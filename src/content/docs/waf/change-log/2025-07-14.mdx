@@ -14,7 +14,7 @@ This week’s vulnerability analysis highlights emerging web application threats
 **Key Findings**
 
 - XSS – Attribute Overloading: A novel cross-site scripting technique where attackers abuse custom or non-standard HTML attributes to smuggle payloads into the DOM. These payloads evade traditional sanitization logic, especially in frameworks that loosely validate attributes or trust unknown tokens.
-- XSS – onToggle Event Abuse: Exploits the lesser-used onToggle event (triggered by elements like <details>) to execute arbitrary JavaScript when users interact with UI elements. This vector is often overlooked by static analyzers and can be embedded in seemingly benign components.
+- XSS – onToggle Event Abuse: Exploits the lesser-used onToggle event (triggered by elements like `<details>`) to execute arbitrary JavaScript when users interact with UI elements. This vector is often overlooked by static analyzers and can be embedded in seemingly benign components.
 - SQLi – Obfuscated Boolean Logic: An advanced SQL injection variant that uses non-standard Boolean expressions, comment-based obfuscation, or alternate encodings (for example, `/*!true*/`, `AND/**/1=1`) to bypass basic input validation and WAF signatures. This technique is particularly dangerous in dynamic query construction contexts.
 
 **Impact**
