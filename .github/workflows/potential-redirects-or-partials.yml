@@ -49,8 +49,8 @@ jobs:
           # Use random delimiter for security reasons
           delimiter="$(openssl rand -hex 8)"
           echo "PARTIAL_FILES<<${delimiter}" >> "$GITHUB_ENV"
-          echo "${files2}" >> "$GITHUB_ENV"
-          echo "${delimiter2}" >> "$GITHUB_ENV"
+          echo "${files}" >> "$GITHUB_ENV"
+          echo "${delimiter}" >> "$GITHUB_ENV"
 
       - name: Comment or Update Comment on PR based on changed files
         env:
@@ -93,7 +93,7 @@ jobs:
               comment_body="$comment_body
 
               ### Partials
-              This PR updates partial files, which are bits of content used across multiple files.
+              This PR updates partial files, which are bits of content used across multiple files."
               for path in $PARTIAL_FILES; do
                 comment_body="$comment_body
                         - [ ] \`$path\`"
