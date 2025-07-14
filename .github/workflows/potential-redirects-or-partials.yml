@@ -93,10 +93,10 @@ jobs:
               comment_body="$comment_body
 
             ### Partials
-            This PR updates partial files, which are bits of content used across multiple files."
+            This PR updates partial files, which are pieces of content used across multiple files in our [Render component](https://developers.cloudflare.com/style-guide/components/render/)."
               for path in $PARTIAL_FILES; do
-                comment_body="$comment_body
                 updated_path=$(echo "$path" | sed -e 's/"//g' -e 's/^\///' -e 's/\/$//')
+                comment_body="$comment_body
             - [ ] [$updated_path](https://developers.cloudflare.com/style-guide/components/render/?partial=$updated_path)"
               done
             fi
