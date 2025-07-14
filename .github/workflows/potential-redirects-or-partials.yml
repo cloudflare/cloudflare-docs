@@ -84,7 +84,7 @@ jobs:
               for path in $CHANGED_FILES; do
                 clean_path=$(echo "$path" | sed 's/"//g') # Remove quotation marks
                 comment_body="$comment_body
-              - [ ] \`$clean_path\`"
+            - [ ] \`$clean_path\`"
               done
             fi
 
@@ -96,7 +96,7 @@ jobs:
             This PR updates partial files, which are bits of content used across multiple files."
               for path in $PARTIAL_FILES; do
                 comment_body="$comment_body
-              - [ ] \`$path\`"
+            - [ ] [$path](https://developers.cloudflare.com/style-guide/components/render/?partial=$path)"
               done
             fi
 
