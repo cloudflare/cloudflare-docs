@@ -45,6 +45,7 @@ jobs:
             -H "Accept: application/vnd.github.v3+json" \
             "https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/files" | \
             jq -r '.[] | select(.status=="modified") | select (.filename | startswith("src/content/partials")) | select(.filename | endswith(".mdx"))' | \
+            sed -e 's|^src/content/partials||' -e 's|\.mdx$|/|')
           # Use random delimiter for security reasons
           delimiter="$(openssl rand -hex 8)"
           echo "PARTIAL_FILES<<${delimiter}" >> "$GITHUB_ENV"
