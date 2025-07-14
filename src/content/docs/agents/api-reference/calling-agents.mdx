@@ -97,7 +97,7 @@ export default {
 		let chatResponse = namedAgent.chat('Hello!');
 		// No need to serialize/deserialize it from a HTTP request or WebSocket
 		// message and back again
-		let agentState = getState() // agentState is of type UserHistory
+		let agentState = namedAgent.getState() // agentState is of type UserHistory
 		return namedResp
 	},
 } satisfies ExportedHandler<Env>;
