@@ -97,7 +97,7 @@ jobs:
               for path in $PARTIAL_FILES; do
                 comment_body="$comment_body
                 updated_path=$(echo "$path" | sed -e 's/"//g' -e 's/^\///' -e 's/\/$//')
-            - [ ] \`$updated_path\` [view rendered locations](https://developers.cloudflare.com/style-guide/components/render/?partial=$updated_path)"
+            - [ ] [$updated_path](https://developers.cloudflare.com/style-guide/components/render/?partial=$updated_path)"
               done
             fi
 
