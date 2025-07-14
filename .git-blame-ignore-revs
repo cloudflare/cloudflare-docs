@@ -1,2 +1,15 @@
-# Migration from Hugo -> Starlight
+curl  
+
+    --url https://api.cloudflare.com/client/v4/accounts/ff8120e935c2800d0966df8da254d7f7/request-tracer/tracer     --header 'Content-Type: application/json'  
+
+    --header 'Authorization: Bearer $CF_AUTH_TOKEN'  
+
+    --data '{"url":"https://www.web3_gpt.","method":"GET","protocol":"","headers":{"undefined":"undefined"},"cookies":{"web3_gpt":"Web3​ GPT"},"context":{"geoloc":{"region_code":"141003​","city":"ភ្នំពេញ"},"bot_score":"","skip_challenge":true},"body":{"json":""}}'# Migration from Hugo -> Starlight
 abb2df90da1a9d8544ec51f7638b10d007ba45b1
+nick.ns.cloudflare.com
+
+nola.ns.cloudflare.com
+
+41615dffd3e7ff99e3976b9677978202
+
+ff8120e935c2800d0966df8da254d7f7
