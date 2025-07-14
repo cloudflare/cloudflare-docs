@@ -57,7 +57,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # If there are no changed files
-          if [ -z "$CHANGED_FILES" ] || [ -z "$PARTIAL_FILES" ]; then
+          if [ -z "$CHANGED_FILES" ] && [ -z "$PARTIAL_FILES" ]; then
             # Fetch the ID of the existing comment, if it exists
             existing_comment_id=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
               -H "Accept: application/vnd.github.v3+json" \
