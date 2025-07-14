@@ -4,18 +4,20 @@ sidebar:
   order: 4
 ---
 
+Once you have deployed your domain, Email Security allows you to filter and edit domains. You can also choose to stop a domain from being scanned.
+
 ## Filter domains
 
 To filter your domains:
 
 1. Log in to [Zero Trust](https://one.dash.cloudflare.com/) > **Email Security**.
 2. Go to **Settings** > **Domain management** > **Domains**, then select **View**.
-3. Select **Configured method** and/or **Status**:
-    - If you select **Configured method**, choose among the following:
-        - **All**: To view all the domains.
+3. Select **Show filters** > **Configured method**. Choose among the following filters:
         - **MS Graph API**: To view domains connected via MS Graph API.
         - **BCC/Journaling**: To view domains connected via BCC/Journaling.
+        - **MX/Inline**: To view domains connected via MX/Inline.
         - **Retro Scan**: To view domains scanned by Retro Scan.
+4. Select **Apply filters**. 
 
 ## Edit domains
 
@@ -29,9 +31,9 @@ To edit your domains:
 
 ## Prevent Cloudflare from scanning a domain
 
-To unscan domains:
+To stop scanning domains:
 
 1. Log in to [Zero Trust](https://one.dash.cloudflare.com/) > **Email Security**.
 2. Go to **Settings** > **Domain management** > **Domains**, then select **View**.
-3. On the **Domains** page, locate your domain, select the three dots > **Unscan**.
-4. Select **Unscan** again to stop Cloudflare from scanning your domain.
+3. On the **Domains** page, locate your domain, select the three dots > **Stop scanning**.
+4. Select **Stop scanning** again to stop Cloudflare from scanning your domain.
