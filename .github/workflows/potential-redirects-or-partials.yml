@@ -97,7 +97,7 @@ jobs:
               for path in $PARTIAL_FILES; do
                 updated_path=$(echo "$path" | sed -e 's/"//g' -e 's/^\///' -e 's/\/$//')
                 comment_body="$comment_body
-            - [ ] <a href="https://developers.cloudflare.com/style-guide/components/render/?partial=$updated_path" target="_blank">$updated_path"</a>
+            - [ ] \`$updated_path\` - [view affected files](https://developers.cloudflare.com/style-guide/components/render/?partial=$updated_path)
               done
             fi
 
