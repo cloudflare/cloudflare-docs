@@ -9,6 +9,8 @@
 </div>
 
 <script>
+	import { track } from "~/util/zaraz";
+
 	const { pathname } = window.location;
 
 	const anchor = document.getElementById("404-search-link");
@@ -17,5 +19,8 @@
 		const pretty = pathname.replaceAll("/", " ").replaceAll("-", " ").trim();
 
 		anchor.setAttribute("href", `/search/?q=${encodeURIComponent(pretty)}`);
+		anchor.addEventListener("click", () => {
+			track("serp from location", { value: "404", query: pretty });
+		});
 	}
 </script>

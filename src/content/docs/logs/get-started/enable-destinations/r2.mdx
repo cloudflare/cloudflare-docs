@@ -6,7 +6,7 @@ sidebar:
 
 ---
 
-import { Render } from "~/components"
+import { Render, APIRequest } from "~/components"
 
 Cloudflare Logpush supports pushing logs directly to R2. You can do so via the automatic setup (Cloudflare creates an R2 bucket for you), or you can create your own R2 bucket with the custom setup. The automatic setup is ideal for quickly setting up a bucket or for testing purposes. Instead, use the custom setup if you need full control over the configuration.
 
@@ -103,22 +103,31 @@ r2://<BUCKET_PATH>/{DATE}?account-id=<ACCOUNT_ID>&access-key-id=<R2_ACCESS_KEY_I
 
 Example request using cURL:
 
-```bash
-curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/jobs \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json" \
---data '{
-  "name": "<DOMAIN_NAME>",
-  "output_options": {
-    "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp","EdgeResponseBytes", "EdgeResponseStatus", "EdgeStartTimestamp", "RayID"],
-    "timestamp_format": "rfc3339"
-  },
-  "destination_conf": "r2://<BUCKET_PATH>/{DATE}?account-id=<ACCOUNT_ID>&access-key-id=<R2_ACCESS_KEY_ID>&secret-access-key=<R2_SECRET_ACCESS_KEY>",
-  "dataset": "http_requests",
-  "enabled": true
-}'
-```
+<APIRequest
+  path="/zones/{zone_id}/logpush/jobs"
+  method="POST"
+  json={{
+    name: "<DOMAIN_NAME>",
+    output_options: {
+      field_names: [
+        "ClientIP",
+        "ClientRequestHost",
+        "ClientRequestMethod",
+        "ClientRequestURI",
+        "EdgeEndTimestamp",
+        "EdgeResponseBytes",
+        "EdgeResponseStatus",
+        "EdgeStartTimestamp",
+        "RayID"
+      ],
+      timestamp_format: "rfc3339"
+    },
+    destination_conf:
+      "r2://<BUCKET_PATH>/{DATE}?account-id=<ACCOUNT_ID>&access-key-id=<R2_ACCESS_KEY_ID>&secret-access-key=<R2_SECRET_ACCESS_KEY>",
+    dataset: "http_requests",
+    enabled: true
+  }}
+/>
 
 ## Download logs from R2
 

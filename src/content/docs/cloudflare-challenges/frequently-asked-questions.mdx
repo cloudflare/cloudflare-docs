@@ -85,7 +85,7 @@ Block Amazon Web Services (AWS) and Google Cloud Platform (GCP) because of large
 
 Previously, unless you customize your front-end application, any AJAX request that is challenged will fail because AJAX calls are not rendered in the DOM.
 
-Now, you can [opt-in to Turnstile's Pre-clearance cookies](/turnstile/concepts/pre-clearance-support/). This allows you to issue a Challenge early in your web application flow and pre-clear users to interact with sensitive APIs. Clearance cookies issued by a Turnstile widget are automatically applied to the Cloudflare zone that the Turnstile widget is embedded on, with no configuration necessary. The duration of the clearance cookie's validity is controlled by the zone-specific configurable [Challenge Passage](/cloudflare-challenges/challenge-types/challenge-pages/#challenge-passage) security setting.
+Now, you can [opt-in to Turnstile's Pre-clearance cookies](/turnstile/concepts/pre-clearance-support/). This allows you to issue a Challenge early in your web application flow and pre-clear users to interact with sensitive APIs. Clearance cookies issued by a Turnstile widget are automatically applied to the Cloudflare zone that the Turnstile widget is embedded on, with no configuration necessary. The duration of the clearance cookie's validity is controlled by the zone-specific configurable [Challenge Passage](/cloudflare-challenges/challenge-types/challenge-pages/challenge-passage/) security setting.
 
 ## Why would I not find any failed Challenges?
 

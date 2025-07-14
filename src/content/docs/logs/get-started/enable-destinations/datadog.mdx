@@ -9,7 +9,7 @@ head:
 
 ---
 
-import { Render, TabItem, Tabs } from "~/components"
+import { Render, TabItem, Tabs, APIRequest } from "~/components"
 
 Cloudflare Logpush supports pushing logs directly to Datadog via the Cloudflare dashboard or via API.
 
@@ -100,21 +100,30 @@ To create a job, make a `POST` request to the Logpush jobs endpoint with the fol
 
 Example request using cURL:
 
-```bash
-curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/jobs \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json" \
---data '{
-  "name": "<DOMAIN_NAME>",
-  "destination_conf": "datadog://<DATADOG_ENDPOINT_URL>?header_DD-API-KEY=<DATADOG_API_KEY>&ddsource=cloudflare&service=<SERVICE>&host=<HOST>&ddtags=<TAGS>",
-  "output_options": {
-    "field_names": ["ClientIP", "ClientRequestHost", "ClientRequestMethod", "ClientRequestURI", "EdgeEndTimestamp", "EdgeResponseBytes", "EdgeResponseStatus" ,"EdgeStartTimestamp", "RayID"],
-    "timestamp_format": "rfc3339"
-  },
-  "dataset": "http_requests"
-}'
-```
+<APIRequest
+  path="/zones/{zone_id}/logpush/jobs"
+  method="POST"
+  json={{
+    name: "<DOMAIN_NAME>",
+    destination_conf:
+      "datadog://<DATADOG_ENDPOINT_URL>?header_DD-API-KEY=<DATADOG_API_KEY>&ddsource=cloudflare&service=<SERVICE>&host=<HOST>&ddtags=<TAGS>",
+    output_options: {
+      field_names: [
+        "ClientIP",
+        "ClientRequestHost",
+        "ClientRequestMethod",
+        "ClientRequestURI",
+        "EdgeEndTimestamp",
+        "EdgeResponseBytes",
+        "EdgeResponseStatus",
+        "EdgeStartTimestamp",
+        "RayID"
+      ],
+      timestamp_format: "rfc3339"
+    },
+    dataset: "http_requests"
+  }}
+/>
 
 Response:
 
@@ -146,16 +155,13 @@ To enable a job, make a `PUT` request to the Logpush jobs endpoint. You will use
 
 Example request using cURL:
 
-```bash
-curl --request PUT \
-https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/jobs/{job_id} \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json" \
---data '{
-  "enabled": true
-}'
-```
+<APIRequest
+  path="/zones/{zone_id}/logpush/jobs/{job_id}"
+  method="PUT"
+  json={{
+    enabled: true
+  }}
+/>
 
 Response:
 
