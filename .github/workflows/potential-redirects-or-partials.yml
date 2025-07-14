@@ -96,8 +96,8 @@ jobs:
             This PR updates partial files, which are bits of content used across multiple files."
               for path in $PARTIAL_FILES; do
                 comment_body="$comment_body
-                clean_path=$(echo "$path" | sed -e 's/"//g' -e 's/^\///' -e 's/\/$//')
-            - [ ] \`$clean_path\` [link]](https://developers.cloudflare.com/style-guide/components/render/?partial=$clean_path)"
+                updated_path=$(echo "$path" | sed -e 's/"//g' -e 's/^\///' -e 's/\/$//')
+            - [ ] \`$updated_path\` [view rendered locations](https://developers.cloudflare.com/style-guide/components/render/?partial=$updated_path)"
               done
             fi
 
