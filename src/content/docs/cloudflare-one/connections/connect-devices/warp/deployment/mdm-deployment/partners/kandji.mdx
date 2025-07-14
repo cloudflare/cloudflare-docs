@@ -233,3 +233,7 @@ fi
 
 exit 0
 ```
+
+## TLS decryption
+
+The Kandji macOS agent uses certificate pinning, which is incompatible with [Gateway TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/). If Gateway TLS decryption is [turned on](/cloudflare-one/policies/gateway/http-policies/tls-decryption/#turn-on-tls-decryption), you must create a Do Not Inspect policy to exempt Kandji from inspection.
