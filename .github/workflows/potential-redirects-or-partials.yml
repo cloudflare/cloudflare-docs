@@ -79,8 +79,8 @@ jobs:
             if [ -n "$CHANGED_FILES" ]; then
               comment_body="$comment_body
 
-                ### Redirects
-                This PR changes current filenames or deletes current files. Make sure you have [redirects](https://developers.cloudflare.com/pages/configuration/redirects/) set up to cover the following paths:"
+            ### Redirects
+            This PR changes current filenames or deletes current files. Make sure you have [redirects](https://developers.cloudflare.com/pages/configuration/redirects/) set up to cover the following paths:"
               for path in $CHANGED_FILES; do
                 clean_path=$(echo "$path" | sed 's/"//g') # Remove quotation marks
                 comment_body="$comment_body
@@ -92,8 +92,8 @@ jobs:
             if [ -n "$PARTIAL_FILES" ]; then
               comment_body="$comment_body
 
-              ### Partials
-              This PR updates partial files, which are bits of content used across multiple files."
+            ### Partials
+            This PR updates partial files, which are bits of content used across multiple files."
               for path in $PARTIAL_FILES; do
                 comment_body="$comment_body
                         - [ ] \`$path\`"
