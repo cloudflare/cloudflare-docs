@@ -12,7 +12,7 @@ const workspace = defineWorkspace([
 				optimizer: {
 					ssr: {
 						enabled: true,
-						include: ["node-html-parser"],
+						include: ["node-html-parser", "yaml"],
 					},
 				},
 			},
