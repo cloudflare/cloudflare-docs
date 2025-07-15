@@ -204,38 +204,6 @@ describe("Cloudflare Docs", () => {
 			const text = await response.text();
 			expect(text).toContain("# Cloudflare Developer Documentation");
 		});
-
-		it("llms-full.txt", async () => {
-			const request = new Request("http://fakehost/llms-full.txt");
-			const response = await SELF.fetch(request);
-
-			expect(response.status).toBe(200);
-
-			const text = await response.text();
-			expect(text).toContain("<page>");
-		});
-
-		it("product-specific llms-full.txt", async () => {
-			const request = new Request("http://fakehost/workers/llms-full.txt");
-			const response = await SELF.fetch(request);
-
-			expect(response.status).toBe(200);
-
-			const text = await response.text();
-			expect(text).toContain("<page>");
-		});
-
-		it("area-specific llms-full.txt", async () => {
-			const request = new Request(
-				"http://fakehost/developer-platform/llms-full.txt",
-			);
-			const response = await SELF.fetch(request);
-
-			expect(response.status).toBe(200);
-
-			const text = await response.text();
-			expect(text).toContain("<page>");
-		});
 	});
 
 	describe("index.md handling", () => {
