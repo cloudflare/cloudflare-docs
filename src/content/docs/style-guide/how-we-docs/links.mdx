@@ -40,7 +40,7 @@ Of these three [link types](#link-types), only **Internal** links:
 - Universally lead to a bad customer experience (a `404` page).
 - Are easily auditable within the current context.
 
-For these reasons, we choose to **fail** a build based on broken internal links. For our implementation, we rely on the [Starlight link validator plugin](https://github.com/HiDeoo/starlight-links-validator).
+For these reasons, we choose to make a build **fail** based on broken internal links. For our implementation, we rely on the [Starlight link validator plugin](https://github.com/HiDeoo/starlight-links-validator).
 
 <GitHubCode
 	repo="cloudflare/cloudflare-docs"
@@ -62,7 +62,7 @@ We also make two intentional decisions about this link auditing:
 
 Though external links are not good for the customer experience, they also don't change within the context of a change to your site's content. Additionally, external link checking can be time consuming and error prone, which can slow down contributions.
 
-We use an external SEO tool to help flag these broken external links for us, addressing them as needed (instead of failing a build on them).
+We use an external SEO tool to help flag these broken external links for us, addressing them as needed (instead of making a build fail because of them).
 
 ### Anchor links
 
