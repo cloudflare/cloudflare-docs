@@ -147,6 +147,8 @@ export default defineConfig({
 									"/workers/examples/?languages=*",
 									"/workers/examples/?tags=*",
 									"/workers-ai/models/**",
+									"**index.md",
+									"/markdown.zip",
 								],
 							}),
 						]
