@@ -1312,6 +1312,14 @@
 /stream/platform/ /stream/changelog/ 301
 /stream/reference/ /stream/faq/ 301
 
+# style guide
+
+/docs-guide/manage-content/redirects/ /style-guide/how-we-docs/redirects/ 301
+/docs-guide/manage-content/redirects/best-practices/ /style-guide/how-we-docs/redirects/ 301
+/docs-guide/manage-content/redirects/process/ /style-guide/how-we-docs/redirects/ 301
+/docs-guide/manage-content/metadata/ /style-guide/how-we-docs/metadata/ 301
+/docs-guide/manage-content/metadata/process/ /style-guide/how-we-docs/metadata/ 301
+
 # support
 
 /support/about-cloudflare/getting-started/troubleshooting-faq-for-new-cloudflare-customers/ /fundamentals/reference/troubleshooting/ 301

@@ -4,17 +4,6 @@
 
 import { Render, Details } from "~/components";
 
-:::caution[Order of enforcement changing on 2025-07-14]
-On 2025-07-14, Gateway will begin evaluating network-level policies before application-level policies and verify the network path to an origin server before accepting a connection. This will only affect your policies if you are applying HTTP policies in your account. For example:
-
-<Details header="Comparison of old and new order of enforcement">
-
-|                                                | Old order of enforcement                                                                                               | New order of enforcement                                                                                                                |
-| ---------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
-| **Network Block policy and HTTP Block policy** | Gateway blocks traffic and displays the block page and/or follows the client notification settings on the HTTP policy. | Gateway blocks traffic. Gateway does not display the block page but will follow the client notification settings on the Network policy. |
-| **Network Allow policy and HTTP Block policy** | Gateway blocks traffic and displays the block page and follows the client notification settings on the HTTP policy.    | No change.                                                                                                                              |
-| **Network Block policy and HTTP Allow policy** | Gateway blocks traffic and follows the client notification settings on the Network policy.                             | No change.                                                                                                                              |
-
 ```mermaid
 flowchart TB
     %% Accessibility
@@ -71,69 +60,19 @@ flowchart TB
     http0@{ shape: lean-r}
 ```
 
+:::caution[Order of enforcement change on 2025-07-14]
+On 2025-07-14, Gateway began evaluating network-level policies before application-level policies and verify the network path to an origin server before accepting a connection. This only affects your policies if you are applying HTTP policies in your account. For example:
+
+<Details header="Comparison of old and new order of enforcement">
+
+|                                                | Old order of enforcement                                                                                               | New order of enforcement                                                                                                                |
+| ---------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| **Network Block policy and HTTP Block policy** | Gateway blocks traffic and displays the block page and/or follows the client notification settings on the HTTP policy. | Gateway blocks traffic. Gateway does not display the block page but will follow the client notification settings on the Network policy. |
+| **Network Allow policy and HTTP Block policy** | Gateway blocks traffic and displays the block page and follows the client notification settings on the HTTP policy.    | No change.                                                                                                                              |
+| **Network Block policy and HTTP Allow policy** | Gateway blocks traffic and follows the client notification settings on the Network policy.                             | No change.                                                                                                                              |
+
 </Details>
 :::
-
-```mermaid
-flowchart TB
-    %% Accessibility
-    accTitle: Gateway order of enforcement
-    accDescr: Flowchart describing the order of enforcement for Gateway policies.
-
-    %% In with user traffic
-    start(["Traffic"])-->dns0[/"DNS query"/]-->dns1
-    start-->http0{{"HTTP(S) request on port 80 or 443?"}}
-    http0-- "Yes" -->http1
-    http0-- "No" -->network0
-
-    %% DNS policies
-    subgraph DNS
-    dns1["DNS policies"]
-    style DNS text-align:left
-    dns1-- "Resolved by" -->dns2["1.1.1.1"]
-    dns1-.->dns3
-
-        %% DNS resolution
-        subgraph Resolution
-        dns2["1.1.1.1"]
-        dns3["Resolver policies <br />(Enterprise users only)"]-- "Resolved by" -->dns4["Custom resolver"]
-        end
-
-    end
-    dns2["1.1.1.1"]----->internet
-    dns4----->internet
-    dns4-.->cloudflare["Private network services <br />(Cloudflare Tunnel, Magic WAN, etc.)"]
-
-
-    %% Proxied by Gateway
-    subgraph Proxy
-
-    %% HTTP policies
-    subgraph HTTP
-    http1{{"Do Not Inspect policies"}}
-    http1-."Inspect".->http2["Isolate policies  <br />(with add-on)"]
-    http2-->http3["Allow, Block, Do Not Scan policies"]
-    end
-
-    http1-- "Do Not Inspect" -->network0
-    http3-->network0
-    network0[/"Network connections"/]-->network1
-
-    %% Network policies
-    subgraph Network
-    network1["Network policies"]
-    end
-    end
-
-    %% Egress
-    subgraph Egress
-    network1-.->egress1["Egress policies <br />(Enterprise users only)"]
-    end
-
-    %% Finish
-    network1-- "Egress with Cloudflare IP" -->internet([Internet])
-    egress1-- "Egress with dedicated IP" -->internet
-```
 
 ## Connection establishment
 
