@@ -11,8 +11,8 @@ import { APIRequest, Details, GlossaryTooltip, Tabs, TabItem } from "~/component
 
 You can bring your own public IPs to Cloudflare to use with Magic Transit. This is a two-step process:
 
-1. Adding an IP <GlossaryTooltip term="prefix">prefix</GlossaryTooltip> for each IP address block that you bring to Cloudflare. The IP prefix includes the permission (<GlossaryTooltip term="letter of agency">Letters of Agency or LOA</GlossaryTooltip>) for Cloudflare to announce the network or its subnets. The IP prefix is also where you define your optional [Autonomous System Number (ASN)](https://www.cloudflare.com/learning/network-layer/what-is-an-autonomous-system/) to be included in Cloudflare's advertised AS path.
-2. Defining additional BGP prefixes, which control the announcement of the prefix from Cloudflare. By default there is always one BGP prefix that is identical to the IP prefix, and you may configure multiple additional subnet prefixes of the IP prefix (where the longest prefix length is `/24`).
+1. Adding IP <GlossaryTooltip term="prefix">prefixes</GlossaryTooltip> for each IP address block that you bring to Cloudflare. The IP prefix includes the permission (<GlossaryTooltip term="letter of agency">Letter of Agency or LOA</GlossaryTooltip>) that allows Cloudflare to announce the network or its subnets. The IP prefix is also where you define your optional [Autonomous System Number (ASN)](https://www.cloudflare.com/learning/network-layer/what-is-an-autonomous-system/) to be included in Cloudflare's advertised AS path.
+2. Defining additional BGP prefixes, which control the announcement of the prefix from Cloudflare. By default there is always one BGP prefix that is identical to the IP prefix. You can optionally configure additional, more-specific BGP prefixes (subnets of the IP prefix), up to a maximum prefix length of `/24`.
 
 ### IP prefixes
 
