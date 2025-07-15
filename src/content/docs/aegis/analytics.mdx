@@ -5,9 +5,11 @@ sidebar:
   order: 7
 ---
 
-import { Type } from "~/components";
+import { Type, Render } from "~/components";
 
-Use the [GraphQL API](/analytics/graphql-api/) to get aggregate data and monitor your Aegis IPs capacity. As explained in [IPs allocation](/aegis/about/ips-allocation/), each Aegis IP can support 40,000 concurrent connections per origin IP.
+Use the [GraphQL API](/analytics/graphql-api/) to get aggregate data and monitor your Aegis IPs capacity.
+
+<Render file="concurrent-connections-explainer" />
 
 Refer to the GraphQL Analytics API documentation to [get started](/analytics/graphql-api/getting-started/). The specific Aegis schema is called `aegisIpUtilizationAdaptiveGroups`.
 

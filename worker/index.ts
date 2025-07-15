@@ -98,6 +98,23 @@ export default class extends WorkerEntrypoint<Env> {
 			console.error("Unknown error", error);
 		}
 
-		return this.env.ASSETS.fetch(request);
+		const response = await this.env.ASSETS.fetch(request);
+
+		if (response.status === 404) {
+			const section = new URL(response.url).pathname.split("/").at(1);
+
+			if (!section) return response;
+
+			const notFoundResponse = await this.env.ASSETS.fetch(
+				`http://fakehost/${section}/404/`,
+			);
+
+			return new Response(notFoundResponse.body, {
+				status: 404,
+				headers: notFoundResponse.headers,
+			});
+		}
+
+		return response;
 	}
 }

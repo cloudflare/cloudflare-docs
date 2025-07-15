@@ -233,28 +233,55 @@ Once an invocation has six connections open, it can still attempt to open additi
 
 - These attempts are put in a pending queue — the connections will not be initiated until one of the currently open connections has closed.
 - Earlier connections can delay later ones, if a Worker tries to make many simultaneous subrequests, its later subrequests may appear to take longer to start.
+- Earlier connections that are stalled<sup>1</sup> might get closed with a `Response closed due to connection limit` exception.
 
 If you have cases in your application that use `fetch()` but that do not require consuming the response body, you can avoid the unread response body from consuming a concurrent connection by using `response.body.cancel()`.
 
 For example, if you want to check whether the HTTP response code is successful (2xx) before consuming the body, you should explicitly cancel the pending response body:
 
 ```ts
-let resp = await fetch(url);
+const response = await fetch(url);
 
 // Only read the response body for successful responses
-if (resp.statusCode <= 299) {
-	// Call resp.json(), resp.text() or otherwise process the body
+if (response.statusCode <= 299) {
+	// Call response.json(), response.text() or otherwise process the body
 } else {
 	// Explicitly cancel it
-	resp.body.cancel();
+	response.body.cancel();
 }
 ```
 
 This will free up an open connection.
 
-If the system detects that a Worker is deadlocked on open connections — for example, if the Worker has pending connection attempts but has no in-progress reads or writes on the connections that it already has open — then the least-recently-used open connection will be canceled to unblock the Worker.
+If the system detects that a Worker is deadlocked on stalled connections<sup>1</sup> — for example, if the Worker has pending connection attempts but has no in-progress reads or writes on the connections that it already has open — then the least-recently-used open connection will be canceled to unblock the Worker.
 
-If the Worker later attempts to use a canceled connection, an exception will be thrown. These exceptions should rarely occur in practice, though, since it is uncommon for a Worker to open a connection that it does not have an immediate use for.
+If the Worker later attempts to use a canceled connection, a `Response closed due to connection limit` exception will be thrown. These exceptions should rarely occur in practice, though, since it is uncommon for a Worker to open a connection that it does not have an immediate use for.
+
+<sup>1</sup>A connections is considered stalled when it is not not being
+actively read from or written to, for example:
+
+```ts
+// Within a for-of loop
+const response = await fetch("https://example.org");
+for await (const chunk of response.body) {
+	// While this code block is executing, there are no pending
+	// reads on the response.body. Accordingly, the system may view
+	// the stream as not being active within this block.
+}
+
+// Using body.getReader()
+const response = await fetch("https://example.org");
+const reader = response.body.getReader();
+let chunk = await reader.read();
+await processChunk(chunk);
+chunk = await reader.read();
+await processChunk(chunk);
+
+async function processChunk(chunk) {
+	// The stream is considered inactive as there is no pending reads
+	// on response.body. It may then get cancelled.
+}
+```
 
 :::note
 
@@ -294,7 +321,7 @@ To reduce the upload size of a Worker, consider some of the following strategies
 
 - Removing unnecessary dependencies and packages
 - Storing configuration files, static assets, and binary data using [Workers KV](/kv/), [R2](/r2/), [D1](/d1/), or [Workers Static Assets](/workers/static-assets/) instead of bundling them within your Worker code.
-- Splitng functionality across multiple Workers and connecting them using [Service bindings](/workers/runtime-apis/bindings/service-bindings/).
+- Splitting functionality across multiple Workers and connecting them using [Service bindings](/workers/runtime-apis/bindings/service-bindings/).
 
 ---
 

@@ -161,14 +161,21 @@ export default defineConfig({
 				headingLinks: false,
 			},
 			routeMiddleware: "./src/plugins/starlight/route-data.ts",
+			disable404Route: true,
 		}),
 		liveCode({}),
 		icon(),
 		sitemap({
 			filter(page) {
-				return !page.startsWith(
-					"https://developers.cloudflare.com/style-guide/",
-				);
+				if (page.includes("/style-guide/")) {
+					return false;
+				}
+
+				if (page.endsWith("/404/")) {
+					return false;
+				}
+
+				return true;
 			},
 			serialize(item) {
 				item.lastmod = new Date().toISOString();

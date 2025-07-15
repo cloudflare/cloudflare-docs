@@ -36,7 +36,7 @@ A JWT validation configuration consists of creating a token validation configura
       1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
       2. Go to **Security** > **Settings**.
       3. Filter by **API abuse**.
-      4. On **Token configurations**, select **Configure tokens**.
+      4. On **Token configurations**, select **Configure tokens**. If you already have one or more tokens, select **&lt;N> out of &lt;M> configurations used** instead.
       5. Add a name for your configuration.
       6. Choose where Cloudflare can locate the JWT for this configuration on incoming requests, such as a header or cookie and its name.
       7. Copy and paste your JWT issuer's public key(s) (JWKS).
@@ -87,7 +87,7 @@ To automatically keep your JWKS up to date when your identity provider refreshes
 
 :::note
 
-Token configuration rules will automatically apply to new endpoints added to Endpoint Management if those endpoints also match the rule. 
+Token configuration rules will automatically apply to new endpoints added to Endpoint Management if those endpoints also match the rule.
 :::
 
 ## Special cases

@@ -78,17 +78,18 @@ Reclassifying messages allows you to choose the disposition of your messages if 
 
 To reclassify a message:
 
-1. On the **Investigation** page, under **Your matching messages**, select the message you want to reclassify.
-2. Select the three dots, then select **Reclassify**.
-3. Under **New disposition**, select among the following:
-   * **Malicious**: Traffic invoked multiple phishing verdict triggers, met thresholds for bad behavior, and is associated with active campaigns.
-   * **Spoof**: Traffic associated with phishing campaigns that is either non-compliant with your email authentication policies (SPF, DKIM, DMARC) or has mismatching Envelope From and `Header From` values.
-   * **Spam**: Traffic associated with non-malicious, commercial campaigns.
-   * **Bulk**: Traffic associated with [Graymail](https://en.wikipedia.org/wiki/Graymail_%28email%29), that falls in between the definitions of `SPAM` and `SUSPICIOUS`. For example, a marketing email that intentionally obscures its unsubscribe link.
-   * **Clean**: Traffic not associated with any phishing campaigns.
-4. Select **Save**.
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Email Security** and select **Investigation**.
+2. On the **Investigation** page, under **Your matching messages**, select the message you want to reclassify.
+3. Select the three dots, then select **Request reclassification**.
+4. Under **New disposition**, select among the following:
+   - **Malicious**: Traffic invoked multiple phishing verdict triggers, met thresholds for bad behavior, and is associated with active campaigns.
+   - **Spoof**: Traffic associated with phishing campaigns that is either non-compliant with your email authentication policies (SPF, DKIM, DMARC) or has mismatching Envelope From and `Header From` values.
+   - **Spam**: Traffic associated with non-malicious, commercial campaigns.
+   - **Bulk**: Traffic associated with [Graymail](https://en.wikipedia.org/wiki/Graymail_%28email%29), that falls in between the definitions of `SPAM` and `SUSPICIOUS`. For example, a marketing email that intentionally obscures its unsubscribe link.
+   - **Clean**: Traffic not associated with any phishing campaigns.
+5. Select **Save**.
 
-To reclassify messages in bulk, select the messages you want to reclassify > **Action** > **Reclassify**.
+To reclassify messages in bulk, select the messages you want to reclassify > **Action** > **Request reclassification**.
 
 ### Upload EML files
 
@@ -97,7 +98,7 @@ Email Security classifies certain emails as "Clean". If you disagree with the di
 On the **Investigation** page:
 
 1. Go to the email marked as **Clean**.
-2. Select the three dots > **Reclassify**.
+2. Select the three dots > **Request reclassification**.
 3. Upload the EML file.
 4. Select a new disposition.
 5. Select **Save**.
@@ -160,21 +161,38 @@ To escalate a reclassification:
 2. Select the three dots > select **Escalate**.
 3. The dashboard will display a message to authorize escalation. Select **Escalate**.
 
+### Invalid submissions
+
+A submission is invalid when:
+
+- A submission has no EML file attached.
+- A submission has been made with an incorrect file extension.
+- You did not configure the domain you are submitting emails for. 
+- A policy has been enforced that causes an email to be received or blocked.
+- A submission was made to the wrong team or user alias.
+
+To ensure your submission is valid:
+
+- Ensure your submission has a file attached with a `.eml` file extension.
+- Ensure you configure the domain you are submitting emails for.
+- Ensure policies are configured correctly.
+
 ## Move messages
 
 Moving messages allows you to move messages to a specific folder. You can move up to 1,000 messages at a time.
 
 To move messages:
 
-1. On the **Investigation** page, select all the messages you want to move.
-2. Select the **Action** dropdown, then select **Move**.
-3. Select among one of the following folders:
-   * **Inbox**: Move messages to the primary email folder.
-   * **Junk email**: Move messages to the junk or spam folder.
-   * **Trash**: Move messages to the trash or deleted items email folder.
-   * **Soft delete (user recoverable)**: Move messages to the user's Deleted Items folder. This option is for Microsoft 365 only.
-   * **Hard delete (admin recoverable)**: Delete messages from a user's inbox.
-4. Select **Save**.
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Email Security**, and select **Investigation**.
+2. On the **Investigation** page, select all the messages you want to move.
+3. Select the **Action** dropdown, then select **Move**.
+4. Select among one of the following folders:
+   - **Inbox**: Move messages to the primary email folder.
+   - **Junk email**: Move messages to the junk or spam folder.
+   - **Trash**: Move messages to the trash or deleted items email folder.
+   - **Soft delete (user recoverable)**: Move messages to the user's Deleted Items folder. This option is for Microsoft 365 only.
+   - **Hard delete (admin recoverable)**: Delete messages from a user's inbox.
+5. Select **Save**.
 
 ## Find similar emails
 
@@ -182,8 +200,9 @@ Each detection has an Email Detection Fingerprint (EDF) hash that Email Security
 
 To find similar detection results:
 
-1. On the **Investigation** page, under **Your matching messages**, search for the **Similar emails** column.
-2. Select the number of similar emails. Selecting the number will show you a list of similar emails.
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Email Security**, and select **Investigation**.
+2. On the **Investigation** page, under **Your matching messages**, search for the **Similar emails** column.
+3. Select the number of similar emails. Selecting the number will show you a list of similar emails.
 
 ## Export messages
 
@@ -191,8 +210,9 @@ With Email Security, you can export messages to a CSV file.
 
 To export messages:
 
-1. On the **Investigation** page, under **Your matching messages**, select **Export to CSV**.
-2. Select **Export messages** on the pop-up message. You can export up to 500 messages from the dashboard. To export up to 1,000 matching messages, use the [API](/api/resources/email_security/subresources/investigate/methods/get/).
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Email Security**, and select **Investigation**.
+2. On the **Investigation** page, under **Your matching messages**, select **Export to CSV**.
+3. Select **Export messages** on the pop-up message. You can export up to 500 messages from the dashboard. To export up to 1,000 matching messages, use the [API](/api/resources/email_security/subresources/investigate/methods/get/).
 
 ## Email status
 
@@ -200,19 +220,20 @@ Email Security allows you to review the status and actions of each email.
 
 To view status and actions for each email:
 
-1. On the **Investigation** page, select the three dots.
-2. Selecting the three dots will show you the following options:
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Email Security**, and select **Investigation**.
+2. On the **Investigation** page, select the three dots.
+3. Selecting the three dots will show you the following options:
    - If the email is quarantined:
       - **View details**: Refer to [Email details](/cloudflare-one/email-security/email-monitoring/search-email/#email-details) to learn more.
       - **View similar emails**: Find similar emails based on the `value_edf_hash` (Electronic Detection Fingerprint hash).
       - **Release**: Email Security will no longer quarantine your chosen messages.
-      - **Reclassify**: Choose the dispositions of your messages if they are incorrect. Refer to [Reclassify messages](/cloudflare-one/email-security/email-monitoring/search-email/#reclassify-messages) to learn more.
-3. If the email is not quarantined:
+      - **Request reclassification**: Choose the dispositions of your messages if they are incorrect. Refer to [Reclassify messages](/cloudflare-one/email-security/email-monitoring/search-email/#reclassify-messages) to learn more.
+4. If the email is not quarantined:
    - **View details**.
    - **View similar emails**.
    - **View submission detail**.
    - [Move](/cloudflare-one/email-security/auto-moves/) (only available if you authorized moves).
-   - [Reclassify](/cloudflare-one/email-security/email-monitoring/search-email/#reclassify-messages).
+   - [Request reclassification](/cloudflare-one/email-security/email-monitoring/search-email/#reclassify-messages).
 
 ## Email details
 

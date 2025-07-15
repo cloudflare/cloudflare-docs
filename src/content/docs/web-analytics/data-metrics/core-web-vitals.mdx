@@ -31,7 +31,6 @@ Core Web Vitals is divided into three main sections, each one with information a
 
 - [Largest Contentful Paint (LCP)](https://web.dev/optimize-lcp/): Measures perceived load speed by the user. It returns how long the main content of the page takes to be loaded.
 - [Interaction to Next Paint (INP)](https://web.dev/inp/): Measures user interface responsiveness – how quickly a website responds to user interactions like clicks or key presses.
-- [First Input Delay (FID)](https://web.dev/optimize-fid/): Measures how fast a website is to respond to the first user input.
 - [Cumulative Layout Shift (CLS)](https://web.dev/optimize-cls/): Measures visual stability, that is, if there are shifts in the page layout as the various elements are being loaded into view.
 
 Each of these metrics represents an impact to the user experience, which is quantified and graded by Web Analytics.
@@ -42,7 +41,7 @@ Cloudflare Web Analytics offers interactive exploration in Core Web Vitals by al
 
 Below each graph, the Debug View section has the top five elements with a negative impact on each metric. Selecting the elements shown in the data table gives you more details about them.
 
-Each table — LCP, FID, and CLS — also shows you the performance of these elements in the 75th percentile (P75) at a glance. Selecting in each row of the table lets you expand the element and have access to more information, including P50, P90 and P99 metrics.
+Each table — LCP, INP, and CLS — also shows you the performance of these elements in the 75th percentile (P75) at a glance. Selecting in each row of the table lets you expand the element and have access to more information, including P50, P90 and P99 metrics.
 
 These numbers refer to how an element performs relatively to others in your page. For example, if an element takes 3,900 ms to load and is in the 75 percentile, this means that it is slower to load than 75% of the elements in your page.
 
@@ -64,7 +63,7 @@ The URL path at the time the Core Web Vitals are captured.
 
 #### Value
 
-[The metric value](https://web.dev/cls/#layout-shift-score) for each Core Web Vitals. This value is in milliseconds for LCP or FID and a score for CLS.
+[The metric value](https://web.dev/cls/#layout-shift-score) for each Core Web Vitals. This value is in milliseconds for LCP or NIP and a score for CLS.
 
 ### Additional data collected for Largest Contentful Paint
 
@@ -75,12 +74,6 @@ The source URL (such as image, text, web fonts).
 #### Size
 
 The source object's size in bytes.
-
-### Additional data collected for First Input Delay
-
-#### Name
-
-The type of event captured (such as `mousedown`, `keydown`, `pointerdown`).
 
 ### Additional data collected for Cumulative Layout Shift
 

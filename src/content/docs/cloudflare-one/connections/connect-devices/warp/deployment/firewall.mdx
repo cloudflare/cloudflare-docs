@@ -91,11 +91,14 @@ The client connects to the following destinations to verify general Internet con
 
 ### Inside tunnel
 
-The client connects to the following destinations to verify connectivity inside of the WARP tunnel. Because this check happens inside of the tunnel, you do not need to add these IPs and domains to your firewall allowlist. However, since the requests go through Gateway, ensure that they are not blocked by a Gateway HTTP or Network policy.
+The WARP client connects to the following IPs to verify connectivity inside of the WARP tunnel:
 
-- `connectivity.cloudflareclient.com`
 - `162.159.197.4`
 - `2606:4700:102::4`
+
+Because this check happens inside of the tunnel, you do not need to add these IPs to your firewall allowlist. However, since the requests go through Gateway, ensure that they are not blocked by a Gateway HTTP or Network policy.
+
+Thought it may be visible in `warp-diag` and other logs, `connectivity.cloudflareclient.com` is used internally by WARP and should not be used in firewall policies.
 
 ## NEL reporting (optional)
 

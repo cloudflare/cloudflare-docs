@@ -1,0 +1,41 @@
+---
+import { getPartialsUsage } from "~/util/components";
+
+import Details from "./Details.astro";
+import UsageList from "./UsageList.astro";
+
+const partials = await getPartialsUsage();
+---
+
+<Details header="Usage" id="partials-container">
+	{
+		[...Object.entries(partials)]
+			.sort((a, b) => a[0].localeCompare(b[0]))
+			.map(([name, usage]) => (
+				<Details header={name} id={name}>
+					<UsageList usage={usage} />
+				</Details>
+			))
+	}
+</Details>
+
+<script>
+	const params = new URLSearchParams(window.location.search);
+	console.log(params);
+	const partial = params.get("partial");
+
+	if (partial) {
+		const container = document.querySelector<HTMLDetailsElement>(
+			"#partials-container",
+		);
+		const details = document.querySelector<HTMLDetailsElement>(
+			`#${CSS.escape(partial)}`,
+		);
+
+		if (container && details) {
+			container.open = true;
+			details.open = true;
+			details.scrollIntoView();
+		}
+	}
+</script>

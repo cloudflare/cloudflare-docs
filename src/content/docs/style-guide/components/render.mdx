@@ -4,7 +4,7 @@ styleGuide:
   component: Render
 ---
 
-import { Code, Details, Type, MetaInfo } from "~/components";
+import { Code, Details, Type, MetaInfo, PartialsUsage } from "~/components";
 
 The `Render` component allows us to include a "partial", a reusable Markdown snippet, onto a page.
 
@@ -15,40 +15,43 @@ It also accepts parameters that can be used as variables within the partial, so 
 ```mdx live
 import { Render } from "~/components";
 
-<Render file="simple-props" params={{
-    name: "world",
-}} />
+<Render
+	file="simple-props"
+	params={{
+		name: "world",
+	}}
+/>
 ```
 
 ### Inputs
 
 - `file` <Type text="string" />
 
-	This should be the name of the partial, without the containing directory or file extension. For example, `/partials/style-guide/hello.mdx` would be `file="hello"`.
+  This should be the name of the partial, without the containing directory or file extension. For example, `/partials/style-guide/hello.mdx` would be `file="hello"`.
 
 - `product` <Type text="string" /> <MetaInfo text="optional" />
 
-	By default, it will look for partials in the same product folder as the current page. You can use this to specify a different product.
+  By default, it will look for partials in the same product folder as the current page. You can use this to specify a different product.
 
-	:::caution
+  :::caution
 
-	When using the `Render` component inside partials, the original `product` is lost.
+  When using the `Render` component inside partials, the original `product` is lost.
 
-	For example, if there are three files:
+  For example, if there are three files:
 
-	1. `docs/fundamentals/index.mdx`
-	2. `partials/dns/thing.mdx`
-	3. `partials/dns/thing2.mdx`
+  1.  `docs/fundamentals/index.mdx`
+  2.  `partials/dns/thing.mdx`
+  3.  `partials/dns/thing2.mdx`
 
-	`docs/fundamentals/index.mdx` uses `<Render file="thing" product="dns" />`
+  `docs/fundamentals/index.mdx` uses `<Render file="thing" product="dns" />`
 
-	`partials/dns/thing.mdx` must use `<Render file="thing2" product="dns" />` as `product` cannot be inferred.
+  `partials/dns/thing.mdx` must use `<Render file="thing2" product="dns" />` as `product` cannot be inferred.
 
-	:::
+  :::
 
 - `params` <Type text="object" /> <MetaInfo text="optional" />
 
-	If you wish to substitute values inside your partial, you can use pass params which can be referenced in your partial. Refer to [properties](#properties).
+  If you wish to substitute values inside your partial, you can use pass params which can be referenced in your partial. Refer to [properties](#properties).
 
 ## Properties
 
@@ -128,9 +131,12 @@ import linkRaw from "~/content/partials/style-guide/link-in-props.mdx?raw";
 ```mdx live
 import { Render } from "~/components";
 
-<Render file="link-in-props" params={{
-	link: "/style-guide/components/render/#links"
-}} />
+<Render
+	file="link-in-props"
+	params={{
+		link: "/style-guide/components/render/#links",
+	}}
+/>
 ```
 
 #### Images
@@ -186,3 +192,7 @@ import { Render } from "~/components";
 
 <Render file="optional-props" params={{ product: "Thing Three" }} />
 ```
+
+## Partials
+
+<PartialsUsage />

@@ -516,6 +516,7 @@
 /cloudflare-one/email-security/setup/post-delivery-deployment/api/office365-api/ /cloudflare-one/email-security/setup/post-delivery-deployment/api/m365-api/ 301
 /cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/journaling-setup/office365-journaling/ /cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/journaling-setup/m365-journaling/ 301
 /cloudflare-one/email-security/setup/pre-delivery-deployment/prerequisites/microsoft365-email-security-mx/ /cloudflare-one/email-security/setup/pre-delivery-deployment/prerequisites/m365-email-security-mx/ 301
+/cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/journaling-setup/manage-domains/ /cloudflare-one/email-security/setup/manage-domains/ 301 
 
 # firewall
 /firewall/api/cf-lists/ /waf/tools/lists/lists-api/ 301
@@ -1310,6 +1311,14 @@
 /stream/reference/faq/ /stream/faq/ 301
 /stream/platform/ /stream/changelog/ 301
 /stream/reference/ /stream/faq/ 301
+
+# style guide
+
+/docs-guide/manage-content/redirects/ /style-guide/how-we-docs/redirects/ 301
+/docs-guide/manage-content/redirects/best-practices/ /style-guide/how-we-docs/redirects/ 301
+/docs-guide/manage-content/redirects/process/ /style-guide/how-we-docs/redirects/ 301
+/docs-guide/manage-content/metadata/ /style-guide/how-we-docs/metadata/ 301
+/docs-guide/manage-content/metadata/process/ /style-guide/how-we-docs/metadata/ 301
 
 # support
 

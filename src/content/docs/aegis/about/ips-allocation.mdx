@@ -9,6 +9,8 @@ head:
 
 ---
 
+import { Render } from "~/components";
+
 Cloudflare Aegis supports both IPv4 and IPv6 addresses.
 
 IPv6 address ranges are deployed globally, meaning your Aegis IPv6 addresses can be used for connections from Cloudflare to your origin servers across all Cloudflare data centers.
@@ -23,7 +25,7 @@ Refer to [connection forwarding](/aegis/about/connection-forwarding/) to underst
 
 ## Connections to your origin
 
-Each Aegis IP can support 40,000 concurrent connections per origin IP. For example, if you have one Aegis IP and two origins (A and B), this single Aegis IP can support 40,000 concurrent connections to origin A, while simultaneously supporting 40,000 concurrent connections to origin B.
+<Render file="concurrent-connections-explainer" />
 
 [GraphQL Analytics API](/aegis/analytics/) allows you to get visibility over Aegis IP utilization.
 

@@ -1,6 +1,8 @@
 ---
 import { z } from "astro:schema";
 import { getComponentsUsage } from "~/util/components";
+
+import UsageList from "./UsageList.astro";
 import Details from "./Details.astro";
 
 type Props = z.infer<typeof props>;
@@ -20,22 +22,6 @@ const usage = await getComponentsUsage(component);
 		<code>{usage.pages.size}</code> pages.
 	</p>
 	<Details header={`Pages which use ${component}`}>
-		<ul>
-			{
-				[...usage.pages].map((path) => (
-					<li>
-						<a
-							href={
-								"https://github.com/cloudflare/cloudflare-docs/blob/production/" +
-								path
-							}
-							target="_blank"
-						>
-							{path}
-						</a>
-					</li>
-				))
-			}
-		</ul>
+		<UsageList usage={usage} />
 	</Details>
 </>

@@ -20,7 +20,7 @@ To resolve: Pass your Browser binding into `puppeteer.launch`.
 
 ### Will Browser Rendering bypass Cloudflare's Bot Protection?
 
-No, Browser Rendering requests are always identified as bots by Cloudflare and do not bypass Bot Protection. Additionally, Browser Rendering respects the robots.txt protocol, ensuring that any disallowed paths specified for user agents are not accessed during rendering.
+No, Browser Rendering requests are always identified as bots by Cloudflare and do not bypass Bot Protection. 
 
 If you are attempting to scan your **own zone** and need Browser Rendering to access areas protected by Cloudflare’s Bot Protection, you can create a [WAF skip rule](/waf/custom-rules/skip/) to bypass the bot protection using a header or a custom user agent.
 
@@ -70,3 +70,15 @@ No. Browser Rendering requests originate from Cloudflares global network, but yo
 This error indicates you have hit the daily browser-instance limit on the Workers Free plan. [Free-plan accounts are capped at free plan limit is 10 minutes of browser use a day](/browser-rendering/platform/limits/#workers-free) once you exceed those, further creation attempts return a 429 until the next UTC day.
 
 To resolve:[Upgrade to a Workers Paid plan](/workers/platform/pricing/) - Paid accounts raise these limits to [10 concurrent browsers and 10 new instances per minute](/browser-rendering/platform/limits/#workers-paid).
+
+### Does local development support all Browser Rendering features?
+
+Not yet. Local development currently has the following limitations:
+- Requests larger than 1 MB are not supported.
+- Playwright is not supported in local development environments.
+
+For full feature access, use `npx wrangler dev --remote`.
+
+### I upgraded from the Workers Free plan, but I'm still hitting the 10-minute per day limit. What should I do?
+
+If you recently upgraded to the Workers Paid plan to increase your Browser Rendering usage limits, but you're still encountering the 10-minute per day cap, try redeploying your Worker. This ensures your usage is correctly associated with your new plan.
