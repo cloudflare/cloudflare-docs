@@ -3,7 +3,6 @@ import {
 	writeFileSync,
 	mkdirSync,
 	appendFileSync,
-	existsSync,
 } from "node:fs";
 
 import glob from "fast-glob";
