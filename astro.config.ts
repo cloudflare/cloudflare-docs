@@ -167,6 +167,10 @@ export default defineConfig({
 		icon(),
 		sitemap({
 			filter(page) {
+				if (page.includes("/style-guide/")) {
+					return false;
+				}
+
 				if (page.endsWith("/404/")) {
 					return false;
 				}
