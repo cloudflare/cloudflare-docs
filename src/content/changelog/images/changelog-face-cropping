@@ -1,0 +1,16 @@
+---
+title: Automatic face cropping in Images
+description: When optimizing with Images, automatically crop images toward detected faces.
+date: 2025-07-18
+---
+You can now use Images to [automatically crop images toward detected faces](/images/transform-images/transform-via-url/#gravity).
+
+The `gravity=face` option automatically detects which pixels represent the face (or faces) in an image, and sets a new focal point based on detected faces. If no faces are found, then the focal point will fall back to the center of the image.
+
+This can be combined with the `zoom` paramter to control how much of the surrounding area will be included in the image. Valid range is from `0` to `1`:
+- **`0` includes as much of the background as possible
+- **`1` crops as closely to the face as possible
+
+![Example of face cropping](~/assets/images/changelog/images/face-cropping.png)
+
+Refer to the [Images documentation](/images/transform-images/transform-via-url) for more information.
