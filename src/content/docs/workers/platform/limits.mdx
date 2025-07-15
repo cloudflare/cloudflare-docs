@@ -233,6 +233,30 @@ Once an invocation has six connections open, it can still attempt to open additi
 
 - These attempts are put in a pending queue — the connections will not be initiated until one of the currently open connections has closed.
 - Earlier connections can delay later ones, if a Worker tries to make many simultaneous subrequests, its later subrequests may appear to take longer to start.
+- Earlier connections that are stalled<sup>1</sup> might get closed with a `Response closed due to connection limit` exception.
+
+<sup>1</sup>A connections is considered stalled when it is not not being actively read from or written to, for example:
+```js
+// Within a for-of loop
+const response = await fetch('https://example.org');
+for await (const chunk of resp.body) {
+  // While this code block is executing, there are no pending
+  // reads on the response.body. Accordingly, the system may view
+  // the stream as not being active within this block.
+}
+
+// Using body.getReader()
+const reader = response.body.getReader();
+let chunk = await reader.read();
+await processChunk(chunk);
+chunk = await reader.read();
+await processChunk(chunk);
+
+async function processChunk(chunk) {
+  // The stream is considered inactive as there is no pending reads
+	// on response.body. It may then get cancelled.
+}
+```
 
 If you have cases in your application that use `fetch()` but that do not require consuming the response body, you can avoid the unread response body from consuming a concurrent connection by using `response.body.cancel()`.
 
