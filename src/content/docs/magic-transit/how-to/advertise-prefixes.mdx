@@ -164,7 +164,13 @@ When you withdraw a prefix using BGP, you must ensure the prefix is withdrawn ac
 
 ### Regional settings
 
-Magic Transit requires static routing to steer traffic from Cloudflare's network over one of your configured tunnel off-ramps (for GRE and IPsec tunnels). For CNI, both static routing and BGP options are available. Currently, advertisement of routes for traffic engineering purposes is not supported. As a best practice to reduce last-hop latency, you should consider scoping your routes regionally. The default setting for static route regions is **All Regions**. Refer to [Scoping routes to specific regions](/magic-transit/reference/traffic-steering/#scoping-routes-to-specific-regions) for more information.
+Magic Transit requires static routing to steer traffic from Cloudflare's network over one of your configured tunnel off-ramps (for GRE and IPsec tunnels). For CNI, both static routing and BGP options are available. Currently, advertisement of routes for traffic engineering purposes is not supported. As a best practice to reduce last-hop latency, you should consider scoping your routes regionally.
+
+<Render file="traffic-steering-region-codes" product="networking-services/reference" />
+
+The default setting for static route regions is **All Regions**. Configure scoping for your traffic in the **Region code** section when [adding](/magic-transit/how-to/configure-routes/#create-a-static-route) or [editing](/magic-transit/how-to/configure-routes/#edit-a-static-route) a static route.
+
+Refer to [Scoping routes to specific regions](/magic-transit/reference/traffic-steering/#scoping-routes-to-specific-regions) for more information.
 
 ### Example router configurations
 
