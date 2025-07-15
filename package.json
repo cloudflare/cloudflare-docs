@@ -128,7 +128,7 @@
 		"ts-blank-space": "0.6.1",
 		"tsx": "4.20.3",
 		"typescript": "5.8.3",
-		"typescript-eslint": "8.36.0",
+		"typescript-eslint": "8.37.0",
 		"unified": "11.0.5",
 		"unist-util-visit": "5.0.0",
 		"vite-tsconfig-paths": "5.1.4",
