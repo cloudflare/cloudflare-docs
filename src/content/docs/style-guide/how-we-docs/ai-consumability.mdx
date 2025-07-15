@@ -5,7 +5,7 @@ meta:
   title: AI consumability | How we docs
 ---
 
-import { Tabs, TabItem } from "~/components";
+import { Tabs, TabItem, Width } from "~/components";
 
 We have various approaches for making our content visible to AI as well as making sure it's easily consumed in a plain-text format.
 
@@ -24,6 +24,11 @@ We have implemented `llms.txt`, `llms-full.txt` and also created per-page Markdo
   - An export of all of our documentation in the aforementioned `index.md` format.
 
 In the top right of this page, you will see a `Page options` button where you can copy the current page as Markdown that can be given to your LLM of choice.
+
+<Width size="medium">
+	![Page options
+	button](~/assets/images/style-guide/how-we-docs/page-options.png)
+</Width>
 
 ## Textual representation of interactive elements
 
@@ -73,3 +78,15 @@ For example, take a look at our Markdown test fixture (or any page by appending 
 
 - [`/style-guide/fixtures/markdown/`](/style-guide/fixtures/markdown/)
 - [`/style-guide/fixtures/markdown/index.md`](/style-guide/fixtures/markdown/index.md)
+
+### Saving on tokens
+
+Most AI pricing is around input & output tokens and our approach greatly reduces the amount of input tokens required.
+
+For example, let's take a look at the amount of tokens required for the [Workers Get Started](/workers/get-started/guide/) using [OpenAI's tokenizer](https://platform.openai.com/tokenizer):
+
+- HTML: 15,229 tokens
+- turndown: 3,401 tokens (4.48x less than HTML)
+- index.md: 2,110 tokens (7.22x less than HTML)
+
+When providing our content to AI, we can see a real-world ~7x saving in input tokens cost.
