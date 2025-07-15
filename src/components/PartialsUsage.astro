@@ -12,7 +12,10 @@ const partials = await getPartialsUsage();
 		[...Object.entries(partials)]
 			.sort((a, b) => a[0].localeCompare(b[0]))
 			.map(([name, usage]) => (
-				<Details header={`${name} (${usage.pages.size} usages)`} id={name}>
+				<Details
+					header={`${name} (${usage.count} uses on ${usage.pages.size} pages)`}
+					id={name}
+				>
 					<UsageList usage={usage} />
 				</Details>
 			))
