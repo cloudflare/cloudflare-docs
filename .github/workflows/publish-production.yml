@@ -41,6 +41,11 @@ jobs:
           cd distmd && zip -r markdown.zip .
           npx wrangler r2 object put vendored-markdown/markdown.zip --file=markdown.zip --remote
           rm markdown.zip
+
+          cd distllms
+          for file in $(find . -type f); do
+            npx wrangler r2 object put vendored-markdown/$file --file=$file --remote
+          done
       - name: Upload vendored Markdown files to ZT DevDocs bucket
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.ZT_DEVDOCS_ACCESS_KEY_ID }}

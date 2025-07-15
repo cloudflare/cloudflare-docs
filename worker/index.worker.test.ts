@@ -212,8 +212,7 @@ describe("Cloudflare Docs", () => {
 			expect(response.status).toBe(200);
 
 			const text = await response.text();
-			expect(text).toContain("URL: https://developers.cloudflare.com/");
-			expect(text).toContain('from "~/components"');
+			expect(text).toContain("<page>");
 		});
 
 		it("product-specific llms-full.txt", async () => {
@@ -223,8 +222,7 @@ describe("Cloudflare Docs", () => {
 			expect(response.status).toBe(200);
 
 			const text = await response.text();
-			expect(text).toContain("URL: https://developers.cloudflare.com/");
-			expect(text).toContain('from "~/components"');
+			expect(text).toContain("<page>");
 		});
 
 		it("area-specific llms-full.txt", async () => {
@@ -236,8 +234,7 @@ describe("Cloudflare Docs", () => {
 			expect(response.status).toBe(200);
 
 			const text = await response.text();
-			expect(text).toContain("URL: https://developers.cloudflare.com/");
-			expect(text).toContain('from "~/components"');
+			expect(text).toContain("<page>");
 		});
 	});
 
