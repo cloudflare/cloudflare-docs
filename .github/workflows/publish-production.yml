@@ -41,6 +41,7 @@ jobs:
           cd distmd && zip -r markdown.zip .
           npx wrangler r2 object put vendored-markdown/markdown.zip --file=markdown.zip --remote
           rm markdown.zip
+          cd ..
 
           cd distllms
           for file in $(find . -type f); do
