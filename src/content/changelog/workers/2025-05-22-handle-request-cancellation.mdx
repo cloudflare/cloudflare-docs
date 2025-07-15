@@ -3,7 +3,7 @@ title: Handle incoming request cancellation in Workers with Request.signal
 description: Workers can now add event listeners on Request.signal and perform tasks when the request is cancelled by the client
 products:
   - workers
-date: 2025-05-22T01:00:00Z
+date: 2025-05-22
 ---
 
 import { Render } from "~/components";
@@ -13,6 +13,5 @@ In Cloudflare Workers, you can now attach an event listener to [`Request`](/work
 You can use a listener to perform cleanup tasks or write to logs before your Worker's invocation ends. For example, if you run the Worker below, and then abort the request from the client, a log will be written:
 
 <Render file="request-signal-example" product="workers" />
-
 
 For more information see the [`Request` documentation](/workers/runtime-apis/request).
