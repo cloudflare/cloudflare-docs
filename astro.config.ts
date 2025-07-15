@@ -138,6 +138,7 @@ export default defineConfig({
 									"/changelog/**",
 									"/http/resources/**",
 									"/llms.txt",
+									"/llms-full.txt",
 									"{props.*}",
 									"/",
 									"/glossary/",
