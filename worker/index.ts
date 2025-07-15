@@ -105,7 +105,14 @@ export default class extends WorkerEntrypoint<Env> {
 
 			if (!section) return response;
 
-			return this.env.ASSETS.fetch(`http://fakehost/${section}/404/`);
+			const notFoundResponse = await this.env.ASSETS.fetch(
+				`http://fakehost/${section}/404/`,
+			);
+
+			return new Response(notFoundResponse.body, {
+				status: 404,
+				headers: notFoundResponse.headers,
+			});
 		}
 
 		return response;
