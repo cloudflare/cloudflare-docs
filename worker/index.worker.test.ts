@@ -168,7 +168,7 @@ describe("Cloudflare Docs", () => {
 				expect(item).toBeDefined();
 				expect(item.product).toBe("Access");
 				expect(item.category).toBe("Access");
-				expect(item.pubDate).toBe("Mon, 03 Mar 2025 06:00:00 GMT");
+				expect(item.pubDate).toBe("Mon, 03 Mar 2025 00:00:00 GMT");
 			});
 
 			it("legacy product-specific", async () => {
