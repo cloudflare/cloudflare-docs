@@ -149,6 +149,8 @@ export default defineConfig({
 									"/workers-ai/models/**",
 									"**index.md",
 									"/markdown.zip",
+									"/style-guide/index.md",
+									"/style-guide/fixtures/markdown/index.md",
 								],
 							}),
 						]
