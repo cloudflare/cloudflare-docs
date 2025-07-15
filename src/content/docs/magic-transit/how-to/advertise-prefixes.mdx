@@ -9,10 +9,10 @@ import { APIRequest, Details, GlossaryTooltip, Render, Tabs, TabItem } from "~/c
 
 ## Onboard prefixes
 
-You can bring your own public IPs to Cloudflare to use with Magic Transit. This is a two-step process:
+You can bring your own public IPs to Cloudflare to use with Magic Transit. This process requires two steps:
 
-1. Adding IP <GlossaryTooltip term="prefix">prefixes</GlossaryTooltip> for each IP address block that you bring to Cloudflare. The IP prefix includes the permission (<GlossaryTooltip term="letter of agency">Letter of Agency or LOA</GlossaryTooltip>) that allows Cloudflare to announce the network or its subnets. The IP prefix is also where you define your optional [Autonomous System Number (ASN)](https://www.cloudflare.com/learning/network-layer/what-is-an-autonomous-system/) to be included in Cloudflare's advertised AS path.
-2. Defining additional BGP prefixes, which control the announcement of the prefix from Cloudflare. By default there is always one BGP prefix that is identical to the IP prefix. You can optionally configure additional, more-specific BGP prefixes (subnets of the IP prefix), up to a maximum prefix length of `/24`.
+1. Add IP <GlossaryTooltip term="prefix">prefixes</GlossaryTooltip> for each IP address block that you bring to Cloudflare. The IP prefix includes the permission (<GlossaryTooltip term="letter of agency">Letter of Agency or LOA</GlossaryTooltip>) that allows Cloudflare to announce the network or its subnets. The IP prefix is also where you define your optional [Autonomous System Number (ASN)](https://www.cloudflare.com/learning/network-layer/what-is-an-autonomous-system/) to be included in Cloudflare's advertised AS path.
+2. Define additional BGP prefixes, which control the announcement of the prefix from Cloudflare. By default there is always one BGP prefix that is identical to the IP prefix. You can optionally configure additional, more-specific BGP prefixes (subnets of the IP prefix), up to a maximum prefix length of `/24`.
 
 ### IP prefixes
 
@@ -28,7 +28,7 @@ Provide all IP prefixes you plan to onboard, along with the ASNs from which they
 - When using Route Origin Authorizations (ROAs) to sign routes for [resource public key infrastructure (RPKI)](https://tools.ietf.org/html/rfc8210), the prefix and originating ASN must match the onboarding submission.
 - If you do not own an ASN, you can use the Cloudflare Customer ASN (AS13335).
 
-#### Cloudflare ASN vs. your own ASN
+#### Choose between Cloudflare’s ASN and your ASN
 
 As a part of your IP prefix onboarding process, you need to decide the ASN Cloudflare will use to announce your prefixes. If you supply your own ASN, Cloudflare prepends the main Cloudflare ASN (AS13335) to the BGP `AS_PATH`. For example, if your ASN is `AS64496`, anyone directly peering with Cloudflare sees the path as `13335 64496`.
 
@@ -40,7 +40,7 @@ For all future onboardings, you must use AS13335. Current customers who are alre
 
 ### BGP prefixes
 
-BGP prefixes represent the prefix that will be announced through anycast from Cloudflare's global network. By default there is always at least one BGP prefix that is identical to the onboarded IP prefix.
+BGP prefixes represent the prefix that will be announced through anycast from Cloudflare's global network. By default, there is always at least one BGP prefix that is identical to the onboarded IP prefix.
 
 For example, if a customer onboards a `/20` IP prefix to Magic Transit, it can only be announced as a `/20` because there is only the default `/20` BGP prefix. Smaller sub-prefixes (such as `/24s`) within that `/20` cannot be announced individually unless they are configured as separate BGP prefixes.
 
@@ -78,15 +78,15 @@ Create a [POST request](/api/resources/addressing/subresources/prefixes/subresou
 
   <TabItem label="Dashboard">
 		:::note
-		You can only advertise your prefix after running pre-flight checks with Cloudflare. If your prefix status is greyed out and shows an Withdrawn status, your prefix is locked. Contact your account team to close the pre-flight checks phase with you and unlock your prefixes.
+		You can only advertise your prefix after running pre-flight checks with Cloudflare. If your prefix status is greyed out and shows a Withdrawn status, your prefix is locked. Contact your account team to close the pre-flight checks phase and unlock your prefixes.
 
-		Currently only the default BGP prefix (that matches the IP prefix) can be controlled via the UI.
+		Currently, only the default BGP prefix (that matches the IP prefix) can be controlled via the Cloudflare dashboard.
 		:::
 
 		1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
 		2. Go to **Magic Transit** > **Configuration**.
 		3. From the **IP Prefixes** tab, select the prefix you want to modify > **Edit**.
-		4. From the dropdown menu **Status**, choose weather the status of your IP is **Advertised** or **Withdrawn**.
+		4. From the dropdown menu **Status**, choose whether the status of your IP is **Advertised** or **Withdrawn**.
 		5. (Optional) Edit the description for your prefix.
 		6. Select **Edit IP Prefix** to save your changes.
   </TabItem>
