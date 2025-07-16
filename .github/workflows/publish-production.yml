@@ -44,8 +44,8 @@ jobs:
         run: |
           cd distmd && zip -r markdown.zip .
           rclone copy \
-            --config bin/rclone.conf \
-            distmd/markdown.zip \
+            --config ../bin/rclone.conf \
+            ./markdown.zip \
             devdocs:/vendored-markdown/markdown.zip
           rm markdown.zip
           cd ..
@@ -53,7 +53,7 @@ jobs:
           cd distllms
           for file in $(find . -type f); do
             rclone copy \
-              --config bin/rclone.conf \
+              --config ../bin/rclone.conf \
               $file \
               devdocs:/vendored-markdown/$file
           done
