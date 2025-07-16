@@ -90,7 +90,7 @@
 		},
 		"logpush": {
 			"title": "Logpush",
-			"link": "/logs/about/",
+			"link": "/logs/logpush/",
 			"properties": {
 				"availability": {
 					"title": "Availability",
