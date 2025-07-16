@@ -4,7 +4,7 @@ description: "@cloudflare/actors library with Durable Objects helpers and patter
 products:
   - durable-objects
   - workers
-date: 2025-06-25T06:00:00Z
+date: 2025-06-25
 ---
 
 The new [@cloudflare/actors](https://www.npmjs.com/package/@cloudflare/actors) library is now in beta!
@@ -28,7 +28,7 @@ import { Storage } from "@cloudflare/actors/storage";
 
 export class ChatRoom extends DurableObject<Env> {
     storage: Storage;
-    
+
     constructor(ctx: DurableObjectState, env: Env) {
         super(ctx, env)
         this.storage = new Storage(ctx.storage);
@@ -50,7 +50,7 @@ export class ChatRoom extends DurableObject<Env> {
 }
 ```
 
-`@cloudflare/actors` library introduces the `Actor` class pattern. `Actor` lets you access Durable Objects without writing the Worker that communicates with your Durable Object (the Worker is created for you). By default, requests are routed to a Durable Object named "default". 
+`@cloudflare/actors` library introduces the `Actor` class pattern. `Actor` lets you access Durable Objects without writing the Worker that communicates with your Durable Object (the Worker is created for you). By default, requests are routed to a Durable Object named "default".
 
 ```js
 export class MyActor extends Actor<Env> {

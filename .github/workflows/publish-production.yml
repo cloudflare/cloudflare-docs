@@ -41,18 +41,36 @@ jobs:
           cd distmd && zip -r markdown.zip .
           npx wrangler r2 object put vendored-markdown/markdown.zip --file=markdown.zip --remote
           rm markdown.zip
+          cd ..
+
+          cd distllms
+          for file in $(find . -type f); do
+            npx wrangler r2 object put vendored-markdown/$file --file=$file --remote
+          done
+      - name: Install rclone
+        run: sudo -v ; curl https://rclone.org/install.sh | sudo bash
       - name: Upload vendored Markdown files to ZT DevDocs bucket
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.ZT_DEVDOCS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.ZT_DEVDOCS_SECRET_ACCESS_KEY }}
         run: |
-          sudo -v ; curl https://rclone.org/install.sh | sudo bash
           rclone sync \
             --s3-env-auth \
             --s3-provider="Cloudflare" \
             --s3-endpoint="https://e76c849bd111ee7d3006b6625713991e.r2.cloudflarestorage.com" \
             distmd \
             :s3:/zt-dashboard-dev-docs
+      - name: Upload vendored Markdown files to AutoRAG DevDocs bucket
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AUTORAG_DEVDOCS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AUTORAG_DEVDOCS_SECRET_ACCESS_KEY }}
+        run: |
+          rclone sync \
+            --s3-env-auth \
+            --s3-provider="Cloudflare" \
+            --s3-endpoint="https://cf9267a5bf4f6b3cceca48d554d81679.r2.cloudflarestorage.com" \
+            distmd \
+            :s3:/developer-docs-full
       - uses: actions/cache/save@v4
         if: always()
         with:

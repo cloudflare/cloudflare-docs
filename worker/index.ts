@@ -22,6 +22,17 @@ export default class extends WorkerEntrypoint<Env> {
 			});
 		}
 
+		if (request.url.endsWith("/llms-full.txt")) {
+			const { pathname } = new URL(request.url);
+			const res = await this.env.VENDORED_MARKDOWN.get(pathname.slice(1));
+
+			return new Response(res?.body, {
+				headers: {
+					"Content-Type": "text/markdown; charset=utf-8",
+				},
+			});
+		}
+
 		if (request.url.endsWith("/index.md")) {
 			const htmlUrl = request.url.replace("index.md", "");
 			const res = await this.env.ASSETS.fetch(htmlUrl, request);

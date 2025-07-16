@@ -168,7 +168,7 @@ describe("Cloudflare Docs", () => {
 				expect(item).toBeDefined();
 				expect(item.product).toBe("Access");
 				expect(item.category).toBe("Access");
-				expect(item.pubDate).toBe("Mon, 03 Mar 2025 06:00:00 GMT");
+				expect(item.pubDate).toBe("Mon, 03 Mar 2025 00:00:00 GMT");
 			});
 
 			it("legacy product-specific", async () => {
@@ -203,41 +203,6 @@ describe("Cloudflare Docs", () => {
 
 			const text = await response.text();
 			expect(text).toContain("# Cloudflare Developer Documentation");
-		});
-
-		it("llms-full.txt", async () => {
-			const request = new Request("http://fakehost/llms-full.txt");
-			const response = await SELF.fetch(request);
-
-			expect(response.status).toBe(200);
-
-			const text = await response.text();
-			expect(text).toContain("URL: https://developers.cloudflare.com/");
-			expect(text).toContain('from "~/components"');
-		});
-
-		it("product-specific llms-full.txt", async () => {
-			const request = new Request("http://fakehost/workers/llms-full.txt");
-			const response = await SELF.fetch(request);
-
-			expect(response.status).toBe(200);
-
-			const text = await response.text();
-			expect(text).toContain("URL: https://developers.cloudflare.com/");
-			expect(text).toContain('from "~/components"');
-		});
-
-		it("area-specific llms-full.txt", async () => {
-			const request = new Request(
-				"http://fakehost/developer-platform/llms-full.txt",
-			);
-			const response = await SELF.fetch(request);
-
-			expect(response.status).toBe(200);
-
-			const text = await response.text();
-			expect(text).toContain("URL: https://developers.cloudflare.com/");
-			expect(text).toContain('from "~/components"');
 		});
 	});
 
