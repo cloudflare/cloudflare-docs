@@ -15,7 +15,7 @@ export async function htmlToMarkdown(
 	url: string,
 ): Promise<string | undefined> {
 	const dom = parse(html);
-	const content = dom.querySelector(".sl-markdown-content");
+	const content = dom.querySelector(".sl-markdown-content:not(.md-ignore)");
 
 	if (!content) {
 		return;

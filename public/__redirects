@@ -957,7 +957,6 @@
 /logs/log-fields/ /logs/reference/log-fields/ 301
 /logs/logpull-api/ /logs/logpull/ 301
 /logs/logpull-api/requesting-logs/ /logs/logpull/requesting-logs/ 301
-/logs/logpush/ /logs/about/ 301
 /logs/logpush/aws-s3/ /logs/get-started/enable-destinations/aws-s3/ 301
 /logs/logpush/azure/ /logs/get-started/enable-destinations/azure/ 301
 /logs/logpush/google-cloud-storage/ /logs/get-started/enable-destinations/google-cloud-storage/ 301
@@ -970,6 +969,8 @@
 # Non-slashed version is being used in the Cloudflare dashboard
 /logs/reference/logpush-api-configuration/examples/example-logpush-curl/ /logs/tutorials/examples/example-logpush-curl/ 301
 /logs/log-explorer/ /log-explorer/log-search/ 301
+/logs/reference/glossary/ /logs/glossary/ 301
+/logs/about/ /logs/logpush/ 301
 
 # magic-firewall
 /magic-firewall/reference/examples/ /magic-firewall/how-to/add-rules/ 301
