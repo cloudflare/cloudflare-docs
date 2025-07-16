@@ -43,7 +43,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.VENDORED_DEVDOCS_SECRET_ACCESS_KEY }}
         run: |
           cd distmd && zip -r markdown.zip .
-          rclone cp \
+          rclone copy \
             --config bin/rclone.conf \
             distmd/markdown.zip \
             devdocs:/vendored-markdown/markdown.zip
@@ -52,7 +52,7 @@ jobs:
 
           cd distllms
           for file in $(find . -type f); do
-            rclone cp \
+            rclone copy \
               --config bin/rclone.conf \
               $file \
               devdocs:/vendored-markdown/$file
