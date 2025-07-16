@@ -67,7 +67,7 @@ Python workers can be split across multiple files. Let's create a new Python fil
 
 ```python
 def hello(name):
-    return "Hello, " + name + "!"
+    return f"Hello, {name}!"
 ```
 
 Now, we can modify `src/entry.py` to make use of the new module.
@@ -97,7 +97,7 @@ from workers import Response
 from hello import hello
 
 async def on_fetch(request):
-    name = (await request.json()).name
+    name = (await request.json())["name"]
     return Response(hello(name))
 ```
 
