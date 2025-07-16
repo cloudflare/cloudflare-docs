@@ -90,3 +90,26 @@ For example, let's take a look at the amount of tokens required for the [Workers
 - index.md: 2,110 tokens (7.22x less than HTML)
 
 When providing our content to AI, we can see a real-world ~7x saving in input tokens cost.
+
+## Curating content
+
+Other than the work making our content [discoverable](#ai-discoverability), most of the other work of making content for AI aligns with SEO or content best practices, such as:
+
+- Using semantic HTML
+- Adding headings
+- Reducing inconsistencies in naming or outdated information
+
+For more details, refer to [Google's AI guidance](https://developers.google.com/search/docs/appearance/ai-features#seo-best-practices).
+
+### `noindex` directives
+
+The only _special_ work we have done is adding a [`noindex` directives](https://developers.google.com/search/docs/crawling-indexing/block-indexing) to specific types of content (via a [frontmatter tag](/style-guide/frontmatter/custom-properties/#noindex)).
+
+{/* prettier-ignore */}
+```html title="noindex meta tag"
+<meta name="robots" content="noindex">
+```
+
+For example, we have certain pages that discuss deprecated features, such as [Wrangler 1](/workers/wrangler/migration/v1-to-v2/wrangler-legacy/). While technically accurate, they are no longer advisable to follow and could potentially confuse AI outputs.
+
+At the moment, it's unclear whether all AI crawlers will respect these directives, but it's the only signal we have to exclude something from their indexing (and we do not want to set up [WAF](/waf/) rules for individual pages).
