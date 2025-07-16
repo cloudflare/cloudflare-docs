@@ -5,4 +5,36 @@ sidebar:
   order: 31
 ---
 
-Browser Rendering service is currently available at no cost up to the [limits](/browser-rendering/platform/limits/) specified until billing begins. Pricing to be announced and we will provide advance notice before any billing begins.
+Browser Rendering is currently available at no cost up to the [limits](/browser-rendering/platform/limits/) specified, with billing beginning on XXXX-XX-XX at the following rates:
+
+| Plan           | REST API                                                                 | Workers Bindings                                                                                         |
+|----------------|---------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------|
+| **Workers Free** | **Browser duration**: 10 minutes per day are included for free. Then, you need to upgrade to Workers Paid. | **Browser duration**: 10 minutes per day are included for free. Then, you need to upgrade to Workers Paid. <br /><br />**Concurrent browsers**: 3 concurrent browsers are included for free. Then, you need to upgrade to Workers Paid. |
+| **Workers Paid** | **Browser duration**: 10 hours per month are included at no additional charge. Then, $0.09 for each additional browser hour. | **Browser duration**: 10 hours per month. Then, $0.09 for each additional browser hour. <br /><br />**Concurrent browsers**: 10 concurrent browsers (averaged monthly) are included at no additional charge. Then, $2.00 for each additional concurrent browser  (averaged monthly). |
+
+You can monitor your Browser Rendering usage in the Cloudflare dashboard. Go to **Compute (Workers)** > **Browser Rendering**.
+
+### Examples of Workers Paid pricing
+<br/>
+#### Example: REST API pricing
+If a Workers Paid user uses the REST API for 50 hours during the month, the estimated cost for the month is as follows.
+
+For **browser duration**:
+<br/>50 hours - 10 hours (included in plan) = 40 hours
+<br/>40 hours × $0.09 per hour = $3.60
+
+#### Example: Workers Bindings pricing
+If a Workers paid user uses the Workers Bindings method for 50 hours during the month, and uses 10 concurrent browsers for the first 15 days and 20 concurrent hours the last 15 days, the estimated cost for the month is as follows.
+
+For **browser duration**:
+<br/>50 hours - 10 hours (included in plan) = 40 hours
+<br/>40 hours × $0.09 per hour = $3.60
+
+For **concurrent browsers**:
+<br/>((10 browsers × 15 days) + (20 browsers × 15 days)) = 450 total browsers used in month
+<br />450 browsers used in month ÷ 30 days in month = 15 browsers (averaged monthly)
+<br/>15 browsers (averaged monthly) − 10 (included in plan) = 5 browsers
+<br/>5 browsers × $2.00 per browser = $10.00
+
+For **browser duration** and **concurrent browsers**:
+<br/>$3.60 + $10.00 = $13.60
