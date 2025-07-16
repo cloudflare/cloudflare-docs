@@ -69,13 +69,13 @@ Based on your report, DLP's machine learning will adjust its confidence in futur
 - DLP will redact all predefined alphanumeric characters in the log. For example, `123-45-6789` will become `XXX-XX-XXXX`.
   - You can define sensitive data with [Exact Data Match (EDM)](/cloudflare-one/policies/data-loss-prevention/datasets/#exact-data-match). EDM match logs will redact your defined strings.
 
-## Send HTTP requests to Logpush destination
+## Send DLP forensic copies to Logpush destination
 
 :::note[Availability]
 Only available on Enterprise plans.
 :::
 
-Gateway allows you to send copies of entire HTTP requests matched in HTTP Allow and Block policies to storage destinations configured in [Logpush](/logs/about/), including third-party destinations.
+Gateway allows you to send copies of entire HTTP requests matched in HTTP Allow and Block policies to storage destinations configured in [Logpush](/logs/about/), including third-party destinations. Forensic copies include un-altered payloads and headers which may include sensitive data. Logpush logs are encrypted in transit only (e.g., via TLS) and further encryption depends on your storage destination's policies. 
 
 To set up the DLP Forensic Copy Logpush job:
 
