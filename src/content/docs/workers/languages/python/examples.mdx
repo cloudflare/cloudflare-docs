@@ -24,7 +24,7 @@ async def on_fetch(request, env):
     params = parse_qs(url.query)
 
     if "name" in params:
-				name = params["name"][0]
+        name = params["name"][0]
         greeting = f"Hello there, {name}"
         return Response(greeting)
 
