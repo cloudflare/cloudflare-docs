@@ -24,7 +24,8 @@ async def on_fetch(request, env):
     params = parse_qs(url.query)
 
     if "name" in params:
-        greeting = "Hello there, {name}".format(name=params["name"][0])
+				name = params["name"][0]
+        greeting = f"Hello there, {name}"
         return Response(greeting)
 
 
@@ -40,8 +41,8 @@ async def on_fetch(request, env):
 from workers import Response
 
 async def on_fetch(request):
-    name = (await request.json()).name
-    return Response("Hello, {name}".format(name=name))
+    name = (await request.json())["name"]
+    return Response(f"Hello, {name}")
 ```
 
 ## Emit logs from your Python Worker
