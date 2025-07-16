@@ -46,7 +46,7 @@ jobs:
           rclone copy \
             --config ../bin/rclone.conf \
             ./markdown.zip \
-            devdocs:/vendored-markdown/markdown.zip
+            devdocs:vendored-markdown
           rm markdown.zip
           cd ..
 
@@ -55,7 +55,7 @@ jobs:
             rclone copy \
               --config ../bin/rclone.conf \
               $file \
-              devdocs:/vendored-markdown/$file
+              devdocs:vendored-markdown
           done
           cd ..
       - name: Upload vendored Markdown files to ZT DevDocs bucket
@@ -66,7 +66,7 @@ jobs:
           rclone sync \
             --config bin/rclone.conf \
             distmd \
-            zt:/zt-dashboard-dev-docs
+            zt:zt-dashboard-dev-docs
       - name: Upload vendored Markdown files to AutoRAG DevDocs bucket
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AUTORAG_DEVDOCS_ACCESS_KEY_ID }}
@@ -75,7 +75,7 @@ jobs:
           rclone sync \
             --config bin/rclone.conf \
             distmd \
-            autorag:/developer-docs-full
+            autorag:developer-docs-full
       - uses: actions/cache/save@v4
         if: always()
         with:
