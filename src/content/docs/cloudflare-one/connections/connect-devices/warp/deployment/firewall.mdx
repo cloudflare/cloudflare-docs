@@ -29,8 +29,6 @@ In [Gateway with DoH](/cloudflare-one/connections/connect-devices/warp/configure
 - IPv6 DoH Addresses: `2606:4700:4700::1111` and `2606:4700:4700::1001`
 
 If your firewall allows traffic only by domain, you may need to explicitly allow `<ACCOUNT_ID>.cloudflare-gateway.com`. Even though `<ACCOUNT_ID>.cloudflare-gateway.com` may resolve to different IP addresses, WARP overrides the resolved IPs with the IPs listed above. To avoid connectivity issues, ensure that the above IPs are permitted through your firewall.
-
-
 ### Android devices
 
 If you are deploying the Cloudflare One Agent on Android/ChromeOS, you must also add `cloudflare-dns.com` to your firewall exception list. On Android/ChromeOS devices, WARP uses `cloudflare-dns.com` to resolve domains on your [Split Tunnel list](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#domain-based-split-tunnels).
