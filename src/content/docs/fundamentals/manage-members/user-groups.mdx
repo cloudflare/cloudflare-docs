@@ -12,9 +12,12 @@ import { Tabs, TabItem } from '~/components';
 User Groups are a collection of [account members](/fundamentals/manage-members/) that are treated equally from an access control perspective. User Groups can be assigned permission policies, with individual members in the group receiving all permissions of the roles assigned to the User Group.
 
 :::note
-If you use the [Cloudflare dashboard SCIM integration](/fundamentals/account/account-security/scim-setup/), you can sync Groups from an upstream Identity Provider via SCIM. This allows you to centralize user and group management at your identity provider.
+User Group permissions are inherited by each member of the group but are not currently reflected in the role field on the **Members** page. To view a member’s full set of permissions, check both:
 
-Additionally, when you manage User Groups with SCIM, you cannot change the name, members, or delete a group through either the Cloudflare dashboard or API.
+- The **Members** page for any directly assigned policies
+- The **Groups** tab to identify which groups the member belongs to, and the policies applied to those groups
+
+Cloudflare is actively working on improving this experience to make inherited and direct permissions easier to view.
 :::
 
 ## Create a User Group manually 
@@ -80,9 +83,16 @@ PAYLOAD
 
 Customers with the SCIM integration configured can sync User Groups from an upstream identity provider to Cloudflare. Cloudflare's SCIM integration requires one external application per account. 
 
+
 :::note
-Cloudflare's SCIM integration requires one external application per account.
+If you use the [Cloudflare dashboard SCIM integration](/fundamentals/account/account-security/scim-setup/), you can sync Groups from an upstream Identity Provider. This allows you to centralize user and group management at your identity provider.
+
+Note that when managing User Groups via SCIM:
+- You cannot change the name, members, or delete the group manually from the Cloudflare dashboard or API. 
+- The integration requires one external SCIM application per Cloudflare account.
+- Cloudflare does not currently support updating user profile fields (`firstName`, `lastName`, or `email`) via SCIM. If those attributes change in your IdP, they will not be updated in Cloudflare. These values are only set during initial provisioning.
 :::
+
 
 To set up a user group with SCIM, refer to the [Provisioning with SCIM guide](/fundamentals/account/account-security/scim-setup/).
 
