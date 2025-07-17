@@ -129,12 +129,12 @@ If a user writes 1,000 objects in R2 **Standard storage** for 1 month with an av
 | Storage                     | (1,000 objects) \* (1 GB per object) = 1,000 GB-months        | 10 GB-months | 990 GB-months     | $14.85      |
 | Class A Operations          | (1,000 objects) \* (1 write per object) = 1,000 writes        | 1 million    | 0                 | $0.00       |
 | Class B Operations          | (1,000 objects) \* (1,000 reads per object) = 1 million reads | 10 million   | 0                 | $0.00       |
-| Data retrieval (processing) | (1,000 objects) \* (1 GB per object) = 1,000 GB               | 0 GB         | None              | $0.00       |
+| Data retrieval (processing) | (1,000 objects) \* (1 GB per object) = 1,000 GB               | NA         | None              | $0.00       |
 | **TOTAL**                   |                                                               |              |                   | **$14.85**  |
 
 ### Infrequent access example
 
-If a user writes 1,000 objects in R2 **Infrequent Access storage** across five days with an average size of 1 GB and reads each object 1,000 times in five days, the estimated cost for the month would be:
+If a user writes 1,000 objects in R2 Infrequent Access storage with an average size of 1 GB, stores them for 5 days, and then deletes them (delete operations are free), and during those 5 days each object is read 1,000 times, the estimated cost for the month would be:
 
 |                             | Usage                                                         | Free Tier    | Billable Quantity | Price       |
 | --------------------------- | ------------------------------------------------------------- | ------------ | ----------------- | ----------- |
