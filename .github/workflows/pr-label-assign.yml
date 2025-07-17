@@ -1,10 +1,13 @@
-name: Label PRs
+name: PR - Label and assign
 
-# **What it does**: Uses the files to label PRs with updated doc areas && size estimates.
+# **What it does**: Labels PRs with size and associated products. Updates assignees to match our CODEOWNERS file.
 # **Why we have it**: Easier scanning of repo PRs && backend reporting on our team's work.
 # **Who does it impact**: PCX team
 
-on: [pull_request_target]
+# https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request_target
+on:
+  pull_request_target:
+    types: [opened, reopened]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -33,6 +36,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/label-size
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    continue-on-error: true
+
+  assign:
+    name: Update assignees
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/assign-pr
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     continue-on-error: true

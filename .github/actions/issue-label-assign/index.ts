@@ -84,7 +84,7 @@ import * as codeOwnersUtils from "codeowners-utils";
 
 		console.log("Assignees added (if present)");
 
-		// Add labels for future reporting
+		// Add "product" labels
 
 		const labelPrefix = "product:";
 		const newLabels = new Set<string>();

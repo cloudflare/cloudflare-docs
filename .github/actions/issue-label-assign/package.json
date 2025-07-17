@@ -1,7 +1,7 @@
 {
 	"private": true,
 	"version": "0.0.0",
-	"name": "assign-issue",
+	"name": "issue-label-assign",
 	"scripts": {
 		"build": "esbuild index.ts --bundle --format=cjs --platform=node --minify --outfile=index.js"
 	},
