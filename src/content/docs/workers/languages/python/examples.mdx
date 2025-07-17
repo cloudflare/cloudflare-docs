@@ -14,9 +14,10 @@ In addition to those examples, consider the following ones that illustrate Pytho
 ## Parse an incoming request URL
 
 ```python
-from workers import Response
+from workers import handler, Response
 from urllib.parse import urlparse, parse_qs
 
+@handler
 async def on_fetch(request, env):
     # Parse the incoming request URL
     url = urlparse(request.url)
@@ -38,8 +39,9 @@ async def on_fetch(request, env):
 ## Parse JSON from the incoming request
 
 ```python
-from workers import Response
+from workers import handle, Response
 
+@handler
 async def on_fetch(request):
     name = (await request.json())["name"]
     return Response(f"Hello, {name}")
@@ -50,10 +52,11 @@ async def on_fetch(request):
 ```python
 # To use the JavaScript console APIs
 from js import console
-from workers import Response
+from workers import handler, Response
 # To use the native Python logging
 import logging
 
+@handler
 async def on_fetch(request):
     # Use the console APIs from JavaScript
     # https://developer.mozilla.org/en-US/docs/Web/API/console
@@ -78,14 +81,11 @@ async def on_fetch(request):
 
 ```python
 from js import Object
-from pyodide.ffi import to_js as _to_js
+import json
 
-from workers import Response
+from workers import handler, Response
 
-# to_js converts between Python dictionaries and JavaScript Objects
-def to_js(obj):
-   return _to_js(obj, dict_converter=Object.fromEntries)
-
+@handler
 async def on_fetch(request, env):
     # Bindings are available on the 'env' parameter
     # https://developers.cloudflare.com/queues/
@@ -94,7 +94,7 @@ async def on_fetch(request, env):
     # We can also pass plain text strings
     await env.QUEUE.send("hello", contentType="text")
     # Send a JSON payload
-    await env.QUEUE.send(to_js({"hello": "world"}))
+    await env.QUEUE.send(json.dumps({"hello": "world"}))
 
     # Return a response
     return Response.json({"write": "success"})
@@ -103,8 +103,9 @@ async def on_fetch(request, env):
 ## Query a D1 Database
 
 ```python
-from workers import Response
+from workers import handler, Response
 
+@handler
 async def on_fetch(request, env):
     results = await env.DB.prepare("PRAGMA table_list").all()
     # Return a JSON response
