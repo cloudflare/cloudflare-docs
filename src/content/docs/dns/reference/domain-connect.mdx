@@ -87,6 +87,20 @@ Use Domain Connect's [linter tool](https://github.com/Domain-Connect/dc-template
 - **Signature**: Required. It also must be the last query parameter.
 - **Key**: Required. You must publish your public key and place it in a DNS TXT record on a domain specified in the template as `syncPubKeyDomain`. To allow for key rotation, the hostname of the TXT record must be appended as another variable on the query string of the form.
 
+### Template definition
+
+- **Service Provider Name**: Will be displayed on the user interface.
+- **Service Name**: Will **not** be displayed on the user interface.
+- **Logo**: If present, will be displayed on the user interface.
+- **Synchronous Block**: Is not supported and will be ignored. Cloudflare only supports the synchronous flow.
+- **Shared**: Is not supported and will be ignored.
+- **Shared Service Name**: Is not supported and will be ignored.
+- **Synchronous Public Key Domain**: Required. Cloudflare only supports the synchronous flow and always checks for signature.
+- **Synchronous Redirect Domains**: Is not supported and will be ignored. Cloudflare looks at the `redirect_uri` provided in the signed apply template url.
+- **Multiple Instance**: Is not supported and will be ignored.
+- **Warn Phishing**: Is not supported and will be ignored.
+- **Host Required**: Is not supported and will be ignored.
+
 ## Template updates
 
 Since September, 2024, template updates are picked up by an automation.
