@@ -87,7 +87,7 @@ const req2 = request(new URL('http://docs.cloudflare.com'),{
 req2.end();
 ```
 
-The following options passed to the `request` method are not supported due to the differences in the Cloudflare Workers and the implementation of the node:http module:
+The following options passed to the `request` method are not supported due to the differences in the Cloudflare Workers and the implementation of the `node:http` module:
 - `maxHeaderSize`
 - `insecureHTTPParser`
 - `createConnection`
