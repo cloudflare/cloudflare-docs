@@ -1224,11 +1224,11 @@ You can configure various aspects of local development, such as the local protoc
 
 - `enable_containers` <Type text="boolean" /> <MetaInfo text="optional" />
 
-  - Whether to build and connect to containers. This requires a Docker daemon to be running. Defaults to `true`.
+  - Whether to enable containers during a local dev session, if they have been configured. Defaults to `true`. If set to `false`, you can develop the rest of your application without requiring Docker or other container tool, as long as you do not invoke any code that interacts with containers. 
 
 - `container_engine` <Type text="string" /> <MetaInfo text="optional" />
 
-  - Either the Docker unix socket i.e. `unix:///var/run/docker.sock` or a full configuration. Note that windows is only supported via WSL at the moment.
+  - Defaults to the default Docker unix socket i.e. `unix:///var/run/docker.sock`. Set this to the socket path your container engine is listening at if you are using another container tool besides Docker, such as `colima`, or if your Docker engine is configured to listen at a custom socket path. You can also set this via the environment variable `WRANGLER_DOCKER_HOST`.
 
 Example:
 
