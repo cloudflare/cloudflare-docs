@@ -38,16 +38,22 @@ cd python-workers-examples/01-hello
 npx wrangler@latest dev
 ```
 
-A Python Worker can be as simple as three lines of code:
+A Python Worker can be as simple as four lines of code:
 
 ```python
-from workers import Response
+from workers import handler, Response
 
+@handler
 def on_fetch(request):
     return Response("Hello World!")
 ```
 
 Similar to Workers written in [JavaScript](/workers/languages/javascript), [TypeScript](/workers/languages/typescript), or [Rust](/workers/languages/rust/), the main entry point for a Python worker is the [`fetch` handler](/workers/runtime-apis/handlers/fetch). In a Python Worker, this handler is named `on_fetch`.
+
+Additionally there is a `@handler` wrapper function used to nativize the on_fetch handler; the inline documentation states:
+> When applied to handlers such as `on_fetch` it will rewrite arguments passed in to native Python
+> types defined in this module. For example, the `request` argument to `on_fetch` gets converted
+> to an instance of the Request class defined in this module.
 
 To run a Python Worker locally, you use [Wrangler](/workers/wrangler/), the CLI for Cloudflare Workers:
 
@@ -74,8 +80,9 @@ Now, we can modify `src/entry.py` to make use of the new module.
 
 ```python
 from hello import hello
-from workers import Response
+from workers import handler, Response
 
+@handler
 def on_fetch(request):
     return Response(hello("World"))
 ```
@@ -93,9 +100,10 @@ Let's try editing the worker to accept a POST request. We know from the
 JSON. In a Python Worker, you would write:
 
 ```python
-from workers import Response
+from workers import handler, Response
 from hello import hello
 
+@handler
 async def on_fetch(request):
     name = (await request.json())["name"]
     return Response(hello(name))
@@ -142,8 +150,9 @@ API_HOST = "example.com"
 Then, you can access the `API_HOST` environment variable via the `env` parameter:
 
 ```python
-from workers import Response
+from workers import handler, Response
 
+@handler
 async def on_fetch(request, env):
     return Response(env.API_HOST)
 ```
