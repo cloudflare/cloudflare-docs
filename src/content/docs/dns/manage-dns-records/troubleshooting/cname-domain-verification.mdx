@@ -18,7 +18,8 @@ Consider the following sections if this is not working correctly for you.
 You may find issues if you have one of the following:
 
 * The `CNAME` record you created for domain verification is set to [**Proxied**](/dns/proxy-status/).
-* The `CNAME` record is correctly set to DNS only (not proxied), but your zone has [**Flatten all CNAMEs**](/dns/cname-flattening/set-up-cname-flattening/#for-all-cname-records) option enabled.
+* The `CNAME` record is correctly set to DNS only (not proxied) but, in your [zone settings](https://dash.cloudflare.com/?to=/:account/:zone/dns/settings), [**CNAME flattening for all CNAME records**](/dns/cname-flattening/set-up-cname-flattening/#for-all-cname-records) is enabled.
+* The `CNAME` record is correctly set to DNS only (not proxied) but CNAME flattening is [enabled for that record specifically](/dns/cname-flattening/set-up-cname-flattening/#per-record).
 
 ## Solution
 
