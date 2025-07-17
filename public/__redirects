@@ -1021,7 +1021,7 @@
 /magic-wan/tutorials/pfsense/ /magic-wan/configuration/manually/third-party/pfsense/ 301
 /magic-wan/tutorials/sophos-firewall/ /magic-wan/configuration/manually/third-party/sophos-firewall/ 301
 /magic-wan/tutorials/warp/ /magic-wan/zero-trust/warp/ 301
-/magic-wan/how-to/run-tunnel-health-checks/ /magic-wan/configuration/common-settings/tunnel-health-checks/ 301
+/magic-wan/how-to/run-tunnel-health-checks/ /magic-wan/configuration/common-settings/update-tunnel-health-checks-frequency/ 301
 /magic-wan/get-started/configure-tunnels/ /magic-wan/configuration/manually/how-to/configure-tunnel-endpoints/ 301
 /magic-wan/configuration/connector/configure-connector/ /magic-wan/configuration/connector/configure-hardware-connector/ 301
 /magic-wan/configuration/connector/device-information/ /magic-wan/configuration/connector/reference/ 301
