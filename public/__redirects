@@ -967,10 +967,16 @@
 /logs/reference/logpush-api-configuration/ /logs/get-started/api-configuration/ 301
 /logs/reference/logpush-api-configuration/filters/ /logs/reference/filters/ 301
 # Non-slashed version is being used in the Cloudflare dashboard
-/logs/reference/logpush-api-configuration/examples/example-logpush-curl/ /logs/tutorials/examples/example-logpush-curl/ 301
+/logs/reference/logpush-api-configuration/examples/example-logpush-curl/ /logs/logpush/examples/example-logpush-curl/ 301
 /logs/log-explorer/ /log-explorer/log-search/ 301
 /logs/reference/glossary/ /logs/glossary/ 301
 /logs/about/ /logs/logpush/ 301
+/logs/tutorials/ /logs/logpush/ 301 
+/logs/tutorials/parsing-json-log-data/ /logs/logpush/parsing-json-log-data/ 301
+/logs/tutorials/examples/ /logs/logpush/examples/ 301
+/logs/tutorials/examples/example-logpush-curl/ /logs/logpush/examples/example-logpush-curl/ 301
+/logs/tutorials/examples/example-logpush-python/ /logs/logpush/examples/example-logpush-python/ 301
+
 
 # magic-firewall
 /magic-firewall/reference/examples/ /magic-firewall/how-to/add-rules/ 301
