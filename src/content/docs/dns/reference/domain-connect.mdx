@@ -4,8 +4,7 @@ title: Domain Connect
 sidebar:
   order: 5
 head: []
-description: Learn how to onboard your templates to use Domain Connect with
-  Cloudflare as DNS provider.
+description: Learn how to onboard your templates to use Domain Connect with Cloudflare as DNS provider.
 
 ---
 
@@ -32,7 +31,10 @@ Domain Connect templates are published and maintained on a GitHub repository.
 
 1. Create a fork of the [templates repository](https://github.com/Domain-Connect/Templates).
 2. Add your template. You can create a copy of one of the existing templates and edit it according to your needs.
-   * Refer to the [Domain Connect Specification](https://github.com/Domain-Connect/spec/blob/master/Domain%20Connect%20Spec%20Draft.adoc#52-template-definition) for details on the different available fields.
+   * Refer to the [Domain Connect Specification](https://github.com/Domain-Connect/spec/blob/master/Domain%20Connect%20Spec%20Draft.adoc) for details on the different available fields.
+	 :::note
+	 Not all properties and fields are supported by Cloudflare, and some will be mandatory for onboarding your template. Refer to the [supported properties](#supported-properties) section below for details.
+	 :::
    * If present, you must set the `syncBlock` field on your template to `false`. This means the template flow will be synchronous, which is the only option supported by Cloudflare.
    * You must also provide a synchronous public key domain (`syncPubKeyDomain` [^1]). When your template is in use, synchronous calls will be digitally signed.
 3. Make sure you follow the naming format defined by Domain Connect: `<providerId>.<serviceId>.json`.
@@ -63,6 +65,16 @@ Send an email to `domain-connect@cloudflare.com`, including the following inform
 4. (Optional) A Cloudflare [account ID](/fundamentals/account/find-account-and-zone-ids/) for you to test the flow.
 
    If you have a [DNS provider discovery](https://github.com/Domain-Connect/spec/blob/master/Domain%20Connect%20Spec%20Draft.adoc#dns-provider-discovery) automation in place and will not list new DNS providers manually, Cloudflare can initially restrict your template to be exposed to the specified account only. Once you confirm everything is working as expected, Cloudflare will publish your template on the discovery endpoint, to be picked up by your automation.
+
+## Supported properties
+
+In the [Domain Connect Specification](https://github.com/Domain-Connect/spec/blob/master/Domain%20Connect%20Spec%20Draft.adoc) you will find the following properties:
+
+- Properties that you can use with your [apply template URL](https://github.com/Domain-Connect/spec/blob/master/Domain%20Connect%20Spec%20Draft.adoc#apply-template).
+- Properties for [defining the template itself](https://github.com/Domain-Connect/spec/blob/master/Domain%20Connect%20Spec%20Draft.adoc#template-definition).
+- Properties for defining the individual [DNS records](https://github.com/Domain-Connect/spec/blob/master/Domain%20Connect%20Spec%20Draft.adoc#template-record).
+
+While most of these are supported by Cloudflare, some are required and others are not supported. Below is what you need to know when creating your Domain Connect templates to use with Cloudflare.
 
 ## Template updates
 
