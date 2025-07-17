@@ -1,0 +1,22 @@
+---
+import StarlightPage, {
+	type StarlightPageProps,
+} from "@astrojs/starlight/components/StarlightPage.astro";
+import FourOhFour from "~/components/404.astro";
+
+const props = {
+	frontmatter: {
+		title: "404 - Page Not Found",
+		template: "splash",
+		editUrl: false,
+		feedback: false,
+		noindex: true,
+	},
+	hideTitle: true,
+	hideBreadcrumbs: true,
+} as StarlightPageProps;
+---
+
+<StarlightPage {...props}>
+	<FourOhFour />
+</StarlightPage>

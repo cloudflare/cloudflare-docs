@@ -14,23 +14,32 @@ The `ResourcesBySelector` component allows you to pull in documentation resource
 import { ResourcesBySelector } from "~/components";
 
 <ResourcesBySelector
-	tags={["AI"]}
-	types={["reference-architecture","design-guide","reference-architecture-diagram"]}
+	directory="workers/examples/"
+	types={["example"]}
+	filterables={["languages", "tags"]}
 />
 ```
 
 ### Inputs
 
+- `directory` <Type text="string" />
+
+  The directory to search for resources in, relative to `src/content/docs/`. For example, for Workers tutorials, `directory="workers/tutorials/"`.
+
+- `filterables` <Type text="string[]" />
+
+  An array of frontmatter properties to show in the frontend filter dropdown. For example, `filterables={["languages", "tags"]}` will allow users to filter based on each pages `languages` and `tags` frontmatter.
+
 - `types` <Type text="string[]" />
 
-	An array of `pcx_content_type` values to filter by.
+  An array of `pcx_content_type` values to filter which content gets pulled into the component. For example, `types={["example"]}`.
 
 - `tags` <Type text="string[]" /> <MetaInfo text="optional" />
 
-	An array of `tags` values to filter by.
+  An array of `tags` values to filter which content gets pulled into the component. For example, `tags={["AI"]}`.
 
-	To see a list of the available tags, and which pages are associated with them, refer to [this list](/style-guide/frontmatter/tags/).
+  To see a list of the available tags, and which pages are associated with them, refer to [this list](/style-guide/frontmatter/tags/).
 
 - `products` <Type text="string[]" /> <MetaInfo text="optional" />
 
-	An array of `products` values to filter by.
+  An array of `products` values to filter which content gets pulled into the component. For example, `products={["D1"]}`.

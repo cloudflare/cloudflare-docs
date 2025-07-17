@@ -44,3 +44,27 @@ You may prefer to set up your own code watchers and reloading mechanisms, or mou
 into the local container images to sync code changes. This can be done, but there is no built-in
 mechanism for doing so in Wrangler, and best-practices will depend on the languages and frameworks
 you are using in your container code.
+
+## Troubleshooting
+
+### Exposing Ports
+
+In production, all of your container's ports will be accessible by your Worker,
+so you do not need to specifically expose ports using the [`EXPOSE` instruction](https://docs.docker.com/reference/dockerfile/#expose) in your Dockerfile.
+
+But for local development you will need to declare any ports you need to access in your Dockerfile with the EXPOSE instruction; for example: `EXPOSE 4000`, if you will be accessing port 4000.
+
+If you have not exposed any ports, you will see the following error in local development:
+
+```txt
+The container "MyContainer" does not expose any ports. In your Dockerfile, please expose any ports you intend to connect to.
+```
+
+And if you try to connect to any port that you have not exposed in your `Dockerfile` you will see the following error:
+
+```txt
+connect(): Connection refused: container port not found. Make sure you exposed the port in your container definition.
+```
+
+You may also see this while the container is starting up and no ports are available yet. You should retry until the ports become available.
+This retry logic should be handled for you if you are using the [containers package](https://github.com/cloudflare/containers/tree/main/src).

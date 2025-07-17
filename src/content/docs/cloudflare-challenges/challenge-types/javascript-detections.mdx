@@ -2,7 +2,7 @@
 ---
 type: overview
 pcx_content_type: reference
-title: JavaScript detections
+title: JavaScript Detections
 sidebar:
   order: 3
 ---
@@ -11,27 +11,77 @@ import { Render, Tabs, TabItem } from "~/components"
 
 <Render file="javascript-detections-definition" />
 
-## Enable JavaScript detections
+<Render file="javascript-detections-process" />
 
-For Bot Fight Mode customers, JavaScript detections are automatically enabled and cannot be disabled.
+Refer to the steps below to enable and enforce JavaScript Detections.
 
-For Super Bot Fight Mode and Bot Management for Enterprise customers, JavaScript detections are optional.
+## 1. Enable JavaScript Detections
+
+For Bot Fight Mode customers, JavaScript Detections is automatically enabled and cannot be disabled.
+
+For Super Bot Fight Mode and Bot Management for Enterprise customers, JavaScript Detections is optional.
 
 <Render file="javascript-detections-enable" />
 
 For more details on how to set up bot protection, refer to the [Bots documentation](/bots/get-started/).
 
-## Enforcing execution of JavaScript detections
+## 2. Enforce execution of JavaScript Detections
 
 <Render file="javascript-detections-implementation" />
 
-<Render file="cf-clearance-cookie" />
+Refer to the [WAF documentation](/waf/custom-rules/create-dashboard/) for more information on creating a custom rule.
+
+## API
+
+If you enable JavaScript Detections via the dashboard, Cloudflare will insert a script tag in all HTML pages served on your website. If you would prefer to limit where JavaScript Detections is served, you can do so with the JavaScript Detections API script.
+
+The JavaScript Detections API allows you more granular control over when and where JavaScript Detections is injected on your website, as well as an option for callback handling (for logging or other additional actions). 
+
+You can explicitly add a script reference to `/cdn-cgi/challenge-platform/scripts/jsd/api.js` and your own code calling `window.cloudflare.jsd.executeOnce` on specific HTML pages of your website.
+
+:::caution
+It is not recommended to combine both approaches (zone-wide toggle and the manual injection). If you want to selectively deploy JavaScript Detections only on certain pages, disable JavaScript Detections via the Cloudflare dashboard and use the JavaScript Detections API exclusively.
+:::
+
+The following script must be added to every page that you wish to have JavaScript Detections enabled:
+
+```js wrap
+<script>
+ 
+function jsdOnload(){
+  window.cloudflare.jsd.executeOnce(
+    {
+      callback: function(result){
+        console.log('jsd outcome', result);
+    }
+  );
+}
+</script>
+<script src="/cdn-cgi/challenge-platform/scripts/jsd/api.js?onload=jsdOnload" async>
+```
+
+:::note
+`result` = `success` or `error` only refers to the execution of JavaScript Detections. It does not indicate whether a visitor is a human or a bot. 
+:::
+
+## Considerations
+
+JavaScript Detections does not guarantee a specific bot score.
+
+- If the JavaScript Detections injection or execution fails and `cf.bot_management.js_detection.passed` = `false`, a separate Bot Management heuristic can still yield a `1` or higher bot score, independent of JavaScript Detections. 
+- If the JavaScript Detections passes, the final bot score may still be `1` due to other detection heuristics (for example, known malicious IP, signature detection, and more), resulting in `js_detection.passed` = `true`, but `score` = `1`. 
 
 ## Limitations
 
 ### If you enabled Bot Management before June 2020
 
-Customers who enabled Enterprise Bot Management before June 2020 do not have JavaScript detections enabled by default (unless specifically requested). These customers can still enable the feature in the Cloudflare dashboard.
+Customers who enabled Enterprise Bot Management before June 2020 do not have JavaScript Detections enabled by default (unless specifically requested). These customers can still enable the feature in the Cloudflare dashboard.
+
+### If it is the first request to your website
+
+The first request from a new client to your website or application will generally not have JavaScript Detections data (`cf.bot_management.js_detection.passed` = `false`). This is because Cloudflare needs at least one HTML request before injecting JavaScript Detection and issuing the `cf_clearance` cookie. 
+
+Subsequent requests can include a `cf_clearance` cookie if JavaScript ran successfully.
 
 ### If you have a Content Security Policy (CSP)
 
@@ -39,7 +89,7 @@ Customers who enabled Enterprise Bot Management before June 2020 do not have Jav
 
 :::caution[Warning]
 
-JavaScript detections are not supported with `nonce` set via `<meta>` tags. 
+JavaScript Detections is not supported with `nonce` set via `<meta>` tags. 
 :::
 
 ### If you have ETags

@@ -4,8 +4,8 @@ releaseNotes: >-
 
   **Changes and improvements**
 
-  - Improved command line interface for Access for Infrastructure
-  with added function for filtering and ordering.
+  - Improved command line interface for Access for Infrastructure with added
+  function for filtering and ordering.
 
   - Fixed client connectivity issues when switching between managed network
   profiles that use different WARP protocols.
@@ -27,3 +27,13 @@ releaseDate: 2025-03-13T17:13:33.600Z
 packageURL: https://downloads.cloudflareclient.com/v1/download/noble-intel/version/2025.2.459.1
 packageSize: 44462470
 platformName: Linux
+linuxPlatforms:
+  noble-intel: 44462470
+  buster-intel: 44952080
+  focal-intel: 44913046
+  fedora34-intel: 47124791
+  fedora35-intel: 46859092
+  jammy-intel: 44575658
+  centos8-intel: 46730316
+  bookworm-intel: 44577042
+  bullseye-intel: 44883128

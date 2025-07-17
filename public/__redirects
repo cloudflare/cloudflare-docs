@@ -516,6 +516,7 @@
 /cloudflare-one/email-security/setup/post-delivery-deployment/api/office365-api/ /cloudflare-one/email-security/setup/post-delivery-deployment/api/m365-api/ 301
 /cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/journaling-setup/office365-journaling/ /cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/journaling-setup/m365-journaling/ 301
 /cloudflare-one/email-security/setup/pre-delivery-deployment/prerequisites/microsoft365-email-security-mx/ /cloudflare-one/email-security/setup/pre-delivery-deployment/prerequisites/m365-email-security-mx/ 301
+/cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/journaling-setup/manage-domains/ /cloudflare-one/email-security/setup/manage-domains/ 301
 
 # firewall
 /firewall/api/cf-lists/ /waf/tools/lists/lists-api/ 301
@@ -956,7 +957,6 @@
 /logs/log-fields/ /logs/reference/log-fields/ 301
 /logs/logpull-api/ /logs/logpull/ 301
 /logs/logpull-api/requesting-logs/ /logs/logpull/requesting-logs/ 301
-/logs/logpush/ /logs/about/ 301
 /logs/logpush/aws-s3/ /logs/get-started/enable-destinations/aws-s3/ 301
 /logs/logpush/azure/ /logs/get-started/enable-destinations/azure/ 301
 /logs/logpush/google-cloud-storage/ /logs/get-started/enable-destinations/google-cloud-storage/ 301
@@ -967,8 +967,16 @@
 /logs/reference/logpush-api-configuration/ /logs/get-started/api-configuration/ 301
 /logs/reference/logpush-api-configuration/filters/ /logs/reference/filters/ 301
 # Non-slashed version is being used in the Cloudflare dashboard
-/logs/reference/logpush-api-configuration/examples/example-logpush-curl/ /logs/tutorials/examples/example-logpush-curl/ 301
+/logs/reference/logpush-api-configuration/examples/example-logpush-curl/ /logs/logpush/examples/example-logpush-curl/ 301
 /logs/log-explorer/ /log-explorer/log-search/ 301
+/logs/reference/glossary/ /logs/glossary/ 301
+/logs/about/ /logs/logpush/ 301
+/logs/tutorials/ /logs/logpush/ 301 
+/logs/tutorials/parsing-json-log-data/ /logs/logpush/parsing-json-log-data/ 301
+/logs/tutorials/examples/ /logs/logpush/examples/ 301
+/logs/tutorials/examples/example-logpush-curl/ /logs/logpush/examples/example-logpush-curl/ 301
+/logs/tutorials/examples/example-logpush-python/ /logs/logpush/examples/example-logpush-python/ 301
+
 
 # magic-firewall
 /magic-firewall/reference/examples/ /magic-firewall/how-to/add-rules/ 301
@@ -1004,7 +1012,7 @@
 # magic-wan
 /magic-wan/tutorials/ipsec/ /magic-wan/reference/tunnels/#ipsec-tunnels 301
 /magic-wan/how-to/configure-tunnels/ /magic-wan/configuration/manually/how-to/configure-tunnels/ 301
-/magic-wan/about/ /magic-wan/reference/ 301
+/magic-wan/about/ /magic-wan/get-started/ 301
 /magic-wan/about/traffic-steering/ /magic-wan/reference/traffic-steering/ 301
 /magic-wan/how-to/ipsec/ /magic-wan/reference/tunnels/#ipsec-tunnels 301
 /magic-wan/partners/aruba-edgeconnect/ /magic-wan/configuration/manually/third-party/aruba-edgeconnect/ 301
@@ -1022,7 +1030,6 @@
 /magic-wan/configuration/manually/how-to/view-analytics/ /magic-wan/analytics/ 301
 /magic-wan/configuration/common-settings/view-analytics/ /magic-wan/analytics/ 301
 /magic-wan/prerequisites/ /magic-wan/get-started/ 301
-/magic-wan/configuration/common-settings/check-tunnel-health-dashboard/ /magic-wan/configuration/common-settings/tunnel-health-checks/ 301
 /magic-wan/configuration/manually/how-to/configure-static-routes/ /magic-wan/configuration/manually/how-to/configure-routes/ 301
 /magic-wan/configuration/manually/how-to/bgp-peering/ /magic-wan/configuration/manually/how-to/configure-routes/ 301
 
@@ -1311,6 +1318,18 @@
 /stream/reference/faq/ /stream/faq/ 301
 /stream/platform/ /stream/changelog/ 301
 /stream/reference/ /stream/faq/ 301
+
+# style guide
+
+/docs-guide/ /style-guide/how-we-docs/ 301
+/docs-guide/manage-content/ /style-guide/how-we-docs/ 301
+/docs-guide/manage-content/automation/ /style-guide/how-we-docs/ 301
+/docs-guide/manage-content/automation/process/ /style-guide/how-we-docs/ 301
+/docs-guide/manage-content/redirects/ /style-guide/how-we-docs/redirects/ 301
+/docs-guide/manage-content/redirects/best-practices/ /style-guide/how-we-docs/redirects/ 301
+/docs-guide/manage-content/redirects/process/ /style-guide/how-we-docs/redirects/ 301
+/docs-guide/manage-content/metadata/ /style-guide/how-we-docs/metadata/ 301
+/docs-guide/manage-content/metadata/process/ /style-guide/how-we-docs/metadata/ 301
 
 # support
 
@@ -2166,6 +2185,7 @@
 /cloudflare-one/policies/browser-isolation/agentless/* /cloudflare-one/policies/browser-isolation/setup/:splat 301
 /cloudflare-one/policies/filtering/http-policies/data-loss-prevention/* /cloudflare-one/policies/data-loss-prevention/ 301
 /cloudflare-one/policies/data-loss-prevention/configuration-guides/* /cloudflare-one/policies/data-loss-prevention/dlp-policies/common-policies/ 301
+/cloudflare-one/policies/data-loss-prevention/datasets/* /cloudflare-one/policies/data-loss-prevention/detection-entries/:splat 301
 
 # Learning paths
 

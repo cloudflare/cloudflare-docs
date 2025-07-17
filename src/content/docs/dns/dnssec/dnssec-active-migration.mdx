@@ -60,23 +60,21 @@ The provider you are migrating from must allow you to add DNSKEY records on the 
 
 You can do this [on the dashboard](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records) or through the [Create DNS Record endpoint](/api/resources/dns/subresources/records/methods/create/), as in the following example.
 
-```bash
-curl https://api.cloudflare.com/client/v4/zones/{zone_id}/dns_records \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json" \
---data '{
-    "type": "DNSKEY",
-    "name": "<ZONE_NAME>",
-    "data": {
-      "flags": 256,
-      "protocol": 3,
-      "algorithm": 13,
-      "public_key": "<PUBLIC_KEY>"
-    },
-    "ttl":3600
-   }'
-```
+<APIRequest
+	path="/zones/{zone_id}/dns_records"
+	method="POST"
+	json={{
+  "type": "DNSKEY",
+  "name": "<ZONE_NAME>",
+  "data": {
+    "flags": 256,
+    "protocol": 3,
+    "algorithm": 13,
+    "public_key": "<PUBLIC_KEY>"
+  },
+  "ttl": 3600
+}}
+/>
 
 2. Get Cloudflare's ZSK using either the API or a query from one of the assigned Cloudflare nameservers.
 

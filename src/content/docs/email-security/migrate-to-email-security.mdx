@@ -33,6 +33,10 @@ Once you have added new account members, you will have to assign each member an 
 
 ## Create webhooks
 
+:::note
+Starting from October 2025, Area 1 webhooks will be visible in Zero Trust Email Security, but non-configurable. Use [Logpush](/cloudflare-one/insights/logs/enable-logs/#enable-user-action-logs) to create new webhooks or configure webhooks.
+:::
+
 In Area 1, you can [create alert webhooks](/email-security/email-configuration/domains-and-routing/alert-webhooks/#create-an-alert-webhook).
 
 In Zero Trust Email Security, webhooks are instead referred to as logs. You can enable [detection logs](/cloudflare-one/insights/logs/enable-logs/#enable-detection-logs) and/or [user action logs](/cloudflare-one/insights/logs/enable-logs/#enable-user-action-logs). Additionally, you can enable [Outbound Data Loss Prevention](/cloudflare-one/email-security/outbound-dlp/) to protect sensitive information in outbound emails.
@@ -47,7 +51,17 @@ In Email Security, you can:
 - Go to [Cloudflare Status API](https://www.cloudflarestatus.com/api) to view status information for the API documentation and functionality.
 - Configure [Cloudflare Notifications](/notifications/get-started/).
 
+## Email alerts
+
+In Area 1, you receive daily or weekly updates of the number of emails dispositioned.
+
+In Email Security, you can view [email monitoring](/cloudflare-one/email-security/email-monitoring/) over the last 90, 30, 7, 3, 1 day(s).
+
 ## Contact support
+
+:::note
+Starting from October 2025, we will no longer receive support requests via email to any `@area1security.com` address. We will transition to receiving support requests from the Cloudflare dashboard.
+:::
 
 In Area 1, you can reach out to support via the following email addresses:
 
@@ -62,6 +76,8 @@ In Email Security, you can:
   - What type of question do you have? **Technical - Other Products**
   - In what area can we help you? **Email Security**
 - Email phishguard@area1security.com (for PhishGuard customers only).
+
+If you are PhishGuard customer, you will be informed when you can start raising PhishGuard tickets in the Cloudflare dashboard. 
 
 ## Search emails
 
@@ -120,3 +136,13 @@ In Email Security, this feature is known as [impersonation registry](/cloudflare
 In Area 1, you can [integrate directories](/email-security/email-configuration/enhanced-detections/business-email-compromise/#integrating-a-directory) in your email provider.
 
 In Email Security, you can add and sync [directories](/cloudflare-one/email-security/directories/).
+
+## API
+
+:::note
+Area 1 API endpoints will deprecate on December 18, 2025. Use the [Email Security API](https://developers.cloudflare.com/api/resources/email_security/) endpoints to prevent interruption to your normal operations.
+:::
+
+To access Area 1 API, go to the [API Documentation](https://developers.cloudflare.com/email-security/static/api_documentation_1.38.1.pdf). You can set up a [service account](https://developers.cloudflare.com/email-security/api/service-accounts/) to configure API tokens.
+
+To access Email Security API, go to [Email Security API](https://developers.cloudflare.com/api/resources/email_security/). You can set up an [API token](/fundamentals/api/get-started/create-token/) to use the Email Security API.

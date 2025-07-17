@@ -123,7 +123,8 @@ Ensure that only **Allow** or **Block** policies are present. **Bypass** and **S
 19. Select **Save**.
 
 ## 5. (Recommended) Modify order of precedence in Gateway
-<Render file="access/modify-gateway-policy-precedence" product="cloudflare-one" params={{ selector: "Access Infrastructure Target" }} />
+
+<Render file="access/modify-gateway-policy-precedence" product="cloudflare-one" params={{ selector: "Access Infrastructure Target", protocol: "rdp" }} />
 
 ## 6. Connect as a user
 
@@ -216,7 +217,7 @@ Cloudflare will not configure user identifiers on the RDP target. Any user ident
 ## Known limitations
 
 - **TLS certificate verification**: Cloudflare uses TLS to connect to the RDP target but does not verify the origin TLS certificate.
-- **WARP authentication**: Users cannot authenticate to RDP targets using their [WARP session identity](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-sessions/#configure-warp-sessions-in-access).
+- **WARP authentication**: Since browser-based RDP traffic does not go through the WARP client, users cannot use their [WARP session identity](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-sessions/#configure-warp-sessions-in-access) to authenticate.
 - **Audio over RDP**: Users cannot use their microphone and speaker to interact with the remote machine.
 - **Clipboard controls**: Admins do not have the ability to restrict copy/paste actions between the remote machine and the user's local clipboard.
 - **File transfers**: Users cannot copy/paste files from their local machine to the remote machine and vice versa.

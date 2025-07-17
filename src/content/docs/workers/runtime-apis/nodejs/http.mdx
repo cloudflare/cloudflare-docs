@@ -1,0 +1,125 @@
+---
+pcx_content_type: configuration
+title: http
+---
+
+import { Render } from "~/components"
+
+<Render file="nodejs-compat-howto" />
+
+## Agent
+
+An implementation of the Node.js [`http.Agent'](https://nodejs.org/docs/latest/api/http.html#class-httpagent) class.
+
+An [Agent](https://nodejs.org/docs/latest/api/http.html#class-httpagent) manages HTTP connection reuse by maintaining request queues per host/port. In the
+workers environment, however, such low-level management of the network connection, ports,
+etc, is not relevant because it is handled by the Cloudflare infrastructure instead. Accordingly, the
+implementation of `Agent` in Workers is a stub implementation that does not support connection
+pooling or keep-alive.
+
+```js
+import { Agent } from 'node:http';
+import { strictEqual } from 'node:assert';
+
+const agent = new Agent();
+strictEqual(agent.protocol, 'http:');
+```
+
+## get
+
+An implementation of the Node.js [`http.get`](https://nodejs.org/docs/latest/api/http.html#httpgetoptions-callback) method.
+
+The `get` method performs a GET request to the specified URL and invokes the callback with the response. It's a convenience method that simplifies making HTTP GET requests without manually configuring request options.
+
+```js
+import { get } from 'node:http';
+import { strictEqual, ok } from 'node:assert';
+
+get('http://docs.cloudflare.com/robots.txt', (res) => {
+	// requests to http://docs.cloudflare.com get redirected to their https counterpart.
+	strictEqual(res.statusCode, 301);
+	let data = '';
+	res.setEncoding('utf8');
+	res.on('data', (chunk) => {
+		data += chunk;
+	});
+	res.on('end', () => {
+		ok(data.includes('301 Moved Permanently'));
+	});
+});
+```
+
+## request
+
+An implementation of the Node.js [`http.request'](https://nodejs.org/docs/latest/api/http.html#httprequesturl-options-callback) method.
+
+The `request` method creates an HTTP request with customizable options like method, headers, and body. It provides full control over the request configuration and returns a [writable stream](https://nodejs.org/docs/latest/api/stream.html#class-streamwritable) for sending request data.
+
+```js
+import { request } from 'node:http';
+import { strictEqual } from 'node:assert';
+
+const req = request({
+	method: 'GET',
+	protocol: 'http:',
+	hostname: 'docs.cloudflare.com',
+	path: '/'
+}, (res) => {
+	// requests to http://docs.cloudflare.com get redirected to their https counterpart.
+	strictEqual(res.statusCode, 301);
+
+	let data = '';
+	res.setEncoding('utf8');
+	res.on('data', (chunk) => {
+		data += chunk;
+	});
+	res.on('end', () => {
+		ok(data.includes('301 Moved Permanently'));
+	});
+});
+req.end();
+```
+
+```js
+const req = request(new URL('http://docs.cloudflare.com'),{
+	method: 'GET',
+}, (res) => {
+	// requests to http://docs.cloudflare.com get redirected to their https counterpart.
+	strictEqual(res.statusCode, 301);
+});
+
+req.end();
+```
+
+The following options passed to the `request` method are not supported due to the differences in the Cloudflare Workers and the implementation of the `node:http` module:
+- `maxHeaderSize`
+- `insecureHTTPParser`
+- `createConnection`
+- `lookup`
+- `socketPath`
+
+## OutgoingMessage
+
+The [`OutgoingMessage`](https://nodejs.org/docs/latest/api/http.html#class-httpoutgoingmessage) class represents an HTTP response that is sent to the client. It provides methods for writing response headers and body, as well as for ending the response. `OutgoingMessage` extends from the [`Writable` stream class](https://nodejs.org/docs/latest/api/stream.html#class-streamwritable).
+
+```js
+import { OutgoingMessage } from 'node:http';
+
+const res = new OutgoingMessage();
+res.writeHead(200, { 'Content-Type': 'text/plain' });
+res.write('Hello, World!');
+res.end();
+```
+## IncomingMessage
+
+The `IncomingMessage` class represents an HTTP request that is received from the client. It provides methods for reading request headers and body, as well as for ending the request. `IncomingMessage` extends from the `Readable` stream class.
+
+```js
+import { get, IncomingMessage } from 'node:http';
+import { ok, strictEqual } from 'node:assert';
+
+get('http://docs.cloudflare.com', (res) => {
+	strictEqual(res.statusCode, 301);
+	ok(res instanceof IncomingMessage);
+});
+```

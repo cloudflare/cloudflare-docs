@@ -47,17 +47,21 @@ There are a couple of common reasons to change the Cache Key Template. You might
 
 ### Impact of SSL settings on Cache behavior
 
-The `$scheme` refers to the protocol (HTTP or HTTPS) sent to your origin web server, not the protocol received from the visitor. Therefore, setting the Cloudflare [SSL option](/ssl/origin-configuration/ssl-modes/) influences caching decisions. For example, when using [Flexible SSL](/ssl/origin-configuration/ssl-modes/flexible/), Cloudflare only attempts to connect to your origin web server via HTTP. This means that Cloudflare serves the same cached resource for visitor requests via either HTTP or HTTPS, since Flexible SSL instructs Cloudflare to connect to an origin solely over HTTP.
+Cloudflare's `$scheme` variable plays a key role in caching behavior, but its meaning varies depending on the cache key type:
 
-It is important to understand how SSL setting changes affect the cache:
+- **Default Cache Key**: `$scheme` refers to the **origin scheme** — the protocol Cloudflare uses to connect to your origin server (HTTP or HTTPS). In this configuration, changes to your SSL settings (for example, switching from Flexible to Full) alter the origin scheme. Because the cache key includes the origin scheme, such changes trigger a cache bust, requiring Cloudflare to fetch content again from the origin.
 
-- Switching from **Off** to **Full**, **Full (strict)**, or **Strict** will change the origin scheme from HTTP to HTTPS. This results in a cache bust, meaning the cached content becomes invalid and needs to be re-fetched from the origin server.
+- **Custom Cache Key**: `$scheme` refers to the **visitor's scheme** — the protocol used by the client making the request to Cloudflare. In this case, SSL setting changes do not impact the cache key unless the origin scheme is explicitly included in your custom configuration.
 
-- Transitioning from **Flexible** to **Full**, **Full (strict)**, or **Strict** changes the origin scheme from HTTP to HTTPS, causing a cache bust.
+For example, with Flexible SSL, Cloudflare always connects to the origin over HTTP, regardless of whether the visitor uses HTTP or HTTPS. This results in the same cache key for both protocols under the default configuration.
 
-- Downgrading from **Full**, **Full (strict)**, or **Strict** to **Flexible** or **Off** changes the origin scheme from HTTPS to HTTP, resulting in a cache bust.
+Be aware that changes in the SSL setting can lead to cache invalidation when using the default cache key:
 
-This behavior is important to consider when adjusting SSL settings, as any change in the origin scheme (HTTP to HTTPS or vice versa) triggers a cache reset.
+- Switching from **Off** to **Full**, **Full (strict)**, or **Strict** updates the origin scheme from HTTP to HTTPS, resulting in a cache bust.
+
+- Moving from **Flexible** to **Full**, **Full (strict)**, or **Strict** similarly changes the origin scheme to HTTPS and causes a cache bust.
+
+Understanding how `$scheme` interacts with your caching configuration is essential when modifying SSL modes to avoid unexpected cache behavior.
 
 ### Cache Level: Ignore Query String
 

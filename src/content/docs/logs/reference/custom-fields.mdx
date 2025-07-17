@@ -5,6 +5,8 @@ sidebar:
   order: 43
 ---
 
+import { APIRequest } from "~/components";
+
 The HTTP requests dataset includes most standard log information by default. However, if you need to capture additional request or response headers or cookies, you can use custom fields to tailor the logs to your specific needs
 
 Custom fields are configured per zone and, once set up, are enabled for all Logpush jobs in that zone that use the HTTP requests dataset and include the request headers, response headers, or cookie fields. You can log these fields in their raw form or as transformed values.
@@ -72,28 +74,27 @@ Perform the following steps to create the rule:
 
 1. Use the [List existing rulesets](/ruleset-engine/rulesets-api/view/#list-existing-rulesets) operation to check if there is already a ruleset for the `http_log_custom_fields` phase at the zone level (you can only have one zone ruleset per phase):
 
-   ```bash
-   curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets \
-   --header "X-Auth-Email: <EMAIL>" \
-   --header "X-Auth-Key: <API_KEY>"
-   ```
+<APIRequest
+  path="/zones/{zone_id}/rulesets"
+  method="GET"
+  roles={false}
+/>
 
    If there is a ruleset for the `http_log_custom_fields` phase at the zone level, take note of the ruleset ID.
 
 2. (Optional) If the response did not include a ruleset with `"kind": "zone"` and `"phase": "http_log_custom_fields"`, create the phase entry point ruleset using the [Create ruleset](/ruleset-engine/rulesets-api/create/) operation:
 
-   ```bash
-   curl https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets \
-   --header "X-Auth-Email: <EMAIL>" \
-   --header "X-Auth-Key: <API_KEY>" \
-   --header "Content-Type: application/json" \
-   --data '{
-     "name": "Zone-level phase entry point",
-     "kind": "zone",
-     "description": "This ruleset configures custom log fields.",
-     "phase": "http_log_custom_fields"
-   }'
-   ```
+<APIRequest
+  path="/zones/{zone_id}/rulesets"
+  method="POST"
+  json={{
+    name: "Zone-level phase entry point",
+    kind: "zone",
+    description: "This ruleset configures custom log fields.",
+    phase: "http_log_custom_fields"
+  }}
+  roles={false}
+/>
 
    Take note of the ruleset ID included in the response.
 
@@ -101,43 +102,41 @@ Perform the following steps to create the rule:
 
    The following example configures custom fields with the names of the HTTP request headers, HTTP response headers, and cookies you wish to include in Logpush logs:
 
-   ```bash
-   curl --request PUT \
-   https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}} \
-   --header "X-Auth-Email: <EMAIL>" \
-   --header "X-Auth-Key: <API_KEY>" \
-   --header "Content-Type: application/json" \
-   --data '{
-     "rules": [
-       {
-         "action": "log_custom_field",
-         "expression": "true",
-         "description": "Set Logpush custom fields for HTTP requests",
-         "action_parameters": {
-           "request_fields": [
-             { "name": "content-type" },
-             { "name": "x-forwarded-for" }
-           ],
-         "transformed_request_fields": [
-             {"name": "host"}
+<APIRequest
+  path="/zones/{zone_id}/rulesets/{ruleset_id}"
+  method="PUT"
+  json={{
+    rules: [
+      {
+        action: "log_custom_field",
+        expression: "true",
+        description: "Set Logpush custom fields for HTTP requests",
+        action_parameters: {
+          request_fields: [
+            { name: "content-type" },
+            { name: "x-forwarded-for" }
           ],
-           "response_fields": [
-             { "name": "server" },
-             { "name": "content-type" }
-   				],
-         "raw_response_fields": [
-             { "name": "allow" }
-           ],
-           "cookie_fields": [
-             { "name": "__ga" },
-             { "name": "accountNumber" },
-             { "name": "__cfruid" }
-           ]
-         }
-       }
-     ]
-   }'
-   ```
+          transformed_request_fields: [
+            { name: "host" }
+          ],
+          response_fields: [
+            { name: "server" },
+            { name: "content-type" }
+          ],
+          raw_response_fields: [
+            { name: "allow" }
+          ],
+          cookie_fields: [
+            { name: "__ga" },
+            { name: "accountNumber" },
+            { name: "__cfruid" }
+          ]
+        }
+      }
+    ]
+  }}
+  roles={false}
+/>
 
    Example response:
 
@@ -193,27 +192,25 @@ Perform the following steps to create the rule:
 
 Some headers sent from the origin — such as `set-cookie` — may have multiple values that you want to capture. You can use the Rulesets API to specify which headers should have all their values logged.
 
-   ```bash
-curl --request PUT \
-  --url https://api.cloudflare.com/client/v4/zones/{{ZONE_TAG}}/rulesets/{{RULE_ID}} \
-  --header 'content-type: application/json' \
-  --header 'x-auth-email: {{EMAIL}}' \
-  --header 'x-auth-key: {{API_KEY}}' \
-  --data '{
-  "rules": [
-    {
-      "action": "log_custom_field",
-      "expression": "true",
-      "description": "Set Logpush custom fields for HTTP requests",
-      "action_parameters": {
-        "response_fields": [
-          {"name": "set-cookie", "preserve_duplicates": true}
-        ]
+<APIRequest
+  path="/zones/{zone_id}/rulesets/{ruleset_id}" 
+  method="PUT"
+  json={{
+    rules: [
+      {
+        action: "log_custom_field",
+        expression: "true",
+        description: "Set Logpush custom fields for HTTP requests",
+        action_parameters: {
+          response_fields: [
+            { name: "set-cookie", preserve_duplicates: true }
+          ]
+        }
       }
-    }
-  ]
-}'
-```
+    ]
+  }}
+  roles={false}
+/>
 
 Note that `preserve_duplicates` applies to both `response_fields` and `raw_response_fields`. If there are no transform rules that affect a header, including `preserve_duplicates` in either `response_fields` or `raw_response_fields` should achieve the same result.
 
@@ -236,22 +233,26 @@ Next, include `Cookies`, `RequestHeaders`, `ResponseHeaders`, and/or `ResponseFi
 
 For example, consider the following request that creates a job that includes custom fields:
 
-```bash
-curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/jobs \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json" \
---data '{
-  "name": "<DOMAIN_NAME>",
-  "destination_conf": "s3://<BUCKET_PATH>?region=us-west-2",
-  "dataset": "http_requests",
-  "output_options": {
-    "field_names": ["RayID", "EdgeStartTimestamp", "Cookies", "RequestHeaders", "ResponseHeaders"],
-    "timestamp_format": "rfc3339"
-  },
-  "ownership_challenge": "<OWNERSHIP_CHALLENGE_TOKEN>"
-}'
-```
+<APIRequest
+  path="/zones/{zone_id}/logpush/jobs"
+  method="POST"
+  json={{
+    name: "<DOMAIN_NAME>",
+    destination_conf: "s3://<BUCKET_PATH>?region=us-west-2",
+    dataset: "http_requests",
+    output_options: {
+      field_names: [
+        "RayID",
+        "EdgeStartTimestamp",
+        "Cookies",
+        "RequestHeaders",
+        "ResponseHeaders"
+      ],
+      timestamp_format: "rfc3339"
+    },
+    ownership_challenge: "<OWNERSHIP_CHALLENGE_TOKEN>"
+  }}
+/>
 
 :::note[Note for Cloudflare Access users]
 

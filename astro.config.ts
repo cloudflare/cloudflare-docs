@@ -137,6 +137,8 @@ export default defineConfig({
 									"/api/**",
 									"/changelog/**",
 									"/http/resources/**",
+									"/llms.txt",
+									"/llms-full.txt",
 									"{props.*}",
 									"/",
 									"/glossary/",
@@ -146,7 +148,12 @@ export default defineConfig({
 									"/ruleset-engine/rules-language/fields/reference/**",
 									"/workers/examples/?languages=*",
 									"/workers/examples/?tags=*",
+									"/workers/llms-full.txt",
 									"/workers-ai/models/**",
+									"**index.md",
+									"/markdown.zip",
+									"/style-guide/index.md",
+									"/style-guide/fixtures/markdown/index.md",
 								],
 							}),
 						]
@@ -161,14 +168,21 @@ export default defineConfig({
 				headingLinks: false,
 			},
 			routeMiddleware: "./src/plugins/starlight/route-data.ts",
+			disable404Route: true,
 		}),
 		liveCode({}),
 		icon(),
 		sitemap({
 			filter(page) {
-				return !page.startsWith(
-					"https://developers.cloudflare.com/style-guide/",
-				);
+				if (page.includes("/style-guide/")) {
+					return false;
+				}
+
+				if (page.endsWith("/404/")) {
+					return false;
+				}
+
+				return true;
 			},
 			serialize(item) {
 				item.lastmod = new Date().toISOString();

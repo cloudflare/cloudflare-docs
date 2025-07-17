@@ -1,6 +1,6 @@
 ---
 name: "Enable auto-populating `process.env`"
-sort_date: "2025-02-27"
+sort_date: "2025-04-01"
 enable_date: "2025-04-01"
 enable_flag: "nodejs_compat_populate_process_env"
 disable_flag: "nodejs_compat_do_not_populate_process_env"
@@ -18,7 +18,7 @@ const LOG_LEVEL = process.env.LOG_LEVEL || "info";
 ```
 
 This makes accessing these values easier and conforms to common Node.js patterns, which can
-reduce toil and help with compatability for existing Node.js libraries.
+reduce toil and help with compatibility for existing Node.js libraries.
 
 If users do not wish for these values to be accessible via `process.env`, they can use the
 `nodejs_compat_do_not_populate_process_env` flag. In this case, `process.env` will still be

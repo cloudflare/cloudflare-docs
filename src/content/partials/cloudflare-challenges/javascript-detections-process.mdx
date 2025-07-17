@@ -1,0 +1,30 @@
+---
+{}
+---
+
+import { Markdown } from "~/components";
+
+## Process 
+
+JavaScript Detections is implemented on your website via a lightweight, invisible JavaScript code snippet that follows Cloudflare's [privacy standards](https://www.cloudflare.com/privacypolicy/). 
+
+JavaScript is injected only in response to requests for HTML pages or page views, excluding AJAX calls. API and mobile application traffic is unaffected. 
+
+JavaScript Detections has a lifespan of 15 minutes. However, the code is injected again before the session expires. After page load, the script is deferred and utilizes a separate thread (where available) to ensure that performance impact is minimal. The snippets of JavaScript will contain a source pointing to the Challenge Platform, with paths that start with `/cdn-cgi/challenge-platform/…`
+
+Once JavaScript Detections is injected on the HTML page, the visitor's browser will run the JavaScript code snippet and a `cf_clearance` cookie is issued to the visitor. The information in JavaScript Detections is stored in the `cf_clearance` cookie and is used to populate `js_detection.passed`.
+
+- If the visitor is verified and a `cf_clearance` cookie is issued, it will contain the outcome: `cf.bot_management.js.detection.passed` = `true`
+- If the verification fails, the cookie will contain the outcome: `cf.bot_management.js.detection.passed` = `false` 
+
+:::note
+The `cf_clearance` cookie cannot exceed the maximum size of 4096 bytes.
+:::
+
+:::caution
+Enforcement against bots does **not** occur even if the cookie is flagged false. 
+
+You must enable JavaScript Detections and then create a custom WAF rule using the `cf.bot_management.js.detection.passed` field to block or challenge a failed request.
+:::
+
+When the visitor encounters a WAF custom rule on your website, the rule will check the outcome of the `cf_clearance` cookie. The outcome of the `cf_clearance` cookie determines whether the request passes, or is blocked or challenged.

@@ -1,0 +1,28 @@
+---
+title: Unexpected _acme-challenge TXT records
+pcx_content_type: troubleshooting
+sidebar:
+  order: 11
+  label: Unexpected TXT records
+---
+
+import { GlossaryTooltip } from "~/components"
+
+You might notice TXT records like `_acme-challenge.<hostname>` are returned by your domain but cannot be found on the DNS tab of your Cloudflare dashboard.
+
+## Causes
+
+These records are automatically created to allow Cloudflare edge certificates ([universal](/ssl/edge-certificates/universal-ssl/), [advanced](/ssl/edge-certificates/advanced-certificate-manager/), and [backup](/ssl/edge-certificates/backup-certificates/)) to be provisioned. `_acme-challenge` records are required by <GlossaryTooltip term="Certificate Authority (CA)">certificate authorities (CAs)</GlossaryTooltip> so that they can verify your domain ownership before issuing the SSL/TLS certificate. For details, refer to [Domain control validation (DCV)](/ssl/edge-certificates/changing-dcv-method/).
+
+## Solution
+
+As these records are tied to the certificates, they cannot be deleted from the DNS tab of your Cloudflare dashboard.
+
+If you need more `_acme-challenge.<hostname>` TXT records in order to provision certificates on your side, you can [manually add them](/dns/manage-dns-records/how-to/create-dns-records/) under [DNS records](https://dash.cloudflare.com/?to=/:account/:zone/dns/records).
+
+If you want to remove these records:
+
+ * [Disable Universal SSL](/ssl/edge-certificates/universal-ssl/disable-universal-ssl/) to remove the records related to universal and backup certificates.
+ * [Delete advanced certificates](/ssl/edge-certificates/advanced-certificate-manager/manage-certificates/#delete-a-certificate) to remove the records related to advanced certificates.
+
+

@@ -144,7 +144,7 @@ A Durable Object is considered hibernatable any time that it is not waiting for 
 
 - Additionally, if the Durable Object has received an incoming request and has not fully responded yet, then it cannot be hibernated, because hibernating would mean losing track of the async function which is eventually supposed to return a response to that request.
 
-- As an exception, a WebSocket request which has explicitly been accepted using the [WebSocket hibernation API](/durable-objects/best-practices/websockets/#websocket-hibernation-api allows a Durable Object to hibernate even while the WebSocket is still connected.
+- As an exception, a WebSocket request which has explicitly been accepted using the [WebSocket hibernation API](/durable-objects/best-practices/websockets/#websocket-hibernation-api) allows a Durable Object to hibernate even while the WebSocket is still connected.
 
 
 

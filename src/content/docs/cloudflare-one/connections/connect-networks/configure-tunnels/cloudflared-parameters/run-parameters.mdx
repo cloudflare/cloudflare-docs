@@ -125,10 +125,9 @@ Writes the application's process identifier (PID) to this file after the first s
 
 ## `post-quantum`
 
-| Syntax                                                   | Environment Variable |
-| -------------------------------------------------------- | -------------------- |
-| `cloudflared tunnel run --post-quantum <UUID or NAME>`   | `TUNNEL_POST_QUANTUM`|
-
+| Syntax                                                 | Environment Variable  |
+| ------------------------------------------------------ | --------------------- |
+| `cloudflared tunnel run --post-quantum <UUID or NAME>` | `TUNNEL_POST_QUANTUM` |
 
 By default, Cloudflare Tunnel connections over [`quic`](#protocol) are encrypted using [post-quantum cryptography (PQC)](/ssl/post-quantum-cryptography/) but will fall back to non-PQ if there are issues connecting. If the `--post-quantum` flag is provided, `quic` connections are only allowed to use PQ key agreements, with no fallback to non-PQ.
 
@@ -151,6 +150,8 @@ The `auto` value will automatically configure the `quic` protocol. If `cloudflar
 | `cloudflared tunnel --region <VALUE> run <UUID or NAME>` | `TUNNEL_REGION`      |
 
 Allows you to choose the regions to which connections are established. Currently the only available value is `us`, which routes all connections through data centers in the United States. Omit or leave empty to connect to the global region.
+
+When the region is set to `us`, `cloudflared` uses different US-specific hostnames and IPs. Refer to [Tunnel with firewall](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-with-firewall/#region-us) for details.
 
 ## `retries`
 
@@ -181,7 +182,6 @@ For remotely-managed tunnels only.
 
 Associates the `cloudflared` instance with a specific tunnel. The tunnel's token is shown in the dashboard when you first [create the tunnel](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/). You can also retrieve the token using the [API](/api/resources/zero_trust/subresources/tunnels/subresources/cloudflared/subresources/token/methods/get/).
 
-
 ## `token-file`
 
 :::note
@@ -189,8 +189,8 @@ Associates the `cloudflared` instance with a specific tunnel. The tunnel's token
 For remotely-managed tunnels only. Requires `2025.4.0` or later.
 :::
 
-| Syntax                                          | Environment Variable |
-| ----------------------------------------------- | -------------------- |
-| `cloudflared tunnel run --token-file <PATH>`    | `TUNNEL_TOKEN_FILE`  |
+| Syntax                                       | Environment Variable |
+| -------------------------------------------- | -------------------- |
+| `cloudflared tunnel run --token-file <PATH>` | `TUNNEL_TOKEN_FILE`  |
 
 Associates the `cloudflared` instance with a specific tunnel using a file which contains the token.

@@ -6,7 +6,7 @@ sidebar:
 
 ---
 
-import { Details, Render } from "~/components"
+import { Details, Render, APIRequest } from "~/components"
 
 This page provides information about some of the different types of DNS records that you can manage on Cloudflare. For guidance on how to add, edit, or delete DNS records, refer to [Manage DNS records](/dns/manage-dns-records/how-to/create-dns-records/).
 
@@ -49,19 +49,20 @@ When creating A or AAAA records [using the API](/dns/manage-dns-records/how-to/c
 
 <Render file="api-field-definitions" />
 
-```bash title="Request" {8,10}
-curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/dns_records" \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json" \
---data '{
-  "type": "A",
-  "name": "www.example.com",
-  "content": "192.0.2.1",
-  "ttl": 3600,
-  "proxied": false
-}'
-```
+<APIRequest
+  path="/zones/{zone_id}/dns_records"
+	method="POST"
+	json={{
+    "type": "A",
+    "name": "www.example.com",
+    "content": "192.0.2.1",
+    "ttl": 3600,
+    "proxied": false
+  }}
+	code={{
+    mark: [8, 10],
+  }}
+/>
 
 ```json title="Response"
 {
@@ -119,23 +120,24 @@ Specific CNAME record values with traffic proxied through Cloudflare will enable
 When creating CNAME records [using the API](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records):
 
 * The `content` of the records is a [fully qualified domain name](https://en.wikipedia.org/wiki/Fully_qualified_domain_name).
-* The `proxied` field affects the record's [proxy status](/dns/proxy-status/)
+* The `proxied` field affects the record's [proxy status](/dns/proxy-status/).
 
 <Render file="api-field-definitions" />
 
-```bash title="Request" {8,10}
-curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/dns_records" \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json" \
---data '{
-  "type": "CNAME",
-  "name": "www.example.com",
-  "content": "www.another-example.com",
-  "ttl": 3600,
-  "proxied": false
-}'
-```
+<APIRequest
+  path="/zones/{zone_id}/dns_records"
+	method="POST"
+	json={{
+    "type": "CNAME",
+    "name": "www.example.com",
+    "content": "www.another-example.com",
+    "ttl": 3600,
+    "proxied": false
+  }}
+	code={{
+    mark: [8, 10],
+  }}
+/>
 
 ```json title="Response"
 {
@@ -242,22 +244,20 @@ A [service record (SRV)](https://www.cloudflare.com/learning/dns/dns-records/dns
 
 <Render file="api-field-definitions" />
 
-```bash title="Request"
-curl "https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/dns_records" \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json" \
---data '{
-  "type": "SRV",
-  "name": "_xmpp._tcp.example.com",
-  "data": {
-    "priority": 10,
-    "weight": 5,
-    "port": 5223,
-    "target": "server.example.com"
-  }
-}'
-```
+<APIRequest
+  path="/zones/{zone_id}/dns_records"
+	method="POST"
+	json={{
+    "type": "SRV",
+    "name": "_xmpp._tcp.example.com",
+    "data": {
+      "priority": 10,
+      "weight": 5,
+      "port": 5223,
+      "target": "server.example.com"
+      }
+	}}
+/>
 
 ```json title="Response"
 {

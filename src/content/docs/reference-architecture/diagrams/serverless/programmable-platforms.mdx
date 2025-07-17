@@ -2,14 +2,14 @@
 title: Programmable Platforms
 pcx_content_type: reference-architecture-diagram
 products:
-   - WorkersForPlatforms
-   - KV
+  - workers-for-platforms
+  - KV
 sidebar:
-   order: 1
-   label: Programmable Platforms
+  order: 1
+  label: Programmable Platforms
 updated: 2025-03-16
+description: Workers for Platforms provide secure, scalable, cost-effective infrastructure for programmable platforms with global reach.
 ---
-
 
 ## Introduction
 
@@ -18,7 +18,6 @@ A programmable platform allows customers to customize a product by writing code.
 Hosting the infrastructure for these platforms presents several challenges, including security, scalability, cost efficiency, and performance isolation. Allowing customers to run custom code introduces risks such as untrusted execution, potential abuse, and resource contention, all of which must be managed without compromising platform reliability. Running millions of single-tenant applications is inherently costly, making efficient resource utilization critical. The ability to scale workloads to zero when idle is key to ensuring economic viability while maintaining rapid startup times when demand spikes. Additionally, ensuring seamless global execution with low-latency performance requires a resilient, distributed architecture. Robust monitoring, debugging, and governance capabilities are also essential to provide visibility and control over customer-deployed code without restricting innovation.
 
 [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) provides the ideal infrastructure for building programmable platforms by offering secure, isolated environments where customers can safely execute custom code at scale, with automatic scaling to zero and a globally distributed runtime that optimizes performance and cost.
-
 
 ## Core Architecture Components
 
@@ -38,11 +37,9 @@ The Workers for Platforms architecture consists of several key components that w
 
 ![Figure 1: Workers for Platforms: Main Flow](~/assets/images/reference-architecture/programmable-platforms/programmable-platforms-1.svg "Figure 1: Workers for Platforms: Main Flow")
 
-
 1. **Client Request**: Send request from a client application to the platform's [Dynamic Dispatch Worker](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#dynamic-dispatch-worker).
 
 2. **Routing**: Identify the correct workload to execute and route the request to the respective [User Worker](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#user-workers) in the [Dispatch Namespace](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#dispatch-namespace). Each customer's workload runs in an isolated User Worker with its own resources and security boundaries.
-
 
 ## Invocation & Metadata Flow
 
@@ -68,11 +65,9 @@ Data observability and control is crucial for security. [Outbound Workers](/clou
 
 3. **Request interception**: Evaluate outgoing requests and perform core functions like centralized policy enforcement and audit logging.
 
-
 ## Metrics & Logging Architecture
 
 ![Figure 4: Workers for Platforms: Metrics & Logging](~/assets/images/reference-architecture/programmable-platforms/programmable-platforms-4.svg "Figure 4: Workers for Platforms: Metrics & Logging")
-
 
 1. **Logging**: Collect logs throughout all Workers in the request flow via [Tail Worker](/cloudflare-for-platforms/workers-for-platforms/configuration/observability/#tail-workers) and [Workers Trace Events Logpush](/cloudflare-for-platforms/workers-for-platforms/configuration/observability/#workers-trace-events-logpush) services.
 
@@ -98,16 +93,15 @@ Data observability and control is crucial for security. [Outbound Workers](/clou
 
 ![Figure 6: Workers for Platforms: Deployment & Management Flow](~/assets/images/reference-architecture/programmable-platforms/programmable-platforms-6.svg "Figure 6: Workers for Platforms: Deployment & Management Flow")
 
-
 1. **Management Interface**: Interact with the platform through GUI, API, or CLI interfaces.
 
 2. **Platform Processing**: Process these interactions to:
+
    - Transform and bundle code
    - Perform security checks
    - Apply configuration
 
 3. **Change Management**: Deploy changes to Cloudflare using the Cloudflare REST API.
-
 
 ## Conclusion
 
@@ -118,4 +112,3 @@ Cloudflare Workers for Platforms provides a robust foundation for building multi
 - [Workers for Platforms: Get started](/cloudflare-for-platforms/workers-for-platforms/get-started/)
 - [Workers for Platforms: Outbound Workers](/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/)
 - [Workers for Platforms: Observability](/cloudflare-for-platforms/workers-for-platforms/configuration/observability/)
-

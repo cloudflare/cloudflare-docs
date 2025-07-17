@@ -217,57 +217,57 @@ To run the Cloudflare Tunnel in Kubernetes:
 
 1. Create a Kubernetes deployment for a remotely-managed Cloudflare Tunnel:
 
-	```yaml title="tunnel.yaml"
-	apiVersion: apps/v1
-	kind: Deployment
-	metadata:
-	name: cloudflared-deployment
-	namespace: default
-	spec:
-	replicas: 2
-	selector:
-		matchLabels:
-			pod: cloudflared
-	template:
-		metadata:
-			labels:
-				pod: cloudflared
-		spec:
-			securityContext:
-				sysctls:
-				# Allows ICMP traffic (ping, traceroute) to resources behind cloudflared.
-					- name: net.ipv4.ping_group_range
-						value: "65532 65532"
-			containers:
-				- image: cloudflare/cloudflared:latest
-					name: cloudflared
-					env:
-						# Defines an environment variable for the tunnel token.
-						- name: TUNNEL_TOKEN
-							valueFrom:
-								secretKeyRef:
-									name: tunnel-token
-									key: token
-					command:
-					  # Configures tunnel run parameters
-						- cloudflared
-						- tunnel
-						- --no-autoupdate
-						- --loglevel
-						- debug
-						- --metrics
-						- 0.0.0.0:2000
-						- run
-					livenessProbe:
-						httpGet:
-							# Cloudflared has a /ready endpoint which returns 200 if and only if
-							# it has an active connection to Cloudflare's network.
-							path: /ready
-							port: 2000
-						failureThreshold: 1
-						initialDelaySeconds: 10
-						periodSeconds: 10
-	```
+  ```yaml title="tunnel.yaml"
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: cloudflared-deployment
+    namespace: default
+  spec:
+    replicas: 2
+    selector:
+      matchLabels:
+        pod: cloudflared
+    template:
+      metadata:
+        labels:
+          pod: cloudflared
+      spec:
+        securityContext:
+          sysctls:
+          # Allows ICMP traffic (ping, traceroute) to resources behind cloudflared.
+            - name: net.ipv4.ping_group_range
+              value: "65532 65532"
+        containers:
+          - image: cloudflare/cloudflared:latest
+            name: cloudflared
+            env:
+              # Defines an environment variable for the tunnel token.
+              - name: TUNNEL_TOKEN
+                valueFrom:
+                  secretKeyRef:
+                    name: tunnel-token
+                    key: token
+            command:
+              # Configures tunnel run parameters
+              - cloudflared
+              - tunnel
+              - --no-autoupdate
+              - --loglevel
+              - debug
+              - --metrics
+              - 0.0.0.0:2000
+              - run
+            livenessProbe:
+              httpGet:
+                # Cloudflared has a /ready endpoint which returns 200 if and only if
+                # it has an active connection to Cloudflare's network.
+                path: /ready
+                port: 2000
+              failureThreshold: 1
+              initialDelaySeconds: 10
+              periodSeconds: 10
+  ```
 
 2. Deploy `cloudflared` to the cluster:
 

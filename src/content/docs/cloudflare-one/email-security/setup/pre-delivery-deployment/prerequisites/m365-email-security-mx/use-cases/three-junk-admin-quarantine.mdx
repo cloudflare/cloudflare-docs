@@ -11,7 +11,7 @@ head:
 
 import { Render } from "~/components"
 
-In this tutorial, you will learn how to deliver `SUSPICIOUS` and `BULK` messages to the users's junk email folder, and `MALICIOUS`, `SPAM`, and `SPOOF` messages to the administrative quarantine (this requires an administrator to release the emails).
+In this tutorial, you will learn how to deliver `BULK` messages to the users's junk email folder, and `MALICIOUS`, `SPAM`, and `SPOOF` messages to the administrative quarantine (this requires an administrator to release the emails).
 
 ## Create quarantine policies
 
@@ -27,4 +27,4 @@ In this tutorial, you will learn how to deliver `SUSPICIOUS` and `BULK` messages
 
 ## Create transport rules
 
-<Render file="email-security/deployment/m365-use-case-transport-rules" params={{ one: "`Email Security Deliver to Junk Email folder`", two: "`SUSPICIOUS`, `BULK`", three: "_Modify the message properties_ > _Set the Spam Confidence Level (SCL)_ > _5_", four: "step4-rules.png", five: "`Email Security User Quarantine Message`", six: "`MALICIOUS`, `UCE`, `SPOOF`", seven: "_Modify the message properties_ > _Set the Spam Confidence Level (SCL)_ > _9_", eight: "step10-user-quarantine.png" }} />
+<Render file="email-security/deployment/m365-use-case-transport-rules" params={{ one: "`Email Security Deliver to Junk Email folder`", two: "BULK", three: "_Modify the message properties_ > _Set the Spam Confidence Level (SCL)_ > _5_", four: "step4-rules.png", five: "`Email Security User Quarantine Message`", six: "`MALICIOUS`, `UCE`, `SPOOF`", seven: "_Modify the message properties_ > _Set the Spam Confidence Level (SCL)_ > _9_", eight: "step10-user-quarantine.png" }} />

@@ -67,7 +67,10 @@ Wrangler supports the following environment variables:
 
   * By setting this to `0`, you can disable Wrangler's colorised output, which makes it easier to read with some terminal setups. For example, `FORCE_COLOR=0`.
 
+* `WRANGLER_DOCKER_HOST` <Type text="string" /> <MetaInfo text="optional" />
 
+  * Defaults to `unix:///var/run/docker.sock`. Set this to the socket path your container engine is listening at if you are using another container tool besides Docker, such as `colima`, or if your Docker engine is configured to listen at a path other than `unix:///var/run/docker.sock`.
+    You can also set this via `container_engine` config option.
 
 
 

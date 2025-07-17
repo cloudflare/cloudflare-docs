@@ -251,7 +251,7 @@ A hot read means that the data is cached on Cloudflare's edge network using the 
 
 The `cacheTtl` parameter must be an integer greater than or equal to `60`, which is the default.
 
-The effective `cacheTtl` of an already cached item can be reduced by getting it again with a lower `cacheTtl`. For example, if you did `NAMESPACE.get(key, {cacheTtl: 86400})` but later realized that caching for 24 hours was too long, you could `NAMESPACE.get(key, {cacheTtl: 300})` or even `NAMESPACE.get(key)` and it would check for newer data to respect the provided `cacheTtl`, which defaults to 60 seconds.
+The effective `cacheTtl` of an already cached item can be reduced by getting it again with a lower `cacheTtl`. For example, if you did `NAMESPACE.get(key, {cacheTtl: 86400})` but later realized that caching for 24 hours was too long, you could `NAMESPACE.get(key, {cacheTtl: 300})` or even `NAMESPACE.get(key)` and it would check for newer data to respect the provided `cacheTtl`, which defaults to 60 seconds. This overwriting `cacheTtl` behavior will only take effect in regions where the key-value pair is read with the updated `cacheTtl`. In other words, reading a key-value pair in a given region will update the cache time-to-live in that region but not in other regions of Cloudflare's network (these will keep the time-to-live from the last read of the region). 
 
 ### Requesting more keys per Worker invocation with bulk requests
 

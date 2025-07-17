@@ -79,7 +79,15 @@ run_worker_first = true
 
 </WranglerConfig>
 
-You can also specify `run_worker_first` as an array of route patterns to selectively run the Worker script first only for specific routes. This is often paired with the [`not_found_handling = "single-page-application"` setting](/workers/static-assets/routing/single-page-application/#advanced-routing-control):
+You can also specify `run_worker_first` as an array of route patterns to selectively run the Worker script first only for specific routes.
+
+The array supports glob patterns with `*` for deep matching and negative patterns with `!` prefix.
+
+Negative patterns have precedence over non-negative patterns. The Worker will run first when a non-negative pattern matches and none of the negative pattern matches.
+
+The order in which the patterns are listed is not significant.
+
+`run_worker_first` is often paired with the [`not_found_handling = "single-page-application"` setting](/workers/static-assets/routing/single-page-application/#advanced-routing-control):
 
 <WranglerConfig>
 
@@ -98,7 +106,8 @@ You can also specify `run_worker_first` as an array of route patterns to selecti
 ```
 
 </WranglerConfig>
-The array supports glob patterns with `*` for deep matching and exception patterns with `!` prefix. In this configuration, requests to `/api/*` routes will invoke the Worker script first, except for `/api/docs/*` which will follow the default asset-first routing behavior.
+
+In this configuration, requests to `/api/*` routes will invoke the Worker script first, except for `/api/docs/*` which will follow the default asset-first routing behavior.
 
 ## `binding`
 

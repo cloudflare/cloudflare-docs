@@ -4,11 +4,20 @@ title: SCIM provisioning
 
 ---
 
-Cloudflare supports bulk provisioning of users into the Cloudflare dashboard by using the System for Cross-domain Identity Management (SCIM) protocol. This allows you to connect your external identity provider (IdP) to Cloudflare and quickly onboard and manage users and their permissions. Cloudflare supports SCIM onboarding with Okta and Microsoft Entra.
+Cloudflare supports bulk provisioning of users into the Cloudflare dashboard by using the System for Cross-domain Identity Management (SCIM) protocol. This allows you to connect an external identity provider (IdP) to Cloudflare, quickly onboard and manage user permissions. Currently, SCIM provisioning has been integrated with Okta and Microsoft Entra.
 
 :::note
-This section covers SCIM provisioning for the Cloudflare dashboard only. If you need to provision SCIM for Cloudflare Zero Trust, refer to [Zero Trust SCIM provisioning](/cloudflare-one/identity/users/scim/).
+This section covers SCIM provisioning for the Cloudflare dashboard. If you need to provision SCIM for Cloudflare Zero Trust, refer to [Zero Trust SCIM provisioning](/cloudflare-one/identity/users/scim/).
 :::
+
+## Objectives
+
+Once the SCIM provisioning is enabled:
+
+- A Cloudflare account can receive user group provisioning from the identity provider.
+- Members of each user group can be assigned one or more [policies](/fundamentals/manage-members/policies/). Each policy defines one or more [roles](https://developers.cloudflare.com/fundamentals/manage-members/roles/) applied to all group members thereof.
+- Members can belong to multiple user groups, and each group can also be configured with different policies.
+- Policies provisioned via SCIM can coexist with policies configured via the [traditional setup](/fundamentals/manage-members/manage/#edit-member-permissions).
 
 ## Expected behaviors
 
@@ -28,19 +37,18 @@ Expectations for user lifecycle management with SCIM:
 
 ## Prerequisites
 
-- Cloudflare provisioning with SCIM is only available to Enterprise customers using Okta or Microsoft Entra.
-- You must be a [Super Administrator](/fundamentals/manage-members/roles/) on the account.
-- In your identity provider, you must have the ability to create applications and groups.
+- Cloudflare dashboard SCIM provisioning is only available to Enterprise customers using Okta or Microsoft Entra.
+- You must be a Super Administrator for the initial setup.
+- In the identity provider, you must have the ability to create applications and groups.
 
 ---
 ## Gather the required data
 
 To start, you will need to collect a couple of pieces of data from Cloudflare and set these aside for later use.
 
-### Get your Account ID
+### Get the Account ID
 
-1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to the Cloudflare account that you want to configure for SCIM provisioning.
-2. Copy your account ID from the account home page.
+The account ID can be found via dashboard or API. For more information, refer to [Find account and zone IDs](/fundamentals/account/find-account-and-zone-ids/).
 
 ### Create an API token
 
@@ -52,7 +60,7 @@ To start, you will need to collect a couple of pieces of data from Cloudflare an
 
    :::note
 
-   Cloudflare recommends using Account Owned API Tokens for SCIM Provisioning. Using user-specific API tokens, while supported, will lead to a broken SCIM connection in the event that the user's policies are revoked from the account with the SCIM integration. Learn more about [account owned tokens](/fundamentals/api/get-started/account-owned-tokens/).
+   Account owned API tokens are recommended for SCIM Provisioning. User owned API tokens, while supported, may result in a broken SCIM connection in the event when the user's policies are revoked from the SCIM integration, or the [API access](/fundamentals/api/how-to/control-api-access/) is unexpectedly disabled. Learn more about [account owned tokens](/fundamentals/api/get-started/account-owned-tokens/).
    :::
 
 2. Under **Account Resources**, select the specific account to include or exclude from the dropdown menu, if applicable.

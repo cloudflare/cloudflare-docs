@@ -5,6 +5,9 @@ productLink: "/r2/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2025-07-03"
+    description: |-
+      - The CRC-64/NVME Checksum algorithm is now supported for both single and multipart objects. This also brings support for the `FULL_OBJECT` Checksum Type on Multipart Uploads. See Checksum Type Compatibility [here](/r2/api/s3/api/).
   - publish_date: "2024-12-03"
     description: |-
       - [Server-side Encryption with Customer-Provided Keys](/r2/examples/ssec/) is now available to all users via the Workers and S3-compatible APIs.

@@ -7,7 +7,7 @@ sidebar:
 
 ---
 
-import { GlossaryTooltip, Render } from "~/components"
+import { GlossaryTooltip, Render, Tabs, TabItem, Steps } from "~/components"
 
 Most development teams struggle to keep track of their APIs. Cloudflare API Discovery helps you map out and understand your attack surface area.
 
@@ -66,7 +66,24 @@ Cloudflare will use your feedback on the ignored endpoints to better train the A
 
 Your API endpoints are discovered with both the Session Identifier-based Discovery and the Machine Learning-based Discovery.
 
-To access Machine Learning-based Discovery, log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain. Go to **API Shield** > **Discovery**. You may filter the source results by `Session Identifier` or `Machine Learning` to view results from each Discovery method.
+To access Machine Learning-based Discovery:
+
+<Tabs syncKey="dashNewNav">
+  <TabItem label="Old dashboard">
+    <Steps>
+      1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain. 
+      2. Go to **API Shield** > **Discovery**. 
+      3. Filter the source results by `Session Identifier` or `Machine Learning` to view results from each Discovery method.
+    </Steps>
+  </TabItem>
+  <TabItem label="New dashboard" icon="rocket">
+    <Steps>
+      1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain. 
+      2. Go to **Web assets** > **Discovery**
+      3. Filter the source results by `Session Identifier` or `Machine Learning` to view results from each Discovery method.
+    </Steps>
+  </TabItem>
+</Tabs>
 
 If all of your zone’s API traffic contains the <GlossaryTooltip term="session identifier">session identifier</GlossaryTooltip> that you have configured, both sources may deliver the same results due to similarities between their underlying methodology. We expect Machine Learning-based Discovery to excel in discovering API traffic regardless of whether your API uses a session identifier.
 

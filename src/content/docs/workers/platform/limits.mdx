@@ -21,7 +21,7 @@ import { Render, WranglerConfig } from "~/components";
 | [Worker startup time](#worker-startup-time)                                      | 400 ms       | 400 ms       |
 | [Number of Workers](#number-of-workers)<sup>1</sup>                              | 100          | 500          |
 | Number of [Cron Triggers](/workers/configuration/cron-triggers/)<br/>per account | 5            | 250          |
-| Number of [Static Asset](#static-assets) files                                   | 20000        | 20000        |
+| Number of [Static Asset](#static-assets) files per Worker version                | 20000        | 20000        |
 | Individual [Static Asset](#static-assets) file size                              | 25 MiB       | 25 MiB       |
 
 <sup>1</sup> If you are running into limits, your project may be a good fit for
@@ -176,17 +176,19 @@ Routes in fail closed mode will display a Cloudflare `1027` error page to visito
 
 ## Memory
 
-Only one Workers instance runs on each of the many global Cloudflare global network servers. Each Workers instance can consume up to 128 MB of memory. Use [global variables](/workers/runtime-apis/web-standards/) to persist data between requests on individual nodes. Note however, that nodes are occasionally evicted from memory.
+Each [isolate](/workers/reference/how-workers-works/#isolates) of your Worker's code runs in can consume up to 128 MB of memory. This includes both memory used by the JavaScript heap, and memory explicitly allocated in [WebAssembly](/workers/runtime-apis/webassembly/). Note that this limit is per-isolate, not per-invocation of your Worker. A single isolate can handle many concurrent requests.
 
-If a Worker processes a request that pushes the Worker over the 128 MB limit, the Cloudflare Workers runtime may cancel one or more requests. To view these errors, as well as CPU limit overages:
+When an isolate running your Worker exceeds 128 MB of memory, the Workers runtime handles this gracefully instead of failing immediately. It allows in-flight requests to complete while simultaneously creating a new isolate for your Worker for new requests. While this approach typically allows in-flight requests to complete, during periods of extremely high load, some incoming requests may be cancelled to maintain system stability.
+
+To view out-of-memory errors (OOM), as well as CPU limit overages:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. Select **Workers & Pages** and in **Overview**, select the Worker you would like to investigate.
 3. Under **Metrics**, select **Errors** > **Invocation Statuses** and examine **Exceeded Memory**.
 
-Use the [TransformStream API](/workers/runtime-apis/streams/transformstream/) to stream responses if you are concerned about memory usage. This avoids loading an entire response into memory.
+To avoid exceeding memory limits, where possible you should avoid buffering large objects or responses in memory, and instead use streaming APIs such as [`TransformStream`](/workers/runtime-apis/streams/transformstream/) or [`node:stream`](/workers/runtime-apis/nodejs/streams/) to stream responses. Manipulating streams allows you to avoid buffering entire responses in memory.
 
-Using DevTools locally can help identify memory leaks in your code. See the [memory profiling with DevTools documentation](/workers/observability/dev-tools/memory-usage/) to learn more.
+You can also use Chrome DevTools in local development to identify memory leaks in your code. See the [memory profiling with DevTools documentation](/workers/observability/dev-tools/memory-usage/) to learn more.
 
 ---
 
@@ -233,28 +235,55 @@ Once an invocation has six connections open, it can still attempt to open additi
 
 - These attempts are put in a pending queue — the connections will not be initiated until one of the currently open connections has closed.
 - Earlier connections can delay later ones, if a Worker tries to make many simultaneous subrequests, its later subrequests may appear to take longer to start.
+- Earlier connections that are stalled<sup>1</sup> might get closed with a `Response closed due to connection limit` exception.
 
 If you have cases in your application that use `fetch()` but that do not require consuming the response body, you can avoid the unread response body from consuming a concurrent connection by using `response.body.cancel()`.
 
 For example, if you want to check whether the HTTP response code is successful (2xx) before consuming the body, you should explicitly cancel the pending response body:
 
 ```ts
-let resp = await fetch(url);
+const response = await fetch(url);
 
 // Only read the response body for successful responses
-if (resp.statusCode <= 299) {
-	// Call resp.json(), resp.text() or otherwise process the body
+if (response.statusCode <= 299) {
+	// Call response.json(), response.text() or otherwise process the body
 } else {
 	// Explicitly cancel it
-	resp.body.cancel();
+	response.body.cancel();
 }
 ```
 
 This will free up an open connection.
 
-If the system detects that a Worker is deadlocked on open connections — for example, if the Worker has pending connection attempts but has no in-progress reads or writes on the connections that it already has open — then the least-recently-used open connection will be canceled to unblock the Worker.
+If the system detects that a Worker is deadlocked on stalled connections<sup>1</sup> — for example, if the Worker has pending connection attempts but has no in-progress reads or writes on the connections that it already has open — then the least-recently-used open connection will be canceled to unblock the Worker.
 
-If the Worker later attempts to use a canceled connection, an exception will be thrown. These exceptions should rarely occur in practice, though, since it is uncommon for a Worker to open a connection that it does not have an immediate use for.
+If the Worker later attempts to use a canceled connection, a `Response closed due to connection limit` exception will be thrown. These exceptions should rarely occur in practice, though, since it is uncommon for a Worker to open a connection that it does not have an immediate use for.
+
+<sup>1</sup>A connections is considered stalled when it is not not being
+actively read from or written to, for example:
+
+```ts
+// Within a for-of loop
+const response = await fetch("https://example.org");
+for await (const chunk of response.body) {
+	// While this code block is executing, there are no pending
+	// reads on the response.body. Accordingly, the system may view
+	// the stream as not being active within this block.
+}
+
+// Using body.getReader()
+const response = await fetch("https://example.org");
+const reader = response.body.getReader();
+let chunk = await reader.read();
+await processChunk(chunk);
+chunk = await reader.read();
+await processChunk(chunk);
+
+async function processChunk(chunk) {
+	// The stream is considered inactive as there is no pending reads
+	// on response.body. It may then get cancelled.
+}
+```
 
 :::note
 
@@ -294,7 +323,7 @@ To reduce the upload size of a Worker, consider some of the following strategies
 
 - Removing unnecessary dependencies and packages
 - Storing configuration files, static assets, and binary data using [Workers KV](/kv/), [R2](/r2/), [D1](/d1/), or [Workers Static Assets](/workers/static-assets/) instead of bundling them within your Worker code.
-- Splitng functionality across multiple Workers and connecting them using [Service bindings](/workers/runtime-apis/bindings/service-bindings/).
+- Splitting functionality across multiple Workers and connecting them using [Service bindings](/workers/runtime-apis/bindings/service-bindings/).
 
 ---
 

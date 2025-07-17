@@ -5,6 +5,12 @@ productLink: "/hyperdrive/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2025-07-03"
+    title: Hyperdrive now supports configurable connection counts
+    description: |-
+      Hyperdrive configurations can now be set to use a specific number of connections to your origin database. There is a minimum of 5 connections for all configurations and a maximum according to your [Workers plan](/hyperdrive/platform/limits/).
+
+      This limit is a soft maximum. Hyperdrive may make more than this amount of connections in the event of unexpected networking issues in order to ensure high availability and resiliency.
   - publish_date: "2025-05-05"
     title: Hyperdrive improves regional caching for prepared statements for faster cache hits
     description: |-

@@ -9,6 +9,8 @@ head:
 
 ---
 
+import { APIRequest } from "~/components"
+
 Cloudflare Logpush supports pushing logs directly to IBM Cloud Logs via API. The dashboard functionality will later be added.
 
 ## Manage via API
@@ -43,28 +45,26 @@ To create a job, make a `POST` request to the Logpush jobs endpoint with the fol
 
 Example request using cURL:
 
-```bash
-curl https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/jobs \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json" \
---data '{
-  "name": "<DOMAIN_NAME>",
-  "output_options": {
-    "output_type": "ndjson",
-    "timestamp_format": "rfc3339",
-    "batch_prefix": "[",
-    "batch_suffix": "]",
-    "record_prefix": "{\"applicationName\":\"ibm-platform-log\",\"subsystemName\":\"internet-svcs:logpush\",\"text\":{",
-    "record_suffix": "}}",
-    "record_delimiter": ","
-  },
-  "destination_conf": "ibmcl://<INSTANCE_ID>.ingress.<REGION>.logs.cloud.ibm.com/logs/v1/singles?ibm_api_key=<IBM_API_KEY>",
-  "max_upload_bytes": 2000000,
-  "dataset": "http_requests",
-  "enabled": true
-}'
-```
+<APIRequest
+  method="POST"
+  path="/zones/{zone_id}/logpush/jobs"
+  json={{
+    name: "<DOMAIN_NAME>",
+    output_options: {
+      output_type: "ndjson",
+      timestamp_format: "rfc3339",
+      batch_prefix: "[",
+      batch_suffix: "]",
+      record_prefix: "{\"applicationName\":\"ibm-platform-log\",\"subsystemName\":\"internet-svcs:logpush\",\"text\":{",
+      record_suffix: "}}",
+      record_delimiter: ","
+    },
+    destination_conf: "ibmcl://<INSTANCE_ID>.ingress.<REGION>.logs.cloud.ibm.com/logs/v1/singles?ibm_api_key=<IBM_API_KEY>",
+    max_upload_bytes: 2000000,
+    dataset: "http_requests",
+    enabled: true
+  }}
+/>
 
 Response:
 
@@ -103,16 +103,13 @@ To enable a job, make a `PUT` request to the Logpush jobs endpoint. You will use
 
 Example request using cURL:
 
-```bash
-curl --request PUT \
-https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/jobs/{job_id} \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json" \
---data '{
-  "enabled": true
-}'
-```
+<APIRequest
+  method="PUT"
+  path="/zones/{zone_id}/logpush/jobs/{job_id}"
+  json={{
+    enabled: true
+  }}
+/>
 
 Response:
 

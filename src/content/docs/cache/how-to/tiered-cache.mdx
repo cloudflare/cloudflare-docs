@@ -4,7 +4,7 @@ pcx_content_type: concept
 
 ---
 
-import { Details, FeatureTable } from "~/components"
+import { Details, FeatureTable, APIRequest } from "~/components";
 
 Tiered Cache uses the size of Cloudflare’s network to reduce requests to customer origins by dramatically increasing cache hit ratios. With data centers around the world, Cloudflare caches content very close to end users. However, if a piece of content is not in cache, the Cloudflare edge data centers must contact the origin server to receive the cacheable content.
 
@@ -77,28 +77,26 @@ You can enable Tiered Cache in the dashboard or via API.
 
 To enable Tiered Cache via API use the following cURL example:
 
-```bash
-curl --request PATCH \
-https://api.cloudflare.com/client/v4/zones/{zone_id}/argo/tiered_caching \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header 'Content-Type: application/json' \
---data '{ "value": "on" }'
-```
+<APIRequest
+  path="/zones/{zone_id}/argo/tiered_caching"
+  method="PATCH"
+  json={{
+    value: "on"
+  }}
+/>
 
 You can also configure Tiered Cache Topology via API, for instance:
 
 
 <Details header="Enable Smart Tiered Cache">
 
-```bash
-curl --request PATCH \
-https://api.cloudflare.com/client/v4/zones/{zone_id}/cache/tiered_cache_smart_topology_enable \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json" \
---data '{ "value": "on" }'
-```
+<APIRequest
+  path="/zones/{zone_id}/cache/tiered_cache_smart_topology_enable"
+  method="PATCH"
+  json={{
+    value: "on"
+  }}
+/>
 
 
 </Details>
@@ -106,15 +104,13 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/cache/tiered_cache_smart_to
 
 <Details header="Enable Regional Tiered Cache">
 
-```bash
-curl --request PATCH \
-https://api.cloudflare.com/client/v4/zones/{zone_id}/cache/regional_tiered_cache \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header 'Content-Type: application/json' \
---data '{ "value": "on" }'
-```
-
+<APIRequest
+  path="/zones/{zone_id}/cache/regional_tiered_cache"
+  method="PATCH"
+  json={{
+    value: "on"
+  }}
+/>
 
 </Details>
 

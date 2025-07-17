@@ -26,6 +26,27 @@ If a Magic Tunnel health alert is fired, customers can expect the following data
 - Alert SLO
 - Timestamp
 
+## SLO thresholds
+
+Currently, there are seven SLO threshold values that you can configure through the Cloudflare dashboard. For a more granular approach, use the [API](#set-up-magic-tunnel-health-alerts).
+
+The SLO threshold for Magic Tunnel health alerts is the percentage of successful health checks for each Magic Tunnel in the alert:
+
+| Alert Sensitivity Level | SLO threshold |
+| --- 										| --- 					|
+| Minimum 								| 95.0 					|
+| Very low 								| 96.0					|
+| Low 										| 97.0 					|
+| Medium 									| 98.0 					|
+| High 										| 99.0 					|
+| Very high 							| 99.5					|
+| Maximum 								| 99.9					|
+
+The time it takes to be alerted depends on the sensitivity level you configure for your SLO thresholds. Higher sensitivity levels will notify you faster when a tunnel's health degrades, but they may also trigger alerts for brief or minor disruptions. Lower sensitivity levels reduce the chance of false alarms but may delay notifications for less severe issues. While the underlying detection timing remains consistent across sensitivity levels, the speed of notification depends on how significantly the tunnel's health has dropped and the sensitivity you have chosen. Cloudflare recommends that you [test SLO thresholds](#test-slos) to decide which one better serves your use case.
+
+Refer to <a href={props.magicTunnelHealthCheckCalculation}>Magic Tunnel health check calculation</a> for more information on this topic.
+
+
 ## Set up Magic Tunnel health alerts
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">

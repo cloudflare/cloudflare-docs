@@ -100,7 +100,7 @@ or create a Docker network with a working MTU value:
 docker network create -o "com.docker.network.driver.mtu=1420" my-docker-network
 ```
 
-The MTU value should be set to the MTU of your host's default interface minus 80 bytes for the WARP protocol overhead. Most MTUs are 1500, so 1420 should work for most users. 
+The MTU value should be set to the MTU of your host's default interface minus 80 bytes for the WARP protocol overhead. Most MTUs are 1500, so 1420 should work for most users.
 
 ## Access WARP DNS from Docker
 
@@ -121,7 +121,7 @@ Address:        8.8.8.8:53
 
 ** server can't find connectivity-check.warp-svc.: NXDOMAIN
 ** server can't find connectivity-check.warp-svc.: NXDOMAIN
- 
+
 # Create a bridge network called demo
 ❯ docker network create demo
 e1e1943a6995a7e8c115a1c60357fe64f87a3ae90074ce6e4c3f0d2bba3fa892
@@ -156,6 +156,14 @@ Address: 127.0.2.3
 ## Windows 10 in Microsoft 365 Cloud PC is not supported
 
 Use of the WARP client in a Microsoft 365 Windows 10 Cloud PC is not supported. To work around this limitation, use Windows 11.
+
+## IPv6 DNS resolution in Secure Web Gateway without DNS filtering mode
+
+In [Secure Web Gateway without DNS filtering mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#secure-web-gateway-without-dns-filtering), devices using IPv6 DNS servers may experience connectivity issues if these servers are not manually excluded from the WARP tunnel.
+
+Unlike common IPv4 DHCP configurations where DNS servers often fall within automatically excluded private address ranges, IPv6 environments typically require manual exclusion of DNS server addresses via split tunnel settings for proper operation.
+
+If your DNS server uses an IPv6 address, you must manually exclude it using [split tunnel settings](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) for Secure Web Gateway without DNS filtering mode to work properly.
 
 ## Troubleshooting
 

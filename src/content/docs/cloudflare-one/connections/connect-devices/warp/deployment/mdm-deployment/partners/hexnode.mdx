@@ -6,6 +6,8 @@ sidebar:
 description: Deploy Cloudflare WARP with Hexnode MDM - Step-by-step guide for Windows, macOS, iOS, and Android.
 ---
 
+import { Render } from "~/components";
+
 ## Windows
 
 1. Create a script file with `.bat`, `.cmd`, and `.ps1` file formats to download, install and configure the Cloudflare WARP client Windows application on the device. Listed below is a sample script with all of the configurable parameters:
@@ -42,9 +44,11 @@ description: Deploy Cloudflare WARP with Hexnode MDM - Step-by-step guide for Wi
 
 5. Select **Actions** > **Execute Custom Script**.
 
-6. Choose the script file source as *Upload file*, then upload the script file.
+6. Choose the script file source as _Upload file_, then upload the script file.
 
 7. Select **Execute**.
+
+<Render file="warp/connectivity-status-check" />
 
 ## macOS
 
@@ -52,7 +56,7 @@ description: Deploy Cloudflare WARP with Hexnode MDM - Step-by-step guide for Wi
 
 2. On your Hexnode console, go to **Apps** > **Add Apps** > **Enterprise App**.
 
-3. Select *macOS* as the app platform.
+3. Select _macOS_ as the app platform.
 
 4. Add an app name, category and description.
 
@@ -90,17 +94,19 @@ description: Deploy Cloudflare WARP with Hexnode MDM - Step-by-step guide for Wi
 
 11. Go to **App Configurations** > **Add new configuration**.
 
-12. Select the *WARP client* app and upload the XML file from Step 6.
+12. Select the _WARP client_ app and upload the XML file from Step 6.
 
 13. Now go to **Policy Targets** and associate the policy with the target entities.
 
 This will push the app along with the configurations to the selected devices.
 
+<Render file="warp/connectivity-status-check" />
+
 ## iOS
 
 1. On your Hexnode console, go to **Apps** > **Add Apps** > **Store App**.
 
-2. Select *iOS* as the app platform.
+2. Select _iOS_ as the app platform.
 
 3. Search for [**Cloudflare One Agent**](https://apps.apple.com/us/app/cloudflare-one-agent/id6443476492) and **Add** the app.
 
@@ -122,6 +128,7 @@ This will push the app along with the configurations to the selected devices.
    ```
 
 5. Upload the app configurations in Hexnode:
+
    1. On your Hexnode console, go to the **Apps** tab.
    2. Find the Cloudflare One Agent app and select its name.
    3. Select the settings icon and choose **App Configuration**.
@@ -137,6 +144,8 @@ This will push the app along with the configurations to the selected devices.
 
 This will push the app along with the configurations to the selected devices.
 
+<Render file="warp/connectivity-status-check" />
+
 ## Android
 
 1. On your Hexnode console, go to **Apps** > **Add Apps** > **Managed Google Apps**.
@@ -149,3 +158,5 @@ This will push the app along with the configurations to the selected devices.
 8. Save the policy.
 
 This will push the app along with the configurations to the selected devices.
+
+<Render file="warp/connectivity-status-check" />

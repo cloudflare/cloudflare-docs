@@ -21,13 +21,15 @@ Use the upsert operation if you want to overwrite the vector value for a vector 
 
 ## Supported vector formats
 
-Vectorize supports vectors in three formats:
+Vectorize supports the insert/upsert of vectors in three formats:
 
 - An array of floating point numbers (converted into a JavaScript `number[]` array).
 - A [Float32Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float32Array)
 - A [Float64Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float64Array)
 
 In most cases, a `number[]` array is the easiest when dealing with other APIs, and is the return type of most machine-learning APIs.
+
+Vectorize stores and restitutes vector dimensions as Float32; vector dimensions provided as Float64 will be converted to Float32 before being stored.
 
 ## Metadata
 

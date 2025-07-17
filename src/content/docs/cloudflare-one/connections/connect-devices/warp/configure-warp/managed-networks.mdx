@@ -57,112 +57,126 @@ If you do not already have a TLS endpoint on your network, you can set one up as
 
 1. Generate a TLS certificate:
 
-```sh
-openssl req -x509 -newkey rsa:4096 -sha256 -days 3650 -nodes -keyout example.key -out example.pem -subj "/CN=example.com" -addext "subjectAltName=DNS:example.com"
-```
+	```sh
+	openssl req -x509 -newkey rsa:4096 -sha256 -days 3650 -nodes -keyout example.key -out example.pem -subj "/CN=example.com" -addext "subjectAltName=DNS:example.com"
+	```
 
-The command will output a certificate in PEM format and its private key. Store these files in a secure place.
+	The command will output a certificate in PEM format and its private key. Store these files in a secure place.
 
-:::note
+	:::note
 
-The WARP client requires certificates to include `CN` and `subjectAltName` metadata. You can use `example.com` or any other domain.
-:::
+	The WARP client requires certificates to include `CN` and `subjectAltName` metadata. You can use `example.com` or any other domain.
+	:::
 
-2. Next, configure an HTTPS server on your network to use this certificate and key. The examples below demonstrate how to run a barebones HTTPS server that responds to requests with a `200` status code:
+2. Configure an HTTPS server on your network to use this certificate and key. The example below demonstrates how to serve the TLS certificate from an nginx container in Docker:
 
-<Details header="nginx in Docker">
+		a. Create an nginx configuration file called `nginx.conf`:
 
-To serve the TLS certificate from an nginx container in Docker:
+			```txt
+			events {
+			worker_connections  1024;
+			}
 
-1. Create an nginx configuration file called `nginx.conf`:
+			http {
+					server {
+						listen              443 ssl;
+						ssl_certificate     /certs/example.pem;
+						ssl_certificate_key /certs/example.key;
+						location / {
+									return 200;
+						}
+					}
+			}
+			```
 
-   ```txt
-   events {
-   worker_connections  1024;
-   }
+		If needed, replace `/certs/example.pem` and `/certs/example.key` with the locations of your certificate and key.
 
-   http {
-      server {
-         listen              443 ssl;
-         ssl_certificate     /certs/example.pem;
-         ssl_certificate_key /certs/example.key;
-         location / {
-               return 200;
-         }
-      }
-   }
-   ```
+		b. Add the nginx image to your Docker compose file:
 
-If needed, replace `/certs/example.pem` and `/certs/example.key` with the locations of your certificate and key.
+			```yml
+			version: "3.3"
+			services:
+			nginx:
+				image: nginx:latest
+				ports:
+					- 3333:443
+				volumes:
+					- ./nginx.conf:/etc/nginx/nginx.conf:ro
+					- ./certs:/certs:ro
+			```
 
-2. Add the nginx image to your Docker compose file:
+			If needed, replace `./nginx.conf` and `./certs` with the locations of your nginx configuration file and certificate.
 
-   ```yml
-   version: "3.3"
-   services:
-   nginx:
-     image: nginx:latest
-     ports:
-       - 3333:443
-     volumes:
-       - ./nginx.conf:/etc/nginx/nginx.conf:ro
-       - ./certs:/certs:ro
-   ```
+		c. Start the server:
 
-   If needed, replace `./nginx.conf` and `./certs` with the locations of your nginx configuration file and certificate.
+			```sh
+			docker-compose up -d
+			```
 
-3. Start the server:
+3. To test that the TLS server is working, run a curl command from the end user's device:
 
-   ```sh
-   docker-compose up -d
-   ```
+	```sh
+	curl --verbose --insecure https://<private-server-IP>:3333/
+	```
 
+	You need to pass the `--insecure` option because we are using a self-signed certificate. If the device is connected to the network, the request should return a `200` status code.
+
+<Details header="Windows IIS">
+
+To create a TLS endpoint using Windows Internet Information Services (IIS) Manager:
+
+1. Run Powershell as administrator.
+
+2. Generate a self-signed certificate:
+
+	```powershell
+	New-SelfSignedCertificate -CertStoreLocation Cert:\LocalMachine\My -DnsName "office-name.example.internal" -FriendlyName "Cloudflare Managed Network Certificate" -NotAfter (Get-Date).AddYears(10)
+	```
+
+	```powershell output
+		PSParentPath: Microsoft.PowerShell.Security\Certificate::LocalMachine\My
+
+	Thumbprint                                Subject
+	----------                                -------
+	0660C4FCD15F69C49BD080FEEA4136B3D302B41B  CN=office-name.example.internal
+	```
+
+3. Extract the certificate's SHA-256 fingerprint:
+
+	```powershell
+	[System.BitConverter]::ToString([System.Security.Cryptography.SHA256]::Create().ComputeHash((Get-ChildItem Cert:\LocalMachine\My | Where-Object { $_.FriendlyName -eq "Cloudflare Managed Network Certificate" }).RawData)) -replace "-", ""
+	```
+
+	```powershell output
+	DD4F4806C57A5BBAF1AA5B080F0541DA75DB468D0A1FE731310149500CCD8662
+	```
+
+	You will need the SHA-256 fingerprint to [configure the managed network in Zero Trust](#3-add-managed-network-to-zero-trust). Do not use the default SHA-1 thumbprint generated by the `New-SelfSignedCertificate` command.
+
+4. Open IIS Manager.
+
+5. In the **Connections** pane, right-click the **Sites** node and select **Add Website**.
+
+6. In **Site name**, enter any name for the TLS server (for example, `Managed Network Server`).
+
+7. In **Physical path**, enter any directory that contains a `.htm` or `html` file, such as `C:\inetpub\wwwroot`. Cloudflare does not validate the content within the directory.
+
+8. Under **Binding**, configure the following fields:
+	- **Type**: _https_
+	- **IP address**: _All Unassigned_
+	- **Port**: `443`
+	- **Host name**: Enter the certificate's Common Name (CN). The CN of our example certificate is `office-name.example.internal`.
+	- **Require Server Name Indication**: Enabled
+	- **SSL certificate**: Select the name of your TLS certificate. Our example certificate is called `Cloudflare Managed Network Certificate`.
+
+9. To test that the TLS server is working, run a curl command from the end user's device:
+
+		```sh
+		curl --verbose --insecure --resolve office-name.example.internal:443:<private-server-IP> https://office-name.example.internal
+		```
+
+		You need to pass the `--insecure` option because we are using a self-signed certificate. The `--resolve` option allows you to connect to the server's private IP but also pass the hostname to the server for SNI and certificate validation. If the device is connected to the network, the request should return your directory's default homepage (`C:\inetpub\wwwroot\iisstart.htm`).
 </Details>
-
-<Details header="Python">
-
-:::caution
-
-This Python script is intended for a quick proof of concept (PoC) and should not be used in production environments.
-:::
-
-To serve the TLS certificate using Python:
-
-1. Create a Python 3 script called `myserver.py`:
-
-   ```txt
-   import ssl, http.server
-
-   class BasicHandler(http.server.BaseHTTPRequestHandler):
-         def do_GET(self):
-            self.send_response(200)
-            self.send_header('Content-type', 'text/html')
-            self.end_headers()
-            self.wfile.write(b'OK')
-            return
-
-   server = http.server.ThreadingHTTPServer(('0.0.0.0', 3333), BasicHandler)
-   sslcontext = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
-   sslcontext.load_cert_chain(certfile='./example.pem', keyfile='./example.key')
-   server.socket = sslcontext.wrap_socket(server.socket, server_side=True)
-   server.serve_forever()
-   ```
-
-2. Run the script:
-
-   ```sh
-   python3 myserver.py
-   ```
-
-</Details>
-
-3. To test that the server is working, run a curl command from the end user's device:
-
-```sh
-curl --verbose --insecure https://<private-server-IP>:3333/
-```
-
-You need to pass the `insecure` option because we are using a self-signed certificate. If the device is connected to the network, the request should return a `200` status code.
 
 ### Supported cipher suites
 
@@ -170,7 +184,9 @@ The WARP client establishes a TLS connection using [Rustls](https://github.com/r
 
 ## 2. Extract the SHA-256 fingerprint
 
-<Tabs> <TabItem label="local certificate">
+The SHA-256 fingerprint is only required if your TLS endpoint uses a self-signed certificate.
+
+<Tabs> <TabItem label="Local certificate">
 
 To obtain the SHA-256 fingerprint of a local certificate:
 
@@ -184,7 +200,7 @@ The output will look something like:
 SHA256 Fingerprint=DD4F4806C57A5BBAF1AA5B080F0541DA75DB468D0A1FE731310149500CCD8662
 ```
 
-</TabItem> <TabItem label="remote server">
+</TabItem> <TabItem label="Remote server">
 
 To obtain the SHA-256 fingerprint of a remote server:
 

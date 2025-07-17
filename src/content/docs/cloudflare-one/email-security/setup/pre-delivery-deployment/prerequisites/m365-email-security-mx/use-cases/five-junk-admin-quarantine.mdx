@@ -11,7 +11,7 @@ head:
 
 import { Render } from "~/components"
 
-In this tutorial, you will learn to deliver `SUSPICIOUS` and `BULK` messages to the user's junk email folder, and `MALICIOUS`, `SPAM`, and `SPOOF` messages to the Administrative Quarantine (this requires an administrator to release the emails).
+In this tutorial, you will learn to deliver `BULK` messages to the user's junk email folder, and `MALICIOUS`, `SPAM`, and `SPOOF` messages to the Administrative Quarantine (this requires an administrator to release the emails).
 
 ## Configure anti-spam policies
 
@@ -19,4 +19,4 @@ In this tutorial, you will learn to deliver `SUSPICIOUS` and `BULK` messages to 
 
 ## Create transport rules
 
-<Render file="email-security/deployment/m365-use-case-transport-rules" params={{ one: "Email Security Deliver to Junk Email folder`", two: "`SUSPICIOUS`, `BULK`", three: "_Modify the message properties_ > _Set the Spam Confidence Level (SCL)_ > _5_", four: "step4-rules.png", five: "`Email Security Admin Managed Host Quarantine`", six: " `MALICIOUS`, `UCE`, `SPOOF`", seven: "_Redirect the message to_ > _hosted quarantine_", eight: "step10-hosted-quarantine-case5.png" }} />
+<Render file="email-security/deployment/m365-use-case-transport-rules" params={{ one: "Email Security Deliver to Junk Email folder`", two: "BULK", three: "_Modify the message properties_ > _Set the Spam Confidence Level (SCL)_ > _5_", four: "step4-rules.png", five: "`Email Security Admin Managed Host Quarantine`", six: " `MALICIOUS`, `UCE`, `SPOOF`", seven: "_Redirect the message to_ > _hosted quarantine_", eight: "step10-hosted-quarantine-case5.png" }} />

@@ -5,6 +5,8 @@ sidebar:
   order: 1
 ---
 
+import { Render } from "~/components";
+
 This guide covers how to deploy the Cloudflare WARP client using [Fleet](https://fleetdm.com/) device management software.
 
 ## macOS
@@ -21,8 +23,8 @@ This guide covers how to deploy the Cloudflare WARP client using [Fleet](https:/
 3. Select **OS settings** > **Custom settings**.
 4. Select **Add profile** and upload the custom `.mobileconfig`.
 5. Select the hosts which require Cloudflare WARP:
-		- **All hosts**: Deploys WARP to all hosts in the team.
-		- **Custom**: Deploys WARP to a subset of the hosts in the team. Use [labels](https://fleetdm.com/guides/managing-labels-in-fleet#basic-article) to define the hosts that should be included or excluded.
+   - **All hosts**: Deploys WARP to all hosts in the team.
+   - **Custom**: Deploys WARP to a subset of the hosts in the team. Use [labels](https://fleetdm.com/guides/managing-labels-in-fleet#basic-article) to define the hosts that should be included or excluded.
 6. Select **Add profile**.
 
 The defined hosts will immediately receive the deployment profile, but WARP is not yet installed.
@@ -48,7 +50,7 @@ To deploy the uploaded `.pkg` file to your hosts:
 3. Go to **Software** and search for `Cloudflare`.
 4. Select **Actions** > **Install**.
 
-Installation will happen automatically when the host comes online. To deploy with REST API or GitOps, refer to the [Fleet documentation](https://fleetdm.com/guides/deploy-software-packages).
+Installation will happen automatically when the host comes online. To deploy with REST API or GitOps, refer to the [Fleet documentation](https://fleetdm.com/guides/deploy-software-packages). <Render file="warp/connectivity-status-check" />
 
 ### 6. Uninstall WARP with Fleet
 
@@ -106,7 +108,7 @@ To deploy the uploaded `.pkg` file to your hosts:
 3. Go to **Software** and search for `Cloudflare`.
 4. Select **Actions** > **Install**.
 
-Installation will happen automatically when the host comes online. To deploy with REST API or GitOps, refer to the [Fleet documentation](https://fleetdm.com/guides/deploy-software-packages).
+Installation will happen automatically when the host comes online. To deploy with REST API or GitOps, refer to the [Fleet documentation](https://fleetdm.com/guides/deploy-software-packages). <Render file="warp/connectivity-status-check" />
 
 ### 4. Uninstall WARP with Fleet
 

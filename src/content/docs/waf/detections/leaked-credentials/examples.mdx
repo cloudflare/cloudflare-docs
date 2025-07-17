@@ -17,7 +17,7 @@ import { Example } from "~/components";
 Access to the `cf.waf.credential_check.username_and_password_leaked` field requires a Pro plan or above.
 :::
 
-Create a [rate limiting rule](/waf/rate-limiting-rules/) using [account takeover (ATO) detection](/bots/additional-configurations/detection-ids/#account-takeover-detections) and leaked credentials fields to limit volumetric attacks from particular IP addresses, JA4 Fingerprints, or countries.
+[Create a rate limiting rule](/waf/rate-limiting-rules/create-zone-dashboard/) using [account takeover (ATO) detection](/bots/additional-configurations/detection-ids/#account-takeover-detections) and leaked credentials fields to limit volumetric attacks from particular IP addresses, JA4 Fingerprints, or countries.
 
 The following example rule applies rate limiting to requests with a specific [ATO detection ID](/bots/additional-configurations/detection-ids/#account-takeover-detections) (corresponding to `Observes all login traffic to the zone`) that contain a previously leaked username and password:
 
@@ -41,7 +41,7 @@ When rate exceeds:
 Access to the _User and Password Leaked_ (`cf.waf.credential_check.username_and_password_leaked`) field requires a Pro plan or above.
 :::
 
-Create a [custom rule](/waf/custom-rules/) that challenges requests containing a previously leaked set of credentials (username and password).
+[Create a custom rule](/waf/custom-rules/create-dashboard/) that challenges requests containing a previously leaked set of credentials (username and password).
 
 - **Expression**: If you use the Expression Builder, configure the following expression:
 

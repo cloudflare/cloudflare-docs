@@ -44,6 +44,7 @@ The new rule, which will be the last rule in the ruleset, will challenge request
 			'(ip.src.country eq "GB" or ip.src.country eq "FR") and cf.waf.score lt 20',
 		action: "challenge",
 	}}
+	roles={false}
 />
 
 <Render file="api-create-ruleset-with-rule" />
@@ -70,6 +71,7 @@ The new rule, which will be the last rule in the ruleset, includes the definitio
 			},
 		},
 	}}
+	roles={false}
 />
 
 <Render file="api-create-ruleset-with-rule" />

@@ -404,3 +404,9 @@ Currently, you can only create complexity-based (or score-based) rules such as t
 :::
 
 When the origin server processes a request, it adds a `score` HTTP header to the response with a value representing how much work the origin has performed to handle it — for example, `400`. In the next hour, the same client can perform requests up to an additional budget of `600`. As soon as this budget is exceeded, later requests will be blocked until the timeout expires.
+
+### GraphQL malicious query protection
+
+API Shield customers can use GraphQL malicious query protection to protect their GraphQL APIs. GraphQL malicious query protection scans your GraphQL traffic for queries that could overload your origin and result in a denial of service. You can build rules that limit the query depth and size of incoming GraphQL queries in order to block suspiciously large or complex queries.
+
+Refer to [API Shield documentation](https://developers.cloudflare.com/api-shield/security/graphql-protection/) for more information on GraphQL malicious query protection.

@@ -4,14 +4,14 @@ description: You can now create Durable Objects using Python
 products:
   - workers
   - durable-objects
-date: 2025-05-16T12:00:00Z
+date: 2025-05-16
 ---
 
 import { WranglerConfig } from "~/components";
 
 You can now create [Durable Objects](/durable-objects/) using
 [Python Workers](/workers/languages/python/). A Durable Object is a special kind of
-Cloudflare Worker which uniquely combines compute with storage, enabling stateful 
+Cloudflare Worker which uniquely combines compute with storage, enabling stateful
 long-running applications which run close to your users. For more info see
 [here](https://developers.cloudflare.com/durable-objects/what-are-durable-objects/).
 
@@ -26,7 +26,7 @@ class MyDurableObject(DurableObject):
     def __init__(self, ctx, env):
         self.ctx = ctx
         self.env = env
-    
+
     def on_fetch(self, request):
         result = self.ctx.storage.sql.exec("SELECT 'Hello, World!' as greeting").one()
         return Response(result.greeting)

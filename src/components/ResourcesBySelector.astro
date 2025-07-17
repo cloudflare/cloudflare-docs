@@ -1,36 +1,58 @@
 ---
 import { z } from "astro:schema";
-import { getCollection } from "astro:content";
+import { getCollection, type CollectionEntry } from "astro:content";
+import ResourcesBySelectorReact from "./ResourcesBySelector";
 
 type Props = z.infer<typeof props>;
+type Frontmatter = keyof CollectionEntry<"docs">["data"];
 
 const props = z.object({
 	tags: z.string().array().optional(),
 	types: z.string().array(),
 	products: z.string().array().optional(),
+	directory: z.string().optional(),
+	filterables: z.custom<Frontmatter>().array().optional(),
 });
 
-const { tags, types, products } = props.parse(Astro.props);
+const { tags, types, products, directory, filterables } = props.parse(
+	Astro.props,
+);
 
-const resources = await getCollection("docs", ({ data }) => {
+const resources = await getCollection("docs", ({ id, data }) => {
 	return (
 		types.includes(data.pcx_content_type ?? "") &&
+		(directory ? id.startsWith(directory) : true) &&
 		(tags ? data.tags?.some((v: string) => tags.includes(v)) : true) &&
 		(products ? data.products?.some((v: string) => products.includes(v)) : true)
 	);
 });
+
+const facets = resources.reduce(
+	(acc, page) => {
+		if (!filterables) return acc;
+
+		for (const filter of filterables) {
+			const val = page.data[filter];
+			if (val) {
+				if (Array.isArray(val) && val.every((v) => typeof v === "string")) {
+					acc[filter] = [...new Set([...(acc[filter] || []), ...val])];
+				} else if (typeof val === "string") {
+					acc[filter] = [...new Set([...(acc[filter] || []), val])];
+				}
+			}
+		}
+
+		return acc;
+	},
+	{} as Record<string, string[]>,
+);
 ---
 
-<ul>
-	{
-		resources.map((page) => {
-			const description = page.data.description;
-			return (
-				<li>
-					<!-- prettier-ignore -->
-					<a href={`/${page.id}/`}>{page.data.title}</a>{description && `: ${description}`}
-				</li>
-			);
-		})
-	}
-</ul>
+<div>
+	<ResourcesBySelectorReact
+		resources={resources}
+		facets={facets}
+		filters={filterables}
+		client:load
+	/>
+</div>

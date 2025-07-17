@@ -1,0 +1,14 @@
+---
+pcx_content_type: configuration
+title: Block traffic by geographical location
+---
+
+This example custom rule blocks requests by autonomous system number (ASN), continent, or country of origin.
+
+- **Expression**: `(ip.src.asnum eq 131279) or (ip.src.continent eq "AS") or (ip.src.country eq "KP")`
+- **Action**: _Block_
+
+## Other resources
+
+- [Use case: Block traffic from specific countries](/waf/custom-rules/use-cases/block-traffic-from-specific-countries/)
+- [Use case: Allow traffic from specific countries only](/waf/custom-rules/use-cases/allow-traffic-from-specific-countries/)

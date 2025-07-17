@@ -10,9 +10,16 @@ description: Preview URLs allow you to preview new versions of your project with
 
 import { Render, WranglerConfig } from "~/components";
 
+# Overview
+
 Preview URLs allow you to preview new versions of your Worker without deploying it to production.
 
-Every time you create a new [version](/workers/configuration/versions-and-deployments/#versions) of your Worker a unique preview URL is generated. Preview URLs take the format: `<VERSION_PREFIX>-<WORKER_NAME>.<SUBDOMAIN>.workers.dev`. New [versions](/workers/configuration/versions-and-deployments/#versions) of a Worker are created on [`wrangler deploy`](/workers/wrangler/commands/#deploy), [`wrangler versions upload`](/workers/wrangler/commands/#upload) or when you make edits on the Cloudflare dashboard. By default, preview URLs are enabled and available publicly.
+There are two types of preview URLs:
+
+- **Versioned Preview URLs**: A unique URL generated automatically for each new version of your Worker.
+- **Aliased Preview URLs**: A static, human-readable alias that you can manually assign to a Worker version.
+
+Both preview URL types follow the format: `<VERSION_PREFIX OR ALIAS>-<WORKER_NAME>.<SUBDOMAIN>.workers.dev`.
 
 Preview URLs can be:
 
@@ -24,22 +31,66 @@ When testing zone level performance or security features for a version, we recom
 
 :::note
 Preview URLs are only available for Worker versions uploaded after 2024-09-25.
+:::
 
+## Types of Preview URLs
+
+### Versioned Preview URLs
+
+Every time you create a new [version](/workers/configuration/versions-and-deployments/#versions) of your Worker, a unique static version preview URL is generated automatically. These URLs use a version prefix and follow the format `<VERSION_PREFIX>-<WORKER_NAME>.<SUBDOMAIN>.workers.dev`.
+
+New versions of a Worker are created when you run:
+
+- [`wrangler deploy`](/workers/wrangler/commands/#deploy)
+- [`wrangler versions upload`](/workers/wrangler/commands/#upload)
+- Or when you make edits via the Cloudflare dashboard
+
+These URLs are public by default and available immediately after version creation.
+
+:::note
 Minimum required Wrangler version: 3.74.0. Check your version by running `wrangler --version`. To update Wrangler, refer to [Install/Update Wrangler](/workers/wrangler/install-and-update/).
 :::
 
-## View preview URLs using wrangler
+#### View versioned preview URLs using Wrangler
 
 The [`wrangler versions upload`](/workers/wrangler/commands/#upload) command uploads a new [version](/workers/configuration/versions-and-deployments/#versions) of your Worker and returns a preview URL for each version uploaded.
 
-## View preview URLs on the Workers dashboard
+#### View versioned preview URLs on the Workers dashboard
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers) and select your project.
 2. Go to the **Deployments** tab, and find the version you would like to view.
 
+### Aliased preview URLs
+
+Aliased preview URLs let you assign a persistent, readable alias to a specific Worker version. These are useful for linking to stable previews across many versions (e.g. to share an upcoming but still actively being developed new feature). A common workflow would be to assign an alias for the branch that you're working on. These types of preview URLs follow the same pattern as other preview URLs:
+`<ALIAS>-<WORKER_NAME>.<SUBDOMAIN>.workers.dev`
+
+:::note
+Minimum required Wrangler version: `4.21.0`. Check your version by running `wrangler --version`. To update Wrangler, refer to [Install/Update Wrangler](/workers/wrangler/install-and-update/).
+:::
+
+#### Create an Alias
+
+Aliases may be created during `versions upload`, by providing the `--preview-alias` flag with a valid alias name:
+
+```bash
+wrangler versions upload --preview-alias staging
+```
+
+The resulting alias would be associated with this version, and immediately available at:
+`staging-<WORKER_NAME>.<SUBDOMAIN>.workers.dev`
+
+#### Rules and limitations
+
+- Aliases may only be created during version upload.
+- Aliases must use only lowercase letters, numbers, and dashes.
+- Aliases must begin with a lowercase letter.
+- The alias and Worker name combined (with a dash) must not exceed 63 characters due to DNS label limits.
+- Only the 20 most recently used aliases are retained. When a new alias is created beyond this limit, the least recently used alias is deleted.
+
 ## Manage access to Preview URLs
 
-By default, preview URLs are enabled and available publicly. You can use [Cloudflare Access](/cloudflare-one/policies/access/) to require visitors to authenticate before accessing preview URLs. You can limit access to yourself, your teammates, your organization, or anyone else you specify in your [access policy](/cloudflare-one/policies/access).
+By default, all preview URLs are enabled and available publicly. You can use [Cloudflare Access](/cloudflare-one/policies/access/) to require visitors to authenticate before accessing preview URLs. You can limit access to yourself, your teammates, your organization, or anyone else you specify in your [access policy](/cloudflare-one/policies/access).
 
 To limit your preview URLs to authorized emails only:
 
@@ -66,6 +117,8 @@ You must press enter after you input your Application domain for it to save. You
 11. Add application.
 
 ## Disabling Preview URLs
+
+Disabling Preview URLs will disable routing to both versioned and aliased preview URLs.
 
 ### Disabling Preview URLs in the dashboard
 
