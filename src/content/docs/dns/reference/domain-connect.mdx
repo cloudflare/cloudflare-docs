@@ -73,13 +73,15 @@ In the [Domain Connect Specification](https://github.com/Domain-Connect/spec/blo
 - Properties for [defining the template itself](https://github.com/Domain-Connect/spec/blob/master/Domain%20Connect%20Spec%20Draft.adoc#template-definition).
 - Properties for defining the individual [DNS records](https://github.com/Domain-Connect/spec/blob/master/Domain%20Connect%20Spec%20Draft.adoc#template-record).
 
-While most of these are supported by Cloudflare, some are required and others are not supported. Below is what you need to know when creating your Domain Connect templates to use with Cloudflare.
+While most of these are supported by Cloudflare, some are required and others are not supported.
 
 :::note[Linter tool]
 Use Domain Connect's [linter tool](https://github.com/Domain-Connect/dc-template-linter) with the option `-cloudflare` enabled to check your template against Cloudflare specific rules.
 :::
 
 ### Apply template URL
+
+For the full list, refer to the [Domain Connect Specification](https://github.com/Domain-Connect/spec/blob/master/Domain%20Connect%20Spec%20Draft.adoc). Below are the details specific to Cloudflare.
 
 - **Redirect URI**: Domain Connect's documentation states that it must be scoped to the `syncRedirectDomain` from the template, or the request must be signed. Cloudflare requires the request to be signed and, as such, does not check if the `redirect_uri` is scoped to the `syncRedirectDomain`.
 - **State**: Is not supported and will be ignored.
@@ -88,6 +90,8 @@ Use Domain Connect's [linter tool](https://github.com/Domain-Connect/dc-template
 - **Key**: Required. You must publish your public key and place it in a DNS TXT record on a domain specified in the template as `syncPubKeyDomain`. To allow for key rotation, the hostname of the TXT record must be appended as another variable on the query string of the form.
 
 ### Template definition
+
+For the full list, refer to the [Domain Connect Specification](https://github.com/Domain-Connect/spec/blob/master/Domain%20Connect%20Spec%20Draft.adoc). Below are the details specific to Cloudflare.
 
 - **Service Provider Name**: Will be displayed on the user interface.
 - **Service Name**: Will **not** be displayed on the user interface.
@@ -100,6 +104,12 @@ Use Domain Connect's [linter tool](https://github.com/Domain-Connect/dc-template
 - **Multiple Instance**: Is not supported and will be ignored.
 - **Warn Phishing**: Is not supported and will be ignored.
 - **Host Required**: Is not supported and will be ignored.
+
+### DNS records
+
+For the full list, refer to the [Domain Connect Specification](https://github.com/Domain-Connect/spec/blob/master/Domain%20Connect%20Spec%20Draft.adoc). Below are the details specific to Cloudflare.
+
+
 
 ## Template updates
 
