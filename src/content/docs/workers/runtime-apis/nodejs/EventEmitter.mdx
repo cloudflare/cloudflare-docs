@@ -37,7 +37,7 @@ emitter.on('error', (err) => {
 
 Like Node.js, when an `'error'` event is emitted on an `EventEmitter` and there
 is no listener for it, the error will be immediately thrown. However, in Node.js
-it is possible to create add a handler on the `process` object for the
+it is possible to add a handler on the `process` object for the
 `'uncaughtException'` event to catch globally uncaught exceptions. The
 `'uncaughtException'` event, however, is currently not implemented in the
 Workers runtime. It is strongly recommended to always add an `'error'` listener
