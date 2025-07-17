@@ -9,7 +9,9 @@ import { Render } from "~/components"
 
 ## Agent
 
-An Agent manages HTTPS connection reuse by maintaining request queues per host/port. In the
+An implementation of the Node.js [`https.Agent'](https://nodejs.org/docs/latest/api/https.html#class-httpsagent) class.
+
+An [Agent](https://nodejs.org/docs/latest/api/https.html#class-httpsagent) manages HTTPS connection reuse by maintaining request queues per host/port. In the
 workers environment, however, such low-level management of the network connection, ports,
 etc, is not relevant because it is handled by the Cloudflare infrastructure instead. Accordingly, the
 implementation of `Agent` in Workers is a stub implementation that does not support connection
@@ -25,9 +27,9 @@ strictEqual(agent.protocol, 'https:');
 
 ## get
 
-The [`get`](https://nodejs.org/docs/latest/api/https.html#httpsgetoptions-callback) method performs a GET request to the specified URL and invokes the callback with the response. This is a convenience method that simplifies making HTTPS GET requests without manually configuring request options.
+An implementation of the Node.js [`https.get'](https://nodejs.org/docs/latest/api/https.html#httpsgetoptions-callback) method.
 
-`get` methods behaves the same as `node:http` get method.
+The [`get`](https://nodejs.org/docs/latest/api/https.html#httpsgetoptions-callback) method performs a GET request to the specified URL and invokes the callback with the response. This is a convenience method that simplifies making HTTPS GET requests without manually configuring request options.
 
 ```js
 import { get } from 'node:https';
@@ -41,8 +43,6 @@ get('https://developers.cloudflare.com/robots.txt', (res) => {
 		data += chunk;
 	});
 	res.on('end', () => {
-		// Returns the response body as a string.
-		console.log(data);
 		ok(data.includes('User-agent'));
 	});
 });
@@ -50,14 +50,14 @@ get('https://developers.cloudflare.com/robots.txt', (res) => {
 
 ## request
 
-The [`request`](https://nodejs.org/docs/latest/api/https.html#httpsrequesturl-options-callback) method creates an HTTPS request with customizable options like method, headers, and body. It provides full control over the request configuration and returns a [writable stream](https://nodejs.org/docs/latest/api/stream.html#class-streamwritable) for sending request data.
+An implementation of the Node.js [`https.request'](https://nodejs.org/docs/latest/api/https.html#httpsrequestoptions-callback) method.
+
+The [`request`](https://nodejs.org/docs/latest/api/https.html#httpsrequestoptions-callback) method creates an HTTPS request with customizable options like method, headers, and body. It provides full control over the request configuration and returns a [writable stream](https://developers.cloudflare.com/workers/runtime-apis/streams/writablestream/) for sending request data.
 
 Request method accepts all options from `http.request` with some differences in default values:
 - `protocol`: default `https:`
 - `port`: default `443`
 - `agent`: default `https.globalAgent`
-
-The following additional options are not supported: `ca`, `cert`, `ciphers`, `clientCertEngine` (deprecated), `crl`, `dhparam`, `ecdhCurve`, `honorCipherOrder`, `key`, `passphrase`, `pfx`, `rejectUnauthorized`, `secureOptions`, `secureProtocol`, `servername`, `sessionIdContext`, `highWaterMark`.
 
 ```js
 import { request } from 'node:https';
@@ -73,10 +73,10 @@ const req = request('https://developers.cloudflare.com/robots.txt', {
 		data += chunk;
 	});
 	res.on('end', () => {
-		// Returns the response body as a string.
-		console.log(data);
 		ok(data.includes('User-agent'));
 	});
 });
 req.end();
 ```
+
+The following additional options are not supported: `ca`, `cert`, `ciphers`, `clientCertEngine` (deprecated), `crl`, `dhparam`, `ecdhCurve`, `honorCipherOrder`, `key`, `passphrase`, `pfx`, `rejectUnauthorized`, `secureOptions`, `secureProtocol`, `servername`, `sessionIdContext`, `highWaterMark`.

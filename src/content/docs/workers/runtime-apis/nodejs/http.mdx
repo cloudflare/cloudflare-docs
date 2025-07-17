@@ -9,7 +9,9 @@ import { Render } from "~/components"
 
 ## Agent
 
-An Agent manages HTTP connection reuse by maintaining request queues per host/port. In the
+An implementation of the Node.js [`http.Agent'](https://nodejs.org/docs/latest/api/http.html#class-httpagent) class.
+
+An [Agent](https://nodejs.org/docs/latest/api/http.html#class-httpagent) manages HTTP connection reuse by maintaining request queues per host/port. In the
 workers environment, however, such low-level management of the network connection, ports,
 etc, is not relevant because it is handled by the Cloudflare infrastructure instead. Accordingly, the
 implementation of `Agent` in Workers is a stub implementation that does not support connection
@@ -42,14 +44,14 @@ get('http://docs.cloudflare.com/robots.txt', (res) => {
 		data += chunk;
 	});
 	res.on('end', () => {
-		// Returns the response body as a string.
-		console.log(data);
 		ok(data.includes('301 Moved Permanently'));
 	});
 });
 ```
 
 ## request
+
+An implementation of the Node.js [`http.request'](https://nodejs.org/docs/latest/api/http.html#httprequesturl-options-callback) method.
 
 The `request` method creates an HTTP request with customizable options like method, headers, and body. It provides full control over the request configuration and returns a [writable stream](https://nodejs.org/docs/latest/api/stream.html#class-streamwritable) for sending request data.
 
@@ -63,7 +65,7 @@ const req = request({
 	hostname: 'docs.cloudflare.com',
 	path: '/'
 }, (res) => {
-	// http://docs.cloudflare.com redirects to https url.
+	// requests to http://docs.cloudflare.com get redirected to their https counterpart.
 	strictEqual(res.statusCode, 301);
 
 	let data = '';
@@ -72,21 +74,21 @@ const req = request({
 		data += chunk;
 	});
 	res.on('end', () => {
-		// Returns the response body as a string.
-		console.log(data);
 		ok(data.includes('301 Moved Permanently'));
 	});
 });
 req.end();
+```
 
-const req2 = request(new URL('http://docs.cloudflare.com'),{
+```js
+const req = request(new URL('http://docs.cloudflare.com'),{
 	method: 'GET',
 }, (res) => {
-	// http://docs.cloudflare.com redirects to https url.
+	// requests to http://docs.cloudflare.com get redirected to their https counterpart.
 	strictEqual(res.statusCode, 301);
 });
 
-req2.end();
+req.end();
 ```
 
 The following options passed to the `request` method are not supported due to the differences in the Cloudflare Workers and the implementation of the `node:http` module:
