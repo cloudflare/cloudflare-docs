@@ -1228,7 +1228,7 @@ You can configure various aspects of local development, such as the local protoc
 
 - `container_engine` <Type text="string" /> <MetaInfo text="optional" />
 
-  - Defaults to the default Docker unix socket i.e. `unix:///var/run/docker.sock`. Set this to the socket path your container engine is listening at if you are using another container tool besides Docker, such as `colima`, or if your Docker engine is configured to listen at a custom socket path. You can also set this via the environment variable `WRANGLER_DOCKER_HOST`.
+  - Defaults to `unix:///var/run/docker.sock`. Set this to the socket path your container engine is listening at if you are using another container tool besides Docker, such as `colima`, or if your Docker engine is configured to listen at a path other than `unix:///var/run/docker.sock`. You can also set this via the environment variable `WRANGLER_DOCKER_HOST`.
 
 Example:
 
