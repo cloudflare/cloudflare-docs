@@ -11,7 +11,11 @@ sidebar:
 
 import { APIRequest } from "~/components"
 
-Cloudflare Audit Logs are account-based. All user-initiated actions are recorded automatically across the API and Dashboard. The system-initiated actions are logged along with additional information and enrichments to user-initiated actions.  When an action occurs, it is streamed through Cloudflare's audit logging pipeline and stored. This ensures consistent visibility into activity across all products.
+Cloudflare Audit Logs are account-based. All user-initiated actions are recorded automatically across both the Cloudflare API and Dashboard. System-initiated logs are also captured to reflect actions taken automatically by Cloudflare systems, such as configuration updates, background processes, or internal policy enforcement.
+
+When a user-initiated action triggers additional automated behavior, corresponding system-initiated logs may be generated. In some cases, these system-initiated logs include additional enrichments that provide more context about what was changed, offering deeper visibility into the full lifecycle of the action.
+
+When an action occurs, it is streamed through Cloudflare's audit logging pipeline and stored. This ensures consistent visibility into activity across all products.
 
 For more detailed information about how the user-initiated actions are logged automatically, refer to the [Cloudflare Blog](https://blog.cloudflare.com/introducing-automatic-audit-logs/).
 
