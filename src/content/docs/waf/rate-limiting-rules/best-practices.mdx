@@ -341,7 +341,7 @@ _This example rule requires Advanced Rate Limiting._
 
 ## Protecting GraphQL APIs
 
-Preventing server overload for GraphQL APIs can be different from preventing overload for RESTful APIs. One of the biggest challenges posed by applications built on GraphQL is that a single path manages all queries to the server, and every request is usually a `POST` operation. This prevents different rate limits for different API use cases based on the method and path.
+Preventing server overload for GraphQL APIs can be different from preventing overload for RESTful APIs. One of the biggest challenges posed by applications built on GraphQL is that a single path manages all queries to the server, and every request is usually a `POST` operation. This prevents different rate limits for different API use cases based on the HTTP method and URI path.
 
 However, instead of using the method and path like a RESTful API, the purpose of the request is usually embedded in the body, which has information on what data the client wants to fetch or mutate (according to [GraphQL's terminology](https://graphql.org/learn/queries/) for server-side data modification), along with any additional data required to carry out the action.
 
