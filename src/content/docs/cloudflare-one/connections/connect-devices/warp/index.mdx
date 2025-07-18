@@ -18,7 +18,7 @@ WARP is a device client, which builds proxy tunnels using either Wireguard or MA
 
 The WARP client comprises of:
 
-- Graphical User Interface (GUI): User-friendly control panel to view WARP's [status](/cloudflare-one/connections/connect-devices/warp/troubleshooting/connectivity-status/).
+- Graphical User Interface (GUI): Control panel that allows end users to view WARP's [status](/cloudflare-one/connections/connect-devices/warp/troubleshooting/connectivity-status/) and perform actions such as turning WARP on or off.
 - WARP daemon (or service): Core background component responsible for establishing secure tunnels (using WireGuard or MASQUE) and handling all WARP functionality on your device.
 
 Refer to [WARP architecture](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/) for more information on how WARP client interacts with a device's operating system to route traffic.
@@ -40,6 +40,8 @@ Deploying the WARP client significantly enhances your organization's security an
 
 - **Device posture checks**: The WARP client provides advanced Zero Trust protection by making it possible to check for [device posture](/cloudflare-one/identity/devices/). By setting up device posture checks, you can build Zero Trust policies that check for a device's location, disk encryption status, OS version, and more.
 
+- **Secure private and infrastructure access**: WARP lets devices connect to [private networks](/cloudflare-one/connections/connect-networks/private-net/cloudflared/) over Cloudflare Tunnel and is required for [Access for Infrastructure](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/), enabling secure SSH with short-lived certificates and detailed logging.
+
 ## WARP modes
 
 WARP offers flexible [operating modes](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) to suit your specific needs. WARP can control device traffic as a full proxy, manage only DNS traffic as a DNS proxy, or both. WARP is the most common method for sending user device traffic through Cloudflare Gateway for filtering and decryption.
@@ -48,4 +50,4 @@ WARP offers flexible [operating modes](/cloudflare-one/connections/connect-devic
 
 - Review the [first-time setup](/cloudflare-one/connections/connect-devices/warp/set-up-warp/) guide to [install](/cloudflare-one/connections/connect-devices/warp/download-warp/) and [deploy](/cloudflare-one/connections/connect-devices/warp/deployment/) the WARP client on your corporate devices.
 - Review possible [WARP modes](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) and [settings](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/) to best suit your organization's needs.
-- Explore [Cloudflare Gateway policies](/cloudflare-one/policies/gateway/) to leverage advanced web filtering, anti-virus scanning, and HTTP policies with WARP.
+- Explore [Cloudflare Gateway](/cloudflare-one/policies/gateway/) to enforce advanced DNS, network, HTTP, and egress policies with WARP.
