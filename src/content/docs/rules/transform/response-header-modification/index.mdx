@@ -68,7 +68,7 @@ You can create a response header transform rule [in the dashboard](/rules/transf
 
 - Modifying `cache-control`, `CDN-Cache-Control`, or `Cloudflare-CDN-Cache-Control` headers will not change the way Cloudflare caches an object. Instead, you should create a [Cache Rule](/cache/how-to/cache-rules/).
 
-- To add a `set-cookie` header to the response, make sure you use the _Add_ operation instead of _Set static_/_Set dynamic_. Using one of the _Set_ operations will remove any `set-cookie` headers already in the response, including those added by other Cloudflare products such as Bot Management.
+- To add a `set-cookie` header to the response, make sure you use one of the _Add static_/_Add dynamic_ operations instead of _Set static_/_Set dynamic_. Using one of the _Set_ operations will remove any `set-cookie` headers already in the response, including those added by other Cloudflare products such as Bot Management.
 
 <Render
 	file="troubleshoot-rules-with-trace"
