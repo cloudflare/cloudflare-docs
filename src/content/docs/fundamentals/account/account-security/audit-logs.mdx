@@ -11,7 +11,7 @@ sidebar:
 
 import { APIRequest } from "~/components"
 
-Cloudflare Audit Logs are account-based. All user-initiated actions are recorded automatically across both the Cloudflare API and Dashboard. System-initiated logs are also captured to reflect actions taken automatically by Cloudflare systems, such as configuration updates, background processes, or internal policy enforcement.
+Cloudflare Audit Logs are account-based. All user-initiated actions are recorded automatically across both the Cloudflare API and dashboard. System-initiated logs are also captured to reflect actions taken automatically by Cloudflare systems, such as configuration updates, background processes, or internal policy enforcement.
 
 When a user-initiated action triggers additional automated behavior, corresponding system-initiated logs may be generated. In some cases, these system-initiated logs include additional enrichments that provide more context about what was changed, offering deeper visibility into the full lifecycle of the action.
 
@@ -30,16 +30,16 @@ Audit Logs (version 2) provide a unified and standardized system for tracking an
 - **Standardized logging**: Audit logs are automatically generated in a consistent format across all Cloudflare services, ensuring uniformity and eliminating inconsistencies.
 - **Expanded product coverage**: Audit Logs covers 111 products, capturing actions from key endpoints, such as `/accounts`, `/zones`, `/user`, and `/memberships` APIs.
 - **Granular filtering**: Uniformly formatted logs allow for precise filtering by actions, actors, methods, and resources, facilitating efficient investigations.
-- **Enhanced context and transparency**: Each log entry includes detailed context, such as the authentication method used, the interface (API or Dashboard) through which the action was performed, and mappings to Cloudflare Ray IDs for improved traceability.
+- **Enhanced context and transparency**: Each log entry includes detailed context, such as the authentication method used, the interface (API or dashboard) through which the action was performed, and mappings to Cloudflare Ray IDs for improved traceability.
 - **Comprehensive activity capture**: Beyond create, edit, and delete actions, Audit Logs records GET requests and failed attempts, ensuring no critical activity is overlooked. 
 
 ## Retention
 
-Audit Logs are retained for 18 months before being deleted. Enterprise customers can use [Logpush](/logs/logpush/) to store Audit Logs for longer periods of time. Logpush for Audit Logs v2 will be available for GA. 
+Audit logs are retained for 18 months before being deleted. Enterprise customers can use [Logpush](/logs/logpush/) to store audit logs for longer periods of time. Logpush for Audit Logs v2 will be available for GA. 
 
 ## Access Audit Logs
 
-You can retrieve audit logs using one of the API or the dashboard. Audit Logs v2 will soon be available with Logpush. 
+You can retrieve audit logs using either the API or the dashboard. Audit Logs v2 will soon be available with Logpush. 
 
 ### API
 
@@ -94,10 +94,10 @@ For more information refer to the [API documentation](https://developers.cloudfl
 To access audit logs in the Cloudflare dashboard:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
-2. Go to **Manage Account** > **Audit Log**.
+2. Go to **Manage Account** > **Audit Logs**.
 
 :::note
-The Audit Logs v1 UI is shown by default, and users can switch between Audit Logs v1 and v2 as needed.
+The Audit Logs v1 is shown by default. You can switch between Audit Logs v1 and v2 as needed.
 :::
 
 ## Audit Log structure
@@ -110,7 +110,7 @@ Audit logs can be initiated either by users or the system. Understanding the typ
 
 #### User initiated Audit Logs
 
-Track actions performed directly by users through Cloudflare interfaces (Dashboard or API). These logs capture who performed the action, when it occurred, and what resource was affected. User initiated actions can be performed by three actors: 
+Track actions performed directly by users through Cloudflare interfaces (dashboard or API). These logs capture who performed the action, when it occurred, and what resource was affected. User initiated actions can be performed by three actors: 
 
 - `actor_type="user"`: Action was performed by an individual user.
 - `actor_type="Cloudflare_admin"`: Action was performed by Cloudflare.
@@ -124,7 +124,7 @@ Record changes made automatically by Cloudflare systems, without direct user inp
 
 #### Account Activity Logs
 
-Contain events scoped to a single Cloudflare account. These logs are filterable by `account ID` and reflect actions within that account only. You can optionally filter events further using the resource_scope field, which specifies whether the resource is associated with a user, an account, or a zone (`resource_scope ="user"`, `resource_scope ="accounts"`, or `resource_scope ="zones"`).
+Contain events scoped to a single Cloudflare account. These logs are filterable by `account ID` and reflect actions within that account only. You can optionally filter events further using the `resource_scope` field, which specifies whether the resource is associated with a user, an account, or a zone (`resource_scope ="user"`, `resource_scope ="accounts"`, or `resource_scope ="zones"`).
 
 #### User Profile Activity Logs
 
@@ -202,11 +202,12 @@ Use the following example to get a list of audit logs for a user account.
 
 ### Actor
 
-The actor represents who performed the action. It includes identity attributes like user ID, email address, IP address, and the type of actor (`user`, `account`, `Cloudflare_admin`, or `system`). It also includes the context used to initiate the action, such as API or Dashboard (`dash`).
+The actor represents who performed the action. It includes identity attributes like user ID, email address, IP address, and the type of actor (`user`, `account`, `Cloudflare_admin`, or `system`). It also includes the context used to initiate the action, such as API or dashboard (`dash`).
 
 ### Action
  
 The action field captures the nature of the event and whether it was successful. It includes a high-level type (e.g., `view`, `create`, `update`, `delete`), a specific description (such as `SSO_LOGIN`), the timestamp of when the action occurred, and the result (`success` or `failure`).  
+
 All `GET` requests are captured as `view` actions in Audit Logs.
 
 ### Account
