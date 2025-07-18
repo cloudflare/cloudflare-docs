@@ -9,7 +9,7 @@ sidebar:
 
 ---
 
-import { CURL } from '~/components';
+import { CURL, Render } from '~/components';
 
 Magic Transit uses endpoint health checks to determine the overall health of your [inter-network connections](/magic-transit/reference/gre-ipsec-tunnels/). Probes originate from Cloudflare infrastructure, outside customer network namespaces, and target IP addresses deep within your network, beyond the tunnel-terminating border router. These "long distance" probes are purely diagnostic.
 
@@ -36,6 +36,8 @@ You can learn how to configure and query endpoint health checks. Configuring hea
 Endpoint health checks can only be configured via the Cloudflare API. Endpoint health checks can not be configured via the dashboard, and they are not shown in the dashboard.
 
 Refer to the [API documentation](/api/resources/diagnostics/) to learn how to create, list, and delete endpoint health checks. Here is an example of a request to the Cloudflare API to create a new endpoint health check.
+
+<Render file="account-id-api-key" product="networking-services" />
 
 <CURL
   url="https://api.cloudflare.com/client/v4/accounts/account_id/diagnostics/endpoint-healthcheck"
