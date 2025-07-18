@@ -7,7 +7,9 @@ sidebar:
 
 You can implement a positive security model with Cloudflare Tunnel by blocking all ingress traffic and allowing only egress traffic from `cloudflared`. Only the services specified in your tunnel configuration will be exposed to the outside world.
 
-## Configure your firewall
+## Ports
+
+The parameters below can be configured for egress traffic inside of a firewall.
 
 How you configure your firewall depends on the firewall type:
 
@@ -16,13 +18,9 @@ How you configure your firewall depends on the firewall type:
 
 Ensure port `7844` is allowed for both TCP and UDP protocols (for `http2` and `quic`).
 
-## Ports
-
-The parameters below can be configured for egress traffic inside of a firewall.
-
 ### Required for tunnel operation
 
-`cloudflared` connects to Cloudflare's global network on port `7844`. To use Cloudflare Tunnel, your firewall must [allow outbound connections](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-with-firewall/#configure-your-firewall) to the following destinations on port `7844` (via UDP if using the `quic` protocol or TCP if using the `http2` protocol).
+`cloudflared` connects to Cloudflare's global network on port `7844`. To use Cloudflare Tunnel, your firewall must allow outbound connections to the following destinations on port `7844` (via UDP if using the `quic` protocol or TCP if using the `http2` protocol).
 
 #### `region1.v2.argotunnel.com`
 
@@ -68,9 +66,9 @@ This rule is only required for firewalls that enforce SNI.
 
 This rule is only required for firewalls that enforce SNI.
 
-### region US
+### Region US
 
-When using the [US region](/cloudflare-one/connections/connect-networks/configure-tunnels/cloudflared-parameters/run-parameters/#region), ensure your firewall [allows outbound connections](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-with-firewall/#configure-your-firewall) to these US-region destinations on port `7844` (TCP/UDP) for tunnel operation.
+When using the [US region](/cloudflare-one/connections/connect-networks/configure-tunnels/cloudflared-parameters/run-parameters/#region), ensure your firewall allows outbound connections to these US-region destinations on port `7844` (TCP/UDP) for tunnel operation.
 
 #### `us-region1.v2.argotunnel.com`
 
