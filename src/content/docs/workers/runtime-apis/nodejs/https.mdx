@@ -7,24 +7,6 @@ import { Render } from "~/components";
 
 <Render file="nodejs-compat-howto" />
 
-## Agent
-
-An implementation of the Node.js [`https.Agent'](https://nodejs.org/docs/latest/api/https.html#class-httpsagent) class.
-
-An [Agent](https://nodejs.org/docs/latest/api/https.html#class-httpsagent) manages HTTPS connection reuse by maintaining request queues per host/port. In the
-workers environment, however, such low-level management of the network connection, ports,
-etc, is not relevant because it is handled by the Cloudflare infrastructure instead. Accordingly, the
-implementation of `Agent` in Workers is a stub implementation that does not support connection
-pooling or keep-alive.
-
-```js
-import { Agent } from "node:https";
-import { strictEqual } from "node:assert";
-
-const agent = new Agent();
-strictEqual(agent.protocol, "https:");
-```
-
 ## get
 
 An implementation of the Node.js [`https.get'](https://nodejs.org/docs/latest/api/https.html#httpsgetoptions-callback) method.
@@ -90,3 +72,31 @@ req.end();
 ```
 
 The following additional options are not supported: `ca`, `cert`, `ciphers`, `clientCertEngine` (deprecated), `crl`, `dhparam`, `ecdhCurve`, `honorCipherOrder`, `key`, `passphrase`, `pfx`, `rejectUnauthorized`, `secureOptions`, `secureProtocol`, `servername`, `sessionIdContext`, `highWaterMark`.
+
+## Agent
+
+An implementation of the Node.js [`https.Agent'](https://nodejs.org/docs/latest/api/https.html#class-httpsagent) class.
+
+An `Agent` manages HTTPS connection reuse by maintaining request queues per host/port. In the workers environment, however, such low-level management of the network connection, ports, etc, is not relevant because it is handled by the Cloudflare infrastructure instead. Accordingly, the implementation of `Agent` in Workers is a stub implementation that does not support connection pooling or keep-alive.
+
+```js
+import { get, Agent } from 'node:https';
+import { strictEqual } from 'node:assert';
+
+export default {
+	async fetch() {
+
+    const agent = new Agent();
+    get({
+			hostname: 'example.org',
+			port: 443,
+			path: '/',
+			agent, // possible but not all that useful.
+		}, (res) => {
+			// ...
+		});
+
+		return new Response('ok');
+	}
+}
+```

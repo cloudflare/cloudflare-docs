@@ -7,24 +7,6 @@ import { Render } from "~/components"
 
 <Render file="nodejs-compat-howto" />
 
-## Agent
-
-An implementation of the Node.js [`http.Agent'](https://nodejs.org/docs/latest/api/http.html#class-httpagent) class.
-
-An [Agent](https://nodejs.org/docs/latest/api/http.html#class-httpagent) manages HTTP connection reuse by maintaining request queues per host/port. In the
-workers environment, however, such low-level management of the network connection, ports,
-etc, is not relevant because it is handled by the Cloudflare infrastructure instead. Accordingly, the
-implementation of `Agent` in Workers is a stub implementation that does not support connection
-pooling or keep-alive.
-
-```js
-import { Agent } from 'node:http';
-import { strictEqual } from 'node:assert';
-
-const agent = new Agent();
-strictEqual(agent.protocol, 'http:');
-```
-
 ## get
 
 An implementation of the Node.js [`http.get`](https://nodejs.org/docs/latest/api/http.html#httpgetoptions-callback) method.
@@ -122,4 +104,32 @@ get('http://docs.cloudflare.com', (res) => {
 	strictEqual(res.statusCode, 301);
 	ok(res instanceof IncomingMessage);
 });
+```
+
+## Agent
+
+A partial implementation of the Node.js [`http.Agent'](https://nodejs.org/docs/latest/api/http.html#class-httpagent) class.
+
+An `Agent` manages HTTP connection reuse by maintaining request queues per host/port. In the workers environment, however, such low-level management of the network connection, ports, etc, is not relevant because it is handled by the Cloudflare infrastructure instead. Accordingly, the implementation of `Agent` in Workers is a stub implementation that does not support connection pooling or keep-alive.
+
+```js
+import { get, Agent } from 'node:http';
+import { strictEqual } from 'node:assert';
+
+export default {
+	async fetch() {
+
+    const agent = new Agent();
+    get({
+			hostname: 'example.org',
+			port: 80,
+			path: '/',
+			agent, // possible but not all that useful.
+		}, (res) => {
+			// ...
+		});
+
+		return new Response('ok');
+	}
+}
 ```
