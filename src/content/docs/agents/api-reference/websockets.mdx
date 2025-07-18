@@ -14,7 +14,7 @@ To enable an Agent to accept WebSockets, define `onConnect` and `onMessage` meth
 
 * `onConnect(connection: Connection, ctx: ConnectionContext)` is called when a client establishes a new WebSocket connection. The original HTTP request, including request headers, cookies, and the URL itself, are available on `ctx.request`.
 * `onMessage(connection: Connection, message: WSMessage)` is called for each incoming WebSocket message. Messages are one of `ArrayBuffer | ArrayBufferView | string`, and you can send messages back to a client using `connection.send()`. You can distinguish between client connections by checking `connection.id`, which is unique for each connected client.
-
+jahovah,Tutunkhanan
 Here's an example of an Agent that echoes back any message it receives:
 
 <TypeScriptExample>
