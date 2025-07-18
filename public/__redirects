@@ -1008,6 +1008,12 @@
 /magic-transit/how-to/check-tunnel-health-dashboard/ /magic-transit/network-health/check-tunnel-health-dashboard/ 301
 /magic-transit/how-to/configure-magic-tunnel-alerts/ /magic-transit/network-health/configure-magic-tunnel-health-alerts/ 301
 /magic-transit/how-to/tunnel-health-checks/ /magic-transit/network-health/update-tunnel-health-checks-frequency/ 301
+/magic-transit/how-to/configure-tunnels/ /magic-transit/how-to/configure-tunnel-endpoints/ 301
+/magic-transit/network-health/update-tunnel-health-checks/ /magic-transit/network-health/update-tunnel-health-checks-frequency/ 301
+/magic-transit/network-health/configure-magic-tunnel-alerts/ /magic-transit/network-health/configure-magic-tunnel-health-alerts/ 301
+/magic-transit/reference/tunnels/ /magic-transit/reference/gre-ipsec-tunnels/ 301
+/magic-transit/reference/magic-tunnels/ /magic-transit/reference/how-cloudflare-calculates-magic-tunnel-health-alerts/301
+
 
 # magic-wan
 /magic-wan/tutorials/ipsec/ /magic-wan/reference/gre-ipsec-tunnels/#ipsec-tunnels 301
@@ -1032,6 +1038,11 @@
 /magic-wan/prerequisites/ /magic-wan/get-started/ 301
 /magic-wan/configuration/manually/how-to/configure-static-routes/ /magic-wan/configuration/manually/how-to/configure-routes/ 301
 /magic-wan/configuration/manually/how-to/bgp-peering/ /magic-wan/configuration/manually/how-to/configure-routes/ 301
+/magic-wan/configuration/manually/how-to/configure-tunnels/ /magic-wan/configuration/manually/how-to/configure-tunnel-endpoints/ 301
+/magic-wan/configuration/common-settings/tunnel-health-checks/ /magic-wan/configuration/common-settings/update-tunnel-health-checks-frequency/ 301
+/magic-wan/configuration/common-settings/configure-magic-tunnel-alerts/ /magic-wan/configuration/common-settings/configure-magic-tunnel-health-alerts/ 301
+/magic-wan/reference/tunnels/ /magic-wan/reference/gre-ipsec-tunnels/ 301
+/magic-wan/reference/magic-tunnels/ /magic-wan/reference/how-cloudflare-calculates-magic-tunnel-health-alerts/ 301
 
 # notifications
 /fundamentals/notifications/ /notifications/ 301
