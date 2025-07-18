@@ -187,13 +187,13 @@ HTTP origin response status code returned to browser.
 
 Type: `string`
 
-The RayID of the request that issued the challenge/jschallenge.
+The Ray ID of the request that issued the challenge/jschallenge.
 
-## RayID
+## Ray ID
 
 Type: `string`
 
-The RayID of the request.
+The [Ray ID](/fundamentals/reference/cloudflare-ray-id/) of the request.
 
 ## Ref
 
