@@ -21,7 +21,7 @@ To configure allow policies:
            - **Action**: Select one of the following to choose how Email Security will handle messages that match your criteria:
                - **Trust sender**: Messages will bypass all detections and link following.
                - **Exempt recipient**: Message to this recipient will bypass all detections.
-               - **Accept sender**: Messages from this sender will be exempted from Spam, Spoof, and Bulk dispositions.
+               - **Accept sender**: Messages from this sender will be exempted from Spam, Spoof, and Bulk dispositions. Refer to [Allow policy configuration use cases](/cloudflare-one/email-security/detection-settings/allow-policies/#use-case-1) for use case examples on how to configure allow policies for accept sender.
        - **Rule type**: Specify the scope of your policy. Choose one of the following:
            - **Email addresses**: Must be a valid email.
            - **IP addresses**: Can only be IPv4. IPv6 and CIDR are invalid entries.
@@ -34,29 +34,30 @@ To configure allow policies:
 
 <Details header="Allow policy configuration use cases">
     
-The following use cases present some use cases that will show you how to properly configure allow policies.
+The following use cases present some scenarios that will show you how to properly configure allow policies for accept sender.
 
 ### Use case 1
 
-<Example title = "Company receives emails from third party providers not used internally. These emails are sent from the service provider, but Email Security gives these emails an incorrect disposition.">
+<Example title = "Company receives emails from third party providers not used internally. These emails are sent from the service provider, and Email Security gives these emails an incorrect disposition.">
     This use case can affect companies such as Shopify, PayPal, and Docusign.
 
     To solve this:
 
     1. Submit a [team submission](/cloudflare-one/email-security/email-monitoring/search-email/#team-submissions).
-    2. Inform your Cloudflare account about the escalation.
-    3. Avoid setting up allow policies, or blocked senders. In this use case, configuring allow policies will create a security gap. Setting up blocked senders will block legitimate emails from providers such as Shopify, PayPal, and Docusign.
+    2. Inform your Cloudflare contact about the escalation.
+    3. Do not set up allow policies, or blocked senders. In this use case, configuring allow policies will create a security gap. Setting up blocked senders will block legitimate emails from providers such as Shopify, PayPal, and Docusign.
 </Example>
 
 ### Use case 2
 
-<Example title = "Company receives emails via third party providers that are used internally. These emails are sent from the custom domain company, but Email Security marks these emails as bulk, spam, or spoof.">
 
-  This use case can cause your inbox to receive too many unwanted emails. This use case can affect companies such as Salesforce, Atlassian, and Figma.
+<Example title = "Company receives emails via third party providers that are used internally. These emails are sent from the company's custom domain, but Email Security marks these emails as bulk, spam, or spoof.">
 
-  To solve this, when you add an allow policy in the Zero Trust dashboard, ensure that:
+  This use case can cause the emails you want to receive to follow the auto-moves rules you set up. This use case affects emails from internal tools (such as Salesforce, Atlassian, Figma, and more) that are given an incorrect disposition.
+
+  To solve this, when you add an allow policy in the Zero Trust dashboard:
   
-  1. You choose **Accept sender**.
+  1. Choose **Accept sender**.
   2. Verify that **Sender verification (recommended)** is turned on.
   
 </Example>
@@ -64,17 +65,17 @@ The following use cases present some use cases that will show you how to properl
 
 ### Use case 3
 
-<Example title = "Company receives emails via third party providers that are used internally. These emails are sent from the custom company domain, but Email Security marks these emails as bulk, spam, or spoof. The custom email domain does not support DMARC, SPF, DKIM, and would fail Sender Verification">
+<Example title = "Company receives emails via third party providers that are used internally. These emails are sent from the company's custom domain, but Email Security marks these emails as bulk, spam, or spoof. The custom email domain does not support DMARC, SPF, DKIM, and would fail Sender Verification">
 
-  This use case can affect companies such as Salesforce, Atlassian, and Figma.
+  This use case impacts the emails from internal tools (such as Salesforce, Atlassian, Figma, and more) that are given an incorrect disposition.
 
-  To solve this, when you add an allow policy in the Zero Trust dashboard, ensure that:
+  To solve this, when you add an allow policy in the Zero Trust dashboard:
 
-  1. You choose **Accept sender** based on the static IP you own.
+  1. Choose **Accept sender** based on the static IP you own.
   2. Ensure that **Sender verification (recommended)** is turned off.
 
   :::caution
-  Do not use email addresses or email domains for this case as they can be easily spoofed without **Sender Verification (Recommended)** enabled.
+  Do not use email addresses or email domains for this policy as they can be easily spoofed without **Sender Verification (Recommended)** enabled.
   :::
  
 </Example>
