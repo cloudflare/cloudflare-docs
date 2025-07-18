@@ -31,10 +31,10 @@ To create a rule:
    :::
 
 8. For **Modify response header**, select one of the following operations:
-
+   - _Add static_ — Adds an HTTP response header with a static string value. This operation will not remove any existing response headers with the same name.
+   - _Add dynamic_ — Adds an HTTP response header according to the provided expression. This operation will not remove any existing response headers with the same name.
    - _Set static_ — Sets the value of an HTTP response header to a static string value. Overrides the value of any existing headers with the same name or adds a new header if it does not exist.
    - _Set dynamic_ — Sets the value of an HTTP response header according to the provided expression. Overrides the value of any existing headers with the same name or adds a new header if it does not exist.
-   - _Add_ — Adds an HTTP response header with a static string value. This operation will not remove any existing response headers with the same name.
    - _Remove_ — Removes the HTTP response header with the provided name, if it exists.
 
 9. Enter the name of the HTTP response header to modify in **Header name** and the static value or expression in **Value**, if you are setting the header value.
