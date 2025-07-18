@@ -20,7 +20,7 @@ If you offer multiple tiers on your website or application and you want to enfor
 
 You can follow the rate limiting rule example below:
 
-```txt title="Rule example"
+```txt title="Example rule expression"
 (http.request.method eq "GET" and
 http.host eq "<YOUR_DOMAIN>" and
 http.request.uri.path matches "</EXAMPLE_PATH>" and
