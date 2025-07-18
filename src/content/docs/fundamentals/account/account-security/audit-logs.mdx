@@ -130,9 +130,7 @@ Contain events scoped to a single Cloudflare account. These logs are filterable 
 
 Reflect actions associated with a user's login (email) across multiple accounts. These logs enable cross-account tracking and can be filtered by `user ID` or `email`. They are visible on any account the user had access to at the time of the activity. User Profile Activity Logs can be filtered using `resource_scope ="user"`. 
 
-:::note
-The `GET /memberships` endpoint supports cross-account access.
-:::
+The `GET /memberships` endpoint supports cross-account access. To query memberships, use the parameter `resource_scope=memberships`.
 
 ## Example how to query Audit Logs
 
