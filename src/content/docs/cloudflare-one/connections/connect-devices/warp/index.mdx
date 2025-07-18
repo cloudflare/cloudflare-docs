@@ -14,9 +14,9 @@ The Cloudflare WARP client allows you to protect corporate devices by securely a
 
 ## How WARP works
 
-WARP is a device client, which builds proxy tunnels using either Wireguard or MASQUE, and builds a DNS proxy using DNS-over-HTTPS. WARP supports all major operating systems, all common forms of endpoint management tooling, and has a robust series of management parameters and profiles to accurately scope the needs of a diverse user base.
+WARP is a device client that builds proxy tunnels using either Wireguard or MASQUE, and builds a DNS proxy using DNS-over-HTTPS. WARP supports all major operating systems, all common forms of endpoint management tooling, and has a robust series of management parameters and profiles to accurately scope the needs of a diverse user base.
 
-The WARP client comprises of:
+The WARP client consists of:
 
 - Graphical User Interface (GUI): Control panel that allows end users to view WARP's [status](/cloudflare-one/connections/connect-devices/warp/troubleshooting/connectivity-status/) and perform actions such as turning WARP on or off.
 - WARP daemon (or service): Core background component responsible for establishing secure tunnels (using WireGuard or MASQUE) and handling all WARP functionality on your device.
@@ -36,7 +36,7 @@ Deploying the WARP client significantly enhances your organization's security an
       - [Browser Isolation](/cloudflare-one/policies/gateway/http-policies/#isolate)
       - [Identity-based policies](/cloudflare-one/policies/gateway/network-policies/)
 
-- **Application-specific insights**: With WARP installed on your corporate devices, you can populate the [Zero Trust Shadow IT Discovery](/cloudflare-one/insights/analytics/shadow-it-discovery/) page with visibility down to the application and user level. This makes it easy to discover, analyze, and take action on any shadow IT your users may be using every day.
+- **Application and device-specific insights**: With WARP installed on your corporate devices, you can view detailed application and user-level activity on the [Zero Trust Shadow IT Discovery](/cloudflare-one/insights/analytics/shadow-it-discovery/) page, while also monitoring device and network performance with [Digital Experience Monitoring (DEX)](/cloudflare-one/insights/dex/) to proactively detect and resolve issues.
 
 - **Device posture checks**: The WARP client provides advanced Zero Trust protection by making it possible to check for [device posture](/cloudflare-one/identity/devices/). By setting up device posture checks, you can build Zero Trust policies that check for a device's location, disk encryption status, OS version, and more.
 
