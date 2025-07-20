@@ -406,7 +406,7 @@ export default {
     instanceId = `${getUserId(request)}-${await crypto.randomUUID().slice(0, 6)}`
     let { result } = await addNewInstanceToDB(userId, instanceId)
     let goodInstance = await env.MY_WORKFLOW.create({
-    	id: userId,
+    	id: instanceId,
     	params: payload
     });
 
