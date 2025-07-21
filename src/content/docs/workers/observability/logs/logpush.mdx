@@ -11,7 +11,7 @@ sidebar:
 
 import { WranglerConfig } from "~/components";
 
-[Cloudflare Logpush](/logs/logpush/) supports the ability to send [Workers Trace Event Logs](/logs/reference/log-fields/account/workers_trace_events/) to a [supported destination](/logs/get-started/enable-destinations/). Worker’s Trace Events Logpush includes metadata about requests and responses, unstructured `console.log()` messages and any uncaught exceptions. This product is available on the Workers Paid plan. For pricing information, refer to [Pricing](/workers/platform/pricing/#workers-trace-events-logpush).
+[Cloudflare Logpush](/logs/logpush/) supports the ability to send [Workers Trace Event Logs](/logs/reference/log-fields/account/workers_trace_events/) to a [supported destination](/logs/logpush/logpush-job/enable-destinations/). Worker’s Trace Events Logpush includes metadata about requests and responses, unstructured `console.log()` messages and any uncaught exceptions. This product is available on the Workers Paid plan. For pricing information, refer to [Pricing](/workers/platform/pricing/#workers-trace-events-logpush).
 
 :::caution
 
@@ -51,7 +51,7 @@ To create a Logpush job in the Cloudflare dashboard:
 
 ### Via cURL
 
-The following example sends Workers logs to R2. For more configuration options, refer to [Enable destinations](/logs/get-started/enable-destinations/) and [API configuration](/logs/get-started/api-configuration/) in the Logs documentation.
+The following example sends Workers logs to R2. For more configuration options, refer to [Enable destinations](/logs/logpush/logpush-job/enable-destinations/) and [API configuration](/logs/get-started/api-configuration/) in the Logs documentation.
 
 ```bash
 curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/logpush/jobs" \
