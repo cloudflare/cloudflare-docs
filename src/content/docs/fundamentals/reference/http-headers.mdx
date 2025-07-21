@@ -88,9 +88,13 @@ For incoming requests, the value of this header will be set to the protocol the 
 
 The `Cf-Ray` header (otherwise known as a [Ray ID](/fundamentals/reference/cloudflare-ray-id/)) is a hashed value that encodes information about the data center and the visitor's request. For example: `Cf-Ray: 230b030023ae2822-SJC`.
 
+The Cf-Ray header identifies the data center processing the request when displayed as a response header. This is represented by a three-letter code corresponding to the data center's location.
+
+The Cf-Ray header is also sent to upstream origins and may be modified to reflect the connecting data center. This occurs when a request is routed through [Argo Smart Routing](/argo-smart-routing/) or [Argo Tiered Caching](/cache/how-to/tiered-cache/). In such cases, the three-letter code in the Cf-Ray header will indicate the data center connecting to the origin, not the ingress data center.
+
 Add the [`Cf-Ray` header to your origin web server logs](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#add-the-cf-ray-header-to-your-logs) to match requests proxied to Cloudflare to requests in your server logs.
 
-Enterprise customers can also see all requests via [Cloudflare Logs](/logs/).
+Enterprise customers can see all requests via [Cloudflare Logs](/logs/), including data related to the ingress data center.
 
 ### CF-IPCountry
 
