@@ -1,0 +1,59 @@
+---
+title: "2025-07-21 - Emergency"
+type: table
+pcx_content_type: release-notes
+sidebar:
+  order: 781
+tableOfContents: false
+---
+
+import { RuleID } from "~/components";
+
+This week’s update spotlights several high-impact vulnerabilities affecting enterprise infrastructure, including flaws in Citrix NetScaler, application performance tools, and network appliances. Several issues enable unauthenticated remote code execution or sensitive data disclosure, posing serious risks to organizational security.
+
+**Key Findings**
+
+Citrix NetScaler ADC (CVE-2025-53770): A newly identified vulnerability that results in sensitive memory disclosure, potentially exposing session tokens or credentials to unauthenticated attackers. This flaw follows the pattern of prior “Citrix Bleed”-style vulnerabilities and could lead to session hijacking.
+Citrix NetScaler ADC (CVE-2025-53771): A related vulnerability that may allow unauthenticated access to active sessions under certain conditions, posing a serious risk to environments relying on NetScaler for secure application delivery.
+
+**Impact**
+
+Together, these vulnerabilities significantly weaken the security boundaries of Citrix NetScaler ADC deployments. By leaking memory contents and enabling session compromise, they create opportunities for attackers to escalate access, impersonate users, and move laterally within enterprise networks.
+
+<table style="width: 100%">
+	<thead>
+		<tr>
+			<th>Ruleset</th>
+			<th>Rule ID</th>
+			<th>Legacy Rule ID</th>
+			<th>Description</th>
+			<th>Previous Action</th>
+			<th>New Action</th>
+			<th>Comments</th>
+		</tr>
+	</thead>
+       <tbody>
+ 		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+					<RuleID id="34dac2b38b904163bc587cc32168f6f0" />
+			</td>
+			<td>100817</td>
+			<td>Microsoft SharePoint - Deserialization - CVE:CVE-2025-53770</td>
+			<td>N/A</td>
+			<td>Block</td>
+			<td>This is a New Detection</td>
+ 		</tr>
+ 		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+ 			<td>
+ 					<RuleID id="d21f327516a145bc9d1b05678de656c4" />
+ 			</td>
+ 			<td>100818</td>
+ 			<td>Microsoft SharePoint - Deserialization - CVE:CVE-2025-53771</td>
+ 			<td>N/A</td>
+ 			<td>Block</td>
+ 			<td>This is a New Detection</td>
+		</tr>
+  </tbody>
+</table>
