@@ -2,18 +2,23 @@ import { useEffect, useState } from "react";
 import ReactSelect from "./ReactSelect";
 import type { CollectionEntry } from "astro:content";
 
-type Frontmatter = keyof CollectionEntry<"docs">["data"];
+type DocsData = keyof CollectionEntry<"docs">["data"];
+type VideosData = keyof CollectionEntry<"stream">["data"];
+
+type ResourcesData = DocsData | VideosData;
 
 interface Props {
-	resources: CollectionEntry<"docs">[];
+	resources: Array<CollectionEntry<"docs"> | CollectionEntry<"stream">>;
 	facets: Record<string, string[]>;
-	filters?: Frontmatter[];
+	filters?: ResourcesData[];
+	columns: number;
 }
 
 export default function ResourcesBySelector({
 	resources,
 	facets,
 	filters,
+	columns,
 }: Props) {
 	const [selectedFilter, setSelectedFilter] = useState<string | null>(null);
 
@@ -34,7 +39,7 @@ export default function ResourcesBySelector({
 
 		const filterableValues: string[] = [];
 		for (const filter of filters) {
-			const val = resource.data[filter];
+			const val = resource.data[filter as keyof typeof resource.data];
 			if (val) {
 				if (Array.isArray(val) && val.every((v) => typeof v === "string")) {
 					filterableValues.push(...val);
@@ -75,7 +80,9 @@ export default function ResourcesBySelector({
 				</div>
 			)}
 
-			<div className="grid grid-cols-2 gap-4">
+			<div
+				className={`grid ${columns === 2 ? "grid-cols-2" : "grid-cols-3"} gap-4`}
+			>
 				{visibleResources.map((page) => (
 					<a
 						key={page.id}
