@@ -10,7 +10,7 @@ learning_center:
 
 import { Render } from "~/components";
 
-<Render file="what-is-a-bot" />
+A **bot** is a software application programmed to do certain tasks.
 
 Bots can be used for good (chatbots, search engine crawlers) or for evil (inventory hoarding, credential stuffing).
 
@@ -36,7 +36,26 @@ You can opt into a managed rule that will block bots that we categorize as artif
 
 ### Which bots are blocked
 
-<Render file="list-ai-bots" />
+When you enable this feature, Cloudflare will block the following bots:
+
+- `Amazonbot` (Amazon)
+- `Applebot` (Apple)
+- `Bytespider` (ByteDance)
+- `ClaudeBot` (Anthropic)
+- `DuckAssistBot` (DuckDuckGo)
+- `Google-CloudVertexBot` (Google)
+- `GoogleOther` (Google)
+- `GPTBot` (OpenAI)
+- `Meta-ExternalAgent` (Meta)
+- `PetalBot` (Huawei)
+- `TikTokSpider` (ByteDance)
+- `CCBot` (Common Crawl)
+
+In addition to this list, [verified bots](https://radar.cloudflare.com/bots#verified-bots) that are classified in AI-related categories such as `AI Crawler` or an `Archiver`, as well as a number of unverified bots that behave similarly, are included in the rule. This rule does not include verified bots that fall into the `Search Engine` categories.
+
+These categories, and the bots classified in these categories, may change from time to time.
+
+If you are a bot operator and feel your bot may have been incorrectly categorized, [add your bot to the list of verified bots](https://dash.cloudflare.com/?to=/:account/configurations/verified-bots).
 
 ### How it works
 
