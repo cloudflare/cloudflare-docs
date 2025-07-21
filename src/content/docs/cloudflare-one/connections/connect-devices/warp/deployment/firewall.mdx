@@ -15,6 +15,13 @@ The WARP client connects to Cloudflare via a standard HTTPS connection outside t
 
 <Render file="warp/client-orchestration-ips" />
 
+<Render
+	file="warp/firewall"
+	params={{
+		domain: "zero-trust-client.cloudflareclient.com",
+	}}
+/>
+
 ## DoH IP
 
 :::note
@@ -25,6 +32,13 @@ In [Gateway with DoH](/cloudflare-one/connections/connect-devices/warp/configure
 
 - IPv4 DoH Addresses: `162.159.36.1` and `162.159.46.1`
 - IPv6 DoH Addresses: `2606:4700:4700::1111` and `2606:4700:4700::1001`
+
+<Render
+	file="warp/firewall"
+	params={{
+		domain: "<ACCOUNT_ID>.cloudflare-gateway.com",
+	}}
+/>
 
 ### Android devices
 
@@ -89,6 +103,13 @@ The client connects to the following destinations to verify general Internet con
 - `162.159.197.3`
 - `2606:4700:102::3`
 
+<Render
+	file="warp/firewall"
+	params={{
+		domain: "engage.cloudflareclient.com",
+	}}
+/>
+
 ### Inside tunnel
 
 The WARP client connects to the following IPs to verify connectivity inside of the WARP tunnel:
@@ -98,7 +119,12 @@ The WARP client connects to the following IPs to verify connectivity inside of t
 
 Because this check happens inside of the tunnel, you do not need to add these IPs to your firewall allowlist. However, since the requests go through Gateway, ensure that they are not blocked by a Gateway HTTP or Network policy.
 
-Thought it may be visible in `warp-diag` and other logs, `connectivity.cloudflareclient.com` is used internally by WARP and should not be used in firewall policies.
+<Render
+	file="warp/firewall"
+	params={{
+		domain: "connectivity.cloudflareclient.com",
+	}}
+/>
 
 ## NEL reporting (optional)
 
@@ -120,7 +146,6 @@ If your organization does not currently allow inbound/outbound communication ove
 
 - Windows: `C:\Program Files\Cloudflare\Cloudflare WARP\warp-svc.exe`
 - macOS: You must explicitly allow both the core networking daemon and GUI component as shown in the following instructions.
-
   1.  Core networking daemon: `/Applications/Cloudflare WARP.app/Contents/Resources/CloudflareWARP`
 
       This binary does not have a Bundle ID and must be allowed via full path.

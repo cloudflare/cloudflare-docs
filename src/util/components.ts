@@ -7,6 +7,7 @@ import {
 	type MdxJsxFlowElement,
 	type MdxJsxTextElement,
 } from "mdast-util-mdx";
+import type { Code } from "mdast";
 import { visit } from "unist-util-visit";
 
 type Usage = { count: number; pages: Set<string> };
@@ -51,6 +52,14 @@ export async function getComponentsUsage(
 				usages[typed.name] ||= { count: 0, pages: new Set() };
 				usages[typed.name].count++;
 				usages[typed.name].pages.add(fullName);
+			});
+
+			visit(tree, "code", function (node: Code) {
+				if (node.lang === "mermaid") {
+					usages["Mermaid"] ||= { count: 0, pages: new Set() };
+					usages["Mermaid"].count++;
+					usages["Mermaid"].pages.add(fullName);
+				}
 			});
 		}
 	}

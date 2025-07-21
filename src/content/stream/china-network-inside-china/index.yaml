@@ -1,0 +1,9 @@
+---
+id: b7933a5b3636ca29f834128ca92665b3
+url: china-network-inside-china
+title: China network - How to speed up your web traffic inside mainland China
+description: In this video, Jess Liu walks us through the main features of Cloudflares China Network They cover how the China Network works, including integrated caching, in-country China name servers, and compliance with ICP regulations They also briefly discuss Cloudflare’s CDN Global Acceleration (formerly China Express), an option for accelerating dynamic content that cannot be cached
+products:
+  - china-network
+thumbnail:
+  timestamp: 34s

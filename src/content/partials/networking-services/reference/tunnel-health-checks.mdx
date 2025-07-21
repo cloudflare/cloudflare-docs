@@ -1,5 +1,6 @@
 ---
 params:
+  - magicWord
   - addTunnels
   - changeHealthCheckRate
   - probeHealth
@@ -13,6 +14,32 @@ import { Render } from "~/components";
 A tunnel health check probe consists of an [ICMP (Internet Control Message Protocol)](https://www.cloudflare.com/learning/ddos/glossary/internet-control-message-protocol-icmp/) payload encapsulated in the protocol of the tunnel the probe is being conducted for. For example, if the tunnel is an IPsec tunnel, the ICMP [packet](https://www.cloudflare.com/learning/network-layer/what-is-a-packet/) is encrypted within the Encapsulating Security Payload (ESP) packet of the tunnel.
 
 A tunnel health check probe comes from Cloudflare to the tunnel origin, then returns a response to Cloudflare. This response is used to determine the outcome of the probe, which is used to calculate the state of the tunnel (this is explained in greater detail below).
+
+{ props.magicWord === "Magic Transit" && (
+	<>
+		<Render
+			file="tunnel-health/health-checks-compatible-cmb-eu"
+			product="networking-services"
+			params={{
+				productName: "Magic Transit"
+			}}
+		/>
+	</>
+	)
+}
+
+{ props.magicWord === "Magic WAN" && (
+	<>
+		<Render
+			file="tunnel-health/health-checks-compatible-cmb-eu"
+			product="networking-services"
+			params={{
+				productName: "Magic WAN"
+			}}
+		/>
+	</>
+	)
+}
 
 ## Tunnel health check attributes
 

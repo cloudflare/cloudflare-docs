@@ -5,6 +5,10 @@ productLink: "/autorag/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2025-07-16"
+    title: Deleted files now removed from index on next sync
+    description: |-
+      When a file is deleted from your R2 bucket, its corresponding chunks are now automatically removed from the Vectorize index linked to your AutoRAG instance during the next sync.
   - publish_date: "2025-07-08"
     title: Reduced cooldown between syncs
     description: |-

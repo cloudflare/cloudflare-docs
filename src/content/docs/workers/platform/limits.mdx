@@ -176,17 +176,19 @@ Routes in fail closed mode will display a Cloudflare `1027` error page to visito
 
 ## Memory
 
-Only one Workers instance runs on each of the many global Cloudflare global network servers. Each Workers instance can consume up to 128 MB of memory. Use [global variables](/workers/runtime-apis/web-standards/) to persist data between requests on individual nodes. Note however, that nodes are occasionally evicted from memory.
+Each [isolate](/workers/reference/how-workers-works/#isolates) of your Worker's code runs in can consume up to 128 MB of memory. This includes both memory used by the JavaScript heap, and memory explicitly allocated in [WebAssembly](/workers/runtime-apis/webassembly/). Note that this limit is per-isolate, not per-invocation of your Worker. A single isolate can handle many concurrent requests.
 
-If a Worker processes a request that pushes the Worker over the 128 MB limit, the Cloudflare Workers runtime may cancel one or more requests. To view these errors, as well as CPU limit overages:
+When an isolate running your Worker exceeds 128 MB of memory, the Workers runtime handles this gracefully instead of failing immediately. It allows in-flight requests to complete while simultaneously creating a new isolate for your Worker for new requests. While this approach typically allows in-flight requests to complete, during periods of extremely high load, some incoming requests may be cancelled to maintain system stability.
+
+To view out-of-memory errors (OOM), as well as CPU limit overages:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
 2. Select **Workers & Pages** and in **Overview**, select the Worker you would like to investigate.
 3. Under **Metrics**, select **Errors** > **Invocation Statuses** and examine **Exceeded Memory**.
 
-Use the [TransformStream API](/workers/runtime-apis/streams/transformstream/) to stream responses if you are concerned about memory usage. This avoids loading an entire response into memory.
+To avoid exceeding memory limits, where possible you should avoid buffering large objects or responses in memory, and instead use streaming APIs such as [`TransformStream`](/workers/runtime-apis/streams/transformstream/) or [`node:stream`](/workers/runtime-apis/nodejs/streams/) to stream responses. Manipulating streams allows you to avoid buffering entire responses in memory.
 
-Using DevTools locally can help identify memory leaks in your code. See the [memory profiling with DevTools documentation](/workers/observability/dev-tools/memory-usage/) to learn more.
+You can also use Chrome DevTools in local development to identify memory leaks in your code. See the [memory profiling with DevTools documentation](/workers/observability/dev-tools/memory-usage/) to learn more.
 
 ---
 

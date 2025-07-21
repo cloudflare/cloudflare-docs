@@ -21,19 +21,22 @@ The list below is for reference only. Responsibility for third-party software li
 - Default for recent [Opera](https://opera.com) and [Brave](https://brave.com)
 - Cloudflare's [fork of Go](https://github.com/cloudflare/go)
 - Default for [Go 1.24+](https://go.dev/doc/go1.24#cryptotlspkgcryptotls)
-- [OpenSSL 3.5.0+](https://www.openssl.org/)
+- Default for [OpenSSL 3.5.0+](https://www.openssl.org/)
 - [BoringSSL](https://boringssl.googlesource.com/boringssl/)
 - [GnuTLS](https://www.gnutls.org)
     - 3.8.9+ compiled with leancrypto 1.2.0+
     - 3.8.8-3.8.9 compiled with liboqs 0.11.0+
 - [rustls 0.23.22+](https://crates.io/crates/rustls)
 - Default for [rpxy 0.9.4+](https://github.com/junkurihara/rust-rpxy)
-- [NGINX](https://github.com/nginx/nginx) compiled with OpenSSL 3.5+ ([instructions](https://github.com/nginx/nginx/issues/288))
+- Default for [NGINX](https://github.com/nginx/nginx) compiled with OpenSSL 3.5+ ([instructions](https://github.com/nginx/nginx/issues/288))
 - [Open Quantum Safe](https://openquantumsafe.org/)
     - C library: liboqs 0.10.0+
     - OpenSSL provider: oqs-provider 0.7.0+
-- [Zig 0.14.0+](https://ziglang.org/)
-- [Caddy HTTP server 2.10.0+](https://caddyserver.com/)
+- [Zig 0.14.0+](https://ziglang.org/) (client)
+- Default for [Caddy HTTP server 2.10.0+](https://caddyserver.com/)
+- [Traefik](https://traefik.io/traefik/)
+    - Default for 3.4.2+, 2.11.26+ ([commit](https://github.com/traefik/traefik/commit/cd16321dd9c25bb47a2e9417b2a4a75959be63d0))
+    - Configurable with `curvePreferences` in [3.5.0-rc.1+](https://github.com/traefik/traefik/releases/tag/v3.5.0-rc1)
 - [Botan C++ library 3.7.0+](https://botan.randombit.net/)
 
 ## X25519Kyber768Draft00
@@ -54,6 +57,6 @@ The list below is for reference only. Responsibility for third-party software li
 - [Open Quantum Safe](https://openquantumsafe.org/)
     - C library: liboqs 0.5.0+
     - OpenSSL provider: oqs-provider 0.5.0-0.8.0
-- [Zig 0.11.0-0.13.0](https://ziglang.org/)
+- [Zig 0.11.0-0.13.0](https://ziglang.org/) (client)
 - [nginx](https://www.nginx.org/) when [compiled with BoringSSL](https://mailman.nginx.org/pipermail/nginx/2023-August/NOISOYU3QTB2DGIYUBGF7CAMQHDI2QLT.html) ([guide](https://blog.centminmod.com/2023/10/03/2860/how-to-enable-cloudflare-post-quantum-x25519kyber768-key-exchange-support-in-centmin-mod-nginx/))
 - [Botan C++ library 3.2.0+](https://botan.randombit.net/) ([instructions](https://github.com/randombit/botan/discussions/3747))

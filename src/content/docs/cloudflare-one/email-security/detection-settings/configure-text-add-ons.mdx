@@ -7,25 +7,28 @@ sidebar:
 
 You can create custom labels to be used as the subject or body prefix for emails with specific dispositions.
 
-To configure text add-ons:
+## Subject prefix
+
+To configure a subject prefix:
 
 1. Log in to [Zero Trust](https://one.dash.cloudflare.com/).
 2. Select **Email Security**.
 3. Select **Settings**, then go to **Detection settings** > **Text add-ons** > **View**.
-4. Select **Configure**.
+4. Select **Configure** > **Subject prefix**.
+5. Populate each disposition with a subject prefix, and turn on the **Status** to enable the subject prefix for a specific disposition.
 
-You can configure a **subject prefix** and/or a **body prefix**.
+### Advanced settings
 
-## Subject prefix
+In **Advanced settings**, you can configure **Add "labels" variable**. This option allows you to add a dynamic value for a label that lists dispositions and allows for additional text. 
 
-A subject prefix is a custom label to be used as the subject prefix for emails with specific dispositions.
-
-Populate each disposition with a subject prefix, and turn on the **Status** to enable the subject prefix for a specific disposition.
-
-Additionally, you can turn on **Add "labels" variable**. This option allows you to add a dynamic value that for a label that lists dispositions and allows for additional text. To turn on this option:
+To turn on **Add "labels" variable**:
 
 1. Go to **Advanced settings** > **Add "labels" variable**.
-2. Choose between **Use default**, or **Use custom "labels" variable**. If you choose **Use custom "labels" variable**, enter the custom label in the text box.
+2. Choose between:
+    - **Use default**.
+    - **Use custom "labels" variable**: Enter the custom label in the text box.
+
+Once you have configured the subject prefix, select **Save**.
 
 ## Body prefix
 
@@ -33,13 +36,22 @@ A body prefix is a custom label added to the top of the email body for emails wi
 
 Populate each disposition with a body prefix, and turn on the **Status** to enable the body prefix for a specific disposition.
 
-With body prefix, you can turn on advanced settings. Go to **Advanced settings**:
+### Advanced settings
 
-- **Add "labels" variable**: This option allows you to add a dynamic value that for a label that lists dispositions and allows for additional text. Choose between:
-    - **Use default**.
-    - **Use custom "labels" variable**: Enter the custom label in the text box.
-- **Add "threat types" variable**: Choose between:
-    - **Use default**.
-    - **Use custom "threat types" variable**: Enter the custom threat type in the text box.
+In Advanced settings, you can configure **Add "labels" or "threat types" variable**. This option allows you to add a dynamic value for labels that lists dispositions, or threats that lists the threat types behind an assigned disposition.
 
-Once you have configured a subject prefix or a body prefix, select **Save**.
+To turn on **Add "labels" or "threat types" variable**:
+
+1. Go to **Advanced settings**:
+2. Choose between:
+    - **Add "labels" variable**: This option allows you to add a dynamic value that for a label that lists dispositions and allows for additional text. Choose between:
+        - **Use default**.
+        - **Use custom "labels" variable**: Enter the custom label in the text box.
+
+Once you have configured the body prefix, select **Save**.
+
+### Add threat types variable
+
+This option allows you to include a dynamic value for '%THREATS' that lists the threat types behind an assigned disposition. It can include additional, HTML-formatted text.
+
+The dashboard will display **Default** or **Custom** (to use "labels" or "threat types" variable), depending on how you configured the [advanced settings](/cloudflare-one/email-security/detection-settings/configure-text-add-ons/#advanced-settings-1).

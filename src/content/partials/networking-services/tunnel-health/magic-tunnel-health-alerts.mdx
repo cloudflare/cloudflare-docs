@@ -44,7 +44,7 @@ The SLO threshold for Magic Tunnel health alerts is the percentage of successful
 
 The time it takes to be alerted depends on the sensitivity level you configure for your SLO thresholds. Higher sensitivity levels will notify you faster when a tunnel's health degrades, but they may also trigger alerts for brief or minor disruptions. Lower sensitivity levels reduce the chance of false alarms but may delay notifications for less severe issues. While the underlying detection timing remains consistent across sensitivity levels, the speed of notification depends on how significantly the tunnel's health has dropped and the sensitivity you have chosen. Cloudflare recommends that you [test SLO thresholds](#test-slos) to decide which one better serves your use case.
 
-Refer to <a href={props.magicTunnelHealthCheckCalculation}>Magic Tunnel health check calculation</a> for more information on this topic.
+Refer to <a href={props.magicTunnelHealthCheckCalculation}>How Cloudflare calculates Magic Tunnel health alerts</a> for more information on this topic.
 
 
 ## Set up Magic Tunnel health alerts
@@ -61,7 +61,7 @@ Refer to <a href={props.magicTunnelHealthCheckCalculation}>Magic Tunnel health c
 5. Select **Alert by tunnel**.
 6. Enter a name and description for the notification.
 7. Add webhooks or an email address for the person who should receive the notification, and select **Next**.
-8. Select the **Alert Sensitivity Level** threshold from the dropdown menu. The threshold is predefined to _Medium (98.0)_. There are options available between _Minimum (95.0)_ and _Maximum (99.9)_. Refer to <a href={props.magicTunnelHealthCheckCalculation}>Magic Tunnel health check calculation</a> for more information on this topic.
+8. Select the **Alert Sensitivity Level** threshold from the dropdown menu. The threshold is predefined to _Medium (98.0)_. There are options available between _Minimum (95.0)_ and _Maximum (99.9)_. Refer to <a href={props.magicTunnelHealthCheckCalculation}>How Cloudflare calculates Magic Tunnel health alerts</a> for more information on this topic.
 9. From the **Alert interval** drop-down menu, set the minimum amount of time that must pass before a duplicate alert is sent to you. Options range from five minutes to seven days.
 10. Enable **Set as default alert for any new tunnels created in the future** if you want the alert sensitivity level you chose to be automatically applied to all new tunnels you create.
 11. Select **Next**.
@@ -75,7 +75,7 @@ Refer to <a href={props.magicTunnelHealthCheckCalculation}>Magic Tunnel health c
 5. Select **Alert by data center**.
 6. Enter a name and description for the notification.
 7. Add webhooks or an email address for the person who should receive the notification, and select **Next**.
-8. Select the **Alert Sensitivity Level** threshold from the dropdown menu. The threshold is predefined to _Medium (98.0)_. There are options available between _Minimum (95.0)_ and _Maximum (99.9)_. Refer to <a href={props.magicTunnelHealthCheckCalculation}>Magic Tunnel health check calculation</a> for more information on this topic.
+8. Select the **Alert Sensitivity Level** threshold from the dropdown menu. The threshold is predefined to _Medium (98.0)_. There are options available between _Minimum (95.0)_ and _Maximum (99.9)_. Refer to <a href={props.magicTunnelHealthCheckCalculation}>How Cloudflare calculates Magic Tunnel health alerts</a> for more information on this topic.
 9. From the **Alert interval** drop-down menu, set the minimum amount of time that must pass before a duplicate alert is sent to you. Options range from five minutes to seven days.
 10. Choose the data centers you want to receive alerts for, and select **Next**.
 11. Choose the tunnels you want to receive alerts for. You can search by specific tunnel names, or filter them by type (GRE, IPsec and CNI). Select **Next**.

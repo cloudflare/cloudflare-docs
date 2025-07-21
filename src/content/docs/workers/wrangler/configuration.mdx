@@ -1222,6 +1222,14 @@ You can configure various aspects of local development, such as the local protoc
 
   - Host to forward requests to, defaults to the host of the first `route` of the Worker.
 
+- `enable_containers` <Type text="boolean" /> <MetaInfo text="optional" />
+
+  - Determines whether to enable containers during a local dev session, if they have been configured. Defaults to `true`. If set to `false`, you can develop the rest of your application without requiring Docker or other container tool, as long as you do not invoke any code that interacts with containers. 
+
+- `container_engine` <Type text="string" /> <MetaInfo text="optional" />
+
+  - Defaults to `unix:///var/run/docker.sock`. Set this to the socket path your container engine is listening at if you are using another container tool besides Docker, such as `colima`, or if your Docker engine is configured to listen at a path other than `unix:///var/run/docker.sock`. You can also set this via the environment variable `WRANGLER_DOCKER_HOST`.
+
 Example:
 
 <WranglerConfig>

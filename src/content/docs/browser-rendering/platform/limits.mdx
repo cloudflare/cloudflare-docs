@@ -14,7 +14,7 @@ import { Render, Plan } from "~/components";
 
 Users on the [Workers Free plan](/workers/platform/pricing/) are limited to **10 minutes of browser rendering usage per day**.
 
-To increase this limit, you’ll need to [upgrade to a Workers Paid plan](/workers/platform/pricing).
+To increase this limit, you will need to [upgrade to a Workers Paid plan](/workers/platform/pricing).
 
 | Feature                                | Limit           |
 | -------------------------------------- | --------------- |
@@ -22,6 +22,8 @@ To increase this limit, you’ll need to [upgrade to a Workers Paid plan](/worke
 | New browser instances per minute (Workers Bindings only)      | 3 per minute    |
 | Browser timeout                        | 60 seconds [^2] |
 | Total requests per min (REST API only) | 6 per minute    |
+
+By default, a browser instance gets killed if it does not get any [devtools](https://chromedevtools.github.io/devtools-protocol/) command for 60 seconds, freeing one instance. Users can optionally increase this by using the `keep_alive` [option](/browser-rendering/platform/puppeteer/#keep-alive). `browser.close()` releases the browser instance.
 
 ## Workers Paid
 
@@ -31,18 +33,13 @@ To increase this limit, you’ll need to [upgrade to a Workers Paid plan](/worke
 | -------------------------------------- | ------------------- |
 | Concurrent browsers per account (Workers Bindings only)        | 10 per account [^1] |
 | New browser instances per minute (Workers Bindings only)       | 10 per minute [^1]  |
-| Browser timeout                        | 60 seconds [^2][^1] |
-| Total requests per min (REST API only) | 60 per minute       |
+| Browser timeout                        | 60 seconds [^2] |
+| Total requests per min (REST API only) | 60 per minute [^1]       |
 
 [^1]: Contact our team to request increases to this limit.
 
-[^2]: By default, a browser instance gets killed if it does not get any [devtools](https://chromedevtools.github.io/devtools-protocol/) command for 60 seconds, freeing one instance. Users can optionally increase this by using the `keep_alive` [option](/browser-rendering/platform/puppeteer/#keep-alive). `browser.close()` releases the browser instance.
+By default, a browser instance gets killed if it does not get any [devtools](https://chromedevtools.github.io/devtools-protocol/) command for 60 seconds, freeing one instance. Users can optionally increase this by using the `keep_alive` [option](/browser-rendering/platform/puppeteer/#keep-alive). `browser.close()` releases the browser instance.
 
 ## Note on concurrency
 
 While the limits above define the maximum number of concurrent browser sessions per account, in practice you may not need to hit these limits. Browser sessions close automatically—by default, after 60 seconds of inactivity or upon task completion—so if each session finishes its work before a new request comes in, the effective concurrency is lower. This means that most workflows do not require very high concurrent browser limits.
-
-## Pricing
-
-Browser Rendering service is currently available at no cost up to the limits specified above **until billing begins**. Pricing to be announced and we will provide advance notice before any billing begins.
-

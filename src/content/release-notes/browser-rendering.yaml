@@ -5,6 +5,10 @@ productLink: "/browser-rendering/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2025-08-20"
+    title: Pricing update to Browser Rendering
+    description: |-
+      * Billing for Browser Rendering starts on August 20, 2025, with usage beyond the included [limits](/browser-rendering/platform/limits/) charged according to the new [pricing rates](/browser-rendering/platform/pricing/).
   - publish_date: "2025-07-03"
     title: Local development support
     description: |-
@@ -12,7 +16,7 @@ entries:
   - publish_date: "2025-06-30"
     title: New Web Bot Auth headers
     description: |-
-      * Browser Rendering now supports [Web Bot Auth](/reference/automatic-request-headers/) by automatically attaching `Signature-agent`, `Signature`, and `Signature-input ` headers to verify that a request originates from Cloudflare Browser Rendering. 
+      * Browser Rendering now supports [Web Bot Auth](/reference/automatic-request-headers/) by automatically attaching `Signature-agent`, `Signature`, and `Signature-input ` headers to verify that a request originates from Cloudflare Browser Rendering.
   - publish_date: "2025-06-27"
     title: Bug fix to debug log noise in Workers
     description: |-

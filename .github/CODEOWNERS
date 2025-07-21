@@ -150,7 +150,6 @@
 
 # Docs team areas
 
-/src/content/docs/docs-guide/ @dcpena @cloudflare/pcx-technical-writing
 /src/content/docs/style-guide/ @dcpena @cloudflare/pcx-technical-writing
 
 # Google tag gateway
