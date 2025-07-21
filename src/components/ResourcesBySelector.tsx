@@ -83,20 +83,27 @@ export default function ResourcesBySelector({
 			<div
 				className={`grid ${columns === 2 ? "grid-cols-2" : "grid-cols-3"} gap-4`}
 			>
-				{visibleResources.map((page) => (
-					<a
-						key={page.id}
-						href={`/${page.id}/`}
-						className="flex flex-col gap-2 rounded-sm border border-solid border-gray-200 p-6 text-black no-underline hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800"
-					>
-						<p className="decoration-accent underline decoration-2 underline-offset-4">
-							{page.data.title}
-						</p>
-						<span className="line-clamp-3" title={page.data.description}>
-							{page.data.description}
-						</span>
-					</a>
-				))}
+				{visibleResources.map((page) => {
+					const href =
+						page.collection === "stream"
+							? `/videos/${page.data.url}/`
+							: `/${page.id}/`;
+
+					return (
+						<a
+							key={page.id}
+							href={href}
+							className="flex flex-col gap-2 rounded-sm border border-solid border-gray-200 p-6 text-black no-underline hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800"
+						>
+							<p className="decoration-accent underline decoration-2 underline-offset-4">
+								{page.data.title}
+							</p>
+							<span className="line-clamp-3" title={page.data.description}>
+								{page.data.description}
+							</span>
+						</a>
+					);
+				})}
 			</div>
 		</div>
 	);
