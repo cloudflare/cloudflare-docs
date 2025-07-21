@@ -57,10 +57,6 @@ You can view the complete breakdown of concurrency caps, request rates, timeouts
 
 You can monitor your Browser Rendering usage in the [Cloudflare dashboard](https://dash.cloudflare.com). Go to **Compute (Workers)** > **Browser Rendering**. Then, you can use [the pricing page](/browser-rendering/platform/pricing/) to estimate your costs.
 
-#### Pricing
-
-Browser Rendering is currently free up to the limits above until billing begins. Pricing will be announced in advance.
-
 ### Does Browser Rendering rotate IP addresses for outbound requests?
 
 No. Browser Rendering requests originate from Cloudflares global network, but you cannot configure per-request IP rotation. All rendering traffic comes from Cloudflare IP ranges and requests include special headers [(`cf-biso-request-id`, `cf-biso-devtools`)](/browser-rendering/reference/automatic-request-headers/) so origin servers can identify them.
@@ -86,3 +82,12 @@ If you recently upgraded to the Workers Paid plan to increase your Browser Rende
 ### Why is my screenshot blurry?
 
 If your screenshot is blurry, it may be because you increased the height and width of the viewport. To fix this, increase the value of the `deviceScaleFactor` (default is 1).
+
+### How can I manage concurrency and session isolation with Browser Rendering?
+
+If you are hitting concurrency limits, or would like to better manage concurrent browser usage with the [Workers Binding method](/browser-rendering/workers-bindings/), here are a few tips:
+
+- Optimize with tabs or shared browsers: Instead of launching a new browser for each task, consider opening multiple tabs or running multiple actions within the same browser instance. 
+- [Reuse sessions](/browser-rendering/workers-bindings/reuse-sessions/): You can optimize your setup and decrease startup time by reusing sessions instead of launching a new browser every time. If you are concerned about maintaining test isolation, for example for tests that depend on a clean environment, we recommend using [incognito browser contexts](https://pptr.dev/api/puppeteer.browser.createbrowsercontext), which isolate cookies and cache with other sessions. 
+
+If you are still running into concurrency limits you can [request a higher limit](https://forms.gle/CdueDKvb26mTaepa9). 

@@ -341,9 +341,15 @@ _This example rule requires Advanced Rate Limiting._
 
 ## Protecting GraphQL APIs
 
-One of the biggest challenges posed by applications built on GraphQL is that a single path manages all queries to the server, and every request is usually a `POST` operation.
+Preventing server overload for GraphQL APIs can be different from preventing overload for RESTful APIs. One of the biggest challenges posed by applications built on GraphQL is that a single path manages all queries to the server, and every request is usually a `POST` operation. This prevents different rate limits for different API use cases based on the HTTP method and URI path.
 
-The purpose of the request is usually embedded in the body, which has information on what data the client wants to fetch or mutate (according to [GraphQL's terminology](https://graphql.org/learn/queries/) for server-side data modification), along with any additional data required to carry out the action.
+However, instead of using the method and path like a RESTful API, the purpose of the request is usually embedded in the body, which has information on what data the client wants to fetch or mutate (according to [GraphQL's terminology](https://graphql.org/learn/queries/) for server-side data modification), along with any additional data required to carry out the action.
+
+To prevent server overload, consider the following approaches:
+
+1. Limit the number of times a particular user can call the same GraphQL operation name.
+2. Limit the total amount of query complexity any given user is allowed to request.
+3. Limit any individual request's query complexity.
 
 The following examples are based on an application that accepts reviews for movies. A GraphQL request could look like the following:
 
@@ -376,7 +382,7 @@ To limit the rate of actions, you could use the following rule:
 
 _This example rule requires Advanced Rate Limiting and payload inspection._
 
-### Prevent server overload
+### Limit the total amount of query complexity
 
 The complexity necessary to handle a GraphQL request can vary significantly. Since the API uses a single endpoint, it is difficult to figure out the complexity of each request before it has been served.
 
@@ -405,7 +411,7 @@ Currently, you can only create complexity-based (or score-based) rules such as t
 
 When the origin server processes a request, it adds a `score` HTTP header to the response with a value representing how much work the origin has performed to handle it — for example, `400`. In the next hour, the same client can perform requests up to an additional budget of `600`. As soon as this budget is exceeded, later requests will be blocked until the timeout expires.
 
-### GraphQL malicious query protection
+### Limit any individual query’s complexity
 
 API Shield customers can use GraphQL malicious query protection to protect their GraphQL APIs. GraphQL malicious query protection scans your GraphQL traffic for queries that could overload your origin and result in a denial of service. You can build rules that limit the query depth and size of incoming GraphQL queries in order to block suspiciously large or complex queries.
 
