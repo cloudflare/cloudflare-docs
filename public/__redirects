@@ -960,9 +960,9 @@
 /logs/logpush/aws-s3/ /logs/logpush/logpush-job/enable-destinations/aws-s3/ 301
 /logs/logpush/azure/ /logs/logpush/logpush-job/enable-destinations/azure/ 301
 /logs/logpush/google-cloud-storage/ /logs/logpush/logpush-job/enable-destinations/google-cloud-storage/ 301
-/logs/logpush/logpush-configuration-api/ 1/logs/logpush/logpush-job/enable-destinations/ 301
+/logs/logpush/logpush-configuration-api/ /logs/logpush/logpush-job/enable-destinations/ 301
 /logs/logpush/logpush-configuration-api/understanding-logpush-api/ /logs/get-started/api-configuration/ 301
-/logs/logpush/logpush-dashboard/ 1/logs/logpush/logpush-job/enable-destinations/ 301
+/logs/logpush/logpush-dashboard/ /logs/logpush/logpush-job/enable-destinations/ 301
 /logs/logpush/s3-compatible-endpoints/ /logs/logpush/logpush-job/enable-destinations/s3-compatible-endpoints/ 301
 /logs/reference/logpush-api-configuration/ /logs/get-started/api-configuration/ 301
 /logs/reference/logpush-api-configuration/filters/ /logs/reference/filters/ 301
