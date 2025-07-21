@@ -10,11 +10,11 @@ description: Cloudflare mTLS now supports client certificates that have not been
 
 ---
 
-import { Render, APIRequest } from "~/components"
+import { Render, APIRequest, Tabs, TabItem } from "~/components"
 
-This page explains how you can manage mTLS using client certificates that have not been issued by Cloudflare CA.
+This page explains how you can manage client certificates that have not been issued by Cloudflare CA. For a broader overview, refer to the [mTLS at Cloudflare learning path](/learning-paths/mtls/concepts/).
 
-This is especially useful if you already have mTLS implemented and client certificates are already installed on devices.
+Bring your own CA (BYOCA) is especially useful if you already have mTLS implemented and [client certificates are already installed](/ssl/client-certificates/#how-it-works) on devices.
 
 ## Availability
 
@@ -77,6 +77,42 @@ This is especially useful if you already have mTLS implemented and client certif
   "expression": "(http.host in {\"<HOSTNAME_1>\" \"<HOSTNAME_2>\"} and not cf.tls_client_auth.cert_verified)",
   "action": "block"
 ```
+
+### Multiple CAs for one hostname
+
+There can be multiple CAs (Cloudflare-managed or BYOCA) associated with the same hostname. For BYOCA certificates, the most recently deployed certificate will be prioritized.
+
+If you wish to remove the association from the Cloudflare-managed certificate and only use your BYOCA certificate(s):
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
+2. Go to **SSL/TLS** > **Client Certificates**.
+3. On the **Hosts** section of the **Client Certificates** card, select **Edit**.
+4. Select the cross next to the hostname you want to remove. The list of hostname associations will be updated.
+5. Select **Save** to confirm.
+
+</TabItem> <TabItem label="API">
+
+1. [List the hostname associations](/api/resources/certificate_authorities/subresources/hostname_associations/methods/get/) **without** the `mtls_certificate_id` parameter.
+
+<APIRequest
+  path="/zones/{zone_id}/certificate_authorities/hostname_associations"
+  method="GET"
+/>
+
+2. Copy the `hostnames` array returned by the API and update it, removing the hostname that should no longer use the Cloudflare-managed CA.
+3. Use the [Replace Hostname Associations endpoint](/api/resources/certificate_authorities/subresources/hostname_associations/methods/update/) **without** the `mtls_certificate_id` parameter to perform the action against the Cloudflare-managed CA. For `hostnames` use the list from the previous step.
+
+<APIRequest
+  path="/zones/{zone_id}/certificate_authorities/hostname_associations"
+  method="PUT"
+	json={{
+		"hostnames": ["<UPDATED_HOSTNAME_ASSOCIATIONS>"]
+	}}
+/>
+
+</TabItem> </Tabs>
 
 ## Delete an uploaded CA
 
