@@ -62,7 +62,7 @@ Specifies when to start extracting the output in the input file. Depends on `mod
 - When `mode` is `spritesheet` or `video`, specifies the timestamp where the output will start.
 - When `mode` is `frame`, specifies the timestamp from which to extract the still image.
 - Formats as a time string, for example: 5s, 2m
-- Acceptable range: 0 – 30s
+- Acceptable range: 0 – 10m
 - Default: 0
 
 ### `duration`
@@ -72,7 +72,7 @@ The duration of the output video or spritesheet. Depends on `mode`:
 - When `mode` is `video`, specifies the duration of the output.
 - When `mode` is `spritesheet`, specifies the time range from which to select frames.
 - Acceptable range: 1s - 60s (or 1m)
-- Default: input duration or 30 seconds, whichever is shorter
+- Default: input duration or 60 seconds, whichever is shorter
 
 ### `fit`
 
@@ -119,7 +119,6 @@ Input video should be an MP4 with H.264 encoded video and AAC or MP3 encoded aud
 Media Transformations are currently in beta. During this period:
 
 - Transformations are available for all enabled zones free-of-charge.
-- Restricting allowed origins for transformations are coming soon.
 - Outputs from Media Transformations will be cached, but if they must be regenerated, the origin fetch is not cached and may result in subsequent requests to the origin asset.
 
 ## Pricing

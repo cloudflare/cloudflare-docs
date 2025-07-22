@@ -19,7 +19,7 @@ An email rule is a pair of a custom email address and a destination address, or 
 
 :::note
 
-If you have more than one destination address linked to the same custom address, Email Routing will only process the most recent rule. This means only the most recent pair of custom address and destination address (rule) will receive your forwarded emails. To avoid this, do not link more than one destination address to the same custom address. 
+If you have more than one destination address linked to the same custom address, Email Routing will only process the most recent rule. This means only the most recent pair of custom address and destination address (rule) will receive your forwarded emails. To avoid this, do not link more than one destination address to the same custom address.
 :::
 
 ### Email rule actions
@@ -64,6 +64,16 @@ To enable Catch-all addresses:
 3. Enable **Catch-all address**, so it shows as **Active**.
 4. In the **Action** drop-down menu, select what to do with these emails. Refer to [Email rule actions](#email-rule-actions) for more information.
 5. Select **Save**.
+
+## Subaddressing
+
+Email Routing supports subaddressing, also known as plus addressing, as defined in [RFC 5233](https://www.rfc-editor.org/rfc/rfc5233). This enables using the "+" separator to augment your custom addresses with arbitrary detail information.
+
+You can enable subaddressing at **Email** > **Email Routing** > **Settings**.
+
+Once enabled, you can use subaddressing with any of your custom addresses. For example, if you send an email to `user+detail@example.com` it will be captured by the `user@example.com` custom address. The `+detail` part is ignored by Email Routing, but it can be captured next in the processing chain in the logs, an [Email Worker](/email-routing/email-workers/) or an [Agent application](https://github.com/cloudflare/agents/tree/main/examples/email-agent).
+
+If a custom address 'user+detail@example.com` already exists, it will take precedence over 'user@example.com'. This prevents breaking existing routing rules for users, and allows certain sub-addresses to be captured by a specific rule.
 
 ## Destination addresses
 

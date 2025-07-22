@@ -7,7 +7,9 @@ sidebar:
 
 import { GlossaryTooltip, Render } from "~/components";
 
-<Render file="bot-score-definition" />
+A bot score is a score from *1* to *99* that indicates how likely that request came from a bot.
+
+For example, a score of 1 means Cloudflare is quite certain the request was automated, while a score of 99 means Cloudflare is quite certain the request came from a human.
 
 Bot scores are available to be used in rule expressions and with Workers to customize application behavior. For more details, refer to [Bot Management variables](/bots/reference/bot-management-variables/).
 
@@ -20,7 +22,13 @@ Granular bot scores are only available to Enterprise customers who have purchase
 
 Customers with a Pro plan or higher can automatically see bot traffic divided into groups by going to **Security** > **Bots**.
 
-<Render file="bot-groupings" />
+| Category             | Range                                                                                  |
+| -------------------- | -------------------------------------------------------------------------------------- |
+| **Not computed**     | Bot scores of 0.                                                                       |
+| **Automated**        | Bot scores of 1.                                                                       |
+| **Likely automated** | Bot scores of 2 through 29.                                                            |
+| **Likely human**     | Bot scores of 30 through 99.                                                           |
+| **Verified bot**     | Non-malicious automated traffic (used to power search engines and other applications). |
 
 :::note
 
@@ -34,15 +42,35 @@ Bot scores are not computed for requests to paths that are handled by Cloudflare
 The following detection engines only apply to Enterprise Bot Management. For specific details about the engines included in your plan, refer to [Plans](/bots/plans/).
 :::
 
-<Render file="bm-bot-detection-engines" />
+### Heuristics
+
+<Render file="bots-heuristics" product="bots" />
+
+The Heuristics engine immediately gives automated requests a score of 1.
+
+### Machine learning
+
+<Render file="bots-ml" product="bots" />
+
+The ML engine produces scores 2 through 99.
+
+### Anomaly detection
+
+<Render file="bots-ad" product="bots" />
+
+### JavaScript detections
+
+<Render file="bots-jsd" product="bots" />
+
+JSD is enabled by default but completely optional. To adjust your settings, open the Bot Management Configuration page from **Security** > **Bots**.
 
 ### Cloudflare service
 
-<Render file="bots-cs" />
+**Cloudflare Service** is a special <GlossaryTooltip term="bot score">bot score</GlossaryTooltip> source for Enterprise Zero Trust to avoid false positives.
 
 ### Not computed
 
-<Render file="bots-nc" />
+A bot score of 0 means Bot Management did not run on the request. Cloudflare does not run Bot Management on internal service requests that Bot Management has no interest in blocking.
 
 ### Notes on detection
 

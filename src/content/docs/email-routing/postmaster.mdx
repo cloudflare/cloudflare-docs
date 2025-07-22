@@ -230,6 +230,6 @@ Due to the nature of email forwarding, restrictive DMARC policies might make for
 
 Email Routing does not support sending or replying from your Cloudflare domain. When you reply to emails forwarded by Email Routing, the reply will be sent from your destination address (like `my-name@gmail.com`), not your custom address (like `info@my-company.com`).
 
-### Signs such "`+`" and "`.`" are treated as normal characters for custom addresses
+### "`.`" is treated as normal characters for custom addresses
 
-Email Routing does not have advanced routing options. Characters such as `+` or `.`, which perform special actions in email providers like Gmail and Outlook, are currently treated as normal characters on custom addresses. More flexible routing options are in our roadmap.
+The `.` character, which perform special actions in email providers like Gmail, is treated as a normal character on custom addresses.
