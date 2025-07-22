@@ -70,7 +70,7 @@ Follow the previous steps to [create](#create-rules-in-the-dashboard) or [edit](
 
 Each rule must include a group of IP prefixes in its definition. All IP prefixes inside a rule are evaluated as a whole, and you should set up a rule with multiple IP prefixes when you want the IP prefixes' aggregated traffic to trigger an alert or advertisement. For thresholds on singular IP prefixes or IP addresses, you can create an individual rule with one prefix and the desired rule parameters.
 
-### Rule IP prefixes example
+#### Rule IP prefixes example
 
 For a rule with two prefix CIDRs and a `packet_threshold` of `10000` as shown below, the rule will be flagged if the joint packet traffic of `192.168.0.0/24` and `172.118.0.0/24` is greater than `10000`. This also means that Cloudflare attempts to auto advertise both CIDRs if the rule has the auto advertisement flag enabled. Customers can also [configure Rule IP prefixes at scale via Cloudflare's API](https://developers.cloudflare.com/api/resources/magic_network_monitoring/subresources/rules/).
 
