@@ -143,7 +143,7 @@ export async function getRSSItems({
 }: GetRSSItemsOptions): Promise<Array<RSSFeedItem>> {
 	return await Promise.all(
 		notes.map(async (note) => {
-			const { title, date, products } = note.data;
+			const { title, date, products, scheduledDate } = note.data;
 
 			const productEntries = await getEntries(products);
 			const productTitles = productEntries.map((p) => p.data.name as string);
@@ -171,8 +171,14 @@ export async function getRSSItems({
 
 			const content = String(file).trim();
 
+			let itemTitle = `${productTitles.join(", ")} - ${title}`;
+
+			if (scheduledDate) {
+				itemTitle += ` scheduled for ${scheduledDate.toISOString().slice(0, 10)}`;
+			}
+
 			return {
-				title: `${productTitles.join(", ")} - ${title}`,
+				title: itemTitle,
 				description: content,
 				pubDate: date,
 				categories: productTitles,
