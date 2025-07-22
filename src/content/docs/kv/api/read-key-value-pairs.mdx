@@ -251,6 +251,8 @@ A hot read means that the data is cached on Cloudflare's edge network using the 
 
 The `cacheTtl` parameter must be an integer greater than or equal to `60`, which is the default. The maximum value for `cacheTtl` is [`Number.MAX_SAFE_INTEGER`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MAX_SAFE_INTEGER).
 
+Once a key has been read with a given `cacheTtl` in a region, it will remain cached in that region until the end of the `cacheTtl` or eviction. This affects regional and central tiers of KV's built-in caching layers. When writing to Workers KV, the regions in the regional and central caching layers internal to KV will get revalidated with the newly written result.
+
 ### Requesting more keys per Worker invocation with bulk requests
 
 Workers are limited to 1,000 operations to external services per invocation. This applies to Workers KV, as documented in [Workers KV limits](/kv/platform/limits/).
