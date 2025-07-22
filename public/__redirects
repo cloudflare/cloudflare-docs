@@ -977,6 +977,7 @@
 /logs/tutorials/examples/example-logpush-curl/ /logs/logpush/examples/example-logpush-curl/ 301
 /logs/tutorials/examples/example-logpush-python/ /logs/logpush/examples/example-logpush-python/ 301
 /logs/get-started/alerts-and-analytics/ /logs/logpush/alerts-and-analytics/ 301
+/logs/edge-log-delivery/ /logs/logpush/logpush-job/edge-log-delivery/ 301
 
 # magic-firewall
 /magic-firewall/reference/examples/ /magic-firewall/how-to/add-rules/ 301
