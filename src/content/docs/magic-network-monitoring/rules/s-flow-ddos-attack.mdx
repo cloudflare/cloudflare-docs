@@ -24,12 +24,12 @@ Customers can export sFlow data of their network traffic to Cloudflare via Magic
 | **Rule name** | Must be unique and cannot contain spaces. Supports characters `A-Z`, `a-z`, `0-9`, underscore (`_`), dash (`-`), period (`.`), and tilde (`~`). Maximum of 256 characters. |
 | **Rule type** | advanced_ddos |
 | **Prefix Match** | The field `prefix_match` determines how IP matches are handled. <ul><li>**Recommended**</li><ul><li>**Subnet**: Automatically advertise if the attacked IPs are within a subnet of a public IP prefix that can be advertised by Magic Transit.</li></ul><li>**Other prefix match options**</li><ul><li>**Exact**: Automatically advertise if the attacked IPs are an exact match with a public IP prefix that can be advertised by Magic Transit.</li><li>**Supernet**: Automatically advertise if the attacked IPs are a supernet of a public IP prefix that can be advertised by Magic Transit.</li></ul></ul> |
-| **Auto-advertisement** | If you are a [Magic Transit On Demand](/magic-transit/on-demand) customer, you can enable this feature to automatically enable Magic Transit if the rule's dynamic threshold is triggered. To learn more refer to [Auto-Advertisement section](/magic-network-monitoring/rules/rule-notifications/#rule-auto-advertisement-notifications). |
+| **Auto-advertisement** | If you are a [Magic Transit On Demand](/magic-transit/on-demand) customer, you can enable this feature to automatically enable Magic Transit if the rule's dynamic threshold is triggered. To learn more refer to [Auto-Advertisement section](/magic-network-monitoring/rules/#rule-auto-advertisement). |
 | **Rule IP prefix** | The IP prefix associated with the rule for monitoring traffic volume. Must be a CIDR range such as `160.168.0.1/24`. The maximum is 5,000 unique CIDR entries. To learn more and see an example, view the [Rule IP prefixes](/magic-network-monitoring/rules/#rule-ip-prefixes). |
 
 ## API documentation
 
-You can visit [developers.cloudflare.com/api/](/api/), navigate to [Magic Network Monitoring](/api/resources/magic_network_monitoring/), and expand the [Rules](/api/resources/magic_network_monitoring/subresources/rules/) section to see an example API configuration call using CURL and the expected output for a successful response.
+Go to the [Rules](/api/resources/magic_network_monitoring/subresources/rules/) section in the Magic Network Monitoring's API documentation to review an example API configuration call using CURL and the expected output for a successful response.
 
 ## Tune the sFlow DDoS alert thresholds
 
