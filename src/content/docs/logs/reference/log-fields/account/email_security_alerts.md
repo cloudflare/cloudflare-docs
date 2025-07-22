@@ -157,7 +157,7 @@ Threat categories attributed by Email Security processing (for example, 'Credent
 
 Type: `int or string`
 
-Start time of message processing (for example, '2024-08-28T15:32:35Z'). To specify the timestamp format, refer to [Output types](/logs/reference/log-output-options/#output-types).
+Start time of message processing (for example, '2024-08-28T15:32:35Z'). To specify the timestamp format, refer to [Output types](/logs/logpush/logpush-job/log-output-options/#output-types).
 
 ## To
 

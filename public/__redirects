@@ -979,6 +979,7 @@
 /logs/get-started/alerts-and-analytics/ /logs/logpush/alerts-and-analytics/ 301
 /logs/edge-log-delivery/ /logs/logpush/logpush-job/edge-log-delivery/ 301
 /logs/reference/filters/ /logs/logpush/logpush-job/filters/ 301
+/logs/reference/log-output-options/ /logs/logpush/logpush-job/log-output-options/ 301
 
 # magic-firewall
 /magic-firewall/reference/examples/ /magic-firewall/how-to/add-rules/ 301
