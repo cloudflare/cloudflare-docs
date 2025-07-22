@@ -19,6 +19,24 @@ index a027f56..639be81 100644
  						{entry.badge && (
  							<Badge
  								variant={entry.badge.variant}
+diff --git a/node_modules/@astrojs/starlight/integrations/remark-rehype-utils.ts b/node_modules/@astrojs/starlight/integrations/remark-rehype-utils.ts
+index 97ff09b..2015f29 100644
+--- a/node_modules/@astrojs/starlight/integrations/remark-rehype-utils.ts
++++ b/node_modules/@astrojs/starlight/integrations/remark-rehype-utils.ts
+@@ -22,7 +22,12 @@ export function shouldTransformFile(file: VFile, docsCollectionPath: string) {
+ 	if (!file?.path) return false;
+ 
+ 	// If the document is not part of the Starlight docs collection, skip it.
+-	if (!normalizePath(file.path).startsWith(docsCollectionPath)) return false;
++	if (
++		!normalizePath(file.path).startsWith(docsCollectionPath) &&
++		!normalizePath(file.path).includes("/src/content/partials/") &&
++		!normalizePath(file.path).includes("/src/content/changelog/")
++	  )
++		return false;
+ 
+ 	return true;
+ }
 diff --git a/node_modules/@astrojs/starlight/user-components/Tabs.astro b/node_modules/@astrojs/starlight/user-components/Tabs.astro
 index 6d173df..61eed80 100644
 --- a/node_modules/@astrojs/starlight/user-components/Tabs.astro
