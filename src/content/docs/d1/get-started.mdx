@@ -121,28 +121,24 @@ To create your first D1 database:
     While Wrangler gets installed locally to your project, you can use it outside the project by using the command `npx wrangler`.
     :::
 
-   ```sh
-   npx wrangler@latest d1 create prod-d1-tutorial
-   ```
+    ```sh
+    npx wrangler@latest d1 create prod-d1-tutorial
+    ```
 
-   ```txt output
+    ```txt output
+    ✅ Successfully created DB 'prod-d1-tutorial' in region WEUR
+    Created your new D1 database.
 
-		✅ Successfully created DB 'prod-d1-tutorial' in region WEUR
-		Created your new D1 database.
-
-		{
-			"d1_databases": [
-				{
-					"binding": "DB",
-					"database_name": "prod-d1-tutorial",
-					"database_id": "<unique-ID-for-your-database>"
-				}
-			]
-		}
-
-   ```
-
-
+    {
+    	"d1_databases": [
+    		{
+    			"binding": "DB",
+    			"database_name": "prod-d1-tutorial",
+    			"database_id": "<unique-ID-for-your-database>"
+    		}
+    	]
+    }
+    ```
 
 </Steps>
 
@@ -257,7 +253,7 @@ After correctly preparing your [Wrangler configuration file](/workers/wrangler/c
     npx wrangler d1 execute prod-d1-tutorial --local --file=./schema.sql
     ```
     ```txt output
-     ⛅️ wrangler 4.13.2
+    ⛅️ wrangler 4.13.2
     -------------------
 
     🌀 Executing on local database prod-d1-tutorial (<DATABASE_ID>) from .wrangler/state/v3/d1:
@@ -442,7 +438,7 @@ To deploy your Worker to production using Wrangler, you must first repeat the [d
     npx wrangler d1 execute prod-d1-tutorial --remote --command="SELECT * FROM Customers"
     ```
     ```txt output
-     ⛅️ wrangler 4.13.2
+    ⛅️ wrangler 4.13.2
     -------------------
 
     🌀 Executing on remote database prod-d1-tutorial (<DATABASE_ID>):
@@ -467,18 +463,18 @@ To deploy your Worker to production using Wrangler, you must first repeat the [d
    npx wrangler deploy
    ```
    ```txt output
-    ⛅️ wrangler 4.13.2
-    -------------------
+   ⛅️ wrangler 4.13.2
+   -------------------
 
-    Total Upload: 0.19 KiB / gzip: 0.16 KiB
-    Your worker has access to the following bindings:
-    - D1 Databases:
-      - DB: prod-d1-tutorial (<DATABASE_ID>)
-    Uploaded d1-tutorial (3.76 sec)
-    Deployed d1-tutorial triggers (2.77 sec)
-      https://d1-tutorial.<YOUR_SUBDOMAIN>.workers.dev
-    Current Version ID: <VERSION_ID>
-    ```
+   Total Upload: 0.19 KiB / gzip: 0.16 KiB
+   Your worker has access to the following bindings:
+   - D1 Databases:
+     - DB: prod-d1-tutorial (<DATABASE_ID>)
+   Uploaded d1-tutorial (3.76 sec)
+   Deployed d1-tutorial triggers (2.77 sec)
+     https://d1-tutorial.<YOUR_SUBDOMAIN>.workers.dev
+   Current Version ID: <VERSION_ID>
+   ```
 
    You can now visit the URL for your newly created project to query your live database.
 
