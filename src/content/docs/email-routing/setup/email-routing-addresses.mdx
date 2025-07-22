@@ -73,7 +73,7 @@ You can enable subaddressing at **Email** > **Email Routing** > **Settings**.
 
 Once enabled, you can use subaddressing with any of your custom addresses. For example, if you send an email to `user+detail@example.com` it will be captured by the `user@example.com` custom address. The `+detail` part is ignored by Email Routing, but it can be captured next in the processing chain in the logs, an [Email Worker](/email-routing/email-workers/) or an [Agent application](https://github.com/cloudflare/agents/tree/main/examples/email-agent).
 
-If a custom address 'user+detail@example.com` already exists, it will take precedence over 'user@example.com'. This prevents breaking existing routing rules for users, and allows certain sub-addresses to be captured by a specific rule.
+If a custom address `user+detail@example.com` already exists, it will take precedence over `user@example.com`. This prevents breaking existing routing rules for users, and allows certain sub-addresses to be captured by a specific rule.
 
 ## Destination addresses
 
