@@ -29,15 +29,17 @@ There are two possible `loading` attributes for your `<img>` tags: `lazy` and  `
 Lazy loading is recommended for most images. With Lazy loading, resources like images are deferred until they reach a certain distance from the viewport. If an image does not reach the threshold, then it does not get loaded.
 
 Example of modifying the `loading` attribute of your `<img>` tags to be `"lazy"`:
-````HTML
+
+```html
 <img src="example.com/cdn-cgi/width=300/image.png" loading="lazy">
-````
+```
 
 ### Eager loading
 
 If you have images that are in the viewport, eager loading, instead of lazy loading, is recommended. Eager loading loads the asset at the initial page load, regardless of its location on the page.
 
 Example of modifying the `loading` attribute of your `<img>` tags to be `"eager"`:
-````HTML
+
+```html
 <img src="example.com/cdn-cgi/width=300/image.png" loading="eager">
-````
+```
