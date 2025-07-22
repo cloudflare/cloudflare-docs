@@ -6,6 +6,7 @@ sidebar:
   order: 4
 
 ---
+import { Render } from "~/components"
 
 Magic Network Monitoring rules allow you to monitor your network traffic for DDoS attacks on specific IP addresses or IP prefixes within your network. If the network traffic that is monitored by a rule exceeds the rule's threshold or contains a DDoS attack fingerprint, then you will receive an alert.
 
@@ -66,7 +67,9 @@ If you are an Enterprise customer using [Magic Transit On Demand](/magic-transit
 
 Follow the previous steps to [create](#create-rules-in-the-dashboard) or [edit](#edit-rules-in-the-dashboard) a rule. Then, enable **Auto-Advertisement**.
 
-After enabling the Auto-Advertisement option, refer to [Rule Auto-Advertisement notifications](/magic-network-monitoring/rules/rule-notifications/#rule-auto-advertisement-notifications) to learn about what each status means.
+#### Rule Auto-Advertisement notifications
+
+<Render file="mnm-auto-advertisement-notifications" product="networking-services" />
 
 ### Rule IP prefixes
 
