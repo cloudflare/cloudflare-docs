@@ -11,7 +11,3 @@ meta:
   title: Cloudflare AI Gateway docs
   description: Observe and control your AI applications.
   author: "@cloudflare"
-
-resources:
-  dashboard_link: https://dash.cloudflare.com/?to=/:account/ai/ai-gateway/general
-  discord: https://discord.com/invite/cloudflaredev

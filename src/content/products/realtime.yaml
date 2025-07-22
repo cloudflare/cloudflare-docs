@@ -10,6 +10,3 @@ meta:
   title: Cloudflare Realtime docs
   description: Documentation for Cloudflare Realtime.
   author: "@cloudflare"
-
-resources:
-  dashboard_link: https://dash.cloudflare.com/?to=/:account/calls

@@ -11,7 +11,3 @@ meta:
   title: Cloudflare Workers AI docs
   description: Run AI models in Workers, Pages, or via API.
   author: "@cloudflare"
-
-resources:
-  dashboard_link: https://dash.cloudflare.com/?to=/:account/ai/workers-ai
-  discord: https://discord.com/invite/cloudflaredev

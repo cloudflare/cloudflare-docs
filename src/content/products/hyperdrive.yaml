@@ -10,7 +10,3 @@ meta:
   title: Hyperdrive docs
   description: Service which accelerates queries you make to existing databases.
   author: "@cloudflare"
-
-resources:
-  dashboard_link: https://dash.cloudflare.com/?to=/:account/workers
-  discord: https://discord.com/invite/cloudflaredev

@@ -11,7 +11,3 @@ meta:
   title: Cloudflare Vectorize docs
   description: Documentation for Vectorize, Cloudflare's vector database
   author: "@cloudflare"
-
-resources:
-  dashboard_link: https://dash.cloudflare.com/?to=/:account/workers
-  discord: https://discord.com/invite/cloudflaredev
