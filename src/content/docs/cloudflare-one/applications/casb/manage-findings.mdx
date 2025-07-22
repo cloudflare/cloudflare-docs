@@ -146,7 +146,24 @@ To remediate a supported finding:
 3. In **Active Instances**, select an instance.
 4. In **Remediation details**, choose a remediation action to take.
 
-CASB will begin remediating the instance. The remediated finding will appear in **CASB** > **Posture Findings** > **Remediated findings**.
+CASB will begin remediating the instance.
+
+### Manage remediated findings
+
+Remediated findings will appear in **CASB** > **Posture Findings** > **Remediated findings**. The status of the finding will change depending on what action CASB has taken:
+
+| Status     | Description                                                          |
+| ---------- | -------------------------------------------------------------------- |
+| Pending    | CASB has set the finding to be remediated.                           |
+| Queued     | CASB has queued the finding for remediation.                         |
+| Processing | CASB is currently remediating the finding.                           |
+| Completed  | CASB successfully remediated the finding.                            |
+| Failed     | CASB unsuccessfully remediated the finding.                          |
+| Rejected   | CASB does not have the correct permissions to remediate the finding. |
+
+If the status is **Completed**, remediation succeeded. If the status is **Failed** or **Rejected**, remediation failed, and you can select the finding to take action again.
+
+CASB will log remediation actions in **Logs** > **Admin**. For more information, refer to [Zero Trust Logs](/cloudflare-one/insights/logs/).
 
 ## Resolve finding with a Gateway policy
 
