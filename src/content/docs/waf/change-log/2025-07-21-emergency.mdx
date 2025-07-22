@@ -13,12 +13,12 @@ This week’s update spotlights several high-impact vulnerabilities affecting en
 
 **Key Findings**
 
-Citrix NetScaler ADC (CVE-2025-53770): A newly identified vulnerability that results in sensitive memory disclosure, potentially exposing session tokens or credentials to unauthenticated attackers. This flaw follows the pattern of prior “Citrix Bleed”-style vulnerabilities and could lead to session hijacking.
-Citrix NetScaler ADC (CVE-2025-53771): A related vulnerability that may allow unauthenticated access to active sessions under certain conditions, posing a serious risk to environments relying on NetScaler for secure application delivery.
+Microsoft SharePoint Server (CVE-2025-53770): A critical vulnerability involving unsafe deserialization of untrusted data, enabling unauthenticated remote code execution over the network. This flaw allows attackers to execute arbitrary code on vulnerable SharePoint servers without user interaction.
+Microsoft SharePoint Server (CVE-2025-53771): A closely related deserialization issue that can be exploited by unauthenticated attackers, potentially leading to full system compromise. The vulnerability highlights continued risks around insecure serialization logic in enterprise collaboration platforms.
 
 **Impact**
 
-Together, these vulnerabilities significantly weaken the security boundaries of Citrix NetScaler ADC deployments. By leaking memory contents and enabling session compromise, they create opportunities for attackers to escalate access, impersonate users, and move laterally within enterprise networks.
+Together, these vulnerabilities significantly weaken the security posture of on-premises Microsoft SharePoint Server deployments. By enabling remote code execution without authentication, they open the door for attackers to gain persistent access, deploy malware, and move laterally across enterprise environments.
 
 <table style="width: 100%">
 	<thead>
