@@ -35,6 +35,7 @@
 /network-interconnect/changelog/index.xml /changelog/rss/network-interconnect.xml 301
 /rules/changelog/index.xml /changelog/rss/rules.xml 301
 /ssl/changelog/index.xml /changelog/rss/ssl.xml 301
+/waf/change-log/index.xml /changelog/rss/waf.xml 301
 
 ## legacy
 /release-notes/index.xml /changelog/rss/index.xml 301
@@ -1549,6 +1550,32 @@
 /support/firewall/tools/ /waf/ 301
 /support/firewall/tools/configuring-cloudflare-rate-limiting/ /waf/reference/legacy/old-rate-limiting/ 301
 /support/firewall/tools/troubleshooting-cloudflare-rate-limiting/ /waf/reference/legacy/old-rate-limiting/troubleshooting/ 301
+/waf/change-log/2025-01-06/ /changelog/2025-01-06/ 301
+/waf/change-log/2025-01-13/ /changelog/2025-01-13/ 301
+/waf/change-log/2025-01-21/ /changelog/2025-01-21/ 301
+/waf/change-log/2025-02-11/ /changelog/2025-02-11/ 301
+/waf/change-log/2025-02-18/ /changelog/2025-02-18/ 301
+/waf/change-log/2025-02-24/ /changelog/2025-02-24/ 301
+/waf/change-log/2025-03-03/ /change-og/2025-03-03/ 301
+/waf/change-log/2025-03-10/ /changelog/2025-03-10/ 301
+/waf/change-log/2025-03-11-emergency/ /changelog/2025-03-11-emergency/ 301
+/waf/change-log/2025-03-17/ /changelog/2025-03-17/ 301
+/waf/change-log/2025-03-19-emergency/ /changelog/2025-03-19-emergency/ 301
+/waf/change-log/2025-03-22-emergency/ /changelog/2025-03-22-emergency/ 301
+/waf/change-log/2025-04-02/ /changelog/2025-04-02/ 301
+/waf/change-log/2025-04-14/ /changelog/2025-04-14/ 301
+/waf/change-log/2025-04-22/ /changelog/2025-04-22/ 301
+/waf/change-log/2025-04-26-emergency/ /changelog/2025-04-26-emergency/ 301
+/waf/change-log/2025-05-05/ /changelog/2025-05-05/ 301
+/waf/change-log/2025-05-19/ /changelog/2025-05-19/ 301
+/waf/change-log/2025-05-27/ /changelog/2025-05-27/ 301
+/waf/change-log/2025-06-02/ /changelog/2025-06-02/ 301
+/waf/change-log/2025-06-09/ /changelog/2025-06-09/ 301
+/waf/change-log/2025-06-16/ /changelog/2025-06-16/ 301
+/waf/change-log/2025-07-07/ /changelog/2025-07-07/ 301
+/waf/change-log/2025-07-14/ /changelog/2025-07-14/ 301
+/waf/change-log/2025-07-21/ /waf/change-log/2025-07-21/ 301
+/waf/change-log/2025-07-21-emergency/ /changelog/2025-07-21-emergency/ 301
 /waf/change-log/historical/ /waf/change-log/historical-2019/ 301
 /waf/custom-rules/manage-dashboard/ /waf/custom-rules/create-dashboard/ 301
 /waf/security-analytics/ /waf/analytics/security-analytics/ 301
