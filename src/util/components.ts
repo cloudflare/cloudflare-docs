@@ -33,7 +33,11 @@ export async function getComponentsUsage(
 		);
 
 		for (const file of files) {
-			const fullName = file.parentPath + "/" + file.name;
+			const parentPath =
+				process.platform === "win32"
+					? file.parentPath.replaceAll("\\", "/")
+					: file.parentPath;
+			const fullName = parentPath + "/" + file.name;
 			const content = await readFile(fullName, "utf8");
 
 			if (!content.includes("import")) continue;
@@ -85,7 +89,11 @@ export async function getPartialsUsage(): Promise<Record<string, Usage>> {
 		);
 
 		for (const file of files) {
-			const fullName = file.parentPath + "/" + file.name;
+			const parentPath =
+				process.platform === "win32"
+					? file.parentPath.replaceAll("\\", "/")
+					: file.parentPath;
+			const fullName = parentPath + "/" + file.name;
 			const content = await readFile(fullName, "utf8");
 
 			if (!content.includes("import")) continue;
