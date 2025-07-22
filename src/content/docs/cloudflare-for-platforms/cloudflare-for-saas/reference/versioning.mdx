@@ -83,7 +83,7 @@ Before your migration, you should:
    * `test_pending`: In the process of being verified or was unable to be verified and re-queued for verification. A custom hostname will be re-queued 25 times before moving to the `test_failed` status.
    * `test_active`: Passed CNAME verification
    * `test_active_apex`: Passed Apex Proxy verification
-   * `test_blocked`: Hostname will be blocked during the migration because hostname belongs to a banned zone. Contact your CSM to verify banned custom hostnames and proceed with the migration.
+   * `test_blocked`: Hostname will be blocked during the migration because hostname belongs to a banned zone. Contact your account team to verify banned custom hostnames and proceed with the migration.
    * `test_failed`: Failed hostname verification 25 times
 3. Review the results of our pre-migration tool (run by your account team) using one of the following methods:
    * Via the API: `https://api.cloudflare.com/client/v4/zones/{zone_tag}/custom_hostnames?hostname_status={status}`
