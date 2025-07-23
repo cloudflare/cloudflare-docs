@@ -39,7 +39,7 @@ if ("product" in input) {
 			!e.data.hidden &&
 			e.data.products.some(({ id }) => id === input.product.id) &&
 			input.hideEntry !== e.id &&
-			input.scheduled === e.data.scheduled
+			input.scheduled == e.data.scheduled
 		);
 	};
 } else {
@@ -55,6 +55,8 @@ if ("product" in input) {
 }
 
 const changelogs = await getChangelogs({ filter });
+
+console.log(changelogs.length);
 ---
 
 <RSSButton href={rss} />
