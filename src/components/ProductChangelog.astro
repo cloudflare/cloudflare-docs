@@ -22,6 +22,7 @@ const props = z
 	.and(
 		z.object({
 			hideEntry: z.string().optional(),
+			scheduledOnly: z.boolean().default(false),
 		}),
 	);
 
@@ -37,7 +38,8 @@ if ("product" in input) {
 		return (
 			!e.data.hidden &&
 			e.data.products.some(({ id }) => id === input.product.id) &&
-			input.hideEntry !== e.id
+			input.hideEntry !== e.id &&
+			(!input.scheduledOnly || e.data.scheduled)
 		);
 	};
 } else {

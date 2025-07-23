@@ -6,7 +6,7 @@ export const changelogSchema = ({ image }: SchemaContext) =>
 		title: z.string(),
 		description: z.string(),
 		date: z.coerce.date(),
-		scheduledDate: z.coerce.date().optional(),
+		scheduled: z.boolean().default(false),
 		products: z
 			.array(reference("products"))
 			.default([])
