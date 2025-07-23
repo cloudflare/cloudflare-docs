@@ -172,7 +172,7 @@ export async function getRSSItems({
 
 			const content = String(file).trim();
 
-			let itemTitle = `${productTitles.join(", ")} - ${title}`;
+			const itemTitle = `${productTitles.join(", ")} - ${title}`;
 
 			return {
 				title: itemTitle,
