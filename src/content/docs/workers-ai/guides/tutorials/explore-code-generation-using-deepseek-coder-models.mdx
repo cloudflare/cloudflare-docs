@@ -91,7 +91,7 @@ else:
 
 A common use case is to complete the code for the user after they provide a descriptive comment.
 
-````python
+```python
 model = "@hf/thebloke/deepseek-coder-6.7b-base-awq"
 
 prompt = "# A function that checks if a given word is a palindrome"
@@ -112,7 +112,7 @@ display(Markdown(f"""
     {code.strip()}
     ```
 """))
-````
+```
 
 ```python
 # A function that checks if a given word is a palindrome
@@ -240,7 +240,7 @@ A common use case in Developer Tools is to autocomplete based on context. DeepSe
 
 Warning: The tokens are prefixed with `<｜` and suffixed with `｜>` make sure to copy and paste them.
 
-````python
+```python
 model = "@hf/thebloke/deepseek-coder-6.7b-base-awq"
 
 code = """
@@ -270,7 +270,7 @@ display(Markdown(f"""
     ```
 """))
 
-````
+```
 
 ```python
 is_valid_email = re.match(r"[^@]+@[^@]+\.[^@]+", email_address)
@@ -280,7 +280,7 @@ is_valid_email = re.match(r"[^@]+@[^@]+\.[^@]+", email_address)
 
 No need to threaten the model or bring grandma into the prompt. Get back JSON in the format you want.
 
-````python
+```python
 model = "@hf/thebloke/deepseek-coder-6.7b-instruct-awq"
 
 # Learn more at https://json-schema.org/
@@ -342,7 +342,7 @@ display(Markdown(f"""
     {response.strip()}
     ```
 """))
-````
+```
 
 ```json
 {
