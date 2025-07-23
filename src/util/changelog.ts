@@ -173,10 +173,6 @@ export async function getRSSItems({
 
 			let itemTitle = `${productTitles.join(", ")} - ${title}`;
 
-			if (scheduledDate) {
-				itemTitle += ` for ${scheduledDate.toISOString().slice(0, 10)}`;
-			}
-
 			return {
 				title: itemTitle,
 				description: content,
