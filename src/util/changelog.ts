@@ -65,6 +65,7 @@ async function getWARPReleases(): Promise<Array<CollectionEntry<"changelog">>> {
 				hidden: false,
 				date: releaseDate,
 				products: [{ id: "zero-trust-warp", collection: "products" }],
+				scheduled: false,
 			},
 			rendered: {
 				html: marked.parse([prefix, releaseNotes].join("\n\n"), {
@@ -143,7 +144,7 @@ export async function getRSSItems({
 }: GetRSSItemsOptions): Promise<Array<RSSFeedItem>> {
 	return await Promise.all(
 		notes.map(async (note) => {
-			const { title, date, products, scheduled } = note.data;
+			const { title, date, products } = note.data;
 
 			const productEntries = await getEntries(products);
 			const productTitles = productEntries.map((p) => p.data.name as string);
@@ -180,7 +181,6 @@ export async function getRSSItems({
 				categories: productTitles,
 				link: `/changelog/${note.id}/`,
 				customData: `<product>${productTitles.at(0)}</product>`,
-				scheduled: scheduled,
 			};
 		}),
 	);
