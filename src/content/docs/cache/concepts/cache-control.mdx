@@ -85,6 +85,7 @@ Any other requests that arrive while this is happening in the same cache locatio
 
 For more details on this, refer to example 1 of our [Revalidation and request collapsing](/cache/concepts/revalidation/#example-1) guide.
 :::
+
 * `stale-if-error=<seconds>` — Indicates that when an error is encountered, a cached stale response may be used to satisfy the request, regardless of other freshness information. To avoid this behavior, include `stale-if-error=0` directive with the object returned from the origin. This directive is not supported when using the Cache API methods `cache.match` or `cache.put`. For more information, refer to the [Worker's documentation for Cache API](/workers/runtime-apis/cache/#methods).
 
 The `stale-if-error` directive is ignored if [Always Online](/cache/how-to/always-online/) is enabled or if an explicit in-protocol directive is passed. Examples of explicit in-protocol directives include a `no-store` or `no-cache cache` directive, a `must-revalidate` cache-response-directive, or an applicable `s-maxage` or `proxy-revalidate` cache-response-directive.
