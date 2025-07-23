@@ -143,7 +143,7 @@ export async function getRSSItems({
 }: GetRSSItemsOptions): Promise<Array<RSSFeedItem>> {
 	return await Promise.all(
 		notes.map(async (note) => {
-			const { title, date, products, scheduledDate } = note.data;
+			const { title, date, products, scheduled } = note.data;
 
 			const productEntries = await getEntries(products);
 			const productTitles = productEntries.map((p) => p.data.name as string);
