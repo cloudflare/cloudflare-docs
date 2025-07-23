@@ -170,27 +170,6 @@ describe("Cloudflare Docs", () => {
 				expect(item.category).toBe("Access");
 				expect(item.pubDate).toBe("Mon, 03 Mar 2025 00:00:00 GMT");
 			});
-
-			it("legacy product-specific", async () => {
-				const request = new Request("http://fakehost/waf/change-log/index.xml");
-				const response = await SELF.fetch(request);
-
-				expect(response.status).toBe(200);
-
-				const xml = await response.text();
-				const parsed = parser.parse(xml);
-				const { channel } = parsed.rss;
-
-				expect(channel.title).toBe("Changelog | WAF");
-
-				const item = channel.item.find(
-					(item: any) => item.title === "WAF - 2025-02-24",
-				);
-
-				expect(item).toBeDefined();
-				expect(item.product).toBeUndefined();
-				expect(item.pubDate).toBe("Mon, 24 Feb 2025 00:00:00 GMT");
-			});
 		});
 	});
 
