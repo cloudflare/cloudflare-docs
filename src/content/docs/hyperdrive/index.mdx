@@ -101,7 +101,7 @@ export default {
 import { createConnection  } from 'mysql2/promise';
 
 export default {
- async fetch(request, env, ctx): Promise<Response> {
+  async fetch(request, env, ctx): Promise<Response> {
     const connection = await createConnection({
      host: env.DB_HOST,
      user: env.DB_USER,
@@ -109,24 +109,20 @@ export default {
      database: env.DB_NAME,
      port: env.DB_PORT
 
-    	 // This is needed to use mysql2 with Workers
+     // This is needed to use mysql2 with Workers
      // This configures mysql2 to use static parsing instead of eval() parsing (not available on Workers)
      disableEval: true
+  });
 
-});
+  const [results, fields] = await connection.query('SHOW tables;');
 
-const [results, fields] = await connection.query(
-'SHOW tables;'
-);
-
-return new Response(JSON.stringify({ results, fields }), {
-headers: {
-'Content-Type': 'application/json',
-'Access-Control-Allow-Origin': '\*',
-},
-});
-},
-} satisfies ExportedHandler<Env>;
+  return new Response(JSON.stringify({ results, fields }), {
+    headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '\*',
+    },
+  });
+}} satisfies ExportedHandler<Env>;
 
 ````
 
