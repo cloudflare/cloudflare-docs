@@ -20,10 +20,12 @@ To increase this limit, you will need to [upgrade to a Workers Paid plan](/worke
 | -------------------------------------- | --------------- |
 | Concurrent browsers per account (Workers Bindings only)        | 3 per account   |
 | New browser instances per minute (Workers Bindings only)      | 3 per minute    |
-| Browser timeout                        | 60 seconds [^2] |
+| Browser timeout                        | 60 seconds |
 | Total requests per min (REST API only) | 6 per minute    |
 
-By default, a browser instance gets killed if it does not get any [devtools](https://chromedevtools.github.io/devtools-protocol/) command for 60 seconds, freeing one instance. Users can optionally increase this by using the `keep_alive` [option](/browser-rendering/platform/puppeteer/#keep-alive). `browser.close()` releases the browser instance.
+:::note[Note on browser timeout]
+By default, a browser will time out if it does not get any [devtools](https://chromedevtools.github.io/devtools-protocol/) command for 60 seconds, freeing one instance. Users can optionally increase this by using the [`keep_alive` option](/browser-rendering/platform/puppeteer/#keep-alive). `browser.close()` releases the browser instance.
+:::
 
 ## Workers Paid
 
@@ -33,12 +35,14 @@ By default, a browser instance gets killed if it does not get any [devtools](htt
 | -------------------------------------- | ------------------- |
 | Concurrent browsers per account (Workers Bindings only)        | 10 per account [^1] |
 | New browser instances per minute (Workers Bindings only)       | 10 per minute [^1]  |
-| Browser timeout                        | 60 seconds [^2] |
+| Browser timeout                        | 60 seconds |
 | Total requests per min (REST API only) | 60 per minute [^1]       |
 
 [^1]: Contact our team to request increases to this limit.
 
-By default, a browser instance gets killed if it does not get any [devtools](https://chromedevtools.github.io/devtools-protocol/) command for 60 seconds, freeing one instance. Users can optionally increase this by using the `keep_alive` [option](/browser-rendering/platform/puppeteer/#keep-alive). `browser.close()` releases the browser instance.
+:::note[Note on browser timeout]
+By default, a browser will time out if it does not get any [devtools](https://chromedevtools.github.io/devtools-protocol/) command for 60 seconds, freeing one instance. Users can optionally increase this by using the [`keep_alive` option](/browser-rendering/platform/puppeteer/#keep-alive). `browser.close()` releases the browser instance.
+:::
 
 ## Note on concurrency
 

@@ -61,7 +61,7 @@ If you want your customers to be able to use CNAME records, you will need to com
 
 #### A record
 
-If your customer uses an A record at their authoritative DNS provider, they need to point their hostname to the IP prefixed allocated for your account.
+If your customer uses an A record at their authoritative DNS provider, they need to point their hostname to the IP prefix allocated for your account. You should also make sure that they point to the specific IPs that you want to use for apex proxying - if you have Static IPs or BYOIP, and your customer points to any of the IPs associated to your account, validation will run.
 
 <Render file="get-started-check-statuses" />
 

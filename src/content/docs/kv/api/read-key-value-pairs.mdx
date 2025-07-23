@@ -251,9 +251,7 @@ A hot read means that the data is cached on Cloudflare's edge network using the 
 
 The `cacheTtl` parameter must be an integer greater than or equal to `60`, which is the default. The maximum value for `cacheTtl` is [`Number.MAX_SAFE_INTEGER`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MAX_SAFE_INTEGER).
 
-The effective `cacheTtl` of an already cached item can be reduced by getting it again with a lower `cacheTtl`. For example, if you did `NAMESPACE.get(key, {cacheTtl: 86400})` but later realized that caching for 24 hours was too long, you could `NAMESPACE.get(key, {cacheTtl: 300})` or even `NAMESPACE.get(key)` and it would check for newer data to respect the provided `cacheTtl`, which defaults to 60 seconds. This overwriting `cacheTtl` behavior will only take effect in regions where the key-value pair is read with the updated `cacheTtl`. In other words, reading a key-value pair in a given region will update the cache time-to-live in that region but not in other regions of Cloudflare's network (these will keep the time-to-live from the last read of the region).
-
-Reading KV values while it is cached still incurs cost in line with Workers KV [limits](/kv/platform/limits/) and [pricing](/kv/platform/pricing/).
+Once a key has been read with a given `cacheTtl` in a region, it will remain cached in that region until the end of the `cacheTtl` or eviction. This affects regional and central tiers of KV's built-in caching layers. When writing to Workers KV, the regions in the regional and central caching layers internal to KV will get revalidated with the newly written result.
 
 ### Requesting more keys per Worker invocation with bulk requests
 
