@@ -7,6 +7,7 @@ import {
 	type MdxJsxFlowElement,
 	type MdxJsxTextElement,
 } from "mdast-util-mdx";
+import type { Code } from "mdast";
 import { visit } from "unist-util-visit";
 
 type Usage = { count: number; pages: Set<string> };
@@ -32,7 +33,11 @@ export async function getComponentsUsage(
 		);
 
 		for (const file of files) {
-			const fullName = file.parentPath + "/" + file.name;
+			const parentPath =
+				process.platform === "win32"
+					? file.parentPath.replaceAll("\\", "/")
+					: file.parentPath;
+			const fullName = parentPath + "/" + file.name;
 			const content = await readFile(fullName, "utf8");
 
 			if (!content.includes("import")) continue;
@@ -51,6 +56,14 @@ export async function getComponentsUsage(
 				usages[typed.name] ||= { count: 0, pages: new Set() };
 				usages[typed.name].count++;
 				usages[typed.name].pages.add(fullName);
+			});
+
+			visit(tree, "code", function (node: Code) {
+				if (node.lang === "mermaid") {
+					usages["Mermaid"] ||= { count: 0, pages: new Set() };
+					usages["Mermaid"].count++;
+					usages["Mermaid"].pages.add(fullName);
+				}
 			});
 		}
 	}
@@ -76,7 +89,11 @@ export async function getPartialsUsage(): Promise<Record<string, Usage>> {
 		);
 
 		for (const file of files) {
-			const fullName = file.parentPath + "/" + file.name;
+			const parentPath =
+				process.platform === "win32"
+					? file.parentPath.replaceAll("\\", "/")
+					: file.parentPath;
+			const fullName = parentPath + "/" + file.name;
 			const content = await readFile(fullName, "utf8");
 
 			if (!content.includes("import")) continue;

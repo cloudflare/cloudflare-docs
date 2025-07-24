@@ -11,8 +11,3 @@ meta:
   title: Cloudflare Zero Trust docs
   description: Cloudflare Zero Trust replaces legacy security perimeters with Cloudflare's network, providing secure access to any application, on any device, in any location.
   author: "@cloudflare"
-
-resources:
-  community: https://community.cloudflare.com/c/zero-trust/86
-  dashboard_link: https://one.dash.cloudflare.com/
-  learning_center: https://www.cloudflare.com/learning/security/glossary/what-is-zero-trust/

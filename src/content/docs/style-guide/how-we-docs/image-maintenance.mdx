@@ -52,12 +52,4 @@ In combination with [flagging unused images](#flag-unused-images), we also have 
 
 This line ensures that our custom [Remark plugin](https://github.com/cloudflare/cloudflare-docs/blob/production/src/plugins/remark/validate-images.ts) validates all images paths. If the path does not exist, we throw an error and prevent the site from building.
 
-<GitHubCode
-	repo="cloudflare/cloudflare-docs"
-	file="src/plugins/remark/validate-images.ts"
-	commit="fdeaadcfa99030d085512e721bc0a5948dcf70d4"
-	lang="ts"
-	code={{ title: "validate-images.ts" }}
-/>
-
 When paired with [flagging unused images](#flag-unused-images), this path validation ensures that a tech writer can safely delete unused files in a pull request. So long as the site builds correctly, you have only deleted image files that are not referenced anywhere.

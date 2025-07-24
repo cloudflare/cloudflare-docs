@@ -109,7 +109,7 @@ The UUID of the device registration associated with this posture result.
 
 Type: `int or string`
 
-The date and time the corresponding device posture upload was performed (for example, '2021-07-27T00:01:07Z'). To specify the timestamp format, refer to [Output types](/logs/reference/log-output-options/#output-types).
+The date and time the corresponding device posture upload was performed (for example, '2021-07-27T00:01:07Z'). To specify the timestamp format, refer to [Output types](/logs/logpush/logpush-job/log-output-options/#output-types).
 
 ## UserUID
 

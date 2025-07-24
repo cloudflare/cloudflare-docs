@@ -12,8 +12,3 @@ meta:
     entire networks while ensuring the performance of legitimate traffic is not
     compromised.
   author: "@cloudflare"
-
-resources:
-  community: https://community.cloudflare.com/tag/ddos
-  dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/security/ddos
-  learning_center: https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/

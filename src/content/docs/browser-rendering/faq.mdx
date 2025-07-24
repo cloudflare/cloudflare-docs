@@ -20,7 +20,7 @@ To resolve: Pass your Browser binding into `puppeteer.launch`.
 
 ### Will Browser Rendering bypass Cloudflare's Bot Protection?
 
-No, Browser Rendering requests are always identified as bots by Cloudflare and do not bypass Bot Protection. 
+No, Browser Rendering requests are always identified as bots by Cloudflare and do not bypass Bot Protection.
 
 If you are attempting to scan your **own zone** and need Browser Rendering to access areas protected by Cloudflare’s Bot Protection, you can create a [WAF skip rule](/waf/custom-rules/skip/) to bypass the bot protection using a header or a custom user agent.
 
@@ -51,15 +51,11 @@ Returning an `HTMLElement` will not work.
 
 :::
 
-### What are the usage limits and pricing tiers for Cloudflare Browser Rendering and how do I estimate my costs?
+### What are the usage limits for Browser Rendering and how do I estimate my costs?
 
 You can view the complete breakdown of concurrency caps, request rates, timeouts, and REST API quotas on the [limits page](/browser-rendering/platform/limits/).
 
-By default, idle browser sessions close after 60 seconds of inactivity. You can adjust this with the [`keep_alive` option](/browser-rendering/platform/puppeteer/#keep-alive).
-
-#### Pricing
-
-Browser Rendering is currently free up to the limits above until billing begins. Pricing will be announced in advance.
+You can monitor your Browser Rendering usage in the [Cloudflare dashboard](https://dash.cloudflare.com). Go to **Compute (Workers)** > **Browser Rendering**. Then, you can use [the pricing page](/browser-rendering/platform/pricing/) to estimate your costs.
 
 ### Does Browser Rendering rotate IP addresses for outbound requests?
 
@@ -86,3 +82,12 @@ If you recently upgraded to the Workers Paid plan to increase your Browser Rende
 ### Why is my screenshot blurry?
 
 If your screenshot is blurry, it may be because you increased the height and width of the viewport. To fix this, increase the value of the `deviceScaleFactor` (default is 1).
+
+### How can I manage concurrency and session isolation with Browser Rendering?
+
+If you are hitting concurrency limits, or would like to better manage concurrent browser usage with the [Workers Binding method](/browser-rendering/workers-bindings/), here are a few tips:
+
+- Optimize with tabs or shared browsers: Instead of launching a new browser for each task, consider opening multiple tabs or running multiple actions within the same browser instance. 
+- [Reuse sessions](/browser-rendering/workers-bindings/reuse-sessions/): You can optimize your setup and decrease startup time by reusing sessions instead of launching a new browser every time. If you are concerned about maintaining test isolation, for example for tests that depend on a clean environment, we recommend using [incognito browser contexts](https://pptr.dev/api/puppeteer.browser.createbrowsercontext), which isolate cookies and cache with other sessions. 
+
+If you are still running into concurrency limits you can [request a higher limit](https://forms.gle/CdueDKvb26mTaepa9). 

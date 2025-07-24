@@ -1,0 +1,42 @@
+---
+import type { GetStaticPaths } from "astro";
+import { getCollection } from "astro:content";
+import StarlightPage, {
+	type StarlightPageProps,
+} from "@astrojs/starlight/components/StarlightPage.astro";
+
+import { Stream, Width } from "~/components";
+
+export const getStaticPaths = (async () => {
+	const entries = await getCollection("stream");
+
+	return entries.map(({ data }) => {
+		return {
+			params: {
+				slug: data.url,
+			},
+			props: {
+				entry: data,
+			},
+		};
+	});
+}) satisfies GetStaticPaths;
+
+const { entry } = Astro.props;
+
+const props = {
+	frontmatter: {
+		title: entry.title,
+		description: entry.description,
+		template: "splash",
+		noindex: true,
+	},
+	hideBreadcrumbs: true,
+} as StarlightPageProps;
+---
+
+<StarlightPage {...props}>
+	<Width size="large" center={true}>
+		<Stream id={entry.id} title={entry.title} chapters={entry.chapters} />
+	</Width>
+</StarlightPage>

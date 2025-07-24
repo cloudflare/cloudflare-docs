@@ -569,7 +569,7 @@
 /fundamentals/speed/aim/ /speed/aim/ 301
 /fundamentals/speed/optimization/ /speed/optimization/ 301
 /fundamentals/speed/prefetch-urls/ /speed/optimization/content/prefetch-urls/ 301
-/fundamentals/data-products/analytics-integrations/sumo-logic/ /logs/get-started/enable-destinations/sumo-logic/ 301
+/fundamentals/data-products/analytics-integrations/sumo-logic/ /logs/logpush/logpush-job/enable-destinations/sumo-logic/ 301
 /support/account-management-billing/account-management/adding-multiple-sites-to-cloudflare-via-automation/ /fundamentals/manage-domains/add-multiple-sites-automation/ 301
 /support/account-management-billing/account-privacy-and-security/securing-user-access-with-two-factor-authentication-2fa/ /fundamentals/user-profiles/2fa/ 301
 /support/account-management-billing/account-privacy-and-security/multi-factor-email-authentication/ /fundamentals/user-profiles/multi-factor-email-authentication/ 301
@@ -957,15 +957,15 @@
 /logs/log-fields/ /logs/reference/log-fields/ 301
 /logs/logpull-api/ /logs/logpull/ 301
 /logs/logpull-api/requesting-logs/ /logs/logpull/requesting-logs/ 301
-/logs/logpush/aws-s3/ /logs/get-started/enable-destinations/aws-s3/ 301
-/logs/logpush/azure/ /logs/get-started/enable-destinations/azure/ 301
-/logs/logpush/google-cloud-storage/ /logs/get-started/enable-destinations/google-cloud-storage/ 301
-/logs/logpush/logpush-configuration-api/ /logs/get-started/enable-destinations/ 301
+/logs/logpush/aws-s3/ /logs/logpush/logpush-job/enable-destinations/aws-s3/ 301
+/logs/logpush/azure/ /logs/logpush/logpush-job/enable-destinations/azure/ 301
+/logs/logpush/google-cloud-storage/ /logs/logpush/logpush-job/enable-destinations/google-cloud-storage/ 301
+/logs/logpush/logpush-configuration-api/ /logs/logpush/logpush-job/enable-destinations/ 301
 /logs/logpush/logpush-configuration-api/understanding-logpush-api/ /logs/get-started/api-configuration/ 301
-/logs/logpush/logpush-dashboard/ /logs/get-started/enable-destinations/ 301
-/logs/logpush/s3-compatible-endpoints/ /logs/get-started/enable-destinations/s3-compatible-endpoints/ 301
+/logs/logpush/logpush-dashboard/ /logs/logpush/logpush-job/enable-destinations/ 301
+/logs/logpush/s3-compatible-endpoints/ /logs/logpush/logpush-job/enable-destinations/s3-compatible-endpoints/ 301
 /logs/reference/logpush-api-configuration/ /logs/get-started/api-configuration/ 301
-/logs/reference/logpush-api-configuration/filters/ /logs/reference/filters/ 301
+/logs/reference/logpush-api-configuration/filters/ /logs/logpush/logpush-job/filters/ 301
 # Non-slashed version is being used in the Cloudflare dashboard
 /logs/reference/logpush-api-configuration/examples/example-logpush-curl/ /logs/logpush/examples/example-logpush-curl/ 301
 /logs/log-explorer/ /log-explorer/log-search/ 301
@@ -976,7 +976,11 @@
 /logs/tutorials/examples/ /logs/logpush/examples/ 301
 /logs/tutorials/examples/example-logpush-curl/ /logs/logpush/examples/example-logpush-curl/ 301
 /logs/tutorials/examples/example-logpush-python/ /logs/logpush/examples/example-logpush-python/ 301
-
+/logs/get-started/alerts-and-analytics/ /logs/logpush/alerts-and-analytics/ 301
+/logs/edge-log-delivery/ /logs/logpush/logpush-job/edge-log-delivery/ 301
+/logs/reference/filters/ /logs/logpush/logpush-job/filters/ 301
+/logs/reference/log-output-options/ /logs/logpush/logpush-job/log-output-options/ 301
+/logs/reference/custom-fields/ /logs/logpush/logpush-job/custom-fields/ 301
 
 # magic-firewall
 /magic-firewall/reference/examples/ /magic-firewall/how-to/add-rules/ 301
@@ -2177,6 +2181,7 @@
 /fundamentals/setup/account/* /fundamentals/account/:splat 301
 /fundamentals/setup/manage-domains/* /fundamentals/manage-domains/:splat 301
 /fundamentals/setup/manage-members/* /fundamentals/manage-members/:splat 301
+/logs/get-started/enable-destinations/* /logs/logpush/logpush-job/enable-destinations/:splat 301
 
 # Cloudflare One / Zero Trust
 /cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/as-a-service/* /cloudflare-one/connections/connect-networks/configure-tunnels/local-management/as-a-service/:splat 301

@@ -10,18 +10,28 @@ import { Render } from "~/components"
 
 You can enable mutual Transport Layer Security (mTLS) for any hostname.
 
-## Enable mTLS
+To enable mTLS for a host from the Cloudflare dashboard:
 
-To enable mutual Transport Layer Security (mTLS) for a host from the Cloudflare dashboard:
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
+2. Go to **SSL/TLS** > **Client Certificates**.
+3. On the **Hosts** section of the **Client Certificates** card, select **Edit**.
+4. Enter the name of a host in your current domain.
+:::note
+The domain (`example.com`) is automatically appended for you. This means that, if you want to enable mTLS for `abc.example.com`, you only need to type `abc`.
+:::
+5. Select **Save** to confirm.
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and application.
-2. Go to **SSL** > **Client Certificates**.
-3. To enable mTLS for a host, select **Edit** in the **Hosts** section of the **Client Certificates** card.
-4. Enter the name of a host in your current application and press `Enter`.
-5. Select **Save**.
+## CAs in use
 
-After enabling mTLS for your host, you can enforce mTLS with [API Shield](/api-shield/security/mtls/configure/). While API Shield is **not required** to use mTLS, many teams may use mTLS to protect their APIs.
+As explained in the [Client certificates overview](/ssl/client-certificates/#how-it-works), Cloudflare validates client certificates against CAs set at account level. This means that these certificates can be used for validation across multiple zones/domains (`example.com`), as long as the zones are under the same Cloudflare account and you have enabled mTLS for the host.
 
-<Render file="cloudflare-managed-client-cert" />
+:::note[Bring your own CA]
+If you need to use your own CA (instead of the Cloudflare Managed CA), refer to [BYOCA](/ssl/client-certificates/byo-ca/). This is an API-only option, available on Enterprise accounts. In this case, certificates and hostname associations are **not** listed on your dashboard.
+:::
 
-<Render file="forward-client-certificate" />
+## Next steps
+
+After enabling mTLS for your host, you can:
+
+- Enforce mTLS with a WAF custom rule. Select **Create mTLS Rule** on the dashboard to use a template, or refer to our [mTLS at Cloudflare learning path](/learning-paths/mtls/mtls-app-security/#3-validate-the-client-certificate-in-the-waf) for further guidance.
+- Enforce mTLS with [API Shield](/api-shield/security/mtls/configure/). While API Shield is **not required** to use mTLS, many teams may use mTLS to protect their APIs.

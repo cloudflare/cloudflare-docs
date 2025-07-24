@@ -3,27 +3,43 @@ import { z } from "astro:schema";
 import { getCollection, type CollectionEntry } from "astro:content";
 import ResourcesBySelectorReact from "./ResourcesBySelector";
 
-type Props = z.infer<typeof props>;
-type Frontmatter = keyof CollectionEntry<"docs">["data"];
+type Props = z.input<typeof props>;
+
+type DocsData = keyof CollectionEntry<"docs">["data"];
+type VideosData = keyof CollectionEntry<"stream">["data"];
+
+type ResourcesData = DocsData | VideosData;
 
 const props = z.object({
 	tags: z.string().array().optional(),
 	types: z.string().array(),
 	products: z.string().array().optional(),
 	directory: z.string().optional(),
-	filterables: z.custom<Frontmatter>().array().optional(),
+	filterables: z.custom<ResourcesData>().array().optional(),
+	columns: z.union([z.literal(2), z.literal(3)]).default(2),
 });
 
-const { tags, types, products, directory, filterables } = props.parse(
+const { tags, types, products, directory, filterables, columns } = props.parse(
 	Astro.props,
 );
 
-const resources = await getCollection("docs", ({ id, data }) => {
+const docs = await getCollection("docs");
+const videos = await getCollection("stream");
+
+const resources: Array<CollectionEntry<"docs"> | CollectionEntry<"stream">> = [
+	...docs,
+	...videos,
+].filter(({ id, collection, data }) => {
+	const type = "pcx_content_type" in data ? data.pcx_content_type : collection;
 	return (
-		types.includes(data.pcx_content_type ?? "") &&
+		types.includes(type ?? "") &&
 		(directory ? id.startsWith(directory) : true) &&
 		(tags ? data.tags?.some((v: string) => tags.includes(v)) : true) &&
-		(products ? data.products?.some((v: string) => products.includes(v)) : true)
+		(products
+			? data.products?.some((v) =>
+					products.includes(typeof v === "object" ? v.id : v),
+				)
+			: true)
 	);
 });
 
@@ -32,7 +48,7 @@ const facets = resources.reduce(
 		if (!filterables) return acc;
 
 		for (const filter of filterables) {
-			const val = page.data[filter];
+			const val = page.data[filter as keyof typeof page.data];
 			if (val) {
 				if (Array.isArray(val) && val.every((v) => typeof v === "string")) {
 					acc[filter] = [...new Set([...(acc[filter] || []), ...val])];
@@ -53,6 +69,7 @@ const facets = resources.reduce(
 		resources={resources}
 		facets={facets}
 		filters={filterables}
+		columns={columns}
 		client:load
 	/>
 </div>

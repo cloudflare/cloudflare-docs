@@ -2779,6 +2779,13 @@
 					"biz": "Yes",
 					"ent": "Yes"
 				},
+				"sni_rewrite": {
+					"title": "[SNI Rewrite for Custom Origin](/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/custom-origin/#sni-rewrites)",
+					"free": "No",
+					"pro": "No",
+					"biz": "No",
+					"ent": "Contact your account team"
+				},				
 				"custom_certificates": {
 					"title": "[Custom certificates](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/custom-certificates/)",
 					"free": "No",

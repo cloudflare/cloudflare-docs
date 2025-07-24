@@ -10,8 +10,6 @@ import { GlossaryTooltip, Render } from "~/components"
 
 <Render file="custom-origin-server-definition" />
 
-<Render file="ssl-for-saas-plan-limitation" />
-
 ## Requirements
 
 To use a custom origin server, you need to meet the following requirements:
@@ -24,6 +22,8 @@ To use a custom origin server, you need to meet the following requirements:
 To use a custom origin, select that option when [creating a new custom hostname](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/) in the dashboard or include the `"custom_origin_server": your_custom_origin_server` parameter when using the API [POST command](/api/resources/custom_hostnames/methods/create/).
 
 ## SNI rewrites
+
+<Render file="ssl-for-saas-plan-limitation" />
 
 When Cloudflare establishes a connection to your default origin server, the `Host` header and <GlossaryTooltip term="Server Name Indication (SNI)">SNI</GlossaryTooltip> will both be the value of the original custom hostname.
 

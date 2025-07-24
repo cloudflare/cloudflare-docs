@@ -121,28 +121,24 @@ To create your first D1 database:
     While Wrangler gets installed locally to your project, you can use it outside the project by using the command `npx wrangler`.
     :::
 
-   ```sh
-   npx wrangler@latest d1 create prod-d1-tutorial
-   ```
+    ```sh
+    npx wrangler@latest d1 create prod-d1-tutorial
+    ```
 
-   ```sh output
+    ```txt output
+    ✅ Successfully created DB 'prod-d1-tutorial' in region WEUR
+    Created your new D1 database.
 
-		✅ Successfully created DB 'prod-d1-tutorial' in region WEUR
-		Created your new D1 database.
-
-		{
-			"d1_databases": [
-				{
-					"binding": "DB",
-					"database_name": "prod-d1-tutorial",
-					"database_id": "<unique-ID-for-your-database>"
-				}
-			]
-		}
-
-   ```
-
-
+    {
+    	"d1_databases": [
+    		{
+    			"binding": "DB",
+    			"database_name": "prod-d1-tutorial",
+    			"database_id": "<unique-ID-for-your-database>"
+    		}
+    	]
+    }
+    ```
 
 </Steps>
 
@@ -253,11 +249,11 @@ After correctly preparing your [Wrangler configuration file](/workers/wrangler/c
 
 2. Initialize your database to run and test locally first. Bootstrap your new D1 database by running:
 
-   ```sh
-   npx wrangler d1 execute prod-d1-tutorial --local --file=./schema.sql
-   ```
-    ```output
-     ⛅️ wrangler 4.13.2
+    ```sh
+    npx wrangler d1 execute prod-d1-tutorial --local --file=./schema.sql
+    ```
+    ```txt output
+    ⛅️ wrangler 4.13.2
     -------------------
 
     🌀 Executing on local database prod-d1-tutorial (<DATABASE_ID>) from .wrangler/state/v3/d1:
@@ -275,7 +271,7 @@ After correctly preparing your [Wrangler configuration file](/workers/wrangler/c
    npx wrangler d1 execute prod-d1-tutorial --local --command="SELECT * FROM Customers"
    ```
 
-   ```sh output
+   ```txt output
    🌀 Mapping SQL input into an array of statements
    🌀 Executing on local database production-db-backend (<DATABASE_ID>) from .wrangler/state/v3/d1:
    ┌────────────┬─────────────────────┬───────────────────┐
@@ -424,7 +420,7 @@ To deploy your Worker to production using Wrangler, you must first repeat the [d
     ```sh
     npx wrangler d1 execute prod-d1-tutorial --remote --file=./schema.sql
     ```
-    ```sh output
+    ```txt output
     ✔ ⚠️ This process may take some time, during which your D1 database will be unavailable to serve queries.
     Ok to proceed? y
     🚣 Executed 3 queries in 0.00 seconds (5 rows read, 6 rows written)
@@ -441,8 +437,8 @@ To deploy your Worker to production using Wrangler, you must first repeat the [d
     ```sh
     npx wrangler d1 execute prod-d1-tutorial --remote --command="SELECT * FROM Customers"
     ```
-    ```sh output
-     ⛅️ wrangler 4.13.2
+    ```txt output
+    ⛅️ wrangler 4.13.2
     -------------------
 
     🌀 Executing on remote database prod-d1-tutorial (<DATABASE_ID>):
@@ -466,19 +462,19 @@ To deploy your Worker to production using Wrangler, you must first repeat the [d
    ```sh
    npx wrangler deploy
    ```
-   ```sh output
-    ⛅️ wrangler 4.13.2
-    -------------------
+   ```txt output
+   ⛅️ wrangler 4.13.2
+   -------------------
 
-    Total Upload: 0.19 KiB / gzip: 0.16 KiB
-    Your worker has access to the following bindings:
-    - D1 Databases:
-      - DB: prod-d1-tutorial (<DATABASE_ID>)
-    Uploaded d1-tutorial (3.76 sec)
-    Deployed d1-tutorial triggers (2.77 sec)
-      https://d1-tutorial.<YOUR_SUBDOMAIN>.workers.dev
-    Current Version ID: <VERSION_ID>
-    ```
+   Total Upload: 0.19 KiB / gzip: 0.16 KiB
+   Your worker has access to the following bindings:
+   - D1 Databases:
+     - DB: prod-d1-tutorial (<DATABASE_ID>)
+   Uploaded d1-tutorial (3.76 sec)
+   Deployed d1-tutorial triggers (2.77 sec)
+     https://d1-tutorial.<YOUR_SUBDOMAIN>.workers.dev
+   Current Version ID: <VERSION_ID>
+   ```
 
    You can now visit the URL for your newly created project to query your live database.
 
