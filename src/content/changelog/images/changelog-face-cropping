@@ -1,7 +1,7 @@
 ---
 title: Automatic face cropping in Images
 description: When optimizing with Images, automatically crop images toward detected faces.
-date: 2025-07-18
+date: 2025-07-25
 ---
 You can now use Images to [automatically crop images toward detected faces](/images/transform-images/transform-via-url/#gravity).
 
@@ -12,5 +12,7 @@ This can be combined with the `zoom` paramter to control how much of the surroun
 - **`1` crops as closely to the face as possible
 
 ![Example of face cropping](~/assets/images/changelog/images/face-cropping.png)
+
+This feature uses an open-source model called RetinaFace through [Workers AI](https://developers.cloudflare.com/workers-ai/). Our model pipeline is limited only to facial detection, or identifying the pixels that represent a human face. We do not support facial identification or recognition. Read more about [Cloudflare’s approach to responsible AI](https://www.cloudflare.com/trust-hub/responsible-ai/).
 
 Refer to the [Images documentation](/images/transform-images/transform-via-url) for more information.
