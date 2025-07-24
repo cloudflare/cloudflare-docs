@@ -8,7 +8,6 @@ sidebar:
 import { Details } from "~/components";
 
 :::note
-
 Only available as an add-on to Zero Trust Enterprise plans.
 :::
 
@@ -41,7 +40,11 @@ When testing against another origin, you may see either an IPv4 or IPv6 address.
 
 ## Bring your own IP address (BYOIP)
 
-Enterprise users can provide an IP address for a private DNS resolver to use as a dedicated egress IP. Gateway supports bringing your own IPv4 and IPv6 addresses.
+Enterprise users can use their own authority-provided IPv4 and IPv6 addresses as dedicated egress IPs. Gateway supports bringing your own IPv4 and IPv6 addresses.
+
+After you onboard your IP addresses, the IP addresses will appear when you create a [egress policy](/cloudflare-one/policies/gateway/egress-policies/) and choose **Use dedicated egress IPs (Cloudflare or BYOIP)** as the [egress method](/cloudflare-one/policies/gateway/egress-policies/#egress-methods). BYOIP dedicate egress IPs do not support [IP geolocation](#ip-geolocation).
+
+For more information, refer to [Cloudflare BYOIP](/byoip/) or contact your account team.
 
 ## Limitations
 
@@ -69,7 +72,6 @@ When creating egress policies with dedicated egress IPs, set your secondary IPv4
 ### IP geolocation
 
 :::note
-
 IP geolocation will take at least six weeks to update across databases.
 :::
 
