@@ -982,6 +982,7 @@
 /logs/reference/log-output-options/ /logs/logpush/logpush-job/log-output-options/ 301
 /logs/reference/custom-fields/ /logs/logpush/logpush-job/custom-fields/ 301
 /logs/get-started/api-configuration/ /logs/logpush/logpush-job/api-configuration/ 301
+/logs/get-started/permissions/ /logs/logpush/permissions/ 301
 
 # magic-firewall
 /magic-firewall/reference/examples/ /magic-firewall/how-to/add-rules/ 301
