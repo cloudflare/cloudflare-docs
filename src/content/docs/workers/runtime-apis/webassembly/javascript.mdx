@@ -93,9 +93,9 @@ import { M } from './myModule.js';
 import mod from './myModule.wasm';
 /** @typedef {import("./myModule.js").MyModuleToplevel} MyModuleToplevel */
 
-async initializeMyModule() {
+async function initializeMyModule() {
   /** @type {MyModuleToplevel} */
-  var myModule = await M({
+  const myModule = await M({
     instantiateWasm: (imports, callback) => {
       const instance = new WebAssembly.Instance(mod, imports);
       callback(instance);
@@ -103,7 +103,9 @@ async initializeMyModule() {
     }
   });
 }
-initializeMyModule();
+initializeMyModule().catch(error => {
+  console.error("Failed to initialize the module:", error);
+});
 ```
 
 Please refer to [this example](https://github.com/cloudflare/worker-emscripten-template) for details.
