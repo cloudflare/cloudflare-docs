@@ -23,11 +23,15 @@ The mTLS certificate is used only to verify the client certificate. It does not 
 
 :::
 
-## Add mTLS to your Access application
+## Enforce mTLS authentication
 
-mTLS is checked on a per host basis. Access sets a flag for when a client certificate was presented and successfully completed mTLS authentication. However, to actually enforce mTLS, you need to secure the specific hostname and path with an Access application and policy.
+### Prerequisites
 
-To enforce mTLS authentication for an application:
+- An [Access application](/cloudflare-one/applications/configure-apps/self-hosted-public-app/) for the hostname that you would like to secure with mTLS.
+- A CA that issues client certificates for your devices.
+   <Render file="byo-ca-mtls-cert-requirements" product="ssl" />
+
+### Add mTLS to your Access application
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Service auth** > **Mutual TLS**.
 
@@ -36,7 +40,6 @@ To enforce mTLS authentication for an application:
 3. Enter any name for the root CA.
 
 4. In **Certificate content**, paste the contents of your root CA.
-   <Render file="byo-ca-mtls-cert-requirements" product="ssl" />
 
 	If the client certificate is directly signed by the root CA, you only need to upload the root. If the client certificate is signed by an intermediate certificate, you must upload the entire CA chain (intermediate and root). For example:
 	```txt
