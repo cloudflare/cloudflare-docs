@@ -83,6 +83,31 @@ export default {
 
 When invoked, this Worker should log `Hello from JavaScript: 42` and return `Success: 42`, demonstrating the ability to invoke Wasm methods with arguments from JavaScript and vice versa.
 
+## Use of Emscripten Modules from Javascript
+
+WebAssembly modules compiled with Emscripten require a few considerations for use with Workers.   Specifically, they should be compiled with `MODULARIZE=1`, `EXPORT_ES6=1`, `ENVIRONMENT=web`, and `DYNAMIC_EXECUTION=0` to avoid the workers' limitations with nodejs compatibility and dynamic code execution.
+
+Then, the module can be instantiated in your worker with:
+```javascript
+import { M } from './myModule.js';
+import mod from './myModule.wasm';
+/** @typedef {import("./myModule.js").MyModuleToplevel} MyModuleToplevel */
+
+async initializeMyModule() {
+  /** @type {MyModuleToplevel} */
+  var myModule = await M({
+    instantiateWasm: (imports, callback) => {
+      const instance = new WebAssembly.Instance(mod, imports);
+      callback(instance);
+      return instance.exports;
+    }
+  });
+}
+initializeMyModule();
+```
+
+Please refer to [this example](https://github.com/cloudflare/worker-emscripten-template) for details.
+
 ## Next steps
 
 In practice, you will likely compile a language of your choice (such as Rust) to WebAssembly binaries. Many languages provide a `bindgen` to simplify the interaction between JavaScript and Wasm. These tools may integrate with your JavaScript bundler, and provide an API other than the WebAssembly API for initializing and invoking your Wasm module. As an example, refer to the [Rust `wasm-bindgen` documentation](https://rustwasm.github.io/wasm-bindgen/examples/without-a-bundler.html).
