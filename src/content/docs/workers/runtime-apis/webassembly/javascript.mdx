@@ -87,23 +87,22 @@ When invoked, this Worker should log `Hello from JavaScript: 42` and return `Suc
 
 WebAssembly modules compiled with Emscripten require a few considerations for use with Workers.   Specifically, they should be compiled with `MODULARIZE=1`, `EXPORT_ES6=1`, `ENVIRONMENT=web`, and `DYNAMIC_EXECUTION=0` to avoid the workers' limitations with nodejs compatibility and dynamic code execution.
 
-Then, the module can be instantiated in your worker with:
+Then, the module can be instantiated in your Worker with:
 ```javascript
 import { M } from './myModule.js';
 import mod from './myModule.wasm';
 /** @typedef {import("./myModule.js").MyModuleToplevel} MyModuleToplevel */
 
-async function initializeMyModule() {
+M({
+  instantiateWasm: (imports, callback) => {
+    const instance = new WebAssembly.Instance(mod, imports);
+    callback(instance);
+    return instance.exports;
+  }
+}).then(instantiatedModule => {
   /** @type {MyModuleToplevel} */
-  const myModule = await M({
-    instantiateWasm: (imports, callback) => {
-      const instance = new WebAssembly.Instance(mod, imports);
-      callback(instance);
-      return instance.exports;
-    }
-  });
-}
-initializeMyModule().catch(error => {
+  const myModule = instantiatedModule;
+}).catch(error => {
   console.error("Failed to initialize the module:", error);
 });
 ```
