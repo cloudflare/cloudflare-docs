@@ -165,6 +165,41 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 
 </TabItem> </Tabs>
 
+## Filter HTTP traffic when inspecting on all ports
+
+If your organization blocks traffic by default with a network policy and you want to [inspect HTTP traffic on all ports](/cloudflare-one/policies/gateway/network-policies/protocol-detection/#inspect-on-all-ports), you need to explicitly allow HTTP and TLS traffic to filter it.
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+| Selector          | Operator | Value  | Logic | Action |
+| ----------------- | -------- | ------ | ----- | ------ |
+| Detected Protocol | is       | _TLS_  | Or    | Allow  |
+| Detected Protocol | is       | _HTTP_ |       |        |
+
+</TabItem>
+
+<TabItem label="API">
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
+--header "Content-Type: application/json" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+--data '{
+  "name": "Allow on inspect all ports",
+  "description": "Filter TLS traffic when using inspect all ports",
+  "enabled": true,
+  "action": "allow",
+  "filters": [
+    "l4"
+  ],
+  "traffic": "net.detected_protocol == \"tls\" or net.detected_protocol == \"http\"",
+  "identity": "",
+  "device_posture": ""
+}'
+```
+
+</TabItem> </Tabs>
+
 ## Restrict access to private networks
 
 Restrict access to resources which you have connected through [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/).
