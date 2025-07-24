@@ -77,7 +77,7 @@ When you are done entering the destination details, select **Continue**.
 
 9. In **Advanced Options**, you can:
    * Choose the format of timestamp fields in your logs (`RFC3339`(default),`Unix`, or `UnixNano`).
-   * Select a [sampling rate](/logs/get-started/api-configuration/#sampling-rate) for your logs or push a randomly-sampled percentage of logs.
+   * Select a [sampling rate](/logs/logpush/logpush-job/api-configuration/#sampling-rate) for your logs or push a randomly-sampled percentage of logs.
    * Enable redaction for `CVE-2021-44228`. This option will replace every occurrence of `${` with `x{`.
 
 10. Select **Submit** once you are done configuring your logpush job.
@@ -99,7 +99,7 @@ r2://<BUCKET_PATH>/{DATE}?account-id=<ACCOUNT_ID>&access-key-id=<R2_ACCESS_KEY_I
 ```
 
 * **dataset** - The category of logs you want to receive. Refer to [Log fields](/logs/reference/log-fields/) for the full list of supported datasets.
-* **output\_options** (optional) - To configure fields, sample rate, and timestamp format, refer to [API configuration options](/logs/get-started/api-configuration/#options).
+* **output\_options** (optional) - To configure fields, sample rate, and timestamp format, refer to [API configuration options](/logs/logpush/logpush-job/api-configuration/#options).
 
 Example request using cURL:
 

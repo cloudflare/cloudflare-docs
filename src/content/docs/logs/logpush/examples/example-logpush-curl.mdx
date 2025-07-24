@@ -12,7 +12,7 @@ You can manage your Cloudflare Logpush service from the command line using cURL.
 
 Before getting started, review the following documentation:
 
-* [API configuration](/logs/get-started/api-configuration/)
+* [API configuration](/logs/logpush/logpush-job/api-configuration/)
 
 :::note
 
@@ -34,7 +34,7 @@ The examples below are for zone-scoped datasets. Account-scoped datasets should 
 
 ### Parameters
 
-* **destination\_conf** - Refer to [Destination](/logs/get-started/api-configuration/#destination) for details.
+* **destination\_conf** - Refer to [Destination](/logs/logpush/logpush-job/api-configuration/#destination) for details.
 
 ### Response
 
@@ -93,7 +93,7 @@ When using Sumo Logic, you may find it helpful to have [Live Tail](https://help.
 ### Parameters
 
 * **name** (optional) - We suggest using your domain name as the job name; the name cannot be changed after the job is created.
-* **destination\_conf** - Refer to [Destination](/logs/get-started/api-configuration/#destination) for details.
+* **destination\_conf** - Refer to [Destination](/logs/logpush/logpush-job/api-configuration/#destination) for details.
 * **dataset** - The category of logs you want to receive. Refer to [Log fields](/logs/reference/log-fields/) for the full list of supported datasets; this parameter cannot be changed after the job is created.
 * **output\_options** (optional) - Refer to [Log Output Options](/logs/logpush/logpush-job/log-output-options/).
   * Typically includes the desired fields and timestamp format.
@@ -101,7 +101,7 @@ When using Sumo Logic, you may find it helpful to have [Live Tail](https://help.
     * Google BigQuery usage.
     * Automated timestamp parsing within Sumo Logic; refer to [timestamps from Sumo Logic](https://help.sumologic.com/03Send-Data/Sources/04Reference-Information-for-Sources/Timestamps%2C-Time-Zones%2C-Time-Ranges%2C-and-Date-Formats) for details.
 * **ownership\_challenge** - Challenge token required to prove destination ownership.
-* **kind** (optional) - Used to differentiate between Logpush and Edge Log Delivery jobs. Refer to [Kind](/logs/get-started/api-configuration/#kind) for details.
+* **kind** (optional) - Used to differentiate between Logpush and Edge Log Delivery jobs. Refer to [Kind](/logs/logpush/logpush-job/api-configuration/#kind) for details.
 * **filter** (optional) - Refer to [Filters](/logs/logpush/logpush-job/filters/) for details.
 
 ### Response
