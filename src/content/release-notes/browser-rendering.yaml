@@ -5,7 +5,7 @@ productLink: "/browser-rendering/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
-    publish_date: "2025-07-24"
+  - publish_date: "2025-07-24"
     title: Playwright now supported in local development
     description: |-
       * You can now use Playwright with local development. Upgrade to wrangler@4.26.0 to get started.
