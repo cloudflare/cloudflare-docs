@@ -1094,13 +1094,15 @@ The following options are available:
 
 - `max_instances` <Type text="string" /> <MetaInfo text="optional" />
 
-  - The maxiumum number of concurrent container instances you want to run. If you have more Durable Objects that
+  - The maximum number of concurrent container instances you want to run. If you have more Durable Objects that
     request to run a container than this number, the container request will error. You may have more Durable Objects
     than this number over a longer time period, but you may not have more concurrently.
 
+  - This value is only enforced when running in production on Cloudflare's network. This limit does not apply during local development, so you may run more instances than specified.
+
 - `name` <Type text="string" /> <MetaInfo text="optional" />
 
-  - The name of your container. Used as an identifier. This will default to a comination of your Worker name, the class
+  - The name of your container. Used as an identifier. This will default to a combination of your Worker name, the class
     name, and your environment.
 
 - `image_build_context` <Type text="string" /> <MetaInfo text="optional" />
@@ -1224,7 +1226,7 @@ You can configure various aspects of local development, such as the local protoc
 
 - `enable_containers` <Type text="boolean" /> <MetaInfo text="optional" />
 
-  - Determines whether to enable containers during a local dev session, if they have been configured. Defaults to `true`. If set to `false`, you can develop the rest of your application without requiring Docker or other container tool, as long as you do not invoke any code that interacts with containers. 
+  - Determines whether to enable containers during a local dev session, if they have been configured. Defaults to `true`. If set to `false`, you can develop the rest of your application without requiring Docker or other container tool, as long as you do not invoke any code that interacts with containers.
 
 - `container_engine` <Type text="string" /> <MetaInfo text="optional" />
 
@@ -1292,12 +1294,12 @@ You can alias all imports of `node-fetch` to instead point directly to the `fetc
 
 ```toml title="wrangler.toml"
 [alias]
-"node-fetch" = "./fetch-nolyfill"
+"node-fetch" = "./fetch-polyfill"
 ```
 
 </WranglerConfig>
 
-```js title="./fetch-nolyfill"
+```js title="./fetch-polyfill"
 export default fetch;
 ```
 

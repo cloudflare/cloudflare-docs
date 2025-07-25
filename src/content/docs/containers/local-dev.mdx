@@ -5,7 +5,7 @@ sidebar:
   order: 3
 ---
 
-You can run both your container and your Worker locally, without additional configuration, by running [`npx wrangler dev`](/workers/wrangler/commands/#dev) in your project's directory.
+You can run both your container and your Worker locally, without additional configuration, by running [`npx wrangler dev`](/workers/wrangler/commands/#dev) (or `vite dev` for Vite projects using the [Cloudflare Vite plugin](/workers/vite-plugin/)) in your project's directory.
 
 To develop Container-enabled Workers locally, you will need to first ensure that a
 Docker compatible CLI tool and Engine are installed. For instance, you can use [Docker Desktop](https://docs.docker.com/desktop/)
@@ -30,6 +30,8 @@ If your Worker app creates many container instances, your local machine may not 
 
 Additionally, if you regularly rebuild containers locally, you may want to clear
 out old container images (using `docker image prune` or similar) to reduce disk used.
+
+Also note that the `max_instances` configuration option is only enforced when running in production on Cloudflare's network. This limit does not apply during local development, so you may run more instances than specified.
 :::
 
 ## Iterating on Container code

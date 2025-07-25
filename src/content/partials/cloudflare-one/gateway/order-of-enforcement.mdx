@@ -82,7 +82,7 @@ If the TCP connection to the destination server is successful, Gateway will appl
 
 <Render file="gateway/tcp-flowchart" product="cloudflare-one" />
 
-Connections to Zero Trust will always appear in your [Zero Trust network session logs](/logs/reference/log-fields/account/zero_trust_network_sessions/) regardless of connection success. Because Gateway does not inspect failed connections, they will not appear in your [Gateway activity logs](/cloudflare-one/insights/logs/gateway-logs/).
+Connections to Zero Trust will always appear in your [Zero Trust network session logs](/logs/logpush/logpush-job/datasets/account/zero_trust_network_sessions/) regardless of connection success. Because Gateway does not inspect failed connections, they will not appear in your [Gateway activity logs](/cloudflare-one/insights/logs/gateway-logs/).
 
 ## Priority between policy builders
 
