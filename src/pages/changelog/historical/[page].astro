@@ -1,0 +1,67 @@
+---
+import StarlightPage, {
+	type StarlightPageProps,
+} from "@astrojs/starlight/components/StarlightPage.astro";
+import Pagination from "@astrojs/starlight/components/Pagination.astro";
+
+import type { GetStaticPaths } from "astro";
+
+import { format } from "date-fns";
+import { getChangelogs } from "~/util/changelog";
+import ProductPills from "~/components/changelog/ProductPills.astro";
+
+export const getStaticPaths = (async ({ paginate }) => {
+	const notes = await getChangelogs({});
+
+	return paginate(notes, { pageSize: 50 });
+}) satisfies GetStaticPaths;
+
+const { page } = Astro.props;
+
+const prev =
+	page.currentPage !== 1
+		? {
+				label: `Page ${page.currentPage - 1}`,
+				link: `/changelog/historical/${page.currentPage - 1}/`,
+			}
+		: undefined;
+
+const next =
+	page.currentPage !== page.lastPage
+		? {
+				label: `Page ${page.currentPage + 1}`,
+				link: `/changelog/historical/${page.currentPage + 1}/`,
+			}
+		: undefined;
+
+const props = {
+	frontmatter: {
+		title: "Historical changelogs",
+		tableOfContents: false,
+		template: "splash",
+		chatbot_deprioritize: true,
+		prev,
+		next,
+	},
+	hideBreadcrumbs: true,
+} as StarlightPageProps;
+---
+
+<StarlightPage {...props}>
+	{
+		page.data.map((note) => {
+			return (
+				<div>
+					<h3>{note.data.title}</h3>
+					<time class="font-bold" datetime={note.data.date.toISOString()}>
+						{format(note.data.date, "MMM dd, yyyy")}
+					</time>
+					<ProductPills products={note.data.products} />
+					<p>{note.data.description}</p>
+					<a href={`/changelog/${note.id}/`}>Read more</a>
+				</div>
+			);
+		})
+	}
+	<Pagination />
+</StarlightPage>
