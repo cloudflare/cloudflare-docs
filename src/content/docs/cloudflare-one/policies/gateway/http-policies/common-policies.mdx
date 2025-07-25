@@ -436,7 +436,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --data '{
   "name": "Filter WebSocket",
-  "description": "Filter WebSocket traffic with HTTP code 101",
+  "description": "Filter WebSocket traffic with HTTP response code 101",
   "enabled": true,
   "action": "allow",
   "filters": [
