@@ -13,8 +13,26 @@ import { productsByGroup } from "~/util/products";
 
 import { render } from "astro:content";
 
-const notes = await getChangelogs({
+let notes = await getChangelogs({
 	filter: (entry) => !entry.data.hidden,
+});
+
+const seen = new Map<string, number>();
+
+notes = notes.flatMap((note) => {
+	const products = note.data.products.map((product) => product.id);
+
+	for (const product of products) {
+		const previous = seen.get(product) || 0;
+
+		seen.set(product, previous + 1);
+
+		if (previous >= 5) {
+			return [];
+		}
+	}
+
+	return note;
 });
 
 const props = {
