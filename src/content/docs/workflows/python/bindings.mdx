@@ -1,0 +1,79 @@
+---
+title: Binding to a Workflow
+pcx_content_type: concept
+sidebar:
+  order: 3
+  group:
+   hideIndex: true
+
+---
+import { WranglerConfig } from "~/components"
+
+The Python Workers platform leverages FFI to access bindings to Cloudflare resources. Refer to the [bindings](/workers/languages/python/ffi/#using-bindings-from-python-workers) documentation for more information.
+
+From the configuration perspective, there is no difference between configuring a Python workflow or a Javascript one.
+
+<WranglerConfig>
+
+```toml title="wrangler.toml"
+#:schema node_modules/wrangler/config-schema.json
+name = "workflows-starter"
+main = "src/index.ts"
+compatibility_date = "2024-10-22"
+
+[[workflows]]
+# name of your workflow
+name = "workflows-starter"
+# binding name env.MY_WORKFLOW
+binding = "MY_WORKFLOW"
+# this is class that extends the Workflow class in src/index.ts
+class_name = "MyWorkflow"
+```
+
+</WranglerConfig>
+
+### Creating an instance via binding
+
+Note that `env` is a Javascript object exposed to the Python script via [JsProxy](https://pyodide.org/en/stable/usage/api/python-api/ffi.html#pyodide.ffi.JsProxy). You can
+access the binding like you would on a Javascript worker. Refer to the [Workflow binding documentation](/workflows/build/workers-api/#workflow) to learn more about the methods available.
+
+Let's consider the previous binding called `MY_WORKFLOW`. Here's how you would create a new instance:
+
+```python
+async def on_fetch(request, env):
+    instance = await env.MY_WORKFLOW.create()
+    return Response.json({"status": "success"})
+```
+
+### Passing a payload to a workflow instance
+
+```python
+from pyodide.ffi import to_js
+
+async def on_fetch(request, env, ctx):
+    event = {"foo": "bar"}
+    # to_js here is required because the binding goes through ffi. Not something we can wrap or override on the runtime
+    await env.MY_WORKFLOW.create(to_js({"params": event}, dict_converter=Object.fromEntries))
+    return Response.json({"status": "success"})
+```
+:::note
+
+Values returned from steps need to be converted into Javascript objects using `to_js`. This is why we explicitly construct the payload using `Object.fromEntries`.
+
+:::
+
+
+And this is how you use the payload in your workflow:
+
+```python
+from pyodide.ffi import to_js
+
+class DemoWorkflowClass(WorkflowEntrypoint):
+    async def on_run(self, event, step):
+        @step.do('step-name')
+        async def first_step():
+            payload = event["payload"]
+            return payload
+```
+
+

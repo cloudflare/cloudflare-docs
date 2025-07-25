@@ -1,0 +1,81 @@
+---
+title: Run method
+pcx_content_type: concept
+sidebar:
+  order: 2
+
+---
+
+The main difference between the [Typescript SDK](/workflows/build/workers-api/#run) and the Python SDK lives in the `run` method, and the parameters that it receives.
+
+## WorkflowStep
+
+* <code>step.do(name, depends=[], concurrent=False, config=None)</code> is a decorator that allows you to define a step in a workflow.
+  * `name` - the name of the step.
+  * `depends` - an optional list of steps that must complete before this step can run.
+  * `concurrent` - an optional boolean that indicates whether this step can run concurrently with other steps.
+  * `config` - an optional [`WorkflowStepConfig`](/workflows/build/workers-api/#workflowstepconfig) for configuring [step specific retry behaviour](/workflows/build/sleeping-and-retrying/). This is passed as a Python dictionary and then type translated into a `WorkflowStepConfig` object.
+
+```python
+from workers import WorkflowEntrypoint
+
+class MyWorkflow(WorkflowEntrypoint):
+    async def on_run(self, event, step):
+        @step.do("my first step")
+        async def my_first_step():
+            # do some work
+            return "Hello World!"
+        
+        await my_first_step()
+```
+
+When returning state from a step, you must make sure that the returned value is serializable. Since steps run through an FFI layer, the returned value gets type translated via [FFI.](https://pyodide.org/en/stable/usage/api/python-api/ffi.html#pyodide.ffi.to_js)
+Refer to [Pyodide's documentation](https://pyodide.org/en/stable/usage/type-conversions.html#type-translations-pyproxy-to-js) regarding type conversions for more information.
+
+* <code>step.sleep(name, duration)</code>
+
+  * `name` - the name of the step.
+  * `duration` - the duration to sleep until, in either seconds or as a `WorkflowDuration` compatible string.
+
+* <code>step.sleep_until(name, timestamp)</code>
+
+  * `name` - the name of the step.
+  * `timestamp` - a `datetime.date` object or seconds from the Unix epoch to sleep the Workflow instance until.
+
+* <code>step.wait_for_event(name, event_type, timeout="24 hours")</code>
+
+  * `name` - the name of the step.
+  * `event_type` - the type of event to wait for.
+  * `timeout` - the timeout for the `waitForEvent` call. The default timeout is 24 hours.
+
+## Error Handling
+
+Workflows semantics allow users to catch exceptions that get thrown to the top level. 
+
+:::note
+Catching specific exceptions within an `except` block may not work, as some Python errors will not be re-instantiated into the same type of error when they are passed through the RPC layer.
+:::
+
+### NonRetryableError
+
+Similarly to the [Typescript SDK](/workflows/build/workers-api/#nonretryableerror), the Python SDK provides a `NonRetryableError` class that can be used to signal that a step should not be retried.
+
+```python
+from workers.workflows import NonRetryableError
+
+throw NonRetryableError(message)
+```
+
+## Configuring a workflow instance
+
+You can bind a step to a specific retry policy by passing a `WorkflowStepConfig` object to the `config` parameter of the `step.do` decorator. 
+In Python , you need to make sure that your `dict` respects the [`WorkflowStepConfig`](/workflows/build/workers-api/#workflowstepconfig) type.
+
+```python
+class DemoWorkflowClass(WorkflowEntrypoint):
+    async def on_run(self, event, step):
+        @step.do('step-name', config={"retries": {"limit": 1, "delay": "10 seconds"}})
+        async def first_step():
+            # do some work
+            pass
+```
