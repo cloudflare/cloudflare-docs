@@ -31,8 +31,7 @@ If your Worker app creates many container instances, your local machine may not 
 Additionally, if you regularly rebuild containers locally, you may want to clear
 out old container images (using `docker image prune` or similar) to reduce disk used.
 
-Also note that the `max_instances` configuration option is only enforced when running in production on Cloudflare's network.
-During local development the limit is not applied, so you may run more instances than specified.
+Also note that the `max_instances` configuration option is only enforced when running in production on Cloudflare's network. This limit does not apply during local development, so you may run more instances than specified.
 :::
 
 ## Iterating on Container code
