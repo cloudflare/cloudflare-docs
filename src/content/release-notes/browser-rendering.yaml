@@ -6,7 +6,7 @@ productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
   - publish_date: "2025-07-25"
-    title: @cloudflare/puppeteer 1.0.4 released
+    title: "@cloudflare/puppeteer 1.0.4 released"
     description: |-
       * We’ve released version 1.0.4 of [`@cloudflare/puppeteer`](https://github.com/cloudflare/puppeteer), now in sync with Puppeteer v22.13.1.
   - publish_date: "2025-07-24"
