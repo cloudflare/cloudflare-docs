@@ -54,7 +54,7 @@ const languages: Array<Tag> = [
 	{ label: "JavaScript", variants: ["js"] },
 	{ label: "MySQL" },
 	{ label: "NoSQL" },
-	{ label: "PowerShell", variants: ["js"] },
+	{ label: "PowerShell", variants: ["ps"] },
 	{ label: "Python", variants: ["py"] },
 	{ label: "Rust", variants: ["rs"] },
 	{ label: "Shell", variants: ["sh"] },
