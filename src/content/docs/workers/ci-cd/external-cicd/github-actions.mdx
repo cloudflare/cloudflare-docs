@@ -58,7 +58,6 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     timeout-minutes: 60
-    needs: test
     steps:
       - uses: actions/checkout@v4
       - name: Build & Deploy Worker
