@@ -137,7 +137,7 @@ entries:
 
   - term: on-ramp
     general_definition: |-
-      a [connection method](/learning-paths/secure-internet-traffic/connect-devices-networks/choose-on-ramp/) from your networks to Cloudflare.
+      refers to a way of connecting a business network to Cloudflare. Examples of on-ramps, or ways to connect to Cloudflare, are Anycast GRE tunnels, Anycast IPsec tunnels, Cloudflare Network Interconnect (CNI), Cloudflare Tunnel, and WARP.
 
   - term: PAC file
     general_definition: |-
