@@ -227,7 +227,6 @@ If route-based VPNs are not an option and you must use policy-based VPNs, be awa
 - Reply-style health checks must be covered by a policy — that is, they must match traffic selectors — otherwise, they will be dropped, just like any other traffic from an IPsec tunnel that does not match a policy.
 - A single IPsec tunnel can only contain around 100 Child SAs. Therefore, there is effectively a limit on the number of different policies per tunnel.
 
-
 { props.magicWord === "Magic Transit" && (
   <>
 	<AnchorHeading title="Network Analytics" depth={2} />
