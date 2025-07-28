@@ -49,6 +49,10 @@ console.log(screenshot.status);
 
 For more options to control the final screenshot, like `clip`, `captureBeyondViewport`, `fullPage` and others, check the endpoint [reference](/api/resources/browser_rendering/subresources/screenshot/methods/create/).
 
+:::note
+The `quality` parameter is not compatible with the default `.png` format and will return a 400 error. If you set `quality`, you must also set `type` to `.jpeg` or another supported format.
+:::
+
 ## Advanced usage
 
 Navigate to `https://cloudflare.com/`, changing the page size (`viewport`) and waiting until there are no active network connections (`waitUntil`) or up to a maximum of `4500ms` (`timeout`). Then take a `fullPage` screenshot.
