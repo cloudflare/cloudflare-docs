@@ -27,9 +27,9 @@
 | **Rate Limiting**                       |        ✅         |             ❌             |
 | **Service Bindings (multiple Workers)** |        ✅         |          ✅ [^1]           |
 | **Vectorize**                           |        ❌         |             ✅             |
-| **Workflows**                           |        ✅         |             ✅             |
+| **Workflows**                           |        ✅         |             ❌             |
 
-[^1]: Service bindings with RPC are not currently supported with remote bindings, although `fetch()` calls do work with remote bindings.
+[^1]: While you can make `fetch()` calls on remote service bindings, you cannot currently call RPC methods on remote service bindings.
 
 ## Remote development
 
