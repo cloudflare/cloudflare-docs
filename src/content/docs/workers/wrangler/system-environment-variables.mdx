@@ -72,6 +72,14 @@ Wrangler supports the following environment variables:
   * Defaults to `unix:///var/run/docker.sock`. Set this to the socket path your container engine is listening at if you are using another container tool besides Docker, such as `colima`, or if your Docker engine is configured to listen at a path other than `unix:///var/run/docker.sock`.
     You can also set this via `container_engine` config option.
 
+* `WRANGLER_HTTPS_KEY_PATH` <Type text="string" /> <MetaInfo text="optional" />
+
+  * Path to a custom HTTPS certificate key when running `wrangler dev`, to be used with `WRANGLER_HTTPS_CERT_PATH`.
+
+* `WRANGLER_HTTPS_CERT_PATH` <Type text="string" /> <MetaInfo text="optional" />
+
+  * Path to a custom HTTPS certificate when running `wrangler dev`, to be used with `WRANGLER_HTTPS_KEY_PATH`.
+
 
 
 ## Example `.env` file

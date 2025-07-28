@@ -4,9 +4,9 @@
 
 ## Local development
 
-During local development, your Worker code always executes locally and bindings connect to locally simulated resources [by default](/workers/development-testing/#remote-bindings).
+**Local simulations**: During local development, your Worker code always executes locally and bindings connect to locally simulated resources [by default](/workers/development-testing/#remote-bindings). This is supported in [`wrangler dev`](/workers/wrangler/commands/#dev) and the [Cloudflare Vite plugin](/workers/vite-plugin/).
 
-You can configure [**remote bindings** during local development](/workers/development-testing/#remote-bindings), allowing your bindings to connect to a deployed resource on a per-binding basis.
+**Remote binding connections:**: Allows you to connect to remote, deployed resources on a per-binding basis. Supported in [`wrangler dev --x-remote-bindings`](/workers/development-testing/#using-wrangler-with-remote-bindings) and the [Cloudflare Vite plugin](/workers/development-testing/#using-vite-with-remote-bindings).
 
 | Binding                                 | Local simulations | Remote binding connections |
 | --------------------------------------- | :---------------: | :------------------------: |
@@ -25,13 +25,11 @@ You can configure [**remote bindings** during local development](/workers/develo
 | **Queues**                              |        ✅         |             ✅             |
 | **R2**                                  |        ✅         |             ✅             |
 | **Rate Limiting**                       |        ✅         |             ❌             |
-| **Service Bindings (multiple Workers)** |        ✅         |             ✅             |
+| **Service Bindings (multiple Workers)** |        ✅         |          ✅ [^1]           |
 | **Vectorize**                           |        ❌         |             ✅             |
-| **Workflows**                           |        ✅         |             ✅             |
+| **Workflows**                           |        ✅         |             ❌             |
 
-- **Local simulations:** Bindings connect to local resource simulations. Supported in [`wrangler dev`](/workers/wrangler/commands/#dev) and the [Cloudflare Vite plugin](/workers/vite-plugin/).
-
-- **Remote binding connections:** Bindings connect to remote resources via `experimental_remote: true` configuration. Supported in [`wrangler dev --x-remote-bindings`](/workers/development-testing/#using-wrangler-with-remote-bindings) and the [Cloudflare Vite plugin](/workers/development-testing/#using-vite-with-remote-bindings).
+[^1]: While you can make `fetch()` calls on remote service bindings, you cannot currently call RPC methods on remote service bindings.
 
 ## Remote development
 

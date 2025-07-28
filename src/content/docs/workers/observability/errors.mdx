@@ -258,7 +258,7 @@ The **Client disconnected by type** chart shows the number of client disconnect 
 
 To find all your errors in Workers Logs, you can use the following filter: `$metadata.error EXISTS`. This will show all the logs that have an error associated with them. You can also filter by `$workers.outcome` to find the requests that resulted in an error. For example, you can filter by `$workers.outcome = "exception"` to find all the requests that resulted in an uncaught exception.
 
-All the possible outcome values can be found in the [Workers Trace Event](/logs/reference/log-fields/account/workers_trace_events/#outcome) reference.
+All the possible outcome values can be found in the [Workers Trace Event](/logs/logpush/logpush-job/datasets/account/workers_trace_events/#outcome) reference.
 
 ## Debug exceptions from `Wrangler`
 
