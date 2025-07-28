@@ -74,7 +74,7 @@ Any pending zone with a paid plan (Pro, Business, Enterprise) will remain pendin
 Make sure not to use pending zones for production traffic. Cloudflare responds to DNS queries for pending zones on the assigned Cloudflare nameserver IPs but there are associated risks, especially if you do not use [zone holds](/fundamentals/account/account-security/zone-holds/).
 :::
 
-For Enterprise zones, if you want to adjust settings before zone activation, Logpush for [DNS logs](/logs/reference/log-fields/zone/dns_logs/) and [DNS Zone Transfer](/dns/zone-setups/zone-transfers/) configuration work as expected in pending state.
+For Enterprise zones, if you want to adjust settings before zone activation, Logpush for [DNS logs](/logs/logpush/logpush-job/datasets/zone/dns_logs/) and [DNS Zone Transfer](/dns/zone-setups/zone-transfers/) configuration work as expected in pending state.
 
 ## Active
 

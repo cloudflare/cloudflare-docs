@@ -11,7 +11,9 @@ On 2022-05-04, Cloudflare started the upgrade from the [previous version of WAF 
 
 Cloudflare is gradually upgrading all zones to the new version of WAF Managed Rules. You can also start the upgrade process manually for a zone in the Cloudflare dashboard or via API. **The upgrade is irreversible** — once you upgrade to the new WAF Managed Rules, you cannot go back to the previous version.
 
-Once the upgrade finishes, the **Managed rules** tab in the Cloudflare dashboard (available in **Security** > **WAF** > **Managed rules**) will display a new interface, and the WAF managed rules APIs will stop working.
+If you are using the old dashboard, once the upgrade finishes your rules will be shown using a different user interface in **Security** > **WAF** > **Managed rules** tab. If you are using the [new security dashboard](/security/), your upgraded rules will be shown in **Security** > **Security rules**.
+
+Additionally, the WAF managed rules APIs will stop working once you upgrade.
 
 :::caution[Deprecation notice]
 
@@ -89,13 +91,14 @@ If a zone has [URI-based WAF overrides](/api/resources/firewall/subresources/waf
 
 ### Cloudflare dashboard changes
 
-After the upgrade process is complete, the Cloudflare dashboard will display the new WAF Managed Rules interface in **Security** > **WAF** > **Managed rules**, where you can deploy managed rulesets and adjust their configuration.
+After the upgrade process is complete, the Cloudflare dashboard will display your rules in:
 
-![After upgrading to WAF Managed Rules, the Cloudflare dashboard will display a new interface where you can deploy managed rulesets to your zone.](~/assets/images/waf/reference/waf-migration-dashboard-differences.png)
+- Old dashboard: **Security** > **WAF** > **Managed rules** tab (using a different user interface)
+- New dashboard: **Security** > **Security rules**
 
-Unlike the WAF managed rules, there is no global on/off setting to enable the WAF in the new interface. Instead, you deploy each managed ruleset individually in your zone.
+Unlike the old WAF managed rules, there is no longer a global on/off setting to enable the WAF. Instead, you deploy each managed ruleset individually in your zone.
 
-For more information about configuring WAF Managed Rules in the dashboard, refer to [Deploy Managed Rulesets for a zone in the dashboard](/waf/managed-rules/deploy-zone-dashboard/).
+For more information about deploying WAF Managed Rules in the Cloudflare dashboard, refer to [Deploy a WAF managed ruleset in the dashboard](/waf/managed-rules/deploy-zone-dashboard/).
 
 ### API changes
 
@@ -166,35 +169,41 @@ You can start the WAF upgrade in the Cloudflare dashboard or via API.
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and zone.
 
-2. Go to **Security** > **WAF** > **Managed rules**.
+2. If you are using the old dashboard, go to **Security** > **WAF** > **Managed rules** tab.<br/>
+   If you are using the [new security dashboard](/security/), go **to Security** > **Security rules** instead and select **Go to upgrade your Managed rules**.
 
    If you are an Enterprise customer, the dashboard will show the following banner:
 
-   ![The upgrade banner displayed to Enterprise customers in WAF > Managed rules.](~/assets/images/waf/reference/waf-migration-ent-banner.png)
+   ![The upgrade banner displayed to Enterprise customers.](~/assets/images/waf/reference/waf-migration-ent-banner.png)
 
    If you are a Professional/Business customer, the dashboard will show the following banner:
 
-   ![The upgrade banner displayed to Pro/Business customers in WAF > Managed rules.](~/assets/images/waf/reference/waf-migration-biz-banner.png)
+   ![The upgrade banner displayed to Pro/Business customers.](~/assets/images/waf/reference/waf-migration-biz-banner.png)
 
-3. In the update banner, select **Review configuration**. This banner is only displayed in eligible zones.
+3. In the upgrade banner, select **Review configuration**. This banner is only displayed in eligible zones.
 
-4. Review the proposed WAF configuration rules. You can make adjustments to the proposed configuration, like [editing the WAF Managed Rules configuration](/waf/managed-rules/deploy-zone-dashboard/#configure-a-managed-ruleset) or creating [exceptions](/waf/managed-rules/waf-exceptions/) to skip the execution of rulesets or specific rules.
+4. Review the proposed WAF configuration. You can adjust configuration, like [editing the WAF Managed Rules configuration](/waf/managed-rules/deploy-zone-dashboard/#configure-a-managed-ruleset) or creating [exceptions](/waf/managed-rules/waf-exceptions/) to skip the execution of rulesets or specific rules.
 
 5. When you are done reviewing, select **Deploy** to deploy the new WAF Managed Rules configuration.
 
-   If you are a Professional/Business customer, Cloudflare will deploy the new WAF configuration and then disable the previous WAF version. The upgrade process may take a couple of minutes. When the migration finishes, the dashboard will display the new WAF Managed Rules interface in **Security** > **WAF** > **Managed rules**. To check if the upgrade has finished, refresh the dashboard.
+   If you are a Professional/Business customer, Cloudflare will deploy the new WAF configuration and then disable the previous WAF version. The upgrade process may take a couple of minutes.
 
    If you are an Enterprise customer, both WAF implementations will be enabled simultaneously when you select **Deploy**, so that you can validate your new configuration. Refer to the steps in the next section for additional guidance.
 
 #### Validate your new WAF configuration and finish the upgrade (Enterprise customers only)
 
-If you are an Enterprise customer, after deploying your new WAF configuration both WAF implementations will be enabled simultaneously. During this stage (called validation mode), the Cloudflare dashboard will display both WAF Managed Rules, old and new, in the **Managed rules** tab. The new WAF Managed Rules will run before the previous version.
+If you are an Enterprise customer, after deploying your new WAF configuration both WAF implementations will be enabled simultaneously. During this stage (called validation mode), you can access both implementations of WAF Managed Rules in the Cloudflare dashboard, which will keep showing the upgrade banner until you finish upgrading. The new WAF Managed Rules will run before the previous version.
 
-1. Use the current validation mode to check the behavior of the new WAF configuration in Security Events (**Security** > **Events**). For more information, refer to [Analyzing the new WAF behavior in Security Events](#analyzing-the-new-waf-behavior-in-security-events).
+1. Use the current validation mode to check the behavior of the new WAF configuration in [Security Events](/waf/analytics/security-events/). For more information, refer to [Analyzing the new WAF behavior in Security Events](#analyzing-the-new-waf-behavior-in-security-events).
 
-2. When you are done reviewing your configuration with both WAFs enabled, select **Ready to update** in the update banner, and then select **Turn off previous version**. This operation will complete the upgrade and disable the previous WAF version.
+2. When you are done reviewing your configuration with both WAFs enabled, select **Ready to update** in the upgrade banner, and then select **Turn off previous version**. This operation will complete the upgrade and disable the previous WAF version.
 
-When the upgrade finishes, the dashboard will only display the new WAF Managed Rules interface in **Security** > **WAF** > **Managed rules**. To check if the upgrade has finished, refresh the dashboard.
+When the upgrade finishes, the dashboard will show all of your upgraded rules in:
+
+- Old dashboard: **Security** > **WAF** > **Managed rules** tab
+- New dashboard: **Security** > **Security rules**
+
+To check if the upgrade has finished, refresh the dashboard.
 
 :::note
 The upgrade process can take up to an hour. During this period you may observe security events from both versions of WAF managed rules.

@@ -69,7 +69,7 @@ This approach is useful for supporting lazy loading of large or dynamically impo
 - Normally, a large lazy-imported file (for example, `await import("./large-dep.mjs")`) would be bundled directly into your entrypoint, reducing the effectiveness of the lazy loading.
   If matching rule is added to `rules`, then this file would only be loaded and executed at runtime when it is actually imported.
 - Previously, variable based dynamic imports (for example, ``await import(`./lang/${language}.mjs`)``) would always fail at runtime because Wrangler had no way of knowing which modules to include in the upload.
-  Providing a rule that matches all these files, such as `{ type = "EsModule", globs = ["./land/**/*.mjs"], fallthrough = true }`, will ensure this module is available at runtime.
+  Providing a rule that matches all these files, such as `{ "type": "EsModule", "globs": ["./lang/**/*.mjs"], "fallthrough": true }`, will ensure this module is available at runtime.
 - "Partial bundling" is supported when `find_additional_modules` is `true`, and a source file matches one of the configured `rules`, since Wrangler will then treat it as "external" and not try to bundle it into the entry-point file.
 
 ## Conditional exports

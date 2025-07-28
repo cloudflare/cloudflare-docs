@@ -81,7 +81,7 @@ To create a job, make a `POST` request to the Logpush jobs endpoint with the fol
 
 * **max\_upload\_bytes** (optional) - The maximum uncompressed file size of a batch of logs. This must be at least 5 MB. Note that there is no way to set a minimum file size. This means that log files may be much smaller than this batch size. Nevertheless, it is recommended to set this parameter to 5,000,000.
 
-* **dataset** - The category of logs you want to receive. Refer to [Log fields](/logs/reference/log-fields/) for the full list of supported datasets.
+* **dataset** - The category of logs you want to receive. Refer to [Datasets](/logs/logpush/logpush-job/datasets/) for the full list of supported datasets.
 
 Example request using cURL:
 

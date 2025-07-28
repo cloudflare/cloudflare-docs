@@ -18,7 +18,7 @@ If you want to use the automatic setup for your logpush job:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
 
-2. Select the Enterprise account or domain (also known as zone) you want to use with Logpush. Depending on your choice, you have access to [account-scoped datasets](/logs/reference/log-fields/account/) and [zone-scoped datasets](/logs/reference/log-fields/zone/), respectively.
+2. Select the Enterprise account or domain (also known as zone) you want to use with Logpush. Depending on your choice, you have access to [account-scoped datasets](/logs/logpush/logpush-job/datasets/account/) and [zone-scoped datasets](/logs/logpush/logpush-job/datasets/zone/), respectively.
 
 3. Go to **Analytics & Logs** > **Logpush**.
 
@@ -98,7 +98,7 @@ We recommend adding the `{DATE}` parameter in the `destination_conf` to separate
 r2://<BUCKET_PATH>/{DATE}?account-id=<ACCOUNT_ID>&access-key-id=<R2_ACCESS_KEY_ID>&secret-access-key=<R2_SECRET_ACCESS_KEY>
 ```
 
-* **dataset** - The category of logs you want to receive. Refer to [Log fields](/logs/reference/log-fields/) for the full list of supported datasets.
+* **dataset** - The category of logs you want to receive. Refer to [Datasets](/logs/logpush/logpush-job/datasets/) for the full list of supported datasets.
 * **output\_options** (optional) - To configure fields, sample rate, and timestamp format, refer to [API configuration options](/logs/logpush/logpush-job/api-configuration/#options).
 
 Example request using cURL:
