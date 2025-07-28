@@ -270,3 +270,7 @@ entries:
   - term: Hops
     general_definition: |-
       Hops refer to the stops an email makes as it travels from the sender to the recipient.
+
+  - term: Quarantine policies
+    general_definition: |-
+      Policies that block specific types of emails (usually malicious and suspicious emails), preventing emails from reaching the end-user or the next mail service provider.
