@@ -240,10 +240,8 @@ To verify that the certificate exchange and validation process work as expected.
 			"binding": "MY_CLIENT_CERT_FETCHER",
 			"certificate_id": "<YOUR_UPLOADED_CERT_ID>",
 			"experimental_remote": true
-
-    	}
-    ]
-
+			}
+	]
 }
 
 ```
@@ -256,10 +254,10 @@ To connect to a high-fidelity version of the Images API, and verify that all tra
 <WranglerConfig>
 ```jsonc title="wrangler.jsonc"
 {
-  "images": {
-    "binding": "IMAGES" ,
+	"images": {
+		"binding": "IMAGES" ,
 		"experimental_remote": true
-  }
+	}
 }
 ```
 
@@ -278,13 +276,13 @@ Workers for Platforms users can configure `experimental_remote: true` in dispatc
 <WranglerConfig>
 ```jsonc title="wrangler.jsonc"
 {
-  "dispatch_namespaces": [
-    {
-      "binding": "DISPATCH_NAMESPACE",
-      "namespace": "testing",
-      "experimental_remote":true
+	"dispatch_namespaces": [
+		{
+			"binding": "DISPATCH_NAMESPACE",
+			"namespace": "testing",
+			"experimental_remote":true
 		}
-  ]
+	]
 }
 ```
 </WranglerConfig>
