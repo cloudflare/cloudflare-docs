@@ -10,13 +10,13 @@ date: 2025-08-04
 
 The following API endpoints are now available:
 
-- [`/api/v1/ct/timeseries`](/api/resources/radar/subresources/ct/methods/timeseries/): Retrieves certificate issuance time series.
-- [`/api/v1/ct/summary/{dimension}`](/api/resources/radar/subresources/ct/methods/summary/): Retrieves certificate distribution by dimension.
-- [`/api/v1/ct/timeseries_groups/{dimension}`](/api/resources/radar/subresources/ct/methods/timeseries_groups/): Retrieves time series of certificate distribution by dimension.
-- [`/api/v1/ct/authorities`](/api/resources/radar/subresources/ct/methods/authorities/): Lists certification authorities.
-- [`/api/v1/ct/authorities/{ca_slug}`](/api/resources/radar/subresources/ct/methods/authorities/): Retrieves details about a Certification Authority (CA). CA information is derived from the [Common CA Database (CCADB)](https://www.ccadb.org/).
-- [`/api/v1/ct/logs`](/api/resources/radar/subresources/ct/methods/logs/): Lists CT logs.
-- [`/api/v1/ct/logs/{log_slug}`](/api/resources/radar/subresources/ct/methods/logs/): Retrieves details about a CT log. CT log information is derived from the [Google Chrome log list](https://googlechrome.github.io/CertificateTransparency/log_lists.html).
+- [`/ct/timeseries`](/api/resources/radar/subresources/ct/methods/timeseries/): Retrieves certificate issuance time series.
+- [`/ct/summary/{dimension}`](/api/resources/radar/subresources/ct/methods/summary/): Retrieves certificate distribution by dimension.
+- [`/ct/timeseries_groups/{dimension}`](/api/resources/radar/subresources/ct/methods/timeseries_groups/): Retrieves time series of certificate distribution by dimension.
+- [`/ct/authorities`](/api/resources/radar/subresources/ct/methods/authorities/): Lists certification authorities.
+- [`/ct/authorities/{ca_slug}`](/api/resources/radar/subresources/ct/methods/authorities/): Retrieves details about a Certification Authority (CA). CA information is derived from the [Common CA Database (CCADB)](https://www.ccadb.org/).
+- [`/ct/logs`](/api/resources/radar/subresources/ct/methods/logs/): Lists CT logs.
+- [`/ct/logs/{log_slug}`](/api/resources/radar/subresources/ct/methods/logs/): Retrieves details about a CT log. CT log information is derived from the [Google Chrome log list](https://googlechrome.github.io/CertificateTransparency/log_lists.html).
 
 For the `summary` and `timeseries_groups` endpoints, the following dimensions are available (and also usable as filters):
 
