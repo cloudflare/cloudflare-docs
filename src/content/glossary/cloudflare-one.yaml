@@ -273,4 +273,4 @@ entries:
 
   - term: Quarantine policies
     general_definition: |-
-      Policies that block specific types of emails (usually malicious and suspicious emails), preventing emails from reaching the end-user or the next mail service provider.
+      Policies that block specific types of emails (usually malicious and suspicious emails), preventing emails from reaching the end-user or the next mail service provider. Emails that are quarantined are reviewed by administrators and potentially released if falsely flagged.
