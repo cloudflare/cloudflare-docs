@@ -128,19 +128,19 @@ The new rule does not consider requests for cached assets when calculating the r
 ### Example D - Complexity-based rate limiting rule
 
 :::note
-[Complexity-based rate limiting](/waf/rate-limiting-rules/request-rate/#complexity-based-rate-limiting) is available in beta and can only be configured via API.
+[Complexity-based rate limiting](/waf/rate-limiting-rules/request-rate/#complexity-based-rate-limiting) is only available to Enterprise customers with Advanced Rate Limiting.
 :::
 
 This example adds a rate limiting rule to the `http_ratelimit` phase entry point ruleset for the zone with ID `$ZONE_ID`. The phase entry point ruleset already exists, with ID `$RULESET_ID`.
 
-The new rule is a complexity-based rate limiting rule that takes the `my-score` HTTP response header into account to calculate a total complexity score for the client. The counter with the total score is updated when there is a match for the rate limiting rule's counting expression (in this case, the same as the rule expression since `counting_expression` is an empty string). When this total score becomes larger than `400` during a period of `60` seconds, any later client requests will be blocked for a period of `600` seconds (10 minutes).
+The new rule is a complexity-based rate limiting rule that takes the `my-score` HTTP response header into account to calculate a total complexity score for the client. The counter with the total score is updated when there is a match for the rate limiting rule's counting expression (in this case, the same as the rule expression since `counting_expression` is an empty string). When this total score becomes larger than `400` during a period of `60` seconds (one minute), any later client requests will be blocked for a period of `600` seconds (10 minutes).
 
 <APIRequest
 	path="/zones/{zone_id}/rulesets/{ruleset_id}/rules"
 	method="POST"
 	json={{
 		description: "My complexity-based rate limiting rule",
-		expression: 'http.request.uri.path matches "^/graphql/"',
+		expression: '(http.request.uri.path wildcard "/graphql/*")',
 		action: "block",
 		ratelimit: {
 			characteristics: ["cf.colo.id", 'http.request.headers["x-api-key"]'],
