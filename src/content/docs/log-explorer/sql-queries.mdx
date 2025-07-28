@@ -5,6 +5,8 @@ sidebar:
   order: 3
 ---
 
+import { Details } from "~/components"
+
 This page outlines the SQL features supported by Log Explorer, including common aggregation functions, expressions, and query clauses.
 The diagram below illustrates the general shape of a valid query supported in Log Explorer. It shows how standard SQL clauses — such as `SELECT`, `WHERE`, `GROUP BY`, and `ORDER BY` — can be composed to form supported queries.
 
@@ -45,27 +47,35 @@ These help manipulate or evaluate values (often strings):
 
 - `ARRAY_CONTAINS(array, element)` –  Checks if the array contains the element.
 
-Example: `ARRAY_CONTAINS(['US', 'CA'], ClientCountry)`
-
-Returns rows where `ClientCountry` is either `US` or `CA`.
+  <Details header="Example">
+  `ARRAY_CONTAINS(['US', 'CA'], ClientCountry)`
+  
+  Returns rows where `ClientCountry` is either `US` or `CA`.
+  </Details>
 
 - `SUBSTRING(string, from_number, for_number)` – Extracts part of a string.
 
-Example: `SUBSTRING(ClientRequestPath, 0, 5)`
-
-Extracts the first `5` characters from `ClientRequestPath`.
+  <Details header="Example">
+  `SUBSTRING(ClientRequestPath, 0, 5)`
+  
+  Extracts the first `5` characters from `ClientRequestPath`.
+  </Details>
 
 - `LOWER(string)` – Converts to lowercase.
-
-Example: `LOWER(ClientRequestUserAgent)`
-
-Converts the user agent string to lowercase.
+  
+  <Details header="Example">
+  `LOWER(ClientRequestUserAgent)`
+  
+  Converts the user agent string to lowercase.
+  </Details>
 
 - `UPPER(string)` – Converts to uppercase.
-
-Example: `UPPER(ClientCountry)`
-
-Converts the country code to uppercase.
+  
+  <Details header="Example">
+  `UPPER(ClientCountry)`
+  
+  Converts the country code to uppercase.
+  </Details>
 
 ### Aggregation functions
 
@@ -73,39 +83,51 @@ Used to perform calculations on sets of rows:
 
 - `SUM(expression)` – Total of values.
 
-Example: `SUM(ClientRequestBytes)`
+  <Details header="Example">
+  `SUM(ClientRequestBytes)`
 
-Adds up the total number of bytes requested by clients.
+  Adds up the total number of bytes requested by clients.
+  </Details>
 
 - `MIN(expression)` – Minimum value.
 
-Example: `MIN(OriginResponseDurationMs)`
-
-Finds the shortest response time from origin servers.
+  <Details header="Example">
+  `MIN(OriginResponseDurationMs)`
+  
+  Finds the shortest response time from origin servers.
+  </Details>
 
 - `MAX(expression)` – Maximum value.
 
-Example: `MAX(OriginResponseDurationMs)`
+   <Details header="Example">
+  `MAX(OriginResponseDurationMs)`
 
-Finds the longest response time.
+  Finds the longest response time.
+  </Details>
 
 - `COUNT(expression)` – Number of rows (can be all rows or non-null values).
+  
+  <Details header="Example">
+  `COUNT(ClientRequestUserAgent)``
 
-Example: `COUNT(ClientRequestUserAgent)``
-
-Counts how many rows have a user agent value.
+  Counts how many rows have a user agent value.
+  </Details>
 
 - `COUNT(DISTINCT expression)` – Number of distinct non-null values.
+  
+  <Details header="Example">
+  `COUNT(DISTINCT ClientIP)`
 
-Example: `COUNT(DISTINCT ClientIP)`
-
-Counts how many unique client IPs made requests.
+  Counts how many unique client IPs made requests.
+  </Details>
 
 - `AVG(expression)` – Average of numeric values.
+  
+  <Details header="Example">
+  `AVG(OriginResponseDurationMs)`
 
-Example: `AVG(OriginResponseDurationMs)`
-
-Computes the average origin response time in milliseconds.
+  Computes the average origin response time in milliseconds.
+  </Details>
 
 The diagram below represents the grammar for SQL expressions including  scalar and aggregate functions.
 
