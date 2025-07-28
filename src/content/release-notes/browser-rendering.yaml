@@ -5,7 +5,7 @@ productLink: "/browser-rendering/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
-  - publish_date: "2025-07-28"
+  - publish_date: "2025-07-29"
     title: Updates to Playwright, local dev support, and REST API
     description: |-
       * [Playwright](/browser-rendering/platform/playwright/) upgraded to [playwright v1.54.1](https://github.com/microsoft/playwright/releases/tag/v1.54.1)
