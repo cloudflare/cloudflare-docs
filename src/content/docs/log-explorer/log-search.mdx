@@ -9,49 +9,6 @@ import { TabItem, Tabs, Render } from "~/components";
 
 Log Explorer enables you to store and explore your Cloudflare logs directly within the Cloudflare dashboard or API, giving you visibility into your logs without the need to forward them to third-party services. Logs are stored on Cloudflare's global network using the R2 object storage platform and can be queried via the dashboard or SQL API.
 
-## SQL queries supported
-
-The diagram below displays the example sql grammar for `SELECT` statements as a railroad syntax diagram:
-
-![Supported SQL grammar](~/assets/images/log-explorer/supported-sql-grammar-graph.png)
-
-Any path from left to right forms a valid query. There is a limit of 25 predicates in the `WHERE` clause. Predicates can be grouped using parenthesis. If the `LIMIT` clause is not specified, then the default limit of 10,000 is applied. The maximum number for the `LIMIT` clause is 10,000. Results are returned in descending order by time.
-
-Examples of queries include:
-
-- `SELECT * FROM table WHERE (a = 1 OR b = "hello") AND c < 25.89` 
-- `SELECT a, b, c FROM table WHERE d >= "GB" LIMIT 10`
-
-### SELECT
-
-The `SELECT` clause specifies the columns that you want to retrieve from the database tables. It can include individual column names, expressions, or even wildcard characters to select all columns.
-
-### FROM
-
-The `FROM` clause specifies the tables from which to retrieve data. It indicates the source of the data for the `SELECT` statement.
-
-### WHERE
-
-The `WHERE` clause filters the rows returned by a query based on specified conditions. It allows you to specify conditions that must be met for a row to be included in the result set.
-
-### GROUP BY
-
-The `GROUP BY` clause is used to group rows that have the same values into summary rows.
-
-### ORDER BY
-
-The `ORDER BY` clause is used to sort the result set by one or more columns in ascending or descending order.
-
-### LIMIT
-
-The `LIMIT` clause is used to constrain the number of rows returned by a query. It is often used in conjunction with the `ORDER BY` clause to retrieve the top `N` rows or to implement pagination.
-
-:::note
-
-Log Explorer does not support `JOIN`, `DDL`, `DML`, or `EXPLAIN` queries.
-
-:::
-
 ## Use Log Explorer
 
 You can filter and view your logs via the Cloudflare dashboard or the API.
