@@ -295,7 +295,8 @@ Certain bindings are not supported for remote connections during local developme
 
 If `experimental_remote: true` is specified in Wrangler configuration for any of the following unsupported binding types, Cloudflare **will issue an error**. See [all supported and unsupported bindings for remote bindings](/workers/development-testing/bindings-per-env/).
 
-- [**Durable Objects**](/workers/wrangler/configuration/#durable-objects): Enabling remote connections for Durable Objects may be supported in the future, but currently will always run locally.
+- [**Durable Objects**](/workers/wrangler/configuration/#durable-objects): Enabling remote connections for Durable Objects may be supported in the future, but currently will always run locally. Using Durable Objects in combination with remote bindings is however possible
+  as illustrated in the [Durable Objects usage section](#durable-objects-usage-with-remote-resources) below.
 
 - [**RPC on service bindings**](/workers/runtime-apis/bindings/service-bindings/rpc/): While you can make `fetch()` calls on remote service bindings, you cannot currently call RPC methods on remote service bindings.
 
@@ -318,6 +319,31 @@ If `experimental_remote: true` is specified in Wrangler configuration for any of
 :::note
 If you have use-cases for connecting to any of the remote resources above, please [open a feature request](https://github.com/cloudflare/workers-sdk/issues) in our [`workers-sdk` repository](https://github.com/cloudflare/workers-sdk).
 :::
+
+#### Durable Objects Usage with Remote Resources
+
+While Durable Objects cannot currently run in remote mode, you can still use them during local development and have them interact with remote resources.
+
+There are two main approaches for this:
+
+- **Local Durable Objects with remote bindings:**
+
+	When you enable remote mode for a binding in your [Wrangler configuration](/workers/wrangler/configuration), both your main Worker and any local Durable Object
+	can make use of it. This allows Durable Objects to interact with remote resources during local development.
+
+- **Remote Durable Objects with local Workers:**
+
+	You can run Durable Objects remotely from a Worker using [`wrangler dev --remote`](/workers/wrangler/commands/#dev) and have them interact with local Workers
+	running on your machine by leveraging Wrangler's [Multiple dev commands](./multi-workers/#multiple-dev-commands) feature.
+
+	To do this:
+
+	- Start your remote Worker (which contains the Durable Object) using `wrangler dev --remote`.
+
+	- In your local Workers' configuration, set the Durable Object's [`script_name`](/workers/wrangler/configuration/#durable-objects) to the name of the remote Worker.
+
+	- Run your local Workers with `wrangler dev` to connect to the remote Durable Object.
+
 
 ### Important Considerations
 
