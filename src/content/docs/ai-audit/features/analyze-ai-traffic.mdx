@@ -1,8 +1,8 @@
 ---
-title: Analyze AI crawlers
+title: Analyze AI traffic
 pcx_content_type: concept
 sidebar:
-  order: 5
+  order: 2
 ---
 
 import { Steps, Tabs, TabItem } from "~/components";
@@ -13,22 +13,33 @@ To view AI Audit metrics:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Go to **AI Audit**.
-3. Go to the **Metrics** tab.
+
+You can find meaningful information across both **AI Crawlers** and **Metrics** tabs.
+
+## View AI crawler activity
+
+The **AI Crawlers** tab provides you with the following information:
+
+- Complete list of detected AI crawlers and their operators
+- Number of requests made by each AI crawler
+- Number of `robots.txt` violations for each crawler
 
 ## View AI Audit metrics
 
-AI Audit provides you with the following metrics to help you understand how AI crawlers are interacting with your website.
+The **Metrics** tab provides you with the following metrics to help you understand how AI crawlers are interacting with your website.
 
 | Metric                                | Description                                                                   |
 | ------------------------------------- | ----------------------------------------------------------------------------- |
 | Total requests                        | The total number of requests to crawl your website, from all AI crawlers      |
 | Blocked requests                      | The number of requests you have blocked (by blocking AI crawlers)             |
 | Allowed requests                      | The number of requests you have allowed (by allowing AI crawlers)             |
-| Request by AI crawlers                | A graph which displays the number of crawl requests from each AI crawler      |
-| Most popular paths by AI crawlers     | The most popular pages crawled by AI crawlers, for each AI crawler            |
 | Hosts                                 | The owner of the AI crawler                                                   |
 | Overall popular paths                 | The most popular pages crawled by AI crawlers, from all AI crawlers           |
 | Most active AI crawlers by operators  | The AI crawler owners with the highest number of requests to access your site |
+| Request by AI crawlers                | A graph which displays the number of crawl requests from each AI crawler      |
+| Most popular paths by AI crawlers     | The most popular pages crawled by AI crawlers, for each AI crawler            |
+| Referrals                             | A graph which displays the number of referrals from each AI operator          |
+| Referers                              | The list of referers who directed traffic to your site                        |
 
 :::note[Requests in AI Audit metrics]
 The number of requests in AI Audit metrics are specifically requests which were met with HTTP code 200 (the request was successfully served, with actual content).
