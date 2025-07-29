@@ -1078,8 +1078,8 @@ The following options are available:
 
 - `image` <Type text="string" /> <MetaInfo text="required" />
 
-  - The image to use for the container. This can either be a local path, in which case `wrangler deploy` will
-    build and push the image. Or it can be an image URL. Currently, only the Cloudflare Registry is a supported registry.
+	- The image to use for the container. This can either be a local path to a `Dockerfile`, in which case `wrangler deploy` will
+    build and push the image, or it can be an image URL. Currently, only the Cloudflare Registry is a supported registry.
 
 - `class_name` <Type text="string" /> <MetaInfo text="required" />
 
@@ -1110,9 +1110,8 @@ The following options are available:
   - The build context of the application, by default it is the directory of `image`.
 
 - `image_vars` <Type text="Record<string, string>" /> <MetaInfo text="optional" />
+  - Build-time variables, equivalent to using `--build-arg` with `docker build`. If you want to provide environment variables to your container at _runtime_, you should [use secret bindings or `envVars` on the Container class](/containers/examples/env-vars-and-secrets/).
 
-  - Environment variables to set in the container. These will be used during the build phase and will be defaults
-    when running the container, though they can be overridden at runtime when starting the container.
 
 <WranglerConfig>
 
