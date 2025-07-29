@@ -19,7 +19,7 @@ const id = env.MY_DURABLE_OBJECT.idFromName("foo");
 const stub = env.MY_DURABLE_OBJECT.get(id);
 ```
 
-Once we have the Durable Object Stub, we can now invoke methods on the Durable Object. Note that the above two lines does not yet send any request to the remote Durable Object.
+Once we have the Durable Object Stub, we can now invoke methods on the Durable Object. Note that the above two lines do not yet send any request to the remote Durable Object.
 
 The following line invokes the `sayHello()` method of the Durable Object class bound to the `MY_DURABLE_OBJECT` binding:
 
@@ -28,7 +28,7 @@ The following line invokes the `sayHello()` method of the Durable Object class b
 const rpcResponse = await stub.sayHello();
 ```
 
-At this point, the caller sends a request to the Durable Object identified by the stub. The lifecycle of the Durable Object now begins.
+At this point, the caller sends a request to the Durable Object identified by the stub. The lifecycle of the Durable Object begins.
 
 ## Durable Object Lifecycle state transitions
 
