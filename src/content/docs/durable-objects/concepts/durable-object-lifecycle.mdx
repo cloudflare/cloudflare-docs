@@ -70,7 +70,7 @@ In case of an incoming request or event while in the **hibernated** state, the `
 
 While in the **idle in-memory non-hibernateable** state, after 70-140 seconds of inactivity (no incoming requests or events), the Durable Object will be evicted entirely from memory and potentially from the Cloudflare host and transition to the **inactive** state.
 
-Objects in the **hibernated** state keep their Websocket clients connected, and the runtime decides it will ever move the object to a different host, thus restarting the lifecycle.
+Objects in the **hibernated** state keep their Websocket clients connected, and the runtime decides if and when to move the object to a different host, thus restarting the lifecycle.
 
 The next incoming request or event starts the cycle again.
 
