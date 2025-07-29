@@ -18,6 +18,12 @@ There are two ways to use Browser Rendering. Depending on the method you use, he
 
 You can monitor your Browser Rendering usage in the [Cloudflare dashboard](https://dash.cloudflare.com). Go to **Compute (Workers)** > **Browser Rendering**.
 
+:::note
+Concurrency is **not billed based on the maximum number of concurrent browsers** you hit in a single moment or day. Instead, we calculate the **daily peak concurrency**, then take the **average across the month**.
+
+This means if you briefly spike to 11 concurrent browsers on just one day, you won’t be charged for that full number unless your monthly average ends up over the included amount. We intentionally designed this to avoid penalizing brief spikes.
+:::
+
 ### Examples of Workers Paid pricing
 <br/>
 #### Example: REST API pricing
