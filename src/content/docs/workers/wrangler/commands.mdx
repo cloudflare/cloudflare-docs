@@ -794,7 +794,7 @@ wrangler workflows instances describe <WORKFLOW_NAME> [ID] [OPTIONS]
 
 - `WORKFLOW_NAME` <Type text="string" /> <MetaInfo text="required" />
   - The name of a registered Workflow.
-- `ID` <Type text="string" /> <MetaInfo text="required" />
+- `ID` <Type text="string" /> <MetaInfo text="(default: latest) optional" />
   - The ID of a Workflow instance. You can optionally provide `latest` to refer to the most recently created instance of a Workflow. Defaults to `latest` if no ID is provided.
 
 <Render file="wrangler-commands/global-flags" product="workers" />
