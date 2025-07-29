@@ -34,13 +34,13 @@ At this point, the caller sends a request to the Durable Object identified by th
 
 A Durable Object can be in one of the following states at any moment:
 
-| State                             | Description                                                                                                                                                                                                                                           |
-|-----------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Active in-memory                  | The Durable Object runs, in memory, and handles incoming requests.                                                                                                                                                                                    |
-| Idle in-memory non-hibernateable  | The Durable Object waits for the next incoming request/event, but does not satisfy the criteria for hibernation.                                                                                                                                      |
-| Idle in-memory hibernateable      | The Durable Object waits for the next incoming request/event and satisfies the criteria for hibernation. It is up to the runtime to decide when to hibernate the Durable Object. Currently, it is after 10 seconds of inactivity while in this state. |
-| Hibernated                        | The Durable Object is removed from memory.                                                                                                                                                                                                            |
-| Inactive                           | The Durable Object is completely removed from the host process. Might need a cold start. This is the initial state of all Durable Objects.                                                                                                                                                              |
+| State                                | Description                                                                                                                                                                                                                                           |
+|--------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Active in-memory**                 | The Durable Object runs, in memory, and handles incoming requests.                                                                                                                                                                                    |
+| **Idle in-memory non-hibernateable** | The Durable Object waits for the next incoming request/event, but does not satisfy the criteria for hibernation.                                                                                                                                      |
+| **Idle in-memory hibernateable**     | The Durable Object waits for the next incoming request/event and satisfies the criteria for hibernation. It is up to the runtime to decide when to hibernate the Durable Object. Currently, it is after 10 seconds of inactivity while in this state. |
+| **Hibernated**                       | The Durable Object is removed from memory.                                                                                                                                                                                                            |
+| **Inactive**                         | The Durable Object is completely removed from the host process. Might need a cold start. This is the initial state of all Durable Objects.                                                                                                                                                              |
 
 This is how a Durable Object transitions among these states (each state is in a rounded rectangle).
 
@@ -48,7 +48,7 @@ This is how a Durable Object transitions among these states (each state is in a 
 
 Assuming a Durable Object does not run, the first incoming request or event (like an Alarm) will execute the `constructor()` of the Durable Object class, then run the corresponding function invoked.
 
-At this point the Durable Object is in the **Active in-memory state**.
+At this point the Durable Object is in the **active in-memory state**.
 
 If it continuously receives requests or events within 10 seconds of each other, the Durable Object will remain in this state.
 
@@ -64,13 +64,13 @@ If all conditions are met, the Durable Object will transition into a **hibernate
 When hibernated, the in-memory state is discarded, so ensure you persist all important information in the Durable Object's storage.
 :::
 
-If any of the above conditions are false, the Durable Object remains in-memory, in the **Idle in-memory non-hibernateable** state.
+If any of the above conditions are false, the Durable Object remains in-memory, in the **idle in-memory non-hibernateable** state.
 
-In case of an incoming request or event while in the hibernated state, the `constructor()` will run again, and the corresponding function invoked will run.
+In case of an incoming request or event while in the **hibernated** state, the `constructor()` will run again, and the corresponding function invoked will run.
 
-While in the idle in-memory non-hibernateable state, after 70-140 seconds of inactivity (no incoming requests or events), the Durable Object will be evicted entirely from memory and potentially from the Cloudflare host and transition to the inactive state.
+While in the **idle in-memory non-hibernateable** state, after 70-140 seconds of inactivity (no incoming requests or events), the Durable Object will be evicted entirely from memory and potentially from the Cloudflare host and transition to the **inactive** state.
 
-Objects in the hibernated state keep their Websocket clients connected, and the runtime decides it will ever move the object to a different host, thus restarting the lifecycle.
+Objects in the **hibernated** state keep their Websocket clients connected, and the runtime decides it will ever move the object to a different host, thus restarting the lifecycle.
 
 The next incoming request or event starts the cycle again.
 
