@@ -549,6 +549,22 @@ When you are ready to connect your Magic WAN Connector to the Cloudflare network
   )
 }
 
+{ props.magicWord === "virtual" && (
+  <>
+		<AnchorHeading title="Default password to access Virtual Connector" depth={2} />
+
+		<Markdown
+		text={`
+		Your Virtual Connector's default password is the last seven characters of your license key, all uppercase, plus an <code>!</code>.
+
+		For example, if your license key is <code>mconn-abcdefghijklmnopqrstuvwxyz</code>, your default password will be <code>TUVWXYZ!</code>.
+		`}
+		inline={false}
+		/>
+  </>
+  )
+}
+
 ---
 
 ## WAN with a static IP address
