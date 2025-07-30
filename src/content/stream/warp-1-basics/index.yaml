@@ -1,0 +1,17 @@
+---
+id: 31178cc41d0ec56d42ef892160589635
+url: warp-1-basics
+title: WARP 1 - Understand Cloudflare WARP basics
+description: In this episode, we explain the core features of the Cloudflare WARP client and how to troubleshoot common issues. After watching, you will have an understanding of the GUI, the differences between the consumer and corporate WARP, device profiles, the various operating modes of WARP, split tunneling, and more.
+products:
+  - warp, zero-trust
+thumbnail:
+  url: https://pub-d9bf66e086fb4b639107aa52105b49dd.r2.dev/Understand-Cloudflare-WARP-Basics%20thumbnail.png
+chapters: {
+  "Introduction and WARP GUI Basics": "0s",
+  "Consumer vs Corporate WARP": "57s",
+  "Device Profiles Explained": "01m35s",
+  "WARP Operating Modes": "02m12s",
+  "Split Tunneling": "03m4s",
+  "Conclusion": "04m56s"
+}

@@ -1,0 +1,17 @@
+---
+id: f13b085ed4d28a9dbb8faf19ae986125
+url: sase-3-secure-remote-access
+title: SASE 3 - Secure remote access to your critical infrastructure
+description: In this video, learn how Cloudflare's SASE platform can provide highly secure access to your critical infrastructure by leveraging a modern ZTNA service to implement Zero Trust principles Applications, databases and their servers are running in a variety of locations from on-premises data centers to cloud hyperscalers, making the need to secure administrative access more important than ever.
+products:
+  - sase
+thumbnail:
+  url: https://pub-d9bf66e086fb4b639107aa52105b49dd.r2.dev/Video-3-Secure-remote-access-to-your-critical-infrastructure.jpg
+chapters: {
+  "Introduction to SASE and Securing Access to Critical Infrastructure": "0s",
+  "Connecting and Securing Private Servers with Cloudflare Tunnels": "50s",
+  "Using Internal DNS to Securely Resolve Private Network Resources": "02m12s",
+  "Connecting User Devices Securely with Cloudflare's Device Agent": "03m01s",
+  "Enforcing Access Control with Identity, Network and Device Based Security Policies": "03m48s",
+  "Auditing and Logging Access to Critical Infrastructure": "05m03s"
+}

@@ -1,0 +1,17 @@
+---
+id: 48a3b49b7cdfaef0b3044d1530c82c19
+url: sase-5-protect-users
+title: SASE 5 - Proteect your users from Internet risks
+description: The Internet has become part of your corporate network; however, browsing the web comes with hidden risks including malware, phishing attacks, and malicious websites. In this video, we will explore how Cloudflare's Secure Web Gateway (SWG) helps keep users safe by filtering and inspecting Internet traffic in real time. Whether you are protecting a remote workforce or securing an entire organization, Cloudflare ensures that users can access the web securely — without sacrificing speed or productivity.
+products:
+  - sase
+thumbnail:
+  url: https://pub-d9bf66e086fb4b639107aa52105b49dd.r2.dev/Video-5-Protect-your-users-from-Internet-risks.jpg
+chapters: {
+  "Introduction to Cloudflare's SASE and the Importance of Secure Corporate Networking": "1s",
+  "Using Secure Web Gateway to Inspect and Control Internet Traffic": "01m06s",
+  "Protecting Users with DNS Filtering and Threat Intelligence": "02m04s" ,
+  "Implementing Network-Level Security Policies for Private and Public Traffic": "03m37s",
+  "Advanced HTTP Filtering and Data Loss Prevention with Cloudflare": "04m23s",
+  "Isolating Risky Websites and Preventing Data Leaks with Browser Isolation": "05m48s"
+}
