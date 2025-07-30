@@ -228,7 +228,7 @@ The following configuration will modify settings in your Cloudflare account.
 		resource "cloudflare_zero_trust_tunnel_cloudflared" "gcp_tunnel" {
 			account_id = var.cloudflare_account_id
 			name       = "Terraform GCP tunnel"
-			secret     = random_bytes.tunnel_secret.base64
+			config_src = "cloudflare"
 		}
 
 		# Creates the CNAME record that routes http_app.${var.cloudflare_zone} to the tunnel.
