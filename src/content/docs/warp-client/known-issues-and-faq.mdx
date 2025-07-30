@@ -22,7 +22,7 @@ As our [Network Map](https://www.cloudflare.com/network/) shows, we have locatio
 No. 1.1.1.1 + WARP replaces your original IP address with a Cloudflare IP that consistently and accurately represents your approximate location. This happens regardless of whether the site is on the Cloudflare network or not. Refer to our [blog post](https://blog.cloudflare.com/geoexit-improving-warp-user-experience-larger-network/) for more information on this topic.
 
 :::note
-If you grant a website access to your microphone or camera, your IP address will [no longer be hidden](#known-issues).
+If you grant a website access to your microphone or camera, traffic will [bypass WARP](#known-issues) and your original IP address will be visible.
 :::
 
 ## Why has my throughput dropped while using WARP?
