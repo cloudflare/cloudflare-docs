@@ -134,7 +134,7 @@
 		"unist-util-visit": "5.0.0",
 		"vite-tsconfig-paths": "5.1.4",
 		"vitest": "2.1.6",
-		"wrangler": "4.26.0"
+		"wrangler": "4.26.1"
 	},
 	"engines": {
 		"node": ">=22"
