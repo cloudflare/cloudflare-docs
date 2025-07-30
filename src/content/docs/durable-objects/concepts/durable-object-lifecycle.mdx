@@ -1,5 +1,5 @@
 ---
-title: The Lifecycle of a Durable Object
+title: Lifecycle of a Durable Object
 pcx_content_type: concept
 sidebar:
   order: 3
@@ -39,8 +39,8 @@ A Durable Object can be in one of the following states at any moment:
 | **Active in-memory**                 | The Durable Object runs, in memory, and handles incoming requests.                                                                                                                                                                                    |
 | **Idle in-memory non-hibernateable** | The Durable Object waits for the next incoming request/event, but does not satisfy the criteria for hibernation.                                                                                                                                      |
 | **Idle in-memory hibernateable**     | The Durable Object waits for the next incoming request/event and satisfies the criteria for hibernation. It is up to the runtime to decide when to hibernate the Durable Object. Currently, it is after 10 seconds of inactivity while in this state. |
-| **Hibernated**                       | The Durable Object is removed from memory.                                                                                                                                                                                                            |
-| **Inactive**                         | The Durable Object is completely removed from the host process. Might need a cold start. This is the initial state of all Durable Objects.                                                                                                                                                              |
+| **Hibernated**                       | The Durable Object is removed from memory. Hibernated WebSocket connections stay connected.                                                                                                                                                                                                          |
+| **Inactive**                         | The Durable Object is completely removed from the host process and might need to cold start. This is the initial state of all Durable Objects.                                                                                                                                                              |
 
 This is how a Durable Object transitions among these states (each state is in a rounded rectangle).
 
