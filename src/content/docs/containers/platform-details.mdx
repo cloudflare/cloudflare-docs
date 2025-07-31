@@ -9,7 +9,6 @@ sidebar:
 
 import { WranglerConfig } from "~/components";
 
-
 ## Instance Types
 
 The memory, vCPU, and disk space for Containers are set through predefined instance types.
@@ -25,16 +24,15 @@ These are specified using the [`instance_type` property](/workers/wrangler/confi
 
 ## Limits
 
-
 While in open beta, the following limits are currently in effect:
 
-| Feature                                           | Workers Paid |
-| ------------------------------------------------- | ------------ |
+| Feature                                               | Workers Paid |
+| ----------------------------------------------------- | ------------ |
 | GB Memory for all concurrent live Container instances | 40GB [^1]    |
 | vCPU for all concurrent live Container instances      | 20 [^1]      |
 | GB Disk for all concurrent live Container instances   | 100GB [^1]   |
-| Image size                                        | 2 GB         |
-| Total image storage per account                   | 50 GB [^2]   |
+| Image size                                            | 2 GB         |
+| Total image storage per account                       | 50 GB [^2]   |
 
 [^1]: This limit will be raised as we continue the beta.
 
@@ -44,12 +42,13 @@ While in open beta, the following limits are currently in effect:
 
 The container runtime automatically sets the following variables:
 
-- `CLOUDFLARE_COUNTRY_A2` - a two-letter code of a country the container is placed in
+- `CLOUDFLARE_APPLICATION_ID` - the ID of the Containers application
+- `CLOUDFLARE_COUNTRY_A2` - the [ISO 3166-1 Alpha 2 code](https://www.iso.org/obp/ui/#search/code/) of a country the container is placed in
 - `CLOUDFLARE_DEPLOYMENT_ID` - the ID of the container instance
 - `CLOUDFLARE_LOCATION` - a name of a location the container is placed in
-- `CLOUDFLARE_NODE_ID` - an ID of a machine the container runs on
 - `CLOUDFLARE_PLACEMENT_ID` - a placement ID
 - `CLOUDFLARE_REGION` - a region name
+- `CLOUDFLARE_DURABLE_OBJECT_ID` - the ID of the Durable Object that the container is bound to
 
 :::note
 If you supply environment variables with the same names, supplied values will override predefined values.
