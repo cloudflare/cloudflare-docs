@@ -5,7 +5,7 @@ sidebar:
   order: 4
 ---
 
-import { GlossaryTooltip } from "~/components";
+import { Render, GlossaryTooltip } from "~/components";
 
 The Application Library allows users to manage their SaaS applications in use in Cloudflare Zero Trust by consolidating views across all relevant products: [Gateway](/cloudflare-one/policies/gateway/), [Access](/cloudflare-one/policies/access/), and [Cloud Access Security Broker (CASB)](/cloudflare-one/applications/casb/). The App Library provides visibility and control for available applications, as well as the ability to view categorized hostnames and manage configuration for Access for SaaS and Gateway policies. For example, you can use the App Library to review how Gateway uses specific hostnames to match against application traffic.
 
@@ -42,7 +42,9 @@ The Shadow IT Discovery dashboard will provide more details for discovered appli
 
 ## Review applications
 
-To organize applications into their approval status for your organization, you can mark them as in-review, approved, or unapproved. Application statuses include **Unreviewed** (default), **In review**, **Approved**, and **Unapproved**.
+To organize applications into their approval status for your organization, you can mark them as in-review, approved, or unapproved. Application statuses include **Unreviewed** (default), **In review**, **Approved**, and **Unapproved**. The App Library synchronizes application review statuses with [approval statuses](/cloudflare-one/insights/analytics/shadow-it-discovery/#approval-status) from Shadow IT Discovery.
+
+<Render file="approval-status-block" />
 
 To set the status of an application:
 
