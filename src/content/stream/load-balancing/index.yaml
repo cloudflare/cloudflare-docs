@@ -1,8 +1,8 @@
 ---
 id: ce39fdf599aed3661f60e8f780761808
 url: load-balancing
-title: Onboard your domain to Cloudflare
-description: Unexpected traffic spikes can crash your website, but Cloudflare Load Balancing helps keep your apps online and fast. In this step-by-step tutorial, learn how to create a public load balancer in just five steps: select a hostname, add an origin pool, attach a health monitor, choose a traffic steering method, and configure custom rules. We'll also explain the difference between public and private load balancers and guide you through using session affinity, fallback pools, and proxy modes.
+title: How to set up a load balancer
+description: Unexpected traffic spikes can crash your website, but Cloudflare Load Balancing helps keep your apps online and fast. In this step-by-step tutorial, learn how to create a public load balancer in just five steps - select a hostname, add an origin pool, attach a health monitor, choose a traffic steering method, and configure custom rules. We'll also explain the difference between public and private load balancers and guide you through using session affinity, fallback pools, and proxy modes.
 products:
   - load-balancing
 thumbnail:
