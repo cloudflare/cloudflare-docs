@@ -4,10 +4,11 @@ title: Pricing
 sidebar:
   order: 31
 ---
+import { Details } from "~/components"
 
 Browser Rendering is currently available at no cost up to the [limits](/browser-rendering/platform/limits/) specified, with billing beginning on August 20, 2025.
 
-There are two ways to use Browser Rendering. Depending on the method you use, here’s how billing will work:
+There are two ways to use Browser Rendering. Depending on the method you use, here is how billing works:
 - [**REST API**](/browser-rendering/rest-api/): Charged for **Duration** only ($/browser hour)
 - [**Workers Bindings**](/browser-rendering/workers-bindings/): Charged for both **Duration** and **Concurrency** ($/browser hour and # of concurrent browsers)
 
@@ -16,13 +17,13 @@ There are two ways to use Browser Rendering. Depending on the method you use, he
 | **Workers Free** | 10 minutes per day | 3 concurrent browsers | N/A |
 | **Workers Paid** | 10 hours per month | 10 concurrent browsers (averaged monthly) | **1. REST API**: $0.09 per additional browser hour <br />**2. Workers Bindings**: $0.09 per additional browser hour <br /> $2.00 per additional concurrent browser |
 
+<Details header="Where can I monitor my usage?">
 You can monitor your Browser Rendering usage in the [Cloudflare dashboard](https://dash.cloudflare.com). Go to **Compute (Workers)** > **Browser Rendering**.
+</Details>
 
-:::note
-Concurrency is **not billed based on the maximum number of concurrent browsers** you hit in a single moment or day. Instead, we calculate the **daily peak concurrency**, then take the **average across the month**.
-
-This means if you briefly spike to 11 concurrent browsers on just one day, you won’t be charged for that full number unless your monthly average ends up over the included amount. We intentionally designed this to avoid penalizing brief spikes.
-:::
+<Details header="How is the number of concurrent browsers calculated?">
+Cloudflare calculates concurrent browsers as the **monthly average of your daily peak usage**. In other words, we record **the peak number of concurrent browsers each day** and then average those values over the month. This approach reflects your typical traffic and ensures you are not disproportionately charged for brief spikes in browser concurrency.
+</Details>
 
 ### Examples of Workers Paid pricing
 <br/>
