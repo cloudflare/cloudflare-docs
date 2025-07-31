@@ -12,7 +12,7 @@ entries:
       * Local development with `npx wrangler dev` now supports [Playwright](/browser-rendering/platform/playwright/) when using Browser Rendering. Upgrade to the latest version of wrangler to get started.
       * The [`/content` endpoint](/browser-rendering/rest-api/content-endpoint/) now returns the page's title, making it easier to identify pages. 
       * The [`/json` endpoint](/browser-rendering/rest-api/json-endpoint/) now allows you to specify your own AI model for the extraction, using the `custom_ai` parameter.
-      * The default viewport size has been increased from 800x600 to 1920x1080. You can still override the viewport via request options. 
+      * The default viewport size on the [`/screenshot` endpoint](/browser-rendering/rest-api/screenshot-endpoint/)has been increased from 800x600 to 1920x1080. You can still override the viewport via request options. 
   - publish_date: "2025-07-25"
     title: "@cloudflare/puppeteer 1.0.4 released"
     description: |-
