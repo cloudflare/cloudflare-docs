@@ -20,23 +20,6 @@ Log Explorer currently supports the following datasets:
 - [Secure Web Gateway](/cloudflare-one/policies/gateway/)
 - [WARP](/warp-client/)
 
-### Headers and cookies
-
-To query request headers and cookies, you must first enable logging for these fields using [Custom fields](/logs/logpush/logpush-job/custom-fields/).
-
-The example below shows how to query HTTP requests by date, timestamp, client country, and a custom request header. Be sure to log the specific headers or cookies you plan to query in advance.
-
-```bash
-SELECT clientip, clientrequesthost, clientrequestmethod, edgeendtimestamp, edgestarttimestamp, rayid, clientcountry, requestheaders
-FROM http_requests
-WHERE Date >= '2025-07-17'
-  AND Date <= '2025-07-17'
-  AND edgeendtimestamp >= '2025-07-17T07:54:19Z'
-  AND edgeendtimestamp <= '2025-07-18T07:54:19Z'
-  AND clientcountry = 'us'
-  AND requestheaders."x-test-header" like '%654AM%';
-```
-
 ## Enable Log Explorer
 
 In order for Log Explorer to begin storing logs, you need to enable the desired datasets. You can do this via the dashboard or the API.
@@ -87,4 +70,21 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/logs/explorer/da
 --json '{
   "dataset": "access_requests"
 }'
+```
+
+## Headers and cookies
+
+To query request headers and cookies, you must first enable logging for these fields using [Custom fields](/logs/logpush/logpush-job/custom-fields/).
+
+The example below shows how to query HTTP requests by date, timestamp, client country, and a custom request header. Be sure to log the specific headers or cookies you plan to query in advance.
+
+```bash
+SELECT clientip, clientrequesthost, clientrequestmethod, edgeendtimestamp, edgestarttimestamp, rayid, clientcountry, requestheaders
+FROM http_requests
+WHERE Date >= '2025-07-17'
+  AND Date <= '2025-07-17'
+  AND edgeendtimestamp >= '2025-07-17T07:54:19Z'
+  AND edgeendtimestamp <= '2025-07-18T07:54:19Z'
+  AND clientcountry = 'us'
+  AND requestheaders."x-test-header" like '%654AM%';
 ```
