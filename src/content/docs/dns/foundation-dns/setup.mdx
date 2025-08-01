@@ -21,7 +21,7 @@ Before opting in for advanced nameservers, consider the following:
 
 Some behaviors are different from standard Cloudflare nameservers:
 - Wildcard records: if moving from standard Cloudflare nameservers to Foundation DNS advanced nameservers, make sure to explicitly create records for subdomains currently covered by wildcard records (`*.example.com`).
-- Subdomain delegation: once a subdomain is delegated via NS records, Cloudflare will not serve any other records (such as A, TXT, or CNAME) on  that subdomain from the parent zone, even if those records exist.
+- Subdomain delegation: once a subdomain is delegated via NS records, Cloudflare will not serve any other records (such as A, TXT, or CNAME) on that subdomain from the parent zone, even if those records exist.
 
 <Details header="Example">
 
