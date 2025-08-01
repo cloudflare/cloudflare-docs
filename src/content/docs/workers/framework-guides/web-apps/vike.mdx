@@ -1,0 +1,187 @@
+---
+pcx_content_type: how-to
+title: Vike
+sidebar:
+  order: 9
+head: []
+tags: ["full-stack"]
+description: Create a Vike application and deploy it to Cloudflare Workers with Workers Assets.
+---
+
+import { Steps, PackageManagers } from "~/components";
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+You can use Vike with the [`vike-cloudflare`](https://www.npmjs.com/package/vike-cloudflare) extension for a zero-config Cloudflare deployment of your [SSR](https://vike.dev/ssr) or [pre-rendered (aka SSG)](https://vike.dev/pre-rendering) app.
+
+
+## What is Vike?
+
+[Vike](https://vike.dev) is a Next.js/Nuxt alternative designed with a modular architecture for unprecedented flexibility and stability.
+
+
+## Create new app
+
+Go to [vike.dev/new](https://vike.dev/new) and select `Cloudflare` to scaffold a new Vike app that uses `vike-cloudflare`.
+
+
+## Add to existing app
+
+### Without a server
+
+If you [pre-render](https://vike.dev/pre-rendering) all your pages then you don't need a server — simply add `vike-cloudflare` like this:
+
+<Steps>
+
+1.  <PackageManagers
+    	pkg="vike-cloudflare wrangler cross-env"
+    	dev
+    />
+
+2.  ```diff lang=ts title="pages/+config.ts"
+      import type { Config } from 'vike/types'
+    + import vikeCloudflare from 'vike-cloudflare/config'
+
+      export default {
+        prerender: true,
+    +   extends: [vikeCloudflare]
+      } satisfies Config
+    ```
+
+3.  ```diff lang=json title="package.json"
+      {
+        "scripts": {
+          "dev": "vike dev",
+    +     "preview": "vike build && cross-env NODE_ENV=production wrangler pages dev",
+    +     "deploy": "vike build && cross-env NODE_ENV=production wrangler pages deploy"
+        }
+      }
+    ```
+
+</Steps>
+
+### With a server
+
+If you use [SSR](https://vike.dev/ssr), you must have a server — add `vike-cloudflare` like this:
+
+<Steps>
+
+1.  <PackageManagers
+      pkg="vike-cloudflare wrangler cross-env"
+      dev
+    />
+
+2.  ```diff lang=ts title="pages/+config.ts"
+      import type { Config } from 'vike/types'
+    + import vikeCloudflare from 'vike-cloudflare/config'
+
+      export default {
+    +   extends: [vikeCloudflare],
+    +   server: {
+    +     entry: 'server/index.ts'
+    +   }
+      } satisfies Config
+    ```
+
+3.  <Tabs>
+      <TabItem label="Hono">
+
+      ```diff lang=ts title="server/index.ts"
+        import { Hono } from 'hono'
+      + import { apply } from 'vike-cloudflare/hono'
+      + import { serve } from 'vike-cloudflare/hono/serve'
+
+        function startServer() {
+          const app = new Hono()
+      +   apply(app)
+      +   return serve(app, { port: 3000 })
+        }
+
+      + export default startServer()
+      ```
+
+      </TabItem>
+      <TabItem label="HatTip">
+
+      ```diff lang=ts title="server/index.ts"
+        import { createRouter } from '@hattip/router'
+      + import { apply } from 'vike-cloudflare/hattip'
+      + import { serve } from 'vike-cloudflare/hattip/serve'
+
+        function startServer() {
+          const router = createRouter()
+      +   apply(router)
+      +   return serve(router, { port: 3000 })
+        }
+
+      + export default startServer()
+      ```
+
+      </TabItem>
+    </Tabs>
+
+    > `vike-cloudflare` currently supports [Hono](https://hono.dev) and [HatTip](https://github.com/hattipjs/hattip) — more servers are coming soon.
+
+4.  ```diff lang=json title="package.json"
+      {
+        "scripts": {
+          "dev": "vike dev",
+    +     "preview": "vike build && cross-env NODE_ENV=production wrangler pages dev",
+    +     "deploy": "vike build && cross-env NODE_ENV=production wrangler pages deploy"
+        }
+      }
+    ```
+
+</Steps>
+
+## Cloudflare APIs (bindings)
+
+You can access Cloudflare's APIs (such as [D1](https://developers.cloudflare.com/d1/) and [KV](https://developers.cloudflare.com/kv/)):
+- In development, by using [`getPlatformProxy()`](https://developers.cloudflare.com/workers/wrangler/api/#getplatformproxy)
+- In production, by using [`import('cloudflare:workers')`](https://developers.cloudflare.com/workers/runtime-apis/bindings/#importing-env-as-a-global)
+
+Using Vike's hook [`+onCreateGlobalContext.server`](https://vike.dev/onCreateGlobalContext), you can make [Cloudflare's bindings](https://developers.cloudflare.com/workers/runtime-apis/bindings/) (the `env` object) available anywhere via [`globalContext.cloudflare.env`](https://vike.dev/globalContext#custom).
+
+```ts title="pages/+onCreateGlobalContext.server.ts"
+export { onCreateGlobalContext }
+
+import type { GlobalContextServer } from 'vike/types'
+
+async function onCreateGlobalContext(globalContext: GlobalContextServer) {
+  let cloudflare: { env: Cloudflare.Env }
+  if (import.meta.env.DEV) {
+    const { getPlatformProxy } = await import('wrangler')
+    cloudflare = (await getPlatformProxy()) as any
+  } else {
+    cloudflare = await import('cloudflare:workers')
+  }
+  globalContext.cloudflare = cloudflare
+}
+
+declare global {
+  namespace Vike {
+    interface GlobalContextServer {
+      cloudflare: { env: Cloudflare.Env }
+    }
+  }
+}
+```
+
+```diff lang=ts title="vite.config.ts"
+  import { defineConfig } from 'vite'
+
+  export default defineConfig({
++   build: {
++     rollupOptions: {
++       external: ['cloudflare:workers']
++     }
++   }
+  })
+```
+
+> For an example of how to access [Cloudflare D1](https://developers.cloudflare.com/d1/) during development, see:
+> <PackageManagers
+> 	type="create"
+> 	pkg="vike@latest"
+> 	args="--react --hono --drizzle --cloudflare"
+> />
+> Or go to [vike.dev/new](https://vike.dev/new) and select `Cloudflare` with an ORM.
