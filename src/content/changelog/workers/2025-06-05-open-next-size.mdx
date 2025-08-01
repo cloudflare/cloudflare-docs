@@ -4,20 +4,15 @@ description: Update to the latest version of `@opennextjs/cloudflare` to automat
 products:
   - workers
 date: 2025-06-05T19:00:00Z
-
 ---
 
 With the release of the Cloudflare adapter for Open Next v1.0.0 in May 2025, we already had followups plans [to improve performance and size](https://blog.cloudflare.com/deploying-nextjs-apps-to-cloudflare-workers-with-the-opennext-adapter/#1-0-and-the-road-ahead).
 
-`@opennextjs/cloudflare` v1.2 released on June 5, 2025 delivers on these enhancements with the following:
+`@opennextjs/cloudflare` v1.2 released on June 5, 2025 delivers on these enhancements. By removing `babel` from the app code and dropping a dependency on `@ampproject/toolbox-optimizer`, we were able to reduce generated bundle sizes. Additionally, by stopping preloading of all app routes, we were able to improve the cold start time.
 
-- We [removed `babel` from the app code](https://github.com/opennextjs/opennextjs-cloudflare/pull/710) to save ~4MB on a typical uncompressed app size
-- We were also able [to drop a dependency on `@ampproject/toolbox-optimizer`](https://github.com/opennextjs/opennextjs-cloudflare/pull/700) to save ~3MB on a typical uncompressed app size
-- We [stopped preloading all the app routes](https://github.com/opennextjs/opennextjs-cloudflare/pull/696) to save >100ms on the first request.
+This means that users will now see a decrease from 14 to 8MiB (2.3 to 1.6MiB gzipped) in generated bundle size for a Next app created via create-next-app, and typically 100ms faster startup times for their medium-sized apps.
 
 Users only need to update to the latest version of `@opennextjs/cloudflare` to automatically benefit from these improvements.
 
 Note that we published [CVE-2005-6087](https://github.com/opennextjs/opennextjs-cloudflare/security/advisories/GHSA-rvpw-p7vw-wj3m) for a SSRF vulnerability in the `@opennextjs/cloudflare` package.
-The vulnerability has been fixed from `@opennextjs/cloudflare` v1.3.0 onwards. Please update to any version after this one. v1.3.1 is the latest at the time of writing.
-
-
+The vulnerability has been fixed from `@opennextjs/cloudflare` v1.3.0 onwards. Please update to any version after this one. v1.6.2 is the latest at the time of writing.
