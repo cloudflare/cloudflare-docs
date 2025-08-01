@@ -16,14 +16,14 @@ The WARP client provides diagnostic logs that you can use to troubleshoot connec
 	thumbnail="https://pub-d9bf66e086fb4b639107aa52105b49dd.r2.dev/Warp-diagnostics%20thumbnail.png"
 	showMoreVideos={false}
 	chapters={{
-		Introduction: "0s",
+		"Introduction: "0s",
 		"What are warp-diag files?": "44s",
 		"How to download and navigate warp-diag files": "1m16s",
 		"warp-status.txt": "2m06s",
 		"warp-settings.txt": "2m29s",
 		"daemon.log": "3m37s",
 		"Addition tips": "8m07s",
-		Conclusion: "8m43s",
+		"Conclusion": "8m43s",
 	}}
 />
 
@@ -160,7 +160,7 @@ In timestamped logs such as `daemon.log`, the most recent events will appear at 
 
 #### Log retention window
 
-Each WARP log file (`daemon.log`, `boringtun.log`, `dns.log`, `dns-stats.log`, `warp-stats.log`) is limited by size and age:
+Each WARP log file (such as `connection_stats.log`, `dns_stats.log`, `daemon.log`, `boringtun.log`, `daemon_dns.log`, `dex.log` and `captive-portal.log`) is limited by size and age:
 
 - **Maximum file size:** 10 MB
 - **Maximum file age:** 24 hours
