@@ -4,7 +4,7 @@ _build:
   render: never
   list: never
 
-name: "Enable availability of `node:http` modules"
+name: "Enable availability of `node:http` and `node:https` modules"
 sort_date: "2025-08-15"
 enable_date: "2025-08-15"
 enable_flag: "enable_nodejs_http_modules"
