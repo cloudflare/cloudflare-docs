@@ -150,7 +150,7 @@ export default {
 		const url = new URL(request.url);
 		if (url.pathname.startsWith("/api")) {
 			// note: "getRandom" to be replaced with latency-aware routing in the near future
-			const containerInstance = getRandom(env.BACKEND, INSTANCE_COUNT);
+			const containerInstance = await getRandom(env.BACKEND, INSTANCE_COUNT);
 			return containerInstance.fetch(request);
 		}
 
