@@ -23,12 +23,102 @@ Make sure you have:
 
 - Provisioned an [AWS CloudHSM cluster](https://docs.aws.amazon.com/cloudhsm/latest/userguide/getting-started.html) .
 - Installed the [appropriate software library for PKCS#11](https://docs.aws.amazon.com/cloudhsm/latest/userguide/pkcs11-library-install.html).
-
+- Installed (openssl version 3 or Higher)[https://openssl-library.org/source/]
+- For cloudhsm-cli - [bootstrap the cli to work with your cluster](https://docs.aws.amazon.com/cloudhsm/latest/userguide/gs_cloudhsm_cli-install.html)
 ---
 
 ## 1. Import the public and private key to the HSM
-
 Before importing the public key, extract it from the certificate provided by your CA. Place the contents of your private key in `privkey.pem` and then run the following (replacing certificate.pem with your actual certificate) to populate `pubkey.pm`.
+
+### HSM2 With Cloudhsm-CLI
+Setup credentials
+```txt
+export CLOUDHSM_ROLE="crypto-user"
+export CLOUDHSM_PIN="<CRYPTO_USER_NAME>:<CRYPTO_USER_PASSWORD>"
+```
+Convert PEM Private key to DER
+```txt
+openssl rsa -in private_key.pem -outform DER -out private_key.der
+```
+Generate temp wrapping/unwrapping keys within the HSM
+```txt
+/opt/cloudhsm/bin/cloudhsm-cli key generate-asymmetric-pair rsa \
+        --public-label wrapping_key_rsa_pub_temp \
+        --private-label unwrapping_key_rsa_prv_temp \
+        --modulus-size-bits 2048 \
+        --public-exponent 65537 \
+        --private-attributes unwrap=true
+```
+Export the wrapping public key to local system
+```txt
+/opt/cloudhsm/bin/cloudhsm-cli key generate-file \
+          --encoding pem \
+          --path wrapping_key.pem \
+          --filter attr.label=wrapping_key_rsa_pub_temp
+```
+
+Generate temp AES key
+```txt
+openssl rand -out temp_aes.bin 32
+```
+Encrypt/wrap the payload RSA private key with AES key
+```txt
+openssl enc -id-aes256-wrap-pad \
+        -K $(hexdump -v -e '/1 "%02X"' < temp_aes.bin) \
+        -iv A65959A6 \
+        -in private_key.der \
+        -out payload_wrapped.bin
+```
+
+Encrypt the temp AES key with the exported public wrapping key
+```txt
+openssl pkeyutl \
+    -encrypt \
+    -in temp_aes.bin \
+    -out temp_aes_wrapped.bin \
+    -inkey wrapping_key.pem \
+    -pubin \
+    -pkeyopt rsa_padding_mode:oaep \
+    -pkeyopt rsa_oaep_md:sha1 \
+    -pkeyopt rsa_mgf1_md:sha1
+```
+Concatenate the two ciphertext blobs
+```txt
+cat temp_aes_wrapped.bin payload_wrapped.bin > rsa_aes_wrapped.bin
+```
+
+Unwrap the blob into the HSM, while adding the required attributes to the unwrapped private RSA key
+
+NOTE: You need to select a hex CKA_ID which should be the same for the private and public keys (example: `0x42`)
+```txt
+/opt/cloudhsm/bin/cloudhsm-cli key unwrap rsa-aes \
+  --data-path rsa_aes_wrapped.bin \
+  --key-type-class rsa-private \
+  --label <PRIV_KEY_LABEL> \
+  --attributes sign=true id=<HEX_CKA_ID> \
+  --filter attr.label=unwrapping_key_rsa_prv_temp \
+  --hash-function sha1 \
+  --mgf mgf1-sha1 
+```
+
+Clean up temp Wrapping/unwrapping keys
+```txt
+/opt/cloudhsm/bin/cloudhsm-cli key delete --filter attr.label="wrapping_key_rsa_pub_temp"
+/opt/cloudhsm/bin/cloudhsm-cli key delete --filter attr.label="unwrapping_key_rsa_prv_temp"
+```
+
+Import the public key
+
+NOTE: Use the same CKA_ID as in the private key
+```txt
+/opt/cloudhsm/bin/cloudhsm-cli key import pem \
+      --path /root/pub.pem \
+      --label <PUB_KEY_LABEL> \
+      --key-type-class rsa-public \
+      --attributes id=<HEX_CKA_ID>
+```
+
+### HSM1 With key_mgmt_util (deprecated)
 
 ```txt
 keyserver$ openssl x509 -pubkey -noout -in certificate.pem > pubkey.pem
