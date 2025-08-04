@@ -166,7 +166,7 @@ Each WARP log file (such as `connection_stats.log`, `dns_stats.log`, `daemon.log
 - **Maximum file age:** 24 hours
 - **Maximum number of retained versions per log:** 4 (for example, `daemon.log`, `daemon.1.log`, `daemon.2.log`, and `daemon.3.log`)
 
-Log files may include data from up to 96 hours (4 days) prior to when `warp-diag` was run, but only if log activity is minimal. In environments with high logging volume (for example, repeated errors), logs may rotate more frequently, and the captured window could be much shorter (only a few hours).
+Log files may include data from up to 96 hours (four days) prior to when `warp-diag` was run, but only if log activity is minimal. In environments with high logging volume (for example, repeated errors), logs may rotate more frequently, and the captured window could be much shorter (only a few hours).
 
 Always check the timestamps at the end of each log file to verify the time range covered by the diagnostic archive.
 
