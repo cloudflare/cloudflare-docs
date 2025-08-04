@@ -39,7 +39,7 @@ Use the following Worker script to verify that the Worker has access to the boun
 ```js
 export default {
   async fetch(request, env, ctx) {
-    const res = await env.DB.prepare("SELECT 1;").all();
+    const res = await env.DB.prepare("SELECT 1;").run();
     return new Response(JSON.stringify(res, null, 2));
   },
 };

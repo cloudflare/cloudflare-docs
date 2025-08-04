@@ -145,7 +145,7 @@ export class UserEntrypoint extends WorkerEntrypoint {
       "SELECT title FROM tasks WHERE user_id = ?"
     )
       .bind(userId)
-      .all();
+      .run();
   }
 
   async createTask(userId, title) {

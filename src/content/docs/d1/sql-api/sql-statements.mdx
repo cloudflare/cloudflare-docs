@@ -64,7 +64,7 @@ const { results } = await env.DB.prepare(
 	"SELECT * FROM Customers WHERE CompanyName LIKE ?",
 )
 	.bind("%eve%")
-	.all();
+	.run();
 console.log("results: ", results);
 ```
 ```js output

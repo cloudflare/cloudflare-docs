@@ -342,7 +342,7 @@ After you have set up your database, run an SQL query from within your Worker.
     				"SELECT * FROM Customers WHERE CompanyName = ?",
     			)
     				.bind("Bs Beverages")
-    				.all();
+    				.run();
     			return Response.json(results);
     		}
 
@@ -387,7 +387,7 @@ You can query your D1 database using your Worker.
     				"SELECT * FROM Customers WHERE CompanyName = ?"
     			)
     				.bind("Bs Beverages")
-    				.all();
+    				.run();
     			return new Response(JSON.stringify(results), {
     				headers: { 'Content-Type': 'application/json' }
     			});
