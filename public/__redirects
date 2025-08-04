@@ -1921,6 +1921,11 @@
 # workflows
 /workflows/reference/storage-options/ /workers/platform/storage-options/ 301
 /workflows/tutorials/ /workflows/examples 301
+/workflows/reference/changelog/ /workflows/platform/changelog/ 301
+/workflows/reference/glossary/ /workflows/platform/glossary/ 301
+/workflows/reference/limits/ /workflows/platform/limits/ 301
+/workflows/reference/pricing/ /workflows/platform/pricing/ 301
+/workflows/reference/wrangler-commands/ /workflows/platform/wrangler-commands/ 301
 
 # workers KV
 /kv/platform/environments/ /kv/reference/environments/ 301
