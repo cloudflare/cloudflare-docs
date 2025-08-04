@@ -10,7 +10,7 @@ import { Render, Details } from "~/components";
 
 | Feature                                                                                                             | Limit                                             |
 | ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------- |
-| Databases                                                                                                           | 50,000 (Workers Paid)[^1] / 10 (Free)             |
+| Databases                                                                                                           | 50,000 (Workers Paid)[^0] / 10 (Free)             |
 | Maximum database size                                                                                               | 10 GB (Workers Paid) / 500 MB (Free)              |
 | Maximum storage per account                                                                                         | 1 TB (Workers Paid)[^1] / 5 GB (Free)             |
 | [Time Travel](/d1/reference/time-travel/) duration (point-in-time recovery)                                         | 30 days (Workers Paid) / 7 days (Free)            |
@@ -31,6 +31,7 @@ import { Render, Details } from "~/components";
 Limits for individual queries (listed above) apply to each individual statement contained within a batch statement. For example, the maximum SQL statement length of 100 KB applies to each statement inside a `db.batch()`.
 :::
 
+[^0]: The maximum number of databases per account can be increased by request on Workers Paid and Enterprise plans, with support for millions to tens-of-millions of databases (or more) per account. See the guidance on limit increases on this page to request an increase.
 [^1]: The maximum storage per account can be increased by request on Workers Paid and Enterprise plans. See the guidance on limit increases on this page to request an increase.
 [^2]: A single Worker script can have up to 1 MB of script metadata. A binding is defined as a binding to a resource, such as a D1 database, KV namespace, [environmental variable](/workers/configuration/environment-variables/), or secret. Each resource binding is approximately 150-bytes, however environmental variables and secrets are controlled by the size of the value you provide. Excluding environmental variables, you can bind up to \~5,000 D1 databases to a single Worker script.
 [^3]: Requests to Cloudflare API must resolve in 30 seconds. Therefore, this duration limit also applies to the entire batch call.
