@@ -10,10 +10,10 @@ import { Render, TypeScriptExample } from "~/components";
 This section describes the lifecycle of a [Durable Object](/durable-objects/concepts/what-are-durable-objects/).
 
 To use a Durable Object you need to create a [Durable Object Stub](/durable-objects/api/stub/).
-By just creating the Durable Object Stub no request is yet sent to the Durable Object, thus the Durable Object is not yet instantiated.
-Only once a method is invoked on the Durable Object Stub a request is actually sent to the Durable Object and its lifecycle begins.
+Simply creating the Durable Object Stub does not send a request to the Durable Object, and therefore the Durable Object is not yet instantiated.
+A request is sent to the Durable Object and its lifecycle begins only once a method is invoked on the Durable Object Stub.
 
-```javascript
+```js
 const id = env.MY_DURABLE_OBJECT.idFromName("foo");
 const stub = env.MY_DURABLE_OBJECT.get(id);
 // Now the request is sent to the remote Durable Object.
@@ -51,7 +51,7 @@ Hibernation can only occur if **all** of the conditions below are true:
 - No WebSocket standard API is used.
 - No request/event is still being processed, because hibernating would mean losing track of the async function which is eventually supposed to return a response to that request.
 
-After 10 seconds of no incoming request or event and all the above conditions satisfied, the Durable Object will transition into the **hibernated** state.
+After 10 seconds of no incoming request or event, and all the above conditions satisfied, the Durable Object will transition into the **hibernated** state.
 
 :::caution
 When hibernated, the in-memory state is discarded, so ensure you persist all important information in the Durable Object's storage.
