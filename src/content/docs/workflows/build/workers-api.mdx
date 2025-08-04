@@ -103,7 +103,7 @@ Objects that include `Function` or `Symbol` types, and objects with circular ref
 
 `step.sleep` and `step.sleepUntil` methods do not count towards the maximum Workflow steps limit.
 
-More information about the limits imposed on Workflow can be found in the [Workflows limits documentation](/workflows/reference/limits/).
+More information about the limits imposed on Workflow can be found in the [Workflows limits documentation](/workflows/platform/limits/).
 
 :::
 
@@ -224,7 +224,7 @@ Ensure you have a compatibility date `2024-10-22` or later installed when bindin
 
 The `Workflow` type provides methods that allow you to create, inspect the status, and manage running Workflow instances from within a Worker script.
 It is part of the generated types produced by [`wrangler types`](/workers/wrangler/commands/#types).
- 
+
 ```ts title="./worker-configuration.d.ts"
 interface Env {
   // The 'MY_WORKFLOW' variable should match the "binding" value set in the Wrangler config file
@@ -298,7 +298,7 @@ export default {
 
 Create (trigger) a batch of new instance of the given Workflow, up to 100 instances at a time.
 
-This is useful when you are scheduling multiple instances at once. A call to `createBatch` is treated the same as a call to `create` (for a single instance) and allows you to work within the [instance creation limit](/workflows/reference/limits/).
+This is useful when you are scheduling multiple instances at once. A call to `createBatch` is treated the same as a call to `create` (for a single instance) and allows you to work within the [instance creation limit](/workflows/platform/limits/).
 
 * <code>createBatch(batch: WorkflowInstanceCreateOptions[]): Promise&lt;WorkflowInstance[]&gt;</code>
 
