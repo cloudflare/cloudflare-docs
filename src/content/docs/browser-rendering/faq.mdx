@@ -65,7 +65,7 @@ No. Browser Rendering requests originate from Cloudflares global network, but yo
 
 This error indicates you have hit the daily browser-instance limit on the Workers Free plan. [Free-plan accounts are capped at free plan limit is 10 minutes of browser use a day](/browser-rendering/platform/limits/#workers-free) once you exceed those, further creation attempts return a 429 until the next UTC day.
 
-To resolve:[Upgrade to a Workers Paid plan](/workers/platform/pricing/) - Paid accounts raise these limits to [10 concurrent browsers and 10 new instances per minute](/browser-rendering/platform/limits/#workers-paid).
+To resolve: [Upgrade to a Workers Paid plan](/workers/platform/pricing/) which allows for more than 10 minutes of usage a day and has higher [limits](/browser-rendering/platform/limits/#workers-paid). If you recently upgraded but still see this error, try redeploying your Worker to ensure your usage is correctly associated with your new plan. 
 
 ### Does local development support all Browser Rendering features?
 
