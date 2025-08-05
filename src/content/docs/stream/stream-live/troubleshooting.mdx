@@ -11,7 +11,7 @@ In addition to following the live stream troubleshooting steps in this guide, ma
 
 ## Buffering, freezing, and latency
 
-If your live stream is buffering, freezing, experiencing latency issues, switching in quality levels, or having other similar issues, try these troubleshooting steps:
+If your live stream is buffering, freezing, experiencing latency issues, or having other similar issues, try these troubleshooting steps:
 
 <Steps>
 1. Go to the [Cloudflare dashboard](https://dash.cloudflare.com) > **Stream** > **Analytics**.
@@ -34,12 +34,12 @@ If your live stream is buffering, freezing, experiencing latency issues, switchi
 
     * Check the video bitrate setting in the software or service you use to send the stream to Cloudflare.
 	   * If it is "variable", change it to "constant" with a specific number, like 8 Mbps.
-	   * If it is above 20 Mbps, lower it to 10 Mbps or 70% of your internet speed, whichever is lower.
+	   * If it is above 15 Mbps, lower it to 8 Mbps or 70% of your internet speed, whichever is lower.
 
     * Follow the steps above (in step 2) to _increase_ the keyframe interval in the software or service you use to send the stream to Cloudflare.
 
 	<Details header="What is the upload-to-duration ratio?">
-	The upload-to-duration ratio is a measurement of how long it takes to upload a part of your stream compared to how long that part would take to play. A ratio of less than 100% means that your stream is uploading faster than it would take to play, so it should not experience buffering or freezing for most users. A ratio of 100% or more means that your video is uploading slower than it would take to play, so it is likely to experience buffering and freezing for most users.
+	The upload-to-duration ratio is a measurement of how long it takes to upload a part of your stream compared to how long that part would take to play. A ratio of less than 100% means that your stream is uploading at least as fast as it would take to play, so it should not experience buffering or freezing for most users. A ratio of 100% or more means that your video is uploading slower than it would take to play, so it is likely that most users will experience buffering and freezing.
 	</Details>
 </Steps>
 
