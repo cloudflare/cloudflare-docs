@@ -35,8 +35,13 @@ You can secure <GlossaryTooltip term="MCP server">Model Context Protocol (MCP) s
 9. Configure [Access policies](/cloudflare-one/policies/access/) to define the users can access the MCP server.
 10. Save the application.
 
+This SaaS application now acts as the SSO provider for your MCP server.
+
 ## 2. Configure your MCP server
 
+Configure the OAuth client on your MCP server to use the OAuth endpoints and credentials from the SaaS app created in [Step 1](#1-create-an-access-for-saas-app). The MCP server should successfully obtain an `access_token` after the user authenticates to Access.
 
+For a practical example of how to configure the OAuth client, refer to [Deploy an example MCP server](#deploy-an-example-mcp-server).
 
 ## Deploy an example MCP server
+
