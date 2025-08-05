@@ -38,8 +38,7 @@ Check out our [demo](https://github.com/whoiskatrin/agents/tree/main/examples/mc
 MCP now supports HTTP streamable transport which is recommended over SSE. This transport type offers:
 
 - **Better performance**: More efficient data streaming and reduced overhead
-- **Improved reliability**: Enhanced connection stability and error recovery
-- **Future-ready**: Built for modern web standards and optimal browser compatibility
+- **Improved reliability**: Enhanced connection stability and error recover- **Automatic fallback**: If streamable transport is not available, it gracefully falls back to SSE
 
 ```ts
 export default MyMCP.serve("/mcp", {
