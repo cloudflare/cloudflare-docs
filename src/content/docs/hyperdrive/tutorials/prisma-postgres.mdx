@@ -1,0 +1,197 @@
+---
+updated: 2025-08-05
+difficulty: Beginner
+pcx_content_type: tutorial
+title: Prisma Postgres with Cloudflare Hyperdrive
+products:
+  - Hyperdrive
+tags:
+  - PostgreSQL
+languages:
+  - TypeScript
+  - Prisma
+---
+
+This tutorial shows you how to set up and use Prisma ORM with Cloudflare Hyperdrive to connect to a Prisma Postgres database from your Cloudflare Workers.
+
+## Step 1: Create a new Cloudflare Workers project
+
+Create a new directory and initialize a Cloudflare Workers project:
+
+```bash
+npm create cloudflare@latest hyperdrive-prisma-postgres
+cd hyperdrive-prisma-postgres
+```
+
+Choose the following options:
+
+- What would you like to start with? → `Hello World example`
+- Which template would you like to use? → `Worker only`
+- Which language do you want to use? → `TypeScript`
+- Do you want to use git for version control? → `Yes`
+- Do you want to deploy your application to Cloudflare? → `No`
+
+## Step 2: Install dependencies
+
+Install the required dependencies for Prisma and Hyperdrive:
+
+```bash
+npm install @prisma/client @prisma/adapter-pg
+npm install -D prisma
+```
+
+## Step 3: Set up Prisma
+
+### 1. Initialize Prisma in your project
+
+To initialize Prisma in your project, run the following command:
+
+```bash
+npx prisma init
+```
+
+### 2. Update your `prisma/schema.prisma` file
+
+Update your `prisma/schema.prisma` file to have the `driverAdapters` preview feature enabled so that we can use the `@prisma/adapter-pg` package. Then, add a `Note` model:
+
+```prisma
+generator client {
+  provider        = "prisma-client-js"
+  output          = "../src/generated/prisma"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider          = "postgresql"
+  url               = env("DATABASE_URL")
+}
+
+model Note {
+  id      String @id @default(uuid())
+  title   String
+  content String
+}
+```
+
+### 3. Set up environment variables
+
+To get a Prisma Postgres connection string, you can use `npx create-db@latest` to create a new database. This database **must** be claimed within 24 hours or it will be deleted.
+
+Once you have a database, copy the database labeled **_Use this database for everything else_**. Then, open the `.env` file and set the `DATABASE_URL` variable to your database connection string.
+
+```env
+DATABASE_URL="..."
+```
+
+### 4. Generate Prisma client and run migrations
+
+Generate the Prisma client with the custom output path:
+
+```bash
+npx prisma generate
+```
+
+Create and run your database migrations:
+
+```bash
+npx prisma migrate dev --name init
+```
+
+This will create the `Note` table in your database.
+
+## Step 4: Create a Hyperdrive database
+
+Create a Hyperdrive database by running the wrangler hyperdrive create command and passing in your database connection string:
+
+```bash
+npx wrangler hyperdrive create hyperdrive-prisma-postgres --connection-string="..."
+```
+
+## Step 5: Configure your Worker
+
+### 1. Update your `wrangler.jsonc` file
+
+Update your `wrangler.jsonc` file to include the Hyperdrive binding, and set the `compatibility_flags` to `nodejs_compat`:
+
+```jsonc
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "hyper-test",
+	"main": "src/index.ts",
+	"compatibility_flags": ["nodejs_compat"],
+	"compatibility_date": "2025-08-05",
+	"observability": {
+		"enabled": true,
+	},
+	"hyperdrive": [
+		{
+			"binding": "HYPERDRIVE",
+			"id": "<YOUR-HYPERDRIVE-DATABASE-ID>",
+		},
+	],
+}
+```
+
+Replace `<YOUR-HYPERDRIVE-DATABASE-ID>` with the actual ID from your Hyperdrive database returned by the `wrangler hyperdrive create` command in the previous step.
+
+### 2. Create your Worker code
+
+Create your main Worker file at `src/index.ts`. This Worker will create a new note every time it's called and return all existing notes.
+
+### 3. Set up imports and environment interface
+
+To start, we'll set up the imports and environment interface.
+
+```typescript
+import { PrismaPg } from "@prisma/adapter-pg";
+import { PrismaClient } from "./generated/prisma";
+
+export interface Env {
+	HYPERDRIVE: Hyperdrive;
+}
+```
+
+### 4. Create a database connection helper
+
+Next, we'll create a database connection helper using the `PrismaPg` adapter.
+
+```typescript
+export const getDb = (env: Env) => {
+	const connectionString = env.HYPERDRIVE.connectionString;
+	const adapter = new PrismaPg({ connectionString, maxUses: 1 });
+	return new PrismaClient({ adapter });
+};
+```
+
+### 5. Implement the Worker handler
+
+Finally, we'll implement the Worker handler which will create a new note every time it's called and return all existing notes.
+
+```typescript
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		const prisma = getDb(env);
+
+		await prisma.note.create({
+			data: {
+				title: "test",
+				content: "test",
+			},
+		});
+
+		const notes = await prisma.note.findMany();
+
+		return new Response(JSON.stringify(notes, null, 2));
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+## Step 6: Deploy to Cloudflare
+
+Deploy your Worker to Cloudflare:
+
+```bash
+npm run deploy
+```
+
+The console will display a URL for your worker. Visit that URL to see a JSON response containing your note. On every refresh, a new note will be created.
