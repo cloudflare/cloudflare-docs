@@ -28,6 +28,7 @@ import LlamaGuard from "~/components/models/code/LlamaGuard.astro";
 import BgeRerankerBase from "~/components/models/code/Bge-Reranker-Base.astro";
 
 import { authorData } from "~/components/models/data";
+import OpenAIResponsesTextGenerationCode from "~/components/models/code/OpenAIResponsesTextGenerationCode.astro";
 
 export const getStaticPaths = (async () => {
 	const models = await getCollection("workers-ai-models");
@@ -108,6 +109,13 @@ if (model.name === "@cf/baai/bge-reranker-base") {
 	CodeExamples = BgeRerankerBase;
 }
 
+if (
+	model.name === "@cf/openai/gpt-oss-120b" ||
+	model.name === "@cf/openai/gpt-oss-20b"
+) {
+	CodeExamples = OpenAIResponsesTextGenerationCode;
+}
+
 const description = model.description;
 
 const isBeta = model.properties.find(
@@ -148,7 +156,7 @@ const starlightPageProps = {
 					alt={`${author.name} logo`}
 				/>
 			) : (
-				<div class="mr-4 flex h-12 w-12 items-center justify-center rounded-md bg-gray-100 text-2xl font-black uppercase text-gray-400">
+				<div class="mr-4 flex h-12 w-12 items-center justify-center rounded-md bg-gray-100 text-2xl font-black text-gray-400 uppercase">
 					{model.name.split("/")[1].substring(0, 1)}
 				</div>
 			)
@@ -156,10 +164,10 @@ const starlightPageProps = {
 		<div>
 			<h1
 				id="_top"
-				class="-mt-4! mb-0! flex items-center text-4xl! font-bold! leading-none!"
+				class="-mt-4! mb-0! flex items-center text-4xl! leading-none! font-bold!"
 			>
 				{name}
-				{isBeta && <Badge text="Beta" variant="caution" class="ml-3 mt-2" />}
+				{isBeta && <Badge text="Beta" variant="caution" class="mt-2 ml-3" />}
 			</h1>
 			<span class="-mt-1 block"><ModelInfo model={model} /></span>
 		</div>
@@ -167,7 +175,7 @@ const starlightPageProps = {
 
 	<span class="mt-4 block font-mono text-sm text-gray-400">{model.name}</span>
 
-	<p class="mb-2! mt-3">{description}</p>
+	<p class="mt-3 mb-2!">{description}</p>
 
 	{
 		model.name === "@cf/meta/llama-3.2-11b-vision-instruct" && (
