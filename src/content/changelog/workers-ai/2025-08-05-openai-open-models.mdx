@@ -13,9 +13,12 @@ Get started with the new models at `@cf/openai/gpt-oss-120b` and `@cf/openai/gpt
 Check out the [blog](https://blog.cloudflare.com/openai-gpt-oss-on-workers-ai) for more details about the new models, and the [`gpt-oss-120b`](/workers-ai/models/gpt-oss-120b) and [`gpt-oss-20b`](/workers-ai/models/gpt-oss-20b) model pages for more information about pricing and context windows.
 
 ## Responses API
-The new Responses API is available through the REST API at `https://api.cloudflare.com/client/v4/accounts/<account_id>/ai/v1/responses`. Responses API streaming support is coming soon.
+If you call the model through:
+- Workers Binding, it will accept/return Responses API – `env.AI.run(“@cf/openai/gpt-oss-120b”)`
+- REST API on `/run` endpoint, it will accept/return Responses API – `https://api.cloudflare.com/client/v4/accounts/<account_id>/ai/run/@cf/openai/gpt-oss-120b`
+- REST API on new `/responses` endpoint, it will accept/return Responses API – `https://api.cloudflare.com/client/v4/accounts/<account_id>/ai/v1/responses`
+- REST API for OpenAI Compatible endpoint, it will return Chat Completions (coming soon) – `https://api.cloudflare.com/client/v4/accounts/<account_id>/ai/v1/chat/completions`
 
-The existing Workers Binding `env.AI.run(“@cf/openai/gpt-oss-120b”)` and REST API `https://api.cloudflare.com/client/v4/accounts/<account_id>/ai/run/@cf/openai/gpt-oss-120b` and OpenAI compatible REST API endpoint `https://api.cloudflare.com/client/v4/accounts/<account_id>/ai/v1/chat/completions` will return the Chat Completions format for backwards compatibility.
 
 ```
 curl https://api.cloudflare.com/client/v4/accounts/<account_id>/ai/v1/responses \
