@@ -17,53 +17,96 @@ This makes it ideal for building AI agents, CI runners, cloud REPLs, data analys
 
 Create persistent code contexts with support for rich visual + structured outputs.
 
+#### createCodeContext(options?)
+
+Creates a new code execution context with persistent state.
+
 ```ts
-import { getSandbox } from "@cloudflare/sandbox";
+// Create a Python context
+const pythonCtx = await sandbox.createCodeContext({ language: "python" });
 
-export default {
-	async fetch(request: Request, env: Env) {
-		const sandbox = getSandbox(env.Sandbox, "my-sandbox");
-
-		// Code interpreter with rich output support
-		const pythonResult = await sandbox.runCode({
-			context: "python",
-			code: `
-        import matplotlib.pyplot as plt
-        import pandas as pd
-
-        # Create sample data
-        data = {'x': [1, 2, 3, 4, 5], 'y': [2, 4, 6, 8, 10]}
-        df = pd.DataFrame(data)
-
-        # Create visualization
-        plt.figure(figsize=(8, 6))
-        plt.plot(df['x'], df['y'], marker='o')
-        plt.title('Sample Plot')
-        plt.show()
-
-        print(df.describe())
-      `,
-		});
-
-		// JavaScript/TypeScript execution
-		const jsResult = await sandbox.runCode({
-			context: "javascript",
-			code: `
-        const data = [1, 2, 3, 4, 5];
-        const sum = data.reduce((a, b) => a + b, 0);
-        console.log(\`Sum: \${sum}\`);
-        return { sum, average: sum / data.length };
-      `,
-		});
+// Create a JavaScript context
+const jsCtx = await sandbox.createCodeContext({ language: "javascript" });
 ```
 
-### Real-time streaming output
+Options:
+
+- language: Programming language ('python' | 'javascript' | 'typescript')
+- cwd: Working directory (default: /workspace)
+- envVars: Environment variables for the context
+
+#### runCode(code, options?)
+
+Executes code with optional streaming callbacks.
+
+```ts
+// Simple execution
+const execution = await sandbox.runCode('print("Hello World")', {
+	context: pythonCtx,
+});
+
+// With streaming callbacks
+await sandbox.runCode(
+	`
+for i in range(5):
+    print(f"Step {i}")
+    time.sleep(1)
+`,
+	{
+		context: pythonCtx,
+		onStdout: (output) => console.log("Real-time:", output.text),
+		onResult: (result) => console.log("Result:", result),
+	},
+);
+```
+
+Options:
+
+- language: Programming language ('python' | 'javascript' | 'typescript')
+- cwd: Working directory (default: /workspace)
+- envVars: Environment variables for the context
+
+#### Real-time streaming output
 
 Returns a streaming response for real-time processing.
 
 ```ts
-/const stream = await sandbox.runCodeStream('import time; [print(i) for i in range(10)]');
+const stream = await sandbox.runCodeStream(
+	"import time; [print(i) for i in range(10)]",
+);
 // Process the stream as needed
+```
+
+#### Rich output handling
+
+Interpreter outputs are auto-formatted and returned in multiple formats:
+
+- text
+- html (e.g., Pandas tables)
+- png, svg (e.g., Matplotlib charts)
+- json (structured data)
+- chart (parsed visualizations)
+
+```ts
+const result = await sandbox.runCode(
+	`
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+data = sns.load_dataset("flights")
+pivot = data.pivot("month", "year", "passengers")
+sns.heatmap(pivot, annot=True, fmt="d")
+plt.title("Flight Passengers")
+plt.show()
+
+pivot.to_dict()
+`,
+	{ context: pythonCtx },
+);
+
+if (result.png) {
+	console.log("Chart output:", result.png);
+}
 ```
 
 ### Preview URLs from Exposed Ports
@@ -108,38 +151,6 @@ await sandbox.gitCheckout("https://github.com/user/repo", {
 	branch: "main",
 	targetDir: "my-project",
 });
-```
-
-### Rich output handling
-
-Interpreter outputs are auto-formatted and returned in multiple formats:
-
-- text
-- html (e.g., Pandas tables)
-- png, svg (e.g., Matplotlib charts)
-- json (structured data)
-- chart (parsed visualizations)
-
-```ts
-const result = await sandbox.runCode(
-	`
-import seaborn as sns
-import matplotlib.pyplot as plt
-
-data = sns.load_dataset("flights")
-pivot = data.pivot("month", "year", "passengers")
-sns.heatmap(pivot, annot=True, fmt="d")
-plt.title("Flight Passengers")
-plt.show()
-
-pivot.to_dict()
-`,
-	{ context: pythonCtx },
-);
-
-if (result.png) {
-	console.log("Chart output:", result.png);
-}
 ```
 
 Sandboxes are still experimental. We're using them to explore how isolated, container-like workloads might scale on Cloudflare — and to help define the developer experience around them.
