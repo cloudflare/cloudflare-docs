@@ -183,7 +183,7 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 
 				<div className="mb-8! hidden md:block">
 					<span className="text-sm font-bold text-gray-600 uppercase dark:text-gray-200">
-						▼ Tasks
+						Tasks
 					</span>
 
 					{tasks.map((task) => (
@@ -216,7 +216,7 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 
 				<div className="mb-8! hidden md:block">
 					<span className="text-sm font-bold text-gray-600 uppercase dark:text-gray-200">
-						▼ Capabilities
+						Capabilities
 					</span>
 
 					{capabilities.map((capability) => (
@@ -251,7 +251,7 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 
 				<div className="hidden md:block">
 					<span className="text-sm font-bold text-gray-600 uppercase dark:text-gray-200">
-						▼ Authors
+						Authors
 					</span>
 
 					{authors.map((author) => (
