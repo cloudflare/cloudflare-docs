@@ -6,7 +6,7 @@ sidebar:
 
 ---
 
-import { GlossaryTooltip, Steps, Tabs, TabItem } from "~/components"
+import { GlossaryTooltip, Steps, Tabs, TabItem, Render } from "~/components"
 
 <GlossaryTooltip term="JSON web token (JWT)">JSON web tokens (JWT)</GlossaryTooltip> are often used as part of an authentication component on many web applications today. Since JWTs are crucial to identifying users and their access, ensuring the token’s integrity is important.
 
@@ -49,7 +49,6 @@ Each JWT issuer typically publishes public keys (JWKS) for verification at a kno
 To automatically keep your JWKS up to date when your identity provider refreshes them, you can use a Worker. Refer to [Configure Workers to automatically update keys](/api-shield/security/jwt-validation/jwt-worker/) to learn more about setting up the Worker.
 
 ### Add a JWT validation rule
-
 
 <Tabs syncKey="dashNewNav">
   <TabItem label="Old dashboard">
@@ -103,6 +102,8 @@ If you expect to migrate between two different identity providers, you must crea
 ### JSON Web Tokens with the `Bearer` prefix
 
 API Shield will verify JSON Web Tokens regardless of whether or not they have the `Bearer` prefix.
+
+<Render file="rate-limit-user" />
 
 ## Availability
 

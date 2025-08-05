@@ -10,7 +10,3 @@ meta:
   title: Cloudflare D1 docs
   description: Managed, serverless database with SQLite's SQL semantics, built-in disaster recovery, and Worker and HTTP API access.
   author: "@cloudflare"
-
-resources:
-  dashboard_link: https://dash.cloudflare.com/?to=/:account/workers
-  discord: https://discord.com/invite/cloudflaredev

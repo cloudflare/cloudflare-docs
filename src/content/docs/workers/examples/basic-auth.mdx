@@ -260,21 +260,22 @@ export default {
 ```
 
 </TabItem> <TabItem label="Rust" icon="seti:rust">
+
 ```rs
 use base64::prelude::*;
 use worker::*;
 
 #[event(fetch)]
 async fn fetch(req: Request, env: Env, _ctx: Context) -> Result<Response> {
-let basic_user = "admin";
-// You will need an admin password. This should be
-// attached to your Worker as an encrypted secret.
-// Refer to https://developers.cloudflare.com/workers/configuration/secrets/
-let basic_pass = match env.secret("PASSWORD") {
-Ok(s) => s.to_string(),
-Err(_) => "password".to_string(),
-};
-let url = req.url()?;
+    let basic_user = "admin";
+    // You will need an admin password. This should be
+    // attached to your Worker as an encrypted secret.
+    // Refer to https://developers.cloudflare.com/workers/configuration/secrets/
+    let basic_pass = match env.secret("PASSWORD") {
+        Ok(s) => s.to_string(),
+        Err(_) => "password".to_string(),
+    };
+    let url = req.url()?;
 
     match url.path() {
         "/" => Response::ok("Anyone can access the homepage."),
@@ -328,10 +329,10 @@ let url = req.url()?;
         }
         _ => Response::error("Not Found.", 404),
     }
-
 }
 
-````
+```
+
 </TabItem> <TabItem label="Hono" icon="seti:typescript">
 
 ```ts
@@ -346,17 +347,17 @@ import { basicAuth } from "hono/basic-auth";
 
 // Define environment interface
 interface Env {
-  Bindings: {
+	Bindings: {
 		USERNAME: string;
-    PASSWORD: string;
-  };
+		PASSWORD: string;
+	};
 }
 
 const app = new Hono<Env>();
 
 // Public homepage - accessible to everyone
 app.get("/", (c) => {
-  return c.text("Anyone can access the homepage.");
+	return c.text("Anyone can access the homepage.");
 });
 
 // Admin route - protected with Basic Auth
@@ -365,8 +366,8 @@ app.get(
 	async (c, next) => {
 		const auth = basicAuth({
 			username: c.env.USERNAME,
-			password: c.env.PASSWORD
-		})
+			password: c.env.PASSWORD,
+		});
 
 		return await auth(c, next);
 	},
@@ -374,10 +375,10 @@ app.get(
 		return c.text("🎉 You have private access!", 200, {
 			"Cache-Control": "no-store",
 		});
-	}
+	},
 );
 
 export default app;
-````
+```
 
 </TabItem> </Tabs>

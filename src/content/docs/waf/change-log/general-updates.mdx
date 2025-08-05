@@ -1,9 +1,6 @@
 ---
 title: "General updates"
 pcx_content_type: changelog
-release_notes_file_name:
-  - waf-general
-release_notes_name: WAF
 sidebar:
   order: 1
 head:
@@ -11,8 +8,10 @@ head:
     content: Changelog for general WAF updates
 ---
 
-import { ProductReleaseNotes } from "~/components";
+import { ProductChangelog } from "~/components";
 
-{/* <!-- Actual content lives in /src/content/release-notes/waf-general.yaml. Update the file there for new entries to appear here. For more details, refer to https://developers.cloudflare.com/style-guide/documentation-content-strategy/content-types/changelog/#yaml-file --> */}
+<ProductChangelog product="waf" />
 
-<ProductReleaseNotes />
+## Previous updates
+
+For preview WAF updates, refer to the [historical changelog (2024)](/waf/change-log/historical-2024/).

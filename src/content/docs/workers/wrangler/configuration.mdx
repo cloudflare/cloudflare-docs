@@ -1078,8 +1078,8 @@ The following options are available:
 
 - `image` <Type text="string" /> <MetaInfo text="required" />
 
-  - The image to use for the container. This can either be a local path, in which case `wrangler deploy` will
-    build and push the image. Or it can be an image URL. Currently, only the Cloudflare Registry is a supported registry.
+	- The image to use for the container. This can either be a local path to a `Dockerfile`, in which case `wrangler deploy` will
+    build and push the image, or it can be an image URL. Currently, only the Cloudflare Registry is a supported registry.
 
 - `class_name` <Type text="string" /> <MetaInfo text="required" />
 
@@ -1094,13 +1094,15 @@ The following options are available:
 
 - `max_instances` <Type text="string" /> <MetaInfo text="optional" />
 
-  - The maxiumum number of concurrent container instances you want to run. If you have more Durable Objects that
+  - The maximum number of concurrent container instances you want to run. If you have more Durable Objects that
     request to run a container than this number, the container request will error. You may have more Durable Objects
     than this number over a longer time period, but you may not have more concurrently.
 
+  - This value is only enforced when running in production on Cloudflare's network. This limit does not apply during local development, so you may run more instances than specified.
+
 - `name` <Type text="string" /> <MetaInfo text="optional" />
 
-  - The name of your container. Used as an identifier. This will default to a comination of your Worker name, the class
+  - The name of your container. Used as an identifier. This will default to a combination of your Worker name, the class
     name, and your environment.
 
 - `image_build_context` <Type text="string" /> <MetaInfo text="optional" />
@@ -1108,9 +1110,8 @@ The following options are available:
   - The build context of the application, by default it is the directory of `image`.
 
 - `image_vars` <Type text="Record<string, string>" /> <MetaInfo text="optional" />
+  - Build-time variables, equivalent to using `--build-arg` with `docker build`. If you want to provide environment variables to your container at _runtime_, you should [use secret bindings or `envVars` on the Container class](/containers/examples/env-vars-and-secrets/).
 
-  - Environment variables to set in the container. These will be used during the build phase and will be defaults
-    when running the container, though they can be overridden at runtime when starting the container.
 
 <WranglerConfig>
 
@@ -1255,7 +1256,14 @@ You can configure various aspects of local development, such as the local protoc
 
   - Host to forward requests to, defaults to the host of the first `route` of the Worker.
 
-Example:
+- `enable_containers` <Type text="boolean" /> <MetaInfo text="optional" />
+
+  - Determines whether to enable containers during a local dev session, if they have been configured. Defaults to `true`. If set to `false`, you can develop the rest of your application without requiring Docker or other container tool, as long as you do not invoke any code that interacts with containers.
+
+- `container_engine` <Type text="string" /> <MetaInfo text="optional" />
+
+  - Used for local development of [Containers](/containers/local-dev). Wrangler will attempt to automatically find the correct socket to use to communicate with your container engine. If that does not work (usually surfacing as an `internal error` when attempting to connect to your Container), you can try setting the socket path using this option. You can also set this via the environment variable `DOCKER_HOST`.
+    Example:
 
 <WranglerConfig>
 
@@ -1317,12 +1325,12 @@ You can alias all imports of `node-fetch` to instead point directly to the `fetc
 
 ```toml title="wrangler.toml"
 [alias]
-"node-fetch" = "./fetch-nolyfill"
+"node-fetch" = "./fetch-polyfill"
 ```
 
 </WranglerConfig>
 
-```js title="./fetch-nolyfill"
+```js title="./fetch-polyfill"
 export default fetch;
 ```
 

@@ -105,7 +105,7 @@ async def on_fetch(request, env):
 from workers import Response
 
 async def on_fetch(request, env):
-    results = await env.DB.prepare("PRAGMA table_list").all()
+    results = await env.DB.prepare("PRAGMA table_list").run()
     # Return a JSON response
     return Response.json(results)
 ```

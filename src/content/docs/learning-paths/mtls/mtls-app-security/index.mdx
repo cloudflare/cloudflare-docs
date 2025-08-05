@@ -10,7 +10,7 @@ This implementation requires an active [Zone](/fundamentals/concepts/accounts-an
 
 API Shield is not required to use mTLS. <br />
 
-By default, mTLS uses Client Certificates issued by a Cloudflare Managed CA. Cloudflare generates a unique CA for each customer account, meaning that Client Certificates all validate against an account-level Cloudflare CA.
+By default, mTLS uses Client Certificates issued by a Cloudflare Managed CA and set at account-level. If you have an Enterprise account, you also have the option to [bring your own CA](/ssl/client-certificates/byo-ca/).
 :::
 
 ## 1. Enable mTLS

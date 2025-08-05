@@ -370,7 +370,7 @@ app.get("/", async (c) => {
 	let notes = [];
 	if (vecId) {
 		const query = `SELECT * FROM notes WHERE id = ?`;
-		const { results } = await c.env.DB.prepare(query).bind(vecId).all();
+		const { results } = await c.env.DB.prepare(query).bind(vecId).run();
 		if (results) notes = results.map((vec) => vec.text);
 	}
 

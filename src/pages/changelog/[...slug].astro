@@ -55,9 +55,7 @@ const props = {
 		<h2>{note.data.title}</h2>
 		<div>
 			<time class="font-bold" datetime={note.data.date.toISOString()}
-				>{format(note.data.date, "MMM dd, yyyy")}, {
-					format(note.data.date, "hh:mm a")
-				}</time
+				>{format(note.data.date, "MMM dd, yyyy")}</time
 			>
 			<ProductPills products={note.data.products} />
 		</div>

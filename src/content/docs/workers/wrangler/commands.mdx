@@ -1046,6 +1046,8 @@ wrangler pages deployment list [--project-name <PROJECT_NAME>]
   - The name of the project you would like to list deployments for.
 - `--environment` <Type text="'production'|'preview'" /> <MetaInfo text="optional" />
   - Environment type to list deployments for.
+- `--json` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Whether to output the list in JSON format.
 
 <Render file="wrangler-commands/global-flags" product="workers" />
 
@@ -1531,7 +1533,7 @@ wrangler versions secret put <KEY> [OPTIONS]
 Delete a secret for a Worker. Creates a new [version](/workers/configuration/versions-and-deployments/#versions) with modified secrets without [deploying](/workers/configuration/versions-and-deployments/#deployments) the Worker.
 
 ```txt
-wrangler versions delete <KEY> [OPTIONS]
+wrangler versions secret delete <KEY> [OPTIONS]
 ```
 
 - `KEY` <Type text="string" /> <MetaInfo text="required" />
@@ -1989,9 +1991,6 @@ wrangler types [<PATH>] [OPTIONS]
   	SERVICE_BINDING: Service<import("../bound-worker/src/index").Entrypoint>;
   }
   ```
-  :::note
-  Currently, this only works if your service binding targets a [named entrypoint](/workers/runtime-apis/bindings/service-bindings/rpc/#named-entrypoints), rather than the default export. If you are unable to use named entrypoints, we recommend you extend your `Env` type in a separate file in order to manually provide those types without risk of being overwritten by subsequent runs of `wrangler types`. This is a temporary limitation we are working to fix.
-  :::
 
 ---
 

@@ -59,16 +59,17 @@ async def on_fetch(request):
 ```
 
 </TabItem> <TabItem label="Rust" icon="seti:rust">
+
 ```rs
 use worker::*;
 
 #[event(fetch)]
-async fn fetch(req: HttpRequest, \_env: Env, \_ctx: Context) -> Result<Response> {
-console_log!("{:?}", req.headers());
-Response::ok("hello world")
+async fn fetch(req: HttpRequest, _env: Env, _ctx: Context) -> Result<Response> {
+    console_log!("{:?}", req.headers());
+    Response::ok("hello world")
 }
+```
 
-````
 </TabItem> <TabItem label="Hono" icon="seti:typescript">
 
 ```ts
@@ -98,7 +99,7 @@ app.get('*', (c) => {
 });
 
 export default app;
-````
+```
 
 </TabItem> </Tabs>
 

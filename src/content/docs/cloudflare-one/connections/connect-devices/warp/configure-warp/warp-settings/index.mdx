@@ -404,8 +404,6 @@ Microsoft's [System Center Configuration Manager](https://learn.microsoft.com/en
 
 - `Enabled`: WARP network interface description is `(SCCM) Cloudflare WARP Interface Tunnel` for devices which have the [SCCM client](https://learn.microsoft.com/en-us/intune/configmgr/core/clients/deploy/deploy-clients-to-windows-computers) installed. Devices without the SCCM client will still use the default `Cloudflare WARP Interface Tunnel` description. WARP checks if the SCCM client is installed by looking for the SMS Agent Host (`ccmexec.exe`) Windows service.
 
-After setting the network interface description, WARP will restart the SMS Agent Host (`ccmexec.exe`) so that changes can propagate to the SCCM server in a timely manner.
-
 #### Example SCCM configuration
 
 Assume you want to push software updates from a cloud based [distribution point](https://learn.microsoft.com/en-us/intune/configmgr/core/servers/deploy/configure/boundary-groups-distribution-points) if the device is remote, but use on-prem servers if the device is on the office network. To set up these boundary groups:

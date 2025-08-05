@@ -5,7 +5,7 @@ sidebar:
   order: 1
 ---
 
-import { GlossaryTooltip, Render, TabItem, Tabs } from "~/components";
+import { GlossaryTooltip, Render, TabItem, Tabs, Badge } from "~/components";
 
 TLS inspection (also known as TLS decryption or HTTPS inspection) allows Cloudflare Gateway to perform deeper traffic analysis and take actions like scanning request bodies for sensitive data, upgrading to a remote browser isolation session, and redirecting based on the complete URL and path of requests.
 
@@ -35,6 +35,17 @@ If the answer to a majority of these questions is no and your organization relie
 To turn on TLS inspection for your Zero Trust organization:
 
 <Render file="gateway/enable-tls-decryption" product="cloudflare-one" />
+
+#### Inspect on all ports <Badge text="Beta" variant="caution" size="small" />
+
+<Render
+	file="gateway/inspect-on-all-ports"
+	product="cloudflare-one"
+	params={{
+		turnOnProcedure:
+			"you can turn on [protocol detection](/cloudflare-one/policies/gateway/network-policies/protocol-detection/) and configure Gateway to [inspect traffic on all ports](/cloudflare-one/policies/gateway/network-policies/protocol-detection/#inspect-on-all-ports)",
+	}}
+/>
 
 ### 3. Determine the certificate used for inspection
 

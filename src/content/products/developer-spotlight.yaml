@@ -9,9 +9,3 @@ meta:
   title: Cloudflare Developer Spotlight
   description: Whether you use Cloudflare in your profession, as a student or as a hobby, let us spotlight your creativity. Write a tutorial for our documentation and earn credits for your Cloudflare account along with having your name credited on your work.
   author: "@cloudflare"
-
-resources:
-  community: https://community.cloudflare.com/c/developers/workers/40
-  dashboard_link: https://dash.cloudflare.com/?to=/:account/workers
-  learning_center: https://www.cloudflare.com/learning/serverless/what-is-serverless/
-  discord: https://discord.com/invite/cloudflaredev

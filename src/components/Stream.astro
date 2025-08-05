@@ -11,7 +11,7 @@ const props = z
 		title: z.string(),
 		thumbnail: z.string().optional(),
 		chapters: z.record(z.string(), z.string()).optional(),
-		showMoreVideos: z.boolean().default(true),
+		showMoreVideos: z.boolean().default(false),
 	})
 	.strict();
 

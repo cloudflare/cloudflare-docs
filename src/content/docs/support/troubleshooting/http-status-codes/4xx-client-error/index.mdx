@@ -10,6 +10,12 @@ source: null
 - The origin server should include an explanation, which should be displayed by the User-Agent, except in the case of a `HEAD` request.
 - [Custom rules](/waf/custom-rules/) can return any response code in the range of `400–499` on your HTML page if the site owner has created a rule with the _Block_ action and configured a custom response code. For more details, refer to [custom response](/waf/custom-rules/create-dashboard/#configure-a-custom-response-for-blocked-requests).
 
+## Log Explorer
+
+[Log Explorer](/log-explorer/) provides access to Cloudflare logs with all the context available within the Cloudflare platform. 
+You can monitor security and performance issues with custom dashboards or investigate and troubleshoot issues with log search.
+Log explorer [allows to build queries](/log-explorer/log-search/) filtering for specific Ray ID, which can be useful to investigate HTTP Errors.
+
 ## 400 Bad Request
 
 For a complete description of this error refer to the [Error 400](/support/troubleshooting/http-status-codes/4xx-client-error/error-400/) page.

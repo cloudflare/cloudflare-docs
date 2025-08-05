@@ -11,8 +11,3 @@ meta:
   title: Cloudflare Aegis docs
   description: Leverage dedicated IPs to improve your origin security and implement Zero Trust.
   author: "@cloudflare"
-
-resources:
-  community: https://community.cloudflare.com/
-  dashboard_link: https://dash.cloudflare.com/
-  discord: https://discord.gg/cloudflaredev

@@ -48,3 +48,9 @@ You may not be seeing metrics on Cloudflare Analytics for the following reasons:
 :::note
 Activations through a hosting partner works via a [CNAME setup](/dns/zone-setups/partial-setup/) on the `www` record. If most of your traffic actually goes to `domain.com`, [forward your traffic](/rules/url-forwarding/bulk-redirects/) from `domain.com` to `www.domain.com`.
 :::
+
+## Why does the analytics data on the **Overview** page not match what I have under **View More Analytics**?
+
+The Overview page shows analytics based on all traffic, including subrequests. However, when you navigate to **Analytics & Logs** > **HTTP Traffic**, the metrics (for example, `Requests`, `Data`, `Visits`) are filtered to show only end user traffic (that is, `requestSource = eyeball`).
+
+As a result, subrequests are excluded from the **HTTP Traffic** view, which can lead to discrepancies between the numbers shown in **Overview** and those displayed in other analytics sections of the dashboard.

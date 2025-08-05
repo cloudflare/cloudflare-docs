@@ -10,7 +10,3 @@ meta:
   title: Cloudflare for Platforms docs
   description: Cloudflare for Platforms allows you to extend the security and performance benefits of Cloudflare's network to your customers via their own custom or vanity domains.
   author: "@cloudflare"
-
-resources:
-  dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/custom-hostnames
-  discord: https://discord.com/channels/595317990191398933/897916119782928394

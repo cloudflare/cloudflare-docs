@@ -7,7 +7,7 @@ sidebar:
 
 ---
 
-import { GlossaryTooltip, Steps } from "~/components"
+import { GlossaryTooltip, Steps, Render } from "~/components"
 
 Cloudflare Volumetric Abuse Detection helps you set up a system of adaptive rate limiting.
 
@@ -59,6 +59,10 @@ Refer to the [Rules documentation](https://developers.cloudflare.com/waf/rate-li
 ## API
 
 [Rate limit recommendations are available via the API](/api/resources/api_gateway/subresources/operations/methods/get/) if you would like to dynamically update rate limits over time.
+
+## Special cases 
+
+<Render file="rate-limit-user" />
 
 ## Limitations
 

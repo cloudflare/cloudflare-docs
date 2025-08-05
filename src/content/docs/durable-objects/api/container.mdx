@@ -39,7 +39,7 @@ export class MyDurableObject extends DurableObject {
 
 }
 
-````
+```
 </TypeScriptExample>
 
 
@@ -51,7 +51,7 @@ export class MyDurableObject extends DurableObject {
 
 ```js
 	this.ctx.container.running;
-````
+```
 
 ## Methods
 
@@ -124,6 +124,21 @@ const res = await port.fetch("http://container/set-state", {
 	body: initialState,
 	method: "POST",
 });
+```
+
+```js
+const conn = this.ctx.container.getTcpPort(8080).connect('10.0.0.1:8080');
+await conn.opened;
+
+try {
+  if (request.body) {
+    await request.body.pipeTo(conn.writable);
+  }
+  return new Response(conn.readable);
+} catch (err) {
+  console.error("Request body piping failed:", err);
+  return new Response("Failed to proxy request body", { status: 502 });
+}
 ```
 
 #### Parameters

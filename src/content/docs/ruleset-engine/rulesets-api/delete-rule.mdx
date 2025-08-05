@@ -12,13 +12,10 @@ Deletes a single rule in a ruleset at the account or zone level.
 
 Use one of the following API endpoints:
 
-| Operation                                    | Method + Endpoint                                                     |
-| -------------------------------------------- | --------------------------------------------------------------------- |
-| [Delete an account ruleset rule][dr-account] | `DELETE /accounts/{account_id}/rulesets/{ruleset_id}/rules/{rule_id}` |
-| [Delete a zone ruleset rule][dr-zone]        | `DELETE /zones/{zone_id}/rulesets/{ruleset_id}/rules/{rule_id}`       |
-
-[dr-account]: /api/resources/rulesets/subresources/rules/methods/delete/
-[dr-zone]: /api/resources/rulesets/methods/delete/
+- [Delete an account ruleset rule](/api/resources/rulesets/subresources/rules/methods/delete/)<br/>
+  `DELETE /accounts/{account_id}/rulesets/{ruleset_id}/rules/{rule_id}`
+- [Delete a zone ruleset rule](/api/resources/rulesets/subresources/rules/methods/delete/)<br/>
+  `DELETE /zones/{zone_id}/rulesets/{ruleset_id}/rules/{rule_id}`
 
 If the delete operation succeeds, the API method call returns a `200 OK` HTTP status code with the complete ruleset in the response body.
 

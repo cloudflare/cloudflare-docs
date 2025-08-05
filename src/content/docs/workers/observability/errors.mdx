@@ -25,6 +25,7 @@ When a Worker running in production has an error that prevents it from returning
 | `1024`     | Worker cannot make a subrequest to a Cloudflare-owned IP address.                                                                               |
 | `1027`     | Worker exceeded free tier [daily request limit](/workers/platform/limits/#daily-request).                                                       |
 | `1042`     | Worker tried to fetch from another Worker on the same zone, which is only [supported](/workers/runtime-apis/fetch/) when the [`global_fetch_strictly_public` compatibility flag](/workers/configuration/compatibility-flags/#global-fetch-strictly-public) is used. |
+| `10162`    | Module has an unsupported Content-Type.                                                                                                         |
 
 Other `11xx` errors generally indicate a problem with the Workers runtime itself. Refer to the [status page](https://www.cloudflarestatus.com) if you are experiencing an error.
 
@@ -258,7 +259,7 @@ The **Client disconnected by type** chart shows the number of client disconnect 
 
 To find all your errors in Workers Logs, you can use the following filter: `$metadata.error EXISTS`. This will show all the logs that have an error associated with them. You can also filter by `$workers.outcome` to find the requests that resulted in an error. For example, you can filter by `$workers.outcome = "exception"` to find all the requests that resulted in an uncaught exception.
 
-All the possible outcome values can be found in the [Workers Trace Event](/logs/reference/log-fields/account/workers_trace_events/#outcome) reference.
+All the possible outcome values can be found in the [Workers Trace Event](/logs/logpush/logpush-job/datasets/account/workers_trace_events/#outcome) reference.
 
 ## Debug exceptions from `Wrangler`
 

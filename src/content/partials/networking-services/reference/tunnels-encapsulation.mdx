@@ -217,6 +217,16 @@ Additionally, the IKE ID type of `ID_IPV4_ADDR` is supported if the following tw
 Make sure each IPsec tunnel has a unique combination of a <a href={props.tunnelEndpoints}>Cloudflare endpoint and customer endpoint</a>. If this combination is not unique among your IPsec tunnels, you should use one of the custom IKE formats (`ID_RFC822_ADDR`, `ID_FQDN`, or `ID_KEY_ID`) to specify the tunnel ID and account ID. This helps Cloudflare link the IKE packet to the right IPsec tunnel for tasks like authentication.
 :::
 
+### Route-based vs. policy-based VPNs
+
+Although Cloudflare supports both route-based and policy-based VPNs, route-based VPNs are preferred.
+
+If route-based VPNs are not an option and you must use policy-based VPNs, be aware of the following limitations:
+
+- Cloudflare only supports a single set of traffic selectors per Child SA.
+- Reply-style health checks must be covered by a policy — that is, they must match traffic selectors — otherwise, they will be dropped, just like any other traffic from an IPsec tunnel that does not match a policy.
+- A single IPsec tunnel can only contain around 100 Child SAs. Therefore, there is effectively a limit on the number of different policies per tunnel.
+
 { props.magicWord === "Magic Transit" && (
   <>
 	<AnchorHeading title="Network Analytics" depth={2} />

@@ -394,7 +394,7 @@ entries:
     availability: |-
       [Bring your own CA](/ssl/client-certificates/byo-ca/).
 
-      The mTLS Certificate Store refers to customer uploaded certificates and does not include client certificates generated with the [Cloudflare CA](/ssl/client-certificates/create-a-client-certificate/).
+      The mTLS Certificate Store refers to customer uploaded certificates and does not include client certificates generated with the [Cloudflare CA](/ssl/client-certificates/#how-it-works).
     associatedProducts: SSL/TLS
     nextSteps: Upload a renewed certificate.
     otherFilters: None.

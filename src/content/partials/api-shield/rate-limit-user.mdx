@@ -1,0 +1,31 @@
+---
+{}
+
+---
+
+### Rate limit by user (JWT claim)
+
+You can rate limit requests based on any claim inside of a JSON Web Token (JWT), such as:
+
+- Registered claims like `aud` or `sub`
+- Custom claims like `userEmail`, including nested custom claims like `user.email`
+
+Rate limiting based on JWT claim values will only work on valid JSON Web Tokens. If you do not block invalid JSON Web Tokens on your path, the [JWT claims will all be counted and possibly blocked](/waf/rate-limiting-rules/parameters/#missing-field-versus-empty-value) if high traffic is detected in the Point of Presence (PoP).
+
+You must also count the JWT claim that uniquely identifies the user. If you select a claim that is the same for many of your users, their rate limits will all be counted together.
+
+### Rate limit by user tier
+
+If you offer multiple tiers on your website or application and you want to enforce rate limiting based on the tiers, such as:
+
+- If `"aud": "free-tier"`, rate limit to five requests per minute.
+- If `"aud": "premium-tier"`, rate limit to 50 requests per minute.
+
+You can follow the rate limiting rule example below:
+
+```txt title="Example rule expression"
+(http.request.method eq "GET" and
+http.host eq "<YOUR_DOMAIN>" and
+http.request.uri.path matches "</EXAMPLE_PATH>" and
+lookup_json_string(http.request.jwt.claims["<JWT_TOKEN_CONFIGURATION_ID>"][0], "aud") eq "free-tier"
+```

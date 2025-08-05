@@ -53,6 +53,10 @@ entries:
     general_definition: |-
       Cloudflare Gateway is a modern next-generation firewall between your user, device, or network and the public Internet. It includes DNS filtering to inspect and apply policies to all Internet-bound DNS queries.
 
+  - term: Cloudflare One
+    general_definition: |-
+      the name for Cloudflare's Secure Access Service Edge (SASE) platform, which includes Zero Trust and network services.
+
   - term: Cloudflare One Agent
     general_definition: |-
       the name of the Cloudflare WARP client app on iOS and Android devices.
@@ -130,6 +134,10 @@ entries:
   - term: OIDC
     general_definition: |-
       OpenID Connect (OIDC) is an identity authentication protocol built on top of OAuth 2.0. It is used verifying user identity and obtaining basic profile information.
+
+  - term: on-ramp
+    general_definition: |-
+      refers to a way of connecting a business network to Cloudflare. Examples of on-ramps, or ways to connect to Cloudflare, are Anycast GRE tunnels, Anycast IPsec tunnels, Cloudflare Network Interconnect (CNI), Cloudflare Tunnel, and WARP.
 
   - term: PAC file
     general_definition: |-
@@ -270,3 +278,7 @@ entries:
   - term: Hops
     general_definition: |-
       Hops refer to the stops an email makes as it travels from the sender to the recipient.
+
+  - term: Quarantine policies
+    general_definition: |-
+      Policies that block specific types of emails (usually malicious and suspicious emails), preventing emails from reaching the end-user or the next mail service provider. Emails that are quarantined are reviewed by administrators and potentially released if falsely flagged.

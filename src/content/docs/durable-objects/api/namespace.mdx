@@ -150,7 +150,7 @@ const stub = env.MY_DURABLE_OBJECT.get(id);
 `jurisdiction` creates a subnamespace from a namespace where all Durable Object IDs and references created from that subnamespace will be restricted to the specified [jurisdiction](/durable-objects/reference/data-location/#restrict-durable-objects-to-a-jurisdiction).
 
 ```js
-const subnamespace = env.MY_DURABLE_OBJECT.jurisdiction("foo");
+const subnamespace = env.MY_DURABLE_OBJECT.jurisdiction("eu");
 const euId = subnamespace.idFromName("foo");
 ```
 

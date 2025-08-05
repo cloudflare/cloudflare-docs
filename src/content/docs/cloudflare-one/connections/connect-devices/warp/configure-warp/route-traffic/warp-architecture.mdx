@@ -12,15 +12,15 @@ This guide explains how the Cloudflare WARP client interacts with a device's ope
 
 In [Gateway with DoH](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#gateway-with-doh) mode, the IP traffic information does not apply. In [Secure Web Gateway without DNS filtering](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#secure-web-gateway-without-dns-filtering) mode, the DNS traffic information does not apply.
 
-## Overview
+## WARP traffic flow
 
 The WARP client allows organizations to have granular control over the applications an end user device can access. The client forwards DNS and network traffic from the device to Cloudflare's global network, where Zero Trust policies are applied in the cloud. On all operating systems, the WARP daemon maintains three connections between the device and Cloudflare:
 
-| Connection                                                                                                                                     | Protocol | Purpose                                                                                                         |
-| ---------------------------------------------------------------------------------------------------------------------------------------------- | -------- | --------------------------------------------------------------------------------------------------------------- |
-| WARP tunnel ([via WireGuard or MASQUE](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#device-tunnel-protocol)) | UDP      | Send IP packets to Gateway for network policy enforcement, HTTP policy enforcement, and private network access. |
-| [DoH](https://www.cloudflare.com/learning/dns/dns-over-tls/)                                                                                   | HTTPS    | Send DNS requests to Gateway for DNS policy enforcement. The DoH connection is maintained inside of the WARP tunnel.      |
-| Device orchestration                                                                                                                           | HTTPS    | Perform user registration, check device posture, apply WARP profile settings.                                   |
+| Connection                                                                                                                                     | Protocol | Purpose                                                                                                              |
+| ---------------------------------------------------------------------------------------------------------------------------------------------- | -------- | -------------------------------------------------------------------------------------------------------------------- |
+| WARP tunnel ([via WireGuard or MASQUE](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#device-tunnel-protocol)) | UDP      | Send IP packets to Gateway for network policy enforcement, HTTP policy enforcement, and private network access.      |
+| [DoH](https://www.cloudflare.com/learning/dns/dns-over-tls/)                                                                                   | HTTPS    | Send DNS requests to Gateway for DNS policy enforcement. The DoH connection is maintained inside of the WARP tunnel. |
+| Device orchestration                                                                                                                           | HTTPS    | Perform user registration, check device posture, apply WARP profile settings.                                        |
 
 ```mermaid
 flowchart LR

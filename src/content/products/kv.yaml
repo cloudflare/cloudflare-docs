@@ -10,7 +10,3 @@ meta:
   title: Cloudflare Workers KV docs
   description: Global, low-latency, key-value data store.
   author: "@cloudflare"
-
-resources:
-  dashboard_link: https://dash.cloudflare.com/?to=/:account/workers
-  discord: https://discord.com/invite/cloudflaredev

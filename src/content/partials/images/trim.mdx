@@ -21,3 +21,37 @@ Specifies a number of pixels to cut off on each side. Allows removal of borders 
   ```
   </TabItem>
 </Tabs>
+
+The API also supports automatic border removal based on color. This can be enabled by setting `trim=border` for automatic color detection, or customized with the parameters below.
+
+`trim.border.color`
+The border color to trim. Accepts any CSS color using CSS4 modern syntax, such as `rgb(255 255 0)`. If omitted, the color is detected automatically.
+
+`trim.border.tolerance`
+The matching tolerance for the color, on a scale of 0 to 255.
+
+`trim.border.keep`
+The number of pixels of the original border to leave untrimmed.
+
+<Tabs>
+  <TabItem label="URL format">
+    ```js
+    trim=border
+
+    OR
+
+    trim.border.color=%23000000
+    trim.border.tolerance=5
+    trim.border.keep=10
+    ```
+  </TabItem>
+  <TabItem label="Workers">
+    ```js
+    cf: {image: {trim: "border"}}
+
+    OR
+
+    cf: {image: {trim: {border: {color: "#000000", tolerance: 5, keep: 10}}}}
+    ```
+  </TabItem>
+</Tabs>

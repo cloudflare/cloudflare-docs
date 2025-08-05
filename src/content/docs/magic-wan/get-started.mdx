@@ -28,7 +28,7 @@ If you plan on using Magic WAN Connector, you can skip the prerequisites below, 
 Setting up Magic WAN manually is done through a combination of third-party devices in your premises and the Cloudflare dashboard. To be successful, you need to:
 
 1. Read the [Prerequisites](#prerequisites) below.
-2. Follow the steps in [Manual configuration](/magic-wan/configuration/manually/how-to/configure-tunnels/).
+2. Follow the steps in [Manual configuration](/magic-wan/configuration/manually/how-to/configure-tunnel-endpoints/).
 
 ## Prerequisites
 
@@ -38,11 +38,11 @@ The list of prerequisites below is only for customers planning to connect manual
 
 ### Use compatible tunnel endpoint routers
 
-Magic WAN relies on <GlossaryTooltip term="GRE tunnel" link="/magic-wan/reference/tunnels/">GRE</GlossaryTooltip> and <GlossaryTooltip term="IPsec tunnel" link="/magic-wan/reference/tunnels/#ipsec-tunnels">IPsec tunnels</GlossaryTooltip> to transmit [packets](https://www.cloudflare.com/learning/network-layer/what-is-a-packet/) from Cloudflare's global network to your origin network. To ensure compatibility with Magic WAN, the routers at your tunnel endpoints must:
+Magic WAN relies on <GlossaryTooltip term="GRE tunnel" link="/magic-wan/reference/gre-ipsec-tunnels/">GRE</GlossaryTooltip> and <GlossaryTooltip term="IPsec tunnel" link="/magic-wan/reference/gre-ipsec-tunnels/#ipsec-tunnels">IPsec tunnels</GlossaryTooltip> to transmit [packets](https://www.cloudflare.com/learning/network-layer/what-is-a-packet/) from Cloudflare's global network to your origin network. To ensure compatibility with Magic WAN, the routers at your tunnel endpoints must:
 
 - Allow configuration of at least one tunnel per Internet service provider (ISP).
 - Support <GlossaryTooltip term="maximum segment size (MSS)">maximum segment size (MSS)</GlossaryTooltip> clamping.
-- Support the configuration parameters for IPsec mentioned in [IPsec tunnels](/magic-wan/reference/tunnels/#supported-configuration-parameters).
+- Support the configuration parameters for IPsec mentioned in [IPsec tunnels](/magic-wan/reference/gre-ipsec-tunnels/#supported-configuration-parameters).
 
 ### Set maximum segment size
 
