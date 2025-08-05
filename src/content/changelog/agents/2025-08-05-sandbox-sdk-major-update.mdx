@@ -17,7 +17,7 @@ This makes it ideal for building AI agents, CI runners, cloud REPLs, data analys
 
 Create persistent code contexts with support for rich visual + structured outputs.
 
-#### createCodeContext(options?)
+#### createCodeContext(options)
 
 Creates a new code execution context with persistent state.
 
@@ -35,7 +35,7 @@ Options:
 - cwd: Working directory (default: /workspace)
 - envVars: Environment variables for the context
 
-#### runCode(code, options?)
+#### runCode(code, options)
 
 Executes code with optional streaming callbacks.
 
@@ -137,9 +137,9 @@ for await (const log of parseSSEStream<LogEvent>(logStream)) {
 
 - listProcesses() - List all running processes
 - getProcess(id) - Get detailed process status
-- killProcess(id, signal?) - Terminate specific processes
+- killProcess(id, signal) - Terminate specific processes
 - killAllProcesses() - Kill all processes
-- streamProcessLogs(id, options?) - Stream logs from running processes
+- streamProcessLogs(id, options) - Stream logs from running processes
 - getProcessLogs(id) - Get accumulated process output
 
 ### Git integration
