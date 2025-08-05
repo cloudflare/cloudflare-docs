@@ -18,22 +18,25 @@ You can secure <GlossaryTooltip term="MCP server">Model Context Protocol (MCP) s
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
 2. Select **SaaS**.
-3. For **Application**, select *Salesforce*.
-4. For the authentication protocol, select **OIDC**.
+3. In **Application**, enter a custom name (for example, `MCP server`) and select the textbox that appears below.
+4. Select **OIDC** as the authentication protocol.
 5. Select **Add application**.
-6. In **Scopes**, select the attributes that you want Access to send in the ID token.
-7. In **Redirect URLs**, enter the callback URL obtained from Salesforce (`https://<your-domain>.my.salesforce.com/services/authcallback/<URL Suffix>`). Refer to [Add a SSO provider to Salesforce](#2-add-a-sso-provider-to-salesforce) for instructions on obtaining this value.
-8. (Optional) Enable [Proof of Key Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/) if the protocol is supported by your IdP. PKCE will be performed on all login attempts.
-9. Copy the following values:
-   * **Client ID**
-   * **Client Secret**
-   * **Authorization endpoint**
-   * **Token endpoint**
-   * **User info endpoint**
-10. Configure [Access policies](/cloudflare-one/policies/access/) for the application.
-11. (Optional) In **Experience settings**, configure [App Launcher settings](/cloudflare-one/applications/app-launcher/) by turning on **Enable App in App Launcher** and, in **App Launcher URL**, entering `https://<your-domain>.my.salesforce.com`.
-12. Save the application.
+6. In **Redirect URLs**, enter the authorization callback URL for your MCP server (for example, `https://<SERVER-NAME>.<SUBDOMAIN>.workers.dev/callback`). Refer to your MCP server documentation for instructions on obtaining this value.
+7. Copy the following values to input into your MCP server's OAuth configuration. Different MCP servers may require different sets of input values.
+   - **Client secret**
+	 - **Client ID**
+	 - **Configuration endpoint**
+	 - **Issuer**
+   - **Token endpoint**
+   - **Authorization endpoint**
+	 - **Key endpoint**
+   - **Userinfo endpoint**
+8. (Optional) Under **Advanced settings**, turn on [**Refresh tokens**](/cloudflare-one/applications/configure-apps/saas-apps/generic-oidc-saas/#advanced-settings) to reduce the number of times a user needs to log in to the identity provider.
+9. Configure [Access policies](/cloudflare-one/policies/access/) to define the users can access the MCP server.
+10. Save the application.
 
 ## 2. Configure your MCP server
+
+
 
 ## Deploy an example MCP server
