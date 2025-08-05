@@ -331,16 +331,9 @@ There are two main approaches for this:
 
 - **Remote Durable Objects with local Workers:**
 
-	You can run Durable Objects remotely from a Worker using [`wrangler dev --remote`](/workers/wrangler/commands/#dev) and have them interact with local Workers
-	running on your machine by leveraging Wrangler's [Multiple dev commands](./multi-workers/#multiple-dev-commands) feature.
+	Although remote bindings for Durable Objects are not currently supported, you can still interact with remote Durable Objects during local development by using remote service bindings.
 
-	To do this:
-
-	- Start your remote Worker (which contains the Durable Object) using `wrangler dev --remote`.
-
-	- In your local Workers' configuration, set the Durable Object's [`script_name`](/workers/wrangler/configuration/#durable-objects) to the name of the remote Worker.
-
-	- Run your local Workers with `wrangler dev` to connect to the remote Durable Object.
+	To do this, deploy a Worker that has a binding to the target Durable Object. Then, configure a remote service binding in your local Worker to point to this deployed Worker. Your local Worker will be able to interact with the Durable Object via the remote service binding, effectively using the deployed Worker as a proxy interface to the Durable Object during local development.
 
 
 ### Important Considerations
