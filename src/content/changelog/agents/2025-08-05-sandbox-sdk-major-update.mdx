@@ -1,5 +1,5 @@
 ---
-title: Cloudflare Sandbox SDK adds Streaming, Code Interpreter, Git, Process Control and more
+title: Cloudflare Sandbox SDK adds streaming, code interpreter, Git support, process control and more
 description: The latest release transforms the Sandbox SDK into a full edge-native code execution platform, enabling secure, containerized runtimes with real-time streaming, language interpreters, Git integration, process lifecycle management, and port forwarding.
 products:
   - agents
@@ -7,13 +7,13 @@ products:
 date: 2025-08-05
 ---
 
-We’ve shipped a major release for the [@cloudflare/sandbox](https://github.com/cloudflare/sandbox) SDK, turning it into a full-featured, container-based execution platform that runs securely on Cloudflare Workers.
+We’ve shipped a major release for the [@cloudflare/sandbox](https://github.com/cloudflare/sandbox-sdk) SDK, turning it into a full-featured, container-based execution platform that runs securely on Cloudflare Workers.
 
 This update adds live streaming of output, persistent Python and JavaScript code interpreters with rich output support (charts, tables, HTML, JSON), file system access, Git operations, full background process control, and the ability to expose running services via public URLs.
 
 This makes it ideal for building AI agents, CI runners, cloud REPLs, data analysis pipelines, or full developer tools — all without managing infrastructure.
 
-### Code Interpreter (Python, JS, TS)
+### Code interpreter (Python, JS, TS)
 
 Create persistent code contexts with support for rich visual + structured outputs.
 
@@ -57,7 +57,7 @@ export default {
 		});
 ```
 
-### Real-time Streaming Output
+### Real-time streaming output
 
 Returns a streaming response for real-time processing.
 
@@ -77,7 +77,7 @@ const preview = await sandbox.exposePort(8000);
 console.log("Live preview at:", preview.url);
 ```
 
-### Full Process Lifecycle Control
+### Full process lifecycle control
 
 Start, inspect, and terminate long-running background processes.
 
@@ -99,7 +99,7 @@ for await (const log of parseSSEStream<LogEvent>(logStream)) {
 - streamProcessLogs(id, options?) - Stream logs from running processes
 - getProcessLogs(id) - Get accumulated process output
 
-### Git Integration
+### Git integration
 
 Clone Git repositories directly into the sandbox.
 
@@ -110,7 +110,7 @@ await sandbox.gitCheckout("https://github.com/user/repo", {
 });
 ```
 
-### Rich Output Handling
+### Rich output handling
 
 Interpreter outputs are auto-formatted and returned in multiple formats:
 
@@ -140,17 +140,6 @@ pivot.to_dict()
 if (result.png) {
 	console.log("Chart output:", result.png);
 }
-```
-
-### Git Integration
-
-Clone Git repositories directly into the sandbox.
-
-```ts
-await sandbox.gitCheckout("https://github.com/user/repo", {
-	branch: "main",
-	targetDir: "my-project",
-});
 ```
 
 Sandboxes are still experimental. We're using them to explore how isolated, container-like workloads might scale on Cloudflare — and to help define the developer experience around them.
