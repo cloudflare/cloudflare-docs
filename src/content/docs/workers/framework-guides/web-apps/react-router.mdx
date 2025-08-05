@@ -132,7 +132,7 @@ As you have direct access to your Worker entry file (`workers/app.ts`), you can 
 
     ```ts title="workers/app.ts"
     import { createRequestHandler } from "react-router";
-    import { WorkflowEntrypoint, WorkflowStep, type WorkflowEvent } from 'cloudflare:workers';
+    import { WorkflowEntrypoint, type WorkflowStep, type WorkflowEvent } from 'cloudflare:workers';
 
     declare global {
     	interface CloudflareEnvironment extends Env {}
