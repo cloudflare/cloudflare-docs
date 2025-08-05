@@ -8,6 +8,5 @@ product:
 meta:
   title: Cloudflare API docs
   description:
-    Cloudflare’s API tokens allow you to make calls to our API to alter
-    different settings.
+    Cloudflare's API tokens allow you to make calls to our API to alter different settings
   author: "@cloudflare"

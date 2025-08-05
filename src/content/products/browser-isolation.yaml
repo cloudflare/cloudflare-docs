@@ -6,4 +6,5 @@ product:
   url: /cloudflare-one/policies/browser-isolation/
 
 meta:
-  description: Cloudflare Browser Isolation executes active webpage content in a secure isolated browser.
+  description: Execute active webpage content in a secure, isolated browser
+  author: "@cloudflare"

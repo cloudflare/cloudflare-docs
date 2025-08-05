@@ -6,4 +6,4 @@ product:
   url: /dns/internal-dns/
 
 meta:
-  description: Use Cloudflare DNS for your internal resources.
+  description: Simplify private network management with Cloudflare DNS for internal resources

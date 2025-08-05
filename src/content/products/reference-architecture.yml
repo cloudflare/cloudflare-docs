@@ -9,5 +9,5 @@ product:
 
 meta:
   title: Cloudflare Reference Architecture docs
-  description: Review best practices and diagrams explaining how to address common Internet security and performance challenges using Cloudflare products.
+  description: Guides and diagrams explain Cloudflare products and how to integrate with IT architectures
   author: "@cloudflare"

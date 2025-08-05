@@ -8,7 +8,5 @@ product:
 
 meta:
   title: Cloudflare DDoS Protection docs
-  description: Cloudflare DDoS protection secures websites, applications, and
-    entire networks while ensuring the performance of legitimate traffic is not
-    compromised.
+  description: Protect against DDoS attacks automatically with uncompromised performance
   author: "@cloudflare"

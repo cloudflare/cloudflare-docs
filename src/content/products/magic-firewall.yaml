@@ -8,6 +8,5 @@ product:
 
 meta:
   title: Cloudflare Magic Firewall docs
-  description: Magic Firewall a network-level firewall delivered through
-    Cloudflare to secure your enterprise.
+  description: Protect your enterprise network with advanced firewall-as-a-service protection
   author: "@cloudflare"
