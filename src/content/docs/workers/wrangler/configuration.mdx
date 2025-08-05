@@ -1135,7 +1135,9 @@ new_sqlite_classes = ["MyContainer"]
 
 ### Custom Instance Types
 
+:::note
 For Enterprise customers only.
+:::
 
 In place of the [named instance types](/containers/platform-details#instance-types), you can set a custom instance type by
 individually configuring vCPU, memory, and disk.
@@ -1144,15 +1146,15 @@ The following options are available:
 
 - `vcpu` <Type text="number" /> <MetaInfo text="optional" />
 
-  - The vCPU to be used by your container. Defaults to 1/16 vCPU.
+  - The vCPU to be used by your container. Defaults to `0.0625` (1/16 vCPU).
 
 - `memory_mib` <Type text="number" /> <MetaInfo text="optional" />
 
-  - The memory to be used by your container, in MiB. Defaults to 256 MiB.
+  - The memory to be used by your container, in MiB. Defaults to `256`.
 
 - `disk_mb` <Type text="number" /> <MetaInfo text="optional" />
 
-  - The disk to be used by your container, in MB. Defaults to 2GB.
+  - The disk to be used by your container, in MB. Defaults to `2000` (2GB).
 
 <WranglerConfig>
 
