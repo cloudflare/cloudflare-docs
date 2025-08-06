@@ -11,7 +11,7 @@ This example imports an existing key pair, but you may prefer to [generate your 
 
 :::note[Note]
 
-AWS is [Deprecating](https://docs.aws.amazon.com/cloudhsm/latest/userguide/compliance-dep-notif.html) HSM1. to keep up you must [migrate](https://docs.aws.amazon.com/cloudhsm/latest/userguide/client-sdk-migration.html) from AWS CloudHSM Client SDK 5 to Client SDK 5. 
+AWS is [deprecating](https://docs.aws.amazon.com/cloudhsm/latest/userguide/compliance-dep-notif.html) HSM1. To keep up you must [migrate](https://docs.aws.amazon.com/cloudhsm/latest/userguide/client-sdk-migration.html) from AWS CloudHSM Client SDK 3 to Client SDK 5. 
 
 :::
 
@@ -23,14 +23,14 @@ Make sure you have:
 
 - Provisioned an [AWS CloudHSM cluster](https://docs.aws.amazon.com/cloudhsm/latest/userguide/getting-started.html) .
 - Installed the [appropriate software library for PKCS#11](https://docs.aws.amazon.com/cloudhsm/latest/userguide/pkcs11-library-install.html).
-- Installed (openssl version 3 or Higher)[https://openssl-library.org/source/]
-- For cloudhsm-cli - [bootstrap the cli to work with your cluster](https://docs.aws.amazon.com/cloudhsm/latest/userguide/gs_cloudhsm_cli-install.html)
+- Installed [OpenSSL version 3 or higher](https://openssl-library.org/source/)
+- For CloudHSM CLI - [bootstrap the CLI to work with your cluster](https://docs.aws.amazon.com/cloudhsm/latest/userguide/gs_cloudhsm_cli-install.html)
 ---
 
 ## 1. Import the public and private key to the HSM
 Before importing the public key, extract it from the certificate provided by your CA. Place the contents of your private key in `privkey.pem` and then run the following (replacing certificate.pem with your actual certificate) to populate `pubkey.pm`.
 
-### HSM2 With Cloudhsm-CLI
+### HSM2 with CloudHSM CLI
 Setup credentials
 ```txt
 export CLOUDHSM_ROLE="crypto-user"
@@ -89,7 +89,9 @@ cat temp_aes_wrapped.bin payload_wrapped.bin > rsa_aes_wrapped.bin
 
 Unwrap the blob into the HSM, while adding the required attributes to the unwrapped private RSA key
 
-NOTE: You need to select a hex CKA_ID which should be the same for the private and public keys (example: `0x42`)
+:::note
+You need to select a hex CKA_ID which should be the same for the private and public keys (example: `0x42`).
+:::
 ```txt
 /opt/cloudhsm/bin/cloudhsm-cli key unwrap rsa-aes \
   --data-path rsa_aes_wrapped.bin \
@@ -109,7 +111,9 @@ Clean up temp Wrapping/unwrapping keys
 
 Import the public key
 
-NOTE: Use the same CKA_ID as in the private key
+:::note 
+Use the same CKA_ID as in the private key.
+:::
 ```txt
 /opt/cloudhsm/bin/cloudhsm-cli key import pem \
       --path /root/pub.pem \
