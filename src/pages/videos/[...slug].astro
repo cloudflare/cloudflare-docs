@@ -56,14 +56,15 @@ if (entry.transcript) {
 <StarlightPage {...props}>
 	<Width size="large" center={true}>
 		<Stream id={entry.id} title={entry.title} chapters={entry.chapters} />
+			{
+				parts && (
+					<br/>
+					<Details header="Transcript">
+						{parts.map((part) => (
+							<p>{part}</p>
+						))}
+					</Details>
+				)
+			}
 	</Width>
-	{
-		parts && (
-			<Details header="Transcript">
-				{parts.map((part) => (
-					<p>{part}</p>
-				))}
-			</Details>
-		)
-	}
 </StarlightPage>
