@@ -4,6 +4,7 @@ product:
   title: Load Balancing
   url: /load-balancing/
   group: Application performance
+  additional_groups: [Cloudflare One]
   preview_tryout: true
 
 meta:
