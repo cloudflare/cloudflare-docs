@@ -11,7 +11,9 @@ Email Security allows you to exempt known partner and internal domains from typi
 
 Trusted domains are not for the email message itself, but for entire domains. 
 
-By default, Email Security automatically detects look alike domains. This means that if an email is received from a domain that looks like a configured domain, this will trigger a detection. Trusted domain is configured to ignore this detection. 
+By default, Email Security automatically detects lookalike domains. Lookalike domains can be something like this: `thisisdomain.com` and `thisisadomain.com`. Both domains almost look identical, but they in reality different.
+
+If an email is received from a domain that looks like a configured domain, this will trigger a detection. Trusted domain is configured to ignore this detection. 
 
 In [Additional detections](/cloudflare-one/email-security/detection-settings/additional-detections/), you can configure malicious domain and suspicious [domain age](/cloudflare-one/email-security/detection-settings/additional-detections/).
 
