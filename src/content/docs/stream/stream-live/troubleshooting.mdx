@@ -14,7 +14,7 @@ In addition to following the live stream troubleshooting steps in this guide, ma
 If your live stream is buffering, freezing, experiencing latency issues, or having other similar issues, try these troubleshooting steps:
 
 <Steps>
-1. Go to the [Cloudflare dashboard](https://dash.cloudflare.com) > **Stream** > **Live Inputs**. Locate the Live Input in use and click on it, then click on the **Metrics** tab.
+1. Go to the [Cloudflare dashboard](https://dash.cloudflare.com) > **Stream** > **Live Inputs** > the Live Input in use > **Metrics** tab.
 
 2. Look at your **Keyframe Interval** chart.
 
@@ -24,7 +24,7 @@ If your live stream is buffering, freezing, experiencing latency issues, or havi
 	  	* If the keyframe interval is "variable" or "automatic", change it to a specific number instead, like 4s.
 
 	<Details header="What is a keyframe interval?">
-	The keyframe interval (also called GOP size) is a measurement of how often keyframes are sent to Stream. A shorter keyframe interval requires more internet bandwidth on the broadcast side, but can reduce glass-to-glass latency. A longer keyframe can reduce buffering and freezing at the expense of increasing glass-to-glass latency, and it requires less bandwidth.
+	The keyframe interval (also called GOP size) is a measurement of how often keyframes are sent to Stream. A shorter keyframe interval requires more internet bandwidth on the broadcast side, but can reduce glass-to-glass latency. A longer keyframe requires less internet bandwidth and can reduce buffering and freezing, but can increase glass-to-glass latency.
 	</Details>
 
 3. Look at your **Upload-to-Duration Ratio** chart.
@@ -36,9 +36,9 @@ If your live stream is buffering, freezing, experiencing latency issues, or havi
 	   * If it is "variable", change it to "constant" with a specific number, like 8 Mbps.
 	   * If it is above 15 Mbps, lower it to 8 Mbps or 70% of your internet speed, whichever is lower.
 
-    * Follow the steps above (in step 2) to _increase_ the keyframe interval in the software or service you use to send the stream to Cloudflare.
+    * Follow the steps above (the keyframe interval steps) to _increase_ the keyframe interval in the software or service you use to send the stream to Cloudflare.
 
 	<Details header="What is the upload-to-duration ratio?">
-	The upload-to-duration ratio is a measurement of how long it takes to upload a part of your stream compared to how long that part would take to play. A ratio of less than 100% means that your stream is uploading at least as fast as it would take to play, so it should not experience buffering or freezing for most users. A ratio of 100% or more means that your video is uploading slower than it would take to play, so it is likely that most users will experience buffering and freezing.
+	The upload-to-duration ratio is a measurement of how long it takes to upload a part of the stream compared to how long that part would take to play. A ratio of less than 100% means that the stream is uploading at least as fast as it would take to play, so most users should not experience buffering or freezing. A ratio of 100% or more means that your video is uploading slower than it would take to play, so it is likely that most users will experience buffering and freezing.
 	</Details>
 </Steps>
