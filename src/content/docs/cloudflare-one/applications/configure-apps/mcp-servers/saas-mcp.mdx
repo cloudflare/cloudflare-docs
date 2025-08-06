@@ -6,7 +6,7 @@ sidebar:
   label: Secure MCP servers with Access for SaaS
 ---
 
-import { Render, GlossaryTooltip } from "~/components"
+import { Render, GlossaryTooltip, Tabs, TabItem, APIRequest } from "~/components"
 
 You can secure <GlossaryTooltip term="MCP server">Model Context Protocol (MCP) servers</GlossaryTooltip> by using Cloudflare Access as an OAuth Single Sign-On (SSO) provider.
 
@@ -77,6 +77,9 @@ The Worker will be deployed to your `*.workers.dev` subdomain at `mcp-server-cf-
 
 ## 2. Create an Access for SaaS app
 
+<Tabs syncKey="dashPlusAPI">
+<TabItem label="Dashboard">
+
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
 2. Select **SaaS**.
 3. In **Application**, enter a custom name (for example, `MCP server`) and select the textbox that appears below.
@@ -96,6 +99,43 @@ The Worker will be deployed to your `*.workers.dev` subdomain at `mcp-server-cf-
 8. (Optional) Under **Advanced settings**, turn on [**Refresh tokens**](/cloudflare-one/applications/configure-apps/saas-apps/generic-oidc-saas/#advanced-settings) if you want to reduce the number of times a user needs to log in to the identity provider.
 9. Configure [Access policies](/cloudflare-one/policies/access/) to define the users who can access the MCP server.
 10. Save the application.
+
+</TabItem>
+<TabItem label="API">
+
+1. Make a `POST` request to the [Access applications](/api/resources/zero_trust/subresources/access/subresources/applications/methods/create/) endpoint:
+
+	<APIRequest
+		path="/accounts/{account_id}/access/apps"
+		method="POST"
+		json={{
+			name: "MCP server",
+			type: "saas",
+			saas_app: {
+				auth_type: "oidc",
+				redirect_uris: [
+					"https://mcp-server-cf-access.<YOUR_SUBDOMAIN>.workers.dev/callback"
+				],
+				grant_type: [
+					"authorization_code",
+					"refresh_tokens"
+				],
+				refresh_token_options: {
+					lifetime: "90d"
+				}
+			},
+			policies: [
+				"f174e90a-fafe-4643-bbbc-4a0ed4fc8415"
+			],
+			allowed_idps: []
+		}}
+	/>
+
+2. Copy the `client_id` and `client_secret` returned in the response.
+3. To determine the OAuth endpoint URLs for the SaaS application, refer to the [generic OIDC documentation](/cloudflare-one/applications/configure-apps/saas-apps/generic-oidc-saas/#2-add-your-application-to-access).
+
+</TabItem>
+</Tabs>
 
 ## 3. Configure your MCP server
 
