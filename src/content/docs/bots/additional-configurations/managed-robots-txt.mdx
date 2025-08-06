@@ -10,8 +10,6 @@ import { Render, Tabs, TabItem, Steps } from "~/components";
 
 Protect your website or application from AI crawlers by implementing a `robots.txt` file on your domain to direct AI bot operators on what content they can and cannot scrape for AI model training.
 
-Cloudflare's managed `robots.txt` explicitly disallows known bots engaged in scraping for AI purposes.
-
 AI bots are expected to follow the `robots.txt` directives.
 
 :::note
@@ -38,6 +36,18 @@ Sitemap: https://www.crawlstop.com/sitemap.xml
 ```
 
 With the managed `robots.txt` enabled, Cloudflare will prepend our managed content before your original content, resulting in what you can view at https://crawlstop.com/robots.txt.
+
+**Robots.txt example**
+<div style="position: relative; padding-top: 56.25%; border: 1px solid orange; border-radius: 5px">
+<iframe
+	src="https://crawlstop.com/robots.txt"
+	style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
+	allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+	allowfullscreen="true"
+	title="crawltop.com robots.txt file"
+	>
+</iframe>
+</div>
 
 ### No robots.txt file
 
