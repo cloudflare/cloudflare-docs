@@ -111,6 +111,8 @@ This policy will allow requests if they present a valid OAuth access token that 
 
 ## 4. Update the self-hosted application
 
+You can add the `linked_app_token` policy to any `self_hosted` application in your Zero Trust account. Other app types (such as `saas`) are [not currently supported](#known-limitations).
+
 1. Get your existing self-hosted application configuration:
 
 	<APIRequest
@@ -118,7 +120,7 @@ This policy will allow requests if they present a valid OAuth access token that 
 		method="GET"
 	/>
 
-2. Add the new Access policy to the self-hosted application. To avoid overwriting your existing configuration, the `PUT` request body should contain all fields returned by the previous `GET` request.
+2. Add the Access policy to the self-hosted application. To avoid overwriting your existing configuration, the `PUT` request body should contain all fields returned by the previous `GET` request.
 
 	<APIRequest
 		path="/accounts/{account_id}/access/apps/{app_id}"
@@ -147,3 +149,4 @@ The end-to-end authorization flow is as follows:
 
 ## Known limitations
 
+The MCP OAuth feature only works with self-hosted applications that rely on the [Cloudflare Access JWT](/cloudflare-one/identity/authorization-cookie/validating-json/) to authenticate and identify the user. If the application implements its own layer of authentication after Cloudflare Access, then this feature is at best a partial solution. Requests that are successfully authenticated by Access may still be blocked by the application itself, resulting in a 401 or 403 error.
