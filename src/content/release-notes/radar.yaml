@@ -5,7 +5,7 @@ productLink: "/radar/"
 productArea: Developer platform
 productAreaLink: /workers/platform/changelog/platform/
 entries:
-  - publish_date: "2025-08-04"
+  - publish_date: "2025-08-06"
     title: Add Certificate Transparency (CT) endpoints
     description: |-
       * Added [CT endpoints](/api/resources/radar/subresources/ct/).
