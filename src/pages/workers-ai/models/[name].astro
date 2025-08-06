@@ -122,7 +122,13 @@ const isBeta = model.properties.find(
 	({ property_id, value }) => property_id === "beta" && value === "true",
 );
 
-const hasPlayground = model.task.name === "Text Generation";
+let hasPlayground = model.task.name === "Text Generation";
+
+// temporary workaround for playground limitations
+if (model.name.includes("@cf/openai/gpt-oss") ) {
+	hasPlayground = false;
+}
+
 
 const author = (authorData as any)[model.name.split("/")[1]];
 
