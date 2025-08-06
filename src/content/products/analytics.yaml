@@ -9,4 +9,4 @@ product:
 meta:
   title: Cloudflare Analytics docs
   description: Visualize the performance, security and reliability data collected by our products
-   author: "@cloudflare"
+  author: "@cloudflare"
