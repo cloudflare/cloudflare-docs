@@ -11,7 +11,7 @@ description: Create a Vike application and deploy it to Cloudflare Workers with 
 import { Steps, PackageManagers } from "~/components";
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 
-You can use Vike with the [`vike-cloudflare`](https://www.npmjs.com/package/vike-cloudflare) extension for a zero-config Cloudflare deployment of your [SSR](https://vike.dev/ssr) or [pre-rendered (aka SSG)](https://vike.dev/pre-rendering) app.
+You can use Vike with the [`vike-cloudflare`](https://www.npmjs.com/package/vike-cloudflare) extension for a zero-config Cloudflare deployment of your SSR or pre-rendered (aka SSG) app.
 
 
 ## What is Vike?
@@ -26,49 +26,15 @@ Go to [vike.dev/new](https://vike.dev/new) and select `Cloudflare` to scaffold a
 
 ## Add to existing app
 
-### Without a server
+See:
+ - [With server](#with-server) if you use [SSR](https://vike.dev/ssr) (it requires a server).
+ - [Without server](#without-server) if you [pre-render](https://vike.dev/pre-rendering) all your pages (you don't need a server then).
 
-If you [pre-render](https://vike.dev/pre-rendering) all your pages then you don't need a server — simply add `vike-cloudflare` like this:
-
-<Steps>
-
-1.  <PackageManagers
-    	pkg="vike-cloudflare wrangler cross-env"
-    	dev
-    />
-
-2.  ```diff lang=ts title="pages/+config.ts"
-      import type { Config } from 'vike/types'
-    + import vikeCloudflare from 'vike-cloudflare/config'
-
-      export default {
-        prerender: true,
-    +   extends: [vikeCloudflare]
-      } satisfies Config
-    ```
-
-3.  ```diff lang=json title="package.json"
-      {
-        "scripts": {
-          "dev": "vike dev",
-    +     "preview": "vike build && cross-env NODE_ENV=production wrangler pages dev",
-    +     "deploy": "vike build && cross-env NODE_ENV=production wrangler pages deploy"
-        }
-      }
-    ```
-
-</Steps>
-
-### With a server
-
-If you use [SSR](https://vike.dev/ssr), you must have a server — add `vike-cloudflare` like this:
+### With server
 
 <Steps>
 
-1.  <PackageManagers
-      pkg="vike-cloudflare wrangler cross-env"
-      dev
-    />
+1.  <PackageManagers pkg="vike-cloudflare wrangler cross-env" />
 
 2.  ```diff lang=ts title="pages/+config.ts"
       import type { Config } from 'vike/types'
@@ -76,9 +42,7 @@ If you use [SSR](https://vike.dev/ssr), you must have a server — add `vike-clo
 
       export default {
     +   extends: [vikeCloudflare],
-    +   server: {
-    +     entry: 'server/index.ts'
-    +   }
+    +   server: 'server/index.ts'
       } satisfies Config
     ```
 
@@ -99,8 +63,10 @@ If you use [SSR](https://vike.dev/ssr), you must have a server — add `vike-clo
       + export default startServer()
       ```
 
+      > If you haven't already, set up a [Hono](https://hono.dev) server and install the `hono` package.
+
       </TabItem>
-      <TabItem label="HatTip">
+      <TabItem label="Hattip">
 
       ```diff lang=ts title="server/index.ts"
         import { createRouter } from '@hattip/router'
@@ -116,10 +82,12 @@ If you use [SSR](https://vike.dev/ssr), you must have a server — add `vike-clo
       + export default startServer()
       ```
 
+      > If you haven't already, set up a [Hattip](https://github.com/hattipjs/hattip) server and install the `@hattip/router` package.
+
       </TabItem>
     </Tabs>
 
-    > `vike-cloudflare` currently supports [Hono](https://hono.dev) and [HatTip](https://github.com/hattipjs/hattip) — more servers are coming soon.
+    > `vike-cloudflare` currently only supports Hono and Hattip — more servers are coming soon.
 
 4.  ```diff lang=json title="package.json"
       {
@@ -130,8 +98,66 @@ If you use [SSR](https://vike.dev/ssr), you must have a server — add `vike-clo
         }
       }
     ```
+    ```diff lang=jsonc title="wrangler.jsonc"
+    + {
+    +   "$schema": "node_modules/wrangler/config-schema.json",
+    +   "compatibility_date": "2025-08-06",
+    +   "name": "my-vike-cloudflare-app",
+    +   "pages_build_output_dir": "./dist/cloudflare",
+    +   // Only needed if your app (or one of your libraries) uses Node.js APIs
+    +   "compatibility_flags": ["nodejs_compat"]
+    + }
+    ```
+
+5.  ```diff lang=bash title=".gitignore"
+    + .wrangler/
+    ```
 
 </Steps>
+
+### Without server
+
+<Steps>
+
+1.  <PackageManagers pkg="vike-cloudflare wrangler cross-env"/>
+
+2.  ```diff lang=ts title="pages/+config.ts"
+      import type { Config } from 'vike/types'
+    + import vikeCloudflare from 'vike-cloudflare/config'
+
+      export default {
+        prerender: true,
+    +   extends: [vikeCloudflare]
+      } satisfies Config
+    ```
+
+3.  ```diff lang=json title="package.json"
+      {
+        "scripts": {
+          "dev": "vike dev",
+    +     "preview": "vike build && cross-env NODE_ENV=production wrangler pages dev",
+    +     "deploy": "vike build && cross-env NODE_ENV=production wrangler pages deploy"
+        }
+      }
+    ```
+    ```diff lang=jsonc title="wrangler.jsonc"
+    + {
+    +   "$schema": "node_modules/wrangler/config-schema.json",
+    +   "compatibility_date": "2025-08-06",
+    +   "name": "my-vike-cloudflare-app",
+    +   "pages_build_output_dir": "./dist/cloudflare",
+    +   "assets": {
+    +     "directory": "./dist/cloudflare"
+    +   }
+    + }
+    ```
+
+4.  ```diff lang=bash title=".gitignore"
+    + .wrangler/
+    ```
+
+</Steps>
+
 
 ## Cloudflare APIs (bindings)
 
