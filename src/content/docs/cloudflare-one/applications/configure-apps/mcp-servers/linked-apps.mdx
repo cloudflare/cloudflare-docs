@@ -132,6 +132,18 @@ This policy will allow requests if they present a valid OAuth access token that 
 
 ## 5. Configure the MCP server
 
+With the policy in place, every API request to the self-hosted application must now include a valid `access_token` from Cloudflare Access. You will need to configure the MCP server to forward the `access_token` in an HTTP request header:
+
+```txt
+Authorization: Bearer ACCESS_TOKEN
+```
+
+The end-to-end authorization flow is as follows:
+1. The MCP server authenticates against the Access for SaaS app via OAuth.
+2. Upon success, the MCP server receives an `access_token`.
+3. The MCP server makes an API request to the self-hosted application with the token in the request headers.
+4. Cloudflare Access intercepts the request to the self-hosted app, inspects the token, and validates it against the `linked_app_token` rule in the policy.
+5. If the token is valid and was issued for the linked SaaS app, the request is allowed. Otherwise, it is blocked.
 
 ## Known limitations
 
