@@ -62,9 +62,9 @@ let request = new Request(input, options)
 
 An object containing properties that you want to apply to the request.
 
-* `cache` `undefined | 'no-store'` optional
+* `cache` `undefined | 'no-store' | 'no-cache'` optional
 
-	* Standard HTTP `cache` header. Only `cache: 'no-store'` is supported.
+	* Standard HTTP `cache` header. Only `cache: 'no-store'` and `cache: 'no-cache'` are supported.
 	Any other cache header will result in a `TypeError` with the message `Unsupported cache mode: <attempted-cache-mode>`.
 
 * `cf` RequestInitCfProperties optional
