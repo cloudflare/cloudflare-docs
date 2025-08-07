@@ -10,21 +10,21 @@ import { Render, GlossaryTooltip, APIRequest } from "~/components"
 
 Cloudflare Access can delegate access from any [self-hosted application](/cloudflare-one/applications/configure-apps/self-hosted-public-app/) to an [Access for SaaS MCP server](/cloudflare-one/applications/configure-apps/mcp-servers/saas-mcp/) via [OAuth](https://modelcontextprotocol.io/specification/2025-03-26/basic/authorization). The OAuth access token authorizes the MCP server to make requests to your self-hosted applications on behalf of the user, using the user's specific permissions and scopes.
 
-For example, your organization may wish to deploy an MCP server that helps employees interact with internal Atlassian applications. You can configure [Access policies](/cloudflare-one/policies/access/#selectors) to ensure that only authorized users can access those applications, either directly or by using an <GlossaryTooltip term="MCP client">MCP client</GlossaryTooltip>.
+For example, your organization may wish to deploy an MCP server that helps employees interact with internal applications. You can configure [Access policies](/cloudflare-one/policies/access/#selectors) to ensure that only authorized users can access those applications, either directly or by using an <GlossaryTooltip term="MCP client">MCP client</GlossaryTooltip>.
 
 ```mermaid
 flowchart LR
 accTitle: Link MCP servers and self-hosted applications in Access
     subgraph SaaS["Access for SaaS <br> OIDC app"]
-        mcp["MCP server <br> for Atlassian"]
+        mcp["MCP server <br> for internal apps"]
     end
 
     subgraph "Access self-hosted app"
-        app1[Jira instance]
+        app1[Admin dashboard]
     end
 
     subgraph "Access self-hosted app"
-        app2[Confluence instance]
+        app2[Company wiki]
     end
 
 		User --> client["MCP client"]
