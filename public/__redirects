@@ -38,6 +38,13 @@
 /waf/change-log/index.xml /changelog/rss/waf.xml 301
 /waf/change-log/general-updates/index.xml /changelog/rss/waf.xml 301
 
+## area changelog feeds
+
+/fundamentals/reference/changelog/performance/index.xml /changelog/rss/application-performance.xml 301
+/fundamentals/reference/changelog/platform/index.xml /changelog/rss/core-platform.xml 301
+/fundamentals/reference/changelog/security/index.xml /changelog/rss/application-security.xml 301
+/workers/platform/changelog/platform/index.xml /changelog/rss/developer-platform.xml 301
+
 ## legacy
 /release-notes/index.xml /changelog/rss/index.xml 301
 /release-notes/ /changelog/ 301
