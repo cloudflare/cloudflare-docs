@@ -2,7 +2,6 @@
 link: "/bots/changelog/"
 productName: Bots
 productLink: "/bots/"
-productArea: Application security
 entries:
   - publish_date: "2025-07-02"
     title: Managed robots.txt will prepend existing files

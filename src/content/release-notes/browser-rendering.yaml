@@ -2,7 +2,6 @@
 link: "/browser-rendering/changelog/"
 productName: Browser Rendering
 productLink: "/browser-rendering/"
-productArea: Developer platform
 entries:
   - publish_date: "2025-07-29"
     title: Updates to Playwright, local dev support, and REST API

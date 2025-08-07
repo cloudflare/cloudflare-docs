@@ -28,9 +28,6 @@ export async function getReleaseNotes(opts?: {
 	const products = [
 		...new Set(releaseNotes.flatMap((x) => x.data.productName)),
 	];
-	const productAreas = [
-		...new Set(releaseNotes.flatMap((x) => x.data.productArea)),
-	];
 
 	const mapped = releaseNotes.flatMap((product) => {
 		return product.data.entries.map((entry) => {
@@ -42,8 +39,6 @@ export async function getReleaseNotes(opts?: {
 				title: entry.title,
 				scheduled: entry.scheduled,
 				productLink: product.data.productLink,
-				productAreaName: product.data.productArea,
-				productAreaLink: product.data.productAreaLink,
 				individual_page: entry.individual_page && entry.link,
 			};
 		});
@@ -52,5 +47,5 @@ export async function getReleaseNotes(opts?: {
 	const grouped = Object.entries(Object.groupBy(mapped, (entry) => entry.date));
 	const entries = grouped.sort().reverse();
 
-	return { products, productAreas, releaseNotes: entries };
+	return { products, releaseNotes: entries };
 }

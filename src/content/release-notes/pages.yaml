@@ -2,7 +2,6 @@
 link: "/pages/platform/changelog/"
 productName: Pages
 productLink: "/pages/"
-productArea: Developer platform
 entries:
   - publish_date: "2025-04-18"
     title: Action recommended - Node.js 18 end-of-life and impact on Pages Build System V2

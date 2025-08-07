@@ -2,7 +2,6 @@
 link: "/workflows/reference/changelog/"
 productName: Workflows
 productLink: "/workflows/"
-productArea: Developer platform
 entries:
   - publish_date: "2025-05-07"
     title: "Search for specific Workflows"

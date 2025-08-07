@@ -2,7 +2,6 @@
 link: "/autorag/platform/release-note/"
 productName: AutoRAG
 productLink: "/autorag/"
-productArea: Developer platform
 entries:
   - publish_date: "2025-07-16"
     title: Deleted files now removed from index on next sync

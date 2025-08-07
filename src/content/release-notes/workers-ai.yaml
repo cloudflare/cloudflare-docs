@@ -2,7 +2,6 @@
 link: "/workers-ai/changelog/"
 productName: Workers AI
 productLink: "/workers-ai/"
-productArea: Developer platform
 entries:
   - publish_date: "2025-04-09"
     title: Pricing correction for @cf/myshell-ai/melotts

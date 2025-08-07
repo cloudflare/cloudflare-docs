@@ -2,7 +2,6 @@
 link: "/security-center/changelog/"
 productName: Security Center
 productLink: "/security-center/"
-productArea: Application security
 entries:
   - publish_date: "2025-02-03"
     description: |-

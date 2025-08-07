@@ -2,7 +2,6 @@
 link: "/queues/platform/changelog/"
 productName: Queues
 productLink: "/queues/"
-productArea: Developer platform
 entries:
   - publish_date: "2025-04-17"
     title: Improved limits for pull consumers

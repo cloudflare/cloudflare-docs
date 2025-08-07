@@ -2,7 +2,6 @@
 link: "/stream/changelog/"
 productName: Stream
 productLink: "/stream/"
-productArea: Developer platform
 entries:
   - publish_date: "2025-03-12"
     title: Stream Live WebRTC WHIP/WHEP Upgrades
