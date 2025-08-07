@@ -2,7 +2,6 @@ import { getCollection } from "astro:content";
 
 export async function getReleaseNotes(opts?: {
 	filter?: Parameters<typeof getCollection<"release-notes">>[1];
-	wranglerOnly?: boolean;
 	deprecationsOnly?: boolean;
 }) {
 	let releaseNotes;
