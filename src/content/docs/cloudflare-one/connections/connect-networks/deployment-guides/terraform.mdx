@@ -138,7 +138,7 @@ The following configuration will modify settings in your Cloudflare account.
 		resource "cloudflare_zero_trust_tunnel_cloudflared" "gcp_tunnel" {
 			account_id    = var.cloudflare_account_id
 			name          = "Terraform GCP tunnel"
-			config_src = "cloudflare"
+			config_src    = "cloudflare"
 		}
 
 		# Reads the token used to run the tunnel on the server.
