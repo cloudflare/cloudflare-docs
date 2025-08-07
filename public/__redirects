@@ -1248,6 +1248,8 @@
 /security-center/indicator-feeds/get-started/ /security-center/indicator-feeds/ 301
 
 # spectrum
+/spectrum/changelog/ /spectrum/ 301
+/spectrum/changelog/index.xml /changelog/rss/index.xml 301
 /spectrum/getting-started/ /spectrum/get-started/ 301
 /spectrum/getting-started/byoip/ /spectrum/about/byoip/ 301
 /spectrum/getting-started/getting-started/ /spectrum/get-started/ 301
