@@ -211,3 +211,32 @@ declare global {
 > 	args="--react --hono --drizzle --cloudflare"
 > />
 > Or go to [vike.dev/new](https://vike.dev/new) and select `Cloudflare` with an ORM.
+
+
+## TypeScript
+
+If you use TypeScript, (re-)run [`wrangler types`](https://developers.cloudflare.com/workers/wrangler/commands/#types) after changing your Cloudflare configuration to generate/update the `worker-configuration.d.ts` file.
+
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="types"
+/>
+
+Then commit it:
+
+```bash
+git commit -am "update cloudflare types"
+```
+
+Make sure TypeScript loads it:
+
+```diff lang=json title="tsconfig.json"
+  {
+    "compilerOptions": {
++     "types": ["./worker-configuration.d.ts"],
+   }
+  }
+```
+
+See also: [Cloudflare Workers > TypeScript](https://developers.cloudflare.com/workers/languages/typescript/)
