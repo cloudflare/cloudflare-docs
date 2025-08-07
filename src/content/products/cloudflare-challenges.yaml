@@ -10,5 +10,5 @@ product:
 
 meta:
   title: Cloudflare challenges docs
-  description: Verify visitors aren't bots with lightweight challenges
+  description: Verify visitors are not bots with lightweight challenges
   author: "@cloudflare"
