@@ -1615,6 +1615,8 @@
 
 # waiting-room
 /waiting-room/how-to/mobile-traffic/ /waiting-room/how-to/json-response/ 301
+/waiting-room/changelog/ /waiting-room/ 301
+/waiting-room/changelog/index.xml /changelog/rss/index.xml 301
 
 # warp-client
 /warp-client/get-started/macOS/ /warp-client/get-started/macos/ 301
