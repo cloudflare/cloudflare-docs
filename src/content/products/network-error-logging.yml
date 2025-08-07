@@ -10,6 +10,6 @@ product:
 
 meta:
   title: Cloudflare Network Error Logging docs
-  description: Review connectivity issues to learn when and where an incident is happening and impact
+  description: Review connectivity issues to learn when and where an incident is happening and its impact
   author: "@cloudflare"
   image: data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQEAYAAABPYyMiAAAABmJLR0T///////8JWPfcAAAACXBIWXMAAABIAAAASABGyWs+AAAAF0lEQVRIx2NgGAWjYBSMglEwCkbBSAcACBAAAeaR9cIAAAAASUVORK5CYII=
