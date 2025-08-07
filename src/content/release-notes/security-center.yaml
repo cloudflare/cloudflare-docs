@@ -3,7 +3,6 @@ link: "/security-center/changelog/"
 productName: Security Center
 productLink: "/security-center/"
 productArea: Application security
-productAreaLink: /fundamentals/reference/changelog/security/
 entries:
   - publish_date: "2025-02-03"
     description: |-
