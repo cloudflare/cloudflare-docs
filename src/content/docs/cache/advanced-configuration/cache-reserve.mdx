@@ -11,7 +11,7 @@ Cache Reserve is a large, persistent data store [implemented on top of R2](/r2/)
 
 How long content in Cache Reserve will be considered “fresh” is determined by Edge Cache TTL setting or Cache-Control headers at your origin, if [Edge Cache TTL](/cache/how-to/edge-browser-cache-ttl/#edge-cache-ttl) is not set. After freshness expires, Cloudflare will attempt to revalidate the asset when a subsequent request arrives in Cache Reserve for the asset. This is the same behavior as in Cloudflare's regular CDN.
 
-The retention period of an asset is how long we will keep the asset in Cache Reserve before marking it for eviction. If an asset is not requested within the retention period, it will be evicted from Cache Reserve. Accessing the asset will extend the retention period by one period. By default, the Cache Reserve retention period is 30 days.
+The retention period of an asset is how long we will keep the asset in Cache Reserve before marking it for eviction. Cache Reserve starts with a retention period of 30 days. If an asset is not requested within the retention period, it will be evicted from Cache Reserve. Accessing the asset will refresh the retention period.
 
 Assets must [meet certain criteria](#cache-reserve-asset-eligibility) to use Cache Reserve.
 
