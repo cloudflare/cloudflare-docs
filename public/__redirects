@@ -1521,6 +1521,10 @@
 # time-services_redirects
 /time-services/nts/usage/ /time-services/nts/ 301
 
+# tenant
+/tenant/changelog/ /tenant/ 301
+/tenant/changelog/index.xml /changelog/rss/index.xml 301
+
 # turnstile
 /turnstile/get-started/domain-management/ /turnstile/reference/domain-management/ 301
 /turnstile/get-started/migrating-from-recaptcha/ /turnstile/migration/recaptcha/ 301
