@@ -9,5 +9,5 @@ product:
 
 meta:
   title: Cloudflare Aegis docs
-  description: Lock down origin security with dedicated IPs 
+  description: Lock down origin security with dedicated IPs
   author: "@cloudflare"
