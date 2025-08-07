@@ -7,13 +7,13 @@ head: []
 description: Configuring environment variables and secrets for local development
 ---
 
-import { Aside, PackageManagers, Steps } from "~/components";
+import { PackageManagers, Steps } from "~/components";
 
 During local development, you may need to configure **environment variables** (such as API URLs, feature flags) and **secrets** (API tokens, private keys). You can use a `.dev.vars` file in the root of your project to override environment variables for local development, and both [Wrangler](/workers/configuration/environment-variables/#compare-secrets-and-environment-variables) and the [Vite plugin](/workers/vite-plugin/reference/secrets/) will respect this override.
 
-<Aside type="caution">
-	Be sure to add `.dev.vars` to your `.gitignore` so it never gets committed.
-</Aside>
+:::caution
+Be sure to add `.dev.vars` to your `.gitignore` so it never gets committed.
+:::
 
 ### Why use a `.dev.vars` file?
 

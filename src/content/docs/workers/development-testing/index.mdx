@@ -13,7 +13,6 @@ import {
 	Render,
 	PackageManagers,
 	WranglerConfig,
-	Aside,
 	InlineBadge,
 	CardGrid,
 	Card,
@@ -266,13 +265,11 @@ To connect to a high-fidelity version of the Images API, and verify that all tra
 
 </WranglerConfig>
 
-<Aside type="note">
-
+:::note
 If `experimental_remote: true` is not specified for Browser Rendering, Vectorize, mTLS, or Images, Cloudflare **will issue a warning**. This prompts you to consider enabling it for a more production-like testing experience.
 
 If a Workers AI binding has `experimental_remote` set to `false`, Cloudflare will **produce an error**. If the property is omitted, Cloudflare will connect to the remote resource and issue a warning to add the property to configuration.
-
-</Aside>
+:::
 
 #### [Dispatch Namespaces](/cloudflare-for-platforms/workers-for-platforms/get-started/developing-with-wrangler/):
 
@@ -319,11 +316,9 @@ If `experimental_remote: true` is specified in Wrangler configuration for any of
 - [**Hyperdrive**](/workers/wrangler/configuration/#hyperdrive): This is being actively worked on, but is currently unsupported.
 - [**Rate Limiting**](/workers/runtime-apis/bindings/rate-limit/#configuration): Local development sessions typically should not share or affect rate limits of your deployed Workers. Rate limiting logic should be tested against local simulations.
 
-<Aside type="tip">
-
+:::note
 If you have use-cases for connecting to any of the remote resources above, please [open a feature request](https://github.com/cloudflare/workers-sdk/issues) in our [`workers-sdk` repository](https://github.com/cloudflare/workers-sdk).
-
-</Aside>
+:::
 
 ### Important Considerations
 
@@ -361,11 +356,9 @@ are however not directly compatible with `experimental_startRemoteProxySession`.
 pass them to `experimental_startRemoteProxySession`, so for this wrangler exposes `unstable_convertConfigBindingsToStartWorkerBindings` which is a simple utility to convert
 the bindings in an `Unstable_Config` object into a structure that can be passed to `experimental_startRemoteProxySession`.
 
-<Aside type="note">
-	This type conversion is temporary. In the future, the types will be unified so
-	you can pass the config object directly to
-	`experimental_startRemoteProxySession`.
-</Aside>
+:::note
+This type conversion is temporary. In the future, the types will be unified so you can pass the config object directly to `experimental_startRemoteProxySession`.
+:::
 
 #### `experimental_maybeStartOrUpdateRemoteProxySession`
 
