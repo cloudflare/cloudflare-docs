@@ -9,7 +9,7 @@ product:
 
 meta:
   title: Cloudflare Pub/Sub docs
-  description: Connect any MQTT-capable device directly to Cloudflare's edge
+  description: Connect any MQTT-capable device directly to Cloudflare's global network
   author: "@cloudflare"
 
 resources:
