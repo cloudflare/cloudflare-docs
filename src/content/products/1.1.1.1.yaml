@@ -8,7 +8,7 @@ product:
 
 meta:
   title: Cloudflare 1.1.1.1 docs
-  description: A blazing fast DNS resolver built for private browsing.
+  description: A blazing fast DNS resolver built for private browsing
   author: "@cloudflare"
 
 resources:

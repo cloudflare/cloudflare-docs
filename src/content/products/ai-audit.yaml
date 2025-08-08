@@ -5,6 +5,6 @@ product:
   group: Core platform
   additional_groups: [AI]
 meta:
-  title: AI Audit
+  title: Cloudflare AI Audit docs
   description: Analyze and control third-party AI crawlers in your website
   author: "@cloudflare"

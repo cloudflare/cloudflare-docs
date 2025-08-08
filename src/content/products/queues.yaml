@@ -8,5 +8,5 @@ product:
 
 meta:
   title: Cloudflare Queues docs
-  description: Reliably send and receive messages without the egress fees.
+  description: Reliably send and receive messages without the egress fees
   author: "@cloudflare"

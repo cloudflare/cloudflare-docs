@@ -90,3 +90,7 @@ If you are hitting concurrency limits, or would like to better manage concurrent
 - [Reuse sessions](/browser-rendering/workers-bindings/reuse-sessions/): You can optimize your setup and decrease startup time by reusing sessions instead of launching a new browser every time. If you are concerned about maintaining test isolation, for example for tests that depend on a clean environment, we recommend using [incognito browser contexts](https://pptr.dev/api/puppeteer.browser.createbrowsercontext), which isolate cookies and cache with other sessions. 
 
 If you are still running into concurrency limits you can [request a higher limit](https://forms.gle/CdueDKvb26mTaepa9). 
+
+### Is there a limit to how many requests a single browser session can handle?
+
+No, there is not a fixed limit on the number of requests per browser session. A single browser can handle multiple requests as long as it stays within the available compute and memory limits.

@@ -2,8 +2,6 @@
 link: "/ai-gateway/changelog/"
 productName: AI Gateway
 productLink: "/ai-gateway/"
-productArea: Developer platform
-productAreaLink: /workers/platform/changelog/platform/
 entries:
   - publish_date: "2025-06-18"
     title: New GA providers

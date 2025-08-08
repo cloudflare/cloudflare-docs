@@ -9,6 +9,5 @@ product:
 
 meta:
   title: Cloudflare Fundamentals docs
-  description: Cloudflare Fundamentals provides information about features that
-    span Cloudflare products.
+  description: Learn about using Cloudflare and features that span across Cloudflare products
   author: "@cloudflare"

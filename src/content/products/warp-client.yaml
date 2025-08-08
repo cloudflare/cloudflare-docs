@@ -8,6 +8,5 @@ product:
 
 meta:
   title: Cloudflare WARP client docs
-  description: The Cloudflare WARP client allows individuals or organizations to
-    have a faster, more secure and private experience online.
+  description: Allows individuals or organizations to have a faster, more secure, and private experience online
   author: "@cloudflare"

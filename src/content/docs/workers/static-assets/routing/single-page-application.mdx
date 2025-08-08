@@ -6,7 +6,7 @@ sidebar:
   order: 2
 ---
 
-import { WranglerConfig, Aside, TypeScriptExample, Render } from "~/components";
+import { WranglerConfig, TypeScriptExample, Render } from "~/components";
 
 Single Page Applications (SPAs) are web applications which are client-side rendered (CSR). They are often built with a framework such as [React](/workers/framework-guides/web-apps/react/), [Vue](/workers/framework-guides/web-apps/vue/) or [Svelte](/workers/framework-guides/web-apps/svelte/). The build process of these frameworks will produce a single `/index.html` file and accompanying client-side resources (e.g. JavaScript bundles, CSS stylesheets, images, fonts, etc.). Typically, data is fetched by the client from an API with client-side requests.
 
@@ -39,12 +39,11 @@ Configuring `assets.not_found_handling` to `single-page-application` overrides t
 
 For more explicit control over SPA routing behavior, you can use `run_worker_first` with an array of route patterns. This approach disables the automatic `Sec-Fetch-Mode: navigate` detection and gives you explicit control over which requests should be handled by your Worker script vs served as static assets.
 
-<Aside type="note">
-	Advanced routing control is supported in:
-    - [Wrangler](/workers/wrangler/install-and-update/) v4.20.0 and above
-    - [Cloudflare Vite plugin](/workers/vite-plugin/get-started/) v1.7.0 and above
-
-</Aside>
+:::note
+Advanced routing control is supported in:
+- [Wrangler](/workers/wrangler/install-and-update/) v4.20.0 and above
+- [Cloudflare Vite plugin](/workers/vite-plugin/get-started/) v1.7.0 and above
+:::
 
 <WranglerConfig>
 
