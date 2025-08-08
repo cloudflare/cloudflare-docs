@@ -6,6 +6,7 @@ product:
   url: /fundamentals/
   wrap: true
   group: Core platform
+  additional_groups: [Docs collections]
 
 meta:
   title: Cloudflare Fundamentals docs

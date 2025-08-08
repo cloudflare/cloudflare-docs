@@ -8,5 +8,5 @@ product:
 
 meta:
   title: Cloudflare Automatic Platform Optimization docs
-  description: Improve performance by serving your WordPress site from Cloudflare's global network
+  description: Improve WordPress site performance by serving it from Cloudflare's global network
   author: "@cloudflare"

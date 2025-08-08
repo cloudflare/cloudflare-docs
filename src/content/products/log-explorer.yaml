@@ -5,6 +5,7 @@ product:
   title: Log Explorer
   url: /log-explorer/
   group: Core platform
+  additional_groups: [Analytics]
 
 meta:
   title: Cloudflare Log Explorer docs

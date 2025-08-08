@@ -6,6 +6,7 @@ product:
   url: /reference-architecture/
   wrap: true
   group: Core platform
+  additional_groups: [Docs collections]
 
 meta:
   title: Cloudflare Reference Architecture docs

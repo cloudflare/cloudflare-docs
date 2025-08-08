@@ -5,6 +5,7 @@ product:
   title: Radar
   url: /radar/
   group: Consumer services
+  additional_groups: [Analytics]
 
 meta:
   title: Cloudflare Radar docs

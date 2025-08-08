@@ -4,13 +4,12 @@ logo: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M5.87
 product:
   title: Data Localization Suite
   url: /data-localization/
-  group: Core platform
+  group: Cloudflare One
   additional_groups:
     [
       Analytics,
       Application performance,
       Application security,
-      Cloudflare One,
       Developer platform,
       Network security,
       Storage,

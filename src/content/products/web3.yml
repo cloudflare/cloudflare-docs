@@ -10,5 +10,5 @@ product:
 
 meta:
   title: Cloudflare Web3 docs
-  description: Gateways to various networks to help you develop applications without worrying about running infrastructure
+  description: Gateways to networks to help you develop applications without worrying about running infrastructure
   author: "@cloudflare"

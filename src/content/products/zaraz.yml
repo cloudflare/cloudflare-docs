@@ -5,7 +5,7 @@ product:
   title: Zaraz
   url: /zaraz/
   group: Developer platform
-  additional_groups: [Application performance, Analytics]
+  additional_groups: [Application performance, Analytics, Privacy]
 
 meta:
   title: Cloudflare Zaraz docs
