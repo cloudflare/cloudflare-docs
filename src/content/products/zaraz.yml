@@ -9,6 +9,5 @@ product:
 
 meta:
   title: Cloudflare Zaraz docs
-  description: Run third-party tools and services on the cloud, and improve the
-    loading speed and security of your website.
+  description: Run third-party tools and services on the cloud for improved speed and security
   author: "@cloudflare"
