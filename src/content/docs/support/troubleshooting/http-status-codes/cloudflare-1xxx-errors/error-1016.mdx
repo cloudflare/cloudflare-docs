@@ -28,21 +28,20 @@ To resolve error `1016`:
 
 ## Error 1016 in the context of SSL for SaaS
 
-Cloudflare returns a 1016 error when the [custom hostname](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/create-custom-hostnames/) cannot be routed or proxied.
+Cloudflare returns a `1016` error when the [custom hostname](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/create-custom-hostnames/) cannot be routed or proxied.
 
 ### Common cause
 
-- Custom Hostname ownership validation is not complete. 
-- Fallback Origin is not [correctly set](/cloudflare-for-platforms/cloudflare-for-saas/start/getting-started/#1-create-fallback-origin). 
-- A Wildcard Custom Hostname has been created, but the requested hostname is associated with a domain that exists in Cloudflare as a standalone zone. 
+- Custom hostname ownership validation is not complete. 
+- Fallback origin is not [correctly set](/cloudflare-for-platforms/cloudflare-for-saas/start/getting-started/#1-create-fallback-origin). 
+- A wildcard custom hostname has been created, but the requested hostname is associated with a domain that exists in Cloudflare as a standalone zone. 
 - There is no DNS record for the hostname in the Cloudflare for SaaS target zone.
 
 ### Resolution
 
 1. To check validation status, run an API call to [search for a certificate by hostname](/cloudflare-for-platforms/cloudflare-for-saas/start/common-api-calls/) and check the verification error field: `"verification_errors": ["custom hostname does not CNAME to this zone."]`. The error will be resolved once the status is `active`.
 2. Confirm that you have created a DNS record for the [fallback origin](/cloudflare-for-platforms/cloudflare-for-saas/start/getting-started/) and also set the fallback origin.
-3. The [hostname priority](/ssl/reference/certificate-and-hostname-priority/#hostname-priority) for the standalone zone will take precedence over the wildcard custom hostname. This behavior applies even if there is no DNS record for this standalone zone hostname. 
-You'll need to use a specific hostname instead of a wildcard for the custom hostname, or [remove the standalone zone from Cloudflare](/fundamentals/manage-domains/remove-domain/).
-4. Make sure that each hostname that needs to be served by the Cloudflare for SaaS parent zone has been added as an individual Custom Hostname and have the status `active`.
+3. The [hostname priority](/ssl/reference/certificate-and-hostname-priority/#hostname-priority) for the standalone zone will take precedence over the wildcard custom hostname. This behavior applies even if there is no DNS record for this standalone zone hostname. Use a specific hostname instead of a wildcard or [remove the standalone zone from Cloudflare](/fundamentals/manage-domains/remove-domain/).
+4. Make sure that each hostname that needs to be served by the Cloudflare for SaaS parent zone has been added as an individual custom hostname and have the status `active`.
 
 
