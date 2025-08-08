@@ -1,5 +1,5 @@
 ---
-title: Import `waitUntil` directly without requiring execution context
+title: Directly import `waitUntil` in Workers for easily spawning background tasks
 description: You can now import `waitUntil` from `cloudflare:workers` to extend execution of background tasks without requiring the request context
 products:
   - workers
@@ -10,7 +10,7 @@ You can now import [`waitUntil`](/workers/runtime-apis/context/#waituntil) from 
 
 Previously, `waitUntil` could only be accessed through the [execution context](/workers/runtime-apis/context/) (`ctx`) parameter passed to your Worker's handler functions. This meant that if you needed to schedule background tasks from deeply nested functions or utility modules, you had to pass the `ctx` object through multiple function calls to access `waitUntil`.
 
-Now, you can import `waitUntil` directly and use it anywhere in your Worker without needing to pass the execution context as a parameter:
+Now, you can import `waitUntil` directly and use it anywhere in your Worker without needing to pass `ctx` as a parameter:
 
 ```js
 import { waitUntil } from "cloudflare:workers";
