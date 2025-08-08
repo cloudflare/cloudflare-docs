@@ -11,7 +11,7 @@ value for the `cache` property of the Request interface. When this compatibility
 enabled, or `cache_option_disabled` is set, the Workers runtime will throw a `TypeError` saying
 `Unsupported cache mode: no-cache`.
 
-When this flag is enabled you can instruct Cloudflare not to force its cache to revalidate its
+When this flag is enabled you can instruct Cloudflare to force its cache to revalidate the
 response from a subrequest you make from your Worker using the [`fetch()`
 API](/workers/runtime-apis/fetch/):
 

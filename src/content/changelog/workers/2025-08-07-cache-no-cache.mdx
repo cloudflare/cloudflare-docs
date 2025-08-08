@@ -1,17 +1,16 @@
 ---
-title: Force cache to revalidate with origin for subrequests made from Cloudflare Workers, with Request.cache
+title: Requests made from Cloudflare Workers can now force a revalidation of their cache with the origin.
 description: New runtime APIs allow you to control when subrequests revalidate cache, increasing compatibility with popular NPM packages
 products:
   - workers
-date: 2024-08-07
+date: 2025-08-07
 ---
 
 import { Render, PackageManagers, TypeScriptExample } from "~/components"
 
-You can now use the [`cache`](/workers/runtime-apis/request/#options) property of the
-[`Request`](/workers/runtime-apis/request/) to force [Cloudflare's
-cache](/workers/reference/how-the-cache-works/) to revalidate the cache with the origin when making
-subrequests from [Cloudflare Workers](/workers), by setting its value to `no-cache`.
+By setting the value of the `cache` property to `no-cache`, you can force [Cloudflare's
+cache](/workers/reference/how-the-cache-works/) to revalidate, its contents with the origin when
+making subrequests from [Cloudflare Workers](/workers).
 
 <TypeScriptExample filename="index.ts">
 ```ts
