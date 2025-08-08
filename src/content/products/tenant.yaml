@@ -8,5 +8,5 @@ product:
 
 meta:
   title: Cloudflare Tenant docs
-  description: With Cloudflare's provisioning APIs, provision and manage Cloudflare accounts and services for your team or customers
+  description: Provision and manage Cloudflare accounts and services for your team or customers
   author: "@cloudflare"
