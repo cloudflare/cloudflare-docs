@@ -15,7 +15,6 @@ Now, you can import `waitUntil` directly and use it anywhere in your Worker with
 ```js
 import { waitUntil } from "cloudflare:workers";
 
-// helpers.js - can now use waitUntil without requiring ctx as a parameter
 export function trackAnalytics(eventData) {
 	const analyticsPromise = fetch("https://analytics.example.com/track", {
 		method: "POST",
