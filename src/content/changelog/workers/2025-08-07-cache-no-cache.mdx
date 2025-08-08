@@ -1,15 +1,15 @@
 ---
-title: Requests made from Cloudflare Workers can now force a revalidation of their cache with the origin.
+title: Requests made from Cloudflare Workers can now force a revalidation of their cache with the origin
 description: New runtime APIs allow you to control when subrequests revalidate cache, increasing compatibility with popular NPM packages
 products:
   - workers
 date: 2025-08-07
 ---
 
-import { Render, PackageManagers, TypeScriptExample } from "~/components"
+import { Render, PackageManagers, TypeScriptExample } from "~/components";
 
 By setting the value of the `cache` property to `no-cache`, you can force [Cloudflare's
-cache](/workers/reference/how-the-cache-works/) to revalidate, its contents with the origin when
+cache](/workers/reference/how-the-cache-works/) to revalidate its contents with the origin when
 making subrequests from [Cloudflare Workers](/workers).
 
 <TypeScriptExample filename="index.ts">
@@ -24,14 +24,17 @@ export default {
 ```
 </TypeScriptExample>
 
-When you set the value to `no-cache` on a subrequest made from a Worker, the Cloudflare Workers
-runtime will force the cache to revalidate its data with the origin
+When `no-cache` is set, the Worker request will first look for a match in Cloudflare's cache, then:
+
+- If there is a match, a conditional request is sent to the origin, regardless of whether or not the match is fresh or stale. If the resource has not changed, the
+  cached version is returned. If the resource has changed, it will be downloaded from the origin, updated in the cache, and returned.
+- If there is no match, Workers will make a standard request to the origin and cache the response.
 
 This increases compatibility with NPM packages and JavaScript frameworks that rely on setting the
 [`cache`](/workers/runtime-apis/request/#options) property, which is a cross-platform standard part
 of the [`Request`](/workers/runtime-apis/request/) interface. Previously, if you set the `cache`
 property on `Request` to `'no-cache'`, the Workers runtime threw an exception.
 
-* Learn [how the Cache works with Cloudflare Workers](/workers/reference/how-the-cache-works/)
-* Enable [Node.js compatibility](/workers/runtime-apis/nodejs/) for your Cloudflare Worker
-* Explore [Runtime APIs](/workers/runtime-apis/) and [Bindings](/workers/runtime-apis/bindings/) available in Cloudflare Workers
+- Learn [how the Cache works with Cloudflare Workers](/workers/reference/how-the-cache-works/)
+- Enable [Node.js compatibility](/workers/runtime-apis/nodejs/) for your Cloudflare Worker
+- Explore [Runtime APIs](/workers/runtime-apis/) and [Bindings](/workers/runtime-apis/bindings/) available in Cloudflare Workers

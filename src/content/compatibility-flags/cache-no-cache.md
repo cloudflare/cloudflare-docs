@@ -20,7 +20,13 @@ When `no-cache` is specified:
 - All requests have the headers `Pragma: no-cache` and `Cache-Control: no-cache` are set on them.
 
 - Subrequests to origins not hosted by Cloudflare force Cloudflare's cache to revalidate with the
-origin.
+  origin.
+
+Revalidating with the origin means that the Worker request will first look for a match in Cloudflare's cache, then:
+
+- If there is a match, a conditional request is sent to the origin, regardless of whether or not the match is fresh or stale. If the resource has not changed, the
+  cached version is returned. If the resource has changed, it will be downloaded from the origin, updated in the cache, and returned.
+- If there is no match, Workers will make a standard request to the origin and cache the response.
 
 Examples using `cache: 'no-cache'`:
 
