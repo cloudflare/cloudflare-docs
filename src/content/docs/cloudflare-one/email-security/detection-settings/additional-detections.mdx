@@ -23,11 +23,13 @@ To configure additional detections:
 
 The domain age is the time since the domain has been registered.
 
+Because of the domain age detection, [trusted domains](/cloudflare-one/email-security/detection-settings/trusted-domains/) can be used to create an exception to the age detection. 
+
 To configure a domain age:
 
 1. On the **Edit additional detections** page:
-   - Select **Malicious domain age**: Controls the threshold for a malicious disposition. Maximum of 100 days.
-   - Select **Suspicious domain age**: Controls the threshold for a suspicious disposition. Maximum of 100 days.
+   - Select **Malicious domain age**: Controls the threshold for a malicious disposition. Maximum of 100 days. It is recommended to set the **Malicious domain age** to 7 days.
+   - Select **Suspicious domain age**: Controls the threshold for a suspicious disposition. Maximum of 100 days. It is recommended to set the **Suspicious domain age** between 30 and 45 days.
 2. Select **Save**.
 
 ## Configure blank email detection

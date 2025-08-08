@@ -1,19 +1,24 @@
 ---
-{}
+params:
+  - showHeading?
 ---
 
-## API token limits
+import { AnchorHeading } from "~/components";
+
+{props.showHeading && (
+	<AnchorHeading title="API token limits" depth={2} />
+)}
 
 | Type                    | Limit                               |
 | ----------------------- | ----------------------------------- |
-| Client API per user     | 1200/5 minutes                      |
+| Client API per user     | 1,200/5 minutes                      |
 | Client API per IP       | 200/second                          |
 | GraphQL                 | Varies by query cost. Max 320/5 min |
 | User API token quota    | 50                                  |
 | Account API token quota | 500                                 |
 
 :::note
-The global rate limit for the Cloudflare API is 1200 requests per five minute period per user, and applies cumulatively regardless of whether the request is made via the dashboard, API key, or API token.
+The global rate limit for the Cloudflare API is 1,200 requests per five minute period per user, and applies cumulatively regardless of whether the request is made via the dashboard, API key, or API token.
 
 If you exceed this limit, all API calls for the next five minutes will be blocked, receiving a `HTTP 429 - Too Many Requests` response.
 :::

@@ -119,6 +119,14 @@ entries:
     general_definition: |-
       a network location, such as an office, that is associated with a specific WARP client device profile.
 
+  - term: MCP client
+    general_definition: |-
+      a Model Context Protocol (MCP) client is a user-facing AI tool that can request information and receive responses from an MCP server. Examples of MCP clients include Claude Desktop, Cursor AI, and Windsurf.
+
+  - term: MCP server
+    general_definition: |-
+      a web application that allows generative AI tools to access third-party data sources and APIs using the Model Context Protocol (MCP). For example, you can use an MCP server to connect an AI assistant to your Google Drive account.
+
   - term: MDM file
     general_definition: |-
       a Mobile Device Management (MDM) file is a configuration file that allows organizations to manage the software, settings, and certificates installed on their devices.

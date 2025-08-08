@@ -7,5 +7,5 @@ product:
 
 meta:
   title: Google tag gateway for advertisers docs
-  description: Google tag gateway for advertisers allows website owners using Google Tag Manager and Cloudflare as a CDN to add a layer of data security and enables additional data privacy controls.
+  description: Add a layer of data security and privacy controls when using Google Tag Manager
   author: "@cloudflare"

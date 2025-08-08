@@ -138,6 +138,7 @@ The following configuration will modify settings in your Cloudflare account.
 		resource "cloudflare_zero_trust_tunnel_cloudflared" "gcp_tunnel" {
 			account_id    = var.cloudflare_account_id
 			name          = "Terraform GCP tunnel"
+			config_src    = "cloudflare"
 		}
 
 		# Reads the token used to run the tunnel on the server.
@@ -164,7 +165,7 @@ The following configuration will modify settings in your Cloudflare account.
 				ingress 	= [
 					{
 						hostname = "http_app.${var.cloudflare_zone}"
-						service  = "http://httpbin:8080"
+						service  = "http://httpbin:80"
 					},
 					{
 						service  = "http_status:404"
@@ -247,7 +248,7 @@ The following configuration will modify settings in your Cloudflare account.
 				config {
 					ingress_rule {
 						hostname = "${cloudflare_record.http_app.hostname}"
-						service  = "http://httpbin:8080"
+						service  = "http://httpbin:80"
 					}
 					ingress_rule {
 						service  = "http_status:404"
@@ -305,7 +306,7 @@ The following configuration defines the specifications for the GCP virtual machi
 		```tf
 		# OS the server will use
 		data "google_compute_image" "image" {
-			family  = "ubuntu-minimal-2004-lts"
+			family  = "ubuntu-2204-lts"
 			project = "ubuntu-os-cloud"
 		}
 
@@ -347,7 +348,7 @@ The following configuration defines the specifications for the GCP virtual machi
 		```tf
 		# OS the server will use
 		data "google_compute_image" "image" {
-			family  = "ubuntu-minimal-2004-lts"
+			family  = "ubuntu-2204-lts"
 			project = "ubuntu-os-cloud"
 		}
 

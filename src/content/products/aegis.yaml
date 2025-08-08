@@ -9,5 +9,5 @@ product:
 
 meta:
   title: Cloudflare Aegis docs
-  description: Leverage dedicated IPs to improve your origin security and implement Zero Trust.
+  description: Lock down origin security with dedicated IPs
   author: "@cloudflare"

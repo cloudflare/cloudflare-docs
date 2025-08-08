@@ -7,4 +7,4 @@ product:
   additional_groups: [Analytics]
 
 meta:
-  description: Workers Analytics Engine provides unlimited-cardinality analytics at scale, via a built-in API to write data points from Workers, and a SQL API to query that data.
+  description: Unlimited-cardinality analytics at scale, via an API to write data from Workers, and a SQL API to query that data

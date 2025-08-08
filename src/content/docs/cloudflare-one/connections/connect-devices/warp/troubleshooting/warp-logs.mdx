@@ -10,20 +10,20 @@ import { TabItem, Tabs, Stream } from "~/components";
 
 The WARP client provides diagnostic logs that you can use to troubleshoot connectivity issues on a device.
 
- <Stream
+<Stream
 	id="c29964ab3dcf7c3432ebb2b4e93c3aca"
 	title="Understand Cloudflare WARP diagnostic logs"
 	thumbnail="https://pub-d9bf66e086fb4b639107aa52105b49dd.r2.dev/Warp-diagnostics%20thumbnail.png"
 	showMoreVideos={false}
 	chapters={{
-		"Introduction": "0s",
+		Introduction: "0s",
 		"What are warp-diag files?": "44s",
 		"How to download and navigate warp-diag files": "1m16s",
 		"warp-status.txt": "2m06s",
 		"warp-settings.txt": "2m29s",
 		"daemon.log": "3m37s",
 		"Addition tips": "8m07s",
-		"Conclusion": "8m43s",
+		Conclusion: "8m43s",
 	}}
 />
 
@@ -81,7 +81,7 @@ The `warp-debugging-info-<date>-<time>.zip` archive contains the following files
 | `boringtun.log`                                                                                     | Log for the WARP tunnel that serves traffic from the device to Cloudflare's global network.                                                                                                                                                                                                                                                 |
 | `bound-dns-ports.txt`                                                                               | Active processes on port `53`.                                                                                                                                                                                                                                                                                                              |
 | `captive-portal-hotspot-detect.txt`                                                                 | HTTP response of `captive.apple.com`                                                                                                                                                                                                                                                                                                        |
-| `connectivity.txt`                                                                                  | DNS resolution and HTTP trace requests to [validate a successful connection](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#connectivity-checks). Can be used to determine whether traffic is routing through the WARP tunnel.                                                                                        |
+| `connectivity.txt`                                                                                  | DNS resolution and HTTP trace requests to [validate a successful connection](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#connectivity-checks). Can be used to determine whether traffic is routing through the WARP tunnel.                                                                                       |
 | `daemon_dns.log`                                                                                    | Contains detailed DNS logs if **Log DNS queries** is enabled in the WARP client.                                                                                                                                                                                                                                                            |
 | `daemon.log`                                                                                        | Detailed log of all actions performed by the WARP client, including all communication between the device and Cloudflare's global network. **Note:** This is the most useful debug log.                                                                                                                                                      |
 | `date.txt`                                                                                          | Date and time (UTC) when you ran the `warp-diag` command.                                                                                                                                                                                                                                                                                   |
@@ -157,6 +157,18 @@ The `warp-debugging-info` folder may contain multiple versions of the same log, 
 
 In timestamped logs such as `daemon.log`, the most recent events will appear at the end of the file.
 :::
+
+#### Log retention window
+
+Each WARP log file (such as `connection_stats.log`, `dns_stats.log`, `daemon.log`, `boringtun.log`, `daemon_dns.log`, `dex.log` and `captive-portal.log`) is limited by size and age:
+
+- **Maximum file size:** 10 MB
+- **Maximum file age:** 24 hours
+- **Maximum number of retained versions per log:** 4 (for example, `daemon.log`, `daemon.1.log`, `daemon.2.log`, and `daemon.3.log`)
+
+Log files may include data from up to 96 hours (four days) prior to when `warp-diag` was run, but only if log activity is minimal. In environments with high logging volume (for example, repeated errors), logs may rotate more frequently, and the captured window could be much shorter (only a few hours).
+
+Always check the timestamps at the end of each log file to verify the time range covered by the diagnostic archive.
 
 ## iOS/Android/ChromeOS
 

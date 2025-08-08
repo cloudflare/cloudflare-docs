@@ -14,11 +14,12 @@ This page lists the available Managed Transforms. They can modify HTTP request h
 	file="snippets-alternative"
 	params={{ suffix: "and customized header modifications" }}
 />
-<br />
 
-:::caution
-The names of HTTP headers are case-insensitive. Cloudflare may use a capitalization different from the one presented in this page. Make sure that your origin server can handle HTTP request headers regardless of the exact capitalization of their names.
-:::
+## Important remarks
+
+- Enabling a Managed Transform may cause issues in your website. You should test any changes in a staging environment. If you detect any undesired or unexpected behavior, consider disabling the Managed Transform and creating a partial implementation using your own transform rule.
+
+- The names of HTTP headers are case-insensitive. Cloudflare may use a capitalization different from the one presented in this page. Make sure that your origin server can handle HTTP request headers regardless of the exact capitalization of their names.
 
 ## HTTP request headers
 
@@ -72,7 +73,7 @@ Adds HTTP headers with location information for the visitor's IP address to the 
 - `cf-postal-code`: The visitor's postal code (value from the [`ip.src.postal_code`](/ruleset-engine/rules-language/fields/reference/ip.src.postal_code/) field).
 - `cf-timezone`: The name of the visitor's timezone (value from the [`ip.src.timezone.name`](/ruleset-engine/rules-language/fields/reference/ip.src.timezone.name/) field).
 
-:::caution
+:::note
 Turning on [IP geolocation](/network/ip-geolocation/) will send a `cf-ipcountry` HTTP header to your origin server even when **Add visitor location headers** is turned off.
 :::
 
@@ -152,6 +153,10 @@ For more information, refer to [Malicious uploads detection](/waf/detections/mal
 Removes the `X-Powered-By` HTTP response header that provides information about the application at the origin server that handled the request.
 
 ### Add security headers
+
+:::note
+Adding the following security headers may have an impact on your website, such as blocking resources or triggering certificate errors. If you find any issues, try disabling the Managed Transform to isolate the possible cause.
+:::
 
 Adds several security-related HTTP response headers. The added response headers and values are the following:
 

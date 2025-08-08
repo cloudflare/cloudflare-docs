@@ -38,6 +38,13 @@
 /waf/change-log/index.xml /changelog/rss/waf.xml 301
 /waf/change-log/general-updates/index.xml /changelog/rss/waf.xml 301
 
+## area changelog feeds
+
+/fundamentals/reference/changelog/performance/index.xml /changelog/rss/application-performance.xml 301
+/fundamentals/reference/changelog/platform/index.xml /changelog/rss/core-platform.xml 301
+/fundamentals/reference/changelog/security/index.xml /changelog/rss/application-security.xml 301
+/workers/platform/changelog/platform/index.xml /changelog/rss/developer-platform.xml 301
+
 ## legacy
 /release-notes/index.xml /changelog/rss/index.xml 301
 /release-notes/ /changelog/ 301
@@ -1241,6 +1248,8 @@
 /security-center/indicator-feeds/get-started/ /security-center/indicator-feeds/ 301
 
 # spectrum
+/spectrum/changelog/ /spectrum/ 301
+/spectrum/changelog/index.xml /changelog/rss/index.xml 301
 /spectrum/getting-started/ /spectrum/get-started/ 301
 /spectrum/getting-started/byoip/ /spectrum/about/byoip/ 301
 /spectrum/getting-started/getting-started/ /spectrum/get-started/ 301
@@ -1514,6 +1523,10 @@
 # time-services_redirects
 /time-services/nts/usage/ /time-services/nts/ 301
 
+# tenant
+/tenant/changelog/ /tenant/ 301
+/tenant/changelog/index.xml /changelog/rss/index.xml 301
+
 # turnstile
 /turnstile/get-started/domain-management/ /turnstile/reference/domain-management/ 301
 /turnstile/get-started/migrating-from-recaptcha/ /turnstile/migration/recaptcha/ 301
@@ -1608,6 +1621,8 @@
 
 # waiting-room
 /waiting-room/how-to/mobile-traffic/ /waiting-room/how-to/json-response/ 301
+/waiting-room/changelog/ /waiting-room/ 301
+/waiting-room/changelog/index.xml /changelog/rss/index.xml 301
 
 # warp-client
 /warp-client/get-started/macOS/ /warp-client/get-started/macos/ 301

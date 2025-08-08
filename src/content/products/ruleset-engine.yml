@@ -10,6 +10,5 @@ product:
 
 meta:
   title: Cloudflare Ruleset Engine docs
-  description: Create and deploy rules and rulesets in different Cloudflare
-    products using the same basic syntax.
+  description: Create rulesets and rules for different Cloudflare products
   author: "@cloudflare"

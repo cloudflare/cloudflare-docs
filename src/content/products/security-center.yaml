@@ -9,8 +9,5 @@ product:
 meta:
   title: Cloudflare Security Center docs
   description:
-    Cloudflare Security Center allows you to manage your IT assets in a
-    single dashboard, warning you about possible security risks and
-    vulnerabilities, and providing a one-click solution for Cloudflare
-    configuration issues.
+    Enhance your security posture with a range of security products and one-click solutions
   author: "@cloudflare"

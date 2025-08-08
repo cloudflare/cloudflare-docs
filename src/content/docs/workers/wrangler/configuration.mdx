@@ -1091,6 +1091,8 @@ The following options are available:
   - The instance type of the container. This determines the amount of memory, CPU, and disk given to the container
     instance. The current options are `"dev"`, `"basic"`, and `"standard"`. The default is `"dev"`. For more information,
     the see [instance types documentation](/containers/platform-details#instance-types).
+    
+  - To specify a custom instance type, see [here](#custom-instance-types).
 
 - `max_instances` <Type text="string" /> <MetaInfo text="optional" />
 
@@ -1130,6 +1132,39 @@ class_name = "MyContainer"
 [[migrations]]
 tag = "v1"
 new_sqlite_classes = ["MyContainer"]
+```
+
+</WranglerConfig>
+
+### Custom Instance Types
+
+:::note
+For Enterprise customers only.
+:::
+
+In place of the [named instance types](/containers/platform-details#instance-types), you can set a custom instance type by
+individually configuring vCPU, memory, and disk.
+
+The following options are available:
+
+- `vcpu` <Type text="number" /> <MetaInfo text="optional" />
+
+  - The vCPU to be used by your container. Defaults to `0.0625` (1/16 vCPU).
+
+- `memory_mib` <Type text="number" /> <MetaInfo text="optional" />
+
+  - The memory to be used by your container, in MiB. Defaults to `256`.
+
+- `disk_mb` <Type text="number" /> <MetaInfo text="optional" />
+
+  - The disk to be used by your container, in MB. Defaults to `2000` (2GB).
+
+<WranglerConfig>
+
+```toml title="wrangler.toml"
+[[containers]]
+image = "./Dockerfile"
+instance_type = { vcpu = 1, memory_mib = 1024, disk_mb = 4000 }
 ```
 
 </WranglerConfig>

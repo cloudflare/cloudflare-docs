@@ -49,8 +49,9 @@ console.log(screenshot.status);
 
 For more options to control the final screenshot, like `clip`, `captureBeyondViewport`, `fullPage` and others, check the endpoint [reference](/api/resources/browser_rendering/subresources/screenshot/methods/create/).
 
-:::note
-The `quality` parameter is not compatible with the default `.png` format and will return a 400 error. If you set `quality`, you must also set `type` to `.jpeg` or another supported format.
+:::note[Notes for basic usage]
+- The `quality` parameter is not compatible with the default `.png` format and will return a 400 error. If you set `quality`, you must also set `type` to `.jpeg` or another supported format.
+- By default, the browser viewport is set to **1920×1080**. You can override the default via request options.
 :::
 
 ## Advanced usage

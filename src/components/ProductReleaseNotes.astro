@@ -16,11 +16,10 @@ if (!page) {
 }
 
 if (
-	!page.data.release_notes_file_name &&
-	!page.data.release_notes_product_area_name
+	!page.data.release_notes_file_name
 ) {
 	throw new Error(
-		`[ProductReleaseNotes] ${Astro.params.slug} does not have a 'release_notes_file_name' or 'changaelog_product_area_name' frontmatter property.`,
+		`[ProductReleaseNotes] ${Astro.params.slug} does not have a 'release_notes_file_name' frontmatter property.`,
 	);
 }
 
@@ -34,37 +33,22 @@ if (
 }
 
 const name =
-	page.data.release_notes_product_area_name ??
 	page.data.release_notes_file_name?.[0];
 
 let releaseNotes;
 
-if (page.data.release_notes_product_area_name) {
+if (name === "api-deprecations") {
 	const opts = {
-		filter: (entry: CollectionEntry<"release-notes">) => {
-			return entry.data.productArea === name;
-		},
+		deprecationsOnly: true,
 	};
 	({ releaseNotes } = await getReleaseNotes(opts));
 } else {
-	if (name === "wrangler") {
-		const opts = {
-			wranglerOnly: true,
-		};
-		({ releaseNotes } = await getReleaseNotes(opts));
-	} else if (name === "api-deprecations") {
-		const opts = {
-			deprecationsOnly: true,
-		};
-		({ releaseNotes } = await getReleaseNotes(opts));
-	} else {
-		const opts = {
-			filter: (entry: CollectionEntry<"release-notes">) => {
-				return entry.id === name;
-			},
-		};
-		({ releaseNotes } = await getReleaseNotes(opts));
-	}
+	const opts = {
+		filter: (entry: CollectionEntry<"release-notes">) => {
+			return entry.id === name;
+		},
+	};
+	({ releaseNotes } = await getReleaseNotes(opts));
 }
 
 if (!releaseNotes) {

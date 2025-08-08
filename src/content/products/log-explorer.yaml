@@ -8,5 +8,5 @@ product:
 
 meta:
   title: Cloudflare Log Explorer docs
-  description: Store and explore your Cloudflare logs directly within the Cloudflare dashboard or API.
+  description: Store and explore your logs in the Cloudflare dashboard or API
   author: '@cloudflare'

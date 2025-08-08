@@ -7,17 +7,15 @@ head: []
 description: Learn how to develop with multiple Workers using different approaches and configurations.
 ---
 
-import { Aside, PackageManagers, Steps, WranglerConfig } from "~/components";
+import { PackageManagers, Steps, WranglerConfig } from "~/components";
 
 When building complex applications, you may want to run multiple Workers during development. This guide covers the different approaches for running multiple Workers locally and when to use each approach.
 
 ## Single dev command
 
-<Aside type="tip">
-
+:::note
 We recommend this approach as the default for most development workflows as it ensures the best compatibility with bindings.
-
-</Aside>
+:::
 
 You can run multiple Workers in a single dev command by passing multiple configuration files to your dev server:
 
@@ -83,12 +81,9 @@ You can also run each Worker in a separate dev commands, each with its own termi
 
 These Workers run in different dev commands but can still communicate with each other via service bindings or tail consumers **regardless of whether they are started with `wrangler dev` or `vite dev`**.
 
-<Aside type="note">
-
-You can also combine both approaches — for example, run a group of Workers together through `vite dev` using `auxiliaryWorkers`, while running another Worker separately with `wrangler dev`. This allows you to keep tightly coupled Workers running under a single dev command, while keeping independent or shared Workers in separate ones. However, 
-running `wrangler dev` with multiple configuration files (e.g. `wrangler dev -c ./app/wrangler.jsonc -c ./api/wrangler.jsonc`) does **not** support cross-process bindings at the moment.
-
-</Aside>
+:::note
+You can also combine both approaches — for example, run a group of Workers together through `vite dev` using `auxiliaryWorkers`, while running another Worker separately with `wrangler dev`. This allows you to keep tightly coupled Workers running under a single dev command, while keeping independent or shared Workers in separate ones. However, running `wrangler dev` with multiple configuration files (e.g. `wrangler dev -c ./app/wrangler.jsonc -c ./api/wrangler.jsonc`) does **not** support cross-process bindings at the moment.
+:::
 
 **Use this approach when:**
 

@@ -19,6 +19,8 @@ import { AnchorHeading, Aside, Card, Code, GlossaryTooltip, Markdown, Render, Ta
 	)
 }
 
+In this page you will find instructions on how to configure Magic WAN Connector. This guide provides a step-by-step guide for Magic WAN Connector's initial setup. You can either return here after setting up your Connector, or refer to the [Maintenance](/magic-wan/configuration/connector/maintenance/) section where you will find instructions on how to update your settings.
+
 ## Prerequisites
 
 { props.magicWord === "hardware" && (
@@ -293,21 +295,8 @@ You cannot enable high availability for an existing Connector on-ramp. To add hi
 { props.magicWord === "hardware" && (
   <>
 		<AnchorHeading title="Register your appliance" depth={3} />
-		<Markdown
-		text={`
-		To set up and use Magic WAN Connector, you first need to register it with your account.
-
-		1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-		2. Go to **Magic WAN** > **Configuration**.
-		3. Under **Connectors**, select **Register your appliance**.
-		4. In **Appliance details** > **Serial number**, insert the serial number for your device. You can optionally add notes about the Magic WAN Connector you are adding to the dashboard.
-		5. (Optional) Select **Add** below **Serial number** to add multiple Magic WAN Connectors at once to your account.
-		6. Select **Register appliance**.
-
-		Your device is now registered with your account. Select **Add on-ramps** to continue with the setup process, or **Return to connections** to check your newly added Connector.
-		`}
-		inline={false}
-		/>
+		<p>To set up and use Magic WAN Connector, you first need to register it with your account.</p>
+		<Render file="register-hardware-appliance" product="networking-services/mconn" />
   </>
   )
 }

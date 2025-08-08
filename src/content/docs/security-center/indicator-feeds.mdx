@@ -60,7 +60,7 @@ Providers can create and manage a Custom Indicator Feed with the [Custom Indicat
    }
    ```
 
-3. Upload data to the feed with the [Update indicator feed data endpoint](/api/resources/intel/subresources/indicator_feeds/subresources/snapshots/methods/update/). Uploaded indicator data must be in a [`.stix2`](https://oasis-open.github.io/cti-documentation/stix/intro) formatted file.
+3. Upload data to the feed with the [Update indicator feed data endpoint](/api/resources/intel/subresources/indicator_feeds/subresources/snapshots/methods/update/). Uploaded indicator data must be in a [`.stix2`](https://oasis-open.github.io/cti-documentation/stix/intro) formatted file. The [maximum upload file size](/r2/platform/limits/) is 4.995 GiB.
 
    ```bash title="Update indicator feed data"
    curl --request PUT \

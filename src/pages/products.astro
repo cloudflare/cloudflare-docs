@@ -15,22 +15,24 @@ let products: CollectionEntry<"products">[] = await getCollection(
 	},
 );
 
-let productData: ProductData[] = products.map((product) => {
-	const iconData = getIconData(iconCollection.local, product.id);
-	let icon = undefined;
-	if (iconData) {
-		icon = iconToSVG(iconData);
-	}
+let productData: ProductData[] = products
+	.map((product) => {
+		const iconData = getIconData(iconCollection.local, product.id);
+		let icon = undefined;
+		if (iconData) {
+			icon = iconToSVG(iconData);
+		}
 
-	return {
-		...product,
-		icon,
-		groups: [
-			product.data.product.group,
-			...(product.data.product.additional_groups || []),
-		].filter((val) => Boolean(val)),
-	};
-});
+		return {
+			...product,
+			icon,
+			groups: [
+				product.data.product.group,
+				...(product.data.product.additional_groups || []),
+			].filter((val) => Boolean(val)),
+		};
+	})
+	.sort((a, b) => a.id.localeCompare(b.id));
 
 const props = {
 	frontmatter: {
