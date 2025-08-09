@@ -22,6 +22,6 @@ The upload limit for the Cloudflare API depends on your plan. If you exceed this
 
 <FeatureTable id="network.max_upload_size" />
 
-Keep in mind, customers can reduce the **Maximum Upload Size** from the zone's **Network** page which can cause a `413`.
+Keep in mind, customers can reduce the **Maximum Upload Size** from the zone's **Network** dashbaord. Keep in mind, this can cause a `413 Payload Too Large`.
 
-If you require a larger upload, break up requests into smaller chunks, change your DNS record to [DNS-only](/dns/proxy-status/#dns-only-records), or [upgrade your plan](/billing/change-plan/).
+If you require a larger upload, you can group requests into smaller chunks, upload the full resource through an [unproxied (grey-clouded) DNS record](/dns/proxy-status/#dns-only-records), or [upgrade your plan](/billing/change-plan/).
