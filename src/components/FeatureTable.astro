@@ -2,7 +2,6 @@
 import { z } from "astro:schema";
 import { indexPlans } from "~/util/plans";
 import { marked } from "marked";
-import GlossaryTooltip from "~/components/GlossaryTooltip.astro";
 
 type Props = z.infer<typeof props>;
 
@@ -46,7 +45,6 @@ const markdown = (content: any) => {
 	<tbody>
 		{
 			features.map((feature) => {
-
 				return (
 					<tr>
 						<th set:html={markdown(feature.title)} />
