@@ -3,9 +3,18 @@ link: "/workers/platform/changelog/"
 productName: Workers
 productLink: "/workers/"
 entries:
+  - publish_date: "2025-06-27"
+    description: |-
+      - Updated v8 to version 13.9.
+  - publish_date: "2025-06-23"
+    description: |-
+      - Enable FinalizationRegistry API. See [We shipped FinalizationRegistry in Workers: why you should never use it](https://blog.cloudflare.com/we-shipped-finalizationregistry-in-workers-why-you-should-never-use-it/) for details.
   - publish_date: "2025-06-04"
     description: |-
       - Updated v8 to version 13.8.
+  - publish_date: "2025-05-27"
+    description: |-
+      - Historically, in some cases, the same instance of `ctx` would be passed to multiple invocations of the event handler. We now always pass a new object for each event. We made this change retroactive to all compatibility dates because we suspect it fixes security bugs in some workers and does not break any worker. However, the old behavior can be restored using the compat flag `nonclass_entrypoint_reuses_ctx_across_invocations`.
   - publish_date: "2025-05-22"
     description: |-
       - Enabled explicit resource context management and support for Float16Array
@@ -15,6 +24,9 @@ entries:
   - publish_date: "2025-04-16"
     description: |-
       - Updated v8 to version 13.6.
+  - publish_date: "2025-04-14"
+    description: |-
+      - JSRPC message size limit has been increased to 32MiB.
   - publish_date: "2025-04-03"
     description: |-
       - Websocket client exceptions are now JS exceptions rather than internal errors.
