@@ -5,6 +5,7 @@ product:
   title: Support
   url: /support/
   group: Core platform
+  additional_groups: [Docs collections]
 
 meta:
   title: Cloudflare Support docs

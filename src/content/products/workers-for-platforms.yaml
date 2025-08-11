@@ -6,4 +6,4 @@ product:
   url: /cloudflare-for-platforms/workers-for-platforms/
 
 meta:
-  description: Deploy custom code for your users or let them directly deploy code to your platform, managing infrastructure
+  description: Deploy custom code for your users or let them directly deploy code to your platform

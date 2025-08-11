@@ -135,15 +135,15 @@ export class WebSocketHibernationServer extends DurableObject {
     ws.send(`[Durable Object] message: ${message}, from: ${session.id}. Total connections: ${this.sessions.size}`);
 
     // Send a message to all WebSocket connections, loop over all the connected WebSockets.
-    this.sessions.forEach((attachment, session) => {
-      session.send(`[Durable Object] message: ${message}, from: ${attachment.id}. Total connections: ${this.sessions.size}`);
+    this.sessions.forEach((attachment, connectedWs) => {
+      connectedWs.send(`[Durable Object] message: ${message}, from: ${session.id}. Total connections: ${this.sessions.size}`);
     });
 
     // Send a message to all WebSocket connections except the connection (ws),
     // loop over all the connected WebSockets and filter out the connection (ws).
-    this.sessions.forEach((attachment, session) => {
-      if (session !== ws) {
-        session.send(`[Durable Object] message: ${message}, from: ${attachment.id}. Total connections: ${this.sessions.size}`);
+    this.sessions.forEach((attachment, connectedWs) => {
+      if (connectedWs !== ws) {
+        connectedWs.send(`[Durable Object] message: ${message}, from: ${session.id}. Total connections: ${this.sessions.size}`);
       }
     });
   }

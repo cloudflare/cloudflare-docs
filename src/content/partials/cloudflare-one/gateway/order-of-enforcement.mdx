@@ -24,7 +24,7 @@ flowchart TB
         http1{{"Do Not Inspect policies"}}
         http2["Isolate policies  <br>(with Browser Isolation add-on)"]
         http3["Allow, Block, Do Not Scan, Quarantine, and Redirect policies, DLP, and anti-virus scanning"]
-        https["HTTP (port 80) or<br>HTTPS (port 443)?"]
+        https["HTTP or HTTPS?"]
   end
  subgraph Proxy["Proxy"]
         HTTP
@@ -204,12 +204,10 @@ When a user goes to `https://test.example.com`, Gateway performs the following o
 1. Evaluate DNS request against DNS policies: <Render file="gateway/order-of-precedence-dns-order" product="cloudflare-one" />
 
 2. Evaluate HTTPS request against HTTP policies:
-
    1. Policy #2 is evaluated first because Do Not Inspect [always takes precedence](#http-policies) over Allow and Block. Since there is no match, move on to check Policy #1.
    2. Policy #1 does not match `test.example.com`. Since there are no matching Block policies, the request passes the HTTP filter and moves on to network policy evaluation.
 
 3. Evaluate HTTPS request against network policies:
-
    1. Policy #1 does not match because port 80 is used for standard HTTP, not HTTPS.
    2. Policy #2 matches, so the request is allowed and proxied to the upstream server.
    3. Policy #3 is not evaluated because there has already been an explicit match.

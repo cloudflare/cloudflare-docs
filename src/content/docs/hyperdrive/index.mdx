@@ -103,11 +103,11 @@ import { createConnection  } from 'mysql2/promise';
 export default {
   async fetch(request, env, ctx): Promise<Response> {
     const connection = await createConnection({
-     host: env.DB_HOST,
-     user: env.DB_USER,
-     password: env.DB_PASSWORD,
-     database: env.DB_NAME,
-     port: env.DB_PORT
+		 host: env.HYPERDRIVE.host,
+		 user: env.HYPERDRIVE.user,
+		 password: env.HYPERDRIVE.password,
+		 database: env.HYPERDRIVE.database,
+		 port: env.HYPERDRIVE.port,
 
      // This is needed to use mysql2 with Workers
      // This configures mysql2 to use static parsing instead of eval() parsing (not available on Workers)

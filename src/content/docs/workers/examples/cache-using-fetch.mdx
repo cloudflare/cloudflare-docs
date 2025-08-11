@@ -554,9 +554,12 @@ async function handleRequest(request) {
 ## Using the HTTP Cache API
 
 The `cache` mode can be set in `fetch` options.
-Currently Workers only support the `no-store` mode for controlling the cache.
+Currently Workers only support the `no-store` and `no-cache` mode for controlling the cache.
 When `no-store` is supplied the cache is bypassed on the way to the origin and the request is not cacheable.
+When `no-cache` is supplied the cache is forced to revalidate the currently cached response with the
+origin.
 
 ```js
 fetch(request, { cache: 'no-store'});
+fetch(request, { cache: 'no-cache'});
 ```

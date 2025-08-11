@@ -3,6 +3,7 @@ name: Learning Paths
 product:
   title: Learning Paths
   url: /learning-paths/
+  group: Docs collections
   wrap: true
 
 meta:

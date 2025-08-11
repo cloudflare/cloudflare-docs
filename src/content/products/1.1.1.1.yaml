@@ -4,7 +4,7 @@ product:
   title: 1.1.1.1 (DNS Resolver)
   url: /1.1.1.1/
   group: Consumer services
-  additional_groups: [Network security]
+  additional_groups: [Network security, Privacy]
 
 meta:
   title: Cloudflare 1.1.1.1 docs

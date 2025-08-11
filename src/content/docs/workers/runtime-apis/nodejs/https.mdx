@@ -7,86 +7,125 @@ import { Render } from "~/components";
 
 <Render file="nodejs-compat-howto" />
 
-## Agent
-
-An implementation of the Node.js [`https.Agent'](https://nodejs.org/docs/latest/api/https.html#class-httpsagent) class.
-
-An [Agent](https://nodejs.org/docs/latest/api/https.html#class-httpsagent) manages HTTPS connection reuse by maintaining request queues per host/port. In the
-workers environment, however, such low-level management of the network connection, ports,
-etc, is not relevant because it is handled by the Cloudflare infrastructure instead. Accordingly, the
-implementation of `Agent` in Workers is a stub implementation that does not support connection
-pooling or keep-alive.
-
-```js
-import { Agent } from "node:https";
-import { strictEqual } from "node:assert";
-
-const agent = new Agent();
-strictEqual(agent.protocol, "https:");
-```
-
 ## get
 
 An implementation of the Node.js [`https.get'](https://nodejs.org/docs/latest/api/https.html#httpsgetoptions-callback) method.
 
-The [`get`](https://nodejs.org/docs/latest/api/https.html#httpsgetoptions-callback) method performs a GET request to the specified URL and invokes the callback with the response. This is a convenience method that simplifies making HTTPS GET requests without manually configuring request options.
+The `get` method performs a GET request to the specified URL and invokes the callback with the response. This is a convenience method that simplifies making HTTPS GET requests without manually configuring request options.
+
+Because `get` is a wrapper around `fetch(...)`, it may be used only within an exported
+fetch or similar handler. Outside of such a handler, attempts to use `get` will throw
+an error.
 
 ```js
-import { get } from "node:https";
+import { get } from 'node:https';
 
 export default {
 	async fetch() {
 		const { promise, resolve, reject } = Promise.withResolvers();
-		get("http://example.com", (res) => {
-			let data = "";
-			res.setEncoding("utf8");
-			res.on("data", (chunk) => {
+		get('https://example.org', (res) => {
+			let data = '';
+			res.setEncoding('utf8');
+			res.on('data', (chunk) => {
 				data += chunk;
 			});
-			res.on("error", reject);
-			res.on("end", () => {
+			res.on('end', () => {
 				resolve(new Response(data));
 			});
-		}).on("error", reject);
+			res.on('error', reject);
+		}).on('error', reject);
 		return promise;
-	},
-};
+  }
+}
 ```
+
+The implementation of `get` in Workers is a wrapper around the global
+[`fetch` API](https://developers.cloudflare.com/workers/runtime-apis/fetch/)
+and is therefore subject to the same [limits](https://developers.cloudflare.com/workers/platform/limits/).
+
+As shown in the example above, it is necessary to arrange for requests to be correctly
+awaited in the `fetch` handler using a promise or the fetch may be canceled prematurely
+when the handler returns.
 
 ## request
 
 An implementation of the Node.js [`https.request'](https://nodejs.org/docs/latest/api/https.html#httpsrequestoptions-callback) method.
 
-The [`request`](https://nodejs.org/docs/latest/api/https.html#httpsrequestoptions-callback) method creates an HTTPS request with customizable options like method, headers, and body. It provides full control over the request configuration and returns a [writable stream](https://developers.cloudflare.com/workers/runtime-apis/streams/writablestream/) for sending request data.
+The `request` method creates an HTTPS request with customizable options like method, headers, and body. It provides full control over the request configuration and returns a Node.js [stream.Writable](https://developers.cloudflare.com/workers/runtime-apis/nodejs/streams/) for sending request data.
 
-Request method accepts all options from `http.request` with some differences in default values:
-
-- `protocol`: default `https:`
-- `port`: default `443`
-- `agent`: default `https.globalAgent`
+Because `get` is a wrapper around `fetch(...)`, it may be used only within an exported
+fetch or similar handler. Outside of such a handler, attempts to use `get` will throw
+an error.
 
 ```js
-import { request } from "node:https";
-import { strictEqual, ok } from "node:assert";
+import { get } from 'node:http';
 
-const req = request(
-	"https://developers.cloudflare.com/robots.txt",
-	{
-		method: "GET",
-	},
-	(res) => {
-		strictEqual(res.statusCode, 200);
-		let data = "";
-		res.setEncoding("utf8");
-		res.on("data", (chunk) => {
-			data += chunk;
-		});
-		res.on("end", () => {
-			ok(data.includes("User-agent"));
-		});
-	},
-);
-req.end();
+export default {
+	async fetch() {
+		const { promise, resolve, reject } = Promise.withResolvers();
+		get({
+			method: 'GET',
+			protocol: 'https:',
+			hostname: 'example.org',
+			path: '/'
+		}, (res) => {
+			let data = '';
+			res.setEncoding('utf8');
+			res.on('data', (chunk) => {
+				data += chunk;
+			});
+			res.on('end', () => {
+				resolve(new Response(data));
+			});
+			res.on('error', reject);
+		}).on('error', reject)
+		  .end();
+		return promise;
+  }
+}
 ```
 
 The following additional options are not supported: `ca`, `cert`, `ciphers`, `clientCertEngine` (deprecated), `crl`, `dhparam`, `ecdhCurve`, `honorCipherOrder`, `key`, `passphrase`, `pfx`, `rejectUnauthorized`, `secureOptions`, `secureProtocol`, `servername`, `sessionIdContext`, `highWaterMark`.
+
+## Agent
+
+An implementation of the Node.js [`https.Agent'](https://nodejs.org/docs/latest/api/https.html#class-httpsagent) class.
+
+An `Agent` manages HTTPS connection reuse by maintaining request queues per host/port. In the workers environment, however, such low-level management of the network connection, ports, etc, is not relevant because it is handled by the Cloudflare infrastructure instead. Accordingly, the implementation of `Agent` in Workers is a stub implementation that does not support connection pooling or keep-alive.
+
+```js
+import { get, Agent } from 'node:https';
+import { strictEqual } from 'node:assert';
+
+export default {
+	async fetch() {
+
+    const agent = new Agent();
+    get({
+			hostname: 'example.org',
+			port: 443,
+			path: '/',
+			agent, // possible but not all that useful.
+		}, (res) => {
+			// ...
+		});
+
+		return new Response('ok');
+	}
+}
+```
+
+## Other differences between Node.js and Workers implementation of `node:https`
+
+Because the Workers imlementation of `node:https` is a wrapper around the global `fetch` API, there are some differences in behavior compared to Node.js:
+
+* `Connection` headers are not used. Workers will manage connections automatically.
+* `Content-Length` headers will be handled the same way as in the `fetch` API. If a body is provided, the header will be set automatically and manually set values will be ignored.
+* `Expect: 100-continue` headers are not supported.
+* Trailing headers are not supported.
+* The `'continue'` event is not supported.
+* The `'information'` event is not supported.
+* The `'socket'` event is not supported.
+* The `'upgrade'` event is not supported.
+* Gaining direct access to the underlying `socket` is not supported.
+* Configuring TLS-specific options like `ca`, `cert`, `key`, `rejectUnauthorized`, etc, is not supported.

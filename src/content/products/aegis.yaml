@@ -5,7 +5,7 @@ product:
   url: /aegis/
   group: Network security
   additional_groups:
-    [Application performance, Application security, Core platform]
+    [Application performance, Application security]
 
 meta:
   title: Cloudflare Aegis docs
