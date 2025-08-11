@@ -3,6 +3,9 @@ link: "/workers/platform/changelog/"
 productName: Workers
 productLink: "/workers/"
 entries:
+  - publish_date: "2025-08-11"
+    description: |-
+      - The MessageChannel and MessagePort APIs are now available in Workers.
   - publish_date: "2025-06-27"
     description: |-
       - Updated v8 to version 13.9.
