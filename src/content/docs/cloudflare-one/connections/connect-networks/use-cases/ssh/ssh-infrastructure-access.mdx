@@ -144,9 +144,10 @@ SSH command logs are not visible from the dashboard itself and must be exported 
 To manually retrieve logs:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Logs** > **Access**.
-2. Select a user who was allowed to access the target.
-3. Select **Download** to download the session's command log.
-4. <Render file="ssh/decrypt-ssh-log" />
+2. Filter the logs using the name of your [SSH application](#5-add-an-infrastructure-application).
+3. Select the SSH session for which you want to export command logs.
+4. In the side panel, scroll down to **SSH logs** and select **Download**.
+5. <Render file="ssh/decrypt-ssh-log" />
 
 ### Export SSH logs with Logpush
 
