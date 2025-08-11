@@ -68,7 +68,7 @@ Then, use [Security Analytics](/waf/analytics/security-analytics/) in the new ap
 
 Alternatively, create a custom rule like the one described in the next step using a _Log_ action. This rule will generate [security events](/waf/analytics/security-events/) that will allow you to validate your configuration.
 
-### 3. Mitigate requests containing PII
+### 3. Mitigate harmful requests
 
 [Create a custom rule](/waf/custom-rules/create-dashboard/) that blocks requests where Cloudflare detected personally identifiable information (PII) in the incoming request (as part of an LLM prompt), returning a custom JSON body:
 
@@ -85,7 +85,7 @@ Alternatively, create a custom rule like the one described in the next step usin
 - **With response type**: Custom JSON
 - **Response body**: `{ "error": "Your request was blocked. Please rephrase your request." }`
 
-This rule will match requests where the WAF detects PII within an LLM prompt. For a list of fields provided by Firewall for AI, refer to [Fields](#fields).
+For additional examples, refer to [Example mitigation rules](#example-mitigation-rules). For a list of fields provided by Firewall for AI, refer to [Fields](#fields).
 
 <Details header="Combine with other Rules language fields">
 
@@ -125,6 +125,38 @@ When enabled, Firewall for AI populates the following fields:
 | LLM Unsafe topic detected   | `Boolean`       | [`cf.llm.prompt.unsafe_topic_detected`](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.unsafe_topic_detected/)     |
 | LLM Unsafe topic categories | `Array<String>` | [`cf.llm.prompt.unsafe_topic_categories`](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.unsafe_topic_categories/) |
 
-For a list of PII categories, refer to the [`cf.llm.prompt.pii_categories` field reference](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.pii_categories/).
+For a list of PII categories, refer to the [`cf.llm.prompt.pii_categories`](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.pii_categories/) field reference.
 
-For a list of unsafe topic categories, refer to the [`cf.llm.prompt.unsafe_topic_categories` field reference](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.unsafe_topic_categories/).
+For a list of unsafe topic categories, refer to the [`cf.llm.prompt.unsafe_topic_categories`](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.unsafe_topic_categories/) field reference.
+
+## Example mitigation rules
+
+### Block requests with specific PII category in prompt
+
+The following example [custom rule](/waf/custom-rules/create-dashboard/) will block requests with an LLM prompt that tries to obtain PII of a specific [category](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.pii_categories/):
+
+- **If incoming requests match**:
+
+  | Field              | Operator | Value         |
+  | ------------------ | -------- | ------------- |
+  | LLM PII Categories | is in    | `Credit Card` |
+
+  If you use the Expression Editor, enter the following expression:<br />
+  `(any(cf.llm.prompt.pii_categories[*] in {"CREDIT_CARD"}))`
+
+- **Action**: _Block_
+
+### Block requests with specific unsafe content categories in prompt
+
+The following example [custom rule](/waf/custom-rules/create-dashboard/) will block requests with an LLM prompt containing unsafe content of specific [categories](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.unsafe_topic_categories/):
+
+- **If incoming requests match**:
+
+  | Field                       | Operator | Value                            |
+  | --------------------------- | -------- | -------------------------------- |
+  | LLM Unsafe topic categories | is in    | `S1: Violent Crimes` `S10: Hate` |
+
+  If you use the Expression Editor, enter the following expression:<br />
+  `(any(cf.llm.prompt.unsafe_topic_categories[*] in {"S1" "S10"}))`
+
+- **Action**: _Block_
