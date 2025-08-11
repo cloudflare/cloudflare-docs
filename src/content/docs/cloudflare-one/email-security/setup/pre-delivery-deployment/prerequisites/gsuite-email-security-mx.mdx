@@ -65,3 +65,23 @@ If desired, you can create a separate quarantine for each of the dispositions.
 ## 4. Set up MX/Inline
 
 <Render file="email-security/deployment/set-up-mx-inline-step"/>
+
+## 5. Secure your mail flow
+
+:::note
+This step should be performed after 72 hours for DNS propagation.
+:::
+
+After 72 hours, the MX record DNS update will have sufficiently propagated across the Internet. It is now safe to secure your email flow. This will ensure that Google only accepts messages that are first received by Email Security. This step is highly recommended to prevent threat actors from using cached MX entries to bypass Email Security by injecting messages directly into Gmail.
+
+To secure your mail flow:
+
+1. In the [Google Administrative Console](https://admin.google.com/), go to **Apps** > **Google Workspace** > **Gmail**.
+
+2. Select **Spam, Phishing and Malware**.
+
+3. Go to **Inbound gateway** and select **Edit Inbound gateway**.
+
+4. Enable **Reject all mail not from gateway IPs** and select **Save**.
+
+5. Select **Save** once more to commit and activate the configuration change in the Gmail advanced configuration console.
