@@ -12,11 +12,14 @@ sidebar:
 
 import { Tabs, TabItem, Details } from "~/components";
 
-Firewall for AI is a detection that can help protect your services powered by large language models (LLMs) against abuse. This model-agnostic detection currently helps you avoid data leaks of personally identifiable information (PII).
+Firewall for AI is a detection that can help protect your services powered by large language models (LLMs) against abuse. This model-agnostic detection currently helps you do the following:
 
-When enabled, the detection runs on incoming traffic, searching for any LLM prompts attempting to exploit the model in order to extract data.
+- Prevent data leaks of personally identifiable information (PII) — for example, phone numbers, email addresses, social security numbers, and credit card numbers.
+- Detect and moderate unsafe or harmful prompts – for example, prompts potentially related to violent crimes.
 
-Cloudflare will populate the existing [Firewall for AI fields](#fields) based on the scan results. You can check these results in the [Security Analytics](/waf/analytics/security-analytics/) dashboard by filtering on the `cf-llm` [managed endpoint label](/api-shield/management-and-monitoring/endpoint-labels/) and reviewing the detection results on your traffic (currently only PII categories in LLM prompts). Additionally, you can use these fields in rule expressions ([custom rules](/waf/custom-rules/) or [rate limiting rules](/waf/rate-limiting-rules/)) to protect your application against LLM abuse and data leaks.
+When enabled, the detection runs on incoming traffic, searching for any LLM prompts attempting to exploit the model.
+
+Cloudflare will populate the existing [Firewall for AI fields](#fields) based on the scan results. You can check these results in the [Security Analytics](/waf/analytics/security-analytics/) dashboard by filtering on the `cf-llm` [managed endpoint label](/api-shield/management-and-monitoring/endpoint-labels/) and reviewing the detection results on your traffic. Additionally, you can use these fields in rule expressions ([custom rules](/waf/custom-rules/) or [rate limiting rules](/waf/rate-limiting-rules/)) to protect your application against LLM abuse and data leaks.
 
 ## Availability
 
@@ -61,7 +64,7 @@ curl "https://<YOUR_HOSTNAME>/api/v1/" \
 
 The PII category for this request would be `EMAIL_ADDRESS`.
 
-Then, use [Security Analytics](/waf/analytics/security-analytics/) in the new application security dashboard to validate that the WAF is correctly detecting prompts leaking PII data in incoming requests. Filter data by the `cf-llm` managed endpoint label and review the detection results on your traffic.
+Then, use [Security Analytics](/waf/analytics/security-analytics/) in the new application security dashboard to validate that the WAF is correctly detecting potentially harmful prompts in incoming requests. Filter data by the `cf-llm` managed endpoint label and review the detection results on your traffic.
 
 Alternatively, create a custom rule like the one described in the next step using a _Log_ action. This rule will generate [security events](/waf/analytics/security-events/) that will allow you to validate your configuration.
 
@@ -114,10 +117,14 @@ You can combine the previous expression with other [fields](/ruleset-engine/rule
 
 When enabled, Firewall for AI populates the following fields:
 
-| Field name in the dashboard | Field                                                                                                           |
-| --------------------------- | --------------------------------------------------------------------------------------------------------------- |
-| LLM PII Detected            | [`cf.llm.prompt.pii_detected`](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.pii_detected/)     |
-| LLM PII Categories          | [`cf.llm.prompt.pii_categories`](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.pii_categories/) |
-| LLM Content Detected        | [`cf.llm.prompt.detected`](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.detected/)             |
+| Field name in the dashboard | Data type       | Field                                                                                                                             |
+| --------------------------- | --------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| LLM PII Detected            | `Boolean`       | [`cf.llm.prompt.pii_detected`](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.pii_detected/)                       |
+| LLM PII Categories          | `Array<String>` | [`cf.llm.prompt.pii_categories`](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.pii_categories/)                   |
+| LLM Content Detected        | `Boolean`       | [`cf.llm.prompt.detected`](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.detected/)                               |
+| LLM Unsafe topic detected   | `Boolean`       | [`cf.llm.prompt.unsafe_topic_detected`](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.unsafe_topic_detected/)     |
+| LLM Unsafe topic categories | `Array<String>` | [`cf.llm.prompt.unsafe_topic_categories`](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.unsafe_topic_categories/) |
 
 For a list of PII categories, refer to the [`cf.llm.prompt.pii_categories` field reference](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.pii_categories/).
+
+For a list of unsafe topic categories, refer to the [`cf.llm.prompt.unsafe_topic_categories` field reference](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.unsafe_topic_categories/).
