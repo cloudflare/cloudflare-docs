@@ -51,6 +51,7 @@ const integrations: Array<Tag> = [
 const languages: Array<Tag> = [
 	{ label: "Go" },
 	{ label: "GraphQL" },
+	{ label: "Java" },
 	{ label: "JavaScript", variants: ["js"] },
 	{ label: "MySQL" },
 	{ label: "NoSQL" },
