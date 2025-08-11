@@ -112,12 +112,12 @@ export default function ResourcesBySelector({
 							<p className="decoration-accent underline decoration-2 underline-offset-4">
 								{title}
 							</p>
-							{ showDescriptions && (
-							<span className="line-clamp-3" title={page.data.description}>
-								{page.data.description}
-							</span>
+							{showDescriptions && (
+								<span className="line-clamp-3" title={page.data.description}>
+									{page.data.description}
+								</span>
 							)
-						}
+							}
 						</a>
 					);
 				})}

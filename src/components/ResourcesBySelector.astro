@@ -20,9 +20,15 @@ const props = z.object({
 	showDescriptions: z.boolean().default(true),
 });
 
-const { tags, types, products, directory, filterables, columns, showDescriptions } = props.parse(
-	Astro.props,
-);
+const {
+	tags,
+	types,
+	products,
+	directory,
+	filterables,
+	columns,
+	showDescriptions,
+} = props.parse(Astro.props);
 
 const docs = await getCollection("docs");
 const videos = await getCollection("stream");
