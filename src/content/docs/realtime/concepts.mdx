@@ -9,7 +9,7 @@ This page explains the core concepts and terminology used in RealtimeKit.
 
 ### Meeting
 
-A **Meeting** is the fundamental communication channel in RealtimeKit. You can think of it like an event on your calendar - it's a persistent, long-lived container or "room" that serves as a blueprint for its [sessions](./concepts#session). Every session created for this meeting inherits the same base configuration, such as the title of the meeting and whether to automatically record the session when it starts. You add participants to the meeting, which grants them access to join a session of that meeting.
+A **Meeting** is the fundamental communication channel in RealtimeKit. You can think of it like an event on your calendar - it's a persistent, long-lived container or "room" that serves as a blueprint for its [sessions](/realtime/concepts#session). Every session created for this meeting inherits the same base configuration, such as the title of the meeting and whether to automatically record the session when it starts. You add participants to the meeting, which grants them access to join a session of that meeting.
 
 ### Session
 
@@ -33,7 +33,7 @@ A **Participant** is the server-side representation of a user within a session. 
 
 ### Peer
 
-A **Peer** is the client-side representation of a [participant](./concepts#participant) in a session. While the terms are sometimes used interchangeably, a peer represents a specific instance of a participant joining the meeting. For example, if a single user joins the same meeting from two different browser tabs, they will have the same participant ID (also referred to as a user ID) but two unique peer IDs.
+A **Peer** is the client-side representation of a [participant](/realtime/concepts#participant) in a session. While the terms are sometimes used interchangeably, a peer represents a specific instance of a participant joining the meeting. For example, if a single user joins the same meeting from two different browser tabs, they will have the same participant ID (also referred to as a user ID) but two unique peer IDs.
 
 ### Stage
 
@@ -55,4 +55,4 @@ The **UI Kit** is a library of pre-built, customizable UI components that sits o
 
 A **Selective Forwarding Unit (SFU)** is a server architecture that efficiently manages real-time media streams in multi-party video calls. Instead of each participant sending their media directly to every other participant in a bandwidth-intensive mesh network, each participant sends a single stream to the SFU. The SFU then forwards those streams to the other participants, making it a highly scalable model.
 
-The [**Realtime SFU**](./sfu) is Cloudflare's implementation of this architecture and is the core engine that powers RealtimeKit. It runs on Cloudflare's global Anycast network, meaning participants automatically connect to the nearest data center. This minimizes latency and ensures a high-quality experience regardless of a user's location. The SFU intelligently routes media, handling the complex task of receiving multiple streams and forwarding them to the appropriate participants.
+The [**Realtime SFU**](/realtime/sfu) is Cloudflare's implementation of this architecture and is the core engine that powers RealtimeKit. It runs on Cloudflare's global Anycast network, meaning participants automatically connect to the nearest data center. This minimizes latency and ensures a high-quality experience regardless of a user's location. The SFU intelligently routes media, handling the complex task of receiving multiple streams and forwarding them to the appropriate participants.

@@ -15,7 +15,7 @@ RealtimeKit is composed of three core components that work together to provide a
 
 - **Core SDK**: The Core SDK provides the business logic for the UI Kit. It **can be used independently** to build a custom UI from the ground up, but the UI Kit offers a simpler and faster way to get started. The SDK interacts directly with the RealtimeKit backend and SFU, providing powerful APIs for features like live video, audio, and streaming while abstracting away the complexities of WebRTC. The Core SDK is available for JavaScript, React, React Native, iOS, and Android.
 
-- **Backend Infrastructure**: This is the foundation of RealtimeKit. It includes REST APIs for creating meetings, adding participants, retrieving session information, webhooks for server-side notifications, and so on. A dedicated socket server handles real-time signalling, while the [Realtime SFU](./sfu) relays media between users with low latency. The entire backend runs on Cloudflare's global network, ensuring reliability and scale.
+- **Backend Infrastructure**: This is the foundation of RealtimeKit. It includes REST APIs for creating meetings, adding participants, retrieving session information, webhooks for server-side notifications, and so on. A dedicated socket server handles real-time signalling, while the [Realtime SFU](/realtime/sfu) relays media between users with low latency. The entire backend runs on Cloudflare's global network, ensuring reliability and scale.
 
 ## Use Cases
 
@@ -31,7 +31,7 @@ Build collaborative experiences for team meetings, online classrooms, or social 
 
 ### Webinars
 
-Webinars are one-to-many events designed for a presenter to share information with a large, interactive audience. Unlike group calls where all participants collaborate freely, webinars have distinct roles for presenters and viewers, managed through [presets](./concepts#presets). This structure, powered by WebRTC, is ideal for product demos, company all-hands, and live workshops, with features like chat, Q&A, and polls to engage the audience.
+Webinars are one-to-many events designed for a presenter to share information with a large, interactive audience. Unlike group calls where all participants collaborate freely, webinars have distinct roles for presenters and viewers, managed through [presets](/realtime/concepts#presets). This structure, powered by WebRTC, is ideal for product demos, company all-hands, and live workshops, with features like chat, Q&A, and polls to engage the audience.
 
 - **Product Demos:** Showcase your product to a large audience with live video and Q&A sessions.
 - **Company All-Hands:** Broadcast company-wide meetings to all your employees, no matter where they are.

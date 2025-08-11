@@ -66,12 +66,12 @@ If the publisher endpoint is a browser you can include these by specifying `send
 
 ```js
 const transceiver = peerConnection.addTransceiver(track, {
-  direction: "sendonly",
-  sendEncodings: [
-    { scaleResolutionDownBy: 1, rid: "f" },
-    { scaleResolutionDownBy: 2, rid: "h" },
-    { scaleResolutionDownBy: 4, rid: "q" }
-  ]
+	direction: "sendonly",
+	sendEncodings: [
+		{ scaleResolutionDownBy: 1, rid: "f" },
+		{ scaleResolutionDownBy: 2, rid: "h" },
+		{ scaleResolutionDownBy: 4, rid: "q" },
+	],
 });
 ```
 
@@ -80,7 +80,7 @@ const transceiver = peerConnection.addTransceiver(track, {
 Here's an example of how to use simulcast with Cloudflare Realtime:
 
 1. Create a new local track with simulcast configuration. There should be a section in the SDP with `a=simulcast:send`.
-2. Use the [Cloudflare Realtime API](/realtime/https-api) to push this local track, by calling the /tracks/new endpoint.
-3. Use the [Cloudflare Realtime API](/realtime/https-api) to start pulling a remote track (from another browser or device), by calling the /tracks/new endpoint and specifying the `simulcast` configuration object along with the remote track ID you get from step 2.
+2. Use the [Cloudflare Realtime API](/realtime/sfu/https-api) to push this local track, by calling the /tracks/new endpoint.
+3. Use the [Cloudflare Realtime API](/realtime/sfu/https-api) to start pulling a remote track (from another browser or device), by calling the /tracks/new endpoint and specifying the `simulcast` configuration object along with the remote track ID you get from step 2.
 
 For more examples, check out the [Realtime Examples GitHub repository](https://github.com/cloudflare/calls-examples/tree/main/echo-simulcast).
