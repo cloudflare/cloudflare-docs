@@ -66,7 +66,7 @@ If desired, you can create a separate quarantine for each of the dispositions.
 
 <Render file="email-security/deployment/set-up-mx-inline-step"/>
 
-## 5. (Recommended) Secure your email flow
+## 5. (Recommended) Secure Google Workspace from MX records bypass
 
 One method of DNS attacks is to search for old MX records and send <GlossaryTooltip term="phishing">phishing</GlossaryTooltip> emails directly to the mail server. To secure the email flow, you will want to enforce an email flow where inbound messages are accepted by Google Workspace only when they originate from Email Security. This can be done by adding a connector to only allow email from Email Security with TLS encryption. This step is optional but recommended.
 
