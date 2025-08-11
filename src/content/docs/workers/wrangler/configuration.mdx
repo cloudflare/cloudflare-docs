@@ -1478,8 +1478,8 @@ This file must contain only a single JSON object of the form:
 When this `config.json` file exists, Wrangler will follow the `configPath` (relative to the `.wrangler/deploy/config.json` file) to find the generated Wrangler configuration file to load and use in the current command.
 Wrangler will display messaging to the user to indicate that the configuration has been redirected to a different file than the user's configuration file.
 
-Note that the generated configuration file should not include any [environments](#environments).
-This is because such a file, when required, should be created based on a target environment's specific values, meaning that tools should generate distinct configuration files for different environments.
+The generated configuration file should not include any [environments](#environments).
+This is because such a file, when required, should be created based on a target environment's specific values and tools should generate distinct configuration files for different environments.
 
 ### Custom build tool example
 
@@ -1505,7 +1505,7 @@ A common example of using a redirected configuration is where a custom build too
 
   </WranglerConfig>
 
-  Note that this configuration points `main` at the user's code entry-point and that it also defined the `MY_VARIABLE` in two different environments.
+  This configuration points `main` at the user's code entry-point and defined the `MY_VARIABLE` in two different environments.
 
 - Then, the user runs a custom build, which might read the user's Wrangler configuration file to find the source code entry-point:
 
