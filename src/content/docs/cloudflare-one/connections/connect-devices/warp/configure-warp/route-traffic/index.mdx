@@ -55,32 +55,29 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    A["WARP user requests resource"] --> B["WARP Client proxies DNS Traffic"]
+    A["WARP user requests resource"] --> B["WARP client proxies all DNS traffic"]
+    B -- WARP checks if domain is listed in Local Domain Fallback policies --> C["Local Domain Fallback"]
 
-    B --> C["WARP checks if domain is listed in Local Domain Fallback (LDF) policies"]
+    %% Left branch (LDF exists)
+    C -- Domain exists in Local Domain Fallback policies --> ST["Split Tunnel processing"]
 
-    C -->|Domain exists in LDF policies| F["Split Tunnel processing"]
-    C -->|Domain does not exist in LDF policies<br/>Sent to Gateway for processing| E["Gateway checks Resolver Policies (Enterprise only)"]
+    ST -- Resolver IP included in WARP Tunnel per Split Tunnel configuration --> QW["Query sent via WARP Tunnel to be resolved"]
+    ST -- Resolver IP not included in WARP Tunnel per Split Tunnel configuration --> QO["Query sent to resolver IP outside WARP Tunnel"]
 
-    %% LDF branch
-    F -->|Resolver IP included in WARP Tunnel per Split Tunnel configuration| G["Query sent via WARP Tunnel to be resolved"]
-    F -->|Resolver IP not included in WARP Tunnel per Split Tunnel configuration| H["Query sent to resolver IP outside WARP Tunnel"]
+    QW -- Allowed by Gateway --> OR["Evaluated by Cloudflare on-ramp routes"]
+    OR -- Onramp routes do not include resolver IP --> GP["Gateway proxies query to resolver IP via normal WARP egress route"]
+    OR -- Onramp routes include, resolver IP --> ADV["Cloudflare onramps advertises route that includes Resolver IP"]
+    ADV --> PR["Private resolver returns IP address to WARP client"]
 
-    G -->|Allowed by Gateway| I["Evaluated by Cloudflare on-ramp routes"]
+    %% Right branch (no LDF match)
+    C -- Domain does not exist in Local Domain Fallback policies --> GWR["Gateway checks Resolver Policies (Enterprise only)"]
 
-    I -->|Onramp routes do not include resolver IP| J["Gateway proxies query to resolver IP via normal WARP egress route"]
-    I -->|Onramp routes include resolver IP| K["Cloudflare onramps advertise route that includes Resolver IP"]
-    K --> L["Private resolver returns IP address to WARP client"]
+    GWR -- Resolver policy is not matched --> C1111a["1.1.1.1"]
 
-    %% Gateway resolver policies branch
-    E -->|Resolver policy is not matched| M["1.1.1.1"]
-
-    E -->|Resolver policy is matched| N["Internal DNS"]
-    E -->|Resolver policy is matched| O["1.1.1.1"]
-    E -->|Resolver policy is matched| P["Custom resolver"]
-
-    P --> Q["Private network services (Cloudflare Tunnel, Magic WAN, WARP Connector)"]
-
+    GWR -- Resolver policy is matched --> IDNS["Internal DNS"]
+    GWR -- Resolver policy is matched --> C1111b["1.1.1.1"]
+    GWR -- Resolver policy is matched --> CUST["Custom resolver"]
+    CUST --> PNS["Private network services<br>(Cloudflare Tunnel, Magic WAN, WARP Connector)"]
 ```
 
 ## Add a DNS suffix
