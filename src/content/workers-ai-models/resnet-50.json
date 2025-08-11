@@ -8,11 +8,18 @@
         "name": "Image Classification",
         "description": "Image classification models take an image input and assigns it labels or classes."
     },
+    "created_at": "2023-09-25 19:21:11.898",
     "tags": [],
     "properties": [
         {
-            "property_id": "beta",
-            "value": "false"
+            "property_id": "price",
+            "value": [
+                {
+                    "unit": "per inference request",
+                    "price": 0.0000025,
+                    "currency": "USD"
+                }
+            ]
         },
         {
             "property_id": "info",

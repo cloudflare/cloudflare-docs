@@ -6,8 +6,6 @@ sidebar:
 head: []
 description: Configure WARP to use a custom root certificate instead of the
   Cloudflare certificate.
-banner:
-  content: The default global Cloudflare root certificate expired on 2025-02-02. If you installed the default Cloudflare certificate before 2024-10-17, you must <a href="/cloudflare-one/connections/connect-devices/user-side-certificates/#generate-a-cloudflare-root-certificate">generate a new certificate</a> and activate it for your Zero Trust organization to avoid inspection errors.
 ---
 
 import { Render, Tabs, TabItem } from "~/components";
@@ -21,7 +19,9 @@ Enterprise customers who do not wish to install a [Cloudflare certificate](/clou
 You can upload up to five custom root certificates. If your organization requires more than five certificates, contact your account team.
 
 :::caution
-Custom certificates are limited to use between your users and the Gateway proxy. Connections between Gateway and the origin server will use a Cloudflare certificate.
+Custom certificates are limited to use between your users and the Gateway proxy. Gateway connects to origin servers using publicly trusted certificates, similar to how a browser validates secure websites.
+
+If your users need to connect to self-signed origin servers, create an HTTP Allow policy for the origin server with the [untrusted certificate action](/cloudflare-one/policies/gateway/http-policies/#untrusted-certificates) set to _Pass through_.
 :::
 
 ## Generate a custom root CA
@@ -78,7 +78,7 @@ openssl x509 -in <CUSTOM-ROOT-CERT>.pem -text
 
 <TabItem label="API">
 
-1. <Render file="upload-mtls-cert" params={{ one: " " }} />
+1. <Render file="upload-mtls-cert" params={{ key: " ", cert: "root CA" }} />
 
 2. Set the certificate as available for use in inspection with the [Activate a Zero Trust certificate endpoint](/api/resources/zero_trust/subresources/gateway/subresources/certificates/methods/activate/). This will deploy the certificate across the Cloudflare global network.
 

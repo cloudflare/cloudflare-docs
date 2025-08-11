@@ -3,7 +3,6 @@ title: Implement Turnstile using implicit and explicit rendering
 pcx_content_type: tutorial
 updated: 2024-09-16
 difficulty: Beginner
-content_type: 📝 Tutorial
 languages:
   - JavaScript
 tags:
@@ -12,6 +11,8 @@ sidebar:
   order: 4
 
 ---
+
+import { Render } from "~/components";
 
 This tutorial will explore the two primary methods of implementing Turnstile to your website via **implicit or explicit rendering** using a detailed explanation, a step by step implementation guide, and examples on how to help you protect your web application security while maintaining a good user experience.
 
@@ -38,7 +39,7 @@ To set up implicit rendering:
 ```html
 <div class="cf-turnstile" data-sitekey="yourSitekey" data-callback="javascriptCallback"></div>
 ```
-Once a challenge has been solved, a token is passed to the success callback. This token must be validated against our [siteverify endpoint](/turnstile/get-started/server-side-validation/).
+Once a challenge has been solved, a token is passed to the success callback. This token must be validated against our [Siteverify endpoint](/turnstile/get-started/server-side-validation/).
 
 3. **Create Your Form**: Turnstile is often used to protect forms on websites such as login forms or contact forms. You can embed the widget within your `<form>` tag.
 
@@ -179,9 +180,9 @@ This will not call any callback and will remove all related DOM elements.
 
 ## Server-side validation
 
-Regardless of the rendering method, Turnstile tokens need to be verified using `siteverify` because the front-end widget creates a cryptographically secured token. To ensure that a token is not forged by an attacker or has not been consumed yet, it is necessary to check the validity of the token using Cloudflare's siteverify API.
+Regardless of the rendering method, Turnstile tokens need to be verified using Siteverify because the front-end widget creates a cryptographically secured token. To ensure that a token is not forged by an attacker or has not been consumed yet, it is necessary to check the validity of the token using Cloudflare's siteverify API.
 
-The `siteverify` API will only validate a token once. If a token has already been checked, the siteverify API will yield an error on subsequent verification attempts indicating that a token has already been consumed.
+The Siteverify API will only validate a token once. If a token has already been checked, the Siteverify API will yield an error on subsequent verification attempts indicating that a token has already been consumed.
 
 ```js
 // This is the demo secret key. In prod, we recommend you store
@@ -236,6 +237,8 @@ export default {
 };
 ```
 
+<Render file="request-dot-clone-warning" product="workers" />
+
 ## Choose between implicit and explicit rendering
 
 Choosing the appropriate rendering method for Turnstile is important and effectively helps you to add it to your website while ensuring optimal performance and user experience. Both implicit and explicit rendering have their own advantages and are suited to different types of web applications. Refer to the table below that highlights the ideal use case for each of these rendering methods:
@@ -265,5 +268,5 @@ Remember to perform server-side validation of the response token to complete the
 ## Additional resources
 
 - [Server-side validation](/turnstile/get-started/server-side-validation/): A guide on how to implement server-side validation to ensure that only valid, human-generated responses are accepted by your application.
-- [Turnstile Analytics](/turnstile/turnstile-analytics/): A guide on how to access and interpret Turnstile analytics data, allowing you to monitor key metrics, access the number of challenges issued, and evaluate the challenge solve rate (CSR).
+- [Turnstile Analytics](/turnstile/turnstile-analytics/): A guide on how to access and interpret Turnstile Analytics data, allowing you to monitor key metrics, access the number of challenges issued, and evaluate the [challenge solve rate (CSR)](/cloudflare-challenges/reference/challenge-solve-rate/).
 - [Turnstile API Reference](/api/resources/turnstile/subresources/widgets/methods/list/): Comprehensive documentation for the Turnstile API, providing detailed information on API operations for managing Turnstile widgets, including how to list, create, and update widgets via API calls.

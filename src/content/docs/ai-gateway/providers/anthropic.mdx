@@ -3,6 +3,8 @@ title: Anthropic
 pcx_content_type: get-started
 ---
 
+import { Render } from "~/components";
+
 [Anthropic](https://www.anthropic.com/) helps build reliable, interpretable, and steerable AI systems.
 
 ## Endpoint
@@ -65,3 +67,17 @@ const message = await anthropic.messages.create({
 	max_tokens: maxTokens,
 });
 ```
+
+<Render
+	file="chat-completions-providers"
+	product="ai-gateway"
+	params={{
+		name: "Anthropic",
+		jsonexample: `
+{
+	"model": "anthropic/{model}"
+}`
+
+    }}
+
+/>

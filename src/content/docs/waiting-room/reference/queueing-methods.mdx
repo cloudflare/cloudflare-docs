@@ -42,6 +42,8 @@ Allow all traffic to pass immediately through your waiting room and into your ap
 
 Use this setup when you only want to use your waiting room for events — where you can update the queueing method — and otherwise avoid queueing during low-traffic hours.
 
+Additionally, you can use this queuing method when you want to gather analytics on your traffic but do not want to queue any users. With passthrough on, all traffic will be sent directly to your origin. However, analytics will be gathered on `total active users`, `new users per minute` and `time on origin`. We recommend this as a useful test to gather insights into your traffic patterns to help determine appropriate threshold settings.
+
 ## Reject
 
 Prevent any traffic from reaching your application by setting its `queueing_method` to **reject**. Users will get a static page.

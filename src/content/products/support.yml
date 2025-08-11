@@ -4,16 +4,10 @@ logo: <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="none"
 product:
   title: Support
   url: /support/
-  group: Cloudflare essentials
+  group: Core platform
+  additional_groups: [Docs collections]
 
 meta:
   title: Cloudflare Support docs
-  description: Cloudflare Support focused documentation.
+  description: Cloudflare Support-focused documentation
   author: "@cloudflare"
-
-resources:
-  dashboard_link: https://dash.cloudflare.com/?to=/:account/support
-
-externals:
-  - title: Cloudflare home
-    url: https://www.cloudflare.com/

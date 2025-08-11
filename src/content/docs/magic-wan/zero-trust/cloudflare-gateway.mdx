@@ -47,12 +47,12 @@ This traffic will egress from Cloudflare according to the [egress policies](/clo
 
 By default, TCP, UDP, and ICMP traffic routed through Magic WAN tunnels and destined to routes behind [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) will be proxied/filtered through Cloudflare Gateway.
 
-Contact your account team to enable Gateway filtering for traffic destined to routes behind Magic WAN tunnels. 
+Contact your account team to enable Gateway filtering for traffic destined to routes behind Magic WAN tunnels.
 
-If enabled, by default TCP/UDP traffic meeting **all** the following criteria will be proxied/filtered by Cloudflare Gateway: 
+If enabled, by default TCP/UDP traffic meeting **all** the following criteria will be proxied/filtered by Cloudflare Gateway:
 - Both source and destination IPs are part of either [RFC1918](https://datatracker.ietf.org/doc/html/rfc1918) space, [WARP](/cloudflare-one/connections/connect-devices/warp/), [BYO](/byoip/) or [Leased IPs](/magic-transit/cloudflare-ips/)
 - Source port must be a client port strictly higher than `1023`
-- Destination port is a well-known port lower than `1024` 
+- Destination port is a well-known port lower than `1024`
 
 Optionally, more specific matches may be specified to override the default:
 
@@ -62,7 +62,7 @@ Optionally, more specific matches may be specified to override the default:
 
 Source ports are hard-coded to `1024`-`65535` and may not be overridden.
 
-<Render file="traceroute" />
+<Render file="traceroute" product="networking-services" />
 
 ## Test Gateway integration
 
@@ -72,4 +72,4 @@ If you are still in the process of testing Gateway, and Cloudflare is not your d
 
 Confirm there is an entry for the test in [HTTP Gateway Activity Logs](/cloudflare-one/insights/logs/gateway-logs/#http-logs). The destination IP address should be the public IP address of `ifconfig.me`, and the source IP address should be the private (WAN) address of the host with the browser. Your outbound connection should be sourced from a Magic WAN IP address, and not any public IP address that Cloudflare might be advertising on your behalf. This is true as well when using [Magic Transit With Egress Option](/reference-architecture/architectures/magic-transit/#magic-transit-with-egress-option-enabled).
 
-Additionally, test both `http://ifconfig.me` (non-TLS) and `https://ifconfig.me` (TLS) to ensure that your [TCP maximum segment size (MSS Clamping)](/magic-wan/get-started/#set-maximum-segment-size) has been set properly. If the response to the HTTPS query hangs or fails, but HTTP works, it is possible that the MSS value is too high or not set. Reduce this value on your customer premise equipment to match the overhead introduced by your [IKE](/magic-wan/reference/tunnels/#supported-configuration-parameters) and [ESP](https://en.wikipedia.org/wiki/IPsec#Encapsulating_Security_Payload) settings.
+Additionally, test both `http://ifconfig.me` (non-TLS) and `https://ifconfig.me` (TLS) to ensure that your [TCP maximum segment size (MSS Clamping)](/magic-wan/get-started/#set-maximum-segment-size) has been set properly. If the response to the HTTPS query hangs or fails, but HTTP works, it is possible that the MSS value is too high or not set. Reduce this value on your customer premise equipment to match the overhead introduced by your [IKE](/magic-wan/reference/gre-ipsec-tunnels/#supported-configuration-parameters) and [ESP](https://en.wikipedia.org/wiki/IPsec#Encapsulating_Security_Payload) settings.

@@ -6,7 +6,7 @@ sidebar:
   order: 3
 ---
 
-import { Details } from "~/components";
+import { Details, APIRequest } from "~/components";
 
 A [phase entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset) contains an ordered list of rules that run in that phase. A rule in an entry point ruleset can execute a different ruleset. You can have entry point rulesets for each phase at the account level and at the zone level.
 
@@ -22,30 +22,31 @@ Instead of relying on the automatic creation of an entry point ruleset, you can 
 
 The following example sets the rules of a phase entry point ruleset at the zone level for the `http_request_firewall_managed` phase using the [Update a zone entry point ruleset](/api/resources/rulesets/subresources/phases/methods/update/) operation.
 
-```bash
-curl --request PUT \
-https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_request_firewall_managed/entrypoint \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-  "rules": [
-    {
-      "action": "execute",
-      "action_parameters": {
-        "id": "<MANAGED_RULESET_ID_1>"
-      },
-      "expression": "true"
-    },
-    {
-      "action": "execute",
-      "action_parameters": {
-        "id": "<MANAGED_RULESET_ID_2>"
-      },
-      "expression": "true"
-    }
-  ]
-}'
-```
+<APIRequest
+	path="/zones/{zone_id}/rulesets/phases/{ruleset_phase}/entrypoint"
+	method="PUT"
+	parameters={{
+		ruleset_phase: "http_request_firewall_managed",
+	}}
+	json={{
+		rules: [
+			{
+				action: "execute",
+				action_parameters: {
+					id: "<MANAGED_RULESET_ID_1>",
+				},
+				expression: "true",
+			},
+			{
+				action: "execute",
+				action_parameters: {
+					id: "<MANAGED_RULESET_ID_2>",
+				},
+				expression: "true",
+			},
+		],
+	}}
+/>
 
 ```json output
 {
@@ -90,20 +91,19 @@ https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_reques
 
 <Details header="Example: Add a single rule to a phase entry point ruleset at the zone level">
 
-The following example adds a single rule to a phase entry point ruleset (with ID `{ruleset_id}`) at the zone level using the [Create a zone ruleset rule](/api/resources/rulesets/subresources/rules/methods/create/) operation.
+The following example adds a single rule to a phase entry point ruleset (with ID `$RULESET_ID`) at the zone level using the [Create a zone ruleset rule](/api/resources/rulesets/subresources/rules/methods/create/) operation.
 
-```bash
-curl https://api.cloudflare.com/client/v4/zone/{zone_id}/rulesets/{ruleset_id}/rules \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-  "action": "execute",
-  "action_parameters": {
-    "id": "<MANAGED_RULESET_ID>"
-  },
-  "expression": "true"
-}'
-```
+<APIRequest
+	path="/zones/{zone_id}/rulesets/{ruleset_id}/rules"
+	method="POST"
+	json={{
+		action: "execute",
+		action_parameters: {
+			id: "<MANAGED_RULESET_ID>",
+		},
+		expression: "true",
+	}}
+/>
 
 ```json output
 {

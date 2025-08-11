@@ -1,0 +1,48 @@
+---
+title: RSSButton
+description: A button component for RSS feed subscriptions.
+---
+
+## Example
+
+```mdx live
+import { RSSButton } from "~/components";
+
+<RSSButton changelog="Workers" />
+<br />
+<RSSButton href="/custom/feed.xml" text="Custom Feed" icon="external" />
+```
+
+## Props
+
+### `text`
+
+**type:** `string`
+
+**default:** `"Subscribe to RSS"`
+
+The text to display in the button.
+
+### `icon`
+
+**type:** [`StarlightIcon`](https://starlight.astro.build/reference/icons/#all-icons)
+
+**default:** `"rss"`
+
+The icon to display next to the text. Uses Starlight's icon component.
+
+### `changelog` or `href`
+
+You must provide either `changelog` or `href`, but not both:
+
+#### `changelog`
+
+**type:** `string`
+
+The name of the changelog to link to. This will be transformed into a lowercase, hyphen-separated string and used to construct the RSS feed URL in the format `/changelog/rss/{changelog}.xml`.
+
+#### `href`
+
+**type:** `string`
+
+A custom URL to link to. Use this when you need to link to an RSS feed that doesn't follow the standard changelog URL pattern.

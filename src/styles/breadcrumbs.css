@@ -1,0 +1,7 @@
+:root[data-theme="dark"] {
+	--color-link-breadcrumbs: var(--color-cl1-gray-7);
+}
+
+:root[data-theme="light"] {
+	--color-link-breadcrumbs: var(--color-cl1-gray-4);
+}

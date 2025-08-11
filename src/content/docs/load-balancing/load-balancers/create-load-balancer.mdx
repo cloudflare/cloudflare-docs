@@ -7,9 +7,11 @@ head: []
 description: Learn how to set up and maintain load balancers.
 ---
 
-import { AvailableNotifications, Render, TabItem, Tabs } from "~/components";
+import { AvailableNotifications, Render, TabItem, Tabs, Stream } from "~/components";
 
 <Render file="load-balancer-definition" /> <br />
+
+<Stream id="ce39fdf599aed3661f60e8f780761808" title="Set up Load Balancer" thumbnail="2s" showMoreVideos={false} />
 
 For more details about load balancers, refer to [Load balancers](/load-balancing/load-balancers/).
 
@@ -45,10 +47,10 @@ Sharing load balancers across sites is only supported if the target zone is on a
 
 To edit a load balancer in the dashboard:
 
-1. Go to **Traffic** > **Load Balancing**.
-2. On a specific load balancer, click **Edit**.
+1. Go to **Load Balancing**.
+2. On a specific load balancer, select **Edit**.
 3. While going through the [creation workflow](#create-a-load-balancer), update settings as needed.
-4. On the **Review** step, click **Save**.
+4. On the **Review** step, select **Save**.
 
 </TabItem> <TabItem label="API">
 
@@ -68,7 +70,7 @@ If you delete or disable a load balancer, your endpoint's response to requests w
 
 To delete a load balancer in the dashboard:
 
-1. Go to **Traffic** > **Load Balancing**.
+1. Go to **Load Balancing**.
 2. On a specific load balancer, click **Delete**.
 
 </TabItem> <TabItem label="API">

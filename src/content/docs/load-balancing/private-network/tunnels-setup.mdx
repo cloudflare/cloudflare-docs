@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import { Render, TabItem, Tabs } from "~/components";
+import { Render, TabItem, Tabs, APIRequest } from "~/components";
 
 Consider the following steps to learn how to configure Private Network Load Balancing solution, using [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) as the off-ramp to securely connect to your private or internal services.
 
@@ -13,9 +13,8 @@ Consider the following steps to learn how to configure Private Network Load Bala
 
 The specific configuration steps can vary depending on your infrastructure and services you are looking to connect. If you are not familiar with Cloudflare Tunnel, the pages linked on each step provide more guidance.
 
-1. [Create a tunnel](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/#1-create-a-tunnel).
-2. [Deploy the tunnel](/cloudflare-one/connections/connect-networks/deploy-tunnels/) to connect to your data center.
-3. Create a [virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/) and assign it to the tunnel you configured in the previous steps.
+1. [Create a tunnel](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/#1-create-a-tunnel) to connect your data center to Cloudflare.
+2. Create a [virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/) and assign it to the tunnel you configured in the previous steps.
 
 <Tabs> <TabItem label="Dashboard">
 
@@ -87,23 +86,21 @@ All origins with private IPs must have `virtual_network_id` specified.
 
 :::
 
-```bash
-curl --request PATCH \
-https://api.cloudflare.com/client/v4/accounts/{account_id}/load_balancers/pools/{pool_id} \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-	"origins": [
-		{
-			"name": "origin-1",
-			"address": "10.0.0.1",
-			"enabled": true,
-			"weight": 1,
-			"virtual_network_id": "a5624d4e-044a-4ff0-b3e1-e2465353d4b4"
-		}
-	]
-}'
-```
+<APIRequest
+  path="/accounts/{account_id}/load_balancers/pools/{pool_id}"
+  method="PATCH"
+  json={{
+    origins: [
+      {
+        name: "origin-1",
+        address: "10.0.0.1",
+        enabled: true,
+        weight: 1,
+        virtual_network_id: "a5624d4e-044a-4ff0-b3e1-e2465353d4b4"
+      }
+    ]
+  }}
+/>
 
 </TabItem>
 </Tabs>

@@ -19,6 +19,12 @@ description: Respond to the Worker request with the response from another
   website (example.com in this example).
 ---
 
+If you want to get started quickly, click on the button below.
+
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/docs-examples/tree/main/workers/respond-with-another-site)
+
+This creates a repository in your GitHub account and deploys the application to Cloudflare Workers.
+
 import { Render, TabItem, Tabs } from "~/components";
 
 <Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
@@ -48,13 +54,13 @@ export default {
 </TabItem> <TabItem label="Python" icon="seti:python">
 
 ```py
-from js import Response, fetch, Headers
+from workers import Response, fetch
 
 def on_fetch(request):
     def method_not_allowed(request):
         msg = f'Method {request.method} not allowed.'
-        headers = Headers.new({"Allow": "GET"}.items)
-        return Response.new(msg, headers=headers, status=405)
+        headers = {"Allow": "GET"}
+        return Response(msg, headers=headers, status=405)
 
     # Only GET requests work with this proxy.
     if request.method != "GET":
@@ -63,4 +69,4 @@ def on_fetch(request):
     return fetch("https://example.com")
 ```
 
-</TabItem> </Tabs>
+</TabItem></Tabs>

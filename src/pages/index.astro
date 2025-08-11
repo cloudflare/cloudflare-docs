@@ -41,7 +41,7 @@ const topCards = [
 			{ text: "Add web analytics", href: "/web-analytics/" },
 			{
 				text: "Troubleshoot errors",
-				href: "/support/troubleshooting/cloudflare-errors/",
+				href: "/support/troubleshooting/http-status-codes/",
 			},
 			{ text: "Register a domain", href: "/registrar/" },
 			{ text: "Setup 1.1.1.1", href: "/1.1.1.1/setup/" },
@@ -72,10 +72,7 @@ const topCards = [
 	{
 		title: "AI Products",
 		links: [
-			{
-				text: "Build a RAG app",
-				href: "/workers-ai/tutorials/build-a-retrieval-augmented-generation-ai/",
-			},
+			{ text: "AutoRAG", href: "/autorag/" },
 			{ text: "Workers AI", href: "/workers-ai/" },
 			{ text: "Vectorize", href: "/vectorize/" },
 			{ text: "AI Gateway", href: "/ai-gateway/" },
@@ -220,7 +217,7 @@ const recommendedSection = {
 								<a
 									href={link.href}
 									target={link.target}
-									class="!text-black hover:!text-accent dark:!text-accent-high dark:hover:!text-black"
+									class="text-black! hover:text-accent! dark:text-accent-high! dark:hover:text-black!"
 								>
 									{link.text}
 								</a>

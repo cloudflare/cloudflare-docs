@@ -47,6 +47,7 @@ For greater accuracy and consistency when changing endpoint health status, you c
 When an [individual endpoint becomes unhealthy](#how-an-endpoint-becomes-unhealthy), that may affect the health status of any associated pools (visible in the dashboard):
 
 * **Healthy**: All endpoints are healthy.
+* **Degraded**: At least one endpoint is unhealthy, but the pool is still considered healthy and could be receiving traffic.
 * **Critical**: The pool has fallen below the number of available endpoints specified in its **Health Threshold** and will not receive traffic from your load balancer (unless other pools are also unhealthy and this pool is marked as the [**Fallback Pool**](#fallback-pools)).
 * **Health unknown**: There are either no monitors attached to pool endpoints or the monitors have not yet determined endpoint health.
 * **No health**: Reserved for your load balancer's [**Fallback Pool**](#fallback-pools).

@@ -6,6 +6,8 @@ summary: Use MQTT.js with the token authentication mode configured on a broker.
 description: Use MQTT.js with the token authentication mode configured on a broker.
 ---
 
+import { PackageManagers } from "~/components";
+
 Below is an example using [MQTT.js](https://github.com/mqttjs/MQTT.js#mqttclientstreambuilder-options) with the TOKEN authentication mode configured on a broker. The example assumes you have [Node.js](https://nodejs.org/en/) v16 or higher installed on your system.
 
 Make sure to set the following environmental variables before running the example:
@@ -16,10 +18,7 @@ Make sure to set the following environmental variables before running the exampl
 
 Before running the example, make sure to install the MQTT library:
 
-```sh
-# Pre-requisite: install MQTT.js
-npm install mqtt --save
-```
+<PackageManagers pkg="mqtt" />
 
 Copy the following example as `example.js` and run it with `node example.js`.
 

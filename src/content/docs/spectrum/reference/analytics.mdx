@@ -5,7 +5,7 @@ weight: 0
 
 ---
 
-import { Render } from "~/components"
+import { Render, APIRequest } from "~/components"
 
 Cloudflare measures the following metrics for every connection.
 
@@ -81,10 +81,9 @@ Use the operators below to filter data.
 
 ## Analytics query example
 
-```bash
-curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/spectrum/analytics/events/summary?metrics=count&dimensions=event,appID&since=2018-01-01T16:57:00Z" \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>"
-```
+<APIRequest
+  path="/zones/{zone_id}/spectrum/analytics/events/summary"
+  method="GET"
+/>
 
 Refer to the [Spectrum API documentation](/api/resources/spectrum/subresources/analytics/subresources/aggregates/subresources/currents/methods/get/) for more examples of API requests.

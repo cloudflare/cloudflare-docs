@@ -1,0 +1,54 @@
+---
+title: Subtract IP calculator
+styleGuide:
+  component: SubtractIPCalculator
+---
+
+import SubtractIPCalculator from "~/components/SubtractIPCalculator.tsx";
+
+## Import
+
+```mdx
+import SubtractIPCalculator from "~/components/SubtractIPCalculator.tsx";
+```
+
+## Usage
+
+<br />
+<SubtractIPCalculator client:load />
+
+```mdx
+import SubtractIPCalculator from "~/components/SubtractIPCalculator.tsx";
+
+<SubtractIPCalculator client:load />
+```
+
+## `<SubtractIPCalculator>` Props
+
+### `defaults`
+
+**type:** `object`
+
+An optional object containing `base` (`string`) and `exclude` (`string[]`) properties, to set default inputs.
+
+**example:**
+
+<SubtractIPCalculator
+	client:load
+	defaults={{
+		base: "10.0.0.0/8",
+		exclude: ["10.0.0.0/24", "10.32.0.0/11"]
+	}}
+/>
+
+```mdx
+import SubtractIPCalculator from "~/components/SubtractIPCalculator.tsx";
+
+<SubtractIPCalculator
+	client:load
+	defaults={{
+		base: "10.0.0.0/8",
+		exclude: ["10.0.0.0/24", "10.32.0.0/11"]
+	}}
+/>
+```

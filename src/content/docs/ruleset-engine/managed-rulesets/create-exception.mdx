@@ -5,9 +5,13 @@ sidebar:
   order: 5
 ---
 
-Use exceptions to skip the execution of a managed ruleset of some of its rules. Exceptions are also known as skip rules, since the rule action is `skip`.
+Use [exceptions](/waf/managed-rules/waf-exceptions/) to skip the execution of a managed ruleset of some of its rules.
 
 The exception configuration includes an [expression](/ruleset-engine/rules-language/expressions/) that defines the skip conditions, and the rules or managed rulesets to skip under those conditions.
+
+If you are using Terraform, refer to [Configure exceptions](/terraform/additional-configurations/waf-managed-rulesets/#configure-exceptions) in the Terraform documentation.
+
+If you are using the Cloudflare dashboard, refer to [Add an exception in the dashboard](/waf/managed-rules/waf-exceptions/define-dashboard/).
 
 :::note
 Currently, only the [Cloudflare Web Application Firewall (WAF)](/waf/managed-rules/waf-exceptions/) supports managed rules exceptions.

@@ -21,7 +21,7 @@ Also, a customer of your application might wish to have their main website domai
 
 Many SaaS applications have caching and security solutions, such as Cloudflare, in front of their applications and as such need to onboard these hostnames. This is often done using a "Zone" model, where inside Cloudflare, or another vendor such as AWS Cloudfront, a "Zone" is created for `app.customer.com`. This means that, as each new customer is onboarded, a new "Zone" must be created - this might be manageable in the tens and hundreds of customers but, when you get to thousands and millions, management of all these zones and their configurations is hard.
 
-Cloudflare for Platforms extends far beyond this traditional model of most edge providers, by managing traffic across many hostnames and domains in one "Zone". You can now manage `www.customer1.com` and `www.customer2.net`, and millions more hostnames, through the same configuration while also customizing features as needed. 
+Cloudflare for Platforms extends far beyond this traditional model of most edge providers, by managing traffic across many hostnames and domains in one "Zone". You can now manage `www.customer1.com` and `www.customer2.net`, and millions more hostnames, through the same configuration while also customizing features as needed.
 
 This document provides a reference and guidance for using Cloudflare for Platforms. The document is split into three main sections.
 

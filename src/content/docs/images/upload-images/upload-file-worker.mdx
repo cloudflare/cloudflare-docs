@@ -1,6 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Upload via a Worker
+description: Learn how to upload images to Cloudflare using Workers. This guide provides code examples for uploading both standard and AI-generated images efficiently.
 
 ---
 
@@ -26,7 +27,6 @@ const response = await fetch(API_URL, {
   body: formData,
 });
 ```
-
 ## Upload from AI generated images
 
 You can use an AI Worker to generate an image and then upload that image to store it in Cloudflare Images. For more information about using Workers AI to generate an image, refer to the [SDXL-Lightning Model](/workers-ai/models/stable-diffusion-xl-lightning).

@@ -20,6 +20,12 @@ Currently, the migrations system aims to be simple yet effective. With the curre
 
 Every migration file in the `migrations` folder has a specified version number in the filename. Files are listed in sequential order. Every migration file is an SQL file where you can specify queries to be run.
 
+:::note[Binding name vs Database name]
+When running a migration script, you can use either the binding name or the database name.
+
+However, the binding name can change, whereas the database name cannot. Therefore, to avoid accidentally running migrations on the wrong binding, you may wish to use the database name for D1 migrations.
+:::
+
 ## Wrangler customizations
 
 By default, migrations are created in the `migrations/` folder in your Worker project directory. Creating migrations will keep a record of applied migrations in the `d1_migrations` table found in your database.

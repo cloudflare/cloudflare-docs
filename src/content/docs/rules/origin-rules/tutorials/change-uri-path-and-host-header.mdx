@@ -1,0 +1,120 @@
+---
+updated: 2025-02-26
+difficulty: Beginner
+pcx_content_type: tutorial
+title: Change URI path and Host header
+products:
+  - Transform Rules
+  - Origin Rules
+---
+
+import { Example } from "~/components";
+
+This guide will instruct you how to modify both the URI path and the `Host` header of incoming requests using [Transform Rules](/rules/transform/) and Origin Rules.
+
+Your website visitors will be routed from `https://<YOUR_SOURCE_HOSTNAME>/uploads/*` to `https://<YOUR_TARGET_HOSTNAME>/*`.
+
+In this tutorial you will do the following:
+
+1. Create a URL rewrite to remove `/uploads` from the path.
+2. Create an origin rule to modify the `Host` header to desired hostname.
+
+By following these steps, you can effectively manage both URI paths and `Host` headers to route traffic appropriately and optimize request handling.
+
+## 1. Create a URL rewrite
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
+2. Go to **Rules** > **Overview**.
+3. Select **Create rule** > **URL Rewrite Rule**.
+4. Enter a descriptive name for the rule in **Rule name**.
+5. Under **If incoming requests match**, select **Custom filter expression**, select **Edit expression**, and enter the following expression:
+
+   <Example>
+
+   Text in **Expression Editor**:
+
+   ```txt
+   raw.http.request.uri.path matches "^/uploads/.*"
+   ```
+
+   </Example>
+
+6. Under **Set Rewrite parameters**, select **Path** > **Rewrite to**, and select _Dynamic_.
+
+7. Define the action for your rewrite URL rule:
+
+   <Example>
+
+   Text after **Path** > **Rewrite to** > _Dynamic_:
+
+   ```txt
+   regex_replace(raw.http.request.uri.path, "^/uploads/", "/")
+   ```
+
+   </Example>
+
+   The [`regex_replace()`](/ruleset-engine/rules-language/functions/#regex_replace) function replaces the `/uploads/` part of the path with `/`, changing `/uploads/example.jpg` to `/example.jpg`.
+
+8. Select **Deploy**.
+
+## 2. Create an origin rule
+
+:::note
+If you are routing traffic to an object storage bucket, use [Cloud Connector](/rules/cloud-connector/) instead of an origin rule.
+:::
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
+2. Go to **Rules** > **Overview**.
+3. Select **Create rule** > **Origin Rule**.
+4. Enter a descriptive name for the rule in **Rule name**.
+5. Under **When incoming requests match**, define the rule expression:
+
+   <Example>
+
+   Text in **Expression Editor**:
+
+   ```txt
+   raw.http.request.uri.path matches "^/uploads/.*"
+   ```
+
+   </Example>
+
+6. Under **Set origin parameters**, select **Host Header** > **Rewrite to**.
+
+7. Configure the rule to modify the `Host` header to desired hostname:
+
+   <Example>
+
+   Text after **Host Header** > **Rewrite to**:
+
+   ```txt
+   example.com
+   ```
+
+   </Example>
+
+   This will set the [`Host` header](/rules/origin-rules/features/#host-header) to `example.com` for matching requests. Make sure to replace `example.com` with your actual hostname.
+
+8. (Optional) To route requests to a different origin (DNS target), use [DNS override](/rules/origin-rules/features/#dns-record):
+
+   <Example>
+
+   Text after **DNS Record** > **Override to**:
+
+   ```txt
+   example.com
+   ```
+
+   </Example>
+
+   This will route requests to the DNS target of `example.com` instead of your default [DNS record](/dns/manage-dns-records/how-to/create-dns-records/).
+
+9. Select **Deploy**.
+
+## Final remarks
+
+After completing this setup, incoming traffic for `https://<YOUR_SOURCE_HOSTNAME>/uploads/*` will be routed to `https://<YOUR_TARGET_HOSTNAME>/*`.
+
+Ensure the filters for the [URL rewrite](/rules/transform/url-rewrite/) and the [origin rule](/rules/origin-rules/) (or [Cloud Connector](/rules/cloud-connector/) rule) are precise to avoid unintended rule executions.
+
+Remember that rules are evaluated [in sequence](/ruleset-engine/reference/phases-list/), so Transform Rules (including URL rewrites) run before Origin Rules or Cloud Connector.

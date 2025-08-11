@@ -17,7 +17,7 @@ To determine how many `cloudflared` host servers you need:
 
 1. Start with our baseline recommendations: <Render file="tunnel/tunnel-capacity-baseline" product="cloudflare-one" />
 
-2. After you have completed this learning path and have users actively engaging with the network, [calculate](/cloudflare-one/connections/connect-networks/deploy-tunnels/system-requirements/#calculate-your-tunnel-capacity) your actual tunnel usage.
+2. After you have completed this learning path and have users actively engaging with the network, [calculate](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-availability/system-requirements/#calculate-your-tunnel-capacity) your actual tunnel usage.
 
 3. Decide how much headroom you want to include and [resize the tunnel](#scale-the-tunnel) if needed.
 
@@ -61,7 +61,7 @@ tunnel-3 <--> C
 
 ### When to add replicas
 
-Adding additional [replicas](/cloudflare-one/connections/connect-networks/deploy-tunnels/deploy-cloudflared-replicas/#cloudflared-replicas) of an existing Cloudflare Tunnel (two is the baseline recommendation) should only be done to support additional traffic to the IP routes in the tunnel. Replicas should always be added in the same physical location as one another so that they can operate in a pooled mode. If you are considering adding a replica in a different geographic location, reevaluate the network proxy design for your Cloudflare Tunnel and refer to [When to add tunnels](#when-to-add-tunnels).
+Adding additional [replicas](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-availability/#cloudflared-replicas) of an existing Cloudflare Tunnel (two is the baseline recommendation) should only be done to support additional traffic to the IP routes in the tunnel. Replicas should always be added in the same physical location as one another so that they can operate in a pooled mode. If you are considering adding a replica in a different geographic location, reevaluate the network proxy design for your Cloudflare Tunnel and refer to [When to add tunnels](#when-to-add-tunnels).
 
 ### When to add tunnels
 

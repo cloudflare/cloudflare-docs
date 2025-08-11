@@ -2,7 +2,7 @@
 pcx_content_type: concept
 title: Configuration and Bindings
 sidebar:
-  order: 8
+  order: 2
 head: []
 description: Details on how to configure Workers static assets and its binding.
 ---
@@ -15,7 +15,7 @@ import {
 	Render,
 	TabItem,
 	Tabs,
-	WranglerConfig
+	WranglerConfig,
 } from "~/components";
 
 Configuring a Worker with assets requires specifying a [directory](/workers/static-assets/binding/#directory) and, optionally, an [assets binding](/workers/static-assets/binding/), in your Worker's Wrangler file. The [assets binding](/workers/static-assets/binding/) allows you to dynamically fetch assets from within your Worker script (e.g. `env.ASSETS.fetch()`), similarly to how you might with a make a `fetch()` call with a [Service binding](/workers/runtime-apis/bindings/service-bindings/http/).
@@ -61,7 +61,7 @@ Now Wrangler will not upload these files as client-side assets when deploying th
 
 ## `run_worker_first`
 
-Controls whether to invoke the Worker script regardless of a request which would have otherwise matched an asset. `run_worker_first = false` ([default](/workers/static-assets/routing/#default-behavior)) will serve any static asset matching a request, while `run_worker_first = true` will unconditionally [invoke your Worker script](/workers/static-assets/routing/#invoking-worker-script-ahead-of-assets).
+Controls whether to invoke the Worker script regardless of a request which would have otherwise matched an asset. `run_worker_first = false` (default) will serve any static asset matching a request, while `run_worker_first = true` will unconditionally [invoke your Worker script](/workers/static-assets/routing/worker-script/#run-your-worker-script-first).
 
 <WranglerConfig>
 
@@ -78,6 +78,36 @@ run_worker_first = true
 ```
 
 </WranglerConfig>
+
+You can also specify `run_worker_first` as an array of route patterns to selectively run the Worker script first only for specific routes.
+
+The array supports glob patterns with `*` for deep matching and negative patterns with `!` prefix.
+
+Negative patterns have precedence over non-negative patterns. The Worker will run first when a non-negative pattern matches and none of the negative pattern matches.
+
+The order in which the patterns are listed is not significant.
+
+`run_worker_first` is often paired with the [`not_found_handling = "single-page-application"` setting](/workers/static-assets/routing/single-page-application/#advanced-routing-control):
+
+<WranglerConfig>
+
+```json
+{
+	"name": "my-spa-worker",
+	"compatibility_date": "$today",
+	"main": "./src/index.ts",
+	"assets": {
+		"directory": "./dist/",
+		"not_found_handling": "single-page-application",
+		"binding": "ASSETS",
+		"run_worker_first": ["/api/*", "!/api/docs/*"]
+	}
+}
+```
+
+</WranglerConfig>
+
+In this configuration, requests to `/api/*` routes will invoke the Worker script first, except for `/api/docs/*` which will follow the default asset-first routing behavior.
 
 ## `binding`
 
@@ -105,7 +135,7 @@ In the example above, assets would be available through `env.ASSETS`.
 
 **Parameters**
 
-- `request: Request` Pass a [Request object](/workers/runtime-apis/request/), URL string, or URL object. Requests made through this method have `html_handling` and `not_found_handling` configuration applied to them.
+- `request: Request | URL | string` Pass a [Request object](/workers/runtime-apis/request/), URL object, or URL string. Requests made through this method have `html_handling` and `not_found_handling` configuration applied to them.
 
 **Response**
 
@@ -113,9 +143,9 @@ In the example above, assets would be available through `env.ASSETS`.
 
 **Example**
 
-Your dynamic code can make new, or forward incoming, requests to your project's static assets using the assets binding.
+Your dynamic code can make new, or forward incoming requests to your project's static assets using the assets binding. For example, `env.ASSETS.fetch(request)`, `env.ASSETS.fetch(new URL('https://assets.local/my-file'))` or `env.ASSETS.fetch('https://assets.local/my-file')`.
 
-Take the following example that configures a Worker script to return a response under all requests headed for `/api/`. Otherwise, the Worker script will pass the incoming request through to the asset binding. In this case, because a Worker script is only invoked when the requested route has not matched any static assets, this will always evaluate [`not_found_handling`](/workers/static-assets/routing/#routing-configuration) behavior.
+Take the following example that configures a Worker script to return a response under all requests headed for `/api/`. Otherwise, the Worker script will pass the incoming request through to the asset binding. In this case, because a Worker script is only invoked when the requested route has not matched any static assets, this will always evaluate [`not_found_handling`](/workers/static-assets/#routing-behavior) behavior.
 
 <Tabs>
 <TabItem label="JavaScript" icon="seti:javascript">
@@ -166,7 +196,7 @@ For the various static asset routing configuration options, refer to [Routing](/
 
 ### Smart Placement with Worker Code First
 
-If you desire to run your [Worker code ahead of assets](/workers/static-assets/routing/#invoking-worker-script-ahead-of-assets) by setting `run_worker_first=true`, all requests must first travel to your Smart-Placed Worker. As a result, you may experience increased latency for asset requests.
+If you desire to run your [Worker code ahead of assets](/workers/static-assets/routing/worker-script/#run-your-worker-script-first) by setting `run_worker_first=true`, all requests must first travel to your Smart-Placed Worker. As a result, you may experience increased latency for asset requests.
 
 Use Smart Placement with `run_worker_first=true` when you need to integrate with other backend services, authenticate requests before serving any assets, or if your want to make modifications to your assets before serving them.
 
@@ -178,4 +208,4 @@ Enabling Smart Placement with `run_worker_first=false` (or not specifying it) le
 
 Use Smart Placement with `run_worker_first=false` (or not specifying it) when prioritizing fast asset delivery.
 
-This will not impact the [default routing behavior](/workers/static-assets/routing/#default-behavior).
+This will not impact the [default routing behavior](/workers/static-assets/#routing-behavior).

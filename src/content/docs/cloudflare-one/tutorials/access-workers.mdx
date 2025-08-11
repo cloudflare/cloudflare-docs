@@ -2,7 +2,6 @@
 updated: 2023-11-27
 category: 🔐 Access
 difficulty: Intermediate
-content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Create custom headers for Cloudflare Access-protected origins with Workers
 products:
@@ -11,6 +10,8 @@ products:
 languages:
   - JavaScript
 ---
+
+import { TypeScriptExample } from "~/components";
 
 This tutorial covers how to use a [Cloudflare Worker](/workers/) to add custom HTTP headers to traffic, and how to send those custom headers to your origin services protected by [Cloudflare Access](/cloudflare-one/policies/access/).
 
@@ -34,7 +35,9 @@ Some applications and networking implementations require specific custom headers
 
 5. Input the following Worker:
 
-```js title="Worker with custom HTTP headers"
+<TypeScriptExample>
+
+```ts title="Worker with custom HTTP headers"
 export default {
   async fetch(request, env, ctx): Promise<Response> {
     const { headers } = request;
@@ -47,6 +50,8 @@ export default {
   },
 } satisfies ExportedHandler<Env>;
 ```
+
+</TypeScriptExample>
 
 6. Select **Save and deploy**.
 

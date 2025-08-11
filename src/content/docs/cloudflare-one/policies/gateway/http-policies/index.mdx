@@ -3,8 +3,6 @@ pcx_content_type: configuration
 title: HTTP policies
 sidebar:
   order: 4
-banner:
-  content: The default global Cloudflare root certificate expired on 2025-02-02. If you installed the default Cloudflare certificate before 2024-10-17, you must <a href="/cloudflare-one/connections/connect-devices/user-side-certificates/#generate-a-cloudflare-root-certificate">generate a new certificate</a> and activate it for your Zero Trust organization to avoid inspection errors.
 ---
 
 import { Details, InlineBadge, Render } from "~/components";
@@ -28,6 +26,8 @@ An HTTP policy consists of an **Action** as well as a logical expression that de
 	params={{ type: "query", example: "Source IP", example2: "Resolved IP" }}
 />
 
+<Render file="gateway/terraform-precedence-warning" product="cloudflare-one" />
+
 ## Actions
 
 Actions in HTTP policies allow you to choose what to do with a given set of elements (domains, IP addresses, file types, and so on). You can assign one action per policy.
@@ -38,46 +38,7 @@ API value: `allow`
 
 <Details header="Available selectors">
 
-**Traffic**
-
-- [Application](#application)
-- [Content Categories](#content-categories)
-- [Destination Continent IP Geolocation](#destination-continent)
-- [Destination Country IP Geolocation](#destination-country)
-- [Destination IP](#destination-ip)
-- [DLP Profile](#dlp-profile)
-- [Domain](#domain)
-- [Download File Types](#download-and-upload-file-types)
-- [Download Mime Type](#download-and-upload-mime-type)
-- [Host](#host)
-- [HTTP Method](#http-method)
-- [HTTP Response](#http-response)
-- [Proxy Endpoint](#proxy-endpoint)
-- [Security Risks](#security-risks)
-- [Source Continent IP Geolocation](#source-continent)
-- [Source Country IP Geolocation](#source-country)
-- [Source Internal IP](#source-internal-ip)
-- [Source IP](#source-ip)
-- [Upload File Types](#download-and-upload-file-types)
-- [Upload Mime Type](#download-and-upload-mime-type)
-- [URL](#url)
-- [URL Path](#url-path)
-- [URL Path & Query](#url-path-and-query)
-- [URL Query](#url-query)
-- [Virtual Network](#virtual-network)
-
-**Identity**
-
-- [SAML Attributes](#users)
-- [User Email](#users)
-- [User Group Emails](#users)
-- [User Group IDs](#users)
-- [User Group Names](#users)
-- [User Name](#users)
-
-**Device Posture**
-
-- [Passed Device Posture Checks](#device-posture)
+<Render file="gateway/http-allow-block-selectors" />
 
 </Details>
 
@@ -89,17 +50,13 @@ The Allow action allows outbound traffic to reach destinations you specify withi
 
 #### Untrusted certificates
 
-:::note
-To use this feature, deploy a [custom root certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/custom-certificate/).
-:::
-
 The **Untrusted certificate action** determines how to handle insecure requests.
 
-| Option       | Action                                                                                                                                                                                                                                                                                                                                                                                                |
-| ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Error        | Display Gateway error page. Matches the default behavior when no action is configured.                                                                                                                                                                                                                                                                                                                |
-| Block        | Display [block page](/cloudflare-one/policies/gateway/block-page/) as set in Zero Trust.                                                                                                                                                                                                                                                                                                              |
-| Pass through | Bypass insecure connection warnings and seamlessly connect to the upstream. To use this feature, deploy a [custom root certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/custom-certificate/). For more information on what statuses are bypassed, refer to the [troubleshooting FAQ](/cloudflare-one/faq/troubleshooting/#i-see-error-526-when-browsing-to-a-website). |
+| Option       | Action                                                                                                                                                                                                                                               |
+| ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Error        | Display Gateway error page. Matches the default behavior when no action is configured.                                                                                                                                                               |
+| Block        | Display [block page](/cloudflare-one/policies/gateway/block-page/) as set in Zero Trust.                                                                                                                                                             |
+| Pass through | Bypass insecure connection warnings and seamlessly connect to the upstream. For more information on what statuses are bypassed, refer to the [troubleshooting FAQ](/cloudflare-one/faq/troubleshooting/#i-see-error-526-when-browsing-to-a-website). |
 
 ### Block
 
@@ -107,46 +64,7 @@ API value: `block`
 
 <Details header="Available selectors">
 
-**Traffic**
-
-- [Application](#application)
-- [Content Categories](#content-categories)
-- [Destination Continent IP Geolocation](#destination-continent)
-- [Destination Country IP Geolocation](#destination-country)
-- [Destination IP](#destination-ip)
-- [DLP Profile](#dlp-profile)
-- [Domain](#domain)
-- [Download File Types](#download-and-upload-file-types)
-- [Download Mime Type](#download-and-upload-mime-type)
-- [Host](#host)
-- [HTTP Method](#http-method)
-- [HTTP Response](#http-response)
-- [Proxy Endpoint](#proxy-endpoint)
-- [Security Risks](#security-risks)
-- [Source Continent IP Geolocation](#source-continent)
-- [Source Country IP Geolocation](#source-country)
-- [Source Internal IP](#source-internal-ip)
-- [Source IP](#source-ip)
-- [Upload File Types](#download-and-upload-file-types)
-- [Upload Mime Type](#download-and-upload-mime-type)
-- [URL](#url)
-- [URL Path](#url-path)
-- [URL Path & Query](#url-path-and-query)
-- [URL Query](#url-query)
-- [Virtual Network](#virtual-network)
-
-**Identity**
-
-- [SAML Attributes](#users)
-- [User Email](#users)
-- [User Group Emails](#users)
-- [User Group IDs](#users)
-- [User Group Names](#users)
-- [User Name](#users)
-
-**Device Posture**
-
-- [Passed Device Posture Checks](#device-posture)
+<Render file="gateway/http-allow-block-selectors" />
 
 </Details>
 
@@ -159,7 +77,77 @@ The Block action blocks outbound traffic from reaching destinations you specify 
 
 #### WARP client block notifications
 
-<Render file="gateway/client-notifications" />
+<Render
+	file="gateway/client-notifications"
+	product="cloudflare-one"
+	params={{ toggleName: "**Display block notification for WARP Client**" }}
+/>
+
+### Redirect
+
+API value: `redirect`
+
+<Details header="Available selectors">
+
+**Traffic**
+
+- [Access Infrastructure Target](#access-infrastructure-target)
+- [Application](#application)
+- [Content Categories](#content-categories)
+- [Destination Continent IP Geolocation](#destination-continent)
+- [Destination Country IP Geolocation](#destination-country)
+- [Destination IP](#destination-ip)
+- [Domain](#domain)
+- [Host](#host)
+- [HTTP Method](#http-method)
+- [Proxy Endpoint](#proxy-endpoint)
+- [Security Risks](#security-risks)
+- [Source Continent IP Geolocation](#source-continent)
+- [Source Country IP Geolocation](#source-country)
+- [Source Internal IP](#source-internal-ip)
+- [Source IP](#source-ip)
+- [URL](#url)
+- [URL Path](#url-path)
+- [URL Path & Query](#url-path-and-query)
+- [URL Query](#url-query)
+- [Virtual Network](#virtual-network)
+
+**Identity**
+
+- [SAML Attributes](#users)
+- [User Email](#users)
+- [User Group Emails](#users)
+- [User Group IDs](#users)
+- [User Group Names](#users)
+- [User Name](#users)
+
+**Device Posture**
+
+- [Passed Device Posture Checks](#device-posture)
+
+</Details>
+
+The Redirect action allows you to redirect matched HTTP requests to a different URL you specify. For example, if your users browse to the public web page of a SaaS app, you can redirect them to your own self-hosted instance, a single sign-on page, or an internal policy page.
+
+To redirect URLs with a Block action and the block page, refer to [Redirect to a block page](/cloudflare-one/policies/gateway/block-page/#redirect-to-a-block-page).
+
+#### Policy settings
+
+In **Policy URL redirect**, you can define what URL to redirect matched requests to. The redirect URL can contain paths and queries. For example, you can redirect `example.com` to `cloudflare.com/path/to/page?querystring=x`.
+
+<Render file="gateway/policy-context" />
+
+When you turn on **Preserve original path and query string**, Gateway will append the original path and query string to the redirected URL. Paths and queries in the redirect URL take precedence over the original URL. For example, if the original URL is `example.com/path/to/page?querystring=X` and the redirect URL is `cloudflare.com/redirect-path?querystring=Y`, Gateway will redirect requests to:
+
+```txt "cloudflare.com/redirect-path" "?querystring=Y"
+cloudflare.com/redirect-path/path/to/page?querystring=Y
+```
+
+When you turn on both options, Gateway will preserve the original path and query string, then append policy context to the end of the redirect URL. For example, if the original URL is `example.com/path/to/page?querystring=X&k=1` and the redirect URL is `cloudflare.com/redirect-path?querystring=Y`, Gateway will redirect requests to:
+
+```txt "cloudflare.com/redirect-path" "?querystring=Y" ins="&cf_user_email=user@example.com"
+cloudflare.com/redirect-path/path/to/page?querystring=Y&k=1&cf_user_email=user@example.com
+```
 
 ### Isolate
 
@@ -198,44 +186,6 @@ API value: `isolate`
 </Details>
 
 The Isolate action serves matched traffic to users via [Cloudflare Browser Isolation](/cloudflare-one/policies/browser-isolation/). For more information on this action, refer to [Isolation policies](/cloudflare-one/policies/browser-isolation/isolation-policies/#isolate).
-
-### Do Not Isolate
-
-API value: `noisolate`
-
-<Details header="Available selectors">
-
-**Traffic**
-
-- [Application](#application)
-- [Content Categories](#content-categories)
-- [Domain](#domain)
-- [Host](#host)
-- [HTTP Method](#http-method)
-- [Security Risks](#security-risks)
-- [Source Continent IP Geolocation](#source-continent)
-- [Source Country IP Geolocation](#source-country)
-- [URL](#url)
-- [URL Path](#url-path)
-- [URL Path & Query](#url-path-and-query)
-- [URL Query](#url-query)
-
-**Identity**
-
-- [SAML Attributes](#users)
-- [User Email](#users)
-- [User Group Emails](#users)
-- [User Group IDs](#users)
-- [User Group Names](#users)
-- [User Name](#users)
-
-**Device Posture**
-
-- [Passed Device Posture Checks](#device-posture)
-
-</Details>
-
-The Do Not Isolate action turns off browser isolation for matched traffic. For more information on this action, refer to [Isolation policies](/cloudflare-one/policies/browser-isolation/isolation-policies/#do-not-isolate).
 
 ### Do Not Inspect
 
@@ -286,6 +236,44 @@ Information contained within HTTPS encryption, such as the full requested URL, w
 Do Not Inspect lets you bypass certain elements from inspection. To prevent Gateway from decrypting and inspecting HTTPS traffic, your policy must match against the Server Name Indicator (SNI) in the TLS header. When accessing a Do Not Inspect site in the browser, your browser may display a **Your connection is not private** warning, which you can proceed through to connect. For more information about applications which may require a Do Not Inspect policy, refer to [TLS decryption limitations](/cloudflare-one/policies/gateway/http-policies/tls-decryption/#inspection-limitations).
 
 All Do Not Inspect rules are evaluated first, before any Allow or Block rules, to determine if inspection should occur. For more information, refer to [Order of enforcement](/cloudflare-one/policies/gateway/order-of-enforcement/#http-policies).
+
+### Do Not Isolate
+
+API value: `noisolate`
+
+<Details header="Available selectors">
+
+**Traffic**
+
+- [Application](#application)
+- [Content Categories](#content-categories)
+- [Domain](#domain)
+- [Host](#host)
+- [HTTP Method](#http-method)
+- [Security Risks](#security-risks)
+- [Source Continent IP Geolocation](#source-continent)
+- [Source Country IP Geolocation](#source-country)
+- [URL](#url)
+- [URL Path](#url-path)
+- [URL Path & Query](#url-path-and-query)
+- [URL Query](#url-query)
+
+**Identity**
+
+- [SAML Attributes](#users)
+- [User Email](#users)
+- [User Group Emails](#users)
+- [User Group IDs](#users)
+- [User Group Names](#users)
+- [User Name](#users)
+
+**Device Posture**
+
+- [Passed Device Posture Checks](#device-posture)
+
+</Details>
+
+The Do Not Isolate action turns off browser isolation for matched traffic. For more information on this action, refer to [Isolation policies](/cloudflare-one/policies/browser-isolation/isolation-policies/#do-not-isolate).
 
 ### Do Not Scan
 
@@ -397,17 +385,17 @@ Policies created using the URL selector are case-sensitive.
 
 Gateway matches HTTP traffic against the following selectors, or criteria:
 
-### All Access Private App Destinations
-
-<Render file="gateway/selectors/all-access-private-app-destinations" />
-
-### All Access App Targets
+### Access Infrastructure Target
 
 <Render file="gateway/selectors/all-access-app-targets" />
 
+### Access Private App
+
+<Render file="gateway/selectors/all-access-private-app-destinations" />
+
 ### Application
 
-<Render file="gateway/selectors/application" params={{ one: "HTTP" }} />
+<Render file="gateway/selectors/application" params={{ policyType: "HTTP" }} />
 
 :::caution[Multiple API selectors required for Terraform]
 When using Terraform to create a policy with the [Do Not Inspect](#do-not-inspect) action, you must use the `app.hosts_ids` and `app.supports_ids` selectors. For example, to create a Do Not Inspect policy for Google Cloud Platform traffic, create a policy with both `any(app.hosts_ids[*] in {1245})` and `any(app.supports_ids[*] in {1245})`.
@@ -458,11 +446,10 @@ Only applies to traffic sent through the [WARP client](/cloudflare-one/connectio
 
 ### Domain
 
-Use this selector to match against a domain and all subdomains -- for example, if you want to block `example.com` and subdomains such as `www.example.com`.
-
-| UI name | API example                                  |
-| ------- | -------------------------------------------- |
-| Domain  | `any(http.conn.domains[*] == "example.com")` |
+<Render
+	file="gateway/selectors/domain"
+	params={{ APIendpoint: "http.conn.domains" }}
+/>
 
 ### Download and Upload File Size
 
@@ -531,10 +518,7 @@ These selectors will scan file signatures in the HTTP body. You can select from 
 
 **Unscannable**
 
-- Password-protected Microsoft Office document
-- Password-protected PDF
-- Password-protected ZIP archive
-- Unscannable ZIP archive
+<Render file="gateway/policies/unscannable-files" />
 
 </Details>
 
@@ -564,15 +548,10 @@ Scans HTTP traffic for the presence of social security numbers and other PII. Yo
 
 ### Host
 
-Use this selector to match only the hostname specified -- for example, if you want to block `test.example.com` but not `example.com` or `www.test.example.com`.
-
-| UI name | API example                                |
-| ------- | ------------------------------------------ |
-| Host    | `http.conn.hostname == "test.example.com"` |
-
-:::note
-Some hostnames (`example.com`) will invisibly redirect to the www subdomain (`www.example.com`). To match this type of website, use the [Domain](#domain) selector instead of the Host selector.
-:::
+<Render
+	file="gateway/selectors/host"
+	params={{ APIendpoint: "http.conn.hostname" }}
+/>
 
 ### HTTP Method
 
@@ -640,9 +619,9 @@ The country of the user making the request. <Render file="gateway/selectors/sour
 
 ### URL Query
 
-| UI name   | API example                    |
-| --------- | ------------------------------ |
-| URL Query | `not(http.request.uri in $%s)` |
+| UI name   | API example                          |
+| --------- | ------------------------------------ |
+| URL Query | `not(http.request.uri.query in $%s)` |
 
 ### Users
 

@@ -8,18 +8,5 @@ product:
 
 meta:
   title: Cloudflare Magic Firewall docs
-  description: Magic Firewall a network-level firewall delivered through
-    Cloudflare to secure your enterprise.
+  description: Protect your enterprise network with advanced firewall-as-a-service protection
   author: "@cloudflare"
-
-resources:
-  dashboard_link: https://dash.cloudflare.com/?to=/:account/rulesets/magic_firewall
-  learning_center: https://www.cloudflare.com/learning/network-layer/what-is-the-network-layer/
-
-externals:
-  - title: Magic Transit home
-    url: https://www.cloudflare.com/magic-transit/
-  - title: "Blog: Magic WAN & Magic Firewall"
-    url: https://blog.cloudflare.com/introducing-magic-firewall/
-  - title: Cloudflare homepage
-    url: https://cloudflare.com

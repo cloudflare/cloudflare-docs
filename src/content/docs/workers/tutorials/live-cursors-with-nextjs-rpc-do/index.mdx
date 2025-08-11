@@ -1,7 +1,6 @@
 ---
 updated: 2024-11-07
 difficulty: Intermediate
-content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Build Live Cursors with Next.js, RPC and Durable Objects
 products:
@@ -42,7 +41,7 @@ The application works like this:
 	<PackageManagers
 		type="create"
 		pkg="cloudflare@latest"
-		args={"next-rpc --framework=next --experimental"}
+		args="next-rpc --framework=next"
 	/>
 
 	<Render
@@ -127,7 +126,7 @@ that will be made available to the Next.js Worker using a [`WorkerEntrypoint`](/
 		product="workers"
 		params={{
 			category: "hello-world",
-			type: "Hello World Worker using Durable Objects",
+			type: "Worker + Durable Objects",
 			lang: "TypeScript",
 		}}
 	/>
@@ -145,7 +144,7 @@ that will be made available to the Next.js Worker using a [`WorkerEntrypoint`](/
 
 	[[migrations]]
 	tag = "v1"
-	new_classes = ["CursorSessions"]
+	new_sqlite_classes = ["CursorSessions"]
 	```
 2. Initialize the main methods for the Durable Object and define types for WebSocket messages and cursor sessions in your `worker/src/index.ts`
 	to support type-safe interaction:
@@ -839,5 +838,5 @@ In this tutorial, you learned how to integrate Next.js with Durable Objects to b
 You can check other Cloudflare tutorials or related resources:
 
 - [Workers RPC](/workers/runtime-apis/bindings/service-bindings/rpc/).
-- [Next.js and Workers Static Assets](/workers/frameworks/framework-guides/nextjs/).
+- [Next.js and Workers Static Assets](/workers/framework-guides/web-apps/nextjs/).
 - [Build a seat booking app with SQLite in Durable Objects](/durable-objects/tutorials/build-a-seat-booking-app/).

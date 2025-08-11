@@ -3,10 +3,12 @@ title: Event notifications for storage
 pcx_content_type: reference-architecture-diagram
 products:
   - R2
+  - Workers
 sidebar:
   order: 1
   label: Event notifications for storage
 updated: 2024-10-21
+description: Use Cloudflare Workers or an external service to monitor for notifications about data changes and then handle them appropriately.
 ---
 
 ## Introduction
@@ -55,6 +57,7 @@ You can follow the steps here to [configure a pull-based consumer](/queues/confi
 - Remove related database entries if an object in R2 is deleted.
 
 ## Related resources
+
 - [Tutorial: Log and store upload events in R2 with event notifications](/r2/tutorials/upload-logs-event-notifications/)
 - [Event Notifications documentation](/r2/buckets/event-notifications/)
 - [Cloudflare R2 overview](/r2/)

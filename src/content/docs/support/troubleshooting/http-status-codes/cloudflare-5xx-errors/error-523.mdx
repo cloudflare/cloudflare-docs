@@ -1,0 +1,24 @@
+---
+pcx_content_type: troubleshooting
+title: Error 523
+source: null
+---
+
+## Error 523: origin is unreachable
+
+This error occurs when Cloudflare cannot contact your origin web server.
+
+### Common causes
+
+This typically occurs when a network device between Cloudflare and the origin web server does not have a route to the origin's IP address.
+
+### Resolution
+
+Contact your hosting provider and share the necessary [error details](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/#required-error-details-for-hosting-provider) to exclude the following common causes at your origin web server:
+
+- Confirm the correct origin IP address is listed for A or AAAA records within your Cloudflare DNS app.
+- Troubleshoot Internet routing issues between your origin and Cloudflare, or with the origin itself.
+
+If none of the above leads to a resolution, request the following information from your hosting provider or site administrator:
+
+- An [MTR or traceroute](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#perform-a-traceroute) from your origin web server to a [Cloudflare IP address](http://www.cloudflare.com/ips) that most commonly connected to your origin web server before the issue occurred. Identify a connecting Cloudflare IP from the logs of the origin web server.

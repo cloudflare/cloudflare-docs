@@ -9,6 +9,8 @@ head:
     content: Magic Network Monitoring encrypt network flow data
 ---
 
+import { APIRequest } from "~/components"
+
 Customers can encrypt the network flow data sent from their router to Cloudflare by [routing](https://www.cloudflare.com/learning/network-layer/what-is-routing/) their network flow traffic through a device running the WARP client. Then, encrypted network flow traffic can be forwarded from the WARP enabled device to Cloudflare's network flow endpoints.
 
 To learn more about the WARP client, and to install the WARP client on Linux, macOS, or Windows, you can visit the [WARP client documentation](/cloudflare-one/connections/connect-devices/warp/).
@@ -28,22 +30,19 @@ The `warp_devices` array at the account level is a list of WARP devices through 
 
 For example:
 
-```bash
-curl --request PATCH \
-"https://api.cloudflare.com/client/v4/accounts/{account_id}/mnm/config" \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json" \
---data '{
-	"warp_devices": [
+<APIRequest
+	path="/accounts/{account_id}/mnm/config"
+	method="PATCH"
+	json={{
+		"warp_devices": [
 		{
-			"id": "5360368d-b351-4791-abe1-93550dabd351",
-			"name": "My warp device",
-			"router_ip": "203.0.113.1"
+			"id": "<YOUR_WARP_DEVICE_UNIQUE_IDENTIFIER>",
+			"name": "<NAME_OF_WARP_DEVICE>",
+			"router_ip": "YOUR_ROUTER_IP"
 		}
 	]
-}'
-```
+	}}
+/>
 
 ## 2. Route Magic Network Monitoring traffic through WARP
 

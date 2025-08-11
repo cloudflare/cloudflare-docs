@@ -1,9 +1,11 @@
 ---
 import { getEntry, type CollectionEntry } from "astro:content";
 import { marked } from "marked";
-import { getReleaseNotes } from "~/util/release-notes";
-import AnchorHeading from "~/components/AnchorHeading.astro";
 import { entryToString } from "~/util/container";
+import { getReleaseNotes } from "~/util/release-notes";
+
+import AnchorHeading from "~/components/AnchorHeading.astro";
+import RSSButton from "~/components/RSSButton.astro";
 
 const page = await getEntry("docs", Astro.params.slug!);
 
@@ -14,11 +16,10 @@ if (!page) {
 }
 
 if (
-	!page.data.release_notes_file_name &&
-	!page.data.release_notes_product_area_name
+	!page.data.release_notes_file_name
 ) {
 	throw new Error(
-		`[ProductReleaseNotes] ${Astro.params.slug} does not have a 'release_notes_file_name' or 'changaelog_product_area_name' frontmatter property.`,
+		`[ProductReleaseNotes] ${Astro.params.slug} does not have a 'release_notes_file_name' frontmatter property.`,
 	);
 }
 
@@ -32,37 +33,22 @@ if (
 }
 
 const name =
-	page.data.release_notes_product_area_name ??
 	page.data.release_notes_file_name?.[0];
 
 let releaseNotes;
 
-if (page.data.release_notes_product_area_name) {
+if (name === "api-deprecations") {
 	const opts = {
-		filter: (entry: CollectionEntry<"release-notes">) => {
-			return entry.data.productArea === name;
-		},
+		deprecationsOnly: true,
 	};
 	({ releaseNotes } = await getReleaseNotes(opts));
 } else {
-	if (name === "wrangler") {
-		const opts = {
-			wranglerOnly: true,
-		};
-		({ releaseNotes } = await getReleaseNotes(opts));
-	} else if (name === "api-deprecations") {
-		const opts = {
-			deprecationsOnly: true,
-		};
-		({ releaseNotes } = await getReleaseNotes(opts));
-	} else {
-		const opts = {
-			filter: (entry: CollectionEntry<"release-notes">) => {
-				return entry.id === name;
-			},
-		};
-		({ releaseNotes } = await getReleaseNotes(opts));
-	}
+	const opts = {
+		filter: (entry: CollectionEntry<"release-notes">) => {
+			return entry.id === name;
+		},
+	};
+	({ releaseNotes } = await getReleaseNotes(opts));
 }
 
 if (!releaseNotes) {
@@ -75,12 +61,11 @@ if (!releaseNotes) {
 {
 	page.data.pcx_content_type === "changelog" && (
 		<p>
-			<a href={`/${page.id}/index.xml`} target="_blank">
-				Subscribe to RSS
-			</a>
+			<RSSButton href={`/${page.id}/index.xml`} />
 		</p>
 	)
 }
+
 {
 	releaseNotes.map(([date, entries]) => (
 		<div data-date={date}>
@@ -110,7 +95,7 @@ if (!releaseNotes) {
 							</a>
 							<p class="text-xs">{entry.date}</p>
 							{page.data.release_notes_product_area_name && (
-								<h3 class="!mt-4">
+								<h3 class="mt-4!">
 									<a href={entry.productLink}>{entry.product}</a>
 								</h3>
 							)}
@@ -124,7 +109,7 @@ if (!releaseNotes) {
 							<AnchorHeading depth={2} title={date} />
 							<div data-product={entry.product.toLowerCase()}>
 								{page.data.release_notes_product_area_name && (
-									<h3 class="!mt-4">
+									<h3 class="mt-4!">
 										<a href={entry.productLink}>{entry.product}</a>
 									</h3>
 								)}

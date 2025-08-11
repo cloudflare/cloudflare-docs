@@ -1,0 +1,19 @@
+---
+pcx_content_type: troubleshooting
+title: Error 400
+source: null
+---
+
+## 400 Bad Request
+
+This error indicates that the client sent a request to the server that could not be understood or processed due to issues with the request itself.
+
+For more information, refer to [RFC 7231](https://tools.ietf.org/html/rfc7231).
+
+### Common use cases
+
+A `400 Bad Request` error occurs due to client-side issues, such as malformed request syntax, invalid request content, message framing problems, or deceptive request routing. For example, if the request contains a special character that is not properly [URL Encoded (or percent-encoded)](https://en.wikipedia.org/wiki/Percent-encoding), an `HTTP Error 400` will be returned.
+
+### Cloudflare-specific information
+
+If you encounter an HTTP error while using the [Cloudflare API](/api/), make sure that you are using the correct syntax, parameters, and body for your API call.

@@ -1,0 +1,77 @@
+---
+import { z } from "astro:schema";
+import type { ComponentProps } from "astro/types";
+import { Code } from "@astrojs/starlight/components";
+
+type Props = z.input<typeof props>;
+
+const Record = z.record(z.string(), z.any());
+
+const props = z.object({
+	method: z
+		.enum(["GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"])
+		.default("GET"),
+	url: z.string().url(),
+	headers: z.record(z.string(), z.string()).default({}),
+	json: z.union([Record, z.array(Record)]).optional(),
+	form: Record.optional(),
+	query: z
+		.record(z.string(), z.union([z.string(), z.array(z.string())]))
+		.optional(),
+	code: z
+		.custom<Omit<ComponentProps<typeof Code>, "code" | "lang">>()
+		.optional(),
+});
+
+const {
+	method,
+	url: baseUrl,
+	headers,
+	json,
+	form,
+	query,
+	code,
+} = props.parse(Astro.props);
+
+if (json && form) {
+	throw new Error("[CURL] Cannot use both 'json' and 'form' properties.");
+}
+
+const url = new URL(baseUrl);
+if (query) {
+	for (const [key, value] of Object.entries(query)) {
+		if (Array.isArray(value)) {
+			for (const v of value) {
+				url.searchParams.append(key, v);
+			}
+		} else {
+			url.searchParams.set(key, value);
+		}
+	}
+}
+
+const lines = [`curl "${url.toString()}"`, `\t--request ${method}`];
+
+if (headers) {
+	for (const [key, value] of Object.entries(headers)) {
+		lines.push(`\t--header "${key}: ${value}"`);
+	}
+}
+
+if (json) {
+	const jsonLines = JSON.stringify(json, null, "\t\t").split("\n");
+	jsonLines[jsonLines.length - 1] = "\t" + jsonLines[jsonLines.length - 1];
+
+	lines.push(`\t--json '${jsonLines.join("\n").replaceAll("'", "'\\''")}'`);
+}
+
+if (form) {
+	const formLines = Object.entries(form).map(
+		([key, value]) =>
+			`\t--form "${key}=${value.toString().replaceAll('"', '\\"')}"`,
+	);
+	lines.push(...formLines);
+}
+---
+
+<Code {...code} lang="bash" code={lines.join(" \\\n")} />

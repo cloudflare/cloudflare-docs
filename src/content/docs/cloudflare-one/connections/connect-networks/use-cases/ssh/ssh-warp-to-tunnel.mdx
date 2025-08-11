@@ -59,7 +59,11 @@ In order to be able to establish an SSH connection, do not enable [OS Login](htt
 
 ## 3. Connect the server to Cloudflare
 
-<Render file="tunnel/warp-to-tunnel-server" />
+<Render file="tunnel/connect-private-network" />
+
+2. In the **Private Networks** tab for the tunnel, enter the private IP or CIDR address of your server. In GCP, the server IP is the  **Internal IP** of the VM instance.
+
+3. (Optional) [Set up Zero Trust policies](/cloudflare-one/connections/connect-networks/private-net/cloudflared/#4-recommended-filter-network-traffic-with-gateway) to fine-tune access to your server.
 
 ## 4. Set up the client
 

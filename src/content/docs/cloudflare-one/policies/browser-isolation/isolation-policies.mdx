@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import { Render, Tabs, TabItem } from "~/components";
+import { Render, Badge, Tabs, TabItem } from "~/components";
 
 With Browser Isolation, you can define policies to dynamically isolate websites based on identity, security threats, or content.
 
@@ -117,6 +117,21 @@ Mouse input remains available to allow users to browse a website by following hy
 - _Allow_: (Default) Users can print isolated web pages to their local machine.
 - _Do not allow_: Prohibits users from printing isolated web pages to their local machine.
 
+## Custom block dialog <Badge text="Beta" variant="note" />
+
+With custom block dialogs, you can host a custom block page when users are blocked from taking specific actions, like [copying](/cloudflare-one/policies/browser-isolation/isolation-policies/#copy-from-remote-to-client), [pasting](/cloudflare-one/policies/browser-isolation/isolation-policies/#paste-from-client-to-remote), [downloading](/cloudflare-one/policies/browser-isolation/isolation-policies/#file-downloads), [uploading](/cloudflare-one/policies/browser-isolation/isolation-policies/#file-uploads), [performing keyboard inputs](/cloudflare-one/policies/browser-isolation/isolation-policies/#keyboard), or [printing](/cloudflare-one/policies/browser-isolation/isolation-policies/#printing), within an isolated browser session.
+
+Administrators can configure custom block dialogs to explain the reason for the block, and guide the users on how to resolve their issue using the provided query parameters:
+
+- `action`: copy, paste, download, upload, perform keyboard inputs, and print
+- `cf_colo`: for example, `sea01`
+- `client_url`: for example, `https://example.com`
+- `policy_id`: 32-character id
+- `rbi_debug_id`: 32-character id
+- `user_id`: 32-character id
+
+Custom block dialogs are still in beta. Contact your account team to start using custom block dialogs.
+
 ## Common policies
 
 ### Isolate all security threats
@@ -134,9 +149,9 @@ Isolate security threats such as malware and phishing.
 <TabItem label="API">
 
 ```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 --header "Content-Type: application/json" \
---header "Authorization: Bearer <API_TOKEN>" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --data '{
   "name": "Isolate all security threats",
   "description": "Isolate security threats such as malware and phishing",
@@ -168,9 +183,9 @@ Isolate high risk content categories such as newly registered domains.
 <TabItem label="API">
 
 ```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 --header "Content-Type: application/json" \
---header "Authorization: Bearer <API_TOKEN>" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --data '{
   "name": "Isolate high risk content",
   "description": "Isolate high risk content categories such as newly registered domains",
@@ -202,9 +217,9 @@ Isolate news and media sites, which are targets for malvertising attacks.
 <TabItem label="API">
 
 ```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 --header "Content-Type: application/json" \
---header "Authorization: Bearer <API_TOKEN>" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --data '{
   "name": "Isolate news and media",
   "description": "Isolate news and media sites, which are targets for malvertising attacks",
@@ -236,9 +251,9 @@ Isolate content that has not been categorized by [Cloudflare Radar](/radar/).
 <TabItem label="API">
 
 ```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 --header "Content-Type: application/json" \
---header "Authorization: Bearer <API_TOKEN>" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --data '{
   "name": "Isolate uncategorized content",
   "description": "Isolate content not categorized by Cloudflare Radar",
@@ -272,9 +287,9 @@ In **Configure policy settings**, you can customize restrictions for ChatGPT. Fo
 <TabItem label="API">
 
 ```bash
-curl https://api.cloudflare.com/client/v4/accounts/{account_id}/gateway/rule \
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 --header "Content-Type: application/json" \
---header "Authorization: Bearer <API_TOKEN>" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --data '{
   "name": "Isolate ChatGPT",
   "description": "Isolate the use of ChatGPT",

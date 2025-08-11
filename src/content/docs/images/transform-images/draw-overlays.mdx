@@ -78,17 +78,17 @@ The accepted options for the overlaid image are `opacity`, `repeat`, `top`, `lef
 // Fetch image and watermark
 const img = await fetch('https://example.com/image.png');
 const watermark = await fetch('https://example.com/watermark.png');
- 
+
 const response = await env.IMAGES.input(img.body)
   .transform({ width: 1024 })
   .draw(watermark.body, { "opacity": 0.25, "repeat": true })
   .output({ format: "image/avif" })
   .response();
-  
+
 return response;
 ```
 
-To apply [other `fetch()` options](/images/transform-images/transform-via-workers/) to the overlaid image, you can pass a child `.transform()` function inside the `.draw()` request.
+To apply [parameters](/images/transform-images/transform-via-workers/) to the overlaid image, you can pass a child `.transform()` function inside the `.draw()` request.
 
 In the example below, the watermark is manipulated with `rotate` and `width` before being drawn over the base image with the `opacity` and `rotate` options.
 

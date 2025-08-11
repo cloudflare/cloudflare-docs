@@ -25,11 +25,41 @@ When you format a CSV file for upload:
 
 To upload the list to Zero Trust:
 
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **My Team** > **Lists**.
 2. Select **Upload CSV**.
 3. Next, specify a **List name**, enter an optional description, and choose a **List type**.
 4. Drag and drop a file into the **CSV file** window, or select a file.
 5. Select **Create**.
+
+</TabItem>
+<TabItem label="Terraform (v5)">
+
+1. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_token):
+	- `Zero Trust Write`
+
+2. Decode the contents of the CSV file and store it as a local value:
+
+	```tf
+	locals {
+		ip_list = csvdecode(file("${path.module}/list-test.csv"))
+	}
+	```
+3. Create a list using the [`cloudflare_zero_trust_list`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_list) resource:
+
+	```tf
+	resource "cloudflare_zero_trust_list" "ips_from_csv" {
+		account_id  = var.cloudflare_account_id
+		name        = "IPs imported from CSV"
+		description = "Managed by Terraform"
+		type        = "IP"
+		items 			= local.ip_list
+	}
+	```
+
+</TabItem>
+</Tabs>
 
 You can now use this list in the policy builder by choosing the _in list_ operator.
 
@@ -59,6 +89,51 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/lists \
 }'
 ```
 
-</TabItem> </Tabs>
+</TabItem>
+<TabItem label="Terraform (v5)">
+
+1. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_token):
+	- `Zero Trust Write`
+
+2. Create a list using the [`cloudflare_zero_trust_list`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_list) resource.
+
+	Example list of IPs:
+	```tf
+	resource "cloudflare_zero_trust_list" "wiki_IPs" {
+		account_id  = var.cloudflare_account_id
+		name        = "Company Wiki IP addresses"
+		description = "Managed by Terraform"
+		type        = "IP"
+		items = [
+			{
+				description = "Example IP address range"
+				value = "192.0.2.0/24",
+			},
+			{
+				value = "198.51.100.0/24"
+			}
+		]
+	}
+	```
+
+	Example list of domains:
+	```tf
+	resource "cloudflare_zero_trust_list" "wiki_domains" {
+		account_id  = var.cloudflare_account_id
+		name        = "Company Wiki Domains"
+		description = "Managed by Terraform"
+		type        = "DOMAIN"
+		items = [
+			{
+				value = "wiki.example.com"
+			},
+			{
+				value = "wiki2.example.com"
+			}]
+	}
+	```
+
+</TabItem>
+</Tabs>
 
 You can now use this list in the policy builder by choosing the _in list_ operator.

@@ -50,7 +50,7 @@ Cloudflare's [Zero Trust Network Access](https://www.cloudflare.com/zero-trust/p
 Microsoft and Cloudflare can be integrated in the following ways.
 
 - Using Microsoft [Entra ID](https://learn.microsoft.com/en-us/entra/fundamentals/whatis) for authentication to all Cloudflare protected resources
-- Leveraging Microsoft [InTune](https://learn.microsoft.com/en-us/mem/intune/fundamentals/what-is-intune) device posture in Cloudflare policies to ensure only managed, trusted devices have access to protected resources
+- Leveraging Microsoft [Intune](https://learn.microsoft.com/en-us/mem/intune/fundamentals/what-is-intune) device posture in Cloudflare policies to ensure only managed, trusted devices have access to protected resources
 - Using Cloudflare [CASB](/cloudflare-one/applications/casb/) to inspect your [Microsoft 365](https://www.microsoft.com/en-us/microsoft-365/what-is-microsoft-365) tenants and alert on security findings for incorrectly configured accounts and shared files containing sensitive data
 - Using Cloudflare's [Secure Web Gateway](/cloudflare-one/policies/gateway/) to control access to Microsoft SaaS applications such as Outlook, OneDrive and Teams
 - Using Cloudflare's [Email Security](/email-security/) service to increase protection of email from phishing attacks and business email compromise.
@@ -65,9 +65,9 @@ Cloudflare's integration with Entra ID allows you to leverage your identities in
 
 ![Figure 1: Microsoft Entra ID integrates with Cloudflare for ZTNA access to SaaS and self hosted applications.](~/assets/images/reference-architecture/cloudflare-sase-with-microsoft/cloudflare-sase-with-microsoft-fig1.svg "Figure 1: Microsoft Entra ID integrates with Cloudflare for ZTNA access to SaaS and self hosted applications.")
 
-### Microsoft InTune with Cloudflare
+### Microsoft Intune with Cloudflare
 
-Cloudflare is able to enforce access policies that include information about device posture. InTune can be integrated into Cloudflare so that information about InTune managed and protected devices can be used to enforce access control to Cloudflare protected resources.
+Cloudflare is able to enforce access policies that include information about device posture. Intune can be integrated into Cloudflare so that information about Intune managed and protected devices can be used to enforce access control to Cloudflare protected resources.
 
 - With a device connected using our [agent](/cloudflare-one/connections/connect-devices/warp/), Cloudflare's ZTNA service can leverage the enhanced telemetry and context provided by Intune regarding a user's device posture and compliance state.
 - Intune provides detailed information about the security status and configuration of user devices, enabling more informed access control decisions.
@@ -104,7 +104,7 @@ It is also possible to configure cloud email security to scan [Microsoft 365 inb
 
 ## Summary
 
-By leveraging Cloudflare and its integrations with Microsoft, organizations can establish a Zero Trust security posture that goes beyond the limitations of traditional network security models. With Cloudflare's Zero Trust Network Access (ZTNA), organizations can replace self hosted VPNs and enforce conditional access based on user identity and device posture. The integration with Microsoft Entra ID allows for authentication and access control, while Microsoft InTune provides device posture information. Additionally, Cloudflare's CASB offers visibility into the security of Microsoft 365 configuration, the Secure Web Gateway inspects and filters traffic to Microsoft 365, and Email Security protects against phishing attacks, ensuring a secure and compliant environment. This approach enables faster and more secure access to applications, while providing granular control over user access based on identity and device posture.
+By leveraging Cloudflare and its integrations with Microsoft, organizations can establish a Zero Trust security posture that goes beyond the limitations of traditional network security models. With Cloudflare's Zero Trust Network Access (ZTNA), organizations can replace self hosted VPNs and enforce conditional access based on user identity and device posture. The integration with Microsoft Entra ID allows for authentication and access control, while Microsoft Intune provides device posture information. Additionally, Cloudflare's CASB offers visibility into the security of Microsoft 365 configuration, the Secure Web Gateway inspects and filters traffic to Microsoft 365, and Email Security protects against phishing attacks, ensuring a secure and compliant environment. This approach enables faster and more secure access to applications, while providing granular control over user access based on identity and device posture.
 
 ![Figure 4: A summary of Cloudflare SASE and Microsoft integrations.](~/assets/images/reference-architecture/cloudflare-sase-with-microsoft/cloudflare-sase-with-microsoft-fig4.svg "Figure 4: A summary of Cloudflare SASE and Microsoft integrations")
 

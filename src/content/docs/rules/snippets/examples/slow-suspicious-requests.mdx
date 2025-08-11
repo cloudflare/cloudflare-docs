@@ -1,7 +1,7 @@
 ---
 type: example
 summary: Define a delay to be used when incoming requests match a rule you
-  consider suspicious.
+  consider suspicious based on the bot score.
 goal:
   - Other
 operation:
@@ -11,8 +11,10 @@ products:
 pcx_content_type: example
 title: Slow down suspicious requests
 description: Define a delay to be used when incoming requests match a rule you
-  consider suspicious.
+  consider suspicious based on the bot score.
 ---
+
+## Snippet code
 
 ```js
 export default {
@@ -29,4 +31,18 @@ export default {
 		return response;
 	},
 };
+```
+
+## Snippet rule
+
+Configure a custom filter expression:
+
+| Field     | Operator  | Value |
+| --------- | --------- | ----- |
+| Bot Score | less than | `10`  |
+
+If you are using the Expression Editor, enter the following expression:
+
+```txt
+(cf.bot_management.score lt 10)
 ```

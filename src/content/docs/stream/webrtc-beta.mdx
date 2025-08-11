@@ -1,6 +1,6 @@
 ---
 pcx_content_type: navigation
-title: WebRTC 
+title: WebRTC
 sidebar:
   badge:
     text: Beta
@@ -19,7 +19,7 @@ WebRTC is ideal for when you need live video to playback in near real-time, such
 
 :::note
 
-WebRTC streaming is currently in beta, and we'd love to hear what you think. Join the Cloudflare Discord server [using this invite](https://discord.com/invite/cloudflaredev/) and hop into our [Discord channel](https://discord.com/channels/595317990191398933/893253103695065128) to let us know what you're building with WebRTC! 
+WebRTC streaming is currently in beta, and we'd love to hear what you think. Join the Cloudflare Discord server [using this invite](https://discord.com/invite/cloudflaredev/) and hop into our [Discord channel](https://discord.com/channels/595317990191398933/893253103695065128) to let us know what you're building with WebRTC!
 
 :::
 
@@ -47,13 +47,13 @@ Every live input has a unique URL that one creator can be stream to. This URL sh
 
 Copy the URL from the `webRTC` key in the API response (see above), or directly from the [Cloudflare Dashboard](https://dash.cloudflare.com/?to=/:account/stream/inputs).
 
-Paste this URL into the provided [WHIP example code](https://github.com/cloudflare/workers-sdk/blob/main/templates/stream/webrtc/src/whip.html#L13).
+Paste this URL into the example code.
 
 ```javascript title="Simplified example code" {4}
 // Add a <video> element to the HTML page this code runs in:
 // <video id="input-video" autoplay muted></video>
 
-import WHIPClient from "./WHIPClient.js"; // an example WHIP client, see https://github.com/cloudflare/workers-sdk/blob/main/templates/stream/webrtc/src/WHIPClient.ts
+import WHIPClient from "./WHIPClient.js";
 
 const url = "<WEBRTC_URL_FROM_YOUR_LIVE_INPUT>"; // add the webRTC URL from your live input here
 const videoElement = document.getElementById("input-video");
@@ -62,19 +62,19 @@ const client = new WHIPClient(url, videoElement);
 
 Once the creator grants permission to their camera and microphone, live video and audio will automatically start being streamed to Cloudflare, using WebRTC.
 
-You can also use this URL with any client that supports the [WebRTC-HTTP ingestion protocol (WHIP)](https://www.ietf.org/id/draft-ietf-wish-whip-06.html). See [supported WHIP clients](#supported-whip-and-whep-clients) for a list of clients we have tested and confirmed compatibility with Cloudflare Stream.
+You can also use this URL with any client that supports the [WebRTC-HTTP ingestion protocol (WHIP)](https://www.ietf.org/archive/id/draft-ietf-wish-whip-16.html). See [supported WHIP clients](#supported-whip-and-whep-clients) for a list of clients we have tested and confirmed compatibility with Cloudflare Stream.
 
 ## Step 3: Play live video using WHEP
 
 Copy the URL from the `webRTCPlayback` key in the API response (see above), or directly from the [Cloudflare Dashboard](https://dash.cloudflare.com/?to=/:account/stream/inputs). There are no limits on the number of concurrent viewers.
 
-Paste this URL into the provided [WHEP example code](https://github.com/cloudflare/workers-sdk/blob/main/templates/stream/webrtc/src/whep.html#L13).
+Paste this URL into the example code.
 
 ```javascript title="Simplified example code" {4}
 // Add a <video> element to the HTML page this code runs in:
 // <video id="output-video" autoplay muted></video>
 
-import WHEPClient from "./WHEPClient.js"; // an example WHEP client, see https://github.com/cloudflare/workers-sdk/blob/main/templates/stream/webrtc/src/WHEPClient.ts
+import WHEPClient from "./WHEPClient.js";
 
 const url = "<WEBRTC_URL_FROM_YOUR_LIVE_INPUT>"; // add the webRTCPlayback URL from your live input here
 const videoElement = document.getElementById("output-video");
@@ -97,7 +97,7 @@ If you are building a native app, the example code above can run within a [WkWeb
 
 ## Supported WHIP and WHEP clients
 
-Beyond the [example WHIP client](https://github.com/cloudflare/workers-sdk/blob/main/templates/stream/webrtc/src/WHIPClient.ts) and [example WHEP client](https://github.com/cloudflare/workers-sdk/blob/main/templates/stream/webrtc/src/WHEPClient.ts) used in the examples above, we have tested and confirmed that the following clients are compatible with Cloudflare Stream:
+Beyond the example WHIP client and example WHEP client used in the examples above, we have tested and confirmed that the following clients are compatible with Cloudflare Stream:
 
 ### WHIP
 
@@ -123,7 +123,7 @@ As more WHIP and WHEP clients are published, we are committed to supporting them
 
 ## Conformance with WHIP and WHEP specifications
 
-Cloudflare Stream fully supports all aspects of the [WHIP](https://www.ietf.org/id/draft-ietf-wish-whip-06.html) and [WHEP](https://www.ietf.org/archive/id/draft-murillo-whep-01.html) specifications, including:
+Cloudflare Stream fully supports all aspects of the [WHIP](https://www.ietf.org/archive/id/draft-ietf-wish-whip-16.html) and [WHEP](https://www.ietf.org/archive/id/draft-murillo-whep-01.html) specifications, including:
 
 * [Trickle ICE](https://datatracker.ietf.org/doc/rfc8838/)
 * [Server and client offer modes](https://www.ietf.org/archive/id/draft-murillo-whep-01.html#section-3) for WHEP

@@ -18,7 +18,7 @@ Follow the steps below to achieve this conversion.
 
 1. [Export a zone file](/dns/manage-dns-records/how-to/import-and-export/#export-records).
 2. Import the zone file into your new primary DNS provider.
-3. At your Cloudflare zone, use the [Update DNS Settings](/api/resources/dns/subresources/settings/methods/edit/) endpoint to enable [secondary DNS overrides](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/proxy-traffic/). Set the value for `secondary_overrides` to `true`.
+3. At your Cloudflare zone, use the [Update DNS Settings](/api/resources/dns/subresources/settings/subresources/zone/methods/edit/) endpoint to enable [secondary DNS overrides](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/proxy-traffic/). Set the value for `secondary_overrides` to `true`.
 
     :::note
     Enabling secondary DNS overrides is necessary in case you have DNS records that you wish to keep <GlossaryTooltip term="proxy status" link="/dns/proxy-status/">proxied</GlossaryTooltip>.

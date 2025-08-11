@@ -3,6 +3,8 @@ pcx_content_type: configuration
 title: Scheduled Handler
 ---
 
+import { TabItem, Tabs } from "~/components";
+
 ## Background
 
 When a Worker is invoked via a [Cron Trigger](/workers/configuration/cron-triggers/), the `scheduled()` handler handles the invocation.
@@ -11,12 +13,14 @@ When a Worker is invoked via a [Cron Trigger](/workers/configuration/cron-trigge
 
 You can test the behavior of your `scheduled()` handler in local development using Wrangler.
 
-Cron Triggers can be tested using `Wrangler` by passing in the `--test-scheduled` flag to [`wrangler dev`](/workers/wrangler/commands/#dev). This will expose a `/__scheduled` route which can be used to test using a http request. To simulate different cron patterns, a `cron` query parameter can be passed in.
+Cron Triggers can be tested using `Wrangler` by passing in the `--test-scheduled` flag to [`wrangler dev`](/workers/wrangler/commands/#dev). This will expose a `/__scheduled` (or `/cdn-cgi/handler/scheduled` for Python Workers) route which can be used to test using a http request. To simulate different cron patterns, a `cron` query parameter can be passed in.
 
 ```sh
 npx wrangler dev --test-scheduled
 
 curl "http://localhost:8787/__scheduled?cron=*+*+*+*+*"
+
+curl "http://localhost:8787/cdn-cgi/handler/scheduled?cron=*+*+*+*+*" # Python Workers
 ```
 
 :::
@@ -25,25 +29,54 @@ curl "http://localhost:8787/__scheduled?cron=*+*+*+*+*"
 
 ## Syntax
 
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
+
 ```js
 export default {
-	async scheduled(event, env, ctx) {
+	async scheduled(controller, env, ctx) {
 		ctx.waitUntil(doSomeTaskOnASchedule());
 	},
 };
 ```
 
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
+
+```ts
+interface Env {}
+export default {
+	async scheduled(
+		controller: ScheduledController,
+		env: Env,
+		ctx: ExecutionContext,
+	) {
+		ctx.waitUntil(doSomeTaskOnASchedule());
+	},
+};
+```
+
+</TabItem> <TabItem label="Python" icon="seti:python">
+
+```python
+from workers import handler
+
+@handler
+async def on_scheduled(controller, env, ctx):
+  ctx.waitUntil(doSomeTaskOnASchedule())
+```
+
+</TabItem></Tabs>
+
 ### Properties
 
-- `event.cron` string
+- `controller.cron` string
 
   - The value of the [Cron Trigger](/workers/configuration/cron-triggers/) that started the `ScheduledEvent`.
 
-- `event.type` string
+- `controller.type` string
 
   - The type of event. This will always return `"scheduled"`.
 
-- `event.scheduledTime` number
+- `controller.scheduledTime` number
 
   - The time the `ScheduledEvent` was scheduled to be executed in milliseconds since January 1, 1970, UTC. It can be parsed as <code>new Date(event.scheduledTime)</code>.
 

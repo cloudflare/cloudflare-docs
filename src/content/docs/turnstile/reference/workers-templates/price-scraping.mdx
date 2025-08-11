@@ -73,7 +73,7 @@ async function getPrice(token){
    );
    // await price information from pricing endpoint
    const price = await response.json();
-   // set the pricing information to what’s returned in the callback
+   // set the pricing information to what's returned in the callback
    priceBox.innerText = price.pricing
 }
 function init(){

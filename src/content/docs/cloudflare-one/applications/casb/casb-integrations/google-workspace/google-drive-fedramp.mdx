@@ -1,0 +1,25 @@
+---
+pcx_content_type: reference
+title: Google Drive (FedRAMP)
+rss: file
+sidebar:
+  order: 8
+---
+
+import { Render } from "~/components";
+
+<Render
+	file="casb/fedramp-availability"
+	params={{
+		integrationName: "Google Drive (FedRAMP)",
+	}}
+/>
+
+<Render
+	file="casb/google/integrations/google-drive"
+	params={{
+		integrationName: "Google Drive (FedRAMP)",
+		environmentName: "Google Workspace account",
+		slugifiedName: "google-workspace/google-drive-fedramp",
+	}}
+/>

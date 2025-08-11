@@ -10,7 +10,7 @@ description: Learn how to set up Geo Key Manager and choose the geographical
   boundaries of where your private encryption keys are stored.
 ---
 
-import { Render, TabItem, Tabs, InlineBadge } from "~/components";
+import { Render, TabItem, Tabs, InlineBadge, APIRequest, Example } from "~/components";
 
 ## Geo Key Manager v2 <InlineBadge preset="beta" />
 
@@ -36,31 +36,38 @@ You also have access to the `geo_restrictions` parameter, which is mutually excl
 
 ### Examples
 
-```bash title="Store private keys in the E.U. and the U.S."
-curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_certificates" \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json" \
---data '{
-  "certificate":"certificate",
-  "private_key":"<PRIVATE_KEY>",
-  "policy":"(country: US) and (region: EU)",
-  "type": "sni_custom"
-}'
-```
+<Example>
 
-```bash title="Store private keys in the E.U., but not in France"
-curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_certificates" \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json" \
---data '{
-  "certificate":"certificate",
-  "private_key":"<PRIVATE_KEY>",
-  "policy":"(region: EU) and (not country: FR)",
-  "type": "sni_custom"
-}'
-```
+Store private keys in the E.U. and the U.S.
+
+<APIRequest
+  path="/zones/{zone_id}/custom_certificates"
+  method="POST"
+  json={{
+		"certificate":"certificate",
+		"private_key":"<PRIVATE_KEY>",
+		"policy":"(country: US) and (region: EU)",
+		"type": "sni_custom"
+	}}
+/>
+
+</Example>
+
+<Example>
+Store private keys in the E.U., but not in France
+
+<APIRequest
+  path="/zones/{zone_id}/custom_certificates"
+  method="POST"
+  json={{
+		  "certificate":"certificate",
+			"private_key":"<PRIVATE_KEY>",
+			"policy":"(region: EU) and (not country: FR)",
+			"type": "sni_custom"
+	}}
+/>
+
+</Example>
 
 :::note
 

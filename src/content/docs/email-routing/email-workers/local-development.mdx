@@ -1,0 +1,206 @@
+---
+title: Local Development
+sidebar:
+  order: 6
+  badge: Beta
+
+---
+
+import { Render, Type, MetaInfo, WranglerConfig } from "~/components";
+
+You can test the behavior of an Email Worker script in local development using [wrangler dev](/workers/wrangler/commands/#dev).
+
+This is the minimal wrangler configuration required to run an Email Worker locally:
+
+<WranglerConfig>
+
+```jsonc
+{
+  "send_email": [
+    {
+      "name": "EMAIL"
+    }
+  ]
+}
+```
+
+</WranglerConfig>
+
+:::note
+
+If you want to deploy your script you need to [enable Email Routing](/email-routing/get-started/enable-email-routing/) and have at least one verified [destination address](/email-routing/setup/email-routing-addresses/#destination-addresses).
+
+:::
+
+You can now test receiving, replying, and sending emails in your local environment.
+
+## Receive an email
+
+Consider this example Email Worker script that uses the open source [`postal-mime`](https://www.npmjs.com/package/postal-mime) email parser:
+
+```ts
+import * as PostalMime from 'postal-mime';
+
+export default {
+	async email(message, env, ctx) {
+		const parser = new PostalMime.default();
+		const rawEmail = new Response(message.raw);
+		const email = await parser.parse(await rawEmail.arrayBuffer());
+		console.log(email);
+	},
+};
+```
+
+Now when you run `npx wrangler dev`, wrangler will expose a local `/cdn-cgi/handler/email` endpoint that you can `POST` email messages to and trigger your Worker's `email()` handler:
+
+```bash
+curl --request POST 'http://localhost:8787/cdn-cgi/handler/email' \
+  --url-query 'from=sender@example.com' \
+  --url-query 'to=recipient@example.com' \
+  --header 'Content-Type: application/json' \
+  --data-raw 'Received: from smtp.example.com (127.0.0.1)
+        by cloudflare-email.com (unknown) id 4fwwffRXOpyR
+        for <recipient@example.com>; Tue, 27 Aug 2024 15:50:20 +0000
+From: "John" <sender@example.com>
+Reply-To: sender@example.com
+To: recipient@example.com
+Subject: Testing Email Workers Local Dev
+Content-Type: text/html; charset="windows-1252"
+X-Mailer: Curl
+Date: Tue, 27 Aug 2024 08:49:44 -0700
+Message-ID: <6114391943504294873000@ZSH-GHOSTTY>
+
+Hi there'
+```
+
+This is what you get in the console:
+
+```json
+{
+  headers: [
+    {
+      key: 'received',
+      value: 'from smtp.example.com (127.0.0.1) by cloudflare-email.com (unknown) id 4fwwffRXOpyR for <recipient@example.com>; Tue, 27 Aug 2024 15:50:20 +0000'
+    },
+    { key: 'from', value: '"John" <sender@example.com>' },
+    { key: 'reply-to', value: 'sender@example.com' },
+    { key: 'to', value: 'recipient@example.com' },
+    { key: 'subject', value: 'Testing Email Workers Local Dev' },
+    { key: 'content-type', value: 'text/html; charset="windows-1252"' },
+    { key: 'x-mailer', value: 'Curl' },
+    { key: 'date', value: 'Tue, 27 Aug 2024 08:49:44 -0700' },
+    {
+      key: 'message-id',
+      value: '<6114391943504294873000@ZSH-GHOSTTY>'
+    }
+  ],
+  from: { address: 'sender@example.com', name: 'John' },
+  to: [ { address: 'recipient@example.com', name: '' } ],
+  replyTo: [ { address: 'sender@example.com', name: '' } ],
+  subject: 'Testing Email Workers Local Dev',
+  messageId: '<6114391943504294873000@ZSH-GHOSTTY>',
+  date: '2024-08-27T15:49:44.000Z',
+  html: 'Hi there\n',
+  attachments: []
+}
+```
+
+## Send an email
+
+Wrangler can also simulate sending emails locally. Consider this example Email Worker script that uses the [`mimetext`](https://www.npmjs.com/package/mimetext) npm package:
+
+```ts
+import { EmailMessage } from "cloudflare:email";
+import { createMimeMessage } from 'mimetext';
+
+export default {
+	async fetch(request, env, ctx) {
+		const msg = createMimeMessage();
+		msg.setSender({ name: 'Sending email test', addr: 'sender@example.com' });
+		msg.setRecipient('recipient@example.com');
+		msg.setSubject('An email generated in a worker');
+		msg.addMessage({
+			contentType: 'text/plain',
+			data: `Congratulations, you just sent an email from a worker.`,
+		});
+
+		var message = new EmailMessage('sender@example.com', 'recipient@example.com', msg.asRaw());
+		await env.EMAIL.send(message);
+		return Response.json({ ok: true });
+	}
+};
+```
+
+Now when you run `npx wrangler dev`, go to http://localhost:8787/ to trigger the `fetch()` handler and send the email. You will see the follow message in your terminal:
+
+```txt
+⎔ Starting local server...
+[wrangler:inf] Ready on http://localhost:8787
+[wrangler:inf] GET / 200 OK (19ms)
+[wrangler:inf] send_email binding called with the following message:
+  /var/folders/33/pn86qymd0w50htvsjp93rys40000gn/T/miniflare-f9be031ff417b2e67f2ac4cf94cb1b40/files/email/33e0a255-a7df-4f40-b712-0291806ed2b3.eml
+```
+
+Wrangler simulated `env.EMAIL.send()` by writing the email to a local file in [eml](https://datatracker.ietf.org/doc/html/rfc5322) format. The file contains the raw email message:
+
+```
+Date: Fri, 04 Apr 2025 12:27:08 +0000
+From: =?utf-8?B?U2VuZGluZyBlbWFpbCB0ZXN0?= <sender@example.com>
+To: <recipient@example.com>
+Message-ID: <2s95plkazox@example.com>
+Subject: =?utf-8?B?QW4gZW1haWwgZ2VuZXJhdGVkIGluIGEgd29ya2Vy?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+Congratulations, you just sent an email from a worker.
+```
+
+## Reply to and forward messages
+
+Likewise, [`EmailMessage`](/email-routing/email-workers/runtime-api/#emailmessage-definition)'s `forward()` and `reply()` methods are also simulated locally. Consider this Worker that receives an email, parses it, replies to the sender, and forwards the original message to one your verified recipient addresses:
+
+```ts
+import * as PostalMime from 'postal-mime';
+import { createMimeMessage } from 'mimetext';
+import { EmailMessage } from 'cloudflare:email';
+
+export default {
+	async email(message, env: any, ctx: any) {
+		// parses incoming message
+		const parser = new PostalMime.default();
+		const rawEmail = new Response(message.raw);
+		const email = await parser.parse(await rawEmail.arrayBuffer());
+
+		// creates some ticket
+		// const ticket = await createTicket(email);
+
+		// creates reply message
+		const msg = createMimeMessage();
+		msg.setSender({ name: 'Thank you for your contact', addr: 'sender@example.com' });
+		msg.setRecipient(message.from);
+		msg.setHeader('In-Reply-To', message.headers.get('Message-ID'));
+		msg.setSubject('An email generated in a worker');
+		msg.addMessage({
+			contentType: 'text/plain',
+			data: `This is an automated reply. We received you email with the subject "${email.subject}", and will handle it as soon as possible.`,
+		});
+
+		const replyMessage = new EmailMessage('sender@example.com', message.from, msg.asRaw());
+
+		await message.reply(replyMessage);
+		await message.forward("recipient@example.com");
+	},
+};
+```
+
+Run `npx wrangler dev` and use curl to `POST` the same message from the [Receive an email](#receive-an-email) example. Your terminal will show you where to find the replied message in your local disk and to whom the email was forwarded:
+
+```txt
+⎔ Starting local server...
+[wrangler:inf] Ready on http://localhost:8787
+[wrangler:inf] Email handler replied to sender with the following message:
+  /var/folders/33/pn86qymd0w50htvsjp93rys40000gn/T/miniflare-381a79d7efa4e991607b30a079f6b17d/files/email/a1db7ebb-ccb4-45ef-b315-df49c6d820c0.eml
+[wrangler:inf] Email handler forwarded message with
+  rcptTo: recipient@example.com
+```

@@ -6,6 +6,8 @@ sidebar:
 
 ---
 
+For a deep-dive on how sampling at Cloudflare works, see [Understanding sampling in Cloudflare Analytics](/analytics/sampling/).
+
 ## Overview
 
 In a small number of cases, the analytics provided on the Cloudflare dashboard and GraphQL Analytics API are based on a **sample** — a subset of the dataset. In these cases, Cloudflare Analytics returns an estimate derived from the sampled value. For example, suppose that during an attack the sampling rate is 10% and 5,000 events are sampled. Cloudflare will estimate 50,000 total events (5,000 × 10) and report this value in Analytics.

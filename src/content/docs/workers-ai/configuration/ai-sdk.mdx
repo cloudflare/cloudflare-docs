@@ -1,20 +1,19 @@
 ---
 pcx_content_type: configuration
-title: AI SDK
+title: Vercel AI SDK
 sidebar:
   order: 3
-
 ---
 
-Workers AI can be used with the [AI SDK](https://sdk.vercel.ai/) for JavaScript and TypeScript codebases.
+import { PackageManagers } from "~/components";
+
+Workers AI can be used with the [Vercel AI SDK](https://sdk.vercel.ai/) for JavaScript and TypeScript codebases.
 
 ## Setup
 
 Install the [`workers-ai-provider` provider](https://sdk.vercel.ai/providers/community-providers/cloudflare-workers-ai):
 
-```bash
-npm install workers-ai-provider
-```
+<PackageManagers pkg="workers-ai-provider" />
 
 Then, add an AI binding in your Workers project Wrangler file:
 
@@ -28,12 +27,12 @@ binding = "AI"
 The AI SDK can be configured to work with [any AI model](/workers-ai/models/).
 
 ```js
-import { createWorkersAI } from 'workers-ai-provider';
+import { createWorkersAI } from "workers-ai-provider";
 
 const workersai = createWorkersAI({ binding: env.AI });
 
 // Choose any model: https://developers.cloudflare.com/workers-ai/models/
-const model = workersai('@cf/meta/llama-3.1-8b-instruct', {});
+const model = workersai("@cf/meta/llama-3.1-8b-instruct", {});
 ```
 
 ## Generate Text

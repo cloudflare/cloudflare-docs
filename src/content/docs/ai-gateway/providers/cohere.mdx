@@ -3,6 +3,8 @@ title: Cohere
 pcx_content_type: get-started
 ---
 
+import { Render } from "~/components";
+
 [Cohere](https://cohere.com/) build AI models designed to solve real-world business challenges.
 
 ## Endpoint
@@ -13,7 +15,7 @@ https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/cohere
 
 ## URL structure
 
-When making requests to [Cohere](https://cohere.com/), replace `https://api.cohere.ai/v1` in the URL you’re currently using with `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/cohere`.
+When making requests to [Cohere](https://cohere.com/), replace `https://api.cohere.ai/v1` in the URL you're currently using with `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/cohere`.
 
 ## Prerequisites
 
@@ -72,3 +74,17 @@ chat = co.chat(
 print(chat)
 
 ```
+
+<Render
+	file="chat-completions-providers"
+	product="ai-gateway"
+	params={{
+		name: "Cohere",
+		jsonexample: `
+{
+	"model": "cohere/{model}"
+}`
+
+    }}
+
+/>

@@ -1,0 +1,34 @@
+---
+title: New API Posture Management for API Shield
+description: Monitor for API-specific threats and risks with Posture Management for API Shield
+date: 2025-03-18
+---
+
+Now, API Shield **automatically** labels your API inventory with API-specific risks so that you can track and manage risks to your APIs.
+
+View these risks in [Endpoint Management](/api-shield/management-and-monitoring/) by label:
+
+![A list of endpoint management labels](~/assets/images/changelog/api-shield/endpoint-management-label.png)
+
+...or in [Security Center Insights](/security-center/security-insights/):
+
+![An example security center insight](~/assets/images/changelog/api-shield/posture-management-insight.png)
+
+API Shield will scan for risks on your API inventory daily. Here are the new risks we're scanning for and automatically labelling:
+
+- **cf-risk-sensitive**: applied if the customer is subscribed to the [sensitive data detection ruleset](/waf/managed-rules/reference/sensitive-data-detection/) and the WAF detects sensitive data returned on an endpoint in the last seven days.
+- **cf-risk-missing-auth**: applied if the customer has configured a session ID and no successful requests to the endpoint contain the session ID.
+- **cf-risk-mixed-auth**: applied if the customer has configured a session ID and some successful requests to the endpoint contain the session ID while some lack the session ID.
+- **cf-risk-missing-schema**: added when a learned schema is available for an endpoint that has no active schema.
+- **cf-risk-error-anomaly**: added when an endpoint experiences a recent increase in response errors over the last 24 hours.
+- **cf-risk-latency-anomaly**: added when an endpoint experiences a recent increase in response latency over the last 24 hours.
+- **cf-risk-size-anomaly**: added when an endpoint experiences a spike in response body size over the last 24 hours.
+
+In addition, API Shield has two new 'beta' scans for **Broken Object Level Authorization (BOLA) attacks**. If you're in the beta, you will see the following two labels when API Shield suspects an endpoint is suffering from a BOLA vulnerability:
+
+- **cf-risk-bola-enumeration**: added when an endpoint experiences successful responses with drastic differences in the number of unique elements requested by different user sessions.
+- **cf-risk-bola-pollution**: added when an endpoint experiences successful responses where parameters are found in multiple places in the request.
+
+We are currently accepting more customers into our beta. Contact your account team if you are interested in BOLA attack detection for your API.
+
+Refer to the [blog post](https://blog.cloudflare.com/cloudflare-security-posture-management/) for more information about Cloudflare's expanded posture management capabilities.

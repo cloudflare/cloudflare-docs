@@ -1,0 +1,79 @@
+---
+pcx_content_type: how-to
+title: Connect to RDP using WARP
+sidebar:
+  order: 2
+  label: RDP with WARP client
+---
+
+import { Render } from "~/components";
+
+Cloudflare WARP to Tunnel allows users to connect to RDP servers using their preferred RDP client. Cloudflare Tunnel creates a secure, outbound-only connection from your RDP server to Cloudflare's global network; this requires running the `cloudflared` daemon on the server (or any other host machine within the private network). Users install the [Cloudflare WARP client](/cloudflare-one/connections/connect-devices/warp/) on their device and enroll in your Zero Trust organization. Remote devices will be able to connect as if they were on your private network. By default, all devices enrolled in your organization can connect to the RDP server unless you build policies to allow or block specific users.
+
+This example walks through how to set up an RDP server on a Google Cloud Platform (GCP) virtual machine (VM), but you can use any machine that supports RDP connections.
+
+## 1. Set up an RDP server in GCP
+
+1. In your [Google Cloud Console](https://console.cloud.google.com/), [create a new project](https://developers.google.com/workspace/guides/create-project).
+2. Go to **Compute Engine** > **VM instances**.
+3. Select **Create instance**.
+4. Name your VM instance, for example `windows-rdp-server`.
+5. Configure your VM instance:
+   1. Scroll down to **Boot Disk** and select **Change**.
+   2. For **Operating system**, select _Windows Server_.
+   3. Choose a **Version** with Desktop Experience, for example _Windows Server 2016 Datacenter_.
+6. Once your VM is running, open the dropdown next to **RDP** and select _View gcloud command to reset password_.
+7. Select **Run in Cloud Shell**.
+8. Run the command in the Cloud Shell terminal. You will be asked to confirm the password reset.
+9. Copy the auto-generated password and username to a safe place.
+
+## 2. Install Microsoft Remote Desktop
+
+You can use any RDP client to access and configure the RDP server.
+
+To access the server through Microsoft Remote Desktop:
+
+1. Download and install [Microsoft Remote Desktop](https://apps.microsoft.com/store/detail/microsoft-remote-desktop/9WZDNCRFJ3PS).
+2. Once downloaded, open Microsoft Remote Desktop and select **Add a PC**.
+3. For **PC name**, enter the public IP address of your RDP server. In GCP, this is the **External IP** of the VM instance.
+4. For **User account**, select **Add User Account** and enter your auto-generated password and username.
+5. Select **Add**. The PC will display in Microsoft Remote Desktop.
+6. To test basic connectivity, double-click the newly added PC.
+7. When asked if you want to continue, select **Continue**.
+
+You can now remotely access the RDP server using its public IP. The next steps will configure access to the server using its private IP.
+
+:::note
+
+By default, Internet Explorer will be installed and configured in [Enhanced Security mode](https://learn.microsoft.com/troubleshoot/developer/browsers/security-privacy/enhanced-security-configuration-faq#internet-explorer-enhanced-security-configuration). If the browser is slow or unable to load, you can turn off Enhanced Security and install an alternate browser such as Google Chrome.
+:::
+
+## 3. Connect the server to Cloudflare
+
+<Render file="tunnel/connect-private-network" />
+
+2. In the **Private Networks** tab for the tunnel, enter the private IP or CIDR address of your server. In GCP, the server IP is the  **Internal IP** of the VM instance.
+
+3. (Optional) [Set up Zero Trust policies](/cloudflare-one/connections/connect-networks/private-net/cloudflared/#4-recommended-filter-network-traffic-with-gateway) to fine-tune access to your server.
+
+## 4. Set up the client
+
+<Render file="tunnel/warp-to-tunnel-client" />
+
+## 5. Route private network IPs through WARP
+
+<Render file="tunnel/warp-to-tunnel-route-ips" params={{ one: "private network"}} />
+
+## 6. Connect as a user
+
+Once the WARP client is configured, you can use your RDP client to connect to the server's private IP address (instead of the public IP address used initially).
+
+To connect in Microsoft Remote Desktop:
+
+1. Open Microsoft Remote Desktop and select **Add a PC**.
+2. For **PC name**, enter the private IP address of your RDP server. In GCP, this is the **Internal IP** of the VM instance.
+3. For **User account**, enter your RDP server username and password.
+4. To test Zero Trust connectivity, double-click the newly added PC.
+5. When asked if you want to continue, select **Continue**.
+
+You now have secure, remote access to the RDP server.

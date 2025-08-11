@@ -15,6 +15,12 @@ sidebar:
 description: Allow a client to request static assets while waiting for the HTML response.
 ---
 
+If you want to get started quickly, click on the button below.
+
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/docs-examples/tree/main/workers/103-early-hints)
+
+This creates a repository in your GitHub account and deploys the application to Cloudflare Workers.
+
 import { TabItem, Tabs } from "~/components";
 
 `103` Early Hints is an HTTP status code designed to speed up content delivery. When enabled, Cloudflare can cache the `Link` headers marked with preload and/or preconnect from HTML pages and serve them in a `103` Early Hints response before reaching the origin server. Browsers can use these hints to fetch linked assets while waiting for the origin’s final response, dramatically improving page load speeds.
@@ -111,7 +117,7 @@ export default {
 
 ```py
 import re
-from js import Response, Headers
+from workers import Response
 
 CSS = "body { color: red; }"
 HTML = """
@@ -129,11 +135,54 @@ HTML = """
 """
 def on_fetch(request):
     if re.search("test.css", request.url):
-        headers = Headers.new({"content-type": "text/css"}.items())
-        return Response.new(CSS, headers=headers)
+        headers = {"content-type": "text/css"}
+        return Response(CSS, headers=headers)
     else:
-        headers = Headers.new({"content-type": "text/html","link": "</test.css>; rel=preload; as=style"}.items())
-        return Response.new(HTML, headers=headers)
+        headers = {"content-type": "text/html","link": "</test.css>; rel=preload; as=style"}
+        return Response(HTML, headers=headers)
+```
+
+</TabItem> <TabItem label="Hono" icon="seti:typescript">
+
+```ts
+import { Hono } from "hono";
+
+const app = new Hono();
+
+const CSS = "body { color: red; }";
+const HTML = `
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Early Hints test</title>
+    <link rel="stylesheet" href="/test.css">
+</head>
+<body>
+    <h1>Early Hints test page</h1>
+</body>
+</html>
+`;
+
+// Serve CSS file
+app.get("/test.css", (c) => {
+	return c.body(CSS, {
+		headers: {
+			"content-type": "text/css",
+		},
+	});
+});
+
+// Serve HTML with early hints
+app.get("*", (c) => {
+	return c.html(HTML, {
+		headers: {
+			link: "</test.css>; rel=preload; as=style",
+		},
+	});
+});
+
+export default app;
 ```
 
 </TabItem> </Tabs>

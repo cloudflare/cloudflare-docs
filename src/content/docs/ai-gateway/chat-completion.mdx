@@ -1,0 +1,110 @@
+---
+title: OpenAI Compatibility
+pcx_content_type: reference
+sidebar:
+  order: 4
+---
+
+Cloudflare's AI Gateway offers an OpenAI-compatible `/chat/completions` endpoint, enabling integration with multiple AI providers using a single URL. This feature simplifies the integration process, allowing for seamless switching between different models without significant code modifications.
+
+## Endpoint URL
+
+```txt
+https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/compat/chat/completions
+```
+
+Replace `{account_id}` and `{gateway_id}` with your Cloudflare account and gateway IDs.
+
+## Parameters
+
+Switch providers by changing the `model` and `apiKey` parameters.
+
+Specify the model using `{provider}/{model}` format. For example:
+
+- `openai/gpt-4o-mini`
+- `google-ai-studio/gemini-2.0-flash`
+- `anthropic/claude-3-haiku`
+
+## Examples
+
+### OpenAI SDK
+
+```js
+import OpenAI from "openai";
+const client = new OpenAI({
+	apiKey: "YOUR_PROVIDER_API_KEY", // Provider API key
+  // NOTE: the OpenAI client automatically adds /chat/completions to the end of the URL, you should not add it yourself.
+	baseURL: "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/compat",
+});
+
+const response = await client.chat.completions.create({
+	model: "google-ai-studio/gemini-2.0-flash",
+	messages: [{ role: "user", content: "What is Cloudflare?" }],
+});
+
+console.log(response.choices[0].message.content);
+```
+
+### cURL
+
+```bash
+curl -X POST https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/compat/chat/completions \
+  --header 'Authorization: Bearer {openai_token}' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "model": "google-ai-studio/gemini-2.0-flash",
+    "messages": [
+      {
+        "role": "user",
+        "content": "What is Cloudflare?"
+      }
+    ]
+  }'
+```
+
+### Universal provider
+
+You can also use this pattern with the [Universal Endpoint](/ai-gateway/universal/) to add [fallbacks](/ai-gateway/configuration/fallbacks/) across multiple providers. When used in combination, every request will return the same standardized format, whether from the primary or fallback model. This behavior means that you do not have to add extra parsing logic to your app.
+
+```ts title="index.ts"
+export interface Env {
+	AI: Ai;
+}
+
+export default {
+	async fetch(request: Request, env: Env) {
+		return env.AI.gateway("default").run({
+			provider: "compat",
+			endpoint: "chat/completions",
+			headers: {
+				authorization: "Bearer",
+			},
+			query: {
+				model: "google-ai-studio/gemini-2.0-flash",
+				messages: [
+					{
+						role: "user",
+						content: "What is Cloudflare?",
+					},
+				],
+			},
+		});
+	},
+};
+```
+
+## Supported Providers
+
+The OpenAI-compatible endpoint supports models from the following providers:
+
+- [Anthropic](/ai-gateway/providers/anthropic/)
+- [OpenAI](/ai-gateway/providers/openai/)
+- [Groq](/ai-gateway/providers/groq/)
+- [Mistral](/ai-gateway/providers/mistral/)
+- [Cohere](/ai-gateway/providers/cohere/)
+- [Perplexity](/ai-gateway/providers/perplexity/)
+- [Workers AI](/ai-gateway/providers/workersai/)
+- [Google-AI-Studio](/ai-gateway/providers/google-ai-studio/)
+- [Grok](/ai-gateway/providers/grok/)
+- [DeepSeek](/ai-gateway/providers/deepseek/)
+- [Cerebras](/ai-gateway/providers/cerebras/)

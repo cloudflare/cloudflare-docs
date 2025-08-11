@@ -9,6 +9,7 @@ concurrency:
 
 jobs:
   publish:
+    if: github.repository == 'cloudflare/cloudflare-docs'
     runs-on: ubuntu-22.04
     permissions:
       contents: read
@@ -26,11 +27,12 @@ jobs:
       - uses: actions/cache/restore@v4
         with:
           path: |
-            node_modules/.astro
+            node_modules/.astro/assets
           key: static
       - run: npm run build
         name: Build
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NODE_OPTIONS: --max-old-space-size=4096
       - name: Deploy to Cloudflare Workers
         env:
@@ -50,5 +52,5 @@ jobs:
         if: always()
         with:
           path: |
-            node_modules/.astro
+            node_modules/.astro/assets
           key: static

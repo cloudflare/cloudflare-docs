@@ -1,7 +1,6 @@
 ---
 title: Use event notification to summarize PDF files on upload
 pcx_content_type: tutorial
-content_type: 📝 Tutorial
 products:
   - Queues
   - Workers
@@ -48,7 +47,7 @@ Create a new Worker project by running the following commands:
     	product="workers"
     	params={{
     	category: "hello-world",
-    	type: "Hello World Worker",
+    	type: "Worker only",
     	lang: "TypeScript",
     	}}
     />
@@ -279,6 +278,8 @@ The above code does the following:
 
 Since the Worker code is written in TypeScript, you should run the following command to add the necessary type definitions. While this is not required, it will help you avoid errors.
 
+<Render file="request-dot-clone-warning" product="workers" />
+
 ```sh
 npm run cf-typegen
 ```
@@ -345,9 +346,7 @@ To extract the textual content from the PDF, the Worker will use the [unpdf](htt
 
 Install the `unpdf` library by running the following command:
 
-```sh
-npm install unpdf
-```
+<PackageManagers pkg="unpdf" />
 
 Update the `src/index.ts` file to import the required modules from the `unpdf` library:
 

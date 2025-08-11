@@ -1,0 +1,23 @@
+---
+title: Custom fields raw and transformed values support
+description: Configure request header and response headers values can log eiterh raw or transformed value
+date: 2025-04-18
+---
+
+Custom Fields now support logging both **raw and transformed values** for request and response headers in the HTTP requests dataset.
+
+These fields are configured per zone and apply to all Logpush jobs in that zone that include request headers, response headers. Each header can be logged in only one format—either raw or transformed—not both.
+
+By default:
+
+- Request headers are logged as raw values
+- Response headers are logged as transformed values
+
+These defaults can be overidden to suit your logging needs.
+
+:::note
+
+Transformed and raw values for request and response headers are available **only via the API** and cannot be set through the UI.
+:::
+
+For more information refer to [Custom fields](/logs/logpush/logpush-job/custom-fields/) documentation

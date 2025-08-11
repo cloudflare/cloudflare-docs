@@ -3,7 +3,9 @@ import type { APIRoute } from "astro";
 import { getChangelogs, getRSSItems } from "~/util/changelog";
 
 export const GET: APIRoute = async ({ locals }) => {
-	const notes = await getChangelogs({});
+	const notes = await getChangelogs({
+		filter: (entry) => !entry.data.hidden,
+	});
 
 	const items = await getRSSItems({
 		notes,

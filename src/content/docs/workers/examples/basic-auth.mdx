@@ -260,6 +260,7 @@ export default {
 ```
 
 </TabItem> <TabItem label="Rust" icon="seti:rust">
+
 ```rs
 use base64::prelude::*;
 use worker::*;
@@ -329,5 +330,55 @@ async fn fetch(req: Request, env: Env, _ctx: Context) -> Result<Response> {
         _ => Response::error("Not Found.", 404),
     }
 }
+
 ```
+
+</TabItem> <TabItem label="Hono" icon="seti:typescript">
+
+```ts
+/**
+ * Shows how to restrict access using the HTTP Basic schema with Hono.
+ * @see https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication
+ * @see https://tools.ietf.org/html/rfc7617
+ */
+
+import { Hono } from "hono";
+import { basicAuth } from "hono/basic-auth";
+
+// Define environment interface
+interface Env {
+	Bindings: {
+		USERNAME: string;
+		PASSWORD: string;
+	};
+}
+
+const app = new Hono<Env>();
+
+// Public homepage - accessible to everyone
+app.get("/", (c) => {
+	return c.text("Anyone can access the homepage.");
+});
+
+// Admin route - protected with Basic Auth
+app.get(
+	"/admin",
+	async (c, next) => {
+		const auth = basicAuth({
+			username: c.env.USERNAME,
+			password: c.env.PASSWORD,
+		});
+
+		return await auth(c, next);
+	},
+	(c) => {
+		return c.text("🎉 You have private access!", 200, {
+			"Cache-Control": "no-store",
+		});
+	},
+);
+
+export default app;
+```
+
 </TabItem> </Tabs>

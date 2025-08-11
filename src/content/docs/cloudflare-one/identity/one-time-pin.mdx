@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import { Tabs, TabItem, Render } from '~/components';
+import { Tabs, TabItem, Render, APIRequest } from '~/components';
 
 Cloudflare Access can send a one-time PIN (OTP) to approved email addresses as an alternative to integrating an identity provider. You can simultaneously configure OTP login and the identity provider of your choice to allow users to select their own authentication method.
 
@@ -21,25 +21,36 @@ For example, if your team uses Okta but you are collaborating with someone outsi
 2. Under **Login methods**, select **Add new**.
 3. Select **One-time PIN**.
 
-</TabItem> <TabItem label="Terraform (v4)">
+</TabItem> <TabItem label="API">
 
-:::note[Provider versions]
-The following example requires Cloudflare provider version `>=4.40.0`.
-:::
+Make a `POST` request to the [Identity Providers](/api/resources/zero_trust/subresources/identity_providers/methods/create/) endpoint:
 
-1. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/4.40.0/docs/resources/api_token):
+<APIRequest
+  path="/accounts/{account_id}/access/identity_providers"
+  method="POST"
+  json={{
+    name: "One-time PIN login",
+    type: "onetimepin",
+    config: {},
+  }}
+/>
+
+</TabItem> <TabItem label="Terraform (v5)">
+
+1. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_token):
 	- `Access: Organizations, Identity Providers, and Groups Write`
 
-2. Configure the [`cloudflare_zero_trust_access_identity_provider`](https://registry.terraform.io/providers/cloudflare/cloudflare/4.40.0/docs/resources/zero_trust_access_identity_provider) resource:
+2. Configure the [`cloudflare_zero_trust_access_identity_provider`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_access_identity_provider) resource:
 
 		```tf
 		resource "cloudflare_zero_trust_access_identity_provider" "onetimepin_login" {
 			account_id = var.cloudflare_account_id
 			name       = "One-time PIN login"
 			type       = "onetimepin"
+			config 		 = {}
 		}
 		```
-</TabItem> </Tabs>
+</TabItem></Tabs>
 
 :::tip
 If your organization uses a third-party email scanning service (for example, Mimecast or Barracuda), add `noreply@notify.cloudflare.com` to the email scanning allowlist.
@@ -69,15 +80,6 @@ By design, blocked users will not receive an email. The login page will always s
 
 :::note
 
-Access only logs an authentication attempt after the user enters a code. If the user enters their email but never submits a code, the event will not appear in your [audit logs](/cloudflare-one/insights/logs/audit-logs/#authentication-audit-logs).
+Access only logs an authentication attempt after the user enters a code. If the user enters their email but never submits a code, the event will not appear in your [audit logs](/cloudflare-one/insights/logs/audit-logs/#authentication-logs).
 :::
 
-## Example API Config
-
-```json
-{
-	"config": {},
-	"type": "onetimepin",
-	"name": "my example idp"
-}
-```

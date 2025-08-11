@@ -1,0 +1,25 @@
+---
+pcx_content_type: reference
+title: Outlook (FedRAMP)
+rss: file
+sidebar:
+  order: 7
+---
+
+import { Render } from "~/components";
+
+<Render
+	file="casb/fedramp-availability"
+	params={{
+		integrationName: "Outlook (FedRAMP)",
+	}}
+/>
+
+<Render
+	file="casb/microsoft/integrations/outlook"
+	params={{
+		integrationName: "Outlook (FedRAMP)",
+		environmentName: "Microsoft 365 account",
+		slugifiedName: "microsoft-365/outlook-fedramp",
+	}}
+/>

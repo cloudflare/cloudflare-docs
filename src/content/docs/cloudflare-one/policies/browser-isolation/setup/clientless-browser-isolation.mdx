@@ -3,10 +3,9 @@ pcx_content_type: concept
 title: Clientless Web Isolation
 sidebar:
   order: 5
-
 ---
 
-import { GlossaryTooltip, Render } from "~/components"
+import { GlossaryTooltip, Render } from "~/components";
 
 Clientless Web Isolation allows users to securely browse high risk or sensitive websites in a remote browser without having to install the Cloudflare WARP client on their device.
 
@@ -14,7 +13,27 @@ Clientless Web Isolation allows users to securely browse high risk or sensitive 
 
 <Render file="clientless-browser-isolation" />
 
-3. To configure permissions, select **Manage**. You can add authentication methods and [rules](/cloudflare-one/policies/access/) to control who can access the remote browser.
+3. To configure permissions, in **Settings** > **Browser Isolation** > select **Manage** next to Permissions. You can add authentication methods and [rules](/cloudflare-one/policies/access/) to control who can access the remote browser.
+
+4. Under **Policies** > Access Policies > select **Create new policy**.
+
+5. Name your policy and define who will have access to your isolated application. Refer to the [Access policy documentation](/cloudflare-one/policies/access/#actions) to construct your policy.
+
+6. Select **Save**.
+
+7. Under **Policies** > Access Policies > select **Select existing policies** and select the policy or policies you created in the previous step > select **Confirm**.
+
+8. At the bottom of the page, select **Save**.
+
+Your application will now be served in an isolated browser for users matching your policies.
+
+### Open links in Browser Isolation
+
+To open links using Browser Isolation:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Browser Isolation**.
+2. Select **Launch isolated browser**. Turn **Clientless web isolation** on.
+3. In **Launch browser**, enter the URL link, and then select **Launch**. Your URL will open in a secure isolated browser.
 
 ## Filter DNS queries
 
@@ -53,6 +72,12 @@ If [TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryptio
 | Selector | Operator | Value        | Action         |
 | -------- | -------- | ------------ | -------------- |
 | Domain   | is       | `mysite.com` | Do Not Inspect |
+
+:::note
+
+Clientless Web Isolation can function without TLS decryption enabled. However, TLS decryption is required to apply [HTTP policies](/cloudflare-one/policies/gateway/http-policies/) to Clientless Web Isolation traffic.
+
+:::
 
 ### Connect private networks
 
@@ -106,6 +131,7 @@ To turn on or off the address bar, users can right-click on any isolated page an
 - **Authentication events**: User login events are available in [Access audit logs](/cloudflare-one/insights/logs/audit-logs/).
 - **HTTP requests**: Traffic from the remote browser to the Internet is logged in [Gateway activity logs](/cloudflare-one/insights/logs/gateway-logs/).
 - **DNS queries**: DNS queries from the remote browser are shown in [Gateway activity logs](/cloudflare-one/insights/logs/gateway-logs/).
+- **User actions**: Track copy/paste, download/upload, and print actions initiated by users in the remote browser (only available in [Logpush](/cloudflare-one/insights/logs/logpush/)).
 
 ## Redirect traffic to the remote browser
 
@@ -114,27 +140,33 @@ If you want to isolate a website without Cloudflare WARP installed, you will nee
 ```html
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Redirecting website to a remote browser</title>
-    <script>
-      window.location.href =
-        "https://<your-team-name>.cloudflareaccess.com/browser/<URL>}";
-    </script>
-    <noscript>
-      <meta
-        http-equiv="refresh"
-        content="0; url=https://<your-team-name>.cloudflareaccess.com/browser/<URL>"
-      />
-    </noscript>
-  </head>
-  <body>
-    <p>
-      This website is being redirected to a remote browser. Select
-      <a href="https://<your-team-name>.cloudflareaccess.com/browser/<URL>"
-        >here</a
-      >
-      if you are not automatically redirected.
-    </p>
-  </body>
+	<head>
+		<title>Redirecting website to a remote browser</title>
+		<script>
+			window.location.href =
+				"https://<your-team-name>.cloudflareaccess.com/browser/<URL>}";
+		</script>
+		<noscript>
+			<meta
+				http-equiv="refresh"
+				content="0; url=https://<your-team-name>.cloudflareaccess.com/browser/<URL>"
+			/>
+		</noscript>
+	</head>
+	<body>
+		<p>
+			This website is being redirected to a remote browser. Select
+			<a href="https://<your-team-name>.cloudflareaccess.com/browser/<URL>"
+				>here</a
+			>
+			if you are not automatically redirected.
+		</p>
+	</body>
 </html>
 ```
+
+## Troubleshooting
+
+Review troubleshooting guidance related to Clientless Web Isolation.
+
+- [Clientless Web Isolation is loading a blank screen on a Windows device](/cloudflare-one/faq/troubleshooting/#clientless-web-isolation-is-loading-with-a-blank-screen-on-a-windows-device)

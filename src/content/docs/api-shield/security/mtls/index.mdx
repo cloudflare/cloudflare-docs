@@ -6,19 +6,19 @@ sidebar:
 
 ---
 
-import { GlossaryTooltip, Render } from "~/components"
+import { GlossaryDefinition, Render } from "~/components";
 
 <Render file="mtls-api-shield-support" />
 
-<GlossaryTooltip term="mTLS (mutual TLS)">Mutual TLS (mTLS)</GlossaryTooltip> authentication uses client certificates to ensure traffic between client and server is bidirectionally secure and trusted. mTLS also allows requests that do not authenticate via an identity provider — such as Internet-of-things (IoT) devices — to demonstrate they can reach a given resource.
+<GlossaryDefinition term="mTLS (mutual TLS)" />
 
 ![mTLS sequence diagram](~/assets/images/api-shield/api-shield-call-sequence.png)
 
 Support includes [gRPC](https://grpc.io/docs/what-is-grpc/introduction/)-based APIs, which use binary formats such as protocol buffers rather than JSON.
 
-## Configure
+## Setup
 
-For help setting up mTLS for one or more hosts using the dashboard, refer to [Configure mTLS](/api-shield/security/mtls/configure/).
+To set up mTLS for one or more hosts using the dashboard, refer to [Configure mTLS](/api-shield/security/mtls/configure/).
 
 ## Availability
 

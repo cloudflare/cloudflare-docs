@@ -9,7 +9,7 @@ description: Encryption modes allow you to control how Cloudflare connects to
   validated.
 ---
 
-import { DirectoryListing, Render, TabItem, Tabs } from "~/components";
+import { DirectoryListing, Render, TabItem, Tabs, APIRequest } from "~/components";
 
 <Render file="encryption-mode-definition" /> <br />
 
@@ -37,25 +37,31 @@ Automatic SSL/TLS leverages advanced methods developed by the SSL/TLS Recommende
 Automatic SSL/TLS will not change your setting to a less secure encryption mode. For example, if your origin certificate expires, the encryption mode will not change from **Full (strict)** to **Full**. You must ensure the validity of your origin SSL/TLS configuration at all times.
 :::
 
-Cloudflare is enabling Automatic SSL/TLS on the following dates:
+#### Additional details
 
-| Plan           | Using SSL/TLS recommender? | Grace period ends |
-| -------------- | -------------------------- | ----------------- |
-| Non-Enterprise | Yes                        | November 5th, 2024 |
-| Enterprise     | Yes                        | February, 2025   |
-| All plans      | No                         | March, 2025  |
+- **Scan frequency**: Automatic scans currently occur approximately once per month, though they may happen more frequently in some cases (for example, configuration changes or upgrades). Scans stop when:
+
+   - The site is already using the most secure mode (for example, **Full (strict)**), or
+   - You switch from auto mode to **Custom SSL/TLS**.
+
+- **Error checking before upgrades**: To prevent disruptions, Cloudflare checks for `5XX` errors (like `502` or `503`) and evaluates whether the HTTP and HTTPS content is consistent before upgrading a zone's encryption mode.
+
+- **Upgrade notifications**: Cloudflare sends weekly digest emails listing which zones have been upgraded. These emails are currently sent to Super Admins only.
 
 #### Opt out single zone
 
 If you want to opt a zone out via the API, you can make this API call on or before the grace period expiration date.
 
-```bash
- curl --request PATCH \
-  --url https://api.cloudflare.com/client/v4/zones/<ZONE_ID>/settings/ssl_automatic_mode \
-  --header 'Authorization: Bearer <CF_API_TOKEN>' \
-  --header 'Content-Type: application/json' \
-  --data '{"value":"custom"}'
-```
+<APIRequest
+  path="/zones/{zone_id}/settings/{setting_id}"
+  method="PATCH"
+  json={{
+		"value":"custom"
+	}}
+		parameters={{
+		setting_id: "ssl_automatic_mode"
+	}}
+/>
 
 #### Opt out multiple zones
 
@@ -89,6 +95,7 @@ If you wanted to opt out multiple zones:
      printf "\n\n"
    done
    ```
+
 
 5. Open your command line and run:
 

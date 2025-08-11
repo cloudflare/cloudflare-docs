@@ -24,7 +24,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
 	--data '{
 	"name": "All-NET-ApplicationAccess-Allow",
   "description": "Ensure access to the application comes from authorized WARP clients",
-  "precedence": 5000,
+  "precedence": 70,
   "enabled": false,
   "action": "block",
   "filters": [
@@ -45,7 +45,7 @@ resource "cloudflare_zero_trust_gateway_policy" "all_net_applicationaccess_allow
   account_id  = var.cloudflare_account_id
   name        = "All-NET-ApplicationAccess-Allow"
   description = "Ensure access to the application comes from authorized WARP clients"
-  precedence  = 5000
+  precedence  = 70
   enabled     = false
   action      = "block"
   filters     = ["l4"]

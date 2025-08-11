@@ -3,17 +3,10 @@ name: Tenant
 product:
   title: Tenant
   url: /tenant/
-  group: Cloudflare essentials
+  group: Core platform
   additional_groups: [Developer platform]
 
 meta:
   title: Cloudflare Tenant docs
-  description: With Cloudflare’s new provisioning APIs, you can provision and
-    manage Cloudflare accounts and services for your team or your customers. A
-    new set of APIs built into our Client v4 API library make a streamlined
-    onboarding and setup experience
+  description: Provision and manage Cloudflare accounts and services for your team or customers
   author: "@cloudflare"
-
-externals:
-  - title: Cloudflare homepage
-    url: https://cloudflare.com

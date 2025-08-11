@@ -19,7 +19,7 @@ To illustrate this, let us say you had a limit of ten requests per ten minutes, 
 
 ## Handling rate limits
 
-When your requests exceed the allowed rate, you'll encounter rate limiting. This means the server will respond with a `429 Too Many Requests` status code and your request won't be processed. 
+When your requests exceed the allowed rate, you will encounter rate limiting. This means the server will respond with a `429 Too Many Requests` status code and your request will not be processed.
 
 ## Default configuration
 
@@ -42,7 +42,7 @@ To set the default rate limiting configuration using the API:
 - `AI Gateway - Read`
 - `AI Gateway - Edit`
 
-2. Get your [Account ID](/fundamentals/setup/find-account-and-zone-ids/).
+2. Get your [Account ID](/fundamentals/account/find-account-and-zone-ids/).
 3. Using that API token and Account ID, send a [`POST` request](/api/resources/ai_gateway/methods/create/) to create a new Gateway and include a value for the `rate_limiting_interval`, `rate_limiting_limit`, and `rate_limiting_technique`.
 
 </TabItem> </Tabs>

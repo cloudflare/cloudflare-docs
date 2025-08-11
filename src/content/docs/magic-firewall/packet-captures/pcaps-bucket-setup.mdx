@@ -31,7 +31,7 @@ The **Prove ownership** step of the **Bucket configuration** displays.
 
 Before you can begin using a bucket, you must first enable destinations.
 
-Refer to the [Amazon S3](/logs/get-started/enable-destinations/aws-s3/#create-and-get-access-to-an-s3-bucket) or [Google Cloud Storage](/logs/get-started/enable-destinations/google-cloud-storage/#create-and-get-access-to-a-gcs-bucket) documentation and follow the steps for those specific services.
+Refer to the [Amazon S3](/logs/logpush/logpush-job/enable-destinations/aws-s3/#create-and-get-access-to-an-s3-bucket) or [Google Cloud Storage](/logs/logpush/logpush-job/enable-destinations/google-cloud-storage/#create-and-get-access-to-a-gcs-bucket) documentation and follow the steps for those specific services.
 
 </TabItem> </Tabs>
 
@@ -72,7 +72,7 @@ The response has a `"filename"` parameter which contains the content of the `own
 		"status": "pending",
 		"submitted": "2022-04-22T18:54:13.397413Z",
 		"validated": "",
-		"destination_conf": "gs://bucket-test",
+		"destination_conf": "gs://bucket-test", // Ensure you use a bucket that you created and registered in the Cloudflare dashboard.
 		"filename": "ownership-challenge-1234.txt"
 	},
 	"success": true,
@@ -101,7 +101,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/pcaps/ownership/
 		"status": "success",
 		"submitted": "2022-04-22T18:54:13.397413Z",
 		"validated": "2022-04-27T14:54:46.440548Z",
-		"destination_conf": "gs://bucket-test",
+		"destination_conf": "gs://<bucket-name>", // Ensure you use a bucket that you created and registered in the Cloudflare dashboard
 		"filename": "ownership-challenge-1234.txt"
 	},
 	"success": true,

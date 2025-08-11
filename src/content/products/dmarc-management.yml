@@ -8,9 +8,5 @@ product:
 
 meta:
   title: Cloudflare DMARC Management docs
-  description: Stop brand impersonation.
+  description: Protect your email domain and stop brand impersonation
   author: "@cloudflare"
-
-externals:
-  - title: Cloudflare homepage
-    url: https://cloudflare.com

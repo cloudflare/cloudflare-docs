@@ -2,7 +2,6 @@
 import StarlightPage, {
 	type StarlightPageProps,
 } from "@astrojs/starlight/components/StarlightPage.astro";
-import { render } from "astro:content";
 
 import Header from "~/components/changelog/Header.astro";
 import ProductPills from "~/components/changelog/ProductPills.astro";
@@ -10,14 +9,20 @@ import ProductPills from "~/components/changelog/ProductPills.astro";
 import { Steps } from "~/components";
 import { format } from "date-fns";
 import { getChangelogs } from "~/util/changelog";
+import { productsByGroup } from "~/util/products";
 
-const notes = await getChangelogs({});
+import { render } from "astro:content";
+
+const notes = await getChangelogs({
+	filter: (entry) => !entry.data.hidden,
+});
 
 const props = {
 	frontmatter: {
 		title: "Changelogs",
 		tableOfContents: false,
 		template: "splash",
+		chatbot_deprioritize: true,
 	},
 	hideTitle: true,
 	hideBreadcrumbs: true,
@@ -27,40 +32,52 @@ const props = {
 <StarlightPage {...props}>
 	<Header notes={notes} />
 	{
-		notes.map(async (entry) => {
+		notes.map(async (entry, idx) => {
 			const date = format(entry.data.date, "MMM dd, yyyy");
 
-			const productIds = JSON.stringify(
-				entry.data.products.map((product) => product.id),
-			);
+			const productIds = entry.data.products.map((product) => product.id);
+
+			const productGroups = productsByGroup
+				.filter((group) =>
+					group[1]?.find((product) => productIds.includes(product.id)),
+				)
+				.map((group) => group[0])
+				.sort();
 
 			const { Content } = await render(entry);
 
 			return (
-				<div class="!mt-0 sm:flex" data-products={productIds}>
+				<div
+					class:list={["mt-0! sm:flex", { "hidden!": idx >= 10 }]}
+					data-products={JSON.stringify(
+						productIds.concat(
+							productGroups.map((group) =>
+								group.replaceAll(" ", "-").toLowerCase(),
+							),
+						),
+					)}
+				>
 					<time
 						datetime={entry.data.date.toISOString()}
-						class="whitespace-nowrap leading-6 sm:pr-4 sm:text-right"
+						class="text-xs leading-6 font-bold whitespace-nowrap sm:pr-4 sm:text-right"
 					>
-						<strong class="text-xs">{date}</strong>
+						{date}
 					</time>
 					<Steps>
-						<ol class="!mt-0 overflow-x-auto">
-							<li class="!pb-16">
+						<ol class="mt-0! overflow-x-auto">
+							<li class="pb-16!">
 								<div>
 									<h3 class="leading-none">
 										<a
 											href={`/changelog/${entry.id}/`}
-											class="mb-4 !text-black no-underline hover:underline"
+											class="mb-4 text-black! no-underline hover:underline"
 										>
 											{entry.data.title}
 										</a>
 									</h3>
 									<ProductPills products={entry.data.products} />
 								</div>
-								<p>
-									<Content />
-								</p>
+								<Content />
 							</li>
 						</ol>
 					</Steps>
@@ -68,6 +85,14 @@ const props = {
 			);
 		})
 	}
+	<div class="flex items-center justify-center">
+		<button
+			id="changelogs-next-button"
+			class="bg-cl1-brand-orange text-cl1-black h-12 cursor-pointer rounded-sm px-6 font-medium"
+		>
+			Load more items
+		</button>
+	</div>
 </StarlightPage>
 
 <script>
@@ -75,33 +100,101 @@ const props = {
 		"#changelogs-next-filter",
 	);
 
-	filter?.addEventListener("change", () => {
-		const entries = document.querySelectorAll<HTMLElement>("[data-products]");
+	const button = document.querySelector<HTMLButtonElement>(
+		"#changelogs-next-button",
+	);
+
+	const url = new URL(window.location.href);
+
+	if (filter && url.searchParams.has("product")) {
+		filter.value = url.searchParams.get("product")!;
+		updateFilter();
+	}
+
+	filter?.addEventListener("change", updateFilter);
+
+	function filterByProduct(e: HTMLElement, value?: string): boolean {
+		if (!value || value === "all") {
+			return true;
+		}
+
+		if (!e.dataset.products) {
+			return false;
+		}
+
+		const products: string[] = JSON.parse(e.dataset.products);
+		return products.includes(value);
+	}
+
+	button?.addEventListener("click", () => {
+		const hidden = [
+			...document.querySelectorAll<HTMLElement>("[data-products]"),
+		]
+			.filter(
+				(e) =>
+					e.classList.contains("hidden!") && filterByProduct(e, filter!.value),
+			)
+			.slice(0, 10);
+
+		hidden.forEach((e) => e.classList.remove("hidden!"));
+
+		hideButton();
+	});
+
+	function updateFilter() {
+		const entries = [
+			...document.querySelectorAll<HTMLElement>("[data-products]"),
+		];
 
 		if (!entries) return;
 
-		const value = filter.value;
+		const value = filter!.value;
 
-		if (value === "all") {
-			entries.forEach((entry) => (entry.style.display = ""));
-
-			return;
-		}
+		const filtered = entries
+			.filter((e) => filterByProduct(e, value))
+			.slice(0, 10);
 
 		for (const entry of entries) {
-			if (!entry.dataset.products) continue;
-
-			const products = JSON.parse(entry.dataset.products);
-
-			const show = products.includes(value);
+			const show = filtered.includes(entry);
 
 			if (show) {
-				entry.style.display = "";
+				entry.classList.remove("hidden!");
 			} else {
-				entry.style.display = "none";
+				entry.classList.add("hidden!");
 			}
 		}
-	});
+
+		const url = new URL(window.location.href);
+
+		if (value === "all") {
+			url.searchParams.delete("product");
+		} else {
+			url.searchParams.set("product", value);
+		}
+
+		history.replaceState(null, "", url.href);
+
+		hideButton();
+	}
+
+	function hideButton() {
+		const entries = [
+			...document.querySelectorAll<HTMLDivElement>("[data-products]"),
+		];
+
+		if (entries.length === 0) return;
+
+		const filtered = entries.filter((p) => filterByProduct(p, filter!.value));
+
+		const visible = filtered.filter((p) => !p.classList.contains("hidden!"));
+		const hidden = filtered.length - visible.length;
+
+		if (hidden > 0) {
+			button!.classList.remove("hidden!");
+		} else {
+			button!.classList.add("hidden!");
+		}
+	}
 </script>
 
 <style>

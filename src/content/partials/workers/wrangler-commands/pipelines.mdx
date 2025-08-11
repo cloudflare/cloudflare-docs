@@ -1,0 +1,111 @@
+---
+{}
+---
+
+import { Render, AnchorHeading, Type, MetaInfo } from "~/components";
+
+:::note
+
+Pipelines is currently in open beta. Report Pipelines bugs in [GitHub](https://github.com/cloudflare/workers-sdk/issues/new/choose).
+
+:::
+
+<AnchorHeading title="`create`" slug="pipelines-create" depth={3} />
+
+Create a new pipeline
+
+```txt
+wrangler pipelines create <name> --r2 <r2-bucket-name> [OPTIONS]
+```
+
+- `name` <Type text="string" /> <MetaInfo text="required" />
+	- The name of the pipeline to create
+- `--source` <Type text="array" /> <MetaInfo text="optional" />
+	- List of allowed sources. Options: `http` or `worker`
+- `--require-http-auth` <Type text="boolean" /> <MetaInfo text="optional" />
+	- Require Cloudflare API token to authenticate with the HTTPS endpoint. Defaults to `false`.
+- `--cors-origins` <Type text="array" /> <MetaInfo text="optional" />
+	- CORS Origin allowlist for HTTP endpoint. Allows `*`. Defaults to an empty array.
+- `--batch-max-mb` <Type text="number" /> <MetaInfo text="optional" />
+	- The maximum size of a batch in megabytes before data is written. Defaults to `100`. Must be between `1` and `100`.
+- `--batch-max-rows` <Type text="number" /> <MetaInfo text="optional" />
+	- The maximum number of rows in a batch before data is written. Defaults to `10000000`. Must be between `1` and `10000000`.
+- `--batch-max-seconds` <Type text="number" /> <MetaInfo text="optional" />
+	- The maximum duration of a batch before data is written in seconds. Defaults to `300`. Must be between `1` and `300`.
+- `--r2-bucket` <Type text="string" /> <MetaInfo text="required" />
+	- The name of the R2 bucket used as the destination to store the data.
+- `--r2-bucket-access-key-id` <Type text="string" /> <MetaInfo text="optional" />
+	- Access key ID used to authenticate with R2. Leave empty for oauth confirmation.
+- `--r2-bucket-secret-access-key` <Type text="string" /> <MetaInfo text="optional" />
+	- Secret access key ID used to authenticate with R2. Leave empty for oauth confirmation.
+- `--r2-prefix` <Type text="string" /> <MetaInfo text="optional" />
+	- Prefix for storing files in the destination bucket.
+- `--compression` <Type text="string" /> <MetaInfo text="optional" />
+	- Type of compression to apply to output files. Choices: `none`, `gzip`, `deflate`
+- `--shard-count` <Type text="number" /> <MetaInfo text="optional" />
+	- Number of pipeline shards. More shards handle higher request volume; fewer shards produce larger output files. Defaults to `2`. Must be between `1` and `15`.
+
+<AnchorHeading title="`update`" slug="pipelines-update" depth={3} />
+
+Update an existing pipeline
+
+```txt
+wrangler pipelines update <name> [OPTIONS]
+```
+
+- `name` <Type text="string" /> <MetaInfo text="required" />
+	- The name of the pipeline to create
+- `--source` <Type text="array" /> <MetaInfo text="optional" />
+	- List of allowed sources. Options: `http` or `worker`
+- `--require-http-auth` <Type text="boolean" /> <MetaInfo text="optional" />
+	- Require Cloudflare API token to authenticate with the HTTPS endpoint. Defaults to `false`.
+- `--cors-origins` <Type text="array" /> <MetaInfo text="optional" />
+	- CORS Origin allowlist for HTTP endpoint. Allows `*`. Defaults to an empty array.
+- `--batch-max-mb` <Type text="number" /> <MetaInfo text="optional" />
+	- The maximum size of a batch in megabytes before data is written. Defaults to `100`. Must be between `1` and `100`.
+- `--batch-max-rows` <Type text="number" /> <MetaInfo text="optional" />
+	- The maximum number of rows in a batch before data is written. Defaults to `10000000`. Must be between `1` and `10000000`.
+- `--batch-max-seconds` <Type text="number" /> <MetaInfo text="optional" />
+	- The maximum duration of a batch before data is written in seconds. Defaults to `300`. Must be between `1` and `300`.
+- `--r2-bucket` <Type text="string" /> <MetaInfo text="required" />
+	- The name of the R2 bucket used as the destination to store the data.
+- `--r2-bucket-access-key-id` <Type text="string" /> <MetaInfo text="optional" />
+	- Access key ID used to authenticate with R2. Leave empty for oauth confirmation.
+- `--r2-bucket-secret-access-key` <Type text="string" /> <MetaInfo text="optional" />
+	- Secret access key ID used to authenticate with R2. Leave empty for oauth confirmation.
+- `--r2-prefix` <Type text="string" /> <MetaInfo text="optional" />
+	- Prefix for storing files in the destination bucket.
+- `--compression` <Type text="string" /> <MetaInfo text="optional" />
+	- Type of compression to apply to output files. Choices: `none`, `gzip`, `deflate`
+- `--shard-count` <Type text="number" /> <MetaInfo text="optional" />
+	- Number of pipeline shards. More shards handle higher request volume; fewer shards produce larger output files. Defaults to `2`. Must be between `1` and `15`.
+
+<AnchorHeading title="`get`" slug="pipelines-get" depth={3} />
+
+Get the configuration for an existing pipeline.
+
+```txt
+wrangler pipelines get <name> [OPTIONS]
+```
+
+- `name` <Type text="string" /> <MetaInfo text="required" />
+	- The name of the pipeline to inspect
+
+<AnchorHeading title="`delete`" slug="pipelines-delete" depth={3} />
+
+Deletes an existing pipeline
+
+```txt
+wrangler pipelines delete <name> [OPTIONS]
+```
+
+- `name` <Type text="string" /> <MetaInfo text="required" />
+	- The name of the pipeline to delete
+
+<AnchorHeading title="`list`" slug="pipelines-list" depth={3} />
+
+Lists all pipelines in your account.
+
+```txt
+wrangler pipelines list [OPTIONS]
+```

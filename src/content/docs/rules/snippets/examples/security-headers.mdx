@@ -74,7 +74,7 @@ export default {
 ## Other common security headers
 
 - Content-Security-Policy headers: Enabling these headers will permit content from a trusted domain and all its subdomains.
-  Refer to [Content-Security-Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy) for details.
+  Refer to [Content-Security-Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy) for details.
 
 ```js
 "Content-Security-Policy": "default-src 'self' example.com *.example.com",
@@ -92,13 +92,13 @@ export default {
 "Permissions-Policy": "interest-cohort=()",
 ```
 
-- X-XSS-Protection header: Prevents a page from loading if an XSS attack is detected. Refer to [X-XSS-Protection](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-XSS-Protection) for details.
+- X-XSS-Protection header: Prevents a page from loading if an XSS attack is detected. Refer to [X-XSS-Protection](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/X-XSS-Protection) for details.
 
 ```js
 "X-XSS-Protection": "0",
 ```
 
-- X-Frame-Options header: Prevents click-jacking attacks. Refer to [X-Frame-Options](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options).
+- X-Frame-Options header: Prevents click-jacking attacks. Refer to [X-Frame-Options](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/X-Frame-Options).
 
 ```js
 "X-Frame-Options": "DENY",

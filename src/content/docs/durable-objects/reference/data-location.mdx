@@ -19,30 +19,39 @@ A [`DurableObjectId`](/durable-objects/api/id) will be logged outside of the spe
 
 :::
 
-Durable Objects can be restricted to a specific jurisdiction either by creating a [`DurableObjectNamespace`](/durable-objects/api/namespace/) restricted to a jurisdiction, or by creating an individual [`DurableObjectId`](/durable-objects/api/id) restricted to a jurisdiction:
+Durable Objects can be restricted to a specific jurisdiction by creating a [`DurableObjectNamespace`](/durable-objects/api/namespace/) restricted to a jurisdiction. All [Durable Object ID methods](/durable-objects/api/id/) are valid on IDs within a namespace restricted to a jurisdiction.
 
 ```js
 const euSubnamespace = env.MY_DURABLE_OBJECT.jurisdiction("eu");
 const euId = euSubnamespace.newUniqueId();
-// or
-const euId = env.MY_DURABLE_OBJECT.newUniqueId({ jurisdiction: "eu" });
 ```
 
-Methods on a [`DurableObjectNamespace`](/durable-objects/api/namespace/) that take a [`DurableObjectId`](/durable-objects/api/id) as a parameter will throw an exception if the parameter is associated with a different jurisdiction. To achieve this, a [`DurableObjectId`](/durable-objects/api/id) encodes its jurisdiction. As a consequence, it is possible to have the same name represent different IDs in different jurisdictions.
+- It is possible to have the same name represent different IDs in different jurisdictions.
 
-```js
-const euId1 = env.MY_DURABLE_OBJECT.idFromName("my-name");
-const euId2 = env.MY_DURABLE_OBJECT.jurisdiction("eu").idFromName("my-name");
-console.assert(!euId1.equal(euId2), "This should always be true");
-```
+  ```js
+  const euId1 = env.MY_DURABLE_OBJECT.idFromName("my-name");
+  const euId2 = env.MY_DURABLE_OBJECT.jurisdiction("eu").idFromName("my-name");
+  console.assert(!euId1.equal(euId2), "This should always be true");
+  ```
 
-Methods on a [`DurableObjectNamespace`](/durable-objects/api/namespace/) that take a [`DurableObjectId`](/durable-objects/api/id) as a parameter will throw an exception if the parameter is associated with a different jurisdiction. However, these methods will not throw an exception if the [`DurableObjectNamespace`](/durable-objects/api/namespace/) is not associated with a jurisdiction. The common case is that any valid [`DurableObjectId`](/durable-objects/api/id) can be used in the top-level namespace's methods.
+- You will run into an error if the jurisdiction on your [`DurableObjectNamespace`](/durable-objects/api/namespace/) and the jurisdiction on [`DurableObjectId`](/durable-objects/api/id) are different.
+- You will not run into an error if the [`DurableObjectNamespace`](/durable-objects/api/namespace/) is not associated with a jurisdiction.
+- All [Durable Object ID methods](/durable-objects/api/id/) are valid on IDs within a namespace restricted to a jurisdiction.
 
-```js
-const euSubnamespace = env.MY_DURABLE_OBJECT.jurisdiction("eu");
-const euId = euSubnamespace.idFromName(name);
-const stub = env.MY_DURABLE_OBJECT.get(euId);
-```
+  ```js
+  const euSubnamespace = env.MY_DURABLE_OBJECT.jurisdiction("eu");
+  const euId = euSubnamespace.idFromName(name);
+  const stub = env.MY_DURABLE_OBJECT.get(euId);
+  ```
+
+:::caution[Use `DurableObjectNamespace.jurisdiction`]
+
+When specifying a jurisdiction, Cloudflare recommends you first create a namespace restricted to a jurisdiction, using `const euSubnamespace = env.MY_DURABLE_OBJECT.jurisdiction("eu")`.
+
+Note that it is also possible to specify a jurisdiction by creating an individual [`DurableObjectId`](/durable-objects/api/id) restricted to a jurisdiction, using `const euId = env.MY_DURABLE_OBJECT.newUniqueId({ jurisdiction: "eu" })`.
+
+**However, Cloudflare does not recommend this approach.**
+:::
 
 ### Supported locations
 
@@ -90,10 +99,10 @@ Hints are a best effort and not a guarantee. Unlike with jurisdictions, Durable 
 | afr       | Africa <sup>2</sup>        |
 | me        | Middle East <sup>2</sup>   |
 
-<sup>1</sup> Dynamic relocation of existing Durable Objects is planned for the
-future.
+<sup>1</sup> Dynamic relocation of existing Durable Objects is planned for the future.
 
-<sup>2</sup> Durable Objects currently do not spawn in this location. Instead,
-the Durable Object will spawn in a nearby location which does support Durable
-Objects. For example, Durable Objects hinted to South America spawn in Eastern
-North America instead.
+<sup>2</sup> Durable Objects currently do not spawn in this location. Instead, the Durable Object will spawn in a nearby location which does support Durable Objects. For example, Durable Objects hinted to South America spawn in Eastern North America instead.
+
+## Additional resources
+
+- You can find our more about where Durable Objects are located using the website: [Where Durable Objects Live](https://where.durableobjects.live/).

@@ -18,7 +18,7 @@
 *.xml text eol=lf
 *.yaml text eol=lf
 *.yml text eol=lf
-_redirects text eol=lf
+__redirects text eol=lf
 .editorconfig text eol=lf
 .gitattributes text eol=lf
 .prettierignore text eol=lf

@@ -86,7 +86,7 @@ Organizations that already use IP allow lists to secure access to SaaS applicati
 
 - **Hybrid employees:** Connecting to Cloudflare using our Zero Trust client, [WARP](/cloudflare-one/connections/connect-devices/warp/).
 - **Office-based users:** Connecting to a local network which routes Internet bound traffic to Cloudflare through GRE or IPsec [Magic WAN tunnels](/magic-wan/).
-- **Contractors and external users:** Accessing SaaS applications through a [remote browser](/learning-paths/zero-trust-web-access/alternative-onramps/clientless-rbi/) hosted in a Cloudflare data center.
+- **Contractors and external users:** Accessing SaaS applications through a [remote browser](/learning-paths/clientless-access/alternative-onramps/clientless-rbi/) hosted in a Cloudflare data center.
 
 Organizations add the new dedicated egress IPs to the existing SaaS IP allow lists for the Cloudflare sourced traffic to be allowed into the SaaS application. This way, organizations can maintain legacy connectivity methods in parallel with Cloudflare and migrate users gradually. Once all users are migrated to access with Cloudflare, the SaaS IP allow lists can be updated by removing the IPs corresponding to legacy infrastructure.
 

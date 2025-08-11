@@ -3,6 +3,8 @@ title: Groq
 pcx_content_type: get-started
 ---
 
+import { Render } from "~/components";
+
 [Groq](https://groq.com/) delivers high-speed processing and low-latency performance.
 
 ## Endpoint
@@ -13,7 +15,7 @@ https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/groq
 
 ## URL structure
 
-When making requests to [Groq](https://groq.com/), replace `https://api.groq.com/openai/v1` in the URL you’re currently using with `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/groq`.
+When making requests to [Groq](https://groq.com/), replace `https://api.groq.com/openai/v1` in the URL you're currently using with `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/groq`.
 
 ## Prerequisites
 
@@ -39,7 +41,7 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/groq/chat/co
         "content": "What is Cloudflare?"
       }
     ],
-    "model": "mixtral-8x7b-32768"
+    "model": "llama3-8b-8192"
 }'
 ```
 
@@ -61,10 +63,24 @@ const groq = new Groq({
 });
 
 const messages = [{ role: "user", content: "What is Cloudflare?" }];
-const model = "mixtral-8x7b-32768";
+const model = "llama3-8b-8192";
 
 const chatCompletion = await groq.chat.completions.create({
 	messages,
 	model,
 });
 ```
+
+<Render
+	file="chat-completions-providers"
+	product="ai-gateway"
+	params={{
+		name: "Groq",
+		jsonexample: `
+{
+	"model": "groq/{model}"
+}`
+
+    }}
+
+/>

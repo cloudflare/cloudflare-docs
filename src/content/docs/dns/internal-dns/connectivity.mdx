@@ -1,0 +1,18 @@
+---
+title: Connect to Gateway resolver
+pcx_content_type: reference
+sidebar:
+  order: 8
+  label: Connectivity
+---
+
+To connect to Cloudflare Gateway resolver - which is [required to reach private resources in Internal DNS](/dns/internal-dns/#architecture-overview) - you can use the following options:
+
+- DNS endpoints supported with [DNS locations](/cloudflare-one/connections/connect-devices/agentless/dns/locations/)
+    - DNS over UDP/TCP port 53 (IPv4 or IPv6)
+    - DNS over TLS
+    - DNS over HTTPS
+- [Proxy Auto-Configuration (PAC) files](/cloudflare-one/connections/connect-devices/agentless/pac-files/)
+- [WARP device client](/cloudflare-one/connections/connect-devices/warp/)
+- [Clientless browser isolation](/cloudflare-one/policies/browser-isolation/setup/clientless-browser-isolation/#filter-dns-queries)
+- [Magic WAN](/magic-wan/zero-trust/cloudflare-gateway/)

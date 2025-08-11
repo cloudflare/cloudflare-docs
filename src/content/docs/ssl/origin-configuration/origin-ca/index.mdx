@@ -36,6 +36,9 @@ To create an Origin CA certificate in the dashboard:
 2. Choose a domain.
 3. Go to **SSL/TLS** > **Origin Server**.
 4. Select **Create Certificate**.
+:::note[API Access required]
+Users who do not have [**API Access**](https://dash.cloudflare.com/?to=/:account/members) will receive an error while trying to perform this action. Refer to [Troubleshooting](/ssl/origin-configuration/origin-ca/troubleshooting/#this-zone-is-either-not-part-of-your-account-or-you-do-not-have-access-to-it) for guidance.
+:::
 5. Choose either:
    * **Generate private key and CSR with Cloudflare**: Private key type can be RSA or ECC.
    * **Use my private key and CSR**: Paste the Certificate Signing Request into the text field.

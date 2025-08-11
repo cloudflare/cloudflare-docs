@@ -1,22 +1,27 @@
 import type { AstroGlobal } from "astro";
-import type { Props } from "@astrojs/starlight/props";
+import type { StarlightRouteData } from "@astrojs/starlight/route-data";
 
-import { getEntry } from "astro:content";
-import { rehypeExternalLinksOptions } from "~/plugins/rehype/external-links";
+import { getEntry, getCollection } from "astro:content";
+import { externalLinkArrow } from "~/plugins/rehype/external-links";
 
-type Link = Extract<Props["sidebar"][0], { type: "link" }> & { order?: number };
-type Group = Extract<Props["sidebar"][0], { type: "group" }> & {
+type Link = Extract<StarlightRouteData["sidebar"][0], { type: "link" }> & {
 	order?: number;
+	icon?: { lottieLink: string };
+};
+type Group = Extract<StarlightRouteData["sidebar"][0], { type: "group" }> & {
+	order?: number;
+	icon?: { lottieLink: string };
 };
 
 export type SidebarEntry = Link | Group;
 type Badge = Link["badge"];
 
+const products = await getCollection("products");
 const sidebars = new Map<string, Group>();
 
-export async function getSidebar(context: AstroGlobal<Props>) {
+export async function getSidebar(context: AstroGlobal) {
 	const pathname = context.url.pathname;
-	const segments = pathname.split("/").slice(1, -1);
+	const segments = pathname.split("/").filter(Boolean);
 
 	const product = segments.at(0);
 
@@ -43,7 +48,7 @@ export async function getSidebar(context: AstroGlobal<Props>) {
 	let memoized = sidebars.get(key);
 
 	if (!memoized) {
-		let group = context.props.sidebar
+		let group = context.locals.starlightRoute.sidebar
 			.filter((entry) => entry.type === "group" && entry.label === product)
 			.at(0) as Group;
 
@@ -88,6 +93,33 @@ export async function generateSidebar(group: Group) {
 		group.entries[0].label = "Overview";
 	}
 
+	const product = products.find((p) => p.id === group.label);
+	if (product && product.data.product.group === "Developer platform") {
+		const links = [
+			["llms.txt", "/llms.txt"],
+			["prompt.txt", "/workers/prompt.txt"],
+			[`${product.data.name} llms-full.txt`, `/${product.id}/llms-full.txt`],
+			["Developer Platform llms-full.txt", "/developer-platform/llms-full.txt"],
+		];
+
+		group.entries.push({
+			type: "group",
+			label: "LLM resources",
+			entries: links.map(([label, href]) => ({
+				type: "link",
+				label,
+				href,
+				isCurrent: false,
+				attrs: {
+					target: "_blank",
+				},
+				badge: undefined,
+			})),
+			collapsed: true,
+			badge: undefined,
+		});
+	}
+
 	return group;
 }
 
@@ -96,9 +128,18 @@ function setSidebarCurrentEntry(
 	pathname: string,
 ): boolean {
 	for (const entry of sidebar) {
-		if (entry.type === "link" && entry.href === pathname) {
-			entry.isCurrent = true;
-			return true;
+		if (entry.type === "link") {
+			if (entry.attrs["data-external-link"]) {
+				continue;
+			}
+
+			const href = entry.href;
+
+			// Compare with and without trailing slash
+			if (href === pathname || href.slice(0, -1) === href) {
+				entry.isCurrent = true;
+				return true;
+			}
 		}
 
 		if (
@@ -160,6 +201,7 @@ async function handleGroup(group: Group): Promise<SidebarEntry> {
 
 	const frontmatter = entry.data;
 
+	group.icon = frontmatter.sidebar.group?.icon ?? frontmatter.icon;
 	group.label = frontmatter.sidebar.group?.label ?? frontmatter.title;
 	group.order = frontmatter.sidebar.order ?? Number.MAX_VALUE;
 
@@ -171,6 +213,7 @@ async function handleGroup(group: Group): Promise<SidebarEntry> {
 		return {
 			type: "link",
 			href: index.href,
+			icon: group.icon,
 			label: group.label,
 			order: group.order,
 			attrs: {
@@ -190,6 +233,13 @@ async function handleGroup(group: Group): Promise<SidebarEntry> {
 	}
 
 	const idx = group.entries.indexOf(index);
+
+	if (idx === -1) {
+		throw new Error(
+			`[Sidebar] Originally located ${index.href} in ${group.label} entries but unable to find it post-transform`,
+		);
+	}
+
 	const removed = group.entries.splice(idx, 1).at(0) as Link;
 
 	removed.attrs = {
@@ -235,17 +285,21 @@ async function handleLink(link: Link): Promise<Link> {
 		link.badge = inferBadgeVariant(link.badge);
 	}
 
-	if (frontmatter.external_link) {
+	if (frontmatter.external_link && !frontmatter.sidebar.group?.hideIndex) {
 		return {
 			...link,
-			label: link.label.concat(rehypeExternalLinksOptions.content.value),
+			icon: frontmatter.icon,
+			label: link.label.concat(externalLinkArrow),
 			href: frontmatter.external_link,
 			badge: frontmatter.external_link.startsWith("/api")
 				? {
 						text: "API",
 						variant: "note",
 					}
-				: undefined,
+				: link.badge,
+			attrs: {
+				"data-external-link": true,
+			},
 		};
 	}
 

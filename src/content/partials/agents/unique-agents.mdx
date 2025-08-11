@@ -1,0 +1,14 @@
+---
+{}
+
+---
+
+:::note
+
+An instance of an Agent is globally unique: given the same name (or ID), you will always get the same instance of an agent.
+
+This allows you to avoid synchronizing state across requests: if an Agent instance represents a specific user, team, channel or other entity, you can use the Agent instance to store state for that entity. No need to set up a centralized session store.
+
+If the client disconnects, you can always route the client back to the exact same Agent and pick up where they left off.
+
+:::

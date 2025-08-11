@@ -1,7 +1,6 @@
 ---
 updated: 2023-06-29
 difficulty: Beginner
-content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Build a QR code generator
 languages:
@@ -31,7 +30,7 @@ First, use the [`create-cloudflare` CLI](/pages/get-started/c3) to create a new 
 	product="workers"
 	params={{
 		category: "hello-world",
-		type: "Hello World Worker",
+		type: "Worker only",
 		lang: "JavaScript",
 	}}
 />
@@ -76,7 +75,7 @@ export default {
 };
 ```
 
-Currently, if an incoming request is not a `POST`, the function will return `undefined`. However, a Worker always needs to return a `Response`. Since the function should only accept incoming `POST` requests, return a new `Response` with a [`405` status code](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/405) if the incoming request is not a `POST`:
+Currently, if an incoming request is not a `POST`, the function will return `undefined`. However, a Worker always needs to return a `Response`. Since the function should only accept incoming `POST` requests, return a new `Response` with a [`405` status code](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/405) if the incoming request is not a `POST`:
 
 ```js null {7,8}
 export default {
@@ -124,9 +123,7 @@ export default {
 
 All projects deployed to Cloudflare Workers support npm packages. This support makes it easy to rapidly build out functionality in your Workers. The ['qrcode-svg'](https://github.com/papnkukn/qrcode-svg) package is a great way to take text and encode it into a QR code. In the command line, install and save 'qrcode-svg' to your project’s 'package.json':
 
-```sh title="Installing the qr-image package"
-npm install --save qrcode-svg
-```
+<PackageManagers pkg="qrcode-svg" />
 
 In `index.js`, import the `qrcode-svg` package as the variable `QRCode`. In the `generateQRCode` function, parse the incoming request as JSON using `request.json`, and generate a new QR code using the `qrcode-svg` package. The QR code is generated as an SVG. Construct a new instance of `Response`, passing in the SVG data as the body, and a `Content-Type` header of `image/svg+xml`. This will allow browsers to properly parse the data coming back from your Worker as an image:
 
@@ -136,7 +133,9 @@ import QRCode from "qrcode-svg";
 async function generateQRCode(request) {
 	const { text } = await request.json();
 	const qr = new QRCode({ content: text || "https://workers.dev" });
-	return new Response(qr.svg(), { headers: { "Content-Type": "image/svg+xml" } });
+	return new Response(qr.svg(), {
+		headers: { "Content-Type": "image/svg+xml" },
+	});
 }
 ```
 
@@ -162,7 +161,9 @@ export default {
 async function generateQRCode(request) {
 	const { text } = await request.json();
 	const qr = new QRCode({ content: text || "https://workers.dev" });
-	return new Response(qr.svg(), { headers: { "Content-Type": "image/svg+xml" } });
+	return new Response(qr.svg(), {
+		headers: { "Content-Type": "image/svg+xml" },
+	});
 }
 
 const landing = `
@@ -216,7 +217,9 @@ export default {
 async function generateQRCode(request) {
 	const { text } = await request.json();
 	const qr = new QRCode({ content: text || "https://workers.dev" });
-	return new Response(qr.svg(), { headers: { "Content-Type": "image/svg+xml" } });
+	return new Response(qr.svg(), {
+		headers: { "Content-Type": "image/svg+xml" },
+	});
 }
 
 const landing = `

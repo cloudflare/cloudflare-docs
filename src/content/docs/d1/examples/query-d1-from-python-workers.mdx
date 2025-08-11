@@ -1,9 +1,8 @@
 ---
 type: example
 summary: Learn how to query D1 from a Python Worker
-tags:
+languages:
   - Python
-  - D1
 pcx_content_type: example
 title: Query D1 from Python Workers
 sidebar:
@@ -82,13 +81,13 @@ The value of `binding` is how you will refer to your database from within your W
 To create a Python Worker, create an empty file at `src/entry.py`, matching the value of `main` in your Wrangler file with the contents below:
 
 ```python
-from js import Response
+from workers import Response
 
 async def on_fetch(request, env):
     # Do anything else you'd like on request here!
 
     # Query D1 - we'll list all tables in our database in this example
-    results = await env.DB.prepare("PRAGMA table_list").all()
+    results = await env.DB.prepare("PRAGMA table_list").run()
     # Return a JSON response
     return Response.json(results)
 

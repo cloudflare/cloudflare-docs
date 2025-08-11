@@ -1,0 +1,16 @@
+---
+id: 18457868eb13222051618b0d138e0225
+url: china-network-acceleration
+title: China network - CDN global acceleration for Mainland China
+description: In this video, Jess Liu discusses Cloudflares CDN Global Acceleration (formerly China Express), including solutions for high latency on dynamic content, accelerating API calls, accessing Cloudflare One services like WARP and Magic WAN from within mainland China, and securely connecting private enterprise networks.
+products:
+  - china-network
+thumbnail:
+  url: https://pub-d9bf66e086fb4b639107aa52105b49dd.r2.dev/2-China-Express-thumbnail.png
+chapters: {
+  "Introduction and overview of Cloudflare solutions for China": "0s",
+  "Dynamic content outside of Mainland China": "38s",
+  "Access to global services": "01m43s",
+  "Private network connectivity": "02m54s",
+  "China Network use case and solution overview": "03m43s"
+}

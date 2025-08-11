@@ -21,17 +21,13 @@ WebSockets are open connections sustained between the client and the origin serv
 
 :::note
 
-
 WebSockets utilize an event-based system for receiving and sending messages, much like the Workers runtime model of responding to events.
-
 
 :::
 
 :::note
 
-
 If your application needs to coordinate among multiple WebSocket connections, such as a chat room or game match, you will need clients to send messages to a single-point-of-coordination. Durable Objects provide a single-point-of-coordination for Cloudflare Workers, and are often used in parallel with WebSockets to persist state over multiple clients and connections. In this case, refer to [Durable Objects](/durable-objects/) to get started, and prefer using the Durable Objects' extended [WebSockets API](/durable-objects/best-practices/websockets/).
-
 
 :::
 
@@ -43,20 +39,21 @@ A client can make a WebSocket request in the browser by instantiating a new inst
 
 ```js
 // In client-side JavaScript, connect to your Workers function using WebSockets:
-const websocket = new WebSocket('wss://example-websocket.signalnerve.workers.dev');
+const websocket = new WebSocket(
+	"wss://example-websocket.signalnerve.workers.dev",
+);
 ```
 
 :::note
 
-
 For more details about creating and working with WebSockets in the client, refer to [Writing a WebSocket client](#write-a-websocket-client).
-
 
 :::
 
 When an incoming WebSocket request reaches the Workers function, it will contain an `Upgrade` header, set to the string value `websocket`. Check for this header before continuing to instantiate a WebSocket:
 
 <Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
+
 ```js
 async function handleRequest(request) {
   const upgradeHeader = request.headers.get('Upgrade');
@@ -66,8 +63,8 @@ async function handleRequest(request) {
 }
 ```
 </TabItem> <TabItem label="Rust" icon="seti:rust">
-```rs
 
+```rs
 use worker::*;
 
 #[event(fetch)]
@@ -81,11 +78,13 @@ async fn fetch(req: HttpRequest, _env: Env, _ctx: Context) -> Result<worker::Res
     }
 }
 ```
+
 </TabItem> </Tabs>
-After you have appropriately checked for the `Upgrade` header, you can create a new instance of `WebSocketPair`, which contains server and client WebSockets. One of these WebSockets should be handled by the Workers function and the other should be returned as part of a `Response` with the [`101` status code](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/101), indicating the request is switching protocols:
+After you have appropriately checked for the `Upgrade` header, you can create a new instance of `WebSocketPair`, which contains server and client WebSockets. One of these WebSockets should be handled by the Workers function and the other should be returned as part of a `Response` with the [`101` status code](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/101), indicating the request is switching protocols:
 
 
 <Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
+
 ```js
 async function handleRequest(request) {
   const upgradeHeader = request.headers.get('Upgrade');
@@ -103,7 +102,9 @@ async function handleRequest(request) {
   });
 }
 ```
+
 </TabItem> <TabItem label="Rust" icon="seti:rust">
+
 ```rs
 use worker::*;
 
@@ -123,9 +124,10 @@ async fn fetch(req: HttpRequest, _env: Env, _ctx: Context) -> Result<worker::Res
     server.accept()?;
 
     worker::Response::from_websocket(client)
-}
 
+}
 ```
+
 </TabItem> </Tabs>
 
 The `WebSocketPair` constructor returns an Object, with the `0` and `1` keys each holding a `WebSocket` instance as its value. It is common to grab the two WebSockets from this pair using [`Object.values`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_objects/Object/values) and [ES6 destructuring](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment), as seen in the below example.
@@ -134,6 +136,7 @@ In order to begin communicating with the `client` WebSocket in your Worker, call
 
 
 <Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
+
 ```js
 async function handleRequest(request) {
   const upgradeHeader = request.headers.get('Upgrade');
@@ -152,7 +155,9 @@ async function handleRequest(request) {
   });
 }
 ```
+
 </TabItem> <TabItem label="Rust" icon="seti:rust">
+
 ```rs
 use worker::*;
 
@@ -172,14 +177,16 @@ async fn fetch(req: HttpRequest, _env: Env, _ctx: Context) -> Result<worker::Res
     server.accept()?;
 
     worker::Response::from_websocket(client)
-}
 
+}
 ```
+
 </TabItem> </Tabs>
 
 WebSockets emit a number of [Events](/workers/runtime-apis/websockets/#events) that can be connected to using `addEventListener`. The below example hooks into the `message` event and emits a `console.log` with the data from it:
 
 <Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
+
 ```js
 async function handleRequest(request) {
   const upgradeHeader = request.headers.get('Upgrade');
@@ -201,7 +208,9 @@ async function handleRequest(request) {
   });
 }
 ```
+
 </TabItem> <TabItem label="Rust" icon="seti:rust">
+
 ```rs
 use futures::StreamExt;
 use worker::*;
@@ -231,9 +240,39 @@ async fn fetch(req: HttpRequest, _env: Env, _ctx: Context) -> Result<worker::Res
         }
     });
     worker::Response::from_websocket(client)
-}
 
+}
 ```
+
+</TabItem> <TabItem label="Hono" icon="seti:typescript">
+
+```ts
+import { Hono } from 'hono'
+import { upgradeWebSocket } from 'hono/cloudflare-workers'
+
+const app = new Hono()
+
+app.get(
+  '*',
+  upgradeWebSocket((c) => {
+    return {
+      onMessage(event, ws) {
+        console.log('Received message from client:', event.data)
+        ws.send(`Echo: ${event.data}`)
+      },
+      onClose: () => {
+        console.log('WebSocket closed:', event)
+      },
+      onError: () => {
+        console.error('WebSocket error:', event)
+      },
+    }
+  })
+)
+
+export default app;
+```
+
 </TabItem> </Tabs>
 
 ### Connect to the WebSocket server from a client
@@ -241,17 +280,19 @@ async fn fetch(req: HttpRequest, _env: Env, _ctx: Context) -> Result<worker::Res
 Writing WebSocket clients that communicate with your Workers function is a two-step process: first, create the WebSocket instance, and then attach event listeners to it:
 
 ```js
-const websocket = new WebSocket('wss://websocket-example.signalnerve.workers.dev');
-websocket.addEventListener('message', event => {
-  console.log('Message received from server');
-  console.log(event.data);
+const websocket = new WebSocket(
+	"wss://websocket-example.signalnerve.workers.dev",
+);
+websocket.addEventListener("message", (event) => {
+	console.log("Message received from server");
+	console.log(event.data);
 });
 ```
 
 WebSocket clients can send messages back to the server using the [`send`](/workers/runtime-apis/websockets/#send) function:
 
 ```js
-websocket.send('MESSAGE');
+websocket.send("MESSAGE");
 ```
 
 When the WebSocket interaction is complete, the client can close the connection using [`close`](/workers/runtime-apis/websockets/#close):
@@ -270,31 +311,31 @@ Additionally, Cloudflare supports establishing WebSocket connections by making a
 
 ```js
 async function websocket(url) {
-  // Make a fetch request including `Upgrade: websocket` header.
-  // The Workers Runtime will automatically handle other requirements
-  // of the WebSocket protocol, like the Sec-WebSocket-Key header.
-  let resp = await fetch(url, {
-    headers: {
-      Upgrade: 'websocket',
-    },
-  });
+	// Make a fetch request including `Upgrade: websocket` header.
+	// The Workers Runtime will automatically handle other requirements
+	// of the WebSocket protocol, like the Sec-WebSocket-Key header.
+	let resp = await fetch(url, {
+		headers: {
+			Upgrade: "websocket",
+		},
+	});
 
-  // If the WebSocket handshake completed successfully, then the
-  // response has a `webSocket` property.
-  let ws = resp.webSocket;
-  if (!ws) {
-    throw new Error("server didn't accept WebSocket");
-  }
+	// If the WebSocket handshake completed successfully, then the
+	// response has a `webSocket` property.
+	let ws = resp.webSocket;
+	if (!ws) {
+		throw new Error("server didn't accept WebSocket");
+	}
 
-  // Call accept() to indicate that you'll be handling the socket here
-  // in JavaScript, as opposed to returning it on to a client.
-  ws.accept();
+	// Call accept() to indicate that you'll be handling the socket here
+	// in JavaScript, as opposed to returning it on to a client.
+	ws.accept();
 
-  // Now you can send and receive messages like before.
-  ws.send('hello');
-  ws.addEventListener('message', msg => {
-    console.log(msg.data);
-  });
+	// Now you can send and receive messages like before.
+	ws.send("hello");
+	ws.addEventListener("message", (msg) => {
+		console.log(msg.data);
+	});
 }
 ```
 

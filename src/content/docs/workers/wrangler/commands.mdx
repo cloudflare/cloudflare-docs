@@ -7,30 +7,40 @@ head:
 description: Create, develop, and deploy your Cloudflare Workers with Wrangler commands.
 ---
 
-import { TabItem, Tabs, Render, Type, MetaInfo, WranglerConfig } from "~/components";
+import {
+	TabItem,
+	Tabs,
+	Render,
+	Type,
+	MetaInfo,
+	WranglerConfig,
+	PackageManagers,
+} from "~/components";
 
 Wrangler offers a number of commands to manage your Cloudflare Workers.
 
 - [`docs`](#docs) - Open this page in your default browser.
 - [`init`](#init) - Create a new project from a variety of web frameworks and templates.
-- [`generate`](#generate) - Create a Wrangler project using an existing [Workers template](https://github.com/cloudflare/worker-template).
+- [`containers`](#containers) - Interact with Containers.
 - [`d1`](#d1) - Interact with D1.
 - [`vectorize`](#vectorize) - Interact with Vectorize indexes.
 - [`hyperdrive`](#hyperdrive) - Manage your Hyperdrives.
 - [`deploy`](#deploy) - Deploy your Worker to Cloudflare.
 - [`dev`](#dev) - Start a local server for developing your Worker.
-- [`publish`](#publish) - Publish your Worker to Cloudflare.
-- [`delete`](#delete-2) - Delete your Worker from Cloudflare.
+- [`delete`](#delete) - Delete your Worker from Cloudflare.
 - [`kv namespace`](#kv-namespace) - Manage Workers KV namespaces.
 - [`kv key`](#kv-key) - Manage key-value pairs within a Workers KV namespace.
 - [`kv bulk`](#kv-bulk) - Manage multiple key-value pairs within a Workers KV namespace in batches.
 - [`r2 bucket`](#r2-bucket) - Manage Workers R2 buckets.
 - [`r2 object`](#r2-object) - Manage Workers R2 objects.
 - [`secret`](#secret) - Manage the secret variables for a Worker.
-- [`secret bulk`](#secretbulk) - Manage multiple secret variables for a Worker.
+- [`secret bulk`](#secret-bulk) - Manage multiple secret variables for a Worker.
+- [`secrets-store secret`](#secrets-store-secret) - Manage account secrets within a secrets store.
+- [`secrets-store store`](#secrets-store-store) - Manage your store within secrets store.
 - [`workflows`](#workflows) - Manage and configure Workflows.
 - [`tail`](#tail) - Start a session to livestream logs from a deployed Worker.
 - [`pages`](#pages) - Configure Cloudflare Pages.
+- [`pipelines`](#pipelines) - Configure Cloudflare Pipelines.
 - [`queues`](#queues) - Configure Workers Queues.
 - [`login`](#login) - Authorize Wrangler with your Cloudflare account using OAuth.
 - [`logout`](#logout) - Remove Wrangler’s authorization for accessing your account.
@@ -43,6 +53,7 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`cert`](#cert) - Manage certificates used for mTLS and Certificate Authority (CA) chain connections.
 - [`types`](#types) - Generate types from bindings and module rules in configuration.
 - [`telemetry`](#telemetry) - Configure whether Wrangler can collect anonymous usage data.
+- [`check`](#check) - Validate your Worker.
 
 :::note
 
@@ -62,25 +73,11 @@ wrangler <COMMAND> <SUBCOMMAND> [PARAMETERS] [OPTIONS]
 
 Since Cloudflare recommends [installing Wrangler locally](/workers/wrangler/install-and-update/) in your project(rather than globally), the way to run Wrangler will depend on your specific setup and package manager.
 
-<Tabs> <TabItem label="npm">
-
-```sh
-npx wrangler <COMMAND> <SUBCOMMAND> [PARAMETERS] [OPTIONS]
-```
-
-</TabItem> <TabItem label="yarn">
-
-```sh
-yarn wrangler <COMMAND> <SUBCOMMAND> [PARAMETERS] [OPTIONS]
-```
-
-</TabItem> <TabItem label="pnpm">
-
-```sh
-pnpm wrangler <COMMAND> <SUBCOMMAND> [PARAMETERS] [OPTIONS]
-```
-
-</TabItem> </Tabs>
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="<COMMAND> <SUBCOMMAND> [PARAMETERS] [OPTIONS]"
+/>
 
 You can add Wrangler commands that you use often as scripts in your project's `package.json` file:
 
@@ -97,25 +94,7 @@ You can add Wrangler commands that you use often as scripts in your project's `p
 
 You can then run them using your package manager of choice:
 
-<Tabs> <TabItem label="npm">
-
-```sh
-npm run deploy
-```
-
-</TabItem> <TabItem label="yarn">
-
-```sh
-yarn run deploy
-```
-
-</TabItem> <TabItem label="pnpm">
-
-```sh
-pnpm run deploy
-```
-
-</TabItem> </Tabs>
+<PackageManagers type="run" args="deploy" />
 
 ---
 
@@ -152,28 +131,11 @@ wrangler init [<NAME>] [OPTIONS]
 
 ---
 
-## `generate`
+## `containers`
 
-:::note
+Interact with Cloudflare's Container Platform.
 
-This command has been deprecated as of [Wrangler v3](/workers/wrangler/migration/update-v2-to-v3/) and will be removed in a future version.
-
-:::
-
-Create a new project using an existing [Workers template](https://github.com/cloudflare/workers-sdk/tree/main/templates/worker).
-
-```txt
-wrangler generate [<NAME>] [TEMPLATE]
-```
-
-- `NAME` <Type text="string" /> <MetaInfo text="optional (default: name of working directory)" />
-  - The name of the Workers project. This is both the directory name and `name` property in the generated [Wrangler configuration](/workers/wrangler/configuration/).
-- `TEMPLATE` <Type text="string" /> <MetaInfo text="optional" />
-  - The URL of a GitHub template, with a default [worker-template](https://github.com/cloudflare/worker-template). Browse a list of available templates on the [cloudflare/workers-sdk](https://github.com/cloudflare/workers-sdk/tree/main/templates#usage) repository.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
----
+<Render file="wrangler-commands/containers" product="workers" />
 
 ## `d1`
 
@@ -195,222 +157,7 @@ Manage [Hyperdrive](/hyperdrive/) database configurations.
 
 Interact with a [Vectorize](/vectorize/) vector database.
 
-### `create`
-
-Creates a new vector index, and provides the binding and name that you will put in your Wrangler file.
-
-```sh
-npx wrangler vectorize create <INDEX_NAME> [--dimensions=<NUM_DIMENSIONS>] [--metric=<DISTANCE_METRIC>] [--description=<DESCRIPTION>]
-```
-
-- `INDEX_NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the new index to create. Must be unique for an account and cannot be changed after creation.
-- `--dimensions` <Type text="number" /> <MetaInfo text="required" />
-  - The vector dimension width to configure the index for. Cannot be changed after creation.
-- `--metric` <Type text="string" /> <MetaInfo text="required" />
-  - The distance metric to use for calculating vector distance. Must be one of `cosine`, `euclidean`, or `dot-product`.
-- `--description` <Type text="string" /> <MetaInfo text="optional" />
-  - A description for your index.
-- `--deprecated-v1` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Create a legacy Vectorize index. Please note that legacy Vectorize indexes are on a [deprecation path](/vectorize/reference/transition-vectorize-legacy).
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `list`
-
-List all Vectorize indexes in your account, including the configured dimensions and distance metric.
-
-```sh
-npx wrangler vectorize list
-```
-
-- `--deprecated-v1` <Type text="boolean" /> <MetaInfo text="optional" />
-  - List legacy Vectorize indexes. Please note that legacy Vectorize indexes are on a [deprecation path](/vectorize/reference/transition-vectorize-legacy).
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `get`
-
-Get details about an individual index, including its configuration.
-
-```sh
-npx wrangler vectorize get <INDEX_NAME>
-```
-
-- `INDEX_NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the index to fetch details for.
-- `--deprecated-v1` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Get a legacy Vectorize index. Please note that legacy Vectorize indexes are on a [deprecation path](/vectorize/reference/transition-vectorize-legacy).
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `info`
-
-Get some additional information about an individual index, including the vector count and details about the last processed mutation.
-
-```sh
-npx wrangler vectorize info <INDEX_NAME>
-```
-
-- `INDEX_NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the index to fetch details for.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `delete`
-
-Delete a Vectorize index.
-
-```sh
-npx wrangler vectorize delete <INDEX_NAME> [OPTIONS]
-```
-
-- `INDEX_NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the Vectorize index to delete.
-- `--force` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Skip confirmation when deleting the index (Note: This is not a recoverable operation).
-- `--deprecated-v1` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Delete a legacy Vectorize index. Please note that legacy Vectorize indexes are on a [deprecation path](/vectorize/reference/transition-vectorize-legacy).
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `insert`
-
-Insert vectors into an index.
-
-```sh
-npx wrangler vectorize insert <INDEX_NAME> [OPTIONS]
-```
-
-- `INDEX_NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the Vectorize index to upsert vectors in.
-- `--file` <Type text="string" /> <MetaInfo text="required" />
-  - A file containing the vectors to insert in newline-delimited JSON (JSON) format.
-- `--batch-size` <Type text="number" /> <MetaInfo text="optional" />
-  - The number of vectors to insert at a time (default: `1000`).
-- `--deprecated-v1` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Insert into a legacy Vectorize index. Please note that legacy Vectorize indexes are on a [deprecation path](/vectorize/reference/transition-vectorize-legacy).
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `upsert`
-
-Upsert vectors into an index. Existing vectors in the index would be overwritten.
-
-```sh
-npx wrangler vectorize upsert <INDEX_NAME> [OPTIONS]
-```
-
-- `INDEX_NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the Vectorize index to upsert vectors in.
-- `--file` <Type text="string" /> <MetaInfo text="required" />
-  - A file containing the vectors to insert in newline-delimited JSON (JSON) format.
-- `--batch-size` <Type text="number" /> <MetaInfo text="optional" />
-  - The number of vectors to insert at a time (default: `5000`).
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `query`
-
-Query a Vectorize index for similar vectors.
-
-```sh
-npx wrangler vectorize query <INDEX_NAME> [OPTIONS]
-```
-
-- `INDEX_NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the Vectorize index to query.
-- `--vector` <Type text="array" /> <MetaInfo text="optional" />
-  - Vector against which the Vectorize index is queried. Either this or the `vector-id` param must be provided.
-- `--vector-id` <Type text="string" /> <MetaInfo text="optional" />
-  - Identifier for a vector that is already present in the index against which the index is queried. Either this or the `vector` param must be provided.
-- `--top-k` <Type text="number" /> <MetaInfo text="optional" />
-  - The number of vectors to query (default: `5`).
-- `--return-values` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Enable to return vector values in the response (default: `false`).
-- `--return-metadata` <Type text="string" /> <MetaInfo text="optional" />
-  - Enable to return vector metadata in the response. Must be one of `none`, `indexed`, or `all` (default: `none`).
-- `--namespace` <Type text="string" /> <MetaInfo text="optional" />
-  - Query response to only include vectors from this namespace.
-- `--filter` <Type text="string" /> <MetaInfo text="optional" />
-  - Filter vectors based on this metadata filter. Example: `'{ 'p1': 'abc', 'p2': { '$ne': true }, 'p3': 10, 'p4': false, 'nested.p5': 'abcd' }'`
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `get-vectors`
-
-Fetch vectors from a Vectorize index using the provided ids.
-
-```sh
-npx wrangler vectorize get-vectors <INDEX_NAME> [OPTIONS]
-```
-
-- `INDEX_NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the Vectorize index from which vectors need to be fetched.
-- `--ids` <Type text="array" /> <MetaInfo text="required" />
-  - List of ids for which vectors must be fetched.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `delete-vectors`
-
-Delete vectors in a Vectorize index using the provided ids.
-
-```sh
-npx wrangler vectorize delete-vectors <INDEX_NAME> [OPTIONS]
-```
-
-- `INDEX_NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the Vectorize index from which vectors need to be deleted.
-- `--ids` <Type text="array" /> <MetaInfo text="required" />
-  - List of ids corresponding to the vectors that must be deleted.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `create-metadata-index`
-
-Enable metadata filtering on the specified property.
-
-```sh
-npx wrangler vectorize create-metadata-index <INDEX_NAME> [OPTIONS]
-```
-
-- `INDEX_NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the Vectorize index for which metadata index needs to be created.
-- `--property-name` <Type text="string" /> <MetaInfo text="required" />
-  - Metadata property for which metadata filtering should be enabled.
-- `--type` <Type text="string" /> <MetaInfo text="required" />
-  - Data type of the property. Must be one of `string`, `number`, or `boolean`.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `list-metadata-index`
-
-List metadata properties on which metadata filtering is enabled.
-
-```sh
-npx wrangler vectorize list-metadata-index <INDEX_NAME> [OPTIONS]
-```
-
-- `INDEX_NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the Vectorize index for which metadata indexes needs to be fetched.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `delete-metadata-index`
-
-Disable metadata filtering on the specified property.
-
-```sh
-npx wrangler vectorize delete-metadata-index <INDEX_NAME> [OPTIONS]
-```
-
-- `INDEX_NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the Vectorize index for which metadata index needs to be disabled.
-- `--property-name` <Type text="string" /> <MetaInfo text="required" />
-  - Metadata property for which metadata filtering should be disabled.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
+<Render file="wrangler-commands/vectorize" product="workers" />
 
 ---
 
@@ -428,16 +175,13 @@ None of the options for this command are required. Many of these options can be 
 
 :::
 
-:::caution
-
-As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions providing `glibc 2.31` or higher (e.g. Ubuntu 20.04/22.04, Debian 11/12, Fedora 37/38/39), macOS version 11 or higher, and Windows (x86-64 architecture).
-
-:::
-
 - `SCRIPT` <Type text="string" />
   - The path to an entry point for your Worker. Only required if your [Wrangler configuration file](/workers/wrangler/configuration/) does not include a `main` key (for example, `main = "index.js"`).
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
   - Name of the Worker.
+- `--config`, `-c` <Type text="string[]" /> <MetaInfo text="optional" />
+  - Path(s) to [Wrangler configuration file](/workers/wrangler/configuration/). If not provided, Wrangler will use the nearest config file based on your current working directory.
+  - You can provide multiple configuration files to run multiple Workers in one dev session like this: `wrangler dev -c ./wrangler.toml -c ../other-worker/wrangler.toml`. The first config will be treated as the _primary_ Worker, which will be exposed over HTTP. The remaining config files will only be accessible via a service binding from the primary Worker.
 - `--no-bundle` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
   - Skip Wrangler's build steps. Particularly useful when using custom builds. Refer to [Bundling](https://developers.cloudflare.com/workers/wrangler/bundling/) for more information.
 - `--env` <Type text="string" /> <MetaInfo text="optional" />
@@ -469,8 +213,6 @@ As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions pr
   - Host to act as origin in local mode, defaults to `dev.host` or route.
 - `--assets` <Type text="string" /> <MetaInfo text="optional beta" />
   - Folder of static assets to be served. Replaces [Workers Sites](/workers/configuration/sites/). Visit [assets](/workers/static-assets/) for more information.
-- `--legacy-assets` <Type text="string" /> <MetaInfo text="optional deprecated, use `--assets`" />
-  - Folder of static assets to be served.
 - `--site` <Type text="string" /> <MetaInfo text="optional deprecated, use `--assets`" />
   - Folder of static assets for Workers Sites.
     :::caution
@@ -484,24 +226,22 @@ As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions pr
   - Protocol to forward requests to host on.
 - `--var` <Type text="key:value\[]" /> <MetaInfo text="optional" />
   - Array of `key:value` pairs to inject as variables into your code. The value will always be passed as a string to your Worker.
-  - For example, `--var git_hash:$(git rev-parse HEAD) test:123` makes the `git_hash` and `test` variables available in your Worker's `env`.
+  - For example, `--var "git_hash:'$(git rev-parse HEAD)'" "test:123"` makes the `git_hash` and `test` variables available in your Worker's `env`.
   - This flag is an alternative to defining [`vars`](/workers/wrangler/configuration/#non-inheritable-keys) in your [Wrangler configuration file](/workers/wrangler/configuration/). If defined in both places, this flag's values will be used.
 - `--define` <Type text="key:value\[]" /> <MetaInfo text="optional" />
   - Array of `key:value` pairs to replace global identifiers in your code.
-  - For example, `--define GIT_HASH:$(git rev-parse HEAD)` will replace all uses of `GIT_HASH` with the actual value at build time.
+  - For example, `--define "GIT_HASH:'$(git rev-parse HEAD)'"` will replace all uses of `GIT_HASH` with the actual value at build time.
   - This flag is an alternative to defining [`define`](/workers/wrangler/configuration/#non-inheritable-keys) in your [Wrangler configuration file](/workers/wrangler/configuration/). If defined in both places, this flag's values will be used.
 - `--tsconfig` <Type text="string" /> <MetaInfo text="optional" />
   - Path to a custom `tsconfig.json` file.
 - `--minify` <Type text="boolean" /> <MetaInfo text="optional" />
   - Minify the Worker.
-- `--node-compat` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Enable Node.js compatibility.
 - `--persist-to` <Type text="string" /> <MetaInfo text="optional" />
   - Specify directory to use for local persistence.
 - `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
   - Develop against remote resources and data stored on Cloudflare's network.
 - `--test-scheduled` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
-  - Exposes a `/__scheduled` fetch route which will trigger a scheduled event (Cron Trigger) for testing during development. To simulate different cron patterns, a `cron` query parameter can be passed in: `/__scheduled?cron=*+*+*+*+*`.
+  - Exposes a `/__scheduled` fetch route which will trigger a scheduled event (Cron Trigger) for testing during development. To simulate different cron patterns, a `cron` query parameter can be passed in: `/__scheduled?cron=*+*+*+*+*` or `/cdn-cgi/handler/scheduled?cron=*+*+*+*+*`.
 - `--log-level` <Type text="'debug'|'info'|'log'|'warn'|'error|'none'" /> <MetaInfo text="(default: log) optional" />
   - Specify Wrangler's logging level.
 - `--show-interactive-dev-session` <Type text="boolean" /> <MetaInfo text="(default: true if the terminal supports interactivity) optional" />
@@ -511,7 +251,7 @@ As of Wrangler v3.2.0, `wrangler dev` is supported by any Linux distributions pr
 
 <Render file="wrangler-commands/global-flags" product="workers" />
 
-`wrangler dev` is a way to [locally test](/workers/local-development/) your Worker while developing. With `wrangler dev` running, send HTTP requests to `localhost:8787` and your Worker should execute as expected. You will also see `console.log` messages and exceptions appearing in your terminal.
+`wrangler dev` is a way to [locally test](/workers/development-testing/) your Worker while developing. With `wrangler dev` running, send HTTP requests to `localhost:8787` and your Worker should execute as expected. You will also see `console.log` messages and exceptions appearing in your terminal.
 
 ---
 
@@ -537,6 +277,7 @@ None of the options for this command are required. Also, many can be set in your
   - Skip Wrangler's build steps. Particularly useful when using custom builds. Refer to [Bundling](https://developers.cloudflare.com/workers/wrangler/bundling/) for more information.
 - `--env` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific environment.
+    <Render file="vite-environments" />
 - `--outdir` <Type text="string" /> <MetaInfo text="optional" />
   - Path to directory where Wrangler will write the bundled Worker files.
 - `--compatibility-date` <Type text="string" /> <MetaInfo text="optional" />
@@ -547,8 +288,6 @@ None of the options for this command are required. Also, many can be set in your
   - Use the latest version of the Workers runtime.
 - `--assets` <Type text="string" /> <MetaInfo text="optional beta" />
   - Folder of static assets to be served. Replaces [Workers Sites](/workers/configuration/sites/). Visit [assets](/workers/static-assets/) for more information.
-- `--legacy-assets` <Type text="string" /> <MetaInfo text="optional deprecated, use `--assets`" />
-  - Folder of static assets to be served.
 - `--site` <Type text="string" /> <MetaInfo text="optional deprecated, use `--assets`" />
   - Folder of static assets for Workers Sites.
     :::caution
@@ -575,33 +314,18 @@ None of the options for this command are required. Also, many can be set in your
   - Path to a custom `tsconfig.json` file.
 - `--minify` <Type text="boolean" /> <MetaInfo text="optional" />
   - Minify the bundled Worker before deploying.
-- `--node-compat` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Enable node.js compatibility.
 - `--dry-run` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
   - Compile a project without actually deploying to live servers. Combined with `--outdir`, this is also useful for testing the output of `npx wrangler deploy`. It also gives developers a chance to upload our generated sourcemap to a service like Sentry, so that errors from the Worker can be mapped against source code, but before the service goes live.
 - `--keep-vars` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
   - It is recommended best practice to treat your Wrangler developer environment as a source of truth for your Worker configuration, and avoid making changes via the Cloudflare dashboard.
-  - If you change your environment variables or bindings in the Cloudflare dashboard, Wrangler will override them the next time you deploy. If you want to disable this behaviour set `keep-vars` to `true`.
+  - If you change your environment variables in the Cloudflare dashboard, Wrangler will override them the next time you deploy. If you want to disable this behaviour set `keep-vars` to `true`.
+  - Secrets are never deleted by a deployment whether this flag is true or false.
 - `--dispatch-namespace` <Type text="string" /> <MetaInfo text="optional" />
   - Specify the [Workers for Platforms dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/get-started/configuration/#2-create-a-dispatch-namespace) to upload this Worker to.
+- `--metafile` <Type text="string" /> <MetaInfo text="optional" />
+  - Specify a file to write the build metadata from esbuild to. If flag is used without a path string, this defaults to `bundle-meta.json` inside the directory specified by `--outdir`. This can be useful for understanding the bundle size.
 
 <Render file="wrangler-commands/global-flags" product="workers" />
-
----
-
-## `publish`
-
-Publish your Worker to Cloudflare.
-
-```txt
-wrangler publish [OPTIONS]
-```
-
-:::note
-
-This command has been deprecated as of v3 in favor of [`wrangler deploy`](#deploy). It will be removed in v4.
-
-:::
 
 ---
 
@@ -769,6 +493,238 @@ Finished processing secrets JSON file:
 🚨 1 secrets failed to upload
 ```
 
+## `secrets-store secret`
+
+With the release of [Secrets Store](/secrets-store/) in open beta, you can use the following commands to manage your account secrets.
+
+:::note[`--remote` option]
+In order to interact with Secrets Store in production, you should append `--remote` to your command. Without it, your command will default to [local development mode](/workers/development-testing/).
+:::
+
+### `create`
+
+Create a secret within a store.
+
+```txt
+wrangler secrets-store secret create <STORE_ID> [OPTIONS]
+```
+
+- `STORE_ID` <Type text="string" /> <MetaInfo text="required" />
+  - The secret store public ID. You can find it and copy from the [Secrets Store tab](https://dash.cloudflare.com/?to=/:account/secrets-store/) on the dashboard.
+- `--name` <Type text="string" /> <MetaInfo text="required" />
+  - A descriptive name for the account-level secret. Cannot contain spaces.
+- `--value` <Type text="string" /> <MetaInfo text="test only" />
+  - Value of the secret.
+    :::caution[Only use for testing]
+    This will leave the secret value in plain-text in terminal history. For real secret values, use the automatic prompt instead. Find an example below.
+    :::
+- `--scopes` <Type text="string" /> <MetaInfo text="required" />
+  - Which services will have access to the account-level secret. Currently, only `workers` is available.
+- `--comment` <Type text="string" /> <MetaInfo text="optional" />
+  - Additional information about the account-level secret.
+- `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
+  - Execute the command against the remote Secrets Store. To interact with account-level secrets in production, make sure to append `--remote` to your commands.
+
+The following is an example of using the `create` command to create an account-level secret.
+
+```sh
+npx wrangler secrets-store secret create 8f7a1cdced6342c18d223ece462fd88d --name ServiceA_key-1 --scopes workers --remote
+```
+
+```sh output
+✓ Enter a secret value: › ***
+
+🔐 Creating secret... (Name: ServiceA_key-1, Value: REDACTED, Scopes: workers, Comment: undefined)
+✓ Select an account: › My account
+✅ Created secret! (ID: 13bc7498c6374a4e9d13be091c3c65f1)
+```
+
+### `update`
+
+Update a secret within a store.
+
+```txt
+wrangler secrets-store secret update <STORE_ID> [OPTIONS]
+```
+
+- `STORE_ID` <Type text="string" /> <MetaInfo text="required" />
+  - The ID of the secrets store that contains the secret you are updating.
+- `--secret-id` <Type text="string" /> <MetaInfo text="required" />
+  - The ID of the secret to update.
+- `--value` <Type text="string" /> <MetaInfo text="test only" />
+  - Updated value of the secret.
+    :::caution[Only use for testing]
+    This will leave the secret value in plain-text in terminal history. For real secret values, use the automatic prompt instead.
+    :::
+- `--scopes` <Type text="string" /> <MetaInfo text="required" />
+  - Which services will have access to the account-level secret. Currently, only `workers` is available.
+- `--comment` <Type text="string" /> <MetaInfo text="optional" />
+  - Updated comment for the account-level secret.
+- `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
+  - Execute the command against the remote Secrets Store. To interact with account-level secrets in production, make sure to append `--remote` to your commands.
+
+### `duplicate`
+
+Duplicate a secret within a store. Use this command to create a new secret that holds the same secret value as an existing secret.
+
+```txt
+wrangler secrets-store secret duplicate <STORE_ID> [OPTIONS]
+```
+
+- `STORE_ID` <Type text="string" /> <MetaInfo text="required" />
+  - The ID of the secrets store that contains the secret you are duplicating.
+- `--secret-id` <Type text="string" /> <MetaInfo text="required" />
+  - The ID of the secret you are duplicating.
+- `--name` <Type text="string" /> <MetaInfo text="required" />
+  - A name for the new secret. Cannot contain spaces.
+- `--scopes` <Type text="string" /> <MetaInfo text="required" />
+  - Which services will have access to the new account-level secret. Currently, only `workers` is available.
+- `--comment` <Type text="string" /> <MetaInfo text="optional" />
+  - Additional information about the new account-level secret.
+- `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
+  - Execute the command against the remote Secrets Store. To interact with account-level secrets in production, make sure to append `--remote` to your commands.
+
+### `get`
+
+Get information on a secret within a store.
+
+```txt
+wrangler secrets-store secret get <STORE_ID> [OPTIONS]
+```
+
+- `STORE_ID` <Type text="string" /> <MetaInfo text="required" />
+  - The ID of the secrets store that contains the secret you want to get.
+- `--secret-id` <Type text="string" /> <MetaInfo text="required" />
+  - The ID of the secret you want to get.
+- `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
+  - Execute the command against the remote Secrets Store. To interact with account-level secrets in production, make sure to append `--remote` to your commands.
+
+The following is an example with the expected output:
+
+```sh
+npx wrangler secrets-store secret get 8f7a1cdced6342c18d223ece462fd88d --secret-id 13bc7498c6374a4e9d13be091c3c65f1 --remote
+```
+
+```sh output
+🔐 Getting secret... (ID: 13bc7498c6374a4e9d13be091c3c65f1)
+✓ Select an account: › My account
+| Name                        | ID                                  | StoreID                             | Comment | Scopes  | Status  | Created                | Modified               |
+|-----------------------------|-------------------------------------|-------------------------------------|---------|---------|---------|------------------------|------------------------|
+| ServiceA_key-1          | 13bc7498c6374a4e9d13be091c3c65f1    | 8f7a1cdced6342c18d223ece462fd88d    |         | workers | active  | 4/9/2025, 10:06:01 PM  | 4/15/2025, 09:13:05 AM |
+```
+
+### `delete`
+
+Delete a secret within a store.
+
+:::caution
+Before deleting a secret, make sure it is not deployed in any Workers application.
+:::
+
+```txt
+wrangler secrets-store secret delete <STORE_ID> [OPTIONS]
+```
+
+- `STORE_ID` <Type text="string" /> <MetaInfo text="required" />
+  - The ID of the secrets store that contains the secret you are deleting.
+- `--secret-id` <Type text="string" /> <MetaInfo text="required" />
+  - The ID of the secret you are deleting.
+- `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
+  - Execute the command against the remote Secrets Store. To interact with account-level secrets in production, make sure to append `--remote` to your commands.
+
+### `list`
+
+List secrets within a store.
+
+```txt
+wrangler secrets-store secret list <STORE_ID>
+```
+
+- `STORE_ID` <Type text="string" /> <MetaInfo text="required" />
+  - The secret store public ID. You can find it and copy from the [Secrets Store tab](https://dash.cloudflare.com/?to=/:account/secrets-store/) on the dashboard.
+
+## `secrets-store store`
+
+Use the following commands to manage your store.
+
+:::note[Store limitation]
+[Secrets Store](/secrets-store/) is in open beta. Currently, you can only have one store per Cloudflare account.
+:::
+
+### `create`
+
+Create a store within Secrets Store.
+
+```txt
+wrangler secrets-store store create <name>
+```
+
+- `name` <Type text="string" /> <MetaInfo text="required" />
+  - A descriptive name for the account-level secret. Cannot contain spaces.
+- `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) required" />
+  - Execute the command against the remote Secrets Store.
+
+The following is an example of using the `create` command to create a store.
+
+```sh
+npx wrangler secrets-store store create default --remote
+```
+
+```sh output
+🔐 Creating store... (Name: default)
+✅ Created store! (Name: default, ID: 2e2a82d317134506b58defbe16982d54)
+```
+
+### `delete`
+
+Delete a store within Secrets Store.
+
+```txt
+wrangler secrets-store store delete <STORE_ID>
+```
+
+- `STORE_ID` <Type text="string" /> <MetaInfo text="required" />
+  - The secret store public ID. You can find it and copy from the [Secrets Store tab](https://dash.cloudflare.com/?to=/:account/secrets-store/) on the dashboard.
+- `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) required" />
+  - Execute the command against the remote Secrets Store.
+
+The following is an example of using the `delete` command to delete a store.
+
+```sh
+npx wrangler secrets-store store delete d2dafaeac9434de2b6d08b292ce08211 --remote
+```
+
+```sh output
+🔐 Deleting store... (Name: d2dafaeac9434de2b6d08b292ce08211)
+✅ Deleted store! (ID: d2dafaeac9434de2b6d08b292ce08211)
+```
+
+### `list`
+
+List the stores within an account.
+
+```txt
+wrangler secrets-store store list
+```
+
+- `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) required" />
+  - Execute the command against the remote Secrets Store.
+
+The following is an example of using the `list` command to list stores.
+
+```sh
+npx wrangler secrets-store store list --remote
+```
+
+```sh output
+🔐 Listing stores...
+┌─────────┬──────────────────────────────────┬──────────────────────────────────┬──────────────────────┬──────────────────────┐
+│ Name    │ ID                               │ AccountID                        │ Created              │ Modified             │
+├─────────┼──────────────────────────────────┼──────────────────────────────────┼──────────────────────┼──────────────────────┤
+│ default │ 8876bad33f164462bf0743fe8adf98f4 │ REDACTED │ 4/9/2025, 1:11:48 PM  │ 4/9/2025, 1:11:48 PM │
+└─────────┴──────────────────────────────────┴──────────────────────────────────┴──────────────────────┴──────────────────────┘
+```
+
 ## `workflows`
 
 :::note
@@ -901,6 +857,23 @@ wrangler workflows describe <WORKFLOW_NAME> [OPTIONS]
 
 <Render file="wrangler-commands/global-flags" product="workers" />
 
+### `delete`
+
+Delete a Workflow and all its instances.
+
+```sh
+wrangler workflows delete <WORKFLOW_NAME> [OPTIONS]
+```
+
+- `WORKFLOW_NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of a registered Workflow.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
+
+```sh
+wrangler workflows instances delete my-workflow
+```
+
 ### `trigger`
 
 Trigger (create) a Workflow instance.
@@ -920,19 +893,6 @@ wrangler workflows trigger <WORKFLOW_NAME> <PARAMS> [OPTIONS]
 # Pass optional params to the Workflow.
 wrangler workflows trigger my-workflow '{"hello":"world"}'
 ```
-
-### `delete`
-
-Delete (unregister) a Workflow.
-
-```sh
-wrangler workflows delete <WORKFLOW_NAME> [OPTIONS]
-```
-
-- `WORKFLOW_NAME` <Type text="string" /> <MetaInfo text="required" />
-  - The name of a registered Workflow.
-
-\*/}
 
 ## `tail`
 
@@ -996,6 +956,9 @@ wrangler pages dev [<DIRECTORY>] [OPTIONS]
   - IP address to listen on, defaults to `localhost`.
 - `--port` <Type text="number" /> <MetaInfo text="optional (default: 8788)" />
   - The port to listen on (serve from).
+- `--config`, `-c` <Type text="string[]" /> <MetaInfo text="optional" />
+  - Path(s) to [Wrangler configuration file](/workers/wrangler/configuration/). If not provided, Wrangler will use the nearest config file based on your current working directory.
+  - You can provide additional configuration files in order to run Workers alongside your Pages project, like this: `wrangler pages dev -c ./wrangler.toml -c ../other-worker/wrangler.toml`. The first argument must point to your Pages configuration file, and the subsequent configurations will be accessible via a Service binding from your Pages project.
 - `--binding` <Type text="string[]" /> <MetaInfo text="optional" />
   - Bind an environment variable or secret (for example, `--binding <VARIABLE_NAME>=<VALUE>`).
 - `--kv` <Type text="string[]" /> optional
@@ -1083,6 +1046,8 @@ wrangler pages deployment list [--project-name <PROJECT_NAME>]
   - The name of the project you would like to list deployments for.
 - `--environment` <Type text="'production'|'preview'" /> <MetaInfo text="optional" />
   - Environment type to list deployments for.
+- `--json` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Whether to output the list in JSON format.
 
 <Render file="wrangler-commands/global-flags" product="workers" />
 
@@ -1153,22 +1118,6 @@ Your site is deployed to `<PROJECT_NAME>.pages.dev`. If you do not provide the `
 
 :::
 
-### `publish`
-
-Publish a directory of static assets as a Pages deployment.
-
-```txt
-wrangler pages publish [<DIRECTORY>] [OPTIONS]
-```
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-:::note
-
-This command has been deprecated as of v3 in favor of [`wrangler pages deploy`](#deploy-1). It will be removed in v4.
-
-:::
-
 ### `secret put`
 
 Create or update a secret for a Pages project.
@@ -1230,7 +1179,36 @@ wrangler pages secret bulk [<FILENAME>] [OPTIONS]
 
 <Render file="wrangler-commands/global-flags" product="workers" />
 
+### `functions build`
+
+Compile a folder of Pages Functions into a single Worker.
+
+```txt
+wrangler pages functions build [<DIRECTORY>] [OPTIONS]
+```
+
+- `DIRECTORY` <Type text="string" /> <MetaInfo text="optional (default: `functions`)" />
+  - The directory of Pages Functions.
+- `--outdir` <Type text="string" /> <MetaInfo text="optional" />
+  - Output directory for the bundled Worker.
+- `--fallback-service` <Type text="string" /> <MetaInfo text="optional (default: `ASSETS`)" />
+  - The service to fallback to at the end of the `next` chain. Setting to `''` will fallback to the global `fetch`.
+- `--compatibility-date` <Type text="string" /> <MetaInfo text="optional" />
+  - Date to use for compatibility checks.
+- `--compatibility-flags` <Type text="string[]" /> <MetaInfo text="optional" />
+  - Flags to use for compatibility checks.
+- `--metafile` <Type text="string" /> <MetaInfo text="optional" />
+  - Specify a file to write the build metadata from esbuild to. If flag is used without a path string, this defaults to `bundle-meta.json` inside the directory specified by `--outdir`. This can be useful for understanding the bundle size.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
+
 ---
+
+## `pipelines`
+
+Manage your [Pipelines](/pipelines/).
+
+<Render file="wrangler-commands/pipelines" product="workers" />
 
 ## `queues`
 
@@ -1348,6 +1326,39 @@ wrangler queues consumer remove <queue-name> <script-name>
 
 <Render file="wrangler-commands/global-flags" product="workers" />
 
+### `purge`
+
+Permanently delete all messages in a queue.
+
+```txt
+wrangler queues purge <queue-name>
+```
+
+- `queue-name` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the queue from which messages should be deleted.
+
+### `pause-delivery`
+
+Pause message delivery from a Queue to consumers (including push consumers, and HTTP pull consumers)
+
+```txt
+wrangler queues pause-delivery <queue-name>
+```
+
+- `queue-name` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the queue which delivery should be paused.
+
+### `resume-delivery`
+
+Resume delivery from a Queue to consumers (including push consumers, and HTTP pull consumers)
+
+```txt
+wrangler queues resume-delivery <queue-name>
+```
+
+- `queue-name` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the queue from which delivery should be resumed.
+
 ---
 
 ## `login`
@@ -1362,16 +1373,20 @@ wrangler login [OPTIONS]
 
 - `--scopes-list` <Type text="string" /> <MetaInfo text="optional" />
   - List all the available OAuth scopes with descriptions.
-- `--scopes $SCOPES` <Type text="string" /> <MetaInfo text="optional" />
+- `--scopes` <Type text="string" /> <MetaInfo text="optional" />
   - Allows to choose your set of OAuth scopes. The set of scopes must be entered in a whitespace-separated list,
     for example, `npx wrangler login --scopes account:read user:read`.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
+- `--callback-host` <Type text="string" /> <MetaInfo text="optional" />
+  - Defaults to `localhost`. Sets the IP or hostname where Wrangler should listen for the OAuth callback.
+- `--callback-port` <Type text="string" /> <MetaInfo text="optional" />
+  - Defaults to `8976`. Sets the port where Wrangler should listen for the OAuth callback.
 
 :::note
 
 `wrangler login` uses all the available scopes by default if no flags are provided.
 :::
+
+<Render file="wrangler-commands/global-flags" product="workers" />
 
 If Wrangler fails to open a browser, you can copy and paste the URL generated by `wrangler login` in your terminal into a browser and log in.
 
@@ -1451,8 +1466,13 @@ wrangler versions upload [OPTIONS]
   - Add a version tag. Accepts empty string.
 - `--message` <Type text="string" /> <MetaInfo text="optional" />
   - Add a version message. Accepts empty string.
+- `--preview-alias` <Type text="string" /> <MetaInfo text="optional" />
+  - Creates an alias to this version.
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific Worker rather than inheriting from the [Wrangler configuration file](/workers/wrangler/configuration/).
+- `--env` <Type text="string" /> <MetaInfo text="optional" />
+  - Perform on a specific environment.
+    <Render file="vite-environments" />
 
 <Render file="wrangler-commands/global-flags" product="workers" />
 
@@ -1513,7 +1533,7 @@ wrangler versions secret put <KEY> [OPTIONS]
 Delete a secret for a Worker. Creates a new [version](/workers/configuration/versions-and-deployments/#versions) with modified secrets without [deploying](/workers/configuration/versions-and-deployments/#deployments) the Worker.
 
 ```txt
-wrangler versions delete <KEY> [OPTIONS]
+wrangler versions secret delete <KEY> [OPTIONS]
 ```
 
 - `KEY` <Type text="string" /> <MetaInfo text="required" />
@@ -1854,6 +1874,7 @@ wrangler cert upload certificate-authority --ca-cert <PATH> [OPTIONS]
 ```
 
 - `--ca-cert` <Type text="string" /> <MetaInfo text="required" />
+
   - A path to the Certificate Authority (CA) chain certificate to upload.
 
 - `--name` <Type text="string" /> <MetaInfo text="optional" />
@@ -1937,7 +1958,7 @@ Deleted certificate 99f5fef1-6cc1-46b8-bd79-44a0d5082b8d successfully
 
 ## `types`
 
-Generate types from bindings and module rules in configuration.
+Generate types based on your Worker configuration, including `Env` types based on your bindings, module rules, and [runtime types](/workers/languages/typescript/) based on the`compatibility_date` and `compatibility_flags` in your [config file](/workers/wrangler/configuration/).
 
 ```txt
 wrangler types [<PATH>] [OPTIONS]
@@ -1945,35 +1966,31 @@ wrangler types [<PATH>] [OPTIONS]
 
 :::note
 
-The `--experimental-include-runtime` flag dynamically generates runtime types according to the `compatibility_date` and `compatibility_flags` defined in your [config file](/workers/wrangler/configuration/).
-
-It is a replacement for the [`@cloudflare/workers-types` package](https://www.npmjs.com/package/@cloudflare/workers-types), so that package, if installed, should be uninstalled to avoid any potential conflict.
-
-After running the command, you must add the path of the generated runtime types file to the [`compilerOptions.types` field](https://www.typescriptlang.org/tsconfig/#types) in your project's [tsconfig.json](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html) file.
-
-You may use the shorthand `--x-include-runtime` flag in place of `--experimental-include-runtime` anywhere it is mentioned.
-
-The minimum required Wrangler version to use this command is 3.66.0.
+<Render file="wrangler-commands/runtime-types" product="workers" />
 
 :::
 
 - `PATH` <Type text="string" /> <MetaInfo text="(default: `./worker-configuration.d.ts`)" />
-  - The path to where **the `Env` types** for your Worker will be written.
+  - The path to where types for your Worker will be written.
   - The path must have a `d.ts` extension.
 - `--env-interface` <Type text="string" /> <MetaInfo text="(default: `Env`)" />
   - The name of the interface to generate for the environment object.
   - Not valid if the Worker uses the Service Worker syntax.
-- `--experimental-include-runtime` <Type text="string" /> <MetaInfo text="optional (default: `./.wrangler/types/runtime.d.ts`)" />
-  - The path to where the **runtime types** file will be written.
-  - Leave the path blank to use the default option, e.g. `npx wrangler types --x-include-runtime`
-  - A custom path must be relative to the project root, e.g. `./my-runtime-types.d.ts`
-  - A custom path must have a `d.ts` extension.
+- `--include-runtime` <Type text="boolean" /> <MetaInfo text="(default: true)" />
+  - Whether to generate runtime types based on the`compatibility_date` and `compatibility_flags` in your [config file](/workers/wrangler/configuration/).
+- `--include-env` <Type text="boolean" /> <MetaInfo text="(default: true)" />
+  - Whether to generate `Env` types based on your Worker bindings.
 - `--strict-vars` <Type text="boolean" /> <MetaInfo text="optional (default: true)" />
   - Control the types that Wrangler generates for `vars` bindings.
-  - If `true`, (the default) Wrangler generates literal and union types for bindings (e.g. `myEnv: 'my dev variable' | 'my prod variable'`).
-  - If `false`, Wrangler generates generic types (e.g. `myEnv: string`). This is useful when variables change frequently, especially when working across multiple environments.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
+  - If `true`, (the default) Wrangler generates literal and union types for bindings (e.g. `myVar: 'my dev variable' | 'my prod variable'`).
+  - If `false`, Wrangler generates generic types (e.g. `myVar: string`). This is useful when variables change frequently, especially when working across multiple environments.
+- `--config`, `-c` <Type text="string[]" /> <MetaInfo text="optional" />
+  - Path(s) to [Wrangler configuration file](/workers/wrangler/configuration/). If the Worker you are generating types for has service bindings or bindings to Durable Objects, you can also provide the paths to those configuration files so that the generated `Env` type will include RPC types. For example, given a Worker with a service binding, `wrangler types -c wrangler.toml -c ../bound-worker/wrangler.toml` will generate an `Env` type like this:
+  ```ts
+  interface Env {
+  	SERVICE_BINDING: Service<import("../bound-worker/src/index").Entrypoint>;
+  }
+  ```
 
 ---
 
@@ -2008,3 +2025,28 @@ This will resolve the global status set by `wrangler telemetry disable / enable`
 ```txt
 wrangler telemetry status
 ```
+
+<Render file="wrangler-commands/global-flags" product="workers" />
+
+---
+
+## `check`
+
+### `startup`
+
+Generate a CPU profile of your Worker's startup phase.
+
+After you run `wrangler check startup`, you can import the profile into Chrome DevTools or open it directly in VSCode to view a flamegraph of your Worker's startup phase. Additionally, when a Worker deployment fails with a startup time error Wrangler will automatically generate a CPU profile for easy investigation.
+
+```sh
+wrangler check startup
+```
+
+- `--args` <Type text="string" /> <MetaInfo text="optional" />
+  - To customise the way `wrangler check startup` builds your Worker for analysis, provide the exact arguments you use when deploying your Worker with `wrangler deploy`, or your Pages project with `wrangler pages functions build`. For instance, if you deploy your Worker with `wrangler deploy --no-bundle`, you should use `wrangler check startup --args="--no-bundle"` to profile the startup phase.
+- `--worker` <Type text="string" /> <MetaInfo text="optional" />
+  - If you don't use Wrangler to deploy your Worker, you can use this argument to provide a Worker bundle to analyse. This should be a file path to a serialized multipart upload, with the exact same format as [the API expects](/api/resources/workers/subresources/scripts/methods/update/).
+- `--pages` <Type text="boolean" /> <MetaInfo text="optional" />
+  - If you don't use a Wrangler config file with your Pages project (i.e. a Wrangler config file containing `pages_build_output_dir`), use this flag to force `wrangler check startup` to treat your project as a Pages project.
+
+<Render file="wrangler-commands/global-flags" product="workers" />

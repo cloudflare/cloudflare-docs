@@ -8,6 +8,14 @@ const workspace = defineWorkspace([
 		test: {
 			name: "Workers",
 			include: ["**/*.worker.test.ts"],
+			deps: {
+				optimizer: {
+					ssr: {
+						enabled: true,
+						include: ["node-html-parser", "yaml"],
+					},
+				},
+			},
 			poolOptions: {
 				workers: {
 					wrangler: { configPath: "./wrangler.toml" },

@@ -3,6 +3,8 @@ title: Google AI Studio
 pcx_content_type: get-started
 ---
 
+import { Render } from "~/components";
+
 [Google AI Studio](https://ai.google.dev/aistudio) helps you build quickly with Google Gemini models.
 
 ## Endpoint
@@ -69,3 +71,17 @@ const model = genAI.getGenerativeModel(
 
 await model.generateContent(["What is Cloudflare?"]);
 ```
+
+<Render
+	file="chat-completions-providers"
+	product="ai-gateway"
+	params={{
+		name: "Google AI Studio",
+		jsonexample: `
+{
+	"model": "google-ai-studio/{model}"
+}`
+
+    }}
+
+/>

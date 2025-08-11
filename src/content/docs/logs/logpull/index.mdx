@@ -13,7 +13,7 @@ Cloudflare Logpull is a REST API for consuming request logs over HTTP. These log
 :::caution
 
 
-Logpull is considered a legacy feature and we recommend using [Logpush](/logs/about/) or [Logs Engine](/logs/r2-log-retrieval/) instead for better performance and functionality.
+Logpull is considered a legacy feature and we recommend using [Logpush](/logs/logpush/) or [Logs Engine](/logs/r2-log-retrieval/) instead for better performance and functionality.
 
 
 :::
@@ -25,3 +25,7 @@ Review the following content to learn more about Logpull.
 ## Availability
 
 <FeatureTable id="analytics.logpull" />
+
+### Limitation
+
+Logpull is unavailable when the Customer Metadata Boundary (CMB) is set outside the US region. Specifically, it does not work when CMB is restricted to the EU-only setting. For more details, refer to the [Cloudflare Data Localization](/data-localization/) documentation.

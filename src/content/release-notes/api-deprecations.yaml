@@ -2,18 +2,138 @@
 link: "/fundamentals/api/reference/deprecations/"
 productName: API deprecations
 productLink: "/fundamentals/"
-productArea: Core platform
-productAreaLink: /fundamentals/reference/changelog/platform/
 entries:
+  - publish_date: "2025-07-01"
+    title: "Cloudflare Radar: Verified Bots APIs"
+    description: |-
+      Deprecation date: July 1, 2025
+
+      End of life date: January 1, 2026
+
+      The Radar Verified Bots API is now deprecated and will be replaced by the new Bots API.
+
+      Deprecated APIs:
+
+        * `GET /radar/verified_bots/top/bots`
+        * `GET /radar/verified_bots/top/categories`
+
+      Replacements:
+
+        * `GET /radar/bots/summary/bot`
+        * `GET /radar/bots/summary/category`
+
+  - publish_date: "2025-11-11"
+    title: "Zero Trust Devices"
+    description: |-
+      End of life date: November 11, 2025
+
+      We are changing the definition of Devices. Devices are going to represent the real-world machines while
+      the relation between Users and Devices will be represented by a new concept - Registrations.
+
+      As a result multiple fields are moving from Devices to Registrations and we are deprecating the endpoints listed below.
+
+      The deprecated endpoints are not supported on accounts with [multi-user mode](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/windows-multiuser/) enabled.
+
+      Deprecated API:
+
+        * `GET /accounts/{account_id}/devices`
+        * `GET /accounts/{account_id}/devices/{device_id}`
+        * `GET /accounts/{account_id}/devices/{device_id}/override_codes`
+        * `POST /accounts/{account_id}/devices/revoke`
+        * `POST /accounts/{account_id}/devices/unrevoke`
+
+      Replacement:
+
+        * `GET /accounts/{account_id}/devices/physical-devices`
+        * `GET /accounts/{account_id}/devices/physical-devices/{device_id}`
+        * `GET /accounts/{account_id}/devices/registrations`
+        * `GET /accounts/{account_id}/devices/registrations/{registration_id}`
+        * `GET /accounts/{account_id}/devices/registrations/{registration_id}/override_codes`
+        * `POST /accounts/{account_id}/devices/registrations/revoke`
+        * `POST /accounts/{account_id}/devices/registrations/unrevoke`
+
+  - publish_date: "2025-06-08"
+    title: "Zone Setting: cname_flattening"
+    description: |-
+      Deprecation date: June 8, 2025
+
+      The Zone Settings API endpoints for managing zone-level CNAME flattening are deprecated. Instead, use the [Show DNS Settings](/api/resources/dns/subresources/settings/subresources/zone/methods/get/) and [Update DNS Settings](/api/resources/dns/subresources/settings/subresources/zone/methods/edit/) endpoints to manage this setting.
+
+      Changes via the old endpoints will be reflected in the new ones, and vice versa, so there is no need to migrate existing zones. However, future API calls must use DNS Settings instead of the Zone Settings endpoints.
+
+      Note that, with the deprecated zone setting, values `"off"` and `"apex"` have the same behavior. These are represented as `{"flatten_all_cnames": false}` in the new API.
+      The zone setting `"on"` corresponds to `{"flatten_all_cnames": true}` in the new API.
+
+      Affected APIs:
+
+      - `GET /zones/:zone_id/settings`
+      - `PATCH /zones/:zone_id/settings`
+
+      Deprecated APIs:
+
+      - `GET /zones/:zone_id/settings/cname_flattening`
+      - `PATCH /zones/:zone_id/settings/cname_flattening`
+
+  - publish_date: "2025-03-20"
+    title: "Cloudflare Radar: Attack top industry and vertical endpoints"
+    description: |-
+      Deprecation date: March 20, 2025
+
+      End of life date: September 20, 2025
+
+      The `/top/industry` and `/top/vertical` attack endpoints are now deprecated and will be replaced by the corresponding summary endpoints.
+
+      Affected APIs:
+
+        * `GET /radar/attacks/layer3/top/industry`
+        * `GET /radar/attacks/layer3/top/vertical`
+        * `GET /radar/attacks/layer7/top/industry`
+        * `GET /radar/attacks/layer7/top/vertical`
+
+      Replacements:
+
+        * `GET /radar/attacks/layer3/summary/industry`
+        * `GET /radar/attacks/layer3/summary/vertical`
+        * `GET /radar/attacks/layer7/summary/industry`
+        * `GET /radar/attacks/layer7/summary/vertical`
+
+  - publish_date: "2025-03-17"
+    title: "Security Center: Security level and Threat Score are now automated"
+    description: |-
+
+      Change date: March 17, 2025
+
+      Cloudflare now combines the IP address threat signal with threshold and botnet data, no longer requiring you to set a sensitivity level. Users will no longer be able to set Security level via the  Cloudflare dashboard. However, users can still rely on the existing API or Terraform configuration to set a Security level.
+
+      If you are using threat score in rule expressions, you should review those expressions to make sure the rule still triggers when appropriate. Cloudflare will audit and migrate your configuration in the future to update any references to threat score. If you are using the Rulesets API or Terraform to push your configuration, you should review your scripts and pipelines before the end of Q1 2026 to prevent issues.
+
+  - publish_date: "2025-03-11"
+    title: "Cloudflare Radar: Layer 7 attack magnitude parameter"
+    description: |-
+      Deprecation date: March 11, 2025
+
+      End of life date: June 11, 2025
+
+      The layer 7 attack `magnitude` query parameter, which allows you to define attack magnitude by total requests mitigated (`MITIGATED_REQUESTS`) or total zones attacked (`AFFECTED_ZONES`), is deprecated.
+      Moving forward, Cloudflare Radar will only support defining layer 7 attack magnitude based on the total number of mitigated requests.
+
+      Affected API:
+
+      `GET /radar/attacks/layer7/top/attacks`
+
+      Replacement:
+
+      Users should stop using the `magnitude` parameter, as the default behavior already uses `MITIGATED_REQUESTS`.
+
   - publish_date: "2025-07-01"
     title: Cloudflare DWeb Resolver
     description: |-
       Deprecation date: July 1, 2025
-      
+
       The Cloudflare DWeb Resolver experiment is ending.
-      
+
       Deprecated APIs:
-      
+
       - DoH resolver on resolver.cloudflare-eth.com
 
   - publish_date: "2025-03-23"
@@ -72,36 +192,13 @@ entries:
       - `GET /zones/:zone_id/access/apps/:app_id`
       - `PUT /zones/:zone_id/access/apps/:app_id`
 
-  - publish_date: "2025-03-21"
-    title: "Zone Setting: cname_flattening"
-    description: |-
-      Deprecation date: March 21, 2025
-
-      The Zone Settings API endpoints for managing zone-level CNAME flattening are deprecated.
-      Instead, use the [Show DNS Settings](/api/resources/dns/subresources/settings/methods/get/) and [Update DNS Settings](/api/resources/dns/subresources/settings/methods/edit/) endpoints to manage this setting.
-
-      Changes via the old endpoints will be reflected in the new ones, and vice versa, so there is no need to migrate existing zones. However, future API calls must use DNS Settings instead of the Zone Settings endpoints.
-
-      Note that, with the deprecated zone setting, values `"off"` and `"apex"` have the same behavior. These are represented as `{"flatten_all_cnames": false}` in the new API.
-      The zone setting `"on"` corresponds to `{"flatten_all_cnames": true}` in the new API.
-
-      Affected APIs:
-
-      - `GET /zones/:zone_id/settings`
-      - `PATCH /zones/:zone_id/settings`
-
-      Deprecated APIs:
-
-      - `GET /zones/:zone_id/settings/cname_flattening`
-      - `PATCH /zones/:zone_id/settings/cname_flattening`
-
   - publish_date: "2025-03-14"
     title: "Account Settings: default_nameservers and use_account_custom_ns_by_default"
     description: |-
       Deprecation date: March 14, 2025
 
       The fields `"default_nameservers"` and `"use_account_custom_ns_by_default"` within the `"settings"` object of accounts are deprecated.
-      Instead, use the [Show DNS Settings](/api/resources/dns/subresources/settings/methods/get/) and [Update DNS Settings](/api/resources/dns/subresources/settings/methods/edit/) endpoints to manage this setting.
+      Instead, use the [Show DNS Settings](/api/resources/dns/subresources/settings/subresources/account/methods/get/) and [Update DNS Settings](/api/resources/dns/subresources/settings/subresources/account/methods/edit/) endpoints to manage this setting.
       This setting is available in the new API as `.zone_defaults.nameservers.type`, with allowed values `"cloudflare.standard"`, `"cloudflare.standard.random"`, `"custom.account"` and `"custom.tenant"`.
 
       Changes via the old endpoints will be reflected in the new ones, and vice versa, so there is no need to migrate existing zones. However, future API calls must use DNS Settings instead of the Accounts endpoints.
@@ -118,7 +215,7 @@ entries:
     description: |-
       Deprecation date: June 15, 2025
 
-      The Firewall Rules API and the Filters API are deprecated, since Firewall Rules was deprecated in favor of [WAF custom rules](/waf/custom-rules/). Refer to [Firewall Rules to WAF custom rules migration](/waf/reference/migration-guides/firewall-rules-to-custom-rules/) for more information about this change.
+      The Firewall Rules API and the Filters API are deprecated, since Firewall Rules was deprecated in favor of [WAF custom rules](/waf/custom-rules/). Refer to [Firewall Rules upgrade](/waf/reference/legacy/firewall-rules-upgrade/) for more information about this change.
 
       Deprecated APIs:
 
@@ -146,7 +243,7 @@ entries:
     description: |-
       Deprecation date: June 15, 2025
 
-      The APIs for managing WAF managed rules (previous version) — namely for managing packages, rule groups, rules, and overrides — are deprecated in favor of [WAF Managed Rules](/waf/managed-rules/). Refer to [WAF Managed Rules migration](/waf/reference/migration-guides/waf-managed-rules-migration/) for more information about this change.
+      The APIs for managing WAF managed rules (previous version) — namely for managing packages, rule groups, rules, and overrides — are deprecated in favor of using the [Rulesets API](/ruleset-engine/rulesets-api/) for managing the new version of [WAF Managed Rules](/waf/managed-rules/). Refer to [WAF Managed Rules upgrade](/waf/reference/legacy/old-waf-managed-rules/upgrade/) for more information about this change.
 
       Deprecated APIs:
 
@@ -172,7 +269,7 @@ entries:
     description: |-
       Deprecation date: June 15, 2025
 
-      The Rate Limiting API is deprecated, since the previous version of rate limiting rules was deprecated in favor of the new [rate limiting rules](/waf/rate-limiting-rules/) based on the Ruleset Engine. Refer to [Rate limiting (previous version) deprecation notice](/waf/reference/migration-guides/old-rate-limiting-deprecation/) for more information about this change.
+      The Rate Limiting API is deprecated, in favor of using the [Rulesets API](/ruleset-engine/rulesets-api/) for managing the new [rate limiting rules](/waf/rate-limiting-rules/). Refer to [Rate limiting (previous version) upgrade](/waf/reference/legacy/old-rate-limiting/upgrade/) for more information about this change.
 
       Deprecated API:
 
@@ -191,27 +288,27 @@ entries:
 
       The following URL parameters for filtering DNS records are deprecated:
 
-      - `name=contains:value`  
+      - `name=contains:value`
         Instead, use the supported `name.contains=value` syntax.
-      - `name=starts_with:value`  
+      - `name=starts_with:value`
         Instead, use the supported `name.startswith=value` syntax.
-      - `name=ends_with:value`  
+      - `name=ends_with:value`
         Instead, use the supported `name.endswith=value` syntax.
-      - `name=one,two,three` (searching for one of multiple possible names, separated by commas)  
+      - `name=one,two,three` (searching for one of multiple possible names, separated by commas)
         Instead, make multiple requests, one for each possible `name`.
         Alternatively, if only querying the `name` field, the `?match=any&name=one&name=two&name=three` syntax can be used instead.
         This syntax has an extended deprecation date of May 23, 2025.
-      - `content=contains:value`  
+      - `content=contains:value`
         Instead, use the supported `content.contains=value` syntax.
-      - `content=starts_with:value`  
+      - `content=starts_with:value`
         Instead, use the supported `content.startswith=value` syntax.
-      - `content=ends_with:value`  
+      - `content=ends_with:value`
         Instead, use the supported `content.endswith=value` syntax.
-      - `content=one,two,three` (searching for one of multiple possible contents, separated by commas)  
+      - `content=one,two,three` (searching for one of multiple possible contents, separated by commas)
         Instead, make multiple requests, one for each possible `content`.
         Alternatively, if only querying the `content` field, the `?match=any&content=one&content=two&content=three` syntax can be used instead.
         This syntax has an extended deprecation date of May 23, 2025.
-      - `type=contains:value`  
+      - `type=contains:value`
         Searching for substrings of a type name will no longer be supported.
         Instead, please search for an exact type name, such as `type=CNAME`.
         If the input value is a free-text search from a human user, consider using the `search` parameter instead.
@@ -304,7 +401,7 @@ entries:
 
       The dedicated endpoints for DNS settings `use_apex_ns` and `secondary_overrides` are being deprecated.
 
-      Instead, use the [Show DNS Settings](/api/resources/dns/subresources/settings/methods/get/) and [Update DNS Settings](/api/resources/dns/subresources/settings/methods/edit/) endpoints to manage these settings.
+      Instead, use the [Show DNS Settings](/api/resources/dns/subresources/settings/subresources/zone/methods/get/) and [Update DNS Settings](/api/resources/dns/subresources/settings/subresources/zone/methods/edit/) endpoints to manage these settings.
 
       - Instead of the `.../use_apex_ns` endpoint, use the `multi_provider` field.
       - Instead of the `.../secondary_overrides` endpoint, use the `secondary_overrides` field.

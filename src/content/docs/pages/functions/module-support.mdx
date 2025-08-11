@@ -3,7 +3,11 @@ pcx_content_type: reference
 title: Module support
 sidebar:
   order: 13
-
+banner:
+  content: We recommend using <strong>Cloudflare Workers</strong> for new projects. For existing Pages projects, see our <a href="/workers/static-assets/migrate-from-pages/">migration guide</a> and <a href="/workers/static-assets/migrate-from-pages/#compatibility-matrix">compatibility matrix</a>.
+  type: note
+  dismissible:
+    id: pages-migrate-to-workers
 ---
 
 Pages Functions provide support for several module types, much like [Workers](https://blog.cloudflare.com/workers-javascript-modules/). This means that you can import and use external modules such as WebAssembly (Wasm), `text` and `binary` files inside your Functions code.
@@ -26,7 +30,7 @@ export function greeting(name: string): string {
 import { greeting } from "../src/greeting.ts";
 
 export async function onRequest(context) {
-    return new Response(`${greeting("Pages Functions")}`);
+	return new Response(`${greeting("Pages Functions")}`);
 }
 ```
 
@@ -44,7 +48,7 @@ import addModule from "add.wasm";
 export async function onRequest() {
 	const addInstance = await WebAssembly.instantiate(addModule);
 	return new Response(
-		`The meaning of life is ${addInstance.exports.add(20, 1)}`
+		`The meaning of life is ${addInstance.exports.add(20, 1)}`,
 	);
 }
 ```
@@ -58,9 +62,9 @@ To import the below HTML file into your Pages Functions code:
 ```html
 <!DOCTYPE html>
 <html>
-  <body>
-    <h1>Hello Pages Functions!</h1>
-  </body>
+	<body>
+		<h1>Hello Pages Functions!</h1>
+	</body>
 </html>
 ```
 
@@ -70,12 +74,9 @@ Use the following script:
 import html from "../index.html";
 
 export async function onRequest() {
-	return new Response(
-		html,
-    {
-      headers: { "Content-Type": "text/html" }
-    }
-	);
+	return new Response(html, {
+		headers: { "Content-Type": "text/html" },
+	});
 }
 ```
 
@@ -89,11 +90,8 @@ Below is a basic example of how you can import the data from a binary file insid
 import data from "../my-data.bin";
 
 export async function onRequest() {
-	return new Response(
-		data,
-    {
-      headers: { "Content-Type": "application/octet-stream" }
-    }
-	);
+	return new Response(data, {
+		headers: { "Content-Type": "application/octet-stream" },
+	});
 }
 ```

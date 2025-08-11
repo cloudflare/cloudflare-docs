@@ -2,17 +2,45 @@
 link: "/ai-gateway/changelog/"
 productName: AI Gateway
 productLink: "/ai-gateway/"
-productArea: Developer platform
-productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2025-06-18"
+    title: New GA providers
+    description: |-
+      We have moved the following providers out of beta and into GA:
+        - [Cartesia](/ai-gateway/providers/cartesia/)
+        - [Cerebras](/ai-gateway/providers/cerebras/)
+        - [DeepSeek](/ai-gateway/providers/deepseek/)
+        - [ElevenLabs](/ai-gateway/providers/elevenlabs/)
+        - [OpenRouter](/ai-gateway/providers/openrouter/)
+  - publish_date: "2025-05-28"
+    title: OpenAI Compatibility
+    description: |-
+      * Introduced a new [OpenAI-compatible chat completions endpoint](/ai-gateway/chat-completion/) to simplify switching between different AI providers without major code modifications.
+  - publish_date: "2025-04-22"
+    description: |-
+      * Increased Max Number of Gateways per account: Raised the maximum number of gateways per account from 10 to 20 for paid users. This gives you greater flexibility in managing your applications as you build and scale.
+      * Streaming WebSocket Bug Fix: Resolved an issue affecting streaming responses over [WebSockets](/ai-gateway/configuration/websockets-api/). This fix ensures more reliable and consistent streaming behavior across all supported AI providers.
+      * Increased Timeout Limits: Extended the default timeout for AI Gateway requests beyond the previous 100-second limit. This enhancement improves support for long-running requests.
+  - publish_date: "2025-04-02"
+    title: Cache Key Calculation Changes
+    description: |-
+      * We have updated how [cache](/ai-gateway/configuration/caching/) keys are calculated. As a result, new cache entries will be created, and you may experience more cache misses than usual during this transition. Please monitor your traffic and performance, and let us know if you encounter any issues.
+  - publish_date: "2025-03-18"
+    title: WebSockets
+    description: |-
+      * Added [WebSockets API](/ai-gateway/configuration/websockets-api/) to provide a persistent connection for AI interactions, eliminating repeated handshakes and reducing latency.
+  - publish_date: "2025-02-26"
+    title: Guardrails
+    description: |-
+      * Added [Guardrails](/ai-gateway/guardrails/) help deploy AI applications safely by intercepting and evaluating both user prompts and model responses for harmful content.
   - publish_date: "2025-02-19"
     title: Updated Log Storage Settings
     description: |-
-      Introduced customizable log storage settings, enabling users to:
-        - Define the maximum number of logs stored per gateway.
+      * Introduced customizable log storage settings, enabling users to:
+         - Define the maximum number of logs stored per gateway.
         - Choose how logs are handled when the storage limit is reached:
-          - **On** - Automatically delete the oldest logs to ensure new logs are always saved.
-          - **Off** - Stop saving new logs when the storage limit is reached.
+           - **On** - Automatically delete the oldest logs to ensure new logs are always saved.
+           - **Off** - Stop saving new logs when the storage limit is reached.
 
   - publish_date: "2025-02-06"
     title: Added request handling

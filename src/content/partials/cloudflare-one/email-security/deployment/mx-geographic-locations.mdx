@@ -1,0 +1,18 @@
+---
+{}
+
+---
+
+When configuring the Email Security (formerly Area 1) MX records, it is important to configure hosts with the correct MX priority. This will allow mail flows to the preferred hosts and fail over as needed.
+
+Choose from the following Email Security MX hosts, and order them by priority. For example, if you are located outside the US and want to prioritize email processing in the EU, add `mailstream-eu1.mxrecord.io` as your first host, and then the US servers.
+
+| Host                                                                                                                             | Location                | Note                                                                                                                                                                                  |
+| -------------------------------------------------------------------------------------------------------------------------------- | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| <un><li>`mailstream-central.mxrecord.mx`</li> <li>`mailstream-east.mxrecord.io`</li> <li>`mailstream-west.mxrecord.io`</li></un> | US                      | Best option to ensure all email traffic processing happens in the US.                                                                                                                 |
+| `mailstream-eu1.mxrecord.io`                                                                                                     | EU                      | Best option to ensure all email traffic processing happens in Germany, with backup to US data centers.                                                                              |
+| `mailstream-bom.mxrecord.mx`                                                                                                     | India                   | Best option to ensure all email traffic processing happens within India.
+| `mailstream-india-primary.mxrecord.mx`                                                                                           | India                   | Same as `mailstream-bom.mxrecord.mx`, with backup to US data centers.                                                                                                               |
+| `mailstream-asia.mxrecord.mx`                                                                                                    | India                   | Best option to ensure all email traffic processing happens in India, with Australia data centers as backup.
+| `mailstream-syd.area1.cloudflare.net`                                                                                            | Australia / New Zealand | Best option to ensure all email traffic processing happens within Australia.                                                                                                          |
+| `mailstream-australia-primary.area1.cloudflare.net`                                                                              | Australia / New Zealand | Best option to ensure all email traffic processing happens in Australia, with India and US data centers as backup.                                                                    |

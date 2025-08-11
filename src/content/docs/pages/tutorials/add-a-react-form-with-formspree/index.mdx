@@ -1,7 +1,6 @@
 ---
 updated: 2021-11-30
 difficulty: Beginner
-content_type: 📝 Tutorial
 pcx_content_type: tutorial
 title: Add a React form with Formspree
 tags:
@@ -9,6 +8,8 @@ tags:
 languages:
   - JavaScript
 ---
+
+import { PackageManagers } from "~/components";
 
 Almost every React website needs a form to collect user data. [Formspree](https://formspree.io/) is a back-end service that handles form processing and storage, allowing developers to include forms on their website without writing server-side code or functions.
 
@@ -52,9 +53,7 @@ Next, you will build the form component using a helper library from Formspree, [
 
 Install it with:
 
-```sh
-npm install --save @formspree/react
-```
+<PackageManagers pkg="@formspree/react" />
 
 Then paste the following code snippet into the `ContactForm.js` file:
 

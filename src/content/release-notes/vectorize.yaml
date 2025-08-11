@@ -2,8 +2,6 @@
 link: "/vectorize/platform/changelog/"
 productName: Vectorize
 productLink: "/vectorize/"
-productArea: Developer platform
-productAreaLink: /workers/platform/changelog/platform/
 entries:
   - publish_date: "2024-12-20"
     title: Added support for index name reuse

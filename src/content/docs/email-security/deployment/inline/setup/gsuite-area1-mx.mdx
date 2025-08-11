@@ -155,13 +155,13 @@ When you are finished entering these details, select **SAVE**.
    * `X-Area1Security-Disposition: MALICIOUS`
    * `X-Area1Security-Disposition: SUSPICIOUS`
    * `X-Area1Security-Disposition: SPOOF`
-   * `X-Area1Security-Disposition: UCE`
+   * `X-Area1Security-Disposition: UCE` (`UCE` is the equivalent of `SPAM`)
 
    If desired, you can create a separate quarantine for each of the dispositions.
 
 :::note
 
-Google handles Groups (that is, distributions lists) differently from user mail accounts. The compliance filters actions are limited to the **Users** account type. If you heavily use Google Groups (that is, distribution lists), quarantining malicious messages using the Email Security quarantine is the recommended method to ensure full protection. 
+Google handles Groups (that is, distributions lists) differently from user mail accounts. The compliance filters actions are limited to the **Users** account type. If you heavily use Google Groups (that is, distribution lists), quarantining malicious messages using the Email Security quarantine is the recommended method to ensure full protection.
 :::
 
 ## 3. Add your domain to Email Security
@@ -212,6 +212,6 @@ Unlike the configuration in [step 2](#2-quarantine-malicious-detections) where t
 
 4. In the **Message Tagging** section, select **Message is considered spam if the following header regexp matches**.
 
-5. In the **Regexp** section, enter the string `X-Area1Security-Disposition: UCE`.
+5. In the **Regexp** section, enter the string `X-Area1Security-Disposition: UCE` (`UCE` is the equivalent of `SPAM`).
 
 6. Select **SAVE** to save the updated configuration.

@@ -1,10 +1,11 @@
 ---
 pcx_content_type: concept
-title: How to template
-
+title: How to
+meta:
+  title: Content type - How to
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 ## Purpose
 
@@ -16,9 +17,13 @@ The purpose of a how to is to explain how to complete a task within the product.
 
 instructional, straightforward
 
-## content\_type
+## content_type
 
-`how-to`
+```yaml
+pcx_content_type: how-to
+```
+
+For more details, refer to [`pcx_content_type`](/style-guide/frontmatter/custom-properties/#pcx_content_type).
 
 ## Structure
 
@@ -60,11 +65,11 @@ Single procedure how-to
 weight: xx
 pcx_content_type: how-to
 ---
- 
+
 # Second-person imperative verb phrase
- 
+
 Context for procedure (optional)
- 
+
 1. Step one
 1. Step two
 1. Step three
@@ -81,22 +86,22 @@ How-to with multiple procedures
 weight: xx
 pcx_content_type: how-to
 ---
- 
+
 # Second-person imperative verb phrase
- 
+
 Context for procedures on page (optional)
- 
+
 ## Second-person imperative verb phrase
- 
+
 1. Step one
 1. Step two
 1. Step three
 1. ...
- 
+
 Next steps sentence - what users should see as the end result and/or actionable next steps.
- 
+
 ## Second-person imperative verb phrase
- 
+
 1. Step one
 1. Step two
 1. Step three
@@ -113,35 +118,35 @@ How-to with multiple procedures that must be completed in order
 weight: xx
 pcx_content_type: how-to
 ---
- 
+
 # Second-person imperative verb phrase
- 
+
 Context for procedures on page (optional)
- 
+
 ## 1. Second-person imperative verb phrase
- 
+
 1. Step one
 1. Step two
 1. Step three
 1. ...
- 
+
 Next steps sentence - what users should see as the end result and/or actionable next steps.
- 
+
 ## 2. Second-person imperative verb phrase
- 
+
 1. Step one
 1. Step two
 1. Step three
 1. ...
- 
+
 Next steps sentence - what users should see as the end result and/or actionable next steps.
- 
+
 ## 3. Second-person imperative verb phrase
- 
+
 1. Step one
 1. Step two
 1. Step three
 1. ...
- 
+
 Next steps sentence - what users should see as the end result and/or actionable next steps.
 ```

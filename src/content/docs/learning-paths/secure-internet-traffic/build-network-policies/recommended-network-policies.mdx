@@ -97,7 +97,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
 --data '{
   "name": "Posture-Fail-NET-Restricted-Access",
   "description": "Restrict access for devices where baseline posture checks have not passed",
-  "precedence": 0,
+  "precedence": 10,
   "enabled": true,
   "action": "block",
   "filters": [
@@ -117,7 +117,7 @@ resource "cloudflare_zero_trust_gateway_policy" "posture_fail_net_restricted_acc
   account_id  = var.cloudflare_account_id
   name        = "Posture-Fail-NET-Restricted-Access"
   description = "Restrict access for devices where baseline posture checks have not passed"
-  precedence  = 0
+  precedence  = 10
   enabled     = true
   action      = "block"
   filters     = ["l4"]
@@ -155,7 +155,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
 --data '{
   "name": "FinanceUsers-NET-HTTPS-FinanceServers",
   "description": "Allow HTTPS access for user groups",
-  "precedence": 0,
+  "precedence": 20,
   "enabled": true,
   "action": "allow",
   "filters": [
@@ -175,7 +175,7 @@ resource "cloudflare_zero_trust_gateway_policy" "finance_users_net_https_finance
   account_id  = var.cloudflare_account_id
   name        = "FinanceUsers-NET-HTTPS-FinanceServers"
   description = "Allow HTTPS access for user groups"
-  precedence  = 0
+  precedence  = 20
   enabled     = true
   action      = "allow"
   filters     = ["l4"]
@@ -214,7 +214,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
 --data '{
   "name": "All-NET-Internet-Blocklist",
   "description": "Block traffic to malicious or risky destination IPs, SNIs, and SNI domains",
-  "precedence": 0,
+  "precedence": 30,
   "enabled": true,
   "action": "block",
   "filters": [
@@ -233,7 +233,7 @@ resource "cloudflare_zero_trust_gateway_policy" "finance_users_net_https_finance
   account_id  = var.cloudflare_account_id
   name        = "All-NET-Internet-Blocklist"
   description = "Block traffic to malicious or risky destination IPs, SNIs, and SNI domains"
-  precedence  = 0
+  precedence  = 30
   enabled     = true
   action      = "block"
   filters     = ["l4"]
@@ -276,7 +276,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
 --data '{
   "name": "All-NET-SSH-Internet-Allowlist",
   "description": "Allow SSH traffic to specific endpoints on the Internet for specific users",
-  "precedence": 0,
+  "precedence": 40,
   "enabled": true,
   "action": "allow",
   "filters": [
@@ -296,7 +296,7 @@ resource "cloudflare_zero_trust_gateway_policy" "all_net_ssh_internet_allowlist"
   account_id  = var.cloudflare_account_id
   name        = "All-NET-SSH-Internet-Allowlist"
   description = "Allow SSH traffic to specific endpoints on the Internet for specific users"
-  precedence  = 0
+  precedence  = 40
   enabled     = true
   action      = "allow"
   filters     = ["l4"]
@@ -332,7 +332,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
 --data '{
   "name": "All-NET-NO-HTTP-HTTPS-Internet-Deny",
   "description": "Block all non-web traffic towards the Internet",
-  "precedence": 0,
+  "precedence": 50,
   "enabled": true,
   "action": "block",
   "filters": [
@@ -351,7 +351,7 @@ resource "cloudflare_zero_trust_gateway_policy" "all_net_no_http_https_internet_
   account_id  = var.cloudflare_account_id
   name        = "All-NET-NO-HTTP-HTTPS-Internet-Deny"
   description = "Block all non-web traffic towards the Internet"
-  precedence  = 0
+  precedence  = 50
   enabled     = true
   action      = "block"
   filters     = ["l4"]
@@ -385,7 +385,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
 --data '{
   "name": "All-NET-InternalNetwork-ImplicitDeny",
   "description": "Implicitly deny all of your internal IP ranges included in a list",
-  "precedence": 0,
+  "precedence": 60,
   "enabled": true,
   "action": "block",
   "filters": [
@@ -404,7 +404,7 @@ resource "cloudflare_zero_trust_gateway_policy" "all_net_internalnetwork_implici
   account_id  = var.cloudflare_account_id
   name        = "All-NET-InternalNetwork-ImplicitDeny"
   description = "Implicitly deny all of your internal IP ranges included in a list"
-  precedence  = 0
+  precedence  = 60
   enabled     = true
   action      = "block"
   filters     = ["l4"]

@@ -17,6 +17,12 @@ description: Send a request to a remote server, read HTML from the response, and
   serve that HTML.
 ---
 
+If you want to get started quickly, click on the button below.
+
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/docs-examples/tree/main/workers/fetch-html)
+
+This creates a repository in your GitHub account and deploys the application to Cloudflare Workers.
+
 import { Render, TabItem, Tabs } from "~/components";
 
 <Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
@@ -47,6 +53,26 @@ async def on_fetch(request):
     # Replace `remote` with the host you wish to send requests to
     remote = "https://example.com"
     return await fetch(remote, request)
+```
+
+</TabItem> <TabItem label="Hono" icon="seti:typescript">
+
+```ts
+import { Hono } from 'hono';
+
+const app = new Hono();
+
+app.all('*', async (c) => {
+  /**
+   * Replace `remote` with the host you wish to send requests to
+   */
+  const remote = "https://example.com";
+
+  // Forward the request to the remote server
+  return await fetch(remote, c.req.raw);
+});
+
+export default app;
 ```
 
 </TabItem> </Tabs>

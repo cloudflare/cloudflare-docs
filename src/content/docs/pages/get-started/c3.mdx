@@ -1,5 +1,5 @@
 ---
-title: CLI
+title: C3 CLI
 pcx_content_type: get-started
 head:
   - tag: title
@@ -8,6 +8,11 @@ description: Use C3 (`create-cloudflare` CLI) to set up and deploy new
   applications using framework-specific setup guides to ensure each new
   application follows Cloudflare and any third-party best practices for
   deployment.
+banner:
+  content: We recommend using <strong>Cloudflare Workers</strong> for new projects. For existing Pages projects, see our <a href="/workers/static-assets/migrate-from-pages/">migration guide</a> and <a href="/workers/static-assets/migrate-from-pages/#compatibility-matrix">compatibility matrix</a>.
+  type: note
+  dismissible:
+    id: pages-migrate-to-workers
 ---
 
 import {
@@ -25,9 +30,13 @@ Cloudflare provides a CLI command for creating new Workers and Pages projects â€
 
 Open a terminal window and run:
 
-<Render file="c3-run-command-no-directory" product="workers" />
+<Render file="c3-run-command-no-directory" product="pages" />
 
 Running this command will prompt you to install the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) package, and then ask you questions about the type of application you wish to create.
+
+:::note
+To create a Pages project you must now specify the `--platform=pages` arg, otherwise C3 will always create a Workers project.
+:::
 
 ## Web frameworks
 
@@ -71,31 +80,17 @@ C3 collects any required input through a series of interactive prompts. You may 
 
 This is the full format of a C3 invocation alongside the possible CLI arguments:
 
-<Tabs> <TabItem label="npm">
-
-```sh
-npm create cloudflare@latest [--] [<DIRECTORY>] [OPTIONS] [-- <NESTED ARGS...>]
-```
-
-</TabItem> <TabItem label="yarn">
-
-```sh
-yarn create cloudflare [--] [<DIRECTORY>] [OPTIONS] [-- <NESTED ARGS...>]
-```
-
-</TabItem> <TabItem label="pnpm">
-
-```sh
-pnpm create cloudflare@latest [--] [<DIRECTORY>] [OPTIONS] [-- <NESTED ARGS...>]
-```
-
-</TabItem> </Tabs>
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args="--platform=pages [<DIRECTORY>] [OPTIONS] [-- <NESTED ARGS...>]"
+/>
 
 - `DIRECTORY` <Type text="string" /> <MetaInfo text="optional" />
 
   - The directory where the application should be created. The name of the application is taken from the directory name.
 
-- `NESTED ARGS..` string\[] optional
+- `NESTED ARGS..` <Type text="string[]" /> <MetaInfo text="optional" />
 
   - CLI arguments to pass to eventual third party CLIs C3 might invoke (in the case of full-stack applications).
 
@@ -169,11 +164,11 @@ pnpm create cloudflare@latest [--] [<DIRECTORY>] [OPTIONS] [-- <NESTED ARGS...>]
 
     See the [templates folder](https://github.com/cloudflare/workers-sdk/tree/main/packages/create-cloudflare/templates) of this repo for more examples.
 
-- `--deploy` boolean (default: true) optional
+- `--deploy` <Type text="boolean" /> <MetaInfo text="(default: true) optional" />
 
   - Deploy your application after it has been created.
 
-- `--lang`string (default: ts) optional
+- `--lang` <Type text="string" /> <MetaInfo text="(default: ts) optional" />
 
   - The programming language of the template.
 
@@ -183,15 +178,15 @@ pnpm create cloudflare@latest [--] [<DIRECTORY>] [OPTIONS] [-- <NESTED ARGS...>]
     - `js`
     - `python`
 
-- `--ts`boolean (default: true) optional
+- `--ts` <Type text="boolean" /> <MetaInfo text="(default: true) optional" />
 
-  - Use TypeScript in your application. Deprecated. Please use `--lang=ts` instead.
+  - Use TypeScript in your application. Deprecated. Use `--lang=ts` instead.
 
-- `--git` boolean (default: true) optional
+- `--git` <Type text="boolean" /> <MetaInfo text="(default: true) optional" />
 
   - Initialize a local git repository for your application.
 
-- `--open` boolean (default: true) optional
+- `--open` <Type text="boolean" /> <MetaInfo text="(default: true) optional" />
 
   - Open with your browser the deployed application (this option is ignored if the application is not deployed).
 
@@ -205,7 +200,7 @@ pnpm create cloudflare@latest [--] [<DIRECTORY>] [OPTIONS] [-- <NESTED ARGS...>]
 
   - Use all the default C3 options each can also be overridden by specifying it.
 
-- `--auto-update` boolean (default: true) optional
+- `--auto-update` <Type text="boolean" /> <MetaInfo text="(default: true) optional" />
 
   - Automatically uses the latest version of C3.
 

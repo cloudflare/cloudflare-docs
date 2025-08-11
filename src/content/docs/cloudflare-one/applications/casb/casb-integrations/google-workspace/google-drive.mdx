@@ -3,40 +3,16 @@ pcx_content_type: reference
 title: Google Drive
 rss: file
 sidebar:
-  order: 1
+  order: 4
 ---
 
 import { Render } from "~/components";
 
 <Render
-  file="casb/integration-description"
-  params={{ integrationName: "Google Drive", integrationAccountType: "Google Workspace account" }}
+	file="casb/google/integrations/google-drive"
+	params={{
+		integrationName: "Google Drive",
+		environmentName: "Google Workspace account",
+		slugifiedName: "google-workspace/google-drive",
+	}}
 />
-
-## Integration prerequisites
-
-<Render file="casb/google/google-prereqs" />
-
-## Integration permissions
-
-<Render
-  file="casb/integration-perms"
-  params={{ parentIntegration: "Google Workspace", parentSlug: "google-workspace" }}
-/>
-
-## Security findings
-
-<Render
-  file="casb/security-findings"
-  params={{ integrationName: "Google Drive", slugRelativePath: "google-workspace/google-drive" }}
-/>
-
-### File sharing
-
-<Render file="casb/google/file-sharing" />
-
-### Data Loss Prevention (optional)
-
-<Render file="casb/data-loss-prevention" />
-
-<Render file="casb/google/google-dlp" />

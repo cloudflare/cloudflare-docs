@@ -38,6 +38,12 @@ wrangler hyperdrive create <CONFIG_NAME> [OPTIONS]
   - Specifies max duration for which items should persist in the cache, cannot be set when caching is disabled.
 - `--swr` <Type text="number" /> <MetaInfo text="optional" />
   - Stale While Revalidate - Indicates the number of seconds cache may serve the response after it becomes stale, cannot be set when caching is disabled.
+- `--ca-certificate-id` <Type text="string" /> <MetaInfo text="optional" />
+  - Sets custom CA certificate when connecting to origin database.
+- `--mtls-certificate-id` <Type text="string" /> <MetaInfo text="optional" />
+  - Sets custom mTLS client certificates when connecting to origin database.
+- `--sslmode` <Type text="string" /> <MetaInfo text="optional" />
+  - Sets SSL mode for CA verification. Must be `require` | `verify-ca` | `verify-full`.
 
 <Render file="wrangler-commands/global-flags" product="workers" />
 
@@ -77,6 +83,12 @@ wrangler hyperdrive update <ID> [OPTIONS]
   - Specifies max duration for which items should persist in the cache, cannot be set when caching is disabled.
 - `--swr` <Type text="number" /> <MetaInfo text="optional" />
   - Stale While Revalidate - Indicates the number of seconds cache may serve the response after it becomes stale, cannot be set when caching is disabled.
+- `--ca-certificate-id` <Type text="string" /> <MetaInfo text="optional" />
+  - Sets custom CA certificate when connecting to origin database.
+- `--mtls-certificate-id` <Type text="string" /> <MetaInfo text="optional" />
+  - Sets custom mTLS client certificates when connecting to origin database.
+- `--sslmode` <Type text="string" /> <MetaInfo text="optional" />
+  - Sets SSL mode for CA verification. Must be `require` | `verify-ca` | `verify-full`.
 
 <Render file="wrangler-commands/global-flags" product="workers" />
 

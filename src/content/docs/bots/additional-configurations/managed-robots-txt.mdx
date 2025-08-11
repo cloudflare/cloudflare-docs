@@ -1,0 +1,81 @@
+---
+pcx_content_type: reference
+title: Direct AI crawlers with managed robots.txt
+sidebar:
+  order: 10
+  label: Managed robots.txt
+---
+
+import { Render, Tabs, TabItem, Steps } from "~/components";
+
+Protect your website or application from AI crawlers by implementing a `robots.txt` file on your domain to direct AI bot operators on what content they can and cannot scrape for AI model training.
+
+AI bots are expected to follow the `robots.txt` directives.
+
+:::note
+Respecting `robots.txt` is voluntary. If you want to prevent crawling, use AI Audit's [manage AI crawlers](/ai-audit/features/manage-ai-crawlers/) feature.
+:::
+
+## Compatibility with existing `robots.txt` files
+
+Cloudflare will independently check whether your website has an existing `robots.txt` file and update the behavior of this feature based on your website.
+
+### Existing robots.txt file
+
+If your website already has a `robots.txt` file — verified by a HTTP `200` response — Cloudflare will prepend our managed `robots.txt` before your existing `robots.txt`, combining both into a single response.
+
+For example, without this feature enabled, the `robots.txt` content of `crawlstop.com` would be:
+
+```txt
+User-agent: *
+Disallow: /lp
+Disallow: /feedback
+Disallow: /langtest
+
+Sitemap: https://www.crawlstop.com/sitemap.xml
+```
+
+With the managed `robots.txt` enabled, Cloudflare will prepend our managed content before your original content, resulting in what you can view at https://www.crawlstop.com/robots.txt.
+
+**Robots.txt example**
+<div style="position: relative; padding-top: 56.25%; border: 1px solid orange; border-radius: 5px">
+<iframe
+	src="https://www.crawlstop.com/robots.txt"
+	style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
+	allowfullscreen="true"
+	title="crawltop.com robots.txt file"
+	>
+</iframe>
+</div>
+
+### No robots.txt file
+
+If your website does not have a `robots.txt` file, Cloudflare creates a new file with our managed block directives and serves it for you.
+
+## Implementation
+
+To implement a `robots.txt` file on your domain:
+
+<Tabs syncKey="dashNewNav">
+	<TabItem label="Old dashboard">
+		<Steps>
+			1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+			2. Go to **Security** > **Bots**.
+			3. Select **Configure Bot Fight Mode**.
+			4. Turn **Manage bot traffic with robots.txt** on.
+		</Steps>
+	</TabItem>
+	<TabItem label="New dashboard" icon="rocket">
+		<Steps>
+			1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
+			2. Go to **Security** > **Settings**.
+			3. Filter by **Bot traffic**.
+			4. Go to **Manage AI bot traffic with robots.txt**.
+			5. Turn **Manage AI bot traffic with robots.txt** on.
+		</Steps>
+	</TabItem>
+</Tabs>
+
+## Availability
+
+Managed `robots.txt` for AI crawlers is available on all plans.

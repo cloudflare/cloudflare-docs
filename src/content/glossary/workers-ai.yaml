@@ -4,6 +4,10 @@ entries:
   - term: Workers AI
     general_definition: |-
       [Workers AI](/workers-ai/) is a Cloudflare service that enables running machine learning models on Cloudflare's global network, utilizing serverless GPUs. It allows developers to integrate AI capabilities into their applications using Workers, Pages, or via the REST API.
+  - term: Context Window
+    general_definition: In generative AI, the context window is the sum of the number of input, reasoning, and completion or response tokens a model supports. You can find the context window limit on each [model page](/workers-ai/models/).
+  - term: Maximum Tokens
+    general_definition: In generative AI, the user-defined property `max_tokens` defines the maximum number of tokens at which the model should stop responding. This limit cannot exceed the context window.
   - term: Serverless GPUs
     general_definition: |-
       [Serverless GPUs](/workers-ai/) are graphics processing units provided by Cloudflare in a serverless environment, enabling scalable and efficient execution of machine learning models without the need for managing underlying hardware.

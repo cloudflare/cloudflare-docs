@@ -1,0 +1,53 @@
+---
+title: Appearance modes
+pcx_content_type: reference
+---
+
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" />
+
+Turnstile has various [appearance modes](/turnstile/get-started/client-side-rendering/#appearance-modes). These can be used to have managed widgets which are invisible unless user interaction is needed.
+
+The following examples will use the [testing sitekeys](/turnstile/troubleshooting/testing/) to force interaction.
+
+## `always` (default)
+
+```mdx live
+<h5>Always succeeds</h5>
+<div
+	class="cf-turnstile"
+	data-sitekey="1x00000000000000000000AA"
+/>
+<h5>Always fails</h5>
+<div
+	class="cf-turnstile"
+	data-sitekey="2x00000000000000000000AB"
+/>
+<h5>Always interactive</h5>
+<div
+	class="cf-turnstile"
+	data-sitekey="3x00000000000000000000FF"
+/>
+```
+
+## `interaction-only`
+
+```mdx live
+<h5>Always succeeds</h5>
+<div
+	class="cf-turnstile"
+	data-sitekey="1x00000000000000000000AA"
+	data-appearance="interaction-only"
+/>
+<h5>Always fails</h5>
+<div
+	class="cf-turnstile"
+	data-sitekey="2x00000000000000000000AB"
+	data-appearance="interaction-only"
+/>
+<h5>Always interactive</h5>
+<div
+	class="cf-turnstile"
+	data-sitekey="3x00000000000000000000FF"
+	data-appearance="interaction-only"
+/>
+```

@@ -5,7 +5,7 @@ sidebar:
   order: 1
 ---
 
-import { Tabs, TabItem, Render } from '~/components';
+import { Tabs, TabItem, Render, APIRequest } from '~/components';
 
 Cloudflare Access has a generic OpenID Connect (OIDC) connector to help you integrate IdPs not already set in Access.
 
@@ -41,7 +41,7 @@ Cloudflare Access has a generic OpenID Connect (OIDC) connector to help you inte
 
 3. Choose **OpenID Connect**.
 
-4. Name your identity provider and fill in the required fields with the information obtained in Step 3.
+4. Name your identity provider and fill in the required fields with the information obtained from your identity provider.
 
 5. (Optional) Enable [Proof of Key Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/) if the protocol is supported by your IdP. PKCE will be performed on all login attempts.
 
@@ -53,50 +53,41 @@ Cloudflare Access has a generic OpenID Connect (OIDC) connector to help you inte
 
 </TabItem> <TabItem label="API">
 
-1. [Create an API token](/fundamentals/api/get-started/create-token/) with the following permissions:
-		| Type    | Item             | Permission |
-		| ------- | ---------------- | ---------- |
-		| Account | Access: Organizations, Identity Providers, and Groups   | Edit    |
+Make a `POST` request to the [Identity Providers](/api/resources/zero_trust/subresources/identity_providers/methods/create/) endpoint:
 
-2. Make a `POST` request to the [Identity Providers](/api/resources/zero_trust/subresources/identity_providers/methods/create/) endpoint:
+<APIRequest
+  path="/accounts/{account_id}/access/identity_providers"
+  method="POST"
+  json={{
+    name: "Generic OIDC example",
+    type: "oidc",
+    config: {
+      client_id: "<your client id>",
+      client_secret: "<your client secret>",
+      auth_url: "https://accounts.google.com/o/oauth2/auth",
+      token_url: "https://accounts.google.com/o/oauth2/token",
+      certs_url: "https://www.googleapis.com/oauth2/v3/certs",
+      pkce_enabled: false,
+      email_claim_name: "email",
+      claims: ["employeeID", "groups"],
+      scopes: ["openid", "email", "profile"],
+    },
+  }}
+/>
 
-		```sh
-		curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/identity_providers \
-		--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
-		--data '{
-			"name": "Generic OIDC example",
-			"type": "oidc",
-			"config": {
-				"client_id": "<your client id>",
-				"client_secret": "<your client secret>",
-				"auth_url": "https://accounts.google.com/o/oauth2/auth",
-				"token_url": "https://accounts.google.com/o/oauth2/token",
-				"certs_url": "https://www.googleapis.com/oauth2/v3/certs",
-				"pkce_enabled": false,
-				"email_claim_name": "email",
-				"claims": ["employeeID", "groups"],
-				"scopes": ["openid", "email", "profile"]
-			}
-		}'
-		```
+</TabItem> <TabItem label="Terraform (v5)">
 
-</TabItem> <TabItem label="Terraform (v4)">
-
-:::note[Provider versions]
-The following example requires Cloudflare provider version `>=4.40.0`.
-:::
-
-1. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/4.40.0/docs/resources/api_token):
+1. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_token):
 	- `Access: Organizations, Identity Providers, and Groups Write`
 
-2. Configure the [`cloudflare_zero_trust_access_identity_provider`](https://registry.terraform.io/providers/cloudflare/cloudflare/4.40.0/docs/resources/zero_trust_access_identity_provider) resource:
+2. Configure the [`cloudflare_zero_trust_access_identity_provider`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_access_identity_provider) resource:
 
 		```tf
 		resource "cloudflare_zero_trust_access_identity_provider" "generic_oidc_example" {
 			account_id = var.cloudflare_account_id
 			name       = "Generic OIDC example"
 			type       = "oidc"
-			config {
+			config 		 = {
 				client_id = "<your client id>"
 				client_secret = "<your client secret>"
 				auth_url = "https://accounts.google.com/o/oauth2/auth"
@@ -129,14 +120,14 @@ Your identity provider must support SCIM version 2.0.
 
 ### 2. Configure SCIM in the IdP
 
-Setup instructions vary depending on the identity provider. In your identity provider, you will either need to edit the [original SSO application](/cloudflare-one/identity/idp-integration/generic-oidc/#set-up-a-generic-oidc) or create a new SCIM application. Refer to your identity provider's documentation for more details. For example instructions, refer to our [Okta](/cloudflare-one/identity/idp-integration/okta/#synchronize-users-and-groups) or [Jumpcloud](/cloudflare-one/identity/idp-integration/jumpcloud-saml/#synchronize-users-and-groups) guides.
+Setup instructions vary depending on the identity provider. In your identity provider, you will either need to edit the [original SSO application](/cloudflare-one/identity/idp-integration/generic-oidc/#1-create-an-application-in-your-identity-provider) or create a new SCIM application. Refer to your identity provider's documentation for more details. For example instructions, refer to our [Okta](/cloudflare-one/identity/idp-integration/okta/#synchronize-users-and-groups) or [Jumpcloud](/cloudflare-one/identity/idp-integration/jumpcloud-saml/#synchronize-users-and-groups) guides.
 
 #### IdP groups
 
 If you would like to build policies based on IdP groups:
 
 - Ensure that your IdP sends a `groups` field. The naming must match exactly (case insensitive). All other values will be sent as a OIDC claim.
-- If your IdP requires creating a new SCIM application, ensure that the groups in the SCIM application match the groups in the [original SSO application](/cloudflare-one/identity/idp-integration/generic-oidc/#set-up-a-generic-oidc). Because SCIM group membership updates will overwrite any groups in a user's identity, assigning the same groups to each app ensures consistent policy evaluation.
+- If your IdP requires creating a new SCIM application, ensure that the groups in the SCIM application match the groups in the [original SSO application](/cloudflare-one/identity/idp-integration/generic-oidc/#1-create-an-application-in-your-identity-provider). Because SCIM group membership updates will overwrite any groups in a user's identity, assigning the same groups to each app ensures consistent policy evaluation.
 
 ### 3. Verify SCIM provisioning
 
@@ -144,9 +135,26 @@ If you would like to build policies based on IdP groups:
 
 ## Optional configurations
 
-### OIDC claims
+### Custom OIDC claims
 
-OIDC integrations support the use of custom OIDC claims. Custom OIDC claims can be referenced in [Access policies](/cloudflare-one/policies/access/), offering a means to control user access based on these specific attributes. Custom OIDC claims are not currently supported in Gateway policies.
+All OIDC IdP integrations support the use of custom OIDC claims. Once configured, Access will add the claims to the [Access JWT](/cloudflare-one/identity/authorization-cookie/application-token/) for consumption by your origin services. You can reference the custom OIDC claims in [Access policies](/cloudflare-one/policies/access/), offering a means to control user access to applications based on custom identity attributes. Custom OIDC claims are not currently supported in Gateway policies.
+
+To add a custom OIDC claim to an IdP integration:
+
+1. In your identity provider, ensure that the custom claim is included in your OIDC ID token.
+2. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Authentication**.
+3. Under **Login methods**, find your identity provider and select **Edit**.
+4. Under **OIDC Claims**, enter the name of your custom claim (for example, `oid`).
+5. Select **Save**.
+6. Select **Test** and verify that the custom claim appears in `oidc_fields`. For example,
+
+		```json
+			"oidc_fields": {
+				"oid": "54eb1ed2-7150-44e6-bbe4-ead24c132fd4"
+			},
+		```
+
+You can now build an Access policy for the custom claim using the **OIDC Claim** or **IdP OIDC Claim** selector. The custom claim will also be passed to origins behind Access in a [JWT](/cloudflare-one/identity/authorization-cookie/application-token/#custom-saml-attributes-and-oidc-claims).
 
 #### Email claim
 

@@ -1,0 +1,38 @@
+---
+title: Configure tunnel endpoints
+pcx_content_type: how-to
+sidebar:
+  order: 1
+head: []
+description: Cloudflare recommends two tunnels for each ISP and network location
+  router combination, one per Cloudflare endpoint. Learn how to configure IPsec
+  or GRE tunnels.
+---
+
+import { GlossaryTooltip, Render } from "~/components";
+
+<Render file="routing/configure-tunnels"
+	product="networking-services"
+	params={{
+		ipRange: "(this address space is also a link-local address)",
+		productName: "Magic WAN",
+		tunnelsAndEncapsulationPagePath: "/magic-wan/reference/gre-ipsec-tunnels/",
+		ciphersPagePath: "/magic-wan/reference/gre-ipsec-tunnels/#supported-configuration-parameters",
+		antiReplayPagePath: "/magic-wan/reference/anti-replay-protection/",
+		cniLink: "/magic-wan/network-interconnect/",
+		productPathDash: "Magic WAN > Configuration",
+		updateHCFrequencyPage: "/magic-wan/configuration/common-settings/tunnel-health-checks-frequency/",
+		tunnelHealthChecksPage: "/magic-wan/reference/tunnel-health-checks/",
+		antiReplayPagePath: "/magic-wan/reference/anti-replay-protection/",
+		biVsUniHealthCheck: "bidirectional",
+		tunnelHealthDash: "/magic-wan/configuration/common-settings/check-tunnel-health-dashboard/",
+		biVsUniHealthCheckDefaults: "For Magic WAN this option defaults to bidirectional"
+	}}
+/>
+
+## Next steps
+
+- Now that you have set up your tunnel endpoints you need to configure routes to route your traffic through Cloudflare. Refer to [Configure routes](/magic-wan/configuration/manually/how-to/configure-routes/) to learn more about static routing and BGP peering (only available through Direct CNI connection).
+
+- After configuring either static routes or BGP routing, you will have to [set up a site](/magic-wan/configuration/common-settings/sites/).
+

@@ -5,7 +5,7 @@ sidebar:
   order: 5
 ---
 
-import { Render, RuleID } from "~/components";
+import { Render, RuleID, APIRequest, Tabs, TabItem } from "~/components";
 
 :::note
 This feature requires an Enterprise plan with a paid add-on.
@@ -27,9 +27,13 @@ When turned on, Cloudflare Sensitive Data Detection will check all responses sen
 
 The detection will handle text, HTML, JSON, and XML content in the response up to 1 MB.
 
+Currently, Cloudflare Sensitive Data Detection does not support [matched payload logging](/waf/managed-rules/payload-logging/).
+
 ---
 
 ## Configure in the dashboard
+
+<Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
 
 To configure Cloudflare Sensitive Data Detection in the Cloudflare dashboard, go to **Security** > **Sensitive Data**.
 
@@ -37,6 +41,24 @@ You can turn the managed ruleset on or off, and configure the following settings
 
 - Turn on or off specific rules or rules with specific tags.
 - Customize the filter expression. With a custom expression, Cloudflare Sensitive Data Detection applies only to a subset of the incoming requests.
+
+</TabItem> <TabItem label="New dashboard" icon="rocket">
+
+To enable Cloudflare Sensitive Data Detection:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
+2. Go to **Security** > **Settings** and filter by **Detections**.
+3. Turn on **Sensitive data detection**.
+
+To adjust the scope of the managed ruleset or turn off specific rules:
+
+1. In the **Settings** page, under **Sensitive data detection**, select **Configured ruleset**.
+2. To apply the managed ruleset for a subset of incoming requests, select **Custom filter expression** and define the filter expression.
+3. Select **Next**.
+4. To turn specific rules on or off, select **Browse rules** and use the toggle next to each rule to turn it on or off.
+5. Select **Next**, and then select **Save**.
+
+</TabItem> </Tabs>
 
 For details on configuring a managed ruleset in the dashboard, refer to [Configure a managed ruleset](/waf/managed-rules/deploy-zone-dashboard/#configure-a-managed-ruleset).
 
@@ -46,17 +68,21 @@ To enable Cloudflare Sensitive Data Detection for a given zone using the API, cr
 
 ### Example
 
-This example deploys the Cloudflare Sensitive Data Detection managed ruleset to the `http_response_firewall_managed` phase of a given zone (`{zone_id}`) by creating a rule that executes the managed ruleset. The rules in the managed ruleset are executed for all incoming requests.
+This example deploys the Cloudflare Sensitive Data Detection managed ruleset to the `http_response_firewall_managed` phase of a given zone (`$ZONE_ID`) by creating a rule that executes the managed ruleset. The rules in the managed ruleset are executed for all incoming requests.
 
 1.  <Render
     	file="rulesets/api-zone/step1-get-entrypoint"
     	params={{ phaseName: "http_response_firewall_managed" }}
     />
 
-    ```bash
-    curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/phases/http_response_firewall_managed/entrypoint" \
-    --header "Authorization: Bearer <API_TOKEN>"
-    ```
+    <APIRequest
+    	path="/zones/{zone_id}/rulesets/phases/{ruleset_phase}/entrypoint"
+    	method="GET"
+    	parameters={{
+    		ruleset_phase: "http_response_firewall_managed",
+    	}}
+    	roles={false}
+    />
 
     ```json output {4}
     {
@@ -87,19 +113,20 @@ This example deploys the Cloudflare Sensitive Data Detection managed ruleset to 
     	}}
     />
 
-    ```bash
-    curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}/rules" \
-    --header "Authorization: Bearer <API_TOKEN>" \
-    --header "Content-Type: application/json" \
-    --data '{
-    	"action": "execute",
-    	"action_parameters": {
-    		"id": "e22d83c647c64a3eae91b71b499d988e"
-    	},
-    	"expression": "true",
-    	"description": "Execute the Cloudflare Sensitive Data Detection managed ruleset"
-    }'
-    ```
+    <APIRequest
+    	path="/zones/{zone_id}/rulesets/{ruleset_id}/rules"
+    	method="POST"
+    	json={{
+    		action: "execute",
+    		action_parameters: {
+    			id: "e22d83c647c64a3eae91b71b499d988e",
+    		},
+    		expression: "true",
+    		description:
+    			"Execute the Cloudflare Sensitive Data Detection managed ruleset",
+    	}}
+    	roles={false}
+    />
 
     ```json output
     {
@@ -144,32 +171,34 @@ This example deploys the Cloudflare Sensitive Data Detection managed ruleset to 
     	}}
     />
 
-    ```bash
-    curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets" \
-    --header "Authorization: Bearer <API_TOKEN>" \
-    --header "Content-Type: application/json" \
-    --data '{
-      "name": "My ruleset",
-      "description": "Entry point ruleset for WAF managed rulesets (response)",
-      "kind": "zone",
-      "phase": "http_response_firewall_managed",
-      "rules": [
-        {
-    			"action": "execute",
-    			"action_parameters": {
-    				"id": "e22d83c647c64a3eae91b71b499d988e"
+    <APIRequest
+    	path="/zones/{zone_id}/rulesets"
+    	method="POST"
+    	json={{
+    		name: "My ruleset",
+    		description: "Entry point ruleset for WAF managed rulesets (response)",
+    		kind: "zone",
+    		phase: "http_response_firewall_managed",
+    		rules: [
+    			{
+    				action: "execute",
+    				action_parameters: {
+    					id: "e22d83c647c64a3eae91b71b499d988e",
+    				},
+    				expression: "true",
+    				description:
+    					"Execute the Cloudflare Sensitive Data Detection managed ruleset",
     			},
-    			"expression": "true",
-    			"description": "Execute the Cloudflare Sensitive Data Detection managed ruleset"
-    		}
-      ]
-    }'
-    ```
+    		],
+    	}}
+    	roles={false}
+    />
 
 <Render
 	file="managed-rulesets/api-next-steps"
 	params={{
 		rulesetName: "Cloudflare Sensitive Data Detection managed ruleset",
+		customizableAction: false,
 	}}
 />
 

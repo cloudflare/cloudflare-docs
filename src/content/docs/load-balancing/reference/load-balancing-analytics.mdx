@@ -8,22 +8,19 @@ head:
     content: Load balancing analytics
 description: Use load balancing analytics to evaluate traffic flow, assess the
   health of endpoints, and review health changes over time.
-
 ---
 
-import { Details } from "~/components"
+import { Details } from "~/components";
 
 Using load balancing analytics, you can:
 
-* Evaluate traffic flow.
-* Assess the health status of endpoints in your pools.
-* Review changes in pools and pool health over time.
+- Evaluate traffic flow.
+- Assess the health status of endpoints in your pools.
+- Review changes in pools and pool health over time.
 
 :::note
 
-
 Load balancing analytics are only available to customers on paid plans (Pro, Business, and Enterprise).
-
 
 :::
 
@@ -35,17 +32,15 @@ To view **Overview** metrics for your load balancer, go to **Traffic** > **Load 
 
 These metrics show the number of requests routed to specific pools within a load balancer, helping you:
 
-* Evaluate the effects of adding or removing a pool.
-* Decide when to create new pools.
-* Plan for peak traffic demands and future infrastructure needs.
+- Evaluate the effects of adding or removing a pool.
+- Decide when to create new pools.
+- Plan for peak traffic demands and future infrastructure needs.
 
 Add additional filters for specific pools, times, regions, and endpoints.
 
 :::note
 
-
 Load balancing <strong>requests</strong> are the number of uncached requests made by your load balancer. By default, Cloudflare caches resolved IP addresses for up to five seconds.
-
 
 :::
 
@@ -67,33 +62,32 @@ For more flexibility, get load balancing metrics directly from the [GraphQL Anal
 
 Get started with a sample query:
 
-
 <Details header="Requests per pool">
 
 This query shows the number of requests each pool receives from each location in Cloudflare's global network.
 
-```graphql title="Query"
-{
-  viewer {
-    zones(filter: {zoneTag: "your Zone ID"}) {
-         loadBalancingRequestsAdaptiveGroups(
-            limit: 100,
-            filter: {
-                datetime_geq: "2021-06-26T00:00:00Z",
-                datetime_leq: "2021-06-26T03:00:00Z",
-                lbName:"lb.example.com"
-            },
-            orderBy: [datetimeFifteenMinutes_DESC]
-        ) {
-          count
-          dimensions {
-            datetimeFifteenMinutes
-            coloCode
-            selectedPoolName
-        }
-      }
-    }
-  }
+```graphql graphql-api-explorer title="Query"
+query RequestsPerPool($zoneTag: string, $start: Time, $end: Time) {
+	viewer {
+		zones(filter: { zoneTag: $zoneTag }) {
+			loadBalancingRequestsAdaptiveGroups(
+				limit: 100
+				filter: {
+					datetime_geq: $start
+					datetime_leq: $end
+					lbName: "lb.example.com"
+				}
+				orderBy: [datetimeFifteenMinutes_DESC]
+			) {
+				count
+				dimensions {
+					datetimeFifteenMinutes
+					coloCode
+					selectedPoolName
+				}
+			}
+		}
+	}
 }
 ```
 
@@ -121,9 +115,7 @@ This query shows the number of requests each pool receives from each location in
 }
 ```
 
-
 </Details>
-
 
 <Details header="Requests per data center">
 
@@ -134,30 +126,30 @@ This query shows the weighted, round-trip time (RTT) measurement (`avgRttMs`) fo
 Note that `avgRttMs` refers to the round-trip time that is measured by the monitors and used in steering decisions. `avgRttMs` is different from the raw RTT for individual requests that reach the Cloudflare network.
 :::
 
-```graphql title="Query"
-{
-  viewer {
-    zones(filter: {zoneTag: "your Zone ID"}) {
-         loadBalancingRequestsAdaptive(
-            limit: 100,
-            filter: {
-                datetime_geq: "2021-06-26T00:00:00Z",
-                datetime_leq: "2021-06-26T03:00:00Z",
-                lbName:"lb.example.com",
-                coloCode: "SIN"
-            },
-            orderBy: [datetime_DESC]
-        ) {
-        selectedPoolName
-        pools {
-          poolName
-          healthy
-          healthCheckEnabled
-          avgRttMs
-        }
-      }
-    }
-  }
+```graphql graphql-api-explorer title="Query"
+query RequestsPerDataCenter($zoneTag: string, $start: Time, $end: Time) {
+	viewer {
+		zones(filter: { zoneTag: $zoneTag }) {
+			loadBalancingRequestsAdaptive(
+				limit: 100
+				filter: {
+					datetime_geq: $start
+					datetime_leq: $end
+					lbName: "lb.example.com"
+					coloCode: "SIN"
+				}
+				orderBy: [datetime_DESC]
+			) {
+				selectedPoolName
+				pools {
+					poolName
+					healthy
+					healthCheckEnabled
+					avgRttMs
+				}
+			}
+		}
+	}
 }
 ```
 
@@ -199,6 +191,5 @@ Note that `avgRttMs` refers to the round-trip time that is measured by the monit
     }
 }
 ```
-
 
 </Details>

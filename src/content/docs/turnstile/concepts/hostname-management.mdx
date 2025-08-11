@@ -10,19 +10,21 @@ You can associate hostnames with your widget to control where it can be used usi
 
 ## Hostname limits
 
-By default, all widgets can have up to 10 hostnames associated with a widget. A widget requires at least one hostname to be entered.
+By default, a widget can have a maximum of 15 hostnames for Free users and 200 hostnames for Enterprise customers. Each widget requires at least one hostname to be entered. You will not be able to create the widget without a hostname configured.
 
-Only Enterprise Bot Management and Enterprise Turnstile customers can have this limit increased. Contact your account team to increase your hostname limit.
+### Availability
+
+Customers with Enterprise Bot Management or Enterprise Turnstile may create and use a widget without entering any hostnames, or have up to 200 hostnames associated with a widget. Contact your account team for access to this feature.
 
 ## Add a custom hostname
 
-You can add a hostname to your Turnstile widget even if it is not on the Cloudflare network or registered as a zone. There are no prerequisites for using Turnstile. 
+You can add a hostname to your Turnstile widget even if it is not on the Cloudflare network or registered as a zone. There are no prerequisites for using Turnstile.
 
 To add a custom hostname:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. Go to **Turnstile**.
-3. On an existing widget, select **Settings**. 
+3. On an existing widget, select **Settings**.
 4. Select **Add Hostnames** under Hostname Management.
 5. Add a custom hostname or choose from an existing hostname.
 6. Select **Add**.
@@ -33,6 +35,10 @@ If you already have a zone registered with Cloudflare, you can add hostnames dur
 
 ## Hostname requirements
 
+:::caution
+Customers enabling [client-side rendering](/turnstile/get-started/client-side-rendering/) must validate their hostnames by looking at the [`hostname`](/turnstile/get-started/server-side-validation/#:~:text=challenge%20was%20solved.-,hostname,-is%20the%20hostname) field in the Siteverify response.
+:::
+
 When associating hostnames with a widget, follow these requirements:
 
 - Hostnames must be fully qualified domain names (FQDNs), such as `example.com` or `subdomain.example.com`.
@@ -42,7 +48,7 @@ When associating hostnames with a widget, follow these requirements:
   - A port (for example, `443`)
   - A path (for example, `/path`)
 
-### Subdomain specification 
+### Subdomain specification
 
 Specifying a subdomain is optional, but it can be used to further restrict the widget. For example, adding `www.example.com` as a hostname will allow widgets to work on:
 
@@ -63,4 +69,6 @@ If the widget is embedded on a hostname not listed, it will display an error mes
 
 Customers with Enterprise Bot Management or Enterprise Turnstile can have the optional `any hostname` validation entitlement.
 
-By default, a widget requires at least one hostname to be entered. With this entitlement, you can create and use a widget without entering any hostnames for the widget. Contact your account team to enable this entitlement.
+By default, a widget requires at least one hostname to be entered. With this feature, you can create and use a widget without entering any hostnames for the widget.
+
+Contact your account team to enable this feature.

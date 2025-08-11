@@ -4,16 +4,9 @@ logo: <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path d="M24.3
 product:
   title: Network
   url: /network/
-  group: Cloudflare essentials
+  group: Core platform
 
 meta:
   title: Cloudflare Network settings docs
-  description: Manage the Cloudflare network settings for your website.
+  description: Manage Cloudflare network settings for your website
   author: "@cloudflare"
-
-resources:
-  dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/network
-
-externals:
-  - title: Cloudflare homepage
-    url: https://cloudflare.com

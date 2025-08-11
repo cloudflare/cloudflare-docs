@@ -10,7 +10,7 @@ import { Example, Render } from "~/components"
 
 When you add a domain to Cloudflare, you may also need to create or review the DNS record on your zone apex. Zone apex refers to the domain (`example.com`) or subdomain (`blog.example.com`) that you are [adding to Cloudflare](/dns/concepts/#zone).
 
-Usually, the zone apex record makes your domain accessible by visitors. In this case, the necessary record type ([A, AAAA, or CNAME](/dns/manage-dns-records/reference/dns-record-types/#ip-address-resolution)) and its content will depend on the provider that [hosts](/fundamentals/setup/manage-domains/#host-your-domain) your website or application. If you are using Cloudflare Pages, refer to [Custom domains](/pages/configuration/custom-domains/). If you are using other providers, look for their guidance on how to connect domains managed on external DNS services.
+Usually, the zone apex record makes your domain accessible by visitors. In this case, the necessary record type ([A, AAAA, or CNAME](/dns/manage-dns-records/reference/dns-record-types/#ip-address-resolution)) and its content will depend on the provider that [hosts](/fundamentals/manage-domains/#host-your-domain) your website or application. If you are using Cloudflare Pages, refer to [Custom domains](/pages/configuration/custom-domains/). If you are using other providers, look for their guidance on how to connect domains managed on external DNS services.
 
 ### ANAME or ALIAS
 
@@ -37,7 +37,7 @@ To create a zone apex record, use `@` for the record **Name**, as in the followi
 
 Once you create a domain, you may want to route that traffic to other places.
 
-For more guidance, refer to [Redirect domain to subdomain](/fundamentals/setup/manage-domains/manage-subdomains/#redirect-the-apex-domain-to-a-subdomain) or [Redirect one domain to another](/fundamentals/setup/manage-domains/redirect-domain/).
+For more guidance, refer to [Redirect domain to subdomain](/fundamentals/manage-domains/manage-subdomains/#redirect-the-apex-domain-to-a-subdomain) or [Redirect one domain to another](/fundamentals/manage-domains/redirect-domain/).
 
 ## Get free SSL certificates
 

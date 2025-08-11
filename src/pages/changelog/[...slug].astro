@@ -31,11 +31,15 @@ const { Content, headings } = await render(note);
 const props = {
 	frontmatter: {
 		title: note.data.title,
+		description: note.data.description,
 		template: "splash",
+		noindex: note.data.hidden,
+		chatbot_deprioritize: true,
 	},
 	headings,
 	hideTitle: true,
 	hideBreadcrumbs: true,
+	originalEntry: note,
 } as StarlightPageProps;
 ---
 
@@ -50,10 +54,8 @@ const props = {
 	<div>
 		<h2>{note.data.title}</h2>
 		<div>
-			<strong
-				>{format(note.data.date, "MMM dd, yyyy")}, {
-					format(note.data.date, "hh:mm a")
-				}</strong
+			<time class="font-bold" datetime={note.data.date.toISOString()}
+				>{format(note.data.date, "MMM dd, yyyy")}</time
 			>
 			<ProductPills products={note.data.products} />
 		</div>

@@ -1,0 +1,23 @@
+---
+title: YouTube Videos
+styleGuide:
+  component: YouTubeVideos
+---
+
+## Usage
+
+```mdx live
+import { YouTubeVideos } from "~/components";
+
+<YouTubeVideos products={["Workers"]} />
+```
+
+## `<YouTubeVideos>` Props
+
+### `products`
+
+**type:** `string[]`
+
+An array of products to show associated videos for.
+
+If not specified, the product where the component is used will be used.

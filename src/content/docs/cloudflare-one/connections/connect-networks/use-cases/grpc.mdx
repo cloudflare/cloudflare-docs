@@ -32,9 +32,9 @@ Server started, listening on 50051
 
 To establish a secure, outbound-only connection to Cloudflare:
 
-1. Create a Cloudflare Tunnel for your server by following our [dashboard setup guide](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/). You can skip the connect an application step and go straight to connecting a network.
+<Render file="tunnel/connect-private-network" />
 
-2. In the **Private Networks** tab for the tunnel, enter the private IP address of your server (or a range that includes the server IP).
+2. In the **Private Networks** tab for the tunnel, enter the private IP or CIDR address of your server.
 
 ## 3. Route private network IPs through WARP
 

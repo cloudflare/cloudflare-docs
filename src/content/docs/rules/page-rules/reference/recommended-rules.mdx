@@ -5,40 +5,38 @@ title: Recommended rules
 head:
   - tag: title
     content: Recommended rules | Page Rules
-
 ---
 
-import { Example, Render } from "~/components"
+import { Example, Render } from "~/components";
 
-Use Cloudflare Page Rules to improve the user experience of your domain with hardened security and enhanced site performance, while increasing reliability and minimizing bandwidth usage for your origin server.
+Use Cloudflare Page Rules to improve the user experience of your domain with hardened security and enhanced site performance, while increasing reliability and minimizing bandwidth usage for your origin server.
 
 <Render file="page-rules-migration" />
 
 Keep in mind that not all rules will be right for everyone, but these are some of the most popular.
 
-* 301/302 Forwarding URL
-* Security Level and Cache Level
-* Edge Cache TTL, Always Online, and Browser Cache TTL
+- 301/302 Forwarding URL
+- Cache Level in specific paths
+- Edge Cache TTL, Always Online, and Browser Cache TTL
 
 ### 301/302 Forwarding URL
 
 :::note
-
-Consider using [Single Redirects](/rules/url-forwarding/single-redirects/) or [Bulk Redirects](/rules/url-forwarding/bulk-redirects/) to forward or redirect traffic to a different URL due to ease of use, maintenance, and cost. You should only use Page Rules when Dynamic or Bulk Redirects do not meet your use case. 
+Consider using [Single Redirects](/rules/url-forwarding/single-redirects/) or [Bulk Redirects](/rules/url-forwarding/bulk-redirects/) to forward or redirect traffic to a different URL due to ease of use, maintenance, and cost. You should only use Page Rules when Dynamic or Bulk Redirects do not meet your use case.
 :::
 
 Two common examples for using forwarding URLs are:
 
-* Defining the root as the canonical version of your domain.
-* Directing visitors to a specific page with an easy to remember URL.
+- Defining the root as the canonical version of your domain.
+- Directing visitors to a specific page with an easy to remember URL.
 
 This example page rule configuration defines the root as the canonical version of your domain:
 
 <Example>
 
-* **If the URL matches**: `*www.example.com/*`
-* **Setting**: *Forwarding URL* | **Select status code**: *301 Permanent Redirect*
-* **Enter destination URL**: `https://example.com/$2`
+- **If the URL matches**: `*www.example.com/*`
+- **Setting**: _Forwarding URL_ | **Select status code**: _301 Permanent Redirect_
+- **Enter destination URL**: `https://example.com/$2`
 
 </Example>
 
@@ -46,24 +44,22 @@ This example redirects visitors to a specific page with an easy to remember URL:
 
 <Example>
 
-* **If the URL matches**: `*www.example.com/fb*`
-* **Setting**: *Forwarding URL* | **Select status code**: *302 Temporary Redirect*
-* **Enter destination URL**: `https://www.facebook.com/username`
+- **If the URL matches**: `*www.example.com/fb*`
+- **Setting**: _Forwarding URL_ | **Select status code**: _302 Temporary Redirect_
+- **Enter destination URL**: `https://www.facebook.com/username`
 
 </Example>
 
-### Security Level and Cache Level
+### Cache Level in specific paths
 
 Certain sections of a website, like the login or admin section, have different security and performance requirements than your general public-facing pages.
 
-The following example page rule configuration performs several security and cache adjustments for requests targeting a specific path:
+The following example page rule configuration bypasses cache for requests targeting a specific path:
 
 <Example>
 
-* **If the URL matches**: `example.com/user*`
-* **Setting**: *Security Level* | **Value**: *High*
-* **Setting**: *Cache Level* | **Value**: *Bypass*
-* **Setting**: *Disable Apps*
+- **If the URL matches**: `example.com/user*`
+- **Setting**: _Cache Level_ | **Value**: _Bypass_
 
 </Example>
 
@@ -73,14 +69,14 @@ Certain resources on your domain will likely not change often. For these resourc
 
 #### Examples
 
-In the following example page rule configuration, the target is a folder that holds the majority of the image assets as well as some other types of multimedia.
+In the following example page rule configuration, the target is a folder that holds the majority of the image assets as well as some other types of multimedia.
 
 <Example>
 
-* **If the URL matches**: `example.com/sites/default/files*`
-* **Setting**: *Browser Cache TTL* | **Value**: *a day*
-* **Setting**: *Cache Level |* **Value**: *Cache Everything*
-* **Setting**: *Edge Cache TTL |* **Value**: *7 days*
+- **If the URL matches**: `example.com/sites/default/files*`
+- **Setting**: _Browser Cache TTL_ | **Value**: _a day_
+- **Setting**: _Cache Level |_ **Value**: _Cache Everything_
+- **Setting**: _Edge Cache TTL |_ **Value**: _7 days_
 
 </Example>
 
@@ -88,10 +84,10 @@ The following example page rule configuration applies unique rules for critical 
 
 <Example>
 
-* **If the URL matches**: `example.com/terms-of-service`
-* **Setting**: *Browser Cache TTL* | **Value**: *a day*
-* **Setting**: *Always Online |* **Value**: *On*
-* **Setting**: *Cache Level* | **Value**: *Cache Everything*
-* **Setting**: *Edge Cache TTL* | **Value**: *a month*
+- **If the URL matches**: `example.com/terms-of-service`
+- **Setting**: _Browser Cache TTL_ | **Value**: _a day_
+- **Setting**: _Always Online |_ **Value**: _On_
+- **Setting**: _Cache Level_ | **Value**: _Cache Everything_
+- **Setting**: _Edge Cache TTL_ | **Value**: _a month_
 
 </Example>

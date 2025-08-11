@@ -12,7 +12,7 @@ description: Get an overview of how Cloudflare is deploying post-quantum cryptog
 
 Post-quantum cryptography (PQC) refers to cryptographic algorithms that have been designed to resist attacks from [quantum computers](https://www.cloudflare.com/learning/ssl/quantum/what-is-quantum-computing/). Cloudflare has been researching and [writing about post-quantum](https://blog.cloudflare.com/tag/post-quantum/) since 2017.
 
-To protect you against the risk of [harvest now, decrypt later](https://en.wikipedia.org/wiki/Harvest_now,_decrypt_later), and considering all the [connections](#three-connections-in-the-life-of-a-request) that take place when your website or application is on Cloudflare, we have deployed and are actively expanding the use of [post-quantum hybrid key agreement](#hybrid-key-agreement).
+To protect you against the risk of [harvest now, decrypt later attacks](https://en.wikipedia.org/wiki/Harvest_now,_decrypt_later), and considering all the [connections](#three-connections-in-the-life-of-a-request) that take place when your website or application is on Cloudflare, we have deployed and are actively expanding the use of [post-quantum hybrid key agreement](#hybrid-key-agreement).
 
 Refer to [Cloudflare Radar](https://radar.cloudflare.com/adoption-and-usage#post-quantum-encryption-adoption) for current statistics on the adoption of PQ encryption in requests to Cloudflare, and visit [pq.cloudflareresearch.com](https://pq.cloudflareresearch.com) to check if your connection is secured using PQ key agreement.
 
@@ -32,7 +32,7 @@ As explained in our [blog post](https://blog.cloudflare.com/pq-2024/#two-migrati
 
 ### Hybrid key agreement
 
-With TLS 1.3, [X25519](https://en.wikipedia.org/wiki/Curve25519) - an Elliptic Curve Diffie-Hellman (ECDH) protocol - is the most commonly used algorithm in key agreement. However, its security can be easily broken by quantum computers using [Shor's algorithm](https://en.wikipedia.org/wiki/Shor%27s_algorithm).
+With TLS 1.3, [X25519](https://en.wikipedia.org/wiki/Curve25519) - an Elliptic Curve Diffie-Hellman (ECDH) protocol - is the most commonly used algorithm in key agreement. However, its security can be broken by quantum computers using [Shor's algorithm](https://en.wikipedia.org/wiki/Shor%27s_algorithm).
 
 It is urgent to migrate key agreement to post-quantum algorithms as soon as possible. The objective is to protect against an adversary capable of harvesting today's encrypted communications and storing it until some time in the future when they can gain access to a sufficiently powerful quantum computer to decrypt it.
 
@@ -83,6 +83,10 @@ As announced in [September 2023](https://blog.cloudflare.com/post-quantum-crypto
 
 ### 3. Cloudflare to your origin
 
-Finally, Cloudflare also supports [hybrid key agreements](#hybrid-key-agreement) when connecting to origins. In this case, post-quantum secured connections will depend on the origin servers also supporting PQC.
+Finally, Cloudflare also supports [hybrid key agreements](#hybrid-key-agreement) when connecting to origins. In this case, post-quantum secured connections will depend on the origin servers also supporting PQC. Customers can also configure connections to origin servers via [PQ Cloudflare Tunnel](/ssl/post-quantum-cryptography/pqc-and-zero-trust/).
 
 Refer to [Post-quantum cryptography between Cloudflare and origin servers](/ssl/post-quantum-cryptography/pqc-to-origin/) for details.
+
+## Protect corporate network traffic
+
+With [Zero Trust](/cloudflare-one/), Cloudflare allows organizations to upgrade their sensitive network traffic to PQC without the hassle of individually upgrading each and every corporate application, system, or network connection. Refer to [Post-quantum cryptography in Cloudflare's Zero Trust platform](/ssl/post-quantum-cryptography/pqc-and-zero-trust/) for details.

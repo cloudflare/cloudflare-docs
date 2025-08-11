@@ -1,20 +1,16 @@
 ---
 pcx_content_type: reference
 title: Machine Learning models
-weight: 0
+sidebar:
+  order: 3
 
 ---
 
-## Enable Auto-updates to the Machine Learning Models
+import { Render } from "~/components"
 
-Cloudflare allows Enterprise customers to enable Auto-updates to its Machine Learning models for the newest bot detection models as they are released.
+## Enable auto-updates to the Machine Learning models
 
-To enable Auto-updates:
-
-1. Log in to the Cloudflare dashboard and select your account and domain.
-2. Go to **Security** > **Bots**.
-3. Select **Configure Bot Management**.
-4. Enable **Auto-updates to the Machine Learning Model**.
+<Render file="latest-ml-model-enable" />
 
 ### What will change
 
@@ -38,3 +34,4 @@ By not updating to the latest version, you will be using a Machine Learning mode
 | v6      | Significantly improved scoring for native Android application traffic. <br/><br/>Improved scoring on the newest versions of Chromium browsers.                                                                                              | Q1 2022     |
 | v7      | Increased recognition of distributed botnets. <br/><br/>Improved HTTP/3 scoring.                                                                                                                                                            | Q1 2024     |
 | v8      | Improved detection of residential proxies. <br/><br/>Increased weight on network level traffic characteristics.                                                                                                                             | Q2 2024     |
+| v9      | Improved model consistency and model efficacy against randomization attack techniques | Q2 2025     |

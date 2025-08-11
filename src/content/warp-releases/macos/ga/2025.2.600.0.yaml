@@ -1,0 +1,26 @@
+releaseNotes: >-
+  This release contains support for a new WARP setting, [Global WARP override](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#global-warp-override). It also includes significant improvements to our captive portal / public Wi-Fi detection logic. If you have experienced captive portal issues in the past, re-test and give this version a try.
+
+
+  **Changes and improvements**
+
+  - Improved [captive portal detection](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/captive-portals/) to make more public networks compatible
+  and have faster detection.
+
+  - Improved error messages shown in the app.
+
+  - WARP tunnel protocol details can now be viewed using the `warp-cli tunnel stats` command.
+
+  - Fixed an issue with device revocation and re-registration when switching configurations.
+
+  - Added a new [Global WARP override](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#global-warp-override) setting. This setting puts account administrators in control of disabling and enabling WARP across all devices registered to an account from the dashboard. Global WARP override is disabled by default.
+
+
+  **Known issues**
+
+  - macOS Sequoia: Due to changes Apple introduced in macOS 15.0.x, the WARP client may not behave as expected. Cloudflare recommends the use of macOS 15.3 or later.
+version: 2025.2.600.0
+releaseDate: 2025-03-31T21:57:06.269Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2025.2.600.0
+packageSize: 91762117
+platformName: macOS

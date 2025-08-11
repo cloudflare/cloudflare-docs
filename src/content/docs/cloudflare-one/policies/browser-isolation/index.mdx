@@ -3,17 +3,17 @@ pcx_content_type: concept
 title: Browser Isolation
 sidebar:
   order: 5
-banner:
-  content: The default global Cloudflare root certificate expired on 2025-02-02. If you installed the default Cloudflare certificate before 2024-10-17, you must <a href="/cloudflare-one/connections/connect-devices/user-side-certificates/#generate-a-cloudflare-root-certificate">generate a new certificate</a> and activate it for your Zero Trust organization to avoid inspection errors.
 ---
 
-:::note
-Available as an add-on to Zero Trust Pay-as-you-go and Enterprise plans.
-:::
+import { Render } from "~/components";
 
 Cloudflare Browser Isolation complements the [Secure Web Gateway](/cloudflare-one/policies/gateway/) and [Zero Trust Network Access](/cloudflare-one/connections/connect-networks/) solutions by executing active webpage content in a secure isolated browser. Executing active content remotely from the endpoint protects users from zero-day attacks and malware. In addition to protecting endpoints, Browser Isolation also protects users from phishing attacks by preventing user input on risky websites and controlling data transmission to sensitive web applications. You can further filter isolated traffic with Gateway [HTTP](/cloudflare-one/policies/gateway/http-policies/) and [DNS](/cloudflare-one/policies/gateway/dns-policies/) policies.
 
 Remote browsing is invisible to the user who continues to use their browser normally without changing their preferred browser and habits. Every open tab and window is automatically isolated. When the user closes the isolated browser, their session is automatically deleted.
+
+:::note
+Available as an add-on to Zero Trust Pay-as-you-go and Enterprise plans.
+:::
 
 ## Privacy
 

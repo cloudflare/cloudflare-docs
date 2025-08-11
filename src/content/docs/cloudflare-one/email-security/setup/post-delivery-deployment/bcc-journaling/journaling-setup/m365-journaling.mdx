@@ -1,0 +1,56 @@
+---
+title: Microsoft 365 journaling setup
+pcx_content_type: how-to
+sidebar:
+  order: 2
+---
+
+import { GlossaryTooltip, Render } from "~/components"
+
+When you receive an email, the email lands on your Microsoft 365 inbox, and then Email Security receives a copy of that email. The following email flow shows how this works:
+
+![Email flow when setting up Microsoft 365 with Email Security.](~/assets/images/email-security/deployment/api-setup/journaling/Email_Security_MS365_Journaling_Diagram.png)
+
+To enable Microsoft 365 journaling deployment:
+
+1. Log in to [Zero Trust](https://one.dash.cloudflare.com/) > **Email Security**.
+2. Select **Overview**. If you have not purchased Email Security, select **Contact Sales**. Otherwise, select **Set up** > **BCC/Journaling**.
+3. Select **Integrate with MS** > **Authorize**.
+4. Continue with [Integrate with Microsoft 365](/cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/journaling-setup/m365-journaling/#integrate-with-microsoft-365) to connect your Microsoft integration.
+
+## Integrate with Microsoft 365
+
+To integrate with Microsoft 365:
+
+1. **Name integration**: Add your integration name, then select **Continue**.
+2. **Authorize integration**:
+   - Select **Authorize**. Selecting **Authorize** will take you to the **Microsoft Sign in** page where you will have to enter your email address.
+   - Once you enter your email address, select **Next**.
+   - After selecting **Next**, the dashboard will show you a dialog box with a list of requested permissions. Select **Accept to authorize Email Security**. Upon authorization, you will be redirected to a page where you can review details and enroll the integration.
+3. **Review details**: Review your integration details, then:
+   - Select **Complete Email Security set up** where you will be able to connect your domains and configure auto-moves.
+   - Select **Continue to Email Security**.
+
+Continue with [Connect your domains](#connect-your-domains) for the next steps.
+
+### Connect your domains
+
+On the **Set up Email Security** page:
+
+1. **Connect domains**: Select at least one domain. Then, select **Continue**.
+2. (**Optional**) **Add manual domains**: Select **Add domain name** to manually enter additional domains. Then, select **Continue**.
+3. (**Optional**) **Adjust hop count**: Enter the number of <GlossaryTooltip term="Hops">hops</GlossaryTooltip>. Then, select **Continue**.
+4. (**Optional**, select **Skip for now** to skip this step) **Move messages**: Refer to [Auto-moves](/cloudflare-one/email-security/auto-moves/) to configure auto-moves. Then, select **Continue**.
+5. **Configure service address with your third party email provider**: Copy and paste the service address into your third-party email provider to allow BCC/Journaling: `<account tag>@CF-emailsecurity.com`.
+6. **Review details**: Review your connected domains. Then, select **Go to domains.**
+
+Your domains are now added successfully.
+
+To view your connected domains:
+
+1. Go to **Settings**.
+2. Locate your domain, select the three dots > **View domain**. Selecting **View domain** will display information about your domain.
+
+## Next steps
+
+<Render file="email-security/enable-logs" />

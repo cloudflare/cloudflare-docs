@@ -13,7 +13,7 @@ description: Create a transform rule to rewrite the request path from `/blog` to
 
 import { Example } from "~/components";
 
-To rewrite a request to the `/blog` path to `/blog?sort-by=date`, create a rewrite URL rule with the following settings:
+To rewrite a request to the `/blog` path to `/blog?sort-by=date`, create a URL rewrite rule with the following settings:
 
 <Example>
 
@@ -23,7 +23,7 @@ Text in **Expression Editor**:
 http.request.uri.path == "/blog"
 ```
 
-Text after **Query** > **Rewrite to...** > _Static_:
+Text after **Query** > **Rewrite to** > _Static_:
 
 ```txt
 sort-by=date

@@ -21,7 +21,7 @@ import { DirectoryListing, GlossaryTooltip, Render } from "~/components"
 
 Customers can configure their load balancer using the `location_strategy` parameter, which includes the properties `prefer_ecs` and `mode`.
 
-`prefer_ecs` determines whether the ECS GeoIP should be preferred as the authoritative location.
+`prefer_ecs` determines whether the ECS geolocation should be preferred as the authoritative location.
 
 | Type          | Description                                                                             |
 | ------------- | --------------------------------------------------------------------------------------- |
@@ -30,17 +30,15 @@ Customers can configure their load balancer using the `location_strategy` parame
 | `"proximity"` | Prefers ECS only when `steering_policy="proximity"`.                                    |
 | `"geo"`       | Prefers ECS only when `steering_policy="geo"` and only supports country-level steering. |
 
-`mode` determines the authoritative location when ECS is not preferred, does not exist in the request, or its GeoIP lookup is unsuccessful.
+`mode` determines the authoritative location when ECS is not preferred, does not exist in the request, or its geolocation lookup is unsuccessful.
 
-| Type            | Description                                                                                                     |
-| --------------- | --------------------------------------------------------------------------------------------------------------- |
-| `"pop"`         | Uses the Cloudflare PoP location.                                                                               |
-| `"resolver_ip"` | Uses the DNS resolver GeoIP location. If the GeoIP lookup is unsuccessful, it uses the Cloudflare PoP location. |
+| Type            | Description                                                                                                             |
+| --------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| `"pop"`         | Uses the Cloudflare PoP location.                                                                                       |
+| `"resolver_ip"` | Uses the DNS resolver geolocation data. If the geolocation lookup is unsuccessful, it uses the Cloudflare PoP location. |
 
 :::note
 
-
 ECS support applies to DNS-only load balancers.
-
 
 :::

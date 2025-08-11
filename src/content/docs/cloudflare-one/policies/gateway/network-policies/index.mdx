@@ -5,7 +5,7 @@ sidebar:
   order: 3
 ---
 
-import { Details, InlineBadge, Render } from "~/components";
+import { Details, InlineBadge, Render, Badge } from "~/components";
 
 :::note
 To enable this feature, download and deploy the [WARP client](/cloudflare-one/connections/connect-devices/warp/deployment/) on your devices.
@@ -26,6 +26,8 @@ A network policy consists of an **Action** as well as a logical expression that 
 	params={{ type: "query", example: "Source IP", example2: "Resolved IP" }}
 />
 
+<Render file="gateway/terraform-precedence-warning" product="cloudflare-one" />
+
 ## Actions
 
 Like actions in DNS and HTTP policies, actions in network policies define which decision you want to apply to a given set of elements. You can assign one action per policy.
@@ -38,8 +40,8 @@ API value: `allow`
 
 **Traffic**
 
-- [All Access Private Apps](#all-access-private-apps)
-- [All Access App Targets](#all-access-app-targets)
+- [Access Infrastructure Target](#access-infrastructure-target)
+- [Access Private App](#access-private-app)
 - [Application](#application)
 - [Content Categories](#content-categories)
 - [Destination Continent IP Geolocation](#destination-continent)
@@ -81,7 +83,7 @@ Policies with Allow actions allow network traffic to reach certain IPs or ports.
 | Destination IP | in       | `92.100.02.102` | And   | Allow  |
 | Email          | in       | `*@example.com` |       |        |
 
-### Audit SSH
+### Audit SSH <Badge text="Deprecated" variant="caution"/>
 
 API value: `audit_ssh`
 
@@ -115,17 +117,19 @@ API value: `audit_ssh`
 
 </Details>
 
+:::caution
+Gateway no longer supports the Audit SSH action for new policies. To log your SSH traffic, Cloudflare recommends deploying [Access for Infrastructure](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/) for your SSH server and configuring [SSH command logs](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/#ssh-command-logs).
+:::
+
 Policies with Audit SSH actions allow administrators to log SSH traffic. Gateway will detect SSH traffic over port `22`. For example, the following configuration logs SSH commands sent to a given IP address:
 
 | Selector       | Operator | Value          | Action    |
 | -------------- | -------- | -------------- | --------- |
 | Destination IP | in       | `203.0.113.83` | Audit SSH |
 
-For more information on SSH logging, refer to [Configure SSH proxy and command logs](/cloudflare-one/policies/gateway/network-policies/ssh-logging/).
-
-:::note
 Gateway only audits SSH traffic over port `22`. Non-standard ports, including those specified with the [Destination Port selector](#destination-port), are not supported.
-:::
+
+For more information on SSH logging, refer to [Configure SSH proxy and command logs](/cloudflare-one/policies/gateway/network-policies/ssh-logging/).
 
 ### Block
 
@@ -135,6 +139,8 @@ API value: `block`
 
 **Traffic**
 
+- [Access Infrastructure Target](#access-infrastructure-target)
+- [Access Private App](#access-private-app)
 - [Application](#application)
 - [Content Categories](#content-categories)
 - [Destination Continent IP Geolocation](#destination-continent)
@@ -177,7 +183,11 @@ Policies with Block actions block network traffic from reaching certain IPs or p
 
 #### WARP client block notifications
 
-<Render file="gateway/client-notifications" />
+<Render
+	file="gateway/client-notifications"
+	product="cloudflare-one"
+	params={{ toggleName: "**Display block notification for WARP Client**" }}
+/>
 
 ### Network Override
 
@@ -230,17 +240,20 @@ Gateway will only log successful override connections in your [network logs](/cl
 
 Gateway matches network traffic against the following selectors, or criteria.
 
-### All Access Private App Destinations
-
-<Render file="gateway/selectors/all-access-private-app-destinations" />
-
-### All Access App Targets
+### Access Infrastructure Target
 
 <Render file="gateway/selectors/all-access-app-targets" />
 
+### Access Private App
+
+<Render file="gateway/selectors/all-access-private-app-destinations" />
+
 ### Application
 
-<Render file="gateway/selectors/application" params={{ one: "network" }} />
+<Render
+	file="gateway/selectors/application"
+	params={{ policyType: "network" }}
+/>
 
 ### Content Categories
 
@@ -273,7 +286,11 @@ Gateway matches network traffic against the following selectors, or criteria.
 
 ### Detected Protocol
 
-<Render file="gateway/selectors/protocol-detection" />
+The inferred network protocol based on Cloudflare's [protocol detection](/cloudflare-one/policies/gateway/network-policies/protocol-detection/).
+
+| UI name           | API example                       |
+| ----------------- | --------------------------------- |
+| Detected Protocol | `net.protocol.detection == "ssh"` |
 
 ### Device Posture
 
@@ -302,11 +319,23 @@ To enable Gateway filtering on TCP and UDP, go to **Settings** > **Network** > *
 
 ### SNI
 
-<Render file="gateway/selectors/sni" />
+The host whose Server Name Indication (SNI) header Gateway will filter traffic against. This will allow for an exact match.
+
+This selector only applies to traffic on port `443`.
+
+| UI name | API example                         |
+| ------- | ----------------------------------- |
+| SNI     | `net.sni.host == "www.example.com"` |
 
 ### SNI Domain
 
-<Render file="gateway/selectors/sni-domain" />
+The domain whose Server Name Indication (SNI) header Gateway will filter traffic against. For example, a rule for `example.com` will match `example.com`, `www.example.com`, and `my.test.example.com`.
+
+This selector only applies to traffic on port `443`.
+
+| UI name    | API example                        |
+| ---------- | ---------------------------------- |
+| SNI Domain | `net.sni.domains == "example.com"` |
 
 ### Source Continent
 

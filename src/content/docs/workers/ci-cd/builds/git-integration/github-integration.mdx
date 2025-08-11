@@ -6,17 +6,23 @@ sidebar:
   order: 2
 ---
 
-Cloudflare supports connecting your GitHub repository to your Cloudflare Worker, and will automatically deploy your code every time you push a change to a selected branch.
+Cloudflare supports connecting your GitHub repository to your Cloudflare Worker, and will automatically deploy your code every time you push a change.
 
 ## Features
 
 Beyond automatic builds and deployments, the Cloudflare GitHub integration lets you monitor builds directly in GitHub, keeping you informed without leaving your workflow.
 
-:::note[Upcoming features]
-In Beta, Workers Builds supports automatic builds and deployments only from a single selected branch (e.g. `main`).
+### Pull request comment
 
-Support for building and deploying preview versions from multiple branches will be added soon, along with the ability to generate [Preview URLs](/workers/configuration/previews/) for pull requests (PRs).
-:::
+If a commit is on a pull request, Cloudflare will automatically post a comment on the pull request with the status of the build.
+
+![GitHub pull request comment](~/assets/images/workers/platform/ci-cd/github-pull-request-comment.png)
+
+A [preview URL](/workers/configuration/previews/) will be provided for any builds which perform `wrangler versions upload`. This is particularly useful when reviewing your pull request, as it allows you to compare the code changes alongside an updated version of your Worker.
+
+Comment history reveals any builds completed earlier while the PR was open.
+
+![GitHub pull request comment history](~/assets/images/workers/platform/ci-cd/github-pull-request-comment-history.png)
 
 ### Check run
 

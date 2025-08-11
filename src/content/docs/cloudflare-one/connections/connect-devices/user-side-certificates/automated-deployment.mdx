@@ -5,11 +5,9 @@ sidebar:
   order: 1
 head: []
 description: Automatically deploy a root certificate on desktop devices.
-banner:
-  content: The default global Cloudflare root certificate expired on 2025-02-02. If you installed the default Cloudflare certificate before 2024-10-17, you must <a href="/cloudflare-one/connections/connect-devices/user-side-certificates/#generate-a-cloudflare-root-certificate">generate a new certificate</a> and activate it for your Zero Trust organization to avoid inspection errors.
 ---
 
-import { Details } from "~/components";
+import { Details, Render } from "~/components";
 
 <Details header="Feature availability">
 
@@ -48,9 +46,11 @@ To configure WARP to install a root certificate on your organization's devices:
 5. [Enroll the device](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/) in your Zero Trust organization.
 6. (Optional) If the device is running macOS Big Sur or newer, [manually trust the certificate](#manually-trust-the-certificate).
 
-WARP will now download any [certificates set to **Available**](/cloudflare-one/connections/connect-devices/user-side-certificates/#activate-a-root-certificate). It may take up to 24 hours for newly available certificates to download to your users' devices.
+WARP will now download any [certificates set to **Available**](/cloudflare-one/connections/connect-devices/user-side-certificates/#activate-a-root-certificate). After download, WARP will add the certificates to the device's system certificate store in `installed_certs/<certificate_id>.pem` and append the contents to the `installed_cert.pem` file. If you have any scripts using `installed_cert.pem`, Cloudflare recommends you set them to use the individual files in the `installed_certs/` directory instead. `installed_certs.pem` will be deprecated by 2025-06-31.
 
-After download, WARP will add the certificates to the device's system certificate store in `installed_certs/<certificate_id>.pem` and append the contents to the `installed_cert.pem` file. If you have any scripts using `installed_cert.pem`, Cloudflare recommends you set them to use the individual files in the `installed_certs/` directory instead. `installed_certs.pem` will be deprecated by 2025-06-31.
+:::note
+<Render file="warp/client-notification-lag" product="cloudflare-one" />
+:::
 
 WARP does not install certificates to individual applications. You will need to [manually add certificates](/cloudflare-one/connections/connect-devices/user-side-certificates/manual-deployment/#add-the-certificate-to-applications) to applications that rely on their own certificate store instead of the system certificate store.
 

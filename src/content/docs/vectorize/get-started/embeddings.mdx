@@ -49,7 +49,7 @@ Open your terminal and create a new project named `embeddings-tutorial` by runni
 	product="workers"
 	params={{
 		category: "hello-world",
-		type: "Hello World Worker",
+		type: "Worker only",
 		lang: "TypeScript",
 	}}
 />
@@ -61,7 +61,7 @@ This will create a new `embeddings-tutorial` directory. Your new `embeddings-tut
 
 :::note
 
-If you are familiar with Cloudflare Workers, or initializing projects in a Continuous Integration (CI) environment, initialize a new project non-interactively by setting `CI=true` as an environmental variable when running `create cloudflare@latest`.
+If you are familiar with Cloudflare Workers, or initializing projects in a Continuous Integration (CI) environment, initialize a new project non-interactively by setting `CI=true` as an [environmental variable](/workers/configuration/environment-variables/) when running `create cloudflare@latest`.
 
 For example: `CI=true npm create cloudflare@latest embeddings-tutorial --type=simple --git --ts --deploy=false` will create a basic "Hello World" project ready to build on.
 
@@ -132,8 +132,6 @@ Specifically:
 Before you deploy your embedding example, ensure your Worker uses your model catalog, including the [text embedding model](/workers-ai/models/#text-embeddings) built-in.
 
 From within the `embeddings-tutorial` directory, open your Wrangler file in your editor and add the new `[[ai]]` binding to make Workers AI's models available in your Worker:
-
-
 
 <WranglerConfig>
 
@@ -281,6 +279,6 @@ By finishing this tutorial, you have successfully created a Vectorize index, use
 
 ## Next steps
 
-- Build a [generative AI chatbot](/workers-ai/tutorials/build-a-retrieval-augmented-generation-ai/) using Workers AI and Vectorize.
+- Build a [generative AI chatbot](/workers-ai/guides/tutorials/build-a-retrieval-augmented-generation-ai/) using Workers AI and Vectorize.
 - Learn more about [how vector databases work](/vectorize/reference/what-is-a-vector-database/).
 - Read [examples](/vectorize/reference/client-api/) on how to use the Vectorize API from Cloudflare Workers.

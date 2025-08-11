@@ -3,7 +3,6 @@ updated: 2024-08-06
 difficulty: Intermediate
 title: Build a web crawler with Queues and Browser Rendering
 summary: Example of how to use Queues and Browser Rendering to power a web crawler.
-content_type: 📝 Tutorial
 pcx_content_type: tutorial
 products:
   - Workers
@@ -46,7 +45,7 @@ To get started, create a Worker application using the [`create-cloudflare` CLI](
 	product="workers"
 	params={{
 		category: "hello-world",
-		type: "Hello World Worker",
+		type: "Worker only",
 		lang: "TypeScript",
 	}}
 />
@@ -61,10 +60,17 @@ cd queues-web-crawler
 
 We need to create a KV store. This can be done through the Cloudflare dashboard or the Wrangler CLI. For this tutorial, we will use the Wrangler CLI.
 
-```sh
-npx wrangler kv namespace create crawler_links
-npx wrangler kv namespace create crawler_screenshots
-```
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="kv namespace create crawler_links"
+/>
+
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="kv namespace create crawler_screenshots"
+/>
 
 ```sh output
 🌀 Creating namespace with title "web-crawler-crawler-links"
@@ -103,14 +109,11 @@ Now, you need to set up your Worker for Browser Rendering.
 
 In your current directory, install Cloudflare’s [fork of Puppeteer](/browser-rendering/platform/puppeteer/) and also [robots-parser](https://www.npmjs.com/package/robots-parser):
 
-```sh
-npm install @cloudflare/puppeteer --save-dev
-npm install robots-parser
-```
+<PackageManagers pkg="@cloudflare/puppeteer" dev />
+
+<PackageManagers pkg="robots-parser" />
 
 Then, add a Browser Rendering binding. Adding a Browser Rendering binding gives the Worker access to a headless Chromium instance you will control with Puppeteer.
-
-
 
 <WranglerConfig>
 
@@ -124,9 +127,11 @@ browser = { binding = "CRAWLER_BROWSER" }
 
 Now, we need to set up the Queue.
 
-```sh
-npx wrangler queues create queues-web-crawler
-```
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="queues create queues-web-crawler"
+/>
 
 ```txt title="Output"
 Creating queue queues-web-crawler.
@@ -136,8 +141,6 @@ Created queue queues-web-crawler.
 ### Add Queue bindings to wrangler.toml
 
 Then, in your Wrangler file, add the following:
-
-
 
 <WranglerConfig>
 
@@ -156,8 +159,6 @@ binding = "CRAWLER_QUEUE"
 Adding the `max_batch_timeout` of 60 seconds to the consumer queue is important because Browser Rendering has a limit of two new browsers per minute per account. This timeout waits up to a minute before collecting queue messages into a batch. The Worker will then remain under this browser invocation limit.
 
 Your final Wrangler file should look similar to the one below.
-
-
 
 <WranglerConfig>
 
@@ -543,9 +544,7 @@ export default {
 
 To deploy your Worker, run the following command:
 
-```sh
-npx wrangler deploy
-```
+<PackageManagers type="exec" pkg="wrangler" args="deploy" />
 
 You have successfully created a Worker which can submit URLs to a queue for crawling and save results to Workers KV.
 

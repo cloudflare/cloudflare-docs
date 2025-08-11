@@ -1,11 +1,9 @@
 ---
-title: Best practices
+title: Rate limiting best practices
 pcx_content_type: configuration
 sidebar:
   order: 21
-head:
-  - tag: title
-    content: Rate limiting best practices
+  label: Best practices
 ---
 
 import { Render } from "~/components";
@@ -34,7 +32,7 @@ A common use case is to limit the rate of requests performed by individual user 
 
 Another use case when controlling access to resources is to exclude or include IP addresses or Autonomous System Numbers (ASNs) from a rate limiting rule.
 
-The following example rule allows up to 10 requests per minute from the same IP address doing a `GET` request for `/status`, as long as the visitor's IP address is not included in the `partner_ips` [IP list](/waf/tools/lists/custom-lists/#lists-with-ip-addresses-ip-lists).
+The following example rule allows up to 10 requests per minute from the same IP address doing a `GET` request for `/status`, as long as the visitor's IP address is not included in the `partner_ips` [IP list](/waf/tools/lists/custom-lists/#ip-lists).
 
 | Setting                  | Value                                                                                                        |
 | ------------------------ | ------------------------------------------------------------------------------------------------------------ |
@@ -243,7 +241,7 @@ In this situation, you could configure a rule similar to the following:
 | Rate (Requests / Period) | 5 requests / 3 minutes                |
 | Action                   | Managed Challenge                     |
 
-To control the rate of actions performed by automated sources, consider use rate limiting rules together with [Cloudflare Bot Management](/bots/get-started/bm-subscription/). With Bot Management, you can use the [bot score](/bots/concepts/bot-score/) as part of the matching criteria to apply the rule only to automated or likely automated traffic. For example, you can use a maximum score (or threshold) of `30` for likely automated traffic and `10` for automated traffic.
+To control the rate of actions performed by automated sources, consider use rate limiting rules together with [Bot Management](/bots/get-started/bot-management/). With Bot Management, you can use the [bot score](/bots/concepts/bot-score/) as part of the matching criteria to apply the rule only to automated or likely automated traffic. For example, you can use a maximum score (or threshold) of `30` for likely automated traffic and `10` for automated traffic.
 
 If your application tracks sessions using a cookie, you can use the cookie to set the rate limiting context (that is, use it as a counting characteristic). By setting the rate limiting characteristic to Cookie, the rule will group together requests from different IP addresses but belonging to the same session, which is a common scenario when dealing with a bot network performing a distributed attack.
 
@@ -269,7 +267,7 @@ If your application tracks sessions using a cookie, you can use the cookie to se
 
 _These example rules require Advanced Rate Limiting and Bot Management._
 
-If the application does not use a session cookie, you can use [JA3 fingerprints](/bots/concepts/ja3-ja4-fingerprint/) to identify individual clients. A JA3 fingerprint is a unique identifier, available to customers with [Bot Management](/bots/get-started/bm-subscription/), that allows Cloudflare to identify requests coming from the same client. All clients have an associated fingerprint, whether they are automated or not.
+If the application does not use a session cookie, you can use [JA3 fingerprints](/bots/additional-configurations/ja3-ja4-fingerprint/) to identify individual clients. A JA3 fingerprint is a unique identifier, available to customers with [Bot Management](/bots/get-started/bot-management/), that allows Cloudflare to identify requests coming from the same client. All clients have an associated fingerprint, whether they are automated or not.
 
 | Setting                  | Value                                                                    |
 | ------------------------ | ------------------------------------------------------------------------ |
@@ -343,9 +341,15 @@ _This example rule requires Advanced Rate Limiting._
 
 ## Protecting GraphQL APIs
 
-One of the biggest challenges posed by applications built on GraphQL is that a single path manages all queries to the server, and every request is usually a `POST` operation.
+Preventing server overload for GraphQL APIs can be different from preventing overload for RESTful APIs. One of the biggest challenges posed by applications built on GraphQL is that a single path manages all queries to the server, and every request is usually a `POST` operation. This prevents different rate limits for different API use cases based on the HTTP method and URI path.
 
-The purpose of the request is usually embedded in the body, which has information on what data the client wants to fetch or mutate (according to [GraphQL's terminology](https://graphql.org/learn/queries/) for server-side data modification), along with any additional data required to carry out the action.
+However, instead of using the method and path like a RESTful API, the purpose of the request is usually embedded in the body, which has information on what data the client wants to fetch or mutate (according to [GraphQL's terminology](https://graphql.org/learn/queries/) for server-side data modification), along with any additional data required to carry out the action.
+
+To prevent server overload, consider the following approaches:
+
+1. Limit the number of times a particular user can call the same GraphQL operation name.
+2. Limit the total amount of query complexity any given user is allowed to request.
+3. Limit any individual request's query complexity.
 
 The following examples are based on an application that accepts reviews for movies. A GraphQL request could look like the following:
 
@@ -378,7 +382,7 @@ To limit the rate of actions, you could use the following rule:
 
 _This example rule requires Advanced Rate Limiting and payload inspection._
 
-### Prevent server overload
+### Limit the total amount of query complexity
 
 The complexity necessary to handle a GraphQL request can vary significantly. Since the API uses a single endpoint, it is difficult to figure out the complexity of each request before it has been served.
 
@@ -388,21 +392,22 @@ This type of rate limiting requires that the server scores every served request 
 
 For example, the following rule defines a total complexity budget of 1,000 per hour:
 
-| Setting                     | Value                                 |
-| --------------------------- | ------------------------------------- |
-| Matching criteria           | URI Path contains `/graphql`          |
-| Expression                  | `http.request.uri.path eq "/graphql"` |
-| Counting characteristics    | Cookie (`session_id`)                 |
-| Score rate (score / period) | 1,000 / 1 hour                        |
-| Score location              | Response header (`score`)             |
-| Action                      | Block                                 |
+| Setting                  | Value                                 |
+| ------------------------ | ------------------------------------- |
+| Matching criteria        | URI Path contains `/graphql`          |
+| Expression               | `http.request.uri.path eq "/graphql"` |
+| Counting characteristics | Cookie (`session_id`)                 |
+| Score per period         | 1,000                                 |
+| Period                   | 1 hour                                |
+| Response header name     | `score`                               |
+| Action                   | Block                                 |
 
 _This example rule requires Advanced Rate Limiting and payload inspection._
 
-:::note
+When the origin server processes a request, it adds a `score` HTTP header to the response with a value representing how much work the origin has performed to handle it — for example, `100`. In the next hour, the same client can perform requests up to an additional budget of `900`. As soon as this budget is exceeded, later requests will be blocked until the timeout expires.
 
-Currently, you can only create complexity-based (or score-based) rules such as the one above [via API](/waf/rate-limiting-rules/create-api/#example-d---complexity-based-rate-limiting-rule).
+### Limit any individual query’s complexity
 
-:::
+API Shield customers can use GraphQL malicious query protection to protect their GraphQL APIs. GraphQL malicious query protection scans your GraphQL traffic for queries that could overload your origin and result in a denial of service. You can build rules that limit the query depth and size of incoming GraphQL queries in order to block suspiciously large or complex queries.
 
-When the origin server processes a request, it adds a `score` HTTP header to the response with a value representing how much work the origin has performed to handle it — for example, `400`. In the next hour, the same client can perform requests up to an additional budget of `600`. As soon as this budget is exceeded, later requests will be blocked until the timeout expires.
+Refer to [API Shield documentation](https://developers.cloudflare.com/api-shield/security/graphql-protection/) for more information on GraphQL malicious query protection.

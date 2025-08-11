@@ -11,7 +11,7 @@ You should replace peer addresses with the anycast IP addresses assigned to your
 - **Anycast 01**: `162.159.###.###`
 - **Anycast 02**: `172.64.###.###`
 
-The following is a Cisco IOS XE configuration example:
+## Cisco IOS XE configuration example
 
 ```txt
 crypto ikev2 proposal CF_MAGIC_WAN_IKEV2_PROPOSAL
@@ -100,6 +100,23 @@ interface GigabitEthernet2
  negotiation auto
  no mop enabled
  no mop sysid
+```
+
+### Establish IPsec behind a NAT or CGNAT with port `4500`
+
+If your Cisco router is behind a NAT or CGNAT and you need to establish a connection on port `4500`, you can use the `nat force-encap`command.
+
+Add the `nat force-encap`command when setting up the `crypto ikev2 profile` for your tunnels:
+
+```txt {7}
+crypto ikev2 profile CF_MAGIC_WAN_01
+ match identity remote address 162.159.###.### 255.255.255.255
+ identity local fqdn ad329f56###############bbe898c0a0.33145236.ipsec.cloudflare.com
+ authentication remote pre-share
+ authentication local pre-share
+ keyring local CF_MAGIC_WAN_KEYRING
+ nat force-encap
+ no config-exchange request
 ```
 
 ## Diagnostic output: show crypto session detail

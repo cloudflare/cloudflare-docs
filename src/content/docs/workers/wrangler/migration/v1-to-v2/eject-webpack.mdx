@@ -3,10 +3,9 @@ pcx_content_type: how-to
 title: 1. Migrate webpack projects
 sidebar:
   order: 2
-
 ---
 
-import { WranglerConfig } from "~/components";
+import { WranglerConfig, PackageManagers } from "~/components";
 
 This guide describes the steps to migrate a webpack project from Wrangler v1 to Wrangler v2. After completing this guide, [update your Wrangler version](/workers/wrangler/migration/v1-to-v2/update-v1-to-v2/).
 
@@ -50,25 +49,24 @@ Wrangler v2 drops support for project types, including `type = webpack` and conf
 
 To do that, you will need to add it as a dependency:
 
-```
-npm install --save-dev webpack@^4.46.0 webpack-cli wranglerjs-compat-webpack-plugin
-# or
-yarn add --dev webpack@4.46.0 webpack-cli wranglerjs-compat-webpack-plugin
-```
+<PackageManagers
+	pkg="webpack@^4.46.0 webpack-cli wranglerjs-compat-webpack-plugin"
+	dev
+/>
 
 You should see this reflected in your `package.json` file:
 
 ```json
 {
-  "name": "my-worker",
-  "version": "x.y.z",
-  // ...
-  "devDependencies": {
-    // ...
-    "wranglerjs-compat-webpack-plugin": "^x.y.z",
-    "webpack": "^4.46.0",
-    "webpack-cli": "^x.y.z"
-  }
+	"name": "my-worker",
+	"version": "x.y.z",
+	// ...
+	"devDependencies": {
+		// ...
+		"wranglerjs-compat-webpack-plugin": "^x.y.z",
+		"webpack": "^4.46.0",
+		"webpack-cli": "^x.y.z"
+	}
 }
 ```
 
@@ -78,12 +76,12 @@ Modify your `webpack.config.js` file to include the plugin you just installed.
 
 ```js
 const {
-  WranglerJsCompatWebpackPlugin,
+	WranglerJsCompatWebpackPlugin,
 } = require("wranglerjs-compat-webpack-plugin");
 
 module.exports = {
-  // ...
-  plugins: [new WranglerJsCompatWebpackPlugin()],
+	// ...
+	plugins: [new WranglerJsCompatWebpackPlugin()],
 };
 ```
 
@@ -91,13 +89,13 @@ module.exports = {
 
 ```json
 {
-  "name": "my-worker",
-  "version": "2.0.0",
-  // ...
-  "scripts": {
-    "build": "webpack" // <-- Add this line!
-    // ...
-  }
+	"name": "my-worker",
+	"version": "2.0.0",
+	// ...
+	"scripts": {
+		"build": "webpack" // <-- Add this line!
+		// ...
+	}
 }
 ```
 
@@ -118,8 +116,6 @@ webpack_config = "webpack.config.js"
 5. Tell Wrangler how to bundle your Worker.
 
 Wrangler no longer has any knowledge of how to build your Worker. You will need to tell it how to call webpack and where to look for webpack's output. This translates into two fields:
-
-
 
 <WranglerConfig>
 

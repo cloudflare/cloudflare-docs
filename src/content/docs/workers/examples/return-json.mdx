@@ -21,6 +21,12 @@ description: Return JSON directly from a Worker script, useful for building APIs
   and middleware.
 ---
 
+If you want to get started quickly, click on the button below.
+
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/docs-examples/tree/main/workers/return-json)
+
+This creates a repository in your GitHub account and deploys the application to Cloudflare Workers.
+
 import { Render, TabItem, Tabs } from "~/components";
 
 <Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
@@ -44,13 +50,13 @@ export default {
 </TabItem> <TabItem label="Python" icon="seti:python">
 
 ```py
-from js import Response, Headers
+from workers import Response
 import json
 
 def on_fetch(request):
     data = json.dumps({"hello": "world"})
-    headers = Headers.new({"content-type": "application/json"}.items())
-    return Response.new(data, headers=headers)
+    headers = {"content-type": "application/json"}
+    return Response(data, headers=headers)
 ```
 
 </TabItem> <TabItem label="Rust" icon="seti:rust">
@@ -71,6 +77,24 @@ async fn fetch(_req: Request, _env: Env, _ctx: Context) -> Result<Response> {
     };
     Response::from_json(&data)
 }
+```
+
+</TabItem> <TabItem label="Hono" icon="seti:typescript">
+
+```ts
+import { Hono } from 'hono';
+
+const app = new Hono();
+
+app.get('*', (c) => {
+  const data = {
+    hello: "world",
+  };
+
+  return c.json(data);
+});
+
+export default app;
 ```
 
 </TabItem> </Tabs>

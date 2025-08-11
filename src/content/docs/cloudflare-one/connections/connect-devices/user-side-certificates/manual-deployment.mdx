@@ -6,8 +6,6 @@ sidebar:
 head: []
 description: Manually add a Cloudflare certificate to mobile devices and
   individual applications.
-banner:
-  content: The default global Cloudflare root certificate expired on 2025-02-02. If you installed the default Cloudflare certificate before 2024-10-17, you must <a href="/cloudflare-one/connections/connect-devices/user-side-certificates/#generate-a-cloudflare-root-certificate">generate a new certificate</a> and activate it for your Zero Trust organization to avoid inspection errors.
 ---
 
 import { Details, Render, TabItem, Tabs } from "~/components";
@@ -121,10 +119,7 @@ To install a Cloudflare certificate in macOS, you can use either the Keychain Ac
 <TabItem label="Keychain Access">
 
 1. Download a Cloudflare certificate.
-2. Open the `.crt` file in Keychain Access. If prompted, enter your local password.
-3. In **Keychain**, choose the access option that suits your needs and select **Add**.
-4. In the list of certificates, locate the newly installed certificate. Keychain Access will mark this certificate as not trusted. Right-click the certificate and select **Get Info**.
-5. Select **Trust**. Under **When using this certificate**, select _Always Trust_.
+<Render file="keychain-access" params={{ cert: ".crt" }} />
 
 The root certificate is now installed and ready to be used.
 
@@ -176,6 +171,10 @@ Windows offers two locations to install the certificate, each impacting which us
 8. Select **OK**, then select **Finish**.
 
 The root certificate is now installed and ready to be used.
+
+:::caution
+If your certificate is installed in the **Local Machine Store**, the [device posture check](/cloudflare-one/identity/devices/warp-client-checks/) looking for a certificate will fail. Install the certificate in the **Current User Store** to ensure a successful posture device check.
+:::
 
 ### Linux
 

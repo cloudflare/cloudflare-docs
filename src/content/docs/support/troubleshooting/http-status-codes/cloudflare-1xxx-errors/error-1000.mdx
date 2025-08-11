@@ -1,0 +1,25 @@
+---
+pcx_content_type: troubleshooting
+title: Error 1000
+source: null
+---
+
+## Error 1000: DNS points to prohibited IP
+
+This error indicates that a Cloudflare DNS record points to a prohibited IP, blocking access to the requested domain.
+
+### Common causes
+
+Cloudflare halted the request for one of the following reasons:
+
+- An A record within your Cloudflare DNS app points to a [Cloudflare IP address](https://www.cloudflare.com/ips/), or a Load Balancer Origin points to a proxied record.
+- Your Cloudflare DNS A or CNAME record references another reverse proxy (such as an nginx web server that uses the proxy_pass function) that then proxies the request to Cloudflare a second time.
+- The request `X-Forwarded-For` header is longer than 100 characters.
+- The request includes two `X-Forwarded-For` headers.
+- The request includes a `CF-Connecting-IP` header.
+- A Server Name Indication (SNI) issue or mismatch at the origin.
+
+### Resolution
+
+- If an A record within your Cloudflare DNS app points to a [Cloudflare IP address](https://www.cloudflare.com/ips/), update the IP address to your origin web server IP address. Reach out to your hosting provider if you need help obtaining the origin IP address.
+- There is a reverse-proxy at your origin that sends the request back through the Cloudflare proxy. Instead of using a reverse-proxy, contact your hosting provider or site administrator to configure an HTTP redirect at your origin.

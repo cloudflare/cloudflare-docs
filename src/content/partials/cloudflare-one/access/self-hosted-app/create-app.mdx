@@ -1,0 +1,24 @@
+---
+params:
+  - private?
+
+---
+
+import { Render } from "~/components"
+
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
+
+2. Select **Add an application**.
+
+3. Select **Self-hosted**.
+
+4. Enter any name for the application.
+
+5. In **Session Duration**, choose how often the user's [application token](/cloudflare-one/identity/authorization-cookie/application-token/) should expire.
+
+   Cloudflare checks every HTTP request to your application for a valid application token. If the user's application token (and global token) has expired, they will be prompted to reauthenticate with the IdP. For more information, refer to [Session management](/cloudflare-one/identity/users/session-management/).
+
+	{
+	props.private && (
+		<p> 			If the application is non-HTTPS or you do not have TLS decryption turned on, the session is tracked by the WARP client per application. </p> )
+	}

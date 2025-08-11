@@ -40,7 +40,13 @@ export default {
             .on("img", new AttributeRewriter("src"));
 
         const res = await fetch(request);
+        if (!res.headers.has("Content-Type")) {
+            return res;
+        }
         const contentType = res.headers.get("Content-Type");
+        if (typeof contentType !== "string") {
+            return res;
+        }
 
         // If the response is HTML, it can be transformed with
         // HTMLRewriter -- otherwise, it should pass through

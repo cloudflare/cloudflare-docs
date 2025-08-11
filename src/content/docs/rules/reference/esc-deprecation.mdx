@@ -112,12 +112,12 @@ https://api.cloudflare.com/client/v4
 This example obtains the current status of the **Disable ESC** setting for the specified zone. The same endpoint will return the currently configured ESC secret for the zone, if configured.
 
 ```bash
-curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/disable_esc" \
---header "X-Auth-Key: <API_KEY>" \
---header "X-Auth-Email: <EMAIL>"
+curl "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/disable_esc" \
+--header "X-Auth-Key: $CLOUDFLARE_API_KEY" \
+--header "X-Auth-Email: $CLOUDFLARE_EMAIL"
 ```
 
-The following example response states that ESC is disabled for the entire `{zone_id}` zone:
+The following example response states that ESC is disabled for the entire `$ZONE_ID` zone:
 
 ```json
 { "always": true }
@@ -131,14 +131,13 @@ The following example response includes the previously configured secret for the
 
 #### Create ESC secret for a zone
 
-This `POST` request example configures an ESC secret for disabling ESC in specific requests for the `{zone_id}` zone, setting the secret to `MySecretString321#`.
+This `POST` request example configures an ESC secret for disabling ESC in specific requests for the `$ZONE_ID` zone, setting the secret to `MySecretString321#`.
 
 ```bash
-curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/disable_esc" \
---header "X-Auth-Key: <API_KEY>" \
---header "X-Auth-Email: <EMAIL>" \
---header "Content-Type: application/json" \
---data '{ "with_secret": "MySecretString321#" }'
+curl "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/disable_esc" \
+--header "X-Auth-Key: $CLOUDFLARE_API_KEY" \
+--header "X-Auth-Email: $CLOUDFLARE_EMAIL" \
+--json '{ "with_secret": "MySecretString321#" }'
 ```
 
 The maximum secret length is 100 characters.
@@ -154,25 +153,24 @@ This will only disable ESC for the request that includes the cookie.
 
 #### Disable ESC for a zone
 
-This `POST` request example disables ESC for all incoming requests of `{zone_id}` zone.
+This `POST` request example disables ESC for all incoming requests of `$ZONE_ID` zone.
 
 ```bash
-curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/disable_esc" \
---header "X-Auth-Key: <API_KEY>" \
---header "X-Auth-Email: <EMAIL>" \
---header "Content-Type: application/json" \
---data '{ "always": true }'
+curl "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/disable_esc" \
+--header "X-Auth-Key: $CLOUDFLARE_API_KEY" \
+--header "X-Auth-Email: $CLOUDFLARE_EMAIL" \
+--json '{ "always": true }'
 ```
 
 #### Re-enable ESC for a zone
 
-This example re-enables ESC for the `{zone_id}` zone.
+This example re-enables ESC for the `$ZONE_ID` zone.
 
 ```bash
 curl --request DELETE \
-"https://api.cloudflare.com/client/v4/zones/{zone_id}/disable_esc" \
---header "X-Auth-Key: <API_KEY>" \
---header "X-Auth-Email: <EMAIL>"
+"https://api.cloudflare.com/client/v4/zones/$ZONE_ID/disable_esc" \
+--header "X-Auth-Key: $CLOUDFLARE_API_KEY" \
+--header "X-Auth-Email: $CLOUDFLARE_EMAIL"
 ```
 
 #### Get ESC status for an account
@@ -180,12 +178,12 @@ curl --request DELETE \
 This example obtains the current status of **Disable ESC** setting for the specified account. The same endpoint will return the currently configured ESC secret for the account, if configured.
 
 ```bash
-curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/disable_esc" \
---header "X-Auth-Key: <API_KEY>" \
---header "X-Auth-Email: <EMAIL>"
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/disable_esc" \
+--header "X-Auth-Key: $CLOUDFLARE_API_KEY" \
+--header "X-Auth-Email: $CLOUDFLARE_EMAIL"
 ```
 
-The following example response states that ESC is disabled for the entire `{account_id}` account:
+The following example response states that ESC is disabled for the entire `$ACCOUNT_ID` account:
 
 ```json
 { "always": true }
@@ -199,14 +197,13 @@ The following example response includes the previously configured secret for the
 
 #### Create ESC secret for an account
 
-This example configures an ESC secret for disabling ESC in specific requests for the `{account_id}` account, setting the secret to `MySecretString321#`.
+This example configures an ESC secret for disabling ESC in specific requests for the `$ACCOUNT_ID` account, setting the secret to `MySecretString321#`.
 
 ```bash
-curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/disable_esc" \
---header "X-Auth-Key: <API_KEY>" \
---header "X-Auth-Email: <EMAIL>" \
---header "Content-Type: application/json" \
---data '{ "with_secret": "MySecretString321#" }'
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/disable_esc" \
+--header "X-Auth-Key: $CLOUDFLARE_API_KEY" \
+--header "X-Auth-Email: $CLOUDFLARE_EMAIL" \
+--json '{ "with_secret": "MySecretString321#" }'
 ```
 
 The maximum secret length is 100 characters.
@@ -222,25 +219,24 @@ This will only disable ESC for the request that includes the cookie.
 
 #### Disable ESC for an account
 
-This `POST` request example disables ESC for all incoming requests of `{account_id}` account.
+This `POST` request example disables ESC for all incoming requests of `$ACCOUNT_ID` account.
 
 ```bash
-curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/disable_esc" \
---header "X-Auth-Key: <API_KEY>" \
---header "X-Auth-Email: <EMAIL>" \
---header "Content-Type: application/json" \
---data '{ "always": true }'
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/disable_esc" \
+--header "X-Auth-Key: $CLOUDFLARE_API_KEY" \
+--header "X-Auth-Email: $CLOUDFLARE_EMAIL" \
+--json '{ "always": true }'
 ```
 
 #### Re-enable ESC for an account
 
-This example re-enables ESC for the `{account_id}` account.
+This example re-enables ESC for the `$ACCOUNT_ID` account.
 
 ```bash
 curl --request DELETE \
-"https://api.cloudflare.com/client/v4/accounts/{account_id}/disable_esc" \
---header "X-Auth-Key: <API_KEY>" \
---header "X-Auth-Email: <EMAIL>"
+"https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/disable_esc" \
+--header "X-Auth-Key: $CLOUDFLARE_API_KEY" \
+--header "X-Auth-Email: $CLOUDFLARE_EMAIL"
 ```
 
 ---

@@ -13,7 +13,7 @@ entries:
     general_definition: |-
       Additional information about a bot request, such as why Cloudflare has given it a bot score and whether the request came from a verified bot or a category of verified bots.
 
-  - term: Challenge Solve Rate (CSR)
+  - term: Challenge solve rate (CSR)
     general_definition: |-
       The percentage of issued challenges that were solved.
 

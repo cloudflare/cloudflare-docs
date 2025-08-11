@@ -9,9 +9,12 @@ head:
 
 import { Render } from "~/components";
 
-:::note[Limited access]
-The Salesforce (FedRAMP) CASB integration is available in limited access. To request access, contact your account team.
-:::
+<Render
+	file="casb/fedramp-availability"
+	params={{
+		integrationName: "Salesforce (FedRAMP)",
+	}}
+/>
 
 <Render
 	file="casb/salesforce-integration"
