@@ -16,12 +16,12 @@ To display a custom page for each error, create a separate page per error. For e
 
 The following custom error tokens are required by their respective error pages:
 
-| Token                                        | Required for                                                                                                                       |
-| -------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| `::CF_WIDGET_BOX::` <br /> `::CAPTCHA_BOX::`[^1] | Interactive Challenge <br/>Country Challenge (Managed Challenge)<br/>Managed Challenge / I'm Under Attack Mode (Interstitial Page) |
-| `::IM_UNDER_ATTACK_BOX::`                    | JS Challenge                                                                                                                       |
-| `::CLOUDFLARE_ERROR_500S_BOX::`              | 5XX Errors                                                                                                                         |
-| `::CLOUDFLARE_ERROR_1000S_BOX::`             | 1XXX Errors                                                                                                                        |
+| Token                            | Required for                                                                                                                       |
+| -------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| `::CAPTCHA_BOX::`                | Interactive Challenge <br/>Country Challenge (Managed Challenge)<br/>Managed Challenge / I'm Under Attack Mode (Interstitial Page) |
+| `::IM_UNDER_ATTACK_BOX::`        | Non-Interactive Challenge (JS Challenge)                                                                                           |
+| `::CLOUDFLARE_ERROR_500S_BOX::`  | 5XX Errors                                                                                                                         |
+| `::CLOUDFLARE_ERROR_1000S_BOX::` | 1XXX Errors                                                                                                                        |
 
 [^1]: Not used for I'm Under Attack Mode.
 
