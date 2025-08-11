@@ -42,6 +42,7 @@ does not use a memory pool and all `Buffer` instances are allocated independentl
 
 Further, in Node.js it is possible to allocate a `Buffer` with uninitialized memory
 using the `Buffer.allocUnsafe()` method. This is not supported in Workers and `Buffer`
-instances are always zero-filled when allocated.
+instances are always initialized so that the `Buffer` is always filled
+with null bytes (`0x00`) when allocated.
 
 Refer to the [Node.js documentation for `Buffer`](https://nodejs.org/dist/latest-v19.x/docs/api/buffer.html) for more information.
