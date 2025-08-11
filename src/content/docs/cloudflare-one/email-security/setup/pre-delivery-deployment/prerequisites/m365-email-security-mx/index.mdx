@@ -109,7 +109,7 @@ To create the transport rules that will send emails with certain [dispositions](
 
 ## 6. (Recommended) Secure Microsoft 365 from MX records bypass
 
-One method of DNS attacks is to search for old MX records and send <GlossaryTooltip term="phishing">phishing</GlossaryTooltip> emails directly to the mail server. To secure the email flow, you will want to enforce an email flow where inbound messages are accepted by Microsoft 365 only when they originate from Email Security. This can be done by adding a connector to only allow email from Email Security with TLS encryption. This step is optional but recommended.
+One method of a DNS attack is to search for old MX records and send <GlossaryTooltip term="phishing">phishing</GlossaryTooltip> emails directly to the mail server. To secure the email flow, you should enforce an email flow where inbound messages are accepted by Microsoft 365 only when they originate from Email Security. This can be done by adding a connector to only allow email from Email Security with TLS encryption. This step is optional but recommended.
 
 :::caution[Important]
 This step should not be performed until 72 hours after all domains in your Microsoft 365 organization have been onboarded to Email Security, and Email Security is their MX record. If a domain has not been onboarded or DNS is still propagating, you will impact production email flow for that domain.
