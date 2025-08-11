@@ -99,6 +99,8 @@ Inheritable keys are configurable at the top-level, and can be inherited (or ove
 :::note
 
 At a minimum, the `name`, `main` and `compatibility_date` keys are required to deploy a Worker.
+
+If a Worker uses [static assets](/workers/static-assets/) (and therefore the Wrangler file specifies the assets directory), the `main` key is optional.
 :::
 
 - `name` <Type text="string" /> <MetaInfo text="required" />
@@ -1091,7 +1093,7 @@ The following options are available:
   - The instance type of the container. This determines the amount of memory, CPU, and disk given to the container
     instance. The current options are `"dev"`, `"basic"`, and `"standard"`. The default is `"dev"`. For more information,
     the see [instance types documentation](/containers/platform-details#instance-types).
-    
+
   - To specify a custom instance type, see [here](#custom-instance-types).
 
 - `max_instances` <Type text="string" /> <MetaInfo text="optional" />
