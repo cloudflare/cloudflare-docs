@@ -4,6 +4,7 @@ product:
   title: API documentation
   url: /api/
   group: Core platform
+  additional_groups: [Docs collections]
 
 meta:
   title: Cloudflare API docs
