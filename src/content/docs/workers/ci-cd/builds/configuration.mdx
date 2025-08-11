@@ -6,7 +6,7 @@ sidebar:
   order: 2
 ---
 
-import { DirectoryListing } from "~/components";
+import { DirectoryListing, Render, Tabs, TabItem } from "~/components";
 
 When connecting your Git repository to your Worker, you can customize the configurations needed to build and deploy your Worker.
 
@@ -82,12 +82,26 @@ It is recommended to consistently use the same API token across all uploads and 
 
 ## Environment variables
 
-You can provide custom environment variables to your build by configuring them in the Cloudflare dashboard:
+You can provide custom environment variables to your build.
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. In **Account Home**, select **Workers & Pages**.
-3. In **Overview**, select your Worker.
-4. Select **Settings** > **Environment variables**.
+<Tabs>
+  <TabItem label="Dashboard">
+
+	To add environment variables via the dashboard:
+
+	1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+	2. In **Account Home**, select **Workers & Pages**.
+	3. In **Overview**, select your Worker.
+	4. Select **Settings** > **Environment variables**.
+  </TabItem>
+  <TabItem label="Wrangler">
+    To add env variables using Wrangler, define text and JSON via the `[vars]` configuration in your Wrangler file.
+
+		<Render file="envvar-example" />
+  </TabItem>
+</Tabs>
+
+### Default variables
 
 The following system environment variables are injected by default (but can be overridden):
 
