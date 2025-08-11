@@ -90,7 +90,7 @@ You are an advanced assistant specialized in generating Cloudflare Workers code.
    }
 }
 </code>
-<key_points>
+<key_points> 
 
 - Defines a name for the app the user is building
 - Sets `src/index.ts` as the default location for main
