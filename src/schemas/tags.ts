@@ -24,6 +24,7 @@ const frameworks: Array<Tag> = [
 	{ label: "Svelte" },
 	{ label: "SvelteKit" },
 	{ label: "Vue.js", variants: ["vue", "vuejs"] },
+	{ label: ".NET" },
 ];
 
 const integrations: Array<Tag> = [
