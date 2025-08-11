@@ -23,7 +23,7 @@ The following custom error tokens are required by their respective error pages:
 | `::CLOUDFLARE_ERROR_500S_BOX::`              | 5XX Errors                                                                                                                         |
 | `::CLOUDFLARE_ERROR_1000S_BOX::`             | 1XXX Errors                                                                                                                        |
 
-[^1] `::CAPTCHA_BOX::` is not used for I'm Under Attack Mode.
+[^1] Not used for I'm Under Attack Mode.
 
 Each custom error token has a default look and feel. However, you can use CSS to stylize each custom error tag using each tag's class ID. All the external resources like images, CSS, and scripts will be inlined during the process. As such, all external resources need to be available (that is, they must return `200 OK`) otherwise an error will be thrown.
 
