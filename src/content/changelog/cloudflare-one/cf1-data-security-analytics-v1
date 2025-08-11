@@ -7,7 +7,9 @@ products:
   - casb
 ---
 
-Zero Trust now includes **Data security analytics**, providing you with unprecedented visibility into your organization sensitive data. The new dashboard includes:
+Zero Trust now includes **Data security analytics**, providing you with unprecedented visibility into your organization sensitive data. 
+
+The new dashboard includes:
 
 * **Sensitive Data Movement Over Time:**
     - See patterns and trends in how sensitive data moves across your environment. This helps understand where data is flowing and identify common paths. ![Data Security Analytics Data Flow](http://googleusercontent.com/image_collection/image_retrieval/$SOME_ID)
