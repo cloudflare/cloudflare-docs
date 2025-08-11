@@ -2,7 +2,7 @@
 title: Manage AI crawlers
 pcx_content_type: concept
 sidebar:
-  order: 2
+  order: 5
 ---
 
 import { Steps, GlossaryTooltip, Tabs, TabItem, Example } from "~/components";
@@ -15,7 +15,7 @@ To manage AI crawlers:
 2. Go to **AI Audit**.
 3. Go to the **AI Crawlers** tab.
 
-## View the list of AI crawlers
+## Review AI crawler activity
 
 The **AI Crawlers** tab displays a table of AI crawlers that are requesting access to your content, and how they interact with your pages. The table provides the following information.
 
@@ -47,6 +47,16 @@ On the free plan, AI Audit identifies AI crawlers based on their [user agent str
 Upgrade your plan to enable a more thorough detection using Cloudflare's [Bot Management detection ID](/bots/reference/bot-management-variables/#ruleset-engine-fields) field.
 :::
 
+### Filter AI crawler data
+
+You can use filters to narrow the scope of your result:
+
+- **Name:** Search the name of the AI crawler.
+- **Operator:** Filter by the AI crawler operator.
+- **Category:** Filter by the category of the AI crawler (for example, AI crawler, AI assistant, or archiver).
+
+The values of the table will update according to your filter.
+
 ## Take action for each AI crawler
 
 <Tabs>
@@ -64,31 +74,30 @@ For each AI crawler, you can take one of three actions: allow, charge, or block.
 
 <Example title="Allow access">
 
-You can allow an AI crawler to scrape your content.
-
-From the **Actions** column, select **Allow**.
-
+- **Summary:** You can allow an AI crawler to scrape your content.
+- **When to use:** Allow AI crawlers that offer services which provide value through citations, referrals, or existing agreements.
+- **Implementation:** From the **Actions** column, select **Allow**.
 Note that you can still choose to [Enforce `robots.txt`](/ai-audit/features/manage-ai-crawlers/#take-action-for-each-ai-crawler).
 
 For more details on how this rule interacts with other Cloudflare settings, refer to [How it works](/bots/concepts/bot/#how-it-works).
 
 </Example>
 
-<Example title="Charge for crawl (Enterprise only)">
+<Example title="Block access">
 
-You can charge the owner of the AI crawler for each crawl request.
+- **Summary:** You can block an AI crawler to completely stop the AI crawler from scraping your webpage.
+- **When to use:** Block AI crawlers when their behavior do not align with your content strategy, or violate your policies.
+- **Implementation:** From the **Actions** column, select **Block**.
+</Example>
 
-From the **Actions** column, select **Charge**.
+<Example title="Charge for crawl (private beta)">
+
+- **Summary:** You can charge the owner of the AI crawler for each crawl request.
+- **When to use:** Charge AI crawlers when your content has training value, and you want to explore monetization options
+- **Implementation:** From the **Actions** column, select **Charge**.
 
 For more information, refer to [What is Pay Per Crawl?](/ai-audit/features/pay-per-crawl/what-is-pay-per-crawl/).
 
-</Example>
-
-<Example title="Block access">
-
-You can block an AI crawler to completely stop the AI crawler from scraping your webpage.
-
-From the **Actions** column, select **Block**.
 </Example>
 
 </TabItem>
@@ -98,30 +107,20 @@ For each AI crawler, you can choose to allow or block access.
 
 <Example title="Allow access">
 
-You can allow an AI crawler to scrape your content. Note that you can still choose to [Enforce `robots.txt`](/ai-audit/features/manage-ai-crawlers/#take-action-for-each-ai-crawler).
-
-For more details on how this rule interacts with other Cloudflare settings, refer to [How it works](/bots/concepts/bot/#how-it-works).
-
+- **Summary:** You can allow an AI crawler to scrape your content.
+- **When to use:** Allow AI crawlers that offer services which provide value through citations, referrals, or existing agreements.
+- **Implementation:** From the **Actions** column, select **Allow**.
+Note that you can still choose to [Enforce `robots.txt`](/ai-audit/features/manage-ai-crawlers/#take-action-for-each-ai-crawler).
 </Example>
 
 <Example title="Block access">
-You can block an AI crawler to completely stop the AI crawler from scraping your webpage.
-
-Use the toggles in the **Block** column to block specific AI crawlers from accessing your content.
+- **Summary:** You can block an AI crawler to completely stop the AI crawler from scraping your webpage.
+- **When to use:** Block AI crawlers when their behavior do not align with your content strategy, or violate your policies.
+- **Implementation:** From the **Actions** column, select **Block**.
 </Example>
 
 </TabItem>
 </Tabs>
-
-## Filter AI crawler data
-
-You can use filters to narrow the scope of your result.
-
-- **Name:** Search the name of the AI crawler.
-- **Operator:** Filter by the AI crawler operator.
-- **Category:** Filter by the category of the AI crawler (for example, AI crawler, AI assistant, or archiver).
-
-The values of the table will update according to your filter.
 
 ## Related resources
 

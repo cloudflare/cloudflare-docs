@@ -8,5 +8,5 @@ product:
 
 meta:
   title: Cloudflare Realtime docs
-  description: Documentation for Cloudflare Realtime.
+  description: Infrastructure for real-time serverless video, audio, and data applications
   author: "@cloudflare"

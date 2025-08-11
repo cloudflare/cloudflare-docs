@@ -9,5 +9,5 @@ product:
 
 meta:
   title: Cloudflare Workers AI docs
-  description: Run AI models in Workers, Pages, or via API.
+  description: Run AI models in Workers, Pages, or via API
   author: "@cloudflare"

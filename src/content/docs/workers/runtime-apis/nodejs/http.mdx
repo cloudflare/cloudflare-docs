@@ -7,91 +7,86 @@ import { Render } from "~/components"
 
 <Render file="nodejs-compat-howto" />
 
-## Agent
-
-An implementation of the Node.js [`http.Agent'](https://nodejs.org/docs/latest/api/http.html#class-httpagent) class.
-
-An [Agent](https://nodejs.org/docs/latest/api/http.html#class-httpagent) manages HTTP connection reuse by maintaining request queues per host/port. In the
-workers environment, however, such low-level management of the network connection, ports,
-etc, is not relevant because it is handled by the Cloudflare infrastructure instead. Accordingly, the
-implementation of `Agent` in Workers is a stub implementation that does not support connection
-pooling or keep-alive.
-
-```js
-import { Agent } from 'node:http';
-import { strictEqual } from 'node:assert';
-
-const agent = new Agent();
-strictEqual(agent.protocol, 'http:');
-```
-
 ## get
 
 An implementation of the Node.js [`http.get`](https://nodejs.org/docs/latest/api/http.html#httpgetoptions-callback) method.
 
 The `get` method performs a GET request to the specified URL and invokes the callback with the response. It's a convenience method that simplifies making HTTP GET requests without manually configuring request options.
 
+Because `get` is a wrapper around `fetch(...)`, it may be used only within an exported
+fetch or similar handler. Outside of such a handler, attempts to use `get` will throw
+an error.
+
 ```js
 import { get } from 'node:http';
-import { strictEqual, ok } from 'node:assert';
 
-get('http://docs.cloudflare.com/robots.txt', (res) => {
-	// requests to http://docs.cloudflare.com get redirected to their https counterpart.
-	strictEqual(res.statusCode, 301);
-	let data = '';
-	res.setEncoding('utf8');
-	res.on('data', (chunk) => {
-		data += chunk;
-	});
-	res.on('end', () => {
-		ok(data.includes('301 Moved Permanently'));
-	});
-});
+export default {
+	async fetch() {
+		const { promise, resolve, reject } = Promise.withResolvers();
+		get('http://example.org', (res) => {
+			let data = '';
+			res.setEncoding('utf8');
+			res.on('data', (chunk) => {
+				data += chunk;
+			});
+			res.on('end', () => {
+				resolve(new Response(data));
+			});
+			res.on('error', reject);
+		}).on('error', reject);
+		return promise;
+  }
+}
 ```
+
+The implementation of `get` in Workers is a wrapper around the global
+[`fetch` API](https://developers.cloudflare.com/workers/runtime-apis/fetch/)
+and is therefore subject to the same [limits](https://developers.cloudflare.com/workers/platform/limits/).
+
+As shown in the example above, it is necessary to arrange for requests to be correctly
+awaited in the `fetch` handler using a promise or the fetch may be canceled prematurely
+when the handler returns.
 
 ## request
 
 An implementation of the Node.js [`http.request'](https://nodejs.org/docs/latest/api/http.html#httprequesturl-options-callback) method.
 
-The `request` method creates an HTTP request with customizable options like method, headers, and body. It provides full control over the request configuration and returns a [writable stream](https://nodejs.org/docs/latest/api/stream.html#class-streamwritable) for sending request data.
+The `request` method creates an HTTP request with customizable options like method, headers, and body. It provides full control over the request configuration and returns a Node.js [stream.Writable](https://developers.cloudflare.com/workers/runtime-apis/nodejs/streams/) for sending request data.
+
+Because `request` is a wrapper around `fetch(...)`, it may be used only within an exported
+fetch or similar handler. Outside of such a handler, attempts to use `request` will throw
+an error.
 
 ```js
-import { request } from 'node:http';
-import { strictEqual } from 'node:assert';
+import { get } from 'node:http';
 
-const req = request({
-	method: 'GET',
-	protocol: 'http:',
-	hostname: 'docs.cloudflare.com',
-	path: '/'
-}, (res) => {
-	// requests to http://docs.cloudflare.com get redirected to their https counterpart.
-	strictEqual(res.statusCode, 301);
-
-	let data = '';
-	res.setEncoding('utf8');
-	res.on('data', (chunk) => {
-		data += chunk;
-	});
-	res.on('end', () => {
-		ok(data.includes('301 Moved Permanently'));
-	});
-});
-req.end();
+export default {
+	async fetch() {
+		const { promise, resolve, reject } = Promise.withResolvers();
+		get({
+			method: 'GET',
+			protocol: 'http:',
+			hostname: 'example.org',
+			path: '/'
+		}, (res) => {
+			let data = '';
+			res.setEncoding('utf8');
+			res.on('data', (chunk) => {
+				data += chunk;
+			});
+			res.on('end', () => {
+				resolve(new Response(data));
+			});
+			res.on('error', reject);
+		}).on('error', reject)
+		  .end();
+		return promise;
+  }
+}
 ```
 
-```js
-const req = request(new URL('http://docs.cloudflare.com'),{
-	method: 'GET',
-}, (res) => {
-	// requests to http://docs.cloudflare.com get redirected to their https counterpart.
-	strictEqual(res.statusCode, 301);
-});
+The following options passed to the `request` (and `get`) method are not supported due to the differences required by Coudflare Workers implementation of `node:http` as a wrapper around the global `fetch` API:
 
-req.end();
-```
-
-The following options passed to the `request` method are not supported due to the differences in the Cloudflare Workers and the implementation of the `node:http` module:
 - `maxHeaderSize`
 - `insecureHTTPParser`
 - `createConnection`
@@ -100,16 +95,23 @@ The following options passed to the `request` method are not supported due to th
 
 ## OutgoingMessage
 
-The [`OutgoingMessage`](https://nodejs.org/docs/latest/api/http.html#class-httpoutgoingmessage) class represents an HTTP response that is sent to the client. It provides methods for writing response headers and body, as well as for ending the response. `OutgoingMessage` extends from the [`Writable` stream class](https://nodejs.org/docs/latest/api/stream.html#class-streamwritable).
+The [`OutgoingMessage`](https://nodejs.org/docs/latest/api/http.html#class-httpoutgoingmessage) class represents an HTTP response that is sent to the client. It provides methods for writing response headers and body, as well as for ending the response. `OutgoingMessage` extends from the Node.js [`stream.Writable` stream class](https://developers.cloudflare.com/workers/runtime-apis/nodejs/streams/).
 
 ```js
 import { OutgoingMessage } from 'node:http';
 
-const res = new OutgoingMessage();
-res.writeHead(200, { 'Content-Type': 'text/plain' });
-res.write('Hello, World!');
-res.end();
+export default {
+	async fetch() {
+		// ...
+		const res = new OutgoingMessage();
+		res.writeHead(200, { 'Content-Type': 'text/plain' });
+		res.write('Hello, World!');
+		res.end();
+		// ...
+	}
+}
 ```
+
 ## IncomingMessage
 
 The `IncomingMessage` class represents an HTTP request that is received from the client. It provides methods for reading request headers and body, as well as for ending the request. `IncomingMessage` extends from the `Readable` stream class.
@@ -118,8 +120,55 @@ The `IncomingMessage` class represents an HTTP request that is received from the
 import { get, IncomingMessage } from 'node:http';
 import { ok, strictEqual } from 'node:assert';
 
-get('http://docs.cloudflare.com', (res) => {
-	strictEqual(res.statusCode, 301);
-	ok(res instanceof IncomingMessage);
-});
+export default {
+	async fetch() {
+		// ...
+		get('http://example.org', (res) => {
+			ok(res instanceof IncomingMessage);
+		});
+		// ...
+	}
+}
 ```
+
+## Agent
+
+A partial implementation of the Node.js [`http.Agent'](https://nodejs.org/docs/latest/api/http.html#class-httpagent) class.
+
+An `Agent` manages HTTP connection reuse by maintaining request queues per host/port. In the workers environment, however, such low-level management of the network connection, ports, etc, is not relevant because it is handled by the Cloudflare infrastructure instead. Accordingly, the implementation of `Agent` in Workers is a stub implementation that does not support connection pooling or keep-alive.
+
+```js
+import { get, Agent } from 'node:http';
+import { strictEqual } from 'node:assert';
+
+export default {
+	async fetch() {
+
+    const agent = new Agent();
+    get({
+			hostname: 'example.org',
+			port: 80,
+			path: '/',
+			agent, // possible but not all that useful.
+		}, (res) => {
+			// ...
+		});
+
+		return new Response('ok');
+	}
+}
+```
+
+## Other differences between Node.js and Workers implementation of `node:http`
+
+Because the Workers implementation of `node:http` is a wrapper around the global `fetch` API, there are some differences in behavior and limitations compared to a standard Node.js environment:
+
+* `Connection` headers are not used. Workers will manage connections automatically.
+* `Content-Length` headers will be handled the same way as in the `fetch` API. If a body is provided, the header will be set automatically and manually set values will be ignored.
+* `Expect: 100-continue` headers are not supported.
+* Trailing headers are not supported.
+* The `'continue'` event is not supported.
+* The `'information'` event is not supported.
+* The `'socket'` event is not supported.
+* The `'upgrade'` event is not supported.
+* Gaining direct access to the underlying `socket` is not supported.

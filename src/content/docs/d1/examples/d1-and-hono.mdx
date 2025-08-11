@@ -48,7 +48,7 @@ app.get("/query/users/:id", async (c) => {
 			"SELECT * FROM users WHERE user_id = ?",
 		)
 			.bind(userId)
-			.all();
+			.run();
 		return c.json(results);
 	} catch (e) {
 		return c.json({ err: e.message }, 500);
@@ -76,7 +76,7 @@ app.get("/query/users/:id", async (c) => {
 			"SELECT * FROM users WHERE user_id = ?",
 		)
 			.bind(userId)
-			.all();
+			.run();
 		return c.json(results);
 	} catch (e) {
 		return c.json({ err: e.message }, 500);

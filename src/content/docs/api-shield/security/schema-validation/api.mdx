@@ -9,7 +9,7 @@ head:
     content: Configure Schema Validation
 ---
 
-import { GlossaryTooltip, Steps } from "~/components"
+import { GlossaryTooltip, Steps, APIRequest } from "~/components"
 
 Schema Validation 2.0 allows all corresponding configuration calls to be made via API. This validation centers more around individual <GlossaryTooltip term="API endpoint">endpoints</GlossaryTooltip> and lets you set mitigation actions for each endpoint individually. Additionally, you can use Cloudflare-provided learned schemas that we [learn automatically](/api-shield/management-and-monitoring/#endpoint-schema-learning) from your traffic for individual endpoints.
 
@@ -49,13 +49,18 @@ Endpoints must be listed in Endpoint Management for Schema Validation to match r
 
 Upload a schema via the v4 API using `POST`. This example requires a `example_schema.yaml` schema file in the current folder.
 
-```bash title="cURL command"
-curl --request POST "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/user_schemas" \
---header "Authorization: Bearer <API_TOKEN>" \
---form file=@example_schema.yaml --form kind=openapi_v3 --form name=example_schema --form validation_enabled=false
-```
+<APIRequest
+  path="/zones/{zone_id}/schema_validation/schemas"
+  method="POST"
+  json={{
+    kind: "openapi_v3",
+    name: "example_schema",
+    source: "<SOURCE>",
+    validation_enabled: true
+  }}
+/>
 
-```json title="Result"
+```json output
 {
     "result":
     {
@@ -80,16 +85,15 @@ By default, Schema Validation is disabled for an uploaded schema so that you can
 
 Use a `PATCH` request to activate a schema after inspection.
 
-```bash title="cURL command"
-curl --request PATCH "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/user_schemas/{schema_id}" \
---header "Authorization: Bearer <API_TOKEN>" \
---header 'Content-Type: application/json' \
---data '{
- "validation_enabled": true
- }'
-```
+<APIRequest
+  path="/zones/{zone_id}/api_gateway/user_schemas/{schema_id}"
+  method="PATCH"
+  json={{
+    validation_enabled: true,
+  }}
+/>
 
-```json title="Result"
+```json output
 {
     "result":
     {
@@ -119,7 +123,7 @@ curl --request GET "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gat
 --header 'Content-Type: application/json'
 ```
 
-```json title="Result"
+```json output
 {
     "result":
         [
@@ -158,7 +162,7 @@ curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/operation
 ]'
 ```
 
-```json title="Result"
+```json output
 {
     "result":  [
             {
@@ -202,7 +206,7 @@ curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/settings/
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
-```json title="Result"
+```json output
 {
     "result":  {
         "validation_default_mitigation_action": "none",
@@ -227,7 +231,7 @@ curl --request PUT "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gat
 }'
 ```
 
-```json title="Result"
+```json output
 {
     "result":  {
         "validation_default_mitigation_action": "block",
@@ -249,7 +253,7 @@ curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/operation
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
-```json title="Result"
+```json output
 {
     "result":  {
         "mitigation_action": "null"
@@ -276,7 +280,7 @@ curl --request PUT "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gat
 }'
 ```
 
-```json title="Result"
+```json output
 {
     "result":  {
         "mitigation_action": "block"
@@ -295,12 +299,12 @@ You can get an overview of the schemas currently active on a zone using `GET`.
 
 `validation_enabled=true` is an optional parameter.
 
-```bash title="cURL command"
-curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/user_schemas?omit_source=true" \
---header "Authorization: Bearer <API_TOKEN>"
-```
+<APIRequest
+  path="/zones/{zone_id}/schema_validation/schemas"
+  method="GET"
+/>
 
-```json title="Result"
+```json output
 {
     "result":  [
         {
@@ -329,12 +333,12 @@ We recommend using the query parameter `omit_source=true` to only display active
 
 You can delete a schema using `DELETE`.
 
-```bash title="cURL command"
-curl --request DELETE "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/user_schemas/{schema_id}" \
---header "Authorization: Bearer <API_TOKEN>"
-```
+<APIRequest
+  path="/zones/{zone_id}/schema_validation/schemas/{schema_id}"
+  method="DELETE"
+/>
 
-```json title="Result"
+```json output
 {
     "result":  null,
     "success": true,
@@ -354,7 +358,7 @@ curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/operation
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
-```json title="Result"
+```json output
 {
     "result":
     {
@@ -404,7 +408,7 @@ curl --request PUT "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gat
 --header "Authorization: Bearer <API_TOKEN>"
 ```
 
-```json title="Result"
+```json output
 {
     "result": null,
     "success": true,
@@ -434,7 +438,7 @@ curl --request PATCH "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_g
 }'
 ```
 
-```json title="Result"
+```json output
 {
     "result":  {
         "validation_default_mitigation_action": "block",

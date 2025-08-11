@@ -160,6 +160,13 @@ The following table exemplifies how to use geographic scoping for routes:
 
 When there are multiple routes to the same prefix with equal priority, and those routes are assigned to different geographic regions (like WNAM and ENAM), traffic entering the network in a specific region — for example, WNAM — will egress through the route associated with that same region.
 
+{ props.magicWord === "Magic Transit" && (
+  <>
+		<Render file="routing/anycast-warning" product="networking-services" />
+	</>
+)
+}
+
 ### Region codes and associated regions
 
 <Render file="traffic-steering-region-codes" product="networking-services/reference" />

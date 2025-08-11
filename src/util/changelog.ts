@@ -65,6 +65,7 @@ async function getWARPReleases(): Promise<Array<CollectionEntry<"changelog">>> {
 				hidden: false,
 				date: releaseDate,
 				products: [{ id: "zero-trust-warp", collection: "products" }],
+				scheduled: false,
 			},
 			rendered: {
 				html: marked.parse([prefix, releaseNotes].join("\n\n"), {
@@ -171,8 +172,10 @@ export async function getRSSItems({
 
 			const content = String(file).trim();
 
+			const itemTitle = `${productTitles.join(", ")} - ${title}`;
+
 			return {
-				title: `${productTitles.join(", ")} - ${title}`,
+				title: itemTitle,
 				description: content,
 				pubDate: date,
 				categories: productTitles,

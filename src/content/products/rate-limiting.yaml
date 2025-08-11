@@ -7,4 +7,4 @@ product:
   preview_tryout: true
 
 meta:
-  description: Rate limiting rules allow you to define rate limits for requests matching an expression, and the action to perform when those rate limits are reached.
+  description: Control the rate of incoming requests matching an expression

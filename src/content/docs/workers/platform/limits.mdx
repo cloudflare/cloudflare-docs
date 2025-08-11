@@ -89,7 +89,7 @@ doing additional work, this time spent waiting **is not** counted towards CPU ti
 To understand your CPU usage:
 
 - CPU time and Wall time are surfaced in the [invocation log](/workers/observability/logs/workers-logs/#invocation-logs) within Workers Logs.
-- For Tail Workers, CPU time and Wall time are surfaced at the top level of the [Workers Trace Events object](/logs/reference/log-fields/account/workers_trace_events/).
+- For Tail Workers, CPU time and Wall time are surfaced at the top level of the [Workers Trace Events object](/logs/logpush/logpush-job/datasets/account/workers_trace_events/).
 - DevTools locally can help identify CPU intensive portions of your code. See the [CPU profiling with DevTools documentation](/workers/observability/dev-tools/cpu-usage/).
 
 You can also set a [custom limit](/workers/wrangler/configuration/#limits) on the amount of CPU time that can be used during each invocation of your Worker.
@@ -353,7 +353,7 @@ If you need more than 500 Workers, consider using [Workers for Platforms](/cloud
 
 ### Number of routes per zone
 
-Each zone has a limit of 1,000 [routes](/workers/configuration/routing/routes/). If you require more than 1,000 routes on your zone, consider using [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) or request an increase to this limit.
+Each zone has a limit of 1,000 [routes](/workers/configuration/routing/routes/). If you require more than 1,000 routes on your zone, consider using [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/).
 
 ### Number of routes per zone when using `wrangler dev --remote`
 
@@ -361,11 +361,11 @@ When you run a [remote development](/workers/development-testing/#remote-binding
 
 ### Number of custom domains per zone
 
-Each zone has a limit of 100 [custom domains](/workers/configuration/routing/custom-domains/). If you require more than 100 custom domains on your zone, consider using a wildcard [route](/workers/configuration/routing/routes/) or request an increase to this limit.
+Each zone has a limit of 100 [custom domains](/workers/configuration/routing/custom-domains/). If you require more than 100 custom domains on your zone, consider using a wildcard [route](/workers/configuration/routing/routes/).
 
 ### Number of routed zones per Worker
 
-When configuring [routing](/workers/configuration/routing/), the maximum number of zones that can be referenced by a Worker is 1,000. If you require more than 1,000 zones on your Worker, consider using [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) or request an increase to this limit.
+When configuring [routing](/workers/configuration/routing/), the maximum number of zones that can be referenced by a Worker is 1,000. If you require more than 1,000 zones on your Worker, consider using [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/).
 
 ---
 

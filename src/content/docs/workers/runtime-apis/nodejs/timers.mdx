@@ -17,14 +17,26 @@ and [`setImmediate`](https://nodejs.org/api/timers.html#setimmediatecallback-arg
 ```ts
 import timers from "node:timers";
 
-console.log("first");
-timers.setTimeout(() => {
-  console.log("last");
-}, 10);
+export default {
+  async fetch() {
+    console.log("first");
+    const { promise1, resolve1 } = Promise.withResolvers();
+    const { promise2, resolve2 } = Promise.withResolvers();    
+    timers.setTimeout(() => {
+      console.log("last");
+      resolve1();
+    }, 10);
 
-timers.setTimeout(() => {
-  console.log("next");
-});
+    timers.setTimeout(() => {
+      console.log("next");
+      resolve2();
+    });
+
+    await Promise.all([promise1, promise2]);
+
+    return new Response("ok");
+  }
+}
 ```
 </TypeScriptExample>
 

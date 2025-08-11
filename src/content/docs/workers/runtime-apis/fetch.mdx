@@ -80,11 +80,13 @@ async def on_scheduled(controller, env, ctx):
 - [`resource`](https://developer.mozilla.org/en-US/docs/Web/API/fetch#resource) Request | string | URL
 
 - `options` options
-  - `cache` `undefined | 'no-store'` optional
-    - Standard HTTP `cache` header. Only `cache: 'no-store'` is supported.
+  - `cache` `undefined | 'no-store' | 'no-cache'` optional
+    - Standard HTTP `cache` header. Only `cache: 'no-store'` and `cache: 'no-cache'` are supported.
       Any other `cache` header will result in a `TypeError` with the message `Unsupported cache mode: <attempted-cache-mode>`.
       _ For all requests this forwards the `Pragma: no-cache` and `Cache-Control: no-cache` headers to the origin.
-      _ For requests to origins not hosted by Cloudflare, `no-store` bypasses the use of Cloudflare's caches.
+      _ For `no-store`, requests to origins not hosted by Cloudflare bypass the use of Cloudflare's caches.
+			_ For `no-cache`, requests to origins not hosted by Cloudflare are forced to revalidate with
+			the origin before resonding.
   - An object that defines the content and behavior of the request.
 
 ---

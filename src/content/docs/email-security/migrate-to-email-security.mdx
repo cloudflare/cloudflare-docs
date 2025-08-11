@@ -43,19 +43,41 @@ In Zero Trust Email Security, webhooks are instead referred to as logs. You can 
 
 ## Set up system alerts
 
-In Area 1, you can view [statistics](/email-security/reporting/statistics-overview/) of your account in the Home section.
+You can check the Area 1 and Email Security status in the [Cloudflare System Status](https://www.cloudflarestatus.com/).
 
-In Email Security, you can:
+To view Area 1 status:
 
-- Go to [Cloudflare System Status](https://www.cloudflarestatus.com/) to view system status for the Cloudflare service.
-- Go to [Cloudflare Status API](https://www.cloudflarestatus.com/api) to view status information for the API documentation and functionality.
-- Configure [Cloudflare Notifications](/notifications/get-started/).
+- Search for **Email Security (Area1)** and check that the status is set to **Operational**. This means that emails are being processed.
+- Search for **Area 1 - Dash** to check the status of the Area 1 dashboard.
+- Search for **Area 1 - API** to check the status of the API endpoints.
 
-## Email alerts
+To view Email Security status:
+
+- Search for **Email Security (Zero Trust)** and check that the status is set to **Operational**. This means that emails are being processed.
+- Search for **Zero Trust Dashboard** to check the status of the Zero Trust dashboard.
+- Search for **API** to check the status of the API endpoints.
+
+You can also check the status of APIs through the [Cloudflare Status API](https://www.cloudflarestatus.com/api) and configure [Cloudflare Notifications](/notifications/get-started/#configure-notifications).
+
+## Email reports
+
+:::note
+Starting from October 2025, weekly and daily email reports will no longer be available. Go to [Monitoring](/cloudflare-one/email-security/email-monitoring/) in Email Security to monitor your inbox.
+:::
 
 In Area 1, you receive daily or weekly updates of the number of emails dispositioned.
 
 In Email Security, you can view [email monitoring](/cloudflare-one/email-security/email-monitoring/) over the last 90, 30, 7, 3, 1 day(s).
+
+## Email alerts for detections
+
+:::note
+Starting from October 2025, emails alerts for detections will no longer be available. As an alternative, use [Logpush](/cloudflare-one/insights/logs/enable-logs/#enable-detection-logs). 
+:::
+
+In Area 1, you receive an email when an email is assigned a disposition.
+
+In Email Security, you enable [Logpush](/cloudflare-one/insights/logs/enable-logs/#enable-detection-logs) to enable detection logs.
 
 ## Contact support
 

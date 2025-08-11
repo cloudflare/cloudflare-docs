@@ -23,7 +23,7 @@ Instant Logs allows Cloudflare customers to access a live stream of the traffic 
 
 4. (optional) Select **Add filter** to narrow down the events to be shown.
 
-Fields supported in our [HTTP requests dataset](/logs/reference/log-fields/zone/http_requests/) can be used when you add filters. Some fields with additional subscriptions required are not supported in the dashboard, you will need to use CLI instead.
+Fields supported in our [HTTP requests dataset](/logs/logpush/logpush-job/datasets/zone/http_requests/) can be used when you add filters. Some fields with additional subscriptions required are not supported in the dashboard, you will need to use CLI instead.
 
 Once a filter is selected and the stream has started, only log lines that match the filter criteria will appear. Filters are not applied retroactively to logs already showing in the dashboard.
 
@@ -33,7 +33,7 @@ Once a filter is selected and the stream has started, only log lines that match 
 
 Create a session by sending a `POST` request to the Instant Logs job endpoint with the following parameters:
 
-- **Fields** - List any field available in the [HTTP requests dataset](/logs/reference/log-fields/zone/http_requests/).
+- **Fields** - List any field available in the [HTTP requests dataset](/logs/logpush/logpush-job/datasets/zone/http_requests/).
 
 - **Sample** - The sample parameter is the sample rate of the records set by the client: `"sample": 1` is 100% of records `"sample": 10` is 10% and so on.
 

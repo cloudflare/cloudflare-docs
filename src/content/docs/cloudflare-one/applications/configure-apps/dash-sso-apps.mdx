@@ -5,7 +5,7 @@ sidebar:
   order: 4
 ---
 
-import { FeatureTable, APIRequest } from "~/components";
+import { FeatureTable, APIRequest, GlossaryTooltip } from "~/components";
 
 By adding a Cloudflare Dashboard SSO application to your Cloudflare Zero Trust account, you can enforce single sign-on (SSO) to the Cloudflare dashboard with the identity provider (IdP) of your choice. SSO will be enforced for every user in your email domain.
 
@@ -214,3 +214,19 @@ curl --request PATCH \
 ```
 
 Users can now log in using their Cloudflare account email and password. To re-enable SSO, send a `PATCH` request with `"sso_connector_status" : "V"`.
+
+## Change your team name
+
+Cloudflare does not allow you to change your <GlossaryTooltip term="team name">team name</GlossaryTooltip> while dashboard SSO is enabled. To change your team name, you must first disable dashboard SSO.
+
+:::caution
+Before disabling SSO, make sure you have access to your Cloudflare account email. This will allow you to reset your password in case you get logged out of the Cloudflare dashboard.
+:::
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Authentication**.
+2. If SSO is enabled, turn off **Cloudflare dashboard SSO**. This action can only be performed by Super Administrators.
+3. Go to **Settings** > **Custom Pages**.
+4. Under **Team domain**, select **Edit** to enter the new team name. Select **Save**.
+5. In your identity provider, update your Cloudflare integration with the new team name. For example, if you are using a SAML IdP, you will need to update the Single Sign-on URL and Entity ID to `https://<new-team-name>.cloudflareaccess.com/cdn-cgi/access/callback`.
+6. In Zero Trust, go to **Settings** > **Authentication**.
+7. Turn on **Cloudflare dashboard SSO** to re-enable SSO.

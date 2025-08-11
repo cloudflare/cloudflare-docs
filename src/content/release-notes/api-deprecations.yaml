@@ -2,8 +2,6 @@
 link: "/fundamentals/api/reference/deprecations/"
 productName: API deprecations
 productLink: "/fundamentals/"
-productArea: Core platform
-productAreaLink: /fundamentals/reference/changelog/platform/
 entries:
   - publish_date: "2025-07-01"
     title: "Cloudflare Radar: Verified Bots APIs"

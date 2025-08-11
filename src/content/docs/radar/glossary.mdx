@@ -95,6 +95,20 @@ In Cloudflare Radar, you can view all certificates issued for a given domain by 
 
 You can review the certificates issued for your domain name to ensure that there have been no incorrect or fraudulent issuances of certificates associated with your domains. You can also sign up to receive alerts from our certificate transparency monitor in the [Cloudflare Dashboard](https://dash.cloudflare.com/).
 
+## Certificate Transparency
+
+[Certificate Transparency (CT)](https://certificate.transparency.dev/) is an Internet security standard for monitoring and auditing the issuance of digital certificates issued by Certification Authorities (CAs).
+CT helps detect misissued or malicious certificates by requiring CAs to publicly log all certificates they issue in append-only, verifiable logs.
+These logs are monitored by various entities, including browsers and security researchers, to ensure transparency and trust in the certificate ecosystem.
+
+Key entities in CT include:
+- **CAs:** Organizations that issue certificates.
+- **CT Logs:** Public, append-only logs where issued certificates are recorded.
+- **Monitors:** Parties that check logs for correctness.
+
+The data available in Cloudflare Radar is derived from the CT logs currently monitored by Cloudflare.
+This enables visibility into certificate issuance trends, distributions, and metadata across the web.
+
 ## Connection characteristics
 
 Share of inbound connections to Cloudflare from mail transfer agents with the given characteristics. “IP Version” breaks down connections made over IPv4 and IPv6. “Encryption” breaks down connections made over an encrypted connection using TLS, and those made over an unencrypted connection, in the clear. Data for these metrics comes from Cloudflare’s email routing service.

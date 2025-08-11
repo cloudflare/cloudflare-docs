@@ -748,7 +748,7 @@ app.get("/api/products", async (c) => {
 
 	try {
 		return await withRetry(async () => {
-			const { results } = await session.prepare("SELECT * FROM products").all();
+			const { results } = await session.prepare("SELECT * FROM products").run();
 
 			const latestBookmark = session.getBookmark();
 

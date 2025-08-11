@@ -7,11 +7,11 @@ sidebar:
 
 import { Tabs, TabItem } from "~/components";
 
-The `/json` endpoint extracts structured data from a webpage. You can specify the expected output using either a `prompt` or a `response_format` parameter which accepts a JSON schema. The endpoint returns the extracted data in JSON format.
+The `/json` endpoint extracts structured data from a webpage. You can specify the expected output using either a `prompt` or a `response_format` parameter which accepts a JSON schema. The endpoint returns the extracted data in JSON format. By default, this endpoint leverages [Workers AI](/workers-ai/). If you would like to specify your own AI model for the extraction, you can use the `custom_ai` parameter.
 
 :::note[Note]
 
-The `/json` endpoint leverages [Workers AI](/workers-ai/) for data extraction. Using this endpoint incurs usage on Workers AI, which you can monitor usage through the Workers AI Dashboard.
+By default, the `/json` endpoint leverages [Workers AI](/workers-ai/) for data extraction. Using this endpoint incurs usage on Workers AI, which you can monitor usage through the Workers AI Dashboard.
 
 :::
 
@@ -243,3 +243,82 @@ console.log(json);
 ```
 
 </TabItem> </Tabs>
+
+## Advanced Usage
+
+
+### Using a custom model (BYO API Key)
+
+Browser Rendering can use a custom model for which you supply credentials. List the model(s) in the `custom_ai` array:
+
+- `model` should be formed as `<provider>/<model_name>` and the provider must be one of these [supported providers](/ai-gateway/chat-completion/#supported-providers).
+- `authorization` is the bearer token or API key that allows Browser Rendering to call the provider on your behalf.
+
+This example uses the `custom_ai` parameter to instruct Browser Rendering to use a Anthropic's Claude Sonnet 4 model. The prompt asks the model to extract the main `<h1>` and `<h2>` headings from the target URL and return them in a structured JSON object.
+
+```bash
+curl --request POST \
+  --url https://api.cloudflare.com/client/v4/accounts/CF_ACCOUNT_ID/browser-rendering/json \
+  --header 'authorization: Bearer CF_API_TOKEN' \
+  --header 'content-type: application/json' \
+  --data '{
+  "url": "http://demoto.xyz/headings",
+  "prompt": "Get the heading from the page in the form of an object like h1, h2. If there are many headings of the same kind then grab the first one.",
+  "response_format": {
+    "type": "json_schema",
+    "json_schema": {
+      "type": "object",
+      "properties": {
+        "h1": {
+          "type": "string"
+        },
+        "h2": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "h1"
+      ]
+    }
+  },
+  "custom_ai": [
+    {
+      "model": "anthropic/claude-sonnet-4-20250514",
+      "authorization": "Bearer <ANTHROPIC_API_KEY>"
+    }
+  ]
+}
+```
+
+```json output
+{
+  "success": true,
+  "result": {
+    "h1": "Heading 1",
+    "h2": "Heading 2"
+  }
+}
+```
+
+### Using a custom model with fallbacks
+
+You may specify multiple models to provide automatic failover. Browser Rendering will attempt the models in order until one succeeds. To add failover, list additional models in the `custom_ai` array.
+
+In this example, Browser Rendering first calls Anthropic's Claude Sonnet 4 model. If that request returns an error, it automatically retries with Meta Llama 3.3 70B from [Workers AI](/workers-ai/), then OpenAI's GPT-4o.
+
+```
+"custom_ai": [
+  {
+    "model": "anthropic/claude-sonnet-4-20250514",
+    "authorization": "Bearer <ANTHROPIC_API_KEY>"
+  },
+  {
+    "model": "workers-ai/@cf/meta/llama-3.3-70b-instruct-fp8-fast",
+    "authorization": "Bearer <CLOUDFLARE_AUTH_TOKEN>"
+  },
+{
+    "model": "openai/gpt-4o",
+    "authorization": "Bearer <OPENAI_API_KEY>"
+  }
+]
+```

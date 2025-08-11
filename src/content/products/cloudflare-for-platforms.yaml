@@ -8,5 +8,5 @@ product:
 
 meta:
   title: Cloudflare for Platforms docs
-  description: Cloudflare for Platforms allows you to extend the security and performance benefits of Cloudflare's network to your customers via their own custom or vanity domains.
+  description: Build your own multi-tenant platform using Cloudflare as infrastructure
   author: "@cloudflare"

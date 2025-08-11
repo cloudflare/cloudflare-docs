@@ -7,5 +7,5 @@ product:
 
 meta:
   title: Cloudflare Health Checks docs
-  description: Standalone Health Checks monitors an IP address or hostname for origin servers or applications.
+  description: Monitor IPs or hostnames and get notified of issues
   author: "@cloudflare"

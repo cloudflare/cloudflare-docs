@@ -2,8 +2,6 @@
 link: "/autorag/platform/release-note/"
 productName: AutoRAG
 productLink: "/autorag/"
-productArea: Developer platform
-productAreaLink: /workers/platform/changelog/platform/
 entries:
   - publish_date: "2025-07-16"
     title: Deleted files now removed from index on next sync
@@ -26,9 +24,9 @@ entries:
     description: |-
       You can now trigger a sync job for an AutoRAG using the [Sync REST API](/api/resources/autorag/subresources/rags/methods/sync/). This scans your data source for changes and queues updated or previously errored files for indexing.
   - publish_date: "2025-06-10"
-    title: Files modified in the data source will now be updated 
+    title: Files modified in the data source will now be updated
     description: |-
-      Files modified in your source R2 bucket will now be updated in the AutoRAG index during the next sync. For example, if you upload a new version of an existing file, the changes will be reflected in the index after the subsequent sync job. 
+      Files modified in your source R2 bucket will now be updated in the AutoRAG index during the next sync. For example, if you upload a new version of an existing file, the changes will be reflected in the index after the subsequent sync job.
       Please note that deleted files are not yet removed from the index. We are actively working on this functionality.
   - publish_date: "2025-05-31"
     title: Errored files will now be retried in next sync

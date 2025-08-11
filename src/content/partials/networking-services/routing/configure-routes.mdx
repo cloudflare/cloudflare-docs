@@ -19,6 +19,13 @@ Refer to <a href={props.trafficSteeringPage}>Traffic Steering</a> for more infor
 - Regional scoping of traffic to reduce latency
 - BGP peering
 
+{ props.magicWord === "Magic Transit" && (
+  <>
+		<Render file="routing/anycast-warning" product="networking-services" />
+	</>
+)
+}
+
 ## Configure static routes
 
 ### Create a static route

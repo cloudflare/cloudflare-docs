@@ -47,6 +47,8 @@ The combination of these files allows us to:
 
 Your Markdown file needs to have several special values to pull in the changelog information. These values are highlighted in the sample page.
 
+For more information about the `ProductChangelog` component, refer to the [style guide](/style-guide/components/product-changelog/).
+
 ```mdx title="/src/content/docs/dns/changelog.mdx"
 ---
 pcx_content_type: changelog
@@ -119,7 +121,6 @@ Each changelog entries has the following properties:
 - `preview_image` <Type text="string" /> <MetaInfo text="optional" />
   - Path to an image file
 - `products` <Type text="Array<String>" /> <MetaInfo text="(default: current location) optional" />
-
   - The products list is case-sensitive. Only use lowercase.
   - This should be an array of strings, each referring to the name of a file in the products collection without the file extension.
   - The folder that your entry is in, such as `src/content/changelog/workers/2025-02-13-new-product-feature.mdx`, is inferred as part of this property. If you do not want to associate the entry with additional products, you can omit it from the frontmatter entirely.

@@ -93,7 +93,7 @@ File findings for some integrations (such as [Microsoft 365](/cloudflare-one/app
 
 After reviewing your findings, you may decide that certain posture findings are not applicable to your organization. Cloudflare CASB allows you to remove findings or individual instances of findings from your list of active issues. CASB will continue to scan for these issues, but any detections will appear in a separate tab.
 
-### Hide a finding
+### Ignore a finding
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **CASB** > **Posture**.
 2. Locate the active finding you want to hide.
@@ -108,13 +108,68 @@ The finding's status will change from **Active** to **Ignored**. CASB will conti
 3. In **Active**, find the instance you want to hide.
 4. In the three-dot menu, select **Move to hidden**.
 
-The instance will be moved from **Active** to **Hidden** within the finding. If the finding occurs again for the same user, CASB will report the new instance in the **Hidden** tab. You can move hidden instances back to the **Active** tab at any time.
+The instance will be moved from **Active** to **Hidden** within the finding. If the finding occurs again for the same user, CASB will report the new instance quietly in the **Hidden** tab. You can move hidden instances back to the **Active** tab at any time.
+
+## Remediate findings
+
+In addition to detecting and surfacing misconfigurations or issues with SaaS and cloud applications, CASB can also remediate findings directly in applications.
+
+CASB supports remediation for findings from the [Microsoft 365 integration](/cloudflare-one/applications/casb/casb-integrations/microsoft-365/):
+
+<Details header="Supported CASB findings for remediation">
+
+- Microsoft: File publicly accessible with edit access
+- Microsoft: File publicly accessible with view access
+- Microsoft: File publicly accessible with edit access with DLP Profile match
+- Microsoft: File publicly accessible with view access with DLP Profile match
+
+</Details>
+
+### Configure remediation permissions
+
+Before you can remediate findings, [add a new integration](/cloudflare-one/applications/casb/#add-an-integration) and choose _Read-Write mode_ during setup. Alternatively, you can update an existing integration:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **CASB** > **Integrations**.
+2. Choose your integration, then select **Configure**.
+3. In **Integration permissions**, choose _Read-Write mode_.
+4. Select **Update integration**. CASB will redirect you to your Microsoft 365 configuration.
+5. Sign in to your organization, then select **Accept**.
+
+CASB can now remediate supported findings directly.
+
+### Remediate a finding
+
+To remediate a supported finding:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **CASB** > **Posture Findings**.
+2. Choose a supported finding type, then select **Manage**.
+3. In **Active Instances**, select an instance.
+4. In **Remediation details**, choose a remediation action to take.
+
+CASB will begin remediating the instance.
+
+### Manage remediated findings
+
+Remediated findings will appear in **CASB** > **Posture Findings** > **Remediated findings**. The status of the finding will change depending on what action CASB has taken:
+
+| Status     | Description                                                          |
+| ---------- | -------------------------------------------------------------------- |
+| Pending    | CASB has set the finding to be remediated.                           |
+| Queued     | CASB has queued the finding for remediation.                         |
+| Processing | CASB is currently remediating the finding.                           |
+| Completed  | CASB successfully remediated the finding.                            |
+| Failed     | CASB unsuccessfully remediated the finding.                          |
+| Rejected   | CASB does not have the correct permissions to remediate the finding. |
+
+If the status is **Completed**, remediation succeeded. If the status is **Failed** or **Rejected**, remediation failed, and you can select the finding to take action again.
+
+CASB will log remediation actions in **Logs** > **Admin**. For more information, refer to [Zero Trust Logs](/cloudflare-one/insights/logs/).
 
 ## Resolve finding with a Gateway policy
 
-Using the security findings from CASB allows for fine-grained Gateway policies which prevent future unwanted behavior while still allowing usage that aligns to your organization's security policy. This means going from viewing a CASB finding, like the use of an unapproved application, to preventing or controlling access in minutes.
+Using the security findings from CASB allows for fine-grained Gateway policies which prevent future unwanted behavior while still allowing usage that aligns to your organization's security policy. You can view a CASB finding, like the use of an unapproved application, then immediately prevent or control access with Gateway.
 
-CASB supports creating a Gateway policy with findings from the [Google Workspace integration](/cloudflare-one/applications/casb/casb-integrations/google-workspace/):
+CASB supports creating a Gateway policy for findings from the [Google Workspace integration](/cloudflare-one/applications/casb/casb-integrations/google-workspace/):
 
 <Details header="Supported CASB findings for Gateway policies">
 
