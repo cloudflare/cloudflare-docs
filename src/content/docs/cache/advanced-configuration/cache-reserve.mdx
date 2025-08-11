@@ -11,7 +11,7 @@ Cache Reserve is a large, persistent data store [implemented on top of R2](/r2/)
 
 How long content in Cache Reserve will be considered “fresh” is determined by Edge Cache TTL setting or Cache-Control headers at your origin, if [Edge Cache TTL](/cache/how-to/edge-browser-cache-ttl/#edge-cache-ttl) is not set. After freshness expires, Cloudflare will attempt to revalidate the asset when a subsequent request arrives in Cache Reserve for the asset. This is the same behavior as in Cloudflare's regular CDN.
 
-The retention period of an asset is how long we will keep the asset in Cache Reserve before marking it for eviction. If an asset is not requested within the retention period, it will be evicted from Cache Reserve. Accessing the asset will extend the retention period by one period. By default, the Cache Reserve retention period is 30 days.
+The retention period of an asset is how long we will keep the asset in Cache Reserve before marking it for eviction. Cache Reserve starts with a retention period of 30 days. If an asset is not requested within the retention period, it will be evicted from Cache Reserve. Accessing the asset will refresh the retention period.
 
 Assets must [meet certain criteria](#cache-reserve-asset-eligibility) to use Cache Reserve.
 
@@ -52,7 +52,7 @@ Not all assets are eligible for Cache Reserve. To be admitted into Cache Reserve
 
 - Cache Reserve file limits are the same as [R2 limits](/r2/platform/limits/). Note that [CDN cache limits](/cache/concepts/default-cache-behavior/#customization-options-and-limits) still apply. Assets larger than standard limits will not be stored in the standard CDN cache, so these assets will incur Cache Reserve operations costs far more frequently.
 - Origin Range requests are not supported at this time from Cache Reserve.
-- Vary for Images is currently not compatible with Cache Reserve.
+- Vary for images is currently not compatible with Cache Reserve.
 - Requests to [R2 public buckets linked to a zone's domain](/r2/buckets/public-buckets/) will not use Cache Reserve. Enabling Cache Reserve for the connected zone will use Cache Reserve only for requests not destined for the R2 bucket.
 - Cache Reserve makes requests for uncompressed content directly from the origin. Unlike the standard Cloudflare CDN, Cache Reserve does not include the `Accept-Encoding: gzip` header when sending requests to the origin.
 - Cache Reserve is bypassed when using the Cloudflare [O2O](/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/how-it-works/) setup.
@@ -61,7 +61,7 @@ Not all assets are eligible for Cache Reserve. To be admitted into Cache Reserve
 
 Like the standard CDN, Cache Reserve also uses the `cf-cache-status` header to indicate cache statuses like `MISS`, `HIT`, and `REVALIDATED`. Cache Reserve cache misses and hits are factored into the dashboard's cache hit ratio.
 
-Individual sampled requests that filled or were served by Cache Reserve are viewable via the [CacheReserveUsed](/logs/reference/log-fields/zone/http_requests/) Logpush field.
+Individual sampled requests that filled or were served by Cache Reserve are viewable via the [CacheReserveUsed](/logs/logpush/logpush-job/datasets/zone/http_requests/) Logpush field.
 
 Cache Reserve monthly operations and storage usage are viewable in the dashboard.
 

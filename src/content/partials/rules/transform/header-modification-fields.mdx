@@ -1,10 +1,14 @@
 ---
-{}
+params:
+  - location
 ---
+
+import { Markdown } from "~/components";
 
 - `cf.bot_management.*`
 - `cf.client.bot`
 - `cf.threat_score`
+- `cf.verified_bot_category`
 - `cf.edge.server_ip`
 - `cf.edge.server_port`
 - `cf.edge.client_port`
@@ -16,6 +20,7 @@
 - `http.host`
 - `http.referer`
 - `http.request.headers`
+- `http.request.headers.*`
 - `http.request.accepted_languages`
 - `http.request.method`
 - `http.request.timestamp.sec`
@@ -26,6 +31,9 @@
 - `http.request.version`
 - `raw.http.request.full_uri`
 - `raw.http.request.uri`
+- `raw.http.request.uri.*`
+- `raw.http.request.headers`
+- `raw.http.request.headers.*`
 - `http.user_agent`
 - `http.x_forwarded_for`
 - `ip.src`
@@ -35,16 +43,46 @@
 - `ip.src.city`
 - `ip.src.country`
 - `ip.src.continent`
+- `ip.src.metro_code`
+- `ip.src.postal_code`
+- `ip.src.region`
+- `ip.src.region_code`
 - `ip.src.is_in_european_union`
 - `ip.src.subdivision_1_iso_code`
 - `ip.src.subdivision_2_iso_code`
 - `ssl`
 
+{ props.location === "request" && (
+  <>
+    <ul>
+      <li><code>http.request.jwt.claims</code></li>
+      <li><code>http.request.jwt.claims.*</code></li>
+      <li><code>cf.waf.auth_detected</code></li>
+      <li><code>cf.waf.credential_check.*</code></li>
+      <li><code>cf.waf.score</code></li>
+      <li><code>cf.waf.score.*</code></li>
+    </ul>
+  </>
+)}
+
+{ props.location === "response" && (
+  <>
+    <ul>
+      <li><code>http.response.code</code></li>
+      <li><code>http.response.headers</code></li>
+      <li><code>http.response.headers.*</code></li>
+      <li><code>http.response.content_type.media_type</code></li>
+      <li><code>cf.response.1xxx_code</code></li>
+      <li><code>cf.response.error_type</code></li>
+    </ul>
+  </>
+)}
+
 Refer to [Fields](/ruleset-engine/rules-language/fields/reference/) for reference information on these fields.
 
 :::caution[Important]
 
-- To obtain the value of an HTTP request header using the [`http.request.headers`](/ruleset-engine/rules-language/fields/reference/http.request.headers/) field, specify the header name in **lowercase**. For example, to get the first value of the `Accept-Encoding` request header in an expression, use: `http.request.headers["accept-encoding"][0]`.
+- To obtain the value of an HTTP header using the [`http.request.headers`](/ruleset-engine/rules-language/fields/reference/http.request.headers/) { props.location === "response" ? <Markdown text='or [`http.response.headers`](/ruleset-engine/rules-language/fields/reference/http.response.headers/) field'/> : 'field' }, specify the header name in **lowercase**. For example, to get the first value of the `Accept-Encoding` request header in an expression, use: `http.request.headers["accept-encoding"][0]`.
 
 - Use the `to_string()` function to get the string representation of a non-string value like an Integer value. For example, `to_string(cf.bot_management.score)`.
 

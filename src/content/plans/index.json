@@ -1368,7 +1368,7 @@
 					"ent": 300
 				},
 				"subrequests": {
-					"title": "Number of [[GLOSSARY_TOOLTIP_SNIPPETS_SUBREQUEST]]",
+					"title": "Number of snippet subrequests",
 					"free": 0,
 					"pro": 2,
 					"biz": 3,
@@ -2785,7 +2785,7 @@
 					"pro": "No",
 					"biz": "No",
 					"ent": "Contact your account team"
-				},				
+				},
 				"custom_certificates": {
 					"title": "[Custom certificates](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/custom-certificates/)",
 					"free": "No",

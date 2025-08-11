@@ -7,26 +7,35 @@ sidebar:
 head:
   - tag: title
     content: Overview
-description: AI Audit is a tool which allows you to analyze and control how third-party AI crawlers interact with your website.
+description: Monitor and control how AI services access your website content.
+
 ---
 
-import { Description, Feature, FeatureTable, Plan, LinkButton, RelatedProduct } from "~/components";
-
-<Description>
-
-Analyze and control how third-party AI crawlers access and interact with your website.
-
-</Description>
+import { Description, Feature, FeatureTable, Plan, LinkButton, RelatedProduct, Card } from "~/components";
 
 <Plan type="all" />
 
-AI Audit helps manage AI crawlers on your website by providing visibility on which crawlers are accessing your pages, and allowing you to block unwanted crawlers.
+<Description>
 
-<LinkButton href="/ai-audit/get-started/">Get started </LinkButton>
+Monitor and control how AI services access your website content.
+
+</Description>
+
+AI companies are increasingly using web content to train their models and power AI applications. AI Audit gives you visibility into which AI services are accessing your content, and provides tools to manage access according to your preferences.
+
+With AI Audit, you can:
+
+- **See which AI services access your content** - Monitor the dashboard to see crawler activity and request patterns
+- **Control access with granular policies** - Set allow or block rules for individual crawlers
+- **Monitor robots.txt compliance** - Track which crawlers follow your directives and create enforcement rules
+- **Explore monetization options** - Set up pay per crawl pricing for content access [(private beta)](/ai-audit/features/pay-per-crawl/what-is-pay-per-crawl/)
+- **Deploy with zero configuration** - Works automatically on all Cloudflare plans
 
 :::note[Beta phase]
 AI Audit is currently only available as a beta product.
 :::
+
+<LinkButton href="/ai-audit/get-started/">Get started </LinkButton>
 
 ---
 
@@ -41,9 +50,9 @@ AI Audit is currently only available as a beta product.
 </Feature>
 
 <Feature
-	header="Analyze AI crawlers"
-	href="/ai-audit/features/analyze-ai-crawlers/"
-	cta="Analyze AI crawlers"
+	header="Analyze AI traffic"
+	href="/ai-audit/features/analyze-ai-traffic/"
+	cta="Analyze AI traffic"
 >
 	Gain insight into how AI crawlers are interacting with your pages.
 </Feature>
@@ -55,6 +64,22 @@ AI Audit is currently only available as a beta product.
 >
 	Allow AI crawlers to access content by paying per crawl.
 </Feature>
+
+---
+
+## Use cases
+
+<Card title="Publishers and content creators">
+Publishers and content creators can monitor which AI crawlers are accessing their articles and educational content. Set policies to allow beneficial crawlers while blocking others.
+</Card>
+
+<Card title="E-commerce and business sites">
+E-commerce and business sites can identify AI crawler activity on product pages and business information. Control access to sensitive data like pricing and inventory.
+</Card>
+
+<Card title="Documentation sites">
+Documentation sites can track how AI crawlers are accessing their technical documentation. Gain insight into how AI crawlers are engaging with your site.
+</Card>
 
 ---
 
@@ -74,4 +99,12 @@ Identify and mitigate automated traffic to protect your domain from bad bots.
 	product="waf"
 >
 Get automatic protection from vulnerabilities and the flexibility to create custom rules.
+</RelatedProduct>
+
+<RelatedProduct
+	header="Analytics"
+	href="/analytics/"
+	product="analytics"
+>
+View and analyze traffic on your domain.
 </RelatedProduct>

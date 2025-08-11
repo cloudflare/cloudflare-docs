@@ -99,7 +99,7 @@ const FieldCatalog = ({ fields }: { fields: Fields }) => {
 
 				<div className="mb-8! hidden md:block">
 					<span className="text-sm font-bold text-gray-600 uppercase dark:text-gray-200">
-						▼ Categories
+						Categories
 					</span>
 
 					{categories.map((category) => (

@@ -95,6 +95,7 @@ The following configuration will modify settings in your Cloudflare account.
 		resource "cloudflare_zero_trust_tunnel_cloudflared" "gcp_tunnel" {
 			account_id    = var.cloudflare_account_id
 			name          = "Ansible GCP tunnel"
+			config_src    = "cloudflare"
 		}
 
 		# Reads the token used to run the tunnel on the server.
@@ -146,7 +147,7 @@ The following configuration defines the specifications for the GCP virtual machi
    ```txt
    # Selects the OS for the GCP VM.
    data "google_compute_image" "image" {
-   family  = "ubuntu-minimal-2004-lts"
+   family  = "ubuntu-2204-lts"
    project = "ubuntu-os-cloud"
    }
 

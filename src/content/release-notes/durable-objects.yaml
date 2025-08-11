@@ -2,8 +2,6 @@
 link: "/durable-objects/release-notes/"
 productName: Durable Objects
 productLink: "/durable-objects/"
-productArea: Developer platform
-productAreaLink: /workers/platform/changelog/platform/
 entries:
   - publish_date: "2025-04-07"
     title: Durable Objects on Workers Free plan

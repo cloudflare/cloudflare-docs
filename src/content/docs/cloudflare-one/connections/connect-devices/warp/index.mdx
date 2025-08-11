@@ -8,6 +8,8 @@ head:
     content: About Cloudflare WARP
 ---
 
+import { Stream } from "~/components"
+
 ## About Cloudflare WARP
 
 The Cloudflare WARP client allows you to protect corporate devices by securely and privately sending traffic from those devices to Cloudflare's global network, where [Cloudflare Gateway](/cloudflare-one/policies/gateway/) can apply advanced web filtering. The WARP client also makes it possible to apply advanced [Zero Trust policies](/cloudflare-one/identity/devices/) that check for a device's health before it connects to corporate applications.
@@ -21,7 +23,22 @@ The WARP client consists of:
 - Graphical User Interface (GUI): Control panel that allows end users to view WARP's [status](/cloudflare-one/connections/connect-devices/warp/troubleshooting/connectivity-status/) and perform actions such as turning WARP on or off.
 - WARP daemon (or service): Core background component responsible for establishing secure tunnels (using WireGuard or MASQUE) and handling all WARP functionality on your device.
 
-Refer to [WARP architecture](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/) for more information on how WARP client interacts with a device's operating system to route traffic.
+For more information on how the WARP client routes traffic, refer to the [WARP architecture page](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/) and watch the video below.
+
+<Stream
+	id="31178cc41d0ec56d42ef892160589635"
+	title="Understand Cloudflare WARP basics"
+	thumbnail="https://pub-d9bf66e086fb4b639107aa52105b49dd.r2.dev/Understand-Cloudflare-WARP-Basics%20thumbnail.png"
+	showMoreVideos={false}
+	chapters={{
+		"Introduction and WARP GUI Basics": "0s",
+		"Consumer vs. Corporate WARP": "57s",
+		"Device Profiles Explained": "1m35s",
+		"WARP Operating Modes": "2m12s",
+		"Split Tunneling": "3m44s",
+		"Conclusion": "4m56s",
+	}}
+/>
 
 ## Key benefits of using WARP
 

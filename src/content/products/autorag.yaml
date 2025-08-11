@@ -8,8 +8,8 @@ product:
   tags: [AI]
 
 meta:
-  title: AutoRAG
-  description: Create fully managed RAG pipelines for your AI applications.
+  title: Cloudflare AutoRAG docs
+  description: Create fully managed RAG pipelines for your AI applications
   author: "@cloudflare"
 
 resources:

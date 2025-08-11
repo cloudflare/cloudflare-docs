@@ -163,7 +163,7 @@ export const loader: LoaderFunction = async ({ context, params }) => {
   const { env, cf, ctx } = context.cloudflare;
   let { results } = await env.DB.prepare(
     "SELECT * FROM products where id = ?1"
-  ).bind(params.productId).all();
+  ).bind(params.productId).run();
   return json(results);
 };
 

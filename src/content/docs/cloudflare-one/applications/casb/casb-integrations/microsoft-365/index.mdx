@@ -7,8 +7,11 @@ rss: file
 import { DirectoryListing, GlossaryTooltip, Render } from "~/components";
 
 <Render
-  file="casb/integration-description"
-  params={{ integrationName: "Microsoft 365 (M365)", integrationAccountType: "Microsoft 365 account" }}
+	file="casb/integration-description"
+	params={{
+		integrationName: "Microsoft 365 (M365)",
+		integrationAccountType: "Microsoft 365 account",
+	}}
 />
 
 This integration covers the following Microsoft 365 products:
@@ -36,13 +39,37 @@ For the Microsoft 365 integration to function, Cloudflare CASB requires the foll
 - `Files.Read.All`
 - `AuditLog.Read.All`
 
-These permissions follow the principle of least privilege to ensure that only the minimum required access is granted. To learn more about each permission, refer to the [Microsoft Graph permissions documentation](https://docs.microsoft.com/en-us/graph/permissions-reference).
+These permissions follow the principle of least privilege to ensure that only the minimum required access is granted.
+
+Additionally, to [remediate findings](/cloudflare-one/applications/casb/manage-findings/#remediate-findings), CASB requires the following permissions:
+
+- `Application.ReadWrite.All`
+- `AuditLog.Read.All`
+- `Calendars.ReadWrite`
+- `Domain.ReadWrite.All`
+- `Files.ReadWrite.All`
+- `Group.ReadWrite.All`
+- `InformationProtectionPolicy.Read.All`
+- `MailboxSettings.ReadWrite`
+- `IdentityRiskyUser.ReadWrite.All`
+- `RoleManagement.ReadWrite.Directory`
+- `User.ReadWrite.All`
+- `UserAuthenticationMethod.ReadWrite.All`
+- `Directory.ReadWrite.All`
+- `GroupMember.ReadWrite.All`
+- `Organization.ReadWrite.All`
+- `Mail.ReadWrite`
+
+To learn more about each permission, refer to the [Microsoft Graph permissions documentation](https://docs.microsoft.com/en-us/graph/permissions-reference).
 
 ## Security findings
 
 <Render
-  file="casb/security-findings"
-  params={{ integrationName: "Microsoft 365", slugRelativePath: "microsoft-365" }}
+	file="casb/security-findings"
+	params={{
+		integrationName: "Microsoft 365",
+		slugRelativePath: "microsoft-365",
+	}}
 />
 
 ### User account settings

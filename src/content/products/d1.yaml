@@ -8,5 +8,5 @@ product:
 
 meta:
   title: Cloudflare D1 docs
-  description: Managed, serverless database with SQLite's SQL semantics, built-in disaster recovery, and Worker and HTTP API access.
+  description: Create managed, serverless databases with SQL semantics
   author: "@cloudflare"

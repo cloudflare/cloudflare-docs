@@ -8,4 +8,4 @@ product:
   url: /realtime/turn/
 
 meta:
-  description: Separately from Cloudflare Realtime's SFU, Realtime offers a managed TURN service.
+  description: Ensure connectivity with a relay point for traffic between WebRTC clients

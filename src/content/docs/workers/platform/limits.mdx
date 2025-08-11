@@ -89,7 +89,7 @@ doing additional work, this time spent waiting **is not** counted towards CPU ti
 To understand your CPU usage:
 
 - CPU time and Wall time are surfaced in the [invocation log](/workers/observability/logs/workers-logs/#invocation-logs) within Workers Logs.
-- For Tail Workers, CPU time and Wall time are surfaced at the top level of the [Workers Trace Events object](/logs/reference/log-fields/account/workers_trace_events/).
+- For Tail Workers, CPU time and Wall time are surfaced at the top level of the [Workers Trace Events object](/logs/logpush/logpush-job/datasets/account/workers_trace_events/).
 - DevTools locally can help identify CPU intensive portions of your code. See the [CPU profiling with DevTools documentation](/workers/observability/dev-tools/cpu-usage/).
 
 You can also set a [custom limit](/workers/wrangler/configuration/#limits) on the amount of CPU time that can be used during each invocation of your Worker.

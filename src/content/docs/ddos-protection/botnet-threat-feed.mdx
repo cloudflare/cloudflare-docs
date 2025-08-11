@@ -11,7 +11,7 @@ learning_center:
   link: https://www.cloudflare.com/learning/ddos/what-is-a-ddos-botnet/
 
 ---
-import { Steps } from "~/components"
+import { Steps, APIRequest } from "~/components"
 
 The Cloudflare DDoS Botnet Threat Feed is a threat intelligence feed for service providers (SPs) such as hosting providers and Internet service providers (ISPs) that provides information about their own IP addresses that have participated in HTTP DDoS attacks as observed from Cloudflare's global network. The feed aims to help service providers stop the abuse and reduce DDoS attacks originating from within their networks.
 
@@ -96,13 +96,12 @@ Retrieves all the data in the botnet tracking database for a given ASN (currentl
 
 The provided `{asn}` must be affiliated with your account.
 
-```bash title="Example request"
-curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/botnet_feed/asn/{asn}/full_report" \
---header "Content-Type: application/json" \
---header "Authorization: Bearer <API_TOKEN>"
-```
+<APIRequest
+  path="/accounts/{account_id}/botnet_feed/asn/{asn_id}/full_report"
+  method="GET"
+/>
 
-```json title="Example response"
+```json output
 {
   "result": [
     {
@@ -129,13 +128,12 @@ The provided `{asn}` must be affiliated with your account.
 
 `{date}` must be an ISO 8601-formatted date: `YYYY-MM-DD`. If no date is specified, the API responds with the data from the day before.
 
-```bash title="Example request"
-curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/botnet_feed/asn/{asn}/day_report?date=2024-05-05" \
---header "Content-Type: application/json" \
---header "Authorization: Bearer <API_TOKEN>"
-```
+<APIRequest
+  path="/accounts/{account_id}/botnet_feed/asn/{asn_id}/day_report"
+  method="GET"
+/>
 
-```json title="Example response"
+```json output
 {
   "result": [
     {

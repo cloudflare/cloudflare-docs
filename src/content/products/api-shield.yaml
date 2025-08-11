@@ -8,6 +8,5 @@ product:
 
 meta:
   title: Cloudflare API Shield docs
-  description: Protect your APIs from simple and sophisticated attacks using
-    Cloudflare API Shield products.
+  description: Identify and address your API vulnerabilities
   author: "@cloudflare"

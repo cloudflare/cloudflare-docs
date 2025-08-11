@@ -117,10 +117,8 @@ There are some limitations to the metadata that can be provided to Cloudflare:
 - Any origin resolution — for example, directing requests for a given hostname to a specific backend — must be provided as a hostname that exists within Cloudflare's DNS (even for non-authoritative setups). Providing an IP address directly will cause requests to error.
 - The total payload must not exceed 4 KB.
 - It requires a Cloudflare Worker that knows how to process the schema and trigger logic based on the contents.
-- Custom metadata cannot be set on custom hostnames that contain wildcards.
 
 :::note
-
 Be careful when modifying the schema. Adding, removing, or changing keys and possible values may cause the Cloudflare Worker to either ignore the data or return an error for requests that trigger it.
 :::
 

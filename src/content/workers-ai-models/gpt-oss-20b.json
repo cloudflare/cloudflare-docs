@@ -1,0 +1,99 @@
+{
+    "id": "188a4e1e-253e-46d0-9616-0bf8c149763f",
+    "source": 1,
+    "name": "@cf/openai/gpt-oss-20b",
+    "description": "OpenAI’s open-weight models designed for powerful reasoning, agentic tasks, and versatile developer use cases – gpt-oss-20b is for lower latency, and local or specialized use-cases.",
+    "task": {
+        "id": "c329a1f9-323d-4e91-b2aa-582dd4188d34",
+        "name": "Text Generation",
+        "description": "Family of generative text models, such as large language models (LLM), that can be adapted for a variety of natural language tasks."
+    },
+    "created_at": "2025-08-05 10:49:53.265",
+    "tags": [],
+    "properties": [
+        {
+            "property_id": "context_window",
+            "value": "128000"
+        },
+        {
+            "property_id": "price",
+            "value": [
+                {
+                    "unit": "per M input tokens",
+                    "price": 0.2,
+                    "currency": "USD"
+                },
+                {
+                    "unit": "per M output tokens",
+                    "price": 0.3,
+                    "currency": "USD"
+                }
+            ]
+        }
+    ],
+    "schema": {
+        "input": {
+            "type": "object",
+            "title": "GPT_OSS_Responses",
+            "properties": {
+                "input": {
+                    "oneOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "role": {
+                                        "type": "string",
+                                        "description": "The role of the message input. One of user, assistant, system, or developer.",
+                                        "enum": [
+                                            "user",
+                                            "assistant",
+                                            "system",
+                                            "developer"
+                                        ]
+                                    },
+                                    "content": {
+                                        "oneOf": [
+                                            {
+                                                "type": "string",
+                                                "description": "The content of the message as a string."
+                                            },
+                                            {
+                                                "type": "array",
+                                                "description": "Refer to OpenAI Responses API docs to learn more about supported content types.",
+                                                "items": {
+                                                    "type": "object",
+                                                    "properties": {}
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                }
+            },
+            "required": [
+                "input"
+            ]
+        },
+        "output": {
+            "oneOf": [
+                {
+                    "type": "object",
+                    "contentType": "application/json"
+                },
+                {
+                    "type": "string",
+                    "contentType": "text/event-stream",
+                    "format": "binary"
+                }
+            ]
+        }
+    }
+}

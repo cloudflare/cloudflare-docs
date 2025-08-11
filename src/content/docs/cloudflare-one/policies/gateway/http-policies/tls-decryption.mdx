@@ -11,6 +11,7 @@ import {
 	Render,
 	TabItem,
 	Tabs,
+	Badge,
 } from "~/components";
 
 Cloudflare Gateway can perform [SSL/TLS decryption](https://www.cloudflare.com/learning/security/what-is-https-inspection/) in order to inspect HTTPS traffic for malware and other security risks.
@@ -40,6 +41,17 @@ Gateway does not support TLS decryption for applications which use:
 - [Mutual TLS (mTLS) authentication](#incompatible-certificates)
 - [ESNI and ECH handshake encryption](#esni-and-ech)
 - [Automatic HTTPS upgrades](#google-chrome-automatic-https-upgrades)
+
+### Inspect on all ports <Badge text="Beta" variant="caution" size="small" />
+
+<Render
+	file="gateway/inspect-on-all-ports"
+	product="cloudflare-one"
+	params={{
+		turnOnProcedure:
+			"you can turn on [protocol detection](/cloudflare-one/policies/gateway/network-policies/protocol-detection/) and configure Gateway to [inspect traffic on all ports](/cloudflare-one/policies/gateway/network-policies/protocol-detection/#inspect-on-all-ports)",
+	}}
+/>
 
 ### Incompatible certificates
 
@@ -86,6 +98,10 @@ To disable automatic HTTPS upgrades on a per-browser basis, go to [Chrome flags]
 Chrome Enterprise users can turn off automatic HTTPS upgrades for all URLs with a [`HttpsUpgradesEnabled` management policy](https://chromeenterprise.google/policies/#HttpsUpgradesEnabled).
 
 </TabItem> </Tabs>
+
+### Mutual TLS (mTLS)
+
+When decrypting TLS to inspect traffic, connections that use mutual TLS (mTLS) will fail because Gateway cannot return the necessary client certificate. To prevent connection failures, create a [Do Not Inspect policy](/cloudflare-one/policies/gateway/http-policies/#do-not-inspect) for this traffic.
 
 ### ESNI and ECH
 

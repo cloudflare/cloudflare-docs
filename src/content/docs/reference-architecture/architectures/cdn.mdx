@@ -119,7 +119,7 @@ Figure 2 shows a simplified view of the Cloudflare CDN. Clients are receiving th
 
 ## Cloudflare CDN architecture and design
 
-Figure 3 is a view of the Cloudflare CDN on the global anycast network. In addition to using anycast for network performance and resiliency, the Cloudflare CDN leverages Tiered Cache to deliver optimized results while saving costs for customers. Customers can also enable Argo Smart Routing to find the fastest network path to route requests to the origin server. These capabilities are discussed in detail in the remainder of this document.
+Figure 3 is a view of the Cloudflare CDN on the global anycast network. In addition to using anycast for network performance and resiliency, the Cloudflare CDN leverages Tiered Cache to deliver optimized results while saving costs for customers. Customers can also [enable Argo Smart Routing](/argo-smart-routing/get-started/) to find the fastest network path to route requests to the origin server. These capabilities are discussed in detail in the remainder of this document.
 
 ![Figure 3: Diagram representing requests coming from an end user, protected by Cloudflare products including WAF and DDoS protection, and traveling through the anycast Network to reach the origin server using Smart Tiered Cache.](~/assets/images/reference-architecture/cdn-reference-architecture-images/ref-arch-cdn-figure3.svg "Figure 3: Cloudflare CDN with Tiered Cache on global anycast network")
 
@@ -250,4 +250,4 @@ Latency depends not just on how far the client is from the origin or cache, but 
 
 ## Summary
 
-To summarize, the Cloudflare CDN is SaaS that helps address the challenges customers face around latency, performance, availability, redundancy, security, and costs. The Cloudflare CDN leverages Cloudflare’s global anycast network and Tiered Cache to deliver optimized results while saving costs for customers. Customers can also enable Argo Smart Routing to ensure the fastest network path is used to route requests to the origin server and also choose to enable Cache Reserve to increase cache hits to further save costs and increase performance of their website or application.
+To summarize, the Cloudflare CDN is SaaS that helps address the challenges customers face around latency, performance, availability, redundancy, security, and costs. The Cloudflare CDN leverages Cloudflare’s global anycast network and Tiered Cache to deliver optimized results while saving costs for customers. Customers can also (enable Argo Smart)[argo-smart-routing/get-started/] Routing to ensure the fastest network path is used to route requests to the origin server and also choose to enable Cache Reserve to increase cache hits to further save costs and increase performance of their website or application.

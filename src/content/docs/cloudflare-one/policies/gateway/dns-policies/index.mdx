@@ -360,7 +360,13 @@ Use this selector to filter DNS responses by their `TXT` records.
 
 ### Indicator Feeds
 
-<Render file="gateway/selectors/indicator-feeds" params={{ one: "dns" }} />
+Use this selector to match against custom indicator feeds.
+
+You can use a [publicly available indicator feed](/security-center/indicator-feeds/#publicly-available-feeds) or a custom indicator feed assigned to your account by a designated third-party vendor. For more information on indicator feeds, refer to [Custom Indicator Feeds](/security-center/indicator-feeds/).
+
+| UI name         | API example          | Evaluation phase      |
+| --------------- | -------------------- | --------------------- |
+| Indicator Feeds | `dns.indicator_feed` | Before DNS resolution |
 
 <Render file="gateway/selectors/category-options" />
 

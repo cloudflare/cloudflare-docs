@@ -2,8 +2,6 @@
 link: /page-shield/changelog/
 productName: Page Shield
 productLink: "/page-shield/"
-productArea: Application security
-productAreaLink: /fundamentals/reference/changelog/security/
 entries:
   - publish_date: "2025-05-20"
     title: Updated machine learning (ML) model

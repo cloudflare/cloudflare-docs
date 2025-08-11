@@ -10,7 +10,7 @@ import { APIRequest } from "~/components";
 
 ## Endpoints
 
-The table below summarizes the job operations available for both Logpush and Edge Log Delivery jobs. Make sure that Account-scoped datasets use `/accounts/{account_id}` and Zone-scoped datasets use `/zone/{zone_id}`. For more information, refer to the [Log fields](/logs/reference/log-fields/) page.
+The table below summarizes the job operations available for both Logpush and Edge Log Delivery jobs. Make sure that Account-scoped datasets use `/accounts/{account_id}` and Zone-scoped datasets use `/zone/{zone_id}`. For more information, refer to the [Datasets](/logs/logpush/logpush-job/datasets/) page.
 
 You can locate `{zone_id}` and `{account_id}` arguments based on the [Find zone and account IDs](/fundamentals/account/find-account-and-zone-ids/) page.
 The `{job_id}` argument is numeric, like 123456.
@@ -210,7 +210,7 @@ Logpull\_options has been replaced with Custom Log Formatting output\_options. P
 
 If you are still using logpull\_options, here are the options that you can customize:
 
-1. **Fields** (optional): Refer to [Log fields](/logs/reference/log-fields/) for the currently available fields. The list of fields is also accessible directly from the API: `https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/datasets/{dataset_id}/fields`. Default fields: `https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/datasets/{dataset_id}/fields/default`.
+1. **Fields** (optional): Refer to [Datasets](/logs/logpush/logpush-job/datasets/) for the currently available fields. The list of fields is also accessible directly from the API: `https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/datasets/{dataset_id}/fields`. Default fields: `https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/datasets/{dataset_id}/fields/default`.
 2. **Timestamp format** (optional): The format in which timestamp fields will be returned. Value options: `unixnano` (default), `unix`, `rfc3339`.
 3. **Redaction for CVE-2021-44228** (optional): This option will replace every occurrence of `${` with `x{`.  To enable it, set `CVE-2021-44228=true`.
 

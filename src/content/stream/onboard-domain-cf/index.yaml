@@ -1,0 +1,15 @@
+---
+id: 89f8aaf01e4cadd0c777eded7ef4cca2
+url: onboard-domain-cf
+title: Onboard your domain to Cloudflare
+description: Learn how Cloudflare secures and accelerates your website using its global network and reverse proxy technology. In this video, we explain how connecting your domain to Cloudflare protects your origin server, enhances performance, and keeps your site online—even during attacks. You'll see how DNS, nameservers, and proxy status work together to route and safeguard traffic. Whether you're self-hosting or using serverless platforms like Cloudflare Workers, this guide helps you understand the onboarding process and why Cloudflare is essential for modern web infrastructure.
+products:
+  - dns
+thumbnail:
+  timestamp: 2s
+chapters: {
+  "How Cloudflare Works": "0s",
+  "Getting Started: Domain Onboarding": "55s",
+  "DNS and Reverse Proxy Explained": "01m24s",
+  "Request Lifecycle and Performance Optimization": "03m20s"
+}
