@@ -107,7 +107,7 @@ Every time you commit new code to your Zola site, Cloudflare Pages will automati
 
 ### Handling Preview Deployments
 
-When working with Cloudflare Pages, you'll often use preview deployments for testing changes before merging to your main branch. However, these preview deployments use different URLs (like `https://your-branch-name.my-zola-project.pages.dev`), which can cause issues with asset loading if your `base_url` is hardcoded.
+When working with Cloudflare Pages, you might use preview deployments for testing changes before merging to your main branch. However, these preview deployments use different URLs (like `https://your-branch-name.my-zola-project.pages.dev`), which can cause issues with asset loading if your `base_url` is hardcoded.
 
 To fix this, modify your build command in the Cloudflare Pages configuration to dynamically set the base URL depending on the environment:
 
