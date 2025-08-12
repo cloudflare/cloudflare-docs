@@ -94,13 +94,13 @@ export default function ResourcesBySelector({
 					let title;
 
 					if (page.collection === "docs") {
-						const titleItem = page.data.head.find(item => item.tag === 'title');
+						const titleItem = page.data.head.find(
+							(item) => item.tag === "title",
+						);
 						title = titleItem ? titleItem.content : page.data.title;
 					} else {
 						title = page.data.title;
 					}
-
-
 
 					return (
 						<a
@@ -115,8 +115,7 @@ export default function ResourcesBySelector({
 								<span className="line-clamp-3" title={page.data.description}>
 									{page.data.description}
 								</span>
-							)
-							}
+							)}
 						</a>
 					);
 				})}
