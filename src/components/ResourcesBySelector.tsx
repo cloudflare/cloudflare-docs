@@ -96,7 +96,6 @@ export default function ResourcesBySelector({
 					if (page.collection === "docs") {
 						const titleItem = page.data.head.find(item => item.tag === 'title');
 						title = titleItem ? titleItem.content : page.data.title;
-						console.log(title)
 					} else {
 						title = page.data.title;
 					}
