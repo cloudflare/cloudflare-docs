@@ -613,11 +613,15 @@ The country of the user making the request. <Render file="gateway/selectors/sour
 
 ### URL Path
 
+The pathname of a webpage's URL.
+
 | UI name  | API example                             |
 | -------- | --------------------------------------- |
 | URL Path | `http.request.uri.path == \"/foo/bar\"` |
 
 ### URL Path and Query
+
+The pathname and query of a webpage's URL.
 
 | UI name            | API example                                                     |
 | ------------------ | --------------------------------------------------------------- |
@@ -625,9 +629,11 @@ The country of the user making the request. <Render file="gateway/selectors/sour
 
 ### URL Query
 
-| UI name   | API example                          |
-| --------- | ------------------------------------ |
-| URL Query | `not(http.request.uri.query in $%s)` |
+The query of a webpage's URL.
+
+| UI name   | API example                                 |
+| --------- | ------------------------------------------- |
+| URL Query | `http.request.uri.query == "ab%242=%2A342"` |
 
 ### Users
 
