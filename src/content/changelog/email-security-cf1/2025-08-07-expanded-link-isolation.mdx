@@ -1,0 +1,24 @@
+---
+title: Expanded Email Link Isolation
+description: You can now apply email link isolation based on disposition  
+date: 2025-08-07T23:22:49Z
+---
+
+
+When deployed MX or Inline, not only can you apply email link isolation to suspicious links in all emails (including benign), but you can now also apply email link isolation to all links of a specified disposition. This provides more flexibility in controlling user actions within emails. 
+
+
+For example, you may want to deliver suspicious messages but isolate the links found within them so that users who choose to interact with the links will not accidentally expose your organization to threats.This means your end users are more secure than ever before.
+
+
+[Expanded Email Link Isolation Configuration](~/assets/images/changelog/email-security/expanded-link-actions.jpg)
+
+
+From **Settings** → **Link Actions**, select **Configure** to isolate all links within a message based on the disposition. As with other other links you isolate, an interstitial will be provided to warn users that this site has been isolated and the link will be recrawled live to see if there are any changes in our threat intel. Learn more about this feature on our [docs](https://developers.cloudflare.com/cloudflare-one/email-security/detection-settings/configure-link-actions/).
+
+
+
+
+This feature is available across these Email Security packages: 
+-   **Enterprise** 
+-   **Enterprise + PhishGuard** 
