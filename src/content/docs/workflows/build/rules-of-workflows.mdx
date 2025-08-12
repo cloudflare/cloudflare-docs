@@ -459,7 +459,7 @@ When creating multiple Workflow instances, use the [`createBatch`](/workflows/bu
 ```ts
 export default {
   async fetch(req: Request, env: Env): Promise<Response> {
-		let instances = [{ id: "order-1001", params: { totalUsd: 29.99 }}, { id: "order-1002", params: { totalUsd: 9.49 }}];
+		let instances = [{id: "user1", params: {name: "John"}}, {id: "user2", params: {name: "Jane"}}, {id: "user3", params: {name: "Alice"}}, {id: "user4", params: {name: "Bob"}}];
 
 		// 🔴 Bad: Create them one by one, which is more likely to hit creation rate limits.
 		for (let instance of instances) {
