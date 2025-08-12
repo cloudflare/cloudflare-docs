@@ -16,7 +16,7 @@ import { ResourcesBySelector } from "~/components";
 <ResourcesBySelector
 	directory="workers/examples/"
 	types={["example"]}
-	filterables={["languages", "tags"]}
+	filterables={["tags"]}
 />
 ```
 
@@ -28,7 +28,7 @@ import { ResourcesBySelector } from "~/components";
 
 - `filterables` <Type text="string[]" />
 
-  An array of frontmatter properties to show in the frontend filter dropdown. For example, `filterables={["languages", "tags"]}` will allow users to filter based on each pages `languages` and `tags` frontmatter.
+  An array of frontmatter properties to show in the frontend filter dropdown. For example, `filterables={["tags"]}` will allow users to filter based on each pages' `tags` frontmatter.
 
 - `types` <Type text="string[]" />
 
