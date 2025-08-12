@@ -129,7 +129,7 @@
 /src/content/partials/workers/ @cloudflare/workers-docs @GregBrimble @irvinebroque @mikenomitch @WalshyDev @cloudflare/deploy-config @cloudflare/pcx-technical-writing @kodster28 @cloudflare/wrangler @cloudflare/workers-runtime-1 @cloudflare/wrangler
 /src/assets/images/workers/ @cloudflare/workers-docs @GregBrimble @irvinebroque @WalshyDev @cloudflare/deploy-config @cloudflare/pcx-technical-writing @kodster28 @cloudflare/wrangler @cloudflare/workers-runtime-1 @cloudflare/wrangler
 /src/content/release-notes/workers.yaml @cloudflare/workers-docs @GregBrimble @WalshyDev @aninibread @cloudflare/deploy-config @cloudflare/pcx-technical-writing @irvinebroque @mikenomitch
-/src/content/docs/zaraz/ @bjesus @jonnyparris @simonabadoiu @cloudflare/pcx-technical-writing
+/src/content/docs/zaraz/ @ToriLindsay @bjesus @jonnyparris @simonabadoiu @cloudflare/pcx-technical-writing
 /src/content/release-notes/zaraz.yaml @bjesus @jonnyparris @simonabadoiu @cloudflare/pcx-technical-writing
 /src/content/docs/workers/ci-cd/ @irvinebroque @aninibread @GregBrimble @kodster28 @cloudflare/pcx-technical-writing
 /src/content/compatibility-flags/ @irvinebroque @mikenomitch @GregBrimble @cloudflare/pcx-technical-writing
@@ -155,7 +155,7 @@
 /src/content/docs/style-guide/ @dcpena @cloudflare/pcx-technical-writing
 
 # Google tag gateway
-/src/content/docs/google-tag-gateway/ @simonabadoiu @jonnyparris @cloudflare/pcx-technical-writing
+/src/content/docs/google-tag-gateway/ @ToriLindsay @simonabadoiu @jonnyparris @cloudflare/pcx-technical-writing
 
 # Magic products
 
