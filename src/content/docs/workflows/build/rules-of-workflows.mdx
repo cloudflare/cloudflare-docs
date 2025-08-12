@@ -461,7 +461,7 @@ export default {
   async fetch(req: Request, env: Env): Promise<Response> {
 		let instances = [{ id: "order-1001", params: { totalUsd: 29.99 }}, { id: "order-1002", params: { totalUsd: 9.49 }}];
 
-		// 🔴 Bad: Create them one by one, which is more likely to hit creation rate limits.
+		// 🔴 Bad: Create them one by one, which is more likely to hit creation rate limits. 
 		for (let instance of instances) {
 			await env.MY_WORKFLOW.create({
 				id: instance.id,
