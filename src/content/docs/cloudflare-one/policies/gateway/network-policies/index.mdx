@@ -355,7 +355,10 @@ The country of the user making the request. <Render file="gateway/selectors/sour
 
 ### Source IP
 
-<Render file="gateway/selectors/source-ip-net" />
+<Render
+	file="gateway/selectors/source-ip"
+	params={{ APIendpoint: "net.src.ip" }}
+/>
 
 ### Source Port
 
@@ -377,9 +380,7 @@ The country of the user making the request. <Render file="gateway/selectors/sour
 <Render file="gateway/comparison-operators" />
 
 :::note
-
 The _in_ operator allows you to specify IP addresses or networks using CIDR notation.
-
 :::
 
 ## Value
