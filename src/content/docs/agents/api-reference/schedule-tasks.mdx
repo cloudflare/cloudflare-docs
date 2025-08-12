@@ -60,7 +60,7 @@ let { id } = await this.schedule("*/10 * * * *", "someTask", { message: "hello" 
 // schedule a task to run every 10 minutes, but only on Mondays
 let task = await this.schedule("*/10 * * * 1", "someTask", { message: "hello" });
 
-// cancel a scheduled task
+// cancel a scheduled task 
 this.cancelSchedule(task.id);
 ```
 
