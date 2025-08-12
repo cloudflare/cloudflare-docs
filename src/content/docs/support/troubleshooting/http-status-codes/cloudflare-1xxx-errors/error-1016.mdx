@@ -32,9 +32,9 @@ Cloudflare returns a `1016` error when the [custom hostname](/cloudflare-for-pla
 
 ### Common cause
 
-- Custom hostname ownership validation is not complete. 
-- Fallback origin is not [correctly set](/cloudflare-for-platforms/cloudflare-for-saas/start/getting-started/#1-create-fallback-origin). 
-- A wildcard custom hostname has been created, but the requested hostname is associated with a domain that exists in Cloudflare as a standalone zone. 
+- Custom hostname ownership validation is not complete.
+- Fallback origin is not [correctly set](/cloudflare-for-platforms/cloudflare-for-saas/start/getting-started/#1-create-fallback-origin).
+- A wildcard custom hostname has been created, but the requested hostname is associated with a domain that exists in Cloudflare as a standalone zone.
 - There is no DNS record for the hostname in the Cloudflare for SaaS target zone.
 
 ### Resolution
@@ -44,4 +44,6 @@ Cloudflare returns a `1016` error when the [custom hostname](/cloudflare-for-pla
 3. The [hostname priority](/ssl/reference/certificate-and-hostname-priority/#hostname-priority) for the standalone zone will take precedence over the wildcard custom hostname. This behavior applies even if there is no DNS record for this standalone zone hostname. Use a specific hostname instead of a wildcard or [remove the standalone zone from Cloudflare](/fundamentals/manage-domains/remove-domain/).
 4. Make sure that each hostname that needs to be served by the Cloudflare for SaaS parent zone has been added as an individual custom hostname and has the status `active`.
 
+## Workers
 
+If you encounter this error with a Worker, you might be using the [Fetch API in a partial zone setup](/workers/platform/known-issues/#fetch-api-in-cname-setup).
