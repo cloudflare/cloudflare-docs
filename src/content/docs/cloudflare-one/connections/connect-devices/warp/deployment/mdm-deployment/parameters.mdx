@@ -50,6 +50,8 @@ You can use the following parameters to configure a specific Zero Trust organiza
 Enrolls the device in your Zero Trust organization using a [service token](/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/#check-for-service-token).
 Requires the `auth_client_secret` parameter.
 
+Note: The service token must have `Service Auth` [WARP enrollment permissions](/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/#example-policies). Allow permissions will not work for service tokens.
+
 **Value Type:** `string`
 
 **Value:** Client ID of the service token.
