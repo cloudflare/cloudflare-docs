@@ -267,7 +267,15 @@ You can create Access and Gateway policies for groups that are not synchronized 
 
 ### Nested groups
 
+#### Authentication
+
 Access and Gateway policies for an Entra group will also apply to all [nested groups](https://learn.microsoft.com/entra/fundamentals/how-to-manage-groups#add-a-group-to-another-group). For example, if a user belongs to the group `US devs`, and `US devs` is part of the broader group `Devs`, the user would be allowed or blocked by all policies created for `Devs`.
+
+#### SCIM provisioning
+
+For SCIM provisioning, [nested groups are not supported](https://learn.microsoft.com/en-us/entra/identity/app-provisioning/how-provisioning-works#assignment-based-scoping). Microsoft Entra ID's SCIM implementation does not send information about nested group memberships to Cloudflare. Only users who are direct members of an explicitly assigned group will be provisioned. To ensure group memberships are correctly synchronized, you must flatten your groups in Entra ID by directly assigning users to the groups you want to provision.
+
+Since the SCIM request from Microsoft does not include nested group information, neither Cloudflare nor Microsoft can provide a notification that nested groups are not being synchronized.
 
 ## Force user interaction during WARP reauthentication
 
