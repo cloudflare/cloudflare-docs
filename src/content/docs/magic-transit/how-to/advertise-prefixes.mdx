@@ -145,7 +145,7 @@ BGP has different mechanisms to control route priorities which are set by the pe
 
 :::caution
 For traffic originated from Cloudflare's services, Cloudflare's internal network will enforce local preference for traffic delivery to Magic Transit, even if a **shorter path** or even a **more specific route** is available over the Internet. You should withdraw a prefix completely from Cloudflare to avoid delivery of Cloudflare traffic over Magic Transit. 
-For example, if you have a CDN zone onboarded with a Magic Transit-protected origin, the proxied CDN traffic from Cloudflare's servers will continue to be delivered to your Magic Transit network and follow its route to your configured tunnesl, even if a more specific or shorter route is publicly available on the internet. 
+For example, if you have a CDN zone onboarded with a Magic Transit-protected origin, the proxied CDN traffic from Cloudflare's servers will continue to be delivered to your Magic Transit network and follow its route to your configured tunnel(s), even if a more specific or shorter route is publicly available on the internet. 
 :::
 
 ## BGP control with Cloudflare Route Reflectors
