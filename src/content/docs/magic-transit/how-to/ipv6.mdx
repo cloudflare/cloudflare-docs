@@ -50,7 +50,7 @@ To configure IPv6:
 
 Your account has been assigned the prefix `2001:db8:abcd:1234::/96`.
 
-In this example, the first two addresses in the range (`::0` and `::1`) are reserved for Cloudflare's internal use. You can use any of the remaining addresses in the `/96` block to create `/127` subnets for your tunnels.
+In this example, the first two addresses in the range (`::0` and `::1`) are reserved for Cloudflare. You can use any of the remaining addresses in the `/96` block to create `/127` subnets for your tunnels.
 
 If you decide to use the first available `/127` after the reserved addresses (`2001:db8:abcd:1234::2/127`), your configuration would be:
 - **Cloudflare IPv6 Interface address**: `2001:db8:abcd:1234::2`
