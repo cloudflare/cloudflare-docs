@@ -37,7 +37,7 @@ Since IPv6 works over an existing IPv4 tunnel you will need to choose either an 
 To test and set up IPv6 in the Cloudflare dashboard there is only one new field you need to fill out when creating a new IPv4 GRE tunnel or editing an existing one: **IPv6 Interface address**. This is where you enter the Cloudflare-assigned IPv6 address for the Cloudflare side of the tunnel. Each tunnel is assigned a `/127` subnet from your allocated `/96` range. You will configure one address on the Cloudflare side and the other address on your router.
 
 :::caution
-Cloudflare allocates a `/96` IPv6 prefix for each account. The first two addresses in this range are reserved for Cloudflare internal configuration. The remaining addresses are available for customer GRE tunnels, starting from `:2`, with two IPv6 addresses assigned per tunnel.
+Cloudflare allocates a `/96` IPv6 prefix for each account. The first two addresses in this range are reserved for Cloudflare. The remaining addresses are available for customer GRE tunnels, starting from `:2`, with two IPv6 addresses assigned per tunnel.
 :::
 
 To configure IPv6:
