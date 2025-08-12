@@ -278,7 +278,10 @@ Gateway matches network traffic against the following selectors, or criteria.
 
 ### Destination IP
 
-<Render file="gateway/selectors/destination-ip" />
+<Render
+	file="gateway/selectors/destination-ip"
+	params={{ APIendpoint: "net.dst.ip" }}
+/>
 
 ### Destination Port
 

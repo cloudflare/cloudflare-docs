@@ -436,9 +436,10 @@ Only applies to traffic sent through the [WARP client](/cloudflare-one/connectio
 Only applies to traffic sent through the [WARP client](/cloudflare-one/connections/connect-devices/warp/set-up-warp/#gateway-with-warp-default).
 :::
 
-| UI name        | API example                        |
-| -------------- | ---------------------------------- |
-| Destination IP | `http.conn.dst_ip == "10.0.0.0/8"` |
+<Render
+	file="gateway/selectors/destination-ip"
+	params={{ APIendpoint: "http.conn.dst_ip" }}
+/>
 
 ### Device Posture
 
@@ -555,11 +556,15 @@ Scans HTTP traffic for the presence of social security numbers and other PII. Yo
 
 ### HTTP Method
 
+The HTTP request method used in the traffic.
+
 | UI name     | API example                    |
 | ----------- | ------------------------------ |
 | HTTP Method | `http.request.method == "GET"` |
 
 ### HTTP Response
+
+The HTTP response status code received by the traffic.
 
 | UI name | API example                          |
 | ------- | ------------------------------------ |
