@@ -74,7 +74,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
   --output "advanced-screenshot.png"
 ```
 
-## Customize CSS and embed custom JavaScript
+### Customize CSS and embed custom JavaScript
 
 Instruct the browser to go to `https://example.com`, embed custom JavaScript (`addScriptTag`) and add extra styles (`addStyleTag`), both inline (`addStyleTag.content`) and by loading an external stylesheet (`addStyleTag.url`).
 
@@ -98,7 +98,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
   }' \
   --output "screenshot.png"
 ```
-## Take a screenshot of a specific element using the selector option
+### Capture a specific element using the selector option
 To capture a screenshot of a specific element on a webpage, use the `selector` option with a valid CSS selector. You can also configure the `viewport` to control the page dimensions during rendering.
 
 ```bash
