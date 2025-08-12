@@ -89,17 +89,13 @@ Connections to Zero Trust will always appear in your [Zero Trust network session
 Gateway applies your policies in the following order:
 
 1. DNS policies with selectors evaluated before resolution
-2. DNS policies with selectors evaluated after resolution
-3. HTTP policies
+2. Resolver policies (if applicable)
+3. DNS policies with selectors evaluated after resolution
 4. Network policies
-5. Resolver policies (if applicable)
-6. Egress policies (if applicable)
+5. Egress policies (if applicable)
+6. HTTP policies
 
-DNS policies are standalone. For example, if you block a site with a DNS policy but do not create a corresponding HTTP policy, users can still access the site if they know its IP address.
-
-Next, Gateway evaluates HTTP policies in [a specific order](#http-policies). For example, if you block a specific source IP in an HTTP policy but allow the IP range in a network policy, the IP address will be blocked.
-
-Lastly, if traffic passes your HTTP policies, Gateway checks the traffic against your network policies. For example, even if you create a Do Not Inspect HTTP policy for a site, it can be blocked by a subsequent network policy.
+DNS and resolver policies are standalone. For example, if you block a site with a DNS policy but do not create a corresponding HTTP policy, users can still access the site if they know its IP address.
 
 ### HTTP/3 traffic
 
