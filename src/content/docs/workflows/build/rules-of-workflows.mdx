@@ -403,7 +403,7 @@ export default {
     let instanceId = getTransactionId() // e.g. assuming transaction IDs are unique
     // or: compose a composite ID and store it in your database
     // so that you can track all instances associated with a specific user or merchant.
-    instanceId = `${getUserId(req)}-${await crypto.randomUUID().slice(0, 6)}`
+    instanceId = `${getUserId(req)}-${await crypto.randomUUID().slice(0, 6)}` 
     let { result } = await addNewInstanceToDB(userId, instanceId)
     let goodInstance = await env.MY_WORKFLOW.create({
     	id: userId,
