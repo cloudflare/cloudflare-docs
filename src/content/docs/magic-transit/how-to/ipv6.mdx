@@ -48,18 +48,17 @@ To configure IPv6:
 
 **Example**
 
-Your account is allocated the prefix `2001:db8:abcd:1234::/96`.
+Your account has been assigned the prefix `2001:db8:abcd:1234::/96`.
 
-- First two addresses (`::0` and `::1`) are reserved for Cloudflare internal use.
-- You can use any other addresses in the `/96` prefix to create your own `/127` subnets for tunnels.
+In this example, the first two addresses in the range (`::0` and `::1`) are reserved for Cloudflare's internal use. You can use any of the remaining addresses in the `/96` block to create `/127` subnets for your tunnels.
 
-If you decide to use the first available `/127` prefix after the reserved addresses, for example `2001:db8:abcd:1234::2/127`:
-- Cloudflare IPv6 interface address would be `2001:db8:abcd:1234::2`
-- Router IPv6 address would be `2001:db8:abcd:1234::3`
+If you decide to use the first available `/127` after the reserved addresses (`2001:db8:abcd:1234::2/127`):
+- **Cloudflare IPv6 Interface address**: `2001:db8:abcd:1234::2`
+- **Router IPv6 address**: `2001:db8:abcd:1234::3`
 
-Tunnel 2 would be `2001:db8:abcd:1234::4/127`:
-- Cloudflare IPv6 Interface address would be `2001:db8:abcd:1234::4`
-- Router IPv6 address: `2001:db8:abcd:1234::5`
+Following our example, the next `/127` for the second tunnel (`2001:db8:abcd:1234::4/127`) is configured like so:
+- **Cloudflare IPv6 Interface address**: `2001:db8:abcd:1234::4`
+- **Router IPv6 address**: `2001:db8:abcd:1234::5`
 
 After the first two reserved addresses, you can continue allocating `/127` subnets sequentially (or in any order you prefer) for as many tunnels as needed until you reach the end of your `/96` range. Each `/127` contains exactly two IPv6 addresses - one for Cloudflare, one for your router.
 
