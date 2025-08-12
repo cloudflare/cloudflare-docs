@@ -261,6 +261,18 @@ Type: `string`
 
 The protocol used for the DNS query by the client (for example, 'udp').
 
+## QueryApplicationIDs
+
+Type: `array[int]`
+
+ID or IDs of applications the queried domain belongs to (for example, [1, 51])
+
+## QueryApplicationNames
+
+Type: `array[string]`
+
+Name or names of applications the queried domain belongs to (for example, ['Cloudflare Dashboard'])
+
 ## QueryCategoryIDs
 
 Type: `array[int]`

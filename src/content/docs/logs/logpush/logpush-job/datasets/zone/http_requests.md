@@ -157,7 +157,7 @@ HTTP method of client request.
 
 Type: `string`
 
-URI path requested by the client.
+URI path requested by the client, which includes only the path portion of the requested URL, without the query string.
 
 ## ClientRequestProtocol
 
@@ -187,7 +187,7 @@ Identifies requests as coming from an external source or another service within 
 
 Type: `string`
 
-URI requested by the client.
+URI requested by the client, which includes the full path and query string of the requested URL.
 
 ## ClientRequestUserAgent
 
@@ -345,6 +345,24 @@ Type: `int`
 
 Total view of Time To First Byte as measured at Cloudflare's edge. Starts after a TCP connection is established and ends when Cloudflare begins returning the first byte of a response to eyeballs. Includes TLS handshake time (for new connections) and origin response time.
 
+## FraudAttack
+
+Type: `string`
+
+The primary attack or use case detected in the request by Fraud detections.
+
+## FraudDetectionIDs
+
+Type: `array[int]`
+
+List of IDs that correlate to the Fraud detections made on a request.
+
+## FraudDetectionTags
+
+Type: `array[string]`
+
+List of tags that correlate to the Fraud detections made on a request.
+
 ## JA3Hash
 
 Type: `string`
@@ -362,6 +380,12 @@ The JA4 fingerprint used to profile SSL/TLS clients. Available only for Bot Mana
 Type: `object`
 
 Inter-request statistics computed for this JA4 fingerprint. JA4Signals field is organized in key:value pairs, where values are numbers. Available only for Bot Management customers. To enable this feature, contact your account team.
+
+## JSDetectionPassed
+
+Type: `string`
+
+Whether the request passed background JavaScript Detection. <br />Possible values are <em>passed</em> \| <em>failed</em> \| <em>missing</em>. Available only for Bot Management customers. To enable this feature, contact your account team.
 
 ## LeakedCredentialCheckResult
 
@@ -518,6 +542,12 @@ The Cloudflare data center used to connect to the origin server if Argo Smart Ro
 Type: `int`
 
 The "upper tier" data center that was checked for a cached copy if Tiered Cache is used.
+
+## VerifiedBotCategory
+
+Type: `string`
+
+The category of verified bot.
 
 ## WAFAttackScore
 
