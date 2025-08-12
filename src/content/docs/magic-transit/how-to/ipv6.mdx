@@ -46,17 +46,17 @@ To configure IPv6:
 2. In **IPv6 Interface address**, enter the IPv6 address assigned to you for the Cloudflare side of the tunnel. This address is one of the two addresses in the `/127` subnet allocated from your `/96` allocation.
 3. Configure your router with the paired IPv6 address from the same `/127` subnet.
 
-**Example**
+### Example
 
 Your account has been assigned the prefix `2001:db8:abcd:1234::/96`.
 
 In this example, the first two addresses in the range (`::0` and `::1`) are reserved for Cloudflare's internal use. You can use any of the remaining addresses in the `/96` block to create `/127` subnets for your tunnels.
 
-If you decide to use the first available `/127` after the reserved addresses (`2001:db8:abcd:1234::2/127`):
+If you decide to use the first available `/127` after the reserved addresses (`2001:db8:abcd:1234::2/127`), your configuration would be:
 - **Cloudflare IPv6 Interface address**: `2001:db8:abcd:1234::2`
 - **Router IPv6 address**: `2001:db8:abcd:1234::3`
 
-Following our example, the next `/127` for the second tunnel (`2001:db8:abcd:1234::4/127`) is configured like so:
+Continuing with the example, the next `/127` for the second tunnel would be `2001:db8:abcd:1234::4/127`. Thus, your configuration would be:
 - **Cloudflare IPv6 Interface address**: `2001:db8:abcd:1234::4`
 - **Router IPv6 address**: `2001:db8:abcd:1234::5`
 
