@@ -13,5 +13,6 @@ export const videosSchema = z
 		updated: z.coerce.date(),
 		difficulty: z.string(),
 		pcx_content_type: z.string(),
+		languages: z.string().array().optional(),
 	})
 	.strict();

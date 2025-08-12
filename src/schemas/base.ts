@@ -89,7 +89,6 @@ export const baseSchema = ({ image }: SchemaContext) =>
 			.describe(
 				"The names of related products, which show on some grids for Examples, [Tutorials](/style-guide/documentation-content-strategy/content-types/tutorial/), and [Reference Architectures](/style-guide/documentation-content-strategy/content-types/reference-architecture/)",
 			),
-		languages: z.string().array().optional(),
 		summary: z.string().optional(),
 		goal: z.string().array().optional(),
 		operation: z.string().array().optional(),
