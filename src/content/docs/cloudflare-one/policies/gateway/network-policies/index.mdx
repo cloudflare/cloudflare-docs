@@ -322,7 +322,7 @@ To enable Gateway filtering on TCP and UDP, go to **Settings** > **Network** > *
 
 The host whose Server Name Indication (SNI) header Gateway will filter traffic against. This will allow for an exact match.
 
-This selector only applies to traffic on port `443`.
+By default, this selector only applies to HTTPS traffic on port `443`. To inspect traffic on every port, turn on [protocol detection](/cloudflare-one/policies/gateway/network-policies/protocol-detection/) and choose to [inspect on all ports](/cloudflare-one/policies/gateway/network-policies/protocol-detection/#inspect-on-all-ports).
 
 | UI name | API example                         |
 | ------- | ----------------------------------- |
@@ -332,7 +332,7 @@ This selector only applies to traffic on port `443`.
 
 The domain whose Server Name Indication (SNI) header Gateway will filter traffic against. For example, a rule for `example.com` will match `example.com`, `www.example.com`, and `my.test.example.com`.
 
-This selector only applies to traffic on port `443`.
+By default, this selector only applies to HTTPS traffic on port `443`. To inspect traffic on every port, turn on [protocol detection](/cloudflare-one/policies/gateway/network-policies/protocol-detection/) and choose to [inspect on all ports](/cloudflare-one/policies/gateway/network-policies/protocol-detection/#inspect-on-all-ports).
 
 | UI name    | API example                        |
 | ---------- | ---------------------------------- |
