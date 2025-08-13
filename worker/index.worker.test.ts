@@ -316,7 +316,7 @@ describe("Cloudflare Docs", () => {
 
 				expect(product).toBe("Access");
 				expect(group).toBe("Cloudflare One");
-				expect(group).toBe("Changelog entry");
+				expect(content_type).toBe("Changelog entry");
 			});
 		});
 	});
