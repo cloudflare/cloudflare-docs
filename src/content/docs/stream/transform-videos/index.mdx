@@ -126,9 +126,9 @@ Specifies the filename to use in the returned Content-Disposition header. If not
 
 ## Source video requirements
 
-Input video must be less than 100MB.
-
-Input video should be an MP4 with H.264 encoded video and AAC or MP3 encoded audio. Other formats may work but are untested.
+- Input video must be less than 100MB.
+- Input video should be an MP4 with H.264 encoded video and AAC or MP3 encoded audio. Other formats may work but are untested.
+- Origin must support either HTTP HEAD and range requests, and must return a Content-Range header.
 
 ## Limitations
 
