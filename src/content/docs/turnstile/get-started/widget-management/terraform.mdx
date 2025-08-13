@@ -23,6 +23,8 @@ Before you begin, you must have:
 
 Create a `main.tf` file.
 
+<Render file="v4-code-snippets" product="terraform" />
+
 ```tf
 terraform {
   required_providers {
@@ -172,7 +174,7 @@ resource "cloudflare_turnstile_widget" "enterprise_widget" {
 
 ## Import existing widgets
 
-Use `cf-terraforming` to import existing widgets.
+Use [`cf-terraforming`](/terraform/advanced-topics/import-cloudflare-resources/#cf-terraforming) to import existing widgets.
 
 ```shell title="Install cf-terraforming"
 go install github.com/cloudflare/cf-terraforming/cmd/cf-terraforming@latest
