@@ -18,6 +18,7 @@ const props = z.object({
 	filterables: z.custom<ResourcesData>().array().optional(),
 	columns: z.union([z.literal(2), z.literal(3)]).default(2),
 	showDescriptions: z.boolean().default(true),
+	showLastUpdated: z.boolean().default(false),
 });
 
 const {
@@ -28,6 +29,7 @@ const {
 	filterables,
 	columns,
 	showDescriptions,
+	showLastUpdated,
 } = props.parse(Astro.props);
 
 const docs = await getCollection("docs");
@@ -78,6 +80,7 @@ const facets = resources.reduce(
 		filters={filterables}
 		columns={columns}
 		showDescriptions={showDescriptions}
+		showLastUpdated={showLastUpdated}
 		client:load
 	/>
 </div>
