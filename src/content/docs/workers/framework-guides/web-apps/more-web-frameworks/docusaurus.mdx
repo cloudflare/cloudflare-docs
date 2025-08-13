@@ -75,7 +75,7 @@ If your Docusaurus project is entirely pre-rendered (which it usually is), follo
 
 
 <Steps>
-1.  **Add a Wrangler configuration file**
+1.  **Add a Wrangler configuration file.**
 
     In your project root, create a Wrangler configuration file with the following content:
 
@@ -95,12 +95,12 @@ If your Docusaurus project is entirely pre-rendered (which it usually is), follo
     </WranglerConfig>
     <Details header="What's this configuration doing?">
     	The key part of this config is the `assets` field, which tells Wrangler where to find your static assets. In this case, we're telling Wrangler to look in the `./build` directory. If your assets are in a different directory, update the `directory` value accordingly.
-    		Read about other [asset configuration options](/workers/static-assets/routing/).
+    		Refer to other [asset configuration options](/workers/static-assets/routing/).
 
     			Also note how there's no `main` field in this config - this is because you're only serving static assets, so no Worker code is needed for on demand rendering/SSR.
     </Details>
 
-2.  **Build and deploy your project**
+2.  **Build and deploy your project.**
 
         		You can deploy your project to a [`*.workers.dev` subdomain](/workers/configuration/routing/workers-dev/) or a [custom domain](/workers/configuration/routing/custom-domains/) from your local machine or any CI/CD system (including [Workers Builds](/workers/ci-cd/#workers-builds)). Use the following command to build and deploy. If you're using a CI service, be sure to update your "deploy command" accordingly.
 
