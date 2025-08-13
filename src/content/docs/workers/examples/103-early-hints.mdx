@@ -116,7 +116,7 @@ export default {
 
 ```py
 import re
-from workers import Response
+from workers import Response, WorkerEntrypoint
 
 CSS = "body { color: red; }"
 HTML = """
@@ -132,12 +132,14 @@ HTML = """
 </body>
 </html>
 """
-def on_fetch(request):
-    if re.search("test.css", request.url):
-        headers = {"content-type": "text/css"}
-        return Response(CSS, headers=headers)
-    else:
-        headers = {"content-type": "text/html","link": "</test.css>; rel=preload; as=style"}
+
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        if re.search("test.css", request.url):
+            headers = {"content-type": "text/css"}
+            return Response(CSS, headers=headers)
+        else:
+            headers = {"content-type": "text/html","link": "</test.css>; rel=preload; as=style"}
         return Response(HTML, headers=headers)
 ```
 

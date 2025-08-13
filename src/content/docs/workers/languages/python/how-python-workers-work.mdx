@@ -18,10 +18,11 @@ When you write a Python Worker, your code is interpreted directly by Pyodide, wi
 ## Local Development Lifecycle
 
 ```python
-from workers import Response
+from workers import Response, WorkerEntrypoint
 
-async def on_fetch(request, env):
-    return Response("Hello world!")
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        return Response("Hello world!")
 ```
 
 …with a [Wrangler configuration file](/workers/wrangler/configuration/) that points to a .py file:

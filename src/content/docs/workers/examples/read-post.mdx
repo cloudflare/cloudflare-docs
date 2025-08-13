@@ -147,7 +147,7 @@ export default {
 </TabItem> <TabItem label="Python" icon="seti:python">
 
 ```py
-
+from workers import WorkerEntrypoint
 from js import Object, Response, Headers, JSON
 
 async def read_request_body(request):
@@ -162,20 +162,21 @@ async def read_request_body(request):
         return JSON.stringify(data)
     return await request.text()
 
-async def on_fetch(request):
-    def raw_html_response(html):
-        headers = Headers.new({"content-type": "text/html;charset=UTF-8"}.items())
-        return Response.new(html, headers=headers)
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        def raw_html_response(html):
+            headers = Headers.new({"content-type": "text/html;charset=UTF-8"}.items())
+            return Response.new(html, headers=headers)
 
-    if "form" in request.url:
-        return raw_html_response("")
+        if "form" in request.url:
+            return raw_html_response("")
 
-    if "POST" in request.method:
-        req_body = await read_request_body(request)
-        ret_body = f"The request body sent in was {req_body}"
-        return Response.new(ret_body)
+        if "POST" in request.method:
+            req_body = await read_request_body(request)
+            ret_body = f"The request body sent in was {req_body}"
+            return Response.new(ret_body)
 
-    return Response.new("The request was not POST")
+        return Response.new("The request was not POST")
 ```
 
 </TabItem> <TabItem label="Rust" icon="seti:rust">

@@ -14,34 +14,36 @@ In addition to those examples, consider the following ones that illustrate Pytho
 ## Parse an incoming request URL
 
 ```python
-from workers import Response
+from workers import WorkerEntrypoint, Response
 from urllib.parse import urlparse, parse_qs
 
-async def on_fetch(request, env):
-    # Parse the incoming request URL
-    url = urlparse(request.url)
-    # Parse the query parameters into a Python dictionary
-    params = parse_qs(url.query)
+class Default(WorkerEntrypoint):
+    async def fetch(self, request, env):
+        # Parse the incoming request URL
+        url = urlparse(request.url)
+        # Parse the query parameters into a Python dictionary
+        params = parse_qs(url.query)
 
-    if "name" in params:
-        greeting = "Hello there, {name}".format(name=params["name"][0])
-        return Response(greeting)
+        if "name" in params:
+            greeting = "Hello there, {name}".format(name=params["name"][0])
+            return Response(greeting)
 
 
-    if url.path == "/favicon.ico":
-      return Response("")
+        if url.path == "/favicon.ico":
+          return Response("")
 
-    return Response("Hello world!")
+        return Response("Hello world!")
 ```
 
 ## Parse JSON from the incoming request
 
 ```python
-from workers import Response
+from workers import WorkerEntrypoint, Response
 
-async def on_fetch(request):
-    name = (await request.json()).name
-    return Response("Hello, {name}".format(name=name))
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        name = (await request.json()).name
+        return Response("Hello, {name}".format(name=name))
 ```
 
 ## Emit logs from your Python Worker
@@ -49,28 +51,29 @@ async def on_fetch(request):
 ```python
 # To use the JavaScript console APIs
 from js import console
-from workers import Response
+from workers import WorkerEntrypoint, Response
 # To use the native Python logging
 import logging
 
-async def on_fetch(request):
-    # Use the console APIs from JavaScript
-    # https://developer.mozilla.org/en-US/docs/Web/API/console
-    console.log("console.log from Python!")
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        # Use the console APIs from JavaScript
+        # https://developer.mozilla.org/en-US/docs/Web/API/console
+        console.log("console.log from Python!")
 
-    # Alternatively, use the native Python logger
-    logger = logging.getLogger(__name__)
+        # Alternatively, use the native Python logger
+        logger = logging.getLogger(__name__)
 
-    # The default level is warning. We can change that to info.
-    logging.basicConfig(level=logging.INFO)
+        # The default level is warning. We can change that to info.
+        logging.basicConfig(level=logging.INFO)
 
-    logger.error("error from Python!")
-    logger.info("info log from Python!")
+        logger.error("error from Python!")
+        logger.info("info log from Python!")
 
-    # Or just use print()
-    print("print() from Python!")
+        # Or just use print()
+        print("print() from Python!")
 
-    return Response("We're testing logging!")
+        return Response("We're testing logging!")
 ```
 
 ## Publish to a Queue
@@ -79,35 +82,37 @@ async def on_fetch(request):
 from js import Object
 from pyodide.ffi import to_js as _to_js
 
-from workers import Response
+from workers import WorkerEntrypoint, Response
 
 # to_js converts between Python dictionaries and JavaScript Objects
 def to_js(obj):
    return _to_js(obj, dict_converter=Object.fromEntries)
 
-async def on_fetch(request, env):
-    # Bindings are available on the 'env' parameter
-    # https://developers.cloudflare.com/queues/
+class Default(WorkerEntrypoint):
+    async def fetch(self, request, env):
+        # Bindings are available on the 'env' parameter
+        # https://developers.cloudflare.com/queues/
 
-    # The default contentType is "json"
-    # We can also pass plain text strings
-    await env.QUEUE.send("hello", contentType="text")
-    # Send a JSON payload
-    await env.QUEUE.send(to_js({"hello": "world"}))
+        # The default contentType is "json"
+        # We can also pass plain text strings
+        await env.QUEUE.send("hello", contentType="text")
+        # Send a JSON payload
+        await env.QUEUE.send(to_js({"hello": "world"}))
 
-    # Return a response
-    return Response.json({"write": "success"})
+        # Return a response
+        return Response.json({"write": "success"})
 ```
 
 ## Query a D1 Database
 
 ```python
-from workers import Response
+from workers import WorkerEntrypoint, Response
 
-async def on_fetch(request, env):
-    results = await env.DB.prepare("PRAGMA table_list").run()
-    # Return a JSON response
-    return Response.json(results)
+class Default(WorkerEntrypoint):
+    async def fetch(self, request, env):
+        results = await env.DB.prepare("PRAGMA table_list").run()
+        # Return a JSON response
+        return Response.json(results)
 ```
 
 Refer to [Query D1 from Python Workers](/d1/examples/query-d1-from-python-workers/) for a more in-depth tutorial that covers how to create a new D1 database and configure bindings to D1.

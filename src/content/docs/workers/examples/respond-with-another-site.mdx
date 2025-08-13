@@ -53,19 +53,20 @@ export default {
 </TabItem> <TabItem label="Python" icon="seti:python">
 
 ```py
-from workers import Response, fetch
+from workers import WorkerEntrypoint, Response, fetch
 
-def on_fetch(request):
-    def method_not_allowed(request):
-        msg = f'Method {request.method} not allowed.'
-        headers = {"Allow": "GET"}
-        return Response(msg, headers=headers, status=405)
+class Default(WorkerEntrypoint):
+    def fetch(self, request):
+        def method_not_allowed(request):
+            msg = f'Method {request.method} not allowed.'
+            headers = {"Allow": "GET"}
+            return Response(msg, headers=headers, status=405)
 
-    # Only GET requests work with this proxy.
-    if request.method != "GET":
-        return method_not_allowed(request)
+        # Only GET requests work with this proxy.
+        if request.method != "GET":
+            return method_not_allowed(request)
 
-    return fetch("https://example.com")
+        return fetch("https://example.com")
 ```
 
 </TabItem></Tabs>
