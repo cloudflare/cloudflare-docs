@@ -12,6 +12,7 @@ interface Props {
 	facets: Record<string, string[]>;
 	filters?: ResourcesData[];
 	columns: number;
+	showDescriptions: boolean;
 }
 
 export default function ResourcesBySelector({
@@ -19,6 +20,7 @@ export default function ResourcesBySelector({
 	facets,
 	filters,
 	columns,
+	showDescriptions,
 }: Props) {
 	const [selectedFilter, setSelectedFilter] = useState<string | null>(null);
 
@@ -89,6 +91,17 @@ export default function ResourcesBySelector({
 							? `/videos/${page.data.url}/`
 							: `/${page.id}/`;
 
+					let title;
+
+					if (page.collection === "docs") {
+						const titleItem = page.data.head.find(
+							(item) => item.tag === "title",
+						);
+						title = titleItem ? titleItem.content : page.data.title;
+					} else {
+						title = page.data.title;
+					}
+
 					return (
 						<a
 							key={page.id}
@@ -96,11 +109,13 @@ export default function ResourcesBySelector({
 							className="flex flex-col gap-2 rounded-sm border border-solid border-gray-200 p-6 text-black no-underline hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800"
 						>
 							<p className="decoration-accent underline decoration-2 underline-offset-4">
-								{page.data.title}
+								{title}
 							</p>
-							<span className="line-clamp-3" title={page.data.description}>
-								{page.data.description}
-							</span>
+							{showDescriptions && (
+								<span className="line-clamp-3" title={page.data.description}>
+									{page.data.description}
+								</span>
+							)}
 						</a>
 					);
 				})}

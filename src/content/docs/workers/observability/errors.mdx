@@ -323,6 +323,10 @@ function postLog(data) {
 
 </TabItem> </Tabs>
 
+## Collect and persist Wasm core dumps
+
+Configure the [Wasm Coredump Service](https://github.com/cloudflare/wasm-coredump) to collect coredumps from your Rust Workers applications and persist them to logs, Sentry, or R2 for analysis with [wasmgdb](https://github.com/xtuc/wasm-coredump/tree/main/bin/wasmgdb). Read the [blog post](https://blog.cloudflare.com/wasm-coredumps/) for more details.
+
 ## Go to origin on error
 
 By using [`event.passThroughOnException`](/workers/runtime-apis/context/#passthroughonexception), a Workers application will forward requests to your origin if an exception is thrown during the Worker's execution. This allows you to add logging, tracking, or other features with Workers, without degrading your application's functionality.

@@ -35,6 +35,8 @@ const props = {
 		template: "splash",
 		noindex: note.data.hidden,
 		chatbot_deprioritize: true,
+		pcx_content_type: "changelog-entry",
+		products: note.data.products.map(a => a.id),
 	},
 	headings,
 	hideTitle: true,

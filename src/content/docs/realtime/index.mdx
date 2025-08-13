@@ -8,27 +8,92 @@ head:
     content: Overview
 ---
 
-import { Description, LinkButton } from "~/components";
+import {
+	Description,
+	LinkButton,
+	RelatedProduct,
+	CardGrid,
+	LinkTitleCard,
+} from "~/components";
 
 <Description>
 
-Build real-time serverless video, audio and data applications.
+Build Realtime apps with lowest latency - at any scale!
 
 </Description>
 
-Cloudflare Realtime is infrastructure for real-time audio/video/data applications. It allows you to build real-time apps without worrying about scaling or regions. It can act as a selective forwarding unit (WebRTC SFU), as a fanout delivery system for broadcasting (WebRTC CDN) or anything in between.
+Cloudflare Realtime is a comprehensive suite of products designed to help you build powerful, scalable real-time applications. It has three main offerings:
 
-Cloudflare Realtime runs on [Cloudflare's global cloud network](https://www.cloudflare.com/network/) in hundreds of cities worldwide.
+### RealtimeKit
 
-<LinkButton variant="primary" href="/realtime/get-started/">
+Cloudflare [RealtimeKit](/realtime/introduction) allows you to integrate programmable and easily customizable live video and voice into your web, mobile, and desktop applications. With just a few lines of code, you can enable live video communication, voice calls, and interactive live streaming.
+
+At its core, RealtimeKit is powered by the [Realtime SFU](/realtime/sfu), which efficiently routes video and audio streams between participants. RealtimeKit provides a set of user-friendly SDKs and APIs that act as a layer on top of the SFU, so you don't have to handle the complexities of media track management, peer management, and other intricate WebRTC-related tasks.
+
+### Realtime SFU
+
+The [Realtime SFU (Selective Forwarding Unit)](/realtime/sfu) is a powerful media server that efficiently routes video and audio streams between participants, and underpins the RealtimeKit. The Realtime SFU runs on [Cloudflare's global cloud network](https://www.cloudflare.com/network/) in hundreds of cities worldwide. For developers with WebRTC expertise, the SFU can be used independently to build highly custom applications that require full control over media streams. This is recommended only for those who want to leverage Cloudflare's network with their own WebRTC logic.
+
+### TURN Service
+
+The [TURN service](/realtime/turn) is a managed service that acts as a relay for WebRTC traffic. It ensures connectivity for users behind restrictive firewalls or NATs by providing a public relay point for media streams.
+
+<LinkButton variant="primary" href="/realtime/getting-started/">
 	Get started
 </LinkButton>
 <LinkButton
 	variant="secondary"
-	href="https://dash.cloudflare.com/?to=/:account/calls"
+	href="https://dash.cloudflare.com/?to=/:account/realtime"
 >
 	Realtime dashboard
 </LinkButton>
-<LinkButton variant="secondary" href="https://github.com/cloudflare/orange">
-	Orange Meets demo app
+<LinkButton variant="secondary" href="https://demo.realtime.cloudflare.com">
+	RealtimeKit demo app
 </LinkButton>
+
+## Related products
+
+<RelatedProduct header="Workers AI" href="/workers-ai/" product="workers-ai">
+
+Run machine learning models, powered by serverless GPUs, on Cloudflare’s global network.
+
+</RelatedProduct>
+
+<RelatedProduct header="Stream" href="/stream/" product="stream">
+
+Cloudflare Stream lets you or your end users upload, store, encode, and deliver live and on-demand video with one API, without configuring or maintaining infrastructure.
+
+</RelatedProduct>
+
+## More resources
+
+<CardGrid>
+
+<LinkTitleCard
+	title="Developer Discord"
+	href="https://discord.cloudflare.com"
+	icon="discord"
+>
+	Connect with the Realtime community on Discord to ask questions, show what you
+	are building, and discuss the platform with other developers.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Use cases"
+	href="/realtime/introduction#use-cases"
+	icon="document"
+>
+	Learn how you can build and deploy ambitious Realtime applications to
+	Cloudflare's global network.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="@CloudflareDev"
+	href="https://x.com/cloudflaredev"
+	icon="x.com"
+>
+	Follow @CloudflareDev on Twitter to learn about product announcements, and
+	what is new in Cloudflare Workers.
+</LinkTitleCard>
+
+</CardGrid>

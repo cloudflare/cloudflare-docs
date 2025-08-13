@@ -72,7 +72,6 @@ async def on_scheduled(controller, env, ctx):
 </TabItem></Tabs>
 
 - <code>fetch(resource, options optional)</code> : Promise`<Response>`
-
   - Fetch returns a promise to a Response.
 
 ### Parameters
@@ -85,8 +84,8 @@ async def on_scheduled(controller, env, ctx):
       Any other `cache` header will result in a `TypeError` with the message `Unsupported cache mode: <attempted-cache-mode>`.
       _ For all requests this forwards the `Pragma: no-cache` and `Cache-Control: no-cache` headers to the origin.
       _ For `no-store`, requests to origins not hosted by Cloudflare bypass the use of Cloudflare's caches.
-			_ For `no-cache`, requests to origins not hosted by Cloudflare are forced to revalidate with
-			the origin before resonding.
+      \_ For `no-cache`, requests to origins not hosted by Cloudflare are forced to revalidate with
+      the origin before resonding.
   - An object that defines the content and behavior of the request.
 
 ---
@@ -136,3 +135,4 @@ export default {
 - [Example: cache using Fetch](/workers/examples/cache-using-fetch/)
 - Write your Worker code in [ES modules syntax](/workers/reference/migrate-to-module-workers/) for an optimized experience.
 - [Error 526](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-526/#error-526-in-the-workers-context)
+- [Fetch API in a partial setup](/workers/platform/known-issues/#fetch-api-in-cname-setup)

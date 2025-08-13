@@ -17,11 +17,18 @@ const props = z.object({
 	directory: z.string().optional(),
 	filterables: z.custom<ResourcesData>().array().optional(),
 	columns: z.union([z.literal(2), z.literal(3)]).default(2),
+	showDescriptions: z.boolean().default(true),
 });
 
-const { tags, types, products, directory, filterables, columns } = props.parse(
-	Astro.props,
-);
+const {
+	tags,
+	types,
+	products,
+	directory,
+	filterables,
+	columns,
+	showDescriptions,
+} = props.parse(Astro.props);
 
 const docs = await getCollection("docs");
 const videos = await getCollection("stream");
@@ -70,6 +77,7 @@ const facets = resources.reduce(
 		facets={facets}
 		filters={filterables}
 		columns={columns}
+		showDescriptions={showDescriptions}
 		client:load
 	/>
 </div>

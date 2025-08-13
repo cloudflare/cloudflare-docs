@@ -16,10 +16,19 @@ To configure link actions:
 1. Log in to [Zero Trust](https://one.dash.cloudflare.com/).
 2. Select **Email Security**.
 3. Select **Settings**, then go to **Detection settings** > **Link actions** > **View**.
-4. Select **Configure**:
-    - **Email link isolation (Recommended)**: This option allows Email Security to open all suspicious links in an isolated browser environment. This option is on by default.
-    - **Assign actions based on dispositions**: Review the [disposition types](/cloudflare-one/email-security/reference/dispositions-and-attributes/#dispositions) and select link actions (choose between **URL defang** to allow links to be unclickable, or **No action** for no action to be taken on the link).
-5. Select **Save**.
+
+You can configure **Link actions settings**, or **URL rewrite ignore patterns**.
+
+## Link actions settings
+
+To configure link actions, select **Configure**.
+
+The dashboard will display **Open links evaluated as suspicious in a remote browser (Recommended)**. This option is turned on by default. Email Security will also allow you to select message dispositions to open all the links for dispositioned emails in a remote browser.
+
+
+Select one or more disposition, then select **Save**.
+
+If **Open links evaluated as suspicious in a remote browser (Recommended)** is turned off, you can select **URL defang** or **No action** on each disposition. Select **Save** once you have completed the configuration.
 
 ## Add patterns for URLs
 

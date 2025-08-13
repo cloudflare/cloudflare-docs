@@ -278,7 +278,10 @@ Gateway matches network traffic against the following selectors, or criteria.
 
 ### Destination IP
 
-<Render file="gateway/selectors/destination-ip" />
+<Render
+	file="gateway/selectors/destination-ip"
+	params={{ APIendpoint: "net.dst.ip" }}
+/>
 
 ### Destination Port
 
@@ -301,16 +304,14 @@ The inferred network protocol based on Cloudflare's [protocol detection](/cloudf
 <Render file="gateway/selectors/protocol" />
 
 :::note
-
 To enable Gateway filtering on TCP and UDP, go to **Settings** > **Network** > **Proxy**. Network policies apply to all enabled protocols unless you use the **Protocol** selector within a policy.
-
 :::
 
 ### Proxy Endpoint
 
 <Render file="gateway/selectors/proxy-endpoint" />
 
-### Security Risks
+### Security Categories
 
 <Render
 	file="gateway/selectors/security-risks"
@@ -354,7 +355,10 @@ The country of the user making the request. <Render file="gateway/selectors/sour
 
 ### Source IP
 
-<Render file="gateway/selectors/source-ip-net" />
+<Render
+	file="gateway/selectors/source-ip"
+	params={{ APIendpoint: "net.src.ip" }}
+/>
 
 ### Source Port
 
@@ -376,9 +380,7 @@ The country of the user making the request. <Render file="gateway/selectors/sour
 <Render file="gateway/comparison-operators" />
 
 :::note
-
 The _in_ operator allows you to specify IP addresses or networks using CIDR notation.
-
 :::
 
 ## Value

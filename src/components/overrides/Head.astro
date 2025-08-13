@@ -29,38 +29,44 @@ const shouldChatbotDeprioritize =
 	frontmatter.sidebar.hidden ||
 	frontmatter.chatbot_deprioritize;
 
+// if not a top-level page, add metadata values from src/content/products/ entries
 if (currentSection) {
-	const product = await getEntry("products", currentSection);
+	// if entry for product, grab and proceed
+	let product = await getEntry("products", currentSection);
+	// if entry for changelog, grab the first product value (which corresponds to the folder the entry is in) and use as the primary "product"
+	if (currentSection === "changelog") {
+		const products = frontmatter.products
+		if (products) {
+			product = await getEntry("products", products[0]);
+		}
+	}
 
 	if (product) {
-		if (product.data.meta.title) {
-			const titleIdx = head.findIndex((x) => x.tag === "title");
+		let productMetaName = product.data.meta.title ? product.data.meta.title : "Cloudflare Docs";
 
-			let title: string;
-
-			if (titleIdx !== -1) {
-				const existingTitle = head[titleIdx].content?.split(
-					` ${DEFAULT_TITLE_DELIMITER} `,
-				)[0];
-				title = `${existingTitle} · ${product.data.meta.title}`;
-
-				head[titleIdx] = {
-					tag: "title",
-					content: title,
-				};
-			} else {
-				title = `${frontmatter.title} · ${product.data.meta.title}`;
-				head.push({
-					tag: "title",
-					content: title,
-				});
-			}
-
-			metaTags.push({
-				property: "og:title",
-				content: title,
-			});
+		if (currentSection === "changelog") {
+			productMetaName = "Changelog"
 		}
+
+		const titleIdx = head.findIndex((x) => x.tag === "title");
+		let title: string;
+
+		// Prefer the title set via frontmatter.head.title. If not, grab the regular frontmatter title value.
+		const existingTitle = head[titleIdx].content ? head[titleIdx].content?.split(
+					` ${DEFAULT_TITLE_DELIMITER} `,
+				)[0]: frontmatter.title;
+
+		title = `${existingTitle} · ${productMetaName}`;
+
+		head[titleIdx] = {
+			tag: "title",
+			content: title,
+		};
+
+		metaTags.push({
+			property: "og:title",
+			content: title,
+		});
 
 		if (product.data.product.title) {
 			["pcx_product", "algolia_product_filter"].map((name) => {
@@ -122,9 +128,11 @@ if (
 
 if (frontmatter.pcx_content_type) {
 	["pcx_content_type", "algolia_content_type"].map((name) => {
+		const contentType = frontmatter.pcx_content_type
+		const updatedName = contentType ? (contentType.charAt(0).toUpperCase() + contentType.slice(1)).replace("-", " ") : ""
 		metaTags.push({
 			name,
-			content: frontmatter.pcx_content_type as string,
+			content: updatedName,
 		});
 	});
 }
@@ -209,6 +217,7 @@ metaTags.map((attrs) => {
 		attrs,
 	});
 });
+
 ---
 
 <script src="src/scripts/footnotes.ts"></script>

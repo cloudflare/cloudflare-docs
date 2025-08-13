@@ -79,6 +79,12 @@ Now, with **Cloudflare Workers**:
 
 </WranglerConfig>
 
+:::note
+
+If your Worker will only contain assets and no Worker script, then you should remove the `"binding": "ASSETS"` field from your configuration file, since this is only valid if you have a Worker script indicated by a `"main"` property. See the [Assets binding](#assets-binding) section below.
+
+:::
+
 #### Serving behavior
 
 Pages would automatically attempt to determine the type of project you deployed. It would look for `404.html` and `index.html` files as signals for whether the project was likely a [Single Page Application (SPA)](/pages/configuration/serving-pages/#single-page-application-spa-rendering) or if it should [serve custom 404 pages](/pages/configuration/serving-pages/#not-found-behavior).

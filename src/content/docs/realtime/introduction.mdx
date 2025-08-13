@@ -1,45 +1,59 @@
 ---
-pcx_content_type: overview
+pcx_content_type: navigation
 title: Introduction
 sidebar:
   order: 2
-
 ---
 
-Cloudflare Realtime can be used to add realtime audio, video and data into your applications. Cloudflare Realtime uses WebRTC, which is the lowest latency way to communicate across a broad range of platforms like browsers, mobile, and native apps.
+Cloudflare RealtimeKit allows you to integrate programmable and easily customizable live video and voice into your web, mobile, and desktop applications. With just a few lines of code, you can enable live video communication, voice calls, and interactive live streaming.
 
-Realtime integrates with your backend and frontend application to add realtime functionality.
+## How RealtimeKit Works
 
-## Why Cloudflare Realtime exists
+RealtimeKit is composed of three core components that work together to provide a complete real-time communication platform: the UI Kit, the Core SDK, and the backend infrastructure.
 
-* **It is difficult to scale WebRTC**: Many struggle scaling WebRTC servers. Operators run into issues about how many users can be in the same "room" or want to build unique solutions that do not fit into the current concepts in high level APIs.
+- **UI Kit**: It provides a library of pre-built, customizable UI components that sits on top of the Core SDK, allowing you to quickly build a polished user interface for your real-time application. The UI Kit is available for React, Angular, HTML, React Native, iOS, and Android.
 
-* **High egress costs**: WebRTC is expensive to use as managed solutions charge a high premium on cloud egress and running your own servers incur system administration and scaling overhead. Cloudflare already has 300+ locations with upwards of 1,000 servers in some locations. Cloudflare Realtime scales easily on top of this architecture and can offer the lowest WebRTC usage costs.
+- **Core SDK**: The Core SDK provides the business logic for the UI Kit. It **can be used independently** to build a custom UI from the ground up, but the UI Kit offers a simpler and faster way to get started. The SDK interacts directly with the RealtimeKit backend and SFU, providing powerful APIs for features like live video, audio, and streaming while abstracting away the complexities of WebRTC. The Core SDK is available for JavaScript, React, React Native, iOS, and Android.
 
-* **WebRTC is growing**: Developers are realizing that WebRTC is not just for video conferencing. WebRTC is supported on many platforms, it is mature and well understood.
+- **Backend Infrastructure**: This is the foundation of RealtimeKit. It includes REST APIs for creating meetings, adding participants, retrieving session information, webhooks for server-side notifications, and so on. A dedicated socket server handles real-time signalling, while the [Realtime SFU](/realtime/sfu) relays media between users with low latency. The entire backend runs on Cloudflare's global network, ensuring reliability and scale.
 
-## What makes Cloudflare Realtime unique
+## Use Cases
 
-* **Unopinionated**: Cloudflare Realtime does not offer a SDK. It instead allows you to access raw WebRTC to solve unique problems that might not fit into existing concepts. The API is deliberately simple.
+RealtimeKit is designed for a variety of real-time communication needs. Here are some of the most common use cases:
 
-* **No rooms**: Unlike other WebRTC products, Cloudflare Realtime lets you be in charge of each track (audio/video/data) instead of offering abstractions such as rooms. You define the presence protocol on top of simple pub/sub. Each end user can publish and subscribe to audio/video/data tracks as they wish.
+### Group Calls
 
-* **No lock-in**: You can use Cloudflare Realtime to solve scalability issues with your SFU. You can use in combination with peer-to-peer architecture. You can use Cloudflare Realtime standalone. To what extent you use Cloudflare Realtime is up to you.
+Build collaborative experiences for team meetings, online classrooms, or social applications. These use cases are powered by WebRTC for real-time, low-latency communication.
 
-## What exactly does Cloudflare Realtime do?
+- **Team Meetings:** Connect with your team through high-quality video conferencing. Share screens, record meetings, and use interactive features.
+- **Virtual Classrooms:** Create engaging learning environments with live video and audio, whiteboards, and breakout rooms.
+- **Social Networking:** Enable users to have private or group video chats within your platform.
 
-* **SFU**: Realtime is a special kind of pub/sub server that is good at forwarding media data to clients that subscribe to certain data. Each client connects to Cloudflare Realtime via WebRTC and either sends data, receives data or both using WebRTC. This can be audio/video tracks or DataChannels.
+### Webinars
 
-* **It scales**: All Cloudflare servers act as a single server so millions of WebRTC clients can connect to Cloudflare Realtime. Each can send data, receive data or both with other clients.
+Webinars are one-to-many events designed for a presenter to share information with a large, interactive audience. Unlike group calls where all participants collaborate freely, webinars have distinct roles for presenters and viewers, managed through [presets](/realtime/concepts#presets). This structure, powered by WebRTC, is ideal for product demos, company all-hands, and live workshops, with features like chat, Q&A, and polls to engage the audience.
 
-## How most developers get started
+- **Product Demos:** Showcase your product to a large audience with live video and Q&A sessions.
+- **Company All-Hands:** Broadcast company-wide meetings to all your employees, no matter where they are.
+- **Live Workshops:** Conduct training sessions and workshops with a live instructor and interactive participation.
 
-1. Get started with the echo example, which you can download from the Cloudflare dashboard when you create a Realtime App or from [demos](/realtime/demos/). This will show you how to send and receive audio and video.
+### Livestreaming
 
-2. Understand how you can manipulate who can receive what media by passing around session and track ids. Remember, you control who receives what media. Each media track is represented by a unique ID. It is your responsibility to save and distribute this ID.
+Livestreaming allows you to broadcast video to a large public audience. While the video itself is a one-way feed, you can enhance audience engagement by adding interactive features like chat and polls. This is powered by [Cloudflare Stream](/stream/) using HLS (HTTP Live Streaming) for maximum scalability, making it perfect for events like sports and concerts.
 
-:::note[Realtime is not a presence protocol]
-Realtime does not know what a room is. It only knows media tracks. It is up to you to make a room by saving who is in a room along with track IDs that unique identify media tracks. If each participant publishes their audio/video, and receives audio/video from each other, you have got yourself a video conference!
-:::
+- **Live Sports:** Stream sporting events to fans around the world in real-time.
+- **Gaming:** Build your own platform to livestream gameplay directly to your followers with RealtimeKit.
+- **Concerts and Events:** Share live performances and events with a global audience.
 
-3. Create an app where you manage each connection to Cloudflare Realtime and the track IDs created by each connection. You can use any tool to save and share tracks. Check out the example apps at [demos](/realtime/demos/), such as [Orange Meets](https://github.com/cloudflare/orange), which is a full-fledged video conferencing app that uses [Workers Durable Objects](/durable-objects/) to keep track of track IDs.
+## Capabilities
+
+Explore the capabilities that you can incrementally add to your live video experiences.
+
+- **[Recording](https://docs.realtime.cloudflare.com/guides/capabilities/recording/recording-overview):** Record meetings and save them to [Cloudflare R2](/r2/), or a provider of your choice.
+- **[Chat](https://docs.realtime.cloudflare.com/web-core/chat/introduction):** Enable real-time text-based chat for participants during a video call.
+- **[Polls](https://docs.realtime.cloudflare.com/web-core/polls/introduction):** Create and manage interactive polls to engage your audience during calls.
+- **[Breakout Rooms](https://docs.realtime.cloudflare.com/guides/capabilities/breakoutroom/create-breakout-rooms):** Split participants into smaller, private groups for focused discussions.
+- **[Virtual Backgrounds](https://docs.realtime.cloudflare.com/guides/capabilities/video/add-virtual-background):** Allow users to apply custom virtual backgrounds to their video streams.
+- **[Video Filters](https://docs.realtime.cloudflare.com/guides/capabilities/video/processing) & [Audio Filters](https://docs.realtime.cloudflare.com/guides/capabilities/audio/processing):** Apply custom middlewares to create unique audio and video effects.
+- **[Multi-Screen Share](https://docs.realtime.cloudflare.com/web-core/local-user/introduction#enable--disable-screen-share):** Allow multiple participants to share their screens simultaneously.
+- **[Transcription](https://docs.realtime.cloudflare.com/guides/capabilities/audio/transcriptions):** Enable live transcription of audio from video calls for captions or records.

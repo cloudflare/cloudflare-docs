@@ -16,9 +16,9 @@ To enable Microsoft 365 journaling deployment:
 1. Log in to [Zero Trust](https://one.dash.cloudflare.com/) > **Email Security**.
 2. Select **Overview**. If you have not purchased Email Security, select **Contact Sales**. Otherwise, select **Set up** > **BCC/Journaling**.
 3. Select **Integrate with MS** > **Authorize**.
-4. Continue with [Integrate with Microsoft 365](/cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/journaling-setup/m365-journaling/#integrate-with-microsoft-365) to connect your Microsoft integration.
+4. Continue with [Integrate with Microsoft 365](/cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/journaling-setup/m365-journaling/#1-integrate-with-microsoft-365) to connect your Microsoft integration.
 
-## Integrate with Microsoft 365
+## 1. Integrate with Microsoft 365
 
 To integrate with Microsoft 365:
 
@@ -50,6 +50,31 @@ To view your connected domains:
 
 1. Go to **Settings**.
 2. Locate your domain, select the three dots > **View domain**. Selecting **View domain** will display information about your domain.
+
+## 2. Configure journal rule
+
+1. Log in to the [Microsoft Purview compliance portal](https://compliance.microsoft.com/homepage).
+
+2. On the sidebar, go to **Settings** (the gear icon) > **Data Lifecycle Management** > **Exchange (legacy)**.
+
+3. In **Send undeliverable journal reports to** enter the email address of a valid user account. Note that you cannot use a team or group address. Select **Save** once you entered the email address.
+
+4. On the sidebar, go to **Solutions** > **Data Lifecycle Management** > **Exchange (legacy)**.
+
+5. Select **Journal rules**.
+
+6. Select **New rule** to configure a journaling rule, and configure it as follows:
+
+   - **Send journal reports to**: This is the address you copied and pasted in step 5 of [Connect your domains](/cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/journaling-setup/m365-journaling/#connect-your-domains).
+   - **Journal rule name**: `Journal Messages to Email Security`
+   - **Journal messages sent or received from**: *Everyone*
+   - **Type of message to journal**: *External messages only*
+
+7. Select **Next**.
+
+8. Verify the information is correct, and select **Submit** > **Done**.
+
+Once saved, the rule is automatically active. However, it may take a few minutes for the configuration to propagate and start pushing messages to Email Security. After it propagates, you can [monitor your inbox](/cloudflare-one/email-security/email-monitoring/) in the Cloudflare dashboard to check the number of messages processed. This number will grow as journaled messages are sent to Email Security from your Exchange server.
 
 ## Next steps
 

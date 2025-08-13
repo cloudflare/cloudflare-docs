@@ -1478,33 +1478,39 @@ This file must contain only a single JSON object of the form:
 When this `config.json` file exists, Wrangler will follow the `configPath` (relative to the `.wrangler/deploy/config.json` file) to find the generated Wrangler configuration file to load and use in the current command.
 Wrangler will display messaging to the user to indicate that the configuration has been redirected to a different file than the user's configuration file.
 
+The generated configuration file should not include any [environments](#environments).
+This is because such a file, when required, should be created as part of a build step, which should already target a specific environment. These build tools should generate distinct deployment configuration files for different environments.
+
 ### Custom build tool example
 
 A common example of using a redirected configuration is where a custom build tool, or framework, wants to modify the user's configuration to be used when deploying, by generating a new configuration in a `dist` directory.
 
-- First, the user writes code that uses Cloudflare Workers resources, configured via a user's Wrangler configuration file.
+- First, the user writes code that uses Cloudflare Workers resources, configured via a user's Wrangler configuration file like the following:
 
-<WranglerConfig>
+  <WranglerConfig>
 
-```toml title="wrangler.toml"
-name = "my-worker"
-main = "src/index.ts"
-[[kv_namespaces]]
-binding = "<BINDING_NAME1>"
-id = "<NAMESPACE_ID1>"
-```
+  ```toml title="wrangler.toml"
+  name = "my-worker"
+  main = "src/index.ts"
 
-</WranglerConfig>
+  [vars]
+  MY_VARIABLE = "production variable"
 
-Note that this configuration points `main` at the user's code entry-point.
-
-- Then, the user runs a custom build, which might read the user's Wrangler configuration file to find the source code entry-point:
-
-  ```bash
-  > my-tool build
+  [env.staging.vars]
+  MY_VARIABLE = "staging variable"
   ```
 
-- This `my-tool` generates a `dist` directory that contains both compiled code and a new generated deployment configuration file.
+  </WranglerConfig>
+
+  This configuration points `main` at the user's code entry-point and defines the `MY_VARIABLE` variable in two different environments.
+
+- Then, the user runs a custom build for a given environment (for example `staging`). This will read the user's Wrangler configuration file to find the source code entry-point and environment specific settings:
+
+  ```bash
+  > my-tool build --env=staging
+  ```
+
+- `my-tool` generates a `dist` directory that contains both compiled code and a new generated deployment configuration file, containing only the settings for the given environment.
   It also creates a `.wrangler/deploy/config.json` file that redirects Wrangler to the new, generated deployment configuration file:
 
   <FileTree>
@@ -1524,11 +1530,14 @@ Note that this configuration points `main` at the user's code entry-point.
   {
   	"name": "my-worker",
   	"main": "./index.js",
-  	"kv_namespaces": [{ "binding": "<BINDING_NAME1>", "id": "<NAMESPACE_ID1>" }]
+  	"vars": {
+  		"MY_VARIABLE": "staging variable"
+  	}
   }
   ```
 
-  Note that, now, the `main` property points to the generated code entry-point.
+  Now, the `main` property points to the generated code entry-point, no environment is defined,
+  and the `MY_VARIABLE` variable is resolved to the staging environment value.
 
   And the `.wrangler/deploy/config.json` contains the path to the generated configuration file:
 

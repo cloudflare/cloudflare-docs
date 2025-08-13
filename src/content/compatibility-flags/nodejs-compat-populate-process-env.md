@@ -23,3 +23,6 @@ reduce toil and help with compatibility for existing Node.js libraries.
 If users do not wish for these values to be accessible via `process.env`, they can use the
 `nodejs_compat_do_not_populate_process_env` flag. In this case, `process.env` will still be
 available, but will not have values automatically added.
+
+If the `disallow_importable_env` compatibility flag is set, the `process.env` will also
+not be populated.
