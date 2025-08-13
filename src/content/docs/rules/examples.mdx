@@ -6,11 +6,12 @@ sidebar:
   order: 2
 ---
 
-import { ListExamples, GlossaryTooltip } from "~/components";
+import { ResourcesBySelector, GlossaryTooltip } from "~/components";
 
 Explore the following <GlossaryTooltip term="code example">examples</GlossaryTooltip> for Rules.
 
-<ListExamples
-	filters={["products", "goal", "operation"]}
+<ResourcesBySelector
+	types={["example"]}
 	additionalProducts={["Cache Rules"]}
+filterables={["products", "goal", "operation"]}
 />

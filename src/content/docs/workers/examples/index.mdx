@@ -7,8 +7,8 @@ sidebar:
   order: 3
 ---
 
-import { GlossaryTooltip, ListExamples } from "~/components";
+import { GlossaryTooltip, ResourcesBySelector } from "~/components";
 
 Explore the following <GlossaryTooltip term="code example">examples</GlossaryTooltip> for Workers.
 
-<ListExamples directory="workers/examples/" filters={["tags"]} />
+<ResourcesBySelector directory="workers/examples/" types={["example"]} filterables={["tags"]} />
