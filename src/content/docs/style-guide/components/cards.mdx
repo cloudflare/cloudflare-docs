@@ -4,6 +4,8 @@ styleGuide:
   component: Card
 ---
 
+import { Render } from "~/components";
+
 Cards are a built-in component provided by [Starlight](https://starlight.astro.build/components/cards/).
 
 ## Cards
@@ -43,3 +45,12 @@ import { LinkTitleCard } from "~/components";
 	Interesting content you want to highlight.
 </LinkTitleCard>
 ```
+
+## Card icons
+
+<Render
+	file="icons"
+	params={{
+		component: "cards",
+	}}
+/>
