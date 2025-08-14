@@ -13,9 +13,9 @@ Refer to the sections below for information on how Aegis pair up with Workers.
 
 ## `fetch`
 
-[`fetch()` requests](/workers/runtime-apis/fetch/) to access services on your origin will use Aegis IP addresses.
+[`fetch()` requests](/workers/runtime-apis/fetch/) that access services on your origin will use Aegis IP addresses.
 
-For Workers subrequests — meaning requests from one Worker to another — it is expected that different IPs are used. However, [`fetch()` requests](/workers/runtime-apis/fetch/) to external origins made by a Worker invoked via a subrequest will use Aegis IP addresses.
+Workers subrequests — requests from one Worker to another — are expected to use different IPs. However, [`fetch()` requests](/workers/runtime-apis/fetch/) to external origins made by a Worker invoked via a subrequest will use Aegis IP addresses.
 
 ## `connect`
 
