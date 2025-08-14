@@ -29,7 +29,6 @@ export { default as HomepageHero } from "./HomepageHero.astro";
 export { default as InlineBadge } from "./InlineBadge.astro";
 export { default as LastReviewed } from "./LastReviewed.astro";
 export { default as LinkTitleCard } from "./LinkTitleCard.astro";
-export { default as ListExamples } from "./ListExamples.astro";
 export { default as ListTutorials } from "./ListTutorials.astro";
 export { default as Markdown } from "./Markdown.astro";
 export { default as MetaInfo } from "./MetaInfo.astro";
