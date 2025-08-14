@@ -9,6 +9,11 @@ entries:
     general_definition: |-
       A container for a collection of Durable Objects that all share the same Durable Object (class) definition. A single namespace can have (tens of) millions of Durable Objects. Metrics are scoped per namespace.
 
+      - The namespace is defined in the Wrangler file under the `durable_objects.bindings.name` key.
+      - You can create a single instance of theDurable Object class using [`idFromName`](/durable-objects/api/namespace/#idfromname), which creates a unique ID for the Durable Object.
+      - You can then create a [stub](/durable-objects/api/stub/) for the Durable Object using the [`get`](/durable-objects/api/namespace/#get) method.
+
+
   - term: "Durable Object"
     general_definition: |-
       A Durable Object is an individual instance of a Durable Object class. A Durable Object is globally unique (referenced by ID), provides a global point of coordination for all methods/requests sent to it, and has private, persistent storage that is not shared with other Durable Objects within a namespace.
