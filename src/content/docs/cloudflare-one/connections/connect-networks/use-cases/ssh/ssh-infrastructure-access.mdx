@@ -90,7 +90,7 @@ Users can use any SSH client to connect to the target, as long as they are logge
 ssh <username>@<target IP>
 ```
 
-Access for Infrastructure also supports `scp` and `rsync` commands. Refer to [Known limitations](#known-limitations) for a list of unsupported SSH commands and features.
+Access for Infrastructure also supports `scp`, `sftp`, and `rsync` commands. Refer to [Known limitations](#known-limitations) for a list of unsupported SSH commands and features.
 
 To learn more about user connections, refer to the [Access for Infrastructure documentation](/cloudflare-one/applications/non-http/infrastructure-apps/#4-connect-as-a-user).
 
@@ -165,8 +165,6 @@ To set up the Logpush job, refer to [Logpush integration](/cloudflare-one/insigh
 
 The following SSH features are not supported:
 
-- `sftp` commands
-- `scp` commands that utilize OpenSSH versions > 9.0, because OpenSSH 9.0+ leverages `sftp` to execute the command
 - Local and remote port forwarding
 - SSH agent forwarding
 - X11 forwarding
