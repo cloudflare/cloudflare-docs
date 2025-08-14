@@ -43,3 +43,11 @@ import { ResourcesBySelector } from "~/components";
 - `products` <Type text="string[]" /> <MetaInfo text="optional" />
 
   An array of `products` values to filter which content gets pulled into the component. For example, `products={["D1"]}`.
+
+- `showDescriptions` <Type text="boolean" /> <MetaInfo text="optional (default true)" />
+
+  If set to `false`, will only show the titles of associated pages, not the showDescriptions
+
+- `showLastUpdated` <Type text="boolean" /> <MetaInfo text="optional (default false)" />
+
+  If set to `true`, will add the last updated date, which is added in the [`updated` frontmatter value](/style-guide/frontmatter/custom-properties/#updated).
