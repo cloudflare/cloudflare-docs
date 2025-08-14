@@ -7,7 +7,7 @@ entries:
     title: Add Certificate Transparency (CT) endpoints and AI Bots Crawl Purpose Dimension
     description: |-
       * Added [CT endpoints](/api/resources/radar/subresources/ct/).
-      * Added [AI Bots Crawl Purpose Dimension](https://developers.cloudflare.com/api/resources/radar/subresources/ai/subresources/timeseries_groups/).
+      * Added [AI Bots Crawl Purpose Dimension](/api/resources/radar/subresources/ai/subresources/timeseries_groups/).
   - publish_date: "2025-07-01"
     title: Add Bots and Web Crawlers endpoints
     description: |-
