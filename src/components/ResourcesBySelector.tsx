@@ -99,6 +99,7 @@ export default function ResourcesBySelector({
 							? `/videos/${page.data.url}/`
 							: `/${page.id}/`;
 
+					// title can either be set directly in title or added as a meta.title property when we want something different for sidebar and SEO titles
 					let title;
 
 					if (page.collection === "docs") {
