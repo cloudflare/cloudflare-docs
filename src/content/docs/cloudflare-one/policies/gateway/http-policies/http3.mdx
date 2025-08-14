@@ -28,7 +28,7 @@ If the UDP proxy is turned on in Zero Trust, Google Chrome will cancel all HTTP/
 
 ## Exempt HTTP/3 traffic from inspection
 
-If you require HTTP/3 traffic with end-to-end encryption from the client to the origin while still using the Gateway proxy, you can create a [Do Not Inspect HTTP policy](/cloudflare-one/policies/gateway/http-policies/#do-not-inspect) for the traffic. Using a Do Not Inspect policy allows HTTP/3 traffic to preserve proxy performance and end-to-end encryption by bypassing Gateway's TLS decryption and inspection.
+If you require HTTP/3 traffic with end-to-end encryption from the client to the origin while still using the Gateway proxy, you can create a [Do Not Inspect HTTP policy](/cloudflare-one/policies/gateway/http-policies/#do-not-inspect) to match the desired traffic. Using a Do Not Inspect policy allows HTTP/3 traffic to preserve proxy performance and end-to-end encryption by bypassing Gateway's TLS decryption and inspection.
 
 ## Force HTTP/2 traffic
 
