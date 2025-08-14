@@ -8,10 +8,9 @@ entries:
     description: |-
       * Added AI Bots crawl purpose dimension and filter to [summary](/api/resources/radar/subresources/ai/subresources/timeseries_groups/methods/summary/) and [timeseries_groups](/api/resources/radar/subresources/ai/subresources/timeseries_groups/methods/timeseries_groups/) endpoints.
   - publish_date: "2025-08-06"
-    title: Add Certificate Transparency (CT) endpoints and AI Bots Crawl Purpose Dimension
+    title: Add Certificate Transparency (CT) endpoints
     description: |-
       * Added [CT endpoints](/api/resources/radar/subresources/ct/).
-      * Added [AI Bots Crawl Purpose Dimension](/api/resources/radar/subresources/ai/subresources/timeseries_groups/).
   - publish_date: "2025-07-01"
     title: Add Bots and Web Crawlers endpoints
     description: |-
