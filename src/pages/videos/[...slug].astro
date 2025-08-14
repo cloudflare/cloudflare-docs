@@ -54,6 +54,7 @@ if (entry.transcript) {
 ---
 
 <StarlightPage {...props}>
+	<p>{entry.description}</p>
 	<Width size="large" center={true}>
 		<Stream id={entry.id} title={entry.title} chapters={entry.chapters} />
 			{
