@@ -10,9 +10,7 @@ entries:
       A container for a collection of Durable Objects that all share the same Durable Object (class) definition. A single namespace can have (tens of) millions of Durable Objects. Metrics are scoped per namespace.
 
       - The namespace is defined in the Wrangler file under the `durable_objects.bindings.name` key.
-      - You can create a single instance of the Durable Object class using [`idFromName`](/durable-objects/api/namespace/#idfromname), which creates a unique ID for the Durable Object.
-      - You can then create a [stub](/durable-objects/api/stub/) for the Durable Object using the [`get`](/durable-objects/api/namespace/#get) method.
-
+      - You can instantiate a Durable Object inside a namespace using [Durable Object namespace methods](/durable-objects/api/namespace/#methods).
 
   - term: "Durable Object"
     general_definition: |-
