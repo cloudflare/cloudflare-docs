@@ -35,26 +35,28 @@ if (currentSection) {
 	let product = await getEntry("products", currentSection);
 	// if entry for changelog, grab the first product value (which corresponds to the folder the entry is in) and use as the primary "product"
 	if (currentSection === "changelog") {
-		const products = frontmatter.products
+		const products = frontmatter.products;
 		if (products) {
 			product = await getEntry("products", products[0]);
 		}
 	}
 
 	if (product) {
-		let productMetaName = product.data.meta.title ? product.data.meta.title : "Cloudflare Docs";
+		let productMetaName = product.data.meta.title
+			? product.data.meta.title
+			: "Cloudflare Docs";
 
 		if (currentSection === "changelog") {
-			productMetaName = "Changelog"
+			productMetaName = "Changelog";
 		}
 
 		const titleIdx = head.findIndex((x) => x.tag === "title");
 		let title: string;
 
 		// Prefer the title set via frontmatter.head.title. If not, grab the regular frontmatter title value.
-		const existingTitle = head[titleIdx].content ? head[titleIdx].content?.split(
-					` ${DEFAULT_TITLE_DELIMITER} `,
-				)[0]: frontmatter.title;
+		const existingTitle = head[titleIdx].content
+			? head[titleIdx].content?.split(` ${DEFAULT_TITLE_DELIMITER} `)[0]
+			: frontmatter.title;
 
 		title = `${existingTitle} · ${productMetaName}`;
 
@@ -128,8 +130,13 @@ if (
 
 if (frontmatter.pcx_content_type) {
 	["pcx_content_type", "algolia_content_type"].map((name) => {
-		const contentType = frontmatter.pcx_content_type
-		const updatedName = contentType ? (contentType.charAt(0).toUpperCase() + contentType.slice(1)).replace("-", " ") : ""
+		const contentType = frontmatter.pcx_content_type;
+		const updatedName = contentType
+			? (contentType.charAt(0).toUpperCase() + contentType.slice(1)).replace(
+					"-",
+					" ",
+				)
+			: "";
 		metaTags.push({
 			name,
 			content: updatedName,
@@ -217,7 +224,6 @@ metaTags.map((attrs) => {
 		attrs,
 	});
 });
-
 ---
 
 <script src="src/scripts/footnotes.ts"></script>
