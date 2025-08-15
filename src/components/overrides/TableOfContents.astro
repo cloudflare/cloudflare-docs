@@ -19,7 +19,7 @@ const showFeedback = Astro.locals.starlightRoute.entry.data.feedback;
 					{tags.map((tag) => (
 						<a
 							href={`/search/?tags=${tag}`}
-							class="rounded-sm border border-(--sl-color-hairline) px-3 text-nowrap text-black"
+							class="overflow-hidden rounded-sm border border-(--sl-color-hairline) px-3 text-ellipsis whitespace-nowrap text-black"
 							data-tag-serp-link={true}
 						>
 							{tag}
