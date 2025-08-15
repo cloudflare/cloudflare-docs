@@ -5,6 +5,8 @@ sidebar:
   order: 3
 ---
 
+import { APIRequest } from "~/components";
+
 By default, Cloudflare Gateway policies apply at all times when turned on. Gateway allows you to configure any DNS policy to activate for a specific amount of time, until an end time, or on a regular time interval.
 
 ## Time-based policy duration
@@ -49,25 +51,24 @@ If you [do not specify a time zone](#example-users-time-zone), Gateway will enab
 
 The following command creates a DNS policy to block `facebook.com` only on weekdays from 8:00 AM - 12:30 PM and 1:30 PM - 5:00 PM in the Chicago, USA time zone.
 
-```bash
-curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules" \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---header "Content-Type: application/json" \
---data '{
-  "name": "office-no-facebook-policy",
-  "action": "block",
-  "traffic": "dns.fqdn == \"facebook.com\"",
-  "enabled": true,
-  "schedule": {
-    "time_zone": "America/Chicago",
-    "mon":  "08:00-12:30,13:30-17:00",
-    "tue":  "08:00-12:30,13:30-17:00",
-    "wed":  "08:00-12:30,13:30-17:00",
-    "thu":  "08:00-12:30,13:30-17:00",
-    "fri":  "08:00-12:30,13:30-17:00"
-  }
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "office-no-facebook-policy",
+		action: "block",
+		traffic: 'dns.fqdn == "facebook.com"',
+		enabled: true,
+		schedule: {
+			time_zone: "America/Chicago",
+			mon: "08:00-12:30,13:30-17:00",
+			tue: "08:00-12:30,13:30-17:00",
+			wed: "08:00-12:30,13:30-17:00",
+			thu: "08:00-12:30,13:30-17:00",
+			fri: "08:00-12:30,13:30-17:00",
+		},
+	}}
+/>
 
 Refer to [this table](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List) for a list of all time zone identifiers.
 
@@ -75,21 +76,20 @@ Refer to [this table](https://en.wikipedia.org/wiki/List_of_tz_database_time_zon
 
 The following command creates a DNS policy to block `clockin.com` only on weekends in the time zone where the user is currently located.
 
-```bash
-curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules" \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---header "Content-Type: application/json" \
---data '{
-  "name": "clock-in-policy",
-  "action": "block",
-  "traffic": "dns.fqdn == \"clockin.com\"",
-  "enabled": true,
-  "schedule": {
-    "sat":  "00:00-24:00",
-    "sun":  "00:00-24:00"
-  }
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "clock-in-policy",
+		action: "block",
+		traffic: 'dns.fqdn == "clockin.com"',
+		enabled: true,
+		schedule: {
+			sat: "00:00-24:00",
+			sun: "00:00-24:00",
+		},
+	}}
+/>
 
 :::note
 Gateway will not change the policy's `enabled` status when inside or outside of the time period specified. When enabled, Gateway activates or deactivates the policy according to its schedule. When disabled, the policy is always deactivated.
