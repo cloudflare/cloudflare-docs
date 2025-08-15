@@ -13,12 +13,12 @@ const props = z
 		thumbnail: z.string().optional(),
 		chapters: z.record(z.string(), z.string()).optional(),
 		showMoreVideos: z.boolean().default(false),
+		expandChapters: z.boolean().default(false),
 	})
 	.strict();
 
-const { id, title, thumbnail, chapters, showMoreVideos } = props.parse(
-	Astro.props,
-);
+const { id, title, thumbnail, chapters, showMoreVideos, expandChapters } =
+	props.parse(Astro.props);
 
 const BASE_URL = `https://customer-1mwganm1ma0xgnmj.cloudflarestream.com/`;
 
@@ -54,7 +54,7 @@ if (thumbnail) {
 
 		{
 			chapters && (
-				<Details header="Chapters" open={false}>
+				<Details header="Chapters" open={expandChapters}>
 					<p>
 						<ul class="flex list-none gap-4 overflow-x-scroll pb-4 pl-0">
 							{Object.entries(chapters).map(([chapter, time]) => {
