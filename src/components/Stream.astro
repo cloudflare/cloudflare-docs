@@ -3,6 +3,7 @@ import { z } from "astro:schema";
 import { Badge } from "@astrojs/starlight/components";
 import parse from "parse-duration";
 import Details from "./Details.astro";
+import { reference, getEntry } from "astro:content";
 
 type Props = z.input<typeof props>;
 
@@ -15,10 +16,51 @@ const props = z
 		showMoreVideos: z.boolean().default(false),
 		expandChapters: z.boolean().default(false),
 	})
-	.strict();
+	.strict()
+	.or(
+		z
+			.object({
+				file: reference("stream"),
+				showMoreVideos: z.boolean().default(false),
+				expandChapters: z.boolean().default(false),
+			})
+			.strict(),
+	);
 
-const { id, title, thumbnail, chapters, showMoreVideos, expandChapters } =
-	props.parse(Astro.props);
+const input = props.parse(Astro.props);
+
+let id;
+let title;
+let thumbnail;
+let chapters;
+const { showMoreVideos, expandChapters } = input;
+
+if ("id" in input) {
+	id = input.id;
+	title = input.title;
+	thumbnail = input.thumbnail;
+	chapters = input.chapters;
+} else {
+	const { file } = input;
+
+	const entry = await getEntry(file);
+
+	if (!entry) {
+		throw new Error(`[Stream] Could not find "${file}"`);
+	}
+
+	id = entry.data.id;
+	title = entry.data.title;
+	chapters = entry.data.chapters;
+
+	if (entry.data.thumbnail) {
+		if ("url" in entry.data.thumbnail) {
+			thumbnail = entry.data.thumbnail.url;
+		} else {
+			thumbnail = entry.data.thumbnail.timestamp;
+		}
+	}
+}
 
 const BASE_URL = `https://customer-1mwganm1ma0xgnmj.cloudflarestream.com/`;
 
