@@ -48,7 +48,7 @@ To create a new network policy:
    		traffic: 'any(net.sni.domains[*] == "internalapp.com")',
    		identity: "",
    		device_posture:
-   			'not(any(device_posture.checks.passed[*] in {"list-uuid"}))',
+   			'not(any(device_posture.checks.passed[*] in {"LIST_UUID"}))',
    	}}
    />
 
