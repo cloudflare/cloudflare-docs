@@ -52,6 +52,12 @@ const resources: Array<CollectionEntry<"docs"> | CollectionEntry<"stream">> = [
 	);
 });
 
+if (resources.length < 1) {
+	throw new Error(
+		`[ResourcesBySelector] Couldn't resources related to your filtered options`,
+	);
+}
+
 const facets = resources.reduce(
 	(acc, page) => {
 		if (!filterables) return acc;
