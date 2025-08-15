@@ -1,6 +1,7 @@
 # homepage
 /api /api/ 301
-/docs/ /products/ 301
+/docs/ /directory/ 301
+/products/ /directory/ 301
 /zero-trust/ /products/?product-group=Cloudflare+One 301
 /dashboard-landing/ / 301
 /tutorials/ /search/?content_type%5B0%5D=Tutorial 301

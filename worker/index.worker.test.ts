@@ -33,14 +33,14 @@ describe("Cloudflare Docs", () => {
 			const request = new Request("http://fakehost/docs/");
 			const response = await SELF.fetch(request, { redirect: "manual" });
 			expect(response.status).toBe(301);
-			expect(response.headers.get("Location")).toBe("/products/");
+			expect(response.headers.get("Location")).toBe("/directory/");
 		});
 
 		it("redirects requests without a trailing slash", async () => {
 			const request = new Request("http://fakehost/docs");
 			const response = await SELF.fetch(request, { redirect: "manual" });
 			expect(response.status).toBe(301);
-			expect(response.headers.get("Location")).toBe("/products/");
+			expect(response.headers.get("Location")).toBe("/directory/");
 		});
 
 		it("redirects /workers/index.html.md to /workers/index.md", async () => {
