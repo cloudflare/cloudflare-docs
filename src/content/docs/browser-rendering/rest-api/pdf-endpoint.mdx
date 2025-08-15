@@ -40,8 +40,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
   -d '{
     "url": "https://example.com/",
     "addStyleTag": [
-      { "content": "body { font-family: Arial; }" },
-      { "url": "https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" }
+      { "content": "body { font-family: Arial; }" }
     ]
   }' \
   --output "output.pdf"
