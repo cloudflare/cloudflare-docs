@@ -1,6 +1,6 @@
 
 ---
-type: overview
+
 pcx_content_type: reference
 title: JavaScript Detections
 sidebar:
@@ -9,29 +9,29 @@ sidebar:
 
 import { Render, Tabs, TabItem, GlossaryTooltip } from "~/components"
 
-JavaScript Detections is a type of Challenge separate from Cloudflare’s Challenge Pages or Turnstile. Javascript Detections helps Cloudflare's [bot solutions](/bots/) identify automated requests. 
+JavaScript Detections is a type of Challenge separate from Cloudflare’s Challenge Pages or Turnstile. Javascript Detections helps Cloudflare's [bot solutions](/bots/) identify automated requests.
 
-While Challenge Pages and Turnstile rely on client-side signals to determine the authenticity of a request, Bot Management’s JavaScript Detections relies on network-side signals and run on every single request made to your website. 
+While Challenge Pages and Turnstile rely on client-side signals to determine the authenticity of a request, Bot Management’s JavaScript Detections relies on network-side signals and run on every single request made to your website.
 
-## Process 
+## Process
 
-JavaScript Detections is implemented on your website via a lightweight, invisible JavaScript code snippet that follows Cloudflare's [privacy standards](https://www.cloudflare.com/privacypolicy/). 
+JavaScript Detections is implemented on your website via a lightweight, invisible JavaScript code snippet that follows Cloudflare's [privacy standards](https://www.cloudflare.com/privacypolicy/).
 
-JavaScript is injected only in response to requests for HTML pages or page views, excluding AJAX calls. API and mobile application traffic is unaffected. 
+JavaScript is injected only in response to requests for HTML pages or page views, excluding AJAX calls. API and mobile application traffic is unaffected.
 
 JavaScript Detections has a lifespan of 15 minutes. However, the code is injected again before the session expires. After page load, the script is deferred and utilizes a separate thread (where available) to ensure that performance impact is minimal. The snippets of JavaScript will contain a source pointing to the Challenge Platform, with paths that start with `/cdn-cgi/challenge-platform/…`
 
 Once JavaScript Detections is injected on the HTML page, the visitor's browser will run the JavaScript code snippet and a `cf_clearance` cookie is issued to the visitor. The information in JavaScript Detections is stored in the `cf_clearance` cookie and is used to populate `js_detection.passed`.
 
 - If the visitor is verified and a `cf_clearance` cookie is issued, it will contain the outcome: `cf.bot_management.js.detection.passed` = `true`
-- If the verification fails, the cookie will contain the outcome: `cf.bot_management.js.detection.passed` = `false` 
+- If the verification fails, the cookie will contain the outcome: `cf.bot_management.js.detection.passed` = `false`
 
 :::note
 The `cf_clearance` cookie cannot exceed the maximum size of 4096 bytes.
 :::
 
 :::caution
-Enforcement against bots does **not** occur even if the cookie is flagged false. 
+Enforcement against bots does **not** occur even if the cookie is flagged false.
 
 You must enable JavaScript Detections and then create a custom WAF rule using the `cf.bot_management.js.detection.passed` field to block or challenge a failed request.
 :::
@@ -70,7 +70,7 @@ The `cf.bot_management.js_detection.passed` field should never be used in a WAF 
 <Tabs>
     <TabItem label="WAF rule example">
         ```txt wrap
-        (http.request.uri.path eq "/api/v4/user/create" and http.request.method eq "POST" and not cf.bot_management.verified_bot) 
+        (http.request.uri.path eq "/api/v4/user/create" and http.request.method eq "POST" and not cf.bot_management.verified_bot)
         and (cf.bot_management.score lt 30 or !cf.bot_management.js_detection.passed)
         ```
     </TabItem>
@@ -91,7 +91,7 @@ Refer to the [WAF documentation](/waf/custom-rules/create-dashboard/) for more i
 
 If you enable JavaScript Detections via the dashboard, Cloudflare will insert a script tag in all HTML pages served on your website. If you would prefer to limit where JavaScript Detections is served, you can do so with the JavaScript Detections API script.
 
-The JavaScript Detections API allows you more granular control over when and where JavaScript Detections is injected on your website, as well as an option for callback handling (for logging or other additional actions). 
+The JavaScript Detections API allows you more granular control over when and where JavaScript Detections is injected on your website, as well as an option for callback handling (for logging or other additional actions).
 
 You can explicitly add a script reference to `/cdn-cgi/challenge-platform/scripts/jsd/api.js` and your own code calling `window.cloudflare.jsd.executeOnce` on specific HTML pages of your website.
 
@@ -103,7 +103,7 @@ The following script must be added to every page that you wish to have JavaScrip
 
 ```js wrap
 <script>
- 
+
 function jsdOnload(){
   window.cloudflare.jsd.executeOnce(
     {
@@ -117,15 +117,15 @@ function jsdOnload(){
 ```
 
 :::note
-`result` = `success` or `error` only refers to the execution of JavaScript Detections. It does not indicate whether a visitor is a human or a bot. 
+`result` = `success` or `error` only refers to the execution of JavaScript Detections. It does not indicate whether a visitor is a human or a bot.
 :::
 
 ## Considerations
 
 JavaScript Detections does not guarantee a specific bot score.
 
-- If the JavaScript Detections injection or execution fails and `cf.bot_management.js_detection.passed` = `false`, a separate Bot Management heuristic can still yield a `1` or higher bot score, independent of JavaScript Detections. 
-- If the JavaScript Detections passes, the final bot score may still be `1` due to other detection heuristics (for example, known malicious IP, signature detection, and more), resulting in `js_detection.passed` = `true`, but `score` = `1`. 
+- If the JavaScript Detections injection or execution fails and `cf.bot_management.js_detection.passed` = `false`, a separate Bot Management heuristic can still yield a `1` or higher bot score, independent of JavaScript Detections.
+- If the JavaScript Detections passes, the final bot score may still be `1` due to other detection heuristics (for example, known malicious IP, signature detection, and more), resulting in `js_detection.passed` = `true`, but `score` = `1`.
 
 ## Limitations
 
@@ -135,7 +135,7 @@ Customers who enabled Enterprise Bot Management before June 2020 do not have Jav
 
 ### If it is the first request to your website
 
-The first request from a new client to your website or application will generally not have JavaScript Detections data (`cf.bot_management.js_detection.passed` = `false`). This is because Cloudflare needs at least one HTML request before injecting JavaScript Detection and issuing the `cf_clearance` cookie. 
+The first request from a new client to your website or application will generally not have JavaScript Detections data (`cf.bot_management.js_detection.passed` = `false`). This is because Cloudflare needs at least one HTML request before injecting JavaScript Detection and issuing the `cf_clearance` cookie.
 
 Subsequent requests can include a `cf_clearance` cookie if JavaScript ran successfully.
 
@@ -152,7 +152,7 @@ If you have a <GlossaryTooltip term="content security policy (CSP)">Content Secu
 
 :::caution[Warning]
 
-JavaScript Detections is not supported with `nonce` set via `<meta>` tags. 
+JavaScript Detections is not supported with `nonce` set via `<meta>` tags.
 :::
 
 ### If you have ETags

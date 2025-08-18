@@ -1,6 +1,6 @@
 ---
 pcx_content_type: concept
-type: overview
+
 title: Volumetric Abuse Detection
 sidebar:
   order: 2
@@ -45,7 +45,7 @@ Cloudflare recommends choosing the overall rate limit recommendation, as our ana
 
 :::note[p-values]
 
-p-values describe what percentile of your traffic fits below the value. For example, if your p90 value is `83`, then 90% of your sessions had maximum request rates less than 83 requests per 10 minutes. 
+p-values describe what percentile of your traffic fits below the value. For example, if your p90 value is `83`, then 90% of your sessions had maximum request rates less than 83 requests per 10 minutes.
 :::
 
 In **Endpoints**, you can review our confidence in the recommendation and how many unique sessions we have seen over the last seven (7) days. In general, endpoints with fewer unique sessions and high variability of user behavior will have lower confidence scores.
@@ -65,7 +65,7 @@ Refer to the [Rules documentation](https://developers.cloudflare.com/waf/rate-li
   method="GET"
 />
 
-## Special cases 
+## Special cases
 
 <Render file="rate-limit-user" />
 

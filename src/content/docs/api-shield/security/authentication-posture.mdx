@@ -1,6 +1,6 @@
 ---
 pcx_content_type: concept
-type: overview
+
 title: Authentication Posture
 sidebar:
   order: 9
@@ -32,7 +32,7 @@ After configuring [session identifiers](/api-shield/get-started/#session-identif
       4. Select an endpoint to see its authentication posture details on the endpoint details page.
       5. Choose between the 24-hour and 7-day view options, and note any authentication changes over time.
     </Steps>
-  </TabItem> 
+  </TabItem>
   <TabItem label="New dashboard" icon="rocket">
     <Steps>
       1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
@@ -44,7 +44,7 @@ After configuring [session identifiers](/api-shield/get-started/#session-identif
   </TabItem>
 </Tabs>
 
-The main authentication widget displays how many successful requests over the last seven days had session identifiers included with them, and which identifiers were included with the traffic. 
+The main authentication widget displays how many successful requests over the last seven days had session identifiers included with them, and which identifiers were included with the traffic.
 
 The authentication-over-time chart shows a detailed breakdown over time of how clients successfully interacted with your API and which identifiers were used. A large increase in unauthenticated traffic may signal a security incident. Similarly, any successful unauthenticated traffic on an endpoint that is expected to be 100% authenticated can be a cause for concern.
 
@@ -58,6 +58,6 @@ You can use the `cf.api_gateway.auth_id_present` field in [custom rules](/waf/cu
 
 Authentication Posture can only apply when customers accurately set up session identifiers in API Shield. As a reminder, session identifiers are meant to uniquely identify authenticated users of your API. If you are unsure of your API's session identifier, consult with your development team.
 
-## Availability 
+## Availability
 
 Authentication Posture is available for all Enterprise subscriptions with API Shield.
