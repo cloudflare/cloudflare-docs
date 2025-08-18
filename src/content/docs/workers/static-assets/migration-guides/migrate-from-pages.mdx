@@ -299,14 +299,12 @@ If you are [using Workers Builds](#builds), ensure you also [configure any varia
 
 Where previously you used [`wrangler pages dev`](/workers/wrangler/commands/#dev-1) and [`wrangler pages deploy`](/workers/wrangler/commands/#deploy-1), now instead use [`wrangler dev`](/workers/wrangler/commands/#dev) and [`wrangler deploy`](/workers/wrangler/commands/#deploy). Additionally, if you are using a Vite-powered framework, [our new Vite plugin](/workers/vite-plugin/) may be able offer you an even simpler development experience.
 
-<Aside
-	type="note"
-	title="Wrangler uses a different default port for local development"
->
-	`wrangler pages dev` will, by default, expose the local development server at
-	`http://localhost:8788`, whereas `wrangler dev` will expose it at
-	`http://localhost:8787/`. You can customize the port using `--port`.
-</Aside>
+:::note[Wrangler uses a different default port for the local development]
+
+`wrangler pages dev` will, by default, expose the local development server at `http://localhost:8788`, whereas `wrangler dev` will expose it at `http://localhost:8787/`.
+
+You can customize the port using `--port`.
+:::
 
 ### Builds
 
