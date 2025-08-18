@@ -9,7 +9,7 @@ This page explains the core concepts and terminology used in RealtimeKit.
 
 ### Meeting
 
-A **Meeting** is the fundamental communication channel in RealtimeKit. You can think of it like an event on your calendar - it's a persistent, long-lived container or "room" that serves as a blueprint for its [sessions](/realtime/concepts#session). Every session created for this meeting inherits the same base configuration, such as the title of the meeting and whether to automatically record the session when it starts. You add participants to the meeting, which grants them access to join a session of that meeting.
+A **Meeting** is the fundamental communication channel in RealtimeKit. You can think of it like an event on your calendar - it's a persistent, long-lived container or "room" that serves as a blueprint for its [sessions](/realtime/realtimekit/concepts/#session). Every session created for this meeting inherits the same base configuration, such as the title of the meeting and whether to automatically record the session when it starts. You add participants to the meeting, which grants them access to join a session of that meeting.
 
 ### Session
 
@@ -33,7 +33,7 @@ A **Participant** is the server-side representation of a user within a session. 
 
 ### Peer
 
-A **Peer** is the client-side representation of a [participant](/realtime/concepts#participant) in a session. While the terms are sometimes used interchangeably, a peer represents a specific instance of a participant joining the meeting. For example, if a single user joins the same meeting from two different browser tabs, they will have the same participant ID (also referred to as a user ID) but two unique peer IDs.
+A **Peer** is the client-side representation of a [participant](/realtime/realtimekit/concepts/#participant) in a session. While the terms are sometimes used interchangeably, a peer represents a specific instance of a participant joining the meeting. For example, if a single user joins the same meeting from two different browser tabs, they will have the same participant ID (also referred to as a user ID) but two unique peer IDs.
 
 ### Stage
 
