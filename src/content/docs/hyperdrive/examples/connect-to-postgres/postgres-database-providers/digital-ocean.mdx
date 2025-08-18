@@ -8,7 +8,7 @@ sidebar:
 description: Connect Hyperdrive to a Digital Ocean Postgres database instance.
 ---
 
-import { Render } from "~/components";
+import { Render, Steps } from "~/components";
 
 This example shows you how to connect Hyperdrive to a Digital Ocean database instance.
 
@@ -18,11 +18,13 @@ To allow Hyperdrive to connect to your database, you will need to ensure that Hy
 
 ### DigitalOcean Dashboard
 
+<Steps>
 1. Go to the DigitalOcean dashboard and select the database you wish to connect to.
 2. Go to the **Overview** tab.
 3. Under the **Connection Details** panel, select **Public network**.
 4. On the dropdown menu, select **Connection string** > **show-password**.
 5. Copy the connection string.
+</Steps>
 
 With the connection string, you can now create a Hyperdrive database configuration.
 
