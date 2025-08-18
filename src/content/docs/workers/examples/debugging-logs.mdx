@@ -116,19 +116,16 @@ export default {
 
 ```py
 from workers import WorkerEntrypoint
-import json
-import traceback
-from pyodide.ffi import create_once_callable
-from js import Response, fetch, Headers
+from pyodide.ffi import create_proxy
+from js import Response, fetch
+
+async def post_log(data):
+	log_url = "https://log-service.example.com/"
+	await fetch(log_url, method="POST", body=data)
 
 class Default(WorkerEntrypoint):
     async def fetch(self, request, _env, ctx):
         # Service configured to receive logs
-        log_url = "https://log-service.example.com/"
-
-        async def post_log(data):
-            return await fetch(log_url, method="POST", body=data)
-
         response = await fetch(request)
 
         try:
@@ -139,12 +136,10 @@ class Default(WorkerEntrypoint):
         except Exception as e:
             # Without ctx.waitUntil(), your fetch() to Cloudflare's
             # logging service may or may not complete
-            ctx.waitUntil(create_once_callable(post_log(e)))
-            stack = json.dumps(traceback.format_exc()) or e
+            ctx.waitUntil(create_proxy(post_log(str(e))))
             # Copy the response and add to header
             response = Response.new(stack, response)
-            response.headers["X-Debug-stack"] = stack
-            response.headers["X-Debug-err"] = e
+            response.headers["X-Debug-err"] = str(e)
 
         return response
 ```
