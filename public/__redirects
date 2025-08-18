@@ -2358,3 +2358,8 @@
 /realtime/example-architecture /realtime/sfu/example-architecture/ 302
 /realtime/pricing /realtime/sfu/pricing/ 302
 /realtime/changelog /realtime/sfu/changelog/ 302
+
+/realtime/realtimekit/get-started /realtime/realtimekit/getting-started/ 302
+/realtime/get-started /realtime/realtimekit/getting-started/ 302
+/realtime/introduction /realtime/realtimekit/introduction 302
+/realtime/concepts /realtime/realtimekit/concepts 302
