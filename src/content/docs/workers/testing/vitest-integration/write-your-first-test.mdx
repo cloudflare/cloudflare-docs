@@ -163,7 +163,7 @@ By importing the Worker we can write a unit test for its `fetch` handler.
     		// Wait for all `Promise`s passed to `ctx.waitUntil()` to settle before running test assertions
     		await waitOnExecutionContext(ctx);
     		expect(response.status).toBe(404);
-    		expect(response.text()).toBe("Not found");
+    		expect(await response.text()).toBe("Not found");
     	});
     });
 
@@ -184,7 +184,7 @@ You can use the SELF fetcher provided by the `cloudflare:test` to write an integ
     	it("responds with not found and proper status for /404", async () => {
     		const response = await SELF.fetch("http://example.com/404");
     		expect(response.status).toBe(404);
-    		expect(response.text()).toBe("Not found");
+    		expect(await response.text()).toBe("Not found");
     	});
     });
 
