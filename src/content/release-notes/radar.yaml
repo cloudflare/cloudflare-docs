@@ -3,6 +3,10 @@ link: "/radar/release-notes/"
 productName: Radar
 productLink: "/radar/"
 entries:
+  - publish_date: "2025-08-14"
+    title: Add AI Bots crawl purpose
+    description: |-
+      * Added AI Bots crawl purpose dimension and filter to [summary](/api/resources/radar/subresources/ai/subresources/timeseries_groups/methods/summary/) and [timeseries_groups](/api/resources/radar/subresources/ai/subresources/timeseries_groups/methods/timeseries_groups/) endpoints.
   - publish_date: "2025-08-06"
     title: Add Certificate Transparency (CT) endpoints
     description: |-

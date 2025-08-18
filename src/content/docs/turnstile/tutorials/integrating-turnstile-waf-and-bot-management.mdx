@@ -63,7 +63,7 @@ Turnstile adds an extra layer of security by analyzing browser and client-side s
 
 ### Enable the option to use the existing clearance cookie
 
-If your site is on Cloudflare, you can enable the option to use the existing [clearance cookie](/turnstile/concepts/pre-clearance-support/) in Turnstile's settings. This integration allows Turnstile to use the clearance cookie as part of its determination of whether a user should receive a challenge. This integration is optional, but recommended if you already are using WAF and Bot Management.
+If your site is on Cloudflare, you can enable the option to use the existing [clearance cookie](/cloudflare-challenges/concepts/clearance/#pre-clearance-support-in-turnstile) in Turnstile's settings. This integration allows Turnstile to use the clearance cookie as part of its determination of whether a user should receive a challenge. This integration is optional, but recommended if you already are using WAF and Bot Management.
 
 ## Integrate Turnstile into your application
 
@@ -77,7 +77,7 @@ Add the Turnstile widget to your existing login form:
 <form id="login-form">
 	<input type="text" id="username" placeholder="Username" required />
 	<input type="password" id="password" placeholder="Password" required />
-	<div class="cf-turnstile" data-sitekey="YOUR_SITE_KEY"></div>
+	<div class="cf-turnstile" data-sitekey="<YOUR-SITE-KEY>"></div>
 	<button type="submit">Log in</button>
 </form>
 
@@ -88,7 +88,7 @@ Add the Turnstile widget to your existing login form:
 ></script>
 ```
 
-Replace `YOUR_SITE_KEY` with your actual Turnstile site key.
+Replace `<YOUR-SITE-KEY>` with your actual Turnstile site key.
 
 ## Handle the login request
 

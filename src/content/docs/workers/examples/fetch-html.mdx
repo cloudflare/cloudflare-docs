@@ -47,12 +47,14 @@ export default {
 </TabItem> <TabItem label="Python" icon="seti:python">
 
 ```py
+from workers import WorkerEntrypoint
 from js import fetch
 
-async def on_fetch(request):
-    # Replace `remote` with the host you wish to send requests to
-    remote = "https://example.com"
-    return await fetch(remote, request)
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        # Replace `remote` with the host you wish to send requests to
+        remote = "https://example.com"
+        return await fetch(remote, request)
 ```
 
 </TabItem> <TabItem label="Hono" icon="seti:typescript">

@@ -75,27 +75,28 @@ export default {
 </TabItem> <TabItem label="Python" icon="seti:python">
 
 ```py
-from workers import Response, fetch
+from workers import WorkerEntrypoint, Response, fetch
 from urllib.parse import urlparse
 
-async def on_fetch(request):
-    external_hostname = "examples.cloudflareworkers.com"
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        external_hostname = "examples.cloudflareworkers.com"
 
-    redirect_map = {
-      "/bulk1": "https://" + external_hostname + "/redirect2",
-      "/bulk2": "https://" + external_hostname + "/redirect3",
-      "/bulk3": "https://" + external_hostname + "/redirect4",
-      "/bulk4": "https://google.com",
-      }
+        redirect_map = {
+          "/bulk1": "https://" + external_hostname + "/redirect2",
+          "/bulk2": "https://" + external_hostname + "/redirect3",
+          "/bulk3": "https://" + external_hostname + "/redirect4",
+          "/bulk4": "https://google.com",
+          }
 
-    url = urlparse(request.url)
-    location = redirect_map.get(url.path, None)
+        url = urlparse(request.url)
+        location = redirect_map.get(url.path, None)
 
-    if location:
-        return Response.redirect(location, 301)
+        if location:
+            return Response.redirect(location, 301)
 
-    # If request not in map, return the original request
-    return fetch(request)
+        # If request not in map, return the original request
+        return fetch(request)
 ```
 
 </TabItem> <TabItem label="Hono" icon="seti:typescript">

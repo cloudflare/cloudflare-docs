@@ -33,7 +33,7 @@ By analyzing these metrics, you can identify trends such as high failure rates i
 
 Turnstile's solve rate is a critical metric that helps gauge how many legitimate visitors are passing a challenge. Solve rates can be broken down into the total number of challenges solved and whether they are interactive, non-interactive, or pre-clearance solves.
 
-If you are using [managed mode](/turnstile/concepts/widget/#widget-types), you can monitor how many of your visitors were prompted interactivity to check the box on the widget (interactive solves) and how many were verified without any disruptions to their experience (non-interactive solves).
+If you are using [managed mode](/turnstile/concepts/widget/#managed-mode-recommended), you can monitor how many of your visitors were prompted interactivity to check the box on the widget (interactive solves) and how many were verified without any disruptions to their experience (non-interactive solves).
 
 For example, the solve rate values in your analytics may look like this:
 
@@ -43,6 +43,6 @@ For example, the solve rate values in your analytics may look like this:
 
 - **Non-interactive solves**: Challenges solved without requiring the visitor to click a checkbox.
 - **Interactive solves**: Challenges solved that required visitor interaction to be solved.
-- [**Pre-clearance solves**](/turnstile/concepts/pre-clearance-support/): Challenges solved that issued the `cf_clearance` cookie along with the Turnstile token.
+- [**Pre-clearance solves**](/cloudflare-challenges/concepts/clearance/#pre-clearance-support-in-turnstile): Challenges solved that issued the `cf_clearance` cookie along with the Turnstile token.
 
 A low solve rate might indicate increased bot activity attempting to bypass Turnstile or anomalous traffic patterns that require further investigation.

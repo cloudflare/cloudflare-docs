@@ -129,6 +129,7 @@ export default {
 
 ```py
 import json
+from workers import WorkerEntrypoint
 from pyodide.ffi import to_js as _to_js
 from js import Object, fetch, Response, Headers
 
@@ -144,28 +145,29 @@ async def gather_response(response):
         return (content_type, json.dumps(dict(await response.json())))
     return (content_type, await response.text())
 
-async def on_fetch(_request):
-    url = "https://jsonplaceholder.typicode.com/todos/1"
+class Default(WorkerEntrypoint):
+    async def fetch(self, _request):
+		url = "https://jsonplaceholder.typicode.com/todos/1"
 
-    body = {
-      "results": ["default data to send"],
-      "errors": None,
-      "msg": "I sent this to the fetch",
-    }
+		body = {
+		"results": ["default data to send"],
+		"errors": None,
+		"msg": "I sent this to the fetch",
+		}
 
-    options = {
-      "body": json.dumps(body),
-      "method": "POST",
-      "headers": {
-        "content-type": "application/json;charset=UTF-8",
-      },
-    }
+		options = {
+		"body": json.dumps(body),
+		"method": "POST",
+		"headers": {
+			"content-type": "application/json;charset=UTF-8",
+		},
+		}
 
-    response = await fetch(url, to_js(options))
-    content_type, result = await gather_response(response)
+		response = await fetch(url, to_js(options))
+		content_type, result = await gather_response(response)
 
-    headers = Headers.new({"content-type": content_type}.items())
-    return Response.new(result, headers=headers)
+		headers = Headers.new({"content-type": content_type}.items())
+		return Response.new(result, headers=headers)
 ```
 
 </TabItem> <TabItem label="Hono" icon="seti:typescript">

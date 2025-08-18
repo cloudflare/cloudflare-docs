@@ -48,12 +48,13 @@ export default {
 </TabItem> <TabItem label="Python" icon="seti:python">
 
 ```py
-from workers import Response
+from workers import WorkerEntrypoint, Response
 
-def on_fetch(request):
-    destinationURL = "https://example.com"
-    statusCode = 301
-    return Response.redirect(destinationURL, statusCode)
+class Default(WorkerEntrypoint):
+    def fetch(self, request):
+        destinationURL = "https://example.com"
+        statusCode = 301
+        return Response.redirect(destinationURL, statusCode)
 ```
 
 </TabItem> <TabItem label="Rust" icon="seti:rust">
@@ -131,19 +132,20 @@ export default {
 </TabItem> <TabItem label="Python" icon="seti:python">
 
 ```py
-from workers import Response
+from workers import WorkerEntrypoint, Response
 from urllib.parse import urlparse
 
-async def on_fetch(request):
-    base = "https://example.com"
-    statusCode = 301
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        base = "https://example.com"
+        statusCode = 301
 
-    url = urlparse(request.url)
+        url = urlparse(request.url)
 
-    destinationURL = f'{base}{url.path}{url.query}'
-    print(destinationURL)
+        destinationURL = f'{base}{url.path}{url.query}'
+        print(destinationURL)
 
-    return Response.redirect(destinationURL, statusCode)
+        return Response.redirect(destinationURL, statusCode)
 ```
 
 </TabItem> <TabItem label="Rust" icon="seti:rust">

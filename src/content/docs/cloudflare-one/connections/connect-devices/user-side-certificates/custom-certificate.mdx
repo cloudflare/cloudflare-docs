@@ -8,7 +8,7 @@ description: Configure WARP to use a custom root certificate instead of the
   Cloudflare certificate.
 ---
 
-import { Render, Tabs, TabItem } from "~/components";
+import { Render, Tabs, TabItem, APIRequest } from "~/components";
 
 :::note
 Only available on Enterprise plans.
@@ -82,11 +82,10 @@ openssl x509 -in <CUSTOM-ROOT-CERT>.pem -text
 
 2. Set the certificate as available for use in inspection with the [Activate a Zero Trust certificate endpoint](/api/resources/zero_trust/subresources/gateway/subresources/certificates/methods/activate/). This will deploy the certificate across the Cloudflare global network.
 
-   ```sh
-   curl --request POST \
-   "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/certificates/$CERTIFICATE_ID/activate" \
-   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
-   ```
+   <APIRequest
+   	path="/accounts/{account_id}/gateway/certificates/{certificate_id}/activate"
+   	method="POST"
+   />
 
    The response will return the certificate and a `pending_deployment` binding status. For example:
 
@@ -114,10 +113,10 @@ openssl x509 -in <CUSTOM-ROOT-CERT>.pem -text
 
 3. Use the [Get Zero Trust certificate details endpoint](/api/resources/zero_trust/subresources/gateway/subresources/certificates/methods/get/) to verify the certificate's binding status is set to `available`.
 
-   ```sh
-   curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/certificates/$CERTIFICATE_ID \
-   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
-   ```
+   <APIRequest
+   	path="/accounts/{account_id}/gateway/certificates/{certificate_id}"
+   	method="GET"
+   />
 
    ```json {12}
    {
@@ -145,20 +144,18 @@ openssl x509 -in <CUSTOM-ROOT-CERT>.pem -text
 
 5. Use the [Patch Zero Trust account configuration endpoint](/api/resources/zero_trust/subresources/gateway/subresources/configurations/methods/edit/) to turn on the certificate for use in inspection. For example:
 
-   ```sh {9}
-   curl --request PATCH \
-   "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/configuration" \
-   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
-   --header "Content-Type: application/json" \
-   --data '{
-   	"settings": {
-   		"certificate": {
-   			"id": "$CERTIFICATE_ID",
-        "in_use": true
-   		}
-   	}
-   }'
-   ```
+<APIRequest
+	path="/accounts/{account_id}/gateway/configuration"
+	method="PATCH"
+	json={{
+		settings: {
+			certificate: {
+				id: "{certificate_id}",
+				in_use: true,
+			},
+		},
+	}}
+/>
 
 Once `in-use` is set to `true`, Gateway will sign your traffic using the custom root certificate and private key. If you turn off or deactivate the custom certificate, Gateway will revert to the next available Cloudflare certificate generated for your Zero Trust account.
 

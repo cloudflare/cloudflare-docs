@@ -13,7 +13,7 @@ type Filters = {
 	groups: string[];
 };
 
-const ProductCatalog = ({ products }: { products: ProductData[] }) => {
+const DirectoryCatalog = ({ products }: { products: ProductData[] }) => {
 	const [filters, setFilters] = useState<Filters>({
 		search: "",
 		groups: [],
@@ -74,7 +74,7 @@ const ProductCatalog = ({ products }: { products: ProductData[] }) => {
 				<input
 					type="text"
 					className="mb-8 w-full rounded-md border-2 border-gray-200 bg-white px-2 py-2 dark:border-gray-700 dark:bg-gray-800"
-					placeholder="Search products"
+					placeholder="Search folders"
 					value={filters.search}
 					onChange={(e) => setFilters({ ...filters, search: e.target.value })}
 				/>
@@ -116,7 +116,7 @@ const ProductCatalog = ({ products }: { products: ProductData[] }) => {
 			<div className="mt-0! grid w-full grid-cols-1 items-stretch gap-2 self-start md:grid-cols-2 lg:w-3/4 lg:grid-cols-3 lg:gap-4">
 				{productList.length === 0 && (
 					<div className="flex w-full flex-col justify-center rounded-md border bg-gray-50 py-6 text-center align-middle md:col-span-2 lg:col-span-3 dark:border-gray-500 dark:bg-gray-800">
-						<span className="text-lg font-bold!">No products found</span>
+						<span className="text-lg font-bold!">No folders found</span>
 						<p>
 							Try a different search term, or broaden your search by removing
 							filters.
@@ -163,4 +163,4 @@ const ProductCatalog = ({ products }: { products: ProductData[] }) => {
 	);
 };
 
-export default ProductCatalog;
+export default DirectoryCatalog;

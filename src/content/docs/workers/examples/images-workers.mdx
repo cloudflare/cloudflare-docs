@@ -96,16 +96,18 @@ export default app;
 </TabItem> <TabItem label="Python" icon="seti:python">
 
 ```py
+from workers import WorkerEntrypoint
 from js import URL, fetch
 
-async def on_fetch(request):
-    # You can find this in the dashboard, it should look something like this: ZWd9g1K7eljCn_KDTu_MWA
-    account_hash = ""
-    url = URL.new(request.url)
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        # You can find this in the dashboard, it should look something like this: ZWd9g1K7eljCn_KDTu_MWA
+        account_hash = ""
+        url = URL.new(request.url)
 
-    # A request to something like cdn.example.com/83eb7b2-5392-4565-b69e-aff66acddd00/public
-    # will fetch "https://imagedelivery.net/<accountHash>/83eb7b2-5392-4565-b69e-aff66acddd00/public"
-    return fetch(f'https://imagedelivery.net/{account_hash}{url.pathname}')
+        # A request to something like cdn.example.com/83eb7b2-5392-4565-b69e-aff66acddd00/public
+        # will fetch "https://imagedelivery.net/<accountHash>/83eb7b2-5392-4565-b69e-aff66acddd00/public"
+        return fetch(f'https://imagedelivery.net/{account_hash}{url.pathname}')
 ```
 
 </TabItem> </Tabs>

@@ -52,9 +52,9 @@ To configure a route in your Wrangler configuration file, add the following to y
 <WranglerConfig>
 
 ```toml
-routes = [
-    { pattern = "example.com/about", zone_id = "<YOUR_ZONE_ID>" }
-]
+[[routes]]
+pattern = "example.com/about"
+zone_id = "<YOUR_ZONE_ID>"
 ```
 
 </WranglerConfig>
@@ -66,9 +66,9 @@ To configure a subdomain in your Wrangler configuration file, add the following 
 <WranglerConfig>
 
 ```toml
-routes = [
-	{ pattern = "subdomain.example.com", custom_domain = true }
-]
+[[routes]]
+pattern = "subdomain.example.com"
+custom_domain = true
 ```
 
 </WranglerConfig>

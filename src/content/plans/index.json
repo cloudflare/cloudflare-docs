@@ -2138,13 +2138,23 @@
 					"title": "Pricing",
 					"link": "https://www.cloudflare.com/application-services/products/turnstile/#Page-Pricing-AS",
 					"free": "Free",
-					"ent": "Contact sales"
+					"ent": "Contact Sales"
 				},
 				"widgets": {
 					"title": "Number of widgets",
 					"link": "/turnstile/concepts/widget/",
 					"free": "Up to 20 widgets",
 					"ent": "Unlimited"
+				},
+				"widget_types": {
+					"title": "All widget types",
+					"free": "Yes",
+					"ent": "Yes"
+				},
+				"challenges_limit": {
+					"title": "Unlimited challenges (traffic or verification requests)",
+					"free": "Yes",
+					"ent": "Yes"
 				},
 				"hostname_management": {
 					"title": "Hostname management",
@@ -2178,6 +2188,16 @@
 				"offlabel": {
 					"title": "Offlabel (remove Cloudflare branding)",
 					"free": "No",
+					"ent": "Yes"
+				},
+				"compliance": {
+					"title": "WCAG 2.1 AA compliance",
+					"free": "Yes",
+					"ent": "Yes"
+				},
+				"community": {
+					"title": "Community support",
+					"free": "Yes",
 					"ent": "Yes"
 				}
 			}

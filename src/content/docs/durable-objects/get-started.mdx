@@ -185,16 +185,16 @@ export default {
 <TabItem label="Python" icon="seti:python">
 
 ```python
-from workers import handler, Response
+from workers import handler, Response, WorkerEntrypoint
 from urllib.parse import urlparse
 
-@handler
-async def on_fetch(request, env, ctx):
-    url = urlparse(request.url)
-    id = env.MY_DURABLE_OBJECT.idFromName(url.path)
-    stub = env.MY_DURABLE_OBJECT.get(id)
-    greeting = await stub.say_hello()
-    return Response(greeting)
+class Default(WorkerEntrypoint):
+    async def fetch(request, env, ctx):
+        url = urlparse(request.url)
+        id = env.MY_DURABLE_OBJECT.idFromName(url.path)
+        stub = env.MY_DURABLE_OBJECT.get(id)
+        greeting = await stub.say_hello()
+        return Response(greeting)
 ```
 
 </TabItem>
@@ -328,13 +328,13 @@ class MyDurableObject(DurableObject):
 
         return result.greeting
 
-@handler
-async def on_fetch(request, env, ctx):
-    url = urlparse(request.url)
-    id = env.MY_DURABLE_OBJECT.idFromName(url.path)
-    stub = env.MY_DURABLE_OBJECT.get(id)
-    greeting = await stub.say_hello()
-    return Response(greeting)
+class Default(WorkerEntrypoint):
+    async def fetch(self, request, env, ctx):
+        url = urlparse(request.url)
+        id = env.MY_DURABLE_OBJECT.idFromName(url.path)
+        stub = env.MY_DURABLE_OBJECT.get(id)
+        greeting = await stub.say_hello()
+        return Response(greeting)
 ```
 
 </TabItem>

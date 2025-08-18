@@ -50,11 +50,12 @@ export default {
 </TabItem> <TabItem label="Python" icon="seti:python">
 
 ```py
-from workers import Response
+from workers import WorkerEntrypoint, Response
 
-async def on_fetch(request):
-    print(dict(request.headers))
-    return Response('Hello world')
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        print(dict(request.headers))
+        return Response('Hello world')
 ```
 
 </TabItem> <TabItem label="Rust" icon="seti:rust">

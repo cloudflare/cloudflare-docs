@@ -73,30 +73,31 @@ export default {
 </TabItem> <TabItem label="Python" icon="seti:python">
 
 ```py
-from workers import Response
+from workers import WorkerEntrypoint, Response
 from js import TextEncoder, crypto
 
-async def on_fetch(request, env):
-    auth_token = request.headers["Authorization"] or ""
-    secret = env.MY_SECRET_VALUE
+class Default(WorkerEntrypoint):
+    async def fetch(self, request, env):
+        auth_token = request.headers["Authorization"] or ""
+        secret = env.MY_SECRET_VALUE
 
-    if secret is None:
-        return Response("Missing secret binding", status=500)
+        if secret is None:
+            return Response("Missing secret binding", status=500)
 
-    if len(auth_token) != len(secret):
-        return Response("Unauthorized", status=401)
+        if len(auth_token) != len(secret):
+            return Response("Unauthorized", status=401)
 
-    encoder = TextEncoder.new()
-    a = encoder.encode(auth_token)
-    b = encoder.encode(secret)
+        encoder = TextEncoder.new()
+        a = encoder.encode(auth_token)
+        b = encoder.encode(secret)
 
-    if a.byteLength != b.byteLength:
-        return Response("Unauthorized", status=401)
+        if a.byteLength != b.byteLength:
+            return Response("Unauthorized", status=401)
 
-    if not crypto.subtle.timingSafeEqual(a, b):
-        return Response("Unauthorized", status=401)
+        if not crypto.subtle.timingSafeEqual(a, b):
+            return Response("Unauthorized", status=401)
 
-    return Response("Welcome!")
+        return Response("Welcome!")
 ```
 
 </TabItem> <TabItem label="Hono" icon="seti:typescript">

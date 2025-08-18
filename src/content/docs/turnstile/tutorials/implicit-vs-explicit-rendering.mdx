@@ -49,7 +49,7 @@ Once a challenge has been solved, a token is passed to the success callback. Thi
     <label for="email">Email:</label><br>
     <input type="email" id="email" name="email" required><br>
     <!-- Turnstile Widget -->
-    <div class="cf-turnstile" data-sitekey="your-site-key"></div>
+    <div class="cf-turnstile" data-sitekey="<YOUR-SITE-KEY>"></div>
     <br>
     <button type="submit">Submit</button>
   </form>
@@ -73,7 +73,7 @@ An invisible input with the name `cf-turnstile-response` is added and will be se
     <label for="email">Email:</label><br>
     <input type="email" id="email" name="email" required><br>
     <!-- Turnstile Widget -->
-    <div class="cf-turnstile" data-sitekey="your-site-key"></div>
+    <div class="cf-turnstile" data-sitekey="<YOUR-SITE-KEY>"></div>
     <br>
     <button type="submit">Submit</button>
   </form>
@@ -104,7 +104,7 @@ To set up explicit rendering:
 ```html
 function onloadTurnstileCallback() {
     turnstile.render('#my-turnstile', {
-        sitekey: '<YOUR_SITE_KEY>',
+        sitekey: '<<YOUR-SITE-KEY>>',
         callback: function(token) {
             console.log(`Challenge Success ${token}`);
         },
@@ -135,7 +135,7 @@ function onloadTurnstileCallback() {
   <script>
     function onloadTurnstileCallback() {
     turnstile.render('#my-turnstile', {
-        sitekey: '<YOUR_SITE_KEY>',
+        sitekey: '<<YOUR-SITE-KEY>>',
         callback: function(token) {
             console.log(`Challenge Success ${token}`);
         },

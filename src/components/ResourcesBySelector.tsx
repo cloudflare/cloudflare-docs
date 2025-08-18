@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import ReactSelect from "./ReactSelect";
 import type { CollectionEntry } from "astro:content";
+import { formatDistance } from "date-fns";
 
 type DocsData = keyof CollectionEntry<"docs">["data"];
 type VideosData = keyof CollectionEntry<"stream">["data"];
@@ -13,6 +14,7 @@ interface Props {
 	filters?: ResourcesData[];
 	columns: number;
 	showDescriptions: boolean;
+	showLastUpdated: boolean;
 }
 
 export default function ResourcesBySelector({
@@ -21,8 +23,14 @@ export default function ResourcesBySelector({
 	filters,
 	columns,
 	showDescriptions,
+	showLastUpdated,
 }: Props) {
 	const [selectedFilter, setSelectedFilter] = useState<string | null>(null);
+
+	const timeAgo = (date?: Date) => {
+		if (!date) return undefined;
+		return formatDistance(date, new Date(), { addSuffix: true });
+	};
 
 	const handleFilterChange = (option: any) => {
 		setSelectedFilter(option?.value || null);
@@ -91,6 +99,7 @@ export default function ResourcesBySelector({
 							? `/videos/${page.data.url}/`
 							: `/${page.id}/`;
 
+					// title can either be set directly in title or added as a meta.title property when we want something different for sidebar and SEO titles
 					let title;
 
 					if (page.collection === "docs") {
@@ -114,6 +123,11 @@ export default function ResourcesBySelector({
 							{showDescriptions && (
 								<span className="line-clamp-3" title={page.data.description}>
 									{page.data.description}
+								</span>
+							)}
+							{showLastUpdated && (
+								<span className="line-clamp-3" title={page.data.description}>
+									Updated {timeAgo(page.data.updated)}
 								</span>
 							)}
 						</a>

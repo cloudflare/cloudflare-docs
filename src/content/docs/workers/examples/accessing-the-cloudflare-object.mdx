@@ -90,14 +90,15 @@ export default app;
 
 ```py
 import json
-from workers import Response
+from workers import Response, WorkerEntrypoint
 from js import JSON
 
-def on_fetch(request):
-    error = json.dumps({ "error": "The `cf` object is not available inside the preview." })
-    data = request.cf if request.cf is not None else error
-    headers = {"content-type":"application/json"}
-    return Response(JSON.stringify(data, None, 2), headers=headers)
+class Default(WorkerEntrypoint):
+	async def fetch(self, request):
+		error = json.dumps({ "error": "The `cf` object is not available inside the preview." })
+		data = request.cf if request.cf is not None else error
+		headers = {"content-type":"application/json"}
+		return Response(JSON.stringify(data, None, 2), headers=headers)
 ```
 
 </TabItem> </Tabs>

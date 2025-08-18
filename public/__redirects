@@ -1,6 +1,7 @@
 # homepage
 /api /api/ 301
-/docs/ /products/ 301
+/docs/ /directory/ 301
+/products/ /directory/ 301
 /zero-trust/ /products/?product-group=Cloudflare+One 301
 /dashboard-landing/ / 301
 /tutorials/ /search/?content_type%5B0%5D=Tutorial 301
@@ -76,14 +77,14 @@
 /1.1.1.1/encrypted-dns/dns-over-https/make-api-requests/ /1.1.1.1/encryption/dns-over-https/make-api-requests/ 301
 /1.1.1.1/encrypted-dns/dns-over-https/make-api-requests/dns-json/ /1.1.1.1/encryption/dns-over-https/make-api-requests/dns-json/ 301
 /1.1.1.1/encrypted-dns/dns-over-tls/ /1.1.1.1/encryption/dns-over-tls/ 301
-/1.1.1.1/fun-stuff/dns-in-google-sheets/ /1.1.1.1/other-ways-to-use-1.1.1.1/dns-in-google-sheets/ 301
-/1.1.1.1/fun-stuff/dns-over-discord/ /1.1.1.1/other-ways-to-use-1.1.1.1/dns-over-discord/ 301
-/1.1.1.1/fun-stuff/dns-over-sms/ /1.1.1.1/other-ways-to-use-1.1.1.1/ 301
-/1.1.1.1/fun-stuff/dns-over-tor/ /1.1.1.1/other-ways-to-use-1.1.1.1/dns-over-tor/ 301
+/1.1.1.1/fun-stuff/dns-in-google-sheets/ /1.1.1.1/additional-options/dns-in-google-sheets/ 301
+/1.1.1.1/fun-stuff/dns-over-discord/ /1.1.1.1/additional-options/dns-over-discord/ 301
+/1.1.1.1/fun-stuff/dns-over-sms/ /1.1.1.1/additional-options/ 301
+/1.1.1.1/fun-stuff/dns-over-tor/ /1.1.1.1/additional-options/dns-over-tor/ 301
 /1.1.1.1/ipv6-networks/ /1.1.1.1/infrastructure/ipv6-networks/ 301
 /1.1.1.1/network-operators/ /1.1.1.1/infrastructure/network-operators/ 301
 /1.1.1.1/nitty-gritty-details/ /1.1.1.1/faq/ 301
-/1.1.1.1/other-ways-to-use-1.1.1.1/dns-over-telegram/ /1.1.1.1/other-ways-to-use-1.1.1.1/ 301
+/1.1.1.1/other-ways-to-use-1.1.1.1/dns-over-telegram/ /1.1.1.1/additional-options/ 301
 /1.1.1.1/privacy/firefox/ /1.1.1.1/privacy/cloudflare-resolver-firefox/ 301
 /1.1.1.1/setting-up-1.1.1.1/ /1.1.1.1/setup/ 301
 /1.1.1.1/setting-up-1.1.1.1/android/ /1.1.1.1/setup/android/ 301
@@ -1549,6 +1550,16 @@
 /turnstile/concepts/widget-types/ /turnstile/concepts/widget/ 301
 /turnstile/concepts/domain-management/ /turnstile/concepts/hostname-management/ 301
 /turnstile/troubleshooting/challenge-solve-issues/ /cloudflare-challenges/troubleshooting/challenge-solve-issues/ 301
+/turnstile/concepts/ephemeral-id/ /turnstile/additional-configuration/ephemeral-id/ 301
+/turnstile/concepts/hostname-management/ /turnstile/additional-configuration/hostname-management/ 301
+/turnstile/concepts/pre-clearance-support/ /cloudflare-challenges/concepts/clearance/ 301
+/turnstile/api-reference/ /turnstile/get-started/widget-management/api/ 301
+/turnstile/concepts/appearance-modes/ /turnstile/get-started/client-side-rendering/widget-configurations/ 301
+/turnstile/demos/ /turnstile/tutorials/ 301
+/turnstile/get-started/pre-clearance/ /cloudflare-challenges/concepts/clearance/ 301
+/turnstile/get-started/terraform/ /turnstile/get-started/widget-management/terraform/ 301
+/turnstile/glossary/ /turnstile/ 301
+/turnstile/get-started/supported-browsers/ /cloudflare-challenges/reference/supported-browsers/ 301
 
 # waf
 /waf/about/ /waf/concepts/ 301
@@ -2202,6 +2213,7 @@
 
 ### DYNAMIC REDIRECTS ###
 /*/index.html.md /:splat/index.md 301
+/1.1.1.1/other-ways-to-use-1.1.1.1/* /1.1.1.1/additional-options/:splat 301
 /api-next/* /api/:splat 301
 /changelog-next/* /changelog/:splat 301
 /browser-rendering/quick-actions-rest-api/* /browser-rendering/rest-api/:splat 301

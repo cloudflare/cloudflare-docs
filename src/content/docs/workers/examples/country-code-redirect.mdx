@@ -87,23 +87,24 @@ export default {
 </TabItem> <TabItem label="Python" icon="seti:python">
 
 ```py
-from workers import Response, fetch
+from workers import WorkerEntrypoint, Response, fetch
 
-async def on_fetch(request):
-    countries = {
-        "US": "https://example.com/us",
-        "EU": "https://example.com/eu",
-    }
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        countries = {
+            "US": "https://example.com/us",
+            "EU": "https://example.com/eu",
+        }
 
-    # Use the cf object to obtain the country of the request
-    # more on the cf object: https://developers.cloudflare.com/workers/runtime-apis/request#incomingrequestcfproperties
-    country = request.cf.country
+        # Use the cf object to obtain the country of the request
+        # more on the cf object: https://developers.cloudflare.com/workers/runtime-apis/request#incomingrequestcfproperties
+        country = request.cf.country
 
-    if country and country in countries:
-        url = countries[country]
-        return Response.redirect(url)
+        if country and country in countries:
+            url = countries[country]
+            return Response.redirect(url)
 
-    return fetch("https://example.com", request)
+        return fetch("https://example.com", request)
 ```
 
 </TabItem> <TabItem label="Hono" icon="seti:typescript">

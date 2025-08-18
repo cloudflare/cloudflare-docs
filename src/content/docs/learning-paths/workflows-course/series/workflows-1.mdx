@@ -8,7 +8,7 @@ description: |
   Cloudflare Workflows provides durable execution capabilities, allowing developers to create reliable, repeatable workflows that run in the background. Workflows are designed to resume execution even if the underlying compute fails, ensuring that tasks complete eventually. They are built on top of Cloudflare Workers and handle scaling and provisioning automatically.
 ---
 
-import { Render, Tabs, TabItem, Stream, Card } from "~/components";
+import { Render, Tabs, TabItem, Card, YouTube } from "~/components";
 
 <Tabs>
   <TabItem label="Watch this episode">
@@ -18,21 +18,7 @@ import { Render, Tabs, TabItem, Stream, Card } from "~/components";
   Workflows are triggered by events, such as Event Notifications consumed from a Queue, HTTP requests, another Worker, or even scheduled timers. Individual steps within a Workflow are designed as retriable units of work. The state is persisted between steps, allowing workflows to resume from the last successful step after failures. Workflows automatically generate metrics for each step, aiding in debugging and observability.
 
     <Card>
-        <Stream
-        id="825b29fbf3c93d525735544f77aeb816"
-        title="Introduction to Workflows"
-        thumbnail="https://pub-d9bf66e086fb4b639107aa52105b49dd.r2.dev/Workflows-video-1.png"
-        showMoreVideos={false}
-        chapters={{
-          "Background": "0s",
-          "Workflows Introduction": "45s",
-          "Punderful, an app using all of the Cloudflare primitives": "1m10s",
-          "Vectorize": "2m35s",
-          "Workflow code in Action": "3m0s",
-          "Does it scale?": "7m0s",
-          "Conclusion and next video introduction": "7m15s"
-        }}
-      />
+        <YouTube id="slS4RBV0SBk" />
 
       **Related content**
 

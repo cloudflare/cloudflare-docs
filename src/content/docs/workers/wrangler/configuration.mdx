@@ -270,9 +270,9 @@ Example:
 <WranglerConfig>
 
 ```toml title="wrangler.toml"
-routes = [
-	{ pattern = "shop.example.com", custom_domain = true }
-]
+[[routes]]
+pattern = "shop.example.com"
+custom_domain = true
 ```
 
 </WranglerConfig>
@@ -296,9 +296,9 @@ Example:
 <WranglerConfig>
 
 ```toml title="wrangler.toml"
-routes = [
-	{ pattern = "subdomain.example.com/*", zone_id = "<YOUR_ZONE_ID>" }
-]
+[[routes]]
+pattern = "subdomain.example.com/*"
+zone_id = "<YOUR_ZONE_ID>"
 ```
 
 </WranglerConfig>
@@ -318,9 +318,9 @@ Example:
 <WranglerConfig>
 
 ```toml title="wrangler.toml"
-routes = [
-	{ pattern = "subdomain.example.com/*", zone_name = "example.com" }
-]
+[[routes]]
+pattern = "subdomain.example.com/*"
+zone_name = "example.com"
 ```
 
 </WranglerConfig>

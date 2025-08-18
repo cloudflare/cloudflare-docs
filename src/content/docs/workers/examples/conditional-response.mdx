@@ -125,47 +125,48 @@ export default {
 
 ```py
 import re
-from workers import Response
+from workers import WorkerEntrypoint, Response, fetch
 from urllib.parse import urlparse
 
-async def on_fetch(request):
-    blocked_hostnames = ["nope.mywebsite.com", "bye.website.com"]
-    url = urlparse(request.url)
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        blocked_hostnames = ["nope.mywebsite.com", "bye.website.com"]
+        url = urlparse(request.url)
 
-    # Block on hostname
-    if url.hostname in blocked_hostnames:
-        return Response("Blocked Host", status=403)
+        # Block on hostname
+        if url.hostname in blocked_hostnames:
+            return Response("Blocked Host", status=403)
 
-    # On paths ending in .doc or .xml
-    if re.search(r'\.(doc|xml)$', url.path):
-        return Response("Blocked Extension", status=403)
+        # On paths ending in .doc or .xml
+        if re.search(r'\.(doc|xml)$', url.path):
+            return Response("Blocked Extension", status=403)
 
-    # On HTTP method
-    if "POST" in request.method:
-        return Response("Response for POST")
+        # On HTTP method
+        if "POST" in request.method:
+            return Response("Response for POST")
 
-    # On User Agent
-    user_agent = request.headers["User-Agent"] or ""
-    if "bot" in user_agent:
-        return Response("Block User Agent containing bot", status=403)
+        # On User Agent
+        user_agent = request.headers["User-Agent"] or ""
+        if "bot" in user_agent:
+            return Response("Block User Agent containing bot", status=403)
 
-    # On Client's IP address
-    client_ip = request.headers["CF-Connecting-IP"]
-    if client_ip == "1.2.3.4":
-        return Response("Block the IP 1.2.3.4", status=403)
+        # On Client's IP address
+        client_ip = request.headers["CF-Connecting-IP"]
+        if client_ip == "1.2.3.4":
+            return Response("Block the IP 1.2.3.4", status=403)
 
-    # On ASN
-    if request.cf and request.cf.asn == 64512:
-        return Response("Block the ASN 64512 response")
+        # On ASN
+        if request.cf and request.cf.asn == 64512:
+            return Response("Block the ASN 64512 response")
 
-    # On Device Type
-    # Requires Enterprise "CF-Device-Type Header" zone setting or
-    # Page Rule with "Cache By Device Type" setting applied.
-    device = request.headers["CF-Device-Type"]
-    if device == "mobile":
-        return Response.redirect("https://mobile.example.com")
+        # On Device Type
+        # Requires Enterprise "CF-Device-Type Header" zone setting or
+        # Page Rule with "Cache By Device Type" setting applied.
+        device = request.headers["CF-Device-Type"]
+        if device == "mobile":
+            return Response.redirect("https://mobile.example.com")
 
-    return fetch(request)
+        return fetch(request)
 ```
 
 </TabItem> <TabItem label="Hono" icon="seti:typescript">

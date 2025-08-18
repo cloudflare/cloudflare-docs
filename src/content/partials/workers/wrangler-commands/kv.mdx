@@ -144,6 +144,47 @@ Deleting namespace 15137f8edf6c09742227e99b08aaf273
 Deleted namespace 15137f8edf6c09742227e99b08aaf273
 ```
 
+<AnchorHeading title="`rename`" slug="kv-namespace-rename" depth={3} />
+
+Rename a KV namespace.
+
+```txt
+wrangler kv namespace rename {<NAME>|--namespace-id=<NAMESPACE_ID>} --new-name=<NEW_NAME> [OPTIONS]
+```
+
+- `NAME` <Type text="string" /> <MetaInfo text="optional" />
+  - The current name (title) of the namespace to rename.
+- `--namespace-id` <Type text="string" />
+  - The ID of the namespace to rename.
+- `--new-name` <Type text="string" /> <MetaInfo text="required" />
+  - The new name for the namespace.
+- `--env` <Type text="string" /> <MetaInfo text="optional" />
+  - Perform on a specific environment.
+
+<Render file="wrangler-commands/global-flags" product="workers" />
+
+The following is an example of renaming a KV namespace called `MY_KV` to `MY_RENAMED_KV` using the current name.
+
+```sh
+npx wrangler kv namespace rename "MY_KV" --new-name="MY_RENAMED_KV"
+```
+
+```sh output
+Renaming KV namespace f7b02e7fc70443149ac906dd81ec1791 to "MY_RENAMED_KV".
+✨ Successfully renamed namespace to "MY_RENAMED_KV"
+```
+
+The following is an example of renaming a KV namespace using the namespace ID.
+
+```sh
+npx wrangler kv namespace rename --namespace-id=f7b02e7fc70443149ac906dd81ec1791 --new-name="MY_RENAMED_KV"
+```
+
+```sh output
+Renaming KV namespace f7b02e7fc70443149ac906dd81ec1791 to "MY_RENAMED_KV".
+✨ Successfully renamed namespace to "MY_RENAMED_KV"
+```
+
 ## `kv key`
 
 Manage key-value pairs within a Workers KV namespace.

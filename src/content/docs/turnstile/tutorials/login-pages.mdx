@@ -28,7 +28,7 @@ This tutorial will guide you through integrating Cloudflare Turnstile to protect
 ## Add the Turnstile widget to your HTML form
 
 1. Add the Turnstile widget to your form.
-2. Replace `YOUR-SITE-KEY` with the sitekey from Cloudflare.
+2. Replace `<YOUR-SITE-KEY>` with the sitekey from Cloudflare.
 3. Add a `data-callback` attribute to the Turnstile widget div. This JavaScript function will be called when the challenge is successful.
 4. Ensure your submit button is initially disabled.
 
@@ -52,7 +52,7 @@ This tutorial will guide you through integrating Cloudflare Turnstile to protect
         <textarea name="message" placeholder="Message" required></textarea>
 
         <!-- Turnstile widget -->
-        <div class="cf-turnstile" data-sitekey="YOUR-SITE-KEY" data-callback="enableSubmit"></div>
+        <div class="cf-turnstile" data-sitekey="<YOUR-SITE-KEY>" data-callback="enableSubmit"></div>
 
         <button type="submit" id="submit-button" disabled>Submit</button>
     </form>

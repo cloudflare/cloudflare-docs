@@ -87,28 +87,29 @@ export default {
 </TabItem> <TabItem label="Python" icon="seti:python">
 
 ```py
-from workers import Response, fetch
+from workers import WorkerEntrypoint, Response, fetch
 from urllib.parse import urlparse
 
-async def on_fetch(request):
-    homepage_url = "https://tutorial.cloudflareworkers.com/"
-    protected_type = "image/"
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        homepage_url = "https://tutorial.cloudflareworkers.com/"
+        protected_type = "image/"
 
-    # Fetch the original request
-    response = await fetch(request)
+        # Fetch the original request
+        response = await fetch(request)
 
-    # If it's an image, engage hotlink protection based on the referer header
-    referer = request.headers["Referer"]
-    content_type = response.headers["Content-Type"] or ""
+        # If it's an image, engage hotlink protection based on the referer header
+        referer = request.headers["Referer"]
+        content_type = response.headers["Content-Type"] or ""
 
-    if referer and content_type.startswith(protected_type):
-        # If the hostnames don't match, it's a hotlink
-        if urlparse(referer).hostname != urlparse(request.url).hostname:
-            # Redirect the user to your website
-            return Response.redirect(homepage_url, 302)
+        if referer and content_type.startswith(protected_type):
+            # If the hostnames don't match, it's a hotlink
+            if urlparse(referer).hostname != urlparse(request.url).hostname:
+                # Redirect the user to your website
+                return Response.redirect(homepage_url, 302)
 
-    # Everything is fine, return the response normally
-    return response
+        # Everything is fine, return the response normally
+        return response
 ```
 
 </TabItem> <TabItem label="Hono" icon="seti:typescript">

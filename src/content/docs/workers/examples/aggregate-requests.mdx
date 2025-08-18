@@ -93,21 +93,22 @@ export default app;
 </TabItem> <TabItem label="Python" icon="seti:python">
 
 ```py
-from workers import Response, fetch
+from workers import Response, fetch, WorkerEntrypoint
 import asyncio
 import json
 
-async def on_fetch(request):
-    # some_host is set up to return JSON responses
-    some_host = "https://jsonplaceholder.typicode.com"
-    url1 = some_host + "/todos/1"
-    url2 = some_host + "/todos/2"
+class Default(WorkerEntrypoint):
+	async def fetch(self, request):
+		# some_host is set up to return JSON responses
+		some_host = "https://jsonplaceholder.typicode.com"
+		url1 = some_host + "/todos/1"
+		url2 = some_host + "/todos/2"
 
-    responses = await asyncio.gather(fetch(url1), fetch(url2))
-    results = await asyncio.gather(*(r.json() for r in responses))
+		responses = await asyncio.gather(fetch(url1), fetch(url2))
+		results = await asyncio.gather(*(r.json() for r in responses))
 
-    headers = {"content-type": "application/json;charset=UTF-8"}
-    return Response.json(results, headers=headers)
+		headers = {"content-type": "application/json;charset=UTF-8"}
+		return Response.json(results, headers=headers)
 ```
 
 </TabItem> </Tabs>

@@ -6,11 +6,18 @@ sidebar:
   order: 2
 ---
 
-import { ListExamples, GlossaryTooltip } from "~/components";
+import { ResourcesBySelector, GlossaryTooltip } from "~/components";
 
 Explore the following <GlossaryTooltip term="code example">examples</GlossaryTooltip> for Rules.
 
-<ListExamples
-	filters={["products", "goal", "operation"]}
-	additionalProducts={["Cache Rules"]}
+:::note
+
+We have a separate listing for [Cache rules examples](/cache/how-to/cache-rules/examples/).
+
+:::
+
+<ResourcesBySelector
+	directory="rules"
+	types={["example"]}
+	filterables={["products", "goal", "operation"]}
 />
