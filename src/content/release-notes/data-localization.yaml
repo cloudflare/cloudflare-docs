@@ -2,8 +2,6 @@
 link: "/data-localization/changelog/"
 productName: Data Localization Suite
 productLink: "/data-localization/"
-productArea: Application performance
-productAreaLink: /fundamentals/reference/changelog/performance/
 entries:
   - publish_date: "2024-05-22"
     title: Expanded Regional Services for more precise data localization.

@@ -6,7 +6,7 @@ sidebar:
 
 ---
 
-import { GlossaryTooltip, Example, Steps } from "~/components";
+import { GlossaryTooltip, Example, Steps, Tabs, TabItem } from "~/components";
 
 AI Audit works alongside other Cloudflare products, such as Cloudflare [Web Application Firewall (WAF)](/waf/). WAF checks incoming web and API requests, and filters undesired traffic based on rules. [WAF custom rules](/waf/custom-rules/) allow you to perform certain actions such as enforcing <GlossaryTooltip term="robots.txt">`robots.txt`</GlossaryTooltip>.
 
@@ -53,9 +53,9 @@ You may have both of the following features enabled:
 - [WAF custom rule to allow search engine bots](/waf/custom-rules/use-cases/allow-traffic-from-verified-bots/)
 - AI Audit's [pay per crawl](/ai-audit/features/pay-per-crawl/what-is-pay-per-crawl/) to charge all AI crawlers when they request access to your content (including search engine bots).
 
-Since WAF custom rules are enforced before pay per crawl:
+Since custom rules are enforced before pay per crawl:
 
-- Only search engine bots will be able to access your site (enforced by WAF custom rule).
+- Only search engine bots will be able to access your site (enforced by custom rule).
 - The search engine bots will then be charged for access to your content (enforced by AI Audit's pay per crawl).
 
 :::note
@@ -71,11 +71,25 @@ You may have both of the following features enabled:
 - A WAF custom rule which blocks all bots.
 - AI Audit selection which allows certain AI crawlers.
 
-In this scenario, you have two WAF custom rules, each directing a different logic for handling AI crawlers. To resolve this issue:
+In this scenario, you have two custom rules, each directing a different logic for handling AI crawlers. To resolve this issue:
+
+<Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
 
 <Steps>
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-2. Go to **Rules** > **Overview**.
+2. Go to **Security** > **WAF** > **Custom rules** tab.
 3. Identify your WAF custom rule and the AI Audit rule.
 4. Drag the rule you wish to prioritize to the top, or modify your WAF custom rule to ensure it does not conflict with your AI Audit configurations.
 </Steps>
+
+</TabItem> <TabItem label="New dashboard" icon="rocket">
+
+<Steps>
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+2. Go to **Security** > **Security rules** and filter by **Custom rules**.
+3. Identify your custom rule and the AI Audit rule.
+4. Drag the rule you wish to prioritize to the top, or modify your custom rule to ensure it does not conflict with your AI Audit configurations.
+</Steps>
+
+</TabItem> </Tabs>
+

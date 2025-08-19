@@ -38,6 +38,7 @@ Through Response Header Transform Rules you can:
 - Set the value of an HTTP response header to a literal string value, overwriting its previous value or adding a new header to the response if it does not exist.
 - Set the value of an HTTP response header according to an expression, overwriting its previous value or adding a new header to the response if it does not exist.
 - Add a new HTTP response header with a literal string value without removing any existing headers with the same name.
+- Add a new HTTP response header according to an expression without removing any existing headers with the same name.
 - Remove an HTTP header from the response.
 
 You can create a response header transform rule [in the dashboard](/rules/transform/response-header-modification/create-dashboard/), [via API](/rules/transform/response-header-modification/create-api/), or [using Terraform](/terraform/additional-configurations/transform-rules/#create-a-response-header-transform-rule).
@@ -67,9 +68,7 @@ You can create a response header transform rule [in the dashboard](/rules/transf
 
 - Modifying `cache-control`, `CDN-Cache-Control`, or `Cloudflare-CDN-Cache-Control` headers will not change the way Cloudflare caches an object. Instead, you should create a [Cache Rule](/cache/how-to/cache-rules/).
 
-- To add a `set-cookie` header to the response, make sure you use the _Add_ operation instead of _Set static_/_Set dynamic_. Using one of the _Set_ operations will remove any `set-cookie` headers already in the response, including those added by other Cloudflare products such as Bot Management.
-
-- Currently you can only use the _Add_ operation with a literal string value.
+- To add a `set-cookie` header to the response, make sure you use one of the _Add static_/_Add dynamic_ operations instead of _Set static_/_Set dynamic_. Using one of the _Set_ operations will remove any `set-cookie` headers already in the response, including those added by other Cloudflare products such as Bot Management.
 
 <Render
 	file="troubleshoot-rules-with-trace"

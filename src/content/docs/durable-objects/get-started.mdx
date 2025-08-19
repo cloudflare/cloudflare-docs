@@ -14,7 +14,7 @@ This guide will instruct you through:
 - Instantiating and communicating with a Durable Object from another Worker.
 - Deploying a Durable Object and a Worker that communicates with a Durable Object.
 
-If you wish to learn more about Durable Objects, refer to [What are Durable Objects?](/durable-objects/what-are-durable-objects/).
+If you wish to learn more about Durable Objects, refer to [What are Durable Objects?](/durable-objects/concepts/what-are-durable-objects/).
 
 ## Quick start
 
@@ -185,16 +185,16 @@ export default {
 <TabItem label="Python" icon="seti:python">
 
 ```python
-from workers import handler, Response
+from workers import handler, Response, WorkerEntrypoint
 from urllib.parse import urlparse
 
-@handler
-async def on_fetch(request, env, ctx):
-    url = urlparse(request.url)
-    id = env.MY_DURABLE_OBJECT.idFromName(url.path)
-    stub = env.MY_DURABLE_OBJECT.get(id)
-    greeting = await stub.say_hello()
-    return Response(greeting)
+class Default(WorkerEntrypoint):
+    async def fetch(request, env, ctx):
+        url = urlparse(request.url)
+        id = env.MY_DURABLE_OBJECT.idFromName(url.path)
+        stub = env.MY_DURABLE_OBJECT.get(id)
+        greeting = await stub.say_hello()
+        return Response(greeting)
 ```
 
 </TabItem>
@@ -328,13 +328,13 @@ class MyDurableObject(DurableObject):
 
         return result.greeting
 
-@handler
-async def on_fetch(request, env, ctx):
-    url = urlparse(request.url)
-    id = env.MY_DURABLE_OBJECT.idFromName(url.path)
-    stub = env.MY_DURABLE_OBJECT.get(id)
-    greeting = await stub.say_hello()
-    return Response(greeting)
+class Default(WorkerEntrypoint):
+    async def fetch(self, request, env, ctx):
+        url = urlparse(request.url)
+        id = env.MY_DURABLE_OBJECT.idFromName(url.path)
+        stub = env.MY_DURABLE_OBJECT.get(id)
+        greeting = await stub.say_hello()
+        return Response(greeting)
 ```
 
 </TabItem>

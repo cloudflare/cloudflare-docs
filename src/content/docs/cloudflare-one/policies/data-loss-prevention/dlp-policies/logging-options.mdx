@@ -67,22 +67,22 @@ Based on your report, DLP's machine learning will adjust its confidence in futur
 - All Cloudflare logs are encrypted at rest. Encrypting the payload content adds a second layer of encryption for the matched values that triggered a DLP rule.
 - Cloudflare cannot decrypt encrypted payloads, since this operation requires your private key. Cloudflare staff will never ask for the private key.
 - DLP will redact all predefined alphanumeric characters in the log. For example, `123-45-6789` will become `XXX-XX-XXXX`.
-  - You can define sensitive data with [Exact Data Match (EDM)](/cloudflare-one/policies/data-loss-prevention/datasets/#exact-data-match). EDM match logs will redact your defined strings.
+  - You can define sensitive data with [Exact Data Match (EDM)](/cloudflare-one/policies/data-loss-prevention/detection-entries/#exact-data-match). EDM match logs will redact your defined strings.
 
-## Send HTTP requests to Logpush destination
+## Send DLP forensic copies to Logpush destination
 
 :::note[Availability]
 Only available on Enterprise plans.
 :::
 
-Gateway allows you to send copies of entire HTTP requests matched in HTTP Allow and Block policies to storage destinations configured in [Logpush](/logs/about/), including third-party destinations.
+Gateway allows you to send copies of entire HTTP requests matched in HTTP Allow and Block policies to storage destinations configured in [Logpush](/logs/logpush/), including third-party destinations. Forensic copies include unaltered payloads and headers which may include sensitive data. Logpush logs are encrypted in transit only, such as when sent as TLS traffic. Further encryption depends on your storage destination's policies.
 
 To set up the DLP Forensic Copy Logpush job:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Logs** > **Logpush**.
 2. If this is your first Logpush job, select **Add a Logpush job**. Otherwise, select **Go to logpush configurations**.
 3. In Logpush, select **Create a Logpush job**.
-4. Choose a [Logpush destination](/logs/get-started/enable-destinations/).
+4. Choose a [Logpush destination](/logs/logpush/logpush-job/enable-destinations/).
 5. In **Configure logpush job**, choose the _DLP forensic copies_ dataset. Select **Create Logpush job**.
 6. Return to Zero Trust and go to **Gateway** > **Firewall policies** > **HTTP**.
 7. Edit an existing Allow or Block policy, or [create a new policy](/cloudflare-one/policies/data-loss-prevention/dlp-policies/#2-create-a-dlp-policy). Your policy does not need to include a DLP profile.
@@ -92,4 +92,4 @@ To set up the DLP Forensic Copy Logpush job:
 
 DLP will now send a copy of HTTP requests that match this policy to your Logpush destination.
 
-Logpush supports up to four DLP Forensic Copy Logpush jobs per account. By default, Gateway will send all matched HTTP requests to your configured DLP Forensic Copy jobs. To send specific policy matches to specific jobs, configure [Log filters](/logs/reference/filters/). If the request contains an archive file, DLP will only send up to 100 MB of uncompressed content to your configured storage.
+Logpush supports up to four DLP Forensic Copy Logpush jobs per account. By default, Gateway will send all matched HTTP requests to your configured DLP Forensic Copy jobs. To send specific policy matches to specific jobs, configure [Log filters](/logs/logpush/logpush-job/filters/). If the request contains an archive file, DLP will only send up to 100 MB of uncompressed content to your configured storage.

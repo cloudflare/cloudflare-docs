@@ -8,26 +8,30 @@ meta:
 
 ## Using DevTools
 
-When running your Worker locally using `wrangler dev`, you automatically have access to [Cloudflare's implementation](https://github.com/cloudflare/workers-sdk/tree/main/packages/chrome-devtools-patches) of [Chrome's DevTools](https://developer.chrome.com/docs/devtools/overview).
-DevTools help you debug and optimize your Workers.
+When running your Worker locally using the [Wrangler CLI](https://developers.cloudflare.com/workers/wrangler/) (`wrangler dev`) or using [Vite](https://vite.dev/) with the [Cloudflare Vite plugin](https://developers.cloudflare.com/workers/vite-plugin/), you automatically have access to [Cloudflare's implementation](https://github.com/cloudflare/workers-sdk/tree/main/packages/chrome-devtools-patches) of [Chrome DevTools](https://developer.chrome.com/docs/devtools/overview).
 
-:::note
-You may have experience using Chrome's DevTools for frontend development. Notably, Worker DevTools are used for backend code and _not_ client-side JavaScript.
-:::
+You can use Chrome DevTools to:
+
+- View logs directly in the Chrome console
+- [Debug code by setting breakpoints](/workers/observability/dev-tools/breakpoints/)
+- [Profile CPU usage](/workers/observability/dev-tools/cpu-usage/)
+- [Observe memory usage and debug memory leaks in your code that can cause out-of-memory (OOM) errors](/workers/observability/dev-tools/memory-usage/)
 
 ## Opening DevTools
 
-To get started, run your Worker in development mode with `wrangler dev`, then open the DevTools in the browser by pressing the `D` key from your terminal. Now when you access this worker locally, it can be debugged and profiled with this DevTools instance.
+### Wrangler
 
-Alternatively, both the [Cloudflare Dashboard](https://dash.cloudflare.com/) and the [Worker's Playground](https://workers.cloudflare.com/playground) include DevTools in their UI.
+- Run your Worker locally, by running `wrangler dev`
+- Press the `D` key from your terminal to open DevTools in a browser tab
 
-## DevTool use cases
+### Vite
 
-DevTools can be used in a variety of situations. For more information, see the documentation:
+- Run your Worker locally by running `vite`
+- In a new Chrome tab, open the debug URL that shows in your console (for example, `http://localhost:5173/__debug`)
 
-- [Debugging code via breakpoints and logging](/workers/observability/dev-tools/breakpoints/)
-- [Profiling CPU usage](/workers/observability/dev-tools/cpu-usage/)
-- [Addressing out of memory (OOM) errors](/workers/observability/dev-tools/memory-usage/)
+### Dashboard editor & playground
+
+Both the [Cloudflare dashboard](https://dash.cloudflare.com/) and the [Worker's Playground](https://workers.cloudflare.com/playground) include DevTools in the UI.
 
 ## Related resources
 

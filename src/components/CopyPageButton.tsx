@@ -140,7 +140,7 @@ export default function CopyPageButton() {
 			<button
 				ref={refs.setReference}
 				{...getReferenceProps()}
-				className="inline-flex h-8 min-w-32 cursor-pointer items-center justify-center gap-2 rounded-sm border border-(--sl-color-hairline) bg-transparent px-3 text-sm text-black hover:bg-(--sl-color-bg-nav)"
+				className="inline-flex min-h-8 min-w-32 cursor-pointer items-center justify-center gap-2 rounded-sm border border-(--sl-color-hairline) bg-transparent px-3 text-sm text-black hover:bg-(--sl-color-bg-nav)"
 			>
 				{getButtonContent()}
 			</button>

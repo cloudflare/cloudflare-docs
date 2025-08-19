@@ -2,11 +2,17 @@
 link: "/radar/release-notes/"
 productName: Radar
 productLink: "/radar/"
-productArea: Developer platform
-productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2025-08-14"
+    title: Add AI Bots crawl purpose
+    description: |-
+      * Added AI Bots crawl purpose dimension and filter to [summary](/api/resources/radar/subresources/ai/subresources/timeseries_groups/methods/summary/) and [timeseries_groups](/api/resources/radar/subresources/ai/subresources/timeseries_groups/methods/timeseries_groups/) endpoints.
+  - publish_date: "2025-08-06"
+    title: Add Certificate Transparency (CT) endpoints
+    description: |-
+      * Added [CT endpoints](/api/resources/radar/subresources/ct/).
   - publish_date: "2025-07-01"
-    title: Add Bots and Web Crawlers Endpoints
+    title: Add Bots and Web Crawlers endpoints
     description: |-
       * Added new [bots endpoints](/api/resources/radar/subresources/bots/), replacing the deprecated verified bots
       endpoints. Use the following replacements:

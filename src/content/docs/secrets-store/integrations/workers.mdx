@@ -6,7 +6,7 @@ sidebar:
   label: Use with Workers
 ---
 
-import { WranglerConfig, Tabs, TabItem } from "~/components";
+import { WranglerConfig, Tabs, TabItem, APIRequest } from "~/components";
 
 [Cloudflare Secrets Store](/secrets-store/) is a secure, centralized location in which account-level secrets are stored and managed. The secrets are securely encrypted and stored across all Cloudflare data centers.
 
@@ -68,25 +68,24 @@ You can find and copy the store ID from the [Secrets Store tab](https://dash.clo
 
 Refer to [Secrets Store API](/api/resources/secrets_store/) for the full API documentation.
 
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/secrets_store/stores/$STORE_ID/secrets \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---header "Content-Type: application/json" \
---data '[
-  {
-    "name":"<MY_SECRET_NAME>",
-    "value":"<SECRET_VALUE>",
-    "scopes":["workers"],
-    "comment":""
-	},
-  {
-		"name":"<MY_SECRET_NAME_2>",
-    "value":"<SECRET_VALUE>",
-    "scopes":["workers"],
-    "comment":""
-  }
-]'
-```
+<APIRequest
+  path="/accounts/{account_id}/secrets_store/stores/{store_id}/secrets"
+	method="POST"
+	json={[
+		{
+			"name":"<MY_SECRET_NAME>",
+			"value":"<SECRET_VALUE>",
+			"scopes":["workers"],
+			"comment":""
+			},
+		{
+			"name":"<MY_SECRET_NAME_2>",
+			"value":"<SECRET_VALUE>",
+			"scopes":["workers"],
+			"comment":""
+			}
+]}
+/>
 
 </TabItem> </Tabs>
 

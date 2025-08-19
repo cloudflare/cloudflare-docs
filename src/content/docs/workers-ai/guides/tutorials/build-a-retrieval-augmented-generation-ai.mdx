@@ -10,10 +10,10 @@ products:
 tags:
   - AI
   - Hono
-languages:
   - JavaScript
 sidebar:
   order: 2
+description: Build your first AI app with Cloudflare AI. This guide uses Workers AI, Vectorize, D1, and Cloudflare Workers.
 ---
 
 import { Details, Render, PackageManagers, WranglerConfig } from "~/components";
@@ -369,7 +369,7 @@ app.get("/", async (c) => {
 	let notes = [];
 	if (vecId) {
 		const query = `SELECT * FROM notes WHERE id = ?`;
-		const { results } = await c.env.DB.prepare(query).bind(vecId).all();
+		const { results } = await c.env.DB.prepare(query).bind(vecId).run();
 		if (results) notes = results.map((vec) => vec.text);
 	}
 

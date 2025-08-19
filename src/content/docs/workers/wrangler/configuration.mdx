@@ -99,6 +99,8 @@ Inheritable keys are configurable at the top-level, and can be inherited (or ove
 :::note
 
 At a minimum, the `name`, `main` and `compatibility_date` keys are required to deploy a Worker.
+
+The `main` key is optional for assets-only Workers.
 :::
 
 - `name` <Type text="string" /> <MetaInfo text="required" />
@@ -268,9 +270,9 @@ Example:
 <WranglerConfig>
 
 ```toml title="wrangler.toml"
-routes = [
-	{ pattern = "shop.example.com", custom_domain = true }
-]
+[[routes]]
+pattern = "shop.example.com"
+custom_domain = true
 ```
 
 </WranglerConfig>
@@ -294,9 +296,9 @@ Example:
 <WranglerConfig>
 
 ```toml title="wrangler.toml"
-routes = [
-	{ pattern = "subdomain.example.com/*", zone_id = "<YOUR_ZONE_ID>" }
-]
+[[routes]]
+pattern = "subdomain.example.com/*"
+zone_id = "<YOUR_ZONE_ID>"
 ```
 
 </WranglerConfig>
@@ -316,9 +318,9 @@ Example:
 <WranglerConfig>
 
 ```toml title="wrangler.toml"
-routes = [
-	{ pattern = "subdomain.example.com/*", zone_name = "example.com" }
-]
+[[routes]]
+pattern = "subdomain.example.com/*"
+zone_name = "example.com"
 ```
 
 </WranglerConfig>
@@ -1078,8 +1080,8 @@ The following options are available:
 
 - `image` <Type text="string" /> <MetaInfo text="required" />
 
-  - The image to use for the container. This can either be a local path, in which case `wrangler deploy` will
-    build and push the image. Or it can be an image URL. Currently, only the Cloudflare Registry is a supported registry.
+	- The image to use for the container. This can either be a local path to a `Dockerfile`, in which case `wrangler deploy` will
+    build and push the image, or it can be an image URL. Currently, only the Cloudflare Registry is a supported registry.
 
 - `class_name` <Type text="string" /> <MetaInfo text="required" />
 
@@ -1092,15 +1094,19 @@ The following options are available:
     instance. The current options are `"dev"`, `"basic"`, and `"standard"`. The default is `"dev"`. For more information,
     the see [instance types documentation](/containers/platform-details#instance-types).
 
+  - To specify a custom instance type, see [here](#custom-instance-types).
+
 - `max_instances` <Type text="string" /> <MetaInfo text="optional" />
 
-  - The maxiumum number of concurrent container instances you want to run. If you have more Durable Objects that
+  - The maximum number of concurrent container instances you want to run. If you have more Durable Objects that
     request to run a container than this number, the container request will error. You may have more Durable Objects
     than this number over a longer time period, but you may not have more concurrently.
 
+  - This value is only enforced when running in production on Cloudflare's network. This limit does not apply during local development, so you may run more instances than specified.
+
 - `name` <Type text="string" /> <MetaInfo text="optional" />
 
-  - The name of your container. Used as an identifier. This will default to a comination of your Worker name, the class
+  - The name of your container. Used as an identifier. This will default to a combination of your Worker name, the class
     name, and your environment.
 
 - `image_build_context` <Type text="string" /> <MetaInfo text="optional" />
@@ -1108,9 +1114,8 @@ The following options are available:
   - The build context of the application, by default it is the directory of `image`.
 
 - `image_vars` <Type text="Record<string, string>" /> <MetaInfo text="optional" />
+  - Build-time variables, equivalent to using `--build-arg` with `docker build`. If you want to provide environment variables to your container at _runtime_, you should [use secret bindings or `envVars` on the Container class](/containers/examples/env-vars-and-secrets/).
 
-  - Environment variables to set in the container. These will be used during the build phase and will be defaults
-    when running the container, though they can be overridden at runtime when starting the container.
 
 <WranglerConfig>
 
@@ -1129,6 +1134,39 @@ class_name = "MyContainer"
 [[migrations]]
 tag = "v1"
 new_sqlite_classes = ["MyContainer"]
+```
+
+</WranglerConfig>
+
+### Custom Instance Types
+
+:::note
+For Enterprise customers only.
+:::
+
+In place of the [named instance types](/containers/platform-details#instance-types), you can set a custom instance type by
+individually configuring vCPU, memory, and disk.
+
+The following options are available:
+
+- `vcpu` <Type text="number" /> <MetaInfo text="optional" />
+
+  - The vCPU to be used by your container. Defaults to `0.0625` (1/16 vCPU).
+
+- `memory_mib` <Type text="number" /> <MetaInfo text="optional" />
+
+  - The memory to be used by your container, in MiB. Defaults to `256`.
+
+- `disk_mb` <Type text="number" /> <MetaInfo text="optional" />
+
+  - The disk to be used by your container, in MB. Defaults to `2000` (2GB).
+
+<WranglerConfig>
+
+```toml title="wrangler.toml"
+[[containers]]
+image = "./Dockerfile"
+instance_type = { vcpu = 1, memory_mib = 1024, disk_mb = 4000 }
 ```
 
 </WranglerConfig>
@@ -1222,7 +1260,14 @@ You can configure various aspects of local development, such as the local protoc
 
   - Host to forward requests to, defaults to the host of the first `route` of the Worker.
 
-Example:
+- `enable_containers` <Type text="boolean" /> <MetaInfo text="optional" />
+
+  - Determines whether to enable containers during a local dev session, if they have been configured. Defaults to `true`. If set to `false`, you can develop the rest of your application without requiring Docker or other container tool, as long as you do not invoke any code that interacts with containers.
+
+- `container_engine` <Type text="string" /> <MetaInfo text="optional" />
+
+  - Used for local development of [Containers](/containers/local-dev). Wrangler will attempt to automatically find the correct socket to use to communicate with your container engine. If that does not work (usually surfacing as an `internal error` when attempting to connect to your Container), you can try setting the socket path using this option. You can also set this via the environment variable `DOCKER_HOST`.
+    Example:
 
 <WranglerConfig>
 
@@ -1284,12 +1329,12 @@ You can alias all imports of `node-fetch` to instead point directly to the `fetc
 
 ```toml title="wrangler.toml"
 [alias]
-"node-fetch" = "./fetch-nolyfill"
+"node-fetch" = "./fetch-polyfill"
 ```
 
 </WranglerConfig>
 
-```js title="./fetch-nolyfill"
+```js title="./fetch-polyfill"
 export default fetch;
 ```
 
@@ -1433,33 +1478,39 @@ This file must contain only a single JSON object of the form:
 When this `config.json` file exists, Wrangler will follow the `configPath` (relative to the `.wrangler/deploy/config.json` file) to find the generated Wrangler configuration file to load and use in the current command.
 Wrangler will display messaging to the user to indicate that the configuration has been redirected to a different file than the user's configuration file.
 
+The generated configuration file should not include any [environments](#environments).
+This is because such a file, when required, should be created as part of a build step, which should already target a specific environment. These build tools should generate distinct deployment configuration files for different environments.
+
 ### Custom build tool example
 
 A common example of using a redirected configuration is where a custom build tool, or framework, wants to modify the user's configuration to be used when deploying, by generating a new configuration in a `dist` directory.
 
-- First, the user writes code that uses Cloudflare Workers resources, configured via a user's Wrangler configuration file.
+- First, the user writes code that uses Cloudflare Workers resources, configured via a user's Wrangler configuration file like the following:
 
-<WranglerConfig>
+  <WranglerConfig>
 
-```toml title="wrangler.toml"
-name = "my-worker"
-main = "src/index.ts"
-[[kv_namespaces]]
-binding = "<BINDING_NAME1>"
-id = "<NAMESPACE_ID1>"
-```
+  ```toml title="wrangler.toml"
+  name = "my-worker"
+  main = "src/index.ts"
 
-</WranglerConfig>
+  [vars]
+  MY_VARIABLE = "production variable"
 
-Note that this configuration points `main` at the user's code entry-point.
-
-- Then, the user runs a custom build, which might read the user's Wrangler configuration file to find the source code entry-point:
-
-  ```bash
-  > my-tool build
+  [env.staging.vars]
+  MY_VARIABLE = "staging variable"
   ```
 
-- This `my-tool` generates a `dist` directory that contains both compiled code and a new generated deployment configuration file.
+  </WranglerConfig>
+
+  This configuration points `main` at the user's code entry-point and defines the `MY_VARIABLE` variable in two different environments.
+
+- Then, the user runs a custom build for a given environment (for example `staging`). This will read the user's Wrangler configuration file to find the source code entry-point and environment specific settings:
+
+  ```bash
+  > my-tool build --env=staging
+  ```
+
+- `my-tool` generates a `dist` directory that contains both compiled code and a new generated deployment configuration file, containing only the settings for the given environment.
   It also creates a `.wrangler/deploy/config.json` file that redirects Wrangler to the new, generated deployment configuration file:
 
   <FileTree>
@@ -1479,11 +1530,14 @@ Note that this configuration points `main` at the user's code entry-point.
   {
   	"name": "my-worker",
   	"main": "./index.js",
-  	"kv_namespaces": [{ "binding": "<BINDING_NAME1>", "id": "<NAMESPACE_ID1>" }]
+  	"vars": {
+  		"MY_VARIABLE": "staging variable"
+  	}
   }
   ```
 
-  Note that, now, the `main` property points to the generated code entry-point.
+  Now, the `main` property points to the generated code entry-point, no environment is defined,
+  and the `MY_VARIABLE` variable is resolved to the staging environment value.
 
   And the `.wrangler/deploy/config.json` contains the path to the generated configuration file:
 

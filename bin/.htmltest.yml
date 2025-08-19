@@ -2,7 +2,9 @@ DirectoryPath: "dist"
 EnforceHTTPS: false
 IgnoreURLs:
   - "/api/*"
-  - "#_top"
+  - "/llms-full.txt$"
+IgnoreDir:
+  - "changelog"
 CheckLinks: true
 CheckImages: false
 CheckScripts: false

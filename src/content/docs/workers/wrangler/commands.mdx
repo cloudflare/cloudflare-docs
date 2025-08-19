@@ -27,7 +27,7 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`hyperdrive`](#hyperdrive) - Manage your Hyperdrives.
 - [`deploy`](#deploy) - Deploy your Worker to Cloudflare.
 - [`dev`](#dev) - Start a local server for developing your Worker.
-- [`delete`](#delete-1) - Delete your Worker from Cloudflare.
+- [`delete`](#delete) - Delete your Worker from Cloudflare.
 - [`kv namespace`](#kv-namespace) - Manage Workers KV namespaces.
 - [`kv key`](#kv-key) - Manage key-value pairs within a Workers KV namespace.
 - [`kv bulk`](#kv-bulk) - Manage multiple key-value pairs within a Workers KV namespace in batches.
@@ -772,13 +772,13 @@ wrangler workflows instances list <WORKFLOW_NAME> [OPTIONS]
 Describe a specific instance of a Workflow, including its current status, any persisted state, and per-step outputs.
 
 ```sh
-wrangler workflows instances describe <WORKFLOW_NAME> <ID> [OPTIONS]
+wrangler workflows instances describe <WORKFLOW_NAME> [ID] [OPTIONS]
 ```
 
 - `WORKFLOW_NAME` <Type text="string" /> <MetaInfo text="required" />
   - The name of a registered Workflow.
-- `ID` <Type text="string" /> <MetaInfo text="required" />
-  - The ID of a Workflow instance. You can optionally provide `latest` to refer to the most recently created instance of a Workflow.
+- `ID` <Type text="string" /> <MetaInfo text="(default: latest) optional" />
+  - The ID of a Workflow instance. You can optionally provide `latest` to refer to the most recently created instance of a Workflow. Defaults to `latest` if no ID is provided.
 
 <Render file="wrangler-commands/global-flags" product="workers" />
 
@@ -1046,6 +1046,8 @@ wrangler pages deployment list [--project-name <PROJECT_NAME>]
   - The name of the project you would like to list deployments for.
 - `--environment` <Type text="'production'|'preview'" /> <MetaInfo text="optional" />
   - Environment type to list deployments for.
+- `--json` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Whether to output the list in JSON format.
 
 <Render file="wrangler-commands/global-flags" product="workers" />
 
@@ -1531,7 +1533,7 @@ wrangler versions secret put <KEY> [OPTIONS]
 Delete a secret for a Worker. Creates a new [version](/workers/configuration/versions-and-deployments/#versions) with modified secrets without [deploying](/workers/configuration/versions-and-deployments/#deployments) the Worker.
 
 ```txt
-wrangler versions delete <KEY> [OPTIONS]
+wrangler versions secret delete <KEY> [OPTIONS]
 ```
 
 - `KEY` <Type text="string" /> <MetaInfo text="required" />
@@ -1989,7 +1991,6 @@ wrangler types [<PATH>] [OPTIONS]
   	SERVICE_BINDING: Service<import("../bound-worker/src/index").Entrypoint>;
   }
   ```
-  - If your service binding targets a [`WorkerEntrypoint`](/workers/runtime-apis/bindings/service-bindings/rpc/) that is a default export, make sure you set `entrypoint: "default"` in your Wrangler config when you configure your service binding.
 
 ---
 

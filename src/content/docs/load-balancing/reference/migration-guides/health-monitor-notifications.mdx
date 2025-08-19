@@ -6,7 +6,7 @@ sidebar:
 
 ---
 
-import { Details } from "~/components"
+import { Details, APIRequest } from "~/components"
 
 Cloudflare is migrating the notifications used by load balancing [health monitors](/load-balancing/monitors/) to use Cloudflare's centralized [Notifications Service](/notifications/).
 
@@ -113,15 +113,13 @@ Though you can perform these steps in the dashboard, Cloudflare recommends you u
 
 If using the Cloudflare API, we recently added a [`PATCH`](/api/resources/load_balancers/subresources/pools/methods/bulk_edit/) endpoint so you can easily remove email notifications from multiple pools at the same time.
 
-```bash title="Request"
-curl --request PATCH \
-"https://api.cloudflare.com/client/v4/accounts/{account_id}/load_balancers/pools" \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-  "notification_email": ""
-}'
-```
+<APIRequest
+  path="/accounts/{account_id}/load_balancers/pools"
+  method="PATCH"
+  json={{
+    notification_email: ""
+  }}
+/>
 
 This API call supports the standard pagination query parameters, either `limit/offset` or `per_page/page`, so by default it only updates the first 25 pools listed. To make sure you update all your pools, you may want to adjust your API call so it loops through various pages or includes a larger number of pools with each request.
 

@@ -16,6 +16,8 @@ import {
 	Plan,
 	RelatedProduct,
 	Render,
+	CardGrid,
+	LinkTitleCard
 } from "~/components";
 
 <Description>
@@ -30,53 +32,29 @@ Turnstile can be embedded into any website without sending traffic through Cloud
 
 <Render file="challenge-behavior" />
 
-Rather than try to unilaterally deprecate and replace CAPTCHA with a single alternative, we built a platform to test many alternatives and rotate new challenges in and out as they become more or less effective.
+## How Turnstile works
 
-With Turnstile, we adapt the actual challenge outcome to the individual visitor or browser. First, we run a series of small non-interactive JavaScript challenges gathering more signals about the visitor/browser environment. Those challenges include, proof-of-work, proof-of-space, probing for web APIs, and various other challenges for detecting browser-quirks and human behavior. As a result, we can fine-tune the difficulty of the challenge to the specific request and avoid ever showing a visual puzzle to a user.
+Turnstile adapts the challenge outcome to the individual visitor or browser. First, we run a series of small non-interactive JavaScript challenges to gather signals about the visitor or browser environment. 
 
-Turnstile also includes machine learning models that detect common features of end visitors who were able to pass a challenge before. The computational hardness of those initial challenges may vary by visitor, but is targeted to run fast.
+These challenges include proof-of-work, proof-of-space, probing for web APIs, and various other challenges for detecting browser-quirks and human behavior. As a result, we can fine-tune the difficulty of the challenge to the specific request and avoid showing a visual or interactive puzzle to a user. 
+
+:::note
+For detailed information on Turnstile's data privacy practices, refer to the [Turnstile Privacy Addendum](https://www.cloudflare.com/turnstile-privacy-policy/).
+:::
+
+### Widget types
 
 Turnstile [widget types](/turnstile/concepts/widget/) include:
 
-- A non-interactive challenge.
-- A non-intrusive interactive challenge (such as checking a box), if the visitor is a suspected bot.
-- An invisible challenge to the browser.
+- **Non-interactive**: Visitors never need to interact with the widget.
+- **Managed**: Visitors are presented with an interactive checkbox if they are a suspected bot.
+- **Invisible**: The widget is completely hidden from the visitor.
 
 ---
 
 ## Accessibility
 
 Turnstile is WCAG 2.1 AA compliant.
-
----
-
-## Privacy policy
-
-For information on Turnstile's data privacy policy, refer to the [Turnstile Privacy Addendum](https://www.cloudflare.com/turnstile-privacy-policy/).
-
----
-
-## Availability
-
-<FeatureTable id="security.turnstile" />
-
-Refer to [Cloudflare Turnstile's product page](https://www.cloudflare.com/products/turnstile/) for more information on Turnstile's plans.
-
----
-
-## Get started
-
-{" "}
-<LinkButton variant="primary" href="/turnstile/get-started/">
-	Get started
-</LinkButton> <LinkButton variant="secondary" href="/turnstile/migration/">
-	Migration guides
-</LinkButton> <LinkButton
-	variant="secondary"
-	href="https://dash.cloudflare.com/?to=/:account/turnstile"
->
-	Dashboard
-</LinkButton>
 
 ---
 
@@ -88,8 +66,8 @@ Refer to [Cloudflare Turnstile's product page](https://www.cloudflare.com/produc
 </Feature>
 
 <Feature
-	header="Pre-Clearance"
-	href="/turnstile/concepts/pre-clearance-support/"
+	header="Pre-clearance"
+	href=" /cloudflare-challenges/concepts/clearance/#pre-clearance-support-in-turnstile"
 >
 	Integrate Cloudflare challenges on single-page applications (SPAs) by allowing
 	Turnstile to issue a Pre-Clearance cookie.
@@ -104,7 +82,22 @@ Refer to [Cloudflare Turnstile's product page](https://www.cloudflare.com/produc
 	your domain from bad bots.
 </RelatedProduct>
 
+<RelatedProduct header="DDoS Protection" href="/ddos-protection/" product="ddos-protection">
+Detect and mitigate Distributed Denial of Service (DDoS) attacks using Cloudflare's Autonomous Edge. 
+</RelatedProduct>
+
 <RelatedProduct header="WAF" href="/waf/" product="waf">
 	Get automatic protection from vulnerabilities and the flexibility to create
 	custom rules.
 </RelatedProduct>
+
+---
+
+## More resources
+
+<CardGrid>
+<LinkTitleCard title="Plans" href="/turnstile/plans/" icon="document">
+
+Learn more about Turnstile's plan availability.
+</LinkTitleCard>
+</CardGrid>

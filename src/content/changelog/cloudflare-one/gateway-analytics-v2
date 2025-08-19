@@ -1,7 +1,7 @@
 ---
 title: New Gateway Analytics in the Cloudflare One Dashboard
 description: An upgraded analytics experience for Gateway usage and metrics.
-date: 2025-05-29T09:00:00Z
+date: 2025-05-29
 products:
   - gateway
 ---
@@ -15,6 +15,6 @@ You can now visualize and explore:
 - Actions Taken: See a clear breakdown of security actions applied by Gateway policies, such as blocks and allows, offering a comprehensive view of your security posture.
 - Geographic Regions: Gain insight into the global distribution of your traffic.
 
-![Gateway Analytics](~/assets/images/changelog/cloudflare-one/gateway-analytics.png) 
+![Gateway Analytics](~/assets/images/changelog/cloudflare-one/gateway-analytics.png)
 
 To access the new overview, log in to your Cloudflare [Zero Trust dashboard](https://one.dash.cloudflare.com/) and go to Analytics in the side navigation bar.

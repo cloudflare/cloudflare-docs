@@ -9,4 +9,4 @@ product:
   wrap: true
 
 meta:
-  description: Digital Experience Monitoring provides visibility into device, network, and application performance across your Zero Trust organization.
+  description: Monitor device, network, and application health across your Zero Trust organization

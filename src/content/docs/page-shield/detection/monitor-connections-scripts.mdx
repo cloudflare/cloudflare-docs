@@ -7,31 +7,32 @@ sidebar:
 
 import { Render } from "~/components";
 
-Once you [activate Page Shield](/page-shield/get-started/), the **Monitors** dashboard will show which resources (scripts and connections) are running on your domain, as well as the cookies recently detected in HTTP traffic.
+Once you [activate Page Shield's client-side resource monitoring](/page-shield/get-started/), the main client-side resources dashboard will show which resources (scripts and connections) are running on your domain, as well as the cookies recently detected in HTTP traffic.
 
 If you notice unexpected scripts or connections on the dashboard, check them for signs of malicious activity. Enterprise customers with a paid add-on will have their [connections and scripts classified as potentially malicious](/page-shield/how-it-works/malicious-script-detection/) based on threat feeds. You should also check for any new or unexpected cookies.
 
 :::note
 
-- Users in Free and Pro plans only have access to the script monitor.
-- If you recently activated Page Shield, you may see a delay in reporting.
+- Users in Free and Pro plans only have access to script monitoring.
+- If you recently activated client-side resource monitoring, you may see a delay in reporting.
 
 :::
 
-## Use the Monitors dashboard
+## Use the client-side resources dashboards
 
-To review the resources and cookies detected by Page Shield:
+To review the resources detected by Cloudflare:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 
-2. Go to **Security** > **Page Shield**.
+2. Go to the client-side resources page:
+   - Old dashboard: Go to **Security** > **Page Shield**.
+   - New security dashboard: Go to **Security** > **Web assets** > **Client-side resources** tab.
 
-3. Under **Monitors**, review the list of scripts, connections, and cookies for your domain. To apply a filter, select **Add filter** and use one or more of the available options:
-
-   - **Script**: Filter scripts by their URL.
-   - **Connection**: Filter connections by their target URL. Depending on your [configuration](/page-shield/reference/settings/#connection-target-details), it may search only by target hostname.
-   - **Host**: Look for scripts appearing on specific hostnames, or connections made in a specific hostname.
-   - **Page** (requires a Business or Enterprise plan): Look for scripts appearing in a specific page, or for connections made in a specific page. Searches the first page where the script was loaded (or where the connection was made) and the latest occurrences list.
+3. Review the list of scripts, connections, and cookies for your domain. To apply a filter, select **Add filter** and use one or more of the available options:
+   - **Script URL**: Filter scripts by their URL.
+   - **Connection URL**: Filter connections by their target URL. Depending on your [configuration](/page-shield/reference/settings/#connection-target-details), it may search only by target hostname.
+   - **Seen on host**: Look for scripts appearing on specific hostnames, or connections made in a specific hostname.
+   - **Seen on page** (requires a Business or Enterprise plan): Look for scripts appearing in a specific page, or for connections made in a specific page. Searches the first page where the script was loaded (or where the connection was made) and the latest occurrences list.
    - **Status**: Filter scripts or connections by [status](/page-shield/reference/script-statuses/).
    - **Type**: Filter cookies according to their type: first-party cookies or unknown.
    - Cookie property: Filter by a cookie property such as **Name**, **Domain**, **Path**, **Same site**, **HTTP only**, and **Secure**.
@@ -40,12 +41,15 @@ To review the resources and cookies detected by Page Shield:
 
 ## View all reported scripts or connections
 
-The All Reported Connections and All Reported Scripts dashboards show all the detected resources including infrequent or inactive ones, reported in the last 30 days. After 30 days without any report, Page Shield will delete information about a previously reported resource, and it will no longer appear in any of the dashboards.
+The All Reported Connections and All Reported Scripts dashboards show all the detected resources including infrequent or inactive ones, reported in the last 30 days. After 30 days without any report, Cloudflare will delete information about a previously reported resource, and it will no longer appear in any of the dashboards.
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-2. Go to **Security** > **Page Shield** > **Monitors**.
+2. Go to the client-side resources page:
+   - Old dashboard: Go to **Security** > **Page Shield**.
+   - New security dashboard: Go to **Security** > **Web assets** > **Client-side resources** tab.
+
 3. Select **Scripts** or **Connections**.
-4. Select **View all**.
+4. Select **View all scripts** or **View all connections**.
 5. Review the information displayed in the dashboard.
 
 You can filter the data in these dashboards using different criteria, and print a report with the displayed records.
@@ -77,7 +81,6 @@ The script details also include the last 10 script versions detected by Page Shi
 The details of each cookie include:
 
 - **Type**: A cookie can have the following types:
-
   - **First-party**: Cookies set by the origin server through a `set-cookie` HTTP response header.
   - **Unknown**: All other detected cookies.
 
@@ -113,6 +116,11 @@ Use this feature to extract data from Page Shield that you can review and annota
 
 To export script, connection, or cookie information in CSV format:
 
-1. Go to the **Monitors** tab and select **Scripts**, **Connections**, or **Cookies**.
-2. (Optional) Apply any filters to the displayed data.
-3. Select **Download CSV**.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+2. Go to the client-side resources page:
+   - Old dashboard: Go to **Security** > **Page Shield**.
+   - New security dashboard: Go to **Security** > **Web assets** > **Client-side resources** tab.
+
+3. Select **Scripts**, **Connections**, or **Cookies**.
+4. (Optional) Apply any filters to the displayed data.
+5. Select **Download CSV**.

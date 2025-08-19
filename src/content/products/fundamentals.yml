@@ -6,9 +6,9 @@ product:
   url: /fundamentals/
   wrap: true
   group: Core platform
+  additional_groups: [Docs collections]
 
 meta:
   title: Cloudflare Fundamentals docs
-  description: Cloudflare Fundamentals provides information about features that
-    span Cloudflare products.
+  description: Learn about using Cloudflare and features that span across Cloudflare products
   author: "@cloudflare"

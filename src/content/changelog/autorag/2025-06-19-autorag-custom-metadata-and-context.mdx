@@ -3,12 +3,12 @@ title: View custom metadata in responses and guide AI-search with context in Aut
 description: You can now view custom metadata in AutoRAG search responses and use a context field to provide additional guidance to AI-generated answers.
 products:
   - autorag
-date: 2025-06-19T6:10:00Z
+date: 2025-06-19
 ---
 
 In [AutoRAG](/autorag/), you can now view your object's custom metadata in the response from [`/search`](/autorag/usage/workers-binding/) and [`/ai-search`](/autorag/usage/workers-binding/), and optionally add a `context` field in the custom metadata of an object to provide additional guidance for AI-generated answers.
 
-You can add [custom metadata](/r2/api/workers/workers-api-reference/#r2putoptions) to an object when uploading it to your R2 bucket. 
+You can add [custom metadata](/r2/api/workers/workers-api-reference/#r2putoptions) to an object when uploading it to your R2 bucket.
 
 # Object's custom metadata in search responses
 
@@ -18,15 +18,15 @@ For example, the `attributes` section of your search response may look like:
 
 ```json
 {
-  "attributes": {
-    "timestamp": 1750001460000,
-    "folder": "docs/",
-    "filename": "launch-checklist.md",
-    "file": {
-      "url": "https://wiki.company.com/docs/launch-checklist",
-      "context": "A checklist for internal launch readiness, including legal, engineering, and marketing steps."
-    }
-  }
+	"attributes": {
+		"timestamp": 1750001460000,
+		"folder": "docs/",
+		"filename": "launch-checklist.md",
+		"file": {
+			"url": "https://wiki.company.com/docs/launch-checklist",
+			"context": "A checklist for internal launch readiness, including legal, engineering, and marketing steps."
+		}
+	}
 }
 ```
 
@@ -40,7 +40,7 @@ For example:
 
 ```json
 {
-  "context": "summary: 'Checklist for internal product launch readiness, including legal, engineering, and marketing steps.'; url: 'https://wiki.company.com/docs/launch-checklist'"
+	"context": "summary: 'Checklist for internal product launch readiness, including legal, engineering, and marketing steps.'; url: 'https://wiki.company.com/docs/launch-checklist'"
 }
 ```
 

@@ -1,11 +1,10 @@
 ---
-type: example
+
 summary: Return JSON directly from a Worker script, useful for building APIs and
   middleware.
 demo: https://returning-json.workers-sites-examples.workers.dev
 tags:
   - JSON
-languages:
   - JavaScript
   - TypeScript
   - Python
@@ -50,13 +49,14 @@ export default {
 </TabItem> <TabItem label="Python" icon="seti:python">
 
 ```py
-from workers import Response
+from workers import WorkerEntrypoint, Response
 import json
 
-def on_fetch(request):
-    data = json.dumps({"hello": "world"})
-    headers = {"content-type": "application/json"}
-    return Response(data, headers=headers)
+class Default(WorkerEntrypoint):
+    def fetch(self, request):
+        data = json.dumps({"hello": "world"})
+        headers = {"content-type": "application/json"}
+        return Response(data, headers=headers)
 ```
 
 </TabItem> <TabItem label="Rust" icon="seti:rust">

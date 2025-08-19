@@ -1,7 +1,7 @@
 ---
 title: Cloudflare API Shield
 pcx_content_type: overview
-type: overview
+
 sidebar:
   order: 1
 head:
@@ -12,7 +12,7 @@ head:
 import { Description, Feature, Plan, RelatedProduct, Render } from "~/components"
 
 <Description>
-Identify and address your API vulnerabilities. 
+Identify and address your API vulnerabilities.
 </Description>
 
 <Plan type="ent-add-on" />
@@ -21,14 +21,21 @@ Identify and address your API vulnerabilities.
 
 ## Why care about API security?
 
-<Render file="why-care" product="api-shield" />
+APIs have become the [backbone of popular web services](https://blog.postman.com/intro-to-apis-history-of-apis/), helping the Internet become more accessible and useful.
+
+As APIs have become more prevalent, however, so have their problems:
+
+- Many companies have [thousands of APIs](/api-shield/security/api-discovery/), including ones they do not even know about.
+- To support a large base of users, many APIs are protected by a negative security model that makes them vulnerable to credential-stuffing attacks and automated scanning tools.
+- With so many endpoints and users, it’s difficult to recognize brute-force attacks against [specific endpoints](/api-shield/security/volumetric-abuse-detection/).
+- Sophisticated attacks are even harder to recognize, often because even development teams are unaware of common and uncommon [usage patterns](/api-shield/security/sequence-analytics/).
 
 Refer to the [Get started](/api-shield/get-started/) guide to set up API Shield.
 
 ## Features
 
 <Feature header="Security features" href="/api-shield/security/">
-Secure your APIs using API Shield's security features. 
+Secure your APIs using API Shield's security features.
 </Feature>
 
 <Feature header="Management, monitoring, and more" href="/api-shield/management-and-monitoring/">
@@ -44,5 +51,5 @@ The full API Shield security suite is available as an Enterprise-only paid add-o
 ## Related products
 
 <RelatedProduct header="DDoS Protection" href="/ddos-protection/" product="ddos-protection">
-Cloudflare DDoS protection secures websites, applications, and entire networks while ensuring the performance of legitimate traffic is not compromised. 
+Cloudflare DDoS protection secures websites, applications, and entire networks while ensuring the performance of legitimate traffic is not compromised.
 </RelatedProduct>

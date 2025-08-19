@@ -132,7 +132,7 @@ As you have direct access to your Worker entry file (`workers/app.ts`), you can 
 
     ```ts title="workers/app.ts"
     import { createRequestHandler } from "react-router";
-    import { WorkflowEntrypoint, WorkflowStep, WorkflowEvent } from 'cloudflare:workers';
+    import { WorkflowEntrypoint, type WorkflowStep, type WorkflowEvent } from 'cloudflare:workers';
 
     declare global {
     	interface CloudflareEnvironment extends Env {}
@@ -188,7 +188,8 @@ As you have direct access to your Worker entry file (`workers/app.ts`), you can 
     And then use it in your application:
 
     ```ts title="app/routes/home.tsx"
-    export function action({ context }: Route.LoaderArgs) {
+    export async function action({ context }: Route.LoaderArgs) {
+    	const env = context.cloudflare.env;
     	const instance = await env.MY_WORKFLOW.create({ params: { "hello": "world" })
     	return { id: instance.id, details: instance.status() };
     }

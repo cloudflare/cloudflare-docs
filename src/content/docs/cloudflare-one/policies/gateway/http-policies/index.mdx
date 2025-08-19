@@ -436,9 +436,10 @@ Only applies to traffic sent through the [WARP client](/cloudflare-one/connectio
 Only applies to traffic sent through the [WARP client](/cloudflare-one/connections/connect-devices/warp/set-up-warp/#gateway-with-warp-default).
 :::
 
-| UI name        | API example                        |
-| -------------- | ---------------------------------- |
-| Destination IP | `http.conn.dst_ip == "10.0.0.0/8"` |
+<Render
+	file="gateway/selectors/destination-ip"
+	params={{ APIendpoint: "http.conn.dst_ip" }}
+/>
 
 ### Device Posture
 
@@ -555,11 +556,15 @@ Scans HTTP traffic for the presence of social security numbers and other PII. Yo
 
 ### HTTP Method
 
+The HTTP request method used in the traffic.
+
 | UI name     | API example                    |
 | ----------- | ------------------------------ |
 | HTTP Method | `http.request.method == "GET"` |
 
 ### HTTP Response
+
+The HTTP response status code received by the traffic.
 
 | UI name | API example                          |
 | ------- | ------------------------------------ |
@@ -593,9 +598,10 @@ The country of the user making the request. <Render file="gateway/selectors/sour
 
 ### Source IP
 
-| UI name   | API example                        |
-| --------- | ---------------------------------- |
-| Source IP | `http.conn.src_ip == "10.0.0.0/8"` |
+<Render
+	file="gateway/selectors/source-ip"
+	params={{ APIendpoint: "http.conn.src_ip" }}
+/>
 
 ### URL
 
@@ -607,11 +613,15 @@ The country of the user making the request. <Render file="gateway/selectors/sour
 
 ### URL Path
 
+The pathname of a webpage's URL.
+
 | UI name  | API example                             |
 | -------- | --------------------------------------- |
 | URL Path | `http.request.uri.path == \"/foo/bar\"` |
 
 ### URL Path and Query
+
+The pathname and query of a webpage's URL.
 
 | UI name            | API example                                                     |
 | ------------------ | --------------------------------------------------------------- |
@@ -619,9 +629,11 @@ The country of the user making the request. <Render file="gateway/selectors/sour
 
 ### URL Query
 
-| UI name   | API example                          |
-| --------- | ------------------------------------ |
-| URL Query | `not(http.request.uri.query in $%s)` |
+The query of a webpage's URL.
+
+| UI name   | API example                                 |
+| --------- | ------------------------------------------- |
+| URL Query | `http.request.uri.query == "ab%242=%2A342"` |
 
 ### Users
 

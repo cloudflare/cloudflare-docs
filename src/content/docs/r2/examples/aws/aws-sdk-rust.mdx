@@ -10,18 +10,6 @@ import { Render } from "~/components";
 
 This example uses the [aws-sdk-s3](https://crates.io/crates/aws-sdk-s3) crate from the [AWS SDK for Rust](https://github.com/awslabs/aws-sdk-rust). You must pass in the R2 configuration credentials when instantiating your `S3` client:
 
-:::note[Compatibility]
-Client versions may introduce modifications to the default checksum behavior that could be incompatible with R2 APIs.
-
-If you encounter checksum-related errors, add the following to your config:
-
-```rust
-.request_checksum_calculation(RequestChecksumCalculation::WhenRequired)
-.response_checksum_validation(ResponseChecksumValidation::WhenRequired)
-```
-
-:::
-
 ## Basic Usage
 
 ```rust

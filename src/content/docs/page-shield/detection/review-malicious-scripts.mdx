@@ -14,7 +14,7 @@ import { Render } from "~/components";
 Only available to Enterprise customers with a paid add-on.
 :::
 
-Page Shield displays scripts and connections considered malicious at the top of the dashboard lists, so that you can quickly identify those resources, review them, and take action.
+Cloudflare displays scripts and connections considered malicious at the top of the dashboard lists, so that you can quickly identify those resources, review them, and take action.
 
 ## Review malicious scripts
 
@@ -22,23 +22,26 @@ To review the scripts considered malicious:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 
-2. Go to **Security** > **Page Shield** > **Monitors**.
+2. Go to the client-side resources page:
+   - Old dashboard: Go to **Security** > **Page Shield**.
+   - New security dashboard: Go to **Security** > **Web assets** > **Client-side resources** tab.
 
-3. Select **Details** for each script considered malicious. The script details will contain:
+3. Select the **Scripts** tab.
 
+4. Select **Details** for each script considered malicious. The script details will contain:
    - **Malicious code analysis**: Scores between 1-99 classifying how malicious the current script version is, where 1 means definitely malicious and 99 means definitely not malicious.
    - **Code behavior analysis**: Scores classifying the behavior of the current script version in terms of code obfuscation and data exfiltration. The scores vary between 1-99, where 1 means definitely malicious and 99 means definitely not malicious.
-   - **Threat intelligence**: Whether the script URL and/or domain is known to be malicious according to threat intelligence feeds. If the script is considered malicious according to the feeds, Page Shield will list the associated threat [categories](/page-shield/how-it-works/malicious-script-detection/#malicious-script-and-connection-categories). If threat intelligence feeds do not have any information about the script URL or domain, the dashboard will show **Not present**.
+   - **Threat intelligence**: Whether the script URL and/or domain is known to be malicious according to threat intelligence feeds. If the script is considered malicious according to the feeds, the dashboard will show a list of associated threat [categories](/page-shield/how-it-works/malicious-script-detection/#malicious-script-and-connection-categories). If threat intelligence feeds do not have any information about the script URL or domain, the dashboard will show **Not present**.
 
-   The script details also include the last 10 script versions detected by Page Shield.
+   The script details also include the last 10 script versions detected by Cloudflare.
 
    <Render file="scripts-hash-note" />
 
    For more information, refer to [Malicious script and connection detection](/page-shield/how-it-works/malicious-script-detection/).
 
-4. Based on the displayed information, and with the help of the [last seen/first seen fields in the script details](/page-shield/detection/monitor-connections-scripts/#view-details), review and update the pages where the malicious script was detected.
+5. Based on the displayed information, and with the help of the [last seen/first seen fields in the script details](/page-shield/detection/monitor-connections-scripts/#view-details), review and update the pages where the malicious script was detected.
 
-You can configure alerts for detected malicious scripts. Refer to [Page Shield alerts](/page-shield/alerts/) for more information.
+You can configure alerts for detected malicious scripts. Refer to [Alerts](/page-shield/alerts/) for more information.
 
 ## Review malicious connections
 
@@ -46,14 +49,17 @@ To review the connections considered malicious:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 
-2. Go to **Security** > **Page Shield** > **Monitors**, and select **Connections**.
+2. Go to the client-side resources page:
+   - Old dashboard: Go to **Security** > **Page Shield**.
+   - New security dashboard: Go to **Security** > **Web assets** > **Client-side resources** tab.
 
-3. Select **Details** for each connection considered malicious. The connection details will contain:
+3. Select **Connections**.
 
+4. Select **Details** for each connection considered malicious. The connection details will contain:
    - **URL match**: Whether the connection's target URL is known to be malicious according to threat intelligence feeds. This field requires that you configure Page Shield to analyze the [full URI](/page-shield/reference/settings/#connection-target-details) of outgoing connections.
    - **Domain match**: Whether the connection's target domain is known to be malicious according to threat intelligence feeds.
    - **Category**: The categorization of the connection considered malicious according to threat intelligence feeds.
 
    For more information, refer to [Malicious script and connection detection](/page-shield/how-it-works/malicious-script-detection/).
 
-4. Based on the displayed information, and with the help of the [last seen/first seen fields in the connection details](/page-shield/detection/monitor-connections-scripts/#view-details), review and update the pages where the malicious connection was detected.
+5. Based on the displayed information, and with the help of the [last seen/first seen fields in the connection details](/page-shield/detection/monitor-connections-scripts/#view-details), review and update the pages where the malicious connection was detected.

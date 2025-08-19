@@ -4,8 +4,9 @@ description: Gateway Network policies (Layer 4) will be evaluated before HTTP (L
 products:
   - gateway
 hidden: false
-date: 2025-06-18T11:00:00Z
+date: 2025-06-18
 ---
+
 [Gateway](/cloudflare-one/policies/gateway/) will now evaluate [Network (Layer 4) policies](/cloudflare-one/policies/gateway/network-policies/) **before** [HTTP (Layer 7) policies](/cloudflare-one/policies/gateway/http-policies/). This change preserves your existing security posture and does not affect which traffic is filtered — but it may impact how notifications are displayed to end users.
 
 This change will roll out progressively between **July 14–18, 2025**. If you use HTTP policies, we recommend reviewing your configuration ahead of rollout to ensure the user experience remains consistent.
@@ -13,14 +14,16 @@ This change will roll out progressively between **July 14–18, 2025**. If you u
 ### Updated order of enforcement
 
 **Previous order:**
-1. DNS policies  
-2. HTTP policies  
-3. Network policies  
+
+1. DNS policies
+2. HTTP policies
+3. Network policies
 
 **New order:**
-1. DNS policies  
-2. **Network policies**  
-3. **HTTP policies**  
+
+1. DNS policies
+2. **Network policies**
+3. **HTTP policies**
 
 ### Action required: Review your Gateway HTTP policies
 
@@ -32,6 +35,7 @@ This change may affect block notifications. For example:
 With the new order, the Network policy will trigger first — and the user will no longer see the HTTP block page.
 
 To ensure users still receive a block notification, you can:
+
 - Add a client notification to your Network policy, or
 - Use only the HTTP policy for that domain.
 

@@ -18,8 +18,9 @@ Use the Security Analytics dashboard to:
 - Analyze suspicious traffic and create tailored WAF custom rules based on applied filters.
 - Learn more about Cloudflare's security scores (<GlossaryTooltip term="attack score" link="/waf/detections/attack-score/">attack score</GlossaryTooltip>, [bot score](/bots/concepts/bot-score/), [malicious uploads](/waf/detections/malicious-uploads/), and [leaked credentials](/waf/detections/leaked-credentials/) results) with real data.
 - [Find an appropriate rate limit](/waf/rate-limiting-rules/find-rate-limit/) for incoming traffic.
+- Analyze suspicious traffic ([new security dashboard](/security/) only).
 
-If you need to modify existing security-related rules you already configured, consider also using the [Security Events](/waf/analytics/security-events/) dashboard. This dashboard displays information about requests affected by Cloudflare security products.
+If you need to modify existing security-related rules you already configured, consider also checking [Security Events](/waf/analytics/security-events/). This dashboard displays information about requests affected by Cloudflare security products.
 
 ## Availability
 
@@ -43,10 +44,6 @@ To use Security Analytics:
 ### Apply filters
 
 Adjust the scope of analytics by manually entering filter conditions. You can also select **Filter** or **Exclude** to filter by a field value. These buttons appear when you hover the analytics data legend.
-
-:::note
-Alternatively, apply several filters at once from the [**Insights** section](#insights), which shows statistics for commonly used filters when doing security analyses.
-:::
 
 To manually add a filter:
 
@@ -72,6 +69,42 @@ To create a [custom rule](/waf/custom-rules/) with an expression based on the fi
 
 ## Main dashboard areas
 
+The [new security dashboard](/security/) and the old dashboard have a few differences, including the order of the various sections on the Security Analytics page.
+
+### Suspicious activity
+
+:::note
+Only available in the [new security dashboard](/security/).
+:::
+
+The suspicious activity section gives you information about suspicious requests that were identified by the Cloudflare detections you have enabled. The supported detections include:
+
+- [Account takeover](/bots/additional-configurations/detection-ids/#account-takeover-detections)
+- [Leaked credential check](/waf/detections/leaked-credentials/) (only for user and password leaked)
+- [Malicious uploads](/waf/detections/malicious-uploads/)
+- [WAF attack score](/waf/detections/attack-score/)
+- [Firewall for AI](/waf/detections/firewall-for-ai/)
+
+Each suspicious activity is classified with a severity score that can vary from critical to low. You can use the filter option to investigate further.
+
+### Request activity
+
+The main chart displays the following data for the selected time frame, according to the selected tab:
+
+- **Traffic analysis**: Traffic mitigated by the Cloudflare security platform, served by Cloudflare, and served by the origin server, according to the following classification:
+
+  - **Mitigated by WAF**: Requests blocked or challenged by Cloudflare's application security products such as the WAF and HTTP DDoS protection. It does not include requests that had the following actions applied: _Log_, _Skip_, and _Allow_.
+  - **Served by Cloudflare**: Requests served by the Cloudflare global network such as cached content and redirects.
+  - **Served by origin**: Requests served by your origin server.
+
+- **Attack analysis**: [WAF attack score](/waf/detections/attack-score/) analysis of incoming requests, classifying them as _Clean_, _Likely clean_, _Likely attack_, or _Attack_.
+
+- **Bot analysis**: [Bot score](/bots/concepts/bot-score/) analysis of incoming requests, classifying them as _Automated_, _Likely automated_, _Likely human_, or _Verified bot_.
+
+- **Request rate analysis**: Displays data on the request rate for traffic matching the selected filters and time period. Use this tab to [find an appropriate rate limit](/waf/rate-limiting-rules/find-rate-limit/) for incoming traffic matching the applied filters.
+
+- **Cloudy analysis** (beta): Get insights about your application security by using plain language to interrogate your data. For more information, refer to [our blog post](https://blog.cloudflare.com/security-analytics-ai-assistant).
+
 ### Top statistics
 
 This section presents top statistics about incoming requests highlighting relevant properties commonly used when performing a security analysis.
@@ -86,6 +119,10 @@ Cloudflare calculates the top statistics from a sample of requests in the select
 
 ### Insights
 
+:::note
+Only available in the previous dashboard navigation structure.
+:::
+
 The provided insights show statistics for commonly used filters when doing security analyses, without immediately applying these filters to the displayed data.
 
 If you find a high value in one or more insights, this can mean that there is a set of suspicious requests that you should investigate. Additionally, these insights are a good starting point for applying a first set of filters to the dashboard.
@@ -94,29 +131,15 @@ To apply the filters for an insight to the data displayed in the Security Analyt
 
 ### Score-based analyses
 
+:::note
+Only available in the previous dashboard navigation structure.
+:::
+
 The **Attack analysis**, **Bot analysis**, **Malicious uploads**, and **Account abuse detection** sections display statistics related to WAF attack scores, bot scores, WAF content scanning scores, and leaked credentials scanning of incoming requests for the selected time frame. All plans include access to the **Leaked credential check** under **Account abuse detection**. This feature detects login attempts using credentials that have been exposed online. For more information on what to do if you have credentials that have been leaked, refer to the [example mitigation rules page](/waf/detections/leaked-credentials/examples/).
 
 You can examine different traffic segments according to the current metric (attack score, bot score, or content scanning). To apply score filters for different segments, select the buttons below the traffic chart. For example, select **Likely attack** under **Attack analysis** to filter requests that are likely an attack (requests with WAF attack score values between 21 and 50).
 
 Additionally, you can use the slider tool below the chart to filter incoming requests according to the current metric. This allows you to filter traffic groups outside the predefined segments.
-
-### Main chart
-
-The main chart displays the following data for the selected time frame, according to the selected tab:
-
-- **Traffic analysis**: Traffic mitigated by the Cloudflare security platform, served by Cloudflare, and served by the origin server, according to the following classification:
-
-  - **Mitigated by WAF**: Requests blocked or challenged by Cloudflare's application security products such as the WAF and HTTP DDoS protection. It does not include requests that had the following actions applied: _Log_, _Skip_, and _Allow_.
-  - **Served by Cloudflare**: Requests served by the Cloudflare global network such as cached content and redirects.
-  - **Served by origin**: Requests served by your origin server.
-
-- **Attack analysis**: [WAF attack score](/waf/detections/attack-score/) analysis of incoming requests, classifying them as _Clean_, _Likely clean_, _Likely attack_, or _Attack_.
-
-- **Bot analysis**: [Bot score](/bots/concepts/bot-score/) analysis of incoming requests, classifying them as _Automated_, _Likely automated_, _Likely human_, or _Verified bot_.
-
-- **Rate limit analysis**: Displays data on the request rate for traffic matching the selected filters and time period. Use this tab to [find an appropriate rate limit](/waf/rate-limiting-rules/find-rate-limit/) for incoming traffic matching the applied filters.
-
-- **Cloudy analysis** (beta): Get insights about your application security by using plain language to interrogate your data. For more information, refer to [our blog post](https://blog.cloudflare.com/security-analytics-ai-assistant).
 
 ### Logs
 

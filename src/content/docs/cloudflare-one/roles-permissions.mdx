@@ -7,8 +7,6 @@ sidebar:
 
 import { Render } from "~/components";
 
-<Render file="survey" />
-
 When creating a Cloudflare Zero Trust account, you will be given the Super Administrator role. As a Super Administrator, you can invite members to join your Zero Trust account and assign them different roles. There is no limit to the number of members which can be added to a given account. Any members with the proper permissions will be able to make configuration changes while actively logged into Zero Trust (unless [read-only mode](/cloudflare-one/api-terraform/#set-dashboard-to-read-only) is enabled).
 
 To check the list of members in your account, or to manage roles and permissions, refer to our [Account setup](/fundamentals/manage-members/) documentation.
@@ -23,7 +21,7 @@ Only Super Administrators will be able to assign or remove the following roles f
 | Cloudflare Zero Trust[^1]                     | ✅          | ✅          | ✅           | ✅           | ✅             | ✅                | ✅                | ✅           | ❌           | ✅       | ✅       |
 | Cloudflare Access                             | ✅          | ✅          | ✅           | ❌           | ✅             | ❌                | ❌                | ✅           | ❌           | ❌       | ❌       |
 | Cloudflare Gateway                            | ✅          | ❌          | ✅           | ✅           | ✅             | ✅                | ✅                | ✅           | ❌           | ❌       | ❌       |
-| Cloudflare Zero Trust Read Only               | ✅          | ❌          | ✅           | ❌           | ✅             | ✅                | ❌                | ✅           | ❌           | ❌       | ❌       |
+| Cloudflare Zero Trust Read Only               | ✅          | ❌          | ✅           | ❌           | ✅             | ✅                | ❌                | ✅           | ❌           | ✅       | ❌       |
 | Cloudflare Zero Trust Reporting               | ❌          | ❌          | ❌           | ❌           | ✅             | ❌                | ❌                | ✅           | ❌           | ✅       | ❌       |
 | Cloudflare Zero Trust DNS Locations Write[^2] | ❌          | ❌          | ❌           | ❌           | ❌             | ✅                | ✅                | ❌           | ❌           | ❌       | ❌       |
 | Cloudflare DEX                                | ❌          | ❌          | ❌           | ❌           | ❌             | ❌                | ❌                | ❌           | ❌           | ✅       | ✅       |
@@ -54,3 +52,4 @@ For more information on Email Security roles, refer to [Account-scoped roles](/f
 - **Email Security Analyst**: Has analyst access. Can take action on emails and read emails.
 - **Email Security Reporting**: Can read metrics.
 - **Email Security Read Only**: Can read all information, but cannot take action on anything.
+- **Email Security Policy Admin**: Can read all settings, but only write allow policies, trusted domains, and blocked senders.

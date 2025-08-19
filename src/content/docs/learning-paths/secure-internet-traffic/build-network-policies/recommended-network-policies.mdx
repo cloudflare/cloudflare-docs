@@ -5,7 +5,13 @@ sidebar:
   order: 2
 ---
 
-import { GlossaryTooltip, Render, Tabs, TabItem } from "~/components";
+import {
+	GlossaryTooltip,
+	Render,
+	Tabs,
+	TabItem,
+	APIRequest,
+} from "~/components";
 
 We recommend you add the following network policies to build an Internet and SaaS app security strategy for your organization.
 
@@ -30,23 +36,22 @@ For more information on building network policies, refer to [Network policies](/
 
 <TabItem label="API">
 
-```sh
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
---header "Content-Type: application/json" \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---data '{
-  "name": "Quarantined-Users-NET-Restricted-Access",
-  "description": "Restrict access for users included in an IdP user group for risky users",
-  "precedence": 0,
-  "enabled": true,
-  "action": "block",
-  "filters": [
-    "l4"
-  ],
-  "traffic": "not(net.dst.ip in $<IP_ALLOWLIST_UUID>) or not(net.sni.host in $<HOST_ALLOWLIST_UUID>) or not(any(net.sni.domains[*] in $<DOMAIN_ALLOWLIST_UUID>))",
-	"identity": "any(identity.groups.name[*] in {\"Quarantined Users\"})"
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "Quarantined-Users-NET-Restricted-Access",
+		description:
+			"Restrict access for users included in an IdP user group for risky users",
+		precedence: 0,
+		enabled: true,
+		action: "block",
+		filters: ["l4"],
+		traffic:
+			"not(net.dst.ip in $<IP_ALLOWLIST_UUID>) or not(net.sni.host in $<HOST_ALLOWLIST_UUID>) or not(any(net.sni.domains[] in $<DOMAIN_ALLOWLIST_UUID>))",
+		identity: 'any(identity.groups.name[] in {"Quarantined Users"})',
+	}}
+/>
 
 </TabItem>
 
@@ -90,23 +95,23 @@ Restrict access for devices where baseline posture checks have not passed. If po
 
 <TabItem label="API">
 
-```sh
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
---header "Content-Type: application/json" \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---data '{
-  "name": "Posture-Fail-NET-Restricted-Access",
-  "description": "Restrict access for devices where baseline posture checks have not passed",
-  "precedence": 10,
-  "enabled": true,
-  "action": "block",
-  "filters": [
-    "l4"
-  ],
-  "traffic": "not(net.dst.ip in $<IP_ALLOWLIST_UUID>) or not(net.sni.host in $<HOST_ALLOWLIST_UUID>) or not(any(net.sni.domains[*] in $<DOMAIN_ALLOWLIST_UUID>))",
-  "device_posture": "not(any(device_posture.checks.passed[*] in {\"<DEVICE_POSTURE_CHECK_UUID>\"}))"
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "Posture-Fail-NET-Restricted-Access",
+		description:
+			"Restrict access for devices where baseline posture checks have not passed",
+		precedence: 10,
+		enabled: true,
+		action: "block",
+		filters: ["l4"],
+		traffic:
+			"not(net.dst.ip in $<IP_ALLOWLIST_UUID>) or not(net.sni.host in $<HOST_ALLOWLIST_UUID>) or not(any(net.sni.domains[] in $<DOMAIN_ALLOWLIST_UUID>))",
+		device_posture:
+			'not(any(device_posture.checks.passed[] in {"<DEVICE_POSTURE_CHECK_UUID>"}))',
+	}}
+/>
 
 </TabItem>
 
@@ -148,23 +153,20 @@ Allow HTTPS access for user groups. For example, the following policy gives fina
 
 <TabItem label="API">
 
-```sh
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
---header "Content-Type: application/json" \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---data '{
-  "name": "FinanceUsers-NET-HTTPS-FinanceServers",
-  "description": "Allow HTTPS access for user groups",
-  "precedence": 20,
-  "enabled": true,
-  "action": "allow",
-  "filters": [
-    "l4"
-  ],
-  "traffic": "net.dst.ip in $<FINANCE_SERVERS_LIST_UUID>",
-  "identity": "any(identity.groups.name[*] in {\"Finance Users\"})"
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "FinanceUsers-NET-HTTPS-FinanceServers",
+		description: "Allow HTTPS access for user groups",
+		precedence: 20,
+		enabled: true,
+		action: "allow",
+		filters: ["l4"],
+		traffic: "net.dst.ip in $<FINANCE_SERVERS_LIST_UUID>",
+		identity: 'any(identity.groups.name[*] in {"Finance Users"})',
+	}}
+/>
 
 </TabItem>
 
@@ -207,22 +209,21 @@ Block traffic to destination IPs, <GlossaryTooltip term="Server Name Indication 
 
 <TabItem label="API">
 
-```sh
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
---header "Content-Type: application/json" \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---data '{
-  "name": "All-NET-Internet-Blocklist",
-  "description": "Block traffic to malicious or risky destination IPs, SNIs, and SNI domains",
-  "precedence": 30,
-  "enabled": true,
-  "action": "block",
-  "filters": [
-    "l4"
-  ],
-  "traffic": "net.dst.ip in $<IP_BLOCKLIST_UUID> and net.sni.host in $<HOST_BLOCKLIST_UUID> and any(net.sni.domains[*] in $<DOMAIN_BLOCKLIST_UUID>)"
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "All-NET-Internet-Blocklist",
+		description:
+			"Block traffic to malicious or risky destination IPs, SNIs, and SNI domains",
+		precedence: 30,
+		enabled: true,
+		action: "block",
+		filters: ["l4"],
+		traffic:
+			"net.dst.ip in $<IP_BLOCKLIST_UUID> and net.sni.host in $<HOST_BLOCKLIST_UUID> and any(net.sni.domains[*] in $<DOMAIN_BLOCKLIST_UUID>)",
+	}}
+/>
 
 </TabItem>
 
@@ -269,23 +270,22 @@ Optionally, you can include a selector to filter by source IP or IdP group.
 
 <TabItem label="API">
 
-```sh
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
---header "Content-Type: application/json" \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---data '{
-  "name": "All-NET-SSH-Internet-Allowlist",
-  "description": "Allow SSH traffic to specific endpoints on the Internet for specific users",
-  "precedence": 40,
-  "enabled": true,
-  "action": "allow",
-  "filters": [
-    "l4"
-  ],
-  "traffic": "net.dst.ip in $<SSH_IP_ALLOWLIST_UUID> and net.sni.host in $<SSH_FQDN_ALLOWLIST_UUID> and net.detected_protocol == \"ssh\"",
-  "identity": "any(identity.groups.name[*] in {\"SSH-Allowed-Users\"})"
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "All-NET-SSH-Internet-Allowlist",
+		description:
+			"Allow SSH traffic to specific endpoints on the Internet for specific users",
+		precedence: 40,
+		enabled: true,
+		action: "allow",
+		filters: ["l4"],
+		traffic:
+			'net.dst.ip in $<SSH_IP_ALLOWLIST_UUID> and net.sni.host in $<SSH_FQDN_ALLOWLIST_UUID> and net.detected_protocol == "ssh"',
+		identity: 'any(identity.groups.name[*] in {"SSH-Allowed-Users"})',
+	}}
+/>
 
 </TabItem>
 
@@ -325,22 +325,20 @@ Block all non-web traffic towards the Internet. By using the **Detected Protocol
 
 <TabItem label="API">
 
-```sh
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
---header "Content-Type: application/json" \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---data '{
-  "name": "All-NET-NO-HTTP-HTTPS-Internet-Deny",
-  "description": "Block all non-web traffic towards the Internet",
-  "precedence": 50,
-  "enabled": true,
-  "action": "block",
-  "filters": [
-    "l4"
-  ],
-  "traffic": "not(net.dst.ip in $<INTERNAL_NETWORK_IP_LIST_UUID>) and not(net.detected_protocol in {\"http\" \"http2\"})"
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "All-NET-NO-HTTP-HTTPS-Internet-Deny",
+		description: "Block all non-web traffic towards the Internet",
+		precedence: 50,
+		enabled: true,
+		action: "block",
+		filters: ["l4"],
+		traffic:
+			'not(net.dst.ip in $<INTERNAL_NETWORK_IP_LIST_UUID>) and not(net.detected_protocol in {"http" "http2"})',
+	}}
+/>
 
 </TabItem>
 
@@ -378,22 +376,20 @@ Implicitly deny all of your internal IP ranges included in a list. We recommend 
 
 <TabItem label="API">
 
-```sh
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
---header "Content-Type: application/json" \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---data '{
-  "name": "All-NET-InternalNetwork-ImplicitDeny",
-  "description": "Implicitly deny all of your internal IP ranges included in a list",
-  "precedence": 60,
-  "enabled": true,
-  "action": "block",
-  "filters": [
-    "l4"
-  ],
-  "traffic": "net.dst.ip in $<INTERNAL_NETWORK_IP_LIST_UUID>"
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "All-NET-InternalNetwork-ImplicitDeny",
+		description:
+			"Implicitly deny all of your internal IP ranges included in a list",
+		precedence: 60,
+		enabled: true,
+		action: "block",
+		filters: ["l4"],
+		traffic: "net.dst.ip in $<INTERNAL_NETWORK_IP_LIST_UUID>",
+	}}
+/>
 
 </TabItem>
 

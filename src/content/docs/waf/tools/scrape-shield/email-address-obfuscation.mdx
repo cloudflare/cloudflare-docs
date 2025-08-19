@@ -53,7 +53,7 @@ To prevent Cloudflare from obfuscating specific email addresses, you can:
 
 - Return email addresses in JSON format for AJAX calls, making sure your web server returns a content type of `application/json`.
 
-- Disable the Email Obfuscation feature by creating a [Configuration Rule](/rules/configuration-rules/) to be applied on a specific endpoint.
+- Disable the Email Obfuscation feature by creating a [configuration rule](/rules/configuration-rules/) to be applied on a specific endpoint.
 
 ---
 
@@ -70,7 +70,7 @@ To prevent unexpected website behavior, email addresses are not obfuscated when 
   - _head_ tags: `<head></head>`
 - Any page that does not have a MIME type of `text/html` or `application/xhtml+xml`.
 
-:::caution
+:::note
 
 Email Obfuscation will not apply in the following cases:
 

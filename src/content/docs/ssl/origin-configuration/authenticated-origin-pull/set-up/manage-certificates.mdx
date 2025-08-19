@@ -38,9 +38,7 @@ However, requests are dropped at your origin if your origin only accepts a valid
 ### Per-hostname
 
 1. [Upload the new certificate](/api/resources/origin_tls_client_auth/subresources/hostnames/subresources/certificates/methods/create/).
-
 2. [List your certificates](/api/resources/origin_tls_client_auth/subresources/hostnames/subresources/certificates/methods/list/) and note the ID for the certificate you uploaded.
-
 3. [Enable Authenticated Origin Pulls for the specific hostname](/api/resources/origin_tls_client_auth/subresources/hostnames/methods/update/), using the ID obtained in step 2 to specify the certificate you want to use:
 
 <APIRequest
@@ -60,7 +58,9 @@ However, requests are dropped at your origin if your origin only accepts a valid
 ### Zone-level
 
 1. [Upload the new certificate](/api/resources/origin_tls_client_auth/methods/create/).
-
 2. [Check whether new certificate is Active](/api/resources/origin_tls_client_auth/methods/get/).
-
 3. Once certificate is active, [delete the previous certificate](/api/resources/origin_tls_client_auth/methods/delete/).
+
+:::note
+If you keep both certificates, the API will state `active` for both but the most recently deployed certificate will be the one enabled and used.
+:::

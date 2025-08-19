@@ -56,7 +56,7 @@ Cloudflare measures a single WebSocket connection in the following way:
 
 - **Bandwidth**: Cloudflare measures data transfer sent from Cloudflare to the client. This typically means that messages from the WebSocket server behind Cloudflare to the WebSocket client are counted towards bandwidth usage.
 
-Once a WebSocket connection is closed, you can view your aggregated WebSocket usage through [Traffic Analytics](/analytics/account-and-zone-analytics/zone-analytics/#traffic), the [GraphQL Analytics API](/analytics/graphql-api/), and [HTTP requests logs](/logs/reference/log-fields/zone/http_requests/).
+Once a WebSocket connection is closed, you can view your aggregated WebSocket usage through [Traffic Analytics](/analytics/account-and-zone-analytics/zone-analytics/#traffic), the [GraphQL Analytics API](/analytics/graphql-api/), and [HTTP requests logs](/logs/logpush/logpush-job/datasets/zone/http_requests/).
 
 ## Technical note
 
@@ -72,4 +72,4 @@ When Cloudflare releases new code to its global network, we may restart servers,
 Investigating issues with Websocket can be facilitated with client tools like [wscat](https://github.com/websockets/wscat).
 Being able to reproduce an issue on a single URL with a minimalistic tool helps narrowing down the issue.
 
-The `EdgeStartTimestamp` and `EdgeStopTimestamp` fields in [HTTP requests logs](/logs/reference/log-fields/zone/http_requests/) represent the duration of the WebSocket connection (they do not represent the initial HTTP connection).
+The `EdgeStartTimestamp` and `EdgeStopTimestamp` fields in [HTTP requests logs](/logs/logpush/logpush-job/datasets/zone/http_requests/) represent the duration of the WebSocket connection (they do not represent the initial HTTP connection).

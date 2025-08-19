@@ -54,7 +54,7 @@ The WAF currently provides the following detections for finding security threats
 To enable traffic detections in the Cloudflare dashboard, go to your domain > **Security** > **Settings**.
 
 :::note
-Currently, you cannot manage the [bot score](/bots/concepts/bot-score/) and [attack score](/waf/detections/attack-score/) detections from the **Security** > **Settings** page. Refer to the documentation of each feature for availability details.
+Currently, you cannot manage the [bot score](/bots/concepts/bot-score/) and [attack score](/waf/detections/attack-score/) detections from **Security** > **Settings**. Refer to the documentation of each feature for availability details.
 :::
 
 ---
@@ -68,7 +68,7 @@ Cloudflare evaluates different types of rules when processing incoming requests.
 3. [Custom rulesets](/waf/account/custom-rulesets/)
 4. [Custom rules](/waf/custom-rules/)
 5. [Rate limiting rules](/waf/rate-limiting-rules/)
-6. [WAF Managed Rules](/waf/managed-rules/)
+6. [Managed Rules](/waf/managed-rules/)
 7. [Cloudflare Rate Limiting](/waf/reference/legacy/old-rate-limiting/) (previous version, deprecated)
 
 Rules are evaluated in order. If there is a match for a rule with a [terminating action](/ruleset-engine/rules-language/actions/), the rule evaluation will stop and the action will be executed immediately. Rules with a non-terminating action (such as _Log_) will not prevent subsequent rules from being evaluated and executed. For more information on how rules are evaluated, refer to [Rule evaluation](/ruleset-engine/about/rules/#rule-evaluation) in the Ruleset Engine documentation.

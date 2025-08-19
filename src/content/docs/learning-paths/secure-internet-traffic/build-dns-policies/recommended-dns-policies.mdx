@@ -5,7 +5,7 @@ sidebar:
   order: 3
 ---
 
-import { Render, Tabs, TabItem } from "~/components";
+import { Render, Tabs, TabItem, APIRequest } from "~/components";
 
 We recommend you add the following DNS policies to build an Internet and SaaS app security strategy for your organization.
 
@@ -26,22 +26,20 @@ Allowlist any known domains and hostnames. With this policy, you ensure that you
 
 <TabItem label="API">
 
-```sh
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
---header "Content-Type: application/json" \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---data '{
-  "name": "All-DNS-Domain-Allowlist",
-  "description": "Allowlist any known domains and hostnames",
-  "precedence": 0,
-  "enabled": true,
-  "action": "allow",
-  "filters": [
-    "dns"
-  ],
-  "traffic": "any(dns.domains[*] in $<KNOWN_DOMAINS_LIST_UUID>) or dns.fqdn in $<KNOWN_DOMAINS_LIST_UUID>"
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "All-DNS-Domain-Allowlist",
+		description: "Allowlist any known domains and hostnames",
+		precedence: 0,
+		enabled: true,
+		action: "allow",
+		filters: ["dns"],
+		traffic:
+			"any(dns.domains[*] in $<KNOWN_DOMAINS_LIST_UUID>) or dns.fqdn in $<KNOWN_DOMAINS_LIST_UUID>",
+	}}
+/>
 
 </TabItem>
 
@@ -81,23 +79,22 @@ resource "cloudflare_zero_trust_gateway_policy" "dns_whitelist_policy" {
 
 <TabItem label="API">
 
-```sh
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
---header "Content-Type: application/json" \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---data '{
-  "name": "Quarantined-Users-DNS-Restricted-Access",
-  "description": "Restrict access for users included in an identity provider (IdP) user group for risky users",
-  "precedence": 10,
-  "enabled": true,
-  "action": "block",
-  "filters": [
-    "dns"
-  ],
-	"traffic": "not(any(dns.domains[*] in $<ALLOWED_REMEDIATION_DOMAINS_LIST_UUID>)) or not(any(dns.domains[*] in $<ALLOWED_REMEDIATION_DOMAINS_LIST_UUID>))",
-  "identity": "any(identity.groups.name[*] in {\"Quarantined Users\"})"
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "Quarantined-Users-DNS-Restricted-Access",
+		description:
+			"Restrict access for users included in an identity provider (IdP) user group for risky users",
+		precedence: 10,
+		enabled: true,
+		action: "block",
+		filters: ["dns"],
+		traffic:
+			"not(any(dns.domains[] in $<ALLOWED_REMEDIATION_DOMAINS_LIST_UUID>)) or not(any(dns.domains[] in $<ALLOWED_REMEDIATION_DOMAINS_LIST_UUID>))",
+		identity: 'any(identity.groups.name[*] in {"Quarantined Users"})',
+	}}
+/>
 
 </TabItem>
 
@@ -166,22 +163,21 @@ Block websites hosted in countries categorized as high risk. The designation of 
 
 <TabItem label="API">
 
-```sh
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
---header "Content-Type: application/json" \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---data '{
-	"name": "All-DNS-GeoCountryIP-Blocklist",
-  "description": "Block traffic hosted in countries categorized as high security risks",
-  "precedence": 50,
-  "enabled": true,
-  "action": "block",
-  "filters": [
-    "dns"
-  ],
-  "traffic": "any(dns.dst.geo.country[*] in {\"AF\" \"BY\" \"CD\" \"CU\" \"IR\" \"IQ\" \"KP\" \"MM\" \"RU\" \"SD\" \"SY\" \"UA\" \"ZW\"})"
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "All-DNS-GeoCountryIP-Blocklist",
+		description:
+			"Block traffic hosted in countries categorized as high security risks",
+		precedence: 50,
+		enabled: true,
+		action: "block",
+		filters: ["dns"],
+		traffic:
+			'any(dns.dst.geo.country[*] in {"AF" "BY" "CD" "CU" "IR" "IQ" "KP" "MM" "RU" "SD" "SY" "UA" "ZW"})',
+	}}
+/>
 
 </TabItem>
 
@@ -219,22 +215,19 @@ Block frequently misused top-level domains (TLDs) to reduce security risks, espe
 
 <TabItem label="API">
 
-```sh
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
---header "Content-Type: application/json" \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---data '{
-  "name": "All-DNS-DomainTopLevel-Blocklist",
-  "description": "Block DNS queries of known risky TLDs",
-  "precedence": 60,
-  "enabled": true,
-  "action": "block",
-  "filters": [
-    "dns"
-  ],
-  "traffic": "any(dns.domains[*] matches \"[.](cn|ru)$ or [.](rest|hair|top|live|cfd|boats|beauty|mom|skin|okinawa)$ or [.](zip|mobi)$\")"
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "All-DNS-DomainTopLevel-Blocklist",
+		description: "Block DNS queries of known risky TLDs",
+		precedence: 60,
+		enabled: true,
+		action: "block",
+		filters: ["dns"],
+		traffic: 'any(dns.domains[*] matches ".$ or .$ or .$")',
+	}}
+/>
 
 </TabItem>
 
@@ -273,22 +266,20 @@ Block misused domains to protect your users against sophisticated phishing attac
 
 <TabItem label="API">
 
-```sh
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
---header "Content-Type: application/json" \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---data '{
-	"name": "All-DNS-DomainPhishing-Blocklist",
-  "description": "Block misused domains used in phishing campaigns",
-  "precedence": 70,
-  "enabled": true,
-  "action": "block",
-  "filters": [
-    "dns"
-  ],
-  "traffic": "any(dns.domains[*] matches \".*okta.*|.*cloudflare.*|.*mfa.*|.sso.*\") and not(any(dns.domains[*] in $<KNOWN_DOMAINS_LIST_UUID>))"
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "All-DNS-DomainPhishing-Blocklist",
+		description: "Block misused domains used in phishing campaigns",
+		precedence: 70,
+		enabled: true,
+		action: "block",
+		filters: ["dns"],
+		traffic:
+			'any(dns.domains[] matches ".okta.|.cloudflare.|.mfa.|.sso.") and not(any(dns.domains[*] in $<KNOWN_DOMAINS_LIST_UUID>))',
+	}}
+/>
 
 </TabItem>
 
@@ -328,22 +319,20 @@ Block specific IP addresses that are malicious or pose a threat to your organiza
 
 <TabItem label="API">
 
-```sh
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
---header "Content-Type: application/json" \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---data '{
-	"name": "All-DNS-ResolvedIP-Blocklist",
-  "description": "Block specific IP addresses deemed to be a risk to the Organization",
-  "precedence": 80,
-  "enabled": true,
-  "action": "block",
-  "filters": [
-    "dns"
-  ],
-  "traffic": "any(dns.resolved_ips[*] in $<IP_BLOCKLIST_UUID>)"
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "All-DNS-ResolvedIP-Blocklist",
+		description:
+			"Block specific IP addresses deemed to be a risk to the Organization",
+		precedence: 80,
+		enabled: true,
+		action: "block",
+		filters: ["dns"],
+		traffic: "any(dns.resolved_ips[*] in $<IP_BLOCKLIST_UUID>)",
+	}}
+/>
 
 </TabItem>
 
@@ -386,22 +375,21 @@ resource "cloudflare_zero_trust_gateway_policy" "dns_resolvedip_blocklist_rule" 
 
 <TabItem label="API">
 
-```sh
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
---header "Content-Type: application/json" \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN>" \
---data '{
-	"name": "All-DNS-DomainHost-Blocklist",
-  "description": "Block specific domains or hosts that are malicious or pose a threat to your organization.",
-  "precedence": 90,
-  "enabled": true,
-  "action": "block",
-  "filters": [
-    "dns"
-  ],
-  "traffic": "any(dns.domains[*] in $<DOMAIN_BLOCKLIST_UUID>) and dns.fqdn in $<HOST_BLOCKLIST_UUID> and dns.fqdn matches \".*example\\.com\""
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "All-DNS-DomainHost-Blocklist",
+		description:
+			"Block specific domains or hosts that are malicious or pose a threat to your organization.",
+		precedence: 90,
+		enabled: true,
+		action: "block",
+		filters: ["dns"],
+		traffic:
+			'any(dns.domains[*] in $<DOMAIN_BLOCKLIST_UUID>) and dns.fqdn in $<HOST_BLOCKLIST_UUID> and dns.fqdn matches ".*example\.com"',
+	}}
+/>
 
 </TabItem>
 

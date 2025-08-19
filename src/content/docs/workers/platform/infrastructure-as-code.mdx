@@ -155,10 +155,11 @@ curl https://api.cloudflare.com/client/v4/accounts/<account_id>/workers/scripts/
         ]
       };type=application/json' \
   -F 'my-hello-world-script.py=@-;filename=my-hello-world-script.py;type=text/x-python' <<EOF
-from workers import Response
+from workers import WorkerEntrypoint, Response
 
-def on_fetch(request, env):
-    return Response(env.MESSAGE)
+class Default(WorkerEntrypoint):
+    async def fetch(self, request, env):
+        return Response(env.MESSAGE)
 EOF
 ```
 

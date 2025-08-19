@@ -160,21 +160,16 @@ The following table exemplifies how to use geographic scoping for routes:
 
 When there are multiple routes to the same prefix with equal priority, and those routes are assigned to different geographic regions (like WNAM and ENAM), traffic entering the network in a specific region — for example, WNAM — will egress through the route associated with that same region.
 
+{ props.magicWord === "Magic Transit" && (
+  <>
+		<Render file="routing/anycast-warning" product="networking-services" />
+	</>
+)
+}
+
 ### Region codes and associated regions
 
-Cloudflare has nine geographic regions across the world which are listed below.
-
-| Region code | Region |
-| ----- | ----- |
-| `AFR` | Africa |
-| `APAC` | Asia Pacific |
-| `EEUR` | Eastern Europe |
-| `ENAM` | Eastern North America |
-| `ME` | Middle East |
-| `OC` | Oceania |
-| `SAM` | South America |
-| `WEUR` | Western Europe |
-| `WNAM` | Western North America |
+<Render file="traffic-steering-region-codes" product="networking-services/reference" />
 
 Configure scoping for your traffic in the **Region code** section when adding or editing a static route. Refer to <a href={props.createStaticRoute}>Create a static route</a> and <a href={props.editStaticRoute}>Edit a static route</a> more information.
 
@@ -208,7 +203,7 @@ Configure scoping for your traffic in the **Region code** section when adding or
 
 		You can summarize these into a single \`192.0.2.0/23\`.
 
-		Refer to [Add tunnels](/magic-transit/how-to/configure-tunnels/#add-tunnels) to learn more about configuring GRE tunnels.
+		Refer to [Add tunnels](/magic-transit/how-to/configure-tunnel-endpoints/#add-tunnels) to learn more about configuring GRE tunnels.
 			`}
 				inline={false}
   />

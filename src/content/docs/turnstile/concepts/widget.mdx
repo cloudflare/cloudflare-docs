@@ -1,107 +1,84 @@
 ---
-title: Widget
-pcx_content_type: reference
+title: Turnstile widgets
+pcx_content_type: concept
 sidebar:
   order: 1
-
 ---
 
 import { GlossaryTooltip, Render } from "~/components"
 
 Every instance of Turnstile belongs to a Turnstile widget. It is configured on a per-widget level. Every widget has a mode, a label, a <GlossaryTooltip term="sitekey">sitekey</GlossaryTooltip>, and a <GlossaryTooltip term="secret key">secret key</GlossaryTooltip>.
 
-The 3 modes for Turnstile are **Managed**, **Non-Interactive**, and **Invisible**.
+## Widget components
 
-Refer to [appearance modes](/turnstile/get-started/client-side-rendering/#appearance-modes) to configure whether to have the widget be always visible or visible only when interaction is required, and to customize your widget theme between automatic, light, or dark mode.
+<Render file="widget-components" />
+
+## Widget modes
+
+The available modes for Turnstile widgets are **Managed**, **Non-Interactive**, and **Invisible**.
+
+### Managed mode (recommended)
+
+Managed mode is fully managed by Cloudflare. It automatically chooses the appropriate action based on client-side signals and risk levels. Cloudflare uses the information from the visitor to decide if an interactive challenge should be used.
+
+Turnstile will only require interaction if a further check is necessary to verify that the visitor is human. When an interaction is required, the visitor will be prompted to select a box. There will be no images or text to decipher.
+
+Managed mode is ideal for users who want a simple configuration without needing to fine-tune the widget's behavior.
+
+### Non-Interactive mode
+
+Visitors will see a widget with a loading spinner while the challenges run in their browsers. Unlike managed mode, visitors will never be required or prompted to interact with the widget.
+
+Non-Interactive mode is ideal for users who want to prioritize visitor experience and do not want to add any friction on their website with a Turnstile interaction.
+
+### Invisible mode
+
+Invisible mode is similar to Non-Interactive mode where visitors will never interact with the Turnstile widget. Visitors will also not see a widget or any indication that an invisible browser challenge is in progress.
+
+Invisible mode is ideal for users who want to prioritize visitor and visual experience on their website.
+
+---
+
+## Widget customization
+
+### Sizes
 
 Widgets can be implemented in normal, flexible, or compact sizes.
 
-<Render file="widget-size" />
+Refer to [Widget configurations](/turnstile/get-started/client-side-rendering/widget-configurations/) for detailed configuration options and code examples.
 
-Refer to [widget sizes](/turnstile/get-started/client-side-rendering/#widget-size) for an example on how to configure flexible or compact mode.
+### Appearance and themes
 
-:::note[Offlabel]
-Customers with Enterprise Bot Management and Enterprise Turnstile have the ability to remove the Cloudflare branding and customize a specific Turnstile widget via the [API](/api/resources/turnstile/subresources/widgets/methods/update/).
-:::
+Turnstile widgets support multiple appearance modes and themes to match your website's design. 
 
-## Availability
+Refer to [Widget configurations](/turnstile/get-started/client-side-rendering/widget-configurations/) for implementation details.
 
-Free users are limited to 20 widgets per account.
+---
 
-Customers with Enterprise Bot Management and Enterprise Turnstile can have this limit increased. Contact your account team to increase your widget limit.
+## Widget states
 
-## Widget types
+### Normal operation states
 
-### Managed (recommended)
+- **Loading**: Widget is processing the challenge.
+- **Interaction**: Visitor needs to check the box (Managed mode only).
+- **Success**: The Challenge was completed successfully.
 
-This mode is fully managed by Cloudflare. It automatically chooses the appropriate action based on various signals and risk levels. Cloudflare will use the information from the visitor to decide if an interactive challenge should be used. Turnstile will only require interaction if a further check is necessary to verify that the visitor is human. When an interaction is required, the user will be prompted to check a box (no images or text to decipher). This managed mode is ideal for users who want a simple configuration without needing to fine-tune the behavior.
+### Error states
 
-#### Light mode
+#### Unknown error
 
-![Managed challenge](~/assets/images/turnstile/light-regular.png)
-![Verifying the challenge](~/assets/images/turnstile/light-verifying.png)
-![Successful managed challenge](~/assets/images/turnstile/light-success.png)
+When an unknown error occurs during the challenge, visitors will encounter this widget state. Visitors can follow the troubleshooting guidelines from the widget or refresh the page to retry the challenge.
 
-#### Dark mode
+#### Interaction timed out
 
-![Managed challenge](~/assets/images/turnstile/dark-regular.png)
-![Verifying the challenge](~/assets/images/turnstile/dark-verifying.png)
-![Successful managed challenge](~/assets/images/turnstile/dark-success.png)
+When the visitor is presented with a checkbox but does not interact with it for an extended period of time. The challenge must be reissued by reloading the page or the widget.
 
-### Compact mode
+#### Challenge timed out
 
-You can configure the Turnstile widget in compact mode, which functions in the same way as a Managed widget.
+When the verification was completed but no further action has been taken, the challenge outcome will no longer be valid. For example, if a Turnstile widget is on a login page and the Turnstile successfully ran, but the visitor did not log in for an extended period of time, the challenge must be reissued by reloading the page or the widget.
 
-#### Light mode
+#### Outdated or unsupported browser
 
-![Compact managed challenge](~/assets/images/turnstile/light-compact.png)
+Visitors with outdated browsers or unsupported browsers will encounter this widget state. 
 
-#### Dark mode
-
-![Compact managed challenge](~/assets/images/turnstile/dark-compact.png)
-
-### Non-Interactive
-
-Visitors will see a widget with a loading bar while the browser challenges run. Unlike managed mode, visitors will never be required or prompted to interact with the widget. This mode is ideal for users who want to prioritize visitor experience and do not want to add any friction with a Turnstile interaction.
-
-#### Light mode
-
-![Verifying the challenge](~/assets/images/turnstile/light-verifying.png)
-![Successful managed challenge](~/assets/images/turnstile/light-success.png)
-
-#### Dark mode
-
-![Verifying the challenge](~/assets/images/turnstile/dark-verifying.png)
-![Successful managed challenge](~/assets/images/turnstile/dark-success.png)
-
-### Invisible
-
-This mode is similar to non-interactive mode where visitors will never interact with the Turnstile widget. Visitors will not see a widget or any indication that an invisible browser challenge is in progress. Invisible challenges should take a few seconds to complete.
-
-## Error states
-
-### Unknown error state
-
-![Unknown error state](~/assets/images/turnstile/unknown-error-state.png)
-
-When an unknown error occurs during the challenge, visitors will encounter this widget state. Visitors can refresh and retry the challenge. If the error persists, they can submit a feedback form by selecting **Send feedback** on the widget.
-
-Refer to [Feedback reports](/turnstile/troubleshooting/feedback-reports) for more information.
-
-### Interaction timed out state
-
-![Interaction timed out](~/assets/images/turnstile/interaction-timed-out.png)
-
-When the challenge is not solved for an extended period of time, it must be issued again by reloading the page or the widget.
-
-### Challenge timed out state
-
-![Challenge timed out](~/assets/images/turnstile/challenge-timed-out.png)
-
-The widget expires when a token was issued but the user did not solve the challenge after an extended period of time. The page or widget must be reloaded.
-
-### Outdated or unsupported browser
-
-![Unsupported browser](~/assets/images/turnstile/unsupported-browser.png)
-
-Visitors with outdated browsers or unsupported browsers will encounter this widget state. Refer to [Supported browsers](/cloudflare-challenges/#browser-support) for more information regarding supported browsers.
+Refer to [Supported browsers](/cloudflare-challenges/reference/supported-browsers/) for more information regarding supported browsers.

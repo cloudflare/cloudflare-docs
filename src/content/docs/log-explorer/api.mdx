@@ -52,7 +52,7 @@ This command returns the following HTTP request details:
 As another example, you could find Cloudflare Access requests with selected columns from a specific timeframe by performing the following SQL query:
 
 ```bash
-curl https://api.cloudflare.com/client/v4/account/{account_id}/logs/explorer/query/sql \
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/logs/explorer/query/sql \
 --header "Authorization: Bearer <API_TOKEN>" \
 --url-query query="SELECT CreatedAt, AppDomain, AppUUID, Action, Allowed, Country, RayID, Email, IPAddress, UserUID FROM access_requests WHERE Date >= '2025-02-06' AND Date <= '2025-02-06' AND CreatedAt >= '2025-02-06T12:28:39Z' AND CreatedAt <= '2025-02-06T12:58:39Z'"
 ```

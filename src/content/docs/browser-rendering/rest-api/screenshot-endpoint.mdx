@@ -49,6 +49,11 @@ console.log(screenshot.status);
 
 For more options to control the final screenshot, like `clip`, `captureBeyondViewport`, `fullPage` and others, check the endpoint [reference](/api/resources/browser_rendering/subresources/screenshot/methods/create/).
 
+:::note[Notes for basic usage]
+- The `quality` parameter is not compatible with the default `.png` format and will return a 400 error. If you set `quality`, you must also set `type` to `.jpeg` or another supported format.
+- By default, the browser viewport is set to **1920×1080**. You can override the default via request options.
+:::
+
 ## Advanced usage
 
 Navigate to `https://cloudflare.com/`, changing the page size (`viewport`) and waiting until there are no active network connections (`waitUntil`) or up to a maximum of `4500ms` (`timeout`). Then take a `fullPage` screenshot.
@@ -74,7 +79,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
   --output "advanced-screenshot.png"
 ```
 
-## Customize CSS and embed custom JavaScript
+### Customize CSS and embed custom JavaScript
 
 Instruct the browser to go to `https://example.com`, embed custom JavaScript (`addScriptTag`) and add extra styles (`addStyleTag`), both inline (`addStyleTag.content`) and by loading an external stylesheet (`addStyleTag.url`).
 
@@ -95,6 +100,23 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
         "url": "https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
       }
     ]
+  }' \
+  --output "screenshot.png"
+```
+### Capture a specific element using the selector option
+To capture a screenshot of a specific element on a webpage, use the `selector` option with a valid CSS selector. You can also configure the `viewport` to control the page dimensions during rendering.
+
+```bash
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/screenshot' \
+  -H 'Authorization: Bearer <apiToken>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "url": "https://example.com",
+    "selector": "#example_element_name",
+    "viewport": {
+      "width": 1200,
+      "height": 1600
+    }
   }' \
   --output "screenshot.png"
 ```

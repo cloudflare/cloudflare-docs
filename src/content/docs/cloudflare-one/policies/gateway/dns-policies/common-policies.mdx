@@ -28,23 +28,20 @@ This policy allows users to access official corporate domains. By deploying the 
 
 <TabItem label="API">
 
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
---header "Content-Type: application/json" \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---data '{
-  "name": "Allow corporate domains",
-  "description": "Allow any internal corporate domains added to a list",
-  "precedence": 0,
-  "enabled": true,
-  "action": "allow",
-  "filters": [
-    "dns"
-  ],
-  "traffic": "any(dns.domains[*] in $<LIST_UUID>)",
-  "identity": ""
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "Allow corporate domains",
+		description: "Allow any internal corporate domains added to a list",
+		precedence: 0,
+		enabled: true,
+		action: "allow",
+		filters: ["dns"],
+		traffic: "any(dns.domains[*] in $<LIST_UUID>)",
+		identity: "",
+	}}
+/>
 
 To get the UUIDs of your lists, use the [List Zero Trust lists](/api/resources/zero_trust/subresources/gateway/subresources/lists/methods/list/) endpoint.
 
@@ -89,22 +86,19 @@ With the [Request Context Categories](/cloudflare-one/policies/gateway/dns-polic
 </TabItem>
 <TabItem label="API">
 
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
---header "Content-Type: application/json" \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---data '{
-  "name": "All-DNS-Bock-Category-Matches-In-Request",
-  "description": "Block all category matches in the request EDNS context",
-  "enabled": true,
-  "action": "block",
-  "filters": [
-    "dns"
-  ],
-  "traffic": "dns.categories_in_request_context_matches",
-  "identity": ""
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "All-DNS-Bock-Category-Matches-In-Request",
+		description: "Block all category matches in the request EDNS context",
+		enabled: true,
+		action: "block",
+		filters: ["dns"],
+		traffic: "dns.categories_in_request_context_matches",
+		identity: "",
+	}}
+/>
 
 </TabItem>
 <TabItem label="Terraform">
@@ -147,22 +141,20 @@ You can implement policies to block websites hosted in countries categorized as 
 
 <TabItem label="API">
 
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
---header "Content-Type: application/json" \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---data '{
-  "name": "Block banned countries",
-  "description": "Block access to banned countries",
-  "enabled": true,
-  "action": "block",
-  "filters": [
-    "dns"
-  ],
-  "traffic": "any(dns.dst.geo.country[*] in {\"AF\" \"BY\" \"CD\" \"CU\" \"IR\" \"IQ\" \"KP\" \"MM\" \"RU\" \"SD\" \"SY\" \"UA\" \"ZW\"})",
-  "identity": ""
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "Block banned countries",
+		description: "Block access to banned countries",
+		enabled: true,
+		action: "block",
+		filters: ["dns"],
+		traffic:
+			'any(dns.dst.geo.country[*] in {"AF" "BY" "CD" "CU" "IR" "IQ" "KP" "MM" "RU" "SD" "SY" "UA" "ZW"})',
+		identity: "",
+	}}
+/>
 
 </TabItem> </Tabs>
 
@@ -182,22 +174,21 @@ Blocking [frequently misused](https://www.spamhaus.org/statistics/tlds/) top-lev
 
 <TabItem label="API">
 
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
---header "Content-Type: application/json" \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---data '{
-  "name": "Block top-level domains",
-  "description": "Block top-level domains that are frequently used for malicious practices",
-  "enabled": true,
-  "action": "block",
-  "filters": [
-    "dns"
-  ],
-  "traffic": "any(dns.domains[*] matches \"[.](cn|ru)$\") or any(dns.domains[*] matches \"[.](rest|hair|top|live|cfd|boats|beauty|mom|skin|okinawa)$\") or any(dns.domains[*] matches \"[.](zip|mobi)$\")",
-  "identity": ""
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "Block top-level domains",
+		description:
+			"Block top-level domains that are frequently used for malicious practices",
+		enabled: true,
+		action: "block",
+		filters: ["dns"],
+		traffic:
+			'any(dns.domains[*] matches "[.](cn|ru)$") or any(dns.domains[*] matches "[.](rest|hair|top|live|cfd|boats|beauty|mom|skin|okinawa)$") or any(dns.domains[*] matches "[.](zip|mobi)$")',
+		identity: "",
+	}}
+/>
 
 </TabItem> </Tabs>
 
@@ -216,22 +207,21 @@ To protect against [sophisticated phishing attacks](https://blog.cloudflare.com/
 
 <TabItem label="API">
 
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
---header "Content-Type: application/json" \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---data '{
-  "name": "Block phishing attacks",
-  "description": "Block attempts to phish specific domains targeting your organization",
-  "enabled": true,
-  "action": "block",
-  "filters": [
-    "dns"
-  ],
-  "traffic": "not(any(dns.domains[*] in $<LIST_UUID>)) and any(dns.domains[*] matches \".*okta.*\\|.*cloudflare.*\\|.*mfa.*\\|.sso.*\")",
-  "identity": ""
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "Block phishing attacks",
+		description:
+			"Block attempts to phish specific domains targeting your organization",
+		enabled: true,
+		action: "block",
+		filters: ["dns"],
+		traffic:
+			'not(any(dns.domains[*] in $<LIST_UUID>)) and any(dns.domains[*] matches ".*okta.*\\|.*cloudflare.*\\|.*mfa.*\\|.sso.*")',
+		identity: "",
+	}}
+/>
 
 To get the UUIDs of your lists, use the [List Zero Trust lists](/api/resources/zero_trust/subresources/gateway/subresources/lists/methods/list/) endpoint.
 
@@ -251,22 +241,19 @@ To safeguard user privacy, some organizations will block tracking domains such a
 
 <TabItem label="API">
 
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
---header "Content-Type: application/json" \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---data '{
-  "name": "Block online tracking",
-  "description": "Block domains used for tracking at an OS level",
-  "enabled": true,
-  "action": "block",
-  "filters": [
-    "dns"
-  ],
-  "traffic": "any(dns.domains[*] in $<LIST_UUID>)",
-  "identity": ""
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "Block online tracking",
+		description: "Block domains used for tracking at an OS level",
+		enabled: true,
+		action: "block",
+		filters: ["dns"],
+		traffic: "any(dns.domains[*] in $<LIST_UUID>)",
+		identity: "",
+	}}
+/>
 
 To get the UUIDs of your lists, use the [List Zero Trust lists](/api/resources/zero_trust/subresources/gateway/subresources/lists/methods/list/) endpoint.
 
@@ -286,22 +273,20 @@ Block specific IP addresses that are known to be malicious or pose a threat to y
 
 <TabItem label="API">
 
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
---header "Content-Type: application/json" \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---data '{
-  "name": "Block malicious IPs",
-  "description": "Block specific IP addresses that are known to be malicious or pose a threat to your organization",
-  "enabled": true,
-  "action": "block",
-  "filters": [
-    "dns"
-  ],
-  "traffic": "any(dns.resolved_ips[*] in $<LIST_UUID>)",
-  "identity": ""
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "Block malicious IPs",
+		description:
+			"Block specific IP addresses that are known to be malicious or pose a threat to your organization",
+		enabled: true,
+		action: "block",
+		filters: ["dns"],
+		traffic: "any(dns.resolved_ips[*] in $<LIST_UUID>)",
+		identity: "",
+	}}
+/>
 
 To get the UUIDs of your lists, use the [List Zero Trust lists](/api/resources/zero_trust/subresources/gateway/subresources/lists/methods/list/) endpoint.
 
@@ -321,22 +306,20 @@ The CIPA (Children's Internet Protection Act) Filter is a collection of subcateg
 
 <TabItem label="API">
 
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
---header "Content-Type: application/json" \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---data '{
-  "name": "Turn on CIPA filter",
-  "description": "Block access to unwanted or harmful online content for children",
-  "enabled": true,
-  "action": "block",
-  "filters": [
-    "dns"
-  ],
-  "traffic": "any(dns.content_category[*] in {182})",
-  "identity": ""
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "Turn on CIPA filter",
+		description:
+			"Block access to unwanted or harmful online content for children",
+		enabled: true,
+		action: "block",
+		filters: ["dns"],
+		traffic: "any(dns.content_category[*] in {182})",
+		identity: "",
+	}}
+/>
 
 </TabItem> </Tabs>
 
@@ -354,22 +337,20 @@ SafeSearch is a feature of search engines that helps you filter explicit or offe
 
 <TabItem label="API">
 
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
---header "Content-Type: application/json" \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---data '{
-  "name": "Hide explicit search results",
-  "description": "Force SafeSearch on search engines to filter explicit or offensive content",
-  "enabled": true,
-  "action": "safesearch",
-  "filters": [
-    "dns"
-  ],
-  "traffic": "any(dns.content_category[*] in {145})",
-  "identity": ""
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "Hide explicit search results",
+		description:
+			"Force SafeSearch on search engines to filter explicit or offensive content",
+		enabled: true,
+		action: "safesearch",
+		filters: ["dns"],
+		traffic: "any(dns.content_category[*] in {145})",
+		identity: "",
+	}}
+/>
 
 </TabItem> </Tabs>
 
@@ -388,22 +369,19 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 
 <TabItem label="API">
 
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
---header "Content-Type: application/json" \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---data '{
-  "name": "Check user identity",
-  "description": "Filter traffic based on a user identity group name",
-  "enabled": true,
-  "action": "block",
-  "filters": [
-    "dns"
-  ],
-  "traffic": "any(app.ids[*] in {606})",
-  "identity": "any(identity.groups.name[*] in {\"Contractors\"})",
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "Check user identity",
+		description: "Filter traffic based on a user identity group name",
+		enabled: true,
+		action: "block",
+		filters: ["dns"],
+		traffic: "any(app.ids[*] in {606})",
+		identity: 'any(identity.groups.name[*] in {"Contractors"})',
+	}}
+/>
 
 </TabItem> </Tabs>
 
@@ -426,23 +404,21 @@ The following example includes two policies. The first policy allows the specifi
 
 <TabItem label="API">
 
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
---header "Content-Type: application/json" \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---data '{
-  "name": "Allow social media for Marketing",
-  "description": "Allow access to social media sites for users in the Marketing group",
-  "precedence": 1,
-  "enabled": true,
-  "action": "allow",
-  "filters": [
-    "dns"
-  ],
-  "traffic": "any(dns.content_category[*] in {149})",
-  "identity": "any(identity.groups.name[*] in {\"Marketing\"})",
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "Allow social media for Marketing",
+		description:
+			"Allow access to social media sites for users in the Marketing group",
+		precedence: 1,
+		enabled: true,
+		action: "allow",
+		filters: ["dns"],
+		traffic: "any(dns.content_category[*] in {149})",
+		identity: 'any(identity.groups.name[*] in {"Marketing"})',
+	}}
+/>
 
 </TabItem> </Tabs>
 
@@ -458,23 +434,20 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
 
 <TabItem label="API">
 
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
---header "Content-Type: application/json" \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---data '{
-  "name": "Block social media",
-  "description": "Block social media for all other users",
-  "precedence": 2,
-  "enabled": true,
-  "action": "block",
-  "filters": [
-    "dns"
-  ],
-  "traffic": "any(dns.content_category[*] in {149})",
-  "identity": ""
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "Block social media",
+		description: "Block social media for all other users",
+		precedence: 2,
+		enabled: true,
+		action: "block",
+		filters: ["dns"],
+		traffic: "any(dns.content_category[*] in {149})",
+		identity: "",
+	}}
+/>
 
 </TabItem> </Tabs>
 
@@ -502,22 +475,19 @@ Force users to connect with IPv4 by blocking IPv6 resolution.
 
 <TabItem label="API">
 
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
---header "Content-Type: application/json" \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---data '{
-  "name": "Force IPv4",
-  "description": "Force users to connect with IPv4 by blocking IPv6 resolution",
-  "enabled": true,
-  "action": "block",
-  "filters": [
-    "dns"
-  ],
-  "traffic": "dns.query_rtype == \"AAAA\"",
-  "identity": ""
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "Force IPv4",
+		description: "Force users to connect with IPv4 by blocking IPv6 resolution",
+		enabled: true,
+		action: "block",
+		filters: ["dns"],
+		traffic: 'dns.query_rtype == "AAAA"',
+		identity: "",
+	}}
+/>
 
 </TabItem> </Tabs>
 
@@ -535,21 +505,18 @@ Force users to connect with IPv6 by blocking IPv4 resolution.
 
 <TabItem label="API">
 
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
---header "Content-Type: application/json" \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---data '{
-  "name": "Force IPv6",
-  "description": "Force users to connect with IPv6 by blocking IPv4 resolution",
-  "enabled": true,
-  "action": "block",
-  "filters": [
-    "dns"
-  ],
-  "traffic": "dns.query_rtype == \"A\"",
-  "identity": ""
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "Force IPv6",
+		description: "Force users to connect with IPv6 by blocking IPv4 resolution",
+		enabled: true,
+		action: "block",
+		filters: ["dns"],
+		traffic: 'dns.query_rtype == "A"',
+		identity: "",
+	}}
+/>
 
 </TabItem> </Tabs>

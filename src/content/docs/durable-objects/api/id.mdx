@@ -57,7 +57,7 @@ console.assert(!id1.equals(id2), "Different unique ids should never be equal.");
 
 ### `name`
 
-`name` is an optional property of a `DurableObjectId`, which returns the name that was used to create the `DurableObjectId` via [`DurableObjectNamespace::idFromName`](/durable-objects/api/namespace/#idfromname). This value is undefined if the `DurableObjectId` was constructed using [`DurableObjectNamespace::newUniqueId`](/durable-objects/api/namespace/#newuniqueid).
+`name` is an optional property of a `DurableObjectId`, which returns the name that was used to create the `DurableObjectId` via [`DurableObjectNamespace::idFromName`](/durable-objects/api/namespace/#idfromname). This value is undefined if the `DurableObjectId` was constructed using [`DurableObjectNamespace::newUniqueId`](/durable-objects/api/namespace/#newuniqueid). This value is also undefined within the `ctx.id` passed into the Durable Object constructor (refer to [GitHub issue](https://github.com/cloudflare/workerd/issues/2240) for discussion).
 
 ```js
 const uniqueId = env.MY_DURABLE_OBJECT.newUniqueId();

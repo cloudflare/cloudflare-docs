@@ -2,13 +2,15 @@
 pcx_content_type: concept
 source: https://support.cloudflare.com/hc/en-us/articles/200168236-Configuring-IP-geolocation
 title: IP geolocation
+tags:
+  - Geolocation
 ---
 
 import { FeatureTable, TabItem, Tabs } from "~/components";
 
 IP geolocation adds the [`CF-IPCountry` header](/fundamentals/reference/http-headers/#cf-ipcountry) to all requests to your origin server.
 
-Cloudflare automatically updates its IP geolocation database from several data sources, typically twice a week.
+Cloudflare automatically updates its IP geolocation database multiple times per week.
 
 ## Availability
 
@@ -44,7 +46,4 @@ In order to use this data, you will need to then retrieve it from the [`CF-IPCou
 
 ## Report an incorrect IP location
 
-If you find an incorrect IP location, consider the following:
-
-- If the IP is part of the [current Cloudflare IP ranges](https://www.cloudflare.com/ips/), report to `ip-corrections@cloudflare.com`.
-- If the IP is **not** listed within the [current Cloudflare IP ranges](https://www.cloudflare.com/ips/), [report to IPinfo](https://ipinfo.io/corrections).
+If you find an IP address with a location that you believe is incorrect, report it to `ip-corrections@cloudflare.com` along with the correct information as applicable (country, state/province, city name, and ZIP code).

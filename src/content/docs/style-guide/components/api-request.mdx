@@ -24,6 +24,7 @@ import { APIRequest } from "~/components";
 	code={{
 		mark: [5, "block"],
 	}}
+	roles="Domain"
 />
 
 <APIRequest
@@ -131,3 +132,15 @@ An object of Expressive Code props, the following props are available:
 - [Base Props](https://expressive-code.com/key-features/code-component/#available-props)
 - [Line Marker Props](https://expressive-code.com/key-features/text-markers/#props)
 - [Collapsible Sections Props](https://expressive-code.com/plugins/collapsible-sections/#props)
+
+### `roles`
+
+**type:** `string | boolean`
+
+**default:** `true`
+
+If set to `true`, which is the default, all API token roles will show.
+
+If set to `false`, API token roles will not be displayed.
+
+If set to a string, the API token roles will be filtered using it as a substring (i.e, `roles="domain"` to filter out `Account API Gateway` and only leave `Domain API Gateway`).

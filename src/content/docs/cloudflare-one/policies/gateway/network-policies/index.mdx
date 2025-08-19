@@ -1,6 +1,8 @@
 ---
 pcx_content_type: configuration
 title: Network policies
+tags:
+  - Geolocation
 sidebar:
   order: 3
 ---
@@ -278,7 +280,10 @@ Gateway matches network traffic against the following selectors, or criteria.
 
 ### Destination IP
 
-<Render file="gateway/selectors/destination-ip" />
+<Render
+	file="gateway/selectors/destination-ip"
+	params={{ APIendpoint: "net.dst.ip" }}
+/>
 
 ### Destination Port
 
@@ -286,7 +291,11 @@ Gateway matches network traffic against the following selectors, or criteria.
 
 ### Detected Protocol
 
-<Render file="gateway/selectors/protocol-detection" />
+The inferred network protocol based on Cloudflare's [protocol detection](/cloudflare-one/policies/gateway/network-policies/protocol-detection/).
+
+| UI name           | API example                       |
+| ----------------- | --------------------------------- |
+| Detected Protocol | `net.protocol.detection == "ssh"` |
 
 ### Device Posture
 
@@ -297,16 +306,14 @@ Gateway matches network traffic against the following selectors, or criteria.
 <Render file="gateway/selectors/protocol" />
 
 :::note
-
 To enable Gateway filtering on TCP and UDP, go to **Settings** > **Network** > **Proxy**. Network policies apply to all enabled protocols unless you use the **Protocol** selector within a policy.
-
 :::
 
 ### Proxy Endpoint
 
 <Render file="gateway/selectors/proxy-endpoint" />
 
-### Security Risks
+### Security Categories
 
 <Render
 	file="gateway/selectors/security-risks"
@@ -315,11 +322,23 @@ To enable Gateway filtering on TCP and UDP, go to **Settings** > **Network** > *
 
 ### SNI
 
-<Render file="gateway/selectors/sni" />
+The host whose Server Name Indication (SNI) header Gateway will filter traffic against. This will allow for an exact match.
+
+By default, this selector only applies to HTTPS traffic on port `443`. To inspect traffic on every port, turn on [protocol detection](/cloudflare-one/policies/gateway/network-policies/protocol-detection/) and choose to [inspect on all ports](/cloudflare-one/policies/gateway/network-policies/protocol-detection/#inspect-on-all-ports).
+
+| UI name | API example                         |
+| ------- | ----------------------------------- |
+| SNI     | `net.sni.host == "www.example.com"` |
 
 ### SNI Domain
 
-<Render file="gateway/selectors/sni-domain" />
+The domain whose Server Name Indication (SNI) header Gateway will filter traffic against. For example, a rule for `example.com` will match `example.com`, `www.example.com`, and `my.test.example.com`.
+
+By default, this selector only applies to HTTPS traffic on port `443`. To inspect traffic on every port, turn on [protocol detection](/cloudflare-one/policies/gateway/network-policies/protocol-detection/) and choose to [inspect on all ports](/cloudflare-one/policies/gateway/network-policies/protocol-detection/#inspect-on-all-ports).
+
+| UI name    | API example                        |
+| ---------- | ---------------------------------- |
+| SNI Domain | `net.sni.domains == "example.com"` |
 
 ### Source Continent
 
@@ -338,7 +357,10 @@ The country of the user making the request. <Render file="gateway/selectors/sour
 
 ### Source IP
 
-<Render file="gateway/selectors/source-ip-net" />
+<Render
+	file="gateway/selectors/source-ip"
+	params={{ APIendpoint: "net.src.ip" }}
+/>
 
 ### Source Port
 
@@ -360,9 +382,7 @@ The country of the user making the request. <Render file="gateway/selectors/sour
 <Render file="gateway/comparison-operators" />
 
 :::note
-
 The _in_ operator allows you to specify IP addresses or networks using CIDR notation.
-
 :::
 
 ## Value

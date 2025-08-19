@@ -1,0 +1,66 @@
+---
+import { z } from "astro:schema";
+
+const props = z.object({
+	label: z.string(),
+});
+
+const { label } = props.parse(Astro.props);
+---
+
+<check-box>
+	<label class="block">
+		<input type="checkbox" />
+		{label}
+	</label>
+</check-box>
+
+<script>
+	function getStorage() {
+		const raw = localStorage.getItem("checkboxes");
+
+		if (!raw) return [];
+
+		let json;
+		try {
+			json = JSON.parse(raw);
+		} catch {
+			localStorage.removeItem("checkboxes");
+			return [];
+		}
+
+		return json;
+	}
+
+	function updateStorage(label: string, checked: boolean) {
+		const key = `${window.location.pathname}${label}`;
+		const storage = getStorage();
+
+		if (checked) {
+			storage.push(key);
+		} else {
+			storage.splice(storage.indexOf(key), 1);
+		}
+
+		localStorage.setItem("checkboxes", JSON.stringify(storage));
+	}
+
+	class Checkbox extends HTMLElement {
+		connectedCallback() {
+			const input = this.querySelector("input") as HTMLInputElement;
+			const label = (
+				this.querySelector("label") as HTMLLabelElement
+			).innerText.trim();
+
+			input.checked = getStorage().includes(
+				`${window.location.pathname}${label}`,
+			);
+
+			input.addEventListener("change", () => {
+				updateStorage(label, input.checked);
+			});
+		}
+	}
+
+	customElements.define("check-box", Checkbox);
+</script>

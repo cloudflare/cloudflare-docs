@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import { Tabs, TabItem } from "~/components";
+import { Tabs, TabItem, APIRequest } from "~/components";
 
 Advanced security features such as [HTTPS traffic inspection](/cloudflare-one/policies/gateway/http-policies/tls-decryption/), [Data Loss Prevention](/cloudflare-one/policies/data-loss-prevention/), [anti-virus scanning](/cloudflare-one/policies/gateway/http-policies/antivirus-scanning/), [Access for Infrastructure](/cloudflare-one/applications/non-http/infrastructure-apps/), and [Browser Isolation](/cloudflare-one/policies/browser-isolation/) require users to install and trust a root certificate on their device. You can either install the certificate provided by Cloudflare (default option), or generate your own custom certificate and upload it to Cloudflare.
 
@@ -46,11 +46,7 @@ To generate a new Cloudflare root certificate for your Zero Trust organization:
 
 Send a `POST` request to the [Create Zero Trust certificate](/api/resources/zero_trust/subresources/gateway/subresources/certificates/methods/create/) endpoint.
 
-```sh
-curl --request POST \
-https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/certificates \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
-```
+<APIRequest path="/accounts/{account_id}/gateway/certificates" method="POST" />
 
 The API will respond with the ID and contents of the new certificate.
 
@@ -83,11 +79,10 @@ To activate your root certificate:
 
 Send a `POST` request to the [Activate a Zero Trust certificate](/api/resources/zero_trust/subresources/gateway/subresources/certificates/methods/activate/) endpoint.
 
-```sh
-curl --request POST \
-https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/certificates/$CERTIFICATE_ID/activate \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
-```
+<APIRequest
+	path="/accounts/{account_id}/gateway/certificates/{certificate_id}/activate"
+	method="POST"
+/>
 
 </TabItem> </Tabs>
 
@@ -108,20 +103,18 @@ Once you deploy and install your certificate, you can turn it on for use in insp
 
 Send a `PUT` request to the [Update Zero Trust account configuration](/api/resources/zero_trust/subresources/gateway/subresources/configurations/methods/update/) endpoint. For example:
 
-```sh
-curl --request PUT \
-"https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/configuration" \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---header "Content-Type: application/json" \
---data '{
-  "settings": {
-    "certificate": {
-      "id": "$CERTIFICATE_ID",
-      "in_use": true
-    }
-  }
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/gateway/configuration"
+	method="PUT"
+	json={{
+		settings: {
+			certificate: {
+				id: "{certificate_id}",
+				in_use: true,
+			},
+		},
+	}}
+/>
 
 </TabItem> </Tabs>
 

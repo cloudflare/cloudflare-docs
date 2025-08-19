@@ -23,7 +23,10 @@ Before you can protect your API or web application with mTLS rules, you need to:
 
 <Render file="mtls-api-shield-support" />
 
-<Render file="cloudflare-managed-client-cert" product="ssl" />
+:::caution
+
+By default, API Shield mTLS uses client certificates issued by a Cloudflare-managed CA. If you need to use certificates issued by another CA, you can use the API to [bring your own CA for mTLS](/ssl/client-certificates/byo-ca/).
+:::
 
 ## Create an mTLS rule via the Cloudflare dashboard
 

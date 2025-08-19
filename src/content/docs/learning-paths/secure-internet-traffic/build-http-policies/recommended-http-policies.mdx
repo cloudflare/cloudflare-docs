@@ -5,7 +5,7 @@ sidebar:
   order: 5
 ---
 
-import { Render, Tabs, TabItem } from "~/components";
+import { Render, Tabs, TabItem, APIRequest } from "~/components";
 
 We recommend you add the following HTTP policies to build an Internet and SaaS app security strategy for your organization.
 
@@ -23,22 +23,20 @@ Bypass HTTP inspection for applications that use embedded certificates. This wil
 </TabItem>
 <TabItem label="API">
 
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
---header "Content-Type: application/json" \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---data '{
-  "name": "All-HTTP-Application-InspectBypass",
-  "description": "Bypass HTTP inspection for applications that use embedded certificates",
-  "precedence": 0,
-  "enabled": true,
-  "action": "block",
-  "filters": [
-    "http"
-  ],
-  "traffic": "any(app.type.ids[*] in {16})"
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "All-HTTP-Application-InspectBypass",
+		description:
+			"Bypass HTTP inspection for applications that use embedded certificates",
+		precedence: 0,
+		enabled: true,
+		action: "block",
+		filters: ["http"],
+		traffic: "any(app.type.ids[*] in {16})",
+	}}
+/>
 
 </TabItem>
 <TabItem label="Terraform">
@@ -73,23 +71,22 @@ Bypass HTTPS inspection for Android applications (such as Google Drive) that use
 </TabItem>
 <TabItem label="API">
 
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
---header "Content-Type: application/json" \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---data '{
-  "name": "Android-HTTP-Application-InspectionBypass",
-  "description": "Bypass HTTPS inspection for Android applications with certificate pinning",
-  "precedence": 10,
-  "enabled": true,
-  "action": "off",
-  "filters": [
-    "http"
-  ],
-  "traffic": "any(app.ids[*] in {554})",
-  "device_posture": "any(device_posture.checks.passed[*] in {\"<ANDROID_VERSION_POSTURE_CHECK_UUID>\"})"
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "Android-HTTP-Application-InspectionBypass",
+		description:
+			"Bypass HTTPS inspection for Android applications with certificate pinning",
+		precedence: 10,
+		enabled: true,
+		action: "off",
+		filters: ["http"],
+		traffic: "any(app.ids[] in {554})",
+		device_posture:
+			'any(device_posture.checks.passed[] in {"<ANDROID_VERSION_POSTURE_CHECK_UUID >"})',
+	}}
+/>
 
 </TabItem>
 <TabItem label="Terraform">
@@ -125,22 +122,21 @@ Bypass HTTP inspection for a custom list of domains identified as incompatible w
 </TabItem>
 <TabItem label="API">
 
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
---header "Content-Type: application/json" \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---data '{
-  "name": "All-HTTP-Domain-Inspection-Bypass",
-  "description": "Bypass HTTP inspection for a custom list of domains identified as incompatible with TLS inspection",
-  "precedence": 20,
-  "enabled": true,
-  "action": "off",
-  "filters": [
-    "http"
-  ],
-  "traffic": "any(http.conn.domains[*] in $<DOMAIN_INSPECTION_BYPASS_LIST_UUID>) or any(http.conn.domains[*] in $<KNOWN_DOMAINS_LIST_UUID>)"
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "All-HTTP-Domain-Inspection-Bypass",
+		description:
+			"Bypass HTTP inspection for a custom list of domains identified as incompatible with TLS inspection",
+		precedence: 20,
+		enabled: true,
+		action: "off",
+		filters: ["http"],
+		traffic:
+			"any(http.conn.domains[] in $<DOMAIN_INSPECTION_BYPASS_LIST_UUID>) or any(http.conn.domains[] in $<KNOWN_DOMAINS_LIST_UUID>)",
+	}}
+/>
 
 </TabItem>
 <TabItem label="Terraform">
@@ -174,22 +170,21 @@ resource "cloudflare_zero_trust_gateway_policy" "android_http_application_inspec
 </TabItem>
 <TabItem label="API">
 
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
---header "Content-Type: application/json" \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---data '{
-  "name": "All-HTTP-SecurityRisks-Blocklist",
-  "description": "Block security categories based on Cloudflare's threat intelligence",
-  "precedence": 30,
-  "enabled": true,
-  "action": "block",
-  "filters": [
-    "http"
-  ],
-  "traffic": "any(http.request.uri.security_category[*] in {68 178 80 83 176 175 117 131 134 151 153})"
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "All-HTTP-SecurityRisks-Blocklist",
+		description:
+			"Block security categories based on Cloudflare's threat intelligence",
+		precedence: 30,
+		enabled: true,
+		action: "block",
+		filters: ["http"],
+		traffic:
+			"any(http.request.uri.security_category[*] in {68 178 80 83 176 175 117 131 134 151 153})",
+	}}
+/>
 
 </TabItem>
 <TabItem label="Terraform">
@@ -240,22 +235,21 @@ resource "cloudflare_zero_trust_gateway_policy" "all_http_security_risks_blockli
 </TabItem>
 <TabItem label="API">
 
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
---header "Content-Type: application/json" \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---data '{
-  "name": "All-HTTP-DomainHost-Blocklist",
-  "description": "Block specific domains or hosts that are malicious or pose a threat to your organization",
-  "precedence": 50,
-  "enabled": true,
-  "action": "block",
-  "filters": [
-    "http"
-  ],
-  "traffic": "any(http.request.domains[*] in $<DOMAIN_BLOCKLIST_UUID>) or http.request.host in $<HOST_BLOCKLIST_UUID> or http.request.host matches \".*example\\.com\""
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "All-HTTP-DomainHost-Blocklist",
+		description:
+			"Block specific domains or hosts that are malicious or pose a threat to your organization",
+		precedence: 50,
+		enabled: true,
+		action: "block",
+		filters: ["http"],
+		traffic:
+			'any(http.request.domains[*] in $<DOMAIN_BLOCKLIST_UUID>) or http.request.host in $<HOST_BLOCKLIST_UUID> or http.request.host matches ".*example\.com"',
+	}}
+/>
 
 </TabItem>
 <TabItem label="Terraform">
@@ -300,22 +294,20 @@ Security teams often need to perform threat analysis or malware testing that cou
 </TabItem>
 <TabItem label="API">
 
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
---header "Content-Type: application/json" \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---data '{
-  "name": "PrivilegedUsers-HTTP-Any-Isolate",
-  "description": "Isolate traffic for privileged users who regularly access critical or testing systems",
-  "precedence": 70,
-  "enabled": true,
-  "action": "isolate",
-  "filters": [
-    "http"
-  ],
-  "identity": "any(identity.groups.name[*] in {\"Privileged Users\"})"
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "PrivilegedUsers-HTTP-Any-Isolate",
+		description:
+			"Isolate traffic for privileged users who regularly access critical or testing systems",
+		precedence: 70,
+		enabled: true,
+		action: "isolate",
+		filters: ["http"],
+		identity: 'any(identity.groups.name[*] in {"Privileged Users"})',
+	}}
+/>
 
 </TabItem>
 <TabItem label="Terraform">
@@ -350,23 +342,22 @@ resource "cloudflare_zero_trust_gateway_policy" "privileged_users_http_any_isola
 </TabItem>
 <TabItem label="API">
 
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
---header "Content-Type: application/json" \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---data '{
-  "name": "Quarantined-Users-HTTP-Restricted-Access",
-  "description": "Restrict access for users included in an identity provider (IdP) user group for risky users",
-  "precedence": 80,
-  "enabled": true,
-  "action": "block",
-  "filters": [
-    "http"
-  ],
-  "traffic": "not(any(http.conn.dst_ip[*] in $<QUARANTINED_USERS_IP_ALLOWLIST_UUID>))",
-  "identity": "any(identity.groups.name[*] in {\"Quarantined Users\"})"
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "Quarantined-Users-HTTP-Restricted-Access",
+		description:
+			"Restrict access for users included in an identity provider (IdP) user group for risky users",
+		precedence: 80,
+		enabled: true,
+		action: "block",
+		filters: ["http"],
+		traffic:
+			"not(any(http.conn.dst_ip[] in $<QUARANTINED_USERS_IP_ALLOWLIST_UUID>))",
+		identity: 'any(identity.groups.name[] in {"Quarantined Users"})',
+	}}
+/>
 
 </TabItem>
 <TabItem label="Terraform">
@@ -402,22 +393,21 @@ Isolate high risk domains or create a custom list of known risky domains to avoi
 </TabItem>
 <TabItem label="API">
 
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
---header "Content-Type: application/json" \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---data '{
-  "name": "All-HTTP-Domain-Isolate",
-  "description": "Isolate high risk domains or create a custom list of known risky domains to avoid data exfiltration or malware infection",
-  "precedence": 90,
-  "enabled": true,
-  "action": "isolate",
-  "filters": [
-    "http"
-  ],
-  "traffic": "any(http.request.uri.content_category[*] in {169 177}) or any(http.request.domains[*] in $<DOMAIN_ISOLATE_LIST_UUID>)"
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "All-HTTP-Domain-Isolate",
+		description:
+			"Isolate high risk domains or create a custom list of known risky domains to avoid data exfiltration or malware infection",
+		precedence: 90,
+		enabled: true,
+		action: "isolate",
+		filters: ["http"],
+		traffic:
+			"any(http.request.uri.content_category[] in {169 177}) or any(http.request.domains[] in $<DOMAIN_ISOLATE_LIST_UUID>)",
+	}}
+/>
 
 </TabItem>
 <TabItem label="Terraform">

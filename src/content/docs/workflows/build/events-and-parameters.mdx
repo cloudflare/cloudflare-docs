@@ -40,7 +40,7 @@ export default {
     // Pass our event as the second parameter to the `create` method
     // on our Workflow binding.
     let instance = await env.MY_WORKFLOW.create({
-      id: await crypto.randomUUID(),
+      id: crypto.randomUUID(),
       params: someEvent
     });
 

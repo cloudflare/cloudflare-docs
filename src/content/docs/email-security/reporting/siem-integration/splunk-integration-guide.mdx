@@ -74,12 +74,8 @@ When creating requests to Splunk, the URL and port number change according to th
 
 Refer to the [Splunk documentation](https://docs.splunk.com/Documentation/Splunk/8.2.2/Data/UsetheHTTPEventCollector) for more information.
 
-If your instance is on-premise, specify the appropriate hostname and ensure that your firewall allows the configured port through to your instance. The connections will be coming from the following egress IP addresses, if you need them for your access control lists (ACLs):
+If your instance is on-premise, specify the appropriate hostname and ensure that your firewall allows the configured port through to your instance. The connections will be coming from this [Egress IP addresses](/email-security/deployment/inline/reference/egress-ips/), if you need them for your access control lists (ACLs)
 
-* `52.11.209.211`
-* `52.89.255.11`
-* `52.0.67.109`
-* `54.173.50.115`
 
 :::note
 Ensure that you have a valid SSL certificate configured on your instance. The certificate cannot be expired and cannot be a self-signed certificate.

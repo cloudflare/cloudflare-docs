@@ -1,7 +1,7 @@
 ---
 title: Hyperdrive
 order: 0
-type: overview
+
 pcx_content_type: overview
 sidebar:
   order: 1
@@ -53,10 +53,6 @@ export default {
     	try {
     		// Sample SQL query
     		const results = await sql`SELECT * FROM pg_tables`;
-
-    		// Close the client after the response is returned
-    		ctx.waitUntil(sql.end());
-
     		return Response.json(results);
     	} catch (e) {
     		return Response.json({ error: e instanceof Error ? e.message : e }, { status: 500 });
@@ -65,7 +61,7 @@ export default {
 
 } satisfies ExportedHandler<{ HYPERDRIVE: Hyperdrive }>;
 
-````
+```
 
     </TabItem>
     <TabItem label="wrangler.jsonc">
@@ -89,7 +85,7 @@ export default {
 			}
 		]
 	}
-````
+```
 
 </TabItem>
 </Tabs>
@@ -101,34 +97,30 @@ export default {
 import { createConnection  } from 'mysql2/promise';
 
 export default {
- async fetch(request, env, ctx): Promise<Response> {
+  async fetch(request, env, ctx): Promise<Response> {
     const connection = await createConnection({
-     host: env.DB_HOST,
-     user: env.DB_USER,
-     password: env.DB_PASSWORD,
-     database: env.DB_NAME,
-     port: env.DB_PORT
+		 host: env.HYPERDRIVE.host,
+		 user: env.HYPERDRIVE.user,
+		 password: env.HYPERDRIVE.password,
+		 database: env.HYPERDRIVE.database,
+		 port: env.HYPERDRIVE.port,
 
-    	 // This is needed to use mysql2 with Workers
+     // This is needed to use mysql2 with Workers
      // This configures mysql2 to use static parsing instead of eval() parsing (not available on Workers)
      disableEval: true
+  });
 
-});
+  const [results, fields] = await connection.query('SHOW tables;');
 
-const [results, fields] = await connection.query(
-'SHOW tables;'
-);
+  return new Response(JSON.stringify({ results, fields }), {
+    headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '\*',
+    },
+  });
+}} satisfies ExportedHandler<Env>;
 
-return new Response(JSON.stringify({ results, fields }), {
-headers: {
-'Content-Type': 'application/json',
-'Access-Control-Allow-Origin': '\*',
-},
-});
-},
-} satisfies ExportedHandler<Env>;
-
-````
+```
 
     </TabItem>
     <TabItem label="wrangler.jsonc">
@@ -152,7 +144,7 @@ headers: {
 			}
 		]
 	}
-````
+```
 
 </TabItem>
 </Tabs>

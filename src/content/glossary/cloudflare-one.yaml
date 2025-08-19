@@ -53,6 +53,10 @@ entries:
     general_definition: |-
       Cloudflare Gateway is a modern next-generation firewall between your user, device, or network and the public Internet. It includes DNS filtering to inspect and apply policies to all Internet-bound DNS queries.
 
+  - term: Cloudflare One
+    general_definition: |-
+      the name for Cloudflare's Secure Access Service Edge (SASE) platform, which includes Zero Trust and network services.
+
   - term: Cloudflare One Agent
     general_definition: |-
       the name of the Cloudflare WARP client app on iOS and Android devices.
@@ -115,6 +119,14 @@ entries:
     general_definition: |-
       a network location, such as an office, that is associated with a specific WARP client device profile.
 
+  - term: MCP client
+    general_definition: |-
+      a Model Context Protocol (MCP) client is a user-facing AI tool that can request information and receive responses from an MCP server. Examples of MCP clients include Claude Desktop, Cursor AI, and Windsurf.
+
+  - term: MCP server
+    general_definition: |-
+      a web application that allows generative AI tools to access third-party data sources and APIs using the Model Context Protocol (MCP). For example, you can use an MCP server to connect an AI assistant to your Google Drive account.
+
   - term: MDM file
     general_definition: |-
       a Mobile Device Management (MDM) file is a configuration file that allows organizations to manage the software, settings, and certificates installed on their devices.
@@ -130,6 +142,10 @@ entries:
   - term: OIDC
     general_definition: |-
       OpenID Connect (OIDC) is an identity authentication protocol built on top of OAuth 2.0. It is used verifying user identity and obtaining basic profile information.
+
+  - term: on-ramp
+    general_definition: |-
+      refers to a way of connecting a business network to Cloudflare. Examples of on-ramps, or ways to connect to Cloudflare, are Anycast GRE tunnels, Anycast IPsec tunnels, Cloudflare Network Interconnect (CNI), Cloudflare Tunnel, and WARP.
 
   - term: PAC file
     general_definition: |-
@@ -207,19 +223,17 @@ entries:
     general_definition: |-
       a resource with an IP address or hostname that is reachable by Cloudflare, such as a server or web application.
 
+  - term: target hostname
+    general_definition: |-
+      a label used to identify a set of targets in an Access for Infrastructure application.
+
   - term: team domain
     general_definition: |-
       a unique subdomain assigned to your Cloudflare account (for example, `<your-team-name>.cloudflareaccess.com`), where users will find the apps you have secured behind Cloudflare Zero Trust.
 
   - term: team name
     general_definition: |-
-      the customizable portion of your team domain, allowing you to personalize your Cloudflare Zero Trust configuration. You can view your team name in Zero Trust under **Settings** > **Custom Pages**.
-
-      | team domain                             | team name        |
-      | --------------------------------------- | ---------------- |
-      | `<your-team-name>.cloudflareaccess.com` | `your-team-name` |
-
-      To learn about the consequences of changing your team name, refer to the [FAQ](/cloudflare-one/faq/teams-getting-started-faq/#whats-a-team-domainteam-name).
+      the customizable portion of your team domain (`<your-team-name>.cloudflareaccess.com`). You can view your team name in Zero Trust under **Settings** > **Custom Pages**.
 
   - term: Terraform
     general_definition: |-
@@ -266,3 +280,7 @@ entries:
   - term: Hops
     general_definition: |-
       Hops refer to the stops an email makes as it travels from the sender to the recipient.
+
+  - term: Quarantine policies
+    general_definition: |-
+      Policies that block specific types of emails (usually malicious and suspicious emails), preventing emails from reaching the end-user or the next mail service provider. Emails that are quarantined are reviewed by administrators and potentially released if falsely flagged.
