@@ -24,7 +24,7 @@ function getCommand(path: string) {
 		node = next.subtree;
 	}
 
-	throw new Error(`[WranglerCommand] Command \"${path}\" not found`);
+	throw new Error(`[WranglerCommand] Command "${path}" not found`);
 }
 
 const props = z.object({
@@ -36,7 +36,7 @@ let { command } = props.parse(Astro.props);
 const definition = getCommand(command);
 
 if (!definition.args) {
-	throw new Error(`[WranglerCommand] \"${command}\" has no arguments`);
+	throw new Error(`[WranglerCommand] "${command}" has no arguments`);
 }
 
 const positionals = definition.positionalArgs;
