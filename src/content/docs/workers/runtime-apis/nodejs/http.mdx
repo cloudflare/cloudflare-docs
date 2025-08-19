@@ -139,7 +139,7 @@ The `IncomingMessage` class represents an HTTP request that is received from the
 
 The `IncomingMessage` class represents an HTTP message (request or response). It provides methods for reading headers and body data. `IncomingMessage` extends from the `Readable` stream class.
 
-````js
+```js
 import { get, IncomingMessage } from 'node:http';
 import { ok, strictEqual } from 'node:assert';
 
@@ -152,6 +152,7 @@ export default {
 		// ...
 	}
 }
+```
 
 The Workers implementation includes a `cloudflare` property on `IncomingMessage` objects:
 
@@ -169,7 +170,7 @@ const server = createServer((req, res) => {
 server.listen(8080);
 
 export default httpServerHandler({ port: 8080 });
-````
+```
 
 The `cloudflare.cf` property contains [Cloudflare-specific request properties](/workers/runtime-apis/request/#incomingrequestcfproperties).
 
