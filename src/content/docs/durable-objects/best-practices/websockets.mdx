@@ -16,7 +16,7 @@ There are two sets of WebSockets API:
 
 ## What are WebSockets?
 
-WebSockets are long-lived TCP connections that enable bi-directional, real-time communication between client and server. Both Cloudflare Durable Objects and Workers can act as WebSocket endpoints – either as a client or as a server. Because WebSocket sessions are long-lived, applications commonly use Durable Objects to accept either the client or server connection. While there are other use cases for using Workers exclusively with WebSockets, for example proxying WebSocket messages, WebSockets are most useful when combined with Durable Objects.
+WebSockets are long-lived TCP connections that enable bi-directional, real-time communication between client and server. Both Cloudflare Durable Objects and Workers can act as WebSocket endpoints - either as a client or as a server. Because WebSocket sessions are long-lived, applications commonly use Durable Objects to accept either the client or server connection. While there are other use cases for using Workers exclusively with WebSockets, for example proxying WebSocket messages, WebSockets are most useful when combined with Durable Objects.
 
 Because Durable Objects provide a single-point-of-coordination between [Cloudflare Workers](/workers/), a single Durable Object instance can be used in parallel with WebSockets to coordinate between multiple clients, such as participants in a chat room or a multiplayer game. Refer to [Cloudflare Edge Chat Demo](https://github.com/cloudflare/workers-chat-demo) for an example of using Durable Objects with WebSockets.
 
@@ -24,11 +24,11 @@ Both Cloudflare Durable Objects and Workers can use the [Web Standard WebSocket 
 
 ## Durable Objects' Hibernation WebSocket API
 
-In addition to [the Web Standard WebSocket API](/workers/runtime-apis/websockets/), Cloudflare Durable Objects can use the WebSocket Hibernation API which extends the Web Standard WebSocket API to reduce costs. Specifically, [billable Duration (GB-s) charges](/durable-objects/platform/pricing/) are not incurred during periods of inactivity. 
+In addition to [the Web Standard WebSocket API](/workers/runtime-apis/websockets/), Cloudflare Durable Objects can use the WebSocket Hibernation API which extends the Web Standard WebSocket API to reduce costs. Specifically, [billable Duration (GB-s) charges](/durable-objects/platform/pricing/) are not incurred during periods of inactivity.
 
 ### How does Durable Object Hibernation work with WebSockets?
 
-When a Durable Object receives no events (like alarms) or messages for 10 seconds, the Durable Object is evicted from memory to avoid unnecessary charges. The WebSocket clients remain connected to the Cloudflare network. When your Durable Object receives an event during hibernation, it is re-initialized, its `constructor` function is called, and it can access the WebSocket clients with the `this.ctx.getWebSockets()` function.
+When a Durable Object receives no events (like alarms) or messages for a short period of time, the Durable Object is evicted from memory to avoid unnecessary charges (refer to [Lifecycle of a Durable Object](/durable-objects/concepts/durable-object-lifecycle/)). The WebSocket clients remain connected to the Cloudflare network. When your Durable Object receives an event during hibernation, it is re-initialized, its `constructor` function is called, and it can access the WebSocket clients with the `this.ctx.getWebSockets()` function.
 
 When the Durable Object is evicted from memory, its in-memory state is reset. It is common to rely on in-memory state to organize your WebSockets (for example, keeping your WebSockets in rooms with a `Map<WebSocket, Object>` data type). With Hibernation, you must restore the in-memory state of your Durable Object within the `constructor` function.
 
@@ -40,7 +40,7 @@ The Durable Object WebSocket class consists of Cloudflare-specific extensions to
 
 Hibernation is only supported when a Durable Object acts as a WebSocket server. Currently, outgoing WebSockets cannot hibernate.
 
-Events, for example [alarms](/durable-objects/api/alarms/), incoming requests, and scheduled callbacks using `setTimeout/setInterval`) can prevent a Durable Object from being inactive and therefore prevent this cost saving.
+Events, for example [alarms](/durable-objects/api/alarms/), incoming requests, and scheduled callbacks using `setTimeout/setInterval`, can prevent a Durable Object from being inactive and therefore prevent this cost saving.
 Read more in the section [When does a Durable Object incur duration charges?](/durable-objects/platform/pricing/#when-does-a-durable-object-incur-duration-charges).
 
 :::
@@ -64,7 +64,7 @@ export class WebSocketHibernationServer extends DurableObject {
 		const [client, server] = Object.values(webSocketPair);
 
 		// Calling `acceptWebSocket()` connects the WebSocket to the Durable Object, allowing the WebSocket to send and receive messages.
-		// Unlike `ws.accept()`, `state.acceptWebSocket(ws)` allows the Durable Object to be hibernated 
+		// Unlike `ws.accept()`, `state.acceptWebSocket(ws)` allows the Durable Object to be hibernated
 		// When the Durable Object receives a message during Hibernation, it will run the `constructor` to be re-initialized
 		this.ctx.acceptWebSocket(server);
 
@@ -106,7 +106,7 @@ export class WebSocketHibernationServer extends DurableObject {
 		const [client, server] = Object.values(webSocketPair);
 
 		// Calling `acceptWebSocket()` connects the WebSocket to the Durable Object, allowing the WebSocket to send and receive messages.
-		// Unlike `ws.accept()`, `state.acceptWebSocket(ws)` allows the Durable Object to be hibernated 
+		// Unlike `ws.accept()`, `state.acceptWebSocket(ws)` allows the Durable Object to be hibernated
 		// When the Durable Object receives a message during Hibernation, it will run the `constructor` to be re-initialized
 		this.ctx.acceptWebSocket(server);
 
