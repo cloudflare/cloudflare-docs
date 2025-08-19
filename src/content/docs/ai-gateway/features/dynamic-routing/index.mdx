@@ -48,15 +48,16 @@ Ensure your gateway has [authentication](/ai-gateway/configuration/authenticatio
 
 :::
 
-1. **Create a route**
-   - In **(Select your gateway) → Dynamic Routes → Add Route**, name it (e.g., `support`), then open the **Editor**.
-2. **Define conditionals, limits etc**
-3. **Configure model nodes**
+1. Create a route.
+   - Go to **(Select your gateway)** > **Dynamic Routes** > **Add Route**, and name it (for example, `support`).
+   - Open **Editor**.
+2. Define conditionals, limits and other settings.
+3. Configure model nodes.
    - Example:
      - Node A: Provider OpenAI, Model `o4-mini-high`
      - Node B: Provider OpenAI, Model `gpt-4.1`
-4. **Save a version**
+4. Save a version.
    - Click **Save** to save the state. You can always roll back to earlier versions from **Versions**.
-   - Deploy the version to make it live
-5. **Call the route from your code**
-   - Use the [OpenAI compatible](/ai-gateway/usage/chat-completion/) endpoint and use the route name in place of the model eg `dynamic/support`
+   - Deploy the version to make it live.
+5. Call the route from your code.
+   - Use the [OpenAI compatible](/ai-gateway/usage/chat-completion/) endpoint, and use the route name in place of the model, for example, `dynamic/support`.
