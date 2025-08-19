@@ -16,6 +16,7 @@ Firewall for AI is a detection that can help protect your services powered by la
 
 - Prevent data leaks of personally identifiable information (PII) — for example, phone numbers, email addresses, social security numbers, and credit card numbers.
 - Detect and moderate unsafe or harmful prompts – for example, prompts potentially related to violent crimes.
+- Detect prompts intentionally designed to subvert the intended behavior of the LLM as specified by the developer – for example, prompt injection attacks and jailbreaking attempts.
 
 When enabled, the detection runs on incoming traffic, searching for any LLM prompts attempting to exploit the model.
 
@@ -124,6 +125,7 @@ When enabled, Firewall for AI populates the following fields:
 | LLM Content Detected        | `Boolean`       | [`cf.llm.prompt.detected`](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.detected/)                               |
 | LLM Unsafe topic detected   | `Boolean`       | [`cf.llm.prompt.unsafe_topic_detected`](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.unsafe_topic_detected/)     |
 | LLM Unsafe topic categories | `Array<String>` | [`cf.llm.prompt.unsafe_topic_categories`](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.unsafe_topic_categories/) |
+| LLM Injection score         | `Number`        | [`cf.llm.prompt.injection_score`](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.injection_score/)                 |
 
 For a list of PII categories, refer to the [`cf.llm.prompt.pii_categories`](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.pii_categories/) field reference.
 
@@ -131,7 +133,7 @@ For a list of unsafe topic categories, refer to the [`cf.llm.prompt.unsafe_topic
 
 ## Example mitigation rules
 
-### Block requests with specific PII category in prompt
+### Block requests with specific PII category in LLM prompt
 
 The following example [custom rule](/waf/custom-rules/create-dashboard/) will block requests with an LLM prompt that tries to obtain PII of a specific [category](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.pii_categories/):
 
@@ -146,7 +148,7 @@ The following example [custom rule](/waf/custom-rules/create-dashboard/) will bl
 
 - **Action**: _Block_
 
-### Block requests with specific unsafe content categories in prompt
+### Block requests with specific unsafe content categories in LLM prompt
 
 The following example [custom rule](/waf/custom-rules/create-dashboard/) will block requests with an LLM prompt containing unsafe content of specific [categories](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.unsafe_topic_categories/):
 
@@ -158,5 +160,20 @@ The following example [custom rule](/waf/custom-rules/create-dashboard/) will bl
 
   If you use the Expression Editor, enter the following expression:<br />
   `(any(cf.llm.prompt.unsafe_topic_categories[*] in {"S1" "S10"}))`
+
+- **Action**: _Block_
+
+### Block requests with prompt injection attempt in LLM prompt
+
+The following example [custom rule](/waf/custom-rules/create-dashboard/) will block requests with an [injection score](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.injection_score/) below `20`. Using a low injection score value in the rule helps avoid false positives.
+
+- **If incoming requests match**:
+
+  | Field               | Operator  | Value |
+  | ------------------- | --------- | ----- |
+  | LLM Injection score | less than | `20`  |
+
+  If you use the Expression Editor, enter the following expression:<br />
+  `(cf.llm.prompt.injection_score < 20)`
 
 - **Action**: _Block_
