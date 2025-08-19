@@ -30,15 +30,15 @@ while making it accessible to both developers and non-technical team members.
 
 - **Route** - A named, versioned flow (e.g., dynamic/support) that you can use as instead of the model name in your requests
 - **Nodes**
-  - **Start** - Entry point for the route.
-  - **Conditional** - If/Else branch based on expressions that reference request body, headers, or metadata (e.g., user_plan == "paid").
-  - **Percentage** - Routes requests probabilistically across multiple outputs, useful for A/B testing and gradual rollouts.
-  - **Model** - Calls a provider/model with the request parameters
-  - **Rate Limit** - Enforces number of requests quotas (per your key, per period) and switches to fallback when exceeded.
-  - **Budget Limit** - Enforces cost quotas (per your key, per period) and switches to fallback when exceeded.
-  - **End** - Terminates the flow and returns the final model response.
-- **Metadata** - Arbitrary key-value context attached to the request (e.g., userId, orgId, plan). You can pass this from your app so rules can reference it.
-- **Versions** - Each change produces a new draft. Deploy to make it live with instant rollback.
+  - **Start**: Entry point for the route.
+  - **Conditional**: If/Else branch based on expressions that reference request body, headers, or metadata (for example, user_plan == "paid").
+  - **Percentage**: Routes requests probabilistically across multiple outputs, useful for A/B testing and gradual rollouts.
+  - **Model**: Calls a provider/model with the request parameters
+  - **Rate Limit**: Enforces number of requests quotas (per your key, per period) and switches to fallback when exceeded.
+  - **Budget Limit**: Enforces cost quotas (per your key, per period) and switches to fallback when exceeded.
+  - **End**: Terminates the flow and returns the final model response.
+- **Metadata**: Arbitrary key-value context attached to the request (for example, userId, orgId, plan). You can pass this from your app so rules can reference it.
+- **Versions**: Each change produces a new draft. Deploy to make it live with instant rollback.
 
 ## Getting Started
 
