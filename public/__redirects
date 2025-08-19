@@ -163,11 +163,11 @@
 /ai-gateway/integration/vercel-ai-sdk/ /ai-gateway/integrations/vercel-ai-sdk/ 301
 /ai-gateway/integration/aig-workers-ai-binding/ /ai-gateway/integrations/aig-workers-ai-binding/ 301
 /ai-gateway/integration/ /ai-gateway/integrations/ 301
-/ai-gateway/providers/open-router/ /ai-gateway/providers/openrouter/ 301
-/ai-gateway/providers/universal/ /ai-gateway/universal/ 301
-/ai-gateway/configuration/websockets-api/ /ai-gateway/websockets-api/ 301
-/ai-gateway/configuration/websockets-api/non-realtime-api/ /ai-gateway/websockets-api/non-realtime-api/ 301
-/ai-gateway/configuration/websockets-api/realtime-api/ /ai-gateway/websockets-api/realtime-api/ 301
+/ai-gateway/providers/open-router/ /ai-gateway/usage/providers/openrouter/ 301
+/ai-gateway/providers/universal/ /ai-gateway/usage/universal/ 301
+/ai-gateway/configuration/websockets-api/ /ai-gateway/usage/websockets-api/ 301
+/ai-gateway/configuration/websockets-api/non-realtime-api/ /ai-gateway/usage/websockets-api/non-realtime-api/ 301
+/ai-gateway/configuration/websockets-api/realtime-api/ /ai-gateway/usage/websockets-api/realtime-api/ 301
 /ai-gateway/configuration/caching/ /ai-gateway/features/caching/ 301
 /ai-gateway/configuration/rate-limiting/ /ai-gateway/features/rate-limiting/ 301
 /ai-gateway/configuration/custom-metadata/ /ai-gateway/observability/custom-metadata/ 301
