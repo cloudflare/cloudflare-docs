@@ -15,7 +15,7 @@ A [dynamic dispatch Worker](/cloudflare-for-platforms/workers-for-platforms/refe
 
 #### Why use a dynamic dispatch Worker?
 
-* **Scale**: Perfect for routing thousands or millions of hostnames to different Workers, without needing to rely on [Workers Routes](/workers/configuration/routing/routes/)
+* **Scale**: Allows you to route requests to millions of hostnames to different Workers, without defining [Workers Routes](/workers/configuration/routing/routes/) configuration for each one
 * **Custom routing logic**: Write code to determine exactly how requests should be routed. For example:
    * Store hostname-to-Worker mappings in [Workers KV](/kv/) and look them up dynamically
    * Route requests based on subdomain, path, headers, or other request properties
