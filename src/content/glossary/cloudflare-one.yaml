@@ -125,7 +125,7 @@ entries:
 
   - term: MCP server
     general_definition: |-
-      a web application that allows generative AI tools to access third-party data sources and APIs using the Model Context Protocol (MCP). For example, you can use an MCP server to connect an AI assistant to your Google Drive account.
+      a web application that allows generative AI agents to access third-party data sources and APIs using the Model Context Protocol (MCP). For example, you can use an MCP server to connect an AI assistant to your Google Drive account.
 
   - term: MDM file
     general_definition: |-
