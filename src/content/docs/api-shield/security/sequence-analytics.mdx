@@ -9,7 +9,7 @@ sidebar:
 
 import { GlossaryTooltip } from "~/components"
 
-Sequence Analytics tracks the order of API endpoint requests over time, allowing you to discover how users interact with your API. Sequence Analytics groups and highlights important user journeys (sequences) across your API. You can enforce preferred sequences using [Sequence Mitigation](/api-shield/security/sequence-mitigation/).
+Sequence Analytics tracks the order of API endpoint requests over time, allowing you to discover how users interact with your API. Sequence Analytics groups and highlights important user journeys (sequences) across your API. You can enforce preferred sequences using [Sequence mitigation](/api-shield/security/sequence-mitigation/).
 
 ## Process
 
@@ -38,7 +38,7 @@ Using the example above, a high score means that the last operation in the seque
 
 To proactively secure your API, you should inspect your highest-scoring sequences. For each high-scoring sequence, you should confirm with your development team if the final operation in the sequence must legitimately always be preceded by the other operations in the sequence.
 
-Using the above example, if `POST /api/v1/transferFunds` must legitimately always be preceded by `GET /api/v1/users/{user_id}/accounts` and `GET /api/v1/accounts/{account_id}/balance?`, you should create an **Allow** rule in Sequence Mitigation on the final operation of the sequence.
+Using the above example, if `POST /api/v1/transferFunds` must legitimately always be preceded by `GET /api/v1/users/{user_id}/accounts` and `GET /api/v1/accounts/{account_id}/balance?`, you should create an **Allow** rule in sequence mitigation on the final operation of the sequence.
 
 You should also consider applying other API Shield protections to these endpoints ([rate limiting suggestions](/api-shield/security/volumetric-abuse-detection/), [Schema validation](/api-shield/security/schema-validation/), [JWT validation](/api-shield/security/jwt-validation/), and [mTLS](/api-shield/security/mtls/)).
 
