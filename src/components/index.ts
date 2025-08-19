@@ -57,6 +57,7 @@ export { default as TagsUsage } from "./TagsUsage.astro";
 export { default as TunnelCalculator } from "./TunnelCalculator.astro";
 export { default as Type } from "./Type.astro";
 export { default as TypeScriptExample } from "./TypeScriptExample.astro";
+export { default as WranglerCommand } from "./WranglerCommand.astro";
 export { default as WranglerConfig } from "./WranglerConfig.astro";
 export { default as WARPReleases } from "./WARPReleases.astro";
 export { default as Width } from "./Width.astro";
