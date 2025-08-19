@@ -10,7 +10,7 @@ sidebar:
     text: Beta
 ---
 
-import { Tabs, TabItem, Details } from "~/components";
+import { Tabs, TabItem, Details, Type } from "~/components";
 
 Firewall for AI is a detection that can help protect your services powered by large language models (LLMs) against abuse. This model-agnostic detection currently helps you do the following:
 
@@ -118,18 +118,14 @@ You can combine the previous expression with other [fields](/ruleset-engine/rule
 
 When enabled, Firewall for AI populates the following fields:
 
-| Field name in the dashboard | Data type       | Field                                                                                                                             |
-| --------------------------- | --------------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| LLM PII Detected            | `Boolean`       | [`cf.llm.prompt.pii_detected`](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.pii_detected/)                       |
-| LLM PII Categories          | `Array<String>` | [`cf.llm.prompt.pii_categories`](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.pii_categories/)                   |
-| LLM Content Detected        | `Boolean`       | [`cf.llm.prompt.detected`](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.detected/)                               |
-| LLM Unsafe topic detected   | `Boolean`       | [`cf.llm.prompt.unsafe_topic_detected`](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.unsafe_topic_detected/)     |
-| LLM Unsafe topic categories | `Array<String>` | [`cf.llm.prompt.unsafe_topic_categories`](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.unsafe_topic_categories/) |
-| LLM Injection score         | `Number`        | [`cf.llm.prompt.injection_score`](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.injection_score/)                 |
-
-For a list of PII categories, refer to the [`cf.llm.prompt.pii_categories`](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.pii_categories/) field reference.
-
-For a list of unsafe topic categories, refer to the [`cf.llm.prompt.unsafe_topic_categories`](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.unsafe_topic_categories/) field reference.
+| Field name in the dashboard | Field + Data type                                                                                                                                                    | Notes                                                                                                   |
+| --------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| LLM PII Detected            | [`cf.llm.prompt.pii_detected`](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.pii_detected/) <br/> <Type text="Boolean"/>                             |                                                                                                         |
+| LLM PII Categories          | [`cf.llm.prompt.pii_categories`](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.pii_categories/) <br/> <Type text="Array<String>"/>                   | [Category list](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.pii_categories/)          |
+| LLM Content Detected        | [`cf.llm.prompt.detected`](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.detected/) <br/> <Type text="Boolean "/>                                    |                                                                                                         |
+| LLM Unsafe topic detected   | [`cf.llm.prompt.unsafe_topic_detected`](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.unsafe_topic_detected/) <br/> <Type text="Boolean"/>           |                                                                                                         |
+| LLM Unsafe topic categories | [`cf.llm.prompt.unsafe_topic_categories`](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.unsafe_topic_categories/) <br/> <Type text="Array<String>"/> | [Category list](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.unsafe_topic_categories/) |
+| LLM Injection score         | [`cf.llm.prompt.injection_score`](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.injection_score/) <br/> <Type text="Number"/>                        | Range: 1–99                                                                                             |
 
 ## Example mitigation rules
 
