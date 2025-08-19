@@ -4,6 +4,14 @@ productName: Radar
 productLink: "/radar/"
 entries:
   - publish_date: "2025-08-14"
+    title: Add vertical and industry dimension and filters to AI Bots and Web Crawlers endpoints
+    description: |-
+      * Added vertical and industry dimensions and filters to the following endpoints:
+        * `[/ai/bots/summary/{dimension}](/api/resources/radar/subresources/ai/subresources/timeseries_groups/methods/summary/)`
+        * `[/ai/bots/timeseries_groups/{dimension}](/api/resources/radar/subresources/ai/subresources/timeseries_groups/methods/timeseries_groups/)`
+        * `[/bots/crawlers/summary/{dimension}](/api/resources/radar/subresources/bots/subresources/web_crawlers/methods/summary/)`
+        * `[/bots/crawlers/timeseries_groups/{dimension}](/api/resources/radar/subresources/bots/subresources/web_crawlers/methods/timeseries_groups/)`
+  - publish_date: "2025-08-14"
     title: Add AI Bots crawl purpose
     description: |-
       * Added AI Bots crawl purpose dimension and filter to [summary](/api/resources/radar/subresources/ai/subresources/timeseries_groups/methods/summary/) and [timeseries_groups](/api/resources/radar/subresources/ai/subresources/timeseries_groups/methods/timeseries_groups/) endpoints.
