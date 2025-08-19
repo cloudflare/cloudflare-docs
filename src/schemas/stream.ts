@@ -10,7 +10,7 @@ export const streamSchema = z.object({
 	transcript: z.string().optional(),
 	chapters: z.record(z.string(), z.string()).optional(),
 	tags: z.array(z.string()).optional(),
-	reviewed: z.date().optional(),
+	updated: z.date().optional(),
 	thumbnail: z
 		.object({
 			url: z.string(),
