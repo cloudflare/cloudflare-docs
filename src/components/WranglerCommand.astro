@@ -39,43 +39,60 @@ if (!definition.args) {
 	throw new Error(`[WranglerCommand] "${command}" has no arguments`);
 }
 
-const positionals = definition.positionalArgs;
+const positionals = definition.positionalArgs
+	?.map((p) => `[${p.toUpperCase()}]`)
+	.join(" ");
 
-if (positionals && positionals.length > 0) {
-	const display = positionals.map((p) => `[${p.toUpperCase()}]`).join(" ");
-
-	command = command.concat(" ".concat(display));
-}
+console.log(JSON.stringify(definition, null, "\t"));
 ---
 
-<AnchorHeading depth={2} title={definition.command} />
+<AnchorHeading depth={2} title={command} />
 
-<p>{definition.metadata?.description}</p>
-
-<PackageManagers pkg="wrangler" type="exec" args={command} />
+<PackageManagers
+	pkg="wrangler"
+	type="exec"
+	args={positionals ? command.concat(` ${positionals}`) : command}
+/>
 
 <AnchorHeading
 	depth={3}
 	title="Arguments"
-	slug={`${definition.command.replaceAll(" ", "-")}-arguments`}
+	slug={`${command.replaceAll(" ", "-")}-arguments`}
 />
 
 <ul>
 	{
-		Object.entries(definition.args).map(([key, value]) => {
-			const required = value.demandOption;
-			const defaultValue = value.default;
+		Object.entries(definition.args)
+			.filter(([_, value]) => !value.hidden)
+			.map(([key, value]) => {
+				const description = value.description ?? value.describe;
+				const required = value.demandOption;
+				const defaultValue = value.default;
+				const alias = value.alias;
+				const positional = definition.positionalArgs?.includes(key);
 
-			return (
-				<li>
-					<code>{key}</code> <Type text={value.type} />{" "}
-					{required && <MetaInfo text="required" />}
-					{defaultValue !== undefined && (
-						<MetaInfo text={`default: ${defaultValue}`} />
-					)}
-					<p>{value.description}</p>
-				</li>
-			);
-		})
+				const name = positional ? `[${key.toUpperCase()}]` : `--${key}`;
+
+				let aliasText;
+				if (alias) {
+					if (Array.isArray(alias)) {
+						aliasText = `aliases: --${alias.join(", --")}`;
+					} else {
+						aliasText = `alias: --${alias}`;
+					}
+				}
+
+				return (
+					<li>
+						<code>{name}</code> <Type text={value.type} />{" "}
+						{aliasText && <MetaInfo text={aliasText} />}
+						{required && <MetaInfo text="required" />}
+						{defaultValue !== undefined && (
+							<MetaInfo text={`default: ${defaultValue}`} />
+						)}
+						<p>{description}</p>
+					</li>
+				);
+			})
 	}
 </ul>
