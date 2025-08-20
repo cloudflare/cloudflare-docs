@@ -159,7 +159,10 @@ resource "cloudflare_zero_trust_gateway_policy" "android_http_application_inspec
 
 ## All-HTTP-SecurityRisks-Blocklist
 
-<Render file="zero-trust/blocklist-security-categories" />
+<Render
+	file="zero-trust/blocklist-security-categories"
+	product="learning-paths"
+/>
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -272,7 +275,7 @@ resource "cloudflare_zero_trust_gateway_policy" "all_http_domainhost_blocklist" 
 
 ## All-HTTP-Application-Blocklist
 
-<Render file="zero-trust/blocklist-application" />
+<Render file="zero-trust/blocklist-application" product="learning-paths" />
 
 <Render
 	file="gateway/policies/dash-plus-api/http/block-applications"
@@ -330,7 +333,7 @@ resource "cloudflare_zero_trust_gateway_policy" "privileged_users_http_any_isola
 
 ## Quarantined-Users-HTTP-Restricted-Access
 
-<Render file="zero-trust/blocklist-restricted-users" />
+<Render file="zero-trust/blocklist-restricted-users" product="learning-paths" />
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 

@@ -277,7 +277,7 @@ None of the options for this command are required. Also, many can be set in your
   - Skip Wrangler's build steps. Particularly useful when using custom builds. Refer to [Bundling](https://developers.cloudflare.com/workers/wrangler/bundling/) for more information.
 - `--env` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific environment.
-    <Render file="vite-environments" />
+    <Render file="vite-environments" product="workers" />
 - `--outdir` <Type text="string" /> <MetaInfo text="optional" />
   - Path to directory where Wrangler will write the bundled Worker files.
 - `--compatibility-date` <Type text="string" /> <MetaInfo text="optional" />
@@ -1331,7 +1331,7 @@ wrangler versions upload [OPTIONS]
   - Perform on a specific Worker rather than inheriting from the [Wrangler configuration file](/workers/wrangler/configuration/).
 - `--env` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific environment.
-    <Render file="vite-environments" />
+    <Render file="vite-environments" product="workers" />
 
 <Render file="wrangler-commands/global-flags" product="workers" />
 
@@ -1733,7 +1733,6 @@ wrangler cert upload certificate-authority --ca-cert <PATH> [OPTIONS]
 ```
 
 - `--ca-cert` <Type text="string" /> <MetaInfo text="required" />
-
   - A path to the Certificate Authority (CA) chain certificate to upload.
 
 - `--name` <Type text="string" /> <MetaInfo text="optional" />

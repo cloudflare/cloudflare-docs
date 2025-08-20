@@ -6,18 +6,22 @@ sidebar:
 head:
   - tag: title
     content: Global traffic steering policies
-
 ---
 
-import { DirectoryListing, GlossaryTooltip, Render } from "~/components"
+import { DirectoryListing, GlossaryTooltip, Render } from "~/components";
 
-<Render file="traffic-steering-definition" /> <br/>
+<Render file="traffic-steering-definition" product="load-balancing" /> <br />
 
 <DirectoryListing />
 
 ## EDNS Client Subnet (ECS) support
 
-<GlossaryTooltip term="EDNS Client Subnet (ECS)">EDNS Client Subnet (ECS)</GlossaryTooltip> support provides customers with more control over location-based steering during gray-clouded DNS resolutions and can be used for proximity or geo (country) steering.
+<GlossaryTooltip term="EDNS Client Subnet (ECS)">
+	EDNS Client Subnet (ECS)
+</GlossaryTooltip>
+support provides customers with more control over location-based steering during
+gray-clouded DNS resolutions and can be used for proximity or geo (country)
+steering.
 
 Customers can configure their load balancer using the `location_strategy` parameter, which includes the properties `prefer_ecs` and `mode`.
 

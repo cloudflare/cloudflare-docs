@@ -6,10 +6,9 @@ sidebar:
 head:
   - tag: title
     content: Zone-level authenticated origin pulls
-
 ---
 
-import { AvailableNotifications, Render } from "~/components"
+import { AvailableNotifications, Render } from "~/components";
 
 When you enable Authenticated Origin Pulls (AOP) for a zone, all proxied traffic to your zone is authenticated at the origin web server.
 
@@ -34,21 +33,25 @@ To use a custom certificate, follow the API instructions to [upload a custom cer
 
 :::caution
 
-
 Although Cloudflare provides you a certificate to easily configure zone-level authenticated origin pulls, this certificate is not exclusive to your account and only guarantees that a request is coming from the Cloudflare network. If you want more strict security, you should upload your own certificate.
 
 Using a custom certificate is required if you need your domain to be [FIPS](https://en.wikipedia.org/wiki/Federal_Information_Processing_Standards) compliant.
-
 
 :::
 
 ## 2. Configure origin to accept client certificates
 
-<Render file="aop-configure-origin" params={{ one: "To use the Cloudflare certificate, download it from step 1 above, rename the .PEM file, and then upload it to `/path/to/origin-pull-ca.pem` before applying the settings.", two: " To use the Cloudflare certificate, download it from step 1 above, rename the .PEM file, and then upload it to `/etc/nginx/certs/cloudflare.crt` before applying the settings." }} />
+<Render
+	file="aop-configure-origin"
+	params={{
+		one: "To use the Cloudflare certificate, download it from step 1 above, rename the .PEM file, and then upload it to `/path/to/origin-pull-ca.pem` before applying the settings.",
+		two: " To use the Cloudflare certificate, download it from step 1 above, rename the .PEM file, and then upload it to `/etc/nginx/certs/cloudflare.crt` before applying the settings.",
+	}}
+/>
 
 ## 3. Configure Cloudflare to use client certificate
 
-<Render file="aop-enable-feature" />
+<Render file="aop-enable-feature" product="ssl" />
 
 ## 4. Enable Authenticated Origin Pulls for all hostnames in a zone
 
@@ -58,13 +61,16 @@ If you had set up logging on your origin during [step 2](#2-configure-origin-to-
 
 ## 5. Enforce validation check on your origin
 
-<Render file="aop-enforce-validation" />
+<Render file="aop-enforce-validation" product="ssl" />
 
 ## 6. (Optional) Set up alerts for zone-level Authenticated Origin Pulls certificates
 
 You can configure alerts to receive notifications before your AOP certificates expire.
 
-<AvailableNotifications product="SSL/TLS" notificationFilter="Zone-level Authenticated Origin Pulls Certificate Expiration Alert" />
+<AvailableNotifications
+	product="SSL/TLS"
+	notificationFilter="Zone-level Authenticated Origin Pulls Certificate Expiration Alert"
+/>
 
 <Render file="get-started" product="notifications" />
 

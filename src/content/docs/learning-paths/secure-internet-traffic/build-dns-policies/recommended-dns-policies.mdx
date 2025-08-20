@@ -63,7 +63,7 @@ resource "cloudflare_zero_trust_gateway_policy" "dns_whitelist_policy" {
 
 ## Quarantined-Users-DNS-Restricted-Access
 
-<Render file="zero-trust/blocklist-restricted-users" />
+<Render file="zero-trust/blocklist-restricted-users" product="learning-paths" />
 
 <Tabs syncKey="dashPlusAPI">
 
@@ -119,7 +119,10 @@ resource "cloudflare_zero_trust_gateway_policy" "dns_restrict_quarantined_users"
 
 ## All-DNS-SecurityCategories-Blocklist
 
-<Render file="zero-trust/blocklist-security-categories" />
+<Render
+	file="zero-trust/blocklist-security-categories"
+	product="learning-paths"
+/>
 
 <Render
 	file="gateway/policies/dash-plus-api/dns/block-security-categories"
@@ -140,7 +143,7 @@ resource "cloudflare_zero_trust_gateway_policy" "dns_restrict_quarantined_users"
 
 ## All-DNS-Application-Blocklist
 
-<Render file="zero-trust/blocklist-application" />
+<Render file="zero-trust/blocklist-application" product="learning-paths" />
 
 <Render
 	file="gateway/policies/dash-plus-api/dns/block-applications"
@@ -305,7 +308,10 @@ resource "cloudflare_zero_trust_gateway_policy" "dns_phishing_domains_block" {
 
 Block specific IP addresses that are malicious or pose a threat to your organization.
 
-<Render file="zero-trust/threat-intelligence-automation" />
+<Render
+	file="zero-trust/threat-intelligence-automation"
+	product="learning-paths"
+/>
 
 <Tabs syncKey="dashPlusAPI">
 

@@ -29,11 +29,11 @@ For more information on deploying and configuring custom rulesets using the Rule
 
 ### Obtain the necessary account or zone IDs
 
-<Render file="find-ids" />
+<Render file="find-ids" product="terraform" />
 
 ### Import or delete existing rulesets
 
-<Render file="import-delete-existing-rulesets" />
+<Render file="import-delete-existing-rulesets" product="terraform" />
 
 ---
 
@@ -41,7 +41,7 @@ For more information on deploying and configuring custom rulesets using the Rule
 
 The following example configures a custom rule in the zone entry point ruleset for the `http_request_firewall_custom` phase for zone with ID `<ZONE_ID>`. The rule will block all traffic on non-standard HTTP(S) ports:
 
-<Render file="v4-code-snippets" />
+<Render file="v4-code-snippets" product="terraform" />
 
 ```tf
 resource "cloudflare_ruleset" "zone_custom_firewall" {
@@ -74,7 +74,7 @@ You can only create and deploy custom rulesets at the account level.
 
 The following configuration creates a custom ruleset with a single rule:
 
-<Render file="v4-code-snippets" />
+<Render file="v4-code-snippets" product="terraform" />
 
 ```tf
 resource "cloudflare_ruleset" "account_firewall_custom_ruleset" {
@@ -101,7 +101,7 @@ resource "cloudflare_ruleset" "account_firewall_custom_ruleset" {
 
 The following configuration deploys the custom ruleset at the account level. It defines a dependency on the `account_firewall_custom_ruleset` resource and uses the ID of the created custom ruleset in `action_parameters`:
 
-<Render file="v4-code-snippets" />
+<Render file="v4-code-snippets" product="terraform" />
 
 ```tf
 resource "cloudflare_ruleset" "account_firewall_custom_entrypoint" {

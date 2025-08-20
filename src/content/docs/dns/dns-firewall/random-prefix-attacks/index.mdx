@@ -3,19 +3,18 @@ pcx_content_type: concept
 title: Random prefix attack mitigation
 sidebar:
   order: 4
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
-<Render file="random-prefix-attack-definition" />
+<Render file="random-prefix-attack-definition" product="dns" />
 
 As part of [DNS Firewall](/dns/dns-firewall/), Cloudflare can protect your upstream authoritative nameservers from these attacks by blocking DNS queries that are determined to be part of an attack and thus preventing them from reaching your authoritative nameservers, where they could cause harm by overloading resources. This protection is an opt-in feature because of the potential for false positives.
 
 ## Resources
 
-* [Background information](/dns/dns-firewall/random-prefix-attacks/about/)
-* [Setup](/dns/dns-firewall/random-prefix-attacks/setup/)
+- [Background information](/dns/dns-firewall/random-prefix-attacks/about/)
+- [Setup](/dns/dns-firewall/random-prefix-attacks/setup/)
 
 ## Limitations
 

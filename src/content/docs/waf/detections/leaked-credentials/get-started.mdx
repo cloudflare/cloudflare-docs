@@ -12,7 +12,7 @@ import { Render, TabItem, Tabs, Details, APIRequest } from "~/components";
 
 ## 1. Turn on the detection
 
-<Render file="leaked-credentials-detection-enable" />
+<Render file="leaked-credentials-detection-enable" product="waf" />
 
 :::note
 To achieve optimal latency performance, Cloudflare recommends that you turn off [Exposed Credentials Checks](/waf/managed-rules/reference/exposed-credentials-check/) (a previous implementation) after turning on leaked credentials detection and setting up your mitigation strategy as described in the next steps.
@@ -97,7 +97,6 @@ To check for leaked credentials in a way that is not covered by the default conf
 2. Go to **Security** > **Settings**.
 3. Under **Incoming traffic detections**, select **Leaked credentials** and then select **Add custom username and password location**.
 4. In **Username location** and **Password location** (optional), enter expressions for obtaining the username and the password from the HTTP request. For example, you could use the following expressions:
-
    - Username location:<br/>
      `lookup_json_string(http.request.body.raw, "user")`
    - Password location:<br/>
@@ -120,7 +119,6 @@ To check for leaked credentials in a way that is not covered by the default conf
 3. Under **Leaked credential detection** > **Configurations**, select the edit icon.
 4. Select **Add custom username and password location**.
 5. In **Username location** and **Password location** (optional), enter expressions for obtaining the username and the password from the HTTP request. For example, you could use the following expressions:
-
    - Username location:<br/>
      `lookup_json_string(http.request.body.raw, "user")`
    - Password location:<br/>
@@ -159,7 +157,10 @@ Refer to the [`lookup_json_string()`](/ruleset-engine/rules-language/functions/#
 
 </TabItem> <TabItem label="Terraform">
 
-<Render file="detections/leaked-credentials-configure-location-terraform" />
+<Render
+	file="detections/leaked-credentials-configure-location-terraform"
+	product="waf"
+/>
 
 Refer to the [`lookup_json_string()`](/ruleset-engine/rules-language/functions/#lookup_json_string) documentation for more information on this function.
 

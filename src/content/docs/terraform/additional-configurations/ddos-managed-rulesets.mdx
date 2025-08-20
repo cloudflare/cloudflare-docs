@@ -30,11 +30,11 @@ For more information on deploying and configuring rulesets using the Rulesets AP
 
 ### Obtain the necessary account, zone, and managed ruleset IDs
 
-<Render file="find-ids-managed-rulesets" />
+<Render file="find-ids-managed-rulesets" product="terraform" />
 
 ### (Optional) Delete existing rulesets to start from scratch
 
-<Render file="import-delete-existing-rulesets" />
+<Render file="import-delete-existing-rulesets" product="terraform" />
 
 ---
 
@@ -42,7 +42,7 @@ For more information on deploying and configuring rulesets using the Rulesets AP
 
 This example configures the [HTTP DDoS Attack Protection](/ddos-protection/managed-rulesets/http/) managed ruleset for a zone using Terraform.
 
-<Render file="v4-code-snippets" />
+<Render file="v4-code-snippets" product="terraform" />
 
 ```tf
 resource "cloudflare_ruleset" "zone_level_http_ddos_config" {
@@ -100,7 +100,7 @@ This example configures the [Network-layer DDoS Attack Protection](/ddos-protect
 
 :::
 
-<Render file="v4-code-snippets" />
+<Render file="v4-code-snippets" product="terraform" />
 
 ```tf
 resource "cloudflare_ruleset" "account_level_network_ddos_config" {
@@ -151,7 +151,7 @@ The order of the rules is important: the rule with the highest sensitivity level
 
 :::
 
-<Render file="v4-code-snippets" />
+<Render file="v4-code-snippets" product="terraform" />
 
 ```tf
 variable "zone_id" {

@@ -13,17 +13,26 @@ head:
     content: Internal DNS
 ---
 
-import { Render, Description, Plan, RelatedProduct, DirectoryListing, GlossaryTooltip, Example } from "~/components";
+import {
+	Render,
+	Description,
+	Plan,
+	RelatedProduct,
+	DirectoryListing,
+	GlossaryTooltip,
+	Example,
+} from "~/components";
 
 <Description>
-Simplify private network management with Cloudflare DNS for your internal resources.
+	Simplify private network management with Cloudflare DNS for your internal
+	resources.
 </Description>
 
 <Plan type="enterprise" />
 
 Manage DNS records that should only be accessible within your private network. Internal DNS [zones](/dns/internal-dns/internal-zones/) and [views](/dns/internal-dns/dns-views/) pair up with [Gateway resolver policies](/cloudflare-one/policies/gateway/resolver-policies/) so that you can control how a DNS query should be responded to according to query context, such as query source IP.
 
-<Render file="internal-dns-beta-note" />
+<Render file="internal-dns-beta-note" product="dns" />
 
 ## Architecture overview
 
@@ -96,6 +105,7 @@ flowchart LR
 				end
 				end
 ```
+
 In this example, a query for `ghi.example.local` routed to view ID 111 would go to zone 600, which presents the longest matching zone name (`example.local`). Zone 600 does not contain a record for `ghi` but, if it is referencing zone 601, Cloudflare will then look for the queried record within the reference zone.
 
 </Example>
@@ -106,10 +116,19 @@ In this example, a query for `ghi.example.local` routed to view ID 111 would go 
 
 ## Related products
 
-<RelatedProduct header="Cloudflare Gateway" href="/cloudflare-one/policies/gateway/" product="privacy-gateway">
-Set up policies to inspect DNS, Network, HTTP, and Egress traffic.
+<RelatedProduct
+	header="Cloudflare Gateway"
+	href="/cloudflare-one/policies/gateway/"
+	product="privacy-gateway"
+>
+	Set up policies to inspect DNS, Network, HTTP, and Egress traffic.
 </RelatedProduct>
 
-<RelatedProduct header="Cloudflare Magic WAN" href="/magic-wan/" product="magic-wan">
-Improve security and performance for your entire corporate networking, reducing cost and operation complexity.
+<RelatedProduct
+	header="Cloudflare Magic WAN"
+	href="/magic-wan/"
+	product="magic-wan"
+>
+	Improve security and performance for your entire corporate networking,
+	reducing cost and operation complexity.
 </RelatedProduct>

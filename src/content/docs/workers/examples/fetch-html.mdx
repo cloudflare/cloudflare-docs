@@ -1,5 +1,4 @@
 ---
-
 summary: Send a request to a remote server, read HTML from the response, and
   serve that HTML.
 tags:
@@ -27,7 +26,7 @@ import { Render, TabItem, Tabs } from "~/components";
 
 <Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
 
-<Render file="fetch-html-example-js" />
+<Render file="fetch-html-example-js" product="workers" />
 
 </TabItem> <TabItem label="TypeScript" icon="seti:typescript">
 
@@ -60,18 +59,18 @@ class Default(WorkerEntrypoint):
 </TabItem> <TabItem label="Hono" icon="seti:typescript">
 
 ```ts
-import { Hono } from 'hono';
+import { Hono } from "hono";
 
 const app = new Hono();
 
-app.all('*', async (c) => {
-  /**
-   * Replace `remote` with the host you wish to send requests to
-   */
-  const remote = "https://example.com";
+app.all("*", async (c) => {
+	/**
+	 * Replace `remote` with the host you wish to send requests to
+	 */
+	const remote = "https://example.com";
 
-  // Forward the request to the remote server
-  return await fetch(remote, c.req.raw);
+	// Forward the request to the remote server
+	return await fetch(remote, c.req.raw);
 });
 
 export default app;

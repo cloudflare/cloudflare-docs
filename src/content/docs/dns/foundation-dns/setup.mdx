@@ -6,36 +6,41 @@ sidebar:
   label: Setup
 ---
 
-import { TabItem, Tabs, APIRequest, Render, Details, Example } from "~/components";
+import {
+	TabItem,
+	Tabs,
+	APIRequest,
+	Render,
+	Details,
+	Example,
+} from "~/components";
 
 Advanced nameservers included with [Foundation DNS](/dns/foundation-dns/) are an opt-in configuration.
-
 
 ## Before you begin
 
 Before opting in for advanced nameservers, consider the following:
 
-- <Render file="ns-advanced-vs-custom" />
+- <Render file="ns-advanced-vs-custom" product="dns" />
 
 ### Differences from standard nameservers
 
 Some behaviors are different from standard Cloudflare nameservers:
+
 - Wildcard records: if moving from standard Cloudflare nameservers to Foundation DNS advanced nameservers, make sure to explicitly create records for subdomains currently covered by wildcard records (`*.example.com`).
 - Subdomain delegation: once a subdomain is delegated via NS records, Cloudflare will not serve any other records (such as A, TXT, or CNAME) on that subdomain from the parent zone, even if those records exist.
 
 <Details header="Example">
 
 <Example>
-DNS management for **example.com**
-| **Type** | **Name** | **Content**               |
-| -------- | -------- | ------------------------- |
-| NS     | www      | ns1.externalhost.com     |
-| NS     | www      | ns2.externalhost.com  |
-| TXT    | www      | "5bb16e6b5a444eedb48ace40c471bcc9" |
-| A     | www      | `192.0.2.1` |
+	DNS management for **example.com** | **Type** | **Name** | **Content** | |
+	-------- | -------- | ------------------------- | | NS | www |
+	ns1.externalhost.com | | NS | www | ns2.externalhost.com | | TXT | www |
+	"5bb16e6b5a444eedb48ace40c471bcc9" | | A | www | `192.0.2.1` |
 </Example>
 
 In this example, the TXT record and the A record for `www.example.com` will not be served.
+
 </Details>
 
 ## Enable on a zone
@@ -44,34 +49,33 @@ To enable advanced nameservers on an existing zone:
 
 1. Opt for advanced nameservers on your zone:
 
-    <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+   <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+   1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
+   2. Go to **DNS** > **Records**.
+   3. In the **Cloudflare nameservers** card, enable **Advanced nameservers**.
+   4. After you refresh the page, the card will display the values for your advanced nameservers `NS` records.
 
-    1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
-    2. Go to **DNS** > **Records**.
-    3. In the **Cloudflare nameservers** card, enable **Advanced nameservers**.
-    4. After you refresh the page, the card will display the values for your advanced nameservers `NS` records.
+   </TabItem> <TabItem label="API">
 
-    </TabItem> <TabItem label="API">
+   Use the [Update DNS Settings](/api/resources/dns/subresources/settings/subresources/zone/methods/edit/) endpoint to send a PATCH request like the following:
 
-    Use the [Update DNS Settings](/api/resources/dns/subresources/settings/subresources/zone/methods/edit/) endpoint to send a PATCH request like the following:
+   <APIRequest
+   	path="/zones/{zone_id}/dns_settings"
+   	method="PATCH"
+   	json={{
+   		foundation_dns: true,
+   	}}
+   />
 
-  	<APIRequest
-  	path="/zones/{zone_id}/dns_settings"
-  	method="PATCH"
-  	json={{
-  		"foundation_dns": true,
-  	}}
-    />
+   The response body will contain your assigned namservers in the `nameservers` object. You will use these nameservers in the next step.
 
-    The response body will contain your assigned namservers in the `nameservers` object. You will use these nameservers in the next step.
-
-    </TabItem> </Tabs>
+   </TabItem> </Tabs>
 
 2. Update the authoritative nameservers at your registrar. This step depends on whether you are using [Cloudflare Registrar](/registrar/):
    - If you are using Cloudflare Registrar, [contact Cloudflare Support](/support/contacting-cloudflare-support/) to have your nameservers updated.
    - If you are using a different registrar or if your zone is delegated to a parent zone, [manually update your nameservers](/dns/nameservers/update-nameservers/#specific-processes).
 
-      :::caution
+     :::caution
 
-      Make sure the values for your assigned nameservers are copied exactly.
-      :::
+     Make sure the values for your assigned nameservers are copied exactly.
+     :::

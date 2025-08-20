@@ -8,18 +8,15 @@ head:
     content: Domain control validation (DCV)
 description: Learn when and how to perform Domain Control Validation when using
   Cloudflare SSL/TLS.
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
-<Render file="dcv-definition" />
+<Render file="dcv-definition" product="ssl" />
 
 :::note
 
-
 Refer to [Domain control validation flow](/ssl/edge-certificates/changing-dcv-method/dcv-flow/) to learn more about the steps and parties involved in the DCV process.
-
 
 :::
 
@@ -27,13 +24,13 @@ For [custom certificates](/ssl/edge-certificates/custom-certificates/), DCV will
 
 For certificates issued through Cloudflare, this process may be done automatically or it may require you to take action, as described in the following sections.
 
-***
+---
 
 ## Full DNS setup - no action required
 
 If your domain is on a [**full setup**](/dns/zone-setups/full-setup/) — meaning that Cloudflare runs your authoritative nameservers — Cloudflare handles DCV automatically on your behalf using a TXT record. For more details, refer to [Enable Universal SSL](/ssl/edge-certificates/universal-ssl/enable-universal-ssl/#full-dns-setup).
 
-***
+---
 
 ## Partial DNS setup - action sometimes required
 
@@ -41,8 +38,8 @@ If your application is on a [partial DNS setup](/dns/zone-setups/partial-setup/)
 
 ### Non-wildcard certificates
 
-<Render file="partial-zone-acm-dcv-nonwildcard" />
+<Render file="partial-zone-acm-dcv-nonwildcard" product="ssl" />
 
 ### Wildcard certificates
 
-<Render file="partial-zone-acm-dcv-wildcard" />
+<Render file="partial-zone-acm-dcv-wildcard" product="ssl" />

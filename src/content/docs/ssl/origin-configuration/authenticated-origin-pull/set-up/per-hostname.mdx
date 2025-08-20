@@ -6,23 +6,23 @@ sidebar:
 head:
   - tag: title
     content: Per-hostname authenticated origin pulls
-
 ---
 
-import { AvailableNotifications, Render, Details } from "~/components"
+import { AvailableNotifications, Render, Details } from "~/components";
 
 When you enable Authenticated Origin Pulls per hostname, all proxied traffic to the specified hostname is authenticated at the origin web server. You can use client certificates from your Private PKI to authenticate connections from Cloudflare.
 
 ## Before you begin
 
 :::caution[Warning]
- <Render file="aop-per-hostname-cert-requirement" />
+
+<Render file="aop-per-hostname-cert-requirement" product="ssl" />
 :::
 
 Refer to the steps below for an example of how to generate a custom certificate using OpenSSL. The CA root certificate that you use to issue the custom certificate should be the same CA that you will [upload to your origin](#2-configure-origin-to-accept-client-certificates).
 
 <Details header="OpenSSL example">
-<Render file="custom-cert-openssl-commands" />
+	<Render file="custom-cert-openssl-commands" product="ssl" />
 </Details>
 
 ## 1. Upload custom certificate
@@ -34,7 +34,7 @@ Use the [`/origin_tls_client_auth/hostnames/certificates`](/api/resources/origin
 You must upload a [leaf certificate](/ssl/concepts/#chain-of-trust). If you upload a root CA instead, the API will return a `missing leaf certificate` error.
 :::
 
-<Render file="aop-per-hostname-upload-cert" />
+<Render file="aop-per-hostname-upload-cert" product="ssl" />
 
 In the API response, save the certificate `id` since it will be required in step 4.
 
@@ -44,7 +44,7 @@ In the API response, save the certificate `id` since it will be required in step
 
 ## 3. Enable Authenticated Origin Pulls (globally)
 
-<Render file="aop-enable-feature" />
+<Render file="aop-enable-feature" product="ssl" />
 
 ## 4. Enable Authenticated Origin Pulls for the hostname
 
@@ -54,13 +54,16 @@ If you had set up logging on your origin during step 2, test and confirm that Au
 
 ## 5. Enforce validation check on your origin
 
-<Render file="aop-enforce-validation" />
+<Render file="aop-enforce-validation" product="ssl" />
 
 ## 6. (Optional) Set up alerts for hostname-level Authenticated Origin Pulls certificates
 
 You can configure alerts to receive notifications before your AOP certificates expire.
 
-<AvailableNotifications product="SSL/TLS" notificationFilter="Hostname-level Authenticated Origin Pulls Certificate Expiration Alert" />
+<AvailableNotifications
+	product="SSL/TLS"
+	notificationFilter="Hostname-level Authenticated Origin Pulls Certificate Expiration Alert"
+/>
 
 <Render file="get-started" product="notifications" />
 
