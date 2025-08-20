@@ -12,7 +12,7 @@ When an environment is read-only, versions deployed to this environment will per
 
 **Version Zero** is an exception to this rule and is always editable.
 
-<Render file="production-read-only-default" /> <br/>
+<Render file="production-read-only-default" product="version-management" /> <br/>
 
 For similar reasons, some organizations may make **Staging** a read-only environment. Otherwise, another member of your account could make changes to a version in **Staging** *after* your organization has performed the validation tests prior to promoting to **Production**. Without having a read-only **Staging** environment, this change could be released into **Production** without testing and might cause an issue with live traffic.
 
