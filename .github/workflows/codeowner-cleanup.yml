@@ -21,4 +21,4 @@ jobs:
         uses: github/cleanowners@v1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          ORGANIZATION: cloudflare
+          REPOSITORY: cloudflare/cloudflare-docs
