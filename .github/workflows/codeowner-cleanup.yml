@@ -20,7 +20,7 @@ jobs:
       - name: Run cleanowners action
         uses: github/cleanowners@v1
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.HOLOPIN_LABELER }}
           REPOSITORY: cloudflare/cloudflare-docs
           ORGANIZATION: cloudflare
           DRY_RUN: true
