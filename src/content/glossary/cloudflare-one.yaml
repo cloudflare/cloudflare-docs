@@ -129,7 +129,7 @@ entries:
 
   - term: MCP server portal
     general_definition: |-
-      a web application in Cloudflare Zero Trust that serves as a single entry point to multiple MCP servers and tools.
+      a web application in Cloudflare Zero Trust that serves as a gateway to multiple MCP servers.
 
   - term: MCP server tool
     general_definition: |-
