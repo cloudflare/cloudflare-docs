@@ -60,8 +60,6 @@ While some D1 errors can be resolved by retrying the operation, retrying is only
 Before retrying any failed operation:
 - Verify your query is idempotent (for example, read-only operations, or queries such as `CREATE TABLE IF NOT EXISTS`).
 - Consider implementing application-level checks to identify if the operation can be retried, and retrying only when it is safe and necessary.
-
-When in doubt, do not retry automatically. Instead, investigate the root cause and ensure your application logic can handle potential duplicates safely.
 :::
 
 | `D1_ERROR` type                                                             | Description                                                                                                                                                               | Recommended action                                                                                                                                |
