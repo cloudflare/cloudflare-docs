@@ -29,6 +29,16 @@ You can connect Hyperdrive to any existing Prisma Postgres database by using you
    postgres://USERNAME:PASSWORD@HOSTNAME_OR_IP_ADDRESS:PORT/database_name
     ```   
 
+:::note
+
+Use the [`create-db`](https://www.npmjs.com/package/create-db) package to generate a quick temporary connection string.
+
+```bash
+npx create-db@latest
+```
+
+:::
+
 With this connection string, you can now create a Hyperdrive database configuration.
 
 ## 2. Create a database configuration
