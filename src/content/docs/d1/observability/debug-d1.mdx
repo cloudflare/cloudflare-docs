@@ -54,6 +54,17 @@ The following table lists specific instances of `D1_ERROR`.
 
 <Example title="List of D1_ERRORs">
 
+:::caution[Retry operations]
+While some D1 errors can be resolved by retrying the operation, retrying is only safe if your query is idempotent (produces the same result when executed multiple times).
+
+Before retrying any failed operation:
+- Verify your query is idempotent
+- Avoid retrying non-idempotent operations
+- Consider implementing application-level safeguards
+
+When in doubt, do not retry automatically. Instead, investigate the root cause and ensure your application logic can handle potential duplicates safely.
+:::
+
 | `D1_ERROR` type                                                             | Description                                                                                                                                                               | Recommended action                                                                                                                                |
 | --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `D1 DB reset because its code was updated.`                                 | Cloudflare has updated the code for D1 (or the underlying Durable Object), and the Durable Object which contains the D1 database is restarting.                           | Retry the operation.                                                                                                                              |
