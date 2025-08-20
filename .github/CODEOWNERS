@@ -6,9 +6,7 @@
 
 /.github/ @kodster28 @pedrosousa @haleycode @kristianfreeman @GregBrimble @KianNH @maxvp @marciocloudflare @WalshyDev
 /.github/CODEOWNERS @cloudflare/pcx-technical-writing
-/.github/actions/assign-issue/index.js @cloudflare/pcx-technical-writing
 /.github/actions/assign-pr/index.js @cloudflare/pcx-technical-writing
-/.github/styles/cloudflare/spelling-exceptions.txt @cloudflare/pcx-technical-writing
 /src/components/ @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @marciocloudflare @haleycode @maxvp @GregBrimble @KianNH @WalshyDev
 *.js @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode @GregBrimble @KianNH @WalshyDev
 *.ts @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode @GregBrimble @KianNH @WalshyDev
@@ -68,8 +66,6 @@
 /src/content/docs/cloudflare-one/policies/data-loss-prevention/ @maxvp @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-one/insights/dex/ @deadlypants1973 @cloudflare/pcx-technical-writing
 /src/content/docs/email-security/ @Maddy-Cloudflare @cloudflare/pcx-technical-writing
-/src/content/release-notes/access.yaml @ranbel @kennyj42 @cloudflare/pcx-technical-writing
-/src/content/release-notes/warp.yaml @kokolocomotion1 @ranbel @cloudflare/pcx-technical-writing
 
 # Consumer products
 
@@ -96,7 +92,6 @@
 # Developer Platform
 
 /src/content/docs/containers/ @mikenomitch @th0m @cloudflare/pcx-technical-writing @cloudflare/cloudchamber
-/src/content/release-notes/containers.yaml @mikenomitch @th0m @cloudflare/pcx-technical-writing
 /src/content/docs/d1/ @elithrar @rozenmd @vy-ton @joshthoward @oxyjun @harshil1712 @cloudflare/pcx-technical-writing
 /src/content/release-notes/d1.yaml @elithrar @rozenmd @vy-ton @joshthoward @oxyjun @cloudflare/pcx-technical-writing
 /src/content/partials/d1/ @elithrar @rozenmd @vy-ton @joshthoward @oxyjun @harshil1712 @cloudflare/pcx-technical-writing
@@ -134,7 +129,6 @@
 /src/content/docs/workers/ci-cd/ @irvinebroque @aninibread @GregBrimble @kodster28 @cloudflare/pcx-technical-writing
 /src/content/compatibility-flags/ @irvinebroque @mikenomitch @GregBrimble @cloudflare/pcx-technical-writing
 /src/content/docs/workers/wrangler/ @cloudflare/wrangler @irvinebroque @kodster28 @cloudflare/pcx-technical-writing @cloudflare/workers-runtime-1
-/src/content/docs/workers/frameworks/ @igorminar @cloudflare/wrangler @aninibread @GregBrimble @kodster28 @cloudflare/pcx-technical-writing
 /src/content/docs/pages/framework-guides/ @igorminar @cloudflare/wrangler @aninibread @GregBrimble @kodster28 @cloudflare/pcx-technical-writing
 /src/content/docs/analytics/analytics-engine/ @irvinebroque @elithrar @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-for-platforms/ @irvinebroque @dinasaur404 @cloudflare/pcx-technical-writing
@@ -168,7 +162,6 @@
 # Migration guides
 
 /src/content/docs/migration-guides/ @kimj15 @cloudflare/pcx-technical-writing
-/src/assets/images/migration-guides/ @kimj15 @cloudflare/pcx-technical-writing
 
 # Performance products
 
@@ -208,7 +201,6 @@
 /src/content/docs/ssl/ @RebeccaTamachiro @cloudflare/pcx-technical-writing
 /src/content/docs/waf/ @pedrosousa @cloudflare/firewall @cloudflare/pcx-technical-writing
 /src/content/docs/waf/change-log/ @pedrosousa @cloudflare/firewall @vs-mg @cloudflare/pcx-technical-writing
-/src/content/release-notes/waf.yaml @pedrosousa @cloudflare/firewall @vs-mg @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-challenges/ @patriciasantaana @cloudflare/pcx-technical-writing
 
 # Support
@@ -224,7 +216,6 @@
 # Waiting Room
 
 /src/content/docs/waiting-room/ @angelampcosta @cloudflare/pcx-technical-writing
-/src/content/release-notes/waiting-room.yaml @angelampcosta @cloudflare/pcx-technical-writing
 
 # Web Analytics
 
