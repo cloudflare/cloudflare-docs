@@ -31,13 +31,13 @@ For more information on deploying and configuring managed rulesets using the Rul
 
 ### Obtain the necessary account, zone, and managed ruleset IDs
 
-<Render file="find-ids-managed-rulesets" />
+<Render file="find-ids-managed-rulesets" product="terraform" />
 
 The IDs of WAF managed rulesets are also available in the [WAF Managed Rules](/waf/managed-rules/#available-managed-rulesets) page.
 
 ### Import or delete existing rulesets
 
-<Render file="import-delete-existing-rulesets" />
+<Render file="import-delete-existing-rulesets" product="terraform" />
 
 ---
 
@@ -45,7 +45,7 @@ The IDs of WAF managed rulesets are also available in the [WAF Managed Rules](/w
 
 The following example deploys two managed rulesets to the zone with ID `<ZONE_ID>` using Terraform, using a `cloudflare_ruleset` resource with two rules that execute the managed rulesets.
 
-<Render file="v4-code-snippets" />
+<Render file="v4-code-snippets" product="terraform" />
 
 ```tf
 # Configure a ruleset at the zone level for the "http_request_firewall_managed" phase
@@ -92,7 +92,7 @@ resource "cloudflare_ruleset" "zone_level_managed_waf" {
 
 The following example deploys two managed rulesets to the account with ID `<ACCOUNT_ID>` using Terraform, using a `cloudflare_ruleset` resource with two rules that execute the managed rulesets for two hostnames belonging to Enterprise zones.
 
-<Render file="v4-code-snippets" />
+<Render file="v4-code-snippets" product="terraform" />
 
 ```tf
 resource "cloudflare_ruleset" "account_level_managed_waf" {
@@ -135,7 +135,7 @@ The following example adds two [exceptions](/waf/managed-rules/waf-exceptions/) 
 
 Add the two exceptions to the `cloudflare_ruleset` resource before the rule that deploys the Cloudflare Managed Ruleset:
 
-<Render file="v4-code-snippets" />
+<Render file="v4-code-snippets" product="terraform" />
 
 ```tf null {4-13,15-27}
 resource "cloudflare_ruleset" "zone_level_managed_waf" {
@@ -198,7 +198,7 @@ The following example adds three [overrides](/ruleset-engine/managed-rulesets/ov
 
 The following configuration includes the three overrides in the rule that executes the Cloudflare Managed Ruleset:
 
-<Render file="v4-code-snippets" />
+<Render file="v4-code-snippets" product="terraform" />
 
 ```tf null {11-26}
   # (...)
@@ -239,7 +239,7 @@ This example enables [payload logging](/waf/managed-rules/payload-logging/) for 
 
 Building upon the rule that deploys the Cloudflare Managed Ruleset, the following rule configuration adds the `matched_data` object with the public key used to encrypt the payload:
 
-<Render file="v4-code-snippets" />
+<Render file="v4-code-snippets" product="terraform" />
 
 ```tf null {11-13}
   # (...)
@@ -280,7 +280,7 @@ The following example rule of a `cloudflare_ruleset` Terraform resource performs
 - Sets the score threshold to `60` (_Low_).
 - Sets the ruleset action to `log`.
 
-<Render file="v4-code-snippets" />
+<Render file="v4-code-snippets" product="terraform" />
 
 ```tf null {11-28}
   # (...)

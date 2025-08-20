@@ -12,7 +12,7 @@ import { Render, TabItem, Tabs } from "~/components";
 
 You can manage Page Rules in the Cloudflare dashboard or via API.
 
-<Render file="page-rules-migration" />
+<Render file="page-rules-migration" product="rules" />
 
 ## Create a page rule
 
@@ -28,7 +28,7 @@ To create a page rule in the dashboard:
 6. In the **Order** dropdown, specify the desired order: _First, Last_ or _Custom_.
 7. To save and deploy your rule, select **Save and Deploy Page Rule**. If you are not ready to deploy your rule, select **Save as Draft**.
 
-   <Render file="rules-creation-dash-dns-popup" />
+   <Render file="rules-creation-dash-dns-popup" product="rules" />
 
 For ideas about what rules you can create, refer to [recommended rules](/rules/page-rules/reference/recommended-rules/).
 
@@ -56,7 +56,6 @@ To edit a page rule in the dashboard:
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
 2. Go to **Rules** > **Page Rules**.
 3. For a specific rule:
-
    - To enable or disable the rule, select the on/off toggle.
    - To modify the URL pattern, settings, and order, select **Edit** (wrench icon). Then, enter the information you want to change.
 

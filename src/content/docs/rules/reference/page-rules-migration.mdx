@@ -128,13 +128,10 @@ You configured a Page Rule to perform an automatic redirect from HTTP to HTTPS f
 1. [Create a single redirect](/rules/url-forwarding/single-redirects/create-dashboard/) to always redirect HTTP requests to HTTPS. You can select the **Redirect from HTTP to HTTPS** rule template or enter the following rule configuration:
 
    <div class="DocsMarkdown--example">
-
    - **If incoming requests match**: Wildcard pattern
-
      - **Request URL**: `http://*`
 
    - **Then**:
-
      - **Target URL**: `https://${1}`
      - **Status code**: _301_
      - **Preserve query string**: Enabled
@@ -170,9 +167,7 @@ You configured a Page Rule turning on Automatic HTTPS Rewrites for all subdomain
 1. [Create a configuration rule](/rules/configuration-rules/create-dashboard/) to always rewrite HTTP links to HTTPS for any hostname containing `example.com`:
 
     <div class="DocsMarkdown--example">
-
    - **When incoming requests match**: Custom filter expression
-
      - Using the Expression Builder:<br/>
        `Hostname contains "example.com"`
      - Using the Expression Editor:<br/>
@@ -213,9 +208,7 @@ You configured a Page Rule adjusting browser cache TTL to one day for all subdom
 1. [Create a cache rule](/cache/how-to/cache-rules/create-dashboard/) to adjust browser cache TTL for caching resources in the browser to one day for any hostname containing `example.com`:
 
     <div class="DocsMarkdown--example">
-
    - **When incoming requests match**: Custom filter expression
-
      - Using the Expression Builder:<br/>
        `Hostname contains "example.com"`
      - Using the Expression Editor:<br/>
@@ -228,7 +221,7 @@ You configured a Page Rule adjusting browser cache TTL to one day for all subdom
 
     </div>
 
-   <Render file="page-rules-cache-rules-difference" />
+   <Render file="page-rules-cache-rules-difference" product="rules" />
 
 2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
 
@@ -259,9 +252,7 @@ You configured a Page Rule turning on Browser Integrity Check for all subdomains
 1. [Create a configuration rule](/rules/configuration-rules/create-dashboard/) to turn on Browser Integrity Check for protecting against bots and threats for any hostname containing `example.com`:
 
     <div class="DocsMarkdown--example">
-
    - **When incoming requests match**: Custom filter expression
-
      - Using the Expression Builder:<br/>
        `Hostname contains "example.com"`
      - Using the Expression Editor:<br/>
@@ -302,9 +293,7 @@ You configured a Page Rule turning on Bypass Cache on Cookie for all subdomains 
 1. [Create a cache rule](/cache/how-to/cache-rules/create-dashboard/) to bypass cache for requests containing cookie `test_cookie` for any hostname containing `example.com`:
 
     <div class="DocsMarkdown--example">
-
    - **When incoming requests match**: Custom filter expression
-
      - Using the Expression Builder:<br/>
        `Hostname contains "example.com" AND Cookie contains "test-cookie"`
      - Using the Expression Editor:<br/>
@@ -315,7 +304,7 @@ You configured a Page Rule turning on Bypass Cache on Cookie for all subdomains 
 
     </div>
 
-   <Render file="page-rules-cache-rules-difference" />
+   <Render file="page-rules-cache-rules-difference" product="rules" />
 
 2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
 
@@ -346,9 +335,7 @@ You configured a Page Rule turning on Cache By Device Type for all subdomains of
 1. [Create a cache rule](/cache/how-to/cache-rules/create-dashboard/) to cache content based on user agent or device type for any hostname containing `example.com`:
 
     <div class="DocsMarkdown--example">
-
    - **When incoming requests match**: Custom filter expression
-
      - Using the Expression Builder:<br/>
        `Hostname contains "example.com"`
      - Using the Expression Editor:<br/>
@@ -361,7 +348,7 @@ You configured a Page Rule turning on Cache By Device Type for all subdomains of
 
     </div>
 
-   <Render file="page-rules-cache-rules-difference" />
+   <Render file="page-rules-cache-rules-difference" product="rules" />
 
 2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
 
@@ -391,9 +378,7 @@ You configured a Page Rule turning on Cache Deception Armor for all subdomains o
 1. [Create a cache rule](/cache/how-to/cache-rules/create-dashboard/) to protect against cache deception attacks for any hostname containing `example.com`:
 
     <div class="DocsMarkdown--example">
-
    - **When incoming requests match**: Custom filter expression
-
      - Using the Expression Builder:<br/>
        `Hostname contains "example.com"`
      - Using the Expression Editor:<br/>
@@ -406,7 +391,7 @@ You configured a Page Rule turning on Cache Deception Armor for all subdomains o
 
     </div>
 
-   <Render file="page-rules-cache-rules-difference" />
+   <Render file="page-rules-cache-rules-difference" product="rules" />
 
 2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
 
@@ -437,9 +422,7 @@ You configured a Page Rule turning on caching of all assets for all subdomains o
 1. [Create a cache rule](/cache/how-to/cache-rules/create-dashboard/) to adjust cache level for any hostname containing `example.com`:
 
     <div class="DocsMarkdown--example">
-
    - **When incoming requests match**: Custom filter expression
-
      - Using the Expression Builder:<br/>
        `Hostname contains "example.com"`
      - Using the Expression Editor:<br/>
@@ -450,7 +433,7 @@ You configured a Page Rule turning on caching of all assets for all subdomains o
 
     </div>
 
-   <Render file="page-rules-cache-rules-difference" />
+   <Render file="page-rules-cache-rules-difference" product="rules" />
 
 2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
 
@@ -481,9 +464,7 @@ You configured a Page Rule turning on caching for responses that contained cooki
 1. [Create a cache rule](/cache/how-to/cache-rules/create-dashboard/) to cache responses containing cookie `test_cookie` for any hostname containing `example.com`:
 
     <div class="DocsMarkdown--example">
-
    - **When incoming requests match**: Custom filter expression
-
      - Using the Expression Builder:<br/>
        `Hostname contains "example.com" AND Cookie contains "test-cookie"`
      - Using the Expression Editor:<br/>
@@ -494,7 +475,7 @@ You configured a Page Rule turning on caching for responses that contained cooki
 
     </div>
 
-   <Render file="page-rules-cache-rules-difference" />
+   <Render file="page-rules-cache-rules-difference" product="rules" />
 
 2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
 
@@ -526,9 +507,7 @@ You configured a Page Rule turning on caching of every response with status code
 1. [Create a cache rule](/cache/how-to/cache-rules/create-dashboard/) to cache responses with status code between `200` and `599` for one day for any hostname containing `example.com`:
 
     <div class="DocsMarkdown--example">
-
    - **When incoming requests match**: Custom filter expression
-
      - Using the Expression Builder:<br/>
        `Hostname contains "example.com"`
      - Using the Expression Editor:<br/>
@@ -546,7 +525,7 @@ You configured a Page Rule turning on caching of every response with status code
 
     </div>
 
-   <Render file="page-rules-cache-rules-difference" />
+   <Render file="page-rules-cache-rules-difference" product="rules" />
 
 2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
 
@@ -577,9 +556,7 @@ You configured a Page Rule setting a custom cache key for all query string param
 1. [Create a cache rule](/cache/how-to/cache-rules/create-dashboard/) to set a custom cache key for all query string parameters, for any hostname containing `example.com`:
 
     <div class="DocsMarkdown--example">
-
    - **When incoming requests match**: Custom filter expression
-
      - Using the Expression Builder:<br/>
        `Hostname contains "example.com"`
      - Using the Expression Editor:<br/>
@@ -592,7 +569,7 @@ You configured a Page Rule setting a custom cache key for all query string param
 
     </div>
 
-   <Render file="page-rules-cache-rules-difference" />
+   <Render file="page-rules-cache-rules-difference" product="rules" />
 
 2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
 
@@ -622,9 +599,7 @@ You configured a Page Rule turning off Cloudflare Apps (deprecated) for all subd
 1. [Create a configuration rule](/rules/configuration-rules/create-dashboard/) to disable Cloudflare Apps (deprecated) for any hostname containing `example.com`:
 
     <div class="DocsMarkdown--example">
-
    - **When incoming requests match**: Custom filter expression
-
      - Using the Expression Builder:<br/>
        `Hostname contains "example.com"`
      - Using the Expression Editor:<br/>
@@ -669,9 +644,7 @@ You configured a Page Rule with **Disable Performance** (deprecated) for all sub
 1. [Create a configuration rule](/rules/configuration-rules/create-dashboard/) to disable Mirage, Polish, and Rocket Loader for any hostname containing `example.com`:
 
     <div class="DocsMarkdown--example">
-
    - **When incoming requests match**: Custom filter expression
-
      - Using the Expression Builder:<br/>
        `Hostname contains "example.com"`
      - Using the Expression Editor:<br/>
@@ -718,7 +691,6 @@ This setting turned off a subset of Cloudflare security features: Email Obfuscat
 **How to replace**:
 
 1. [Create a configuration rule](/rules/configuration-rules/create-dashboard/) to turn off one or more security features:
-
    - Email Obfuscation (part of [Cloudflare Scrape Shield](/waf/tools/scrape-shield/))
    - Hotlink Protection (part of Cloudflare Scrape Shield)
 
@@ -750,9 +722,7 @@ You configured a Page Rule turning off [Zaraz](/zaraz/) for all subdomains of `e
 1. [Create a configuration rule](/rules/configuration-rules/create-dashboard/) to turn off Zaraz for any hostname containing `example.com`:
 
     <div class="DocsMarkdown--example">
-
    - **When incoming requests match**: Custom filter expression
-
      - Using the Expression Builder:<br/>
        `Hostname contains "example.com"`
      - Using the Expression Editor:<br/>
@@ -792,9 +762,7 @@ You configured a Page Rule adjusting Edge Cache TTL for all subdomains of `examp
 1. [Create a cache rule](/cache/how-to/cache-rules/create-dashboard/) to adjust edge cache TTL for caching resources on Cloudflare edge to one day, for any hostname containing `example.com`:
 
     <div class="DocsMarkdown--example">
-
    - **When incoming requests match**: Custom filter expression
-
      - Using the Expression Builder:<br/>
        `Hostname contains "example.com"`
      - Using the Expression Editor:<br/>
@@ -808,7 +776,7 @@ You configured a Page Rule adjusting Edge Cache TTL for all subdomains of `examp
 
     </div>
 
-   <Render file="page-rules-cache-rules-difference" />
+   <Render file="page-rules-cache-rules-difference" product="rules" />
 
 2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
 
@@ -839,9 +807,7 @@ You configured a Page Rule turning off [Email Obfuscation](/waf/tools/scrape-shi
 1. [Create a configuration rule](/rules/configuration-rules/create-dashboard/) to turn off Email Obfuscation for any hostname containing `example.com`:
 
     <div class="DocsMarkdown--example">
-
    - **When incoming requests match**: Custom filter expression
-
      - Using the Expression Builder:<br/>
        `Hostname contains "example.com"`
      - Using the Expression Editor:<br/>
@@ -885,13 +851,10 @@ You configured a Page Rule permanently redirecting `www.example.com` to `example
 1. [Create a single redirect](/rules/url-forwarding/single-redirects/create-dashboard/) to permanently redirect requests from `https://www.example.com` to `https://example.com`. You can select the **Redirect from WWW to Root** rule template or enter the following rule configuration:
 
    <div class="DocsMarkdown--example">
-
    - **If incoming requests match**: Wildcard pattern
-
      - **Request URL**: `https://www.example.com/*`
 
    - **Then**:
-
      - **Target URL**: `https://example.com/${1}`
      - **Status code**: _301_
      - **Preserve query string**: Enabled
@@ -936,13 +899,10 @@ You configured a Page Rule permanently redirecting `example.com/old-path` to `ex
 1. [Create a single redirect](/rules/url-forwarding/single-redirects/create-dashboard/) to permanently redirect requests for `example.com/old-path` to `example.com/new-path`:
 
    <div class="DocsMarkdown--example">
-
    - **If incoming requests match**: Wildcard pattern
-
      - **Request URL**: `https://example.com/old-path/*`
 
    - **Then**:
-
      - **Target URL**: `https://example.com/new-path/${1}`
      - **Status code**: _301_
      - **Preserve query string**: Enabled
@@ -986,9 +946,7 @@ You configured a Page Rule changing the `Host` HTTP header to `example.saas-prov
 1. [Create an origin rule](/rules/origin-rules/create-dashboard/) changing the `Host` header to `example.saas-provider.com` for any hostname containing `example.com`:
 
     <div class="DocsMarkdown--example">
-
    - **When incoming requests match**: Custom filter expression
-
      - Using the Expression Builder:<br/>
        `Hostname contains "example.com"`
      - Using the Expression Editor:<br/>
@@ -1055,9 +1013,7 @@ You configured a Page Rule turning off Mirage for all subdomains of `example.com
 1. [Create a configuration rule](/rules/configuration-rules/create-dashboard/) to turn off Mirage for any hostname containing `example.com`:
 
     <div class="DocsMarkdown--example">
-
    - **When incoming requests match**: Custom filter expression
-
      - Using the Expression Builder:<br/>
        `Hostname contains "example.com"`
      - Using the Expression Editor:<br/>
@@ -1098,9 +1054,7 @@ You configured a Page Rule turning off Opportunistic Encryption for all subdomai
 1. [Create a configuration rule](/rules/configuration-rules/create-dashboard/) to turn off Opportunistic Encryption for any hostname containing `example.com`:
 
     <div class="DocsMarkdown--example">
-
    - **When incoming requests match**: Custom filter expression
-
      - Using the Expression Builder:<br/>
        `Hostname contains "example.com"`
      - Using the Expression Editor:<br/>
@@ -1141,9 +1095,7 @@ You configured a Page Rule turning off Origin Cache Control for all subdomains o
 1. [Create a cache rule](/cache/how-to/cache-rules/create-dashboard/) to determine edge cache behavior for any hostname containing `example.com`:
 
     <div class="DocsMarkdown--example">
-
    - **When incoming requests match**: Custom filter expression
-
      - Using the Expression Builder:<br/>
        `Hostname contains "example.com"`
      - Using the Expression Editor:<br/>
@@ -1156,7 +1108,7 @@ You configured a Page Rule turning off Origin Cache Control for all subdomains o
 
     </div>
 
-   <Render file="page-rules-cache-rules-difference" />
+   <Render file="page-rules-cache-rules-difference" product="rules" />
 
 2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
 
@@ -1187,9 +1139,7 @@ You configured a Page Rule turning on Origin Error Page Pass-thru for all subdom
 1. [Create a cache rule](/cache/how-to/cache-rules/create-dashboard/) to determine edge cache behavior for any hostname containing `example.com`:
 
     <div class="DocsMarkdown--example">
-
    - **When incoming requests match**: Custom filter expression
-
      - Using the Expression Builder:<br/>
        `Hostname contains "example.com"`
      - Using the Expression Editor:<br/>
@@ -1202,7 +1152,7 @@ You configured a Page Rule turning on Origin Error Page Pass-thru for all subdom
 
     </div>
 
-   <Render file="page-rules-cache-rules-difference" />
+   <Render file="page-rules-cache-rules-difference" product="rules" />
 
 2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
 
@@ -1233,9 +1183,7 @@ You configured a Page Rule turning off [Polish](/images/polish/) for all subdoma
 1. [Create a configuration rule](/rules/configuration-rules/create-dashboard/) to turn off Polish for any hostname containing `example.com`:
 
     <div class="DocsMarkdown--example">
-
    - **When incoming requests match**: Custom filter expression
-
      - Using the Expression Builder:<br/>
        `Hostname contains "example.com"`
      - Using the Expression Editor:<br/>
@@ -1276,9 +1224,7 @@ You configured a Page Rule turning on Query String Sort for all subdomains of `e
 1. [Create a cache rule](/cache/how-to/cache-rules/create-dashboard/) to sort query string parameters for caching purposes, for any hostname containing `example.com`:
 
     <div class="DocsMarkdown--example">
-
    - **When incoming requests match**: Custom filter expression
-
      - Using the Expression Builder:<br/>
        `Hostname contains "example.com"`
      - Using the Expression Editor:<br/>
@@ -1291,7 +1237,7 @@ You configured a Page Rule turning on Query String Sort for all subdomains of `e
 
     </div>
 
-   <Render file="page-rules-cache-rules-difference" />
+   <Render file="page-rules-cache-rules-difference" product="rules" />
 
 2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
 
@@ -1322,9 +1268,7 @@ You configured a Page Rule changing the origin to `example.saas-provider.com`, f
 1. [Create an origin rule](/rules/origin-rules/create-dashboard/) overriding the origin to `example.saas-provider.com` for any hostname containing `example.com`:
 
     <div class="DocsMarkdown--example">
-
    - **When incoming requests match**: Custom filter expression
-
      - Using the Expression Builder:<br/>
        `Hostname contains "example.com"`
      - Using the Expression Editor:<br/>
@@ -1364,9 +1308,7 @@ You configured a Page Rule turning on byte-for-byte equivalency checks for all s
 1. [Create a cache rule](/cache/how-to/cache-rules/create-dashboard/) to respect strong ETags for any hostname containing `example.com`:
 
     <div class="DocsMarkdown--example">
-
    - **When incoming requests match**: Custom filter expression
-
      - Using the Expression Builder:<br/>
        `Hostname contains "example.com"`
      - Using the Expression Editor:<br/>
@@ -1379,7 +1321,7 @@ You configured a Page Rule turning on byte-for-byte equivalency checks for all s
 
     </div>
 
-   <Render file="page-rules-cache-rules-difference" />
+   <Render file="page-rules-cache-rules-difference" product="rules" />
 
 2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
 
@@ -1410,9 +1352,7 @@ You configured a Page Rule turning off Rocket Loader for all subdomains of `exam
 1. [Create a configuration rule](/rules/configuration-rules/create-dashboard/) to turn off Rocket Loader for any hostname containing `example.com`:
 
     <div class="DocsMarkdown--example">
-
    - **When incoming requests match**: Custom filter expression
-
      - Using the Expression Builder:<br/>
        `Hostname contains "example.com"`
      - Using the Expression Editor:<br/>
@@ -1453,9 +1393,7 @@ You configured a Page Rule setting Security Level to _I'm Under Attack_ for all 
 1. [Create a configuration rule](/rules/configuration-rules/create-dashboard/) to set Security Level to _I'm Under Attack_, for any hostname containing `example.com`:
 
     <div class="DocsMarkdown--example">
-
    - **When incoming requests match**: Custom filter expression
-
      - Using the Expression Builder:<br/>
        `Hostname contains "example.com"`
      - Using the Expression Editor:<br/>
@@ -1522,9 +1460,7 @@ You configured a Page Rule setting SSL to _Strict_ for all subdomains of `exampl
 1. [Create a configuration rule](/rules/configuration-rules/create-dashboard/) to set SSL to _Strict_, for any hostname containing `example.com`:
 
     <div class="DocsMarkdown--example">
-
    - **When incoming requests match**: Custom filter expression
-
      - Using the Expression Builder:<br/>
        `Hostname contains "example.com"`
      - Using the Expression Editor:<br/>
