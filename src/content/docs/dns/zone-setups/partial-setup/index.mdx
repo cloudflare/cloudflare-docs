@@ -6,18 +6,18 @@ sidebar:
   label: About
 ---
 
-import { FeatureTable, Render } from "~/components"
+import { FeatureTable, Render } from "~/components";
 
-<Render file="partial-setup-definition" />
+<Render file="partial-setup-definition" product="dns" />
 
 Once you are on a partial setup, the actual resolution of your records to Cloudflare depends on CNAME records [added at your authoritative DNS provider](/dns/zone-setups/partial-setup/setup/#3-add-dns-records). Check your authoritative DNS provider to know which records are pointing to `{your-hostname}.cdn.cloudflare.net`.
 
 ## How to
 
-* [Set up a partial domain](/dns/zone-setups/partial-setup/setup/)
-* [Convert a partial setup to a full setup](/dns/zone-setups/conversions/convert-partial-to-full/)
-* [Convert a partial setup to a secondary setup](/dns/zone-setups/conversions/convert-partial-to-secondary/)
-* [Create DNS records of other types](/dns/zone-setups/partial-setup/setup/#other-record-types)
+- [Set up a partial domain](/dns/zone-setups/partial-setup/setup/)
+- [Convert a partial setup to a full setup](/dns/zone-setups/conversions/convert-partial-to-full/)
+- [Convert a partial setup to a secondary setup](/dns/zone-setups/conversions/convert-partial-to-secondary/)
+- [Create DNS records of other types](/dns/zone-setups/partial-setup/setup/#other-record-types)
 
 ## Availability
 

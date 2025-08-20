@@ -25,9 +25,9 @@ All [Pages Functions](/pages/functions/) are billed as Workers. All pricing and 
 
 Users on the Workers Paid plan have access to the Standard usage model. Workers Enterprise accounts are billed based on the usage model specified in their contract. To switch to the Standard usage model, contact your Account Manager.
 
-|              | Requests<sup>1, 2</sup>                                            | Duration                        | CPU time                                                                                                                                                                                                                                                                                                                                   |
-| ------------ | ------------------------------------------------------------------ | ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **Free**     | 100,000 per day                                                    | No charge for duration          | 10 milliseconds of CPU time per invocation                                                                                                                                                                                                                                                                                                 |
+|              | Requests<sup>1, 2</sup>                                            | Duration                        | CPU time                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ------------ | ------------------------------------------------------------------ | ------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Free**     | 100,000 per day                                                    | No charge for duration          | 10 milliseconds of CPU time per invocation                                                                                                                                                                                                                                                                                                                                                                |
 | **Standard** | 10 million included per month <br /> +$0.30 per additional million | No charge or limit for duration | 30 million CPU milliseconds included per month<br /> +$0.02 per additional million CPU milliseconds<br /><br/> Max of [5 minutes of CPU time](/workers/platform/limits/#worker-limits) per invocation (default: 30 seconds)<br /> Max of 15 minutes of CPU time per [Cron Trigger](/workers/configuration/cron-triggers/) or [Queue Consumer](/queues/configuration/javascript-apis/#consumer) invocation |
 
 <sup>1</sup> Inbound requests to your Worker. Cloudflare does not bill for
@@ -50,7 +50,7 @@ A Worker that serves 15 million requests per month, and uses an average of 7 mil
 
 #### Example 2
 
-A project that serves 15 million requests per month, with 80% (12 million) requests serving [static assets](/workers/static-assets/) and the remaining invoking dynamic Worker code. The Worker uses an average of 7 milliseconds (ms) of  time per request.
+A project that serves 15 million requests per month, with 80% (12 million) requests serving [static assets](/workers/static-assets/) and the remaining invoking dynamic Worker code. The Worker uses an average of 7 milliseconds (ms) of time per request.
 
 Requests to static assets are free and unlimited. This project would have the following estimated costs:
 
@@ -127,7 +127,7 @@ Existing Workers will not be impacted when changing the default usage model. You
 
 ## Workers Logs
 
-<Render file="workers_logs_pricing" />
+<Render file="workers_logs_pricing" product="workers" />
 
 :::note[Workers Logs documentation]
 
@@ -148,7 +148,7 @@ destination after applying filtering or sampling.
 
 ## Workers KV
 
-<Render file="kv_pricing" />
+<Render file="kv_pricing" product="workers" />
 
 :::note[KV documentation]
 
@@ -158,7 +158,7 @@ To learn more about KV, refer to the [KV documentation](/kv/).
 
 ## Hyperdrive
 
-<Render file="hyperdrive_pricing" />
+<Render file="hyperdrive_pricing" product="workers" />
 
 :::note[Hyperdrive documentation]
 
@@ -168,7 +168,7 @@ To learn more about Hyperdrive, refer to the [Hyperdrive documentation](/hyperdr
 
 ## Queues
 
-<Render file="queues_pricing" />
+<Render file="queues_pricing" product="workers" />
 
 :::note[Queues billing examples]
 
@@ -180,7 +180,7 @@ To learn more about Queues pricing and review billing examples, refer to [Queues
 
 D1 is available on both the Workers Free and Workers Paid plans.
 
-<Render file="d1-pricing" />
+<Render file="d1-pricing" product="workers" />
 
 :::note[D1 billing]
 
@@ -190,9 +190,13 @@ Refer to [D1 Pricing](/d1/platform/pricing/) to learn more about how D1 is bille
 
 ## Durable Objects
 
-<Render file="do-plans-note" product="durable-objects"/>
+<Render file="do-plans-note" product="durable-objects" />
 
-<Render file="durable-objects-pricing" product="durable-objects" params={{product:"workers"}} />
+<Render
+	file="durable-objects-pricing"
+	product="durable-objects"
+	params={{ product: "workers" }}
+/>
 
 :::note[Durable Objects billing examples]
 

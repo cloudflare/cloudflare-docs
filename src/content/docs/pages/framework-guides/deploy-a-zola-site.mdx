@@ -75,9 +75,12 @@ Upon running `zola init`, you will prompted with three questions:
 
 4. Do you want to build a search index of the content? \[y/N]: y
 
-<Render file="tutorials-before-you-start" />
+<Render file="tutorials-before-you-start" product="pages" />
 
-<Render file="framework-guides/create-github-repository_no_init" />
+<Render
+	file="framework-guides/create-github-repository_no_init"
+	product="pages"
+/>
 
 ## Deploy with Cloudflare Pages
 
@@ -121,6 +124,7 @@ if [ "$CF_PAGES_BRANCH" = "main" ]; then zola build; else zola build --base-url 
 ```
 
 This command uses:
+
 - The `base_url` set in `config.toml` when building from the `main` branch
 - The preview deployment URL (automatically provided by Cloudflare Pages as `$CF_PAGES_URL`) for all other branches
 

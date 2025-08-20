@@ -11,7 +11,7 @@ noindex: true
 
 import { Render, Type, MetaInfo, WranglerConfig } from "~/components";
 
-<Render file="wrangler-v1-deprecation" />
+<Render file="wrangler-v1-deprecation" product="workers" />
 
 Complete list of all commands available for [`wrangler`](https://github.com/cloudflare/wrangler-legacy), the Workers CLI.
 
@@ -28,15 +28,12 @@ wrangler generate [$NAME] [$TEMPLATE] [--type=$TYPE] [--site]
 Default values indicated by =value.
 
 - `$NAME` =worker optional
-
   - The name of the Workers project. This is both the directory name and `name` property in the generated [Wrangler configuration](/workers/wrangler/migration/v1-to-v2/wrangler-legacy/configuration/) file.
 
 - `$TEMPLATE` =[https://github.com/cloudflare/worker-template](https://github.com/cloudflare/worker-template) optional
-
   - The GitHub URL of the [repository to use as the template](https://github.com/cloudflare/worker-template) for generating the project.
 
 - `--type=$TYPE` =webpack optional
-
   - The type of project; one of `webpack`, `javascript`, or `rust`.
 
 - `--site` optional
@@ -55,11 +52,9 @@ wrangler init [$NAME] [--type=$TYPE] [--site]
 Default values indicated by =value.
 
 - `$NAME` =(Name of working directory) optional
-
   - The name of the Workers project. This is both the directory name and `name` property in the generated [Wrangler configuration](/workers/wrangler/migration/v1-to-v2/wrangler-legacy/configuration/) file.
 
 - `--type=$TYPE` =webpack optional
-
   - The type of project; one of `webpack`, `javascript`, or `rust`.
 
 - `--site` optional
@@ -145,11 +140,9 @@ wrangler publish [--env $ENVIRONMENT_NAME]
 To use this command, the following fields are required in your Wrangler file:
 
 - `name` string
-
   - The name of the Workers project. This is both the directory name and `name` property in the generated [Wrangler configuration](/workers/wrangler/migration/v1-to-v2/wrangler-legacy/configuration/) file.
 
 - `type` string
-
   - The type of project; one of `webpack`, `javascript`, or `rust`.
 
 - `account_id` string
@@ -173,11 +166,9 @@ After you have registered a subdomain, add `workers_dev` to your Wrangler file.
 To publish to your own domain, specify these three fields in your Wrangler file.
 
 - `zone_id` string
-
   - The Cloudflare zone ID, for example, `zone_id = "b6558acaf2b4cad1f2b51c5236a6b972"`, which can be found in the [Cloudflare dashboard](https://dash.cloudflare.com).
 
 - `route` string
-
   - The route you would like to publish to, for example, `route = "example.com/my-worker/*"`.
 
 - `routes` Array
@@ -204,23 +195,18 @@ wrangler dev [--env $ENVIRONMENT_NAME] [--ip <ip>] [--port <port>] [--host <host
 ```
 
 - `--env` optional
-
   - If defined, Wrangler will load the matching environment's configuration. Refer to [Environments](/workers/wrangler/environments/) for more information.
 
 - `--ip` optional
-
   - The IP to listen on, defaults to `127.0.0.1`.
 
 - `--port` optional
-
   - The port to listen on, defaults to `8787`.
 
 - `--host` optional
-
   - The host to forward requests to, defaults to the zone of the project or to `tutorial.cloudflareworkers.com` if unauthenticated.
 
 - `--local-protocol` optional
-
   - The protocol to listen to requests on, defaults to `http`.
 
 - `--upstream-protocol` optional
@@ -290,15 +276,12 @@ wrangler preview [--watch] [--env $ENVIRONMENT_NAME] [ --url $URL] [$METHOD] [$B
 Default values indicated by =value.
 
 - `--env $ENVIRONMENT_NAME` optional
-
   - If defined, Wrangler will load the matching environment's configuration. Refer to [Environments](/workers/wrangler/environments/) for more information.
 
 - `--watch` recommended
-
   - When enabled, any changes to the Worker project will continually update the preview service with the newest version of your project. By default, `wrangler preview` will only bundle your project a single time.
 
 - `$METHOD` ="GET" optional
-
   - The type of request to preview your Worker with (`GET`, `POST`).
 
 - `$BODY` ="Null" optional
@@ -362,7 +345,6 @@ wrangler route delete $ID [--env $ENVIRONMENT_NAME]
 Default values indicated by =value.
 
 - `$ID` required
-
   - The hash of the route ID to delete.
 
 - `--env $ENVIRONMENT_NAME` optional
@@ -400,7 +382,6 @@ echo "-----BEGIN PRIVATE KEY-----\nM...==\n-----END PRIVATE KEY-----\n" | wrangl
 ```
 
 - `name`
-
   - The variable name to be accessible in the script.
 
 - `--env $ENVIRONMENT_NAME` optional
@@ -415,7 +396,6 @@ wrangler secret delete <name> --env ENVIRONMENT_NAME
 ```
 
 - `name`
-
   - The variable name to be accessible in the script.
 
 - `--env $ENVIRONMENT_NAME` optional
@@ -582,11 +562,9 @@ wrangler kv:namespace create $NAME [--env=$ENVIRONMENT_NAME] [--preview]
 ```
 
 - `$NAME`
-
   - The name of the new namespace.
 
 - `--env $ENVIRONMENT_NAME` optional
-
   - If defined, the changes will only apply to the specified environment. Refer to [Environments](/workers/wrangler/environments/) for more information.
 
 - `--preview` optional
@@ -648,15 +626,12 @@ wrangler kv:namespace delete --binding= [--namespace-id=]
 ```
 
 - `--binding` required (if no <code>--namespace-id</code>)
-
   - The name of the namespace to delete.
 
 - `--namespace-id` required (if no <code>--binding</code>)
-
   - The ID of the namespace to delete.
 
 - `--env $ENVIRONMENT_NAME` optional
-
   - If defined, the changes will only apply to the specified environment. Refer to [Environments](/workers/wrangler/environments/) for more information.
 
 - `--preview` optional
@@ -692,35 +667,27 @@ wrangler kv:key put --binding= [--namespace-id=] $KEY $VALUE
 ```
 
 - `$KEY` required
-
   - The key to write to.
 
 - `$VALUE` required
-
   - The value to write.
 
 - `--binding` required (if no <code>--namespace-id</code>)
-
   - The name of the namespace to write to.
 
 - `--namespace-id` required (if no <code>--binding</code>)
-
   - The ID of the namespace to write to.
 
 - `--env $ENVIRONMENT_NAME` optional
-
   - If defined, the changes will only apply to the specified environment. Refer to [Environments](/workers/wrangler/environments/) for more information.
 
 - `--preview` optional
-
   - Interact with a preview namespace instead of production. Pass this to the Wrangler file’s `kv_namespaces.preview_id` instead of `kv_namespaces.id`.
 
 - `--ttl` optional
-
   - The lifetime (in number of seconds) the document should exist before expiring. Must be at least `60` seconds. This option takes precedence over the `expiration` option.
 
 - `--expiration` optional
-
   - The timestamp, in UNIX seconds, indicating when the key-value pair should expire.
 
 - `--path` optional
@@ -757,15 +724,12 @@ wrangler kv:key list --binding= [--namespace-id=] [--prefix] [--env]
 ```
 
 - `--binding` required (if no <code>--namespace-id</code>)
-
   - The name of the namespace to list.
 
 - `--namespace-id` required (if no <code>--binding</code>)
-
   - The ID of the namespace to list.
 
 - `--env $ENVIRONMENT_NAME` optional
-
   - If defined, the changes will only apply to the specified environment. Refer to [Environments](/workers/wrangler/environments/) for more information.
 
 - `--prefix` optional
@@ -797,19 +761,15 @@ wrangler kv:key get --binding= [--env=] [--preview] [--namespace-id=] "$KEY"
 ```
 
 - `$KEY` required
-
   - The key value to get.
 
 - `--binding` required (if no <code>--namespace-id</code>)
-
   - The name of the namespace to get from.
 
 - `--namespace-id` required (if no <code>--binding</code>)
-
   - The ID of the namespace to get from.
 
 - `--env $ENVIRONMENT_NAME` optional
-
   - If defined, the operation will only apply to the specified environment. Refer to [Environments](/workers/wrangler/environments/) for more information.
 
 - `--preview` optional
@@ -831,19 +791,15 @@ wrangler kv:key delete --binding= [--env=] [--preview] [--namespace-id=] "$KEY"
 ```
 
 - `$KEY` required
-
   - The key value to delete.
 
 - `--binding` required (if no <code>--namespace-id</code>)
-
   - The name of the namespace to delete from.
 
 - `--namespace-id` required (if no <code>--binding</code>)
-
   - The id of the namespace to delete from.
 
 - `--env` optional
-
   - Perform on a specific environment specified as `$ENVIRONMENT_NAME`.
 
 - `--preview` optional
@@ -870,19 +826,15 @@ wrangler kv:bulk put --binding= [--env=] [--preview] [--namespace-id=] $FILENAME
 ```
 
 - `$FILENAME` required
-
   - The file to write to the namespace
 
 - `--binding` required (if no <code>--namespace-id</code>)
-
   - The name of the namespace to put to.
 
 - `--namespace-id` required (if no <code>--binding</code>)
-
   - The id of the namespace to put to.
 
 - `--env $ENVIRONMENT_NAME` optional
-
   - If defined, the changes will only apply to the specified environment. Refer to [Environments](/workers/wrangler/environments/) for more information.
 
 - `--preview` optional
@@ -915,19 +867,15 @@ In order to save JSON data, cast `value` to a string:
 The schema below is the full schema for key-value entries uploaded via the bulk API:
 
 - `key` <Type text="string" /> <MetaInfo text="required" />
-
   - The key’s name. The name may be 512 bytes maximum. All printable, non-whitespace characters are valid.
 
 - `value` <Type text="string" /> <MetaInfo text="required" />
-
   - The UTF-8 encoded string to be stored, up to 25 MB in length.
 
 - `expiration` int optional
-
   - The time, measured in number of seconds since the UNIX epoch, at which the key should expire.
 
 - `expiration_ttl` int optional
-
   - The number of seconds the document should exist before expiring. Must be at least `60` seconds.
 
 - `base64` bool optional
@@ -952,19 +900,15 @@ wrangler kv:bulk delete --binding= [--env=] [--preview] [--namespace-id=] $FILEN
 ```
 
 - `$FILENAME` required
-
   - The file with key-value pairs to delete.
 
 - `--binding` required (if no <code>--namespace-id</code>)
-
   - The name of the namespace to delete from.
 
 - `--namespace-id` required (if no <code>--binding</code>)
-
   - The ID of the namespace to delete from.
 
 - `--env $ENVIRONMENT_NAME` optional
-
   - If defined, the changes will only apply to the specified environment. Refer to [Environments](/workers/wrangler/environments/) for more information.
 
 - `--preview` optional
@@ -982,11 +926,9 @@ This command takes a JSON file as an argument with a list of key-value pairs to 
 ```
 
 - `key` <Type text="string" /> <MetaInfo text="required" />
-
   - The key’s name. The name may be at most 512 bytes. All printable, non-whitespace characters are valid.
 
 - `value` <Type text="string" /> <MetaInfo text="required" />
-
   - This field must be specified for deserialization purposes, but is unused because the provided keys are being deleted, not written.
 
 ##### Usage

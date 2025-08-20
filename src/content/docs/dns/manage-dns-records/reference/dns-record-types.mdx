@@ -3,14 +3,19 @@ pcx_content_type: reference
 title: DNS record types
 sidebar:
   order: 2
-
 ---
 
-import { Details, Render, APIRequest, GlossaryTooltip, Example } from "~/components"
+import {
+	Details,
+	Render,
+	APIRequest,
+	GlossaryTooltip,
+	Example,
+} from "~/components";
 
 This page provides information about some of the different types of DNS records that you can manage on Cloudflare. For guidance on how to add, edit, or delete DNS records, refer to [Manage DNS records](/dns/manage-dns-records/how-to/create-dns-records/).
 
-***
+---
 
 ## IP address resolution
 
@@ -18,15 +23,15 @@ At least one **IP address resolution** record is required for each domain on Clo
 
 ### A and AAAA
 
-<Render file="a-aaaa-definition" />
+<Render file="a-aaaa-definition" product="dns" />
 
 These records include the following fields:
 
-* **Name**: A subdomain or the zone apex (`@`), which must:
-  * Be 63 characters or less
-  * Start with a letter and end with a letter or digit
-  * Only contain letters, digits, or hyphens (underscores allowed but discouraged)
-* **IPv4/IPv6 address**: Your origin server address (cannot be a [Cloudflare IP](https://www.cloudflare.com/ips))
+- **Name**: A subdomain or the zone apex (`@`), which must:
+  - Be 63 characters or less
+  - Start with a letter and end with a letter or digit
+  - Only contain letters, digits, or hyphens (underscores allowed but discouraged)
+- **IPv4/IPv6 address**: Your origin server address (cannot be a [Cloudflare IP](https://www.cloudflare.com/ips))
 
   :::note
 
@@ -35,77 +40,77 @@ These records include the following fields:
   Alternative notations of IPv4 addresses (`1.1` for `1.0.0.1`, for example) are not supported for A records.
   :::
 
-* **TTL**: Time to live, which controls how long DNS resolvers should cache a response before revalidating it.
-  * If the **Proxy Status** is **Proxied**, this value defaults to **Auto**, which is 300 seconds.
-  * If the **Proxy Status** is **DNS Only**, you can customize the value.
-* **Proxy status**: For more details, refer to [Proxied DNS records](/dns/proxy-status/).
+- **TTL**: Time to live, which controls how long DNS resolvers should cache a response before revalidating it.
+  - If the **Proxy Status** is **Proxied**, this value defaults to **Auto**, which is 300 seconds.
+  - If the **Proxy Status** is **DNS Only**, you can customize the value.
+- **Proxy status**: For more details, refer to [Proxied DNS records](/dns/proxy-status/).
 
 #### Example API call
 
 When creating A or AAAA records [using the API](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records):
 
-* The `content` of the records is an IP address (IPv4 for A or IPv6 for AAAA).
-* The `proxied` field affects the record's [proxy status](/dns/proxy-status/).
+- The `content` of the records is an IP address (IPv4 for A or IPv6 for AAAA).
+- The `proxied` field affects the record's [proxy status](/dns/proxy-status/).
 
-<Render file="api-field-definitions" />
+<Render file="api-field-definitions" product="dns" />
 
 <APIRequest
-  path="/zones/{zone_id}/dns_records"
+	path="/zones/{zone_id}/dns_records"
 	method="POST"
 	json={{
-    "type": "A",
-    "name": "www.example.com",
-    "content": "192.0.2.1",
-    "ttl": 3600,
-    "proxied": false
-  }}
+		type: "A",
+		name: "www.example.com",
+		content: "192.0.2.1",
+		ttl: 3600,
+		proxied: false,
+	}}
 	code={{
-    mark: [8, 10],
-  }}
+		mark: [8, 10],
+	}}
 />
 
 ```json title="Response"
 {
-  "result": {
-    "id": "<ID>",
-    "zone_id": "<ZONE_ID>",
-    "zone_name": "example.com",
-    "name": "www.example.com",
-    "type": "A",
-    "content": "192.0.2.1",
-    "proxiable": true,
-    "proxied": false,
-    "ttl": 1,
-    "locked": false,
-    "meta": {
-      "source": "primary"
-    },
-    "comment": null,
-    "tags": [],
-    "created_on": "2023-01-17T20:37:05.368097Z",
-    "modified_on": "2023-01-17T20:37:05.368097Z"
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": {
+		"id": "<ID>",
+		"zone_id": "<ZONE_ID>",
+		"zone_name": "example.com",
+		"name": "www.example.com",
+		"type": "A",
+		"content": "192.0.2.1",
+		"proxiable": true,
+		"proxied": false,
+		"ttl": 1,
+		"locked": false,
+		"meta": {
+			"source": "primary"
+		},
+		"comment": null,
+		"tags": [],
+		"created_on": "2023-01-17T20:37:05.368097Z",
+		"modified_on": "2023-01-17T20:37:05.368097Z"
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 
 ### CNAME
 
-<Render file="cname-definition" />
+<Render file="cname-definition" product="dns" />
 
 These records include the following fields:
 
-* **Name**: A subdomain or the zone apex (`@`), which must:
-  * Be 63 characters or less
-  * Start with a letter and end with a letter or digit
-  * Only contain letters, digits, or hyphens (underscores are allowed but discouraged)
-* **Target**: The hostname where traffic should be directed (`example.com`).
-* **TTL**: Time to live, which controls how long DNS resolvers should cache a response before revalidating it.
-  * If the **Proxy Status** is **Proxied**, this value defaults to **Auto**, which is 300 seconds.
-  * If the **Proxy Status** is **DNS Only**, you can customize the value.
-* **Proxy status**: For more details, refer to [Proxied DNS records](/dns/proxy-status/).
+- **Name**: A subdomain or the zone apex (`@`), which must:
+  - Be 63 characters or less
+  - Start with a letter and end with a letter or digit
+  - Only contain letters, digits, or hyphens (underscores are allowed but discouraged)
+- **Target**: The hostname where traffic should be directed (`example.com`).
+- **TTL**: Time to live, which controls how long DNS resolvers should cache a response before revalidating it.
+  - If the **Proxy Status** is **Proxied**, this value defaults to **Auto**, which is 300 seconds.
+  - If the **Proxy Status** is **DNS Only**, you can customize the value.
+- **Proxy status**: For more details, refer to [Proxied DNS records](/dns/proxy-status/).
 
 #### Proxied CNAME records
 
@@ -118,18 +123,20 @@ Observe the following aspects, especially before changing a CNAME record from <G
 <Example>
 DNS management for **example.com**:
 
-| Type     | Name    | Content                 | Proxy status  |
-| -------- | ------- | ----------------------- | ------------- |
-| CNAME    | abc     | `target.external.test`  | DNS Only      |
+| Type  | Name | Content                | Proxy status |
+| ----- | ---- | ---------------------- | ------------ |
+| CNAME | abc  | `target.external.test` | DNS Only     |
+
 </Example>
 
 <Example>
 DNS management for **external.test**:
 
-| Type    | Name      | Content               |
-| ------- | --------- | --------------------- |
-| A       | target    | `192.0.2.1`           |
-| TXT     | target    | `"some TXT content"`  |
+| Type | Name   | Content              |
+| ---- | ------ | -------------------- |
+| A    | target | `192.0.2.1`          |
+| TXT  | target | `"some TXT content"` |
+
 </Example>
 
 In this example, a query for TXT in `abc.example.com` will **not** return the TXT content in the target zone.
@@ -146,54 +153,54 @@ Specific CNAME record values with traffic proxied through Cloudflare will enable
 
 When creating CNAME records [using the API](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records):
 
-* The `content` of the records is a [fully qualified domain name](https://en.wikipedia.org/wiki/Fully_qualified_domain_name).
-* The `proxied` field affects the record's [proxy status](/dns/proxy-status/).
+- The `content` of the records is a [fully qualified domain name](https://en.wikipedia.org/wiki/Fully_qualified_domain_name).
+- The `proxied` field affects the record's [proxy status](/dns/proxy-status/).
 
-<Render file="api-field-definitions" />
+<Render file="api-field-definitions" product="dns" />
 
 <APIRequest
-  path="/zones/{zone_id}/dns_records"
+	path="/zones/{zone_id}/dns_records"
 	method="POST"
 	json={{
-    "type": "CNAME",
-    "name": "www.example.com",
-    "content": "www.another-example.com",
-    "ttl": 3600,
-    "proxied": false
-  }}
+		type: "CNAME",
+		name: "www.example.com",
+		content: "www.another-example.com",
+		ttl: 3600,
+		proxied: false,
+	}}
 	code={{
-    mark: [8, 10],
-  }}
+		mark: [8, 10],
+	}}
 />
 
 ```json title="Response"
 {
-  "result": {
-    "id": "<ID>",
-    "zone_id": "<ZONE_ID>",
-    "zone_name": "example.com",
-    "name": "www.example.com",
-    "type": "A",
-    "content": "www.another-example.com",
-    "proxiable": true,
-    "proxied": false,
-    "ttl": 1,
-    "locked": false,
-    "meta": {
-      "source": "primary"
-    },
-    "comment": null,
-    "tags": [],
-    "created_on": "2023-01-17T20:37:05.368097Z",
-    "modified_on": "2023-01-17T20:37:05.368097Z"
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": {
+		"id": "<ID>",
+		"zone_id": "<ZONE_ID>",
+		"zone_name": "example.com",
+		"name": "www.example.com",
+		"type": "A",
+		"content": "www.another-example.com",
+		"proxiable": true,
+		"proxied": false,
+		"ttl": 1,
+		"locked": false,
+		"meta": {
+			"source": "primary"
+		},
+		"comment": null,
+		"tags": [],
+		"created_on": "2023-01-17T20:37:05.368097Z",
+		"modified_on": "2023-01-17T20:37:05.368097Z"
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 
-***
+---
 
 ## Email authentication
 
@@ -205,33 +212,33 @@ If your domain is not used to send email messages, learn more about creating rec
 
 A mail exchange (MX) record is required to deliver email to a mail server.
 
-* [MX record syntax](https://www.cloudflare.com/learning/dns/dns-records/dns-mx-record/)
-* [Create an MX record](/dns/manage-dns-records/how-to/email-records/#send-and-receive-email)
+- [MX record syntax](https://www.cloudflare.com/learning/dns/dns-records/dns-mx-record/)
+- [Create an MX record](/dns/manage-dns-records/how-to/email-records/#send-and-receive-email)
 
-<Render file="api-field-definitions" />
+<Render file="api-field-definitions" product="dns" />
 
 ### DKIM
 
 A DomainKeys Identified Mail (DKIM) record ensures email authenticity by cryptographically signing emails:
 
-* [DKIM record syntax](https://www.cloudflare.com/learning/dns/dns-records/dns-dkim-record/)
-* [Create a DKIM record](/dmarc-management/security-records/#create-security-records)
+- [DKIM record syntax](https://www.cloudflare.com/learning/dns/dns-records/dns-dkim-record/)
+- [Create a DKIM record](/dmarc-management/security-records/#create-security-records)
 
 ### SPF
 
 A Sender Policy Framework (SPF) record lists authorized IP addresses and domains that can send email on behalf of your domain.
 
-* [SPF record syntax](https://www.cloudflare.com/learning/dns/dns-records/dns-spf-record/)
-* [Create an SPF record](/dmarc-management/security-records/#create-security-records)
+- [SPF record syntax](https://www.cloudflare.com/learning/dns/dns-records/dns-spf-record/)
+- [Create an SPF record](/dmarc-management/security-records/#create-security-records)
 
 ### DMARC
 
 A Domain-based Message Authentication Reporting and Conformance (DMARC) record helps generate aggregate reports about your email traffic and provide clear instructions for how email receivers should treat non-conforming emails.
 
-* [DMARC record syntax](https://www.cloudflare.com/learning/dns/dns-records/dns-dmarc-record/)
-* [Create a DMARC record](/dmarc-management/security-records/#create-security-records)
+- [DMARC record syntax](https://www.cloudflare.com/learning/dns/dns-records/dns-dmarc-record/)
+- [Create a DMARC record](/dmarc-management/security-records/#create-security-records)
 
-***
+---
 
 ## Specialized records
 
@@ -245,15 +252,13 @@ At Cloudflare, TXT records are most commonly used to demonstrate domain ownershi
 
 You could also use TXT to create email authentication records, but we recommend that you use our [Email Security Wizard](/dns/manage-dns-records/how-to/email-records/#prevent-domain-spoofing) instead.
 
-<Render file="api-field-definitions" />
+<Render file="api-field-definitions" product="dns" />
 
 :::note
-
 
 The **Content** for each TXT record must be 2,048 characters or less.
 
 If you have multiple TXT records with the same **Name**, there is also a limit for the sum of their **Content** characters, which must be 8,192 or less.
-
 
 :::
 
@@ -261,7 +266,7 @@ If you have multiple TXT records with the same **Name**, there is also a limit f
 
 A [Certificate Authority Authorization (CAA) record](/ssl/edge-certificates/caa-records/) specifies which Certificate Authorities (CAs) are allowed to issue certificates for a domain.
 
-<Render file="api-field-definitions" />
+<Render file="api-field-definitions" product="dns" />
 
 ### SRV
 
@@ -269,57 +274,57 @@ A [service record (SRV)](https://www.cloudflare.com/learning/dns/dns-records/dns
 
 #### Example API call
 
-<Render file="api-field-definitions" />
+<Render file="api-field-definitions" product="dns" />
 
 <APIRequest
-  path="/zones/{zone_id}/dns_records"
+	path="/zones/{zone_id}/dns_records"
 	method="POST"
 	json={{
-    "type": "SRV",
-    "name": "_xmpp._tcp.example.com",
-    "data": {
-      "priority": 10,
-      "weight": 5,
-      "port": 5223,
-      "target": "server.example.com"
-      }
+		type: "SRV",
+		name: "_xmpp._tcp.example.com",
+		data: {
+			priority: 10,
+			weight: 5,
+			port: 5223,
+			target: "server.example.com",
+		},
 	}}
 />
 
 ```json title="Response"
 {
-  "result": {
-    "id": "<ID>",
-    "zone_id": "<ZONE_ID>",
-    "zone_name": "example.com",
-    "name": "_xmpp._tcp.example.com",
-    "type": "SRV",
-    "content": "5 5223 server.example.com",
-    "priority": 10,
-    "proxiable": false,
-    "proxied": false,
-    "ttl": 1,
-    "locked": false,
-    "data": {
-      "port": 5223,
-      "priority": 10,
-      "target": "server.example.com",
-      "weight": 5
-    },
-    "meta": {
-      "auto_added": false,
-      "managed_by_apps": false,
-      "managed_by_argo_tunnel": false,
-      "source": "primary"
-    },
-    "comment": null,
-    "tags": [],
-    "created_on": "2022-11-08T15:57:39.585977Z",
-    "modified_on": "2022-11-08T15:57:39.585977Z"
-  },
-  "success": true,
-  "errors": [],
-  "messages": []
+	"result": {
+		"id": "<ID>",
+		"zone_id": "<ZONE_ID>",
+		"zone_name": "example.com",
+		"name": "_xmpp._tcp.example.com",
+		"type": "SRV",
+		"content": "5 5223 server.example.com",
+		"priority": 10,
+		"proxiable": false,
+		"proxied": false,
+		"ttl": 1,
+		"locked": false,
+		"data": {
+			"port": 5223,
+			"priority": 10,
+			"target": "server.example.com",
+			"weight": 5
+		},
+		"meta": {
+			"auto_added": false,
+			"managed_by_apps": false,
+			"managed_by_argo_tunnel": false,
+			"source": "primary"
+		},
+		"comment": null,
+		"tags": [],
+		"created_on": "2022-11-08T15:57:39.585977Z",
+		"modified_on": "2022-11-08T15:57:39.585977Z"
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
 }
 ```
 
@@ -331,7 +336,7 @@ If your domain has [HTTP/2 or HTTP/3 enabled](/speed/optimization/protocol/) and
 
 For more details and context, refer to the [announcement blog post](https://blog.cloudflare.com/speeding-up-https-and-http-3-negotiation-with-dns/) and [RFC 9460](https://www.rfc-editor.org/rfc/rfc9460.html).
 
-<Render file="api-field-definitions" />
+<Render file="api-field-definitions" product="dns" />
 
 ### PTR
 
@@ -339,7 +344,7 @@ A [pointer (PTR) record](https://www.cloudflare.com/learning/dns/dns-records/dns
 
 Within Cloudflare, PTR records are used for reverse DNS lookups and should preferably be added to [reverse zones](/dns/additional-options/reverse-zones/).
 
-<Render file="api-field-definitions" />
+<Render file="api-field-definitions" product="dns" />
 
 ### SOA
 
@@ -360,47 +365,46 @@ Refer to the following list for information about each SOA record field:
 
 <Details header="SOA record fields">
 
-* **`MNAME`**: The primary nameserver for the zone. Secondary nameservers receive zone updates from the nameserver specified in this field.
-* **`RNAME`**: The email address of the administrator responsible for the zone.
+- **`MNAME`**: The primary nameserver for the zone. Secondary nameservers receive zone updates from the nameserver specified in this field.
+- **`RNAME`**: The email address of the administrator responsible for the zone.
 
-    The `@` symbol is replaced by the first dot. If an email address contains a dot before `@`, this should be represented as `\.`.
+  The `@` symbol is replaced by the first dot. If an email address contains a dot before `@`, this should be represented as `\.`.
 
-    | Email                     | `RNAME`                 |
-    |---------------------------|-------------------------|
-    |`john@example.com`         | `john.example.com`      |
-    |`john.doe@example.com`     | `john\.doe.example.com` |
+  | Email                  | `RNAME`                 |
+  | ---------------------- | ----------------------- |
+  | `john@example.com`     | `john.example.com`      |
+  | `john.doe@example.com` | `john\.doe.example.com` |
 
-* **`Serial`**: The serial number for the zone. Secondary nameservers initiate zone transfers if this number increases.
-* **`Refresh`**: Time (in seconds) after which a secondary nameserver should query the primary for the `SOA` record, to detect zone changes. Only relevant if DNS NOTIFY ([RFC 1996](https://www.rfc-editor.org/rfc/rfc1996.html)) is not configured.
+- **`Serial`**: The serial number for the zone. Secondary nameservers initiate zone transfers if this number increases.
+- **`Refresh`**: Time (in seconds) after which a secondary nameserver should query the primary for the `SOA` record, to detect zone changes. Only relevant if DNS NOTIFY ([RFC 1996](https://www.rfc-editor.org/rfc/rfc1996.html)) is not configured.
 
-    | Default      | Minimum    | Maximum  |
-    |--------------|------------|----------|
-    |`10000`       | `600`      | `86400`  |
+  | Default | Minimum | Maximum |
+  | ------- | ------- | ------- |
+  | `10000` | `600`   | `86400` |
 
-* **`Retry`**: Time (in seconds) after which a secondary nameserver should retry getting the serial number from the primary nameserver after a failed attempt. Any specified values must not be greater than `Refresh`.
+- **`Retry`**: Time (in seconds) after which a secondary nameserver should retry getting the serial number from the primary nameserver after a failed attempt. Any specified values must not be greater than `Refresh`.
 
-    | Default      | Minimum    | Maximum  |
-    |--------------|------------|----------|
-    |`2400`        | `600`      | `3600`   |
+  | Default | Minimum | Maximum |
+  | ------- | ------- | ------- |
+  | `2400`  | `600`   | `3600`  |
 
-* **`Expire`**: Time (in seconds) after which a secondary nameserver should stop answering queries for a zone if the primary does not respond. Any specified values must not be smaller than `Refresh`.
+- **`Expire`**: Time (in seconds) after which a secondary nameserver should stop answering queries for a zone if the primary does not respond. Any specified values must not be smaller than `Refresh`.
 
-    | Default      | Minimum    | Maximum   |
-    |--------------|------------|-----------|
-    |`604800`      | `86400`    | `2419200` |
+  | Default  | Minimum | Maximum   |
+  | -------- | ------- | --------- |
+  | `604800` | `86400` | `2419200` |
 
-* **`Record TTL`**: The [time to live](/dns/manage-dns-records/reference/ttl/) of the SOA record.
+- **`Record TTL`**: The [time to live](/dns/manage-dns-records/reference/ttl/) of the SOA record.
 
-    | Default      | Minimum    | Maximum  |
-    |--------------|------------|----------|
-    |`3600`        | `1800`     | `3600`   |
+  | Default | Minimum | Maximum |
+  | ------- | ------- | ------- |
+  | `3600`  | `1800`  | `3600`  |
 
-* **`Minimum TTL`**: The TTL for caching negative responses. Refer to [RFC 2308](https://www.rfc-editor.org/rfc/rfc2308.html#section-4) for details.
+- **`Minimum TTL`**: The TTL for caching negative responses. Refer to [RFC 2308](https://www.rfc-editor.org/rfc/rfc2308.html#section-4) for details.
 
-    | Default      | Minimum    | Maximum  |
-    |--------------|------------|----------|
-    |`1800`        | `60`       | `86400`  |
-
+  | Default | Minimum | Maximum |
+  | ------- | ------- | ------- |
+  | `1800`  | `60`    | `86400` |
 
 </Details>
 
@@ -410,7 +414,7 @@ A [nameserver (NS) record](https://www.cloudflare.com/learning/dns/dns-records/d
 
 You only need to add NS records to your DNS records table in Cloudflare when you are using [subdomain setup](/dns/zone-setups/subdomain-setup/) or [delegating subdomains outside of Cloudflare](/dns/manage-dns-records/how-to/subdomains-outside-cloudflare/).
 
-<Render file="api-field-definitions" />
+<Render file="api-field-definitions" product="dns" />
 
 :::note
 Your assigned Cloudflare nameservers, custom nameservers, and their corresponding [nameserver TTLs](/dns/nameservers/nameserver-options/#nameserver-ttl) are controlled via dedicated sections in [**DNS** > **Records**](https://dash.cloudflare.com/?to=/:account/:zone/dns/records). For details, refer to [Nameservers](/dns/nameservers/).
@@ -422,7 +426,7 @@ Your assigned Cloudflare nameservers, custom nameservers, and their correspondin
 
 Most Cloudflare domains do not need to add these records and should instead follow our [DNSSEC setup guide](/dns/dnssec/).
 
-<Render file="api-field-definitions" />
+<Render file="api-field-definitions" product="dns" />
 
 ### Other
 

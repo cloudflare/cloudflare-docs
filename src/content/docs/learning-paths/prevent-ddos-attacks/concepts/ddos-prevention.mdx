@@ -3,10 +3,9 @@ title: How to prevent DDoS attacks
 pcx_content_type: learning-unit
 sidebar:
   order: 2
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 Since DDoS attacks target your web servers, the way to prevent them is to reduce requests reaching those servers.
 
@@ -21,11 +20,11 @@ flowchart TD;
     A --Prevent external connections---x Origin
 ```
 
-<br/>
+<br />
 
 Requests can come to your origin server in two ways, from your web application and from direct connections to the server itself.
 
-***
+---
 
 ## Reduce application requests to the origin
 
@@ -35,7 +34,7 @@ A cache stores copies of frequently accessed resources (images, CSS files).
 
 When a resource is cached - either on a user's browser or Content Delivery Network (CDN) server - requests for that resource do not have to go to your origin server. Instead, these resources are served directly by the cache.
 
-<Render file="cache-basic-diagram" /> <br/>
+<Render file="cache-basic-diagram" product="learning-paths" /> <br />
 
 In the context of DDoS attacks, caching reduces the number of requests going to your origin server, which makes it harder for your server to get overwhelmed by traffic.
 

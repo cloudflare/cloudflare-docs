@@ -4,10 +4,9 @@ pcx_content_type: how-to
 description: Learn how to create API tokens via Cloudflare's API. Follow steps to define access policies, set restrictions, and generate tokens securely.
 sidebar:
   order: 3
-
 ---
 
-import { Render, Tabs, TabItem, APIRequest } from "~/components"
+import { Render, Tabs, TabItem, APIRequest } from "~/components";
 
 Generate new API tokens on the fly via the API. Before you can do this, you must create an API token in the Cloudflare dashboard that can create subsequent tokens.
 
@@ -15,7 +14,7 @@ Generate new API tokens on the fly via the API. Before you can do this, you must
 
 Before you can create tokens via the API, you need to [generate the initial token](/fundamentals/api/get-started/create-token/) via the Cloudflare dashboard.
 
-<Render file="new-token-warning" />
+<Render file="new-token-warning" product="fundamentals" />
 
 ### Recommendations
 
@@ -41,24 +40,24 @@ Each token can contain multiple policies.
 
 ```json
 [
-  {
-    "id": "f267e341f3dd4697bd3b9f71dd96247f",
-    "effect": "allow",
-    "resources": {
-      "com.cloudflare.api.account.zone.eb78d65290b24279ba6f44721b3ea3c4": "*",
-      "com.cloudflare.api.account.zone.22b1de5f1c0e4b3ea97bb1e963b06a43": "*"
-    },
-    "permission_groups": [
-      {
-        "id": "c8fed203ed3043cba015a93ad1616f1f",
-        "name": "Zone Read"
-      },
-      {
-        "id": "82e64a83756745bbbb1c9c2701bf816b",
-        "name": "DNS Read"
-      }
-    ]
-  }
+	{
+		"id": "f267e341f3dd4697bd3b9f71dd96247f",
+		"effect": "allow",
+		"resources": {
+			"com.cloudflare.api.account.zone.eb78d65290b24279ba6f44721b3ea3c4": "*",
+			"com.cloudflare.api.account.zone.22b1de5f1c0e4b3ea97bb1e963b06a43": "*"
+		},
+		"permission_groups": [
+			{
+				"id": "c8fed203ed3043cba015a93ad1616f1f",
+				"name": "Zone Read"
+			},
+			{
+				"id": "82e64a83756745bbbb1c9c2701bf816b",
+				"name": "DNS Read"
+			}
+		]
+	}
 ]
 ```
 
@@ -75,7 +74,6 @@ API token policies support three resource types: `User`, `Account`, and `Zone`.
 
 :::note
 
-
 Fetch each object's ID by calling the appropriate `GET <object>` API. Refer to [User](/api/resources/user/methods/get/), [Account](/api/resources/accounts/methods/list/), and [Zone](/api/resources/zones/methods/list/) documentation for more details.
 :::
 
@@ -83,16 +81,16 @@ Fetch each object's ID by calling the appropriate `GET <object>` API. Refer to [
 
 Include a single account or all accounts in a token policy.
 
-* A **single account** is denoted as:`"com.cloudflare.api.account.<ACCOUNT_ID>": "*"`.
-* **All accounts** is denoted as:`"com.cloudflare.api.account.*": "*"`
+- A **single account** is denoted as:`"com.cloudflare.api.account.<ACCOUNT_ID>": "*"`.
+- **All accounts** is denoted as:`"com.cloudflare.api.account.*": "*"`
 
 ##### Zone
 
 Include a **single zone**, **all zones in an account**, or **all zones in all accounts** in a token policy.
 
-* A **single zone** is denoted as:`"com.cloudflare.api.account.zone.<ZONE_ID>": "*"`
-* **All Zones in an account** are denoted as:`"com.cloudflare.api.account.<ACCOUNT_ID>": {"com.cloudflare.api.account.zone.*": "*"}`
-* **All zones in all accounts** is denoted as:`"com.cloudflare.api.account.zone.*": "*"`
+- A **single zone** is denoted as:`"com.cloudflare.api.account.zone.<ZONE_ID>": "*"`
+- **All Zones in an account** are denoted as:`"com.cloudflare.api.account.<ACCOUNT_ID>": {"com.cloudflare.api.account.zone.*": "*"}`
+- **All zones in all accounts** is denoted as:`"com.cloudflare.api.account.zone.*": "*"`
 
 ##### User
 
@@ -104,36 +102,27 @@ Add permission groups to the API token by specifying their `id` values. We recom
 
 To fetch all available permission groups and their IDs, use the [List permission groups](/api/resources/user/subresources/tokens/subresources/permission_groups/methods/list/) endpoint:
 
-<APIRequest
-  path="/user/tokens/permission_groups"
-  method="GET"
-/>
+<APIRequest path="/user/tokens/permission_groups" method="GET" />
 
 ```json output
 {
-  "result": [
-    {
-      "id": "19637fbb73d242c0a92845d8db0b95b1",
-      "name": "AI Audit Read",
-      "description": "Grants access to reading AI Audit",
-      "scopes": [
-        "com.cloudflare.api.account.zone"
-      ]
-    },
-    {
-      "id": "1ba6ab4cacdb454b913bbb93e1b8cb8c",
-      "name": "AI Audit Write",
-      "description": "Grants access to reading and editing AI Audit",
-      "scopes": [
-        "com.cloudflare.api.account.zone"
-      ]
-    },
-    // (...)
+	"result": [
+		{
+			"id": "19637fbb73d242c0a92845d8db0b95b1",
+			"name": "AI Audit Read",
+			"description": "Grants access to reading AI Audit",
+			"scopes": ["com.cloudflare.api.account.zone"]
+		},
+		{
+			"id": "1ba6ab4cacdb454b913bbb93e1b8cb8c",
+			"name": "AI Audit Write",
+			"description": "Grants access to reading and editing AI Audit",
+			"scopes": ["com.cloudflare.api.account.zone"]
+		}
+		// (...)
 	]
 }
 ```
-
-
 
 ### 2. Define the restrictions
 
@@ -145,16 +134,10 @@ Limit usage of a token by client IP address filters with the following object:
 
 ```json
 {
-  "request.ip": {
-    "in": [
-      "199.27.128.0/21",
-      "2400:cb00::/32"
-    ],
-    "not_in": [
-      "199.27.128.0/21",
-      "2400:cb00::/32"
-    ]
-  }
+	"request.ip": {
+		"in": ["199.27.128.0/21", "2400:cb00::/32"],
+		"not_in": ["199.27.128.0/21", "2400:cb00::/32"]
+	}
 }
 ```
 
