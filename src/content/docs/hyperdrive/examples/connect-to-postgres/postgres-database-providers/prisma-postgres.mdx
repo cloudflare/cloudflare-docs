@@ -22,7 +22,7 @@ You can connect Hyperdrive to any existing Prisma Postgres database by using you
 2. Select **Connect to your database** > **Any client**.
 3. Select **Generate database credentials**. Copy the connection string for your Prisma Postgres database.
 4. Edit the connection string to make it compatible with Hyperdrive.
-  - Add the database name after the port, but before `?sslmode=require`.
+  - Add the database name after the port. You may remove any query parameters, such as `?sslmode=require`.
   - The final string will look like:
   
    ```txt ins="database_name"
