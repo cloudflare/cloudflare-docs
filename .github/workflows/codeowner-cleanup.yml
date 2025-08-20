@@ -22,5 +22,6 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPOSITORY: cloudflare/cloudflare-docs
+          ORGANIZATION: cloudflare
           DRY_RUN: true
           ISSUE_REPORT: true
