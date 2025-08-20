@@ -54,12 +54,15 @@ If you are unsure of which URL to use in the **Entity ID** and **Assertion Consu
    - **Identity Provider Certificate**: Upload the `.crt` certificate file from [2. Create a certificate file](#2-create-a-certificate-file).
    - **Entity ID**: `https://<your-domain>.my.salesforce.com`
    - **SAML Identity type:** If the user's Salesforce username is their email address, select _Assertion contains the User's Salesforce username_. Otherwise, select _Assertion contains the Federation ID from the User object_ and make sure the user's Federation ID matches their email address.
-     <Details header="Configure Federation IDs">
-   1. In the **Quick Find** box, enter `users` and select **Users**.
-   2. Select the user.
-   3. Verify that the user's **Federation ID** matches the email address used to authenticate to Cloudflare Access.
-      </Details>
-   - **Identity Provider Login URL**: SSO endpoint provided in Cloudflare Zero Trust for this application.
+
+   <Details header="Configure Federation IDs">
+   	1. In the **Quick Find** box, enter `users` and select **Users**. 2. Select
+   	the user. 3. Verify that the user's **Federation ID** matches the email
+   	address used to authenticate to Cloudflare Access.
+   </Details>
+   - **Identity Provider Login URL**: SSO endpoint provided in Cloudflare Zero
+   Trust for this application.
+
 5. Select **Save**.
 
 ## 4. Enable Single Sign-On in Salesforce
