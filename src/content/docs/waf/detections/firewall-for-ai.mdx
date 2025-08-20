@@ -10,13 +10,13 @@ sidebar:
     text: Beta
 ---
 
-import { Tabs, TabItem, Details, Type } from "~/components";
+import { GlossaryTooltip, Tabs, TabItem, Details, Type } from "~/components";
 
-Firewall for AI is a detection that can help protect your services powered by large language models (LLMs) against abuse. This model-agnostic detection currently helps you do the following:
+Firewall for AI is a detection that can help protect your services powered by <GlossaryTooltip term="LLM">large language models</GlossaryTooltip> (LLMs) against abuse. This model-agnostic detection currently helps you do the following:
 
 - Prevent data leaks of personally identifiable information (PII) — for example, phone numbers, email addresses, social security numbers, and credit card numbers.
 - Detect and moderate unsafe or harmful prompts – for example, prompts potentially related to violent crimes.
-- Detect prompts intentionally designed to subvert the intended behavior of the LLM as specified by the developer – for example, prompt injection attacks and jailbreaking attempts.
+- Detect prompts intentionally designed to subvert the intended behavior of the LLM as specified by the developer – for example, <GlossaryTooltip term="prompt injection">prompt injection</GlossaryTooltip> attacks.
 
 When enabled, the detection runs on incoming traffic, searching for any LLM prompts attempting to exploit the model.
 
