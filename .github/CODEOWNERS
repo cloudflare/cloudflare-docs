@@ -213,8 +213,9 @@
 
 # Support
 
-/src/content/docs/support/ @zeinjaber @TracyCloudflare @ngayerie @cloudflare/pcx-technical-writing @cloudflare/customer-support
-/src/assets/images/support/ @zeinjaber @TracyCloudflare @ngayerie @cloudflare/pcx-technical-writing @cloudflare/customer-support
+/src/content/docs/support/ @zeinjaber @ngayerie @cloudflare/pcx-technical-writing @cloudflare/customer-support
+/src/assets/images/support/ @zeinjaber @ngayerie @cloudflare/pcx-technical-writing @cloudflare/customer-support
+/src/content/docs/billing/ @zeinjaber @ngayerie @simon-says @cloudflare/customer-support @cloudflare/pcx-technical-writing
 
 # Turnstile
 
