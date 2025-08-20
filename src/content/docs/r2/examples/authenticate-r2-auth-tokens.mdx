@@ -13,7 +13,7 @@ For providing secure access to bucket objects for anonymous users, we recommend 
 Pre-signed URLs do not require users to be a member of your organization and enable programmatic application directly.
 :::
 
-Ensure you have set the following environmental variables prior to running either example:
+Ensure you have set the following environmental variables prior to running either example. Refer to [Get S3 API credentials from an API token](/r2/api/tokens/#get-s3-api-credentials-from-an-api-token) for more information.
 
 ```sh
 export R2_ACCOUNT_ID=your_account_id
@@ -32,7 +32,6 @@ export R2_BUCKET_NAME=your_bucket_name
 
     ```javascript
     const AWS = require('aws-sdk');
-    const crypto = require('crypto');
 
     const ACCOUNT_ID = process.env.R2_ACCOUNT_ID;
     const ACCESS_KEY_ID = process.env.R2_ACCESS_KEY_ID;
@@ -99,14 +98,11 @@ export R2_BUCKET_NAME=your_bucket_name
     SECRET_ACCESS_KEY = os.environ.get('R2_SECRET_ACCESS_KEY')
     BUCKET_NAME = os.environ.get('R2_BUCKET_NAME')
 
-    # Hash the secret access key using SHA-256
-    hashed_secret_key = hashlib.sha256(SECRET_ACCESS_KEY.encode()).hexdigest()
-
     # Configure the S3 client for Cloudflare R2
     s3_client = boto3.client('s3',
         endpoint_url=f'https://{ACCOUNT_ID}.r2.cloudflarestorage.com',
         aws_access_key_id=ACCESS_KEY_ID,
-        aws_secret_access_key=hashed_secret_key,
+        aws_secret_access_key=SECRET_ACCESS_KEY,
         config=Config(signature_version='s3v4')
     )
 
@@ -149,7 +145,6 @@ export R2_BUCKET_NAME=your_bucket_name
 
     import (
         "context"
-        "crypto/sha256"
         "encoding/hex"
         "fmt"
         "io"
@@ -169,11 +164,6 @@ export R2_BUCKET_NAME=your_bucket_name
         secretAccessKey := os.Getenv("R2_SECRET_ACCESS_KEY")
         bucketName := os.Getenv("R2_BUCKET_NAME")
 
-        // Hash the secret access key
-        hasher := sha256.New()
-        hasher.Write([]byte(secretAccessKey))
-        hashedSecretKey := hex.EncodeToString(hasher.Sum(nil))
-
         // Configure the S3 client for Cloudflare R2
         r2Resolver := aws.EndpointResolverWithOptionsFunc(func(service, region string, options ...interface{}) (aws.Endpoint, error) {
             return aws.Endpoint{
@@ -183,7 +173,7 @@ export R2_BUCKET_NAME=your_bucket_name
 
         cfg, err := config.LoadDefaultConfig(context.TODO(),
             config.WithEndpointResolverWithOptions(r2Resolver),
-            config.WithCredentialsProvider(credentials.NewStaticCredentialsProvider(accessKeyID, hashedSecretKey, "")),
+            config.WithCredentialsProvider(credentials.NewStaticCredentialsProvider(accessKeyID, secretAccessKey, "")),
             config.WithRegion("auto"), // Cloudflare R2 doesn't use regions, but this is required by the SDK
         )
         if err != nil {
