@@ -23,5 +23,4 @@ jobs:
           GH_TOKEN: ${{ secrets.HOLOPIN_LABELER }}
           REPOSITORY: cloudflare/cloudflare-docs
           ORGANIZATION: cloudflare
-          DRY_RUN: true
           ISSUE_REPORT: true
