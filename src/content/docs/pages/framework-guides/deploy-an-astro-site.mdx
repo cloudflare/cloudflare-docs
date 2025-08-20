@@ -47,7 +47,7 @@ Astro will ask:
 
 You can deploy an Astro Server-side Rendered (SSR) site to Cloudflare Pages using the [`@astrojs/cloudflare` adapter](https://github.com/withastro/adapters/tree/main/packages/cloudflare#readme). SSR sites render on Pages Functions and allow for dynamic functionality and customizations.
 
-<Render file="c3-adapter" />
+<Render file="c3-adapter" product="pages" />
 
 Add the [`@astrojs/cloudflare` adapter](https://github.com/withastro/adapters/tree/main/packages/cloudflare#readme) to your project's `package.json` by running:
 
@@ -55,9 +55,9 @@ Add the [`@astrojs/cloudflare` adapter](https://github.com/withastro/adapters/tr
 npm run astro add cloudflare
 ```
 
-<Render file="tutorials-before-you-start" />
+<Render file="tutorials-before-you-start" product="pages" />
 
-<Render file="framework-guides/create-github-repository" />
+<Render file="framework-guides/create-github-repository" product="pages" />
 
 ## Deploy with Cloudflare Pages
 
@@ -114,7 +114,7 @@ Use bindings in Astro components and API routes by using `context.locals` from [
 
 Refer to the following example of how to access a KV namespace with TypeScript.
 
-First, you need to define Cloudflare runtime and KV type by updating the `env.d.ts`. Make sure you have generated Cloudflare runtime types by running [`wrangler types`](/pages/functions/typescript/). 
+First, you need to define Cloudflare runtime and KV type by updating the `env.d.ts`. Make sure you have generated Cloudflare runtime types by running [`wrangler types`](/pages/functions/typescript/).
 
 ```typescript
 /// <reference types="astro/client" />

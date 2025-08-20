@@ -5,7 +5,7 @@ title: http
 
 import { Render } from "~/components";
 
-<Render file="nodejs-compat-howto" />
+<Render file="nodejs-compat-howto" product="workers" />
 
 ## Compatibility flags
 
@@ -140,18 +140,18 @@ The `IncomingMessage` class represents an HTTP request that is received from the
 The `IncomingMessage` class represents an HTTP message (request or response). It provides methods for reading headers and body data. `IncomingMessage` extends from the `Readable` stream class.
 
 ```js
-import { get, IncomingMessage } from 'node:http';
-import { ok, strictEqual } from 'node:assert';
+import { get, IncomingMessage } from "node:http";
+import { ok, strictEqual } from "node:assert";
 
 export default {
 	async fetch() {
 		// ...
-		get('http://example.org', (res) => {
+		get("http://example.org", (res) => {
 			ok(res instanceof IncomingMessage);
 		});
 		// ...
-	}
-}
+	},
+};
 ```
 
 The Workers implementation includes a `cloudflare` property on `IncomingMessage` objects:

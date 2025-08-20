@@ -77,7 +77,7 @@ To interact with your KV namespace binding locally by passing arguments to the W
 npx wrangler pages dev <OUTPUT_DIR> --kv=TODO_LIST
 ```
 
-<Render file="cli-precedence-over-file" />
+<Render file="cli-precedence-over-file" product="pages" />
 
 ## Durable Objects
 
@@ -142,7 +142,7 @@ To interact with your Durable Object namespace locally via the Wrangler CLI, app
 
 For example, if your Worker is called `do-worker` and it declares a Durable Object class called `DurableObjectExample`, access this Durable Object by running `npx wrangler dev` in the `do-worker` directory. At the same time, run `npx wrangler pages dev <OUTPUT_DIR> --do MY_DO=DurableObjectExample@do-worker` in your Pages' project directory. Interact with the `MY_DO` binding in your Function code by using `context.env` (for example, `context.env.MY_DO`).
 
-<Render file="cli-precedence-over-file" />
+<Render file="cli-precedence-over-file" product="pages" />
 
 ## R2 buckets
 
@@ -213,7 +213,7 @@ npx wrangler pages dev <OUTPUT_DIR> --r2=BUCKET
 
 Interact with this binding by using `context.env` (for example, `context.env.BUCKET`.)
 
-<Render file="cli-precedence-over-file" />
+<Render file="cli-precedence-over-file" product="pages" />
 
 ## D1 databases
 
@@ -288,7 +288,7 @@ By default, Wrangler automatically persists data to local storage. For more info
 
 Refer to the [D1 Workers Binding API documentation](/d1/worker-api/) for the API methods available on your D1 binding.
 
-<Render file="cli-precedence-over-file" />
+<Render file="cli-precedence-over-file" product="pages" />
 
 ## Vectorize indexes
 
@@ -499,7 +499,7 @@ To interact with a Workers AI binding via the Wrangler CLI while developing loca
 npx wrangler pages dev --ai=<BINDING_NAME>
 ```
 
-<Render file="cli-precedence-over-file" />
+<Render file="cli-precedence-over-file" product="pages" />
 
 ## Service bindings
 
@@ -562,7 +562,7 @@ Support for running multiple Workers in the same dev session with one Wrangler c
 
 :::
 
-<Render file="cli-precedence-over-file" />
+<Render file="cli-precedence-over-file" product="pages" />
 
 ## Queue Producers
 

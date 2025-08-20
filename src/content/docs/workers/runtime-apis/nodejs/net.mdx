@@ -5,7 +5,7 @@ title: net
 
 import { Render, TypeScriptExample } from "~/components";
 
-<Render file="nodejs-compat-howto" />
+<Render file="nodejs-compat-howto" product="workers" />
 
 You can use [`node:net`](https://nodejs.org/api/net.html) to create a direct connection to servers via a TCP sockets
 with [`net.Socket`](https://nodejs.org/api/net.html#class-netsocket).
@@ -29,7 +29,8 @@ export default {
     socket.end();
 
     return new Response("Wrote to server", { status: 200 });
-  },
+
+},
 } satisfies ExportedHandler;
 
 ```
@@ -41,3 +42,4 @@ and [`net.SocketAddress`](https://nodejs.org/api/net.html#class-netsocketaddress
 Note that the [`net.Server`](https://nodejs.org/api/net.html#class-netserver) class is not supported by Workers.
 
 The full `node:net` API is documented in the [Node.js documentation for `node:net`](https://nodejs.org/api/net.html).
+```

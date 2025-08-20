@@ -17,7 +17,7 @@ Text strings and JSON values are not encrypted and are useful for storing applic
 
 To add env variables using Wrangler, define text and JSON via the `[vars]` configuration in your Wrangler file. In the following example, `API_HOST` and `API_ACCOUNT_ID` are text values and `SERVICE_X_DATA` is a JSON value.
 
-<Render file="envvar-example" />
+<Render file="envvar-example" product="workers" />
 
 Refer to the following example on how to access the `API_HOST` environment variable in your Worker code:
 
@@ -93,11 +93,11 @@ To add environment variables via the dashboard:
 Select the **Secret** type if your environment variable is a [secret](/workers/configuration/secrets/). Alternatively, consider [Cloudflare Secrets Store](/secrets-store/), for account-level secrets.
 :::
 
-<Render file="env_and_secrets" />
+<Render file="env_and_secrets" product="workers" />
 
 ### Local development with secrets
 
-<Render file="secrets-in-dev" />
+<Render file="secrets-in-dev" product="workers" />
 
 ## Environment variables and Node.js compatibility
 

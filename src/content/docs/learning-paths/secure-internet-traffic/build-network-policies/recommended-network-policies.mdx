@@ -19,7 +19,7 @@ For more information on building network policies, refer to [Network policies](/
 
 ## Quarantined-Users-NET-Restricted-Access
 
-<Render file="zero-trust/blocklist-restricted-users" />
+<Render file="zero-trust/blocklist-restricted-users" product="learning-paths" />
 
 <Tabs syncKey="dashPlusAPI">
 
@@ -78,7 +78,7 @@ resource "cloudflare_zero_trust_gateway_policy" "quarantined_users_net_restricte
 
 Restrict access for devices where baseline posture checks have not passed. If posture checks are integrated with service providers such as Crowdstrike or Intune via the API, this policy dynamically blocks access for devices that do not meet predetermined security requirements.
 
-<Render file="zero-trust/blocklist-restricted-users" />
+<Render file="zero-trust/blocklist-restricted-users" product="learning-paths" />
 
 <Tabs syncKey="dashPlusAPI">
 
@@ -193,7 +193,10 @@ resource "cloudflare_zero_trust_gateway_policy" "finance_users_net_https_finance
 
 Block traffic to destination IPs, <GlossaryTooltip term="Server Name Indication (SNI)">SNIs</GlossaryTooltip>, and SNI domains that are malicious or pose a threat to your organization.
 
-<Render file="zero-trust/threat-intelligence-automation" />
+<Render
+	file="zero-trust/threat-intelligence-automation"
+	product="learning-paths"
+/>
 
 <Tabs syncKey="dashPlusAPI">
 
