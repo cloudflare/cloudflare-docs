@@ -1241,6 +1241,9 @@ entries:
       | `S13` | Elections                 | False information about the time, place, or manner of voting in elections.                                        |
 
       Requires a Cloudflare Enterprise plan. You must also enable [Firewall for AI](/waf/detections/firewall-for-ai/).
+    example_block: |-
+      # Matches requests where an unsafe topic categorized as "S2" (Non-Violent Crimes) or "S10" (Hate) was detected in the LLM prompt:
+      (cf.llm.prompt.unsafe_topic_detected and any(cf.llm.prompt.unsafe_topic_categories[*] in {"S2" "S10"}))
 
   - name: cf.llm.prompt.injection_score
     data_type: Number
