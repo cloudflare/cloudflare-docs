@@ -66,7 +66,7 @@ cd durable-object-starter
 
 To add a Durable Object to an existing Worker, you need to:
 
-1. Modify the code of the existing Worker to include the following:
+- Modify the code of the existing Worker to include the following:
 
   ```ts
   export class MyDurableObject extends DurableObject<Env> {
@@ -91,7 +91,7 @@ To add a Durable Object to an existing Worker, you need to:
   } satisfies ExportedHandler<Env>;
   ```
 
-2. Update the Wrangler configuration file of your existing Worker to bind the Durable Object to the Worker.
+- Update the Wrangler configuration file of your existing Worker to bind the Durable Object to the Worker.
 
 :::
 
