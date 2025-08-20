@@ -13,15 +13,15 @@ A Cloudflare Web3 gateway provides HTTP-accessible interfaces to various Web3 ne
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-<Render file="create-gateway-dashboard" />
+<Render file="create-gateway-dashboard" product="web3" />
 
 </TabItem> <TabItem label="API">
 
-<Render file="create-gateway-api" />
+<Render file="create-gateway-api" product="web3" />
 
 </TabItem> </Tabs>
 
-<Render file="post-creation-steps" />
+<Render file="post-creation-steps" product="web3" />
 
 ---
 
@@ -96,7 +96,6 @@ To add an item to the blocklist using the dashboard:
 5. Click **Add entry**.
 
 6. Enter the following information:
-
    - **Blocklist entry type**: Choose **CID** or **Content path**.
    - **Blocklist entry content**: Add a CID or content path to block, meaning either a valid CIDv0 or CIDv1 string (CID) or the entry should start with `/ipfs/` or `/ipns/` (content path).
    - **Blocklist entry description**: Add a description to help you identify the blocklist entry.

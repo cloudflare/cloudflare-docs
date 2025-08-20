@@ -7,13 +7,13 @@ sidebar:
 
 import { Render } from "~/components";
 
-<Render file="version-definition" />
+<Render file="version-definition" product="version-management" />
 
 ---
 
 ## Create version
 
-<Render file="enable-default-creation" />
+<Render file="enable-default-creation" product="version-management" />
 
 If you need to test out different implementations of configurations at the same time or multiple types of changes, create a new version of your zone.
 **Zone Versioning** roles are not adequate for creating a new version. A **Super Administrator** or **Administrator** role is required.
@@ -45,7 +45,7 @@ To use the API for a different version, you will need to use a different zone ID
 
 ### Editable versions
 
-<Render file="edit-version" />
+<Render file="edit-version" product="version-management" />
 
 :::note
 
