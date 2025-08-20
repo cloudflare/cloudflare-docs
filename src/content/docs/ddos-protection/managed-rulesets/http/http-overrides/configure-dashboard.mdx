@@ -27,24 +27,27 @@ If you cannot deploy any additional overrides, consider editing an existing over
 
 <Tabs syncKey="dashNewNav">
 	<TabItem label="Old dashboard">
-		<Steps>
-			1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and
-			select your account and website. 2. Go to **Security** > **DDoS**. 3. Next
-			to **HTTP DDoS attack protection**, select **Deploy a DDoS override**.
-		</Steps>
-	</TabItem>
-	<TabItem label="New dashboard" icon="rocket">
-		<Steps>
-			1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and
-			select your account and domain. 2. Go to **Security** > **Security rules**
-			> **DDoS protection** tab. 3. On **HTTP DDoS attack protection**, select
-			**Create override**.
-		</Steps>
-	</TabItem>
+
+    {/* prettier-ignore */}
+    	<Steps>
+    		1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
+    		2. Go to **Security** > **DDoS**.
+    		3. Next to **HTTP DDoS attack protection**, select **Deploy a DDoS override**.
+    	</Steps>
+    </TabItem>
+    <TabItem label="New dashboard" icon="rocket">
+    	<Steps>
+    		1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+    		2. Go to **Security** > **Security rules** > **DDoS protection** tab.
+    		3. On **HTTP DDoS attack protection**, select **Create override**.
+    	</Steps>
+    </TabItem>
+
 </Tabs>
 
 ### Create a DDoS override
 
+{/* prettier-ignore */}
 <Steps>
 1. Enter a descriptive name for the override in **Override name**.
 2. If you are an Enterprise customer with the Advanced DDoS Protection subscription:
@@ -73,4 +76,4 @@ If you cannot deploy any additional overrides, consider editing an existing over
 4. Select **Save**.
 
 </Steps>
-<Render file="managed-rulesets/delete-override" params={{ one: "select your account and domain", two: "Security > DDoS" }} />
+<Render file="managed-rulesets/delete-override" product="ddos-protection" params={{ one: "select your account and domain", two: "Security > DDoS" }} />
