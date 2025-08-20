@@ -249,6 +249,10 @@ Non-inheritable keys are configurable at the top-level, but cannot be inherited 
 
   - A list of the Tail Workers your Worker sends data to. Refer to [Tail Workers](/workers/observability/logs/tail-workers/).
 
+- `version_metadata` <Type text="object" /> <MetaInfo text="optional" />
+
+  - Binding for metadata associated with a version from inside the Workers runtime. Refer to [Version metadata](/workers/runtime-apis/bindings/version-metadata/).
+
 ## Types of routes
 
 There are three types of [routes](/workers/configuration/routing/): [Custom Domains](/workers/configuration/routing/custom-domains/), [routes](/workers/configuration/routing/routes/), and [`workers.dev`](/workers/configuration/routing/workers-dev/).
