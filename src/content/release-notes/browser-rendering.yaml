@@ -3,6 +3,10 @@ link: "/browser-rendering/changelog/"
 productName: Browser Rendering
 productLink: "/browser-rendering/"
 entries:
+  - publish_date: "2025-08-20"
+    title: Browser Rendering billing goes live
+    description: |-
+      * Billing for Browser Rendering begins today, August 20th, 2025. See [pricing page](/browser-rendering/platform/pricing/) for full details. You can monitor usage via the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers/browser-rendering).
   - publish_date: "2025-08-18"
     title: Wrangler updates to local dev
     description: |-
