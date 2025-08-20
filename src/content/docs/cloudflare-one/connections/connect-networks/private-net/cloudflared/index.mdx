@@ -19,17 +19,20 @@ To enable remote access to your private network, follow the guide below.
 
 To connect your infrastructure with Cloudflare Tunnel:
 
-<Render file="tunnel/connect-private-network" />
+<Render file="tunnel/connect-private-network" product="cloudflare-one" />
 
 2. In the **Private Networks** tab for the tunnel, enter the IP/CIDR range that you wish to route through the tunnel (for example `10.0.0.0/8`).
 
 ## 2. Set up the client
 
-<Render file="tunnel/warp-to-tunnel-client" />
+<Render file="tunnel/warp-to-tunnel-client" product="cloudflare-one" />
 
 ## 3. Route private network IPs through WARP
 
-<Render file="tunnel/warp-to-tunnel-route-ips" params={{ one: "private network"}}/>
+<Render
+	file="tunnel/warp-to-tunnel-route-ips"
+	params={{ one: "private network" }}
+/>
 
 ## 4. (Recommended) Filter network traffic with Gateway
 
@@ -37,7 +40,7 @@ By default, all WARP devices enrolled in your Zero Trust organization can connec
 
 ### Enable the Gateway proxy
 
-<Render file="tunnel/enable-gateway-proxy" />
+<Render file="tunnel/enable-gateway-proxy" product="cloudflare-one" />
 
 ### Zero Trust policies
 

@@ -8,28 +8,43 @@ head:
   - tag: title
     content: Junk email and Email Security (formerly Area 1) Admin Quarantine -
       Office 365
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 In this tutorial, you will learn how to deliver emails to the Office 365 junk email folder and the Admin Quarantine in Email Security.
 
 ## Configure domains
 
-<Render file="deployment/o365-use-case-configure-domain" params={{ one: "Check the `MALICIOUS`, `SPAM`, and `SPOOF` dispositions." }} />
+<Render
+	file="deployment/o365-use-case-configure-domain"
+	params={{ one: "Check the `MALICIOUS`, `SPAM`, and `SPOOF` dispositions." }}
+/>
 
 ## Create quarantine policies
 
-<Render file="deployment/o365-use-case-1-3-create-quarantine-policy" />
+<Render
+	file="deployment/o365-use-case-1-3-create-quarantine-policy"
+	product="email-security"
+/>
 
 ## Configure quarantine notifications
 
-<Render file="deployment/o365-use-case-configure-quarantine-notifications" />
+<Render
+	file="deployment/o365-use-case-configure-quarantine-notifications"
+	product="email-security"
+/>
 
 ## Configure anti-spam policies
 
-<Render file="deployment/o365-use-cases-antispam" params={{ one: "_UserNotifyAdminRelease_", two: "_UserNotifyAdminRelease_", three: "_UserNotifyAdminRelease_" }} />
+<Render
+	file="deployment/o365-use-cases-antispam"
+	params={{
+		one: "_UserNotifyAdminRelease_",
+		two: "_UserNotifyAdminRelease_",
+		three: "_UserNotifyAdminRelease_",
+	}}
+/>
 
 ## Create transport rules
 
@@ -42,14 +57,13 @@ To create the transport rules that will send emails with certain dispositions to
 3. Select **Add a Rule** > **Create a new rule**.
 
 4. Set the following rule conditions:
-
-   * **Name**: `Email Security Deliver to Junk Email folder`.
-   * **Apply this rule if**: *The message headers* > *includes any of these words*.
-     * **Enter text**: `X-Area1Security-Disposition` > **Save**.
-     * **Enter words**: `SUSPICIOUS`, `BULK` > **Add** > **Save**.
-   * **Apply this rule if**: Select **+** to add a second condition.
-   * **And**: *The sender* > *IP address is in any of these ranges or exactly matches* > enter the egress IPs in the [Egress IPs page](/email-security/deployment/inline/reference/egress-ips/).
-   * **Do the following** - *Modify the message properties* > *Set the Spam Confidence Level (SCL)* > *5*.
+   - **Name**: `Email Security Deliver to Junk Email folder`.
+   - **Apply this rule if**: _The message headers_ > _includes any of these words_.
+     - **Enter text**: `X-Area1Security-Disposition` > **Save**.
+     - **Enter words**: `SUSPICIOUS`, `BULK` > **Add** > **Save**.
+   - **Apply this rule if**: Select **+** to add a second condition.
+   - **And**: _The sender_ > _IP address is in any of these ranges or exactly matches_ > enter the egress IPs in the [Egress IPs page](/email-security/deployment/inline/reference/egress-ips/).
+   - **Do the following** - _Modify the message properties_ > _Set the Spam Confidence Level (SCL)_ > _5_.
 
    ![Set the rules in the above step](~/assets/email-security/static/flexible-partial-images/o365-area1-mx/step4-rules.png)
 

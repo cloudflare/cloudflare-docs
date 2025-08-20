@@ -41,10 +41,15 @@ Access for Infrastructure currently only supports [SSH](/cloudflare-one/connecti
 
 ## 2. Add an infrastructure application
 
-<Render file="access/add-infrastructure-app" />
+<Render file="access/add-infrastructure-app" product="cloudflare-one" />
 
 ## 3. (Recommended) Modify order of precedence in Gateway
-<Render file="access/modify-gateway-policy-precedence" product="cloudflare-one" params={{ selector: "Access Infrastructure Target", protocol: "infra"}} />
+
+<Render
+	file="access/modify-gateway-policy-precedence"
+	product="cloudflare-one"
+	params={{ selector: "Access Infrastructure Target", protocol: "infra" }}
+/>
 
 ## 4. Configure the server
 

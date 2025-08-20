@@ -6,7 +6,15 @@ sidebar:
   label: Magic Transit with CDN
 ---
 
-import { Details, Example, TabItem, Tabs, GlossaryTooltip, APIRequest, Render } from "~/components";
+import {
+	Details,
+	Example,
+	TabItem,
+	Tabs,
+	GlossaryTooltip,
+	APIRequest,
+	Render,
+} from "~/components";
 
 [Magic Transit](/magic-transit/) customers using BYOIP can also benefit from the performance, reliability, and security that Cloudflare offers for HTTP-based applications. [Service bindings](/byoip/service-bindings/) allow BYOIP customers to selectively route traffic on a per-IP address basis to the CDN pipeline (which includes [Cache](/cache/), [Web Application Firewall (WAF)](/waf/), and more).
 
@@ -17,31 +25,31 @@ It is important to note that traffic routed to the CDN pipeline is protected at 
 ## Before you begin
 
 <Render
-file="service-bindings-prereqs"
-params={{
-	pre_existing_product: "Magic Transit",
-	added_product: "CDN"
-}}
+	file="service-bindings-prereqs"
+	params={{
+		pre_existing_product: "Magic Transit",
+		added_product: "CDN",
+	}}
 />
 
 ## 1. Get account information
 
 <Render
-file="service-bindings-account-info"
-params={{
-	pre_existing_product: "Magic Transit",
-	added_product: "CDN"
-}}
+	file="service-bindings-account-info"
+	params={{
+		pre_existing_product: "Magic Transit",
+		added_product: "CDN",
+	}}
 />
 
 ## 2. Create service binding
 
 <Render
-file="service-bindings-create-binding"
-params={{
-	pre_existing_product: "Magic Transit",
-	added_product: "CDN"
-}}
+	file="service-bindings-create-binding"
+	params={{
+		pre_existing_product: "Magic Transit",
+		added_product: "CDN",
+	}}
 />
 
 ## 3. Create address maps
@@ -117,7 +125,6 @@ At this point, if an address map for a zone `example.com` specifies that Cloudfl
 1. Cloudflare responds to DNS requests with `203.0.113.100`.
 2. Cloudflare proxies requests through the CDN and then routes the requests via [GRE](/magic-transit/reference/gre-ipsec-tunnels/) or [CNI](/magic-transit/network-interconnect/) to the origin server `203.0.113.150` (which is within the Magic Transit protected prefix).
 3. Depending on whether Magic Transit is implemented with [direct server return model or with Magic Transit egress](/magic-transit/how-to/configure-tunnel-endpoints/#bidirectional-vs-unidirectional-health-checks), the origin server responds back to Cloudflare either:
-
    - Directly over the Internet in a Magic Transit direct server return model
    - Back through the Magic GRE tunnel(s) in a Magic Transit egress model
 
@@ -141,4 +148,4 @@ Assuming `203.0.113.100` was also the origin IP, the DNS record would look like 
 
 ## 5. (Optional) Add layer 7 functionality
 
-<Render file="service-bindings-related-products" />
+<Render file="service-bindings-related-products" product="byoip" />

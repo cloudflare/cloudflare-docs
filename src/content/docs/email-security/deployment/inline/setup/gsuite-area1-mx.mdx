@@ -8,16 +8,13 @@ head:
   - tag: title
     content: Deploy and configure Google Workspace with Email Security (formerly
       Area 1) as MX Record
-
 ---
 
-import { GlossaryTooltip, Render } from "~/components"
+import { GlossaryTooltip, Render } from "~/components";
 
 :::caution[Area 1 has been renamed]
 
-
-<Render file="rename-area1-to-ces" />
-
+<Render file="rename-area1-to-ces" product="email-security" />
 
 :::
 
@@ -25,15 +22,18 @@ import { GlossaryTooltip, Render } from "~/components"
 
 In this tutorial, you will learn how to configure Google Workspace with Email Security as MX record. This tutorial is broken down into several steps.
 
-<Render file="outbound-email" />
+<Render file="outbound-email" product="email-security" />
 
 ## Requirements
 
-* Provisioned Email Security account.
-* Access to the Google administrator console ([**Google administrator console**](https://admin.google.com) > **Apps** > **Google Workspace** > **Gmail**).
-* Access to the domain nameserver hosting the MX records for the domains that will be processed by Email Security.
+- Provisioned Email Security account.
+- Access to the Google administrator console ([**Google administrator console**](https://admin.google.com) > **Apps** > **Google Workspace** > **Gmail**).
+- Access to the domain nameserver hosting the MX records for the domains that will be processed by Email Security.
 
-<Render file="deployment/mx-deployment-prerequisites" />
+<Render
+	file="deployment/mx-deployment-prerequisites"
+	product="email-security"
+/>
 
 ## 1. Add Email Security IP addresses to the Inbound gateway configuration
 
@@ -52,10 +52,9 @@ When Email Security is deployed as the MX record for Google Workspace, the Inbou
 4. Enable **Inbound Gateway**, and configure it with the following details:
 
    ![Enable inbound gateway](~/assets/images/email-security/deployment/inline-setup/gsuite-area1-mx/step4-inbound-gateway.png)
-
-   * In **Gateway IPs**, select the **Add** link, and add the IPs mentioned in [Egress IPs](/email-security/deployment/inline/reference/egress-ips/).
-   * Select **Automatically detect external IP (recommended)**.
-   * Select **Require TLS for connections from the email gateways listed above**.
+   - In **Gateway IPs**, select the **Add** link, and add the IPs mentioned in [Egress IPs](/email-security/deployment/inline/reference/egress-ips/).
+   - Select **Automatically detect external IP (recommended)**.
+   - Select **Require TLS for connections from the email gateways listed above**.
 
     <div class="medium-img">
 
@@ -77,8 +76,8 @@ This optional step is highly recommended to prevent users from being exposed to 
 
 When messages are identified as malicious, Email Security will insert the X-header `X-Area1Security-Disposition` into the message with the corresponding <GlossaryTooltip term="disposition">disposition</GlossaryTooltip>. Based on the value of the `X-Area1Security-Disposition`, a content compliance filter can be configured to send malicious detections to an administrative quarantine. This section will outline the steps required to:
 
-* Create an Email Security Malicious quarantine.
-* Create the content compliance filter to send malicious messages to quarantine.
+- Create an Email Security Malicious quarantine.
+- Create the content compliance filter to send malicious messages to quarantine.
 
 ### Create Email Security Malicious Quarantine
 
@@ -93,11 +92,10 @@ If you would like to send Email Security malicious detection to a separate quara
    ![Select the add quarantine button](~/assets/images/email-security/deployment/inline-setup/gsuite-area1-mx/step2-add-quarantine.png)
 
 3. In the quarantine configuration pop-up, enter the following:
-
-   * **Name**: `Email Security Malicious`.
-   * **Description**: `Email Security Malicious`.
-   * For the **Inbound denial consequence**, select **Drop Message**.
-   * For the **Outbound denial consequence**, select **Drop Message**.
+   - **Name**: `Email Security Malicious`.
+   - **Description**: `Email Security Malicious`.
+   - For the **Inbound denial consequence**, select **Drop Message**.
+   - For the **Outbound denial consequence**, select **Drop Message**.
 
     <div class="medium-img">
 
@@ -126,17 +124,16 @@ When you are finished entering these details, select **SAVE**.
    ![Select the configure button](~/assets/images/email-security/deployment/inline-setup/gsuite-area1-mx/step2-configure.png)
 
 3. In the **Content compliance filter** configuration, enter the following:
-
-   * **Name**: `Quarantine Email Security Malicious`.
-   * In **1. Email message to affect**, select **Inbound**.
-   * In **2. Add expression that describe the content you want to search for in each message**:
-     * Select **Add** to add the condition.
-       * In the *Simple content match* dropdown, select **Advanced content match**.
-       * In **Location**, select **Full headers**.
-       * In **Match type**, select **Contains text**.
-       * In **Content**, enter `X-Area1Security-Disposition: MALICIOUS`.
-     * Select **SAVE** to save the condition.
-   * In **3. If the above expression match, do the following**, select the *Action* dropdown. Then choose **Quarantine message** and the **Email Security Malicious** quarantine that was created in the previous step.
+   - **Name**: `Quarantine Email Security Malicious`.
+   - In **1. Email message to affect**, select **Inbound**.
+   - In **2. Add expression that describe the content you want to search for in each message**:
+     - Select **Add** to add the condition.
+       - In the _Simple content match_ dropdown, select **Advanced content match**.
+       - In **Location**, select **Full headers**.
+       - In **Match type**, select **Contains text**.
+       - In **Content**, enter `X-Area1Security-Disposition: MALICIOUS`.
+     - Select **SAVE** to save the condition.
+   - In **3. If the above expression match, do the following**, select the _Action_ dropdown. Then choose **Quarantine message** and the **Email Security Malicious** quarantine that was created in the previous step.
 
     <div class="medium-img">
 
@@ -151,11 +148,10 @@ When you are finished entering these details, select **SAVE**.
    ![After configuration, the console shows the content compliance filter](~/assets/images/email-security/deployment/inline-setup/gsuite-area1-mx/step4-compliance-filter.png)
 
    If you would like to quarantine the other dispositions, repeat the above steps and use the following strings for the other dispositions:
-
-   * `X-Area1Security-Disposition: MALICIOUS`
-   * `X-Area1Security-Disposition: SUSPICIOUS`
-   * `X-Area1Security-Disposition: SPOOF`
-   * `X-Area1Security-Disposition: UCE` (`UCE` is the equivalent of `SPAM`)
+   - `X-Area1Security-Disposition: MALICIOUS`
+   - `X-Area1Security-Disposition: SUSPICIOUS`
+   - `X-Area1Security-Disposition: SPOOF`
+   - `X-Area1Security-Disposition: UCE` (`UCE` is the equivalent of `SPAM`)
 
    If desired, you can create a separate quarantine for each of the dispositions.
 
@@ -182,7 +178,8 @@ To avoid email loop errors, add your domain to your Email Security dashboard.
 
 Instructions to update your MX records will depend on the DNS provider you are using. You need to replace the existing Google MX records with the Email Security hosts. For example:
 
-<Render file="deployment/mx-deployment-values" /> <Render file="deployment/mx-geographic-locations" />
+<Render file="deployment/mx-deployment-values" product="email-security" />
+<Render file="deployment/mx-geographic-locations" product="email-security" />
 
 DNS changes will reach the major DNS servers in about an hour or follow the TTL value as described in the [Prerequisites section](#prerequisites).
 

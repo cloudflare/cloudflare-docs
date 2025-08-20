@@ -3,16 +3,13 @@ title: Channel and Alliance Partners
 pcx_content_type: navigation
 sidebar:
   order: 7
-
 ---
 
-import { GlossaryTooltip, Render } from "~/components"
+import { GlossaryTooltip, Render } from "~/components";
 
 :::caution[Area 1 has been renamed]
 
-
-<Render file="rename-area1-to-ces" />
-
+<Render file="rename-area1-to-ces" product="email-security" />
 
 :::
 
@@ -33,7 +30,7 @@ This is only required for administrators that manage multiple accounts. For exam
 1. Log in to the [Email Security dashboard](https://horizon.area1security.com/).
 2. Go to **Settings** (the gear icon).
 3. In **Delegated Accounts** > **Accounts**, select **Create new customer**.
-4. Enter their information, and make sure you select *Parent* in **Account Type**.
+4. Enter their information, and make sure you select _Parent_ in **Account Type**.
 5. Select **Save**.
 
 Your newly created account should show up in the list. If not, refresh the page.
@@ -44,7 +41,7 @@ Your newly created account should show up in the list. If not, refresh the page.
 2. Go to **Settings** (the gear icon).
 3. In **Delegated Accounts** > **Accounts**, select the parent account where you want to create a child account.
 4. Select **Create New customer**.
-5. Enter their information, and make sure you select *Advantage* in **Account Type**.
+5. Enter their information, and make sure you select _Advantage_ in **Account Type**.
 6. Scroll down to the **Email Traffic Related Information** section, and enter the information related to your email provider. The number to enter in **Loopback Hops** will depend on your email configuration and where Email Security is in the chain of events. Refer to [Inline deployment](/email-security/deployment/inline/) and [API deployment](/email-security/deployment/api/) for more information.
 7. For **Daily Email Volume** and **Number of Email Users** make sure you enter the appropriate values for your organization.
 8. Select **Save**.
@@ -59,7 +56,12 @@ If you modify the Delegated Access controls, make sure you create an administrat
 
 To create an account at parent level or child level:
 
-<Render file="add-user" params={{ one: "with a parent account or child account depending on what you are trying to create" }} />
+<Render
+	file="add-user"
+	params={{
+		one: "with a parent account or child account depending on what you are trying to create",
+	}}
+/>
 
 ## Escalation contacts
 
@@ -75,8 +77,8 @@ Subscribe to incident status alerts [from Email Security](https://status.area1se
 
 Refer to the [setup options](/email-security/deployment/) for Email Security to learn about the best way of deploying Email Security in your organization. You can choose between two main setup architectures:
 
-* Inline deployment
-* API deployment
+- Inline deployment
+- API deployment
 
 With an [inline deployment](/email-security/deployment/inline/), Email Security evaluates email messages before they reach a user’s inbox. When you choose an [API deployment](/email-security/deployment/api/), email messages only reach Email Security after they have already reached a user’s inbox.
 

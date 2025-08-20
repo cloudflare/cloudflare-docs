@@ -38,7 +38,10 @@ To control whether only IPv4 or IPv6 is used to egress, ensure you are [filterin
 
 The following egress policy configures all traffic destined for a third-party network to use a static source IP:
 
-<Render file="gateway/policies/egress-destination-ip" />
+<Render
+	file="gateway/policies/egress-destination-ip"
+	product="cloudflare-one"
+/>
 
 ### Catch-all policy
 
@@ -69,7 +72,10 @@ Gateway matches egress traffic against the following selectors, or criteria:
 	params={{ policyType: "egress" }}
 />
 
-<Render file="gateway/selectors/egress-selector-limitation" />
+<Render
+	file="gateway/selectors/egress-selector-limitation"
+	product="cloudflare-one"
+/>
 
 ### Content Categories <Badge text="Beta" variant="caution"/>
 
@@ -78,7 +84,10 @@ Gateway matches egress traffic against the following selectors, or criteria:
 	params={{ APIendpoint: "net.fqdn.content_category" }}
 />
 
-<Render file="gateway/selectors/egress-selector-limitation" />
+<Render
+	file="gateway/selectors/egress-selector-limitation"
+	product="cloudflare-one"
+/>
 
 ### Destination Continent
 
@@ -103,11 +112,11 @@ Gateway matches egress traffic against the following selectors, or criteria:
 
 ### Destination Port
 
-<Render file="gateway/selectors/destination-port" />
+<Render file="gateway/selectors/destination-port" product="cloudflare-one" />
 
 ### Device Posture
 
-<Render file="gateway/selectors/device-posture" />
+<Render file="gateway/selectors/device-posture" product="cloudflare-one" />
 
 ### Domain <Badge text="Beta" variant="caution"/>
 
@@ -116,7 +125,10 @@ Gateway matches egress traffic against the following selectors, or criteria:
 	params={{ APIendpoint: "net.fqdn.domains" }}
 />
 
-<Render file="gateway/selectors/egress-selector-limitation" />
+<Render
+	file="gateway/selectors/egress-selector-limitation"
+	product="cloudflare-one"
+/>
 
 ### Host <Badge text="Beta" variant="caution"/>
 
@@ -125,15 +137,18 @@ Gateway matches egress traffic against the following selectors, or criteria:
 	params={{ APIendpoint: "net.fqdn.host" }}
 />
 
-<Render file="gateway/selectors/egress-selector-limitation" />
+<Render
+	file="gateway/selectors/egress-selector-limitation"
+	product="cloudflare-one"
+/>
 
 ### Protocol
 
-<Render file="gateway/selectors/protocol" />
+<Render file="gateway/selectors/protocol" product="cloudflare-one" />
 
 ### Proxy Endpoint
 
-<Render file="gateway/selectors/proxy-endpoint" />
+<Render file="gateway/selectors/proxy-endpoint" product="cloudflare-one" />
 
 ### Source Continent
 
@@ -159,11 +174,11 @@ The country of the user making the request. <Render file="gateway/selectors/sour
 
 ### Source Port
 
-<Render file="gateway/selectors/source-port" />
+<Render file="gateway/selectors/source-port" product="cloudflare-one" />
 
 ### Users
 
-<Render file="gateway/selectors/users" />
+<Render file="gateway/selectors/users" product="cloudflare-one" />
 
 ### Virtual Network
 
@@ -174,7 +189,7 @@ The country of the user making the request. <Render file="gateway/selectors/sour
 
 ## Comparison operators
 
-<Render file="gateway/comparison-operators" />
+<Render file="gateway/comparison-operators" product="cloudflare-one" />
 
 ## Value
 

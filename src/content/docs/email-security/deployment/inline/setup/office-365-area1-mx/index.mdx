@@ -15,7 +15,7 @@ import { GlossaryTooltip, Render } from "~/components";
 
 :::caution[Area 1 has been renamed]
 
-<Render file="rename-area1-to-ces" />
+<Render file="rename-area1-to-ces" product="email-security" />
 
 :::
 
@@ -23,13 +23,16 @@ import { GlossaryTooltip, Render } from "~/components";
 
 In this tutorial, you will learn how to configure Microsoft Office 365 with Email Security as its MX record. This tutorial is broken down into several steps. If at any steps during this tutorial you receive a message saying that you need to run the `Enable-OrganizationCustomization` cmdlet, [refer to section 6](#6-execute-enable-organizationcustomization-if-required).
 
-<Render file="deployment/o365-gcc" />
+<Render file="deployment/o365-gcc" product="email-security" />
 
 For the purposes of this guide, Office 365 and Microsoft 365 are equivalent.
 
-<Render file="outbound-email" />
+<Render file="outbound-email" product="email-security" />
 
-<Render file="deployment/mx-deployment-prerequisites" />
+<Render
+	file="deployment/mx-deployment-prerequisites"
+	product="email-security"
+/>
 
 ## 1. Add Email Security IP addresses to Allow List
 
@@ -111,7 +114,6 @@ This option will allow Office 365 to properly identify the original connecting I
 5. Select **Next**.
 
 6. Set the following options:
-
    - **Name** - `Email Security Inbound Connector`
    - **Description** - `Inbound connector for Enhanced Filtering`
 
@@ -229,7 +231,8 @@ The Email Security dashboard has an [Admin quarantine](/email-security/email-con
 
 Instructions to update your MX records will depend on the DNS provider you are using. You will need to update and replace your existing MX record with the Email Security hosts. For example:
 
-<Render file="deployment/mx-deployment-values" /> <Render file="deployment/mx-geographic-locations" />
+<Render file="deployment/mx-deployment-values" product="email-security" />
+<Render file="deployment/mx-geographic-locations" product="email-security" />
 
 DNS changes will reach the major DNS servers in about an hour or follow the TTL value as described in the [Prerequisites section](#prerequisites).
 
@@ -270,7 +273,6 @@ This step should not be performed until 24 hours after all domains (excluding yo
 5. Select **Next**.
 
 6. Set the following options:
-
    - **Name** - `Secure O365 Inbound`
    - **Description** - `Only accept inbound email from Email Security (formerly Area 1)`
 

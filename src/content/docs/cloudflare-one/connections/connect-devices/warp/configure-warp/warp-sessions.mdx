@@ -9,7 +9,7 @@ import { Render, Badge } from "~/components";
 
 Cloudflare Zero Trust enforces WARP client reauthentication on a per-application basis, unlike legacy VPNs which treat it as a global setting. You can configure WARP session timeouts for your [Access applications](#configure-warp-sessions-in-access) or as part of your [Gateway policies](#configure-warp-sessions-in-gateway).
 
-<Render file="warp/warp-sessions-intro" />
+<Render file="warp/warp-sessions-intro" product="cloudflare-one" />
 
 ## Prerequisites
 
@@ -17,7 +17,7 @@ Ensure that traffic can reach your IdP and `<your-team-name>.cloudflareaccess.co
 
 ## Configure WARP sessions in Gateway
 
-<Render file="warp/warp-sessions-gateway" />
+<Render file="warp/warp-sessions-gateway" product="cloudflare-one" />
 
 :::note[Enforce a global timeout]
 

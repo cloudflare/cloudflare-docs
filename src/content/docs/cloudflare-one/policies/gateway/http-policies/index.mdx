@@ -38,7 +38,7 @@ API value: `allow`
 
 <Details header="Available selectors">
 
-<Render file="gateway/http-allow-block-selectors" />
+<Render file="gateway/http-allow-block-selectors" product="cloudflare-one" />
 
 </Details>
 
@@ -64,7 +64,7 @@ API value: `block`
 
 <Details header="Available selectors">
 
-<Render file="gateway/http-allow-block-selectors" />
+<Render file="gateway/http-allow-block-selectors" product="cloudflare-one" />
 
 </Details>
 
@@ -135,7 +135,7 @@ To redirect URLs with a Block action and the block page, refer to [Redirect to a
 
 In **Policy URL redirect**, you can define what URL to redirect matched requests to. The redirect URL can contain paths and queries. For example, you can redirect `example.com` to `cloudflare.com/path/to/page?querystring=x`.
 
-<Render file="gateway/policy-context" />
+<Render file="gateway/policy-context" product="cloudflare-one" />
 
 When you turn on **Preserve original path and query string**, Gateway will append the original path and query string to the redirected URL. Paths and queries in the redirect URL take precedence over the original URL. For example, if the original URL is `example.com/path/to/page?querystring=X` and the redirect URL is `cloudflare.com/redirect-path?querystring=Y`, Gateway will redirect requests to:
 
@@ -375,7 +375,7 @@ The Quarantine action sends files in matching requests to a file sandbox to scan
 
 In **Sandbox file types**, you can select which file types to quarantine with your policy. You must select at least one file type.
 
-<Render file="gateway/sandbox-file-types" />
+<Render file="gateway/sandbox-file-types" product="cloudflare-one" />
 
 ## Selectors
 
@@ -387,11 +387,17 @@ Gateway matches HTTP traffic against the following selectors, or criteria:
 
 ### Access Infrastructure Target
 
-<Render file="gateway/selectors/all-access-app-targets" />
+<Render
+	file="gateway/selectors/all-access-app-targets"
+	product="cloudflare-one"
+/>
 
 ### Access Private App
 
-<Render file="gateway/selectors/all-access-private-app-destinations" />
+<Render
+	file="gateway/selectors/all-access-private-app-destinations"
+	product="cloudflare-one"
+/>
 
 ### Application
 
@@ -443,7 +449,7 @@ Only applies to traffic sent through the [WARP client](/cloudflare-one/connectio
 
 ### Device Posture
 
-<Render file="gateway/selectors/device-posture" />
+<Render file="gateway/selectors/device-posture" product="cloudflare-one" />
 
 ### Domain
 
@@ -519,7 +525,7 @@ These selectors will scan file signatures in the HTTP body. You can select from 
 
 **Unscannable**
 
-<Render file="gateway/policies/unscannable-files" />
+<Render file="gateway/policies/unscannable-files" product="cloudflare-one" />
 
 </Details>
 
@@ -572,7 +578,7 @@ The HTTP response status code received by the traffic.
 
 ### Proxy Endpoint
 
-<Render file="gateway/selectors/proxy-endpoint" />
+<Render file="gateway/selectors/proxy-endpoint" product="cloudflare-one" />
 
 ### Security Risks
 
@@ -605,7 +611,7 @@ The country of the user making the request. <Render file="gateway/selectors/sour
 
 ### URL
 
-<Render file="gateway/url-slash" />
+<Render file="gateway/url-slash" product="cloudflare-one" />
 
 | UI name | API example                                             |
 | ------- | ------------------------------------------------------- |
@@ -637,7 +643,7 @@ The query of a webpage's URL.
 
 ### Users
 
-<Render file="gateway/selectors/users" />
+<Render file="gateway/selectors/users" product="cloudflare-one" />
 
 ### Virtual Network
 
@@ -648,7 +654,7 @@ The query of a webpage's URL.
 
 ## Comparison operators
 
-<Render file="gateway/comparison-operators" />
+<Render file="gateway/comparison-operators" product="cloudflare-one" />
 
 ## Value
 

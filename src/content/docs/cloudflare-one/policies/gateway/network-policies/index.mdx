@@ -244,11 +244,17 @@ Gateway matches network traffic against the following selectors, or criteria.
 
 ### Access Infrastructure Target
 
-<Render file="gateway/selectors/all-access-app-targets" />
+<Render
+	file="gateway/selectors/all-access-app-targets"
+	product="cloudflare-one"
+/>
 
 ### Access Private App
 
-<Render file="gateway/selectors/all-access-private-app-destinations" />
+<Render
+	file="gateway/selectors/all-access-private-app-destinations"
+	product="cloudflare-one"
+/>
 
 ### Application
 
@@ -287,7 +293,7 @@ Gateway matches network traffic against the following selectors, or criteria.
 
 ### Destination Port
 
-<Render file="gateway/selectors/destination-port" />
+<Render file="gateway/selectors/destination-port" product="cloudflare-one" />
 
 ### Detected Protocol
 
@@ -299,11 +305,11 @@ The inferred network protocol based on Cloudflare's [protocol detection](/cloudf
 
 ### Device Posture
 
-<Render file="gateway/selectors/device-posture" />
+<Render file="gateway/selectors/device-posture" product="cloudflare-one" />
 
 ### Protocol
 
-<Render file="gateway/selectors/protocol" />
+<Render file="gateway/selectors/protocol" product="cloudflare-one" />
 
 :::note
 To enable Gateway filtering on TCP and UDP, go to **Settings** > **Network** > **Proxy**. Network policies apply to all enabled protocols unless you use the **Protocol** selector within a policy.
@@ -311,7 +317,7 @@ To enable Gateway filtering on TCP and UDP, go to **Settings** > **Network** > *
 
 ### Proxy Endpoint
 
-<Render file="gateway/selectors/proxy-endpoint" />
+<Render file="gateway/selectors/proxy-endpoint" product="cloudflare-one" />
 
 ### Security Categories
 
@@ -364,11 +370,11 @@ The country of the user making the request. <Render file="gateway/selectors/sour
 
 ### Source Port
 
-<Render file="gateway/selectors/source-port" />
+<Render file="gateway/selectors/source-port" product="cloudflare-one" />
 
 ### Users
 
-<Render file="gateway/selectors/users" />
+<Render file="gateway/selectors/users" product="cloudflare-one" />
 
 ### Virtual Network
 
@@ -379,7 +385,7 @@ The country of the user making the request. <Render file="gateway/selectors/sour
 
 ## Comparison operators
 
-<Render file="gateway/comparison-operators" />
+<Render file="gateway/comparison-operators" product="cloudflare-one" />
 
 :::note
 The _in_ operator allows you to specify IP addresses or networks using CIDR notation.

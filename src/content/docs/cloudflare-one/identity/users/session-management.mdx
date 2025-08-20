@@ -13,9 +13,9 @@ A user session determines how long a user can access an Access application witho
 
 When a user logs in to an application protected by Access, Access validates their identity against your Access policies and generates two signed JSON Web Tokens (JWTs):
 
-| Token                                                                                 | Description                                                                                                          | Expiration                                                                                                                                        | Storage                                                                           |
-| ------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
-| Global session token                                                                  | Stores the user's identity from the IdP and provides single sign-on (SSO) functionality for all Access applications. | [Global session duration](#global-session-duration)                                                                                           | Your Cloudflare <GlossaryTooltip term="team domain">team domain</GlossaryTooltip> |
+| Token                                                                                 | Description                                                                                                          | Expiration                                                                                                                                       | Storage                                                                           |
+| ------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------- |
+| Global session token                                                                  | Stores the user's identity from the IdP and provides single sign-on (SSO) functionality for all Access applications. | [Global session duration](#global-session-duration)                                                                                              | Your Cloudflare <GlossaryTooltip term="team domain">team domain</GlossaryTooltip> |
 | [Application token](/cloudflare-one/identity/authorization-cookie/application-token/) | Allows the user to access a specific Access application.                                                             | [Policy session duration](#set-policy-session-duration), which defaults to the [application session duration](#set-application-session-duration) | The hostname protected by the Access application                                  |
 
 The user can access the application for the entire duration of the application token's lifecycle. When the application token expires, Cloudflare will automatically issue a new application token if the global token is still valid (and the user's identity still passes your Access policies). If the global token has also expired, the user will be prompted to re-authenticate with the IdP.
@@ -24,7 +24,7 @@ The global token expiration is usually set to equal or exceed the application to
 
 As an analogy, you can think of the global session like a festival where you buy a ticket to enter for the day. For certain rides or areas, the staff may periodically check your ticket to make sure you are authorized to enter. For example, the backstage area may allow ticket holders to go on a 30 minutes tour, after which you need to sign up for another tour. This is analogous to the app session. Now imagine a special policy exists where VIP ticket holders can go backstage for as long as they want. The VIPs have a policy session duration which overrides the default 30 minutes value.
 
-<Render file="access/one-time-pin-warning" />
+<Render file="access/one-time-pin-warning" product="cloudflare-one" />
 
 ### Global session duration
 
@@ -69,11 +69,17 @@ Users who match a policy configured with a _Same as application session timeout_
 
 #### SaaS applications
 
-<Render file="access/saas-apps/saas-sessions" params={{ session: "Application session durations", token: "Access application token"}} />
+<Render
+	file="access/saas-apps/saas-sessions"
+	params={{
+		session: "Application session durations",
+		token: "Access application token",
+	}}
+/>
 
 #### SSH, RDP, and VNC
 
-<Render file="access/self-hosted-app/ssh-sessions" />
+<Render file="access/self-hosted-app/ssh-sessions" product="cloudflare-one" />
 
 ### WARP session duration
 

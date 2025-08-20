@@ -7,10 +7,9 @@ sidebar:
 head:
   - tag: title
     content: Advanced DDoS Protection systems
-
 ---
 
-import { GlossaryTooltip, Render, Steps } from "~/components"
+import { GlossaryTooltip, Render, Steps } from "~/components";
 
 The Advanced DDoS Protection system includes [Advanced TCP Protection](/ddos-protection/advanced-ddos-systems/overview/advanced-tcp-protection/) and [Advanced DNS Protection](/ddos-protection/advanced-ddos-systems/overview/advanced-dns-protection/). Both systems are configured using the general settings, but also comprise of their own dedicated settings.
 
@@ -48,7 +47,7 @@ You cannot add unapproved prefixes to Advanced DDoS Protection systems. Contact 
 
 You can create a rule for SYN Flood Protection and another rule for Out-of-state TCP Protection, both with global scope and in monitoring mode. These rules will apply to all received <GlossaryTooltip term="data packet">packets</GlossaryTooltip>.
 
-Optionally, you can create [filters](/ddos-protection/advanced-ddos-systems/concepts/#filter) for each protection system component (SYN flood protection and out-of-state TCP protection). <Render file="atp-filter-definition" />
+Optionally, you can create [filters](/ddos-protection/advanced-ddos-systems/concepts/#filter) for each protection system component (SYN flood protection and out-of-state TCP protection). <Render file="atp-filter-definition" product="ddos-protection" />
 
 ### Prefixes
 
@@ -63,7 +62,8 @@ Refer to [Concepts](/ddos-protection/advanced-ddos-systems/concepts/) for more i
 Enable the Advanced DDoS system and begin routing traffic through it.
 
 <Steps>
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to **L3/4 DDoS** > **Advanced Protection** > **General settings**.
-3. Under **General settings**, toggle the feature status **On**.
+	1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and
+	select your account. 2. Go to **L3/4 DDoS** > **Advanced Protection** >
+	**General settings**. 3. Under **General settings**, toggle the feature status
+	**On**.
 </Steps>
