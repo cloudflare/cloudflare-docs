@@ -11,12 +11,20 @@ description: With tenant-level custom nameservers, you can use the same custom
   nameservers for different zones and across different accounts, as long as the
   accounts are part of the [tenant](/tenant/). The domain or domains that
   provide the nameservers names do not have to exist as zones in Cloudflare.
-
 ---
 
-import { Example, Render, APIRequest } from "~/components"
+import { Example, Render, APIRequest } from "~/components";
 
-<Render file="acns-tcns-intro" params={{ one: "Tenant", two: "T", three: "tenant", four: "accounts", five: "tenant " }} />
+<Render
+	file="acns-tcns-intro"
+	params={{
+		one: "Tenant",
+		two: "T",
+		three: "tenant",
+		four: "accounts",
+		five: "tenant ",
+	}}
+/>
 
 ## Availability
 
@@ -26,7 +34,10 @@ Tenant custom nameservers, if created by the tenant owner, will be available to 
 
 For this configuration to be possible, a few conditions apply:
 
-<Render file="acns-tcns-conditions" params={{ one: "tenant", two: "the tenant owner", three: "Tenant owners" }} />
+<Render
+	file="acns-tcns-conditions"
+	params={{ one: "tenant", two: "the tenant owner", three: "Tenant owners" }}
+/>
 
 <Render file="acns-tcns-byoip" params={{ one: "Tenant", two: "tenant" }} />
 
@@ -41,11 +52,11 @@ If you are an account owner and your account is part of a tenant that has custom
 <APIRequest
 	path="/zones/{zone_id}/custom_ns"
 	method="PUT"
-  json={{
-    "enabled": true,
-		"ns_type": "tenant",
-		"ns_set": "<SET>",
-		}}
+	json={{
+		enabled: true,
+		ns_type: "tenant",
+		ns_set: "<SET>",
+	}}
 />
 
 :::note
@@ -66,6 +77,7 @@ To make these TCNS the default namerservers for all new zones added to your acco
   }
 }
 ```
+
 ### Disable tenant custom nameservers on a zone
 
 To remove TCNS and their associated DNS records from a zone, use a [PUT command](/api/resources/zones/subresources/custom_nameservers/methods/update/).
@@ -91,7 +103,7 @@ curl https://api.cloudflare.com/client/v4/tenants/{tenant_id}/custom_ns \
 }'
 ```
 
-<Render file="ns-set-omission-callout" />
+<Render file="ns-set-omission-callout" product="dns" />
 
 2. Add the account custom nameservers and IP addresses to your domain's registrar as glue (A and AAAA) records ([RFC 1912](https://www.rfc-editor.org/rfc/rfc1912.html)).
 

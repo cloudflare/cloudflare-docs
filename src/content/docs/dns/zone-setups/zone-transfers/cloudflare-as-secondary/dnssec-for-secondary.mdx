@@ -8,7 +8,13 @@ head:
     content: DNSSEC for Secondary DNS
 ---
 
-import { Render, TabItem, Tabs, GlossaryTooltip, APIRequest } from "~/components";
+import {
+	Render,
+	TabItem,
+	Tabs,
+	GlossaryTooltip,
+	APIRequest,
+} from "~/components";
 
 [DNS Security Extensions (DNSSEC)](https://www.cloudflare.com/learning/dns/dns-security/) increase security by adding cryptographic signatures to DNS records. When you use multiple providers and Cloudflare is secondary, you have a few options to enable DNSSEC for records served by Cloudflare.
 
@@ -38,7 +44,7 @@ In this setup, DNSSEC on your pirmary DNS provider does not need to be enabled.
 
 3. Under **DNSSEC with Secondary DNS** select **Live signing**. You will then have access to several necessary values to create a **DS** record at your registrar.
 
-4. <Render file="dnssec-registrar-steps" />
+4. <Render file="dnssec-registrar-steps" product="dns" />
 
 </TabItem> <TabItem label="API">
 
@@ -48,13 +54,13 @@ In this setup, DNSSEC on your pirmary DNS provider does not need to be enabled.
 	path="/zones/{zone_id}/dnssec"
 	method="PATCH"
 	json={{
-		"status": "active",
+		status: "active",
 	}}
 />
 
 2. Use the [DNSSEC Details endpoint](/api/resources/dns/subresources/dnssec/methods/get/) to get the necessary values to create a **DS** record at your registrar.
 
-3. <Render file="dnssec-registrar-steps" />
+3. <Render file="dnssec-registrar-steps" product="dns" />
 
 </TabItem> </Tabs>
 
@@ -91,7 +97,7 @@ Use the [Edit DNSSEC Status endpoint](/api/resources/dns/subresources/dnssec/met
 	path="/zones/{zone_id}/dnssec"
 	method="PATCH"
 	json={{
-		"dnssec_presigned": true,
+		dnssec_presigned: true,
 	}}
 />
 

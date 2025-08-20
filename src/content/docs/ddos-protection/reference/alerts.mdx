@@ -6,10 +6,9 @@ sidebar:
 head:
   - tag: title
     content: DDoS alerts
-
 ---
 
-import { AvailableNotifications, Render } from "~/components"
+import { AvailableNotifications, Render } from "~/components";
 
 Configure notifications to receive real-time alerts (within \~1 minute) about L3/4 and L7 DDoS attacks on your Internet properties, depending on your plan and services. You can choose from different delivery methods.
 
@@ -27,12 +26,12 @@ Cloudflare automatically sends weekly summaries of detected and mitigated DDoS a
 
 :::note
 
- <Render file="alerts-and-reports-independent" />
+<Render file="alerts-and-reports-independent" product="ddos-protection" />
 :::
 
 ## Set up a notification for DDoS alerts
 
-<Render file="create-notification" />
+<Render file="create-notification" product="ddos-protection" />
 
 ## Edit an existing notification
 
@@ -46,9 +45,15 @@ Cloudflare can issue notifications for different types of DDoS attack alerts.
 
 ### Standard alerts
 
-<AvailableNotifications product="DDoS Protection" notificationFilter="HTTP DDoS Attack Alert" />
+<AvailableNotifications
+	product="DDoS Protection"
+	notificationFilter="HTTP DDoS Attack Alert"
+/>
 
-<AvailableNotifications product="DDoS Protection" notificationFilter="Layer 3/4 DDoS Attack Alert" />
+<AvailableNotifications
+	product="DDoS Protection"
+	notificationFilter="Layer 3/4 DDoS Attack Alert"
+/>
 
 ### Advanced alerts
 
@@ -59,7 +64,14 @@ The availability of advanced DDoS attack alerts depends on your Cloudflare plan 
 
 Advanced DDoS attack alerts support additional configuration, allowing you to filter the notifications you wish to receive.
 
-<AvailableNotifications product="DDoS Protection" notificationFilter="Advanced HTTP DDoS Attack Alert" /> <AvailableNotifications product="DDoS Protection" notificationFilter="Advanced Layer 3/4 DDoS Attack Alert" />
+<AvailableNotifications
+	product="DDoS Protection"
+	notificationFilter="Advanced HTTP DDoS Attack Alert"
+/>
+<AvailableNotifications
+	product="DDoS Protection"
+	notificationFilter="Advanced Layer 3/4 DDoS Attack Alert"
+/>
 
 You will also receive alerts for rules with a _Log_ action, containing information on what triggered the alert.
 
@@ -67,15 +79,16 @@ You will also receive alerts for rules with a _Log_ action, containing informati
 
 The available alerts depend on your Cloudflare plan and subscribed services:
 
-| Alert type                           |     WAF/CDN     |      Spectrum      |  Spectrum BYOIP |  Magic Transit  |
+| Alert type                           |     WAF/CDN     |      Spectrum      | Spectrum BYOIP  |  Magic Transit  |
 | ------------------------------------ | :-------------: | :----------------: | :-------------: | :-------------: |
-| HTTP DDoS Attack Alert               |       Yes       |          –         |        –        |        –        |
-| Advanced HTTP DDoS Attack Alert      | Yes<sup>1</sup> |          –         |        –        |        –        |
+| HTTP DDoS Attack Alert               |       Yes       |         –          |        –        |        –        |
+| Advanced HTTP DDoS Attack Alert      | Yes<sup>1</sup> |         –          |        –        |        –        |
 | Layer 3/4 DDoS Attack Alert          |        –        | Yes<sup>2, 3</sup> |       Yes       | Yes<sup>3</sup> |
-| Advanced Layer 3/4 DDoS Attack Alert |        –        |          –         | Yes<sup>2</sup> | Yes<sup>2</sup> |
+| Advanced Layer 3/4 DDoS Attack Alert |        –        |         –          | Yes<sup>2</sup> | Yes<sup>2</sup> |
 
-<sup>1</sup> _Only available to Enterprise customers with the Advanced DDoS Protection subscription._ <br/>
-<sup>2</sup> _Only available on an Enterprise plan._ <br/>
+<sup>1</sup> _Only available to Enterprise customers with the Advanced DDoS
+Protection subscription._ <br />
+<sup>2</sup> _Only available on an Enterprise plan._ <br />
 <sup>3</sup> _Refer to [Final remarks](#final-remarks) for additional notes._
 
 ## Example notification

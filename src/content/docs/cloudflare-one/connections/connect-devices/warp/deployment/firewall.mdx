@@ -13,7 +13,7 @@ If your organization uses a firewall or other policies to restrict or intercept 
 
 The WARP client connects to Cloudflare via a standard HTTPS connection outside the tunnel for operations like registration or settings changes. To perform these operations, you must allow `zero-trust-client.cloudflareclient.com` which will lookup the following IP addresses:
 
-<Render file="warp/client-orchestration-ips" />
+<Render file="warp/client-orchestration-ips" product="cloudflare-one" />
 
 <Render
 	file="warp/firewall"

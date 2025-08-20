@@ -6,24 +6,23 @@ sidebar:
 head:
   - tag: title
     content: Enable Logpush to Google Cloud Storage
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 Cloudflare Logpush supports pushing logs directly to Google Cloud Storage (GCS) via the Cloudflare dashboard or via API.
 
 ## Manage via the Cloudflare dashboard
 
-<Render file="enable-logpush-job" />
+<Render file="enable-logpush-job" product="logs" />
 
 5. In **Select a destination**, choose **Google Cloud Storage**.
 
 6. Enter or select the following destination details:
-   * **Bucket** - GCS bucket name
-   * **Path** - bucket location within the storage container
-   * **Organize logs into daily subfolders** (recommended)
-   * For **Grant Cloudflare access to upload files to your bucket**, make sure your bucket has added Cloudflare’s IAM as a user with a [Storage Object Admin role](https://cloud.google.com/storage/docs/access-control/iam-roles).
+   - **Bucket** - GCS bucket name
+   - **Path** - bucket location within the storage container
+   - **Organize logs into daily subfolders** (recommended)
+   - For **Grant Cloudflare access to upload files to your bucket**, make sure your bucket has added Cloudflare’s IAM as a user with a [Storage Object Admin role](https://cloud.google.com/storage/docs/access-control/iam-roles).
 
 When you are done entering the destination details, select **Continue**.
 
@@ -32,14 +31,14 @@ When you are done entering the destination details, select **Continue**.
 8. Select the dataset to push to the storage service.
 
 9. In the next step, you need to configure your logpush job:
-   * Enter the **Job name**.
-   * Under **If logs match**, you can select the events to include and/or remove from your logs. Refer to [Filters](/logs/logpush/logpush-job/filters/) for more information. Not all datasets have this option available.
-   * In **Send the following fields**, you can choose to either push all logs to your storage destination or selectively choose which logs you want to push.
+   - Enter the **Job name**.
+   - Under **If logs match**, you can select the events to include and/or remove from your logs. Refer to [Filters](/logs/logpush/logpush-job/filters/) for more information. Not all datasets have this option available.
+   - In **Send the following fields**, you can choose to either push all logs to your storage destination or selectively choose which logs you want to push.
 
 10. In **Advanced Options**, you can:
-    * Choose the format of timestamp fields in your logs (`RFC3339`(default),`Unix`, or `UnixNano`).
-    * Select a [sampling rate](/logs/logpush/logpush-job/api-configuration/#sampling-rate) for your logs or push a randomly-sampled percentage of logs.
-    * Enable redaction for `CVE-2021-44228`. This option will replace every occurrence of `${` with `x{`.
+    - Choose the format of timestamp fields in your logs (`RFC3339`(default),`Unix`, or `UnixNano`).
+    - Select a [sampling rate](/logs/logpush/logpush-job/api-configuration/#sampling-rate) for your logs or push a randomly-sampled percentage of logs.
+    - Enable redaction for `CVE-2021-44228`. This option will replace every occurrence of `${` with `x{`.
 
 11. Select **Submit** once you are done configuring your logpush job.
 
@@ -47,7 +46,7 @@ When you are done entering the destination details, select **Continue**.
 
 Cloudflare uses Google Cloud Identity and Access Management (IAM) to gain access to your bucket. The Cloudflare IAM service account needs admin permission for the bucket.
 
-<Render file="enable-read-permissions" /> <br/>
+<Render file="enable-read-permissions" product="logs" /> <br />
 
 To enable Logpush to GCS:
 

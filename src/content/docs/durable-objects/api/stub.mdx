@@ -15,7 +15,7 @@ Durable Objects implement E-order semantics, a concept deriving from the [E dist
 
 If an exception is thrown by a Durable Object <GlossaryTooltip term="stub">stub</GlossaryTooltip> all in-flight calls and future calls will fail with [exceptions](/durable-objects/observability/troubleshooting/). To continue invoking methods on a remote Durable Object a Worker must recreate the stub. There are no ordering guarantees between different stubs.
 
-<Render file="example-rpc" />
+<Render file="example-rpc" product="durable-objects" />
 
 ## Properties
 

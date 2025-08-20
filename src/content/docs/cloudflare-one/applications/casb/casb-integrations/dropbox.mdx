@@ -7,8 +7,11 @@ rss: file
 import { Render } from "~/components";
 
 <Render
-  file="casb/integration-description"
-  params={{ integrationName: "Dropbox", integrationAccountType: "Dropbox account" }}
+	file="casb/integration-description"
+	params={{
+		integrationName: "Dropbox",
+		integrationAccountType: "Dropbox account",
+	}}
 />
 
 ## Integration prerequisites
@@ -38,8 +41,8 @@ These permissions follow the principle of least privilege to ensure that only th
 ## Security findings
 
 <Render
-  file="casb/security-findings"
-  params={{ integrationName: "Dropbox", slugRelativePath: "dropbox" }}
+	file="casb/security-findings"
+	params={{ integrationName: "Dropbox", slugRelativePath: "dropbox" }}
 />
 
 ### File and folder sharing
@@ -62,7 +65,7 @@ Identify files and folders that have been shared in a potentially insecure fashi
 
 ### Data Loss Prevention (optional)
 
-<Render file="casb/data-loss-prevention" />
+<Render file="casb/data-loss-prevention" product="cloudflare-one" />
 
 | Finding type                                                   | Severity | Description                                                                           |
 | -------------------------------------------------------------- | -------- | ------------------------------------------------------------------------------------- |

@@ -7,7 +7,7 @@ sidebar:
 
 import { Render, PackageManagers, WranglerConfig } from "~/components";
 
-<Render file="vectorize-ga" />
+<Render file="vectorize-ga" product="vectorize" />
 
 Vectorize is Cloudflare's vector database. Vector databases allow you to use machine learning (ML) models to perform semantic search, recommendation, classification and anomaly detection tasks, as well as provide context to LLMs (Large Language Models).
 
@@ -82,7 +82,7 @@ To create your first Vectorize index, change into the directory you just created
 cd vectorize-tutorial
 ```
 
-<Render file="vectorize-legacy" />
+<Render file="vectorize-legacy" product="vectorize" />
 
 To create an index, you will need to use the `wrangler vectorize create` command and provide a name for the index. A good index name is:
 
@@ -92,7 +92,7 @@ To create an index, you will need to use the `wrangler vectorize create` command
 
 In addition, you will need to define both the `dimensions` of the vectors you will store in the index, as well as the distance `metric` used to determine similar vectors when creating the index. A `metric` can be euclidean, cosine, or dot product. **This configuration cannot be changed later**, as a vector database is configured for a fixed vector configuration.
 
-<Render file="vectorize-wrangler-version" />
+<Render file="vectorize-wrangler-version" product="vectorize" />
 
 Run the following `wrangler vectorize` command:
 

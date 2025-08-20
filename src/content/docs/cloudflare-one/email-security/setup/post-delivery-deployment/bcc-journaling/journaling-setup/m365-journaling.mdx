@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import { GlossaryTooltip, Render } from "~/components"
+import { GlossaryTooltip, Render } from "~/components";
 
 When you receive an email, the email lands on your Microsoft 365 inbox, and then Email Security receives a copy of that email. The following email flow shows how this works:
 
@@ -64,11 +64,10 @@ To view your connected domains:
 5. Select **Journal rules**.
 
 6. Select **New rule** to configure a journaling rule, and configure it as follows:
-
    - **Send journal reports to**: This is the address you copied and pasted in step 5 of [Connect your domains](/cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/journaling-setup/m365-journaling/#connect-your-domains).
    - **Journal rule name**: `Journal Messages to Email Security`
-   - **Journal messages sent or received from**: *Everyone*
-   - **Type of message to journal**: *External messages only*
+   - **Journal messages sent or received from**: _Everyone_
+   - **Type of message to journal**: _External messages only_
 
 7. Select **Next**.
 
@@ -78,4 +77,4 @@ Once saved, the rule is automatically active. However, it may take a few minutes
 
 ## Next steps
 
-<Render file="email-security/enable-logs" />
+<Render file="email-security/enable-logs" product="cloudflare-one" />

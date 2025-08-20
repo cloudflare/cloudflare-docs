@@ -1,7 +1,7 @@
 ---
 title: Classic Schema validation (deprecated)
 pcx_content_type: how-to
-type: overview
+
 head:
   - tag: title
     content: Configure Classic Schema validation (deprecated)
@@ -9,16 +9,16 @@ sidebar:
   badge:
     text: Deprecated
   order: 1
-  label: Classic Schema validation 
+  label: Classic Schema validation
 
 ---
 
 import { GlossaryTooltip } from "~/components"
 
 :::caution[Deprecation notice]
-Classic Schema validation has been deprecated. 
+Classic Schema validation has been deprecated.
 
-Upload all new schemas to [Schema validation 2.0](/api-shield/security/schema-validation/). 
+Upload all new schemas to [Schema validation 2.0](/api-shield/security/schema-validation/).
 :::
 
 Use the **API Shield** interface to configure [API Schema validation](/api-shield/security/schema-validation/), which validates requests according to the <GlossaryTooltip term="API schema">API schema</GlossaryTooltip> you provide.
@@ -29,7 +29,7 @@ If you are in the Schema validation 2.0, you can make changes to your settings b
 
 :::note
 
-This feature is only available for customers on an Enterprise plan. Contact your Cloudflare Customer Success Manager to get access. 
+This feature is only available for customers on an Enterprise plan. Contact your Cloudflare Customer Success Manager to get access.
 :::
 
 ## Create an API Shield with Schema validation
@@ -42,7 +42,7 @@ To configure Schema validation in the Cloudflare dashboard:
 4. Enter a descriptive name for your policy and optionally edit the expression to trigger Schema validation. For example, if your API is available at `http://api.example.com/v1`, include a check for the *Hostname* field — equal to `api.example.com` — and a check for the *URI Path* field using a regular expression — matching the regex `^/v1`.
 :::caution[Important]
 
-To validate the hostname, you must include the *Hostname* field explicitly in the rule, even if the hostname value is in the schema file. Any hostname value present in the schema file will be ignored. 
+To validate the hostname, you must include the *Hostname* field explicitly in the rule, even if the hostname value is in the schema file. Any hostname value present in the schema file will be ignored.
 :::
 5. Select **Next**.
 6. Upload your schema file.

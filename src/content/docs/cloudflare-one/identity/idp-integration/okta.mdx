@@ -9,6 +9,7 @@ import { Render } from "~/components";
 Okta provides cloud software that helps companies manage and secure user authentication to modern applications, and helps developers build identity controls into applications, website web services, and devices. You can integrate Okta with Cloudflare Zero Trust and build rules based on user identity and group membership. Cloudflare Zero Trust supports Okta integrations using either the OIDC (default) or [SAML](/cloudflare-one/identity/idp-integration/okta-saml/) protocol.
 
 Additionally, you can configure Okta to use risk information from Zero Trust [user risk scores](/cloudflare-one/insights/risk-score/) to create SSO-level policies. For more information, refer to [Send risk score to Okta](/cloudflare-one/insights/risk-score/#send-risk-score-to-okta).
+
 ## Set up Okta as an OIDC provider
 
 1. On your Okta admin dashboard, go to **Applications** > **Applications**.
@@ -52,7 +53,6 @@ Additionally, you can configure Okta to use risk information from Zero Trust [us
 12. Under **Login methods**, select **Add new**. Select **Okta** as your identity provider.
 
 13. Fill in the following information:
-
     - **Name**: Name your identity provider.
     - **App ID**: Enter your Okta client ID.
     - **Client secret**: Enter your Okta client secret.
@@ -61,7 +61,6 @@ Additionally, you can configure Okta to use risk information from Zero Trust [us
 14. (Optional) Create an Okta API token and enter it in Zero Trust (the token can be read-only). This will prevent your Okta groups from failing if you have more than 100 groups.
 
 15. (Optional) To configure [custom OIDC claims](/cloudflare-one/identity/idp-integration/generic-oidc/#custom-oidc-claims):
-
     1. In Okta, create a [custom authorization server](https://developer.okta.com/docs/guides/customize-authz-server/main/) and ensure that the `groups` scope is enabled.
     2. In Zero Trust, enter the **Authorization Server ID** obtained from Okta.
     3. Under **Optional configurations**, enter the claims that you wish to add to your users' identity.
@@ -123,7 +122,6 @@ If you would like to only maintain one Okta app instance, Okta does support SAML
 11. Select **Test API Credentials** to ensure that the credentials were entered correctly. Select **Save**.
 
 12. On the **Provisioning** tab, select **Edit** and enable:
-
     - **Create Users**
     - **Update User Attributes**
     - **Deactivate Users**
@@ -142,7 +140,7 @@ If you would like to only maintain one Okta app instance, Okta does support SAML
 
 To verify the integration, select **View Logs** in the Okta SCIM application.
 
-<Render file="access/verify-scim-provisioning" />
+<Render file="access/verify-scim-provisioning" product="cloudflare-one" />
 
 ## Example API Configuration
 

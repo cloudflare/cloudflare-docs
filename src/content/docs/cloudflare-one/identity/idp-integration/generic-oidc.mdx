@@ -5,7 +5,7 @@ sidebar:
   order: 1
 ---
 
-import { Tabs, TabItem, Render, APIRequest } from '~/components';
+import { Tabs, TabItem, Render, APIRequest } from "~/components";
 
 Cloudflare Access has a generic OpenID Connect (OIDC) connector to help you integrate IdPs not already set in Access.
 
@@ -22,7 +22,6 @@ Cloudflare Access has a generic OpenID Connect (OIDC) connector to help you inte
    You can find your team name in Zero Trust under **Settings** > **Custom Pages**.
 
 3. Copy the content of these fields:
-
    - Client ID
    - Client secret
    - Auth URL: The `authorization_endpoint` URL of your IdP
@@ -56,50 +55,51 @@ Cloudflare Access has a generic OpenID Connect (OIDC) connector to help you inte
 Make a `POST` request to the [Identity Providers](/api/resources/zero_trust/subresources/identity_providers/methods/create/) endpoint:
 
 <APIRequest
-  path="/accounts/{account_id}/access/identity_providers"
-  method="POST"
-  json={{
-    name: "Generic OIDC example",
-    type: "oidc",
-    config: {
-      client_id: "<your client id>",
-      client_secret: "<your client secret>",
-      auth_url: "https://accounts.google.com/o/oauth2/auth",
-      token_url: "https://accounts.google.com/o/oauth2/token",
-      certs_url: "https://www.googleapis.com/oauth2/v3/certs",
-      pkce_enabled: false,
-      email_claim_name: "email",
-      claims: ["employeeID", "groups"],
-      scopes: ["openid", "email", "profile"],
-    },
-  }}
+	path="/accounts/{account_id}/access/identity_providers"
+	method="POST"
+	json={{
+		name: "Generic OIDC example",
+		type: "oidc",
+		config: {
+			client_id: "<your client id>",
+			client_secret: "<your client secret>",
+			auth_url: "https://accounts.google.com/o/oauth2/auth",
+			token_url: "https://accounts.google.com/o/oauth2/token",
+			certs_url: "https://www.googleapis.com/oauth2/v3/certs",
+			pkce_enabled: false,
+			email_claim_name: "email",
+			claims: ["employeeID", "groups"],
+			scopes: ["openid", "email", "profile"],
+		},
+	}}
 />
 
 </TabItem> <TabItem label="Terraform (v5)">
 
-1. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_token):
-	- `Access: Organizations, Identity Providers, and Groups Write`
+1.  Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_token):
+    - `Access: Organizations, Identity Providers, and Groups Write`
 
-2. Configure the [`cloudflare_zero_trust_access_identity_provider`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_access_identity_provider) resource:
+2.  Configure the [`cloudflare_zero_trust_access_identity_provider`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_access_identity_provider) resource:
 
-		```tf
-		resource "cloudflare_zero_trust_access_identity_provider" "generic_oidc_example" {
-			account_id = var.cloudflare_account_id
-			name       = "Generic OIDC example"
-			type       = "oidc"
-			config 		 = {
-				client_id = "<your client id>"
-				client_secret = "<your client secret>"
-				auth_url = "https://accounts.google.com/o/oauth2/auth"
-				token_url = "https://accounts.google.com/o/oauth2/token"
-				certs_url = "https://www.googleapis.com/oauth2/v3/certs"
-				pkce_enabled = false
-				email_claim_name = "email"
-				claims = ["employeeID", "groups"]
-				scopes = ["openid", "email", "profile"]
-			}
-		}
-		```
+        	```tf
+        	resource "cloudflare_zero_trust_access_identity_provider" "generic_oidc_example" {
+        		account_id = var.cloudflare_account_id
+        		name       = "Generic OIDC example"
+        		type       = "oidc"
+        		config 		 = {
+        			client_id = "<your client id>"
+        			client_secret = "<your client secret>"
+        			auth_url = "https://accounts.google.com/o/oauth2/auth"
+        			token_url = "https://accounts.google.com/o/oauth2/token"
+        			certs_url = "https://www.googleapis.com/oauth2/v3/certs"
+        			pkce_enabled = false
+        			email_claim_name = "email"
+        			claims = ["employeeID", "groups"]
+        			scopes = ["openid", "email", "profile"]
+        		}
+        	}
+        	```
+
 </TabItem> </Tabs>
 
 ## 3. Test the connection
@@ -131,7 +131,7 @@ If you would like to build policies based on IdP groups:
 
 ### 3. Verify SCIM provisioning
 
-<Render file="access/verify-scim-provisioning" />
+<Render file="access/verify-scim-provisioning" product="cloudflare-one" />
 
 ## Optional configurations
 
@@ -141,18 +141,18 @@ All OIDC IdP integrations support the use of custom OIDC claims. Once configured
 
 To add a custom OIDC claim to an IdP integration:
 
-1. In your identity provider, ensure that the custom claim is included in your OIDC ID token.
-2. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Authentication**.
-3. Under **Login methods**, find your identity provider and select **Edit**.
-4. Under **OIDC Claims**, enter the name of your custom claim (for example, `oid`).
-5. Select **Save**.
-6. Select **Test** and verify that the custom claim appears in `oidc_fields`. For example,
+1.  In your identity provider, ensure that the custom claim is included in your OIDC ID token.
+2.  In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Authentication**.
+3.  Under **Login methods**, find your identity provider and select **Edit**.
+4.  Under **OIDC Claims**, enter the name of your custom claim (for example, `oid`).
+5.  Select **Save**.
+6.  Select **Test** and verify that the custom claim appears in `oidc_fields`. For example,
 
-		```json
-			"oidc_fields": {
-				"oid": "54eb1ed2-7150-44e6-bbe4-ead24c132fd4"
-			},
-		```
+        ```json
+        	"oidc_fields": {
+        		"oid": "54eb1ed2-7150-44e6-bbe4-ead24c132fd4"
+        	},
+        ```
 
 You can now build an Access policy for the custom claim using the **OIDC Claim** or **IdP OIDC Claim** selector. The custom claim will also be passed to origins behind Access in a [JWT](/cloudflare-one/identity/authorization-cookie/application-token/#custom-saml-attributes-and-oidc-claims).
 

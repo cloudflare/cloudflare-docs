@@ -298,9 +298,12 @@ Use this selector to match against the IP address of the authoritative nameserve
 
 ### Content Categories
 
-<Render file="gateway/selectors/dns-content-categories" />
+<Render
+	file="gateway/selectors/dns-content-categories"
+	product="cloudflare-one"
+/>
 
-<Render file="gateway/selectors/category-options" />
+<Render file="gateway/selectors/category-options" product="cloudflare-one" />
 
 ### DNS CNAME Record
 
@@ -333,7 +336,7 @@ Use this selector to filter DNS responses by their `PTR` records.
 
 ### DNS Resolver IP
 
-<Render file="gateway/selectors/dns-resolver-ip" />
+<Render file="gateway/selectors/dns-resolver-ip" product="cloudflare-one" />
 
 ### DNS TXT Record
 
@@ -345,7 +348,7 @@ Use this selector to filter DNS responses by their `TXT` records.
 
 ### DoH Subdomain
 
-<Render file="gateway/selectors/doh-subdomain" />
+<Render file="gateway/selectors/doh-subdomain" product="cloudflare-one" />
 
 ### Domain
 
@@ -368,15 +371,15 @@ You can use a [publicly available indicator feed](/security-center/indicator-fee
 | --------------- | -------------------- | --------------------- |
 | Indicator Feeds | `dns.indicator_feed` | Before DNS resolution |
 
-<Render file="gateway/selectors/category-options" />
+<Render file="gateway/selectors/category-options" product="cloudflare-one" />
 
 ### Location
 
-<Render file="gateway/selectors/location" />
+<Render file="gateway/selectors/location" product="cloudflare-one" />
 
 ### Query Record Type
 
-<Render file="gateway/selectors/query-record-type" />
+<Render file="gateway/selectors/query-record-type" product="cloudflare-one" />
 
 ### Resolved Continent
 
@@ -421,9 +424,9 @@ Use this selector to match a dynamic list of [category IDs](/cloudflare-one/poli
 
 ### Security Categories
 
-<Render file="gateway/selectors/security-categories" />
+<Render file="gateway/selectors/security-categories" product="cloudflare-one" />
 
-<Render file="gateway/selectors/category-options" />
+<Render file="gateway/selectors/category-options" product="cloudflare-one" />
 
 ### Source Continent
 
@@ -435,15 +438,15 @@ Use this selector to filter based on the country where the query arrived to Gate
 
 ### Source IP
 
-<Render file="gateway/selectors/source-ip-dns" />
+<Render file="gateway/selectors/source-ip-dns" product="cloudflare-one" />
 
 ### Users
 
-<Render file="gateway/selectors/users" />
+<Render file="gateway/selectors/users" product="cloudflare-one" />
 
 ## Comparison operators
 
-<Render file="gateway/comparison-operators" />
+<Render file="gateway/comparison-operators" product="cloudflare-one" />
 
 ## Value
 
@@ -457,7 +460,7 @@ Use this selector to filter based on the country where the query arrived to Gate
 
 ### Third-party filtering conflict
 
-<Render file="gateway/third-party-warning" />
+<Render file="gateway/third-party-warning" product="cloudflare-one" />
 
 ### Magic WAN forwarding
 

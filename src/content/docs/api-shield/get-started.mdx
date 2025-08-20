@@ -18,13 +18,13 @@ Enabling API Shield features will have no impact on your traffic until you choos
 
 ## Session identifiers
 
-<Render file="session-identifiers" />
+<Render file="session-identifiers" product="api-shield" />
 
-<Render file="required-session-identifiers" />
+<Render file="required-session-identifiers" product="api-shield" />
 
 ### To set up session identifiers
 
-<Render file="set-up-session-identifiers" />
+<Render file="set-up-session-identifiers" product="api-shield" />
 
 ## Upload a schema using Schema validation (optional)
 
@@ -56,7 +56,7 @@ Cloudflare’s machine learning models have already inspected your existing traf
 
 :::note
 
-Schema validation, Schema Learning, JWT validation, Sequence Analytics, Sequence Mitigation, and rate limit recommendations only run on endpoints saved to Endpoint Management. 
+Schema validation, schema learning, JWT validation, Sequence Analytics, sequence mitigation, and rate limit recommendations only run on endpoints saved to Endpoint Management. 
 :::
 
 You can save your endpoints directly from [API Discovery](/api-shield/management-and-monitoring/#add-endpoints-from-api-discovery), [Schema validation](/api-shield/management-and-monitoring/#add-endpoints-from-schema-validation), or [manually](/api-shield/management-and-monitoring/#add-endpoints-manually) by method, path, and host.
@@ -101,7 +101,7 @@ You can export your learned schemas in the [Cloudflare dashboard](/api-shield/ma
 
 You can observe the top sequences in your API traffic that contain endpoints stored in Endpoint Management. We rank sequences by Correlation Score. High-scoring sequences contain API requests which are likely to occur together in order.
 
-[Sequence Mitigation](/api-shield/security/sequence-mitigation/) allows you to enforce request patterns for authenticated clients communicating with your API. Use Sequence Analytics to better understand the request sequences used by your API clients.
+[Sequence mitigation](/api-shield/security/sequence-mitigation/) allows you to enforce request patterns for authenticated clients communicating with your API. Use Sequence Analytics to better understand the request sequences used by your API clients.
 
 You should apply all possible API Shield protections (rate limiting suggestions, Schema validation, JWT validation, and mTLS) to API endpoints found in high correlation score sequences that make up the critical request flows in your application. You should also check their specific endpoint order with your development team.
 

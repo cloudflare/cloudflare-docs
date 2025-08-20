@@ -26,7 +26,7 @@ Like Pages, requests for static assets on Workers are free, and Pages Functions 
 
 Unlike Pages, Workers has a distinctly broader set of features available to it, (including Durable Objects, Cron Triggers, and more comprehensive Observability). A complete list can be found at [the bottom of this page](#compatibility-matrix). Workers will receive the focus of Cloudflare's development efforts going forwards, so we therefore [are recommending using Cloudflare Workers over Cloudflare Pages for any new projects](http://blog.cloudflare.com/full-stack-development-on-cloudflare-workers).
 
-## Migration 
+## Migration
 
 Migrating from Cloudflare Pages to Cloudflare Workers is often a straightforward process. The following are some of the most common steps you will need to take to migrate your project.
 
@@ -304,6 +304,13 @@ If you are [using Workers Builds](#builds), ensure you also [configure any varia
 
 Where previously you used [`wrangler pages dev`](/workers/wrangler/commands/#dev-1) and [`wrangler pages deploy`](/workers/wrangler/commands/#deploy-1), now instead use [`wrangler dev`](/workers/wrangler/commands/#dev) and [`wrangler deploy`](/workers/wrangler/commands/#deploy). Additionally, if you are using a Vite-powered framework, [our new Vite plugin](/workers/vite-plugin/) may be able offer you an even simpler development experience.
 
+:::note[Wrangler uses a different default port for the local development]
+
+`wrangler pages dev` will, by default, expose the local development server at `http://localhost:8788`, whereas `wrangler dev` will expose it at `http://localhost:8787/`.
+
+You can customize the port using `--port`.
+:::
+
 ### Builds
 
 If you are using Pages' built-in CI/CD system, you can swap this for Workers Builds by first [connecting your repository to Workers Builds](/workers/ci-cd/builds/#get-started) and then [disabling automatic deployments on your Pages project](/pages/configuration/git-integration/#disable-automatic-deployments).
@@ -381,7 +388,7 @@ Once you have validated the behavior of Worker, and are satisfied with the devel
 
 ## Migrate your project using an AI coding assistant
 
-You can add the following [experimental prompt](https://developers.cloudflare.com/workers/prompts/pages-to-workers.txt) in your preferred coding assistant (e.g. Claude Code, Cursor) to make your project compatible with Workers: 
+You can add the following [experimental prompt](https://developers.cloudflare.com/workers/prompts/pages-to-workers.txt) in your preferred coding assistant (e.g. Claude Code, Cursor) to make your project compatible with Workers:
 
 ```
 https://developers.cloudflare.com/workers/prompts/pages-to-workers.txt
@@ -407,7 +414,7 @@ This compatibility matrix compares the features of Workers and Pages. Unless oth
 | [Gradual Deployments](/workers/configuration/versions-and-deployments/)                                     | ✅      | ❌      |
 | [Preview URLs](/workers/configuration/previews)                                                             | ✅      | ✅      |
 | [Testing tools](/workers/testing)                                                                           | ✅      | ✅      |
-| [Local Development](/workers/development-testing/)                                                            | ✅      | ✅      |
+| [Local Development](/workers/development-testing/)                                                          | ✅      | ✅      |
 | [Remote Development (`--remote`)](/workers/wrangler/commands/)                                              | ✅      | ❌      |
 | [Quick Editor in Dashboard](https://blog.cloudflare.com/improved-quick-edit)                                | ✅      | ❌      |
 | **Static Assets**                                                                                           |         |         |

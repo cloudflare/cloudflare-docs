@@ -27,7 +27,7 @@ import { Render, WranglerConfig } from "~/components";
 <sup>1</sup> If you are running into limits, your project may be a good fit for
 [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/).
 
-<Render file="limits_increase" />
+<Render file="limits_increase" product="workers" />
 
 ---
 
@@ -84,7 +84,7 @@ doing additional work, this time spent waiting **is not** counted towards CPU ti
 
 **Most Workers requests consume less than 1-2 milliseconds of CPU time**, but you can increase the maximum CPU time from the default 30 seconds to 5 minutes (300,000 milliseconds) if you have CPU-bound tasks, such as large JSON payloads that need to be serialized, cryptographic key generation, or other data processing tasks.
 
-<Render file="isolate-cpu-flexibility" />
+<Render file="isolate-cpu-flexibility" product="workers" />
 
 To understand your CPU usage:
 
@@ -337,7 +337,7 @@ If you are having trouble staying under this limit, consider [profiling using De
 
 When you attempt to deploy a Worker using the [Wrangler CLI](/workers/wrangler/), but your deployment is rejected because your Worker exceeds the maximum startup time, Wrangler will automatically generate a CPU profile that you can import into Chrome DevTools or open directly in VSCode. You can use this to learn what code in your Worker uses large amounts of CPU time at startup. Refer to [`wrangler check startup`](/workers/wrangler/commands/#startup) for more details.
 
-<Render file="limits_increase" />
+<Render file="limits_increase" product="workers" />
 
 ---
 

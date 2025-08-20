@@ -103,7 +103,7 @@ To push a new `mdm.xml` file using Intune:
 7.  In **Assignments**, select the Windows devices that should receive the new `mdm.xml` file.
 8.  To deploy the script, select **Add**.
 
-Intune will now execute the Powershell script on the target devices and overwrite the previous `mdm.xml` file. Once the new `mdm.xml` file is created, WARP will immediately start using the new configuration. <Render file="warp/connectivity-status-check" />
+Intune will now execute the Powershell script on the target devices and overwrite the previous `mdm.xml` file. Once the new `mdm.xml` file is created, WARP will immediately start using the new configuration. <Render file="warp/connectivity-status-check" product="cloudflare-one" />
 
 If you prefer to use Intune's Win32 App tool to run the Powershell script, refer to the [Intune documentation](https://learn.microsoft.com/en-us/mem/intune/apps/apps-win32-app-management).
 
@@ -275,7 +275,6 @@ To configure your Cloudflare One Agent app policy:
 
 1. In the Microsoft Intune admin center, go to **Apps** > **App configuration policies** > select **Add** > **Managed Devices**.
 2. Fill out the basic details of your configuration policy:
-
    1. Enter the **Name** of the profile. (For example: Cloudflare One Agent - configuration policy)
    2. Select the Platform as **Android Enterprise**.
    3. Select the desired **Profile Type**. (For example: Personally-Owned Work Profile Only)
@@ -283,7 +282,6 @@ To configure your Cloudflare One Agent app policy:
    5. Select **Next**.
 
 3. Fill out the settings for the configuration policy.
-
    1. Select **Configuration setting format** as **Enter JSON data**.
    2. Enter your desired deployment parameters in the `managedProperty` field. For example:
 
@@ -389,4 +387,4 @@ To configure your Cloudflare One Agent app policy:
 
 Intune will now deploy the Cloudflare One Agent application on a user's device with the managed parameters.
 
-<Render file="warp/connectivity-status-check" />
+<Render file="warp/connectivity-status-check" product="cloudflare-one" />

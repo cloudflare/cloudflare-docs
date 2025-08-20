@@ -10,7 +10,14 @@ description: Learn how to set up Geo Key Manager and choose the geographical
   boundaries of where your private encryption keys are stored.
 ---
 
-import { Render, TabItem, Tabs, InlineBadge, APIRequest, Example } from "~/components";
+import {
+	Render,
+	TabItem,
+	Tabs,
+	InlineBadge,
+	APIRequest,
+	Example,
+} from "~/components";
 
 ## Geo Key Manager v2 <InlineBadge preset="beta" />
 
@@ -41,13 +48,13 @@ You also have access to the `geo_restrictions` parameter, which is mutually excl
 Store private keys in the E.U. and the U.S.
 
 <APIRequest
-  path="/zones/{zone_id}/custom_certificates"
-  method="POST"
-  json={{
-		"certificate":"certificate",
-		"private_key":"<PRIVATE_KEY>",
-		"policy":"(country: US) and (region: EU)",
-		"type": "sni_custom"
+	path="/zones/{zone_id}/custom_certificates"
+	method="POST"
+	json={{
+		certificate: "certificate",
+		private_key: "<PRIVATE_KEY>",
+		policy: "(country: US) and (region: EU)",
+		type: "sni_custom",
 	}}
 />
 
@@ -57,13 +64,13 @@ Store private keys in the E.U. and the U.S.
 Store private keys in the E.U., but not in France
 
 <APIRequest
-  path="/zones/{zone_id}/custom_certificates"
-  method="POST"
-  json={{
-		  "certificate":"certificate",
-			"private_key":"<PRIVATE_KEY>",
-			"policy":"(region: EU) and (not country: FR)",
-			"type": "sni_custom"
+	path="/zones/{zone_id}/custom_certificates"
+	method="POST"
+	json={{
+		certificate: "certificate",
+		private_key: "<PRIVATE_KEY>",
+		policy: "(region: EU) and (not country: FR)",
+		type: "sni_custom",
 	}}
 />
 
@@ -77,7 +84,7 @@ For more information on the `policy` field, refer to [Supported options](/ssl/ed
 
 ## Geo Key Manager v1
 
-<Render file="geokey-manager-v1" />
+<Render file="geokey-manager-v1" product="ssl" />
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 

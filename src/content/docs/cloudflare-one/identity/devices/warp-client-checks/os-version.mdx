@@ -21,34 +21,34 @@ The OS Version device posture attribute checks whether the version of a device's
 
 ## Enable the OS version check
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client**.
-2. Scroll down to **WARP client checks** and select **Add new**.
-3. Select **OS version**.
-4. Configure the **Operating system**, **Operator**, and **Version** fields to specify the [OS version](#determine-the-os-version) you want devices to match.
+1.  In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client**.
+2.  Scroll down to **WARP client checks** and select **Add new**.
+3.  Select **OS version**.
+4.  Configure the **Operating system**, **Operator**, and **Version** fields to specify the [OS version](#determine-the-os-version) you want devices to match.
 
-	<Render file="warp/os-version-semver" />
+    <Render file="warp/os-version-semver" product="cloudflare-one" />
 
-5. (Optional) Configure additional OS-specific fields:
+5.  (Optional) Configure additional OS-specific fields:
 
-		<Tabs> <TabItem label="macOS">
+        <Tabs> <TabItem label="macOS">
 
-		- **Version extra**: Enter the macOS [Rapid Security Response (RSR)](https://support.apple.com/guide/deployment/rapid-security-responses-dep93ff7ea78/web) version you want devices to match (for example, `(a)`). Be sure to include the parenthesis around the letter.
+        - **Version extra**: Enter the macOS [Rapid Security Response (RSR)](https://support.apple.com/guide/deployment/rapid-security-responses-dep93ff7ea78/web) version you want devices to match (for example, `(a)`). Be sure to include the parenthesis around the letter.
 
-		</TabItem> <TabItem label="iOS">
+        </TabItem> <TabItem label="iOS">
 
-		- **Version extra**: Enter the iOS [Rapid Security Response (RSR)](https://support.apple.com/guide/deployment/rapid-security-responses-dep93ff7ea78/web) version you want devices to match (for example, `(a)`). Be sure to include the parenthesis around the letter.
+        - **Version extra**: Enter the iOS [Rapid Security Response (RSR)](https://support.apple.com/guide/deployment/rapid-security-responses-dep93ff7ea78/web) version you want devices to match (for example, `(a)`). Be sure to include the parenthesis around the letter.
 
-		</TabItem>
+        </TabItem>
 
-		<TabItem label="Linux">
+        <TabItem label="Linux">
 
-		- **Distro name** and **Distro revision**: Enter the Linux distribution you want devices to match (for example, `ubuntu 22.04`). The distro version always matches with an equal-to operator (==) regardless of the **Operator** setting.
+        - **Distro name** and **Distro revision**: Enter the Linux distribution you want devices to match (for example, `ubuntu 22.04`). The distro version always matches with an equal-to operator (==) regardless of the **Operator** setting.
 
-		- **Version extra**: Enter the [patch version](#linux) of the kernel. For example, if the kernel is `6.50.0-1007-oem`, enter `1007`.
+        - **Version extra**: Enter the [patch version](#linux) of the kernel. For example, if the kernel is `6.50.0-1007-oem`, enter `1007`.
 
-		</TabItem> </Tabs>
+        </TabItem> </Tabs>
 
-6. Select **Save**.
+6.  Select **Save**.
 
 Next, go to **Logs** > **Posture** and verify that the OS version check is returning the expected results.
 

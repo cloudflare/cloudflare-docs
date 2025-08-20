@@ -11,6 +11,8 @@ The `/screenshot` endpoint renders the webpage by processing its HTML and JavaSc
 
 ## Basic usage
 
+### Capture a screenshot from HTML
+
 <Tabs syncKey="workersExamples"> <TabItem label="curl">
 
 Sets the HTML content of the page to `Hello World!` and then takes a screenshot. The option `omitBackground` hides the default white background and allows capturing screenshots with transparency.
@@ -55,6 +57,31 @@ For more options to control the final screenshot, like `clip`, `captureBeyondVie
 :::
 
 ## Advanced usage
+
+### Capture a screenshot of an authenticated page
+
+Some webpages require authentication before you can view their content. To capture a screenshot of these pages, you must provide valid session cookies. The following example navigates to a page that requires login. By providing a valid cookie in the `cookies` array, Browser Rendering will be able to access the secure content in order to capture the screenshot. 
+
+```bash
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/screenshot' \
+  -H 'Authorization: Bearer <apiToken>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "url": "https://example.com/protected-page",
+    "cookies": [
+      {
+        "name": "session_id",
+        "value": "your-session-cookie-value",
+        "domain": "example.com",
+        "path": "/"
+      }
+    ]
+  }' \
+  --output "authenticated-screenshot.png"
+```
+
+
+### Navigate and capture a full-page screenshot
 
 Navigate to `https://cloudflare.com/`, changing the page size (`viewport`) and waiting until there are no active network connections (`waitUntil`) or up to a maximum of `4500ms` (`timeout`). Then take a `fullPage` screenshot.
 

@@ -39,13 +39,14 @@ npx wrangler@latest dev
 A Python Worker can be as simple as three lines of code:
 
 ```python
-from workers import Response
+from workers import WorkerEntrypoint, Response
 
-def on_fetch(request):
-    return Response("Hello World!")
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        return Response("Hello World!")
 ```
 
-Similar to Workers written in [JavaScript](/workers/languages/javascript), [TypeScript](/workers/languages/typescript), or [Rust](/workers/languages/rust/), the main entry point for a Python worker is the [`fetch` handler](/workers/runtime-apis/handlers/fetch). In a Python Worker, this handler is named `on_fetch`.
+Similar to Workers written in [JavaScript](/workers/languages/javascript), [TypeScript](/workers/languages/typescript), or [Rust](/workers/languages/rust/), the main entry point for a Python worker is the [`fetch` handler](/workers/runtime-apis/handlers/fetch). In a Python Worker, this handler is placed in a `Default` class that extends the `WorkerEntrypoint` class (which you can import from the `workers` SDK module).
 
 To run a Python Worker locally, you use [Wrangler](/workers/wrangler/), the CLI for Cloudflare Workers:
 
@@ -72,10 +73,11 @@ Now, we can modify `src/entry.py` to make use of the new module.
 
 ```python
 from hello import hello
-from workers import Response
+from workers import WorkerEntrypoint, Response
 
-def on_fetch(request):
-    return Response(hello("World"))
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        return Response(hello("World"))
 ```
 
 Once you edit `src/entry.py`, Wrangler will automatically detect the change and
@@ -91,12 +93,13 @@ Let's try editing the worker to accept a POST request. We know from the
 JSON. In a Python Worker, you would write:
 
 ```python
-from workers import Response
+from workers import WorkerEntrypoint, Response
 from hello import hello
 
-async def on_fetch(request):
-    name = (await request.json()).name
-    return Response(hello(name))
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        name = (await request.json()).name
+        return Response(hello(name))
 ```
 
 Once you edit the `src/entry.py`, Wrangler should automatically restart the local
@@ -140,10 +143,11 @@ API_HOST = "example.com"
 Then, you can access the `API_HOST` environment variable via the `env` parameter:
 
 ```python
-from workers import Response
+from workers import WorkerEntrypoint, Response
 
-async def on_fetch(request, env):
-    return Response(env.API_HOST)
+class Default(WorkerEntrypoint):
+    async def fetch(self, request, env):
+        return Response(env.API_HOST)
 ```
 
 ## Further Reading

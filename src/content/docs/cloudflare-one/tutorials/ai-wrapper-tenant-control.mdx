@@ -1,5 +1,5 @@
 ---
-updated: 2025-05-02
+reviewed: 2025-05-02
 category: 🔐 Zero Trust
 pcx_content_type: tutorial
 title: Create and secure an AI agent wrapper using AI Gateway and Zero Trust
@@ -42,7 +42,7 @@ For more information, refer to [Getting started with AI Gateway](/ai-gateway/get
 
 ## 2. (Optional) Use Guardrails to block unsafe or inappropriate content
 
-[Guardrails](/ai-gateway/guardrails/) is an built-in AI Gateway security feature that allows Cloudflare to identify unsafe or inappropriate content in prompts and responses based on selected categories.
+[Guardrails](/ai-gateway/features/guardrails/) is an built-in AI Gateway security feature that allows Cloudflare to identify unsafe or inappropriate content in prompts and responses based on selected categories.
 
 1. Go to **AI** > **AI Gateway**.
 2. Select your AI gateway.
@@ -448,7 +448,7 @@ For more information on creating DLP policies, refer to [Scan HTTP traffic](/clo
 
 Because you published your wrapper as a self-hosted Access application, you can execute it in an [isolated session](/cloudflare-one/policies/browser-isolation/setup/clientless-browser-isolation/) for your users by creating an [Access policy](/cloudflare-one/policies/access/) and configuring it for your application.
 
-<Render file="clientless-browser-isolation" />
+<Render file="clientless-browser-isolation" product="cloudflare-one" />
 
 3. Go to **Access** > **Policies**.
 4. Select **Add a policy**.
@@ -480,4 +480,4 @@ Logs can be exported to external providers with [Logpush](/logs/logpush/).
 
 ### Configurability
 
-You can configure your wrapper to use a [different AI provider](/ai-gateway/providers/) or give your users the option to choose between multiple AI providers, including AI models running directly on Cloudflare's global network with [Workers AI](/workers-ai/). With this, you can control costs related to AI usage or adopt newer models without impacting your users or the access controls already put in place.
+You can configure your wrapper to use a [different AI provider](/ai-gateway/usage/providers/) or give your users the option to choose between multiple AI providers, including AI models running directly on Cloudflare's global network with [Workers AI](/workers-ai/). With this, you can control costs related to AI usage or adopt newer models without impacting your users or the access controls already put in place.

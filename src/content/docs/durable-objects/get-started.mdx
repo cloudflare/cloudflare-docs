@@ -62,6 +62,39 @@ Move into your new directory:
 cd durable-object-starter
 ```
 
+:::note[Adding a Durable Object to an existing Worker]
+
+To add a Durable Object to an existing Worker, you need to:
+
+- Modify the code of the existing Worker to include the following:
+
+  ```ts
+  export class MyDurableObject extends DurableObject<Env> {
+    constructor(ctx: DurableObjectState, env: Env) {
+      // Required, as we're extending the base class.
+      super(ctx, env)
+    }
+
+    {/* Define your Durable Object methods here */}
+
+  }
+
+  export default {
+    async fetch(request, env, ctx): Promise<Response> {
+      const id:DurableObjectId = env.MY_DURABLE_OBJECT.idFromName(new URL(request.url).pathname);
+
+      const stub = env.MY_DURABLE_OBJECT.get(id);
+
+      {/* Access your Durable Object methods here */}
+
+    },
+  } satisfies ExportedHandler<Env>;
+  ```
+
+- Update the Wrangler configuration file of your existing Worker to bind the Durable Object to the Worker.
+
+:::
+
 ## 2. Write a Durable Object class using SQL API
 
 Before you create and access a Durable Object, its behavior must be defined by an ordinary exported JavaScript class.
@@ -185,16 +218,16 @@ export default {
 <TabItem label="Python" icon="seti:python">
 
 ```python
-from workers import handler, Response
+from workers import handler, Response, WorkerEntrypoint
 from urllib.parse import urlparse
 
-@handler
-async def on_fetch(request, env, ctx):
-    url = urlparse(request.url)
-    id = env.MY_DURABLE_OBJECT.idFromName(url.path)
-    stub = env.MY_DURABLE_OBJECT.get(id)
-    greeting = await stub.say_hello()
-    return Response(greeting)
+class Default(WorkerEntrypoint):
+    async def fetch(request, env, ctx):
+        url = urlparse(request.url)
+        id = env.MY_DURABLE_OBJECT.idFromName(url.path)
+        stub = env.MY_DURABLE_OBJECT.get(id)
+        greeting = await stub.say_hello()
+        return Response(greeting)
 ```
 
 </TabItem>
@@ -328,13 +361,13 @@ class MyDurableObject(DurableObject):
 
         return result.greeting
 
-@handler
-async def on_fetch(request, env, ctx):
-    url = urlparse(request.url)
-    id = env.MY_DURABLE_OBJECT.idFromName(url.path)
-    stub = env.MY_DURABLE_OBJECT.get(id)
-    greeting = await stub.say_hello()
-    return Response(greeting)
+class Default(WorkerEntrypoint):
+    async def fetch(self, request, env, ctx):
+        url = urlparse(request.url)
+        id = env.MY_DURABLE_OBJECT.idFromName(url.path)
+        stub = env.MY_DURABLE_OBJECT.get(id)
+        greeting = await stub.say_hello()
+        return Response(greeting)
 ```
 
 </TabItem>

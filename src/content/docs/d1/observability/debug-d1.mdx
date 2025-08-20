@@ -6,40 +6,13 @@ sidebar:
 
 ---
 
+import { Example } from "~/components";
+
 D1 allows you to capture exceptions and log errors returned when querying a database. To debug D1, you will use the same tools available when [debugging Workers](/workers/observability/).
 
-## Handle errors
+D1's [`stmt.`](/d1/worker-api/prepared-statements/) and [`db.`](/d1/worker-api/d1-database/) methods throw an [Error object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error) whenever an error occurs. To capture exceptions, log the `e.message` value.
 
-The D1 [Workers Binding API](/d1/worker-api/) returns detailed error messages within an `Error` object.
-
-To ensure you are capturing the full error message, log or return `e.message` as follows:
-
-```ts
-try {
-    await db.exec("INSERTZ INTO my_table (name, employees) VALUES ()");
-} catch (e: any) {
-    console.error({
-        message: e.message
-    });
-}
-/*
-{
-  "message": "D1_EXEC_ERROR: Error in line 1: INSERTZ INTO my_table (name, employees) VALUES (): sql error: near \"INSERTZ\": syntax error in INSERTZ INTO my_table (name, employees) VALUES () at offset 0"
-}
-*/
-```
-
-### Errors
-
-The [`stmt.`](/d1/worker-api/prepared-statements/) and [`db.`](/d1/worker-api/d1-database/) methods throw an [Error object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error) whenever an error occurs.
-
-:::note
-Prior to [`wrangler` 3.1.1](https://github.com/cloudflare/workers-sdk/releases/tag/wrangler%403.1.1), D1 JavaScript errors used the [cause property](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/cause) for detailed error messages.
-
-To inspect these errors when using older versions of `wrangler`, you should log `error?.cause?.message`.
-:::
-
-To capture exceptions, log the `Error.message` value. For example, the code below has a query with an invalid keyword - `INSERTZ` instead of `INSERT`:
+For example, the code below has a query with an invalid keyword - `INSERTZ` instead of `INSERT`:
 
 ```js
 try {
@@ -60,18 +33,50 @@ The code above throws the following error message:
 }
 ```
 
-### Error list
+:::note
+Prior to [`wrangler` 3.1.1](https://github.com/cloudflare/workers-sdk/releases/tag/wrangler%403.1.1), D1 JavaScript errors used the [cause property](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/cause) for detailed error messages.
+
+To inspect these errors when using older versions of `wrangler`, you should log `error?.cause?.message`.
+:::
+
+## Error list
 
 D1 returns the following error constants, in addition to the extended (detailed) error message:
 
-| Message              | Cause                                                                                                                                                            |
-| -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `D1_ERROR`           | Generic error.                                                                                                                                                   |
-| `D1_TYPE_ERROR`      | Returned when there is a mismatch in the type between a column and a value. A common cause is supplying an `undefined` variable (unsupported) instead of `null`. |
-| `D1_COLUMN_NOTFOUND` | Column not found.                                                                                                                                                |
-| `D1_DUMP_ERROR`      | Database dump error.                                                                                                                                             |
-| `D1_EXEC_ERROR`      | Exec error in line x: y error.                                                                                                                                   |
+| Error message                                                               | Description                                                                                                                                                      | Recommended action                                                                                                                                |
+| --------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `D1_ERROR`                                                                  | Prefix of a specific D1 error.                                                                                                                                   | Refer to "List of D1_ERRORs" below for more detail about your specific error.                                                                     |
+| `D1_EXEC_ERROR`                                                             | Exec error in line x: y error.                                                                                                                                   |                                                                                                                                                   |
+| `D1_TYPE_ERROR`                                                             | Returned when there is a mismatch in the type between a column and a value. A common cause is supplying an `undefined` variable (unsupported) instead of `null`. | Ensure the type of the value and the column match.                                                                                                |
+| `D1_COLUMN_NOTFOUND`                                                        | Column not found.                                                                                                                                                | Ensure you have selected a column which exists in the database.                                                                                   |
 
+The following table lists specific instances of `D1_ERROR`.
+
+<Example title="List of D1_ERRORs">
+
+:::note[Retry operations]
+While some D1 errors can be resolved by retrying the operation, retrying is only safe if your query is idempotent (produces the same result when executed multiple times).
+
+Before retrying any failed operation:
+- Verify your query is idempotent (for example, read-only operations, or queries such as `CREATE TABLE IF NOT EXISTS`).
+- Consider implementing application-level checks to identify if the operation can be retried, and retrying only when it is safe and necessary.
+:::
+
+| `D1_ERROR` type                                                             | Description                                                                                                                                                               | Recommended action                                                                                                                                |
+| --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `D1 DB reset because its code was updated.`                                 | Cloudflare has updated the code for D1 (or the underlying Durable Object), and the Durable Object which contains the D1 database is restarting.                           | Retry the operation.                                                                                                                              |
+| `Internal error while starting up D1 DB storage caused object to be reset.` | The Durable Object containing the D1 database is failing to start.                                                                                                        | Retry the operation.                                                                                                                              |
+| `Network connection lost.`                                                  | A network error.                                                                                                                                                          | Retry the operation. Refer to the "Retry operation" note above.                                                                                   |
+| `Internal error in D1 DB storage caused object to be reset.`                | An error has caused the D1 database to restart.                                                                                                                           | Retry the operation.                                                                                                                              |
+| `Cannot resolve D1 DB due to transient issue on remote node.`               | The query cannot reach the Durable Object containing the D1 database.                                                                                                     | Retry the operation. Refer to the "Retry operation" note above.                                                                                   |
+| `Can't read from request stream because client disconnected.`               | A query request was made (e.g. uploading a SQL query), but the connection was closed during the query was fully executed.                                                 | App action: Retry the operation, and ensure the connection stays open.                                                                            |
+| `D1 DB storage operation exceeded timeout which caused object to be reset.` | A query is trying to write a large amount of information (e.g. GBs), and is taking too long.                                                                              | App action: Optimize the queries (so that each query takes less time), send fewer requests by spreading the load over time, or shard the queries. |
+| `D1 DB is overloaded. Requests queued for too long.`                        | The requests to the D1 database are queued for too long, either because there are too many requests, or the queued requests are taking too long.                          | App action: Optimize the queries (so that each query takes less time), send fewer requests by spreading the load over time, or shard the queries. |
+| `D1 DB is overloaded. Too many requests queued.`                            | The request queue to the D1 database is too long, either because there are too many requests, or the queued requests are taking too long.                                 | App action: Optimize the queries (so that each query takes less time), send fewer requests by spreading the load over time, or shard the queries. |
+| `D1 DB's isolate exceeded its memory limit and was reset.`                  | A query loaded too much into memory, causing the D1 database to crash.                                                                                                    | App action: Optimize the queries (so that each query takes less time), send fewer requests by spreading the load over time, or shard the queries. |
+| `D1 DB exceeded its CPU time limit and was reset.`                          | A query is taking up a lot of CPU time (e.g. scanning over 9 GB table, or attempting a large import/export).                                                              | App action: Split the query into smaller shards.                                                                                                  |
+
+</Example>
 
 ## View logs
 

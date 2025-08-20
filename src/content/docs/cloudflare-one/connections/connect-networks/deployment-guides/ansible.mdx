@@ -56,81 +56,80 @@ Two files will be generated: `gcp_ssh` which contains the private key, and `gcp_
 
 ### Define input variables
 
-<Render file="terraform/input-variables" />
+<Render file="terraform/input-variables" product="cloudflare-one" />
 
 ### Assign values to the variables
 
-<Render file="terraform/variable-values" />
+<Render file="terraform/variable-values" product="cloudflare-one" />
 
 ### Configure Terraform providers
 
 You will need to declare the [providers](https://registry.terraform.io/browse/providers) used to provision the infrastructure.
 
-1. In your configuration directory, create a `.tf` file:
+1.  In your configuration directory, create a `.tf` file:
 
-   ```sh
-   touch providers.tf
-   ```
+    ```sh
+    touch providers.tf
+    ```
 
-2. Add the following providers to `providers.tf`. The `random` provider is used to generate a tunnel secret.
+2.  Add the following providers to `providers.tf`. The `random` provider is used to generate a tunnel secret.
 
-		<Render file="terraform/providers-v5" />
+        <Render file="terraform/providers-v5" product="cloudflare-one" />
 
 ### Configure Cloudflare resources
 
 The following configuration will modify settings in your Cloudflare account.
 
-1. In your configuration directory, create a `.tf` file:
+1.  In your configuration directory, create a `.tf` file:
 
-   ```sh
-   touch Cloudflare-config.tf
-   ```
+    ```sh
+    touch Cloudflare-config.tf
+    ```
 
-2. Add the following resources to `Cloudflare-config.tf`:
+2.  Add the following resources to `Cloudflare-config.tf`:
 
+        ```tf
 
-		```tf
+        # Creates a new remotely-managed tunnel for the GCP VM.
+        resource "cloudflare_zero_trust_tunnel_cloudflared" "gcp_tunnel" {
+        	account_id    = var.cloudflare_account_id
+        	name          = "Ansible GCP tunnel"
+        	config_src    = "cloudflare"
+        }
 
-		# Creates a new remotely-managed tunnel for the GCP VM.
-		resource "cloudflare_zero_trust_tunnel_cloudflared" "gcp_tunnel" {
-			account_id    = var.cloudflare_account_id
-			name          = "Ansible GCP tunnel"
-			config_src    = "cloudflare"
-		}
+        # Reads the token used to run the tunnel on the server.
+        data "cloudflare_zero_trust_tunnel_cloudflared_token" "gcp_tunnel_token" {
+        	account_id 	= var.cloudflare_account_id
+        	tunnel_id 	= cloudflare_zero_trust_tunnel_cloudflared.gcp_tunnel.id
+        }
 
-		# Reads the token used to run the tunnel on the server.
-		data "cloudflare_zero_trust_tunnel_cloudflared_token" "gcp_tunnel_token" {
-			account_id 	= var.cloudflare_account_id
-			tunnel_id 	= cloudflare_zero_trust_tunnel_cloudflared.gcp_tunnel.id
-		}
+        # Creates the CNAME record that routes http_app.${var.cloudflare_zone} to the tunnel.
+        resource "cloudflare_dns_record" "http_app" {
+        	zone_id = var.cloudflare_zone_id
+        	name    = "http_app"
+        	content = "${cloudflare_zero_trust_tunnel_cloudflared.gcp_tunnel.id}.cfargotunnel.com"
+        	type    = "CNAME"
+        	ttl     = 1
+        	proxied = true
+        }
 
-		# Creates the CNAME record that routes http_app.${var.cloudflare_zone} to the tunnel.
-		resource "cloudflare_dns_record" "http_app" {
-			zone_id = var.cloudflare_zone_id
-			name    = "http_app"
-			content = "${cloudflare_zero_trust_tunnel_cloudflared.gcp_tunnel.id}.cfargotunnel.com"
-			type    = "CNAME"
-			ttl     = 1
-			proxied = true
-		}
-
-		# Configures tunnel with a public hostname route for clientless access.
-		resource "cloudflare_zero_trust_tunnel_cloudflared_config" "gcp_tunnel_config" {
-			tunnel_id  = cloudflare_zero_trust_tunnel_cloudflared.gcp_tunnel.id
-			account_id = var.cloudflare_account_id
-			config     = {
-				ingress 	= [
-					{
-						hostname = "http_app.${var.cloudflare_zone}"
-						service  = "http://localhost:80"
-					},
-					{
-						service  = "http_status:404"
-					}
-				]
-			}
-		}
-		```
+        # Configures tunnel with a public hostname route for clientless access.
+        resource "cloudflare_zero_trust_tunnel_cloudflared_config" "gcp_tunnel_config" {
+        	tunnel_id  = cloudflare_zero_trust_tunnel_cloudflared.gcp_tunnel.id
+        	account_id = var.cloudflare_account_id
+        	config     = {
+        		ingress 	= [
+        			{
+        				hostname = "http_app.${var.cloudflare_zone}"
+        				service  = "http://localhost:80"
+        			},
+        			{
+        				service  = "http_status:404"
+        			}
+        		]
+        	}
+        }
+        ```
 
 ### Configure GCP resources
 
@@ -205,26 +204,26 @@ The following configuration defines the specifications for the GCP virtual machi
 
 The following Terraform resource exports the [tunnel token](/cloudflare-one/connections/connect-networks/configure-tunnels/remote-tunnel-permissions/) and other variables to `tf_ansible_vars_file.yml`. Ansible will use the tunnel token to configure and run `cloudflared` on the server.
 
-1. In your configuration directory, create a new `tf` file:
+1.  In your configuration directory, create a new `tf` file:
 
-   ```sh
-   touch export.tf
-   ```
+    ```sh
+    touch export.tf
+    ```
 
-2. Copy and paste the following content into `export.tf`:
+2.  Copy and paste the following content into `export.tf`:
 
-		```tf
-		resource "local_file" "tf_ansible_vars_file" {
-			content = <<-DOC
-				# Ansible vars_file containing variable values from Terraform.
-				tunnel_id: ${cloudflare_zero_trust_tunnel_cloudflared.gcp_tunnel.id}
-				tunnel_name: ${cloudflare_zero_trust_tunnel_cloudflared.gcp_tunnel.name}
-				tunnel_token: ${data.cloudflare_zero_trust_tunnel_cloudflared_token.gcp_tunnel_token.token}
-				DOC
+        ```tf
+        resource "local_file" "tf_ansible_vars_file" {
+        	content = <<-DOC
+        		# Ansible vars_file containing variable values from Terraform.
+        		tunnel_id: ${cloudflare_zero_trust_tunnel_cloudflared.gcp_tunnel.id}
+        		tunnel_name: ${cloudflare_zero_trust_tunnel_cloudflared.gcp_tunnel.name}
+        		tunnel_token: ${data.cloudflare_zero_trust_tunnel_cloudflared_token.gcp_tunnel_token.token}
+        		DOC
 
-			filename = "./tf_ansible_vars_file.yml"
-		}
-		```
+        	filename = "./tf_ansible_vars_file.yml"
+        }
+        ```
 
 ## 5. Create the Ansible playbook
 

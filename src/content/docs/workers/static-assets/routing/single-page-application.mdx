@@ -33,7 +33,7 @@ In order to deploy a Single Page Application to Workers, you must configure the 
 
 Configuring `assets.not_found_handling` to `single-page-application` overrides the default serving behavior of Workers for static assets. When an incoming request does not match a file in the `assets.directory`, Workers will serve the contents of the `/index.html` file with a `200 OK` status.
 
-<Render file="navigation_requests" />
+<Render file="navigation_requests" product="workers" />
 
 ## Advanced routing control
 
@@ -41,9 +41,10 @@ For more explicit control over SPA routing behavior, you can use `run_worker_fir
 
 :::note
 Advanced routing control is supported in:
+
 - [Wrangler](/workers/wrangler/install-and-update/) v4.20.0 and above
 - [Cloudflare Vite plugin](/workers/vite-plugin/get-started/) v1.7.0 and above
-:::
+  :::
 
 <WranglerConfig>
 
@@ -84,6 +85,7 @@ export default {
 	},
 } satisfies ExportedHandler;
 ```
+
 </TypeScriptExample>
 
 ## Local Development

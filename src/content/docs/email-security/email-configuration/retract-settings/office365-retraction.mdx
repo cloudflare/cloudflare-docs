@@ -6,10 +6,9 @@ sidebar:
 head:
   - tag: title
     content: Retraction guide for Microsoft Office 365
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 ![Email workflow for retracting emails with Microsoft Office 365](~/assets/images/email-security/email-retraction/o365/opening_img-o365-retraction.png)
 
@@ -55,25 +54,33 @@ If you do not see the Retract Settings option, [contact customer support](/suppo
 
 ## 2. Configure auto-retraction actions
 
-<Render file="auto-retraction" params={{ one: "Office 365 messages cannot be recovered without using the eDiscovery feature or the Exchange admin center. Refer to [Recover hard deleted messages](#recover-hard-deleted-messages) for more information." }} />
+<Render
+	file="auto-retraction"
+	params={{
+		one: "Office 365 messages cannot be recovered without using the eDiscovery feature or the Exchange admin center. Refer to [Recover hard deleted messages](#recover-hard-deleted-messages) for more information.",
+	}}
+/>
 
 ## 3. Configure journaling
 
-<Render file="deployment/journaling-connector" />
+<Render file="deployment/journaling-connector" product="email-security" />
 
 ## 4. Manual message retraction
 
-<Render file="manual-retraction" />
+<Render file="manual-retraction" product="email-security" />
 
 ## Recover hard deleted messages
 
 Office 365 has two ways for recovering hard deleted email messages:
 
-* **[eDiscovery](https://learn.microsoft.com/en-us/purview/ediscovery?view=o365-worldwide)**
-* **[Exchange admin center](https://learn.microsoft.com/en-us/exchange/recipients-in-exchange-online/manage-user-mailboxes/recover-deleted-messages)**
+- **[eDiscovery](https://learn.microsoft.com/en-us/purview/ediscovery?view=o365-worldwide)**
+- **[Exchange admin center](https://learn.microsoft.com/en-us/exchange/recipients-in-exchange-online/manage-user-mailboxes/recover-deleted-messages)**
 
 Refer to Microsoft's documentation to learn more about how to use these tools to recover deleted email messages.
 
 ## Geographic locations
 
-<Render file="deployment/bcc-table-geographic-locations" />
+<Render
+	file="deployment/bcc-table-geographic-locations"
+	product="email-security"
+/>
