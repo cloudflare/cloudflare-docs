@@ -42,8 +42,6 @@ if (!definition.args) {
 const positionals = definition.positionalArgs
 	?.map((p) => `[${p.toUpperCase()}]`)
 	.join(" ");
-
-console.log(JSON.stringify(definition, null, "\t"));
 ---
 
 <AnchorHeading depth={2} title={command} />
