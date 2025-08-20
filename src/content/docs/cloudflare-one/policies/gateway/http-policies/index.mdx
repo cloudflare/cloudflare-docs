@@ -393,6 +393,14 @@ Gateway matches HTTP traffic against the following selectors, or criteria:
 
 <Render file="gateway/selectors/all-access-private-app-destinations" />
 
+### Application Approval Status
+
+The [approval status](/cloudflare-one/insights/analytics/shadow-it-discovery/#approval-status) of an application from [Shadow IT Discovery](/cloudflare-one/insights/analytics/shadow-it-discovery/) or the [Application Library](/cloudflare-one/applications/app-library/).
+
+| UI name    | API example                          |
+| ---------- | ------------------------------------ |
+| App Status | `any(app.statuses[*] == "approved")` |
+
 ### Application
 
 <Render file="gateway/selectors/application" params={{ policyType: "HTTP" }} />
