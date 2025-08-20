@@ -1,0 +1,22 @@
+---
+name: Weekly codeowners cleanup
+workflow_dispatch:
+  schedule:
+    - cron: "0 0 1 * *"
+
+permissions:
+  contents: read
+
+jobs:
+  cleanowners:
+    name: cleanowners
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+
+    steps:
+      - name: Run cleanowners action
+        uses: github/cleanowners@v1
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ORGANIZATION: cloudflare
