@@ -66,8 +66,32 @@ cd durable-object-starter
 
 To add a Durable Object to an existing Worker, you need to:
 
-- Modify the code of the existing Worker code (as shown in subsequent steps).
-- Update the Wrangler configuration file of your existing Worker to bind the Durable Object to the Worker.
+1. Modify the code of the existing Worker to include the following:
+
+  ```ts
+  export class MyDurableObject extends DurableObject<Env> {
+    constructor(ctx: DurableObjectState, env: Env) {
+      // Required, as we're extending the base class.
+      super(ctx, env)
+    }
+
+    {/* Define your Durable Object methods here */}
+
+  }
+
+  export default {
+    async fetch(request, env, ctx): Promise<Response> {
+      const id:DurableObjectId = env.MY_DURABLE_OBJECT.idFromName(new URL(request.url).pathname);
+
+      const stub = env.MY_DURABLE_OBJECT.get(id);
+
+      {/* Insert your Durable Object code here */}
+
+    },
+  } satisfies ExportedHandler<Env>;
+  ```
+
+2. Update the Wrangler configuration file of your existing Worker to bind the Durable Object to the Worker.
 
 :::
 
