@@ -1,0 +1,23 @@
+---
+title: Wrangler dev with multiple config files now supports worker bindings across dev commands
+description: Workers running with wrangler dev using multiple config files can now communicate with Workers running in separate dev commands.
+products:
+  - workers
+date: 2025-08-22
+---
+
+Workers using `wrangler dev` with multiple config files can now communicate with Workers running in separate dev commands using service bindings and tail consumers.
+
+Previously, cross-command communication only worked when using a single config file. Now it works with multiple configs:
+
+```sh
+# Terminal 1
+wrangler dev
+
+# Terminal 2
+wrangler dev --config ./api/wrangler.jsonc --config ./app/wrangler.jsonc
+```
+
+This means Workers can now communicate with each other across separate dev commands, regardless of your development setup.
+
+Check out the [Developing with multiple Workers](/workers/development-testing/multi-workers) guide to learn more about the different approaches and when to use each one.
