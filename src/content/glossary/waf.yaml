@@ -56,6 +56,12 @@ entries:
 
   - term: threat score
     general_definition: |-
-      the threat score is a score from 0 (zero risk) to 100 (high risk) classifying the IP reputation of a visitor.
+      the threat score was a score from `0` (zero risk) to `100` (high risk) classifying the IP reputation of a visitor. Currently, the threat score is always `0` (zero).
 
-      IP reputation is calculated based on Project Honeypot, external public IP information, as well as internal threat intelligence from WAF managed rules and DDoS.
+  - term: LLM
+    general_definition: |-
+      a machine learning model that can comprehend and generate human language text. It works by analyzing massive data sets of language.
+
+  - term: prompt injection
+    general_definition: |-
+      the process of overwriting the system prompt for a large language model (LLM), which instructs the LLM on how to respond to user input.

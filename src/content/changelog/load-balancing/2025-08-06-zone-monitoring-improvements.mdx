@@ -1,0 +1,20 @@
+---
+title: Improvements to Monitoring Using Zone Settings
+description: Monitors configured with a probe zone have been migrated to new infrastructure.
+date: 2025-08-06
+---
+
+Cloudflare Load Balancing Monitors support loading and applying settings for a specific zone to monitoring requests to origin endpoints. This feature has been migrated to new infrastructure to improve reliability, performance, and accuracy.
+
+All zone monitors have been tested against the new infrastructure. There should be no change to health monitoring results of currently healthy and active pools. Newly created or re-enabled pools may need validation of their monitor zone settings before being introduced to service, especially regarding correct application of mTLS.
+
+### What you can expect:
+
+- More reliable application of zone settings to monitoring requests, including
+  - Authenticated Origin Pulls
+  - Aegis Egress IP Pools
+  - Argo Smart Routing
+  - HTTP/2 to Origin
+- Improved support and bug fixes for retries, redirects, and proxied origin resolution
+- Improved performance and reliability of monitoring requests withing the Cloudflare network
+- Unrelated CDN or WAF configuration changes should have no risk of impact to pool health

@@ -5,6 +5,8 @@ sidebar:
   order: 3
 ---
 
+import { Render } from "~/components";
+
 You can delete objects from your bucket from the Cloudflare dashboard or using the Wrangler.
 
 ## Delete objects via the Cloudflare dashboard
@@ -36,3 +38,5 @@ wrangler r2 object delete test-bucket/foo.png
 Deleting object "foo.png" from bucket "test-bucket".
 Delete complete.
 ```
+
+<Render file="link-to-workers-r2-api" product="r2"/>

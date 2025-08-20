@@ -1,0 +1,21 @@
+---
+pcx_content_type: troubleshooting
+title: Error 404
+source: null
+---
+
+## 404 Not Found
+
+The `404 Not Found` status code indicates that the origin server was unable to locate the requested resource. Typically, this means the host server could not find the resource. For a more permanent version of this error, the 410 Gone status code should be used.
+
+For more details, refer to [RFC 7231](https://tools.ietf.org/html/rfc7231).
+
+### Common use cases
+
+These errors typically occur when someone mistypes a URL on your site, when there is a broken link from another page, when a page that previously existed is moved or removed, or there is an error when a search engine indexes your site.
+
+These errors typically account for approximately 3% of total page views for a typical site. However, they often go untracked by traditional analytics platforms, such as Google Analytics. To improve user experience, website owners usually implement a custom 404 page to be displayed when this error is generated.
+
+### Cloudflare-specific information
+
+Cloudflare does not generate `404s` for customer websites, we only proxy the request from the origin server. If you encounter a `404` error on a Cloudflare-powered site, the issue lies with the origin server. In such cases, contact your hosting provider for assistance.

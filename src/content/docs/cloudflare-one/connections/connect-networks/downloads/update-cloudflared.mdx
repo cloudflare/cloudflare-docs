@@ -51,7 +51,7 @@ sudo launchctl start com.cloudflare.cloudflared
 1. Update the `cloudflared` package:
 
 ```sh
-sudo apt-get update && sudo apt-get upgrade cloudflared
+sudo apt-get update && sudo apt-get install --only-upgrade cloudflared
 ```
 
 2. Restart the service:
@@ -119,9 +119,9 @@ docker run --pull always cloudflare/cloudflared:latest tunnel --no-autoupdate ru
 
 2. Run the following command to update `cloudflared`:
 
-    ```sh
-    docker run --pull always -v <PATH-TO-YOUR-LOCAL-CLOUDFLARED>:/home/nonroot/.cloudflared cloudflare/cloudflared:latest tunnel --no-autoupdate run <TUNNEL-ID>
-    ```
+   ```sh
+   docker run --pull always -v <PATH-TO-YOUR-LOCAL-CLOUDFLARED>:/home/nonroot/.cloudflared cloudflare/cloudflared:latest tunnel --no-autoupdate run <TUNNEL-ID>
+   ```
 
 </TabItem> <TabItem label="Other">
 

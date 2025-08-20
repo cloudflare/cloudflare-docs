@@ -1,0 +1,141 @@
+---
+title: Analytics
+pcx_content_type: reference
+sidebar:
+  order: 7
+---
+
+import { Type, Render } from "~/components";
+
+Use the [GraphQL API](/analytics/graphql-api/) to get aggregate data and monitor your Aegis IPs capacity.
+
+<Render file="concurrent-connections-explainer" product="aegis" />
+
+Refer to the [GraphQL Analytics API documentation](/analytics/graphql-api/getting-started/) for further guidance, or consider the  [example](#example) below for a quickstart.
+
+## Aegis schema
+
+The specific Aegis schema is called `aegisIpUtilizationAdaptiveGroups`.
+
+You can get average (`avg`) or maximum (`max`) utilization values (in percentage), and use the following dimensions:
+
+- `datetimeFiveMinutes` <Type text="time" />
+    - Timestamp truncated to five minutes. For example, `2025-01-10T00:05:00Z`.
+
+- `popName` <Type text="string" />
+    - The Cloudflare point of presence (PoP). For example, `sjc`.
+
+- `egressIp` <Type text="string" />
+    - Your assigned Aegis IP. For example, `192.0.2.1`.
+
+- `origin` <Type text="string" />
+    - Origin IP and port. For example, `203.0.113.150:443`.
+
+- `popUtilizationKey` <Type text="string" />
+    - The Cloudflare point of presence (PoP), the Aegis IP, and the origin IP and port. For example, `sjc 192.0.2.1 203.0.113.150:443`.
+
+## Example
+
+Refer to the query below to learn how to get average utilization and maximum utilization by point of presence, and filter the results.
+
+You can also select the button at the bottom to use this query for your account via the [Cloudflare GraphQL API Explorer](https://graphql.cloudflare.com/explorer). Make sure to provide your account ID and timestamps, and replace the placeholders for `popName`, `egressIp`, and `origin` as needed.
+
+```graphql graphql-api-explorer "popName: "<CLOUDFLARE_POP>"" "egressIp: "<YOUR_EGRESS_IP>"" "origin: "<ORIGIN_IP_AND_PORT>""
+query AegisIpUtilizationQuery(
+  $accountTag: string
+  $datetimeStart: string
+  $datetimeEnd: string
+) {
+  viewer {
+    utilization: accounts(filter: { accountTag: $accountTag }) {
+      avgByPopUtilization: aegisIpUtilizationAdaptiveGroups(
+        limit: 100
+        filter: {
+          datetimeFiveMinutes_geq: $datetimeStart
+          datetimeFiveMinutes_leq: $datetimeEnd
+        }
+        orderBy: [datetimeFiveMinutes_ASC]
+      ) {
+        avg {
+          utilization
+        }
+        dimensions {
+          datetimeFiveMinutes
+          popUtilizationKey
+        }
+      }
+
+      maxByPopUtilization: aegisIpUtilizationAdaptiveGroups(
+        limit: 100
+        filter: {
+          datetimeFiveMinutes_geq: $datetimeStart
+          datetimeFiveMinutes_leq: $datetimeEnd
+        }
+        orderBy: [datetimeFiveMinutes_ASC]
+      ) {
+        max {
+          utilization
+        }
+        dimensions {
+          datetimeFiveMinutes
+          popUtilizationKey
+        }
+      }
+
+      filterPopUtilization: aegisIpUtilizationAdaptiveGroups(
+        limit: 100
+        filter: {
+          datetimeFiveMinutes_geq: $datetimeStart
+          datetimeFiveMinutes_leq: $datetimeEnd
+          popName: "<CLOUDFLARE_POP>"
+        }
+        orderBy: [datetimeFiveMinutes_ASC]
+      ) {
+        max {
+          utilization
+        }
+        dimensions {
+          datetimeFiveMinutes
+          popUtilizationKey
+        }
+      }
+
+      filterIPUtilization: aegisIpUtilizationAdaptiveGroups(
+        limit: 100
+        filter: {
+          datetimeFiveMinutes_geq: $datetimeStart
+          datetimeFiveMinutes_leq: $datetimeEnd
+          egressIp: "<YOUR_EGRESS_IP>"
+        }
+        orderBy: [datetimeFiveMinutes_ASC]
+      ) {
+        max {
+          utilization
+        }
+        dimensions {
+          datetimeFiveMinutes
+          popUtilizationKey
+        }
+      }
+
+      filterOriginUtilization: aegisIpUtilizationAdaptiveGroups(
+        limit: 100
+        filter: {
+          datetimeFiveMinutes_geq: $datetimeStart
+          datetimeFiveMinutes_leq: $datetimeEnd
+          origin: "<ORIGIN_IP_AND_PORT>"
+        }
+        orderBy: [datetimeFiveMinutes_ASC]
+      ) {
+        max {
+          utilization
+        }
+        dimensions {
+          datetimeFiveMinutes
+          popUtilizationKey
+        }
+      }
+    }
+  }
+}
+```

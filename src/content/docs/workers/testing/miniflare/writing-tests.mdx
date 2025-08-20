@@ -7,7 +7,7 @@ head: []
 description: Write integration tests against Workers using Miniflare.
 ---
 
-import { TabItem, Tabs, Details } from "~/components";
+import { TabItem, Tabs, Details, PackageManagers } from "~/components";
 
 import { FileTree } from "@astrojs/starlight/components";
 
@@ -19,25 +19,7 @@ This guide will show you how to set up [Miniflare](/workers/testing/miniflare) t
 
 To use Miniflare, make sure you've installed the latest version of Miniflare v3:
 
-<Tabs> <TabItem label="npm">
-
-```sh
-npm install -D miniflare
-```
-
-</TabItem> <TabItem label="yarn">
-
-```sh
-yarn add -D miniflare
-```
-
-</TabItem> <TabItem label="pnpm">
-
-```sh
-pnpm add -D miniflare
-```
-
-</TabItem> </Tabs>
+<PackageManagers pkg="miniflare@latest" dev />
 
 The rest of this guide demonstrates concepts with the [`node:test`](https://nodejs.org/api/test.html) testing framework, but any testing framework can be used.
 
@@ -98,13 +80,13 @@ The highlighted lines of the test file above demonstrate how to set up Miniflare
 <Details header="What runtime are tests running in?">
 	When using the [Vitest integration](/workers/testing/vitest-integration/),
 	your entire test suite runs in
-	[`workerd`](https://github.com/cloudflare/workerd), which is why it is possible
-	to unit test individual functions. By contrast, when using a different testing
-	framework to run tests via Miniflare, only your Worker itself is running in
-	[`workerd`](https://github.com/cloudflare/workerd) — your test files run in
-	Node.js. This means that importing functions from your Worker into your test
-	files might exhibit different behaviour than you'd see at runtime if the
-	functions rely on `workerd`-specific behaviour.
+	[`workerd`](https://github.com/cloudflare/workerd), which is why it is
+	possible to unit test individual functions. By contrast, when using a
+	different testing framework to run tests via Miniflare, only your Worker
+	itself is running in [`workerd`](https://github.com/cloudflare/workerd) — your
+	test files run in Node.js. This means that importing functions from your
+	Worker into your test files might exhibit different behaviour than you'd see
+	at runtime if the functions rely on `workerd`-specific behaviour.
 </Details>
 
 ## Interacting with Bindings

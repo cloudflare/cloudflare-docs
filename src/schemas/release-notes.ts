@@ -4,8 +4,6 @@ export const releaseNotesSchema = z.object({
 	link: z.string(),
 	productName: z.string(),
 	productLink: z.string(),
-	productArea: z.string(),
-	productAreaLink: z.string(),
 	entries: z
 		.object({
 			publish_date: z.string(),

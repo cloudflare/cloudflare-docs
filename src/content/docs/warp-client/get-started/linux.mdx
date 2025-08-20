@@ -28,7 +28,7 @@ If you get an error message when trying to install via the terminal, download th
 
 The command line interface is the primary way to use WARP.
 
-### Initial Connection
+### Initial connection
 
 To connect for the very first time:
 
@@ -36,12 +36,25 @@ To connect for the very first time:
 2. Connect `warp-cli connect`.
 3. Run `curl https://www.cloudflare.com/cdn-cgi/trace/` and verify that `warp=on`.
 
-### Switching modes
+### Switch modes
 
-You can use `warp-cli mode --help` to get a list of the modes to switch between. For example:
+You can use `warp-cli mode --help` to get a list of modes to switch between. For example:
 
-- **DNS only mode via DoH:** `warp-cli mode doh`.
-- **WARP with DoH:** `warp-cli mode warp+doh`.
+- **DNS only mode via DoH:** `warp-cli mode doh`
+- **WARP with DoH:** `warp-cli mode warp+doh`
+
+### Switch tunnel protocol
+
+You can switch the protocol that WARP uses to route traffic from the device to Cloudflare.
+
+- **WireGuard:** `warp-cli tunnel protocol set WireGuard`
+- **MASQUE:** (default) `warp-cli tunnel protocol set MASQUE`
+
+:::note
+The protocol values are case-sensitive.
+:::
+
+For information on WireGuard versus MASQUE, refer to our [blog post](https://blog.cloudflare.com/zero-trust-warp-with-a-masque).
 
 ### Using 1.1.1.1 for Families
 

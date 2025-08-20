@@ -7,7 +7,7 @@
 # For a list of all options, see https://vale.sh/docs/topics/styles/
 
 extends: substitution
-message: "Use '%s' instead of '%s', but consider rewriting the sentence."
+message: "Use '%s' instead of '%s'. Only change the words specified, nothing else."
 link: https://developers.cloudflare.com/style-guide/grammar/parts-of-speech/abbreviations/#ie-vs-eg
 level: warning
 nonword: true

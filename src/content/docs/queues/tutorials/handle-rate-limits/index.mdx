@@ -1,5 +1,5 @@
 ---
-updated: 2024-09-25
+reviewed: 2024-09-25
 difficulty: Beginner
 title: Handle rate limits of external APIs
 summary: Example of how to use Queues to handle rate limits of external APIs.
@@ -7,7 +7,7 @@ pcx_content_type: tutorial
 products:
   - Workers
   - Queues
-languages:
+tags:
   - TypeScript
 sidebar:
   order: 1002
@@ -235,9 +235,7 @@ interface Env {
 
 Lastly, install the [`resend` package](https://www.npmjs.com/package/resend) using the following command:
 
-```sh title="Install Resend"
-npm install resend
-```
+<PackageManagers pkg="resend" />
 
 You can now use the `RESEND_API_KEY` variable in your code.
 

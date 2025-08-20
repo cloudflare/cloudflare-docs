@@ -4,15 +4,15 @@ sidebar:
 title: Get Started
 ---
 
+import { PackageManagers } from "~/components";
+
 The Miniflare API allows you to dispatch events to workers without making actual HTTP requests, simulate connections between Workers, and interact with local emulations of storage products like [KV](/workers/testing/miniflare/storage/kv), [R2](/workers/testing/miniflare/storage/r2), and [Durable Objects](/workers/testing/miniflare/storage/durable-objects). This makes it great for writing tests, or other advanced use cases where you need finer-grained control.
 
 ## Installation
 
 Miniflare is installed using `npm` as a dev dependency:
 
-```sh
-$ npm install -D miniflare
-```
+<PackageManagers pkg="miniflare" dev />
 
 ## Usage
 

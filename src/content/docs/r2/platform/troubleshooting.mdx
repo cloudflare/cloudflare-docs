@@ -4,6 +4,8 @@ title: Troubleshooting
 
 ---
 
+import { FileTree } from "~/components";
+
 ## Troubleshooting 403 / CORS issues with R2
 
 If you are encountering a CORS error despite setting up everything correctly, you may follow this troubleshooting guide to help you.
@@ -61,3 +63,23 @@ If your users are directly uploading to the bucket (for example, using the S3 or
 ### Bucket sharding
 
 For higher capacity at the cost of added complexity, consider bucket sharding. This approach distributes reads and writes across multiple buckets, reducing the load on any single bucket.  While sharding cannot prevent a single hot object from exhausting capacity, it can mitigate the overall impact and improve system resilience.
+
+## Objects named `This object is unnamed`
+
+In the Cloudflare dashboard, you can choose to view objects with `/` in the name as folders by selecting **View prefixes as directories**.
+
+For example, an object named `example/object` will be displayed as below.
+
+<FileTree>
+- example
+  - object
+</FileTree>
+
+Object names which end with `/` will cause the Cloudflare dashboard to render the object as a folder with an unnamed object inside.
+
+For example, uploading an object named `example/` into an R2 bucket will be displayed as below.
+
+<FileTree>
+- example
+  - `This object is unnamed`
+</FileTree>

@@ -4,9 +4,11 @@ pcx_content_type: design-guide
 products:
   - Gateway
   - Magic WAN
+tags:
+  - IPv6
 sidebar:
   label: Securing guest wireless networks
-updated: 2024-12-17
+reviewed: 2024-12-17
 ---
 
 import { PublicStats } from "~/components";
@@ -21,7 +23,7 @@ However, providing guest Wi-Fi also introduces risks. Malicious users could expl
 
 ![Figure 1: Guest networks are often directly connected to the Internet with little security.](~/assets/images/reference-architecture/securing-guest-wireless-networks/figure1.svg "Figure 1: Guest networks are often directly connected to the Internet with little security.")
 
-While it may be unlikely that your organization could face criminal charges, your organization could become part of lengthy investigations, potentially resulting in legal expenses and reputation damage. In this guide, you will learn how Cloudflare can help minimize risk, provide visibility into guest Internet activity and better secure your guest wireless network.
+While it may be unlikely that your organization could face criminal charges, your organization could become part of lengthy investigations, potentially resulting in legal expenses and reputation damage. In this guide, you will learn how Cloudflare can help minimize risk, provide visibility into guest Internet activity and [better secure your guest wireless network](https://www.cloudflare.com/zero-trust/solutions/secure-guest-wifi/).
 
 ### Who is this document for and what will you learn?
 
@@ -141,10 +143,6 @@ Cloudflare also allows [custom feeds](/security-center/indicator-feeds/#publicly
 For devices making requests from known DNS locations, it's also possible to add these to the policy. So you can create different policies for different guest Wi-Fi locations. This can help with situations where local laws require you to prevent access to a specific type of Internet site.
 
 Policies can be made up of multiple rules, so a single policy can prevent access to high risk websites as well as inappropriate content.
-
-### Customizing Block Pages
-
-Inform your guests why their access was blocked by configuring [custom block messages](/cloudflare-one/policies/gateway/block-page/). Each policy can have a unique message. For example: _"For your protection and the security of Acme Corporation, this website has been blocked."_
 
 ### Recommended policies
 

@@ -4,7 +4,11 @@ title: Troubleshooting
 head:
   - tag: title
     content: Troubleshooting | Full-stack (SSR) | Next.js apps
-
+banner:
+  content: We recommend using <strong>Cloudflare Workers</strong> for new projects. For existing Pages projects, see our <a href="/workers/static-assets/migrate-from-pages/">migration guide</a> and <a href="/workers/static-assets/migrate-from-pages/#compatibility-matrix">compatibility matrix</a>.
+  type: note
+  dismissible:
+    id: pages-migrate-to-workers
 ---
 
 Learn more about troubleshooting issues with your Full-stack (SSR) Next.js apps using Cloudflare.
@@ -22,7 +26,7 @@ export const runtime = "edge";
 If you are still using the Next.js [Pages router](https://nextjs.org/docs/pages), for page routes, you must use `'experimental-edge'` instead of `'edge'`.
 :::
 
-***
+---
 
 ## App router
 
@@ -62,31 +66,31 @@ You must call `getRequestContext` within the function that handles your route â€
 Don't do this:
 
 ```js null {5}
-import { getRequestContext } from '@cloudflare/next-on-pages'
+import { getRequestContext } from "@cloudflare/next-on-pages";
 
-export const runtime = 'edge'
+export const runtime = "edge";
 
-const myVariable = getRequestContext().env.MY_VARIABLE
+const myVariable = getRequestContext().env.MY_VARIABLE;
 
 export async function GET(request) {
-  return new Response(myVariable)
+	return new Response(myVariable);
 }
 ```
 
 Instead, do this:
 
 ```js null {6}
-import { getRequestContext } from '@cloudflare/next-on-pages'
+import { getRequestContext } from "@cloudflare/next-on-pages";
 
-export const runtime = 'edge'
+export const runtime = "edge";
 
 export async function GET(request) {
-  const myVariable = getRequestContext().env.MY_VARIABLE
-  return new Response(myVariable)
+	const myVariable = getRequestContext().env.MY_VARIABLE;
+	return new Response(myVariable);
 }
 ```
 
-***
+---
 
 ## Pages router
 
@@ -111,8 +115,6 @@ export async function getStaticPaths() {
 
 :::caution
 
-
 Note that the `paths` array cannot be empty since an empty `paths` array causes Next.js to ignore the provided `fallback` value.
-
 
 :::

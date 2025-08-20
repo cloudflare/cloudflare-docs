@@ -27,7 +27,7 @@ Two different timeouts cause HTTP error `522` depending on when they occur betwe
 
 - If you are using [Cloudflare Pages](/pages/), verify that you have a custom domain set up and that your CNAME record is pointed to your [custom Pages domain](/pages/configuration/custom-domains/#add-a-custom-domain).
 
-- If you are using [Workers with a Custom Domain](/workers/configuration/routing/custom-domains/), performing a `fetch` to its own hostname will cause a `522` error. Consider using a [Route](/workers/configuration/routing/) or target another hostname instead.
+- If you are using [Workers with a Custom Domain](/workers/configuration/routing/custom-domains/), performing a `fetch` to its own hostname will cause a `522` error. Consider using a [Route](/workers/configuration/routing/), targeting another hostname, or enabling the [`global_fetch_strictly_public` compatibility flag](/workers/configuration/compatibility-flags/#global-fetch-strictly-public) instead.
 
 - If none of the above leads to a resolution, request the following information from your hosting provider or site administrator before [contacting Cloudflare support](/support/contacting-cloudflare-support/):
 

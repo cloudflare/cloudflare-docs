@@ -1,0 +1,26 @@
+---
+params:
+  - conditional?
+---
+
+import { Details, Render } from "~/components";
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
+2. Go to **Internal DNS** and select **Create an internal zone**.
+3. Give your internal zone a name.
+
+{ props.conditional === "get-started-detail" && (
+<Details header="Internal zone configuration conditions">
+<Render file="internal-zones-conditions" />
+</Details>
+	)
+}
+
+4. Add DNS records to your internal zone using your preferred option:
+- [Import](/dns/manage-dns-records/how-to/import-and-export/) a formatted BIND file.
+- Select **Add a record** and choose **Create** under the record type you want to add. Refer to [DNS record types](/dns/manage-dns-records/reference/dns-record-types/) for details.
+5. Repeat this process for each internal zone you wish to add.
+
+:::note
+Creating multiple internal DNS records in batch is currently only supported via API.
+:::

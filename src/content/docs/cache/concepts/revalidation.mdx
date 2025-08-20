@@ -6,7 +6,7 @@ pcx_content_type: concept
 
 import { GlossaryTooltip } from "~/components"
 
-Revalidation is a caching mechanism that checks the [freshness](/cache/concepts/retention-vs-freshness/#freshness-ttl) of cached data before serving it to users. If a cached object is no longer fresh and Cloudflare receives a request for it, the system makes a request to the origin to revalidate the object in the Cloudflare cache. By using headers like `If-Modified-Since` and `ETag`, Cloudflare validates content without fully re-fetching it. When these headers are missing, Smart Edge Revalidation generates a `Last-Modified` header, ensuring efficient updates and delivery of fresh content while reducing origin traffic.
+Revalidation is a caching mechanism that checks the [freshness](/cache/concepts/retention-vs-freshness/#freshness-ttl) of cached data before serving it to users. If a cached object is no longer fresh and Cloudflare receives a request for it, the system makes a request to the origin to revalidate the object in the Cloudflare cache. By using headers like `If-Modified-Since` and `ETag`, Cloudflare validates content without fully re-fetching it. When these headers are missing, [Smart Edge Revalidation](https://blog.cloudflare.com/introducing-smart-edge-revalidation/) generates a `Last-Modified` header, ensuring efficient updates and delivery of fresh content while reducing origin traffic.
 
 ## Revalidation towards origin
 

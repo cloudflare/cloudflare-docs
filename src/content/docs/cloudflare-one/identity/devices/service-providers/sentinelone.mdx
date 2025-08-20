@@ -6,17 +6,22 @@ sidebar:
 head:
   - tag: title
     content: SentinelOne - Posture checks
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
-Cloudflare Zero Trust can integrate with SentinelOne to require that users connect to certain applications from managed devices. Our service-to-service posture check identifies devices based on their serial numbers.
+<Render file="posture/service-provider-intro" params={{ one: "SentinelOne" }} />
 
 ## Prerequisites
 
-* SentinelOne agent is deployed on the device.
-* <Render file="posture/prereqs-warp-is-deployed" params={{ name: "Service providers", link: "/cloudflare-one/identity/devices/service-providers/" }} />
+- SentinelOne agent is deployed on the device.
+- <Render
+  	file="posture/prereqs-warp-is-deployed"
+  	params={{
+  		name: "Service providers",
+  		link: "/cloudflare-one/identity/devices/service-providers/",
+  	}}
+  />
 
 ## Set up SentinelOne as a service provider
 
@@ -24,8 +29,8 @@ Cloudflare Zero Trust can integrate with SentinelOne to require that users conne
 
 The following SentinelOne values are needed to set up the SentinelOne posture check:
 
-* API Token
-* REST API URL
+- API Token
+- REST API URL
 
 To retrieve those values:
 
@@ -33,7 +38,7 @@ To retrieve those values:
 2. Go to **Settings** > **Users** > **Create new Service User**.
 3. Select **Create New Service User**.
 4. Enter a **Name** and **Expiration Date** and select **Next**.
-5. Set **Scope of Access** to *Viewer*.
+5. Set **Scope of Access** to _Viewer_.
 6. Select **Create User**. SentinelOne will generate an API Token for this user.
 7. Copy the **API Token** to a safe location.
 8. Select **Close**.
@@ -49,19 +54,22 @@ To retrieve those values:
 
 ### 3. Configure the posture check
 
-<Render file="posture/configure-posture-check" params={{ one: "SentinelOne" }} />
+<Render
+	file="posture/configure-posture-check"
+	params={{ one: "SentinelOne" }}
+/>
 
 ## Device posture attributes
 
 Device posture data is gathered from the SentinelOne Management APIs. For more information, refer to `https://<S1-DOMAIN>.sentinelone.net/api-doc/overview`.
 
-| Selector       | Description                                                           |
-| -------------- | --------------------------------------------------------------------- |
-| Infected       | Whether the device is infected                                        |
-| Active Threats | Number of active threats on the device                                |
-| Is Active      | Whether the SentinelOne Agent is active                               |
-| Network status | Whether the SentinelOne Agent is connected to the SentinelOne service |
-| Operational State | The [operational state](https://community.sentinelone.com/s/login/?ec=302&startURL=%2Fs%2Farticle%2F000005285) of the SentinelOne Agent.|
+| Selector          | Description                                                                                                                              |
+| ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| Infected          | Whether the device is infected                                                                                                           |
+| Active Threats    | Number of active threats on the device                                                                                                   |
+| Is Active         | Whether the SentinelOne Agent is active                                                                                                  |
+| Network status    | Whether the SentinelOne Agent is connected to the SentinelOne service                                                                    |
+| Operational State | The [operational state](https://community.sentinelone.com/s/login/?ec=302&startURL=%2Fs%2Farticle%2F000005285) of the SentinelOne Agent. |
 
 ### Detect user risk behavior
 

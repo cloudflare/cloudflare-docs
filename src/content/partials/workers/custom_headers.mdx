@@ -8,7 +8,7 @@ import { Markdown, Render } from "~/components";
 
 ## Custom headers
 
-The default response headers served on static asset responses can be overridden, or added to, by creating a plain text file called `_headers` without a file extension, in the static asset directory of your project. This file will not itself be served as a static asset, but will instead be parsed by {props.product === 'workers' ? 'Workers' : 'Cloudflare Pages'} and its rules will be applied to static asset responses.
+The default response headers served on static asset responses can be overridden, removed, or added to, by creating a plain text file called `_headers` without a file extension, in the static asset directory of your project. This file will not itself be served as a static asset, but will instead be parsed by {props.product === 'workers' ? 'Workers' : 'Cloudflare Pages'} and its rules will be applied to static asset responses.
 
 <Render
 	product="workers"
@@ -117,16 +117,25 @@ This applies the `Access-Control-Allow-Origin` header to any incoming URL. To be
 
 [Google](https://developers.google.com/search/docs/advanced/robots/robots_meta_tag#directives) and other search engines often support the `X-Robots-Tag` header to instruct its crawlers how your website should be indexed.
 
-For example, to prevent your <code>{props.product === 'workers' ? '\*.workers.dev' : '\*.pages.dev'}</code> URLs from being indexed, add the following to your `_headers` file:
+For example, to prevent your {props.product === 'workers' ? <code>\*.\*.workers.dev</code> : <><code>\*.pages.dev</code> and <code>\*.\*.pages.dev</code></>} URLs from being indexed, add the following to your `_headers` file:
 
 <Code
 	lang="txt"
 	code={
 		props.product === "workers"
-			? `https://*.workers.dev/*\n\tX-Robots-Tag: noindex`
-			: `https://*.pages.dev/*\n\tX-Robots-Tag: noindex`
+			? `https://:version.:subdomain.workers.dev/*\n\tX-Robots-Tag: noindex`
+			: `https://:project.pages.dev/*\n\tX-Robots-Tag: noindex\n\nhttps://:version.:project.pages.dev/*\n\tX-Robots-Tag: noindex`
 	}
 />
+
+##### Configure custom browser cache behavior
+
+If you have a folder of fingerprinted assets (assets which have a hash in their filename), you can configure more aggressive caching behavior in the browser to improve performance for repeat visitors:
+
+```txt
+/static/*
+  Cache-Control: public, max-age=31556952, immutable
+```
 
 ##### Harden security for an application
 

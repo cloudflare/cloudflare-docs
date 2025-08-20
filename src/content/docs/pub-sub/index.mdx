@@ -9,9 +9,15 @@ head:
     content: Overview
 ---
 
-:::note
+:::caution
 
-Pub/Sub is currently in private beta. Browse the documentation to understand how Pub/Sub works and integrates with our broader Developer Platform, and [sign up for the waitlist](https://www.cloudflare.com/cloudflare-pub-sub-lightweight-messaging-private-beta/) to get access in the near future.
+**The Pub/Sub private beta will be ending as of August 20th, 2025**. Customers still using Pub/Sub will be contacted directly, and we'll no longer be accepting beta sign-ups.
+
+We recommend using the new [`@cloudflare/actors`](/changelog/2025-06-25-actors-package-alpha/) library for building fan-out and broadcast messaging applications, which builds upon Durable Objects. You can also consider:
+
+* [Queues](/queues/ ) for building reliable, durable message and task queues.
+* [Durable Objects](/durable-objects/ ) for building collaborative multiplayer and stateful serverless applications.
+* Cloudflare [Realtime](/realtime/) for serverless audio, video and data applications over WebRTC.
 
 :::
 

@@ -4,7 +4,7 @@ pcx_content_type: concept
 
 ---
 
-import { Details, FeatureTable } from "~/components"
+import { Details, FeatureTable, APIRequest } from "~/components"
 
 `Vary` is an HTTP response header that allows origins to serve variants of the same content that can be used depending on the browser sending the request.
 
@@ -44,42 +44,43 @@ Vary for Images is enabled through Cloudflare’s API by creating a variants rul
 
 ### Create a variants rule
 
-```bash
-curl --request PATCH \
-"https://api.cloudflare.com/client/v4/zones/{zone_id}/cache/variants" \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json" \
---data '{"value":{"jpeg":["image/webp","image/avif"],"jpg":["image/webp","image/avif"]}}'
-```
+<APIRequest
+  path="/zones/{zone_id}/cache/variants"
+  method="PATCH"
+  json={{
+    value: {
+      jpeg: ["image/webp", "image/avif"],
+      jpg: ["image/webp", "image/avif"]
+    }
+  }}
+/>
 
 ### Modify to only allow WebP variants
 
-```bash
-curl --request PATCH \
-"https://api.cloudflare.com/client/v4/zones/{zone_id}/cache/variants" \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>" \
---header "Content-Type: application/json" \
---data '{"value":{"jpeg":["image/webp"],"jpg":["image/webp"]}}'
-```
+<APIRequest
+  path="/zones/{zone_id}/cache/variants"
+  method="PATCH"
+  json={{
+    value: {
+      jpeg: ["image/webp"],
+      jpg: ["image/webp"]
+    }
+  }}
+/>
 
 ### Delete the rule
 
-```bash
-curl --request DELETE \
-"https://api.cloudflare.com/client/v4/zones/{zone_id}/cache/variants" \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>"
-```
+<APIRequest
+  path="/zones/{zone_id}/cache/variants"
+  method="DELETE"
+/>
 
 ### Get the rule
 
-```bash
-curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/cache/variants" \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>"
-```
+<APIRequest
+  path="/zones/{zone_id}/cache/variants"
+  method="GET"
+/>
 
 To learn more about purging varied images, refer to [Purge varied images](/cache/how-to/purge-cache/purge-varied-images/).
 

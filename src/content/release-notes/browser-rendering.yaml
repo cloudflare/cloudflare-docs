@@ -2,9 +2,51 @@
 link: "/browser-rendering/changelog/"
 productName: Browser Rendering
 productLink: "/browser-rendering/"
-productArea: Developer platform
-productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2025-08-18"
+    title: Wrangler updates to local dev
+    description: |-
+      * Improved the local development experience by updating the method for downloading the dev mode browser and added support for [`/v1/sessions` endpoint](/platform/puppeteer/#list-open-sessions), allowing you to list open browser rendering sessions. Upgrade to `wrangler@4.31.0` to get started.
+  - publish_date: "2025-07-29"
+    title: Updates to Playwright, local dev support, and REST API
+    description: |-
+      * [Playwright](/browser-rendering/platform/playwright/) upgraded to [Playwright v1.54.1](https://github.com/microsoft/playwright/releases/tag/v1.54.1) and [Playwright MCP](/browser-rendering/platform/playwright-mcp/) upgraded to be in sync with upstream Playwright MCP v0.0.30.
+      * Local development with `npx wrangler dev` now supports [Playwright](/browser-rendering/platform/playwright/) when using Browser Rendering. Upgrade to the latest version of wrangler to get started.
+      * The [`/content` endpoint](/browser-rendering/rest-api/content-endpoint/) now returns the page's title, making it easier to identify pages.
+      * The [`/json` endpoint](/browser-rendering/rest-api/json-endpoint/) now allows you to specify your own AI model for the extraction, using the `custom_ai` parameter.
+      * The default viewport size on the [`/screenshot` endpoint](/browser-rendering/rest-api/screenshot-endpoint/) has been increased from 800x600 to 1920x1080. You can still override the viewport via request options.
+  - publish_date: "2025-07-25"
+    title: "@cloudflare/puppeteer 1.0.4 released"
+    description: |-
+      * We have released version 1.0.4 of [`@cloudflare/puppeteer`](https://github.com/cloudflare/puppeteer), now in sync with Puppeteer v22.13.1.
+  - publish_date: "2025-07-24"
+    title: Playwright now supported in local development
+    description: |-
+      * You can now use Playwright with local development. Upgrade to wrangler@4.26.0 to get started.
+  - publish_date: "2025-07-16"
+    title: Pricing update to Browser Rendering
+    description: |-
+      * Billing for Browser Rendering starts on August 20, 2025, with usage beyond the included [limits](/browser-rendering/platform/limits/) charged according to the new [pricing rates](/browser-rendering/platform/pricing/).
+  - publish_date: "2025-07-03"
+    title: Local development support
+    description: |-
+      * We added local development support to Browser Rendering, making it simpler than ever to test and iterate before deploying.
+  - publish_date: "2025-06-30"
+    title: New Web Bot Auth headers
+    description: |-
+      * Browser Rendering now supports [Web Bot Auth](/reference/automatic-request-headers/) by automatically attaching `Signature-agent`, `Signature`, and `Signature-input ` headers to verify that a request originates from Cloudflare Browser Rendering.
+  - publish_date: "2025-06-27"
+    title: Bug fix to debug log noise in Workers
+    description: |-
+      * Fixed an issue where all debug logging was on by default and would flood logs. Debug logs is now off by default but can be re-enabled by setting [`process.env.DEBUG`](https://pptr.dev/guides/debugging#log-devtools-protocol-traffic) when needed.
+  - publish_date: "2025-05-26"
+    title: Playwright MCP
+    description: |-
+      * You can now deploy [Playwright MCP](/browser-rendering/platform/playwright-mcp/) and use any MCP client to get AI models to interact with Browser Rendering.
+  - publish_date: "2025-04-30"
+    title: Automatic Request Headers
+    description: |-
+      * [Clarified Automatic Request headers](/browser-rendering/reference/automatic-request-headers/) in Browser Rendering. These headers are unique to Browser Rendering, and are automatically included and cannot be removed or overridden.
   - publish_date: "2025-04-07"
     title: New free tier and REST API GA with additional endpoints
     description: |-

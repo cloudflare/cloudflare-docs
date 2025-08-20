@@ -160,7 +160,7 @@ At this point, you should discard requests with timestamps that are too old for 
 
 Prepare the signature source string and concatenate the following strings:
 
-* Value of the `time` field e.g. `1230811200`
+* Value of the `time` field for example `1230811200`
 * Character `.`
 * Webhook request body (complete with newline characters, if applicable)
 
@@ -247,7 +247,7 @@ func main() {
 
     const getUtf8Bytes = str =>
       new Uint8Array(
-        [...unescape(encodeURIComponent(str))].map(c => c.charCodeAt(0))
+        [...decodeURIComponent(encodeURIComponent(str))].map(c => c.charCodeAt(0))
       );
 
     const keyBytes = getUtf8Bytes(key);

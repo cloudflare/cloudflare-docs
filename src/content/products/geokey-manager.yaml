@@ -6,4 +6,4 @@ product:
   url: /ssl/edge-certificates/geokey-manager/
 
 meta:
-  description: Restrict where the private keys used for TLS certificates are stored and managed.
+  description: Control SSL/TLS key storage for compliance and security

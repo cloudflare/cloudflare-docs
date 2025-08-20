@@ -40,7 +40,7 @@
             "type": "object",
             "oneOf": [
                 {
-                    "title": "Prompt",
+                    "title": "Qwen_Qwq_32B_Prompt",
                     "properties": {
                         "prompt": {
                             "type": "string",
@@ -115,7 +115,7 @@
                     ]
                 },
                 {
-                    "title": "Messages",
+                    "title": "Qwen_Qwq_32B_Messages",
                     "properties": {
                         "messages": {
                             "type": "array",

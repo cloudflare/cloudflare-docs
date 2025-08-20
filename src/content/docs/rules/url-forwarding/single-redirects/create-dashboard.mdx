@@ -14,7 +14,6 @@ import { Render } from "~/components";
 4. (Optional) Select one of the rule templates that address common use cases. Then, review and adjust the proposed rule configuration.
 5. Enter a descriptive name for the rule in **Rule name**.
 6. Under **When incoming requests match**, select one of the following options:
-
    - **Wildcard pattern**: The rule will only apply to traffic matching the wildcard pattern.
      - **Request URL**: Enter the [wildcard pattern](/ruleset-engine/rules-language/operators/#wildcard-matching) using the asterisk (`*`) character to match multiple requests. For example, `http*://*.example.com/files/*`.
      - **Then**: Define the [URL redirect settings](/rules/url-forwarding/single-redirects/settings/) including:
@@ -28,7 +27,7 @@ import { Render } from "~/components";
 
 7. To save and deploy your rule, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
 
-   <Render file="rules-creation-dash-dns-popup" />
+   <Render file="rules-creation-dash-dns-popup" product="rules" />
 
 <Render
 	file="url-forwarding/requires-proxied-site"

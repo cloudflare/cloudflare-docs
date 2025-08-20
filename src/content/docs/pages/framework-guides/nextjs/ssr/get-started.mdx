@@ -7,6 +7,11 @@ head:
   - tag: title
     content: Get started | Full-stack (SSR) | Next.js apps
 description: Deploy a full-stack Next.js app to Cloudflare Pages
+banner:
+  content: We recommend using <strong>Cloudflare Workers</strong> for new projects. For existing Pages projects, see our <a href="/workers/static-assets/migrate-from-pages/">migration guide</a> and <a href="/workers/static-assets/migrate-from-pages/#compatibility-matrix">compatibility matrix</a>.
+  type: note
+  dismissible:
+    id: pages-migrate-to-workers
 ---
 
 import { PackageManagers, WranglerConfig } from "~/components";
@@ -14,7 +19,7 @@ import { PackageManagers, WranglerConfig } from "~/components";
 Learn how to deploy full-stack (SSR) Next.js apps to Cloudflare Pages.
 
 :::note
-You can now also deploy Next.js apps to [Cloudflare Workers](https://developers.cloudflare.com/workers/frameworks/), including apps that use the Node.js "runtime" from Next.js. This allows you to use the [Node.js APIs that Cloudflare Workers provides](/workers/runtime-apis/nodejs/#built-in-nodejs-runtime-apis), and ensures compatibility with a broader set of Next.js features and rendering modes.
+You can now also [deploy Next.js apps to Cloudflare Workers](/workers/framework-guides/web-apps/nextjs/), including apps that use the Node.js "runtime" from Next.js. This allows you to use the [Node.js APIs that Cloudflare Workers provides](/workers/runtime-apis/nodejs/#built-in-nodejs-runtime-apis), and ensures compatibility with a broader set of Next.js features and rendering modes.
 
 Refer to the [OpenNext docs for the `@opennextjs/cloudflare` adapter](https://opennext.js.org/cloudflare) to learn how to get started.
 :::
@@ -39,9 +44,7 @@ For more guidance on developing your app, refer to [Bindings](/pages/framework-g
 
 First, install [@cloudflare/next-on-pages](https://github.com/cloudflare/next-on-pages):
 
-```sh
-npm install --save-dev @cloudflare/next-on-pages
-```
+<PackageManagers pkg="@cloudflare/next-on-pages" dev />
 
 ### 2. Add Wrangler file
 
@@ -107,9 +110,7 @@ Add the following to the scripts field of your `package.json` file:
 
 Either deploy via the command line:
 
-```sh
-npm run deploy
-```
+<PackageManagers type="run" args="deploy" />
 
 Or [connect a Github or Gitlab repository](/pages/get-started/git-integration/), and Cloudflare will automatically build and deploy each pull request you merge to your production branch.
 
@@ -117,9 +118,7 @@ Or [connect a Github or Gitlab repository](/pages/get-started/git-integration/),
 
 Optionally, you might want to add `eslint-plugin-next-on-pages`, which lints your Next.js app to ensure it is configured correctly to run on Cloudflare Pages.
 
-```sh
-npm install --save-dev eslint-plugin-next-on-pages
-```
+<PackageManagers pkg="eslint-plugin-next-on-pages" dev />
 
 Once it is installed, add the following to `.eslintrc.json`:
 

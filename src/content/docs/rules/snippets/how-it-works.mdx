@@ -6,14 +6,13 @@ sidebar:
 head:
   - tag: title
     content: How it works
-
 ---
 
 Cloudflare Snippets are executed based on rules defined within your zone. Here is how the process works:
 
 ## Request evaluation
 
-For each incoming request, Cloudflare evaluates the expression of every Snippet Rule defined in the zone. The evaluation checks for a match based on various request properties (such as bot score, country of origin, cookies).
+For each incoming request, Cloudflare evaluates the expression of every Snippet Rule defined in the zone. The evaluation checks for a match based on various request properties (such as bot score, WAF attack score, country of origin, and cookies).
 
 ## Snippet execution
 

@@ -1,7 +1,11 @@
 ---
 pcx_content_type: concept
 title: Serving Pages
-
+banner:
+  content: We recommend using <strong>Cloudflare Workers</strong> for new projects. For existing Pages projects, see our <a href="/workers/static-assets/migrate-from-pages/">migration guide</a> and <a href="/workers/static-assets/migrate-from-pages/#compatibility-matrix">compatibility matrix</a>.
+  type: note
+  dismissible:
+    id: pages-migrate-to-workers
 ---
 
 Cloudflare Pages includes a number of defaults for serving your Pages sites. This page details some of those decisions, so you can understand how Pages works, and how you might want to override some of the default behaviors.
@@ -34,9 +38,7 @@ Note that when you use Cloudflare Pages, the static assets that you upload as pa
 
 :::note[Purging the cache]
 
-
 If you notice stale assets being served after a new deployment, go to your zone and then **Caching** > **Configuration** > [**Purge Everything**](/cache/how-to/purge-cache/purge-everything/) to ensure the latest deployment gets served.
-
 
 :::
 
@@ -68,9 +70,7 @@ Server: cloudflare
 
 :::note
 
-
 The [`Cf-Ray`](/fundamentals/reference/cloudflare-ray-id/) header is unique to Cloudflare.
-
 
 :::
 

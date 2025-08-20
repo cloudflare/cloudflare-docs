@@ -5,8 +5,9 @@ sidebar:
   order: 2
 head: []
 description: Learn how to deploy Cloudflare WARP using JumpCloud.
-
 ---
+
+import { Render } from "~/components";
 
 ## Windows
 
@@ -32,14 +33,16 @@ description: Learn how to deploy Cloudflare WARP using JumpCloud.
 
 10. Select the device(s) you want to deploy the app to:
 
-    * **Single device**: Go to the **Devices** tab and select the target device.
-    * **Device group**: Go to the **Device Groups** tab and select the target device group.
+    - **Single device**: Go to the **Devices** tab and select the target device.
+    - **Device group**: Go to the **Device Groups** tab and select the target device group.
 
 11. Select **save**.
 
 12. Select **save** again.
 
 Verify that Cloudflare WARP was installed by selecting the app and viewing the **Status** tab.
+
+<Render file="warp/connectivity-status-check" />
 
 ## macOS
 
@@ -57,9 +60,11 @@ Verify that Cloudflare WARP was installed by selecting the app and viewing the *
 
 6. Select the device(s) you want to deploy the app to:
 
-   * **Single device**: Go to the **Devices** tab and select the target device. To select all devices, select the checkbox next to **Type**.
-   * **Device group**: Go to the **Device Groups** tab and select the target device group. To select all device groups, select the checkbox next to **Type**.
+   - **Single device**: Go to the **Devices** tab and select the target device. To select all devices, select the checkbox next to **Type**.
+   - **Device group**: Go to the **Device Groups** tab and select the target device group. To select all device groups, select the checkbox next to **Type**.
 
 7. Select **save** to install the client.
 
 Verify that Cloudflare WARP was installed by selecting the app and viewing the **Status** tab.
+
+<Render file="warp/connectivity-status-check" />

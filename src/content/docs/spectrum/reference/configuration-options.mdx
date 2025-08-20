@@ -5,7 +5,7 @@ weight: 0
 
 ---
 
-Spectrum is a global TCP and UDP proxy running on Cloudflare's edge nodes. It does not terminate the connection. Instead it passes through the packets to the backend server.
+Spectrum is a global TCP and UDP proxy running on Cloudflare's edge nodes. It does not terminate the connection in the application-layer sense. However, at Layer 4, Spectrum does terminate the TCP and UDP sockets in both directions. The L4 payloads of TCP segments and UDP datagrams are passed back and forth as-is, without modifications.
 
 :::note
 
@@ -87,6 +87,10 @@ For example, in the configurations above, a connection to `range.example.com:100
 ## IP Access rules
 
 If IP Access rules are enabled for a Spectrum application, Cloudflare will respect the IP Access rules created under **Security** > **WAF** > **Tools** for that domain. Cloudflare only respects rules created for specific IP addresses, IP blocks, countries, or ASNs for Spectrum applications. Spectrum will also only respect rules created with the actions `allow` or `block`.
+
+:::note
+Network analytics data for Spectrum does not reflect the outcomes of IP Access rules. Instead, to verify whether traffic was allowed or blocked based on these rules, consult the Spectrum event logs.
+:::
 
 ## Argo Smart Routing
 

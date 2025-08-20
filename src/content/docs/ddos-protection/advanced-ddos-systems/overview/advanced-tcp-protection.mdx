@@ -11,9 +11,9 @@ head:
 
 import { Render } from "~/components"
 
-Cloudflare's Advanced TCP Protection, powered by [`flowtrackd`](https://blog.cloudflare.com/announcing-flowtrackd/), is a stateful TCP inspection engine used to detect and mitigate sophisticated out-of-state TCP attacks such as randomized and spoofed ACK floods or SYN and SYN-ACK floods.
+<Render file="advanced-ddos/tcp-protection-intro" />
 
-<Render file="mt-advanced-ddos-systems-onboarding" />
+<Render file="advanced-ddos/mt-advanced-ddos-systems-onboarding" />
 
 ## How it works
 
@@ -51,4 +51,4 @@ For more information on the configuration settings of out-of-state TCP rules, re
 
 ## Setup
 
-[Create a global configuration](/ddos-protection/advanced-ddos-systems/overview/#rules) to set up SYN Flood and Out-of-state TCP rules and filters for Advanced TCP Protection.
+<Render file="advanced-ddos/tcp-setup" />

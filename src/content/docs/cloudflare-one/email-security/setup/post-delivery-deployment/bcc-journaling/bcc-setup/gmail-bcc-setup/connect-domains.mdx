@@ -7,13 +7,15 @@ sidebar:
 
 import { GlossaryTooltip } from "~/components"
 
+To connect your domains, you will need to [enable your Gmail BCC integration](/cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/bcc-setup/gmail-bcc-setup/enable-gmail-integration/#enable-gmail-bcc-integration). Once you have enabled your Gmail BCC integration, the Cloudflare dashboard will redirect you to the **Set up Email Security** page.
+
 On the **Set up Email Security** page:
 
 1. **Connect domains**: Select at least one domain. Then, select **Continue**.
 2. (**Optional**) **Add manual domains**: Select **Add domain name** to manually enter additional domains. Then, select **Continue**.
 3. (**Optional**) **Adjust hop count**: Enter the number of <GlossaryTooltip term="Hops">hops</GlossaryTooltip>. Then, select **Continue**.
 4. (**Optional**, select **Skip for now** to skip this step) **Move messages**: Refer to [Auto-moves](/cloudflare-one/email-security/auto-moves/) to configure auto-moves. Then, select **Continue**.
-5. **Configure service address with your third party email provider**: Copy and paste the service address into your third-party email provider to allow BCC/Journaling: `<account tag>@CF-emailsecurity.com`.
+5. **Configure service address with your third party email provider**: Copy the service address into your third-party email provider to allow BCC/Journaling: `<account tag>@CF-emailsecurity.com`. You will need to paste this address in step 7 in [Add BCC rules](/cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/bcc-setup/gmail-bcc-setup/add-bcc-rules/), where you will replace your recipient.
 6. **Review details**: Review your connected domains. Then, select **Go to domains.**
 
 Your domains are now added successfully.
@@ -26,7 +28,7 @@ Under **Source**, the dashboard will display **Google integration**, along with 
 
 To add additional domains:
 
-1. Go to **Settings**.
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Email Security** > **Settings**.
 2. Select **Connect an integration** > **BCC/Journaling** > **Integrate with Google** > **Authorize**.
 3. **Connect domains**: Select the domains you want to add, then select **Next**.
 4. (Optional) Select **Add manual domains**: Enter additional domains manually, then select **Next**.

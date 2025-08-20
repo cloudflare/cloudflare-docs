@@ -30,7 +30,7 @@ You will not be able to access your **Secret Access Key** again after this step.
 
 You will also need to configure the `endpoint` in your S3 client to `https://<ACCOUNT_ID>.r2.cloudflarestorage.com`.
 
-Find your [account ID in the Cloudflare dashboard](/fundamentals/setup/find-account-and-zone-ids/).
+Find your [account ID in the Cloudflare dashboard](/fundamentals/account/find-account-and-zone-ids/).
 
 Buckets created with jurisdictions must be accessed via jurisdiction-specific endpoints:
 
@@ -80,7 +80,7 @@ A specific bucket is represented as:
 "com.cloudflare.edge.r2.bucket.<ACCOUNT_ID>_<JURISDICTION>_<BUCKET_NAME>": "*"
 ```
 
-- `ACCOUNT_ID`: Refer to [Find zone and account IDs](/fundamentals/setup/find-account-and-zone-ids/#find-account-id-workers-and-pages).
+- `ACCOUNT_ID`: Refer to [Find zone and account IDs](/fundamentals/account/find-account-and-zone-ids/#find-account-id-workers-and-pages).
 - `JURISDICTION`: The [jurisdiction](/r2/reference/data-location/#available-jurisdictions) where the R2 bucket lives. For buckets not created in a specific jurisdiction this value will be `default`.
 - `BUCKET_NAME`: The name of the bucket your Access Policy applies to.
 
@@ -92,7 +92,7 @@ All buckets in an account are represented as:
 }
 ```
 
-- `ACCOUNT_ID`: Refer to [Find zone and account IDs](/fundamentals/setup/find-account-and-zone-ids/#find-account-id-workers-and-pages).
+- `ACCOUNT_ID`: Refer to [Find zone and account IDs](/fundamentals/account/find-account-and-zone-ids/#find-account-id-workers-and-pages).
 
 #### Permission groups
 

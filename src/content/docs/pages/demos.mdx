@@ -3,10 +3,18 @@ pcx_content_type: navigation
 title: Demos and architectures
 sidebar:
   order: 8
-
+banner:
+  content: We recommend using <strong>Cloudflare Workers</strong> for new projects. For existing Pages projects, see our <a href="/workers/static-assets/migrate-from-pages/">migration guide</a> and <a href="/workers/static-assets/migrate-from-pages/#compatibility-matrix">compatibility matrix</a>.
+  type: note
+  dismissible:
+    id: pages-migrate-to-workers
 ---
 
-import { ExternalResources, GlossaryTooltip, ResourcesBySelector } from "~/components"
+import {
+	ExternalResources,
+	GlossaryTooltip,
+	ResourcesBySelector,
+} from "~/components";
 
 Learn how you can use Pages within your existing application and architecture.
 
@@ -20,4 +28,11 @@ Explore the following <GlossaryTooltip term="demo application">demo applications
 
 Explore the following <GlossaryTooltip term="reference architecture">reference architectures</GlossaryTooltip> that use Pages:
 
-<ResourcesBySelector types={["reference-architecture","design-guide","reference-architecture-diagram"]} products={["Pages"]} />
+<ResourcesBySelector
+	types={[
+		"reference-architecture",
+		"design-guide",
+		"reference-architecture-diagram",
+	]}
+	products={["Pages"]}
+/>

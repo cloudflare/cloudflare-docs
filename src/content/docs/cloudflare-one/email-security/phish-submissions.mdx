@@ -2,7 +2,7 @@
 title: Phish submissions
 pcx_content_type: how-to
 sidebar:
-  order: 6
+  order: 16
 ---
 
 import { GlossaryTooltip, Render } from "~/components"
@@ -14,16 +14,17 @@ Submitting missed phish samples to Cloudflare is of paramount importance and nec
 There are three routes you can use to report an email as a phish:
 
 - Via Investigation, by [reclassifying an email](/cloudflare-one/email-security/phish-submissions/#reclassify-an-email).
-- Via [PhishNet O365](/cloudflare-one/email-security/phish-submissions/#phishnet-o365) or [PhishNet for Google Workspace](/cloudflare-one/email-security/phish-submissions/#phishnet-for-google-workspace), depending on your email provider.
+- Via [PhishNet M365](/cloudflare-one/email-security/phish-submissions/#phishnet-m365) or [PhishNet for Google Workspace](/cloudflare-one/email-security/phish-submissions/#phishnet-for-google-workspace), depending on your email provider.
 - Via [Submission addresses](/cloudflare-one/email-security/phish-submissions/#submission-addresses).
 
 ## Reclassify an email
 
 1. Log in to [Zero Trust](https://one.dash.cloudflare.com/).
 2. Select **Email Security** > **Investigation**.
-3. On the **Investigation** page, under **Your matching messages**, select the message you want to reclassify. Select the three dots, then select **Reclassify**. By selecting **Reclassify**, you are requesting a new disposition for the message.
-4. Select the new disposition, then select **Save**.
+3. On the **Investigation** page, under **Your matching messages**, select the message you want to reclassify. Select the three dots, then select **Request reclassification**. By selecting **Request reclassification**, you are requesting a new disposition for the message.
+4. Select the new disposition, then select **Save**. 
 
+When you report an email as phish, this email will be displayed under [User submissions](/cloudflare-one/email-security/email-monitoring/search-email/#user-submissions).
 ## PhishNet M365
 
 PhishNet is an add-in button that helps users to submit directly to Email Security <GlossaryTooltip term="phishing">phish</GlossaryTooltip> samples missed by Email Security's detection.

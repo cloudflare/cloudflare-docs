@@ -2,7 +2,7 @@
 {}
 ---
 
-import { TabItem, Tabs } from "~/components";
+import { TabItem, Tabs, PackageManagers } from "~/components";
 
 ### Dashboard
 
@@ -31,24 +31,10 @@ Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://gith
 
 3. Run the following command, replacing the value of `[<DIRECTORY>]` which the location you want to put your Worker Script.
 
-<Tabs> <TabItem label="npm">
-
-```sh
-npm create cloudflare@latest [<DIRECTORY>] -- --type=pre-existing
-```
-
-</TabItem> <TabItem label="yarn">
-
-```sh
-yarn create cloudflare [<DIRECTORY>] --type=pre-existing
-```
-
-</TabItem> <TabItem label="pnpm">
-
-```sh
-pnpm create cloudflare@latest [<DIRECTORY>] --type=pre-existing
-```
-
-</TabItem> </Tabs>
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args="[<DIRECTORY>] --type=pre-existing"
+/>
 
 After you run this command - and work through the prompts - your local changes will not automatically sync with dashboard. So, once you download your script, continue using the CLI.

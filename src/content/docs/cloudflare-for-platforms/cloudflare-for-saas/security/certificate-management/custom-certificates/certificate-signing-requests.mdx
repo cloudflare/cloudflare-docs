@@ -9,7 +9,7 @@ head:
 
 ---
 
-import { Render } from "~/components"
+import { Render, APIRequest } from "~/components"
 
 <Render file="csr-definition" product="ssl" />
 
@@ -79,7 +79,6 @@ curl https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_csrs \
     "csr": "-----BEGIN CERTIFICATE REQUEST-----\nMIIBSzCB8gIBADBiMQswaQYDVQQGEwJVUzELMAkGA1UECBMCTUExDzANBgNVBAcT\nBkJvc3RvbjEaMBgGA1UEChMRQ2l0eSBvZiBDaGFtcGlvbnMxGTAXBgNVBAMTEGNz\nci1wcm9kLnRscy5mdW4wWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAaTKf70NYlwr\n20P6P8xj8/4mTN5q28dbZR/gM3u4m/RPs24+PxAfMZCNvkVKAPVWYfUAadZI4Ha/\ndxLh5Q6X5bhIoC4wLAYJKoZIhvcNAQkOMR8wHTAbBqNVHREEFDASghBjc3ItcHJv\nZC50bHMuZnVuMAoGCCqGSM49BAMCA0gAMEUCIQDgtFUZav466SbT2FGBsIBlahDI\nVkg4y+u+V/K5DlY1+gIgQ9xLfUSKnSnJYbM9TwWr4Z964+lBtB9af4O5pp7/PSA=\n-----END CERTIFICATE REQUEST-----\n"
   },
   "success": true
-}
 ```
 
 Replace the `\n` characters with actual newlines before passing to your customer. This can be accomplished by piping the output of the prior call to a tool like jq and perl, such as:

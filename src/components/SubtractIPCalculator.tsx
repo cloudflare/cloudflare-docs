@@ -17,7 +17,7 @@ export default function SubtractIPCalculator({
 
 	function calculate() {
 		setResult(excludeCidr(base, exclude));
-		track("clicked calculator submit");
+		track("interacted with docs calculator", { value: "split ip calculator" });
 	}
 
 	function disableButton() {

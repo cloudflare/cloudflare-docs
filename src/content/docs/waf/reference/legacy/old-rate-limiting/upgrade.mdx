@@ -1,0 +1,216 @@
+---
+title: Rate limiting (previous version) upgrade
+pcx_content_type: reference
+sidebar:
+  order: 3
+  label: Rate limiting upgrade
+head:
+  - tag: title
+    content: Rate limiting (previous version) upgrade
+description: Guide on upgrading rate limiting rules from the previous version to the new version.
+---
+
+Cloudflare is upgrading all rate limiting rules created in the [previous version](/waf/reference/legacy/old-rate-limiting/) to the [new version of rate limiting rules](/waf/rate-limiting-rules/).
+
+The Cloudflare dashboard will now show all your rate limiting rules in a single list.
+
+:::caution[Deprecation notice]
+
+**The [Rate Limiting API](/api/resources/rate_limits/) and the [`cloudflare_rate_limit`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/rate_limit) Terraform resource for the previous version of rate limiting rules are now deprecated.**
+
+This API and Terraform resource are no longer supported since 2025-06-15. You must use the [Rulesets API](/ruleset-engine/rulesets-api/) and the [`cloudflare_ruleset`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/ruleset) Terraform resource to configure rate limiting rules.
+
+:::
+
+## Main differences
+
+- **Billing model:** The previous version of Rate Limiting was billed based on usage and it was available as an add-on on all plans, while the new version is included in Cloudflare plans. For Enterprise plans, Rate Limiting is priced based on total contracted HTTP traffic. The new rate limiting rules offer all the capabilities available on the previous version of rate limiting along with several additional features.
+
+- **Advanced scope expressions:** The previous version of Rate Limiting allowed you to scope the rules based on a single path and method of the request. In the new version, you can write rules similar to [WAF custom rules](/waf/custom-rules/), combining multiple parameters of the HTTP request.
+
+- **Separate counting and mitigation expressions:** In the new version of Rate Limiting, counting and mitigation expressions are separate (for Business and Enterprise customers). The counting expression defines which requests are used to compute the rate. The mitigation expression defines which requests are mitigated once the threshold has been reached. Using these separate expressions, you can track the rate of requests on a specific path such as `/login` and, when an IP exceeds the threshold, block every request from the same IP addressed at your domain.
+
+- **Additional counting dimensions (Advanced Rate Limiting only):** Like in the previous version of Rate Limiting, customers with the new Rate Limiting get IP-based rate limiting, where Cloudflare counts requests based on the source IP address of incoming requests. In addition to IP-based rate limiting, customers with the new Rate Limiting who subscribe to Advanced Rate Limiting can group requests based on other characteristics, such as the value of API keys, cookies, session headers, ASN, query parameters, or a specific JSON body field. Refer to [Rate limiting best practices](/waf/rate-limiting-rules/best-practices/) for examples.
+
+- **Number of rules per plan**: Besides the exact features per Cloudflare plan, the number of rules per plan is different in the new version of Rate Limiting (for information on the new version limits, refer to [Rate limiting rules](/waf/rate-limiting-rules/#availability)):
+
+  | Product                          | Free | Pro | Business | Enterprise with RL add-on,<br/> or equivalent plan |
+  | -------------------------------- | :--: | :-: | :------: | :------------------------------------------------: |
+  | Rate Limiting (previous version) |  1   | 10  |    15    |                        100                         |
+  | Rate Limiting (new version)      |  1   |  2  |    5     |                        100                         |
+
+  Enterprise customers must have application security on their contract to get access to rate limiting rules.
+
+  Refer to [Important remarks about the upgrade](#important-remarks-about-the-upgrade) for details on how Cloudflare will adjust your rules quota, if needed, after the upgrade.
+
+For more details on the differences between old and new rate limiting rules, refer to [our blog post](https://blog.cloudflare.com/unmetered-ratelimiting/).
+
+## Important remarks about the upgrade
+
+- **After the upgrade, you will not be able to create or edit rate limiting rules while you are above the new rules quota for your Cloudflare plan.** The number of rate limiting rules included in your Cloudflare plan can be lower than before. If you are over the new limit, you will need to either upgrade to a plan that gives you more rules, or delete existing rules until the number of rules is less or equal to the new maximum number of rules for your plan.
+
+- **Custom timeouts will be rounded to the nearest supported timeout.** Both custom counting periods and custom mitigation timeouts will be rounded up or down to the nearest counting period and mitigation timeout supported in the new version (refer to [Availability](/waf/rate-limiting-rules/#availability) for details on the available values per plan).<br/>
+  For example, if you had a rate limiting rule with a mitigation timeout of 55 seconds, this timeout will be rounded up to one minute (nearest value).<br/>
+  Enterprise customers will be able to set a custom mitigation timeout for a rule after the upgrade, but this configuration is only available via API.
+
+- **Customers on a Business plan (or higher) will have access to the [IP with NAT support](/waf/rate-limiting-rules/parameters/#use-cases-of-ip-with-nat-support) characteristic.** This characteristic is used to handle situations such as requests under NAT sharing the same IP address.
+
+---
+
+### Relevant changes in the dashboard
+
+If you had access to the previous version of Cloudflare Rate Limiting, you will now find all rate limiting rules in the same list in **Security** > **WAF** > **Rate limiting rules**.
+Rate limiting rules created in the previous version are tagged with `Previous version` in the Cloudflare dashboard.
+
+![Rate limiting rules user interface showing two rules created in the previous version.](~/assets/images/waf/reference/rate-limiting-rules-upgrade-ui.png)
+
+If you are using the new [application security dashboard](/security/), only the rate limiting rules that have been upgraded to the new version will be shown at **Security** > **Security rules**.
+
+If you edit a rule with this tag in the dashboard, you will no longer be able to edit the rule using the API and Terraform resource for the previous version of rate limiting rules. In this case, you will need to start using the [Rulesets API](/ruleset-engine/rulesets-api/) or the [`cloudflare_ruleset`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/ruleset) Terraform resource for this purpose. Refer to [Relevant changes for API users](#relevant-changes-for-api-users) and [Relevant changes for Terraform users](#relevant-changes-for-terraform-users) for more information.
+
+### Relevant changes for API users
+
+**The previous Rate Limiting API is deprecated.** The API is no longer supported since 2025-06-15. You must update any automation based on the [previous Rate Limiting API](/api/resources/rate_limits/) to the [Rulesets API](/waf/rate-limiting-rules/create-api/) to prevent any issues.
+
+The new rate limiting rules are based on the [Ruleset Engine](/ruleset-engine/). To configure these rate limiting rules via the API you must use the [Rulesets API](/ruleset-engine/rulesets-api/). Since rate limiting rules created in the previous version were upgraded to the new version, this API will also return these rules created in the new version.
+
+The [Rulesets API](/ruleset-engine/rulesets-api/) is the only API that allows you to create, edit, and delete any rate limiting rule, regardless of the implementation version where you created the rule. The [previous Rate Limiting API](/api/resources/rate_limits/) will only work with rate limiting rules created in the previous version that you have not edited in the dashboard or modified through the new API/Terraform resource since they were upgraded to the new version.
+
+Until the API sunset date, you can use the [previous Rate Limiting API](/api/resources/rate_limits/) to create, edit, and delete rate limiting rules created in the previous version (which Cloudflare upgraded to the new version). However, if you use the Rulesets API to edit a rule created in the previous version, or if you change such a rule in the Cloudflare dashboard – including changing the rule order – you will no longer be able to manage this rule (upgraded from the previous version and then updated using the Rulesets API) using the old API operations. In this case, you will need to completely switch to the [Rulesets API](/ruleset-engine/rulesets-api/) for managing this specific rule.
+
+### Relevant changes for Terraform users
+
+**The `cloudflare_rate_limit` Terraform resource is deprecated.** The resource is no longer supported since 2025-06-15. You must manually update your rate limiting configuration in Terraform from [`cloudflare_rate_limit`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/rate_limit) resources to [`cloudflare_ruleset`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/ruleset) resources to prevent any issues.
+
+The new rate limiting rules are based on the [Ruleset Engine](/ruleset-engine/). To configure these rate limiting rules with Terraform you must use the `cloudflare_ruleset` Terraform resource.
+
+The [`cloudflare_ruleset`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/ruleset) Terraform resource is the only resource that allows you to create, edit, and delete any rate limiting rule, regardless of the implementation version where you created the rule. The `cloudflare_rate_limit` Terraform resource will only work with rate limiting rules created in the previous version that you have not edited in the dashboard or modified through the new API/Terraform resource since they were upgraded to the new version.
+
+Until the sunset date for the `cloudflare_rate_limit` Terraform resource, you can use this resource to create, edit, and delete rate limiting rules created in the previous version (which Cloudflare upgraded to the new version). However, if you start using the `cloudflare_ruleset` Terraform resource to manage a rule created in the previous version, or if you edit such a rule in the Cloudflare dashboard – including changing the rule order – you will no longer be able to manage this rule (upgraded from the previous version and then updated using the new resource) using the old Terraform resource. In this case, you will need to completely switch to the `cloudflare_ruleset` Terraform resource for managing this specific rule.
+
+Refer to the Terraform documentation for [examples of configuring the new rate limiting rules using Terraform](/terraform/additional-configurations/rate-limiting-rules/).
+
+### Replace your configuration with cf-terraforming
+
+You can use the [`cf-terraforming`](https://github.com/cloudflare/cf-terraforming) tool to generate your new Terraform configuration for rate limiting rules created in the previous version. Then, you can import the new resources to Terraform state.
+
+The recommended steps for replacing your old rate limiting configuration in Terraform with a new ruleset configuration are the following.
+
+1.  Run the following command to generate all ruleset configurations for a zone:
+
+    ```sh null {3,6}
+    cf-terraforming generate --zone <ZONE_ID> --resource-type "cloudflare_ruleset"
+    ```
+
+    ```tf output {1,4}
+    resource "cloudflare_ruleset" "terraform_managed_resource_3c0b456bc2aa443089c5f40f45f51b31" {
+      kind    = "zone"
+      name    = "default"
+      phase   = "http_ratelimit"
+      zone_id = "<ZONE_ID>"
+      rules {
+        # (...)
+      }
+      # (...)
+    }
+    # (...)
+    ```
+
+2.  The previous command may return additional ruleset configurations for other Cloudflare products also based on the [Ruleset Engine](/ruleset-engine/). Since you are updating your rate limiting rules configuration, keep only the Terraform resource for the `http_ratelimit` phase and save it to a `.tf` configuration file. You will need the full resource name in the next step.
+
+3.  Import the `cloudflare_ruleset` resource you previously identified into Terraform state using the `terraform import` command. For example:
+
+    ```sh
+    terraform import cloudflare_ruleset.terraform_managed_resource_3c0b456bc2aa443089c5f40f45f51b31 zone/<ZONE_ID>/3c0b456bc2aa443089c5f40f45f51b31
+    ```
+
+    ```txt output
+    cloudflare_ruleset.terraform_managed_resource_3c0b456bc2aa443089c5f40f45f51b31: Importing from ID "zone/<ZONE_ID>/3c0b456bc2aa443089c5f40f45f51b31"...
+    cloudflare_ruleset.terraform_managed_resource_3c0b456bc2aa443089c5f40f45f51b31: Import prepared!
+      Prepared cloudflare_ruleset for import
+    cloudflare_ruleset.terraform_managed_resource_3c0b456bc2aa443089c5f40f45f51b31: Refreshing state... [id=3c0b456bc2aa443089c5f40f45f51b31]
+
+    Import successful!
+
+    The resources that were imported are shown above. These resources are now in
+    your Terraform state and will henceforth be managed by Terraform.
+    ```
+
+4.  Run `terraform plan` to validate that Terraform now checks the state of the new `cloudflare_ruleset` resource, in addition to other existing resources already managed by Terraform. For example:
+
+    ```sh
+    terraform plan
+    ```
+
+    ```txt output
+    cloudflare_ruleset.terraform_managed_resource_3c0b456bc2aa443089c5f40f45f51b31: Refreshing state... [id=3c0b456bc2aa443089c5f40f45f51b31]
+    [...]
+    cloudflare_rate_limit.my_rate_limiting_rules: Refreshing state... [id=0580eb5d92e344ddb2374979f74c3ddf]
+    [...]
+    ```
+
+5.  Remove any state related to rate limiting rules configured through the old `cloudflare_rate_limit` resource from your Terraform state:
+
+    :::caution[Important]
+    You must remove rate limiting rules configured through the `cloudflare_rate_limit` resource from Terraform state before deleting their configuration from `.tf` configuration files to prevent issues.
+    :::
+    1. Run the following command to find all resources related to rate limiting rules (previous version):
+
+       ```sh
+       terraform state list | grep -E '^cloudflare_rate_limit\.'
+       ```
+
+       ```txt output
+       cloudflare_rate_limit.my_rate_limiting_rules
+       ```
+
+    2. Run the `terraform state rm ...` command in dry-run mode to understand the impact of removing those resources without performing any changes:
+
+       ```sh
+       terraform state rm -dry-run cloudflare_rate_limit.my_rate_limiting_rules
+       ```
+
+       ```txt output
+       Would remove cloudflare_rate_limit.my_rate_limiting_rules
+       ```
+
+    3. If the impact looks correct, run the same command without the `-dry-run` parameter to actually remove the resources from Terraform state:
+
+       ```sh
+       terraform state rm cloudflare_rate_limit.my_rate_limiting_rules
+       ```
+
+       ```txt output
+       Removed cloudflare_rate_limit.my_rate_limiting_rules
+       Successfully removed 1 resource instance(s).
+       ```
+
+6.  After removing `cloudflare_rate_limit` resources from Terraform state, delete all these resources from `.tf` configuration files.
+
+7.  Run `terraform plan` to verify that the resources you deleted from configuration files no longer appear. You should not have any pending changes.
+
+    ```sh
+    terraform plan
+    ```
+
+    ```txt output
+    cloudflare_ruleset.terraform_managed_resource_3c0b456bc2aa443089c5f40f45f51b31: Refreshing state... [id=3c0b456bc2aa443089c5f40f45f51b31]
+    [...]
+
+    No changes. Your infrastructure matches the configuration.
+
+    Terraform has compared your real infrastructure against your configuration and found no differences, so no changes are needed.
+    ```
+
+For details on importing Cloudflare resources to Terraform and using the `cf-terraforming` tool, refer to the following resources:
+
+- [Import Cloudflare resources](/terraform/advanced-topics/import-cloudflare-resources/)
+- [`cf-terraforming` GitHub repository](https://github.com/cloudflare/cf-terraforming)
+
+## More resources
+
+For more information on the new rate limiting implementation, including the available features in each Cloudflare plan, refer to [Rate limiting rules](/waf/rate-limiting-rules/).
+
+Cloudflare also offers an Advanced version of Rate Limiting, which is available to Enterprise customers. For more information, refer to the [Introducing Advanced Rate Limiting](https://blog.cloudflare.com/advanced-rate-limiting/) blog post.
+
+To learn more about what you can do with the new rate limiting, refer to [Rate limiting best practices](/waf/rate-limiting-rules/best-practices/).

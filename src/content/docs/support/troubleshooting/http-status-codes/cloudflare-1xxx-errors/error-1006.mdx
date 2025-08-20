@@ -1,0 +1,22 @@
+---
+pcx_content_type: troubleshooting
+title: Error 1006, 1007, 1008 or 1106
+source: null
+---
+
+## Errors 1006, 1007, 1008 or 1106 Access Denied: Your IP address has been banned
+
+This error indicates that access is denied because your IP address has been banned.
+
+### Common causes
+
+A Cloudflare customer blocked traffic from your client or browser.
+
+:::note
+
+Error 1006 also occurs in the Cloudflare **Workers** app under the **Preview** tab when a customer uses **[Zone Lockdown](/waf/tools/zone-lockdown/)** or any other Cloudflare security feature to block the Google Cloud Platform IPs that the **Preview** tab relies upon.
+:::
+
+### Resolution
+
+Request the website owner to investigate their Cloudflare security settings or allow your client IP address. Since the website owner blocked your request, Cloudflare support cannot override a customer's security settings.

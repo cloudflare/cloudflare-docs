@@ -114,8 +114,13 @@ Gateway cannot scan [certain archive files](#non-scannable-files) regardless of 
 
 Gateway cannot scan all files for malware. When Gateway encounters a non-scannable file, you can configure AV scanning whether to fail open (allow the file to pass through unscanned) or to fail closed (deny the file transfer).
 
-<Render file="gateway/nonscannable-files" params={{ fileSizeLimitMB: "100" }} />
+Gateway cannot scan requests containing the following files:
 
+- Files larger than:
+  - 15 MB on Free plans
+  - 25 MB on Pay-as-you-go plans
+  - 100 MB on Enterprise plans
+- PGP encrypted files
 - Password protected archives
 - Archives with more than three recursion levels
 - Archives with more than 300 files

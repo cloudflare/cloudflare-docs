@@ -13,18 +13,19 @@ Review Workers errors and exceptions.
 
 When a Worker running in production has an error that prevents it from returning a response, the client will receive an error page with an error code, defined as follows:
 
-| Error code | Meaning                                                                                                           |
-| ---------- | ----------------------------------------------------------------------------------------------------------------- |
-| `1101`     | Worker threw a JavaScript exception.                                                                              |
-| `1102`     | Worker exceeded [CPU time limit](/workers/platform/limits/#cpu-time).                                             |
-| `1103`     | The owner of this worker needs to contact [Cloudflare Support](/support/contacting-cloudflare-support/)           |
-| `1015`     | Worker hit the [burst rate limit](/workers/platform/limits/#burst-rate).                                          |
-| `1019`     | Worker hit [loop limit](#loop-limit).                                                                             |
-| `1021`     | Worker has requested a host it cannot access.                                                                     |
-| `1022`     | Cloudflare has failed to route the request to the Worker.                                                         |
-| `1024`     | Worker cannot make a subrequest to a Cloudflare-owned IP address.                                                 |
-| `1027`     | Worker exceeded free tier [daily request limit](/workers/platform/limits/#daily-request).                         |
-| `1042`     | Worker tried to fetch from another Worker on the same zone, which is [unsupported](/workers/runtime-apis/fetch/). |
+| Error code | Meaning                                                                                                                                         |
+| ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| `1101`     | Worker threw a JavaScript exception.                                                                                                            |
+| `1102`     | Worker exceeded [CPU time limit](/workers/platform/limits/#cpu-time).                                                                           |
+| `1103`     | The owner of this worker needs to contact [Cloudflare Support](/support/contacting-cloudflare-support/)                                         |
+| `1015`     | Worker hit the [burst rate limit](/workers/platform/limits/#burst-rate).                                                                        |
+| `1019`     | Worker hit [loop limit](#loop-limit).                                                                                                           |
+| `1021`     | Worker has requested a host it cannot access.                                                                                                   |
+| `1022`     | Cloudflare has failed to route the request to the Worker.                                                                                       |
+| `1024`     | Worker cannot make a subrequest to a Cloudflare-owned IP address.                                                                               |
+| `1027`     | Worker exceeded free tier [daily request limit](/workers/platform/limits/#daily-request).                                                       |
+| `1042`     | Worker tried to fetch from another Worker on the same zone, which is only [supported](/workers/runtime-apis/fetch/) when the [`global_fetch_strictly_public` compatibility flag](/workers/configuration/compatibility-flags/#global-fetch-strictly-public) is used. |
+| `10162`    | Module has an unsupported Content-Type.                                                                                                         |
 
 Other `11xx` errors generally indicate a problem with the Workers runtime itself. Refer to the [status page](https://www.cloudflarestatus.com) if you are experiencing an error.
 
@@ -190,7 +191,7 @@ These errors occur when a Worker is uploaded or modified.
 | `10016`    | Invalid Worker name.                                                                                                            |
 | `10021`    | Validation Error. Refer to [Validation Errors](/workers/observability/errors/#validation-errors-10021) for details.             |
 | `10026`    | Could not parse request body.                                                                                                   |
-| `10027`    | Your Worker exceeded the size limit of XX MB (for more details see [Worker size limits](/workers/platform/limits/#worker-size)) |
+| `10027`    | The uploaded Worker exceeded the [Worker size limits](/workers/platform/limits/#worker-size). |
 | `10035`    | Multiple attempts to modify a resource at the same time                                                                         |
 | `10037`    | An account has exceeded the number of [Workers allowed](/workers/platform/limits/#number-of-workers).                           |
 | `10052`    | A [binding](/workers/runtime-apis/bindings/) is uploaded without a name.                                                        |
@@ -205,14 +206,6 @@ These errors occur when a Worker is uploaded or modified.
 The 10021 error code includes all errors that occur when you attempt to deploy a Worker, and Cloudflare then attempts to load and run the top-level scope (everything that happens before your Worker's [handler](/workers/runtime-apis/handlers/) is invoked). For example, if you attempt to deploy a broken Worker with invalid JavaScript that would throw a `SyntaxError` — Cloudflare will not deploy your Worker.
 
 Specific error cases include but are not limited to:
-
-#### Worker exceeded the upload size limit
-
-A Worker can be up to 10 MB in size after compression on the Workers Paid plan, and up to 3 MB on the Workers Free plan.
-
-To reduce the upload size of a Worker, you should consider removing unnecessary dependencies and/or using Workers KV, a D1 database or R2 to store configuration files, static assets and binary data instead of attempting to bundle them within your Worker code.
-
-Another method to reduce a Worker's file size is to split its functionality across multiple Workers and connect them using [Service bindings](/workers/runtime-apis/bindings/service-bindings/).
 
 #### Script startup exceeded CPU time limit
 
@@ -255,10 +248,10 @@ The **Errors by invocation status** chart shows the number of errors broken down
 
 The **Client disconnected by type** chart shows the number of client disconnect errors broken down into the following categories:
 
-| Client Disconnects             | Meaning                                                                                                                                                     |
-| ------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Client Disconnects             | Meaning                                                                                                                                                                                          |
+| ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `Response Stream Disconnected` | Connection was terminated during the deferred proxying stage of a Worker request flow. It commonly appears for longer lived connections such as [WebSockets](/workers/runtime-apis/websockets/). |
-| `Cancelled`                    | The Client disconnected before the Worker completed its response.                                                                                           |
+| `Cancelled`                    | The Client disconnected before the Worker completed its response.                                                                                                                                |
 
 ## Debug exceptions with Workers Logs
 
@@ -266,7 +259,7 @@ The **Client disconnected by type** chart shows the number of client disconnect 
 
 To find all your errors in Workers Logs, you can use the following filter: `$metadata.error EXISTS`. This will show all the logs that have an error associated with them. You can also filter by `$workers.outcome` to find the requests that resulted in an error. For example, you can filter by `$workers.outcome = "exception"` to find all the requests that resulted in an uncaught exception.
 
-All the possible outcome values can be found in the [Workers Trace Event](/logs/reference/log-fields/account/workers_trace_events/#outcome) reference.
+All the possible outcome values can be found in the [Workers Trace Event](/logs/logpush/logpush-job/datasets/account/workers_trace_events/#outcome) reference.
 
 ## Debug exceptions from `Wrangler`
 
@@ -301,6 +294,12 @@ export default {
 
 </TabItem> <TabItem label="Service Worker" icon="seti:javascript">
 
+:::caution[Service Workers are deprecated]
+
+Service Workers are deprecated, but still supported. We recommend using [Module Workers](/workers/reference/migrate-to-module-workers/) instead. New features may not be supported for Service Workers.
+
+:::
+
 ```js
 addEventListener("fetch", (event) => {
 	event.respondWith(handleEvent(event));
@@ -324,6 +323,10 @@ function postLog(data) {
 
 </TabItem> </Tabs>
 
+## Collect and persist Wasm core dumps
+
+Configure the [Wasm Coredump Service](https://github.com/cloudflare/wasm-coredump) to collect coredumps from your Rust Workers applications and persist them to logs, Sentry, or R2 for analysis with [wasmgdb](https://github.com/xtuc/wasm-coredump/tree/main/bin/wasmgdb). Read the [blog post](https://blog.cloudflare.com/wasm-coredumps/) for more details.
+
 ## Go to origin on error
 
 By using [`event.passThroughOnException`](/workers/runtime-apis/context/#passthroughonexception), a Workers application will forward requests to your origin if an exception is thrown during the Worker's execution. This allows you to add logging, tracking, or other features with Workers, without degrading your application's functionality.
@@ -341,6 +344,12 @@ export default {
 ```
 
 </TabItem> <TabItem label="Service Worker" icon="seti:javascript">
+
+:::caution[Service Workers are deprecated]
+
+Service Workers are deprecated, but still supported. We recommend using [Module Workers](/workers/reference/migrate-to-module-workers/) instead. New features may not be supported for Service Workers.
+
+:::
 
 ```js
 addEventListener("fetch", (event) => {

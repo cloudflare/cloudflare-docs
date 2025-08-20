@@ -9,7 +9,7 @@ description: Create a compression rule to set Brotli as the only supported
   compression algorithm for a specific URI path.
 ---
 
-import { Example, TabItem, Tabs, APIRequest } from "~/components";
+import { Example, TabItem, Tabs, APIRequest, Render } from "~/components";
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -42,6 +42,7 @@ The following example sets the rules of an existing [entry point ruleset](/rules
 	json={{
 		rules: [
 			{
+				ref: "use_only_brotli_for_assets_tar",
 				expression: 'http.request.uri.path eq "/download/assets.tar"',
 				action: "compress_response",
 				action_parameters: {
@@ -51,5 +52,7 @@ The following example sets the rules of an existing [entry point ruleset](/rules
 		],
 	}}
 />
+
+<Render file="terraform-use-ref-field" params={{ addDocsLocation: true }} />
 
 </TabItem> </Tabs>

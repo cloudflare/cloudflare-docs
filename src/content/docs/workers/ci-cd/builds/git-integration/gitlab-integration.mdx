@@ -11,10 +11,17 @@ Cloudflare supports connecting your GitLab repository to your Cloudflare Worker,
 ## Features
 
 Beyond automatic builds and deployments, the Cloudflare GitLab integration lets you monitor builds directly in GitLab, keeping you informed without leaving your workflow.
-:::note[Upcoming features]
-While you can still [enable builds for non-production branches](/workers/ci-cd/builds/build-branches/#configure-non-production-branch-builds), when using GitLab, we don't currently create PR comments.
 
-This feature will be available soon.
+### Merge request comment
+
+If a commit is on a merge request, Cloudflare will automatically post a comment on the merge request with the status of the build.
+
+![GitLab merge request comment](~/assets/images/workers/platform/ci-cd/gitlab-pull-request-comment.png)
+
+A [preview URL](/workers/configuration/previews/) will be provided for any builds which perform `wrangler versions upload`. This is particularly useful when reviewing your pull request, as it allows you to compare the code changes alongside an updated version of your Worker.
+
+:::note[Enabling GitLab Merge Request events for existing connections]
+New GitLab connections are automatically configured to receive merge request events, which enable commenting functionality. For existing connections, you'll need to manually enable `Merge request events` in the Webhooks tab of your project's settings. You can follow GitLab's documentation for guidance on [managing webhooks](https://docs.gitlab.com/user/project/integrations/webhooks/#manage-webhooks).
 :::
 
 ### Commit Status

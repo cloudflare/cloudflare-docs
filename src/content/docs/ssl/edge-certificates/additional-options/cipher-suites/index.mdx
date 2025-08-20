@@ -8,12 +8,12 @@ head: []
 description: Consider information about supported cipher suites, how to meet
   your security requirements, and how to troubleshoot compatibility and other
   issues.
-
 ---
 
 import { DirectoryListing, Render } from "~/components";
 
-<Render file="cipher-suites-definition" /><br />
+<Render file="cipher-suites-definition" product="ssl" />
+<br />
 
 This section covers cipher suites used in connections between clients — such as your visitor's browser — and the Cloudflare network. For information about cipher suites used between Cloudflare and your origin server, refer to [Origin server > Cipher suites](/ssl/origin-configuration/cipher-suites/).
 
@@ -48,16 +48,15 @@ Each cipher suite relates to a specific minimum protocol that it supports. This 
 
 ### TLS 1.3
 
-<Render file="tls-13-cipher-limitations" />
+<Render file="tls-13-cipher-limitations" product="ssl" />
 
 Cloudflare may return the following names for TLS 1.3 cipher suites. This is how they map to [RFC 8446](https://www.rfc-editor.org/rfc/rfc8446.html) names:
 
-| Cloudflare                      | RFC 8446                           |
-| ------------------------------  | -----------------------------------|
-| `AEAD-AES128-GCM-SHA256`        | `TLS_AES_128_GCM_SHA256`           |
-| `AEAD-AES256-GCM-SHA384`        | `TLS_AES_256_GCM_SHA384`           |
-| `AEAD-CHACHA20-POLY1305-SHA256` | `TLS_CHACHA20_POLY1305_SHA256`     |
-
+| Cloudflare                      | RFC 8446                       |
+| ------------------------------- | ------------------------------ |
+| `AEAD-AES128-GCM-SHA256`        | `TLS_AES_128_GCM_SHA256`       |
+| `AEAD-AES256-GCM-SHA384`        | `TLS_AES_256_GCM_SHA384`       |
+| `AEAD-CHACHA20-POLY1305-SHA256` | `TLS_CHACHA20_POLY1305_SHA256` |
 
 ## Resources
 

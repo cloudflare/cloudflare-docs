@@ -8,7 +8,7 @@ head:
     content: Cache Rules — Terraform example
 ---
 
-import { Details } from "~/components";
+import { Details, Render } from "~/components";
 
 The following example defines a single cache rule for a zone using Terraform. The rule configures several cache settings and sets a custom cache key for incoming requests addressed at `example.net`.
 
@@ -81,6 +81,12 @@ resource "cloudflare_ruleset" "cache_rules_example" {
   }
 }
 ```
+
+<Render
+	file="terraform-use-ref-field"
+	product="rules"
+	params={{ addDocsLocation: true }}
+/>
 
 </Details>
 

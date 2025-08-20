@@ -1,0 +1,33 @@
+---
+import { z } from "astro:schema";
+import { Code } from "@astrojs/starlight/components";
+import Details from "~/components/Details.astro";
+
+type Props = z.infer<typeof props>;
+
+const props = z.object({
+	name: z.string(),
+});
+
+const { name } = props.parse(Astro.props);
+
+const worker = `
+export interface Env {
+	AI: Ai;
+}
+
+export default {
+	async fetch(request, env): Promise<Response> {
+		const { audio } = await env.AI.run('${name}', {
+			prompt: 'Hello world',
+			lang: 'en',
+		});
+		// Returns the base64 encoded MP3 audio
+		return Response.json({ audio });
+	},
+} satisfies ExportedHandler<Env>;`;
+---
+
+<Details header="Workers - TypeScript">
+	<Code code={worker} lang="ts" />
+</Details>

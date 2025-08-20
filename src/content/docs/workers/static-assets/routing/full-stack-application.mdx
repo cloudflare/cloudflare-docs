@@ -1,0 +1,22 @@
+---
+pcx_content_type: concept
+title: Full-stack application
+description: How to configure and use a full-stack application with Workers.
+sidebar:
+  order: 1
+---
+
+import { WranglerConfig, Render, DirectoryListing } from "~/components";
+
+Full-stack applications are web applications which are span both the client and server. The build process of these applications will produce a HTML files, accompanying client-side resources (e.g. JavaScript bundles, CSS stylesheets, images, fonts, etc.) and a Worker script. Data is typically fetched the Worker script at request-time and the initial page response is usually server-side rendered (SSR). From there, the client is then hydrated and a SPA-like experience ensues.
+
+The following full-stack frameworks are natively supported by Workers:
+
+<DirectoryListing
+	folder="workers/framework-guides/web-apps"
+	tag="full-stack"
+/>
+<DirectoryListing
+	folder="workers/framework-guides/web-apps/more-web-frameworks"
+	tag="full-stack"
+/>

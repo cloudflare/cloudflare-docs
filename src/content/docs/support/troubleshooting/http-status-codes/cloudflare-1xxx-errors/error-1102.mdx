@@ -1,0 +1,18 @@
+---
+pcx_content_type: troubleshooting
+title: Error 1102
+source: null
+---
+
+## Error 1102: Rendering error
+
+This error indicates that a Cloudflare Worker has exceeded the CPU time limit.
+
+### Common cause
+
+A Cloudflare Worker exceeds a [CPU time limit](/workers/observability/errors/). CPU time is the time spent executing code (for example, loops, parsing JSON, etc). Time spent on network requests (fetching, responding) does not count towards CPU time.
+
+### Resolution
+
+Contact the developer of your Workers code to optimize code for a reduction in CPU usage in the active Workers scripts.
+

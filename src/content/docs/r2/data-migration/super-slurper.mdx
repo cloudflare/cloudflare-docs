@@ -45,7 +45,10 @@ This setting specifies the prefix within the source bucket where objects will be
 
 #### Overwrite files?
 
-This setting determines what happens when an object being copied from the source storage bucket matches the path of an existing object in the destination R2 bucket. There are two options: overwrite (default) and skip.
+This setting determines what happens when an object being copied from the source storage bucket matches the path of an existing object in the destination R2 bucket. There are two options:
+
+- Overwrite (default)
+- Skip
 
 ## Supported cloud storage providers
 
@@ -128,7 +131,7 @@ You can now use this JSON key file when enabling Super Slurper.
 
 ### ETags
 
-<Render file="migrator-etag-caveat" params={{ one: "Super Slurper" }} />
+<Render file="migrator-etag-caveat" params={{ one: "Super Slurper" }} product="r2" />
 
 ### Archive storage classes
 

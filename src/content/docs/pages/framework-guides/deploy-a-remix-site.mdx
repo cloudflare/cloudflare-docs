@@ -2,6 +2,11 @@
 pcx_content_type: how-to
 title: Remix
 tags: [Remix]
+banner:
+  content: We recommend using <strong>Cloudflare Workers</strong> for new projects. For existing Pages projects, see our <a href="/workers/static-assets/migrate-from-pages/">migration guide</a> and <a href="/workers/static-assets/migrate-from-pages/#compatibility-matrix">compatibility matrix</a>.
+  type: note
+  dismissible:
+    id: pages-migrate-to-workers
 ---
 
 import {
@@ -44,9 +49,12 @@ cd my-remix-app
 npm run dev
 ```
 
-<Render file="tutorials-before-you-start" />
+<Render file="tutorials-before-you-start" product="pages" />
 
-<Render file="framework-guides/create-github-repository_no_init" />
+<Render
+	file="framework-guides/create-github-repository_no_init"
+	product="pages"
+/>
 
 ## Deploy with Cloudflare Pages
 
@@ -158,7 +166,7 @@ export const loader: LoaderFunction = async ({ context, params }) => {
   const { env, cf, ctx } = context.cloudflare;
   let { results } = await env.DB.prepare(
     "SELECT * FROM products where id = ?1"
-  ).bind(params.productId).all();
+  ).bind(params.productId).run();
   return json(results);
 };
 

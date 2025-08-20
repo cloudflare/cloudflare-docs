@@ -1,6 +1,11 @@
 ---
 pcx_content_type: how-to
 title: SolidStart
+banner:
+  content: We recommend using <strong>Cloudflare Workers</strong> for new projects. For existing Pages projects, see our <a href="/workers/static-assets/migrate-from-pages/">migration guide</a> and <a href="/workers/static-assets/migrate-from-pages/#compatibility-matrix">compatibility matrix</a>.
+  type: note
+  dismissible:
+    id: pages-migrate-to-workers
 ---
 
 import { Render, PackageManagers } from "~/components";
@@ -33,7 +38,7 @@ npm run dev
 
 ## SolidStart Cloudflare configuration
 
-<Render file="c3-adapter" />
+<Render file="c3-adapter" product="pages" />
 
 In order to configure SolidStart so that it can be deployed to Cloudflare pages, update its config file like so:
 
@@ -51,9 +56,9 @@ export default defineConfig({
 });
 ```
 
-<Render file="tutorials-before-you-start" />
+<Render file="tutorials-before-you-start" product="pages" />
 
-<Render file="framework-guides/create-github-repository" />
+<Render file="framework-guides/create-github-repository" product="pages" />
 
 ## Deploy with Cloudflare Pages
 
@@ -61,7 +66,7 @@ export default defineConfig({
 
 ### Deploy via the Cloudflare dashboard
 
-<Render file="deploy-to-pages-steps-no-preset" />
+<Render file="deploy-to-pages-steps-no-preset" product="pages" />
 
 <div>
 

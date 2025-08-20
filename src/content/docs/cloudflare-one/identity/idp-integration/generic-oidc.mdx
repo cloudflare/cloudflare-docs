@@ -5,7 +5,7 @@ sidebar:
   order: 1
 ---
 
-import { Tabs, TabItem, Render } from '~/components';
+import { Tabs, TabItem, Render, APIRequest } from '~/components';
 
 Cloudflare Access has a generic OpenID Connect (OIDC) connector to help you integrate IdPs not already set in Access.
 
@@ -53,32 +53,27 @@ Cloudflare Access has a generic OpenID Connect (OIDC) connector to help you inte
 
 </TabItem> <TabItem label="API">
 
-1. [Create an API token](/fundamentals/api/get-started/create-token/) with the following permissions:
-		| Type    | Item             | Permission |
-		| ------- | ---------------- | ---------- |
-		| Account | Access: Organizations, Identity Providers, and Groups   | Edit    |
+Make a `POST` request to the [Identity Providers](/api/resources/zero_trust/subresources/identity_providers/methods/create/) endpoint:
 
-2. Make a `POST` request to the [Identity Providers](/api/resources/zero_trust/subresources/identity_providers/methods/create/) endpoint:
-
-		```sh
-		curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/identity_providers \
-		--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
-		--data '{
-			"name": "Generic OIDC example",
-			"type": "oidc",
-			"config": {
-				"client_id": "<your client id>",
-				"client_secret": "<your client secret>",
-				"auth_url": "https://accounts.google.com/o/oauth2/auth",
-				"token_url": "https://accounts.google.com/o/oauth2/token",
-				"certs_url": "https://www.googleapis.com/oauth2/v3/certs",
-				"pkce_enabled": false,
-				"email_claim_name": "email",
-				"claims": ["employeeID", "groups"],
-				"scopes": ["openid", "email", "profile"]
-			}
-		}'
-		```
+<APIRequest
+  path="/accounts/{account_id}/access/identity_providers"
+  method="POST"
+  json={{
+    name: "Generic OIDC example",
+    type: "oidc",
+    config: {
+      client_id: "<your client id>",
+      client_secret: "<your client secret>",
+      auth_url: "https://accounts.google.com/o/oauth2/auth",
+      token_url: "https://accounts.google.com/o/oauth2/token",
+      certs_url: "https://www.googleapis.com/oauth2/v3/certs",
+      pkce_enabled: false,
+      email_claim_name: "email",
+      claims: ["employeeID", "groups"],
+      scopes: ["openid", "email", "profile"],
+    },
+  }}
+/>
 
 </TabItem> <TabItem label="Terraform (v5)">
 
@@ -140,9 +135,26 @@ If you would like to build policies based on IdP groups:
 
 ## Optional configurations
 
-### OIDC claims
+### Custom OIDC claims
 
-OIDC integrations support the use of custom OIDC claims. Custom OIDC claims can be referenced in [Access policies](/cloudflare-one/policies/access/), offering a means to control user access based on these specific attributes. Custom OIDC claims are not currently supported in Gateway policies.
+All OIDC IdP integrations support the use of custom OIDC claims. Once configured, Access will add the claims to the [Access JWT](/cloudflare-one/identity/authorization-cookie/application-token/) for consumption by your origin services. You can reference the custom OIDC claims in [Access policies](/cloudflare-one/policies/access/), offering a means to control user access to applications based on custom identity attributes. Custom OIDC claims are not currently supported in Gateway policies.
+
+To add a custom OIDC claim to an IdP integration:
+
+1. In your identity provider, ensure that the custom claim is included in your OIDC ID token.
+2. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Authentication**.
+3. Under **Login methods**, find your identity provider and select **Edit**.
+4. Under **OIDC Claims**, enter the name of your custom claim (for example, `oid`).
+5. Select **Save**.
+6. Select **Test** and verify that the custom claim appears in `oidc_fields`. For example,
+
+		```json
+			"oidc_fields": {
+				"oid": "54eb1ed2-7150-44e6-bbe4-ead24c132fd4"
+			},
+		```
+
+You can now build an Access policy for the custom claim using the **OIDC Claim** or **IdP OIDC Claim** selector. The custom claim will also be passed to origins behind Access in a [JWT](/cloudflare-one/identity/authorization-cookie/application-token/#custom-saml-attributes-and-oidc-claims).
 
 #### Email claim
 

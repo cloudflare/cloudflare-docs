@@ -9,7 +9,7 @@ description: Create a compression rule to set Gzip compression as the preferred
   compression method for CSV files.
 ---
 
-import { Example, TabItem, Tabs, APIRequest } from "~/components";
+import { Example, TabItem, Tabs, APIRequest, Render } from "~/components";
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -40,6 +40,7 @@ The following example sets the rules of an existing [entry point ruleset](/rules
 	json={{
 		rules: [
 			{
+				ref: "use_gzip_for_csv",
 				expression: 'http.request.uri.path.extension eq "csv"',
 				action: "compress_response",
 				action_parameters: {
@@ -49,5 +50,7 @@ The following example sets the rules of an existing [entry point ruleset](/rules
 		],
 	}}
 />
+
+<Render file="terraform-use-ref-field" params={{ addDocsLocation: true }} />
 
 </TabItem> </Tabs>

@@ -1,0 +1,17 @@
+---
+pcx_content_type: troubleshooting
+title: Error 10055
+source: null
+---
+
+## Error 10055: Query string settings incompatible with redirect target URL
+
+This error indicates a conflict between the **Preserve query string** option and the query string in the redirect target URL.
+
+### Common causes
+
+This error occurs when you enable the **Preserve query string** option of a URL redirect, but also provide a query string in the redirect target URL. In this case, the URL redirect would have conflicting configuration on how to handle the query string of incoming requests.
+
+### Resolution
+
+To resolve this issue, either disable the **Preserve query string** option in the URL redirect or remove the query string component from the redirect target URL to eliminate the conflict.

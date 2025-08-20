@@ -57,6 +57,10 @@ netsh int ipv6 set dynamicport udp start=11000 num=50000
 
 </TabItem> </Tabs>
 
+### Private DNS
+
+DNS queries utilize [more system resources](#estimated-throughput) compared to TCP and non-DNS UDP requests. To optimize service availability, Cloudflare recommends splitting [private DNS traffic](/cloudflare-one/connections/connect-networks/private-net/cloudflared/private-dns/) into its own Cloudflare Tunnel. The tunnel should run on a dedicated host and only include routes for your internal DNS resolver IPs.
+
 ### ulimits
 
 On Linux and macOS, `ulimit` settings determine the system resources available to a logged-in user. We recommend configuring the following ulimits on the `cloudflared` server:

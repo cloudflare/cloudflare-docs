@@ -1,7 +1,11 @@
 ---
 pcx_content_type: concept
 title: Early Hints
-
+banner:
+  content: We recommend using <strong>Cloudflare Workers</strong> for new projects. For existing Pages projects, see our <a href="/workers/static-assets/migrate-from-pages/">migration guide</a> and <a href="/workers/static-assets/migrate-from-pages/#compatibility-matrix">compatibility matrix</a>.
+  type: note
+  dismissible:
+    id: pages-migrate-to-workers
 ---
 
 [Early Hints](/cache/advanced-configuration/early-hints/) help the browser to load webpages faster. Early Hints is enabled automatically on all `pages.dev` domains and custom domains.
@@ -27,9 +31,9 @@ Pages will attach this `Link: </styles.css>; rel=preload; as=style` header. Earl
 
 In order to make the authoring experience easier, Pages also automatically generates `Link` headers from any `<link>` HTML elements with the following attributes:
 
-* `href`
-* `as` (optional)
-* `rel` (one of `preconnect`, `preload`, or `modulepreload`)
+- `href`
+- `as` (optional)
+- `rel` (one of `preconnect`, `preload`, or `modulepreload`)
 
 `<link>` elements which contain any other additional attributes (for example, `fetchpriority`, `crossorigin` or `data-do-not-generate-a-link-header`) will not be used to generate `Link` headers in order to prevent accidentally losing any custom prioritization logic that would otherwise be dropped as an Early Hint.
 
@@ -37,10 +41,10 @@ This allows you to directly create Early Hints as you are writing your document,
 
 ```html
 <html>
-  <head>
-    <link rel="preload" href="/style.css" as="style" />
-    <link rel="stylesheet" href="/style.css" />
-  </head>
+	<head>
+		<link rel="preload" href="/style.css" as="style" />
+		<link rel="stylesheet" href="/style.css" />
+	</head>
 </html>
 ```
 
@@ -55,8 +59,6 @@ Remove any automatically generated `Link` headers by adding the following to you
 
 :::caution
 
-
 Automatic `Link` header generation should not have any negative performance impact on your website. If you need to disable this feature, contact us by letting us know about your circumstance in our [Discord server](https://discord.com/invite/cloudflaredev).
-
 
 :::

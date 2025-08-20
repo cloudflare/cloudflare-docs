@@ -38,12 +38,12 @@ To explore the schema, you can use a GraphQL client such as [GraphiQL](https://g
 2. In your GraphQL client, [add your API token](/analytics/graphql-api/getting-started/authentication/graphql-client-headers/) as an Authorization header.
 3. Compose a query to access your Gateway Analytics datasets. For example, you can query the `gatewayResolverQueriesAdaptiveGroups` dataset to return the adaptive groups of DNS queries resolved by Gateway:
 
-   ```graphql
-   {
+   ```graphql graphql-api-explorer
+   query GatewaySampleQuery($accountTag: string!, $start: Time) {
    	viewer {
-   		accounts(filter: { accountTag: "<ACCOUNT_ID>" }) {
+   		accounts(filter: { accountTag: $accountTag }) {
    			gatewayResolverQueriesAdaptiveGroups(
-   				filter: { datetime_gt: "2025-02-28T00:00:00Z" }
+   				filter: { datetime_gt: $start }
    				limit: 10
    			) {
    				count

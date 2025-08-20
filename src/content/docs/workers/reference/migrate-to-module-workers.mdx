@@ -24,6 +24,12 @@ There are several reasons to migrate your Workers to the ES modules format:
 
 The following example demonstrates a Worker that redirects all incoming requests to a URL with a `301` status code.
 
+:::caution[Service Workers are deprecated]
+
+Service Workers are deprecated, but still supported. We recommend using [Module Workers](/workers/reference/migrate-to-module-workers/) instead. New features may not be supported for Service Workers.
+
+:::
+
 With the Service Worker syntax, the example Worker looks like:
 
 ```js

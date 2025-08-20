@@ -1,0 +1,28 @@
+---
+title: Review audit logs - v1
+pcx_content_type: how-to
+sidebar:
+  order: 5
+---
+
+import { Render } from "~/components";
+
+:::note
+Audit Logs version 2 is available in beta. Refer to the [Audit Logs v2 documentation](/fundamentals/account/account-security/audit-logs/) for more details.
+:::
+
+<Render file="account-audit-logs-definition" product="fundamentals" />
+
+## Access audit logs
+
+### Using the dashboard
+
+<Render file="view-audit-log" product="fundamentals" />
+
+### Using the API
+
+<Render file="audit-log-api" product="fundamentals" />
+
+## Retention
+
+Audit Logs are retained for 18 months before being deleted. Enterprise customers can use [Logpush](/logs/logpush/) to store Audit Logs for longer periods of time.

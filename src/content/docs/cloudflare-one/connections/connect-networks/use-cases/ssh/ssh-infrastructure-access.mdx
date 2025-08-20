@@ -6,7 +6,7 @@ sidebar:
   label: SSH with Access for Infrastructure
 ---
 
-import { Tabs, TabItem, Badge, Render } from "~/components";
+import { Tabs, TabItem, Badge, Render, APIRequest } from "~/components";
 
 [Access for Infrastructure](/cloudflare-one/applications/non-http/infrastructure-apps/) provides granular control over how users can connect to your SSH servers. This feature uses the same deployment model as [WARP-to-Tunnel](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-warp-to-tunnel/) but unlocks more policy options and command logging functionality.
 
@@ -41,7 +41,15 @@ To connect your devices to Cloudflare:
 
 <Render file="access/add-infrastructure-app" />
 
-## 6. Configure SSH server
+## 6. (Recommended) Modify order of precedence in Gateway
+
+<Render
+	file="access/modify-gateway-policy-precedence"
+	product="cloudflare-one"
+	params={{ selector: "Access Infrastructure Target", protocol: "ssh" }}
+/>
+
+## 7. Configure SSH server
 
 Next, configure your SSH server to trust the Cloudflare SSH CA. This allows Access to authenticate using short-lived certificates instead of traditional SSH keys.
 
@@ -57,7 +65,7 @@ To generate a Cloudflare SSH CA and get its public key:
 
 <Render file="ssh/public-key" />
 
-### Modify your SSHD config
+### Modify your `sshd_config` file
 
 <Render file="ssh/modify-sshd" />
 
@@ -70,11 +78,11 @@ chmod 600 /etc/ssh/ca.pub
 
 :::
 
-### Restart your SSH server
+### Reload your SSH server
 
 <Render file="ssh/restart-server" />
 
-## 7. Connect as a user
+## 8. Connect as a user
 
 Users can use any SSH client to connect to the target, as long as they are logged into the WARP client on their device. If the target is located within a particular virtual network, ensure that the WARP client is [connected to that virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/#connect-to-a-virtual-network) before initiating the connection. Users do not need to modify any SSH configs on their device. For example, to SSH from a terminal:
 
@@ -82,19 +90,23 @@ Users can use any SSH client to connect to the target, as long as they are logge
 ssh <username>@<target IP>
 ```
 
-SSH with Access for Infrastructure also supports `scp` and `rsync` commands. At this time, `sftp` is not supported. Note that `scp` commands that utilize OpenSSH versions > 9.0 will not work at this time because OpenSSH 9.0+ leverages `sftp` to execute the command.
+Access for Infrastructure also supports `scp`, `sftp`, and `rsync` commands. Refer to [Known limitations](#known-limitations) for a list of unsupported SSH commands and features.
 
 To learn more about user connections, refer to the [Access for Infrastructure documentation](/cloudflare-one/applications/non-http/infrastructure-apps/#4-connect-as-a-user).
 
 ## SSH command logs
 
-SSH command logs contain the actual SSH commands that a user ran on the target. These logs are encrypted using a public key provided by the customer and are not visible to Cloudflare.
+SSH command logs contain the actual SSH commands that a user ran on the target. Customers on all plans can store SSH logs on Cloudflare and download the logs from the dashboard. [Downloadable logs](#download-encrypted-ssh-logs) are encrypted using a public key provided by the customer and are not visible to Cloudflare. Delivery of downloadable SSH logs is best effort; for guaranteed delivery, Enterprise customers can [configure a Logpush job](#export-ssh-logs-with-logpush) to send SSH logs to storage destinations. Logpush payloads are not encrypted with a customer-provided public key.
 
-### Enable SSH command logging
+### Download encrypted SSH logs
+
+Follow these instructions to encrypt and download SSH command logs from Zero Trust.
+
+#### Enable SSH command logging
 
 <Render file="ssh/upload-ssh-key" params={{ note: "" }} />
 
-### Disable SSH command logging
+#### Disable SSH command logging
 
 To turn off SSH command logging, delete your uploaded public key:
 
@@ -114,26 +126,49 @@ Cloudflare will stop logging SSH commands to your targets, as well as any comman
 
 To delete the SSH encryption public key using the [API](/api/resources/zero_trust/subresources/gateway/subresources/audit_ssh_settings/methods/update/):
 
-```sh
-curl --request PUT https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/audit_ssh_settings \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---data '{
-  "public_key": ""
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/gateway/audit_ssh_settings"
+	method="PUT"
+	json={{
+		public_key: "",
+	}}
+/>
 
 </TabItem>
 </Tabs>
 
-### View SSH logs
+#### View SSH logs
 
 SSH command logs are not visible from the dashboard itself and must be exported and decrypted.
 
 To manually retrieve logs:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Logs** > **Access**.
-2. Select a user who was allowed to access the target.
-3. Select **Download** to download the session's command log.
-4. <Render file="ssh/decrypt-ssh-log" />
+2. Filter the logs using the name of your [SSH application](#5-add-an-infrastructure-application).
+3. Select the SSH session for which you want to export command logs.
+4. In the side panel, scroll down to **SSH logs** and select **Download**.
+5. <Render file="ssh/decrypt-ssh-log" />
 
-Enterprise customers can also export command logs using [Logpush](/cloudflare-one/insights/logs/logpush/).
+### Export SSH logs with Logpush
+
+:::note[Availability]
+Only available on Enterprise plans.
+:::
+
+Cloudflare allows you to send SSH command logs to storage destinations configured in [Logpush](/logs/logpush/), including third-party destinations. For a list of available data fields, refer to the [SSH logs dataset](/logs/logpush/logpush-job/datasets/account/ssh_logs/).
+
+To set up the Logpush job, refer to [Logpush integration](/cloudflare-one/insights/logs/logpush/).
+
+## Known limitations
+
+### SSH features
+
+The following SSH features are not supported:
+
+- Local and remote port forwarding
+- SSH agent forwarding
+- X11 forwarding
+
+### Session duration
+
+SSH sessions have a maximum expected duration of 10 hours. For more information, refer to the [Troubleshooting FAQ](/cloudflare-one/faq/troubleshooting/#long-lived-ssh-sessions-frequently-disconnect).

@@ -2,6 +2,8 @@
 title: Icons
 ---
 
+import { Render } from "~/components";
+
 There are two icon components which pull from two different icon sets.
 
 ## astro-icon
@@ -25,3 +27,12 @@ import { StarlightIcon } from "~/components";
 
 <StarlightIcon name="seti:shell" color="var(--sl-color-text-accent)" size="3rem" />
 ```
+
+## Icon library
+
+<Render
+	file="icons"
+	params={{
+		component: "cards or tabs",
+	}}
+/>

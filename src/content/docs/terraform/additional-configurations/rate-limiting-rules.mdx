@@ -26,11 +26,11 @@ For more information on configuring the previous version of rate limiting rules 
 
 ### Obtain the necessary account or zone IDs
 
-<Render file="find-ids" />
+<Render file="find-ids" product="terraform" />
 
 ### Import or delete existing rulesets
 
-<Render file="import-delete-existing-rulesets" />
+<Render file="import-delete-existing-rulesets" product="terraform" />
 
 ---
 
@@ -38,7 +38,7 @@ For more information on configuring the previous version of rate limiting rules 
 
 This example creates a rate limiting rule in zone with ID `<ZONE_ID>` blocking traffic that exceeds the configured rate:
 
-<Render file="v4-code-snippets" />
+<Render file="v4-code-snippets" product="terraform" />
 
 ```tf
 resource "cloudflare_ruleset" "zone_rl" {
@@ -78,7 +78,7 @@ resource "cloudflare_ruleset" "zone_rl" {
 
 This example defines a [custom ruleset](/ruleset-engine/custom-rulesets/) with a single rate limiting rule in account with ID `<ACCOUNT_ID>` that blocks traffic for the `/api/` path exceeding the configured rate. The second `cloudflare_ruleset` resource defines an `execute` rule that deploys the custom ruleset for traffic addressed at `example.com`.
 
-<Render file="v4-code-snippets" />
+<Render file="v4-code-snippets" product="terraform" />
 
 ```tf
 resource "cloudflare_ruleset" "account_rl" {
@@ -135,7 +135,7 @@ This example creates a rate limiting rule in zone with ID `<ZONE_ID>` with:
 - A custom counting expression that includes a response field (`http.response.code`).
 - A custom JSON response for rate limited requests.
 
-<Render file="v4-code-snippets" />
+<Render file="v4-code-snippets" product="terraform" />
 
 ```tf
 resource "cloudflare_ruleset" "zone_rl_custom_response" {

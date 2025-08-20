@@ -1,0 +1,10 @@
+name: Realtime TURN Service
+
+product:
+  title: TURN Service
+  group: Developer platform
+  additional_groups: [Media]
+  url: /realtime/turn/
+
+meta:
+  description: Ensure connectivity with a relay point for traffic between WebRTC clients

@@ -99,3 +99,71 @@ export default {
 would render as
 
 <img width="870" alt="Screenshot 2024-02-20 at 14 29 22" src="https://github.com/cloudflare/cloudflare-docs/assets/28503158/56aa8016-b3b6-4d64-8213-b1a26f16534a">
+
+## GraphQL API Explorer
+
+If you are adding a code snippet to the documentation that is an executable GraphQL query, you can add `graphql-api-explorer` right after `graphql` in the code block metadata (both must be present). This will render a button that allows users to open the query in the [GraphQL API Explorer](https://graphql.cloudflare.com/explorer). For example:
+
+````
+```graphql graphql-api-explorer title="A GraphQL query"
+query GraphqlExample($zoneTag: string, $start: Time, $end: Time) {
+	viewer {
+		zones(filter: { zoneTag: $zoneTag }) {
+			firewallEventsAdaptive(
+				filter: { datetime_gt: $start, datetime_lt: $end }
+				limit: 2
+				orderBy: [datetime_DESC]
+			) {
+				action
+				datetime
+				host: clientRequestHTTPHost
+			}
+		}
+	}
+}
+```
+````
+
+When a user selects the `Run in GraphQL API Explorer` button, the following variables will be pre-populated in the GraphQL API Explorer along with the query.
+
+:::note
+The user must be logged in or have an API token saved to see the query and variables pre-populated.
+:::
+
+```
+{"zoneTag":"ZONE_ID", "start":"2025-05-07T14:54:36Z", "end":"2025-05-07T20:54:36Z"}
+```
+
+### Conventions to auto populate `Variables` section in the GraphQL API Explorer
+
+By default, the `Variables` section will be automatically populated based on the variables used in the GraphQL query.
+
+- Any variable name that includes `start` and has a type of `Time` --> start: "2025-05-09T14:58:06Z" (6 hours from the current time)
+  - e.g. `datetimeStart` also has `start` keyword, so it will be recognized for a start time (or date)
+- Any variable name that includes `end` and has a type of `Time` --> end: "2025-05-09T20:58:06Z" (current time)
+- Any variable name that includes `start` and has a type of `Date` --> start: "2025-05-07" (24 hours from the current date)
+- Any variable name that includes `end` and has a type of `Date` --> end: "2025-05-08" (current date)
+- `zoneTag` and has a type of `string` --> zoneTag: "ZONE_ID"
+- `accountTag` and has a type of `string` --> accountTag: "ACCOUNT_ID"
+- Any variable name that includes `id` and has a type of `string` --> id: "REPLACE_WITH_ID"
+- Any variable name and has a type of string --> anyString: "REPLACE_WITH_STRING"
+- `limit` with type `*int*` --> limit: 100
+
+In addition to the variables that are automatically populated, you can add custom variables by setting their values as a JSON string in the `graphql-api-explorer` metadata.
+
+````
+```graphql graphql-api-explorer='{"uID": "something"}' title="A GraphQL query"
+query GraphqlExample($zoneTag: string, $start: Time, $end: Time) {
+	viewer {
+		zones(filter: { zoneTag: $zoneTag }) {
+			...
+		}
+	}
+}
+````
+
+The variables added via the metadata value will be merged with the automatically populated variables.
+
+```
+{"zoneTag":"ZONE_ID", "start":"2025-05-07T14:54:36Z", "end":"2025-05-07T20:54:36Z", "uId": "something"}
+```

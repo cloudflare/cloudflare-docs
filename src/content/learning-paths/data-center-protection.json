@@ -1,0 +1,8 @@
+{
+	"title": "Protect your data center",
+	"path": "/learning-paths/data-center-protection/concepts/",
+	"priority": 2,
+	"description": "Learn how to use Magic Transit to protect your data centers from distributed denial-of-service (DDoS) attacks.",
+	"products": ["Magic Transit"],
+	"product_group": "Network security"
+}

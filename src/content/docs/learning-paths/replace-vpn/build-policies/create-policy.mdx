@@ -77,7 +77,25 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
 }'
 ```
 
-</TabItem> </Tabs>
+</TabItem>
+<TabItem label="Terraform (v5)">
+
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "dns_allow_wiki_domains" {
+	name        = "Company Wiki DNS policy"
+	enabled     = true
+	account_id  = var.cloudflare_account_id
+	description = "Managed by Terraform - Allow employees to access company wiki domains."
+	precedence  = 102
+	action      = "allow"
+	filters     = ["dns"]
+	traffic     = "any(dns.domains[*] in ${"$"}${cloudflare_zero_trust_list.wiki_domains.id})"
+	identity    = "identity.email matches \".*@example.com\""
+}
+```
+
+</TabItem>
+</Tabs>
 
 ## Example network policy
 
@@ -135,7 +153,25 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
 }'
 ```
 
-</TabItem> </Tabs>
+</TabItem>
+<TabItem label="Terraform (v5)">
+
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "network_allow_wiki_IPs" {
+	name        = "Company Wiki Network policy"
+	enabled     = true
+	account_id  = var.cloudflare_account_id
+	description = "Managed by Terraform - Allow employees to access company wiki IPs."
+	precedence  = 103
+	action      = "allow"
+	filters     = ["l4"]
+	traffic     = "net.dst.ip in ${"$"}${cloudflare_zero_trust_list.wiki_IPs.id}"
+	identity    = "identity.email matches \".*@example.com\""
+}
+```
+
+</TabItem>
+</Tabs>
 
 ### Catch-all policy
 
@@ -197,7 +233,24 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
 }'
 ```
 
-</TabItem> </Tabs>
+</TabItem>
+<TabItem label="Terraform (v5)">
+
+```tf
+resource "cloudflare_zero_trust_gateway_policy" "network_catch_all" {
+  name        = "Catch-all block policy"
+  enabled     = true
+  account_id  = var.cloudflare_account_id
+  description = "Managed by Terraform - Block access to private network."
+  precedence  = 14002
+  action      = "block"
+  filters     = ["l4"]
+  traffic     = "net.dst.ip in ${"$"}${cloudflare_zero_trust_list.private_IPs.id} or any(net.sni.domains[*] in ${"$"}${cloudflare_zero_trust_list.private_domains.id})"
+}
+```
+
+</TabItem>
+</Tabs>
 
 Network policies are evaluated in [top-down order](/cloudflare-one/policies/gateway/order-of-enforcement/#order-of-precedence), so if a user does not match an explicitly defined policy for an application, they will be blocked.
 To learn how multiple policies interact, refer to [Order of enforcement](/cloudflare-one/policies/gateway/order-of-enforcement/).

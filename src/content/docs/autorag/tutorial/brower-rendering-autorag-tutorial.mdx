@@ -5,6 +5,8 @@ sidebar:
   order: 4
 ---
 
+import { TypeScriptExample } from "~/components";
+
 AutoRAG is designed to work out of the box with data in R2 buckets. But what if your content lives on a website or needs to be rendered dynamically?
 
 In this tutorial, we’ll walk through how to:
@@ -25,7 +27,7 @@ npm create cloudflare@latest -- browser-r2-worker
 
 For setup, select the following options:
 
-- For _What would you like to start with_?, choose `Hello World Starter`.
+- For _What would you like to start with_?, choose `Hello World example`.
 - For _Which template would you like to use_?, choose `Worker only`.
 - For _Which language do you want to use_?, choose `TypeScript`.
 - For _Do you want to use git for version control_?, choose `Yes`.
@@ -61,6 +63,8 @@ npx wrangler r2 bucket create html-bucket
 ```
 
 5. Replace the contents of `src/index.ts` with the following skeleton script:
+
+<TypeScriptExample filename="src/index.ts">
 
 ```typescript
 import puppeteer from "@cloudflare/puppeteer";
@@ -120,6 +124,8 @@ export default {
 } satisfies ExportedHandler<Env>;
 ```
 
+</TypeScriptExample>
+
 6. Once the code is ready, you can deploy it to your Cloudflare account by running:
 
 ```bash
@@ -158,7 +164,7 @@ You can view the progress of your indexing job in the Overview page of your Auto
 
 Once AutoRAG finishes indexing your content, you’re ready to start asking it questions. You can open up your AutoRAG instance, navigate to the Playground tab, and ask a question based on your uploaded content, like “What is AutoRAG?”.
 
-Once you’re happy with the results in the Playground, you can integrate AutoRAG directly into the application that you are building. If you are using a Worker to build your application, then you can use the AI binding to directly call your AutoRAG:
+Once you’re happy with the results in the Playground, you can integrate AutoRAG directly into the application that you are building. If you are using a Worker to build your [RAG application](/autorag/), then you can use the AI binding to directly call your AutoRAG:
 
 ```jsonc
 {

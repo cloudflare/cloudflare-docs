@@ -3,10 +3,9 @@ pcx_content_type: concept
 title: Load Balancing components
 sidebar:
   order: 3
-
 ---
 
-import { GlossaryDefinition, Render } from "~/components"
+import { GlossaryDefinition, Render } from "~/components";
 
 This page provides a simplified overview of the three main components of the Cloudflare Load Balancing solution and how they relate to one another.
 
@@ -14,11 +13,15 @@ This page provides a simplified overview of the three main components of the Clo
 
 For a hostname (`blog.example.com`) to resolve, the Domain Name System (DNS) must return an IP address, where the website or application is hosted (origin).
 
-When you set up a load balancer, Cloudflare automatically creates an [LB DNS record](/load-balancing/load-balancers/dns-records/) for the specified hostname. This means that, according to a [priority order](/load-balancing/load-balancers/dns-records/#priority-order), instead of simply returning an IP address, the logic you introduced using the Cloudflare Load Balancing solution will be considered.
+When you set up a public load balancer, Cloudflare automatically creates an [LB DNS record](/load-balancing/load-balancers/dns-records/) for the specified hostname. This means that, according to a [priority order](/load-balancing/load-balancers/dns-records/#priority-order), instead of simply returning an IP address, the logic you introduced using the Cloudflare Load Balancing solution will be considered.
 
 Note that you can use the root domain as a Load Balancer hostname. When doing so, make sure you enter the hostname without including the auto-generated dot that typically precedes your zone's name.
 
-<Render file="load-balancing-diagram" />
+:::note
+Private load balancers are not automatically associated with a hostname. Private load balancers are created with either a CGNAT IP address or a custom RFC-1918 IP address.
+:::
+
+<Render file="load-balancing-diagram" product="load-balancing" />
 
 ## Pools
 
@@ -42,12 +45,10 @@ Finally, monitors are the component you can use to guarantee only [healthy pools
 
 When you configure a monitor and attach it to endpoints, the monitor will issue health monitor requests to your endpoints at regular intervals. This process makes it possible for your load balancer to intelligently handle traffic, considering which endpoints are actually available.
 
-<Render file="health-check-diagram" />
+<Render file="health-check-diagram" product="load-balancing" />
 
 :::note
 
-
 Health monitors associated with load balancers are different from [**Standalone health checks**](/health-checks/).
-
 
 :::

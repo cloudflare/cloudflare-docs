@@ -5,29 +5,4 @@ sidebar:
   order: 2
 ---
 
-To create a new interconnect, make sure you are logged in with Admin or higher-level account permissions. This is required for the wizard to successfully request and provision a new Direct CNI connection.
-
-1. Log in to the [Cloudflare dashboard](https://developers.cloudflare.com/), and select your account.
-2. Select **Interconnects**.
-3. In **Direct CNI**, select **Create new**.
-4. From the list, choose a location that suits you with **Select location**, or search for one in the search box. In addition to city, state and country, you can also search by the [IATA airport code](https://en.wikipedia.org/wiki/IATA_airport_code) for the metro area where your data center is located.
-   :::note
-   If your location is not listed it means that Direct CNI is not available in your location yet. Refer to [Classic CNI](/network-interconnect/classic-cni/) to learn how you can use the classic version of Cloudflare Network Interconnect to connect your location to Cloudflare.
-   :::
-5. Your interface is automatically assigned a speed of 10G. Give it a name, and select **Continue**.
-   :::note
-   Contact your account team if you need 100 Gigabit connections.
-   :::
-6. Review the options you have chosen, and select **Confirm order**.
-7. Download the Letter of Authorization that Cloudflare created with your settings. You will need this document to contact your data center and provide them the IP addresses for the CNI connection.
-8. Select **View Interconnects** to review the CNIs you have ordered.
-
-## Review interconnects
-
-The Cloudflare dashboard shows a list of all previously created interconnects, as well as useful information such as IP addresses, speed, type of interconnect, and status.
-
-The [Status column](https://dash.cloudflare.com/?to=/:account/interconnects/all) in the dashboard shows three different status:
-
-- **Active**: The link operational state at the interconnect port on the Customer Connectivity Router (CCR) is up. This means that the CCR port sees sufficient light levels and has negotiated an Ethernet link.
-- **Unhealthy**: The link operational state at interconnect port is down. This might mean the CCR does not see light, cannot negotiate an Ethernet signal, or the light levels are below -20 dBm. You can take general troubleshooting steps to solve the issue (such as checking cables and status lights for connectivity issues). If you are unable to solve the issue in this way, contact your account team.
-- **Pending**: The link is not yet active. This is expected and can occur for several reasons: the customer has not received a cross-connect, the device is unresponsive, or physical adjustments may be required, such as swapping RX/TX fibers. The `Pending` status will disappear after the customer completes the cross-connect and status moves to `Active`.
+To create a new interconnect, contact your customer success manager to get started with the set up.

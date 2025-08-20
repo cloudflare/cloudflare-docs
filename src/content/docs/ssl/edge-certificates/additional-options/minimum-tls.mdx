@@ -5,7 +5,7 @@ sidebar:
   order: 13
 ---
 
-import { FeatureTable, TabItem, Tabs } from "~/components";
+import { FeatureTable, TabItem, Tabs, APIRequest } from "~/components";
 
 Minimum TLS Version only allows HTTPS connections from visitors that support the selected TLS protocol version or newer.
 
@@ -54,16 +54,17 @@ Use the [Edit zone setting](/api/resources/zones/subresources/settings/methods/e
 
 In the following example, the minimum TLS version for the zone will be set to `1.2`. Replace the zone ID and API token placeholders with your information, and adjust the `value` field with your chosen TLS version.
 
-```bash
-curl --request PATCH \
-"https://api.cloudflare.com/client/v4/zones/{zone_id}/settings/min_tls_version" \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-    "id": "min_tls_version",
-    "value": "1.2"
-  }'
-```
+<APIRequest
+  path="/zones/{zone_id}/settings/{setting_id}"
+  method="PATCH"
+  json={{
+		"id": "min_tls_version",
+		"value": "1.2",
+	}}
+	parameters={{
+		setting_id: "min_tls_version"
+	}}
+/>
 
 </TabItem> </Tabs>
 
@@ -78,17 +79,18 @@ This is currently only available via the API:
 
 Cloudflare uses the [hostname priority logic](/ssl/reference/certificate-and-hostname-priority/) to determine which setting to apply.
 
-In the following example, the minimum TLS version for a specific hostname will be set to `1.2`. Replace the zone ID, hostname, and API token placeholders with your information, and adjust the `value` field with your chosen TLS version.
+In the following example, the minimum TLS version for a specific hostname will be set to `1.2`. Replace the zone ID, hostname, and authentication placeholders with your information, and adjust the `value` field with your chosen TLS version.
 
-```bash
-curl --request PUT \
-"https://api.cloudflare.com/client/v4/zones/{zone_id}/hostnames/settings/min_tls_version/{hostname}" \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-    "value": "1.2"
-  }'
-```
+<APIRequest
+  path="/zones/{zone_id}/hostnames/settings/{setting_id}/{hostname}"
+  method="PUT"
+  json={{
+		"value": "1.2"
+	}}
+	parameters={{
+		setting_id: "min_tls_version"
+	}}
+/>
 
 ## Test supported TLS versions
 

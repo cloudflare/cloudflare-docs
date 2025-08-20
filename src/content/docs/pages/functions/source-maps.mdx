@@ -3,18 +3,20 @@ pcx_content_type: configuration
 title: Source maps and stack traces
 head: []
 description: Adding source maps and generating stack traces for Pages.
-
+banner:
+  content: We recommend using <strong>Cloudflare Workers</strong> for new projects. For existing Pages projects, see our <a href="/workers/static-assets/migrate-from-pages/">migration guide</a> and <a href="/workers/static-assets/migrate-from-pages/#compatibility-matrix">compatibility matrix</a>.
+  type: note
+  dismissible:
+    id: pages-migrate-to-workers
 ---
 
-import { Render, WranglerConfig } from "~/components"
+import { Render, WranglerConfig } from "~/components";
 
 <Render file="source-maps" product="workers" />
 
 :::caution
 
-
 Support for uploading source maps for Pages is available now in open beta. Minimum required Wrangler version: 3.60.0.
-
 
 :::
 
@@ -41,17 +43,16 @@ You can then view the stack trace when streaming [real-time logs](/pages/functio
 
 :::note
 
-
 The source map is retrieved after your Pages Function invocation completes — it's an asynchronous process that does not impact your applications's CPU utilization or performance. Source maps are not accessible inside the application at runtime, if you `console.log()` the [stack property](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/stack), you will not get a deobfuscated stack trace.
 
 :::
 
 ## Limits
 
-| Description                    | Limit         |
-| ------------------------------ | ------------- |
-| Maximum Source Map Size        | 15 MB gzipped |
+| Description             | Limit         |
+| ----------------------- | ------------- |
+| Maximum Source Map Size | 15 MB gzipped |
 
 ## Related resources
 
-* [Real-time logs](/pages/functions/debugging-and-logging/) - Learn how to capture Pages logs in real-time.
+- [Real-time logs](/pages/functions/debugging-and-logging/) - Learn how to capture Pages logs in real-time.

@@ -1,0 +1,18 @@
+---
+pcx_content_type: troubleshooting
+title: Error 1034
+source: null
+---
+
+## Error 1034: Edge IP Restricted
+
+This error indicates that the IP address used for the domain is restricted by Cloudflare's edge validation.
+
+### Common cause
+
+Customers who previously pointed their domains to `1.1.1.1` will now encounter `1034` error. This is due to a new edge validation check in Cloudflare's systems to prevent misconfiguration and/or potential abuse.
+
+### Resolution
+
+Ensure DNS records are pointed to IP addresses you control, and in the case a placeholder IP address is needed for “originless” setups, use the IPv6 reserved address `100::` or the IPv4 reserved address `192.0.2.0`.
+

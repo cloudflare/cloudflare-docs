@@ -11,7 +11,15 @@ description: Storage and database options available on Cloudflare's developer pl
 
 import { Render, Details } from "~/components";
 
-Cloudflare Workers support a range of storage and database options for persisting different types of data across different use-cases, from key-value stores (like [Workers KV](/kv/)) through to SQL databases (such as [D1](/d1/)). This guide describes the use-cases suited to each storage option, as well as their performance and consistency properties.
+This guide describes the storage & database products available as part of Cloudflare Workers, including recommended use-cases and best practices.
+
+## Choose a storage product
+
+The following table maps our storage & database products to common industry terms as well as recommended use-cases:
+
+<Render file="storage-products-table" product="workers" />
+
+Applications can build on multiple storage & database products: for example, using Workers KV for session data; R2 for large file storage, media assets and user-uploaded files; and Hyperdrive to connect to a hosted Postgres or MySQL database.
 
 :::note[Pages Functions]
 
@@ -19,71 +27,34 @@ Storage options can also be used by your front-end application built with Cloudf
 
 :::
 
-Available storage and persistency products include:
+## SQL database options
 
-- [Workers KV](#workers-kv) for key-value storage.
-- [R2](#r2) for object storage, including use-cases where S3 compatible storage is required.
-- [Durable Objects](#durable-objects) for transactional, globally coordinated storage.
-- [D1](#d1) as a relational, SQL-based database.
-- [Queues](#queues) for job queueing, batching and inter-Service (Worker to Worker) communication.
-- [Hyperdrive](/hyperdrive/) for connecting to and speeding up access to existing hosted and on-premises databases.
-- [Analytics Engine](/analytics/analytics-engine/) for storing and querying (using SQL) time-series data and product metrics at scale.
-- [Vectorize](/vectorize/) for vector search and storing embeddings from [Workers AI](/workers-ai/).
+There are three options for SQL-based databases available when building applications with Workers.
 
-Applications built on the Workers platform may combine one or more storage components as they grow, scale or as requirements demand.
+* **Hyperdrive** if you have an existing Postgres or MySQL database, require large (1TB, 100TB or more) single databases, and/or want to use your existing database tools. You can also connect Hyperdrive to database platforms like [PlanetScale](https://planetscale.com/) or [Neon](https://neon.tech/).
+* **D1** for lightweight, serverless applications that are read-heavy, have global users that benefit from D1's [read replication](/d1/best-practices/read-replication/), and do not require you to manage and maintain a traditional RDBMS. You can connect to
+* **Durable Objects** for stateful serverless workloads, per-user or per-customer SQL state, and building distributed systems (D1 and Queues are built on Durable Objects) where Durable Object's [strict serializability](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/) enables global ordering of requests and storage operations.
 
-## Choose a storage product
+### Session storage
 
-<Render file="storage-products-table" product="workers" />
+We recommend using [Workers KV](/kv/) for storing session data, credentials (API keys), and/or configuration data. These are typically read at high rates (thousands of RPS or more), are not typically modified (within KV's 1 write RPS per unique key limit), and do not need to be immediately consistent.
 
-## Performance and consistency
+Frequently read keys benefit from KV's [internal cache](/kv/concepts/how-kv-works/), and repeated reads to these "hot" keys will typically see latencies in the 500µs to 10ms range.
 
-The following table highlights the performance and consistency characteristics of the primary storage offerings available to Cloudflare Workers:
+Authentication frameworks like [OpenAuth](https://openauth.js.org/docs/storage/cloudflare/) use Workers KV as session storage when deployed to Cloudflare, and [Cloudflare Access](/cloudflare-one/policies/access/) uses KV to securely store and distribute user credentials so that they can be validated as close to the user as possible and reduce overall latency.
 
-<table-wrap>
+## Product overviews
 
-| Feature                     | Workers KV                                       | R2                                    | Durable Objects                  | D1                                                  |
-| --------------------------- | ------------------------------------------------ | ------------------------------------- | -------------------------------- | --------------------------------------------------- |
-| Maximum storage per account | Unlimited [^1]                                   | Unlimited [^2]                        | Unlimited [^3]                   | 250 GB [^4]                                         |
-| Storage grouping name       | Namespace                                        | Bucket                                | Durable Object                   | Database                                            |
-| Maximum size per value      | 25 MiB                                           | 5 TiB per object                      | 128 KiB per value                | 10 GB per database [^5]                             |
-| Consistency model           | Eventual: updates take up to 60s to be reflected | Strong (read-after-write) [^6]        | Serializable (with transactions) | Serializable (no replicas) / Causal (with replicas) |
-| Supported APIs              | Workers, HTTP/REST API                           | Workers, S3 compatible                | Workers                          | Workers, HTTP/REST API                              |
-
-</table-wrap>
-
-[^1]: Free accounts are limited to 1 GiB of KV storage.
-[^2]: Free accounts are limited to 10 GB of R2 storage.
-[^3]: Free accounts are limited to 5 GB of storage for SQLite-backed Durable Objects. 50 GB limit applies for KV-backed Durable Objects. Refer to [Durable Objects limits](/durable-objects/platform/limits/).
-[^4]: Free accounts are limited to 5 GB of database storage.
-[^5]: Free accounts are limited to 500 MB per database.
-[^6]: Refer to the [R2 documentation](/r2/reference/consistency/) for more details on R2's consistency model.
-
-<Details header= "Footnotes" open = {true}>
-1. Free accounts are limited to 1 GiB of KV storage.
-
-2. Free accounts are limited to 10 GB of R2 storage.
-
-3. Free accounts are limited to 5 GB of storage for SQLite-backed Durable Objects. 50 GB limit applies for KV-backed Durable Objects. Refer to [Durable Objects limits](/durable-objects/platform/limits/).
-
-4. Free accounts are limited to 5 GB of database storage.
-
-5. Free accounts are limited to 500 MB per database.
-
-6. Refer to the [R2 documentation](/r2/reference/consistency/) for more details on R2's consistency model.
-</Details>
-
-<Render file="limits_increase" />
-
-## Workers KV
+### Workers KV
 
 Workers KV is an eventually consistent key-value data store that caches on the Cloudflare global network.
 
 It is ideal for projects that require:
 
 - High volumes of reads and/or repeated reads to the same keys.
+- Low-latency global reads (typically within 10ms for hot keys)
 - Per-object time-to-live (TTL).
-- Distributed configuration.
+- Distributed configuration and/or session storage.
 
 To get started with KV:
 
@@ -92,7 +63,7 @@ To get started with KV:
 - Review the [KV Runtime API](/kv/api/).
 - Learn about KV [Limits](/kv/platform/limits/).
 
-## R2
+### R2
 
 R2 is S3-compatible blob storage that allows developers to store large amounts of unstructured data without egress fees associated with typical cloud storage services.
 
@@ -109,7 +80,7 @@ To get started with R2:
 - Learn about R2 [Limits](/r2/platform/limits/).
 - Review the [R2 Workers API](/r2/api/workers/workers-api-reference/).
 
-## Durable Objects
+### Durable Objects
 
 Durable Objects provide low-latency coordination and consistent storage for the Workers platform through global uniqueness and a transactional storage API.
 
@@ -130,7 +101,7 @@ To get started with Durable Objects:
 - Get started with [Durable Objects](/durable-objects/get-started/).
 - Learn about Durable Objects [Limits](/durable-objects/platform/limits/).
 
-## D1
+### D1
 
 [D1](/d1/) is Cloudflare’s native serverless database. With D1, you can create a database by importing data or defining your tables and writing your queries within a Worker or through the API.
 
@@ -150,7 +121,7 @@ To get started with D1:
 If your working data size exceeds 10 GB (the maximum size for a D1 database), consider splitting the database into multiple, smaller D1 databases.
 :::
 
-## Queues
+### Queues
 
 Cloudflare Queues allows developers to send and receive messages with guaranteed delivery. It integrates with [Cloudflare Workers](/workers) and offers at-least once delivery, message batching, and does not charge for egress bandwidth.
 
@@ -165,9 +136,9 @@ To get started with Queues:
 - [Set up your first queue](/queues/get-started/).
 - Learn more [about how Queues works](/queues/reference/how-queues-works/).
 
-## Hyperdrive
+### Hyperdrive
 
-Hyperdrive is a service that accelerates queries you make to existing databases, making it faster to access your data from across the globe, irrespective of your users’ location.
+Hyperdrive is a service that accelerates queries you make to MySQL and Postgres databases, making it faster to access your data from across the globe, irrespective of your users’ location.
 
 Hyperdrive allows you to:
 
@@ -180,7 +151,22 @@ To get started with Hyperdrive:
 - [Connect Hyperdrive](/hyperdrive/get-started/) to your existing database.
 - Learn more [about how Hyperdrive speeds up your database queries](/hyperdrive/configuration/how-hyperdrive-works/).
 
-## Analytics Engine
+## Pipelines
+
+Pipelines is a streaming ingestion service that allows you to ingest high volumes of real time data, without managing any infrastructure.
+
+Pipelines allows you to:
+
+- Ingest data at extremely high throughput (tens of thousands of records per second or more)
+- Batch and write data directly to object storage, ready for querying
+- (Future) Transform and aggregate data during ingestion
+
+To get started with Pipelines:
+
+- [Create a Pipeline](/pipelines/getting-started/) that can batch and write records to R2.
+- Learn more [about how Pipelines works](/pipelines/concepts/how-pipelines-work/).
+
+### Analytics Engine
 
 Analytics Engine is Cloudflare's time-series and metrics database that allows you to write unlimited-cardinality analytics at scale using a built-in API to write data points from Workers and query that data using SQL directly.
 
@@ -199,7 +185,7 @@ To get started with Analytics Engine:
 - See [an example of writing time-series data to Analytics Engine](/analytics/analytics-engine/recipes/usage-based-billing-for-your-saas-product/)
 - Understand the [SQL API](/analytics/analytics-engine/sql-api/) for reading data from your Analytics Engine datasets
 
-## Vectorize
+### Vectorize
 
 Vectorize is a globally distributed vector database that enables you to build full-stack, AI-powered applications with Cloudflare Workers and [Workers AI](/workers-ai/).
 
@@ -217,21 +203,6 @@ To get started with Vectorize:
 
 <Render file="durable-objects-vs-d1" product="durable-objects" />
 
-<Render file="kv-vs-d1" product="kv" />
 
-## D1 vs Hyperdrive
 
-D1 is a standalone, serverless database that provides a SQL API, using SQLite's SQL semantics, to store and access your relational data.
 
-Hyperdrive is a service that lets you connect to your existing, regional PostgreSQL databases and improves database performance by optimizing them for global, scalable data access from Workers.
-
-- If you are building a new project on Workers or are considering migrating your data, use D1.
-- If you are building a Workers project with an existing PostgreSQL database, use Hyperdrive.
-
-:::note
-
-You cannot use D1 with Hyperdrive.
-
-However, D1 does not need to be used with Hyperdrive because it does not have slow connection setups which would benefit from Hyperdrive's connection pooling. D1 data can also be cached within Workers using the [Cache API](/workers/runtime-apis/cache/).
-
-:::

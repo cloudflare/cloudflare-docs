@@ -11,6 +11,8 @@ on:
 
 jobs:
   image-audit:
+    permissions:
+      issues: write
     runs-on: ubuntu-latest
 
     steps:

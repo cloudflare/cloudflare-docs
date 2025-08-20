@@ -13,16 +13,16 @@ Before defining a custom error page in your Cloudflare account, you will need to
 
 When designing your custom error page, you can include page-specific [custom error tokens](/rules/custom-errors/reference/error-tokens/). Each custom error token provides diagnostic information that appears on the error page.
 
-To display a custom page for each error, create a separate page per error. For example, to create a custom error page for both **IP/Country Block** and **Interactive Challenge**, you must design and publish two separate pages.
+To display a custom page for each error, create a separate page per error. For example, to create a custom error page for both **IP/Country Block** and **WAF block**, you must design and publish two separate pages.
 
 :::note[Notes]
 
 - Your custom error page should include a page-specific custom error token if applicable and cannot exceed 1.5 MB. Also, it must include HTML `<head>` and `</head>` tags.
-- Make sure that the `referrer` meta tag is not present in your custom error page's HTML code since it will disrupt [Cloudflare challenges](/fundamentals/security/cloudflare-challenges/): `<meta name="referrer" (...) />`
+- Make sure that the `referrer` meta tag is not present in your custom error page's HTML code since it will disrupt [Cloudflare challenges](/cloudflare-challenges/): `<meta name="referrer" (...) />`
 
 :::
 
-You can use the following custom error template to start building your page:
+You can use the following template to start building your error page:
 
 ```html
 <html>
@@ -33,9 +33,9 @@ You can use the following custom error template to start building your page:
 </html>
 ```
 
-<Details header="Example Custom Page for 5XX errors">
+<Details header="Example error page for 5XX errors">
 
-The following HTML code is an example Custom Page for 5XX errors without styling:
+The following HTML code is an example error page for 5XX errors without styling:
 
 ```html
 <!doctype html>

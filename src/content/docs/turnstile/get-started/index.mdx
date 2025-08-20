@@ -1,77 +1,117 @@
 ---
-title: Get started with Turnstile
+title: Get started
 pcx_content_type: get-started
 sidebar:
   order: 4
-  group:
-    label: Get started
+---
+
+
+import { Render, LinkButton } from "~/components"
+
+This guide will get you started on setting up the Turnstile widget to protect your website from bots while maintaining a seamless user experience.
+
+## Prerequisites
+
+Before you begin, you must have: 
+
+- A Cloudflare account
+- A website or web application to protect
+- Basic knowledge of HTML and your preferred server-side language
 
 ---
 
-import { GlossaryTooltip, Render } from "~/components"
+## Process
 
-This guide will get you started on setting up the Turnstile widget.
+Turnstile widgets are the foundation of your bot protection implementation. 
 
-If you are currently using a <GlossaryTooltip term="CAPTCHA">CAPTCHA</GlossaryTooltip> service, you can copy and paste our script wherever you have deployed the existing script today.
+<Render file="widget-components" />
 
-## Get a sitekey and secret key
-
-To start using the Turnstile widget, you will need to obtain a <GlossaryTooltip term="sitekey">sitekey</GlossaryTooltip> and a <GlossaryTooltip term="secret key">secret key</GlossaryTooltip>. The sitekey and secret key are always associated with one widget and cannot be reused for other widgets.
-
-The sitekey is public and used to invoke the Turnstile widget on your site.
-
-The sitekey and secret key are generated upon the creation of a widget, allowing communication between your site and Cloudflare to verify responses for a solved challenge from Turnstile. Make sure you keep the secret key safe for security reasons.
-
-:::note
-
-You can find special sitekeys to be used for testing in the [testing](/turnstile/troubleshooting/testing/) section.
+:::note[Important]
+Regardless of how you create and manage your widgets, you will still need to [embed the widget](/turnstile/get-started/client-side-rendering/) on your webpage and [validate the token](/turnstile/get-started/server-side-validation/) on your server.
 :::
 
-### New sites
+Implementing Turnstile involves two essential components that work together:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/turnstile) and select your account.
-2. Go to **Turnstile**.
-3. Select **Add widget** and fill out the site name and [your website's hostname or select from your existing websites](/turnstile/concepts/hostname-management/) on Cloudflare.
-4. Select the widget mode.
-5. (Optional) Opt in for [pre-clearance support](/turnstile/concepts/pre-clearance-support/).
-6. Copy your sitekey and secret key.
+1. Client-side: [Embed the widget](/turnstile/get-started/client-side-rendering/)
 
-### Existing sites
+    Add the Turnstile widget to your webpage to challenge visitors and generate verification tokens.
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/turnstile) and select your account.
-2. Go to **Turnstile**.
-3. In the widget overview, select **Settings**.
-4. Confirm the [hostnames](/turnstile/concepts/hostname-management/) configured.
-5. (Optional) Opt in for [pre-clearance support](/turnstile/concepts/pre-clearance-support/).
-6. Copy your sitekey and secret key.
+2. Server-side: [Validate the token](/turnstile/get-started/server-side-validation/)
 
-## Add the Turnstile widget to your site
+    Verify the tokens on your server using the Siteverify API to ensure they are authentic and have not been tampered with.
 
-To add the Turnstile widget:
+Refer to [Implementation](#implementation) below for guidance on how to implement Turnstile on your website.
 
-1. Insert the Turnstile script snippet in your HTML's `<head>` element:
+---
 
-<div>
+## Implementation
 
-```html
-<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-```
+Follow the steps below to implement Turnstile.
 
-</div>
+### 1. Create your widget
 
-2. [Render the client-side integration](/turnstile/get-started/client-side-rendering/)
+First, you must create a Turnstile widget to get your sitekey and secret key.
 
-   - [Explicit rendering](/turnstile/get-started/client-side-rendering/#explicitly-render-the-turnstile-widget)
-   - [Implicit rendering](/turnstile/get-started/client-side-rendering/#implicitly-render-the-turnstile-widget)
+Select your preferred implementation method:
 
-## Validate the server-side response
+<Render file="implementation-methods" />
 
-<Render file="siteverify-warning" />
+### 2. Embed the widget
 
-After you have installed the Turnstile widget on your site, you must configure your server to validate the Turnstile response.
-Refer to [Server-side validation](/turnstile/get-started/server-side-validation/).
+Add the Turnstile widget to your webpage forms and applications.
 
-:::note
+Refer to [Embed the widget](/turnstile/get-started/client-side-rendering/) to learn more about implicit and explicit rendering methods.
 
-Rendering the client-side integration & validating the server-side response are both necessary to allow Turnstile to function properly.
+:::note[Testing]
+<Render file="test-sitekey" />
 :::
+
+### 3. Validate tokens
+
+Implement server-side validation to verify the tokens generated by your widgets.
+
+Refer to [Validate the token](/turnstile/get-started/server-side-validation/) to secure your implementation with proper token verification.
+
+
+:::note[Testing]
+<Render file="test-secret-key" />
+:::
+
+
+## Additional implementation options
+
+### Mobile configuration
+
+Special considerations are necessary for mobile applications and WebView implementations. 
+
+Refer to [Mobile implementation](/turnstile/get-started/mobile-implementation/) for more information on mobile application integration.
+
+### Migration from other CAPTCHAs
+
+If you are currently using reCAPTCHA, hCaptcha, or another CAPTCHA service, Turnstile can be a drop-in replacement. You can copy and paste our script wherever you have deployed the existing script today.
+
+Refer to [Migration](/turnstile/migration/) for step-by-step migration guidance from other CAPTCHA services.
+
+---
+
+## Security requirements
+
+<Render file="security-requirements" />
+
+---
+
+## Best practices
+
+### Security
+
+- Protect your secret keys. Never expose secret keys in client-side code.
+- Rotate your keys regularly. Use API or dashboard to rotate secret keys periodically.
+- Restrict your hostnames. Only allow widgets on domains that you control.
+- Monitor the usage. Use analytics to detect unusual patterns.
+
+### Operational
+
+- Use descriptive names. Name widgets based on their purpose, such as "Login Form" or "Contact Page".
+- Separate your environments. Use different widgets for development, staging, and production.
+- Keep track of which widgets are used at which locations.
+- Store your widget configurations in version control when using Terraform.

@@ -52,7 +52,7 @@ return await fetch(request);
 
 ## Fetch API in CNAME setup
 
-When you make a subrequest using [`fetch()`](/workers/runtime-apis/fetch/) from a Worker, the Cloudflare DNS resolver is used. When a zone has a [Partial (CNAME) setup](/dns/zone-setups/partial-setup/), all hostnames that the Worker needs to be able to resolve require a dedicated DNS entry in Cloudflare's DNS setup. Otherwise the Fetch API call will fail with status code [530 (1016)](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/#error-1016-origin-dns-error).
+When you make a subrequest using [`fetch()`](/workers/runtime-apis/fetch/) from a Worker, the Cloudflare DNS resolver is used. When a zone has a [Partial (CNAME) setup](/dns/zone-setups/partial-setup/), all hostnames that the Worker needs to be able to resolve require a dedicated DNS entry in Cloudflare's DNS setup. Otherwise the Fetch API call will fail with status code [530 (1016)](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1016/).
 
 Setup with missing DNS records in Cloudflare DNS
 

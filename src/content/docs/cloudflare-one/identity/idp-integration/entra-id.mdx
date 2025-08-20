@@ -3,7 +3,7 @@ pcx_content_type: how-to
 title: Microsoft Entra ID
 ---
 
-import { Render, Tabs, TabItem } from "~/components";
+import { Render, Tabs, TabItem, APIRequest } from "~/components";
 
 You can integrate Microsoft Entra ID (formerly Azure Active Directory) with Cloudflare Zero Trust and build policies based on user identity and group membership. Users will authenticate to Zero Trust using their Entra ID credentials.
 
@@ -47,7 +47,7 @@ To retrieve those values:
 
     ![Viewing the Application ID and Directory ID in Azure](~/assets/images/cloudflare-one/identity/azure/azure-values.png)
 
-10. Under **Client credentials**, go to **Add a certificate or secret**. Select **New client secret**.
+10. On the same page, under **Client credentials**, go to **Add a certificate or secret**. Select **New client secret**.
 
 11. Name the client secret and choose an expiration period.
 
@@ -61,7 +61,7 @@ To retrieve those values:
 
 ### 2. Configure API permissions in Entra ID
 
-1. From the **App registrations** page for your application, go to **API permissions**.
+1. Go to **App registrations** > **All applications** > select your application > **API permissions**.
 
 2. Select **Add a permission**.
 
@@ -110,32 +110,26 @@ More narrow permissions may be used, however this is the set of permissions that
    - **Entra ID Policy Sync**: Refer to our [Entra ID Conditional Access tutorial](/cloudflare-one/tutorials/entra-id-conditional-access/).
    - **Enable SCIM**: Refer to [Synchronize users and groups](#synchronize-users-and-groups).
    - **Email claim**: Enter the Entra ID claim that you wish to use for user identification (for example, `preferred_username`).
-   - **OIDC Claims**: Enter [custom OIDC claims](/cloudflare-one/identity/idp-integration/generic-oidc/#oidc-claims) that you wish to add to your users' identity. This information will be available in the [user identity endpoint](/cloudflare-one/identity/authorization-cookie/application-token/#user-identity).
+   - **OIDC Claims**: Enter [custom OIDC claims](/cloudflare-one/identity/idp-integration/generic-oidc/#custom-oidc-claims) that you wish to add to your users' identity.
 
 </TabItem> <TabItem label="API">
 
-1.  [Create an API token](/fundamentals/api/get-started/create-token/) with the following permissions:
+Make a `POST` request to the [Identity Providers](/api/resources/zero_trust/subresources/identity_providers/methods/create/) endpoint:
 
-        | Type    | Item                                                  | Permission |
-        | ------- | ----------------------------------------------------- | ---------- |
-        | Account | Access: Organizations, Identity Providers, and Groups | Edit       |
-
-2.  Make a `POST` request to the [Identity Providers](/api/resources/zero_trust/subresources/identity_providers/methods/create/) endpoint:
-
-        ```sh
-        curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/identity_providers \
-        --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
-        --data '{
-        	"name": "Entra ID example",
-        	"type": "azureAD",
-        	"config": {
-        	  "client_id": "<your client id>",
-            "client_secret": "<your client secret>",
-            "directory_id": "<your azure directory uuid>",
-            "support_groups": true
-        	}
-        }'
-        ```
+<APIRequest
+  path="/accounts/{account_id}/access/identity_providers"
+  method="POST"
+  json={{
+    name: "Entra ID example",
+    type: "azureAD",
+    config: {
+      client_id: "<your client id>",
+      client_secret: "<your client secret>",
+      directory_id: "<your azure directory uuid>",
+      support_groups: true,
+    },
+  }}
+/>
 
 </TabItem> <TabItem label="Terraform">
 
@@ -161,7 +155,7 @@ By default, Cloudflare will first look for the unique claim name you created and
 
 To receive an email claim in the `id_token` from Microsoft Entra, you must:
 
-1. In the [Microsoft Entra admin center](https://entra.microsoft.com/), go to **Application** > **App registration** > select the relevant application > **Manage** > **Token configuration**.
+1. In the [Microsoft Entra admin center](https://entra.microsoft.com/), go to **Application** > **App registration** > **All applications** > select the relevant application > under **Manage**, select **Token configuration**.
 2. Add a claim for email.
 
    ![Email claim for Entra](~/assets/images/cloudflare-one/identity/azure/entra-email-claim.png)
@@ -170,6 +164,10 @@ To receive an email claim in the `id_token` from Microsoft Entra, you must:
 
 3. If you gave your email claim another name than `email`, you must update your configuration in the Cloudflare dashboard. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Authentication** > **Azure AD** > **Edit**.
 4. Under **Optional configurations** > **Email claim**, enter the name of the claim representing your organization's email addresses.
+
+#### Object ID
+
+If you are concerned that users' emails or UPNs may change, you can pass the user's object ID (`oid`) from Microsoft Entra to Cloudflare Access. To configure Access to receive the object ID, refer to [custom OIDC claims](/cloudflare-one/identity/idp-integration/generic-oidc/#custom-oidc-claims).  No additional configuration is required in Microsoft Entra.
 
 ## Synchronize users and groups
 
@@ -269,42 +267,57 @@ You can create Access and Gateway policies for groups that are not synchronized 
 
 ### Nested groups
 
+#### Authentication
+
 Access and Gateway policies for an Entra group will also apply to all [nested groups](https://learn.microsoft.com/entra/fundamentals/how-to-manage-groups#add-a-group-to-another-group). For example, if a user belongs to the group `US devs`, and `US devs` is part of the broader group `Devs`, the user would be allowed or blocked by all policies created for `Devs`.
+
+#### SCIM provisioning
+
+For SCIM provisioning, [nested groups are not supported](https://learn.microsoft.com/en-us/entra/identity/app-provisioning/how-provisioning-works#assignment-based-scoping). Microsoft Entra ID's SCIM implementation does not send information about nested group memberships to Cloudflare. Only users who are direct members of an explicitly assigned group will be provisioned. To ensure group memberships are correctly synchronized, you must flatten your groups in Entra ID by directly assigning users to the groups you want to provision.
+
+Since the SCIM request from Microsoft does not include nested group information, neither Cloudflare nor Microsoft can provide a notification that nested groups are not being synchronized.
 
 ## Force user interaction during WARP reauthentication
 
 You can require users to re-enter their credentials into Entra ID whenever they [re-authenticate their WARP session](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-sessions/). To configure this setting:
 
 1. Make a `GET` request to the [Identity Providers endpoint](/api/resources/zero_trust/subresources/identity_providers/) and copy the response for the Entra ID identity provider.
+
+	<APIRequest
+		path="/accounts/{account_id}/access/identity_providers/{identity_provider_id}"
+		method="GET"
+	/>
+
 2. [Update the Entra ID identity provider](/api/resources/zero_trust/subresources/identity_providers/methods/update/) using a `PUT` request. In the request body, include all existing configurations and set the `prompt` parameter to either `login` or `select_account`. For example:
 
-   ```sh {17}
-   curl --request PUT \
-   https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/identity_providers/$IDENTITY_PROVIDER_ID \
-   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
-   --header "Content-Type: application/json" \
-   --data '{
-   		"id": "f174e90a-fafe-4643-bbbc-4a0ed4fc8415",
-   		"type": "azureAD",
-   		"uid": "f174e90a-fafe-4643-bbbc-4a0ed4fc8415",
-   		"name": "Entra ID",
-   		"version": "31e74e9b4f033e16b604552091a72295",
-   		"config": {
-   			"azure_cloud": "default",
-   			"client_id": "<CLIENT_ID>",
-   			"conditional_access_enabled": false,
-   			"directory_id": "<AZURE_DIRECTORY_ID>",
-   			"redirect_url": "https://<TEAM_NAME>.cloudflareaccess.com/cdn-cgi/access/callback",
-   			"prompt": "login",
-   			"support_groups": true
-   		},
-   		"scim_config": {
-   			"enabled": true,
-   			"user_deprovision": true,
-   			"seat_deprovision": false,
-   			"group_member_deprovision": false,
-   			"identity_update_behavior": "automatic"
-   		},
-   		"scim_base_url": "https://<TEAM_NAME>.cloudflareaccess.com/populations/f174e90a-fafe-4643-bbbc-4a0ed4fc8415/scim/v2"
-   }'
-   ```
+		<APIRequest
+			path="/accounts/{account_id}/access/identity_providers/{identity_provider_id}"
+			method="PUT"
+			json={{
+				id: "f174e90a-fafe-4643-bbbc-4a0ed4fc8415",
+				type: "azureAD",
+				uid: "f174e90a-fafe-4643-bbbc-4a0ed4fc8415",
+				name: "Entra ID",
+				version: "31e74e9b4f033e16b604552091a72295",
+				config: {
+					azure_cloud: "default",
+					client_id: "<CLIENT_ID>",
+					conditional_access_enabled: false,
+					directory_id: "<AZURE_DIRECTORY_ID>",
+					redirect_url: "https://<TEAM_NAME>.cloudflareaccess.com/cdn-cgi/access/callback",
+					prompt: "login",
+					support_groups: true,
+				},
+				scim_config: {
+					enabled: true,
+					user_deprovision: true,
+					seat_deprovision: false,
+					group_member_deprovision: false,
+					identity_update_behavior: "automatic",
+				},
+				scim_base_url: "https://<TEAM_NAME>.cloudflareaccess.com/populations/f174e90a-fafe-4643-bbbc-4a0ed4fc8415/scim/v2",
+			}}
+			code = {{
+				mark: [16]
+			}}
+		/>

@@ -5,12 +5,16 @@ sidebar:
   order: 5
 ---
 
+import { TypeScriptExample } from "~/components";
+
 By using the `search` method, you can implement a simple but fast search engine. This example uses [Workers Binding](/autorag/usage/workers-binding/), but can be easily adapted to use the [REST API](/autorag/usage/rest-api/) instead.
 
 To replicate this example remember to:
 
 - Disable `rewrite_query`, as you want to match the original user query
 - Configure your AutoRAG to have small chunk sizes, usually 256 tokens is enough
+
+<TypeScriptExample>
 
 ```ts
 export interface Env {
@@ -34,3 +38,5 @@ export default {
 	},
 } satisfies ExportedHandler<Env>;
 ```
+
+</TypeScriptExample>

@@ -5,6 +5,8 @@ sidebar:
   order: 2
 ---
 
+import { Render } from "~/components";
+
 You can download objects from your bucket from the Cloudflare dashboard or using the Wrangler.
 
 ## Download objects via the Cloudflare dashboard
@@ -30,3 +32,5 @@ Download complete.
 ```
 
 The file will be downloaded into the current working directory. You can also use the `--file` flag to set a new name for the object as it is downloaded, and the `--pipe` flag to pipe the download to standard output (stdout).
+
+<Render file="link-to-workers-r2-api" product="r2"/>

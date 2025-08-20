@@ -1,12 +1,12 @@
 ---
-updated: 2023-06-14
+reviewed: 2023-06-14
 difficulty: Beginner
 pcx_content_type: tutorial
 title: OpenAI GPT function calling with JavaScript and Cloudflare Workers
-languages:
-  - JavaScript
 tags:
   - AI
+  - JavaScript
+description: Build a project that leverages OpenAI's function calling feature, available in OpenAI's latest Chat Completions API models.
 ---
 
 import { Render, PackageManagers } from "~/components";
@@ -25,7 +25,7 @@ The function calling feature allows the AI model to intelligently decide when to
 
 ---
 
-<Render file="tutorials-before-you-start" />
+<Render file="tutorials-before-you-start" product="workers" />
 
 ## 1. Create a new Worker project
 
@@ -61,9 +61,7 @@ You will also need an OpenAI account and API key for this tutorial. If you do no
 
 With your Worker project created, make your first request to OpenAI. You will use the OpenAI node library to interact with the OpenAI API. In this project, you will also use the Cheerio library to handle processing the HTML content of websites
 
-```sh
-npm install openai cheerio
-```
+<PackageManagers pkg="openai cheerio" />
 
 Now, define the structure of your Worker in `index.js`:
 
