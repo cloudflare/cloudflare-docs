@@ -3,6 +3,10 @@ link: "/autorag/platform/release-note/"
 productName: AutoRAG
 productLink: "/autorag/"
 entries:
+  - publish_date: "2025-08-20"
+    title: Increased maximum query results to 50
+    description: |-
+      The maximum number of results returned from a query has been increased from **20** to **50**. This allows you to surface more relevant matches in a single request.  
   - publish_date: "2025-07-16"
     title: Deleted files now removed from index on next sync
     description: |-
