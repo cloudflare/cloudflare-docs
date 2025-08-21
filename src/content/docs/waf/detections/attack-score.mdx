@@ -6,7 +6,7 @@ sidebar:
   label: Attack score
 ---
 
-import { GlossaryTooltip } from "~/components";
+import { GlossaryTooltip, Type } from "~/components";
 
 The attack score [traffic detection](/waf/concepts/#detection-versus-mitigation) helps identify variations of known attacks and their malicious payloads. This detection complements [WAF Managed Rules](/waf/managed-rules/).
 
@@ -24,13 +24,13 @@ This feature is available to Enterprise customers. Business plans have access to
 
 The Cloudflare WAF provides the following attack score fields:
 
-| Score                  | Data type | Minimum plan required | Attack vector                    | Field                                                                                       |
-| ---------------------- | --------- | --------------------- | -------------------------------- | ------------------------------------------------------------------------------------------- |
-| WAF Attack Score       | Number    | Enterprise            | N/A (global score)               | [`cf.waf.score`](/ruleset-engine/rules-language/fields/reference/cf.waf.score/)             |
-| WAF SQLi Attack Score  | Number    | Enterprise            | [SQL injection][1] (SQLi)        | [`cf.waf.score.sqli`](/ruleset-engine/rules-language/fields/reference/cf.waf.score.sqli/)   |
-| WAF XSS Attack Score   | Number    | Enterprise            | [Cross-site scripting][2] (XSS)  | [`cf.waf.score.xss`](/ruleset-engine/rules-language/fields/reference/cf.waf.score.xss/)     |
-| WAF RCE Attack Score   | Number    | Enterprise            | [Remote code execution][3] (RCE) | [`cf.waf.score.rce`](/ruleset-engine/rules-language/fields/reference/cf.waf.score.rce/)     |
-| WAF Attack Score Class | String    | Business              | N/A (global classification)      | [`cf.waf.score.class`](/ruleset-engine/rules-language/fields/reference/cf.waf.score.class/) |
+| Name in the dashboard  | Field + Data type                                                                                                        | Required plan     | Description                                                                                            |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------ | ----------------- | ------------------------------------------------------------------------------------------------------ |
+| WAF Attack Score       | [`cf.waf.score`](/ruleset-engine/rules-language/fields/reference/cf.waf.score/) <br/> <Type text="Number" />             | Enterprise        | A global score from 1–99 that combines the score of each WAF attack vector into a single score.        |
+| WAF SQLi Attack Score  | [`cf.waf.score.sqli`](/ruleset-engine/rules-language/fields/reference/cf.waf.score.sqli/) <br/> <Type text="Number" />   | Enterprise        | A score from 1–99 classifying the [SQL injection][1] (SQLi) attack vector.                             |
+| WAF XSS Attack Score   | [`cf.waf.score.xss`](/ruleset-engine/rules-language/fields/reference/cf.waf.score.xss/) <br/> <Type text="Number" />     | Enterprise        | A score from 1–99 classifying the [cross-site scripting][2] (XSS) attack vector.                       |
+| WAF RCE Attack Score   | [`cf.waf.score.rce`](/ruleset-engine/rules-language/fields/reference/cf.waf.score.rce/) <br/> <Type text="Number" />     | Enterprise        | A score from 1–99 classifying the command injection or [remote code execution][3] (RCE) attack vector. |
+| WAF Attack Score Class | [`cf.waf.score.class`](/ruleset-engine/rules-language/fields/reference/cf.waf.score.class/) <br/> <Type text="String" /> | Business or above | The attack score class of the current request, based on the WAF attack score.                          |
 
 [1]: https://www.cloudflare.com/learning/security/threats/sql-injection/
 [2]: https://www.cloudflare.com/learning/security/threats/cross-site-scripting/
