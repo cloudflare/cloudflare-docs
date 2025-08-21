@@ -28,7 +28,7 @@ curl -X 'POST' 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browse
 import Cloudflare from "cloudflare";
 
 const client = new Cloudflare({
-	apiToken: "nR_paJ1qn-XDIVzbVjIG3oPDJhUgqvQ24OaoMUgh"
+	apiToken: process.env["CLOUDFLARE_API_TOKEN"],
 });
 
 const content = await client.browserRendering.content.create({
