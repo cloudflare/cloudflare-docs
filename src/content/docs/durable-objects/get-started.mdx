@@ -160,7 +160,7 @@ export class MyDurableObject extends DurableObject<Env> {
 
 }
 
-````
+```
 </TypeScriptExample>
 
 <TabItem label="Python" icon="seti:python">
@@ -178,7 +178,7 @@ class MyDurableObject(DurableObject):
             .one()
 
         return result.greeting
-````
+```
 
 </TabItem>
 
@@ -218,7 +218,7 @@ export default {
 
 } satisfies ExportedHandler<Env>;
 
-````
+```
 </TypeScriptExample>
 
 <TabItem label="Python" icon="seti:python">
@@ -233,7 +233,7 @@ class Default(WorkerEntrypoint):
         stub = env.MY_DURABLE_OBJECT.getByName(url.path)
         greeting = await stub.say_hello()
         return Response(greeting)
-````
+```
 
 </TabItem>
 
@@ -345,7 +345,7 @@ const stub = env.MY_DURABLE_OBJECT.getByName(new URL(request.url).pathname);
 
 } satisfies ExportedHandler<Env>;
 
-````
+```
 </TypeScriptExample>
 
 <TabItem label="Python" icon="seti:python">
@@ -371,7 +371,7 @@ class Default(WorkerEntrypoint):
         stub = env.MY_DURABLE_OBJECT.getByName(url.path)
         greeting = await stub.say_hello()
         return Response(greeting)
-````
+```
 
 </TabItem>
 

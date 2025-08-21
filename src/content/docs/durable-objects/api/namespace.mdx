@@ -29,7 +29,7 @@ export class MyDurableObject extends DurableObject {
 export default {
   async fetch(request, env) {
     // A stub is a client Object used to invoke methods defined by the Durable Object
-    const stub = env.MY_DURABLE_OBJECT.getByName("foo);
+    const stub = env.MY_DURABLE_OBJECT.getByName("foo");
     ...
   }
 }
@@ -141,7 +141,7 @@ const stub = env.MY_DURABLE_OBJECT.get(id);
 
 ### `getByName`
 
-`getByName` obtains a [`DurableObjectStub`](/durable-objects/api/stub) from a provided name which can be used to invoke methods on a Durable Object.
+`getByName` obtains a [`DurableObjectStub`](/durable-objects/api/stub) from a provided name, which can be used to invoke methods on a Durable Object.
 
 This method returns the <GlossaryTooltip term="stub">stub</GlossaryTooltip> immediately, often before a connection has been established to the Durable Object. This allows requests to be sent to the instance right away, without waiting for a network round trip.
 
