@@ -1,0 +1,22 @@
+---
+title: Workers KV completes hybrid storage provider rollout for improved performance, fault-tolerance
+description: Workers KV adds new storage providers on Cloudflare's infrastructure, delivering significant latency improvements with p95 latency reduced by 67% and p99 by 29%.
+products:
+  - kv
+date: 2025-08-22 12:00:00 UTC
+---
+
+Workers KV has completed rolling out performance improvements across all Workers KV namespaces, providing significant performance improvements through our redesigned architecture with new Cloudflare infrastructure storage providers. We've rebuilt Workers KV to run on both our own infrastructure and existing providers for increased availability and faster performance.
+
+![Workers KV latency improvements showing p95 and p99 performance gains in Europe, Asia, Africa and Middle East regions](~/assets/images/kv/changelog/kv-hybrid-providers-performance-improvements.png)
+
+## Performance & reliability improvements
+
+The new hybrid architecture delivers substantial latency improvements throughout Europe, Asia, Middle East, Africa regions:
+
+- **p95 latency**: Reduced from ~150ms to ~50ms (67%)
+- **p99 latency**: Reduced from ~350ms to ~250ms (29%)
+
+In addition, the new backend architecture eliminates single points of failures providing active-active redundancy across independent storage systems.
+
+This architecture ensures that Workers KV remains available even if one backend experiences issues, ensuring high availability and reliability while retaining Workers KV's existing eventual consistency and read-heavy scale.
