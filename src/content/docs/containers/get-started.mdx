@@ -27,8 +27,6 @@ the `docker info` command will hang or return an error including the message "Ca
 
 ## Deploy your first Container
 
-
-
 Run the following command to create and deploy a new Worker with a container, from the starter template:
 
 ```sh
@@ -101,7 +99,6 @@ on container status changes, and more.
 
 See the [documentation for Durable Object container methods](/durable-objects/api/container/) and the
 [`Container` class repository](https://github.com/cloudflare/containers) for more details.
-
 
 ### Configuration
 
@@ -204,9 +201,8 @@ When a request enters Cloudflare, your Worker's [`fetch` handler](/workers/runti
 
   ```js
   if (pathname.startsWith("/container")) {
-  	const id = env.MY_CONTAINER.idFromName(pathname);
-		const container = env.MY_CONTAINER.get(id);
-		return await container.fetch(request);
+  	const container = env.MY_CONTAINER.getByName(pathname);
+  	return await container.fetch(request);
   }
   ```
 

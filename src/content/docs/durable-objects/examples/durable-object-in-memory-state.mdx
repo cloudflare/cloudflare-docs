@@ -1,5 +1,4 @@
 ---
-
 summary: Create a Durable Object that stores the last location it was accessed
   from in-memory.
 pcx_content_type: example
@@ -25,10 +24,9 @@ export default {
 };
 
 async function handleRequest(request, env) {
-	let id = env.LOCATION.idFromName("A");
-	let obj = env.LOCATION.get(id);
+	let stub = env.LOCATION.getByName("A");
 	// Forward the request to the remote Durable Object.
-	let resp = await obj.fetch(request);
+	let resp = await stub.fetch(request);
 	// Return the response to the client.
 	return new Response(await resp.text());
 }

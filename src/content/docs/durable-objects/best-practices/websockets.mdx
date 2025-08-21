@@ -168,7 +168,11 @@ The following are methods available on the **Native Durable Object WebSocket API
 
 #### `WebSocket.serializeAttachment()`
 
-- <code> serializeAttachment(value <Type text="any" />)</code>: <Type text="void" />
+- <code>
+  	{" "}
+  	serializeAttachment(value <Type text="any" />)
+  </code>
+  : <Type text="void" />
 
   - Keeps a copy of `value` associated with the WebSocket to survive hibernation. The value can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm), which is true of most types. If the value needs to be durable please use [Durable Object Storage](/durable-objects/api/storage-api/).
 
@@ -179,7 +183,6 @@ The following are methods available on the **Native Durable Object WebSocket API
 - `deserializeAttachment()`: <Type text='any' />
 
   - Retrieves the most recent value passed to `serializeAttachment()`, or `null` if none exists.
-
 
 ## WebSocket Standard API
 
@@ -213,8 +216,7 @@ export default {
 
 			// This example will refer to a single Durable Object instance, since the name "foo" is
 			// hardcoded
-			let id = env.WEBSOCKET_SERVER.idFromName("foo");
-			let stub = env.WEBSOCKET_SERVER.get(id);
+			let stub = env.WEBSOCKET_SERVER.getByName("foo");
 
 			// The Durable Object's fetch handler will accept the server side connection and return
 			// the client
@@ -254,8 +256,7 @@ export default {
 
 			// This example will refer to a single Durable Object instance, since the name "foo" is
 			// hardcoded
-			let id = env.WEBSOCKET_SERVER.idFromName("foo");
-			let stub = env.WEBSOCKET_SERVER.get(id);
+			let stub = env.WEBSOCKET_SERVER.getByName("foo");
 
 			// The Durable Object's fetch handler will accept the server side connection and return
 			// the client

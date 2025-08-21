@@ -50,11 +50,8 @@ export class MyDurableObject extends DurableObject {
 // Worker
 export default {
 	async fetch(request, env) {
-		// Every unique ID refers to an individual instance of the Durable Object class
-		const id = env.MY_DURABLE_OBJECT.idFromName("foo");
-
 		// A stub is a client used to invoke methods on the Durable Object
-		const stub = env.MY_DURABLE_OBJECT.get(id);
+		const stub = env.MY_DURABLE_OBJECT.getByName("foo");
 
 		// Methods on the Durable Object are invoked via the stub
 		const response = await stub.fetch(request);
@@ -87,11 +84,8 @@ export class MyDurableObject extends DurableObject {
 // Worker
 export default {
 	async fetch(request, env) {
-		// Every unique ID refers to an individual instance of the Durable Object class
-		const id = env.MY_DURABLE_OBJECT.idFromName("foo");
-
 		// A stub is a client used to invoke methods on the Durable Object
-		const stub = env.MY_DURABLE_OBJECT.get(id);
+		const stub = env.MY_DURABLE_OBJECT.getByName("foo");
 
 		// Methods on the Durable Object are invoked via the stub
 		const response = await stub.fetch(request);
@@ -147,11 +141,8 @@ export class MyDurableObject extends DurableObject {
 // Worker
 export default {
 	async fetch(_request, env, _ctx) {
-		// Every unique ID refers to an individual instance of the Durable Object class
-		const id = env.MY_DURABLE_OBJECT.idFromName("foo");
-
 		// A stub is a client used to invoke methods on the Durable Object
-		const stub = env.MY_DURABLE_OBJECT.get(id);
+		const stub = env.MY_DURABLE_OBJECT.getByName("foo");
 
 		// Invoke the fetch handler on the Durable Object stub
 		let response = await stub.fetch("http://do/hello?name=World");
@@ -205,11 +196,8 @@ export class MyDurableObject extends DurableObject {
 // Worker
 export default {
 	async fetch(_request, env, _ctx) {
-		// Every unique ID refers to an individual instance of the Durable Object class
-		const id = env.MY_DURABLE_OBJECT.idFromName("foo");
-
 		// A stub is a client used to invoke methods on the Durable Object
-		const stub = env.MY_DURABLE_OBJECT.get(id);
+		const stub = env.MY_DURABLE_OBJECT.getByName("foo");
 
 		// Invoke the fetch handler on the Durable Object stub
 		let response = await stub.fetch("http://do/hello?name=World");

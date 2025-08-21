@@ -107,8 +107,7 @@ import puppeteer from "@cloudflare/puppeteer";
 
 export default {
 	async fetch(request, env) {
-		let id = env.BROWSER.idFromName("browser");
-		let obj = env.BROWSER.get(id);
+		let obj = env.BROWSER.getByName("browser");
 
 		// Send a request to the Durable Object, then await its response.
 		let resp = await obj.fetch(request.url);

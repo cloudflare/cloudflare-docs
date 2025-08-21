@@ -1,5 +1,4 @@
 ---
-
 summary: Use the Durable Objects Alarms API to batch requests to a Durable Object.
 pcx_content_type: example
 title: Use the Alarms API
@@ -22,8 +21,7 @@ import { DurableObject } from "cloudflare:workers";
 // Worker
 export default {
 	async fetch(request, env) {
-		let id = env.BATCHER.idFromName("foo");
-		return await env.BATCHER.get(id).fetch(request);
+		return await env.BATCHER.getByName("foo").fetch(request);
 	},
 };
 

@@ -71,7 +71,7 @@ const mf = new Miniflare({
 
   export default {
     async fetch(request, env) {
-      const stub = env.TEST_OBJECT.get(env.TEST_OBJECT.idFromName("test"));
+      const stub = env.TEST_OBJECT.getByName("test");
       return stub.fetch(request);
     }
   }
@@ -79,8 +79,7 @@ const mf = new Miniflare({
 });
 
 const ns = await mf.getDurableObjectNamespace("TEST_OBJECT");
-const id = ns.idFromName("test");
-const stub = ns.get(id);
+const stub = ns.getByName("test");
 const doRes = await stub.fetch("http://localhost:8787/put");
 console.log(await doRes.text()); // "1"
 

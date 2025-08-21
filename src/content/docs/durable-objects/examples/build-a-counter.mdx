@@ -1,5 +1,4 @@
 ---
-
 summary: Build a counter using Durable Objects and Workers with RPC methods.
 pcx_content_type: example
 title: Build a counter
@@ -29,15 +28,8 @@ export default {
 			);
 		}
 
-		// Every unique ID refers to an individual instance of the Counter class that
-		// has its own state. `idFromName()` always returns the same ID when given the
-		// same string as input (and called on the same class), but never the same
-		// ID for two different strings (or for different classes).
-		let id = env.COUNTERS.idFromName(name);
-
-		// Construct the stub for the Durable Object using the ID.
 		// A stub is a client Object used to send messages to the Durable Object.
-		let stub = env.COUNTERS.get(id);
+		let stub = env.COUNTERS.getByName(name);
 
 		// Send a request to the Durable Object using RPC methods, then await its response.
 		let count = null;
@@ -107,15 +99,8 @@ export default {
 			);
 		}
 
-		// Every unique ID refers to an individual instance of the Counter class that
-		// has its own state. `idFromName()` always returns the same ID when given the
-		// same string as input (and called on the same class), but never the same
-		// ID for two different strings (or for different classes).
-		let id = env.COUNTERS.idFromName(name);
-
-		// Construct the stub for the Durable Object using the ID.
 		// A stub is a client Object used to send messages to the Durable Object.
-		let stub = env.COUNTERS.get(id);
+		let stub = env.COUNTERS.get(name);
 
 		let count = null;
 		switch (url.pathname) {

@@ -860,8 +860,7 @@ import { requireAuth } from "../middleware/auth";
  */
 const getInterviewDO = (ctx: HonoCtx) => {
 	const username = ctx.get("username");
-	const id = ctx.env.INTERVIEW.idFromName(username);
-	return ctx.env.INTERVIEW.get(id);
+	return ctx.env.INTERVIEW.getByName(username);
 };
 
 /**
