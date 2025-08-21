@@ -20,7 +20,7 @@ Firewall for AI is a detection that can help protect your services powered by <G
 
 When enabled, the detection runs on incoming traffic, searching for any LLM prompts attempting to exploit the model.
 
-Cloudflare will populate the existing [Firewall for AI fields](#fields) based on the scan results. You can check these results in the [Security Analytics](/waf/analytics/security-analytics/) dashboard by filtering on the `cf-llm` [managed endpoint label](/api-shield/management-and-monitoring/endpoint-labels/) and reviewing the detection results on your traffic. Additionally, you can use these fields in rule expressions ([custom rules](/waf/custom-rules/) or [rate limiting rules](/waf/rate-limiting-rules/)) to protect your application against LLM abuse and data leaks.
+Cloudflare will populate the existing [Firewall for AI fields](#firewall-for-ai-fields) based on the scan results. You can check these results in the [Security Analytics](/waf/analytics/security-analytics/) dashboard by filtering on the `cf-llm` [managed endpoint label](/api-shield/management-and-monitoring/endpoint-labels/) and reviewing the detection results on your traffic. Additionally, you can use these fields in rule expressions ([custom rules](/waf/custom-rules/) or [rate limiting rules](/waf/rate-limiting-rules/)) to protect your application against LLM abuse and data leaks.
 
 ## Availability
 
@@ -86,7 +86,7 @@ Alternatively, create a custom rule like the one described in the next step usin
 - **With response type**: Custom JSON
 - **Response body**: `{ "error": "Your request was blocked. Please rephrase your request." }`
 
-For additional examples, refer to [Example mitigation rules](#example-mitigation-rules). For a list of fields provided by Firewall for AI, refer to [Fields](#fields).
+For additional examples, refer to [Example mitigation rules](#example-mitigation-rules). For a list of fields provided by Firewall for AI, refer to [Fields](#firewall-for-ai-fields).
 
 <Details header="Combine with other Rules language fields">
 
@@ -114,7 +114,7 @@ You can combine the previous expression with other [fields](/ruleset-engine/rule
 
 </Details>
 
-## Fields
+## Firewall for AI fields
 
 When enabled, Firewall for AI populates the following fields:
 
