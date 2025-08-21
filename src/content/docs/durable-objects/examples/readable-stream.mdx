@@ -25,7 +25,7 @@ This example demonstrates:
 import { DurableObject } from 'cloudflare:workers';
 
 // Send incremented counter value every second
-async function\* dataSource(signal: AbortSignal) {
+async function* dataSource(signal: AbortSignal) {
 let counter = 0;
 while (!signal.aborted) {
 yield counter++;
@@ -33,7 +33,6 @@ await new Promise((resolve) => setTimeout(resolve, 1_000));
 }
 
     console.log('Data source cancelled');
-
 }
 
 export class MyDurableObject extends DurableObject<Env> {
@@ -111,4 +110,3 @@ export default {
 In a setup where a Durable Object returns a readable stream to a Worker, if the Worker cancels the Durable Object's readable stream, the cancellation propagates to the Durable Object.
 
 :::
-```
