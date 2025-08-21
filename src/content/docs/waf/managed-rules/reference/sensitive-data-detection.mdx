@@ -72,6 +72,7 @@ This example deploys the Cloudflare Sensitive Data Detection managed ruleset to 
 
 1.  <Render
     	file="rulesets/api-zone/step1-get-entrypoint"
+    	product="waf"
     	params={{ phaseName: "http_response_firewall_managed" }}
     />
 
@@ -107,6 +108,7 @@ This example deploys the Cloudflare Sensitive Data Detection managed ruleset to 
 
 2.  <Render
     	file="rulesets/api-zone/step2-create-rule"
+    	product="waf"
     	params={{
     		deploymentItem:
     			"Cloudflare Sensitive Data Detection managed ruleset (with ID `e22d83c647c64a3eae91b71b499d988e`)",
@@ -164,6 +166,7 @@ This example deploys the Cloudflare Sensitive Data Detection managed ruleset to 
 
 3.  <Render
     	file="rulesets/api-zone/step3-create-ruleset"
+    	product="waf"
     	params={{
     		deploymentItem:
     			"Cloudflare Sensitive Data Detection managed ruleset (with ID `e22d83c647c64a3eae91b71b499d988e`)",
@@ -196,6 +199,7 @@ This example deploys the Cloudflare Sensitive Data Detection managed ruleset to 
 
 <Render
 	file="managed-rulesets/api-next-steps"
+	product="waf"
 	params={{
 		rulesetName: "Cloudflare Sensitive Data Detection managed ruleset",
 		customizableAction: false,

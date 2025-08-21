@@ -212,6 +212,7 @@ resource "cloudflare_zero_trust_gateway_policy" "all_http_security_risks_blockli
 
 <Render
 	file="zero-trust/content-categories-description"
+	product="learning-paths"
 	params={{ policyType: "HTTP" }}
 />
 
@@ -224,6 +225,7 @@ resource "cloudflare_zero_trust_gateway_policy" "all_http_security_risks_blockli
 
 <Render
 	file="zero-trust/blocklist-domain-host"
+	product="learning-paths"
 	params={{ blocklistPolicyType: "HTTP" }}
 />
 

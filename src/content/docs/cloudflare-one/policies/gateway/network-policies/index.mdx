@@ -25,6 +25,7 @@ A network policy consists of an **Action** as well as a logical expression that 
 
 <Render
 	file="gateway/response"
+	product="cloudflare-one"
 	params={{ type: "query", example: "Source IP", example2: "Resolved IP" }}
 />
 
@@ -260,6 +261,7 @@ Gateway matches network traffic against the following selectors, or criteria.
 
 <Render
 	file="gateway/selectors/application"
+	product="cloudflare-one"
 	params={{ policyType: "network" }}
 />
 
@@ -267,6 +269,7 @@ Gateway matches network traffic against the following selectors, or criteria.
 
 <Render
 	file="gateway/selectors/net-http-content-categories"
+	product="cloudflare-one"
 	params={{ APIendpoint: "net.fqdn.content_category" }}
 />
 
@@ -274,6 +277,7 @@ Gateway matches network traffic against the following selectors, or criteria.
 
 <Render
 	file="gateway/selectors/destination-continent"
+	product="cloudflare-one"
 	params={{ one: "net.dst" }}
 />
 
@@ -281,6 +285,7 @@ Gateway matches network traffic against the following selectors, or criteria.
 
 <Render
 	file="gateway/selectors/destination-country"
+	product="cloudflare-one"
 	params={{ one: "net.dst" }}
 />
 
@@ -288,6 +293,7 @@ Gateway matches network traffic against the following selectors, or criteria.
 
 <Render
 	file="gateway/selectors/destination-ip"
+	product="cloudflare-one"
 	params={{ APIendpoint: "net.dst.ip" }}
 />
 
@@ -323,6 +329,7 @@ To enable Gateway filtering on TCP and UDP, go to **Settings** > **Network** > *
 
 <Render
 	file="gateway/selectors/security-risks"
+	product="cloudflare-one"
 	params={{ APIendpoint: "net.fqdn.security_category" }}
 />
 
@@ -358,6 +365,7 @@ The country of the user making the request. <Render file="gateway/selectors/sour
 
 <Render
 	file="gateway/selectors/source-internal-ip"
+	product="cloudflare-one"
 	params={{ one: "network", two: "net.src.internal_src_ip" }}
 />
 
@@ -365,6 +373,7 @@ The country of the user making the request. <Render file="gateway/selectors/sour
 
 <Render
 	file="gateway/selectors/source-ip"
+	product="cloudflare-one"
 	params={{ APIendpoint: "net.src.ip" }}
 />
 
@@ -380,6 +389,7 @@ The country of the user making the request. <Render file="gateway/selectors/sour
 
 <Render
 	file="gateway/selectors/virtual-network"
+	product="cloudflare-one"
 	params={{ one: "net.vnet_id" }}
 />
 
@@ -393,11 +403,16 @@ The _in_ operator allows you to specify IP addresses or networks using CIDR nota
 
 ## Value
 
-<Render file="gateway/value" params={{ one: "SNI hosts", two: "SNI" }} />
+<Render
+	file="gateway/value"
+	product="cloudflare-one"
+	params={{ one: "SNI hosts", two: "SNI" }}
+/>
 
 ## Logical operators
 
 <Render
 	file="gateway/logical-operators"
+	product="cloudflare-one"
 	params={{ one: "**Identity** or **Device Posture**" }}
 />

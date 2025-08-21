@@ -3,17 +3,23 @@ pcx_content_type: how-to
 title: Carbon Black
 sidebar:
   order: 2
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 Cloudflare Zero Trust can check if [Carbon Black](https://www.carbonblack.com/) is running on a device to determine if a request should be allowed to reach a protected resource.
 
 ## Prerequisites
 
-* Carbon Black agent is deployed on the device.
-* <Render file="posture/prereqs-warp-is-deployed" params={{ name: "WARP Client Checks", link: "/cloudflare-one/identity/devices/warp-client-checks/" }} />
+- Carbon Black agent is deployed on the device.
+- <Render
+  	file="posture/prereqs-warp-is-deployed"
+  	product="cloudflare-one"
+  	params={{
+  		name: "WARP Client Checks",
+  		link: "/cloudflare-one/identity/devices/warp-client-checks/",
+  	}}
+  />
 
 ## Configure the Carbon Black check
 
@@ -24,7 +30,6 @@ Cloudflare Zero Trust can check if [Carbon Black](https://www.carbonblack.com/) 
 3. Select **Carbon Black**.
 
 4. You will be prompted for the following information:
-
    1. **Name**: Enter a unique name for this device posture check.
    2. **Operating system**: Select your operating system. You will need to configure one posture check per operating system (macOS and Windows currently supported).
    3. **Application Path**: Enter the full path to the Carbon Black process to be checked (for example, `c:\program files\CarbonBlack\CarbonBlack.exe`).

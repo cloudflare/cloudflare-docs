@@ -32,12 +32,13 @@ To use `create-cloudflare` to create a new Docusaurus project, run the following
 
 ## Deploy with Cloudflare Pages
 
-<Render file="deploy-via-c3" params={{ name: "Docusaurus" }} />
+<Render file="deploy-via-c3" params={{ name: "Docusaurus" }} product="pages" />
 
 ### Deploy via the Cloudflare dashboard
 
 <Render
 	file="deploy-to-pages-steps-with-preset"
+	product="pages"
 	params={{ name: "Docusarus" }}
 />
 
@@ -49,4 +50,8 @@ Every time you commit new code to your Docusaurus site and push those changes to
 
 For the complete guide to deploying your first site to Cloudflare Pages, refer to the [Get started guide](/pages/get-started/).
 
-<Render file="framework-guides/learn-more" params={{ one: "Docusaurus" }} />
+<Render
+	file="framework-guides/learn-more"
+	product="pages"
+	params={{ one: "Docusaurus" }}
+/>

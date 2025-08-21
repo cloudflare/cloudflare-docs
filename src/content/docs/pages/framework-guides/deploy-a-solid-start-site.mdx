@@ -62,7 +62,7 @@ export default defineConfig({
 
 ## Deploy with Cloudflare Pages
 
-<Render file="deploy-via-c3" params={{ name: "Solid" }} />
+<Render file="deploy-via-c3" product="pages" params={{ name: "Solid" }} />
 
 ### Deploy via the Cloudflare dashboard
 
@@ -89,4 +89,8 @@ For the complete guide to deploying your first site to Cloudflare Pages, refer t
 After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`.
 Every time you commit new code to your Solid repository, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/configuration/preview-deployments/) on new pull requests, to preview how changes look to your site before deploying them to production.
 
-<Render file="framework-guides/learn-more" params={{ one: "Solid" }} />
+<Render
+	file="framework-guides/learn-more"
+	product="pages"
+	params={{ one: "Solid" }}
+/>

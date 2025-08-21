@@ -42,7 +42,11 @@ Specify a value from the SAML Attribute Assertion.
 
 Use this selector to create identity-based Gateway rules based on a user's email.
 
-<Render file="gateway/selectors/user-email" params={{ UIname: "User Email" }} />
+<Render
+	file="gateway/selectors/user-email"
+	product="cloudflare-one"
+	params={{ UIname: "User Email" }}
+/>
 
 ### User Group IDs
 
@@ -50,6 +54,7 @@ Use this selector to create identity-based Gateway rules based on an IdP group I
 
 <Render
 	file="gateway/selectors/user-group-ids"
+	product="cloudflare-one"
 	params={{ UIname: "User Group IDs" }}
 />
 
@@ -59,6 +64,7 @@ Use this selector to create identity-based Gateway rules based on an IdP group e
 
 <Render
 	file="gateway/selectors/user-group-email"
+	product="cloudflare-one"
 	params={{ UIname: "User Group Email" }}
 />
 
@@ -68,6 +74,7 @@ Use this selector to create identity-based Gateway rules based on an IdP group n
 
 <Render
 	file="gateway/selectors/user-group-names"
+	product="cloudflare-one"
 	params={{ UIname: "User Group Names" }}
 />
 

@@ -23,6 +23,7 @@ An HTTP policy consists of an **Action** as well as a logical expression that de
 
 <Render
 	file="gateway/response"
+	product="cloudflare-one"
 	params={{ type: "query", example: "Source IP", example2: "Resolved IP" }}
 />
 
@@ -401,7 +402,11 @@ Gateway matches HTTP traffic against the following selectors, or criteria:
 
 ### Application
 
-<Render file="gateway/selectors/application" params={{ policyType: "HTTP" }} />
+<Render
+	file="gateway/selectors/application"
+	product="cloudflare-one"
+	params={{ policyType: "HTTP" }}
+/>
 
 :::caution[Multiple API selectors required for Terraform]
 When using Terraform to create a policy with the [Do Not Inspect](#do-not-inspect) action, you must use the `app.hosts_ids` and `app.supports_ids` selectors. For example, to create a Do Not Inspect policy for Google Cloud Platform traffic, create a policy with both `any(app.hosts_ids[*] in {1245})` and `any(app.supports_ids[*] in {1245})`.
@@ -411,6 +416,7 @@ When using Terraform to create a policy with the [Do Not Inspect](#do-not-inspec
 
 <Render
 	file="gateway/selectors/net-http-content-categories"
+	product="cloudflare-one"
 	params={{ APIendpoint: "http.conn.content_category" }}
 />
 
@@ -422,6 +428,7 @@ Only applies to traffic sent through the [WARP client](/cloudflare-one/connectio
 
 <Render
 	file="gateway/selectors/destination-continent"
+	product="cloudflare-one"
 	params={{ one: "http.dst_ip" }}
 />
 
@@ -433,6 +440,7 @@ Only applies to traffic sent through the [WARP client](/cloudflare-one/connectio
 
 <Render
 	file="gateway/selectors/destination-country"
+	product="cloudflare-one"
 	params={{ one: "http.dst_ip" }}
 />
 
@@ -444,6 +452,7 @@ Only applies to traffic sent through the [WARP client](/cloudflare-one/connectio
 
 <Render
 	file="gateway/selectors/destination-ip"
+	product="cloudflare-one"
 	params={{ APIendpoint: "http.conn.dst_ip" }}
 />
 
@@ -455,6 +464,7 @@ Only applies to traffic sent through the [WARP client](/cloudflare-one/connectio
 
 <Render
 	file="gateway/selectors/domain"
+	product="cloudflare-one"
 	params={{ APIendpoint: "http.conn.domains" }}
 />
 
@@ -557,6 +567,7 @@ Scans HTTP traffic for the presence of social security numbers and other PII. Yo
 
 <Render
 	file="gateway/selectors/host"
+	product="cloudflare-one"
 	params={{ APIendpoint: "http.conn.hostname" }}
 />
 
@@ -584,6 +595,7 @@ The HTTP response status code received by the traffic.
 
 <Render
 	file="gateway/selectors/security-risks"
+	product="cloudflare-one"
 	params={{ APIendpoint: "http.conn.security_category" }}
 />
 
@@ -599,6 +611,7 @@ The country of the user making the request. <Render file="gateway/selectors/sour
 
 <Render
 	file="gateway/selectors/source-internal-ip"
+	product="cloudflare-one"
 	params={{ one: "HTTP", two: "http.conn.internal_src_ip" }}
 />
 
@@ -606,6 +619,7 @@ The country of the user making the request. <Render file="gateway/selectors/sour
 
 <Render
 	file="gateway/selectors/source-ip"
+	product="cloudflare-one"
 	params={{ APIendpoint: "http.conn.src_ip" }}
 />
 
@@ -649,6 +663,7 @@ The query of a webpage's URL.
 
 <Render
 	file="gateway/selectors/virtual-network"
+	product="cloudflare-one"
 	params={{ one: "http.conn.vnet_id" }}
 />
 
@@ -658,16 +673,22 @@ The query of a webpage's URL.
 
 ## Value
 
-<Render file="gateway/value" params={{ one: "hostnames", two: "Host" }} />
+<Render
+	file="gateway/value"
+	product="cloudflare-one"
+	params={{ one: "hostnames", two: "Host" }}
+/>
 
 ## Logical operators
 
 <Render
 	file="gateway/logical-operators"
+	product="cloudflare-one"
 	params={{ one: "**Identity** or **Device Posture**" }}
 />
 
 <Render
 	file="gateway/response"
+	product="cloudflare-one"
 	params={{ type: "request", example: "Source IP", example2: "a DLP Profile" }}
 />

@@ -16,6 +16,7 @@ import { Example, Render, Tabs, TabItem } from "~/components";
 
 <Render
 	file="acns-tcns-intro"
+	product="dns"
 	params={{
 		one: "Account",
 		two: "A",
@@ -40,10 +41,15 @@ For this configuration to be possible, a few conditions apply:
 
 <Render
 	file="acns-tcns-conditions"
+	product="dns"
 	params={{ one: "account", two: "you", three: "You" }}
 />
 
-<Render file="acns-tcns-byoip" params={{ one: "Account", two: "account" }} />
+<Render
+	file="acns-tcns-byoip"
+	product="dns"
+	params={{ one: "Account", two: "account" }}
+/>
 
 - Choosing a set from `ns_set 1` through `ns_set 5` will influence how Cloudflare assigns nameservers to your new zones if you configure [DNS zone defaults](/dns/nameservers/nameserver-options/#dns-zone-defaults).
 

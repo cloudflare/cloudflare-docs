@@ -77,6 +77,7 @@ To deploy the rate limiting ruleset, add a rule with `"action": "execute"` to th
 
 1.  <Render
     	file="rulesets/api-account/step1-get-entrypoint"
+    	product="waf"
     	params={{ phaseName: "http_ratelimit" }}
     />
 
@@ -112,6 +113,7 @@ To deploy the rate limiting ruleset, add a rule with `"action": "execute"` to th
 
 2.  <Render
     	file="rulesets/api-account/step2-create-rule"
+    	product="waf"
     	params={{
     		deploymentItem: "rate limiting ruleset",
     	}}
@@ -138,6 +140,7 @@ To deploy the rate limiting ruleset, add a rule with `"action": "execute"` to th
 
 3.  <Render
     	file="rulesets/api-account/step3-create-ruleset"
+    	product="waf"
     	params={{
     		deploymentItem: "rate limiting ruleset",
     		scope: "all incoming requests of Enterprise zones in your account",

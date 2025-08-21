@@ -61,11 +61,15 @@ npm run astro add cloudflare
 
 ## Deploy with Cloudflare Pages
 
-<Render file="deploy-via-c3" params={{ name: "Astro" }} />
+<Render file="deploy-via-c3" product="pages" params={{ name: "Astro" }} />
 
 ### Deploy via the Cloudflare dashboard
 
-<Render file="deploy-to-pages-steps-with-preset" params={{ name: "Astro" }} />
+<Render
+	file="framework-guides/learn-more"
+	product="pages"
+	params={{ name: "Astro" }}
+/>
 
 <div>
 
@@ -157,4 +161,8 @@ const value = await myKV.get("key");
 
 To learn more about the Astro Cloudflare runtime, refer to the [Access to the Cloudflare runtime](https://docs.astro.build/en/guides/integrations-guide/cloudflare/#access-to-the-cloudflare-runtime) in the Astro documentation.
 
-<Render file="framework-guides/learn-more" params={{ one: "Astro" }} />
+<Render
+	file="framework-guides/learn-more"
+	product="pages"
+	params={{ one: "Astro" }}
+/>

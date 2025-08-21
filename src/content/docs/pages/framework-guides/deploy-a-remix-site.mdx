@@ -58,11 +58,15 @@ npm run dev
 
 ## Deploy with Cloudflare Pages
 
-<Render file="deploy-via-c3" params={{ name: "Remix" }} />
+<Render file="deploy-via-c3" product="pages" params={{ name: "Remix" }} />
 
 ### Deploy via the Cloudflare dashboard
 
-<Render file="deploy-to-pages-steps-with-preset" params={{ name: "Remix" }} />
+<Render
+	file="framework-guides/learn-more"
+	product="pages"
+	params={{ name: "Remix" }}
+/>
 
 <PagesBuildPreset framework="remix" />
 
@@ -184,4 +188,8 @@ export default function Index() {
 }
 ```
 
-<Render file="framework-guides/learn-more" params={{ one: "Remix" }} />
+<Render
+	file="framework-guides/learn-more"
+	product="pages"
+	params={{ one: "Remix" }}
+/>
