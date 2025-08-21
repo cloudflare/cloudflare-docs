@@ -4,9 +4,14 @@
 
 import { Render } from "~/components";
 
-To organize applications into their approval status for your organization, you can mark them as **Unreviewed** (default), **In review**, **Approved**, and **Unapproved**. The App Library synchronizes application review statuses with [approval statuses](/cloudflare-one/insights/analytics/shadow-it-discovery/#approval-status) from the Shadow IT Discovery SaaS analytics dashboard.
+To organize applications into their approval status for your organization, you can mark them as **Unreviewed** (default), **In review**, **Approved**, and **Unapproved**.
 
-<Render file="approval-status-block" />
+| Status     | API value    | Description                                                                                            |
+| ---------- | ------------ | ------------------------------------------------------------------------------------------------------ |
+| Approved   | `approved`   | Applications that have been marked as sanctioned by your organization.                                 |
+| Unapproved | `unapproved` | Applications that have been marked as unsanctioned by your organization.                               |
+| In review  | `in review`  | Applications in the process of being reviewed by your organization.                                    |
+| Unreviewed | `unreviewed` | Unknown applications that are neither sanctioned nor being reviewed by your organization at this time. |
 
 To set the status of an application:
 
@@ -16,4 +21,10 @@ To set the status of an application:
 
 Once you mark the status of an application, its badge will change. You can filter applications by their status to review each application in the list for your organization.
 
-The App Library will include application status review updates in Shadow IT Discovery within one hour.
+The App Library and Shadow IT Discovery will update the review status for an application within one hour.
+
+:::note
+Approval status does not impact a user's ability to access an application. Users are allowed or blocked according to your [Access](/cloudflare-one/policies/access/) and [Gateway policies](/cloudflare-one/policies/gateway/).
+:::
+
+{/* TODO update this note to call out the Gateway app status selector */}
