@@ -5,10 +5,31 @@ sidebar:
   order: 3
 ---
 
-You can run both your container and your Worker locally, without additional configuration, by running [`npx wrangler dev`](/workers/wrangler/commands/#dev) (or `vite dev` for Vite projects using the [Cloudflare Vite plugin](/workers/vite-plugin/)) in your project's directory.
+You can run both your container and your Worker locally by running [`npx wrangler dev`](/workers/wrangler/commands/#dev) (or `vite dev` for Vite projects using the [Cloudflare Vite plugin](/workers/vite-plugin/)) in your project's directory.
 
 To develop Container-enabled Workers locally, you will need to first ensure that a
 Docker compatible CLI tool and Engine are installed. For instance, you could use [Docker Desktop](https://docs.docker.com/desktop/) or [Colima](https://github.com/abiosoft/colima).
+
+## Required Configuration
+
+For local development, your `wrangler.json` or `wrangler.jsonc` file must include specific configuration fields:
+
+```json
+{
+  "containers": [{
+    "name": "your-container-name",      // Required for local development
+    "class_name": "YourContainerClass", // Your Durable Object class name
+    "image": "./path/to/Dockerfile",    // Path to your Dockerfile
+    "instance_type": "standard",        // Required for proper runtime behavior
+    "max_instances": 2                  // Optional, not enforced locally
+  }],
+  "compatibility_flags": ["nodejs_compat"] // Required when using Container class from @cloudflare/containers
+}
+```
+
+:::note
+The `name` and `instance_type` fields are essential for local development. Without them, you may encounter "Connection refused: container port not found" errors even if your container is properly configured.
+:::
 
 When you start a dev session, your container image will be built or downloaded. If your
 [Wrangler configuration](/workers/wrangler/configuration/#containers) sets
@@ -45,6 +66,15 @@ mechanism for doing so, and best-practices will depend on the languages and fram
 you are using in your container code.
 
 ## Troubleshooting
+
+### Container Configuration Errors
+
+If you encounter "Connection refused: container port not found" errors during local development, verify that:
+
+1. Your container configuration includes a `name` field
+2. Your container configuration includes an `instance_type` field (typically `"standard"`)
+3. You have `nodejs_compat` in your `compatibility_flags` array if using the Container class from `@cloudflare/containers`
+4. Your Dockerfile includes the necessary `EXPOSE` instructions (see below)
 
 ### Exposing Ports
 
