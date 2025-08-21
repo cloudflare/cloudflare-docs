@@ -1008,6 +1008,17 @@ The following options are available:
 - `image_vars` <Type text="Record<string, string>" /> <MetaInfo text="optional" />
   - Build-time variables, equivalent to using `--build-arg` with `docker build`. If you want to provide environment variables to your container at _runtime_, you should [use secret bindings or `envVars` on the Container class](/containers/examples/env-vars-and-secrets/).
 
+- `rollout_active_grace_period` <Type text="number" /> <MetaInfo text="optional" />
+  - The minimum number of seconds to wait before an active container instance becomes eligible for updating during a [rollout](/containers/faq#how-do-container-updates-and-rollouts-work). At that point, the container will be sent at `SIGTERM` and still has 15 minutes to shut down before it is forcibly killed and updated.
+  - Defaults to `0`.
+
+- `rollout_step_percentage` <Type text="number | number[]" /> <MetaInfo text="optional" />
+  - Configures what percentage of instances should be updated at each step of a [rollout](/containers/faq#how-do-container-updates-and-rollouts-work).
+  - If this is set to a single number, each step will rollout to that percentage of instances. The options are `5`, `10`, `20`, `25`, `50` or `100`.
+  - If this is an array of numbers, each step specifies the cumulative rollout progress, so the final step must be `100`.
+  - Defaults to `[10, 100]`.
+  - This can be overridden ad hoc by deploying with the `--containers-rollout=immediate` flag, which will roll out to 100% of instances in one step. Note that flag will not override `rollout_active_grace_period`, if configured.
+
 <WranglerConfig>
 
 ```toml title="wrangler.toml"
