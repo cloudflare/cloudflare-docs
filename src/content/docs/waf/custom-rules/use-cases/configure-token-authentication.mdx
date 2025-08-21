@@ -184,3 +184,18 @@ This is illustrated in the previous example, where `http.request.uri` is passed 
 Since `http.request.uri` includes the path to the asset and that value is extracted for each request, the validation function evaluates all request URIs to `downloads.example.com` using the same secret key.
 
 Note that while you can use the same secret key to authenticate several paths, you must generate an HMAC token for each unique message you want to authenticate.
+
+## Protecting an entire directory with a single signature
+
+You can dynamically [concatenate the MessageMAC](/ruleset-engine/rules-language/functions/#concatenated-messagemac-argument) argument to the `is_timed_hmac_valid_v0()` function to protect an entire directory with a single signature.
+
+This example assumes that the directory name is always the same length (for example, `/images/12345678-90ab-4cde-f012-3456789abcde/cat.jpg`).
+
+To protect an entire directory, you can use the `substring()` function to extract the directory name from the request URI path.
+The length of the directory name is 45 characters here, so you do `substring(http.request.uri.path, 0, 45)` to extract the first 45 characters of the path which corresponds to the directory name.
+
+Then you need to concatenate the directory name with the query string and pass it to the `is_timed_hmac_valid_v0()` function like this:
+
+```txt
+(http.host eq "downloads.example.com" and not is_timed_hmac_valid_v0("mysecrettoken", concat(substring(http.request.uri.path, 0, 45), "?", http.request.uri.query), 10800, http.request.timestamp.sec))
+```
