@@ -4,6 +4,10 @@ productName: Durable Objects
 productLink: "/durable-objects/"
 entries:
   - publish_date: "2025-04-07"
+    title: Durable Objects stubs can now be directly constructed by name
+    description: |-
+      A [`DurableObjectStub`](/durable-objects/api/stub) can now be directly constructed by created directly with [`DurableObjectNamespace::getByName`](/durable-objects/api/namespace/#getbyname).
+  - publish_date: "2025-04-07"
     title: Durable Objects on Workers Free plan
     description: |-
       [SQLite-backed Durable Objects](/durable-objects/get-started/) are now available on the Workers Free plan with these [limits](/durable-objects/platform/pricing/).
