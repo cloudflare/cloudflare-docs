@@ -445,7 +445,7 @@ Time taken for origin to return response headers after Cloudflare finishes sendi
 
 Type: `int`
 
-Status returned by the upstream server. The value 0 means that there was no request made to the origin server and the response was served by Cloudflare's Edge. However, if the zone has a Worker running on it, the value 0 could be the result of a Workers subrequest made to the origin.
+Status returned by the upstream server. The value 0 means that there was no response received from the origin server and the response was served by Cloudflare's Edge. However, if the zone has a Worker running on it, the value 0 could be the result of a Workers subrequest made to the origin.
 
 ## OriginResponseTime (deprecated)
 
