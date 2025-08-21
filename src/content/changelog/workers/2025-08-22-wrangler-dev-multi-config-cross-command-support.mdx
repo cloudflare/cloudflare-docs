@@ -6,14 +6,20 @@ products:
 date: 2025-08-22
 ---
 
-You can run multiple Workers in a single dev command by passing multiple config files to `wrangler dev` (e.g., `wrangler dev --config api.toml --config frontend.toml`). Previously, these Workers could not communicate with Workers running in separate dev commands. Now service bindings and tail consumers work across dev commands:
+You can run multiple Workers in a single dev command by passing multiple config files to `wrangler dev`:
 
 ```sh
 # Terminal 1 - Main Application
-wrangler dev --config ./api/wrangler.jsonc --config ./app/wrangler.jsonc
+wrangler dev --config ./app/wrangler.jsonc --config ./api/wrangler.jsonc
+```
 
-# Terminal 2 - Shared Worker (e.g. auth)
+Previously, these Workers could not communicate with Workers running in separate dev commands. Now service bindings and tail consumers work across dev commands:
+
+```sh
+# Terminal 2 - Other Workers (e.g. auth)
 wrangler dev --config ./auth/wrangler.jsonc
 ```
 
-Workers can now communicate with each other across separate dev commands, regardless of your development setup. Check out the [Developing with multiple Workers](/workers/development-testing/multi-workers) guide to learn more about the different approaches and when to use each one.
+These Workers can now communicate with each other across separate dev commands, regardless of your development setup.
+
+Check out the [Developing with multiple Workers](/workers/development-testing/multi-workers) guide to learn more about the different approaches and when to use each one.
