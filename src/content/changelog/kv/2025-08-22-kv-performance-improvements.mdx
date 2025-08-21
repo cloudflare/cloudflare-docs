@@ -6,7 +6,7 @@ products:
 date: 2025-08-22 12:00:00 UTC
 ---
 
-Workers KV has completed rolling out performance improvements across all Workers KV namespaces, providing significant performance improvements through our redesigned architecture with new Cloudflare infrastructure storage providers. We've rebuilt Workers KV to run on both our own infrastructure and existing providers for increased availability and faster performance.
+Workers KV has completed rolling out performance improvements across all KV namespaces, providing a significant latency reduction on read operations for all KV users. This is due to architectural changes to KV's underlying storage infrastructure, which introduces a new metadata later and substantially improves redundancy.
 
 ![Workers KV latency improvements showing p95 and p99 performance gains in Europe, Asia, Africa and Middle East regions](~/assets/images/kv/changelog/kv-hybrid-providers-performance-improvements.png)
 
