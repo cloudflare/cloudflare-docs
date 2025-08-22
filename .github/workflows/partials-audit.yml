@@ -48,13 +48,18 @@ jobs:
             echo "  - SEARCH_FILE: $SEARCH_FILE"
             # --- END LOGGING ---
 
-            # This command checks if the combination of file and product exists.
-            if ! perl -ne 'BEGIN{undef $/;} ($found=0); if (m/<Render.*?file="file".*?product="product".*?\/>/s) {$found=1;} print "FOUND\n" if $found; ' YourFile.mdx | grep -q 'FOUND'; then
+            # Use Perl to search for a multi-line <Render> component with both values
+            # The "s" flag allows the dot to match newlines, and the "e" flag executes the script.
+            # The -0777 option makes Perl read the entire file at once.
+            # The (?s) is a modifier to allow '.' to match newline characters
+            # This makes the regex a single-line regex, even if the text spans multiple lines.
+            if ! perl -ne "exit 0 if /\<Render.*?(?:\s|$SEARCH_PRODUCT).*?(?:\s|$SEARCH_FILE).*?\/?\>/s" -e "exit 1" ./*/*.mdx; then
               UNUSED_FILES+="$FILE\n"
               echo "  -> UNUSED! Adding to list."
             else
               echo "  -> Used. Skipping."
             fi
+            echo "" # Add a blank line for readability
           done
 
           # If there are unused files, output them
