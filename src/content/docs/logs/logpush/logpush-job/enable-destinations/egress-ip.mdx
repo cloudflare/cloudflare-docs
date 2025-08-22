@@ -18,7 +18,7 @@ The general approach is to have your Logpush job proxying Logpush data through a
 
 As a prerequisite, you need to create a dedicated zone or use an existing zone. If using an existing zone, be aware that the zone's egress will be restricted to Aegis IPs. Make sure all services using that zone will not be impacted. 
 
-It is recommended to use a separate, dedicated zone as a proxy to avoid impacting production systems. If you choose to create a new zone, follow the steps to register a new domain with Cloudflare.
+It is recommended to use a separate, dedicated zone as a proxy to avoid impacting production systems. If you choose to create a new zone, follow the [steps](/registrar/get-started/register-domain/) to register a new domain with Cloudflare.
 
 The following example shows how to set up logpush and Aegis to proxy an HTTPS destination, but the proxying should work for any supported Logpush destination as all destinations use the HTTP protocol underneath.
 
@@ -54,6 +54,6 @@ The following example shows how to set up logpush and Aegis to proxy an HTTPS de
 
 ![Enter destination details when creating a Logpush job in the Cloudflare dashboard](~/assets/images/logs/destination-details.png)
 
-- Configuration: Select dataset, job name, filters, and fields. Refer to the Logpush documentation for more details.
+- Configuration: Select dataset, job name, filters, and fields. Refer to the [Logpush documentation](/logs/logpush/) for more details.
 
 2. Check destination to confirm if the logs are received.
