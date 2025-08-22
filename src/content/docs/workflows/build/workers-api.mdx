@@ -160,11 +160,8 @@ Refer to the [documentation on sleeping and retrying](/workflows/build/sleeping-
 
 ## NonRetryableError
 
-- <code>
-  	throw new NonRetryableError(message: <Type text="string" />, name{" "}
-  	<Type text="string" /> <MetaInfo text="optional" />)
-  </code>
-  : <Type text="NonRetryableError" />
+{/* prettier-ignore */}
+- <code>throw new NonRetryableError(message: <Type text="string" />, name <Type text="string" /> <MetaInfo text="optional" />)</code>: <Type text="NonRetryableError" />
   - Throws an error that forces the current Workflow instance to fail and not be retried.
   - Refer to the [documentation on sleeping and retrying](/workflows/build/sleeping-and-retrying/) to learn more about how Workflows are retried.
 
