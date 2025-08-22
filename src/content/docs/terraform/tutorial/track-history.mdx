@@ -59,7 +59,9 @@ resource "cloudflare_dns_record" "www" {
   comment = "Domain verification record"
 }
 ```
-Note: You must still include the empty provider definition in the file, so that Terraform knows to install the Cloudflare plugin. For more information about advanced options you can use to customize the Cloudflare provider, refer to [Provider customization](/terraform/advanced-topics/provider-customization/).
+:::note
+You must still include the empty provider definition in the file, so that Terraform knows to install the Cloudflare plugin. For more information about advanced options you can use to customize the Cloudflare provider, refer to [Provider customization](/terraform/advanced-topics/provider-customization/).
+:::
 
 Update your `terraform.tfvars` file:
 ```hcl
