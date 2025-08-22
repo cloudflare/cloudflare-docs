@@ -54,9 +54,13 @@ The mTLS certificate is used only to verify the client certificate. It does not 
 9. If this is for a client who does not need to log in through an IdP, set the policy **Action** to _Service Auth_.
 
    <Example>
-   	**Example mTLS policy** | Action | Rule type | Selector | Value | | ------
-   	| --------- | -------- | ----------------- | | Service Auth | Include |
-   	Common Name | `John Doe` |
+
+   **Example mTLS policy**
+
+   | Action       | Rule type | Selector    | Value      |
+   | ------------ | --------- | ----------- | ---------- |
+   | Service Auth | Include   | Common Name | `John Doe` |
+
    </Example>
 
 10. Save the policy, then go to **Access** > **Applications**.
