@@ -19,6 +19,7 @@ The general approach is to have your logpush job proxy logpush data through a Cl
 As a prerequisite, you need to create a dedicated zone or use an existing zone. If using an existing zone, be aware that the zone's egress will be restricted to Aegis IPs. Make sure all services using that zone will not be impacted. 
 
 It is recommended to use a separate, dedicated zone as a proxy to avoid impacting production systems. If you choose to create a new zone, follow the steps to register a new domain with Cloudflare.
+
 The following example shows how to set up logpush and Aegis to proxy an https destination, but the proxying should work for any supported logpush destination as all destinations use the http protocol underneath.
 
 ## 1. Provision Aegis IP Pool
