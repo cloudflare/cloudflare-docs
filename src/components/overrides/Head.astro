@@ -167,8 +167,8 @@ if (lastUpdated) {
 	});
 }
 
-if (frontmatter.updated) {
-	const daysBetween = differenceInCalendarDays(new Date(), frontmatter.updated);
+if (frontmatter.reviewed) {
+	const daysBetween = differenceInCalendarDays(new Date(), frontmatter.reviewed);
 
 	metaTags.push({
 		name: "pcx_last_reviewed",

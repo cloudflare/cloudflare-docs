@@ -95,7 +95,7 @@ In most cases, a Cache Reserve miss will result in both one class A and one clas
 	</tbody>
 </table>
 
-<Render file="cache-reserve-billing-note" />
+<Render file="cache-reserve-billing-note" product="cache" />
 
 ### Storage usage
 
@@ -144,7 +144,7 @@ Assuming 1,000 assets (each 1 GB) are written to Cache Reserve at the start of t
 | **TOTAL**          |                                           |                   | **$19.86** |
 |                    |                                           |                   |            |
 
-<Render file="cache-reserve-billing-note" />
+<Render file="cache-reserve-billing-note" product="cache" />
 
 #### Example 2
 
@@ -163,7 +163,7 @@ the estimated cost for the month would be:
 | **TOTAL**          |                                                      |                   | **$171.60** |
 |                    |                                                      |                   |             |
 
-<Render file="cache-reserve-billing-note" />
+<Render file="cache-reserve-billing-note" product="cache" />
 
 ## Tips and best practices
 
@@ -203,10 +203,7 @@ To delete Cache Reserve data via API use the following example requests. For mor
 
 **Request 1: Get Cache Reserve status**
 
-<APIRequest
-  path="/zones/{zone_id}/cache/cache_reserve"
-  method="GET"
-/>
+<APIRequest path="/zones/{zone_id}/cache/cache_reserve" method="GET" />
 
 ```json title="Response"
 {
@@ -225,10 +222,7 @@ If Cache Reserve is turned off, you can proceed to the Cache Reserve Clear opera
 
 **Request 2: Start Cache Reserve Clear**
 
-<APIRequest
-  path="/zones/{zone_id}/cache/cache_reserve_clear"
-  method="POST"
-/>
+<APIRequest path="/zones/{zone_id}/cache/cache_reserve_clear" method="POST" />
 
 ```json title="Response"
 {

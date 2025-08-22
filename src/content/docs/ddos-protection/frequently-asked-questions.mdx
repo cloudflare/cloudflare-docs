@@ -171,3 +171,13 @@ DDoS managed rules and Advanced DDoS Protection are autonomous and run on every 
 - **DDoS managed rules**: Detects and mitigates DDoS attacks in real-time. When it detects an attack, it deploys rules within seconds to mitigate the malicious traffic.
 - **Advanced TCP Protection**: Identifies and drops abnormal TCP/IP behavior before it hits application servers.
 - **Advanced DNS Protection**: Identifies and drops abnormal DNS queries behavior before it hits DNS servers.
+
+---
+
+## What is Advanced TCP Protection's Protected Learning functionality?
+
+The Protected Learning functionality enables the [Advanced TCP Protection](/ddos-protection/advanced-ddos-systems/overview/advanced-tcp-protection/) system to overcome Internet routing chaos while allowing your legitimate traffic through and blocking DDoS attacks at the edge.
+
+Anycast and BGP are protocols that help route Internet traffic by sending it to the nearest or most optimal data center. Occasional network events—such as a data center being taken offline for maintenance or changes in Internet routing—can cause an established connection to be rerouted to a different data center.
+
+Cloudflare's flow inference functionality, also known as Protected Learning, is specifically designed to handle this. When a TCP connection, such as a flow, shifts to a new data center, our system observes that it is an existing connection that does not appear in the local flow table. Instead of immediately blocking the flow as an unknown connection that may be part of a DDoS attack, our system uses a proprietary process to verify if the connection is legitimate. It might challenge the acknowledgment (ACK) packets of the flow to ensure it is not part of a DDoS attack. Once the flow passes our checks, we allow it to continue without interruption. This ensures that even rare, legitimate shifts in traffic do not break your long-running connections while keeping your network protected against DDoS attacks.

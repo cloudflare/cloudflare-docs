@@ -35,7 +35,7 @@ The `run` method can optionally return data, which is available when querying th
 export class MyWorkflow extends WorkflowEntrypoint<Env, Params> {
 	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
 	  // Steps here
-		let someComputedState = step.do("my step", async () => { })
+		let someComputedState = await step.do("my step", async () => { })
 
 		// Optional: return state from our run() method
 		return someComputedState

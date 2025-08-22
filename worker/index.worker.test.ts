@@ -178,6 +178,7 @@ describe("Cloudflare Docs", () => {
 			const response = await SELF.fetch(request);
 
 			expect(response.status).toBe(200);
+			expect(response.headers.get("x-robots-tag")).toBe("noindex");
 
 			const text = await response.text();
 			expect(text).toMatchInlineSnapshot(`

@@ -14,8 +14,7 @@ Simply creating the Durable Object Stub does not send a request to the Durable O
 A request is sent to the Durable Object and its lifecycle begins only once a method is invoked on the Durable Object Stub.
 
 ```js
-const id = env.MY_DURABLE_OBJECT.idFromName("foo");
-const stub = env.MY_DURABLE_OBJECT.get(id);
+const stub = env.MY_DURABLE_OBJECT.getByName("foo");
 // Now the request is sent to the remote Durable Object.
 const rpcResponse = await stub.sayHello();
 ```

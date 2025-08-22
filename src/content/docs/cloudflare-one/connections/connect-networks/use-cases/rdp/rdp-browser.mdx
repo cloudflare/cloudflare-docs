@@ -8,11 +8,12 @@ sidebar:
     text: Beta
 ---
 
-import { Render, GlossaryTooltip, Details  } from "~/components"
+import { Render, GlossaryTooltip, Details } from "~/components";
 
 Users can connect to an RDP server without installing an RDP client or the [WARP client](/cloudflare-one/connections/connect-devices/warp/) on their device. Browser-based RDP leverages [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/), which creates a secure, outbound-only connection from your RDP server to Cloudflare's global network. Setup involves running the `cloudflared` daemon on the RDP server (or any other host machine within the private network) and routing RDP traffic over a public hostname.
 
 There are two ways for users to [reach the RDP server in their browser](#4-connect-as-a-user):
+
 - **App Launcher (recommended)**: Users can log in to the [Access App Launcher](/cloudflare-one/applications/app-launcher/) with their Cloudflare Access credentials and then initiate an RDP connection within the browser to their Windows machine. Users will authenticate to the Windows machine using their pre-configured Windows username and password. Cloudflare does not manage any credentials on the Windows server.
 - **Direct URL**: A user may also navigate directly to the Windows server at `https://<app-domain>/rdp/<vnet-id>/<target-ip>/<port>`, where `vnet-id` is the <GlossaryTooltip term="Virtual network">virtual network</GlossaryTooltip> assigned to the Cloudflare Tunnel route. The authentication flow is the same as for the App Launcher; first users must log in to Cloudflare Access and then use their Windows credentials to authenticate to the Windows machine.
 
@@ -26,17 +27,20 @@ Browser-based RDP can be used in conjunction with [routing over WARP](/cloudflar
 
 ## 1. Connect the server to Cloudflare
 
-<Render file="tunnel/connect-private-network" />
+<Render file="tunnel/connect-private-network" product="cloudflare-one" />
 
-<Render file="tunnel/connect-private-network-infra-access" />
+<Render
+	file="tunnel/connect-private-network-infra-access"
+	product="cloudflare-one"
+/>
 
 ## 2. Add a target
 
-<Render file="access/add-target" params={{ protocol: "rdp" }}/>
+<Render file="access/add-target" params={{ protocol: "rdp" }} />
 
 ## 3. Create a DNS record
 
-To make your RDP targets (that is, your Windows machines) available through the browser, you will need a [Cloudflare DNS record](/dns/manage-dns-records/how-to/create-dns-records/) for the domain and subdomain that users will connect to.  This domain will be used to access any targets that are available to users through your Access application (see Step 4).
+To make your RDP targets (that is, your Windows machines) available through the browser, you will need a [Cloudflare DNS record](/dns/manage-dns-records/how-to/create-dns-records/) for the domain and subdomain that users will connect to. This domain will be used to access any targets that are available to users through your Access application (see Step 4).
 
 For example, if want users to connect to targets on `rdp.example.com`, [create a DNS record](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records) for `rdp.example.com`. You can create either an `A`, `AAAA`, or `CNAME` record:
 
@@ -76,23 +80,26 @@ The DNS record does not need to point to an active destination IP address or hos
 
 ## 4. Create an Access application
 
-<Render file="access/self-hosted-app/create-app" />
+<Render file="access/self-hosted-app/create-app" product="cloudflare-one" />
 
-6. Select **Add public hostname**.
+6.  Select **Add public hostname**.
 
-		:::note
-		Browser-based RDP is only compatible with public hostnames. If you add a private hostname or IP, RDP functionality will not be available in this application.
-		:::
+        :::note
+        Browser-based RDP is only compatible with public hostnames. If you add a private hostname or IP, RDP functionality will not be available in this application.
+        :::
 
-7. <Render file="access/self-hosted-app/choose-domain" product="cloudflare-one" />
+7.  <Render
+    	file="access/self-hosted-app/choose-domain"
+    	product="cloudflare-one"
+    />
 
-		:::note
-		You can only enable browser-based RDP on domains and subdomains, not for specific paths. The selected domain and subdomain must also have a corresponding DNS record (refer to [Step 3](#3-create-a-dns-record)).
-		:::
+        :::note
+        You can only enable browser-based RDP on domains and subdomains, not for specific paths. The selected domain and subdomain must also have a corresponding DNS record (refer to [Step 3](#3-create-a-dns-record)).
+        :::
 
-8. Expand **Browser rendering settings**. In the **Browser rendering** dropdown, select _RDP_.
+8.  Expand **Browser rendering settings**. In the **Browser rendering** dropdown, select _RDP_.
 
-9. In **Target criteria**, select the [target hostname(s)](#2-add-a-target) that define your RDP servers. The application definition will apply to all targets that share the selected target hostname, including any targets added in the future.
+9.  In **Target criteria**, select the [target hostname(s)](#2-add-a-target) that define your RDP servers. The application definition will apply to all targets that share the selected target hostname, including any targets added in the future.
 
 10. In **Port**, enter the [RDP listening port](https://docs.microsoft.com/en-us/windows-server/remote/remote-desktop-services/clients/change-listening-port) of your server. It will likely be port `3389`.
 
@@ -110,21 +117,28 @@ Ensure that only **Allow** or **Block** policies are present. **Bypass** and **S
 
 15. (Recommended) Turn on **Show application in App Launcher** and configure [App Launcher settings](/cloudflare-one/applications/app-launcher/) for the application. The App Launcher allows users to view the Windows servers that they can access using browser-based RDP. Without the App Launcher, users will need to know each target's direct URL.
 
-		:::note
-		Ensure that users match an Allow rule in your [App Launcher policies](/cloudflare-one/applications/app-launcher/#enable-the-app-launcher).
-		:::
+        :::note
+        Ensure that users match an Allow rule in your [App Launcher policies](/cloudflare-one/applications/app-launcher/#enable-the-app-launcher).
+        :::
 
 16. <Render file="access/access-block-page" product="cloudflare-one" />
 
 17. Select **Next**.
 
-18. <Render file="access/self-hosted-app/advanced-settings" product="cloudflare-one" />
+18. <Render
+    	file="access/self-hosted-app/advanced-settings"
+    	product="cloudflare-one"
+    />
 
 19. Select **Save**.
 
 ## 5. (Recommended) Modify order of precedence in Gateway
 
-<Render file="access/modify-gateway-policy-precedence" product="cloudflare-one" params={{ selector: "Access Infrastructure Target", protocol: "rdp" }} />
+<Render
+	file="access/modify-gateway-policy-precedence"
+	product="cloudflare-one"
+	params={{ selector: "Access Infrastructure Target", protocol: "rdp" }}
+/>
 
 ## 6. Connect as a user
 
@@ -132,23 +146,26 @@ To connect to a Windows machine over RDP:
 
 1. Open a browser and go to your App Launcher URL:
 
-	```text
-	https://<your-team-name>.cloudflareaccess.com
-	```
+   ```text
+   https://<your-team-name>.cloudflareaccess.com
+   ```
 
-	Replace `<your-team-name>` with your Zero Trust <GlossaryTooltip term="team name">team name</GlossaryTooltip>.
+   Replace `<your-team-name>` with your Zero Trust <GlossaryTooltip term="team name">team name</GlossaryTooltip>.
+
 2. Follow the prompts to log in to your identity provider.
 
-	Once you have authenticated, the App Launcher will display tiles showing the applications that you are authorized to use. Windows servers (targets) available through browser-based RDP will also appear as tiles. If a target is reachable through multiple Access applications, the target will have a tile per Access application.
+   Once you have authenticated, the App Launcher will display tiles showing the applications that you are authorized to use. Windows servers (targets) available through browser-based RDP will also appear as tiles. If a target is reachable through multiple Access applications, the target will have a tile per Access application.
+
 3. Select the target you want to connect to.
 
-	The App Launcher tile will launch a URL of the form `https://<app-domain>/rdp/<vnet-id>/<target-ip>/<port>`. You may also navigate directly to this URL.
+   The App Launcher tile will launch a URL of the form `https://<app-domain>/rdp/<vnet-id>/<target-ip>/<port>`. You may also navigate directly to this URL.
 
-	:::note[Virtual network ID]
-	`vnet-id` refers to the [virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/) (VNET) that the RDP target is assigned to in your Cloudflare Tunnel configuration. If you did not specify a VNET when routing the target through Cloudflare Tunnel, the target is automatically added to the default VNET.
+   :::note[Virtual network ID]
+   `vnet-id` refers to the [virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/) (VNET) that the RDP target is assigned to in your Cloudflare Tunnel configuration. If you did not specify a VNET when routing the target through Cloudflare Tunnel, the target is automatically added to the default VNET.
 
-	To fetch a list of all VNETs and their IDs, make a `GET` request to the [List Virtual Networks](/api/resources/zero_trust/subresources/networks/subresources/virtual_networks/methods/list/) endpoint. The default VNET will have the parameter `"is_default_network": true`.
-	:::
+   To fetch a list of all VNETs and their IDs, make a `GET` request to the [List Virtual Networks](/api/resources/zero_trust/subresources/networks/subresources/virtual_networks/methods/list/) endpoint. The default VNET will have the parameter `"is_default_network": true`.
+   :::
+
 4. Select the port that you want to connect to. The port selection screen only appears if the Access application allows RDP traffic on multiple ports (for example, port `3389` and port `65321`).
 5. (Optional) In your browser settings, allow the Access application to access the clipboard. Clipboard permissions grant the ability to copy or paste text between the local machine and the remote Windows machine.
 6. Enter your Windows username and password. For more information on how to format your username, refer to [User identifier formats](#user-identifier-formats).
@@ -194,6 +211,7 @@ Browser-based RDP supports connecting to Windows machines using the following lo
 SAM-formatted user identifiers are supported with and without spaces.
 
 Examples:
+
 - `DOMAIN\username`
 - `DOMAIN\username with spaces`
 - `.\username`
@@ -205,6 +223,7 @@ Examples:
 Identifiers which specify a domain, such as `DOMAIN\username`, can have a maximum of 20 characters for the domain and 15 characters for the username.
 
 Identifiers without a domain, such as `.\username`, will use the default domain. The username can have a maximum of 20 characters.
+
 </Details>
 
 #### User Principal Name (UPN)
@@ -212,6 +231,7 @@ Identifiers without a domain, such as `.\username`, will use the default domain.
 UPN-formatted user identifiers are supported with spaces, with and without quotes.
 
 Examples:
+
 - `"username with spaces"@domain.org`
 - `username with spaces@domain.org`
 - `username@domain.org`
@@ -231,7 +251,10 @@ The login flow differs slightly when using an Microsoft Entra ID-bound username:
 
 ### Cloudflare products
 
- <Render file="access/self-hosted-app/product-compatibility" product="cloudflare-one" />
+<Render
+	file="access/self-hosted-app/product-compatibility"
+	product="cloudflare-one"
+/>
 
 ## Known limitations
 
@@ -242,4 +265,3 @@ The login flow differs slightly when using an Microsoft Entra ID-bound username:
 - **Clipboard controls**: Admins do not have the ability to restrict copy/paste actions between the remote machine and the user's local clipboard.
 - **File transfers**: Users cannot copy/paste files from their local machine to the remote machine and vice versa.
 - **Network Level Authentication for Entra-joined accounts**: Browser-based RDP does not support PKU2U authentication which is required for [Network Level Authentication (NLA)](https://learn.microsoft.com/en-us/windows-server/remote/remote-desktop-services/remotepc/remote-desktop-allow-access#why-allow-connections-only-with-network-level-authentication) with Entra-joined accounts. Connecting to Entra-joined accounts requires disabling enforcement of NLA on the remote Windows machine. You can disable NLA from **Settings** > **System** > **Remote Desktop**, or use the Local Group Policy Editor to disable **Require user authentication for remote connections by using Network Level Authentication**.
-

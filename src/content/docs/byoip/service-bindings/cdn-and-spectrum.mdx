@@ -6,9 +6,17 @@ sidebar:
   label: CDN and Spectrum
 ---
 
-import { Render, APIRequest, Details, Example, TabItem, Tabs, GlossaryTooltip } from  "~/components";
+import {
+	Render,
+	APIRequest,
+	Details,
+	Example,
+	TabItem,
+	Tabs,
+	GlossaryTooltip,
+} from "~/components";
 
- With [service bindings](/byoip/service-bindings/), CDN[^1] customers using BYOIP can take the same prefix they have onboarded to Cloudflare and use it to selectively route traffic on a per-IP address basis to [Spectrum](/spectrum/)[^2], or vice versa. This means:
+With [service bindings](/byoip/service-bindings/), CDN[^1] customers using BYOIP can take the same prefix they have onboarded to Cloudflare and use it to selectively route traffic on a per-IP address basis to [Spectrum](/spectrum/)[^2], or vice versa. This means:
 
 - You can upgrade individual IPs within a CDN prefix to a Spectrum IP. For example, if you have a CDN prefix 203.0.113.0/24, you can upgrade 203.0.113.1 to Spectrum.
 
@@ -19,11 +27,11 @@ This guide will use the first example and consider a prefix that was onboarded t
 ## Before you begin
 
 <Render
-file="service-bindings-prereqs"
-params={{
-	pre_existing_product: "CDN",
-	added_product: "Spectrum"
-}}
+	file="service-bindings-prereqs"
+	params={{
+		pre_existing_product: "CDN",
+		added_product: "Spectrum",
+	}}
 />
 
 ---
@@ -33,21 +41,21 @@ params={{
 ### 1. Get account information
 
 <Render
-file="service-bindings-account-info"
-params={{
-	pre_existing_product: "CDN",
-	added_product: "Spectrum"
-}}
+	file="service-bindings-account-info"
+	params={{
+		pre_existing_product: "CDN",
+		added_product: "Spectrum",
+	}}
 />
 
 ### 2. Create service bindings
 
 <Render
-file="service-bindings-create-binding"
-params={{
-	pre_existing_product: "CDN",
-	added_product: "Spectrum"
-}}
+	file="service-bindings-create-binding"
+	params={{
+		pre_existing_product: "CDN",
+		added_product: "Spectrum",
+	}}
 />
 
 ### 3. Verify all service bindings
@@ -55,8 +63,8 @@ params={{
 After the propagation time (four to six hours), the [List Service Bindings](/api/resources/addressing/subresources/prefixes/subresources/service_bindings/methods/get/) endpoint should return all service bindings that are part of the prefix - in this case, CDN and Spectrum.
 
 <APIRequest
-path="/accounts/{account_id}/addressing/prefixes/{prefix_id}/bindings"
-method="GET"
+	path="/accounts/{account_id}/addressing/prefixes/{prefix_id}/bindings"
+	method="GET"
 />
 
 ---
@@ -168,36 +176,37 @@ Configuring Spectrum to use your own IP address is only possible via the [Cloudf
 The `origin_direct` field takes the origin IP address, while `edge_ips` allows you to define which IP address from your BYOIP prefix Cloudflare should use to process requests for your Spectrum application.
 
 <APIRequest
-path="/zones/{zone_id}/spectrum/apps"
-method="POST"
-json={[
-    {
-			"protocol":"tcp/22",
-			"dns":{
-				"type":"CNAME",
-				"name":"ssh.example.com"
-				},
-			"origin_direct":["tcp://192.0.2.1:22"],
-			"proxy_protocol":"off",
-			"ip_firewall":true,
-			"tls":"full",
-			"edge_ips":{
-				"type":"static",
-				"ips":["203.0.113.18"]
-				},
-			"traffic_type":"direct",
-			}
-  ]}
-	  code={{
-    mark: [17, 18, 19, 20, 21, "203.0.113.18"]
-  }}
+	path="/zones/{zone_id}/spectrum/apps"
+	method="POST"
+	json={[
+		{
+			protocol: "tcp/22",
+			dns: {
+				type: "CNAME",
+				name: "ssh.example.com",
+			},
+			origin_direct: ["tcp://192.0.2.1:22"],
+			proxy_protocol: "off",
+			ip_firewall: true,
+			tls: "full",
+			edge_ips: {
+				type: "static",
+				ips: ["203.0.113.18"],
+			},
+			traffic_type: "direct",
+		},
+	]}
+	code={{
+		mark: [17, 18, 19, 20, 21, "203.0.113.18"],
+	}}
 />
 
 ---
 
 ## (Optional) Add layer 7 functionality
 
-<Render file="service-bindings-related-products" />
+<Render file="service-bindings-related-products" product="byoip" />
 
 [^1]: Layer 7 HTTP-based
+
 [^2]: Layer 4 or Layer 7 HTTP with custom ports

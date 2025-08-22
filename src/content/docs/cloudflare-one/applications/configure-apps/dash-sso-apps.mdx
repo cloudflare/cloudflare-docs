@@ -81,7 +81,7 @@ Configure an identity provider (IdP)-initiated single sign-on (SSO) session usin
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Applications** > select your **SSO App**.
 2. Select **Configure** to access the application settings.
-3. In the **Basic Information** section, find the **SSO Endpoint URL** and copy it. You will need the copied **SSO Endpoint URL** for your IdP setup.
+3. In the **Basic Information** section, copy the **SSO Endpoint URL** and **Access Entity ID or Issuer**. You will need these values for your IdP setup.
 
 #### Configure Okta as the IdP
 
@@ -90,10 +90,11 @@ Configure an identity provider (IdP)-initiated single sign-on (SSO) session usin
 3. In the pop-up, select **SAML 2.0** and select **Next**.
 4. Enter a name for the app and select **Next**.
 5. In the **Single Sign-On URL** field, paste the **SSO Endpoint URL** [you copied earlier](/cloudflare-one/applications/configure-apps/dash-sso-apps/#prerequisites-1).
-6. Set the **Name ID Format** to **EmailAddress**.
-7. Set the **Application Username** to **Email**.
-8. Select **Next** > **Finish** to save the integration.
-9. Test the integration by going to your Okta User Dashboard, locating the new app tile, and selecting it to verify the SSO flow.
+6. In the **Audience URI (SP Entity ID)** field, paste the **Access Entity ID or Issuer** [you copied earlier](/cloudflare-one/applications/configure-apps/dash-sso-apps/#prerequisites-1).
+7. Set the **Name ID Format** to **EmailAddress**.
+8. Set the **Application Username** to **Email**.
+9. Select **Next** > **Finish** to save the integration.
+10. Test the integration by going to your Okta User Dashboard, locating the new app tile, and selecting it to verify the SSO flow.
 
 **(Optional) Enforce single IdP login with Instant Auth**
 

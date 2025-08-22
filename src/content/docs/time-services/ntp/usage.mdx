@@ -6,12 +6,11 @@ sidebar:
 head:
   - tag: title
     content: Using Cloudflare's Time Service
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
-<Render file="ntp-definition" />
+<Render file="ntp-definition" product="time-services" />
 
 To use our NTP server, change the time configuration in your device to point to `time.cloudflare.com`.
 
@@ -45,18 +44,18 @@ To have your Windows machine synchronize time from `time.cloudflare.com`:
 
 Cloudflare's time servers are included in [pool.ntp.org](https://www.ntppool.org/en/) which is the default time service for many Linux distributions and network appliances. If your NTP client is synchronizing from one of the below servers, you are already using Cloudflare's time services.
 
-* [162.159.200.1](https://www.ntppool.org/scores/162.159.200.1)
-* [162.159.200.123](https://www.ntppool.org/scores/162.159.200.123)
-* [2606:4700:f1::1](https://www.ntppool.org/scores/2606:4700:f1::1)
-* [2606:4700:f1::123](https://www.ntppool.org/scores/2606:4700:f1::123)
+- [162.159.200.1](https://www.ntppool.org/scores/162.159.200.1)
+- [162.159.200.123](https://www.ntppool.org/scores/162.159.200.123)
+- [2606:4700:f1::1](https://www.ntppool.org/scores/2606:4700:f1::1)
+- [2606:4700:f1::123](https://www.ntppool.org/scores/2606:4700:f1::123)
 
 To manually configure your NTP client to use our time service, please first refer to the documentation for your Linux distribution to determine which NTP client you are using and where the configuration files are stored.
 
 For example:
 
-* [Ubuntu](https://ubuntu.com/server/docs/about-time-synchronisation)
-* [Debian](https://wiki.debian.org/NTP)
-* [RHEL](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/system_administrators_guide/ch-configuring_ntp_using_the_chrony_suite)
+- [Ubuntu](https://ubuntu.com/server/docs/about-time-synchronisation)
+- [Debian](https://wiki.debian.org/NTP)
+- [RHEL](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/system_administrators_guide/ch-configuring_ntp_using_the_chrony_suite)
 
 Exact configuration will vary by Linux distribution, but below are some example configurations for popular clients:
 

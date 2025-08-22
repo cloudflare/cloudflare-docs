@@ -277,8 +277,7 @@ export default {
   async fetch(request, env) {
     let url = new URL(request.url);
     let userId = url.searchParams.get("userId") || crypto.randomUUID();
-    let id = env.ALARM_EXAMPLE.idFromName(userId);
-    return await env.ALARM_EXAMPLE.get(id).fetch(request);
+    return await env.ALARM_EXAMPLE.getByName(userId).fetch(request);
   },
 };
 
@@ -1269,7 +1268,7 @@ export default {
 		const client = new OpenAI({
 			apiKey: env.OPENAI_API_KEY,
 			// Optional: use AI Gateway to bring logs, evals & caching to your AI requests
-			// https://developers.cloudflare.com/ai-gateway/providers/openai/
+			// https://developers.cloudflare.com/ai-gateway/usage/providers/openai/
 			// baseUrl: "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai"
 		});
 

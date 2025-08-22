@@ -10,13 +10,17 @@ sidebar:
     text: Beta
 ---
 
-import { Tabs, TabItem, Details } from "~/components";
+import { GlossaryTooltip, Tabs, TabItem, Details, Type } from "~/components";
 
-Firewall for AI is a detection that can help protect your services powered by large language models (LLMs) against abuse. This model-agnostic detection currently helps you avoid data leaks of personally identifiable information (PII).
+Firewall for AI is a detection that can help protect your services powered by <GlossaryTooltip term="LLM">large language models</GlossaryTooltip> (LLMs) against abuse. This model-agnostic detection currently helps you do the following:
 
-When enabled, the detection runs on incoming traffic, searching for any LLM prompts attempting to exploit the model in order to extract data.
+- Prevent data leaks of personally identifiable information (PII) — for example, phone numbers, email addresses, social security numbers, and credit card numbers.
+- Detect and moderate unsafe or harmful prompts – for example, prompts potentially related to violent crimes.
+- Detect prompts intentionally designed to subvert the intended behavior of the LLM as specified by the developer – for example, <GlossaryTooltip term="prompt injection">prompt injection</GlossaryTooltip> attacks.
 
-Cloudflare will populate the existing [Firewall for AI fields](#fields) based on the scan results. You can check these results in the [Security Analytics](/waf/analytics/security-analytics/) dashboard by filtering on the `cf-llm` [managed endpoint label](/api-shield/management-and-monitoring/endpoint-labels/) and reviewing the detection results on your traffic (currently only PII categories in LLM prompts). Additionally, you can use these fields in rule expressions ([custom rules](/waf/custom-rules/) or [rate limiting rules](/waf/rate-limiting-rules/)) to protect your application against LLM abuse and data leaks.
+When enabled, the detection runs on incoming traffic, searching for any LLM prompts attempting to exploit the model.
+
+Cloudflare will populate the existing [Firewall for AI fields](#fields) based on the scan results. You can check these results in the [Security Analytics](/waf/analytics/security-analytics/) dashboard by filtering on the `cf-llm` [managed endpoint label](/api-shield/management-and-monitoring/endpoint-labels/) and reviewing the detection results on your traffic. Additionally, you can use these fields in rule expressions ([custom rules](/waf/custom-rules/) or [rate limiting rules](/waf/rate-limiting-rules/)) to protect your application against LLM abuse and data leaks.
 
 ## Availability
 
@@ -61,11 +65,11 @@ curl "https://<YOUR_HOSTNAME>/api/v1/" \
 
 The PII category for this request would be `EMAIL_ADDRESS`.
 
-Then, use [Security Analytics](/waf/analytics/security-analytics/) in the new application security dashboard to validate that the WAF is correctly detecting prompts leaking PII data in incoming requests. Filter data by the `cf-llm` managed endpoint label and review the detection results on your traffic.
+Then, use [Security Analytics](/waf/analytics/security-analytics/) in the new application security dashboard to validate that the WAF is correctly detecting potentially harmful prompts in incoming requests. Filter data by the `cf-llm` managed endpoint label and review the detection results on your traffic.
 
 Alternatively, create a custom rule like the one described in the next step using a _Log_ action. This rule will generate [security events](/waf/analytics/security-events/) that will allow you to validate your configuration.
 
-### 3. Mitigate requests containing PII
+### 3. Mitigate harmful requests
 
 [Create a custom rule](/waf/custom-rules/create-dashboard/) that blocks requests where Cloudflare detected personally identifiable information (PII) in the incoming request (as part of an LLM prompt), returning a custom JSON body:
 
@@ -82,7 +86,7 @@ Alternatively, create a custom rule like the one described in the next step usin
 - **With response type**: Custom JSON
 - **Response body**: `{ "error": "Your request was blocked. Please rephrase your request." }`
 
-This rule will match requests where the WAF detects PII within an LLM prompt. For a list of fields provided by Firewall for AI, refer to [Fields](#fields).
+For additional examples, refer to [Example mitigation rules](#example-mitigation-rules). For a list of fields provided by Firewall for AI, refer to [Fields](#fields).
 
 <Details header="Combine with other Rules language fields">
 
@@ -114,10 +118,63 @@ You can combine the previous expression with other [fields](/ruleset-engine/rule
 
 When enabled, Firewall for AI populates the following fields:
 
-| Field name in the dashboard | Field                                                                                                           |
-| --------------------------- | --------------------------------------------------------------------------------------------------------------- |
-| LLM PII Detected            | [`cf.llm.prompt.pii_detected`](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.pii_detected/)     |
-| LLM PII Categories          | [`cf.llm.prompt.pii_categories`](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.pii_categories/) |
-| LLM Content Detected        | [`cf.llm.prompt.detected`](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.detected/)             |
+| Name in the dashboard       | Field + Data type                                                                                                                                                    | Description                                                                                                                                                                                                                              |
+| --------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| LLM PII Detected            | [`cf.llm.prompt.pii_detected`](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.pii_detected/) <br/> <Type text="Boolean"/>                             | Indicates whether any personally identifiable information (PII) has been detected in the LLM prompt included in the request.                                                                                                             |
+| LLM PII Categories          | [`cf.llm.prompt.pii_categories`](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.pii_categories/) <br/> <Type text="Array<String>"/>                   | Array of string values with the personally identifiable information (PII) categories found in the LLM prompt included in the request.<br/>[Category list](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.pii_categories/) |
+| LLM Content Detected        | [`cf.llm.prompt.detected`](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.detected/) <br/> <Type text="Boolean "/>                                    | Indicates whether Cloudflare detected an LLM prompt in the incoming request.                                                                                                                                                             |
+| LLM Unsafe topic detected   | [`cf.llm.prompt.unsafe_topic_detected`](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.unsafe_topic_detected/) <br/> <Type text="Boolean"/>           | Indicates whether the incoming request includes any unsafe topic category in the LLM prompt.                                                                                                                                             |
+| LLM Unsafe topic categories | [`cf.llm.prompt.unsafe_topic_categories`](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.unsafe_topic_categories/) <br/> <Type text="Array<String>"/> | Array of string values with the type of unsafe topics detected in the LLM prompt.<br/>[Category list](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.unsafe_topic_categories/)                                            |
+| LLM Injection score         | [`cf.llm.prompt.injection_score`](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.injection_score/) <br/> <Type text="Number"/>                        | A score from 1–99 that represents the likelihood that the LLM prompt in the request is trying to perform a prompt injection attack.                                                                                                      |
 
-For a list of PII categories, refer to the [`cf.llm.prompt.pii_categories` field reference](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.pii_categories/).
+## Example mitigation rules
+
+### Block requests with specific PII category in LLM prompt
+
+The following example [custom rule](/waf/custom-rules/create-dashboard/) will block requests with an LLM prompt that tries to obtain PII of a specific [category](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.pii_categories/):
+
+- **If incoming requests match**:
+
+  | Field              | Operator | Value         |
+  | ------------------ | -------- | ------------- |
+  | LLM PII Categories | is in    | `Credit Card` |
+
+  If you use the Expression Editor, enter the following expression:<br />
+  `(any(cf.llm.prompt.pii_categories[*] in {"CREDIT_CARD"}))`
+
+- **Action**: _Block_
+
+### Block requests with specific unsafe content categories in LLM prompt
+
+The following example [custom rule](/waf/custom-rules/create-dashboard/) will block requests with an LLM prompt containing unsafe content of specific [categories](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.unsafe_topic_categories/):
+
+- **If incoming requests match**:
+
+  | Field                       | Operator | Value                            |
+  | --------------------------- | -------- | -------------------------------- |
+  | LLM Unsafe topic categories | is in    | `S1: Violent Crimes` `S10: Hate` |
+
+  If you use the Expression Editor, enter the following expression:<br />
+  `(any(cf.llm.prompt.unsafe_topic_categories[*] in {"S1" "S10"}))`
+
+- **Action**: _Block_
+
+### Block requests with prompt injection attempt in LLM prompt
+
+The following example [custom rule](/waf/custom-rules/create-dashboard/) will block requests with an [injection score](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.injection_score/) below `20`. Using a low injection score value in the rule helps avoid false positives.
+
+- **If incoming requests match**:
+
+  | Field               | Operator  | Value |
+  | ------------------- | --------- | ----- |
+  | LLM Injection score | less than | `20`  |
+
+  If you use the Expression Editor, enter the following expression:<br />
+  `(cf.llm.prompt.injection_score < 20)`
+
+- **Action**: _Block_
+
+## More resources
+
+- [Cloudflare AI Gateway](/ai-gateway/)
+- [Learning Center: What are the OWASP Top 10 risks for LLMs?](https://www.cloudflare.com/learning/ai/owasp-top-10-risks-for-llms/)

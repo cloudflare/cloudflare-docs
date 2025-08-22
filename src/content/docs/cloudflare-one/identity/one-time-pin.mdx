@@ -5,13 +5,13 @@ sidebar:
   order: 2
 ---
 
-import { Tabs, TabItem, Render, APIRequest } from '~/components';
+import { Tabs, TabItem, Render, APIRequest } from "~/components";
 
 Cloudflare Access can send a one-time PIN (OTP) to approved email addresses as an alternative to integrating an identity provider. You can simultaneously configure OTP login and the identity provider of your choice to allow users to select their own authentication method.
 
 For example, if your team uses Okta but you are collaborating with someone outside your organization, you can use OTP to grant access to guests.
 
-<Render file="access/one-time-pin-warning" />
+<Render file="access/one-time-pin-warning" product="cloudflare-one" />
 
 ## Set up OTP
 
@@ -26,30 +26,31 @@ For example, if your team uses Okta but you are collaborating with someone outsi
 Make a `POST` request to the [Identity Providers](/api/resources/zero_trust/subresources/identity_providers/methods/create/) endpoint:
 
 <APIRequest
-  path="/accounts/{account_id}/access/identity_providers"
-  method="POST"
-  json={{
-    name: "One-time PIN login",
-    type: "onetimepin",
-    config: {},
-  }}
+	path="/accounts/{account_id}/access/identity_providers"
+	method="POST"
+	json={{
+		name: "One-time PIN login",
+		type: "onetimepin",
+		config: {},
+	}}
 />
 
 </TabItem> <TabItem label="Terraform (v5)">
 
-1. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_token):
-	- `Access: Organizations, Identity Providers, and Groups Write`
+1.  Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_token):
+    - `Access: Organizations, Identity Providers, and Groups Write`
 
-2. Configure the [`cloudflare_zero_trust_access_identity_provider`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_access_identity_provider) resource:
+2.  Configure the [`cloudflare_zero_trust_access_identity_provider`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_access_identity_provider) resource:
 
-		```tf
-		resource "cloudflare_zero_trust_access_identity_provider" "onetimepin_login" {
-			account_id = var.cloudflare_account_id
-			name       = "One-time PIN login"
-			type       = "onetimepin"
-			config 		 = {}
-		}
-		```
+        	```tf
+        	resource "cloudflare_zero_trust_access_identity_provider" "onetimepin_login" {
+        		account_id = var.cloudflare_account_id
+        		name       = "One-time PIN login"
+        		type       = "onetimepin"
+        		config 		 = {}
+        	}
+        	```
+
 </TabItem></Tabs>
 
 :::tip
@@ -74,7 +75,6 @@ By design, blocked users will not receive an email. The login page will always s
 
 4. Paste the PIN into the Access login page and select **Sign in**.
    ![Enter PIN to sign in.](~/assets/images/cloudflare-one/identity/otp/otp2.png)
-
    - If the code was valid, you will be redirected to the application.
    - If the code was invalid, you will see **That account does not have access.**
 
@@ -82,4 +82,3 @@ By design, blocked users will not receive an email. The login page will always s
 
 Access only logs an authentication attempt after the user enters a code. If the user enters their email but never submits a code, the event will not appear in your [audit logs](/cloudflare-one/insights/logs/audit-logs/#authentication-logs).
 :::
-

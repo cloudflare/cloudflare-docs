@@ -6,10 +6,9 @@ sidebar:
 head:
   - tag: title
     content: Enabling Cloudflare Web Analytics
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 ## Sites not proxied through Cloudflare
 
@@ -28,11 +27,11 @@ Repeat steps 3-7 for all the websites you want to track with Web Analytics by se
 
 For more information on how many sites you can track, refer to [Limits](/web-analytics/limits/).
 
-***
+---
 
 ## Sites proxied through Cloudflare
 
-<Render file="web-analytics-proxied-setup" />
+<Render file="web-analytics-proxied-setup" product="web-analytics" />
 
 Your website is now using Web Analytics through the automatic setup, which is enabled by default.
 
@@ -40,7 +39,7 @@ You always have the option to go to **Manage Site** and change the automatic set
 
 - **Enable, excluding visitor data in the EU** - The JS Snippet will not be injected for visitors from the EU.
 - **Enable with JS Snippet installation** - The JS Snippet needs to be installed manually.
-- **Disable** - The JS Snippet will not be injected and has been disabled. 
+- **Disable** - The JS Snippet will not be injected and has been disabled.
 
 Repeat these steps for all of the websites you want to track with Web Analytics. Web Analytics is enabled by default for sites proxied through Cloudflare that previously used Browser Insights. Adjust Web Analytics for your site at any time by selecting **Manage site** from Web Analytics.
 
@@ -50,13 +49,11 @@ For more information on how to configure which sites or pages you track with Web
 
 :::caution[Important]
 
-
 If you have a `Cache-Control` header set to `public, no-transform`, Cloudflare proxy will not be able to modify the original payload of the website. Therefore, the Beacon script will not be automatically injected to your site, and Web Analytics will not work. Refer to [Origin cache control](/cache/concepts/cache-control/) for more information.
-
 
 :::
 
-***
+---
 
 ## Pages projects
 

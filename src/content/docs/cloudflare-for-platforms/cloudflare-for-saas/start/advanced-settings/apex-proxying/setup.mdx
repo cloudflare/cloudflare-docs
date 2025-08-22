@@ -6,22 +6,30 @@ sidebar:
 head:
   - tag: title
     content: Set up apex proxying
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 To set up Cloudflare for SaaS for [apex proxying](/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/apex-proxying/) - as opposed to the [normal setup](/cloudflare-for-platforms/cloudflare-for-saas/start/getting-started/) - perform the following steps.
 
-***
+---
 
-<Render file="get-started-prereqs" params={{ one: "(this should be within the account associated with your IP prefixes)." }} />
+<Render
+	file="get-started-prereqs"
+	params={{
+		one: "(this should be within the account associated with your IP prefixes).",
+	}}
+/>
 
-***
+---
 
 ## Initial setup
 
-<Render file="get-started-initial-setup-preamble" /> <br/>
+<Render
+	file="get-started-initial-setup-preamble"
+	product="cloudflare-for-platforms"
+/>
+<br />
 
 ### 1. Get IP range
 
@@ -31,21 +39,19 @@ For more details on this step, reach out to your account team.
 
 :::caution
 
-
 These IP addresses are different than those associated with your Cloudflare zone.
-
 
 :::
 
 ### 2. Create fallback origin
 
-<Render file="get-started-fallback-origin" />
+<Render file="get-started-fallback-origin" product="cloudflare-for-platforms" />
 
-***
+---
 
 ## Per-hostname setup
 
-<Render file="get-started-per-hostname" />
+<Render file="get-started-per-hostname" product="cloudflare-for-platforms" />
 
 ### 3. Have customer create DNS record
 
@@ -53,9 +59,7 @@ To finish the custom hostname setup, your customer can set up either an A or CNA
 
 :::note
 
-
 If you want your customers to be able to use CNAME records, you will need to complete the [normal setup process](/cloudflare-for-platforms/cloudflare-for-saas/start/getting-started/) as well.
-
 
 :::
 
@@ -63,7 +67,7 @@ If you want your customers to be able to use CNAME records, you will need to com
 
 If your customer uses an A record at their authoritative DNS provider, they need to point their hostname to the IP prefix allocated for your account. You should also make sure that they point to the specific IPs that you want to use for apex proxying - if you have Static IPs or BYOIP, and your customer points to any of the IPs associated to your account, validation will run.
 
-<Render file="get-started-check-statuses" />
+<Render file="get-started-check-statuses" product="cloudflare-for-platforms" />
 
 Your customer's A record might look like the following:
 
@@ -75,7 +79,7 @@ example.com.  60  IN  A   192.0.2.1
 
 If your customer uses a CNAME record at their authoritative DNS, they need to point their hostname to your [CNAME target](/cloudflare-for-platforms/cloudflare-for-saas/start/getting-started/#2-optional-create-cname-target) [^1].
 
-<Render file="get-started-check-statuses" />
+<Render file="get-started-check-statuses" product="cloudflare-for-platforms" />
 
 Your customer's CNAME record might look like the following:
 
@@ -83,8 +87,12 @@ Your customer's CNAME record might look like the following:
 mystore.com CNAME customers.saasprovider.com
 ```
 
-[^1]: <Render file="regional-services" />
+[^1]:
+    <Render file="regional-services" product="cloudflare-for-platforms" />
 
 #### Service continuation
 
-<Render file="get-started-service-continuation" />
+<Render
+	file="get-started-service-continuation"
+	product="cloudflare-for-platforms"
+/>

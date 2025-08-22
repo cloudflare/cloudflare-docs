@@ -22,7 +22,7 @@ Before you begin, you must have:
 
 1. Page load: The Turnstile script loads and scans for elements or waits for programmatic calls.
 2. Widget rendering: Widgets are created and begin running challenges.
-3. Token generation: When a challenge is completed, a token is generated. 
+3. Token generation: When a challenge is completed, a token is generated.
 4. Form integration: The token is made available via callbacks or hidden form fields.
 5. Server validation: Your server receives the token and validates it using the Siteverify API.
 
@@ -46,7 +46,11 @@ Cloudflare recommends using implicit rendering on the following scenarios:
 Add the Turnstile JavaScript API to your HTML.
 
 ```html wrap
-<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+<script
+	src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+	async
+	defer
+></script>
 ```
 
 :::caution
@@ -66,12 +70,13 @@ Add widget containers where you want the challenges to appear on your website.
 [Customize your widgets](/turnstile/get-started/client-side-rendering/widget-configurations/) using data attributes.
 
 ```html
-<div class="cf-turnstile" 
-    data-sitekey="<YOUR-SITE-KEY>"
-    data-theme="light"
-    data-size="normal"
-    data-callback="onSuccess">
-</div>
+<div
+	class="cf-turnstile"
+	data-sitekey="<YOUR-SITE-KEY>"
+	data-theme="light"
+	data-size="normal"
+	data-callback="onSuccess"
+></div>
 ```
 
 ### Complete implicit rendering examples by use case
@@ -88,11 +93,12 @@ Add widget containers where you want the challenges to appear on your website.
     <form action="/login" method="POST">
         <input type="text" name="username" placeholder="Username" required />
         <input type="password" name="password" placeholder="Password" required />
-        
+
         <!-- Turnstile widget with basic configuration -->
         <div class="cf-turnstile" data-sitekey="<YOUR-SITE-KEY>"></div>
         <button type="submit">Log in</button>
     </form>
+
 </body>
 </html>
 ```
@@ -101,36 +107,38 @@ Add widget containers where you want the challenges to appear on your website.
 <Details header="Advanced form with callbacks">
 
 ```html title="Example"
-
 <form action="/contact" method="POST" id="contact-form">
-    <input type="email" name="email" placeholder="Email" required />
-    <textarea name="message" placeholder="Message" required></textarea>
-<!-- Widget with callbacks and custom configuration -->
-    <div class="cf-turnstile" 
-         data-sitekey="<YOUR-SITE-KEY>"
-         data-theme="auto"
-         data-size="flexible"
-         data-callback="onTurnstileSuccess"
-         data-error-callback="onTurnstileError"
-         data-expired-callback="onTurnstileExpired"></div>
-    <button type="submit" id="submit-btn" disabled>Send Message</button>
+	<input type="email" name="email" placeholder="Email" required />
+	<textarea name="message" placeholder="Message" required></textarea>
+	<!-- Widget with callbacks and custom configuration -->
+	<div
+		class="cf-turnstile"
+		data-sitekey="<YOUR-SITE-KEY>"
+		data-theme="auto"
+		data-size="flexible"
+		data-callback="onTurnstileSuccess"
+		data-error-callback="onTurnstileError"
+		data-expired-callback="onTurnstileExpired"
+	></div>
+	<button type="submit" id="submit-btn" disabled>Send Message</button>
 </form>
 
 <script>
-function onTurnstileSuccess(token) {
-    console.log('Turnstile success:', token);
-    document.getElementById('submit-btn').disabled = false;
-}
-function onTurnstileError(errorCode) {
-    console.error('Turnstile error:', errorCode);
-    document.getElementById('submit-btn').disabled = true;
-}
-function onTurnstileExpired() {
-    console.warn('Turnstile token expired');
-    document.getElementById('submit-btn').disabled = true;
-}
+	function onTurnstileSuccess(token) {
+		console.log("Turnstile success:", token);
+		document.getElementById("submit-btn").disabled = false;
+	}
+	function onTurnstileError(errorCode) {
+		console.error("Turnstile error:", errorCode);
+		document.getElementById("submit-btn").disabled = true;
+	}
+	function onTurnstileExpired() {
+		console.warn("Turnstile token expired");
+		document.getElementById("submit-btn").disabled = true;
+	}
 </script>
 ```
+
 </Details>
 
 <Details header="Multiple widgets with different configurations">
@@ -138,26 +146,31 @@ function onTurnstileExpired() {
 ```html title="Example"
 <!-- Compact widget for newsletter signup -->
 <form action="/newsletter" method="POST">
-    <input type="email" name="email" placeholder="Email" />
-    <div class="cf-turnstile" 
-         data-sitekey="<YOUR-SITE-KEY>"
-         data-size="compact"
-         data-action="newsletter"></div>
-    <button type="submit">Subscribe</button>
+	<input type="email" name="email" placeholder="Email" />
+	<div
+		class="cf-turnstile"
+		data-sitekey="<YOUR-SITE-KEY>"
+		data-size="compact"
+		data-action="newsletter"
+	></div>
+	<button type="submit">Subscribe</button>
 </form>
 
 <!-- Normal widget for contact form -->
 <form action="/contact" method="POST">
-    <input type="text" name="name" placeholder="Name" />
-    <input type="email" name="email" placeholder="Email" />
-    <textarea name="message" placeholder="Message"></textarea>
-    <div class="cf-turnstile" 
-         data-sitekey="<YOUR-SITE-KEY>"
-         data-action="contact"
-         data-theme="dark"></div>
-    <button type="submit">Send</button>
+	<input type="text" name="name" placeholder="Name" />
+	<input type="email" name="email" placeholder="Email" />
+	<textarea name="message" placeholder="Message"></textarea>
+	<div
+		class="cf-turnstile"
+		data-sitekey="<YOUR-SITE-KEY>"
+		data-action="contact"
+		data-theme="dark"
+	></div>
+	<button type="submit">Send</button>
 </form>
 ```
+
 </Details>
 
 <Details header="Automatic form integration">
@@ -166,13 +179,14 @@ When you embed a Turnstile widget inside a `<form>` element, an invisible input 
 
 ```html
 <form action="/submit" method="POST">
-    <input type="text" name="data" />
-    <div class="cf-turnstile" data-sitekey="<YOUR-SITE-KEY>"></div>
-    <!-- Hidden field automatically added: -->
-    <!-- <input type="hidden" name="cf-turnstile-response" value="TOKEN_VALUE" /> -->
-    <button type="submit">Submit</button>
+	<input type="text" name="data" />
+	<div class="cf-turnstile" data-sitekey="<YOUR-SITE-KEY>"></div>
+	<!-- Hidden field automatically added: -->
+	<!-- <input type="hidden" name="cf-turnstile-response" value="TOKEN_VALUE" /> -->
+	<button type="submit">Submit</button>
 </form>
 ```
+
 </Details>
 
 ---
@@ -196,7 +210,10 @@ Cloudflare recommends using explicit rendering on the following scenarios:
 #### 1. Add the script to your website with explicit rendering
 
 ```html wrap
-<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" defer></script>
+<script
+	src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"
+	defer
+></script>
 ```
 
 #### 2. Create container elements
@@ -212,11 +229,11 @@ Create containers without the `cf-turnstile` class.
 Call `turnstile.render()` when you are ready to create the widget.
 
 ```js
-const widgetId = turnstile.render('#turnstile-container', {
-    sitekey: '<YOUR-SITE-KEY>',
-    callback: function(token) {
-        console.log('Success:', token);
-    }
+const widgetId = turnstile.render("#turnstile-container", {
+	sitekey: "<YOUR-SITE-KEY>",
+	callback: function (token) {
+		console.log("Success:", token);
+	},
 });
 ```
 
@@ -227,54 +244,62 @@ const widgetId = turnstile.render('#turnstile-container', {
 ```html title="Example"
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Explicit Rendering</title>
-    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" defer></script>
-</head>
-<body>
-    <form id="login-form">
-        <input type="text" name="username" placeholder="Username" />
-        <input type="password" name="password" placeholder="Password" />
-        <div id="turnstile-widget"></div>
-        <button type="submit">Login</button>
-    </form>
+	<head>
+		<title>Explicit Rendering</title>
+		<script
+			src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"
+			defer
+		></script>
+	</head>
+	<body>
+		<form id="login-form">
+			<input type="text" name="username" placeholder="Username" />
+			<input type="password" name="password" placeholder="Password" />
+			<div id="turnstile-widget"></div>
+			<button type="submit">Login</button>
+		</form>
 
-    <script>
-    window.onload = function() {
-        turnstile.render('#turnstile-widget', {
-            sitekey: '<YOUR-SITE-KEY>',
-            callback: function(token) {
-                console.log('Turnstile token:', token);
-                // Handle successful verification
-            },
-            'error-callback': function(errorCode) {
-                console.error('Turnstile error:', errorCode);
-            }
-        });
-    };
-    </script>
-</body>
+		<script>
+			window.onload = function () {
+				turnstile.render("#turnstile-widget", {
+					sitekey: "<YOUR-SITE-KEY>",
+					callback: function (token) {
+						console.log("Turnstile token:", token);
+						// Handle successful verification
+					},
+					"error-callback": function (errorCode) {
+						console.error("Turnstile error:", errorCode);
+					},
+				});
+			};
+		</script>
+	</body>
 </html>
 ```
+
 </Details>
 
 <Details header="Using onload callback">
 
 ```html title="Example"
-<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=onTurnstileLoad" defer></script>
+<script
+	src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=onTurnstileLoad"
+	defer
+></script>
 <div id="widget-container"></div>
 <script>
-function onTurnstileLoad() {
-    turnstile.render('#widget-container', {
-        sitekey: '<YOUR-SITE-KEY>',
-        theme: 'light',
-        callback: function(token) {
-            console.log('Challenge completed:', token);
-        }
-    });
-}
+	function onTurnstileLoad() {
+		turnstile.render("#widget-container", {
+			sitekey: "<YOUR-SITE-KEY>",
+			theme: "light",
+			callback: function (token) {
+				console.log("Challenge completed:", token);
+			},
+		});
+	}
 </script>
 ```
+
 </Details>
 
 <Details header="Advanced SPA implementation">
@@ -285,69 +310,70 @@ function onTurnstileLoad() {
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"></script>
 
 <script>
-class TurnstileManager {
-    constructor() {
-        this.widgets = new Map();
-    }
-    createWidget(containerId, config) {
-        // Wait for Turnstile to be ready
-        turnstile.ready(() => {
-            const widgetId = turnstile.render(containerId, {
-                sitekey: config.sitekey,
-                theme: config.theme || 'auto',
-                size: config.size || 'normal',
-                callback: (token) => {
-                    console.log(`Widget ${widgetId} completed:`, token);
-                    if (config.onSuccess) config.onSuccess(token, widgetId);
-                },
-                'error-callback': (error) => {
-                    console.error(`Widget ${widgetId} error:`, error);
-                    if (config.onError) config.onError(error, widgetId);
-                }
-            });
-            
-            this.widgets.set(containerId, widgetId);
-            return widgetId;
-        });
-    }
-    removeWidget(containerId) {
-        const widgetId = this.widgets.get(containerId);
-        if (widgetId) {
-            turnstile.remove(widgetId);
-            this.widgets.delete(containerId);
-        }
-    }
-    resetWidget(containerId) {
-        const widgetId = this.widgets.get(containerId);
-        if (widgetId) {
-            turnstile.reset(widgetId);
-        }
-    }
-}
+	class TurnstileManager {
+		constructor() {
+			this.widgets = new Map();
+		}
+		createWidget(containerId, config) {
+			// Wait for Turnstile to be ready
+			turnstile.ready(() => {
+				const widgetId = turnstile.render(containerId, {
+					sitekey: config.sitekey,
+					theme: config.theme || "auto",
+					size: config.size || "normal",
+					callback: (token) => {
+						console.log(`Widget ${widgetId} completed:`, token);
+						if (config.onSuccess) config.onSuccess(token, widgetId);
+					},
+					"error-callback": (error) => {
+						console.error(`Widget ${widgetId} error:`, error);
+						if (config.onError) config.onError(error, widgetId);
+					},
+				});
 
-// Usage
-const manager = new TurnstileManager();
+				this.widgets.set(containerId, widgetId);
+				return widgetId;
+			});
+		}
+		removeWidget(containerId) {
+			const widgetId = this.widgets.get(containerId);
+			if (widgetId) {
+				turnstile.remove(widgetId);
+				this.widgets.delete(containerId);
+			}
+		}
+		resetWidget(containerId) {
+			const widgetId = this.widgets.get(containerId);
+			if (widgetId) {
+				turnstile.reset(widgetId);
+			}
+		}
+	}
 
-// Create a widget when user clicks a button
-document.getElementById('show-form-btn').addEventListener('click', () => {
-    document.getElementById('dynamic-form-container').innerHTML = `
+	// Usage
+	const manager = new TurnstileManager();
+
+	// Create a widget when user clicks a button
+	document.getElementById("show-form-btn").addEventListener("click", () => {
+		document.getElementById("dynamic-form-container").innerHTML = `
         <form>
             <input type="email" placeholder="Email" />
             <div id="turnstile-widget"></div>
             <button type="submit">Submit</button>
         </form>
     `;
-    manager.createWidget('#turnstile-widget', {
-        sitekey: '<YOUR-SITE-KEY>',
-        theme: 'dark',
-        onSuccess: (token) => {
-            // Handle successful verification
-            console.log('Form ready for submission');
-        }
-    });
-});
+		manager.createWidget("#turnstile-widget", {
+			sitekey: "<YOUR-SITE-KEY>",
+			theme: "dark",
+			onSuccess: (token) => {
+				// Handle successful verification
+				console.log("Form ready for submission");
+			},
+		});
+	});
 </script>
 ```
+
 </Details>
 
 ### Widget lifecycle management
@@ -356,9 +382,9 @@ Explicit rendering provides full control over the widget lifecycle.
 
 ```js
 // Render a widget
-const widgetId = turnstile.render('#container', {
-    sitekey: '<YOUR-SITE-KEY>',
-    callback: handleSuccess
+const widgetId = turnstile.render("#container", {
+	sitekey: "<YOUR-SITE-KEY>",
+	callback: handleSuccess,
 });
 
 // Get the current token
@@ -380,13 +406,13 @@ Control when challenges run with execution modes.
 
 ```js
 // Render widget but don't run challenge yet
-const widgetId = turnstile.render('#container', {
-    sitekey: '<YOUR-SITE-KEY>',
-    execution: 'execute'  // Don't auto-execute
+const widgetId = turnstile.render("#container", {
+	sitekey: "<YOUR-SITE-KEY>",
+	execution: "execute", // Don't auto-execute
 });
 
 // Later, run the challenge when needed
-turnstile.execute('#container');
+turnstile.execute("#container");
 ```
 
 ---
@@ -395,15 +421,15 @@ turnstile.execute('#container');
 
 Both implicit and explicit rendering methods support the same configuration options. Refer to the table below for the most commonly used configurations.
 
-| Option | Description | Values |
-| --- | --- | --- |
-| `sitekey` | Your widget's sitekey | Required string |
-| `theme` | Visual theme | `auto`, `light`, `dark` |
-| `size` | Widget size | `normal`, `flexible`, `compact` |
-| `callback` | Success callback | Function |
-| `error-callback` | Error callback | Function |
-| `execution` | When to run the challenge | `render`, `execute` |
-| `appearance` | When the widget is visible | `always`, `execute`, `interaction-only` |
+| Option           | Description                | Values                                  |
+| ---------------- | -------------------------- | --------------------------------------- |
+| `sitekey`        | Your widget's sitekey      | Required string                         |
+| `theme`          | Visual theme               | `auto`, `light`, `dark`                 |
+| `size`           | Widget size                | `normal`, `flexible`, `compact`         |
+| `callback`       | Success callback           | Function                                |
+| `error-callback` | Error callback             | Function                                |
+| `execution`      | When to run the challenge  | `render`, `execute`                     |
+| `appearance`     | When the widget is visible | `always`, `execute`, `interaction-only` |
 
 For a complete list of configuration options, refer to [Widget configurations](/turnstile/get-started/client-side-rendering/widget-configurations/).
 
@@ -411,10 +437,10 @@ For a complete list of configuration options, refer to [Widget configurations](/
 
 ## Testing
 
-<Render file="test-sitekey" />
+<Render file="test-sitekey" product="turnstile" />
 
 ---
 
 ## Security requirements
 
-<Render file="security-requirements" />
+<Render file="security-requirements" product="turnstile" />

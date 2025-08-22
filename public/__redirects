@@ -163,11 +163,14 @@
 /ai-gateway/integration/vercel-ai-sdk/ /ai-gateway/integrations/vercel-ai-sdk/ 301
 /ai-gateway/integration/aig-workers-ai-binding/ /ai-gateway/integrations/aig-workers-ai-binding/ 301
 /ai-gateway/integration/ /ai-gateway/integrations/ 301
-/ai-gateway/providers/open-router/ /ai-gateway/providers/openrouter/ 301
-/ai-gateway/providers/universal/ /ai-gateway/universal/ 301
-/ai-gateway/configuration/websockets-api/ /ai-gateway/websockets-api/ 301
-/ai-gateway/configuration/websockets-api/non-realtime-api/ /ai-gateway/websockets-api/non-realtime-api/ 301
-/ai-gateway/configuration/websockets-api/realtime-api/ /ai-gateway/websockets-api/realtime-api/ 301
+/ai-gateway/providers/open-router/ /ai-gateway/usage/providers/openrouter/ 301
+/ai-gateway/providers/universal/ /ai-gateway/usage/universal/ 301
+/ai-gateway/configuration/websockets-api/ /ai-gateway/usage/websockets-api/ 301
+/ai-gateway/configuration/websockets-api/non-realtime-api/ /ai-gateway/usage/websockets-api/non-realtime-api/ 301
+/ai-gateway/configuration/websockets-api/realtime-api/ /ai-gateway/usage/websockets-api/realtime-api/ 301
+/ai-gateway/configuration/caching/ /ai-gateway/features/caching/ 301
+/ai-gateway/configuration/rate-limiting/ /ai-gateway/features/rate-limiting/ 301
+/ai-gateway/configuration/custom-metadata/ /ai-gateway/observability/custom-metadata/ 301
 
 # agents
 /agents/capabilities/mcp-server/ /agents/model-context-protocol/ 301
@@ -203,6 +206,7 @@
 /analytics/graphql-api/tutorials/export-graphql-to-csv/ /analytics/graphql-api/tutorials/ 301
 /analytics/analytics-integrations/google-cloud/ /analytics/analytics-integrations/ 301
 /analytics/dashboards/ /log-explorer/custom-dashboards/ 301
+/analytics/analytics-integrations/looker/ /analytics/analytics-integrations/ 301
 
 # email-security
 /email-security/reporting/search/detection-search/ /email-security/reporting/search/ 301
@@ -2348,6 +2352,11 @@
 
 # Calls
 /calls/* /realtime/:splat 301
+
+# AI Gateway
+/ai-gateway/providers/* /ai-gateway/usage/providers/:splat 301
+/ai-gateway/guardrails/* /ai-gateway/features/guardrails/:splat 301
+/ai-gateway/websockets-api/* /ai-gateway/usage/websockets-api/:splat 301
 
 # Realtime
 /realtime/limits /realtime/sfu/limits 302

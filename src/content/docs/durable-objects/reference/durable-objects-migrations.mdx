@@ -57,6 +57,7 @@ To apply a Create migration:
 
 2. Ensure you reference the correct name of the Durable Object class in your Worker code.
 3. Deploy the Worker.
+
 </Steps>
 
 <Details header="Create migration example">
@@ -76,7 +77,7 @@ class_name = "DurableObjectAClass"
 tag = "v1"
 new_sqlite_classes = ["DurableObjectAClass"]
 
-```
+````
 </WranglerConfig>
 
 </Details>
@@ -93,11 +94,11 @@ Use `new_classes` on the migration in your Worker's Wrangler file to create a Du
 [[migrations]]
 tag = "v1" # Should be unique for each entry
 new_classes = ["MyDurableObject"] # Array of new classes
-```
+````
 
 </WranglerConfig>
 
-<Render file="do-plans-note" />
+<Render file="do-plans-note" product="durable-objects" />
 
 ## Delete migration
 
@@ -127,6 +128,7 @@ To apply a Delete migration:
     - The array `deleted_classes`, which contains the deleted Durable Object classes.
 
 4. Deploy the Worker.
+
 </Steps>
 
 <Details header = "Delete migration example">
@@ -143,7 +145,7 @@ To delete a Durable Object binding `DEPRECATED_OBJECT`, your `wrangler.toml / wr
 tag = "v3" # Should be unique for each entry
 deleted_classes = ["DeprecatedObjectClass"] # Array of deleted classes
 
-```
+````
 </WranglerConfig>
 </Details>
 
@@ -175,6 +177,7 @@ To apply a Rename migration:
 		- `to` property is the renamed Durable Object class name.
 2. Reference the new Durable Object class name in your Worker code.
 3. Deploy the Worker.
+
 </Steps>
 
 <Details header = "Rename migration example">
@@ -193,7 +196,7 @@ class_name = "UpdatedName"
 [[migrations]]
 tag = "v3"
 renamed_classes = [{from = "OldName", to = "UpdatedName" }] # Array of rename directives
-```
+````
 
 </WranglerConfig>
 
@@ -234,6 +237,7 @@ To apply a Transfer migration:
 
 2. Ensure you reference the name of the new, destination Durable Object class in your Worker code.
 3. Deploy the Worker.
+
 </Steps>
 
 <Details header = "Transfer migration example">
@@ -253,7 +257,7 @@ class_name = "TransferredClass"
 tag = "v4"
 transferred_classes = [{from = "DurableObjectExample", from_script = "OldWorkerScript", to = "TransferredClass" }]
 
-```
+````
 </WranglerConfig>
 
 </Details>
@@ -310,3 +314,4 @@ You cannot enable a SQLite storage backend on an existing, deployed Durable Obje
 Durable Object migrations are atomic operations and cannot be gradually deployed. To provide early feedback to developers, new Worker versions with new migrations cannot be uploaded. Refer to [Gradual deployments for Durable Objects](/workers/configuration/versions-and-deployments/gradual-deployments/#gradual-deployments-for-durable-objects) for more information.
 :::
 
+````

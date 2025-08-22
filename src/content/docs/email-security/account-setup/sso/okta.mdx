@@ -6,10 +6,9 @@ sidebar:
 head:
   - tag: title
     content: Okta integration guide
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 In this tutorial you will learn how to connect your Email Security (formerly Area 1) account to Okta. When single sign-on (SSO) is correctly configured, your authorized employees can connect to the Email Security dashboard using a familiar user name and password.
 
@@ -35,15 +34,15 @@ You will need to manually create an app for Email Security in Okta.
    | ----------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
    | **Single sing on URL**              | `https://horizon.area1security.com/api/users/saml`                                                                    |
    | **Audience URI (SP Entity ID)**     | `https://horizon.area1security.com/api/users/saml`                                                                    |
-   | **Name ID format**                  | Select *EmailAddress* from the drop-down menu.                                                                        |
-   | **Application username**            | Select *Email* from the drop-down menu.                                                                               |
-   | **Response**                        | *Signed*                                                                                                              |
-   | **Assertion signature**             | *Unsigned*                                                                                                            |
-   | **Signature Algorithm**             | *RSA-SHA1*                                                                                                            |
-   | **Digest Algorithm**                | *SHA1*                                                                                                                |
+   | **Name ID format**                  | Select _EmailAddress_ from the drop-down menu.                                                                        |
+   | **Application username**            | Select _Email_ from the drop-down menu.                                                                               |
+   | **Response**                        | _Signed_                                                                                                              |
+   | **Assertion signature**             | _Unsigned_                                                                                                            |
+   | **Signature Algorithm**             | _RSA-SHA1_                                                                                                            |
+   | **Digest Algorithm**                | _SHA1_                                                                                                                |
    | **Attribute statements (optional)** |                                                                                                                       |
    | **Name**                            | Enter email addresses for your users. Should match users already added to Email Security (formerly Area 1) dashboard. |
-   | **Name format**                     | Select *Unspecified* from the drop-down menu.                                                                         |
+   | **Name format**                     | Select _Unspecified_ from the drop-down menu.                                                                         |
    | **Value**                           | Select `user.email` from the drop-down menu.                                                                          |
 
    ![Input the correct settings in SAML settings](~/assets/images/email-security/sso/okta/step5-saml-settings.png)
@@ -88,7 +87,7 @@ You will need to manually create an app for Email Security in Okta.
 
    ![Enable SSO](~/assets/images/email-security/sso/generic/step4-sso.png)
 
-5. In **SSO Enforcement**, choose one of the settings according to your specific needs: <Render file="sso-enforcement" />
+5. In **SSO Enforcement**, choose one of the settings according to your specific needs: <Render file="sso-enforcement" product="email-security" />
 
 6. In **SAML SSO Domain** enter the domain you saved from step 13. For example, `area1security-examplecorp.okta.com`.
 

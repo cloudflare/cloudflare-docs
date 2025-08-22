@@ -12,27 +12,40 @@ description: With account-level custom nameservers, you can use the same custom
   provide the nameservers names do not have to exist as zones in Cloudflare.
 ---
 
-import { Example, Render, Tabs, TabItem } from "~/components"
+import { Example, Render, Tabs, TabItem } from "~/components";
 
-<Render file="acns-tcns-intro" params={{ one: "Account", two: "A", three: "account", four: "zones", five: "account " }} />
+<Render
+	file="acns-tcns-intro"
+	params={{
+		one: "Account",
+		two: "A",
+		three: "account",
+		four: "zones",
+		five: "account ",
+	}}
+/>
 
 ## Availability
 
 Account custom nameservers are available for customers on Business (after [contacting Cloudflare Support](/support/contacting-cloudflare-support/)) or Enterprise plans. Once configured, account custom nameservers can be used by all zones in the account, regardless of the zone plan. Via API or on the dashboard.
 
 :::note
-<Render file="ns-advanced-vs-custom" />
+
+<Render file="ns-advanced-vs-custom" product="dns" />
 :::
 
 ## Configuration conditions
 
 For this configuration to be possible, a few conditions apply:
 
-<Render file="acns-tcns-conditions" params={{ one: "account", two: "you", three: "You" }} />
+<Render
+	file="acns-tcns-conditions"
+	params={{ one: "account", two: "you", three: "You" }}
+/>
 
 <Render file="acns-tcns-byoip" params={{ one: "Account", two: "account" }} />
 
-* Choosing a set from `ns_set 1` through `ns_set 5` will influence how Cloudflare assigns nameservers to your new zones if you configure [DNS zone defaults](/dns/nameservers/nameserver-options/#dns-zone-defaults).
+- Choosing a set from `ns_set 1` through `ns_set 5` will influence how Cloudflare assigns nameservers to your new zones if you configure [DNS zone defaults](/dns/nameservers/nameserver-options/#dns-zone-defaults).
 
 ## Enable account custom nameservers
 
@@ -53,7 +66,7 @@ For this configuration to be possible, a few conditions apply:
 
 Use the [Add account custom nameserver endpoint](/api/resources/custom_nameservers/methods/create/) to create account custom nameservers. Follow the [conditions](#configuration-conditions) for `ns_name` and `ns_set`.
 
-<Render file="ns-set-omission-callout" />
+<Render file="ns-set-omission-callout" product="dns" />
 
 </TabItem>
 </Tabs>
@@ -61,24 +74,22 @@ Use the [Add account custom nameserver endpoint](/api/resources/custom_nameserve
 Cloudflare will assign an IPv4 and an IPv6 address to each ACNS name, and these nameservers will be listed as options that you can [use on existing zones](#2-use-acns-on-existing-zones) or [set up as default for new zones in the account](#3-optional-make-acns-default-for-new-zones).
 
 2. Make sure `A/AAAA` records with the assigned IPv4 and IPv6 exist at the authoritative DNS of the domain that provides the ACNS names.
+   - If the domain uses Cloudflare DNS, the respective `A` and `AAAA` records are automatically created.
 
-   * If the domain uses Cloudflare DNS, the respective `A` and `AAAA` records are automatically created.
-
-   * If the domain or domains that are used for the account custom nameservers do not exist within the same account, you must manually create the `A/AAAA` records on the configured nameserver names (for example, `ns1.example.com`) at the authoritative DNS provider.
+   - If the domain or domains that are used for the account custom nameservers do not exist within the same account, you must manually create the `A/AAAA` records on the configured nameserver names (for example, `ns1.example.com`) at the authoritative DNS provider.
 
   <Example>
 
-  | Type | Name              | Content  |
-  | ---- | ----------------- | -------- |
-  | `A`  | `ns1.example.com` | `<IPv4>` |
+| Type | Name              | Content  |
+| ---- | ----------------- | -------- |
+| `A`  | `ns1.example.com` | `<IPv4>` |
 
   </Example>
 
 3. Update the registrar of the domain that provides the ACNS names. This step depends on whether you are using [Cloudflare Registrar](/registrar/):
+   - If you are using Cloudflare Registrar for the domain that provides the ACNS names, [contact Cloudflare Support](/support/contacting-cloudflare-support/) to add the account custom nameservers and IP addresses as glue records to the domain.
 
-   * If you are using Cloudflare Registrar for the domain that provides the ACNS names, [contact Cloudflare Support](/support/contacting-cloudflare-support/) to add the account custom nameservers and IP addresses as glue records to the domain.
-
-   * If you are not using Cloudflare Registrar for the domain that provides the ACNS names, add the account custom nameservers and IP addresses to your domain's registrar as glue records ([RFC 1912](https://www.rfc-editor.org/rfc/rfc1912.html)). If you do not add these records, DNS lookups for your domain will fail.
+   - If you are not using Cloudflare Registrar for the domain that provides the ACNS names, add the account custom nameservers and IP addresses to your domain's registrar as glue records ([RFC 1912](https://www.rfc-editor.org/rfc/rfc1912.html)). If you do not add these records, DNS lookups for your domain will fail.
 
 ### 2. Use ACNS on existing zones
 
@@ -103,9 +114,9 @@ Use the endpoint [Update DNS Settings for a Zone](/api/resources/dns/subresource
 
 2. Make sure the nameservers are updated:
 
-  * If your domain uses [Cloudflare Registrar](/registrar/), [contact Cloudflare Support](/support/contacting-cloudflare-support/) to update your nameservers.
-  * If your domain uses a different registrar, update the nameservers at your registrar to use the account custom nameservers.
-  * If your zone is delegated to a parent zone, update the corresponding `NS` record at the parent zone.
+- If your domain uses [Cloudflare Registrar](/registrar/), [contact Cloudflare Support](/support/contacting-cloudflare-support/) to update your nameservers.
+- If your domain uses a different registrar, update the nameservers at your registrar to use the account custom nameservers.
+- If your zone is delegated to a parent zone, update the corresponding `NS` record at the parent zone.
 
 ### 3. (Optional) Make ACNS default for new zones
 
@@ -146,14 +157,14 @@ To remove ACNS from a zone, first update your nameservers to stop using ACNS:
 <Tabs syncKey="dashPlusAPI">
 <TabItem label="Dashboard">
 
-* If you are using [Cloudflare Registrar](/registrar/), [contact Cloudflare Support](/support/contacting-cloudflare-support/) to set your nameservers back to the regular Cloudflare branded nameservers.
-* If you are not using [Cloudflare Registrar](/registrar/), modify the domain's registrar to use your regular Cloudflare branded nameservers.
+- If you are using [Cloudflare Registrar](/registrar/), [contact Cloudflare Support](/support/contacting-cloudflare-support/) to set your nameservers back to the regular Cloudflare branded nameservers.
+- If you are not using [Cloudflare Registrar](/registrar/), modify the domain's registrar to use your regular Cloudflare branded nameservers.
 
 </TabItem>
 <TabItem label="API">
 
-* If you are using [Cloudflare Registrar](/registrar/), use the [Update DNS settings endpoint](/api/resources/dns/subresources/settings/subresources/zone/methods/edit/) to set the `type` parameter in the `nameservers` object to `"cloudflare.standard"`. Then, [contact Cloudflare Support](/support/contacting-cloudflare-support/) to set your nameservers back to the regular Cloudflare branded nameservers.
-* If you are not using [Cloudflare Registrar](/registrar/), modify the domain's registrar to use your regular Cloudflare branded nameservers and then use the [Update DNS settings endpoint](/api/resources/dns/subresources/settings/subresources/zone/methods/edit/) to set the `type` parameter in the `nameservers` object to `"cloudflare.standard"`.
+- If you are using [Cloudflare Registrar](/registrar/), use the [Update DNS settings endpoint](/api/resources/dns/subresources/settings/subresources/zone/methods/edit/) to set the `type` parameter in the `nameservers` object to `"cloudflare.standard"`. Then, [contact Cloudflare Support](/support/contacting-cloudflare-support/) to set your nameservers back to the regular Cloudflare branded nameservers.
+- If you are not using [Cloudflare Registrar](/registrar/), modify the domain's registrar to use your regular Cloudflare branded nameservers and then use the [Update DNS settings endpoint](/api/resources/dns/subresources/settings/subresources/zone/methods/edit/) to set the `type` parameter in the `nameservers` object to `"cloudflare.standard"`.
 
 </TabItem>
 </Tabs>

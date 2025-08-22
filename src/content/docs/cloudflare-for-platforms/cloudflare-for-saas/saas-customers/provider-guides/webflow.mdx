@@ -1,0 +1,47 @@
+---
+pcx_content_type: configuration
+title: Webflow
+head:
+  - tag: title
+    content: Webflow | Provider guides
+description: Learn how to configure your Enterprise zone with Webflow.
+---
+
+import { Render } from "~/components";
+
+<Render file="provider-guide-intro" params={{ providerName: "Webflow" }} />
+
+## Benefits
+
+O2O's benefits include applying your own Cloudflare zone's services and settings — such as WAF, Bot Management, Waiting Room, and more — on the traffic destined for your Webflow environment.
+
+## How it works
+
+For more details about how O2O is different than other Cloudflare setups, refer to [How O2O works](/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/how-it-works/).
+
+## Enable
+
+You can enable O2O on any Cloudflare zone plan.
+
+To enable O2O on your account, [create](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records) a `CNAME` DNS record.
+
+| Type    | Name                 | Target                | Proxy status |
+| ------- | -------------------- | --------------------- | ------------ |
+| `CNAME` | `<YOUR_SHOP_DOMAIN>` | `shops.myshopify.com` | Proxied      |
+
+## Product compatibility
+
+<Render
+	file="provider-guide-compatibility"
+	product="cloudflare-for-platforms"
+/>
+
+## Additional support
+
+<Render file="provider-guide-help" params={{ providerName: "Webflow" }} />
+
+### DNS CAA records
+
+Webflow issues SSL/TLS certificates for merchant domains using Let’s Encrypt and Google Trust Services. If you add any DNS CAA records, you must select **Let’s Encrypt** or **Google Trust Services** as the Certificate Authority (CA) or HTTPS connections may fail.
+
+For more details, refer to [CAA records](/ssl/edge-certificates/caa-records/#caa-records-added-by-cloudflare).

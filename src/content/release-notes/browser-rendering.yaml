@@ -3,6 +3,14 @@ link: "/browser-rendering/changelog/"
 productName: Browser Rendering
 productLink: "/browser-rendering/"
 entries:
+  - publish_date: "2025-08-20"
+    title: Browser Rendering billing goes live
+    description: |-
+      * Billing for Browser Rendering begins today, August 20th, 2025. See [pricing page](/browser-rendering/platform/pricing/) for full details. You can monitor usage via the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers/browser-rendering).
+  - publish_date: "2025-08-18"
+    title: Wrangler updates to local dev
+    description: |-
+      * Improved the local development experience by updating the method for downloading the dev mode browser and added support for [`/v1/sessions` endpoint](/platform/puppeteer/#list-open-sessions), allowing you to list open browser rendering sessions. Upgrade to `wrangler@4.31.0` to get started.
   - publish_date: "2025-07-29"
     title: Updates to Playwright, local dev support, and REST API
     description: |-

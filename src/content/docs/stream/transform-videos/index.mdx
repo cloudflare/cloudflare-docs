@@ -2,12 +2,12 @@
 pcx_content_type: concept
 title: Transform videos
 sidebar:
-  order: 5
+  order: 4
   badge:
     text: Beta
 ---
 
-Media Transformations let you optimize and manipulate videos stored _outside_ of the Cloudflare Stream. Transformed videos and images are served from one of your zones on Cloudflare.
+You can optimize and manipulate videos stored _outside_ of Cloudflare Stream with Media Transformations. Transformed videos and images are served from one of your zones on Cloudflare.
 
 To transform a video or image, you must [enable transformations](/stream/transform-videos/#getting-started) for your zone. If your zone already has Image Transformations enabled, you can also optimize videos with Media Transformations.
 
@@ -126,9 +126,9 @@ Specifies the filename to use in the returned Content-Disposition header. If not
 
 ## Source video requirements
 
-Input video must be less than 100MB.
-
-Input video should be an MP4 with H.264 encoded video and AAC or MP3 encoded audio. Other formats may work but are untested.
+- Input video must be less than 100MB.
+- Input video should be an MP4 with H.264 encoded video and AAC or MP3 encoded audio. Other formats may work but are untested.
+- Origin must support either HTTP HEAD and range requests, and must return a Content-Range header.
 
 ## Limitations
 
@@ -136,6 +136,9 @@ Media Transformations are currently in beta. During this period:
 
 - Transformations are available for all enabled zones free-of-charge.
 - Outputs from Media Transformations will be cached, but if they must be regenerated, the origin fetch is not cached and may result in subsequent requests to the origin asset.
+- Maximum input file size is 100 MB. Maximum duration of input video is 10 minutes.
+- Media Transformations are not compatible with [Bring Your Own IP (BYOIP)](/byoip/).
+- Input video should be an MP4 with H.264 encoded video and AAC or MP3 encoded audio. Other formats may work but are untested.
 
 ## Pricing
 

@@ -28,7 +28,7 @@ Gateway will automatically detect changes in user name, title, and group members
 
 ### Extended email addresses
 
-<Render file="gateway/extended-email" />
+<Render file="gateway/extended-email" product="cloudflare-one" />
 
 ## Identity-based selectors
 
@@ -36,31 +36,40 @@ Gateway will automatically detect changes in user name, title, and group members
 
 Specify a value from the SAML Attribute Assertion.
 
-<Render file="gateway/selectors/saml-attributes" />
+<Render file="gateway/selectors/saml-attributes" product="cloudflare-one" />
 
 ### User Email
 
 Use this selector to create identity-based Gateway rules based on a user's email.
 
-<Render file="gateway/selectors/user-email" params={{ UIname: "User Email" }}/>
+<Render file="gateway/selectors/user-email" params={{ UIname: "User Email" }} />
 
 ### User Group IDs
 
 Use this selector to create identity-based Gateway rules based on an IdP group ID of which the user is configured as a member in the IdP.
 
-<Render file="gateway/selectors/user-group-ids" params={{ UIname: "User Group IDs" }}/>
+<Render
+	file="gateway/selectors/user-group-ids"
+	params={{ UIname: "User Group IDs" }}
+/>
 
 ### User Group Email
 
 Use this selector to create identity-based Gateway rules based on an IdP group email address of which the user is configured as a member in the IdP.
 
-<Render file="gateway/selectors/user-group-email" params={{ UIname: "User Group Email" }}/>
+<Render
+	file="gateway/selectors/user-group-email"
+	params={{ UIname: "User Group Email" }}
+/>
 
 ### User Group Names
 
 Use this selector to create identity-based Gateway rules based on an IdP group name of which the user is configured as a member in the IdP.
 
-<Render file="gateway/selectors/user-group-names" params={{ UIname: "User Group Names" }}/>
+<Render
+	file="gateway/selectors/user-group-names"
+	params={{ UIname: "User Group Names" }}
+/>
 
 ### User Name
 

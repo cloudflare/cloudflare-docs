@@ -4,16 +4,13 @@ pcx_content_type: how-to
 description: Configure escalation contacts in Cloudflare Email Security to prioritize alerts for phishing threats and email irregularities. Set up SOC, Triage, Analyst, and Executive contacts.
 sidebar:
   order: 2
-
 ---
 
-import { GlossaryTooltip, Render } from "~/components"
+import { GlossaryTooltip, Render } from "~/components";
 
 :::caution[Area 1 has been renamed]
 
-
-<Render file="rename-area1-to-ces" />
-
+<Render file="rename-area1-to-ces" product="email-security" />
 
 :::
 
@@ -21,10 +18,10 @@ Whenever Email Security (formerly Area 1) finds an exceptional <GlossaryTooltip 
 
 There are four types of contacts available to configure, each with a priority type:
 
-* **SOC Contact**: P1 priority.
-* **Triage Analyst**: P2 priority.
-* **In-Depth Analyst**: P3 priority.
-* **Executive Contact**: P4 priority.
+- **SOC Contact**: P1 priority.
+- **Triage Analyst**: P2 priority.
+- **In-Depth Analyst**: P3 priority.
+- **Executive Contact**: P4 priority.
 
 Email Security will start by reaching out to P1-level contacts. If they do not respond, we will then try reaching out to the other contacts down the list until we receive a reply from one of these groups.
 
@@ -39,8 +36,6 @@ You can enable these special notifications through an opt-in process:
 
 :::note
 
-
 If you select **Critical Service Events**, the contact will be sent a text and/or an email message. They will need to select the link to confirm the subscriptions.
-
 
 :::

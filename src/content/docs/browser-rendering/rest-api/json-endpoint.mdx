@@ -248,12 +248,11 @@ console.log(json);
 
 ## Advanced Usage
 
-
 ### Using a custom model (BYO API Key)
 
 Browser Rendering can use a custom model for which you supply credentials. List the model(s) in the `custom_ai` array:
 
-- `model` should be formed as `<provider>/<model_name>` and the provider must be one of these [supported providers](/ai-gateway/chat-completion/#supported-providers).
+- `model` should be formed as `<provider>/<model_name>` and the provider must be one of these [supported providers](/ai-gateway/usage/chat-completion/#supported-providers).
 - `authorization` is the bearer token or API key that allows Browser Rendering to call the provider on your behalf.
 
 This example uses the `custom_ai` parameter to instruct Browser Rendering to use a Anthropic's Claude Sonnet 4 model. The prompt asks the model to extract the main `<h1>` and `<h2>` headings from the target URL and return them in a structured JSON object.
@@ -294,11 +293,11 @@ curl --request POST \
 
 ```json output
 {
-  "success": true,
-  "result": {
-    "h1": "Heading 1",
-    "h2": "Heading 2"
-  }
+	"success": true,
+	"result": {
+		"h1": "Heading 1",
+		"h2": "Heading 2"
+	}
 }
 ```
 
