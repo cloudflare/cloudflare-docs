@@ -48,14 +48,13 @@ jobs:
             echo "  - SEARCH_FILE: $SEARCH_FILE"
             # --- END LOGGING ---
 
-            # Use a chained grep to find lines containing BOTH strings, regardless of order
-            if ! grep -q -r --exclude-dir=.github --include="*.mdx" -e "$SEARCH_PRODUCT" -e "$SEARCH_FILE" .; then
+            # This command checks if the combination of file and product exists.
+            if ! perl -ne 'BEGIN{undef $/;} ($found=0); if (m/<Render.*?file="file".*?product="product".*?\/>/s) {$found=1;} print "FOUND\n" if $found; ' YourFile.mdx | grep -q 'FOUND'; then
               UNUSED_FILES+="$FILE\n"
               echo "  -> UNUSED! Adding to list."
             else
               echo "  -> Used. Skipping."
             fi
-            echo "" # Add a blank line for readability
           done
 
           # If there are unused files, output them
