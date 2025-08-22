@@ -15,7 +15,10 @@ const zeroUsePartials = Object.fromEntries(
 );
 ---
 
-<Details header={`All partials - ${Object.keys(allPartials).length} files`} id="partials-container">
+<Details
+	header={`All partials (${Object.keys(allPartials).length} files)`}
+	id="partials-container"
+>
 	{
 		[...Object.entries(allPartials)]
 			.sort((a, b) => a[0].localeCompare(b[0]))
@@ -33,7 +36,7 @@ const zeroUsePartials = Object.fromEntries(
 <br />
 
 <Details
-	header={`1 use partials - ${Object.keys(singleUsePartials).length} files`}
+	header={`1 use partials (${Object.keys(singleUsePartials).length} files)`}
 	id="one-use-partials-container"
 >
 	{
@@ -48,7 +51,7 @@ const zeroUsePartials = Object.fromEntries(
 <br />
 
 <Details
-	header={`0 use partials - ${Object.keys(zeroUsePartials).length} files`}
+	header={`0 use partials (${Object.keys(zeroUsePartials).length} files)`}
 	id="unused-partials-container"
 >
 	{
