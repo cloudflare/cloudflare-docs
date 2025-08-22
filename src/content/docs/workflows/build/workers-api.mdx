@@ -316,10 +316,8 @@ Create (trigger) a batch of new instance of the given Workflow, up to 100 instan
 
 This is useful when you are scheduling multiple instances at once. A call to `createBatch` is treated the same as a call to `create` (for a single instance) and allows you to work within the [instance creation limit](/workflows/reference/limits/).
 
-- <code>
-  	createBatch(batch: WorkflowInstanceCreateOptions[]):
-  	Promise&lt;WorkflowInstance[]&gt;
-  </code>
+{/* prettier-ignore */}
+- <code>createBatch(batch: WorkflowInstanceCreateOptions[]): Promise&lt;WorkflowInstance[]&gt;</code>
   - `batch` - list of Options to pass when creating an instance, including a user-provided ID and payload parameters.
 
 Each element of the `batch` list is expected to include both `id` and `params` properties:
