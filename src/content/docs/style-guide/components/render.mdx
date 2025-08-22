@@ -30,24 +30,9 @@ import { Render } from "~/components";
 
   This should be the name of the partial, without the containing directory or file extension. For example, `/partials/style-guide/hello.mdx` would be `file="hello"`.
 
-- `product` <Type text="string" /> <MetaInfo text="optional" />
+- `product` <Type text="string" />
 
-  By default, it will look for partials in the same product folder as the current page. You can use this to specify a different product.
-
-  :::caution
-
-  When using the `Render` component inside partials, the original `product` is lost.
-
-  For example, if there are three files:
-  1.  `docs/fundamentals/index.mdx`
-  2.  `partials/dns/thing.mdx`
-  3.  `partials/dns/thing2.mdx`
-
-  `docs/fundamentals/index.mdx` uses `<Render file="thing" product="dns" />`
-
-  `partials/dns/thing.mdx` must use `<Render file="thing2" product="dns" />` as `product` cannot be inferred.
-
-  :::
+  This should be the folder within `src/partials`.
 
 - `params` <Type text="object" /> <MetaInfo text="optional" />
 
