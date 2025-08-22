@@ -1,0 +1,51 @@
+name: Image audit
+
+# **What it does**: Regularly audits our documentation for unused image files.
+# **Why we have it**: Good hygiene + helps simplify future image audits.
+# **Who does it impact**: PCX team
+
+on:
+  pull_request:
+    branches:
+      - production
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 1 * *"
+
+jobs:
+  image-audit:
+    permissions:
+      issues: write
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Find Unused Files
+        id: find-files
+        run: |
+          # Find all files in the partial folder
+          FILES=$(find . -type f \( -name "*.mdx" -o -name "*.md" \) -path "./src/content/partials/*")
+
+          # Check if files are referenced in any Render component
+          UNUSED_FILES=""
+          for FILE in $FILES; do
+            # Extract product and file name from the path
+            PRODUCT=$(echo "$FILE" | awk -F'/' '{print $(NF-1)}')
+            FILENAME=$(basename "$FILE" .mdx)
+
+            # Construct the individual search strings for product and file
+            SEARCH_PRODUCT="product=\"$PRODUCT\""
+            SEARCH_FILE="file=\"$FILENAME\""
+
+            # Use a chained grep to find lines containing BOTH strings, regardless of order
+            if ! grep -q -r --exclude-dir=.github "$SEARCH_PRODUCT" --include="*.mdx" . | grep -q "$SEARCH_FILE"; then
+              UNUSED_FILES+="$FILE\n"
+            fi
+          done
+
+          # If there are unused files, output them
+          if [ -n "$UNUSED_FILES" ]; then
+            echo "unused_files=$UNUSED_FILES" >> "$GITHUB_OUTPUT"
+          fi
