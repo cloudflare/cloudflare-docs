@@ -38,13 +38,13 @@ To add an MCP server:
 4. Enter any name for the server.
 5. (Optional) Enter a custom string for the **Server ID**.
 6. In **HTTP URL**, enter the full URL of your MCP server. For example, if you want to add the [Cloudflare Documentation MCP server](https://github.com/cloudflare/mcp-server-cloudflare/tree/main/apps/docs-vectorize), enter `https://docs.mcp.cloudflare.com/sse`.
-7. Add [Access policies](/cloudflare-one/policies/access/) to show or hide the server in an [MCP server portal](#create-a-portal). The MCP server link will only appear in the portal for users who match an Allow policy. Blocked users will not see the server in their portal.
+7. Add [Access policies](/cloudflare-one/policies/access/) to show or hide the server in an [MCP server portal](#create-a-portal). The MCP server link will only appear in the portal for users who match an Allow policy. Users who do not pass an Allow policy will not see this server through any portals.
 
 	:::note
 	Blocked users can still connect to the server (and bypass your Access policies) by using its direct URL. If you want to enforce authentication through Cloudflare Access, [configure Access as the server's OAuth provider](/cloudflare-one/applications/configure-apps/mcp-servers/saas-mcp/).
 	:::
 8. Select **Add server**.
-9. If the MCP server supports OAuth, you will be redirected to log in to your OAuth provider. You can log in to any account on the MCP server.
+9. If the MCP server supports OAuth, you will be redirected to log in to your OAuth provider. You can log in to any account on the MCP server. The account used to authenticate will serve as the "admin" credential for that MCP Server. If you do not configure "user auth required" in your MCP portal, then the portal will use this admin credential to make requests.
 
 Cloudflare Access will validate the server connection and fetch a list of tools and prompts. Once the server is successfully connected, the [server status](#server-status) will change to **Ready**. You can now add the MCP server to an [MCP server portal](#create-a-portal).
 
@@ -55,9 +55,9 @@ The MCP server status indicates the connectivity status of the MCP server to Clo
 | Status | Description |
 | ------ | ----------- |
 | Unknown | ?|
-| Inactive | ?|
-| Waiting | ?|
-| Ready | ?|
+| Inactive | The latest syncronized of tools, prompts and resources failed due to expired or incorrect credentials|
+| Waiting | The server's tools, prompts and resources are being syncronized|
+| Ready | The server was successfully syncronized and all tools, prompts and resources are available|
 
 ### Refresh the MCP server
 
@@ -78,7 +78,7 @@ To create an MCP server portal:
 3. Enter any name for the portal.
 4. Under **Custom domain**, select a domain for the portal URL. Domains must belong to an active zone in your Cloudflare account. You can optionally specify a subdomain.
 5. [Add MCP servers](#add-an-mcp-server) to the portal.
-6. (Optional) Under **MCP servers**, configure the tools and prompts available through the portal.
+6. (Optional) Under **MCP servers**, configure the tools and prompts available through the portal. "require user auth" will prompt the user to utilize their own login credentials to establish a connection with the MCP Server, if it support OAuth authentication.
 7. Add [Access policies](/cloudflare-one/policies/access/) to define the users who can connect to the portal URL.
 8. Select **Add an MCP server portal**.
 9. (Optional) [Customize the login experience](#customize-login-settings) for the portal.
