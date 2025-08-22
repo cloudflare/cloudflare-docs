@@ -1,0 +1,61 @@
+---
+pcx_content_type: concept
+title: NLWeb
+sidebar:
+  order: 1
+---
+
+Enable conversational search on your website with NLWeb and Cloudflare AutoRAG. This template crawls your site, indexes the content, and deploys NLWeb-standard endpoints to serve both people and AI agents.
+
+:::note
+This is a public preview ideal for experimentation. If you're interested in running this in production workflows please contact us at nlweb@cloudflare.com
+:::
+
+## What is NLWeb
+
+[NLWeb]() is an open project developed by Microsoft that defines a standard protocol for natural language queries on websites. Its goal is to make every website as accessible and interactive as a conversational AI app, so both people and AI agents can reliably query site content. It does this by exposing two key endpoints:
+
+- `/ask`: Conversational endpoint for user queries
+- `/mcp`: Structured Model Context Protocol (MCP) endpoint for AI agents
+
+## How to Use It
+
+You can deploy NLWeb on your website directly through the AutoRAG dashboard:
+
+1. Navigate to Compute & AI > AutoRAG in the Cloudflare Dashboard
+2. Select Create, then choose the NLWeb Website option
+3. Select your domain from your Cloudflare account
+4. Click Deploy
+
+Once complete, AutoRAG will crawl and index your site, then deploy an NLWeb Worker for you.
+
+## What This Template Includes
+
+Choosing the NLWeb Website option extends a normal AutoRAG by tailoring it for content‑heavy websites and giving you everything needed to adopt NLWeb as the standard for conversational search on your site. Specifically, the template provides:
+
+- **Website as a data source:** Uses [Website](/autorag/configuration/data-source/website/) as data source option to crawl and ingest pages with the Rendered Sites option.
+- **Defaults for content-heavy websites:**  Applies tuned embedding and retrieval configurations ideal for publishing and content‑rich websites.
+- **NLWeb Worker deployment:** Automatically spins up a Cloudflare Worker from the [NLWeb Worker template](https://github.com/cloudflare/templates).
+
+## What the Worker Includes
+
+Your deployed Worker provides two endpoints:
+
+- `/ask` — NLWeb’s standard conversational endpoint
+    - Powers the conversational UI at the root (`/`)
+    - Powers the embeddable preview widget (`/snippet.html`)
+- `/mcp` — NLWeb’s MCP server endpoint for trusted AI agents
+
+These endpoints give both people and agents structured access to your content.
+
+## Using It on Your Website
+
+To integrate NLWeb search directly into your site:
+
+1. Find your deployed Worker in the Cloudflare Dashboard. You can do so by going to your AutoRAG, selecting Connect, then the NLWeb tab, and clicking Go to Worker
+2. Add a [custom domain](/workers/configuration/routing/custom-domains/) to your Worker (for example, ask.example.com)
+3. Use the /ask endpoint on your custom domain to power the search (for example, https://ask.example.com/ask)
+
+This lets you serve conversational AI search directly from your own domain, with full control over how people and agents access your content.
+
+
