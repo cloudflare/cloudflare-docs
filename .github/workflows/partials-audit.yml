@@ -32,7 +32,8 @@ jobs:
           UNUSED_FILES=""
           for FILE in $FILES; do
             # Extract product and file name from the path
-            PRODUCT=$(echo "$FILE" | awk -F'/' '{print $(NF-1)}')
+            TEMP_STRING=${FILE#*partials/}
+            PRODUCT=${TEMP_STRING%%/*}
             TEMP_PATH=${FILE#*src/content/partials/*/}
             FILENAME=${TEMP_PATH%.mdx}
 
