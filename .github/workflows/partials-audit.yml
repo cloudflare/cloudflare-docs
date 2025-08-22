@@ -38,6 +38,7 @@ jobs:
             FILENAME=${TEMP_PATH%.mdx}
 
             # Construct the individual search strings for product and file
+            # We escape the quotes to ensure they are treated as part of the string.
             SEARCH_PRODUCT="product=\"$PRODUCT\""
             SEARCH_FILE="file=\"$FILENAME\""
 
@@ -48,12 +49,9 @@ jobs:
             echo "  - SEARCH_FILE: $SEARCH_FILE"
             # --- END LOGGING ---
 
-            # Use Perl to search for a multi-line <Render> component with both values
-            # The "s" flag allows the dot to match newlines, and the "e" flag executes the script.
-            # The -0777 option makes Perl read the entire file at once.
-            # The (?s) is a modifier to allow '.' to match newline characters
-            # This makes the regex a single-line regex, even if the text spans multiple lines.
-            if ! perl -ne "exit 0 if /\<Render.*?(?:\s|$SEARCH_PRODUCT).*?(?:\s|$SEARCH_FILE).*?\/?\>/s" -e "exit 1" ./*/*.mdx; then
+            # Use Perl to search for a multi-line <Render> component with both values.
+            # The entire logic is now in a single `-e` block, fixing the syntax error.
+            if ! perl -ne "exit 0 if /<Render.*?(?:\s|)$SEARCH_PRODUCT.*?(?:\s|)$SEARCH_FILE.*?\/?\>/s; exit 1" ./*/*.mdx; then
               UNUSED_FILES+="$FILE\n"
               echo "  -> UNUSED! Adding to list."
             else
