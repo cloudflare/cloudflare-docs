@@ -166,7 +166,7 @@ You will need to append this parameter to the URL you are protecting:
 The authentication token parameter (`verify=<VALUE>` in the example) must be the last parameter in the query string.
 :::
 
-### Testing the generated token parameter
+### Test the generated token parameter
 
 If you are on an Enterprise plan, you can test if URLs are being generated correctly on the origin server by doing the following:
 
@@ -175,7 +175,7 @@ If you are on an Enterprise plan, you can test if URLs are being generated corre
 
 ---
 
-## Protecting several paths using the same secret
+## Protect several paths using the same secret
 
 You can use the same secret key to protect several URI paths.
 
@@ -185,17 +185,26 @@ Since `http.request.uri` includes the path to the asset and that value is extrac
 
 Note that while you can use the same secret key to authenticate several paths, you must generate an HMAC token for each unique message you want to authenticate.
 
-## Protecting an entire directory with a single signature
+## Protect an entire URI path prefix with a single signature
 
-You can dynamically [concatenate the MessageMAC](/ruleset-engine/rules-language/functions/#concatenated-messagemac-argument) argument to the `is_timed_hmac_valid_v0()` function to protect an entire directory with a single signature.
+You can protect an entire URI path prefix with a fixed length using a single HMAC signature. To achieve this, supply a URI path prefix (instead of the full URI path) and the original query string as the [`MessageMAC`](/ruleset-engine/rules-language/functions/#messagemac) argument for the [`is_timed_hmac_valid_v0()`](/ruleset-engine/rules-language/functions/#hmac-validation) function.
 
-This example assumes that the directory name is always the same length (for example, `/images/12345678-90ab-4cde-f012-3456789abcde/cat.jpg`).
+Use the [`substring()`](/ruleset-engine/rules-language/functions/#substring) function to obtain the prefix from the full URI path.
 
-To protect an entire directory, you can use the `substring()` function to extract the directory name from the request URI path.
-The length of the directory name is 45 characters here, so you do `substring(http.request.uri.path, 0, 45)` to extract the first 45 characters of the path which corresponds to the directory name.
+The following example assumes that the prefix is always 50 characters long.
 
-Then you need to concatenate the directory name with the query string and pass it to the `is_timed_hmac_valid_v0()` function like this:
+Example URI path of an incoming request:
 
 ```txt
-(http.host eq "downloads.example.com" and not is_timed_hmac_valid_v0("mysecrettoken", concat(substring(http.request.uri.path, 0, 45), "?", http.request.uri.query), 10800, http.request.timestamp.sec))
+/case-studies/12345678-90ab-4cde-f012-3456789abcde/foobar-report.pdf?1755795722-21riMY6ELx6nI5dOPPHFHn2D4o0ZmEMa1UtoCo%2Bqe%2Bk%3D
 ```
+
+If you wanted to block requests failing the HMAC validation for this path prefix, you could create a custom rule similar to the following:
+
+- Rule expression:
+
+  ```txt
+  (http.host eq "downloads.example.com" and not is_timed_hmac_valid_v0("mysecrettoken", concat(substring(http.request.uri.path, 0, 50), "?", http.request.uri.query), 10800, http.request.timestamp.sec, 1))
+  ```
+
+- Action: Block
