@@ -7,15 +7,15 @@ import UsageList from "./UsageList.astro";
 const allPartials = await getPartialsUsage();
 
 const singleUsePartials = Object.fromEntries(
-	Object.entries(allPartials).filter(([key, value]) => value.count === 1),
+	Object.entries(allPartials).filter(([, value]) => value.count === 1),
 );
 
 const zeroUsePartials = Object.fromEntries(
-	Object.entries(allPartials).filter(([key, value]) => value.count === 0),
+	Object.entries(allPartials).filter(([, value]) => value.count === 0),
 );
 ---
 
-<Details header=`All partials - ${Object.keys(allPartials).length} files`` id="partials-container">
+<Details header=`All partials - ${Object.keys(allPartials).length} files` id="partials-container">
 	{
 		[...Object.entries(allPartials)]
 			.sort((a, b) => a[0].localeCompare(b[0]))
