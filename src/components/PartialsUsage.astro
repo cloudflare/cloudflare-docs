@@ -19,7 +19,7 @@ const zeroUsePartials = Object.fromEntries(
 );
 ---
 
-<Details header="Usage" id="partials-container">
+<Details header=`Frequently used - ${Object.keys(usedPartials).length} files`` id="partials-container">
 	{
 		[...Object.entries(usedPartials)]
 			.sort((a, b) => a[0].localeCompare(b[0]))
