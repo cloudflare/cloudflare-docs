@@ -1,4 +1,4 @@
-name: Image audit
+name: Partial audit
 
 # **What it does**: Regularly audits our documentation for unused image files.
 # **Why we have it**: Good hygiene + helps simplify future image audits.
@@ -13,7 +13,7 @@ on:
     - cron: "0 0 1 * *"
 
 jobs:
-  image-audit:
+  partial-audit:
     permissions:
       issues: write
     runs-on: ubuntu-latest
@@ -25,8 +25,8 @@ jobs:
       - name: Find Unused Files
         id: find-files
         run: |
-          # Find all files in the partial folder
-          FILES=$(find . -type f \( -name "*.mdx" -o -name "*.md" \) -path "./src/content/partials/*")
+          # Find all .mdx files, but only in the ./src/content/partials directory
+          FILES=$(find ./src/content/partials -type f -name "*.mdx")
 
           # Check if files are referenced in any Render component
           UNUSED_FILES=""
@@ -39,10 +39,21 @@ jobs:
             SEARCH_PRODUCT="product=\"$PRODUCT\""
             SEARCH_FILE="file=\"$FILENAME\""
 
+            # --- START LOGGING ---
+            echo "----------------------------------------"
+            echo "Checking file: $FILE"
+            echo "  - SEARCH_PRODUCT: $SEARCH_PRODUCT"
+            echo "  - SEARCH_FILE: $SEARCH_FILE"
+            # --- END LOGGING ---
+
             # Use a chained grep to find lines containing BOTH strings, regardless of order
             if ! grep -q -r --exclude-dir=.github "$SEARCH_PRODUCT" --include="*.mdx" . | grep -q "$SEARCH_FILE"; then
               UNUSED_FILES+="$FILE\n"
+              echo "  -> UNUSED! Adding to list."
+            else
+              echo "  -> Used. Skipping."
             fi
+            echo "" # Add a blank line for readability
           done
 
           # If there are unused files, output them
