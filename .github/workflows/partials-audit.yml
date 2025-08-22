@@ -47,7 +47,7 @@ jobs:
             # --- END LOGGING ---
 
             # Use a chained grep to find lines containing BOTH strings, regardless of order
-            if ! grep -q -r --exclude-dir=.github "$SEARCH_PRODUCT" --include="*.mdx" . | grep -q "$SEARCH_FILE"; then
+            if ! grep -q -r --exclude-dir=.github --include="*.mdx" -e "$SEARCH_PRODUCT" -e "$SEARCH_FILE" .; then
               UNUSED_FILES+="$FILE\n"
               echo "  -> UNUSED! Adding to list."
             else
