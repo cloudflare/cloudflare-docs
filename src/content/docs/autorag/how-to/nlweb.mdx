@@ -26,7 +26,7 @@ You can deploy NLWeb on your website directly through the AutoRAG dashboard:
 2. Go to **Compute & AI** > **AutoRAG**.
 3. Select **Create AutoRAG**, then choose the **NLWeb Website** option.
 4. Select your domain from your Cloudflare account.
-5. Click **Deploy**.
+5. Click **Start indexing**.
 
 Once complete, AutoRAG will crawl and index your site, then deploy an NLWeb Worker for you.
 
@@ -63,3 +63,21 @@ To integrate NLWeb search directly into your site:
 This lets you serve conversational AI search directly from your own domain, with control over how people and agents access your content.
 
 
+## Modifying or updating the Worker
+
+You may want to customize your Worker, for example, to adjust the UI for the embeddable snippet. In those cases, we recommend calling the `/ask` endpoint for queries and building your own UI on top of it, however, you may also choose to modify the Worker's code for the embeddable UI.
+
+If the NLWeb standard is updated, you can update your Worker to stay compatible and recieve the latest updates.
+
+The simplest way to apply changes or updates is to redeploy the Worker template:
+
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/templates/tree/main/nlweb-template)
+
+To do so: 
+
+1. Select the **Deploy to Cloudflare** button from above to deploy the Worker template to your Cloudflare account.
+2. Enter the name of your AutoRAG in the `RAG_ID` environment variable field.
+3. Click **Deploy**.
+4. Select the **GitHub/GitLab** icon on the Workers Dashboard.
+4. Clone the repository that is created for your Worker.
+5. Make your modifications, then commit and push changes to the repository to update your Worker.
