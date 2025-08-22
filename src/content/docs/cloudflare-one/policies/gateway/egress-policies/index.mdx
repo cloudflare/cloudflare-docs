@@ -38,7 +38,10 @@ To control whether only IPv4 or IPv6 is used to egress, ensure you are [filterin
 
 The following egress policy configures all traffic destined for a third-party network to use a static source IP:
 
-<Render file="gateway/policies/egress-destination-ip" />
+<Render
+	file="gateway/policies/egress-destination-ip"
+	product="cloudflare-one"
+/>
 
 ### Catch-all policy
 
@@ -66,24 +69,33 @@ Gateway matches egress traffic against the following selectors, or criteria:
 
 <Render
 	file="gateway/selectors/application"
+	product="cloudflare-one"
 	params={{ policyType: "egress" }}
 />
 
-<Render file="gateway/selectors/egress-selector-limitation" />
+<Render
+	file="gateway/selectors/egress-selector-limitation"
+	product="cloudflare-one"
+/>
 
 ### Content Categories <Badge text="Beta" variant="caution"/>
 
 <Render
 	file="gateway/selectors/net-http-content-categories"
+	product="cloudflare-one"
 	params={{ APIendpoint: "net.fqdn.content_category" }}
 />
 
-<Render file="gateway/selectors/egress-selector-limitation" />
+<Render
+	file="gateway/selectors/egress-selector-limitation"
+	product="cloudflare-one"
+/>
 
 ### Destination Continent
 
 <Render
 	file="gateway/selectors/destination-continent"
+	product="cloudflare-one"
 	params={{ one: "net.dst" }}
 />
 
@@ -91,6 +103,7 @@ Gateway matches egress traffic against the following selectors, or criteria:
 
 <Render
 	file="gateway/selectors/destination-country"
+	product="cloudflare-one"
 	params={{ one: "net.dst" }}
 />
 
@@ -98,55 +111,65 @@ Gateway matches egress traffic against the following selectors, or criteria:
 
 <Render
 	file="gateway/selectors/destination-ip"
+	product="cloudflare-one"
 	params={{ APIendpoint: "net.dst.ip" }}
 />
 
 ### Destination Port
 
-<Render file="gateway/selectors/destination-port" />
+<Render file="gateway/selectors/destination-port" product="cloudflare-one" />
 
 ### Device Posture
 
-<Render file="gateway/selectors/device-posture" />
+<Render file="gateway/selectors/device-posture" product="cloudflare-one" />
 
 ### Domain <Badge text="Beta" variant="caution"/>
 
 <Render
 	file="gateway/selectors/domain"
+	product="cloudflare-one"
 	params={{ APIendpoint: "net.fqdn.domains" }}
 />
 
-<Render file="gateway/selectors/egress-selector-limitation" />
+<Render
+	file="gateway/selectors/egress-selector-limitation"
+	product="cloudflare-one"
+/>
 
 ### Host <Badge text="Beta" variant="caution"/>
 
 <Render
 	file="gateway/selectors/host"
+	product="cloudflare-one"
 	params={{ APIendpoint: "net.fqdn.host" }}
 />
 
-<Render file="gateway/selectors/egress-selector-limitation" />
+<Render
+	file="gateway/selectors/egress-selector-limitation"
+	product="cloudflare-one"
+/>
 
 ### Protocol
 
-<Render file="gateway/selectors/protocol" />
+<Render file="gateway/selectors/protocol" product="cloudflare-one" />
 
 ### Proxy Endpoint
 
-<Render file="gateway/selectors/proxy-endpoint" />
+<Render file="gateway/selectors/proxy-endpoint" product="cloudflare-one" />
 
 ### Source Continent
 
-The continent of the user making the request. <Render file="gateway/selectors/source-continent" params={{ one: "net.src" }} />
+The continent of the user making the request. <Render file="gateway/selectors/source-continent" product="cloudflare-one" params={{ one: "net.src" }} />
 
 ### Source Country
 
-The country of the user making the request. <Render file="gateway/selectors/source-country" params={{ one: "net.src" }} />
+The country of the user making the request. <Render file="gateway/selectors/source-country" product="cloudflare-one" params={{ one: "net.src" }} />
 
 ### Source Internal IP
 
 <Render
 	file="gateway/selectors/source-internal-ip"
+	product="cloudflare-one"
 	params={{ one: "egress", two: "net.src.internal_src_ip" }}
 />
 
@@ -154,27 +177,29 @@ The country of the user making the request. <Render file="gateway/selectors/sour
 
 <Render
 	file="gateway/selectors/source-ip"
+	product="cloudflare-one"
 	params={{ APIendpoint: "net.src.ip" }}
 />
 
 ### Source Port
 
-<Render file="gateway/selectors/source-port" />
+<Render file="gateway/selectors/source-port" product="cloudflare-one" />
 
 ### Users
 
-<Render file="gateway/selectors/users" />
+<Render file="gateway/selectors/users" product="cloudflare-one" />
 
 ### Virtual Network
 
 <Render
 	file="gateway/selectors/virtual-network"
+	product="cloudflare-one"
 	params={{ one: "net.vnet_id" }}
 />
 
 ## Comparison operators
 
-<Render file="gateway/comparison-operators" />
+<Render file="gateway/comparison-operators" product="cloudflare-one" />
 
 ## Value
 
@@ -186,6 +211,7 @@ Gateway uses Rust to evaluate regular expressions. The Rust implementation is sl
 
 <Render
 	file="gateway/logical-operators"
+	product="cloudflare-one"
 	params={{ one: "**Identity** or **Device Posture**" }}
 />
 

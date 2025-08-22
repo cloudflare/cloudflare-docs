@@ -22,7 +22,6 @@ The following example rule will disable compression for AVIF images, based on ei
 **When incoming requests match**
 
 - Custom filter expression:
-
   - _Media Type_ _equals_ `image/avif` **OR**
   - _File extension_ _equals_ `avif`
 
@@ -54,6 +53,10 @@ The following example sets the rules of an existing [entry point ruleset](/rules
 	}}
 />
 
-<Render file="terraform-use-ref-field" params={{ addDocsLocation: true }} />
+<Render
+	file="terraform-use-ref-field"
+	product="rules"
+	params={{ addDocsLocation: true }}
+/>
 
 </TabItem> </Tabs>

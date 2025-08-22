@@ -31,7 +31,6 @@ Custom rulesets are configured at the account level. To work with custom ruleset
 4. In the page that displays, enter a name and (optionally) a description for the custom ruleset.
 
 5. Under **Scope**, define when the custom ruleset should run.
-
    - Select **All incoming requests** to apply the custom ruleset to all incoming requests for all your zones on an Enterprise plan.
    - Select **Custom filter expression** to define a custom expression that defines when to execute the custom ruleset. Use the **Field** drop-down list to choose an HTTP property. For each request, the value of the property you choose for **Field** is compared to the value you specify for **Value** using the operator selected in **Operator**. Alternatively, select **Edit expression** to define your expression using the [Expression Editor](/ruleset-engine/rules-language/expressions/edit-expressions/#expression-editor).
 
@@ -84,6 +83,7 @@ Deployed custom rulesets will only apply to incoming traffic of Enterprise domai
 
 <Render
 	file="custom-response-blocked-requests"
+	product="waf"
 	params={{
 		responseType: "WAF block",
 		defaultStatusCode: "403",

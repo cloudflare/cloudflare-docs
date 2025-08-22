@@ -9,7 +9,11 @@ import { Render } from "~/components";
 
 <Render
 	file="casb/integration-description"
-	params={{ integrationName: props.integrationName, integrationAccountType: props.environmentName }}
+	product="cloudflare-one"
+	params={{
+		integrationName: props.integrationName,
+		integrationAccountType: props.environmentName,
+	}}
 />
 
 ## Integration prerequisites
@@ -34,7 +38,11 @@ These permissions follow the principle of least privilege to ensure that only th
 
 <Render
 	file="casb/security-findings"
-	params={{ integrationName: props.integrationName, slugRelativePath: props.slugifiedName }}
+	product="cloudflare-one"
+	params={{
+		integrationName: props.integrationName,
+		slugRelativePath: props.slugifiedName,
+	}}
 />
 
 ### File sharing

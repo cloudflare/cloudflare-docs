@@ -46,7 +46,7 @@ Alternatively, you can [download the latest Darwin amd64 release](/cloudflare-on
 
 Use the apt package manager to install `cloudflared` on compatible machines.
 
-<Render file="tunnel/cloudflared-debian-install" />
+<Render file="tunnel/cloudflared-debian-install" product="cloudflare-one" />
 
 **RHEL RPM**
 
@@ -159,7 +159,6 @@ warp-routing:
 ## 5. Start routing traffic
 
 1. Now assign a `CNAME` record that points traffic to your tunnel subdomain:
-
    - If you are connecting an application, route the service to a [public hostname](/cloudflare-one/connections/connect-networks/routing-to-tunnel/):
 
    ```sh
@@ -208,4 +207,4 @@ cloudflared tunnel info <UUID or NAME>
 
 You can now [route traffic](/cloudflare-one/connections/connect-networks/routing-to-tunnel/) to your tunnel using Cloudflare DNS or [determine who can reach your tunnel](/cloudflare-one/policies/access/) with Cloudflare Access.
 
-<Render file="access/secure-tunnel-with-access" />
+<Render file="access/secure-tunnel-with-access" product="cloudflare-one" />

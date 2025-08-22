@@ -4,7 +4,7 @@ title: How R2 works
 pcx_content_type: concept
 sidebar:
   order: 2
-description: xyz
+description: Find out how R2 works.
 head:
   - tag: title
     content: How R2 works
@@ -12,14 +12,14 @@ head:
 
 import { Render, LinkCard } from "~/components";
 
-Cloudflare R2 is an S3-compatible object storage service with no egress fees, built on Cloudflare’s global network. It is [strongly consistent](/r2/reference/consistency/) and designed for high [data durability](/r2/reference/durability/).
+Cloudflare R2 is an S3-compatible object storage service with no egress fees, built on Cloudflare's global network. It is [strongly consistent](/r2/reference/consistency/) and designed for high [data durability](/r2/reference/durability/).
 
-R2 is ideal for storing and serving unstructured data that needs to be accessed frequently over the internet, without incurring egress fees. It’s a good fit for workloads like serving web assets, training AI models, and managing user-generated content.
+R2 is ideal for storing and serving unstructured data that needs to be accessed frequently over the internet, without incurring egress fees. It's a good fit for workloads like serving web assets, training AI models, and managing user-generated content.
 
 ## Architecture
-R2’s architecture is composed of multiple components:
+R2's architecture is composed of multiple components:
 
-- **R2 Gateway:** The entry point for all API requests that handles authentication and routing logic. This service is deployed across Cloudflare’s global network via [Cloudflare Workers](/workers/).
+- **R2 Gateway:** The entry point for all API requests that handles authentication and routing logic. This service is deployed across Cloudflare's global network via [Cloudflare Workers](/workers/).
 
 - **Metadata Service:** A distributed layer built on [Durable Objects](/durable-objects/) used to store and manage object metadata (e.g. object key, checksum) to ensure strong consistency of the object across the storage system. It includes a built-in cache layer to speed up access to metadata.
 
@@ -42,7 +42,7 @@ When a write request (e.g. uploading an object) is made to R2, the following seq
 
 3. **Writing to storage:** The encrypted data is written and stored in the distributed storage infrastructure, and replicated within the region (e.g. ENAM) for [durability](/r2/reference/durability/).
 
-4. **Metadata commit:** Finally, the Metadata Service commits the object’s metadata, making it visible in subsequent reads. Only after this commit is an `HTTP 200` success response sent to the client, preventing unacknowledged writes.
+4. **Metadata commit:** Finally, the Metadata Service commits the object's metadata, making it visible in subsequent reads. Only after this commit is an `HTTP 200` success response sent to the client, preventing unacknowledged writes.
 
 ![Write data to R2](public/images/r2/write-data-to-r2.png)
 
@@ -53,7 +53,7 @@ When a read request (e.g. fetching an object) is made to R2, the following seque
 
 2. **Metadata lookup:** The Gateway asks the Metadata Service for the object metadata.
 
-3. **Reading the object:** The Gateway attempts to retrieve the [encrypted](/r2/reference/data-security/) object from the tiered read cache. If it’s not available, it retrieves the object from one of the distributed storage data centers within the region that holds the object data.
+3. **Reading the object:** The Gateway attempts to retrieve the [encrypted](/r2/reference/data-security/) object from the tiered read cache. If it's not available, it retrieves the object from one of the distributed storage data centers within the region that holds the object data.
 
 4. **Serving to client:** The object is decrypted and served to the user.
 
@@ -62,7 +62,7 @@ When a read request (e.g. fetching an object) is made to R2, the following seque
 ## Performance
 The performance of your operations can be influenced by factors such as the bucket's geographical location, request origin, and access patterns.
 
-To further optimize R2 performance for object read requests, you can enable [Cloudflare Cache](/cache/) when using a [custom domain](/r2/buckets/public-buckets/#custom-domains). When caching is enabled, [read requests](/r2/how-r2-works/#read-data-from-r2) can bypass the R2 Gateway Worker and be served directly from Cloudflare’s edge cache, reducing latency. However, note that it may cause consistency trade-offs since cached data may not reflect the latest version immediately.
+To further optimize R2 performance for object read requests, you can enable [Cloudflare Cache](/cache/) when using a [custom domain](/r2/buckets/public-buckets/#custom-domains). When caching is enabled, [read requests](/r2/how-r2-works/#read-data-from-r2) can bypass the R2 Gateway Worker and be served directly from Cloudflare's edge cache, reducing latency. However, note that it may cause consistency trade-offs since cached data may not reflect the latest version immediately.
 
 ![Read data to R2 with Cloudflare Cache](public/images/r2/read-data-to-r2-with-cloudflare-cache.png)
 

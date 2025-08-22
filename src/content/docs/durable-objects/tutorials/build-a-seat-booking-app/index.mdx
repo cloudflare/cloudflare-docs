@@ -374,8 +374,7 @@ export default {
 			);
 		}
 
-		const id = env.FLIGHT.idFromName(flightId);
-		const stub = env.FLIGHT.get(id);
+		const stub = env.FLIGHT.getByName(flightId);
 		return stub.fetch(request);
 	},
 } satisfies ExportedHandler<Env>;

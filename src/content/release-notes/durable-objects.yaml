@@ -3,6 +3,10 @@ link: "/durable-objects/release-notes/"
 productName: Durable Objects
 productLink: "/durable-objects/"
 entries:
+  - publish_date: "2025-08-21"
+    title: Durable Objects stubs can now be directly constructed by name
+    description: |-
+      A [`DurableObjectStub`](/durable-objects/api/stub) can now be directly constructed by created directly with [`DurableObjectNamespace::getByName`](/durable-objects/api/namespace/#getbyname).
   - publish_date: "2025-04-07"
     title: Durable Objects on Workers Free plan
     description: |-

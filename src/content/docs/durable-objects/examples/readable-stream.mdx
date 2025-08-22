@@ -1,5 +1,4 @@
 ---
-
 summary: Stream ReadableStream from Durable Objects.
 pcx_content_type: example
 title: Use ReadableStream with Durable Object and Workers
@@ -8,7 +7,11 @@ sidebar:
 description: Stream ReadableStream from Durable Objects.
 ---
 
-import { GlossaryTooltip, WranglerConfig, TypeScriptExample } from "~/components";
+import {
+	GlossaryTooltip,
+	WranglerConfig,
+	TypeScriptExample,
+} from "~/components";
 
 This example demonstrates:
 
@@ -23,11 +26,11 @@ import { DurableObject } from 'cloudflare:workers';
 
 // Send incremented counter value every second
 async function* dataSource(signal: AbortSignal) {
-    let counter = 0;
-    while (!signal.aborted) {
-        yield counter++;
-        await new Promise((resolve) => setTimeout(resolve, 1_000));
-    }
+let counter = 0;
+while (!signal.aborted) {
+yield counter++;
+await new Promise((resolve) => setTimeout(resolve, 1_000));
+}
 
     console.log('Data source cancelled');
 }
@@ -60,12 +63,12 @@ export class MyDurableObject extends DurableObject<Env> {
 
         return new Response(stream, { headers });
     }
+
 }
 
 export default {
     async fetch(request, env, ctx): Promise<Response> {
-        const id: DurableObjectId = env.MY_DURABLE_OBJECT.idFromName('my-id');
-        const stub = env.MY_DURABLE_OBJECT.get(id);
+        const stub = env.MY_DURABLE_OBJECT.getByName("foo");
         const response = await stub.fetch(request, { ...request });
         if (!response.ok || !response.body) {
             return new Response('Invalid response', { status: 500 });
@@ -96,7 +99,9 @@ export default {
 
         return Response.json(data);
     },
+
 } satisfies ExportedHandler<Env>;
+
 ```
 </TypeScriptExample>
 

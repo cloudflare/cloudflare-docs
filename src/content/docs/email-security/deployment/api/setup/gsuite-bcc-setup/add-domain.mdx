@@ -5,10 +5,11 @@ sidebar:
   order: 2
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 :::caution[Area 1 has been renamed]
-<Render file="rename-area1-to-ces" />
+
+<Render file="rename-area1-to-ces" product="email-security" />
 :::
 
 To set up Email Security (formerly Area 1) for Gmail:
@@ -17,11 +18,13 @@ To set up Email Security (formerly Area 1) for Gmail:
 2. Select the question mark, where you will be able to find your BCC address.
 3. Once you found your address, select **Settings** (the gear icon), then select **New Domain**.
 4. Fill in the information needed to add your domain:
-  - **Domain**: Enter the domain you want to set up BCC from Google.
-  - **Configured As**: Select Hops, enter `2`.
-  - **Forwarding To**: Enter `google.com`.
-  - **Outbound TLS**: Select **Forward all messages over TLS**.
-  - **Quarantine policy**: Ensure no policy is selected.
+
+- **Domain**: Enter the domain you want to set up BCC from Google.
+- **Configured As**: Select Hops, enter `2`.
+- **Forwarding To**: Enter `google.com`.
+- **Outbound TLS**: Select **Forward all messages over TLS**.
+- **Quarantine policy**: Ensure no policy is selected.
+
 5. Select **Publish Domain**.
 
 ## Next steps

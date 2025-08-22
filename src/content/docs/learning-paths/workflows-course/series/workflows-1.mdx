@@ -13,9 +13,9 @@ import { Render, Tabs, TabItem, Card, YouTube } from "~/components";
 <Tabs>
   <TabItem label="Watch this episode">
 
-  Cloudflare Workflows provides durable execution capabilities, allowing developers to create reliable, repeatable workflows that run in the background. Workflows are designed to resume execution even if the underlying compute fails, ensuring that tasks complete eventually. They are built on top of Cloudflare Workers and handle scaling and provisioning automatically.
+Cloudflare Workflows provides durable execution capabilities, allowing developers to create reliable, repeatable workflows that run in the background. Workflows are designed to resume execution even if the underlying compute fails, ensuring that tasks complete eventually. They are built on top of Cloudflare Workers and handle scaling and provisioning automatically.
 
-  Workflows are triggered by events, such as Event Notifications consumed from a Queue, HTTP requests, another Worker, or even scheduled timers. Individual steps within a Workflow are designed as retriable units of work. The state is persisted between steps, allowing workflows to resume from the last successful step after failures. Workflows automatically generate metrics for each step, aiding in debugging and observability.
+Workflows are triggered by events, such as Event Notifications consumed from a Queue, HTTP requests, another Worker, or even scheduled timers. Individual steps within a Workflow are designed as retriable units of work. The state is persisted between steps, allowing workflows to resume from the last successful step after failures. Workflows automatically generate metrics for each step, aiding in debugging and observability.
 
     <Card>
         <YouTube id="slS4RBV0SBk" />
@@ -29,8 +29,9 @@ import { Render, Tabs, TabItem, Card, YouTube } from "~/components";
     - [Cloudflare Workers AI](/workers-ai/)
 
     </Card>
+
   </TabItem>
-  
+
   <TabItem label="Step-by-step tutorial">
 
     Punderful is a sample application that showcases the use of various Cloudflare primitives, including Workers, D1, Vectorize, Workers AI, and Workflows. The application displays a list of puns stored in a D1 database.
@@ -78,7 +79,7 @@ import { Render, Tabs, TabItem, Card, YouTube } from "~/components";
 
     Optionally, the workflow can perform content moderation using an external service like OpenAI's moderation API if an API key is available in the environment.
 
-  [See here](https://github.com/craigsdennis/punderful-workflows/blob/7cec7f4bd7d6b17085cb6d6cb3e56b6a4b5b7c9d/src/workflows/publish.ts#L16)
+[See here](https://github.com/craigsdennis/punderful-workflows/blob/7cec7f4bd7d6b17085cb6d6cb3e56b6a4b5b7c9d/src/workflows/publish.ts#L16)
 
     This step calls the OpenAI moderation API. If the content is flagged as inappropriate, the pun's status is updated in the database, and a `NonRetryableError` is thrown. Throwing a `NonRetryableError` prevents the workflow from retrying this step, as the content is permanently deemed inappropriate.
 
@@ -102,7 +103,7 @@ import { Render, Tabs, TabItem, Card, YouTube } from "~/components";
 
     Insert the created pun embedding and potentially categories embedding into the Vectorize database.
 
-   [See here](https://github.com/craigsdennis/punderful-workflows/blob/7cec7f4bd7d6b17085cb6d6cb3e56b6a4b5b7c9d/src/workflows/publish.ts#L78)
+[See here](https://github.com/craigsdennis/punderful-workflows/blob/7cec7f4bd7d6b17085cb6d6cb3e56b6a4b5b7c9d/src/workflows/publish.ts#L78)
 
     This step uses `this.env.VECTORIZE.upsert()` to add the generated embeddings and associated metadata to the Vectorize database. This makes the pun searchable semantically. `step.do()` ensures this critical indexing step is completed reliably.
 
@@ -135,6 +136,6 @@ import { Render, Tabs, TabItem, Card, YouTube } from "~/components";
   </TabItem>
 
   <TabItem label="Series overview">
-    <Render file="workflows-series-navigation" />
+    <Render file="workflows-series-navigation" product="learning-paths" />
   </TabItem>
 </Tabs>

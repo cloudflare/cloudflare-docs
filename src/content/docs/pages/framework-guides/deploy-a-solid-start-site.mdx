@@ -38,7 +38,7 @@ npm run dev
 
 ## SolidStart Cloudflare configuration
 
-<Render file="c3-adapter" />
+<Render file="c3-adapter" product="pages" />
 
 In order to configure SolidStart so that it can be deployed to Cloudflare pages, update its config file like so:
 
@@ -56,17 +56,17 @@ export default defineConfig({
 });
 ```
 
-<Render file="tutorials-before-you-start" />
+<Render file="tutorials-before-you-start" product="pages" />
 
-<Render file="framework-guides/create-github-repository" />
+<Render file="framework-guides/create-github-repository" product="pages" />
 
 ## Deploy with Cloudflare Pages
 
-<Render file="deploy-via-c3" params={{ name: "Solid" }} />
+<Render file="deploy-via-c3" product="pages" params={{ name: "Solid" }} />
 
 ### Deploy via the Cloudflare dashboard
 
-<Render file="deploy-to-pages-steps-no-preset" />
+<Render file="deploy-to-pages-steps-no-preset" product="pages" />
 
 <div>
 
@@ -89,4 +89,8 @@ For the complete guide to deploying your first site to Cloudflare Pages, refer t
 After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`.
 Every time you commit new code to your Solid repository, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/configuration/preview-deployments/) on new pull requests, to preview how changes look to your site before deploying them to production.
 
-<Render file="framework-guides/learn-more" params={{ one: "Solid" }} />
+<Render
+	file="framework-guides/learn-more"
+	product="pages"
+	params={{ one: "Solid" }}
+/>

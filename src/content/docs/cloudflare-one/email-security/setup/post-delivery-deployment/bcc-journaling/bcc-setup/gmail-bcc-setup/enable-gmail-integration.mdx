@@ -5,30 +5,33 @@ sidebar:
   order: 2
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 ## Prerequisites
 
 To use Email Security, you will need to have:
 
-<Render file="email-security/onboarding-prerequisites" />
+<Render
+	file="email-security/onboarding-prerequisites"
+	product="cloudflare-one"
+/>
 
 ## Enable Gmail BCC integration:
 
 1. Log in to [Zero Trust](https://one.dash.cloudflare.com/).
 2. Select **Email Security**.
 3. Select **Overview**. Select one of the following options:
-- If you have not purchased Email Security, select **Contact sales**. 
+
+- If you have not purchased Email Security, select **Contact sales**.
 - If you have not associated any integration:
   - Select **Set up**, then choose **BCC/Journaling**.
-  - Select **Integrate with Google** > **Authorize**. 
+  - Select **Integrate with Google** > **Authorize**.
   - Name your integration, then select **Next**.
   - Go to [step 1](/cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/bcc-setup/gmail-bcc-setup/enable-gmail-integration/#1-create-a-service-account-in-your-gcp-project) to continue the process of associating an integration.
 - If you have associated an integration, but have not connected a domain:
-    - Select **Connect a domain**.
-    - Choose **BCC/Journaling** > **Integrate with Google**. 
-    - Refer to [Connect your domains](/cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/bcc-setup/gmail-bcc-setup/connect-domains/) to connect your domain(s).
-
+  - Select **Connect a domain**.
+  - Choose **BCC/Journaling** > **Integrate with Google**.
+  - Refer to [Connect your domains](/cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/bcc-setup/gmail-bcc-setup/connect-domains/) to connect your domain(s).
 
 ### 1. Create a Service Account in your GCP Project
 
@@ -36,18 +39,14 @@ To use Email Security, you will need to have:
 2. On the [Google Cloud Console](https://console.cloud.google.com/welcome/new), go to the sidebar, select **APIs & Services**, then select **Credentials**.
 3. Select **CREATE CREDENTIALS** > **Service account**.
 4. Fill in the details to create a service account:
-    - **Service account name**: Enter `Cloudflare Google Integration`.
-    - **Service account ID**: Enter `cloudflare-google-integration`.
-    - **Service account description**: Enter `Cloudflare Google Integration`.
-    - Select **CREATE AND CONTINUE**.
+   - **Service account name**: Enter `Cloudflare Google Integration`.
+   - **Service account ID**: Enter `cloudflare-google-integration`.
+   - **Service account description**: Enter `Cloudflare Google Integration`.
+   - Select **CREATE AND CONTINUE**.
 
 ### 2. Create a JSON Key for your Service Account
 
-On the [Google Cloud Console](https://console.cloud.google.com/welcome/new), select **Service Accounts** on the sidebar:
-    - Select the three dots, then:
-        - Select **Manage keys**.
-        - Select **ADD KEY** > **Create new key**.
-        - Select **JSON** > Select **CREATE**. This downloads a `.json` file which you will use at a later stage.
+On the [Google Cloud Console](https://console.cloud.google.com/welcome/new), select **Service Accounts** on the sidebar: - Select the three dots, then: - Select **Manage keys**. - Select **ADD KEY** > **Create new key**. - Select **JSON** > Select **CREATE**. This downloads a `.json` file which you will use at a later stage.
 
 ### 3. Upload JSON Key
 
@@ -55,12 +54,7 @@ On the [Zero Trust dashboard](https://one.dash.cloudflare.com/), upload the `.js
 
 ### 4. Enable Necessary Google Workspace APIs in GCP
 
-Enable the following APIs on the Google Cloud Console:
-    - [Enable Google Calendar API](https://console.cloud.google.com/apis/library/calendar-json.googleapis.com?project=winter-surf-439414-h1)
-    - [Enable Google Drive API](https://console.cloud.google.com/apis/library/drive.googleapis.com?project=winter-surf-439414-h1)
-    - [Enable Google Admin SDK API](https://console.cloud.google.com/apis/library/admin.googleapis.com?project=winter-surf-439414-h1)
-    - [Enable Gmail API](https://console.cloud.google.com/apis/library/gmail.googleapis.com?project=winter-surf-439414-h1)
-    - [Enable Google Service Usage API](https://console.cloud.google.com/apis/library/serviceusage.googleapis.com?project=winter-surf-439414-h1)
+Enable the following APIs on the Google Cloud Console: - [Enable Google Calendar API](https://console.cloud.google.com/apis/library/calendar-json.googleapis.com?project=winter-surf-439414-h1) - [Enable Google Drive API](https://console.cloud.google.com/apis/library/drive.googleapis.com?project=winter-surf-439414-h1) - [Enable Google Admin SDK API](https://console.cloud.google.com/apis/library/admin.googleapis.com?project=winter-surf-439414-h1) - [Enable Gmail API](https://console.cloud.google.com/apis/library/gmail.googleapis.com?project=winter-surf-439414-h1) - [Enable Google Service Usage API](https://console.cloud.google.com/apis/library/serviceusage.googleapis.com?project=winter-surf-439414-h1)
 
 ### 5. Log in to Google Workspace Admin Console
 
@@ -97,7 +91,7 @@ If you do not reach the step to complete the Email Security set up:
 1. Go to **Settings** (the gear icon) > **SaaS Integrations**.
 2. Delete the integration, if present. Locate your integration, select **Configure**, then select **Delete**.
 3. Follow the steps from the beginning to [enable Gmail BCC integration](/cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/bcc-setup/gmail-bcc-setup/enable-gmail-integration/#enable-gmail-bcc-integration).
-:::
+   :::
 
 ## Next steps
 

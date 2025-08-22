@@ -8,7 +8,7 @@ sidebar:
   order: 3
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 When a [Live Input](/stream/stream-live/start-stream-live/) begins receiving a
 broadcast, a new video is automatically created if the input's `mode` property
@@ -17,7 +17,7 @@ is set to `automatic`.
 To watch, Stream offers a built-in Player or you use a custom player with the
 HLS and DASH manifests.
 
-<Render file="chromecast_limitations" />
+<Render file="chromecast_limitations" product="stream" />
 
 ## View by Live Input ID or Video ID
 
@@ -169,17 +169,17 @@ In the example below, the response indicates the `ID` is for an input with an ac
 
 ```json
 {
-    "isInput": true,
-    "videoUID": "55b9b5ce48c3968c6b514c458959d6a",
-    "live": true
+	"isInput": true,
+	"videoUID": "55b9b5ce48c3968c6b514c458959d6a",
+	"live": true
 }
 ```
 
 ```json
 {
-    "isInput": true,
-    "videoUID": null,
-    "live": false
+	"isInput": true,
+	"videoUID": null,
+	"live": false
 }
 ```
 
@@ -189,8 +189,8 @@ When viewing a live stream via the live input ID, the `requireSignedURLs` and `a
 
 After a live stream ends, a recording is automatically generated and available within 60 seconds. To ensure successful video viewing and playback, keep the following in mind:
 
-* If a live stream ends while a viewer is watching, viewers using the Stream player should wait 60 seconds and then reload the player to view the recording of the live stream.
-* After a live stream ends, you can check the status of the recording via the API. When the video state is `ready`, you can use one of the manifest URLs to stream the recording.
+- If a live stream ends while a viewer is watching, viewers using the Stream player should wait 60 seconds and then reload the player to view the recording of the live stream.
+- After a live stream ends, you can check the status of the recording via the API. When the video state is `ready`, you can use one of the manifest URLs to stream the recording.
 
 While the recording of the live stream is generating, the video may report as `not-found` or `not-started`.
 

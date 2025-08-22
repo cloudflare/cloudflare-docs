@@ -17,6 +17,7 @@ import { Render } from "~/components";
 
 <Render
 	file="simple-props"
+	product="style-guide"
 	params={{
 		name: "world",
 	}}
@@ -29,24 +30,9 @@ import { Render } from "~/components";
 
   This should be the name of the partial, without the containing directory or file extension. For example, `/partials/style-guide/hello.mdx` would be `file="hello"`.
 
-- `product` <Type text="string" /> <MetaInfo text="optional" />
+- `product` <Type text="string" />
 
-  By default, it will look for partials in the same product folder as the current page. You can use this to specify a different product.
-
-  :::caution
-
-  When using the `Render` component inside partials, the original `product` is lost.
-
-  For example, if there are three files:
-  1.  `docs/fundamentals/index.mdx`
-  2.  `partials/dns/thing.mdx`
-  3.  `partials/dns/thing2.mdx`
-
-  `docs/fundamentals/index.mdx` uses `<Render file="thing" product="dns" />`
-
-  `partials/dns/thing.mdx` must use `<Render file="thing2" product="dns" />` as `product` cannot be inferred.
-
-  :::
+  This should be the folder within `src/partials`.
 
 - `params` <Type text="object" /> <MetaInfo text="optional" />
 
@@ -94,7 +80,7 @@ import simpleRaw from "~/content/partials/style-guide/simple-props.mdx?raw";
 ```mdx live
 import { Render } from "~/components";
 
-<Render file="simple-props" params={{ name: "world" }} />
+<Render file="simple-props" product="style-guide" params={{ name: "world" }} />
 ```
 
 ### Properties in Markdown syntax
@@ -116,7 +102,11 @@ import strongRaw from "~/content/partials/style-guide/strong-in-props.mdx?raw";
 ```mdx live
 import { Render } from "~/components";
 
-<Render file="strong-in-props" params={{ do: "Text", dont: "**Text**" }} />
+<Render
+	file="strong-in-props"
+	product="style-guide"
+	params={{ do: "Text", dont: "**Text**" }}
+/>
 ```
 
 #### Links
@@ -132,6 +122,7 @@ import { Render } from "~/components";
 
 <Render
 	file="link-in-props"
+	product="style-guide"
 	params={{
 		link: "/style-guide/components/render/#links",
 	}}
@@ -149,7 +140,11 @@ import imageRaw from "~/content/partials/style-guide/image-in-props.mdx?raw";
 ```mdx live
 import { Render } from "~/components";
 
-<Render file="image-in-props" params={{ image: "/logo.svg" }} />
+<Render
+	file="image-in-props"
+	product="style-guide"
+	params={{ image: "/logo.svg" }}
+/>
 ```
 
 #### Code blocks
@@ -163,7 +158,11 @@ import codeRaw from "~/content/partials/style-guide/code-in-props.mdx?raw";
 ```mdx live
 import { Render } from "~/components";
 
-<Render file="code-in-props" params={{ code: "export const foo = 'bar';" }} />
+<Render
+	file="code-in-props"
+	product="style-guide"
+	params={{ code: "export const foo = 'bar';" }}
+/>
 ```
 
 ### Properties to render content conditionally
@@ -181,15 +180,27 @@ import optionalRaw from "~/content/partials/style-guide/optional-props.mdx?raw";
 ```mdx live
 import { Render } from "~/components";
 
-<Render file="optional-props" params={{ product: "Thing", deprecated: true }} />
+<Render
+	file="optional-props"
+	product="style-guide"
+	params={{ product: "Thing", deprecated: true }}
+/>
 
 <hr />
 
-<Render file="optional-props" params={{ product: "Thing Two" }} />
+<Render
+	file="optional-props"
+	product="style-guide"
+	params={{ product: "Thing Two" }}
+/>
 
 <hr />
 
-<Render file="optional-props" params={{ product: "Thing Three" }} />
+<Render
+	file="optional-props"
+	product="style-guide"
+	params={{ product: "Thing Three" }}
+/>
 ```
 
 ## Partials

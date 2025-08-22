@@ -1,5 +1,4 @@
 ---
-
 summary: Implement a Time To Live (TTL) for Durable Object instances.
 pcx_content_type: example
 title: Durable Object Time To Live
@@ -46,8 +45,7 @@ export class MyDurableObject extends DurableObject {
 // Worker
 export default {
   async fetch(request, env) {
-    const id = env.MY_DURABLE_OBJECT.idFromName("foo");
-        const stub = env.MY_DURABLE_OBJECT.get(id)
+    const stub = env.MY_DURABLE_OBJECT.getByName("foo");
     return await stub.fetch(request);
   },
 };
@@ -85,8 +83,7 @@ export class MyDurableObject extends DurableObject {
 // Worker
 export default {
   async fetch(request, env) {
-    const id = env.MY_DURABLE_OBJECT.idFromName("foo");
-        const stub = env.MY_DURABLE_OBJECT.get(id)
+    const stub = env.MY_DURABLE_OBJECT.getByName("foo");
     return await stub.fetch(request);
   },
 } satisfies ExportedHandler<Env>;

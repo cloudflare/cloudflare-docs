@@ -6,10 +6,9 @@ sidebar:
 head:
   - tag: title
     content: Renew certificates
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 The exact method for certificate renewal depends on whether that hostname is active[^1] and whether it is a wildcard certificate.
 
@@ -25,9 +24,9 @@ If the custom hostname is not active, then the custom hostname domain owner will
 
 With wildcard hostnames, you cannot use HTTP. In this case, you will have to use TXT DCV tokens.
 
-<Render file="txt-validation_preamble" />
+<Render file="txt-validation_preamble" product="cloudflare-for-platforms" />
 
-<Render file="update-dcv-method" />
+<Render file="update-dcv-method" product="cloudflare-for-platforms" />
 
 After this step, follow the normal steps for [TXT validation](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/txt/).
 

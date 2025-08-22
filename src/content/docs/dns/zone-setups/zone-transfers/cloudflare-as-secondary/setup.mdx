@@ -12,7 +12,7 @@ import { Render, TabItem, Tabs } from "~/components";
 
 With [incoming zone transfers](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/), you can keep your primary DNS provider and use Cloudflare as a secondary DNS provider.
 
-<Render file="secondary-dns-override" /> <br />
+<Render file="secondary-dns-override" product="dns" /> <br />
 
 ## Before you begin
 
@@ -31,7 +31,7 @@ You will also need the following information from your Primary DNS provider:
 
 - **Primary IP address**: The IP address that Cloudflare sends zone transfer requests to (via AXFR or IXFR).
 - **Zone transfer type**: Will zone transfers be full (AXFR) or incremental (IXFR)?
-- **TSIG name** (optional): A descriptive name of the TSIG following domain name syntax ([RFC 8945 section 4.2](https://datatracker.ietf.org/doc/html/rfc8945#section-4.2)). <Render file="tsig-name-match" />
+- **TSIG name** (optional): A descriptive name of the TSIG following domain name syntax ([RFC 8945 section 4.2](https://datatracker.ietf.org/doc/html/rfc8945#section-4.2)). <Render file="tsig-name-match" product="dns" />
 - **TSIG secret** (optional): The secret string used to authenticate zone transfers.
 - **TSIG algorithm** (optional): The algorithm used to authenticate zone transfers.
 
@@ -49,21 +49,21 @@ Get the following values from your Cloudflare account:
 
 ## 1. Create TSIG (optional)
 
-<Render file="tsig-definition" />
+<Render file="tsig-definition" product="dns" />
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-<Render file="tsig-create-dash" />
+<Render file="tsig-create-dash" product="dns" />
 
 </TabItem> <TabItem label="API">
 
-<Render file="tsig-create-api" />
+<Render file="tsig-create-api" product="dns" />
 
 </TabItem> </Tabs>
 
 ## 2. Create Peer Server
 
-<Render file="create-peer-server" />
+<Render file="create-peer-server" product="dns" />
 
 ## 3. Create the Secondary Zone
 
@@ -82,7 +82,7 @@ To create a secondary zone using the dashboard:
    :::
 7. Select the peer server you [previously created](#2-create-peer-server). If needed, you can link more than one peer server to a zone.
    :::note
-   <Render file="linked-peers-limit" />
+   <Render file="linked-peers-limit" product="dns" />
    :::
 8. Click **Continue**.
 9. Review the list of transferred records and click **Continue**.
@@ -109,4 +109,4 @@ To increase the reliability of your incoming zone transfers, [set up notificatio
 
 ## 6. Proxy traffic through Cloudflare (optional)
 
-<Render file="secondary-dns-override" />
+<Render file="secondary-dns-override" product="dns" />

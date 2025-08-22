@@ -1,0 +1,43 @@
+---
+title: Python Workflows SDK
+pcx_content_type: navigation
+sidebar:
+  order: 5
+  badge:
+    text: Beta
+---
+
+
+Workflow entrypoints can be declared using Python. To achieve this, you can export a `WorkflowEntrypoint` that runs on the Cloudflare Workers platform.
+Refer to [Python Workers](/workers/languages/python) for more information about Python on the Workers runtime.
+
+:::caution[Python Workflows are in beta, as well as the underlying platform.]
+
+You must add both `python_workflows` and `python_workers` compatibility flags to your `wrangler.toml` file.
+
+Join the #python-workers channel in the [Cloudflare Developers Discord](https://discord.cloudflare.com/) and let us know what you'd like to see next.
+:::
+
+## Get Started
+
+The main entrypoint for a Python workflow is the [`WorkflowEntrypoint`](/workflows/build/workers-api/#workflowentrypoint) class. Your workflow logic should exist inside the [`run`](/workflows/build/workers-api/#run) handler.
+
+```python
+from workers import WorkflowEntrypoint
+
+class MyWorkflow(WorkflowEntrypoint):
+    async def run(self, event, step):
+        # steps here
+```
+
+To run a Python Workflow locally, you use [Wrangler](/workers/wrangler/), the CLI for Cloudflare Workers:
+
+```bash
+npx wrangler@latest dev
+```
+
+To deploy a Python Workflow to Cloudflare, run [`wrangler deploy`](/workers/wrangler/commands/#deploy):
+
+```bash
+npx wrangler@latest deploy
+```

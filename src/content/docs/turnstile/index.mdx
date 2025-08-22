@@ -17,7 +17,7 @@ import {
 	RelatedProduct,
 	Render,
 	CardGrid,
-	LinkTitleCard
+	LinkTitleCard,
 } from "~/components";
 
 <Description>
@@ -30,13 +30,13 @@ Turnstile can be embedded into any website without sending traffic through Cloud
 
 ![Turnstile Overview](~/assets/images/turnstile/turnstile-overview.png)
 
-<Render file="challenge-behavior" />
+<Render file="challenge-behavior" product="turnstile" />
 
 ## How Turnstile works
 
-Turnstile adapts the challenge outcome to the individual visitor or browser. First, we run a series of small non-interactive JavaScript challenges to gather signals about the visitor or browser environment. 
+Turnstile adapts the challenge outcome to the individual visitor or browser. First, we run a series of small non-interactive JavaScript challenges to gather signals about the visitor or browser environment.
 
-These challenges include proof-of-work, proof-of-space, probing for web APIs, and various other challenges for detecting browser-quirks and human behavior. As a result, we can fine-tune the difficulty of the challenge to the specific request and avoid showing a visual or interactive puzzle to a user. 
+These challenges include proof-of-work, proof-of-space, probing for web APIs, and various other challenges for detecting browser-quirks and human behavior. As a result, we can fine-tune the difficulty of the challenge to the specific request and avoid showing a visual or interactive puzzle to a user.
 
 :::note
 For detailed information on Turnstile's data privacy practices, refer to the [Turnstile Privacy Addendum](https://www.cloudflare.com/turnstile-privacy-policy/).
@@ -61,8 +61,9 @@ Turnstile is WCAG 2.1 AA compliant.
 ## Features
 
 <Feature header="Turnstile Analytics" href="/turnstile/turnstile-analytics/">
-	Assess the number of challenges issued, evaluate the [challenge solve rate](/cloudflare-challenges/reference/challenge-solve-rate/), and
-	view the metrics of issued challenges.
+	Assess the number of challenges issued, evaluate the [challenge solve
+	rate](/cloudflare-challenges/reference/challenge-solve-rate/), and view the
+	metrics of issued challenges.
 </Feature>
 
 <Feature
@@ -82,8 +83,13 @@ Turnstile is WCAG 2.1 AA compliant.
 	your domain from bad bots.
 </RelatedProduct>
 
-<RelatedProduct header="DDoS Protection" href="/ddos-protection/" product="ddos-protection">
-Detect and mitigate Distributed Denial of Service (DDoS) attacks using Cloudflare's Autonomous Edge. 
+<RelatedProduct
+	header="DDoS Protection"
+	href="/ddos-protection/"
+	product="ddos-protection"
+>
+	Detect and mitigate Distributed Denial of Service (DDoS) attacks using
+	Cloudflare's Autonomous Edge.
 </RelatedProduct>
 
 <RelatedProduct header="WAF" href="/waf/" product="waf">
@@ -99,5 +105,6 @@ Detect and mitigate Distributed Denial of Service (DDoS) attacks using Cloudflar
 <LinkTitleCard title="Plans" href="/turnstile/plans/" icon="document">
 
 Learn more about Turnstile's plan availability.
+
 </LinkTitleCard>
 </CardGrid>

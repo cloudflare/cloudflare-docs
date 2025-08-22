@@ -16,7 +16,6 @@ import { APIRequest, Render } from "~/components";
 3. Select **Create rule** > **Custom Error Rule**.
 4. Enter a descriptive name for the rule in **Rule name**.
 5. Under **If incoming requests match**, select one of the following options:
-
    - **Custom filter expression**: The rule will only apply to traffic matching a custom expression. Define the [rule expression](/ruleset-engine/rules-language/expressions/edit-expressions/) to configure which requests should be rewritten. Use either the Expression Builder or the Expression Editor to define the custom expression. For more information, refer to [Edit expressions in the dashboard](/ruleset-engine/rules-language/expressions/edit-expressions/).
 
    - **All incoming requests**: The rule will apply to all responses with a `400` status code or above, except for block and challenge actions issued by Cloudflare’s security products.
@@ -124,7 +123,11 @@ This example configures a custom error rule returning a [previously created cust
 	}}
 />
 
-<Render file="terraform-use-ref-field" params={{ addDocsLocation: true }} />
+<Render
+	file="terraform-use-ref-field"
+	product="rules"
+	params={{ addDocsLocation: true }}
+/>
 
 This `PUT` request, corresponding to the [Update a zone entry point ruleset](/api/resources/rulesets/subresources/phases/methods/update/) operation, replaces any existing rules in the `http_custom_errors` phase entry point ruleset.
 

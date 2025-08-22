@@ -199,7 +199,7 @@ All properties of an incoming `Request` object (the request you receive from the
 * `signal` AbortSignal read-only
   * The `AbortSignal` corresponding to this request. If you use the [`enable_request_signal`](/workers/configuration/compatibility-flags/#enable-requestsignal-for-incoming-requests) compatibility flag, you can attach an event listener to the signal. This allows you to perform cleanup tasks or write to logs before your Worker's invocation ends.
     For example, if you run the Worker below, and then abort the request from the client, a log will be written:
-    <Render file="request-signal-example" />
+    <Render file="request-signal-example" product="workers" />
 
 * `url` string read-only
 

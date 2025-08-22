@@ -8,16 +8,13 @@ head:
   - tag: title
     content: Setup phishing risk assessment for Office 365 with Email Security
       (formerly Area 1)
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 :::caution[Area 1 has been renamed]
 
-
-<Render file="rename-area1-to-ces" />
-
+<Render file="rename-area1-to-ces" product="email-security" />
 
 :::
 
@@ -25,12 +22,15 @@ For customers using Microsoft Office 365, setting up Email Security via journali
 
 ![Email flow when setting up a phishing assessment risk for Office 365 with Email Security.](~/assets/images/email-security/deployment/api-setup/journaling/office365-journaling-flow.png)
 
-<Render file="deployment/o365-gcc" />
+<Render file="deployment/o365-gcc" product="email-security" />
 
 ## Journaling
 
-<Render file="deployment/journaling-connector" />
+<Render file="deployment/journaling-connector" product="email-security" />
 
 ## Geographic locations
 
-<Render file="deployment/bcc-table-geographic-locations" />
+<Render
+	file="deployment/bcc-table-geographic-locations"
+	product="email-security"
+/>

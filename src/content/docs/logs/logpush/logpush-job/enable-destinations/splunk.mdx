@@ -14,7 +14,7 @@ The [HTTP Event Collector (HEC)](https://dev.splunk.com/enterprise/docs/devtools
 
 ## Manage via the Cloudflare dashboard
 
-<Render file="enable-logpush-job" />
+<Render file="enable-logpush-job" product="logs" />
 
 5. In **Select a destination**, choose **Splunk**.
 
@@ -30,13 +30,11 @@ When you are done entering the destination details, select **Continue**.
 7. Select the dataset to push to the storage service.
 
 8. In the next step, you need to configure your logpush job:
-
    - Enter the **Job name**.
    - Under **If logs match**, you can select the events to include and/or remove from your logs. Refer to [Filters](/logs/logpush/logpush-job/filters/) for more information. Not all datasets have this option available.
    - In **Send the following fields**, you can choose to either push all logs to your storage destination or selectively choose which logs you want to push.
 
 9. In **Advanced Options**, you can:
-
    - Choose the format of timestamp fields in your logs (`RFC3339`(default),`Unix`, or `UnixNano`).
    - Select a [sampling rate](/logs/logpush/logpush-job/api-configuration/#sampling-rate) for your logs or push a randomly-sampled percentage of logs.
    - Enable redaction for `CVE-2021-44228`. This option will replace every occurrence of `${` with `x{`.
@@ -54,7 +52,7 @@ To set up a Splunk Logpush job:
 Unlike configuring Logpush jobs for AWS S3, GCS, or Azure, there is no ownership challenge when configuring Logpush to Splunk.
 :::
 
-<Render file="enable-read-permissions" />
+<Render file="enable-read-permissions" product="logs" />
 
 ### 1. Create a job
 
@@ -62,7 +60,6 @@ To create a job, make a `POST` request to the Logpush jobs endpoint with the fol
 
 - **name** (optional) - Use your domain name as the job name.
 - **destination_conf** - A log destination consisting of an endpoint URL, channel id, insecure-skip-verify flag, source type, authorization header in the string format below.
-
   - **\<SPLUNK_ENDPOINT_URL>**: The Splunk raw HTTP Event Collector URL with port. For example: `splunk.cf-analytics.com:8088/services/collector/raw`.
     - Cloudflare expects the Splunk endpoint to be `/services/collector/raw` while configuring and setting up the Logpush job.
     - Ensure you have enabled HEC in Splunk. Refer to [Splunk Analytics Integrations](/analytics/analytics-integrations/splunk/) for information on how to set up HEC in Splunk.
@@ -90,27 +87,28 @@ Cloudflare highly recommends setting this value to <code class="InlineCode">fals
 Example request using cURL:
 
 <APIRequest
-  path="/zones/{zone_id}/logpush/jobs"
-  method="POST"
-  json={{
-    name: "<DOMAIN_NAME>",
-    destination_conf: "splunk://<SPLUNK_ENDPOINT_URL>?channel=<SPLUNK_CHANNEL_ID>&insecure-skip-verify=<INSECURE_SKIP_VERIFY>&sourcetype=<SOURCE_TYPE>&header_Authorization=<SPLUNK_AUTH_TOKEN>",
-    output_options: {
-      field_names: [
-        "ClientIP",
-        "ClientRequestHost",
-        "ClientRequestMethod",
-        "ClientRequestURI",
-        "EdgeEndTimestamp",
-        "EdgeResponseBytes",
-        "EdgeResponseStatus",
-        "EdgeStartTimestamp",
-        "RayID"
-      ],
-      timestamp_format: "rfc3339"
-    },
-    dataset: "http_requests"
-  }}
+	path="/zones/{zone_id}/logpush/jobs"
+	method="POST"
+	json={{
+		name: "<DOMAIN_NAME>",
+		destination_conf:
+			"splunk://<SPLUNK_ENDPOINT_URL>?channel=<SPLUNK_CHANNEL_ID>&insecure-skip-verify=<INSECURE_SKIP_VERIFY>&sourcetype=<SOURCE_TYPE>&header_Authorization=<SPLUNK_AUTH_TOKEN>",
+		output_options: {
+			field_names: [
+				"ClientIP",
+				"ClientRequestHost",
+				"ClientRequestMethod",
+				"ClientRequestURI",
+				"EdgeEndTimestamp",
+				"EdgeResponseBytes",
+				"EdgeResponseStatus",
+				"EdgeStartTimestamp",
+				"RayID",
+			],
+			timestamp_format: "rfc3339",
+		},
+		dataset: "http_requests",
+	}}
 />
 
 Response:
@@ -144,11 +142,11 @@ To enable a job, make a `PUT` request to the Logpush jobs endpoint. Use the job 
 Example request using cURL:
 
 <APIRequest
-  method="PUT"
-  path="/zones/{zone_id}/logpush/jobs/{job_id}"
-  json={{
-    enabled: true
-  }}
+	method="PUT"
+	path="/zones/{zone_id}/logpush/jobs/{job_id}"
+	json={{
+		enabled: true,
+	}}
 />
 
 Response:

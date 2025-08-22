@@ -85,7 +85,7 @@ To allow traffic from good bots, use the [Verified Bot](/ruleset-engine/rules-la
 
 ### Why might the ja3hash or JA4 be empty in HTTP logs?
 
-<Render file="ja3-ja4-null" />
+<Render file="ja3-ja4-null" product="bots" />
 
 ---
 
@@ -157,7 +157,7 @@ For **Business** and **Enterprise** (with no Bot Management add-on) plans
   3. Set each of **Definitely automated traffic**, **Likely automated** and **Verified bots** to **Allow**.
   4. Turn **Static resource protection** and **JavaScript detections** off.
 
-<Render file="flexible-sbfm" />
+<Render file="flexible-sbfm" product="bots" />
 
 You cannot bypass or skip Bot Fight Mode using the _Skip_ action in WAF custom rules or using Page Rules. _Skip_, _Bypass_, and _Allow_ actions apply to rules or rulesets running on the [Ruleset Engine](/ruleset-engine/). While Super Bot Fight Mode rules are implemented in the Ruleset Engine, Bot Fight Mode checks are not. This is why you can skip Super Bot Fight Mode, but not Bot Fight Mode. If you need to skip Bot Fight Mode, consider using [Super Bot Fight Mode](/bots/get-started/super-bot-fight-mode/).
 

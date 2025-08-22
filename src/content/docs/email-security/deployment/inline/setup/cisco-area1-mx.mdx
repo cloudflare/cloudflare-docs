@@ -6,18 +6,16 @@ sidebar:
   order: 3
 head:
   - tag: title
-    content: Deploy and configure Cisco IronPort with Email Security (formerly Area
+    content:
+      Deploy and configure Cisco IronPort with Email Security (formerly Area
       1) as MX Record
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 :::caution[Area 1 has been renamed]
 
-
-<Render file="rename-area1-to-ces" />
-
+<Render file="rename-area1-to-ces" product="email-security" />
 
 :::
 
@@ -25,7 +23,10 @@ import { Render } from "~/components"
 
 In this tutorial, you will learn how to configure Cisco IronPort with Email Security as MX record. This tutorial is broken down into several steps.
 
-<Render file="deployment/mx-deployment-prerequisites" />
+<Render
+	file="deployment/mx-deployment-prerequisites"
+	product="email-security"
+/>
 
 ## 1. Add a Sender Group for Email Security Email Protection IPs
 
@@ -36,13 +37,13 @@ To add a new Sender Group:
 2. Select **Add Sender Group**.
 
 3. Configure the new Sender Group as follows:
-   * **Name**: `Area1`.
-   * **Order**: Order above the existing **WHITELIST** sender group.
-   * **Comment**: `Area 1 Email Protection egress IP Addresses`.
-   * **Policy**: `TRUSTED` (by default, spam detection is disabled for this mail flow policy).
-   * **SBRS**: Leave blank.
-   * **DNS Lists**: Leave blank.
-   * **Connecting Host DNS Verification**: Leave all options unchecked.
+   - **Name**: `Area1`.
+   - **Order**: Order above the existing **WHITELIST** sender group.
+   - **Comment**: `Area 1 Email Protection egress IP Addresses`.
+   - **Policy**: `TRUSTED` (by default, spam detection is disabled for this mail flow policy).
+   - **SBRS**: Leave blank.
+   - **DNS Lists**: Leave blank.
+   - **Connecting Host DNS Verification**: Leave all options unchecked.
 
 4. Select **Submit and Add Senders** and add the IP addresses mentioned in [Egress IPs](/email-security/deployment/inline/reference/egress-ips/).
 
@@ -70,6 +71,7 @@ Refer to [Cisco's documentation](https://www.cisco.com/c/en/us/support/docs/secu
 
 Instructions to update your MX records will depend on the DNS provider you are using. In your domain DNS zone, you need to replace your current MX records with the Email Security hosts. This will have to be done for every domain where Email Security will be the primary MX. For example:
 
-<Render file="deployment/mx-deployment-values" /> <Render file="deployment/mx-geographic-locations" />
+<Render file="deployment/mx-deployment-values" product="email-security" />
+<Render file="deployment/mx-geographic-locations" product="email-security" />
 
 DNS changes will reach the major DNS servers in about an hour or follow the TTL value as described in the [Prerequisites section](#prerequisites).

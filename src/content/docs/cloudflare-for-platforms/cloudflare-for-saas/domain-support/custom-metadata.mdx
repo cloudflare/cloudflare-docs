@@ -16,7 +16,10 @@ To do this, you will first need to reach out to your account team to enable acce
 - Read the metadata JSON from [Cloudflare Workers](/workers/) (requires access to Workers) to define per-hostname behavior.
 - Use custom metadata values in [rule expressions](/ruleset-engine/rules-language/expressions/) of different Cloudflare security products to define the rule scope.
 
-<Render file="ssl-for-saas-plan-limitation" />
+<Render
+	file="ssl-for-saas-plan-limitation"
+	product="cloudflare-for-platforms"
+/>
 
 ---
 
@@ -32,20 +35,19 @@ Please speak with your Solutions Engineer to discuss additional logic and requir
 
 You may add custom metadata to Cloudflare via the Custom Hostnames API. This data can be added via a [`PATCH` request](/api/resources/custom_hostnames/methods/edit/) to the specific hostname ID to set metadata for that hostname, for example:
 
-
 <APIRequest
-  path="/zones/{zone_id}/custom_hostnames/{custom_hostname_id}"
-  method="PATCH"
-  json={{
-		"ssl": {
-    "method": "http",
-    "type": "dv"
-  },
-  "custom_metadata": {
-    "customer_id": "12345",
-    "redirect_to_https": true,
-    "security_tag": "low"
-  },
+	path="/zones/{zone_id}/custom_hostnames/{custom_hostname_id}"
+	method="PATCH"
+	json={{
+		ssl: {
+			method: "http",
+			type: "dv",
+		},
+		custom_metadata: {
+			customer_id: "12345",
+			redirect_to_https: true,
+			security_tag: "low",
+		},
 	}}
 />
 
@@ -63,21 +65,21 @@ In the example below we will use the user_id in the Worker that was submitted us
 
 ```ts
 export default {
-  /**
-   * Fetch and add a X-Customer-Id header to the origin based on hostname
-   * @param {Request} request
-   */
-  async fetch(request, env, ctx): Promise<Response> {
-    const customer_id = request.cf.hostMetadata.customer_id;
-    const newHeaders = new Headers(request.headers);
-    newHeaders.append('X-Customer-Id', customer_id);
+	/**
+	 * Fetch and add a X-Customer-Id header to the origin based on hostname
+	 * @param {Request} request
+	 */
+	async fetch(request, env, ctx): Promise<Response> {
+		const customer_id = request.cf.hostMetadata.customer_id;
+		const newHeaders = new Headers(request.headers);
+		newHeaders.append("X-Customer-Id", customer_id);
 
-    const init = {
-      headers: newHeaders,
-      method: request.method,
-    };
-    return fetch(request.url, init);
-  },
+		const init = {
+			headers: newHeaders,
+			method: request.method,
+		};
+		return fetch(request.url, init);
+	},
 } satisfies ExportedHandler<Env>;
 ```
 

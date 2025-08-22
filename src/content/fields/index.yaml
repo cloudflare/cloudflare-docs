@@ -995,6 +995,8 @@ entries:
     plan_info_label: Enterprise
     summary: A global score from 1–99 that combines the score of each WAF attack vector into a single score.
     description: |-
+      The special score `100` indicates that Cloudflare did not score the request.
+
       This is the standard [WAF attack score](/waf/detections/attack-score/) to detect variants of attack patterns.
 
       Requires a Cloudflare Enterprise plan. You must also enable [attack score detection](/waf/detections/attack-score/).
@@ -1201,6 +1203,61 @@ entries:
     example_block: |-
       # Matches requests where PII categorized as "EMAIL_ADDRESS" or "IBAN_CODE" was detected:
       (cf.llm.prompt.pii_detected and any(cf.llm.prompt.pii_categories[*] in {"EMAIL_ADDRESS" "IBAN_CODE"}))
+
+  - name: cf.llm.prompt.unsafe_topic_detected
+    data_type: Boolean
+    categories: [Request]
+    keywords: [request, cloudflare, ai, client, visitor]
+    plan_info_label: Enterprise
+    summary: Indicates whether the incoming request includes any unsafe topic category in the LLM prompt.
+    description: |-
+      Equivalent to checking if the [`cf.llm.prompt.unsafe_topic_categories`](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.unsafe_topic_categories/) field is not empty.
+
+      Requires a Cloudflare Enterprise plan. You must also enable [Firewall for AI](/waf/detections/firewall-for-ai/).
+
+  - name: cf.llm.prompt.unsafe_topic_categories
+    data_type: Array<String>
+    categories: [Request]
+    keywords: [request, cloudflare, ai, client, visitor]
+    plan_info_label: Enterprise
+    summary: Array of string values with the type of unsafe topics detected in the LLM prompt.
+    description: |-
+      The possible values are the following:
+
+      | Value | Category name             | Description                                                                                                       |
+      | ----- | ------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+      | `S1`  | Violent Crimes            | Violent crimes against people or animals.                                                                         |
+      | `S2`  | Non-Violent Crimes        | Non-violent offenses such as fraud, theft, drug creation, or hacking.                                             |
+      | `S3`  | Sex-Related Crimes        | Sex-related crimes, including trafficking, assault, and harassment.                                               |
+      | `S4`  | Child Sexual Exploitation | Sexual exploitation of children.                                                                                  |
+      | `S5`  | Defamation                | False statements that are likely to damage a living person's reputation.                                          |
+      | `S6`  | Specialized Advice        | Specialized financial, medical, or legal advice, or misrepresent dangerous things as safe.                        |
+      | `S7`  | Privacy                   | Sensitive, nonpublic personal information that could endanger an individual.                                      |
+      | `S8`  | Intellectual Property     | Violate a third party's intellectual property rights.                                                             |
+      | `S9`  | Indiscriminate Weapons    | Creation of indiscriminate weapons like chemical, biological, or nuclear arms.                                    |
+      | `S10` | Hate                      | Demean or dehumanize people based on their race, religion, sexual orientation, or other personal characteristics. |
+      | `S11` | Suicide & Self-Harm       | Encourage or endorse suicide, self-injury, or disordered eating.                                                  |
+      | `S12` | Sexual Content            | Erotic content.                                                                                                   |
+      | `S13` | Elections                 | False information about the time, place, or manner of voting in elections.                                        |
+
+      Requires a Cloudflare Enterprise plan. You must also enable [Firewall for AI](/waf/detections/firewall-for-ai/).
+    example_block: |-
+      # Matches requests where an unsafe topic categorized as "S2" (Non-Violent Crimes) or "S10" (Hate) was detected in the LLM prompt:
+      (cf.llm.prompt.unsafe_topic_detected and any(cf.llm.prompt.unsafe_topic_categories[*] in {"S2" "S10"}))
+
+  - name: cf.llm.prompt.injection_score
+    data_type: Number
+    categories: [Request]
+    keywords: [request, cloudflare, ai, client, visitor]
+    plan_info_label: Enterprise
+    summary: A score from 1–99 that represents the likelihood that the LLM prompt in the request is trying to perform a prompt injection attack.
+
+    description: |-
+      A low score (for example, below `20`) indicates that there is a high probability that the LLM prompt in the request is trying to perform a prompt injection attack.
+
+      The special score `100` indicates that Cloudflare did not score the request.
+
+      Requires a Cloudflare Enterprise plan. You must also enable [Firewall for AI](/waf/detections/firewall-for-ai/).
 
   - name: cf.worker.upstream_zone
     data_type: String

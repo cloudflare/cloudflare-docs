@@ -1,26 +1,22 @@
 ---
 pcx_content_type: configuration
 title: process
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
-<Render file="nodejs-compat-howto" />
+<Render file="nodejs-compat-howto" product="workers" />
 
 The [`process`](https://nodejs.org/dist/latest-v19.x/docs/api/process.html) module in Node.js provides a number of useful APIs related to the current process. Within a serverless environment like Workers, most of these APIs are not relevant or meaningful, but some are useful for cross-runtime compatibility. Within Workers, the following APIs are available:
 
 ```js
-import {
-  env,
-  nextTick,
-} from 'node:process';
+import { env, nextTick } from "node:process";
 
-env['FOO'] = 'bar';
-console.log(env['FOO']); // Prints: bar
+env["FOO"] = "bar";
+console.log(env["FOO"]); // Prints: bar
 
 nextTick(() => {
-  console.log('next tick');
+	console.log("next tick");
 });
 ```
 
@@ -45,22 +41,22 @@ necessary -- but only within the context of a request.
 Setting any value on `process.env` will coerce that value into a string.
 
 ```js
-import * as process from 'node:process';
+import * as process from "node:process";
 
 export default {
-  fetch(req, env) {
-    // Set process.env.FOO to the value of env.FOO if process.env.FOO is not already set
-    // and env.FOO is a string.
-    process.env.FOO ??= (() => {
-      if (typeof env.FOO === 'string') {
-        return env.FOO;
-      }
-    })();
-  }
+	fetch(req, env) {
+		// Set process.env.FOO to the value of env.FOO if process.env.FOO is not already set
+		// and env.FOO is a string.
+		process.env.FOO ??= (() => {
+			if (typeof env.FOO === "string") {
+				return env.FOO;
+			}
+		})();
+	},
 };
 ```
 
-It is strongly recommended that you *do not* replace the entire `process.env` object with
+It is strongly recommended that you _do not_ replace the entire `process.env` object with
 the cloudflare `env` object. Doing so will cause you to lose any environment variables that
 were set previously and will cause unexpected behavior for other Workers running in the
 same isolate. Specifically, it would cause inconsistency with the `process.env` object when
@@ -82,3 +78,4 @@ process.env === env; // false! they are no longer the same object
 The Workers implementation of `process.nextTick()` is a wrapper for the standard Web Platform API [`queueMicrotask()`](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/queueMicrotask).
 
 Refer to the [Node.js documentation for `process`](https://nodejs.org/dist/latest-v19.x/docs/api/process.html) for more information.
+```

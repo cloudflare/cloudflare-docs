@@ -81,7 +81,7 @@ The response will include the complete ruleset after updating the rule.
 
 To reorder a rule in a list of ruleset rules, include a `position` object in the request, containing one of the following:
 
-<Render file="rule-position-values" />
+<Render file="rule-position-values" product="ruleset-engine" />
 
 Reorder a rule without changing its definition by including only the `position` object in the `PATCH` request body. You can also update a rule definition and reorder it in the same `PATCH` request by including both the `rule` object and the `position` object.
 

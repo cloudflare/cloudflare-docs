@@ -41,15 +41,15 @@ If using the API, you may also want to [locate your Zone and Account IDs](/funda
 
 ## 1. Create TSIG (optional)
 
-<Render file="tsig-definition" />
+<Render file="tsig-definition" product="dns" />
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-<Render file="tsig-create-dash" />
+<Render file="tsig-create-dash" product="dns" />
 
 </TabItem> <TabItem label="API">
 
-<Render file="tsig-create-api" />
+<Render file="tsig-create-api" product="dns" />
 
 </TabItem> </Tabs>
 
@@ -86,7 +86,8 @@ To create a peer DNS server using the API, send a [POST](/api/resources/dns/subr
 If you previously [created a peer DNS server](#2-create-peer-dns-server-optional), you should link it to your primary zone.
 
 :::note
-<Render file="linked-peers-limit" />
+
+<Render file="linked-peers-limit" product="dns" />
 :::
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
@@ -141,7 +142,7 @@ Send the following `PATCH` request replacing the placeholders with your zone ID 
 	path="/zones/{zone_id}/dns_settings"
 	method="PATCH"
 	json={{
-		"multi_provider": true,
+		multi_provider: true,
 	}}
 />
 

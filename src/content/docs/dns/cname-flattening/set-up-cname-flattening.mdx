@@ -6,16 +6,13 @@ sidebar:
 head:
   - tag: title
     content: Set up CNAME flattening
-
 ---
 
-import { Render, TabItem, Tabs, GlossaryTooltip } from "~/components"
+import { Render, TabItem, Tabs, GlossaryTooltip } from "~/components";
 
 :::note
 
-
 If the CNAME target is on the same zone as the CNAME record, Cloudflare proceeds with CNAME flattening and ignores the **CNAME Flattening** setting.
-
 
 :::
 
@@ -40,7 +37,8 @@ Make a `PATCH` request to the [Update DNS Settings](/api/resources/dns/subresour
 </TabItem> </Tabs>
 
 :::caution
- <Render file="cname-flattening-callout" />
+
+<Render file="cname-flattening-callout" product="dns" />
 :::
 
 ## Per record
@@ -59,10 +57,11 @@ If you use this option, a special [tag](/dns/manage-dns-records/reference/record
 
 :::note[Unavailable flatten option]
 For the following cases, **Flatten** will not be available:
+
 - The record is at the [zone apex](#for-your-zone-apex).
 - The record is already proxied, which means it will be flattened by default.
 - **CNAME flattening for all CNAME records** is turned on, which means you cannot override it per record.
-:::
+  :::
 
 </TabItem> <TabItem label="API">
 

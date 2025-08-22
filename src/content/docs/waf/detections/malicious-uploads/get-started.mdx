@@ -36,7 +36,7 @@ Use a `POST` request similar to the following:
 
 </TabItem> <TabItem label="Terraform">
 
-<Render file="detections/malicious-uploads-enable-terraform" />
+<Render file="detections/malicious-uploads-enable-terraform" product="waf" />
 
 </TabItem> </Tabs>
 
@@ -160,7 +160,10 @@ lookup_json_string(http.request.body.raw, "file")
 
 </TabItem> <TabItem label="Terraform">
 
-<Render file="detections/malicious-uploads-configure-expression-terraform" />
+<Render
+	file="detections/malicious-uploads-configure-expression-terraform"
+	product="waf"
+/>
 
 </TabItem> </Tabs>
 

@@ -5,13 +5,13 @@ sidebar:
   order: 1
 ---
 
-import { GlossaryTooltip, Render } from "~/components"
+import { GlossaryTooltip, Render } from "~/components";
 
 Every instance of Turnstile belongs to a Turnstile widget. It is configured on a per-widget level. Every widget has a mode, a label, a <GlossaryTooltip term="sitekey">sitekey</GlossaryTooltip>, and a <GlossaryTooltip term="secret key">secret key</GlossaryTooltip>.
 
 ## Widget components
 
-<Render file="widget-components" />
+<Render file="widget-components" product="turnstile" />
 
 ## Widget modes
 
@@ -49,7 +49,7 @@ Refer to [Widget configurations](/turnstile/get-started/client-side-rendering/wi
 
 ### Appearance and themes
 
-Turnstile widgets support multiple appearance modes and themes to match your website's design. 
+Turnstile widgets support multiple appearance modes and themes to match your website's design.
 
 Refer to [Widget configurations](/turnstile/get-started/client-side-rendering/widget-configurations/) for implementation details.
 
@@ -79,6 +79,6 @@ When the verification was completed but no further action has been taken, the ch
 
 #### Outdated or unsupported browser
 
-Visitors with outdated browsers or unsupported browsers will encounter this widget state. 
+Visitors with outdated browsers or unsupported browsers will encounter this widget state.
 
 Refer to [Supported browsers](/cloudflare-challenges/reference/supported-browsers/) for more information regarding supported browsers.
