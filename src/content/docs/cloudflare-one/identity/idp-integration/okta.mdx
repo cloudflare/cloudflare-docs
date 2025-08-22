@@ -93,7 +93,11 @@ If you would like to only maintain one Okta app instance, Okta does support SAML
 
 ### 1. Enable SCIM in Zero Trust
 
-<Render file="access/enable-scim-on-dashboard" params={{ idp: "Okta" }} />
+<Render
+	file="access/enable-scim-on-dashboard"
+	product="cloudflare-one"
+	params={{ idp: "Okta" }}
+/>
 
 ### 2. Configure SCIM in Okta
 

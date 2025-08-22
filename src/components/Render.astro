@@ -13,9 +13,15 @@ const props = z.object({
 let { file, product, params } = props.parse(Astro.props);
 
 if (!product) {
-	throw new Error(
-		`[Render] Unable to infer which folder ${file} is in, please provide a "product" input with your "file" input.`,
-	);
+	const fromSlug = Astro.params.slug?.split("/")[0];
+
+	if (!fromSlug) {
+		throw new Error(
+			`[Render] Unable to infer which folder ${file} is in, please provide a "product" input with your "file" input.`,
+		);
+	}
+
+	product = fromSlug;
 }
 
 const id = `${product}/${file}`;
