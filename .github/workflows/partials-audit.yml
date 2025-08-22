@@ -33,7 +33,8 @@ jobs:
           for FILE in $FILES; do
             # Extract product and file name from the path
             PRODUCT=$(echo "$FILE" | awk -F'/' '{print $(NF-1)}')
-            FILENAME=$(basename "$FILE" .mdx)
+            TEMP_PATH=${FILE#*src/content/partials/}
+            FILENAME=${TEMP_PATH%.mdx}
 
             # Construct the individual search strings for product and file
             SEARCH_PRODUCT="product=\"$PRODUCT\""
