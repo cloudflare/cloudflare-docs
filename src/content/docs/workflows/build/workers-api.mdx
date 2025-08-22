@@ -29,9 +29,8 @@ export class MyWorkflow extends WorkflowEntrypoint<Env, Params> {
 
 ### run
 
-- <code>
-  	run(event: WorkflowEvent&lt;T&gt;, step: WorkflowStep): Promise&lt;T&gt;
-  </code>
+{/* prettier-ignore */}
+- <code>run(event: WorkflowEvent&lt;T&gt;, step: WorkflowStep): Promise&lt;T&gt;</code>
   - `event` - the event passed to the Workflow, including an optional `payload` containing data (parameters)
   - `step` - the `WorkflowStep` type that provides the step methods for your Workflow
 
