@@ -1,13 +1,9 @@
 ---
-pcx_content_type: navigation
-title: Platform
+pcx_content_type: reference
+title: Limits and Instance Types
 sidebar:
   order: 2
-  group:
-    hideIndex: true
 ---
-
-import { WranglerConfig } from "~/components";
 
 ## Instance Types
 
@@ -37,31 +33,3 @@ While in open beta, the following limits are currently in effect:
 [^1]: This limit will be raised as we continue the beta.
 
 [^2]: Delete container images with `wrangler containers delete` to free up space. Note that if you delete a container image and then [roll back](/workers/configuration/versions-and-deployments/rollbacks/) your Worker to a previous version, this version may no longer work.
-
-## Environment variables
-
-The container runtime automatically sets the following variables:
-
-- `CLOUDFLARE_APPLICATION_ID` - the ID of the Containers application
-- `CLOUDFLARE_COUNTRY_A2` - the [ISO 3166-1 Alpha 2 code](https://www.iso.org/obp/ui/#search/code/) of a country the container is placed in
-- `CLOUDFLARE_DEPLOYMENT_ID` - the ID of the container instance
-- `CLOUDFLARE_LOCATION` - a name of a location the container is placed in
-- `CLOUDFLARE_PLACEMENT_ID` - a placement ID
-- `CLOUDFLARE_REGION` - a region name
-- `CLOUDFLARE_DURABLE_OBJECT_ID` - the ID of the Durable Object that the container is bound to
-
-:::note
-If you supply environment variables with the same names, supplied values will override predefined values.
-:::
-
-Custom environment variables can be set when defining a Container in your Worker:
-
-```javascript
-class MyContainer extends Container {
-	defaultPort = 4000;
-	envVars = {
-		MY_CUSTOM_VAR: "value",
-		ANOTHER_VAR: "another_value",
-	};
-}
-```
