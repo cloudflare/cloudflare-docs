@@ -12,15 +12,15 @@ This guide covers [Aegis](/aegis/) and Logpush configuration and testing instruc
 
 ## Prerequisites 
 
-To use Logpush with a dedicated egress IP, you will need to have Aegis IPs. Note that the Aegis IP pool is associated with a zone, not with an account. In order to use Logpush with dedicated IPs, traffic must be routed to a single zone.  
+To use Logpush with a dedicated egress IP, you will need to have Aegis IPs. Note that the Aegis IP pool is associated with a zone, not with an account. To use Logpush with dedicated IPs, traffic must be routed to a single zone.  
 
-The general approach is to have your logpush job proxy logpush data through a Cloudflare zone with Aegis enabled to send data to your desired destination. This way your destination will only need to whitelist the provisioned Aegis IPs of your proxy zone.
+The general approach is to have your Logpush job proxying Logpush data through a Cloudflare zone with Aegis enabled to send data to your desired destination. This way your destination will only need to allowlist the provisioned Aegis IPs of your proxy zone.
 
 As a prerequisite, you need to create a dedicated zone or use an existing zone. If using an existing zone, be aware that the zone's egress will be restricted to Aegis IPs. Make sure all services using that zone will not be impacted. 
 
 It is recommended to use a separate, dedicated zone as a proxy to avoid impacting production systems. If you choose to create a new zone, follow the steps to register a new domain with Cloudflare.
 
-The following example shows how to set up logpush and Aegis to proxy an https destination, but the proxying should work for any supported logpush destination as all destinations use the http protocol underneath.
+The following example shows how to set up logpush and Aegis to proxy an HTTPS destination, but the proxying should work for any supported Logpush destination as all destinations use the HTTP protocol underneath.
 
 ## 1. Provision Aegis IP Pool
 
@@ -40,9 +40,9 @@ The following example shows how to set up logpush and Aegis to proxy an https de
 
 1. In your zone, add a DNS record (CNAME or A/AAAA) with Target as HTTP destination endpoint. 
 
-![Define HTTP destination endpoint](~/assets/images/logs/endpoint.png)
+![Create a DNS record in the Cloudflare dashboard to define the HTTP destination endpoint](~/assets/images/logs/endpoint.png)
 
-2. If needed, configure [origin rules](/rules/origin-rules/) to specify a custom port. This is useful if your destination only accepts traffic on a non standard port, for example `12345`. You can configure `logpush.yourdestinationendpoint`.com (without specifying a port, as Cloudflare by default only proxies traffic on http/https ports) to proxy to `yourdestinationendpoint.com:12345`.
+2. If needed, configure [origin rules](/rules/origin-rules/) to specify a custom port. This is useful if your destination only accepts traffic on a non standard port, for example `12345`. You can configure `logpush.yourdestinationendpoint.com` (without specifying a port, as Cloudflare by default only proxies traffic on HTTP/HTTPS ports) to proxy to `yourdestinationendpoint.com:12345`.
 
 
 ## 4. Configure Logpush
@@ -50,9 +50,9 @@ The following example shows how to set up logpush and Aegis to proxy an https de
 1. Create a Logpush job with the following details:
 
 - Destination: HTTP
-- Endpoint: Use the domain/path set up (Logpush UI will auto-validate the destination). Use the server Name specified in the Name section in the DNS record. In this case, `logpush.yourdestionationendpoint.com`.
+- Endpoint: Use the domain/path set up (the Cloudflare dashboard will auto-validate the destination). Use the server name specified in the **Name** section in the DNS record. In this case, `logpush.yourdestionationendpoint.com`.
 
-![Enter destination details](~/assets/images/logs/destination-details.png)
+![Enter destination details when creating a Logpush job in the Cloudflare dashboard](~/assets/images/logs/destination-details.png)
 
 - Configuration: Select dataset, job name, filters, and fields. Refer to the Logpush documentation for more details.
 
