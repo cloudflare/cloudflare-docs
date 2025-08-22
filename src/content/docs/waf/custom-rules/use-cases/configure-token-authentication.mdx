@@ -223,6 +223,6 @@ Example URI paths of valid incoming requests:
 /case-studies/768bf477-22d5-4545-857d-b155510119ff/another-company-report.pdf?1755878057-jeMS5S1F3MIgxvL61UmiX4vODiWtuLfcPV6q%2B0Y3Rig%3D
 ```
 
-The first two URI paths could use the same HMAC signature because they share the same 51-character prefix (`/case-studies/12345678-90ab-4cde-f012-3456789abcde/`) that is validated by the custom rule.
+The first two URI paths can use the same HMAC signature because they share the same 51-character prefix (`/case-studies/12345678-90ab-4cde-f012-3456789abcde/`) that is validated by the custom rule.
 
-The third URI path would need a different HMAC signature, since the prefix is different.
+The third URI path needs a different HMAC signature, since the prefix is different.
