@@ -55,6 +55,10 @@ function buildPageTree(parentPath: string, currentDepth: number): PageNode[] {
 }
 
 const pageTree = buildPageTree(folder, baseDepth + 1);
+
+if (pageTree.length === 0) {
+	console.warn("DirectoryListing error")
+}
 ---
 
 <ul>
