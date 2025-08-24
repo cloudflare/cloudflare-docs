@@ -420,9 +420,9 @@ The review approval status of an application from [Shadow IT Discovery](/cloudfl
 When using Terraform to create a policy with the [Do Not Inspect](#do-not-inspect) action, you must use the `app.hosts_ids` and `app.supports_ids` selectors. For example, to create a Do Not Inspect policy for Google Cloud Platform traffic, create a policy with both `any(app.hosts_ids[*] in {1245})` and `any(app.supports_ids[*] in {1245})`.
 :::
 
-#### Cloud App Control
+#### Application Granular Controls
 
-When using the _is_ operator with the _Application_ selector, you can use Cloud App Control to choose specific actions and operations to match application traffic. For example, you can block file uploads to ChatGPT without blocking all ChatGPT traffic:
+When using the _is_ operator with the _Application_ selector, you can use Application Granular Controls to choose specific actions and operations to match application traffic. For example, you can block file uploads to ChatGPT without blocking all ChatGPT traffic:
 
 | Selector    | Operator | Value     | Controls | Action |
 | ----------- | -------- | --------- | -------- | ------ |
