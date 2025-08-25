@@ -28,15 +28,19 @@ Cloudflare’s systems constantly analyze traffic and automatically apply mitiga
 
 ### How we calculate geographical and industry insights
 
-#### Source country
+#### Source country or location
 
-At the application layer, Cloudflare uses the attacking IP addresses to understand the origin country of the attacks. That is because at that layer, IP addresses cannot be spoofed [^1] (or modified). However, at the network layer, source IP addresses can be spoofed. So, instead of relying on IP addresses to understand the source, Cloudflare uses the location of our data centers where the attack packets were ingested. It is possible to obtain geographical accuracy due to Cloudflare's large global coverage in over 300 locations around the world.
+At the application layer (HTTP), Cloudflare uses source IP addresses to determine the origin country or location of attacks. At this layer, IP addresses cannot be spoofed [^1], making them a reliable indicator. These IP addresses are mapped to their geographical location, and the aggregated data identifies the top sources of attack traffic.
+
+At the network layer (layers 3 and 4 of the [OSI model](https://www.cloudflare.com/learning/ddos/glossary/open-systems-interconnection-model-osi/)), source IP addresses can be spoofed and are therefore unreliable. Instead, Cloudflare uses the location of the data centers where attack packets are ingested. With Cloudflare’s [global network](https://www.cloudflare.com/network/) spanning 330+ locations worldwide, this approach provides consistent geographical accuracy. However, Internet Service Providers (ISPs) traffic routing and backhauling, largely driven by cost, congestion, or failure management, can divert traffic through other countries before it reaches a Cloudflare data center.
+
+When referring to source countries or locations of DDoS attacks, this does not imply that a nation itself is launching attacks. Rather, it may indicate the presence of botnet nodes within that country (e.g., compromised routers or [IoT devices](https://www.cloudflare.com/learning/ddos/glossary/internet-of-things-iot/)), or that traffic is being relayed through [Virtual Private Network (VPN)](https://www.cloudflare.com/learning/access-management/what-is-a-vpn/) or [proxy](https://www.cloudflare.com/learning/cdn/glossary/reverse-proxy/) endpoints to disguise the true origin.
 
 [^1]: IP spoofing is the creation of Internet Protocol (IP) packets which have a modified source address to hide the identity of the sender, impersonate another computer system, or both.
 
-#### Target country
+#### Target country or location
 
-For both application-layer and network-layer DDoS attacks, attacks and traffic are grouped by customers’ billing country. This allows Cloudflare to understand which countries are subject to more attacks.
+For both application-layer and network-layer DDoS attacks, attack traffic is aggregated by the billing country of Cloudflare customers that were targeted by DDoS attacks. This provides a view of which countries or locations are more frequently targeted. However, similar to the “source country” metric, this does not necessarily mean that an entire nation is under attack. Rather, it reflects attacks against organizations based in those countries. Furthermore, many companies operate globally, so the billing country often corresponds to where the organization is headquartered or legally registered rather than where its operations or infrastructure are physically located.
 
 #### Target industry
 
