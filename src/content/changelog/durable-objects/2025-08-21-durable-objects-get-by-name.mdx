@@ -1,0 +1,22 @@
+---
+title: New getByName() API to access Durable Objects
+description: Get a Durable Object client with a single line of code.
+products:
+  - durable-objects
+  - workers
+date: 2025-08-21
+---
+
+Users can now create a client (a [Durable Object stub](/durable-objects/api/stub/)) to a Durable Object with a single line of code. 
+
+```js
+const stub = env.MY_DURABLE_OBJECT.getByName("foo");
+// Now the request is sent to the remote Durable Object.
+const rpcResponse = await stub.sayHello();
+```
+
+Each Durable Object has a globally-unique name, which allows you to send requests to a specific object from anywhere in the world. Thus, a Durable Object can be used to coordinate between multiple clients who need to work together. You can have billions of Durable Objects, providing isolation between application tenants.
+
+For more information, checkout:
+
+- [API Documentation](/durable-objects/api/namespace/#getbyname)
