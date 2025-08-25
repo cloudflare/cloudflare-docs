@@ -61,6 +61,10 @@ Use the Cloudflare dashboard or API to [configure two IPsec tunnels](/magic-wan/
    - **Health check direction**: _Bidirectional_
 4. Select **Add pre-shared key later** > **Add tunnels**.
 
+:::note
+If site-to-site traffic is a requirement for your use case, you need to enable replay protection. Refer to how to [Add tunnels](/magic-wan/configuration/manually/how-to/configure-tunnel-endpoints/#add-tunnels) > IPsec tunnel to learn how to enable this feature.
+:::
+
 ### Generate pre-shared keys
 
 When you create IPsec tunnels with the option **Add pre-shared key later**, the Cloudflare dashboard will show you a warning indicator.
