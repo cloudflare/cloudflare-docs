@@ -67,14 +67,15 @@ Below we have three examples of filters:
 Example request using cURL:
 
 <APIRequest
-  path="/zones/{zone_id}/logpush/edge" 
-  method="POST"
-  json={{
-    fields: "ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID",
-    sample: 100,
-    filter: "",
-    kind: "instant-logs"
-  }}
+	path="/zones/{zone_id}/logpush/edge/jobs"
+	method="POST"
+	json={{
+		fields:
+			"ClientIP,ClientRequestHost,ClientRequestMethod,ClientRequestURI,EdgeEndTimestamp,EdgeResponseBytes,EdgeResponseStatus,EdgeStartTimestamp,RayID",
+		sample: 100,
+		filter: "",
+		kind: "instant-logs",
+	}}
 />
 
 Response:
