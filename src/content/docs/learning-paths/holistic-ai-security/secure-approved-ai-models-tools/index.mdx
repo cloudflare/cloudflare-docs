@@ -36,12 +36,18 @@ Just like an API, an MCP server is a primary entry point for AI agents to intera
 
 As with any new technology, it can be difficult to manage the growing use of MCP servers among your employees. This space will continue to expand, but your first step should always be to gain visibility and understand usage before developing a security strategy to control inputs and outputs.
 
-This section will walk through the process of consolidating and securing access to your internal MCP servers, while introducing logging for user prompts.
+This section will discuss the process of consolidating and securing access to your internal MCP servers, while introducing logging for user prompts.
 
-## Authenticate agents
+### Use Cloudflare Access as your OAuth provider
 
-**AI Controls** in Cloudflare Access allow you to centralize management of your MCP servers and tools. There, you can create MCP server portals and add them as Access applications to control who can reach and interact with them. This means that you can determine which users have the ability to authorize MCP servers across all their potential clients. Because most MCP authorization is done using standards like OAuth2.0, you can get user-level policy enforcement and logging when your protected MCP servers are authorized. 
+The Model Context Protocol supports [OAuth 2.1 for authorization](https://modelcontextprotocol.io/specification/2025-06-18/basic/authorization). You can configure your MCP server to use Cloudflare Access as its OAuth provider. This allows you to secure the MCP server with Access policies, using signals from your existing identity providers (IdPs), device posture providers, and other rules to control who can log in to the server. Once the user is authenticated through Access, Access passes an OAuth ID token to the MCP server. You can then implement server-side access controls based on the user identity attributes included in the token. For example, you may wish to limit access to specific tools based on user emails.
 
-### Create an MCP server app
+To set up the Cloudflare Access OAuth integration, refer to [Secure MCP servers with Access for SaaS](/cloudflare-one/applications/configure-apps/mcp-servers/saas-mcp/).
 
-To begin defining user access to your systems, start by creating an application to represent one of your MCP servers. This is going to be granular, and will have its own Cloudflare Access policy or policies applied to it. If desired, it can be managed as part of a greater MCP Portal, in which you can manage access for users to a group of MCP servers, while still maintaining granular access control for the servers in the Portal on a per-user or per-policy basis.
+### Consolidate MCP servers into a portal
+
+MCP server portals allow you to centralize management of your MCP servers and tools. An MCP server portal is added as an Access application on one of your Cloudflare domains. Users log in to the configured portal URL (for example, `https://<subdomain>.<domain>/sse`) from an MCP client and gain access to all MCP servers in the portal that they are allowed to access. MCP server portals support both unauthenticated MCP servers and MCP servers secured with any OAuth provider. We recommend using [Cloudflare Access as your server's OAuth provider](#use-cloudflare-access-as-your-oauth-provider) if you want the full security benefits of Cloudflare Access on top of the ergonomic benefits provided by MCP portals.
+
+To define user access to your systems, you can configure Access policies for a portal as a whole while maintaining granular access control for the MCP servers that a user sees in their portals. Additionally, you can turn on or off the individual tools available through the portal and only expose the tools relevant for your specific use case. Prompts and responses made using the portal are logged in Cloudflare Access, providing you with visibility into how users are interacting with your MCP servers.
+
+To get started with MCP server portals, refer to [MCP server portals](/cloudflare-one/applications/configure-apps/mcp-servers/mcp-portals/).
