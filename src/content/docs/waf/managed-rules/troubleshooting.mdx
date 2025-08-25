@@ -39,20 +39,27 @@ If you contact Cloudflare Support to verify whether a WAF managed rule triggers 
 
 To identify false negatives, review the HTTP logs on your origin server. To reduce false negatives, use the following checklist:
 
-- Are DNS records that serve HTTP traffic [proxied through Cloudflare](/dns/proxy-status/)?
+- Are DNS records that serve HTTP traffic [proxied through Cloudflare](/dns/proxy-status/)?<br/>
+  Cloudflare only mitigates requests in proxied traffic.
 
-- Have you deployed any of the [WAF managed rulesets](/waf/managed-rules/#available-managed-rulesets) in your zone?
-  - Old dashboard: Go to **Security** > **WAF** > **Managed rules** tab.
-  - New security dashboard: Go to **Security** > **Security rules** and filter by **Managed rules**.
+- Have you deployed any of the [WAF managed rulesets](/waf/managed-rules/#available-managed-rulesets) in your zone?<br/>
+  You must [deploy a managed ruleset](/waf/managed-rules/deploy-zone-dashboard/#deploy-a-managed-ruleset) to apply its rules.
 
-- Are Managed Rules being skipped via an [exception](/waf/managed-rules/waf-exceptions/)?
+- Are Managed Rules being skipped via an [exception](/waf/managed-rules/waf-exceptions/)?<br/>
+  Use [Security Events](/waf/analytics/security-events/) to search for requests being skipped. If necessary, adjust the exception expression so that it matches the attack traffic that should have been blocked.
 
-- Not all rules of WAF managed rulesets are enabled by default, so you should review individual managed rules.
+- Have you enabled any necessary managed rules that are not enabled by default?<br/>
+  Not all rules of WAF managed rulesets are enabled by default, so you should review individual managed rules.
   - For example, Cloudflare allows requests with empty user agents by default. To block requests with an empty user agent, enable the rule with ID <RuleID id="b57df4f17f7f4ea4b8db33e20a6dbbd3"/> in the Cloudflare Managed Ruleset.
-  - Another example: If you are looking to block unmitigated SQL injection (SQLi) attacks, make sure the relevant managed rules tagged with `sqli` are enabled in the Cloudflare Managed Ruleset.
+  - Another example: If you want to block unmitigated SQL injection (SQLi) attacks, make sure the relevant managed rules tagged with `sqli` are enabled in the Cloudflare Managed Ruleset.
 
-- Is the attack traffic matching a custom rule [skipping all Managed Rules](/waf/custom-rules/skip/)?
+  For instructions, refer to [Configure rules in bulk in a managed ruleset](/waf/managed-rules/deploy-zone-dashboard/#configure-rules-in-bulk-in-a-managed-ruleset).
 
-- Is the attack traffic matching an allowed ASN, IP range, or IP address in [IP Access rules](/waf/tools/ip-access-rules/)?
+- Is the attack traffic matching a custom rule [skipping all Managed Rules](/waf/custom-rules/skip/)?<br/>
+  If necessary, adjust the custom rule expression so that it does not apply to the attack traffic.
 
-- Is the malicious traffic reaching your origin IP addresses directly, therefore bypassing Cloudflare protection? Block all traffic except from [Cloudflare's IP addresses](/fundamentals/concepts/cloudflare-ip-addresses/) at your origin server.
+- Is the attack traffic matching an allowed ASN, IP range, or IP address in [IP Access rules](/waf/tools/ip-access-rules/)?<br/>
+  Review your IP Access rules and make sure that any allow rules do not match the attack traffic.
+
+- Is the malicious traffic reaching your origin IP addresses directly, therefore bypassing Cloudflare protection?<br/>
+  Block all traffic except from [Cloudflare's IP addresses](/fundamentals/concepts/cloudflare-ip-addresses/) at your origin server.
