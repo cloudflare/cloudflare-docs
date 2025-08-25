@@ -8,12 +8,14 @@ sidebar:
 
 import { RuleID } from "~/components";
 
-By default, WAF managed rulesets are compatible with most websites and web applications. However, false positives and false negatives may occur:
+By default, WAF's managed rulesets are compatible with most websites and web applications. However, false positives and false negatives may occur:
 
 - **False positives**: Legitimate requests detected and mitigated as malicious.
 - **False negatives**: Malicious requests that were not mitigated and reached your origin server.
 
-## Handle false positives
+## Troubleshoot false positives
+
+You can use [Security Events](/waf/analytics/security-events/) to help you identify what caused legitimate requests to get blocked. Add filters and adjust the report duration as needed.
 
 If you encounter a false positive caused by a managed rule, do one of the following:
 
