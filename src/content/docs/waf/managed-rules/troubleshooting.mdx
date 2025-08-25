@@ -55,7 +55,7 @@ To identify false negatives, review the HTTP logs on your origin server. To redu
   - For example, Cloudflare allows requests with empty user agents by default. To block requests with an empty user agent, enable the rule with ID <RuleID id="b57df4f17f7f4ea4b8db33e20a6dbbd3"/> in the Cloudflare Managed Ruleset.
   - Another example: If you want to block unmitigated SQL injection (SQLi) attacks, make sure the relevant managed rules tagged with `sqli` are enabled in the Cloudflare Managed Ruleset.
 
-  For instructions, refer to [Configure rules in bulk in a managed ruleset](/waf/managed-rules/deploy-zone-dashboard/#configure-rules-in-bulk-in-a-managed-ruleset).
+  For instructions, refer to [Configure a managed ruleset](/waf/managed-rules/deploy-zone-dashboard/#configure-a-managed-ruleset).
 
 - Is the attack traffic matching a custom rule [skipping all Managed Rules](/waf/custom-rules/skip/)?<br/>
   If necessary, adjust the custom rule expression so that it does not apply to the attack traffic.
