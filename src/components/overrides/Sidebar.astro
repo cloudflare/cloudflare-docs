@@ -22,12 +22,8 @@ const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 		type="text"
 		id="sidebar-search"
 		placeholder="Search documentation..."
-		class="w-full px-3 pr-8 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-orange-500 dark:focus:border-orange-500 transition-colors duration-200"
+		class="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-orange-500 dark:focus:border-orange-500 transition-colors duration-200"
 	/>
-	<button
-		id="sidebar-search-clear"
-		class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-transparent border-none text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 cursor-pointer text-xl leading-none p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200"
-	>×</button>
 </div>
 
 <!-- No Results Message -->
@@ -43,7 +39,6 @@ const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 <script>
 	function initSidebarSearch() {
 		const searchInput = document.getElementById('sidebar-search') as HTMLInputElement;
-		const clearButton = document.getElementById('sidebar-search-clear') as HTMLButtonElement;
 		const noResultsMessage = document.getElementById('sidebar-no-results') as HTMLElement;
 		const globalSearchLink = document.getElementById('global-search-link') as HTMLButtonElement;
 		const sidebarContent = document.querySelector('.sidebar-content');
@@ -117,11 +112,8 @@ const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 				// Hide no results message
 				noResultsMessage.classList.add('hidden');
 
-				clearButton.style.display = 'none';
 				return;
 			}
-
-			clearButton.style.display = 'block';
 
 			// Split search query into terms for more precise matching
 			const searchTerms = query.toLowerCase().split(/\s+/).filter(term => term.length > 0);
@@ -222,12 +214,6 @@ const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 			storeOriginalState();
 			const query = (e.target as HTMLInputElement).value;
 			filterSidebarItems(query);
-		});
-
-		clearButton.addEventListener('click', () => {
-			searchInput.value = '';
-			filterSidebarItems('');
-			searchInput.focus();
 		});
 
 		// Clear search on Escape key
