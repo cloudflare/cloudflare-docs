@@ -39,9 +39,7 @@ Make sure that you have properly onboarded to the Advanced DDoS Protection syste
 
 #### Process
 
-The automatic threshold system calculates thresholds for both new and existing customers, provided they meet the criteria outlined in the process below. 
-
-Every 10 minutes, the system scans for Magic Transit accounts that meet the following criteria:
+The automatic threshold system calculates thresholds every 10 minutes for both new and existing Magic Transit accounts, provided they meet the requirements outlined in the process below. 
 
 - The `flowtrackd` account was created within the past 7 to 10 days.
 - The account has at least one configured global threshold (rate and burst). This can be a threshold that was automatically provisioned by the system or manually provisioned by Cloudflare.
@@ -122,7 +120,6 @@ Enable the Advanced DDoS system and begin routing traffic through it.
 <Steps>
 	1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and
 	select your account.
-  2. Go to **L3/4 DDoS** > **Advanced Protection** >
-	**General settings**.
+  2. Go to **L3/4 DDoS** > **Advanced Protection** > **General settings**.
   3. Under **General settings**, toggle the feature status **On**.
 </Steps>
