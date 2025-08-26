@@ -52,8 +52,7 @@ const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 		
 		if (!searchInput || !sidebarContent || !noResultsMessage || !globalSearchLink) return;
 
-		let originalState: Map<Element, boolean> = new Map();
-		let isSearchActive = false;
+		const originalState: Map<Element, boolean> = new Map();
 
 		// Store original state of details elements
 		function storeOriginalState() {
@@ -65,25 +64,6 @@ const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 			}
 		}
 
-		// Show all contents within a folder recursively
-		function showAllContentsInFolder(element: Element) {
-			// Show the element itself
-			(element as HTMLElement).style.display = '';
-			
-			// If it's a details element, open it
-			if (element.tagName === 'DETAILS') {
-				(element as HTMLDetailsElement).open = true;
-			}
-			
-			// Recursively show all children
-			const children = element.children;
-			for (let i = 0; i < children.length; i++) {
-				const child = children[i];
-				if (child.tagName === 'LI' || child.tagName === 'DETAILS' || child.tagName === 'UL') {
-					showAllContentsInFolder(child);
-				}
-			}
-		}
 
 		// Check if text matches all search terms (for multi-word searches)
 		function matchesAllTerms(text: string, searchTerms: string[]): boolean {
@@ -139,12 +119,10 @@ const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 				// Hide no results message
 				noResultsMessage.classList.add('hidden');
 				
-				isSearchActive = false;
 				clearButton.style.display = 'none';
 				return;
 			}
 
-			isSearchActive = true;
 			clearButton.style.display = 'block';
 			
 			// Split search query into terms for more precise matching
