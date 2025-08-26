@@ -39,7 +39,9 @@ If you contact Cloudflare Support to verify whether a WAF managed rule triggers 
 
 ## Troubleshoot false negatives
 
-To identify false negatives, review the HTTP logs on your origin server. To reduce false negatives, use the following checklist:
+To identify false negatives, review the HTTP logs on your origin server.
+
+To reduce false negatives, use the following checklist:
 
 - Are DNS records that serve HTTP traffic [proxied through Cloudflare](/dns/proxy-status/)?<br/>
   Cloudflare only mitigates requests in proxied traffic.
