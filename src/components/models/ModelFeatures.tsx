@@ -116,6 +116,18 @@ const ModelFeatures = ({ model }: { model: WorkersAIModelsSchema }) => {
 									<td>Yes</td>
 								</tr>
 							)}
+							{properties.partner && (
+								<tr>
+									<td>Partner</td>
+									<td>Yes</td>
+								</tr>
+							)}
+							{properties.realtime && (
+								<tr>
+									<td>Real-time</td>
+									<td>Yes</td>
+								</tr>
+							)}
 							{properties.price && properties.price.length > 0 && (
 								<tr>
 									<td>Unit Pricing</td>
