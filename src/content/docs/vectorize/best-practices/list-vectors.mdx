@@ -12,9 +12,9 @@ The list-vectors operation allows you to enumerate all vector identifiers in a V
 
 Use list-vectors for:
 
-- **Bulk operations**: When you need to process all vectors in an index
+- **Bulk operations**: To process all vectors in an index
 - **Auditing**: To verify the contents of your index or generate reports
-- **Data migration**: When moving vectors between indexes or systems
+- **Data migration**: To move vectors between indexes or systems
 - **Cleanup operations**: To identify and remove outdated vectors
 
 ## Pagination behavior
@@ -39,7 +39,7 @@ Each response includes:
 - `totalCount`: Total number of vectors in the index
 - `isTruncated`: Whether there are more vectors available
 - `nextCursor`: Cursor for the next page (null if no more results)
-- `cursorExpirationTimestamp`: When the cursor expires
+- `cursorExpirationTimestamp`: Timestamp of when the cursor expires
 - `vectors`: Array of vector identifiers
 
 ### Cursor expiration
