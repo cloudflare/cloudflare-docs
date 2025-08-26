@@ -14,7 +14,7 @@ const defs = experimental_getWranglerCommands();
 const node = defs.subtree.get(namespace);
 
 if (!node || node.subtree.size === 0) {
-	throw new Error(`[WranglerCommands] Namespace "${namespace}" not found`);
+	throw new Error(`[WranglerNamespace] Namespace "${namespace}" not found`);
 }
 
 const definitions: NonNullable<(typeof node)["definition"]>[] = [];
@@ -36,7 +36,7 @@ flattenSubtree(node.subtree);
 	definitions.map((definition) => {
 		if (definition.type !== "command") {
 			throw new Error(
-				`[WranglerCommands] Expected "command" but got "${definition.type}" for "${definition.command}"`,
+				`[WranglerNamespace] Expected "command" but got "${definition.type}" for "${definition.command}"`,
 			);
 		}
 		return (
