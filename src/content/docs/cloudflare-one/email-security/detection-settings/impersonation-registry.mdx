@@ -26,11 +26,23 @@ To add a user to the impersonation registry:
        - **User email**: Enter one of the following:
          - **Email address**: Enter all known email addresses, separated by a comma.
          - **Regular expressions**: Must be valid Java expressions.
-   - **Upload manual list**: You can upload a file no larger than 150 KB containing all variables of potential emails. The file must contain `Display_Name` and `Email`, and the first row must be the header row.
+   - **Upload manual list**: You can upload a file no larger than 150 KB containing all variables of potential emails. The file must contain `Display_Name` and `Email`, and the first row must be the header row. Refer to [CSV uploads](/cloudflare-one/email-security/detection-settings/impersonation-registry/#csv-uploads) for an example file.
    - **Select from existing directories**:
        - **Select directory**: Select your directory.
        - **Add users or groups**: Choose the users or groups you want to register.
 6. Select **Save**.
+
+### CSV uploads
+
+You can upload a file no larger than 150 KB containing all variables of potential emails. The file must contain `Display_Name` and `Email`, and the first row must be the header row.
+
+An example file would look like this:
+
+```txt
+Display Name, Email
+Star Phish, star@nophish.com
+Phish Ee, phishee@nophish.com
+```
 
 ## Edit users
 

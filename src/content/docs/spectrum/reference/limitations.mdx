@@ -23,6 +23,10 @@ Minecraft Java Edition is supported but Minecraft Bedrock Edition is not support
 
 [Universal SSL](/ssl/edge-certificates/universal-ssl/) is not compatible with Cloudflare Spectrum. Use either an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/) or a [custom certificate](/ssl/edge-certificates/custom-certificates/) instead.
 
+## Private Network Load Balancing
+
+When using [Spectrum](/load-balancing/private-network/#on-ramps) as an on-ramp and [Magic WAN](/load-balancing/private-network/#magic-wan) as an off-ramp the [proxy protocol](/spectrum/how-to/enable-proxy-protocol/) setting in Spectrum is not supported.
+
 ## Listen on ports configuration
 
 By default, Spectrum is configured to listen on all ports, which can raise concerns for security auditors. However, it is important to note that Spectrum will only proxy connections from edge ports that are specifically configured within Cloudflare.

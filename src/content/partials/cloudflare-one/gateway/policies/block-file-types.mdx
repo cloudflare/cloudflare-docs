@@ -2,7 +2,7 @@
 {}
 ---
 
-import { Tabs, TabItem } from "~/components";
+import { Tabs, TabItem, APIRequest } from "~/components";
 
 Block the upload or download of files based on their type.
 
@@ -17,22 +17,20 @@ Block the upload or download of files based on their type.
 
 <TabItem label="API">
 
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
---header "Content-Type: application/json" \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---data '{
-  "name": "Block file types",
-  "description": "Block the upload or download of files based on their type",
-  "enabled": true,
-  "action": "block",
-  "filters": [
-    "http"
-  ],
-  "traffic": "any(http.upload.file.types[*] in {\"docx\"}) and any(http.download.file.types[*] in {\"pdf\"})",
-  "identity": "",
-  "device_posture": ""
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "Block file types",
+		description: "Block the upload or download of files based on their type",
+		enabled: true,
+		action: "block",
+		filters: ["http"],
+		traffic:
+			'any(http.upload.file.types[*] in {"docx"}) and any(http.download.file.types[*] in {"pdf"})',
+		identity: "",
+		device_posture: "",
+	}}
+/>
 
 </TabItem> </Tabs>

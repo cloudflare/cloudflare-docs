@@ -27,11 +27,11 @@ This guide covers how to connect a private network to the Internet using WARP Co
 
 ## 1. Install a WARP Connector
 
-<Render file="tunnel/warp-connector-install" />
+<Render file="tunnel/warp-connector-install" product="cloudflare-one" />
 
 ## 2. (Recommended) Create a device profile
 
-<Render file="tunnel/warp-connector-device-profile" />
+<Render file="tunnel/warp-connector-device-profile" product="cloudflare-one" />
 
 ## 3. Route traffic from subnet to WARP Connector
 
@@ -39,29 +39,41 @@ Depending on where you installed the WARP Connector, you may need to configure o
 
 ### Option 1: Default gateway
 
-<Render file="tunnel/warp-connector-default-gateway" />
+<Render file="tunnel/warp-connector-default-gateway" product="cloudflare-one" />
 
 ### Option 2: Alternate gateway
 
-<Render file="tunnel/warp-connector-alternate-gateway" />
+<Render
+	file="tunnel/warp-connector-alternate-gateway"
+	product="cloudflare-one"
+/>
 
 #### Add route to router
 
 For example, for all traffic from the subnet to egress through WARP Connector, add a rule on the router that routes `0.0.0.0` to the WARP Connector host machine (`10.0.0.100`).
 
-<Render file="tunnel/warp-connector-alternate-gateway-flow" />
+<Render
+	file="tunnel/warp-connector-alternate-gateway-flow"
+	product="cloudflare-one"
+/>
 
 ### Option 3: Intermediate gateway
 
-<Render file="tunnel/warp-connector-intermediate-gateway" />
+<Render
+	file="tunnel/warp-connector-intermediate-gateway"
+	product="cloudflare-one"
+/>
 
 #### Add route to devices
 
-<Render file="tunnel/warp-connector-route-all-traffic" />
+<Render
+	file="tunnel/warp-connector-route-all-traffic"
+	product="cloudflare-one"
+/>
 
 #### Verify routes
 
-<Render file="tunnel/warp-connector-verify-routes" />
+<Render file="tunnel/warp-connector-verify-routes" product="cloudflare-one" />
 
 ## 4. Test the WARP Connector
 
@@ -80,4 +92,8 @@ You can now test if traffic from your subnet routes through Cloudflare. For exam
       router1-->C((Cloudflare))-->I{Internet}
 ```
 
-[^1]: <Render file="tunnel/warp-connector-linux-packages" />
+[^1]:
+    <Render
+    	file="tunnel/warp-connector-linux-packages"
+    	product="cloudflare-one"
+    />

@@ -8,8 +8,5 @@ product:
 
 meta:
   title: Cloudflare Realtime docs
-  description: Documentation for Cloudflare Realtime.
+  description: RealtimeKit, SFU and TURN
   author: "@cloudflare"
-
-resources:
-  dashboard_link: https://dash.cloudflare.com/?to=/:account/calls

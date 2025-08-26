@@ -1,0 +1,176 @@
+Migrate Cloudflare Pages to Workers using the guide below:
+
+# Cloudflare Pages to Workers Migration Guide
+
+## Goal
+
+Migrate a Cloudflare Pages project to Cloudflare Workers with static assets support.
+
+## Core Migration Concepts
+
+### Understanding the Migration
+
+When migrating from Pages to Workers, you're essentially:
+
+1. Moving from Pages deployment commands to Workers deployment commands
+2. Converting Pages-specific configuration to Workers format
+3. Handling static assets using Workers Assets (not the deprecated Workers Sites)
+4. Converting any Pages Functions to Workers format if they exist
+
+### Key Principles
+
+- **Deployment**: Use `wrangler deploy`, never `wrangler pages deploy`
+- **Configuration**: Prefer wrangler.jsonc for better documentation support
+- **Assets**: Use the modern Workers Assets format: `"assets": {"directory": "path"}`
+- **Flexibility**: Adapt the migration to your specific project structure
+- **Package Manager**: Use the appropriate package manager for the project (check for bun.lock, bun.lockb, pnpm-lock.yaml, yarn.lock, or package-lock.json)
+
+## Migration Steps
+
+### 1. Prerequisites
+
+- Update Wrangler to version 4 or later using your package manager:
+  - npm: `npm install --save-dev wrangler@^4.0.0`
+  - pnpm: `pnpm add --save-dev wrangler@^4.0.0`
+  - yarn: `yarn add --dev wrangler@^4.0.0`
+  - bun: `bun add --dev wrangler@^4.0.0`
+  - This is required as Workers deployment commands have evolved significantly in v4
+  - Check current version with `npx wrangler --version`
+- Install project dependencies if not already installed
+- Consult the official Cloudflare documentation for the latest guidance
+
+### 2. Configuration Migration
+
+#### Update Wrangler Configuration
+
+- Convert to wrangler.jsonc format if using .toml or .json
+- Replace `pages_build_output_dir` with `"assets": {"directory": "path"}`
+- Ensure a `compatibility_date` field exists
+
+#### Example Structure
+
+```jsonc
+{
+	"name": "project-name",
+	"compatibility_date": "2025-06-05",
+	"assets": { "directory": "./dist" },
+	// Add other fields as needed
+}
+```
+
+### 3. Determine Project Type
+
+**First, check for Pages Functions:**
+
+- Look for a `functions/` directory with .js/.ts files
+- If found, you **must** add `wrangler pages functions build` to your build process (see step 6)
+
+**Then, run your build command and check the output directory:**
+
+- **If \_worker.js exists**: You have a Workers script project
+  - Add `"main": "./path/to/_worker.js"`
+  - Add binding to assets: `"assets": {"directory": "path", "binding": "ASSETS"}`
+- **If no \_worker.js**: You have an assets-only project
+  - Just use `"assets": {"directory": "path"}` without main field
+
+### 4. Handle \_worker.js (if present)
+
+If your build creates a \_worker.js file or directory:
+
+1. Create a `.assetsignore` file containing `_worker.js`
+2. Update your build script to copy it to the output directory
+3. This prevents the worker code from being served as a static asset
+
+### 5. Update Package.json Scripts
+
+First, ensure wrangler is updated to v4+ using your package manager:
+
+```bash
+# npm
+npm install --save-dev wrangler@^4.0.0
+# pnpm
+pnpm add --save-dev wrangler@^4.0.0
+# yarn
+yarn add --dev wrangler@^4.0.0
+# bun
+bun add --dev wrangler@^4.0.0
+```
+
+Then replace Pages commands with Workers equivalents:
+
+- `wrangler pages deploy` to `wrangler deploy`
+- `wrangler pages dev` to `wrangler dev`
+
+Keep framework-specific commands unchanged (e.g., `astro dev`, `next dev`).
+
+### 6. Pages Functions Migration (if applicable)
+
+**ONLY if you have a `functions/` directory with .js/.ts files:**
+
+- **Always add** the Pages Functions build command to your build process
+- Use: `wrangler pages functions build --outdir=<output>/_worker.js/`
+- This command converts Pages Functions to Workers format
+- Update your main field to point to the compiled functions: `"main": "./path/to/_worker.js"`
+- The presence of a `functions/` directory means you **must** include this build step
+
+### 7. Validation and Deployment
+
+1. Build your project to ensure it works
+2. Run `wrangler deploy --dry-run` to validate configuration
+3. Fix any issues identified
+4. Deploy with user permission using `wrangler deploy`
+
+## Common Patterns
+
+### Assets-Only Projects
+
+Most static sites fall into this category:
+
+```jsonc
+{
+	"name": "my-site",
+	"assets": { "directory": "./dist" },
+	"compatibility_date": "2025-06-05",
+}
+```
+
+### Projects with Workers Scripts
+
+Sites with server-side logic or Pages Functions:
+
+```jsonc
+{
+	"name": "my-app",
+	"main": "./dist/_worker.js",
+	"assets": {
+		"directory": "./dist",
+		"binding": "ASSETS",
+	},
+	"compatibility_date": "2025-06-05",
+}
+```
+
+**Build script example for projects with Pages Functions:**
+
+```json
+{
+	"scripts": {
+		"build": "your-framework-build && wrangler pages functions build --outdir=./dist/_worker.js/"
+	}
+}
+```
+
+## Important Notes
+
+- **Bindings**: Don't add KV, D1, or other bindings unless your build explicitly fails
+- **Framework Messages**: Ignore informational logs about storage or sessions
+- **Documentation**: Always check the official Cloudflare docs for the latest guidance
+- **Flexibility**: Adapt these guidelines to your specific project structure
+
+## Migration Summary Format
+
+When complete, document:
+
+1. **Project Analysis**: What type of Pages project and its specific features
+2. **Migration Steps**: What changes were made and why
+3. **Validation**: How the migration was tested and verified

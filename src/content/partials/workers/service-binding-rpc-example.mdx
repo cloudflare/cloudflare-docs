@@ -2,7 +2,7 @@
 {}
 ---
 
-import { WranglerConfig, TypeScriptExample } from "~/components";
+import { WranglerConfig, TypeScriptExample, TabItem, Tabs } from "~/components";
 
 For example, if Worker B implements the public method `add(a, b)`:
 
@@ -15,7 +15,9 @@ main = "./src/workerB.js"
 
 </WranglerConfig>
 
-<TypeScriptExample>
+<Tabs syncKey="workersExamples">
+
+<TypeScriptExample omitTabs={true}>
 
 ```ts
 import { WorkerEntrypoint } from "cloudflare:workers";
@@ -33,6 +35,23 @@ export default class extends WorkerEntrypoint {
 
 </TypeScriptExample>
 
+<TabItem label="Python" icon="seti:python">
+
+```python
+from workers import WorkerEntrypoint, Response
+
+class Default(WorkerEntrypoint):
+    async def fetch(self, request, env, ctx):
+        return Response("Hello from Worker B")
+
+    def add(self, a: int, b: int) -> int:
+        return a + b
+```
+
+</TabItem>
+
+</Tabs>
+
 Worker A can declare a [binding](/workers/runtime-apis/bindings) to Worker B:
 
 <WranglerConfig>
@@ -49,7 +68,10 @@ services = [
 
 Making it possible for Worker A to call the `add()` method from Worker B:
 
-<TypeScriptExample>
+
+<Tabs syncKey="workersExamples">
+
+<TypeScriptExample omitTabs={true}>
 
 ```ts
 export default {
@@ -61,3 +83,19 @@ export default {
 ```
 
 </TypeScriptExample>
+
+
+<TabItem label="Python" icon="seti:python">
+
+```python
+from workers import WorkerEntrypoint, Response
+
+class Default(WorkerEntrypoint):
+    async def fetch(self, request, env, ctx):
+        result = await env.WORKER_B.add(1, 2)
+		return Response(f"Result: {result}")
+```
+
+</TabItem>
+
+</Tabs>

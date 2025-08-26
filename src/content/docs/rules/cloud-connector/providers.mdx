@@ -50,7 +50,7 @@ The SSL setting applied to requests between Cloud Connector and AWS S3 depends o
 
 For more information, refer to the [Amazon S3 documentation](https://docs.aws.amazon.com/AmazonS3/latest/userguide/EnableWebsiteHosting.html).
 
-<Render file="cloud-connector-limit-bucket-to-cloudflare-ips" />
+<Render file="cloud-connector-limit-bucket-to-cloudflare-ips" product="rules" />
 
 ## Google Cloud Platform - Cloud Storage
 
@@ -77,7 +77,7 @@ Cloud Connector supports both subdomain and URI path-style URLs:
 
 If the files in your bucket are not publicly accessible, you must change the bucket permissions. For details, refer to the [Google Cloud Storage documentation](https://cloud.google.com/storage/docs/access-control/making-data-public#buckets).
 
-<Render file="cloud-connector-limit-bucket-to-cloudflare-ips" />
+<Render file="cloud-connector-limit-bucket-to-cloudflare-ips" product="rules" />
 
 ## Microsoft Azure - Blob Storage
 
@@ -96,4 +96,4 @@ For Azure Blog Storage, Cloud Connector supports only subdomain URLs like `<BUCK
 
 If the blob container is not configured for public access, you must change the container settings. For details, refer to the [Azure Storage documentation](https://learn.microsoft.com/en-us/azure/storage/blobs/anonymous-read-access-configure?tabs=portal).
 
-<Render file="cloud-connector-limit-bucket-to-cloudflare-ips" />
+<Render file="cloud-connector-limit-bucket-to-cloudflare-ips" product="rules" />

@@ -11,7 +11,7 @@ Potential examples include:
 - Sharing brand assets and marketing materials
 
 :::caution
-The example rules in this page can bypass Cloudflare's security features and are generally not recommended. Use with caution.
+The example custom rules in this page can bypass Cloudflare's security features and are generally not recommended. Use with caution.
 :::
 
 ## Use ASN in custom rules
@@ -25,7 +25,7 @@ This example uses:
 - The [`ip.src.asnum`](/ruleset-engine/rules-language/fields/reference/ip.src.asnum/) field to specify the general region.
 - The [`cf.bot_management.score`](/ruleset-engine/rules-language/fields/reference/cf.bot_management.score/) field to ensure partner traffic does not come from bots.
 
-Example rule:
+Example custom rule:
 
 - **Expression**: `(ip.src.asnum eq 64496 and cf.bot_management.score gt 30)`
 - **Action**: _Skip:_
@@ -37,12 +37,12 @@ Access to [Bot Management](/bots/plans/bm-subscription/) requires a Cloudflare E
 
 ### Adjust rules by ASN
 
-This example uses:
+This example custom rule uses:
 
 - The [`ip.src.asnum`](/ruleset-engine/rules-language/fields/reference/ip.src.asnum/) field to specify the general region.
 - The [`cf.bot_management.score`](/ruleset-engine/rules-language/fields/reference/cf.bot_management.score/) field to check if the request comes from a human.
 
-If a request meets these criteria, your custom rule skips [User Agent Blocking](/waf/tools/user-agent-blocking/) rules.
+If a request meets these criteria, the custom rule will skip [User Agent Blocking](/waf/tools/user-agent-blocking/) rules.
 
 - **Expression**: `(ip.src.asnum eq 64496 and cf.bot_management.score gt 50)`
 - **Action**: _Skip:_
@@ -59,7 +59,7 @@ This example:
 - Specifies the source IP address and the host.
 - Uses the [`cf.bot_management.score`](/ruleset-engine/rules-language/fields/reference/cf.bot_management.score/) field to ensure requests are not high-risk traffic.
 
-Example rule:
+Example custom rule:
 
 - **Expression**: `(ip.src eq 203.0.113.1 and http.host eq "example.com" and cf.bot_management.score gt 30)`
 - **Action**: _Skip:_
@@ -67,9 +67,9 @@ Example rule:
 
 ### Adjust rules by IP address
 
-This example specifies the source IP address and the host.
+This example custom rule specifies the source IP address and the host.
 
-If a request meets these criteria, it will skip [rate limiting rules](/waf/rate-limiting-rules/).
+If a request meets these criteria, the custom rule will skip [rate limiting rules](/waf/rate-limiting-rules/).
 
 - **Expression**: `(ip.src eq 203.0.113.1 and http.host eq "example.com")`
 - **Action**: _Skip:_

@@ -20,45 +20,4 @@ Azure ExpressRoute support is coming soon.
 
 ## Cloud Interconnect Setup
 
-Enterprise customers using Magic WAN can get started with Cloud Interconnect by contacting their account team.
-
-### AWS Direct Connect (beta)
-
-If you are a Magic WAN customer, you can connect to [AWS Direct Connect](https://docs.aws.amazon.com/directconnect/) using Cloud Interconnect. Currently, Cloud Interconnect only supports Dedicated Direct Connect, not Hosted Direct Connect. A Dedicated AWS Direct Connect involves a full physical port allocation in AWS, whereas a Hosted AWS Direct Connect uses a VLAN on a shared port between AWS and Cloudflare.
-
-For your AWS Direct Connect, you can choose between connection speeds of 10 Gbps or 1 Gbps.
-
-To connect to AWS Direct Connect:
-
-1. Contact your account team to start the Cloud Interconnect provisioning process. Your team will let you know of available interconnect locations so you can choose the best one for you, as well as all the details involved in this process.
-2. Log in to your AWS portal and order a Direct Connect.
-3. AWS will provide you a Letter of Agency (LOA) — sometimes referred to as a Letter of Authorization — and a VLAN ID that you need to send to your account team.
-4. Your account team will continue the process of provisioning your Cloud Interconnect with the AWS documents you have provided. Overall, this process should take around four weeks to finish.
-
-### Google Cloud interconnect (beta)
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account.
-2. Select **Interconnects** > **Create new**.
-3. Under **Cloud CNI** select **Create new** .
-4. Under **Google Integration**, select **Select integration**.
-5. Give your interconnect a name and optionally a description. Make sure the **MTU** value matches the MTU configured on the [GCP VLAN attachment](https://cloud.google.com/network-connectivity/docs/interconnect/how-to/dedicated/creating-vlan-attachments).
-6. Select **Continue**.
-7. From the **Interface speed** dropdown menu, select an **Interface speed**. GCP will charge you based on the speed of the interconnect that you choose.
-8. Enter your [VLAN attachment pairing key](https://cloud.google.com/network-connectivity/docs/interconnect/how-to/partner/creating-vlan-attachments).
-9. Select **Continue**.
-10. Review the details you provided and select **Confirm order**.
-
-Your Google Cloud Platform (GCP) interconnect will take a few minutes to be available. A BGP session will be established but no routes will be exchanged.
-
-#### GCP next steps
-
-You can now select **View interconnects** for a list of all interconnects on your account. Select the interconnect name to show the interconnect details. The interconnect has a unique **Interconnect ID**.
-
-After you have configured your Google Cloud Interconnect, you will need to add routes to use the interconnect:
-
-- To create routes in the Magic routing table to direct traffic towards GCP:
-	- Add [static routes](/magic-wan/configuration/manually/how-to/configure-routes/#configure-static-routes) to your Magic WAN routing table with [legacy bidirectional tunnel health checks](/magic-wan/configuration/manually/how-to/configure-tunnels/#legacy-bidirectional-health-checks) to detect failures and steer traffic to alternative paths.
-	- Note that routes advertised by BGP from GCP Cloud Router will be ignored.
-- To create routes in GCP routing table to direct traffic towards Cloudflare, you must use the GCP Cloud Router:
-		- Add [custom learned routes to Cloud Router](https://cloud.google.com/network-connectivity/docs/router/how-to/configure-custom-learned-routes).
-		- Use the BGP session. Reach out to your account team to request a list of one or more prefixes to advertise, and specify the interconnect ID you want to advertise over.
+To create a new cloud interconnect, contact your customer success manager to get started with the set up.

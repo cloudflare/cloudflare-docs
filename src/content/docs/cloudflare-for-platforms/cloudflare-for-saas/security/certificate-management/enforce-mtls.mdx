@@ -6,17 +6,15 @@ sidebar:
 head:
   - tag: title
     content: TLS Settings — Cloudflare for SaaS
-
 ---
 
-import { AvailableNotifications, Details, Render } from "~/components"
+import { AvailableNotifications, Details, Render } from "~/components";
 
 [Mutual TLS (mTLS)](https://www.cloudflare.com/learning/access-management/what-is-mutual-tls/) adds an extra layer of protection to application connections by validating certificates on the server and the client. When building a SaaS application, you may want to enforce mTLS to protect sensitive endpoints related to payment processing, database updates, and more.
 
 [Minimum TLS Version](/ssl/edge-certificates/additional-options/minimum-tls/) allows you to choose a cryptographic standard per custom hostname. Cloudflare recommends TLS 1.2 to comply with the Payment Card Industry (PCI) Security Standards Council.
 
 [Cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/) are a combination of ciphers used to negotiate security settings during the [SSL/TLS handshake](https://www.cloudflare.com/learning/ssl/what-happens-in-a-tls-handshake/). As a SaaS provider, you can [specify configurations for cipher suites](#cipher-suites) on your zone as a whole and cipher suites on individual custom hostnames via the API.
-
 
 :::caution
 When you [issue a custom hostname certificate](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/) with wildcards enabled, any cipher suites or Minimum TLS settings applied to that hostname will only apply to the direct hostname.
@@ -30,9 +28,7 @@ Once you have [added a custom hostname](/cloudflare-for-platforms/cloudflare-for
 
 :::note
 
-
 Currently, you cannot add mTLS policies for custom hostnames using [API Shield](/api-shield/security/mtls/).
-
 
 :::
 
@@ -55,20 +51,21 @@ While TLS 1.3 is the most recent and secure version, it is not supported by some
 
 For security and regulatory reasons, you may want to only allow connections from certain cipher suites. Cloudflare provides recommended values and full cipher suite reference in our [Cipher suites documentation](/ssl/edge-certificates/additional-options/cipher-suites/#resources).
 
-
 <Details header="Restrict cipher suites for your zone">
 
 Refer to [Customize cipher suites - SSL/TLS](/ssl/edge-certificates/additional-options/cipher-suites/customize-cipher-suites/).
 
 </Details>
 
-
 <Details header="Restrict cipher suites for custom hostname">
 
 In the API documentation, refer to [SSL properties of a custom hostname](/api/resources/custom_hostnames/methods/edit/).
 
-<Render file="edit-custom-hostname-api" params={{ one: "When making the request," }} />
-
+<Render
+	file="edit-custom-hostname-api"
+	params={{ one: "When making the request," }}
+	product="cloudflare-for-platforms"
+/>
 
 </Details>
 
@@ -76,6 +73,9 @@ In the API documentation, refer to [SSL properties of a custom hostname](/api/re
 
 You can configure alerts to receive notifications before your mutual TLS certificates expire.
 
-<AvailableNotifications product="SSL/TLS" notificationFilter="Access mTLS Certificate Expiration Alert" />
+<AvailableNotifications
+	product="SSL/TLS"
+	notificationFilter="Access mTLS Certificate Expiration Alert"
+/>
 
 <Render file="get-started" product="notifications" />

@@ -6,7 +6,6 @@ sidebar:
 head:
   - tag: title
     content: Zone transfers - Multi-provider DNS
-
 ---
 
 import { Render } from "~/components";
@@ -17,14 +16,14 @@ With AXFR, the entire zone will be transferred from the primary to the secondary
 
 With zone transfers, you have two configuration options:
 
-* [Cloudflare as Primary](/dns/zone-setups/zone-transfers/cloudflare-as-primary/): Cloudflare is your primary DNS provider and performs outgoing zone transfers to your secondary DNS provider(s).
-* [Cloudflare as Secondary](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/): Cloudflare is your secondary DNS provider and initiates incoming zone transfers from your primary DNS provider.
+- [Cloudflare as Primary](/dns/zone-setups/zone-transfers/cloudflare-as-primary/): Cloudflare is your primary DNS provider and performs outgoing zone transfers to your secondary DNS provider(s).
+- [Cloudflare as Secondary](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/): Cloudflare is your secondary DNS provider and initiates incoming zone transfers from your primary DNS provider.
 
 ## Peer DNS server
 
 Peer DNS servers can be used as primary and secondary external DNS servers. The same peer can be linked to multiple primary and secondary zones. Each peer can be associated with only one Transaction Signature (TSIG).
 
-<Render file="linked-peers-limit" />
+<Render file="linked-peers-limit" product="dns" />
 
 You can manage peers via the [API](/api/resources/dns/subresources/zone_transfers/subresources/peers/methods/list/) or the dashboard by going to **Manage Account** > **Configurations** > **DNS Zone Transfers**.
 

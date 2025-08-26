@@ -5,7 +5,7 @@ title: Block Microsoft Exchange Autodiscover requests
 
 In some cases, Microsoft Exchange Autodiscover service requests can be "noisy", triggering large numbers of `HTTP 404` (`Not found`) errors.
 
-This example blocks requests for `autodiscover.xml` and `autodiscover.src`:
+This example custom rule blocks requests for `autodiscover.xml` and `autodiscover.src`:
 
 - **Expression**: `(ends_with(http.request.uri.path, "/autodiscover.xml") or ends_with(http.request.uri.path, "/autodiscover.src"))`
 - **Action**: _Block_

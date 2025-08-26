@@ -4,7 +4,8 @@ Disallow: /client-ip-geolocation
 Disallow: /plans/
 Disallow: /constellation
 Disallow: /cdn-cgi/
-Disallow: /security/
 Disallow: /email-security/
+
+Content-Usage: tdm=y
 
 Sitemap: https://developers.cloudflare.com/sitemap-index.xml

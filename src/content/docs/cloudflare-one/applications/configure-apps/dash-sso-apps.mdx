@@ -5,7 +5,7 @@ sidebar:
   order: 4
 ---
 
-import { FeatureTable } from "~/components";
+import { FeatureTable, APIRequest, GlossaryTooltip } from "~/components";
 
 By adding a Cloudflare Dashboard SSO application to your Cloudflare Zero Trust account, you can enforce single sign-on (SSO) to the Cloudflare dashboard with the identity provider (IdP) of your choice. SSO will be enforced for every user in your email domain.
 
@@ -15,7 +15,7 @@ By adding a Cloudflare Dashboard SSO application to your Cloudflare Zero Trust a
 
 ## Prerequisites
 
-All users in your email domain must exist as a member in your Cloudflare account and IdP. To add users to your Cloudflare account, refer to [Manage Cloudflare account access](/fundamentals/setup/manage-members/).
+All users in your email domain must exist as a member in your Cloudflare account and IdP. To add users to your Cloudflare account, refer to [Manage Cloudflare account access](/fundamentals/manage-members/).
 
 ## 1. Set up an IdP
 
@@ -81,7 +81,7 @@ Configure an identity provider (IdP)-initiated single sign-on (SSO) session usin
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Applications** > select your **SSO App**.
 2. Select **Configure** to access the application settings.
-3. In the **Basic Information** section, find the **SSO Endpoint URL** and copy it. You will need the copied **SSO Endpoint URL** for your IdP setup.
+3. In the **Basic Information** section, copy the **SSO Endpoint URL** and **Access Entity ID or Issuer**. You will need these values for your IdP setup.
 
 #### Configure Okta as the IdP
 
@@ -90,14 +90,15 @@ Configure an identity provider (IdP)-initiated single sign-on (SSO) session usin
 3. In the pop-up, select **SAML 2.0** and select **Next**.
 4. Enter a name for the app and select **Next**.
 5. In the **Single Sign-On URL** field, paste the **SSO Endpoint URL** [you copied earlier](/cloudflare-one/applications/configure-apps/dash-sso-apps/#prerequisites-1).
-6. Set the **Name ID Format** to **EmailAddress**.
-7. Set the **Application Username** to **Email**.
-8. Select **Next** > **Finish** to save the integration.
-9. Test the integration by going to your Okta User Dashboard, locating the new app tile, and selecting it to verify the SSO flow.
+6. In the **Audience URI (SP Entity ID)** field, paste the **Access Entity ID or Issuer** [you copied earlier](/cloudflare-one/applications/configure-apps/dash-sso-apps/#prerequisites-1).
+7. Set the **Name ID Format** to **EmailAddress**.
+8. Set the **Application Username** to **Email**.
+9. Select **Next** > **Finish** to save the integration.
+10. Test the integration by going to your Okta User Dashboard, locating the new app tile, and selecting it to verify the SSO flow.
 
 **(Optional) Enforce single IdP login with Instant Auth**
 
-If you use only one IdP (for exampple, Okta) for Cloudflare SSO and want users to skip the identity provider selection prompt:
+If you use only one IdP (for example, Okta) for Cloudflare SSO and want users to skip the identity provider selection prompt:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Applications** > select your **SSO App**.
 2. Go to **Login methods**.
@@ -114,15 +115,14 @@ If there is an issue with your SSO IdP provider, you can add an alternate IdP us
 
 1. [Add](/api/resources/zero_trust/subresources/identity_providers/methods/create/) one-time PIN login:
 
-```bash title="cURL command"
-curl 'https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/identity_providers' \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---header "Content-Type: application/json" \
---data '{
-  "type": "onetimepin",
-  "config": {}
-}'
-```
+<APIRequest
+  path="/accounts/{account_id}/access/identity_providers"
+  method="POST"
+  json={{
+    type: "onetimepin",
+    config: {},
+  }}
+/>
 
 2. [Get](/api/resources/zero_trust/subresources/access/subresources/applications/methods/list/) the `id` of the `dash_sso` Access application. You can use [`jq`](https://jqlang.github.io/jq/download/) to quickly find the correct application:
 
@@ -142,20 +142,24 @@ curl 'https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/apps' \
 }
 ```
 
-3. Using the `id` obtained above, [update](/api/resources/zero_trust/subresources/access/subresources/applications/methods/update/) **SSO App** to accept all identity providers:
+3. Using the `id` obtained above, [update](/api/resources/zero_trust/subresources/access/subresources/applications/methods/update/) **SSO App** to accept all identity providers. To avoid overwriting your existing configuration, the PUT request body should contain all fields returned by the previous GET request.
 
-```bash title="cURL command"
-curl --request PUT \
-'https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/apps/3537a672-e4d8-4d89-aab9-26cb622918a1' \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---header "Content-Type: application/json" \
---data '{
-  "id": "3537a672-e4d8-4d89-aab9-26cb622918a1",
-  ...
-  "allowed_idps": [],
-  ...
-}'
-```
+<APIRequest
+  path="/accounts/{account_id}/access/apps/{app_id}"
+  method="PUT"
+  parameters={{ app_id: "3537a672-e4d8-4d89-aab9-26cb622918a1" }}
+  json={{
+    id: "3537a672-e4d8-4d89-aab9-26cb622918a1",
+		uid: "3537a672-e4d8-4d89-aab9-26cb622918a1",
+		type: "dash_sso",
+		name: "SSO App",
+    allowed_idps: [],
+    // ... (other existing properties)
+  }}
+	code={{
+		mark: [9]
+	}}
+/>
 
 Users will now have the option to log in using a one-time PIN.
 
@@ -192,8 +196,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/sso/v2/connectors
 ```bash title="cURL command"
 curl --request PATCH \
 'https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/sso/v2/connectors/2828' \
---header "X-Auth-Email: $CLOUDFLARE_EMAIL" \
---header "X-Auth-Key: $CLOUDFLARE_API_KEY" \
+--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
 --header "Content-Type: application/json" \
 --data '{
   "sso_connector_status": "DIS"
@@ -212,3 +215,19 @@ curl --request PATCH \
 ```
 
 Users can now log in using their Cloudflare account email and password. To re-enable SSO, send a `PATCH` request with `"sso_connector_status" : "V"`.
+
+## Change your team name
+
+Cloudflare does not allow you to change your <GlossaryTooltip term="team name">team name</GlossaryTooltip> while dashboard SSO is enabled. To change your team name, you must first disable dashboard SSO.
+
+:::caution
+Before disabling SSO, make sure you have access to your Cloudflare account email. This will allow you to reset your password in case you get logged out of the Cloudflare dashboard.
+:::
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Authentication**.
+2. If SSO is enabled, turn off **Cloudflare dashboard SSO**. This action can only be performed by Super Administrators.
+3. Go to **Settings** > **Custom Pages**.
+4. Under **Team domain**, select **Edit** to enter the new team name. Select **Save**.
+5. In your identity provider, update your Cloudflare integration with the new team name. For example, if you are using a SAML IdP, you will need to update the Single Sign-on URL and Entity ID to `https://<new-team-name>.cloudflareaccess.com/cdn-cgi/access/callback`.
+6. In Zero Trust, go to **Settings** > **Authentication**.
+7. Turn on **Cloudflare dashboard SSO** to re-enable SSO.

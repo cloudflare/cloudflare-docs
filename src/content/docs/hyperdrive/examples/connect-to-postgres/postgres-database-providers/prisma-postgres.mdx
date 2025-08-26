@@ -1,0 +1,92 @@
+---
+type: example
+summary: Connect Hyperdrive to a Prisma Postgres database.
+pcx_content_type: example
+title: Prisma Postgres
+sidebar:
+  order: 12
+description: Connect Hyperdrive to a Prisma Postgres database.
+---
+
+import { Render, TabItem, Tabs, Steps } from "~/components";
+
+This example shows you how to connect Hyperdrive to a [Prisma Postgres](https://www.prisma.io/postgres) database.
+
+## 1. Allow Hyperdrive access
+
+You can connect Hyperdrive to any existing Prisma Postgres database by using your existing database connection string.
+
+### Prisma Data Platform
+
+1. Go to the [**Prisma Data Platform Console**](https://console.prisma.io/) and select the project (database) you wish to connect to.
+2. Select **Connect to your database** > **Any client**.
+3. Select **Generate database credentials**. Copy the connection string for your Prisma Postgres database.
+4. Edit the connection string to make it compatible with Hyperdrive.
+  - Add the database name after the port. You may remove any query parameters, such as `?sslmode=require`.
+  - The final string will look like:
+  
+   ```txt ins="database_name"
+   postgres://USERNAME:PASSWORD@HOSTNAME_OR_IP_ADDRESS:PORT/database_name
+    ```   
+
+:::note
+
+An alternative to the Prisma Data Platform is to use the [`create-db`](https://www.npmjs.com/package/create-db) package. This package will generate a quick temporary Prisma Postgres database for you to use.
+
+```bash
+npx create-db@latest
+```
+
+:::
+
+With this connection string, you can now create a Hyperdrive database configuration.
+
+## 2. Create a database configuration
+
+<Render file="create-hyperdrive-config" product="hyperdrive" />
+
+## 4. Configure Hyperdrive maximum connections
+
+Prisma Postgres has limits on the number of direct connections that can be made to the database using Hyperdrive. Refer to [Prisma Postgres limits](https://www.prisma.io/docs/postgres/database/direct-connections?utm_source=website&utm_medium=postgres-page#connection-limit).
+
+:::note
+There are two limits to consider here.
+
+- Origin database's connection limit, set by the origin database provider. This is the maximum number of direct database connections that can be made to the origin database.
+- Hyperdrive's origin connection limit, set by Hyperdrive. This is the maximum number of database connections that Hyperdrive can make to your origin database (in this case, Prisma Postgres).
+
+Hyperdrive's origin connection limit should be lower than the Prisma Postgres connection limit, since Hyperdrive's origin connection limit is a soft limit, and Hyperdrive may create more connections if there are network disruptions that prevent existing connections from being used.
+:::
+
+<Tabs>
+
+<TabItem label={"Dashboard"}>
+<Steps>
+1. From the [Cloudflare Hyperdrive dashboard](https://dash.cloudflare.com/?to=/:account/workers/hyperdrive), select your newly created Hyperdrive configuration.
+2. Go to **Settings**.
+3. In **Origin connection limit**, select **Edit Settings**, and set your maximum connections to a number that is lower than your Prisma connection limit.
+</Steps>
+</TabItem>
+<TabItem label={"Wrangler CLI"}>
+<Steps>
+1. Edit your existing Hyperdrive configuration with the `--origin-connection-limit` parameter:
+	```bash
+	npx wrangler hyperdrive update <HYPERDRIVE_ID> --origin-connection-limit=10
+	```
+
+	Replace `<HYPERDRIVE_ID>` with your Hyperdrive configuration ID and set the connection limit to a number that is less than your Prisma connection limit.
+2. Verify the configuration change:
+	```bash
+	npx wrangler hyperdrive get <HYPERDRIVE_ID>
+	```
+</Steps>
+</TabItem>
+</Tabs>
+
+:::note
+
+When connecting to a Prisma Postgres database with Hyperdrive, you should use a driver like [node-postgres (pg)](/hyperdrive/examples/connect-to-postgres/postgres-drivers-and-libraries/node-postgres/) or [Postgres.js](/hyperdrive/examples/connect-to-postgres/postgres-drivers-and-libraries/postgres-js/) to connect directly to the underlying PostgreSQL database, instead of the Prisma Accelerate extension. Hyperdrive is optimized for database access for Workers, and connects directly to your database to perform global connection pooling and fast query routing.
+
+:::
+
+<Render file="create-hyperdrive-config-next-steps" product="hyperdrive" />

@@ -7,6 +7,8 @@ sidebar:
     label: Leaked credentials
 ---
 
+import { Type } from "~/components";
+
 The leaked credentials [traffic detection](/waf/detections/) scans incoming requests for credentials (usernames and passwords) previously leaked from [data breaches](https://www.cloudflare.com/learning/security/what-is-a-data-breach/).
 
 :::note
@@ -96,13 +98,13 @@ For instructions on configuring a custom detection location, refer to [Get start
 
 ## Leaked credentials fields
 
-| Field name in the dashboard | Field                                                       | Availability       |
-| --------------------------- | ----------------------------------------------------------- | ------------------ |
-| Password Leaked             | [`cf.waf.credential_check.password_leaked`][1]              | All plans          |
-| User and Password Leaked    | [`cf.waf.credential_check.username_and_password_leaked`][2] | Pro plan and above |
-| Username Leaked             | [`cf.waf.credential_check.username_leaked`][3]              | Enterprise plan    |
-| Similar Password Leaked     | [`cf.waf.credential_check.username_password_similar`][4]    | Enterprise plan    |
-| Authentication detected     | [`cf.waf.auth_detected`][5]                                 | Enterprise plan    |
+| Field                                                                                                                    | Description                                                                                                                                                     |
+| ------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Password Leaked <br/> [`cf.waf.credential_check.password_leaked`][1] <br/> <Type text="Boolean" />                       | Indicates whether the password detected in the request was previously leaked. <br/> Available on all plans.                                                     |
+| User and Password Leaked <br/> [`cf.waf.credential_check.username_and_password_leaked`][2] <br/> <Type text="Boolean" /> | Indicates whether the username-password pair detected in the request were previously leaked. <br/> Requires a Pro plan or above.                                |
+| Username Leaked <br/> [`cf.waf.credential_check.username_leaked`][3] <br/> <Type text="Boolean" />                       | Indicates whether the username detected in the request was previously leaked. <br/> Requires an Enterprise plan.                                                |
+| Similar Password Leaked <br/> [`cf.waf.credential_check.username_password_similar`][4] <br/> <Type text="Boolean" />     | Indicates whether a similar version of the username and password credentials detected in the request were previously leaked. <br/> Requires an Enterprise plan. |
+| Authentication detected <br/> [`cf.waf.auth_detected`][5] <br/> <Type text="Boolean" />                                  | Indicates whether Cloudflare detected authentication credentials in the request. <br/> Requires an Enterprise plan.                                             |
 
 [1]: /ruleset-engine/rules-language/fields/reference/cf.waf.credential_check.password_leaked/
 [2]: /ruleset-engine/rules-language/fields/reference/cf.waf.credential_check.username_and_password_leaked/

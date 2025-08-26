@@ -1,10 +1,9 @@
 ---
 pcx_content_type: reference
 title: Cloudflare Cookies
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 Cloudflare uses various cookies to maximize network resources, manage traffic, and protect our customers’ sites from malicious traffic.
 
@@ -26,7 +25,7 @@ The `__cflb` cookie allows Cloudflare to return an end user to the same customer
 Currently Cloudflare only supports Session Affinity in "orange-cloud" (proxied) mode.
 :::
 
-### \_\_cf\_bm cookie for Cloudflare bot products
+### \_\_cf_bm cookie for Cloudflare bot products
 
 Cloudflare's [bot products](/bots/) identify and mitigate automated traffic to protect your site from bad bots. Cloudflare places the `__cf_bm` cookie on end-user devices that access customer sites protected by Bot Management or Bot Fight Mode. The `__cf_bm` cookie is necessary for these bot solutions to function properly.
 
@@ -42,19 +41,26 @@ Bot Management is available to Enterprise customers as an add-on service. Contac
 
 ### \_\_cfseq cookie for Cloudflare bot products
 
-<Render file="sequence-rules" product="bots" params={{ one: "Sequence rules", two: "/bots/additional-configurations/sequence-rules/" }} />
+<Render
+	file="sequence-rules"
+	product="bots"
+	params={{
+		one: "Sequence rules",
+		two: "/bots/additional-configurations/sequence-rules/",
+	}}
+/>
 
 ### cf_clearance cookie for Cloudflare bot products
 
 The `cf_clearance` cookie is required for [JavaScript detections](/bots/additional-configurations/javascript-detections/). JavaScript detections are stored in the `cf_clearance` cookie.
 
-### cf\_ob\_info and cf\_use\_ob cookie for Cloudflare Always Online
+### cf_ob_info and cf_use_ob cookie for Cloudflare Always Online
 
 The `cf_ob_info` cookie provides information on:
 
-* The HTTP Status Code returned by the origin web server
-* The Ray ID of the original failed request
-* The data center serving the traffic
+- The HTTP Status Code returned by the origin web server
+- The Ray ID of the original failed request
+- The data center serving the traffic
 
 The `cf_use_ob` cookie informs Cloudflare to fetch the requested resource from the Always Online cache on the designated port. Applicable values are: 0, 80, and 443. The `cf_ob_info` and `cf_use_ob` cookies are persistent cookies that expire after 30 seconds.
 
@@ -85,8 +91,10 @@ The table below shows additional cookies used by the Challenge Platform.
 
 :::caution
 
-
 If your website is not [using HTTPS](/ssl/edge-certificates/encrypt-visitor-traffic/), you may experience issues with the [`cf_clearance` cookie](/waf/troubleshooting/samesite-cookie-interaction/#known-issues-with-samesite-and-cf_clearance-cookies).
 
-
 :::
+
+### Cloudflare Access cookies
+
+To review Cloudflare Access cookies and their behavior, refer to [Access cookies](/cloudflare-one/identity/authorization-cookie/#access-cookies).

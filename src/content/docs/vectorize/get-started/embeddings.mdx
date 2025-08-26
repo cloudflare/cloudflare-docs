@@ -7,7 +7,7 @@ sidebar:
 
 import { Render, PackageManagers, WranglerConfig } from "~/components";
 
-<Render file="vectorize-ga" />
+<Render file="vectorize-ga" product="vectorize" />
 
 Vectorize allows you to generate [vector embeddings](/vectorize/reference/what-is-a-vector-database/) using a machine-learning model, including the models available in [Workers AI](/workers-ai/).
 
@@ -77,7 +77,7 @@ To create your first Vectorize index, change into the directory you just created
 cd embeddings-tutorial
 ```
 
-<Render file="vectorize-legacy" />
+<Render file="vectorize-legacy" product="vectorize" />
 
 To create an index, use the `wrangler vectorize create` command and provide a name for the index. A good index name is:
 
@@ -87,7 +87,7 @@ To create an index, use the `wrangler vectorize create` command and provide a na
 
 In addition, define both the `dimensions` of the vectors you will store in the index, as well as the distance `metric` used to determine similar vectors when creating the index. **This configuration cannot be changed later**, as a vector database is configured for a fixed vector configuration.
 
-<Render file="vectorize-wrangler-version" />
+<Render file="vectorize-wrangler-version" product="vectorize" />
 
 Run the following `wrangler vectorize` command, ensuring that the `dimensions` are set to `768`: this is important, as the Workers AI model used in this tutorial outputs vectors with 768 dimensions.
 

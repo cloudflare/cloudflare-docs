@@ -50,7 +50,7 @@ If you suspect that Cloudflare mitigations might be dropping legitimate traffic 
 3. In the **All traffic** tab select **Add filter** to configure the filters for the traffic-flow in question — like source IP, destination IP and protocol/ports.
 4. Check the analytics results to determine which Cloudflare mitigation system has dropped the traffic — for example, DDoS Managed Rules, Advanced TCP/DNS Protection or Magic Firewall.
 5. If the traffic was dropped by DDoS Managed Rules:
-	- Check whether the rule that dropped the traffic is customizable. If it is, go to [DDoS Overrides](/ddos-protection/managed-rulesets/network/configure-dashboard/#create-a-ddos-override). There, you can create/amend an existing override to ensure that this endpoint IP is added to the override with a lower sensitivity applied.
+	- Check whether the rule that dropped the traffic is customizable. If it is, go to [DDoS Overrides](/ddos-protection/managed-rulesets/network/network-overrides/configure-dashboard/#create-a-ddos-override). There, you can create/amend an existing override to ensure that this endpoint IP is added to the override with a lower sensitivity applied.
 	- If this rule is not customizable and is part of Cloudflare's always-on standard DDoS mitigations, reach out to Cloudflare support team to request for assistance on this.
 6. If the traffic was dropped by Advanced TCP Protection (ATP):
 	- If the mode for the global rule is **Mitigation** you can set up a filter for `monitoring` so that ATP will not drop traffic for this particular traffic flow.

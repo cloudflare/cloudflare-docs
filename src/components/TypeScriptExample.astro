@@ -13,10 +13,11 @@ const props = z
 		filename: z.string().optional(),
 		playground: z.boolean().default(false),
 		code: z.custom<ComponentProps<typeof Code>>().optional(),
+		omitTabs: z.boolean().default(false),
 	})
 	.strict();
 
-const { filename, playground, code } = props.parse(Astro.props);
+const { filename, playground, code, omitTabs } = props.parse(Astro.props);
 
 const slot = await Astro.slots.render("default");
 
@@ -41,9 +42,11 @@ if (!raw) {
 raw = raw.replace(/\u007f/g, "\n");
 
 const js = await format(tsBlankSpace(raw), { parser: "babel", useTabs: true });
+
+const Wrapper = omitTabs ? Fragment : Tabs;
 ---
 
-<Tabs syncKey="workersExamples">
+<Wrapper syncKey="workersExamples">
 	<TabItem label="JavaScript" icon="seti:javascript">
 		<Code
 			{...code}
@@ -56,4 +59,4 @@ const js = await format(tsBlankSpace(raw), { parser: "babel", useTabs: true });
 	<TabItem label="TypeScript" icon="seti:typescript">
 		<Code {...code} lang="ts" code={raw} title={filename} />
 	</TabItem>
-</Tabs>
+</Wrapper>

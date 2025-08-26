@@ -3,9 +3,9 @@ title: Deploy a Worker
 pcx_content_type: tutorial
 products:
   - Workers
-updated: 2024-09-13
+reviewed: 2024-09-13
 difficulty: Beginner
-languages:
+tags:
   - JavaScript
   - TypeScript
   - Python
@@ -31,7 +31,7 @@ You will provision resources that qualify under free tier offerings for both Pul
 ## Before you begin
 
 Ensure you have:
- 
+
 - A Cloudflare account and API Token with permission to edit the resources in this tutorial. If you need to, sign up for a [Cloudflare account](https://www.cloudflare.com/sign-up) before continuing. Your token must have the following:
   - `Account-Workers Scripts-Edit` permission
   - `Zone-Workers Route-Edit` permission
@@ -137,7 +137,7 @@ You have not defined any resources at this point, so you'll have an empty stack.
 
 In this step, you will store your application settings in a Pulumi [ESC Environment](https://www.pulumi.com/docs/esc/environments/), a YAML file containing configurations and secrets. These can be accessed in several ways, including a Pulumi program. All ESC Environments securely reside in your Pulumi Cloud account and can be fully managed via the Pulumi CLI. For this tutorial, you will store the following values:
 
-- Your Cloudflare [account ID](/fundamentals/setup/find-account-and-zone-ids/).
+- Your Cloudflare [account ID](/fundamentals/account/find-account-and-zone-ids/).
 - A valid Cloudflare API [token](/fundamentals/api/get-started/create-token/).
 - A domain. For instance, `example.com`.
 

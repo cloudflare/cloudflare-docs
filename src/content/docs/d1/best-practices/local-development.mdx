@@ -151,7 +151,7 @@ You can then use the `getD1Database()` method to retrieve the simulated database
 const db = await mf.getD1Database("DB");
 
 const stmt = db.prepare("SELECT name, age FROM users LIMIT 3");
-const { results } = await stmt.all();
+const { results } = await stmt.run();
 
 console.log(results);
 ```

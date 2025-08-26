@@ -1,8 +1,9 @@
 ---
 pcx_content_type: reference
-title: Sequence Mitigation custom rules
+title: Sequence mitigation custom rules
 sidebar:
-  order: 2
+  order: 4
+  label: Custom rules
 
 ---
 
@@ -12,7 +13,7 @@ API Shield sequence custom rules use the configured API Shield <GlossaryTooltip 
 
 These rules are different from [cookie sequence rules](/bots/additional-configurations/sequence-rules/) in a few ways: 
 
-- They only require an API Shield subscription.
+- They need the `fraud_acct_ent` entitlement on a Cloudflare account.
 - They require [session identifiers](/api-shield/get-started/#session-identifiers) to be set in API Shield.
 - Because they use an API's session identifiers, they can be used for APIs designed for mobile applications.
 - Because Cloudflare stores the user state in memory and not in a cookie, the session lifetime is limited to 10 minutes.
@@ -23,7 +24,11 @@ Rules built using these custom rules are different from sequence mitigation rule
 
 <Render file="sequence-rules-availability" product="bots" />
 
-## Example rules
+## Build a sequence custom rule
+
+<Render file="sequence-custom-rules" product="api-shield" />
+
+### Example rules
 
 Each saved endpoint will have an endpoint ID visible in its details page in Endpoint Management in the form of a UUID. The references below (`aaaaaaaa`, `bbbbbbbb`, and `cccccccc`) are the first eight characters of the endpoint ID.
 

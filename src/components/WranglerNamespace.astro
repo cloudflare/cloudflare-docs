@@ -1,0 +1,46 @@
+---
+import { z } from "astro:schema";
+import { experimental_getWranglerCommands } from "wrangler";
+import WranglerCommand from "./WranglerCommand.astro";
+
+const props = z.object({
+	namespace: z.string(),
+});
+
+const { namespace } = props.parse(Astro.props);
+
+const defs = experimental_getWranglerCommands();
+
+const node = defs.subtree.get(namespace);
+
+if (!node || node.subtree.size === 0) {
+	throw new Error(`[WranglerNamespace] Namespace "${namespace}" not found`);
+}
+
+const definitions: NonNullable<(typeof node)["definition"]>[] = [];
+
+function flattenSubtree(node: (typeof defs)["subtree"]) {
+	for (const value of node.values()) {
+		if (value.definition?.type === "command") {
+			definitions.push(value.definition);
+		} else {
+			flattenSubtree(value.subtree);
+		}
+	}
+}
+
+flattenSubtree(node.subtree);
+---
+
+{
+	definitions.map((definition) => {
+		if (definition.type !== "command") {
+			throw new Error(
+				`[WranglerNamespace] Expected "command" but got "${definition.type}" for "${definition.command}"`,
+			);
+		}
+		return (
+			<WranglerCommand command={definition.command.replace("wrangler ", "")} />
+		);
+	})
+}

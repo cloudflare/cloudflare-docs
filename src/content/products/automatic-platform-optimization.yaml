@@ -8,9 +8,5 @@ product:
 
 meta:
   title: Cloudflare Automatic Platform Optimization docs
-  description: Serve your WP site from Cloudflare's edge, ensuring improved performance.
+  description: Improve WordPress site performance by serving it from Cloudflare's global network
   author: "@cloudflare"
-
-resources:
-  community: https://community.cloudflare.com/c/website-application-performance/apo/5
-  dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/speed/optimization/content

@@ -6,6 +6,8 @@ description: Magic Transit uses a static configuration to route traffic through
   anycast tunnels using the Generic Routing Encapsulation (GRE) and Internet
   Protocol Security (IPsec) protocols from Cloudflare's global network to your
   network.
+sidebar:
+  order: 7
 ---
 
 import { Render } from "~/components";
@@ -16,7 +18,7 @@ import { Render } from "~/components";
 	params={{
   	magicWord: "Magic Transit",
   	productName: "Magic Transit",
-  	greIpsecReferenceURL: "/magic-transit/reference/tunnels/",
+  	greIpsecReferenceURL: "/magic-transit/reference/gre-ipsec-tunnels/",
   	createStaticRoute: "/magic-transit/how-to/configure-routes/#create-a-static-route",
   	editStaticRoute: "/magic-transit/how-to/configure-routes/#edit-a-static-route",
   	setupBgpPeering: "/magic-transit/how-to/configure-routes/#set-up-bgp-peering",

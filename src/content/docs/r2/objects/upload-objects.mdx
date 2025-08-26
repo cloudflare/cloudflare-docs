@@ -5,7 +5,7 @@ sidebar:
   order: 1
 ---
 
-import { Steps, Tabs, TabItem } from "~/components"
+import { Steps, Tabs, TabItem, Render } from "~/components"
 
 You can upload objects to your bucket from using API (both [Workers Binding API](/r2/api/workers/workers-api-reference/) or [compatible S3 API](/r2/api/s3/api/)), rclone, Cloudflare dashboard, or Wrangler.
 
@@ -72,3 +72,5 @@ Wrangler's `object put` command only allows you to upload one object at a time.
 
 Use rclone if you wish to upload multiple objects to R2.
 :::
+
+<Render file="link-to-workers-r2-api" product="r2"/>

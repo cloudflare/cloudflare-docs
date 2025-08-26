@@ -51,4 +51,8 @@ If the name `www` exists but the type TXT does not, the example below would trig
 dig +dnssec www.example.com TXT
 ```
 
+## Availability
+
+NSEC3 is only available for zones on the Enterprise plan.
+
 [^1]: A method where an attacker exploits NSEC negative answers to obtain all names in a given zone. This is possible when such negative answers provide information on the previous and next names in a chain.

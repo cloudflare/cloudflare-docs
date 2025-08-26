@@ -11,6 +11,8 @@ import react from "@astrojs/react";
 import { readdir } from "fs/promises";
 import { fileURLToPath } from "url";
 
+import remarkValidateImages from "./src/plugins/remark/validate-images";
+
 import rehypeTitleFigure from "rehype-title-figure";
 import rehypeMermaid from "./src/plugins/rehype/mermaid.ts";
 import rehypeAutolinkHeadings from "./src/plugins/rehype/autolink-headings.ts";
@@ -61,6 +63,7 @@ export default defineConfig({
 	site: "https://developers.cloudflare.com",
 	markdown: {
 		smartypants: false,
+		remarkPlugins: [remarkValidateImages],
 		rehypePlugins: [
 			rehypeMermaid,
 			rehypeExternalLinks,
@@ -134,16 +137,23 @@ export default defineConfig({
 									"/api/**",
 									"/changelog/**",
 									"/http/resources/**",
+									"/llms.txt",
+									"/llms-full.txt",
 									"{props.*}",
 									"/",
 									"/glossary/",
-									"/products/",
+									"/directory/",
 									"/rules/snippets/examples/?operation=*",
 									"/rules/transform/examples/?operation=*",
 									"/ruleset-engine/rules-language/fields/reference/**",
 									"/workers/examples/?languages=*",
 									"/workers/examples/?tags=*",
+									"/workers/llms-full.txt",
 									"/workers-ai/models/**",
+									"**index.md",
+									"/markdown.zip",
+									"/style-guide/index.md",
+									"/style-guide/fixtures/markdown/index.md",
 								],
 							}),
 						]
@@ -157,14 +167,22 @@ export default defineConfig({
 			markdown: {
 				headingLinks: false,
 			},
+			routeMiddleware: "./src/plugins/starlight/route-data.ts",
+			disable404Route: true,
 		}),
 		liveCode({}),
 		icon(),
 		sitemap({
 			filter(page) {
-				return !page.startsWith(
-					"https://developers.cloudflare.com/style-guide/",
-				);
+				if (page.includes("/style-guide/")) {
+					return false;
+				}
+
+				if (page.endsWith("/404/")) {
+					return false;
+				}
+
+				return true;
 			},
 			serialize(item) {
 				item.lastmod = new Date().toISOString();

@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import { Render } from "~/components";
+import { GlossaryTooltip, Render } from "~/components";
 
 By default, Cloudflare Zero Trust excludes common top-level domains, used for local resolution, from being sent to Gateway for processing. These top-level domains are resolved by the local DNS resolver configured for the device on its primary interface.
 
@@ -16,6 +16,8 @@ You can add additional domains to the Local Domain Fallback list and specify a D
 Local Domain Fallback only applies to devices running the WARP client.
 
 Because DNS requests subject to Local Domain Fallback bypass the Gateway resolver, they are not subject to Gateway DNS policies or DNS logging. If you want to route DNS queries to custom resolvers and apply Gateway filtering, use [resolver policies](/cloudflare-one/policies/gateway/resolver-policies/). If both Local Domain Fallback and resolver policies are configured for the same device, Cloudflare will apply client-side Local Domain Fallback rules first.
+
+<Render file="warp/ldf-best-practice" product="cloudflare-one" />
 
 ### AWS
 
@@ -48,3 +50,8 @@ Local Domain Fallback configuration only impacts where DNS requests get resolved
 4. Find the domain in the list and select **Delete**.
 
 The domain will no longer be excluded from Gateway DNS policies, effective immediately.
+
+## Related resources
+
+- [Split Tunnels](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) - Control which traffic goes through WARP by including or excluding specific IPs or domains.
+- [WARP with firewall](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/) - Learn which IPs, domains, and ports to allow so users can deploy and connect WARP successfully behind a firewall.

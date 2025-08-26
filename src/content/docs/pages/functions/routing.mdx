@@ -10,7 +10,7 @@ banner:
     id: pages-migrate-to-workers
 ---
 
-import { FileTree } from "~/components";
+import { Details, FileTree, PagesBuildPresetsTable } from "~/components";
 
 Functions utilize file-based routing. Your `/functions` directory structure determines the designated routes that your Functions will run on. You can create a `/functions` directory with as many levels as needed for your project's use case. Review the following directory:
 
@@ -143,7 +143,15 @@ Some frameworks (such as [Remix](/pages/framework-guides/deploy-a-remix-site/), 
 
 ### Create a `_routes.json` file
 
-Create a `_routes.json` file to control when your Function is invoked. It should be placed in the output directory of your project.
+Create a `_routes.json` file to control when your Function is invoked. It should be placed in the build directory of your project.
+
+<Details header="Default build directories">
+
+Below are some standard build commands and directories for popular frameworks and tools.
+
+<PagesBuildPresetsTable />
+
+</Details>
 
 This file will include three different properties:
 

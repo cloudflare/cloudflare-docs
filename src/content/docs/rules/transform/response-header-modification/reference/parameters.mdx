@@ -12,14 +12,15 @@ To set an HTTP response header, overwriting any headers with the same name, use 
 
 - **operation**: `set`
 - Include one of the following parameters to define a static or dynamic value:
-
   - **value**: Specifies a static value for the HTTP response header.
   - **expression**: Specifies the expression that defines a value for the HTTP response header.
 
 To add an HTTP response header, keeping any existing headers with the same name, use the following parameters in the `action_parameters` field:
 
 - **operation**: `add`
-- **value**: Specifies a static value for the HTTP response header.
+- Include one of the following parameters to define a static or dynamic value:
+  - **value**: Specifies a static value for the HTTP response header.
+  - **expression**: Specifies the expression that defines a value for the HTTP response header.
 
 To remove an HTTP response header, set the following parameter in the `action_parameters` field:
 
@@ -48,7 +49,7 @@ The full syntax of the `action_parameters` field to define a dynamic HTTP respon
 "action_parameters": {
   "headers": {
     "<HEADER_NAME>": {
-      "operation": "set",
+      "operation": "<set|add>",
       "expression": "<EXPRESSION>"
     }
   }

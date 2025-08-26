@@ -22,7 +22,7 @@ These logs are helpful for debugging, identifying configuration adjustments, and
 
 ## Features
 
-<Feature header="Logpush" href="/logs/get-started/">
+<Feature header="Logpush" href="/logs/logpush/">
 
 Push your request or event logs to your cloud service provider using Logpush, which can be configured via the Cloudflare dashboard or API.
 
@@ -36,9 +36,9 @@ View HTTP request logs instantly in the Cloudflare dashboard or the CLI.
 
 </Feature>
 
-<Feature header="Logs Engine" href="/logs/r2-log-retrieval/">
+<Feature header="Logpull (legacy)" href="/logs/logpull/">
 
-Use Logs Engine to store your logs in R2 and query them directly.
+Consume request logs over HTTP using Cloudflare Logpull, a REST API designed for log retrieval.
 
 
 </Feature>
@@ -47,7 +47,11 @@ Use Logs Engine to store your logs in R2 and query them directly.
 
 ## Related products
 
-<RelatedProduct header="Audit Logs" href="/fundamentals/setup/account/account-security/review-audit-logs/" product="fundamentals">
+<RelatedProduct header="Log Explorer" href="/log-explorer/" product="logs">
+Store and explore your Cloudflare logs directly within the Cloudflare dashboard or API.
+</RelatedProduct>
+
+<RelatedProduct header="Audit Logs" href="/fundamentals/account/account-security/review-audit-logs/" product="fundamentals">
 Summarize the history of changes made within your Cloudflare account.
 </RelatedProduct>
 

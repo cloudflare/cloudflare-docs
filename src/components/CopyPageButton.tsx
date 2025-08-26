@@ -10,11 +10,12 @@ import {
 } from "@floating-ui/react";
 import { useState } from "react";
 import {
-	PiMarkdownLogo,
+	PiDotsThreeOutlineFill,
 	PiClipboardTextLight,
 	PiArrowSquareOutLight,
 	PiCheckCircleLight,
 	PiXCircleLight,
+	PiChatCircleLight,
 } from "react-icons/pi";
 import { track } from "~/util/zaraz";
 
@@ -45,6 +46,14 @@ export default function CopyPageButton() {
 			value: "view markdown",
 		});
 		window.open(markdownUrl, "_blank");
+	};
+
+	const handleDocsAI = () => {
+		const docsAIUrl = "https://developers.cloudflare.com/support/ai/";
+		track("clicked copy page button", {
+			value: "docs ai",
+		});
+		window.open(docsAIUrl, "_blank");
 	};
 
 	const handleCopyMarkdown = async () => {
@@ -91,6 +100,12 @@ export default function CopyPageButton() {
 			icon: PiArrowSquareOutLight,
 			onClick: handleViewMarkdown,
 		},
+		{
+			label: "Ask Docs AI",
+			description: "Open our Docs AI assistant in a new tab",
+			icon: PiChatCircleLight,
+			onClick: handleDocsAI,
+		},
 	];
 
 	const getButtonContent = () => {
@@ -114,8 +129,8 @@ export default function CopyPageButton() {
 
 		return (
 			<>
-				<span>Copy Page</span>
-				<PiMarkdownLogo />
+				<span>Page options</span>
+				<PiDotsThreeOutlineFill />
 			</>
 		);
 	};
@@ -125,7 +140,7 @@ export default function CopyPageButton() {
 			<button
 				ref={refs.setReference}
 				{...getReferenceProps()}
-				className="inline-flex h-8 min-w-32 cursor-pointer items-center justify-center gap-2 rounded-sm border border-(--sl-color-hairline) bg-transparent px-3 text-sm text-black hover:bg-(--sl-color-bg-nav)"
+				className="inline-flex min-h-8 min-w-32 cursor-pointer items-center justify-center gap-2 rounded-sm border border-(--sl-color-hairline) bg-transparent px-3 text-sm text-black hover:bg-(--sl-color-bg-nav)"
 			>
 				{getButtonContent()}
 			</button>
