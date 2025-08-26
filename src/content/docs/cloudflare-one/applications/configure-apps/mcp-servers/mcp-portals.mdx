@@ -98,7 +98,7 @@ To create an MCP server portal:
 8. Select **Add an MCP server portal**.
 9. (Optional) [Customize the login experience](#customize-login-settings) for the portal.
 
-Users can now [connect to the portal](#connect-to-a-portal) at `https//<subdomain>.<domain>/sse` using an MCP client.
+Users can now [connect to the portal](#connect-to-a-portal) at `https://<subdomain>.<domain>/mcp` using an MCP client.
 
 ### Customize login settings
 
@@ -117,12 +117,12 @@ Cloudflare Access automatically creates an Access application for each MCP serve
 
 ## Connect to a portal
 
-Users can connect to your MCP server running at `https//<subdomain>.<domain>/sse` using [Workers AI Playground](https://playground.ai.cloudflare.com/), [MCP inspector](https://github.com/modelcontextprotocol/inspector), or [other MCP clients](/agents/guides/remote-mcp-server/#connect-your-mcp-server-to-claude-and-other-mcp-clients) that support remote MCP servers.
+Users can connect to your MCP server running at `https://<subdomain>.<domain>/mcp` using [Workers AI Playground](https://playground.ai.cloudflare.com/), [MCP inspector](https://github.com/modelcontextprotocol/inspector), or [other MCP clients](/agents/guides/remote-mcp-server/#connect-your-mcp-server-to-claude-and-other-mcp-clients) that support remote MCP servers.
 
 To test in Workers AI Playground:
 
 1. Go to [Workers AI Playground](https://playground.ai.cloudflare.com/).
-2. Under **MCP Servers**, enter `https//<subdomain>.<domain>/sse` for the portal URL.
+2. Under **MCP Servers**, enter `https://<subdomain>.<domain>/mcp` for the portal URL.
 3. Select **Connect**.
 4. A popup window will appear requesting access to the MCP server portal. Select **Approve**.
 5. Follow the prompts to log in to your Cloudflare Access identity provider.
