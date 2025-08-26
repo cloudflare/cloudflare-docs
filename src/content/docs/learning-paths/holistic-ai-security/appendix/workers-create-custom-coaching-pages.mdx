@@ -8,39 +8,39 @@ sidebar:
 
 Cloudflare Workers are an easy method to stand up custom user coaching pages. The customs status pages can be handled dynamically based on the information that Gateway sends about a blocked request.
 
-## Example 
+## Example
 
-```
+```js
 const COMPANY_NAME = "Your Company Inc.";
-const APPROVED_TOOL_URL = 'https://chat.yourcompany.com'; // Your sanctioned AI tool URL
-const APPROVED_TOOL_NAME = 'Corporate AI Assistant'; // The user-friendly name of your tool
-const IT_HELPDESK_EMAIL = 'it-security@yourcompany.com'; // Email for the "report a problem" button
-const COMPANY_LOGO_URL = 'Your_Logo.svg'; // A publicly accessible URL for your company logo. Replace with your own.
+const APPROVED_TOOL_URL = "https://chat.yourcompany.com"; // Your sanctioned AI tool URL
+const APPROVED_TOOL_NAME = "Corporate AI Assistant"; // The user-friendly name of your tool
+const IT_HELPDESK_EMAIL = "it-security@yourcompany.com"; // Email for the "report a problem" button
+const COMPANY_LOGO_URL = "Your_Logo.svg"; // A publicly accessible URL for your company logo. Replace with your own.
 
 export default {
-async fetch(request) {
-// 1. Get the blocked URL from the query string passed by Gateway.
-const url = new URL(request.url);
-const blockedUrlParam = url.searchParams.get('blocked_url');
+	async fetch(request) {
+		// 1. Get the blocked URL from the query string passed by Gateway.
+		const url = new URL(request.url);
+		const blockedUrlParam = url.searchParams.get("blocked_url");
 
-// Decode and sanitize the blocked URL for display.
-let blockedHostname = "the requested site";
-let fullBlockedUrl = "an unapproved external tool";
-if (blockedUrlParam) {
-try {
-const decodedUrl = decodeURIComponent(blockedUrlParam);
-fullBlockedUrl = decodedUrl;
-blockedHostname = new URL(decodedUrl).hostname;
-} catch (e) {
-// If the URL is malformed, use the raw param safely.
-fullBlockedUrl = blockedUrlParam;
-blockedHostname = blockedUrlParam;
-}
-}
+		// Decode and sanitize the blocked URL for display.
+		let blockedHostname = "the requested site";
+		let fullBlockedUrl = "an unapproved external tool";
+		if (blockedUrlParam) {
+			try {
+				const decodedUrl = decodeURIComponent(blockedUrlParam);
+				fullBlockedUrl = decodedUrl;
+				blockedHostname = new URL(decodedUrl).hostname;
+			} catch (e) {
+				// If the URL is malformed, use the raw param safely.
+				fullBlockedUrl = blockedUrlParam;
+				blockedHostname = blockedUrlParam;
+			}
+		}
 
-// 2. Prepare the "Report a problem" mailto link.
-const mailtoSubject = Business Justification for AI Tool: ${blockedHostname};
-const mailtoBody = `Hello IT/Security Team,
+		// 2. Prepare the "Report a problem" mailto link.
+		const mailtoSubject = `Business Justification for AI Tool: ${blockedHostname}`;
+		const mailtoBody = `Hello IT/Security Team,
 
 I was attempting to access the following website and was redirected to this coaching page:
 ${fullBlockedUrl}
@@ -51,29 +51,29 @@ My business justification for needing this specific tool is:
 Thank you,
 [Your Name]`;
 
-const mailtoLink = mailto:${IT_HELPDESK_EMAIL}?subject=${encodeURIComponent(mailtoSubject)}&body=${encodeURIComponent(mailtoBody)};
+		const mailtoLink = `mailto:${IT_HELPDESK_EMAIL}?subject=${encodeURIComponent(mailtoSubject)}&body=${encodeURIComponent(mailtoBody)}`;
 
-// 3. Generate the full HTML page.
-const html = generateHTML(blockedHostname, mailtoLink);
+		// 3. Generate the full HTML page.
+		const html = generateHTML(blockedHostname, mailtoLink);
 
-// 4. Return the HTML as a response.
-return new Response(html, {
-headers: {
-'Content-Type': 'text/html;charset=UTF-8',
-},
-});
-},
+		// 4. Return the HTML as a response.
+		return new Response(html, {
+			headers: {
+				"Content-Type": "text/html;charset=UTF-8",
+			},
+		});
+	},
 };
 
 /**
-* Generates the full HTML for the coaching page.
-* @param {string} blockedHostname - The hostname of the site the user tried to access.
-* @param {string} mailtoLink - The pre-built mailto link for reporting an issue.
-* @returns {string} - The complete HTML document as a string.
-*/
+ * Generates the full HTML for the coaching page.
+ * @param {string} blockedHostname - The hostname of the site the user tried to access.
+ * @param {string} mailtoLink - The pre-built mailto link for reporting an issue.
+ * @returns {string} - The complete HTML document as a string.
+ */
 function generateHTML(blockedHostname, mailtoLink) {
-// Using a template literal for easy-to-read HTML with embedded variables.
-return `
+	// Using a template literal for easy-to-read HTML with embedded variables.
+	return `
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -202,4 +202,4 @@ We encourage you to use our officially approved and secure solution, the
 
 If successful, your custom user coaching page will look like the image below. It will appear anytime a user attempts to access an unapproved AI tool.
 
-![Exmaple of a custom coaching page utilizing the code example above.](~/assets/images/learning-paths/holistic-ai-security/custom-coaching-page.png)
+![Example of a custom coaching page utilizing the code example above.](~/assets/images/learning-paths/holistic-ai-security/custom-coaching-page.png)
