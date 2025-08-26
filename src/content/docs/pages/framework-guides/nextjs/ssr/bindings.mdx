@@ -52,3 +52,29 @@ export async function GET(request) {
 	// ...
 }
 ```
+
+## Import with npm create cloudflare
+
+If you initialized your project using the command:
+
+```bash
+npm create cloudflare@latest -- my-next-app --framework=next --platform=pages
+```
+
+the recommended way to access bindings is through getCloudflareContext from the [@opennextjs/cloudflare](https://opennext.js.org/cloudflare/bindings) package:
+
+```js
+import { getCloudflareContext } from "@opennextjs/cloudflare";
+
+export async function GET(request) {
+  const myKv = getCloudflareContext().env.MY_KV_NAMESPACE;
+  await myKv.put("foo", "bar");
+  const foo = await myKv.get("foo");
+
+  return new Response(foo);
+}
+ 
+```
+Remember, with this approach you do not need to install ```@cloudflare/next-on-pages```,
+nor do you need to add ```jssetupDevPlatform();``` to the ```next.config.mjs```
+file.
