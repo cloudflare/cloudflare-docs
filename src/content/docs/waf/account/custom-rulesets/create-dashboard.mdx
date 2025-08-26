@@ -10,7 +10,7 @@ head:
     content: Work with WAF custom rulesets in the dashboard
 ---
 
-import { Render } from "~/components";
+import { Render, Steps } from "~/components";
 
 :::note
 This feature requires an Enterprise plan with a paid add-on.
@@ -19,6 +19,8 @@ This feature requires an Enterprise plan with a paid add-on.
 Custom rulesets are configured at the account level. To work with custom rulesets, go to Account Home > **WAF** > **Custom rulesets**.
 
 ## Create and deploy a custom ruleset
+
+<Steps>
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 
@@ -54,7 +56,11 @@ Custom rulesets are configured at the account level. To work with custom ruleset
 
 13. Select **Create**.
 
+</Steps>
+
 ## Edit a custom ruleset
+
+<Steps>
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 
@@ -68,16 +74,22 @@ Custom rulesets are configured at the account level. To work with custom ruleset
 
 5. When you are done, select **Back to rulesets list**.
 
+</Steps>
+
 :::caution
 Deployed custom rulesets will only apply to incoming traffic of Enterprise domains. The Expression Builder will automatically include this filter. If you define a custom expression for the ruleset using the Expression Editor, you must use parentheses to enclose any custom conditions and end your expression with `and cf.zone.plan eq "ENT"` so that the rule only applies to domains on an Enterprise plan.
 :::
 
 ## Delete a custom ruleset
 
+<Steps>
+
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. Go to Account Home > **WAF** > **Custom rulesets**.
 3. To delete a custom ruleset, select the three dots next to it > **Delete**.
 4. To confirm the delete operation, select **Delete**.
+
+</Steps>
 
 ## Configure a custom response for blocked requests
 

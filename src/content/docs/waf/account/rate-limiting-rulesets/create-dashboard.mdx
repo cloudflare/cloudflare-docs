@@ -9,7 +9,7 @@ head:
     content: Create a rate limiting ruleset in the dashboard for an account
 ---
 
-import { Render } from "~/components";
+import { Render, Steps } from "~/components";
 
 :::note
 This feature requires an Enterprise plan with a paid add-on.
@@ -19,7 +19,7 @@ At the account level, rate limiting rules are grouped into rate limiting ruleset
 
 ## 1. Create a custom rate limiting ruleset
 
-To create a new custom rate limiting ruleset:
+<Steps>
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account.
 
@@ -59,9 +59,13 @@ To create a new custom rate limiting ruleset:
 
 16. Create additional rate limiting rules as needed, and then select **Create** to create the ruleset.
 
+</Steps>
+
 ## 2. Deploy the custom rate limiting ruleset
 
 To deploy a custom rate limiting ruleset to one or more zones on an Enterprise plan:
+
+<Steps>
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account.
 
@@ -78,6 +82,8 @@ To deploy a custom rate limiting ruleset to one or more zones on an Enterprise p
    :::
 
 6. To deploy your rule immediately, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
+
+</Steps>
 
 The **Deployed custom rate limiting rulesets** list will show a rule for each deployed custom rate limiting ruleset.
 
