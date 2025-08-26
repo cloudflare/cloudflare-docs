@@ -17,25 +17,23 @@ const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 </a>
 
 <!-- Search Input -->
-<div class="relative" style="margin: 1rem var(--sl-sidebar-item-padding-inline) 0.75rem;">
+<div class="relative">
 	<input
 		type="text"
 		id="sidebar-search"
 		placeholder="Search documentation..."
 		class="w-full px-3 pr-8 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-orange-500 dark:focus:border-orange-500 transition-colors duration-200"
 	/>
-	<button 
-		id="sidebar-search-clear" 
-		class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-transparent border-none text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 cursor-pointer text-xl leading-none p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200" 
-		style="display: none;"
+	<button
+		id="sidebar-search-clear"
+		class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-transparent border-none text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 cursor-pointer text-xl leading-none p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200"
 	>×</button>
 </div>
 
 <!-- No Results Message -->
-<div 
-	id="sidebar-no-results" 
-	class="text-sm text-gray-500 dark:text-gray-400 text-center py-4 px-4 hidden"
-	style="margin: 0 var(--sl-sidebar-item-padding-inline);"
+<div
+	id="sidebar-no-results"
+	class="text-sm text-gray-500 dark:text-gray-400 text-center p-4 hidden"
 >
 	No results found. Try a different search term, or use our <button id="global-search-link" class="text-blue-500 dark:text-orange-500 underline hover:no-underline cursor-pointer bg-transparent border-none p-0 font-inherit">global search</button>.
 </div>
@@ -49,7 +47,7 @@ const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 		const noResultsMessage = document.getElementById('sidebar-no-results') as HTMLElement;
 		const globalSearchLink = document.getElementById('global-search-link') as HTMLButtonElement;
 		const sidebarContent = document.querySelector('.sidebar-content');
-		
+
 		if (!searchInput || !sidebarContent || !noResultsMessage || !globalSearchLink) return;
 
 		const originalState: Map<Element, boolean> = new Map();
@@ -107,7 +105,7 @@ const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 				items.forEach(item => {
 					(item as HTMLElement).style.display = '';
 				});
-				
+
 				// Restore original details state
 				detailsElements.forEach(details => {
 					const originalOpen = originalState.get(details);
@@ -115,16 +113,16 @@ const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 						(details as HTMLDetailsElement).open = originalOpen;
 					}
 				});
-				
+
 				// Hide no results message
 				noResultsMessage.classList.add('hidden');
-				
+
 				clearButton.style.display = 'none';
 				return;
 			}
 
 			clearButton.style.display = 'block';
-			
+
 			// Split search query into terms for more precise matching
 			const searchTerms = query.toLowerCase().split(/\s+/).filter(term => term.length > 0);
 
@@ -144,7 +142,7 @@ const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 				const summary = details.querySelector('summary');
 				if (summary) {
 					const summaryText = summary.textContent || '';
-					
+
 					if (matchesAllTerms(summaryText, searchTerms)) {
 						// This is a folder match - show the folder and its direct children
 						const parentLi = details.closest('li');
@@ -161,16 +159,16 @@ const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 			// 2. Check for specific page matches (show page + parent chain)
 			items.forEach(item => {
 				if (matchedItems.has(item)) return; // Skip if already matched as folder
-				
+
 				const link = item.querySelector('a');
 				const summary = item.querySelector('summary');
-				
+
 				// Skip if this is a folder (has summary) - those are handled above
 				if (summary) return;
-				
+
 				if (link) {
 					const linkText = link.textContent || '';
-					
+
 					if (matchesAllTerms(linkText, searchTerms)) {
 						// This is a specific page match - show page + parent chain
 						(item as HTMLElement).style.display = '';
@@ -190,13 +188,13 @@ const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 					const summaryText = summary?.textContent?.toLowerCase() || '';
 
 					// Check if any search term is found (partial matching)
-					const hasPartialMatch = searchTerms.some(term => 
+					const hasPartialMatch = searchTerms.some(term =>
 						textContent.includes(term) || linkText.includes(term) || summaryText.includes(term)
 					);
 
 					if (hasPartialMatch) {
 						(item as HTMLElement).style.display = '';
-						
+
 						// If it's a folder, show direct children only
 						if (summary) {
 							const details = item.querySelector('details');
@@ -204,7 +202,7 @@ const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 								showDirectChildren(details);
 							}
 						}
-						
+
 						showParentChain(item);
 						matchedItems.add(item);
 					}
@@ -248,17 +246,17 @@ const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 				const docSearchButton = document.querySelector('#docsearch button') as HTMLButtonElement ||
 					document.querySelector('.DocSearch-Button') as HTMLButtonElement ||
 					document.querySelector('[data-docsearch-button]') as HTMLButtonElement;
-				
+
 				if (docSearchButton) {
 					// Click the DocSearch button to open the modal
 					docSearchButton.click();
-					
+
 					// Wait for modal to open and set the search term
 					setTimeout(() => {
 						const searchInput = document.querySelector('.DocSearch-Input') as HTMLInputElement ||
 							document.querySelector('#docsearch-input') as HTMLInputElement ||
 							document.querySelector('[data-docsearch-input]') as HTMLInputElement;
-						
+
 						if (searchInput) {
 							searchInput.value = currentQuery;
 							searchInput.focus();
@@ -279,7 +277,7 @@ const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 	}
 
 	// Re-initialize on navigation (for SPA-like behavior)
-	document.addEventListener('astro:page-load', initSidebarSearch);
+	initSidebarSearch();
 </script>
 
 <style is:global>
