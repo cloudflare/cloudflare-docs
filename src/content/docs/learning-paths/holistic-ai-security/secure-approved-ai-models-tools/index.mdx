@@ -12,7 +12,7 @@ As you decide which AI tools to sanction within your organization, you can devel
 
 Cloudflare supports API-based cloud access security broker (CASB) integrations with popular AI services like OpenAI (ChatGPT), Anthropic (Claude), and Google Gemini. These integrations allow you to report on AI tool usage and flag sensitive data with Data Loss Prevention (DLP) Profiles.
 
-Since these integrations are out-of-bound connections to SaaS applications, they don't require inline user traffic to create detections. This means you can immediately gain visibility into how your employees are using sanctioned AI tools without having to install the Cloudflare device client on every user's machine.
+Since these integrations are out-of-bound connections to SaaS applications, they do not require inline user traffic to create detections. This means you can immediately gain visibility into how your employees are using sanctioned AI tools without having to install the Cloudflare device client on every user's machine.
 
 ![OpenAI API CASB Integration showing riskier features that are toggled on, security posture risks like unused admin credentials, and an uploaded attachment with a DLP profile match.](~/assets/images/learning-paths/holistic-ai-security/casb-posture-findings-openai.png)
 
@@ -32,7 +32,7 @@ The Model Context Protocol (MCP) is an emerging standard that allows AI agents t
 
 Cloudflare has been an early supporter of the MCP standard. Many of our customers are already building custom MCP servers and use cases, and our engineering teams have worked to deliver MCP functionality for our public API. You can review our [changelog](/changelog/?product=ai) to see some of the MCP servers we have already released.
 
-Just like an API, an MCP server is a primary entry point for AI agents to interact with and manipulate your structured data. Since anyone can build and host an MCP server, it's crucial to have a comprehensive secure access strategy as your business starts to adopt these new agentic workflows.
+Just like an API, an MCP server is a primary entry point for AI agents to interact with and manipulate your structured data. Since anyone can build and host an MCP server, it is crucial to have a comprehensive secure access strategy as your business starts to adopt these new agentic workflows.
 
 As with any new technology, it can be difficult to manage the growing use of MCP servers among your employees. This space will continue to expand, but your first step should always be to gain visibility and understand usage before developing a security strategy to control inputs and outputs.
 
