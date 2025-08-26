@@ -46,13 +46,9 @@ The automatic threshold system calculates thresholds every 10 minutes for both n
 
 These checks are performed independently for SYN Flood Protection, Out-of-State TCP Flood Protection, and Advanced DNS Protection. The criteria does not require the presence of any rules to be configured. Accounts initially provisioned by the automatic system will have default thresholds. Otherwise, thresholds may be unconfigured if they are not set by Cloudflare.
 
-After seven days, the system calculates a rate and burst threshold for each of the protection components.
+After seven days, the system calculates a rate and burst threshold for each of the protection components. The burst threshold is calculated as five times the rate threshold.
 
-Thresholds are applied globally per account.
-
-There is no minimum packets-per-second (pps) requirement for threshold calculation.
-
-The burst threshold is calculated as five times the rate threshold.
+Thresholds are applied globally per account and there is no minimum packets-per-second (pps) requirement for threshold calculation.
 
 Thresholds are derived using the 95th percentile (P95) of observed traffic over the preceding seven days:
 
@@ -66,8 +62,9 @@ The automatic threshold calculation system does not differentiate between legiti
 
 #### Implementation
 
-You should enable the automatically provisioned rules. Initially, these rules will have default values and operate in Monitor mode. After seven days, once thresholds are calculated, you can use the Network Analytics dashboard to observe what packets would have been dropped or allowed, then safely enable the rules in mitigation mode. Depending on what is observed in the Network Analytics dashboard (e.g. legitimate traffic is being flagged in Monitor mode), you may want to change the sensitivity level and continue observation before enabling in mitigation mode. Rules and Filters, where supported, can also be scoped to allow for additional granularity.
-Recalculation
+You should enable the automatically provisioned rules. Initially, these rules will have default values and operate in Monitor mode. After seven days, once thresholds are calculated, you can use the Network Analytics dashboard to observe what packets would have been dropped or allowed, then safely enable the rules in mitigation mode. Depending on what is observed in the Network Analytics dashboard (for example, legitimate traffic is being flagged in Monitor mode), you may want to change the sensitivity level and continue observation before enabling in mitigation mode. Rules and Filters, where supported, can also be scoped to allow for additional granularity.
+
+#### Recalculation
 
 Automatic thresholds are calculated only once. Cloudflare can manually trigger a recalculation. Adding, approving, removing, delegating, advertising, or withdrawing prefixes after initial onboarding does not automatically re-trigger the calculation. It is recommended to move the relevant systems to Monitor mode before making changes that impact traffic levels and requesting a recalculation from Cloudflare. Future improvements will take these events into consideration. 
 
