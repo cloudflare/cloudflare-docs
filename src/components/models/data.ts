@@ -56,11 +56,11 @@ export const authorData: Record<string, { name: string; logo: string }> = {
 		name: "Black Forest Labs",
 		logo: blackforestlabs.src,
 	},
-	"deepgram": {
+	deepgram: {
 		name: "Deepgram",
 		logo: deepgram.src,
 	},
-	"leonardo": {
+	leonardo: {
 		name: "Leonardo",
 		logo: leonardo.src,
 	},
