@@ -33,7 +33,7 @@ export class MyDurableObject extends DurableObject {
 
   - This method can be `async`.
 
-  - Refer to [Invoke methods](/durable-objects/best-practices/create-durable-object-stubs-and-send-requests/) for more information on best practices when using this method.
+  - Durable Objects support [RPC calls](/durable-objects/best-practices/create-durable-object-stubs-and-send-requests/) as of a compatibility date greater or equal to [2024-04-03](https://developers.cloudflare.com/workers/configuration/compatibility-flags/#durable-object-stubs-and-service-bindings-support-rpc). Users should call RPC methods over fetch() if their application design does not follow HTTP request/response flow.
 
 ### `alarm`
 
