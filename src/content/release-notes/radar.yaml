@@ -16,7 +16,7 @@ entries:
         *  `[/bots/timeseries_groups/{dimension}](/api/resources/radar/subresources/bots/methods/timeseries_groups/)`
       * Added new `botKind` filter to:
         *  `[/bots/timeseries](/api/resources/radar/subresources/bots/methods/timeseries/)`
-      * Added new `kind` filter to:
+      * Added new `kind` property/filter to:
         *  `[/bots](/api/resources/radar/subresources/bots/methods/list/)`
         *  `[/bots/{bot_slug}](/api/resources/radar/subresources/bots/methods/get/)`
   - publish_date: "2025-08-14"
