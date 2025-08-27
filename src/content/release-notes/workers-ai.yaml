@@ -3,6 +3,21 @@ link: "/workers-ai/changelog/"
 productName: Workers AI
 productLink: "/workers-ai/"
 entries:
+  - publish_date: "2025-08-27"
+    title: Introducing Partner models to the Workers AI catalog
+    description: |-
+      - Read the [blog](https://blog.cloudflare.com/workers-ai-partner-models) for more details
+      - [`@cf/deepgram/aura-1`](/workers-ai/models/aura-1) is a text-to-speech model that allows you to input text and have it come to life in a customizable voice
+      - [`@cf/deepgram/nova-3`](/workers-ai/models/nova-3) is speech-to-text model that transcribes multilingual audio at a blazingly fast speed
+      - [`@cf/pipecat-ai/smart-turn-v2`](/workers-ai/models/smart-turn-v2) helps you detect when someone is done speaking
+      - [`@cf/leonardo/lucid-origin`](/workers-ai/models/lucid-origin) is a text-to-image model that generates images with sharp graphic design, stunning full-HD renders, or highly specific creative direction
+      - [`@cf/leonardo/phoenix-1.0`](/workers-ai/models/phoenix-1.0) is a text-to-image model with exceptional prompt adherence and coherent text
+      - WebSocket support added for audio models like `@cf/deepgram/aura-1`, `@cf/deepgram/nova-3`, `@cf/pipecat-ai/smart-turn-v2`
+  - publish_date: "2025-08-05"
+    title: Adding gpt-oss models to our catalog
+    description: |-
+      - Check out the [blog](https://blog.cloudflare.com/openai-gpt-oss-on-workers-ai) for more details about the new models
+      - Take a look at the [`gpt-oss-120b`](/workers-ai/models/gpt-oss-120b) and [`gpt-oss-20b`](/workers-ai/models/gpt-oss-20b) model pages for more information about schemas, pricing, and context windows
   - publish_date: "2025-04-09"
     title: Pricing correction for @cf/myshell-ai/melotts
     description: |-
