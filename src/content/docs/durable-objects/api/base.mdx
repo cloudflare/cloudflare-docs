@@ -33,6 +33,8 @@ export class MyDurableObject extends DurableObject {
 
   - This method can be `async`.
 
+  - This method exists for backward compatibility. New projects should [invoke RPC methods](/durable-objects/best-practices/create-durable-object-stubs-and-send-requests/#invoke-rpc-methods).
+
 ### `alarm`
 
 - <code>alarm(`alarmInfo`<Type text="Object"/>)</code>: <Type text="Promise <void>"/>
