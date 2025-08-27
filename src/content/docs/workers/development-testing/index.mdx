@@ -319,21 +319,21 @@ If `experimental_remote: true` is specified in Wrangler configuration for any of
 If you have use-cases for connecting to any of the remote resources above, please [open a feature request](https://github.com/cloudflare/workers-sdk/issues) in our [`workers-sdk` repository](https://github.com/cloudflare/workers-sdk).
 :::
 
-#### Durable Objects Usage with Remote Resources
+#### Using remote resources with Durable Objects and Workflows
 
-While Durable Object bindings cannot currently be remote, you can still use them during local development and have them interact with remote resources.
+While Durable Object and Workflow bindings cannot currently be remote, you can still use them during local development and have them interact with remote resources.
 
-There are two main approaches for this:
+There are two recommended patterns for this:
 
-- **Local Durable Objects with remote bindings:**
+- **Local Durable Objects/Workflows with remote bindings:**
 
-	When you enable remote mode for a binding in your [Wrangler configuration](/workers/wrangler/configuration), both your main Worker and any local Durable Objects can make use of it. This allows Durable Objects to interact with remote resources during local development.
+	When you enable remote bindings in your [Wrangler configuration](/workers/wrangler/configuration), your locally running Durable Objects and Workflows can access those remote resources.
+	This allows such bindings, although run locally to interact with remote resources during local development.
 
-- **Connection to remote Durable Objects via remote Workers:**
+- **Accessing remote Durable Objects/Workflows via service bindings:**
 
-	Although remote bindings for Durable Objects are not currently supported, you can still interact with remote Durable Objects during local development by using remote service bindings.
-
-	To do this, deploy a Worker that has a binding to the target Durable Object. Then, configure a remote service binding in your local Worker to point to this deployed Worker. Your local Worker will be able to interact with the Durable Object via the remote service binding, effectively using the deployed Worker as a proxy interface to the Durable Object during local development.
+	To interact with remote Durable Object or Workflow instances, deploy a Worker that defines those. Then, in your local Worker, configure a remote [service binding](/workers/runtime-apis/bindings/service-bindings/) pointing to the deployed Worker.
+	Your local Worker will be then able to interact with the remote deployed Worker which in turn can communicate with the remote Durable Objects/Workflows. In such a manner you can create a communication channel via the remote service binding, effectively using the deployed Worker as a proxy interface to the remote bindings during local development.
 
 
 ### Important Considerations
