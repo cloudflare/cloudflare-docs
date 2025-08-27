@@ -115,7 +115,7 @@ filters: {
       {
         type: "gt",
         key: "folder",
-        value: "customer-a//",
+        value: "customer-a/",
       },
       {
         type: "lte",
@@ -129,7 +129,7 @@ filters: {
 This filter identifies paths starting with `customer-a/` by using:
 
 - The `and` condition to combine the effects of the `gt` and `lte` conditions.
-- The `gt` condition to include paths greater than the `/` ASCII character.
+- The `gt` condition to include paths greater than the folder.
 - The `lte` condition to include paths less than and including the lower case `z` ASCII character.
 
 Together, these conditions effectively select paths that begin with the provided path value.
