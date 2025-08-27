@@ -66,15 +66,30 @@ The Price in Tokens column is equivalent to the Price in Neurons column - the di
 | @cf/baai/bge-large-en-v1.5 | $0.204 per M input tokens | 18582 neurons per M input tokens |
 | @cf/baai/bge-m3            | $0.012 per M input tokens | 1075 neurons per M input tokens  |
 
-## Other model pricing
+## Image model pricing
 
 | Model                                 | Price in Tokens                                            | Price in Neurons                                                         |
 | ------------------------------------- | ---------------------------------------------------------- | ------------------------------------------------------------------------ |
 | @cf/black-forest-labs/flux-1-schnell  | $0.0000528 per 512x512 tile <br/> $0.0001056 per step      | 4.80 neurons per 512x512 tile <br/> 9.60 neurons per step                |
+| @cf/leonardo/lucid-origin    | $0.006996 per 512x512 tile <br/> $0.000132 per step | 636.00 neurons per 512x512 tile <br/> 12.00 neurons per step |
+| @cf/leonardo/phoenix-1.0     | $0.005830 per 512x512 tile <br/> $0.000110 per step | 530.00 neurons per 512x512 tile <br/> 10.00 neurons per step |
+
+## Audio model pricing
+
+| Model                                 | Price in Tokens                                            | Price in Neurons                                                         |
+| ------------------------------------- | ---------------------------------------------------------- | ------------------------------------------------------------------------ |
+| @cf/openai/whisper                    | $0.0005 per audio minute                                   | 41.14 neurons per audio minute                                           |
+| @cf/openai/whisper-large-v3-turbo     | $0.0005 per audio minute                                   | 46.63 neurons per audio minute                                           |
+| @cf/myshell-ai/melotts                | $0.0002 per audio minute                                   | 18.63 neurons per audio minute                                           |
+| @cf/deepgram/aura-1          | $0.015 per 1k characters input <br/>                | 1.36 neurons per 1k characters input <br/>                   |
+| @cf/deepgram/nova-3          | $0.0052 per audio minute output <br/>               | 7.88 neurons per audio minute output <br/>                   |
+| @cf/pipecat-ai/smart-turn-v2 | $0.00033795 per audio minute input <br/>            | 0.51 neurons per audio minute output <br/>                   |
+
+## Other model pricing
+
+| Model                                 | Price in Tokens                                            | Price in Neurons                                                         |
+| ------------------------------------- | ---------------------------------------------------------- | ------------------------------------------------------------------------ |
 | @cf/huggingface/distilbert-sst-2-int8 | $0.026 per M input tokens                                  | 2394 neurons per M input tokens                                          |
 | @cf/baai/bge-reranker-base            | $0.003 per M input tokens                                  | 283 neurons per M input tokens                                           |
 | @cf/meta/m2m100-1.2b                  | $0.342 per M input tokens <br/> $0.342 per M output tokens | 31050 neurons per M input tokens <br/> 31050 neurons per M output tokens |
 | @cf/microsoft/resnet-50               | $2.51 per M images                                         | 228055 neurons per M images                                              |
-| @cf/openai/whisper                    | $0.0005 per audio minute                                   | 41.14 neurons per audio minute                                           |
-| @cf/openai/whisper-large-v3-turbo     | $0.0005 per audio minute                                   | 46.63 neurons per audio minute                                           |
-| @cf/myshell-ai/melotts                | $0.0002 per audio minute                                   | 18.63 neurons per audio minute                                           |
