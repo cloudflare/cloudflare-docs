@@ -29,6 +29,8 @@ import BgeRerankerBase from "~/components/models/code/Bge-Reranker-Base.astro";
 
 import { authorData } from "~/components/models/data";
 import OpenAIResponsesTextGenerationCode from "~/components/models/code/OpenAIResponsesTextGenerationCode.astro";
+import DeepgramAura from "~/components/models/code/DeepgramAura.astro";
+import DeepgramNova from "~/components/models/code/DeepgramNova.astro";
 
 export const getStaticPaths = (async () => {
 	const models = await getCollection("workers-ai-models");
@@ -116,6 +118,14 @@ if (
 	CodeExamples = OpenAIResponsesTextGenerationCode;
 }
 
+if (model.name === "@cf/deepgram/aura-1") {
+	CodeExamples = DeepgramAura;
+}
+
+if (model.name === "@cf/deepgram/nova-3") {
+	CodeExamples = DeepgramNova;
+}
+
 const description = model.description;
 
 const isBeta = model.properties.find(
@@ -125,10 +135,9 @@ const isBeta = model.properties.find(
 let hasPlayground = model.task.name === "Text Generation";
 
 // temporary workaround for playground limitations
-if (model.name.includes("@cf/openai/gpt-oss") ) {
+if (model.name.includes("@cf/openai/gpt-oss")) {
 	hasPlayground = false;
 }
-
 
 const author = (authorData as any)[model.name.split("/")[1]];
 
