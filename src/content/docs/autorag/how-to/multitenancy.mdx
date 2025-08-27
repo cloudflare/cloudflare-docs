@@ -65,7 +65,7 @@ filters: {
       {
         type: "gt",
         key: "folder",
-        value: "customer-a//",
+        value: "customer-a/",
       },
       {
         type: "lte",
@@ -79,7 +79,7 @@ filters: {
 This filter identifies paths starting with `customer-a/` by using:
 
 - The `and` condition to combine the effects of the `gt` and `lte` conditions.
-- The `gt` condition to include paths greater than the `/` ASCII character.
+- The `gt` condition to include paths greater than the folder.
 - The `lte` condition to include paths less than and including the lower case `z` ASCII character.
 
 This filter captures both files `profile.md` and `contract-1.pdf`.
