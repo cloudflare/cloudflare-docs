@@ -15,7 +15,7 @@ const { name } = props.parse(Astro.props);
 const worker = `
 export default {
   async fetch(request, env, ctx): Promise<Response> {
-    const URL = "https://pub-dbcf9f0bd3af47ca9d40971179ee62de.r2.dev/02f6edc0-1f7b-4272-bd17-f05335104725/audio.mp3";
+    const URL = "https://URL_TO_MP3_FILE/audio.mp3";
     const mp3 = await fetch(URL);
 
 
