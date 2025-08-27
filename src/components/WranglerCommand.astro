@@ -9,9 +9,9 @@ import MetaInfo from "./MetaInfo.astro";
 function getCommand(path: string) {
 	const segments = path.trim().split(/\s+/);
 
-	const { subtree } = experimental_getWranglerCommands();
+	const { registry } = experimental_getWranglerCommands();
 
-	let node = subtree;
+	let node = registry.subtree;
 	for (const segment of segments) {
 		const next = node.get(segment);
 
@@ -39,6 +39,12 @@ if (!definition.args) {
 	throw new Error(`[WranglerCommand] "${command}" has no arguments`);
 }
 
+const { globalFlags } = experimental_getWranglerCommands();
+
+const args = Object.entries(definition.args).concat(
+	Object.entries(globalFlags as unknown as typeof definition.args),
+);
+
 const positionals = definition.positionalArgs
 	?.map((p) => `[${p.toUpperCase()}]`)
 	.join(" ");
@@ -54,8 +60,8 @@ const positionals = definition.positionalArgs
 
 <ul>
 	{
-		Object.entries(definition.args)
-			.filter(([_, value]) => !value.hidden)
+		args
+			.filter(([_, value]) => !value.hidden && value.type !== undefined)
 			.map(([key, value]) => {
 				const description = value.description ?? value.describe;
 				const required = value.demandOption;

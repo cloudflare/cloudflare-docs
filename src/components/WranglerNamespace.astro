@@ -9,9 +9,9 @@ const props = z.object({
 
 const { namespace } = props.parse(Astro.props);
 
-const defs = experimental_getWranglerCommands();
+const { registry } = experimental_getWranglerCommands();
 
-const node = defs.subtree.get(namespace);
+const node = registry.subtree.get(namespace);
 
 if (!node || node.subtree.size === 0) {
 	throw new Error(`[WranglerNamespace] Namespace "${namespace}" not found`);
@@ -19,7 +19,7 @@ if (!node || node.subtree.size === 0) {
 
 const definitions: NonNullable<(typeof node)["definition"]>[] = [];
 
-function flattenSubtree(node: (typeof defs)["subtree"]) {
+function flattenSubtree(node: (typeof registry)["subtree"]) {
 	for (const value of node.values()) {
 		if (value.definition?.type === "command") {
 			definitions.push(value.definition);
