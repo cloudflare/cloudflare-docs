@@ -5,7 +5,7 @@ sidebar:
   order: 5
 ---
 
-import { Steps, GlossaryTooltip, Tabs, TabItem, Example } from "~/components";
+import { Steps, GlossaryTooltip, Tabs, TabItem, Example, Plan } from "~/components";
 
 AI Crawl Control enables you to take specific action for each AI crawler.
 
@@ -17,29 +17,15 @@ To manage AI crawlers:
 
 ## Review AI crawler activity
 
-The **AI Crawlers** tab displays a table of AI crawlers that are requesting access to your content, and how they interact with your pages. The table provides the following information.
+The **Crawlers** tab displays a table of AI crawlers that are requesting access to your content, and how they interact with your pages. The table provides the following information.
 
-<Tabs syncKey="plan">
-<TabItem label="Free plan">
-| Column                | Details                                                                                                                                                             |
-| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| AI Crawlers           | The name of the AI crawler.                                                                                                                                         |
-| Operator              | The name of the entity who owns the AI crawler. Note that an operator may have multiple AI crawlers.                                                                |
-| Category              | The category of the AI crawler. Refer to [Verified bot categories](/bots/concepts/bot/verified-bots/categories/).                                                   |
-| Block                 | Toggle for blocking specific AI crawlers.                                                                                                                           |
-
-</TabItem> <TabItem label="Paid plan">
-| Column                | Details                                                                                                                                                             |
-| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| AI Crawlers           | The name of the AI crawler.                                                                                                                                         |
-| Operator              | The name of the entity who owns the AI crawler. Note that an operator may have multiple AI crawlers.                                                                |
-| Category              | The category of the AI crawler. Refer to [Verified bot categories](/bots/concepts/bot/verified-bots/categories/).                                                   |
-| Requests              | The number of times the AI crawler has requested to crawl your content.                                                                                             |
-| Robots.txt violations | The number of times the AI crawler has violated your <GlossaryTooltip term="robots.txt">`robots.txt`</GlossaryTooltip> file.                                        |
+| Column                | Details                                                                                                                                                                     |
+| --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Crawler               | The name of the AI crawler and the operator that owns it.                                                                                                                   |
+| Category              | The category of the AI crawler. Refer to [Verified bot categories](/bots/concepts/bot/verified-bots/categories/).                                                           |
+| Requests              | Total allowed and blocked requests with trend chart. Blocked requests may come from any configured rule, not just the actions shown here.                                   |
+| Robots.txt violations | The number of times the AI crawler has violated your <GlossaryTooltip term="robots.txt">`robots.txt`</GlossaryTooltip> file.                                                |
 | Action                | The action you wish to take for the AI crawler. Refer to [Take action for each AI crawler](/ai-crawl-control/features/manage-ai-crawlers/#take-action-for-each-ai-crawler). |
-
-</TabItem>
-</Tabs>
 
 :::note[Quality of AI crawler detection]
 On the free plan, AI Crawl Control identifies AI crawlers based on their [user agent strings](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/User-Agent). This enables AI Crawl Control to detect easy-to-detect (well-known) AI crawlers.
@@ -90,6 +76,7 @@ For more details on how this rule interacts with other Cloudflare settings, refe
 - **Implementation:** From the **Actions** column, select **Block**.
 
 Note that you can configure the response that gets returned when blocking an AI crawler. Refer to [Configure block response](/ai-crawl-control/features/manage-ai-crawlers/#configure-block-response).
+
 </Example>
 
 <Example title="Charge for crawl (private beta)">
@@ -112,7 +99,9 @@ For each AI crawler, you can choose to allow or block access.
 - **Summary:** You can allow an AI crawler to scrape your content.
 - **When to use:** Allow AI crawlers that offer services which provide value through citations, referrals, or existing agreements.
 - **Implementation:** From the **Actions** column, select **Allow**.
+
 Note that you can still choose to [Enforce `robots.txt`](/ai-crawl-control/features/manage-ai-crawlers/#take-action-for-each-ai-crawler).
+
 </Example>
 
 <Example title="Block access">
@@ -121,12 +110,15 @@ Note that you can still choose to [Enforce `robots.txt`](/ai-crawl-control/featu
 - **Implementation:** From the **Actions** column, select **Block**.
 
 Note that you can configure the response that gets returned when blocking an AI crawler. Refer to [Configure block response](/ai-crawl-control/features/manage-ai-crawlers/#configure-block-response).
+
 </Example>
 
 </TabItem>
 </Tabs>
 
 ## Configure block response
+
+<Plan type="paid" />
 
 When blocking an AI crawler, you can configure the details of the response that gets returned to the AI crawler. Specifically, you can configure:
 
@@ -177,4 +169,3 @@ In the **Response body** text field, enter the response you wish to display for 
 ## Related resources
 
 - Use [pay per crawl](/ai-crawl-control/features/pay-per-crawl/what-is-pay-per-crawl/) to charge AI crawlers every time they access your content.
-- Blog: [TBC].
