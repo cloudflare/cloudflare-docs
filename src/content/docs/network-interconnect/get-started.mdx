@@ -5,6 +5,8 @@ sidebar:
   order: 2
 ---
 
+import { Render } from "~/components"
+
 ## Prerequisites
 
 ### CNI port availability
@@ -16,3 +18,7 @@ Eligibility for CNI and port availability is determined in coordination with you
 - CNI is available in a subset of Cloudflare data centers:
   - The type of dataplane offered in that location (v1.0 or v1.1) will determine specifications of the supported connection, such as the MTU.
   - The diversity offered in the location will vary.
+
+### Product use cases
+
+<Render file="cni-product-use-cases" product="networking-services" />
