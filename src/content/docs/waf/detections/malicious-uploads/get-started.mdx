@@ -8,7 +8,14 @@ head:
     content: Get started with malicious uploads detection
 ---
 
-import { Details, TabItem, Tabs, APIRequest, Render } from "~/components";
+import {
+	Details,
+	TabItem,
+	Tabs,
+	Render,
+	Steps,
+	APIRequest,
+} from "~/components";
 
 :::note
 WAF content scanning is available to customers on an Enterprise plan with a paid add-on.
@@ -18,15 +25,23 @@ WAF content scanning is available to customers on an Enterprise plan with a paid
 
 <Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
 
+<Steps>
+
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Go to **Security** > **Settings**.
 3. Under **Incoming traffic detections**, turn on **Malicious uploads**.
 
+</Steps>
+
 </TabItem> <TabItem label="New dashboard" icon="rocket">
+
+<Steps>
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
 2. Go to **Security** > **Settings** and filter by **Detections**.
 3. Turn on **Malicious uploads detection**.
+
+</Steps>
 
 </TabItem> <TabItem label="API">
 
@@ -108,14 +123,12 @@ To check uploaded content in a way that is not covered by the default configurat
 
 <Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
 
+<Steps>
+
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-
 2. Go to **Security** > **Settings**.
-
 3. Under **Incoming traffic detections**, select **Malicious uploads**.
-
 4. Select **Add content object location**.
-
 5. In **Content location**, enter your custom scan expression. For example:
 
    ```txt
@@ -124,7 +137,11 @@ To check uploaded content in a way that is not covered by the default configurat
 
 6. Select **Save**.
 
+</Steps>
+
 </TabItem> <TabItem label="New dashboard" icon="rocket">
+
+<Steps>
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Go to **Security** > **Settings** and filter by **Detections**.
@@ -137,6 +154,8 @@ To check uploaded content in a way that is not covered by the default configurat
    ```
 
 6. Select **Save**.
+
+</Steps>
 
 </TabItem> <TabItem label="API">
 

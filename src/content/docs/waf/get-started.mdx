@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import { Details, GlossaryTooltip, Tabs, TabItem } from "~/components";
+import { Details, GlossaryTooltip, Tabs, TabItem, Steps } from "~/components";
 
 The Cloudflare Web Application Firewall (Cloudflare WAF) checks incoming web and API requests and filters undesired traffic based on sets of rules called rulesets.
 
@@ -29,15 +29,23 @@ The [Cloudflare Managed Ruleset](/waf/managed-rules/reference/cloudflare-managed
 
 <Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
 
+<Steps>
+
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
 2. Go to **Security** > **WAF** and select the **Managed rules** tab.
 3. Under **Managed Rulesets**, select **Deploy** next to the Cloudflare Managed Ruleset.
 
+</Steps>
+
 </TabItem> <TabItem label="New dashboard" icon="rocket">
+
+<Steps>
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
 2. Go to **Security** > **Settings** and filter by **Web application exploits**.
 3. Turn on **Cloudflare managed ruleset**.
+
+</Steps>
 
 </TabItem> </Tabs>
 
@@ -66,6 +74,8 @@ WAF attack score is only available to Business customers (limited access to a si
 
 If you are an Enterprise customer, do the following:
 
+<Steps>
+
 1. Reach out to your account team to get access to WAF attack score.
 
 2. [Create a custom rule](/waf/custom-rules/create-dashboard/) using the <GlossaryTooltip term="attack score">Attack Score</GlossaryTooltip> field:
@@ -77,6 +87,8 @@ If you are an Enterprise customer, do the following:
 
    - **Choose action**: Block
 
+</Steps>
+
 If you are on a Business plan, create a custom rule as mentioned above but use the [WAF Attack Score Class](/waf/detections/attack-score/#available-scores) field instead. For example, you could use the following rule expression: `WAF Attack Score Class equals Attack`.
 
 ## 3. Create custom rule based on bot score
@@ -87,15 +99,16 @@ Bot score is only available to Enterprise customers with [Bot Management](/bots/
 
 Customers with access to [Bot Management](/bots/get-started/bot-management/) can block automated traffic (for example, from [bots scraping online content](https://www.cloudflare.com/learning/bots/what-is-content-scraping/)) using a custom rule with bot score, preventing this traffic from hitting your application.
 
-1. [Create a custom rule](/waf/custom-rules/create-dashboard/) using the <GlossaryTooltip term="bot score">Bot Score</GlossaryTooltip> and <GlossaryTooltip term="verified bot">Verified Bot</GlossaryTooltip> fields:
-   - **If incoming requests match**:
+[Create a custom rule](/waf/custom-rules/create-dashboard/) using the <GlossaryTooltip term="bot score">Bot Score</GlossaryTooltip> and <GlossaryTooltip term="verified bot">Verified Bot</GlossaryTooltip> fields:
 
-     | Field        | Operator  | Value | Logic |
-     | ------------ | --------- | ----- | ----- |
-     | Bot Score    | less than | `20`  | And   |
-     | Verified Bot | equals    | Off   |       |
+- **If incoming requests match**:
 
-   - **Choose action**: Managed Challenge
+  | Field        | Operator  | Value | Logic |
+  | ------------ | --------- | ----- | ----- |
+  | Bot Score    | less than | `20`  | And   |
+  | Verified Bot | equals    | Off   |       |
+
+- **Choose action**: Managed Challenge
 
 For a more comprehensive example of a baseline protection against malicious bots, refer to [Challenge bad bots](/waf/custom-rules/use-cases/challenge-bad-bots/#general-protection).
 
@@ -113,15 +126,23 @@ The Cloudflare OWASP Core Ruleset is prone to false positives and offers only ma
 
 <Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
 
+<Steps>
+
 1. Go to your domain > **Security** > **WAF** and select the **Managed rules** tab.
 2. Under **Managed Rulesets**, select **Deploy** next to the Cloudflare OWASP Core Ruleset.<br/>
    This will deploy the ruleset with the default configuration: paranoia level = _PL1_ and score threshold = _Medium - 40 and higher_.
 
+</Steps>
+
 </TabItem> <TabItem label="New dashboard" icon="rocket">
+
+<Steps>
 
 1. Go to your domain > **Security** > **Settings** and filter by **Web application exploits**.
 2. Turn on **OWASP Core**.<br/>
    This will deploy the Cloudflare OWASP Core Ruleset with the default configuration: paranoia level = _PL1_ and score threshold = _Medium - 40 and higher_.
+
+</Steps>
 
 </TabItem> </Tabs>
 
