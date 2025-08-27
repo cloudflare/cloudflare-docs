@@ -125,10 +125,9 @@ const isBeta = model.properties.find(
 let hasPlayground = model.task.name === "Text Generation";
 
 // temporary workaround for playground limitations
-if (model.name.includes("@cf/openai/gpt-oss") ) {
+if (model.name.includes("@cf/openai/gpt-oss")) {
 	hasPlayground = false;
 }
-
 
 const author = (authorData as any)[model.name.split("/")[1]];
 
@@ -213,6 +212,28 @@ const starlightPageProps = {
 	}
 
 	<ModelFeatures model={model} />
+	{
+		model.name === "@cf/deepgram/nova-3" && (
+			<Aside>
+				<p>
+					The <a href="/workers-ai/platform/pricing">pricing of this model</a>{" "}
+					is different based on transport.
+				</p>
+				<p>
+					<ul>
+						<li>
+							WebSocket: $0.0092 per audio minute output (836.36 neurons per
+							audio minute output)
+						</li>
+						<li>
+							Regular HTTP: $0.0052 per audio minute output (472.73 neurons per
+							audio minute output)
+						</li>
+					</ul>
+				</p>
+			</Aside>
+		)
+	}
 
 	{
 		hasPlayground && (
