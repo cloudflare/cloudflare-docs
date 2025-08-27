@@ -2,14 +2,14 @@
 pcx_content_type: concept
 title: Web Bot Auth
 sidebar:
-    order: 6
+    order: 2
     label: Web Bot Auth
 
 ---
 
 import { GlossaryTooltip, Steps } from "~/components"
 
-Web Bot Auth is an authentication method that leverages cryptographic signatures in HTTP messages to verify that a request comes from an automated bot.
+Web Bot Auth is an authentication method that leverages cryptographic signatures in HTTP messages to verify that a request comes from an automated bot. Web Bot Auth is used as a verification method for [verified bots](/bots/concepts/bot/verified-bots/) and [signed agents](/bots/concepts/bot/signed-agents/).
 
 It relies on two active IETF drafts: a [directory draft](https://datatracker.ietf.org/doc/html/draft-meunier-http-message-signatures-directory) allowing the crawler to share their public keys, and a [protocol draft](https://datatracker.ietf.org/doc/html/draft-meunier-web-bot-auth-architecture) defining how these keys should be used to attach crawler's identity to HTTP requests.
 
