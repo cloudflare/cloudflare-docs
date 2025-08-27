@@ -3,7 +3,7 @@ link: "/radar/release-notes/"
 productName: Radar
 productLink: "/radar/"
 entries:
-  - publish_date: "2025-08-14"
+  - publish_date: "2025-08-27"
     title: Add industry and vertical to AI Bots and Web Crawlers and bot kind to Bots
     description: |-
       * Added vertical and industry dimensions/filters to:
