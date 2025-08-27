@@ -29,7 +29,7 @@
         {
             "property_id": "partner",
             "value": "true"
-        },
+        }
     ],
     "schema": {
         "input": {
