@@ -11,7 +11,7 @@ entries:
         * `[/ai/bots/timeseries_groups/{dimension}](/api/resources/radar/subresources/ai/subresources/timeseries_groups/methods/timeseries_groups/)`
         * `[/bots/crawlers/summary/{dimension}](/api/resources/radar/subresources/bots/subresources/web_crawlers/methods/summary/)`
         * `[/bots/crawlers/timeseries_groups/{dimension}](/api/resources/radar/subresources/bots/subresources/web_crawlers/methods/timeseries_groups/)`
-      * Added new dimension `BOT_KIND` and new `botKind` filter to:
+      * Added bot kind dimension/filter to:
         *  `[/bots/summary/{dimension}](/api/resources/radar/subresources/bots/methods/summary/)`
         *  `[/bots/timeseries_groups/{dimension}](/api/resources/radar/subresources/bots/methods/timeseries_groups/)`
       * Added new `botKind` filter to:
