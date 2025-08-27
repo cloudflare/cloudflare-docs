@@ -25,11 +25,12 @@ Once you have added new account members, you will have to assign each member an 
 
 | Area 1              | Email Security                                                     | Description                                                  |
 |---------------------|--------------------------------------------------------------------|--------------------------------------------------------------|
-| Super Admin         | Email Security Analyst + Email Security Config Admin = Super Admin | Has full access to all products on Zero Trust Email Security |
-| Configuration Admin | Email Security Configuration Admin                                 | Admin, cannot take actions on emails or see emails           |
-| SOC Analyst         | Email Security Analyst                                             | Admin, can take actions on emails and see emails             |
-| Viewer              | Email Security Reporting                                           | Can see metrics                                              |
+| Super Admin         | Email Security Analyst + Email Security Configuration Admin = Super Admin | Has full access to all admin features in Email Security |
+| Configuration Admin | Email Security Configuration Admin                                 | Has administrator access. Cannot take actions on emails, or read emails           |
+| SOC Analyst         | Email Security Analyst                                             | Has analyst access. Can take action on emails and read emails.            |
+| Viewer              | Email Security Reporting                                           | Can read metrics                                              |
 |N/A | Cloudflare Zero Trust PII | Can read PII in Zero Trust (this includes Email Security)
+|N/A | Email Security Policy Admin | Can read all settings, but only write allow policies, trusted domains, and blocked senders |
 
 ## Create webhooks
 
