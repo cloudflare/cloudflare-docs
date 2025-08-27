@@ -37,11 +37,14 @@ const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 <Default><slot /></Default>
 
 <script>
+	import { track } from "~/util/zaraz"
 	function initSidebarSearch() {
 		const searchInput = document.getElementById('sidebar-search') as HTMLInputElement;
 		const noResultsMessage = document.getElementById('sidebar-no-results') as HTMLElement;
 		const globalSearchLink = document.getElementById('global-search-link') as HTMLButtonElement;
 		const sidebarContent = document.querySelector('.sidebar-content');
+
+		track("use sidebar search", { query: searchInput });
 
 		if (!searchInput || !sidebarContent || !noResultsMessage || !globalSearchLink) return;
 
