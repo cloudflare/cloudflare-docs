@@ -13,4 +13,14 @@ MoQ (Media over QUIC) is a protocol for delivering live media content using QUIC
 
 MoQ is designed to be an Internet infrastructure level service that provides media delivery to applications, similar to how HTTP provides content delivery and WebRTC provides real-time communication.
 
+Cloudflare's implementation of MoQ currently supports a subset of the [draft-07 MoQ Transport specfication](https://datatracker.ietf.org/doc/html/draft-ietf-moq-transport-07).
+
 For the most up-to-date documentation on the protocol, please visit the IETF working group documentation.
+
+## Frequently Asked Questions
+
+* What about Safari?
+
+  Safari does not yet have fully functional WebTransport support. Apple never publicly commits to timelines for new features like this. However, Apple has indicated their [intent to support WebTransport](https://github.com/WebKit/standards-positions/issues/18#issuecomment-1495890122). An Apple employee is even a co-author of the [WebTransport over HTTP/3](https://datatracker.ietf.org/doc/draft-ietf-webtrans-http3/) draft. Since Safari 18.4 (2025-03-31), an early (not yet fully functional) implementation of the WebTransport API has been available for testing behind a developer-mode / advanced settings feature flag (including on iOS).
+
+  Until Safari has a fully functional WebTransport implementation, some MoQ use cases may require a fallback to WebRTC, or, in some cases, WebSockets.

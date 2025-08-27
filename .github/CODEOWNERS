@@ -165,8 +165,8 @@
 
 # MoQ
 
-/src/content/docs/moq/ @englishm @renandincer @cloudflare/pcx-technical-writing
-/src/content/products/moq.yml @englishm @renandincer @cloudflare/pcx-technical-writing
+/src/content/docs/moq/ @englishm @renandincer @nils-ohlmeier @cloudflare/pcx-technical-writing
+/src/content/products/moq.yml @englishm @renandincer @nils-ohlmeier @cloudflare/pcx-technical-writing
 
 # Performance products
 

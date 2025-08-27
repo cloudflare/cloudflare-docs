@@ -3,25 +3,35 @@ pcx_content_type: how-to
 title: Uptycs
 sidebar:
   order: 4
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
-<Render file="posture/service-provider-intro" params={{ one: "Uptycs" }} />
+<Render
+	file="posture/service-provider-intro"
+	product="cloudflare-one"
+	params={{ one: "Uptycs" }}
+/>
 
 ## Prerequisites
 
-* Uptycs agent is deployed on the device.
-* <Render file="posture/prereqs-warp-is-deployed" params={{ name: "Service providers", link: "/cloudflare-one/identity/devices/service-providers/" }} />
+- Uptycs agent is deployed on the device.
+- <Render
+  	file="posture/prereqs-warp-is-deployed"
+  	product="cloudflare-one"
+  	params={{
+  		name: "Service providers",
+  		link: "/cloudflare-one/identity/devices/service-providers/",
+  	}}
+  />
 
 ## 1. Obtain Uptycs Settings
 
 The following Uptycs values are needed to set up the Uptycs posture check:
 
-* Client key
-* Client Secret
-* Customer ID
+- Client key
+- Client Secret
+- Customer ID
 
 To obtain these values:
 
@@ -31,14 +41,23 @@ To obtain these values:
 
 ## 2. Add Uptycs as a service provider
 
-<Render file="posture/add-service-provider" params={{ provider: "Uptycs" }} />
+<Render
+	file="posture/add-service-provider"
+	product="cloudflare-one"
+	params={{ provider: "Uptycs" }}
+/>
+
 5. Enter the **Client ID**, **Client secret** and **Customer ID** as you noted down above.
 6. Select a **Polling frequency** for how often Cloudflare Zero Trust should query Uptycs for information.
 7. Select **Test and save**.
 
 ## 3. Configure the posture check
 
-<Render file="posture/configure-posture-check" params={{ one: "Uptycs" }} />
+<Render
+	file="posture/configure-posture-check"
+	product="cloudflare-one"
+	params={{ one: "Uptycs" }}
+/>
 
 ## Device posture attributes
 

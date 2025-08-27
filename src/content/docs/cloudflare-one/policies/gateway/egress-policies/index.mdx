@@ -69,6 +69,7 @@ Gateway matches egress traffic against the following selectors, or criteria:
 
 <Render
 	file="gateway/selectors/application"
+	product="cloudflare-one"
 	params={{ policyType: "egress" }}
 />
 
@@ -81,6 +82,7 @@ Gateway matches egress traffic against the following selectors, or criteria:
 
 <Render
 	file="gateway/selectors/net-http-content-categories"
+	product="cloudflare-one"
 	params={{ APIendpoint: "net.fqdn.content_category" }}
 />
 
@@ -93,6 +95,7 @@ Gateway matches egress traffic against the following selectors, or criteria:
 
 <Render
 	file="gateway/selectors/destination-continent"
+	product="cloudflare-one"
 	params={{ one: "net.dst" }}
 />
 
@@ -100,6 +103,7 @@ Gateway matches egress traffic against the following selectors, or criteria:
 
 <Render
 	file="gateway/selectors/destination-country"
+	product="cloudflare-one"
 	params={{ one: "net.dst" }}
 />
 
@@ -107,6 +111,7 @@ Gateway matches egress traffic against the following selectors, or criteria:
 
 <Render
 	file="gateway/selectors/destination-ip"
+	product="cloudflare-one"
 	params={{ APIendpoint: "net.dst.ip" }}
 />
 
@@ -122,6 +127,7 @@ Gateway matches egress traffic against the following selectors, or criteria:
 
 <Render
 	file="gateway/selectors/domain"
+	product="cloudflare-one"
 	params={{ APIendpoint: "net.fqdn.domains" }}
 />
 
@@ -134,6 +140,7 @@ Gateway matches egress traffic against the following selectors, or criteria:
 
 <Render
 	file="gateway/selectors/host"
+	product="cloudflare-one"
 	params={{ APIendpoint: "net.fqdn.host" }}
 />
 
@@ -152,16 +159,17 @@ Gateway matches egress traffic against the following selectors, or criteria:
 
 ### Source Continent
 
-The continent of the user making the request. <Render file="gateway/selectors/source-continent" params={{ one: "net.src" }} />
+The continent of the user making the request. <Render file="gateway/selectors/source-continent" product="cloudflare-one" params={{ one: "net.src" }} />
 
 ### Source Country
 
-The country of the user making the request. <Render file="gateway/selectors/source-country" params={{ one: "net.src" }} />
+The country of the user making the request. <Render file="gateway/selectors/source-country" product="cloudflare-one" params={{ one: "net.src" }} />
 
 ### Source Internal IP
 
 <Render
 	file="gateway/selectors/source-internal-ip"
+	product="cloudflare-one"
 	params={{ one: "egress", two: "net.src.internal_src_ip" }}
 />
 
@@ -169,6 +177,7 @@ The country of the user making the request. <Render file="gateway/selectors/sour
 
 <Render
 	file="gateway/selectors/source-ip"
+	product="cloudflare-one"
 	params={{ APIendpoint: "net.src.ip" }}
 />
 
@@ -184,6 +193,7 @@ The country of the user making the request. <Render file="gateway/selectors/sour
 
 <Render
 	file="gateway/selectors/virtual-network"
+	product="cloudflare-one"
 	params={{ one: "net.vnet_id" }}
 />
 
@@ -201,6 +211,7 @@ Gateway uses Rust to evaluate regular expressions. The Rust implementation is sl
 
 <Render
 	file="gateway/logical-operators"
+	product="cloudflare-one"
 	params={{ one: "**Identity** or **Device Posture**" }}
 />
 

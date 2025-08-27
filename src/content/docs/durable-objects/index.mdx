@@ -10,10 +10,21 @@ head:
     content: Overview
 ---
 
-import { Render, CardGrid, Description, Feature, LinkTitleCard, Plan, RelatedProduct, LinkButton } from "~/components"
+import {
+	Render,
+	CardGrid,
+	Description,
+	Feature,
+	LinkTitleCard,
+	Plan,
+	RelatedProduct,
+	LinkButton,
+} from "~/components";
 
 <Description>
-Create AI agents, collaborative applications, real-time interactions like chat, and more without needing to coordinate state, have separate storage, or manage infrastructure.
+	Create AI agents, collaborative applications, real-time interactions like
+	chat, and more without needing to coordinate state, have separate storage, or
+	manage infrastructure.
 </Description>
 
 <Plan type="workers-all" />
@@ -32,11 +43,11 @@ SQLite-backed Durable Objects are now available on the Workers Free plan with th
 
 ### What are Durable Objects?
 
-<Render file="what-are-durable-objects"/>
+<Render file="what-are-durable-objects" product="durable-objects" />
 
 For more information, refer to the full [What are Durable Objects?](/durable-objects/concepts/what-are-durable-objects/) page.
 
-***
+---
 
 ## Features
 
@@ -44,13 +55,11 @@ For more information, refer to the full [What are Durable Objects?](/durable-obj
 
 Learn how Durable Objects coordinate connections among multiple clients or events.
 
-
 </Feature>
 
 <Feature header="Storage API" href="/durable-objects/api/storage-api/">
 
 Learn how Durable Objects provide transactional, strongly consistent, and serializable storage.
-
 
 </Feature>
 
@@ -58,17 +67,15 @@ Learn how Durable Objects provide transactional, strongly consistent, and serial
 
 Learn how WebSocket Hibernation allows you to manage the connections of multiple clients at scale.
 
-
 </Feature>
 
 <Feature header="Durable Objects Alarms" href="/durable-objects/api/alarms/">
 
 Learn how to use alarms to trigger a Durable Object and perform compute in the future at customizable intervals.
 
-
 </Feature>
 
-***
+---
 
 ## Related products
 
@@ -76,13 +83,11 @@ Learn how to use alarms to trigger a Durable Object and perform compute in the f
 
 Cloudflare Workers provides a serverless execution environment that allows you to create new applications or augment existing ones without configuring or maintaining infrastructure.
 
-
 </RelatedProduct>
 
 <RelatedProduct header="D1" href="/d1/" product="d1">
 
 D1 is Cloudflare's SQL-based native serverless database. Create a database by importing data or defining your tables and writing your queries within a Worker or through the API.
-
 
 </RelatedProduct>
 
@@ -90,37 +95,62 @@ D1 is Cloudflare's SQL-based native serverless database. Create a database by im
 
 Cloudflare R2 Storage allows developers to store large amounts of unstructured data without the costly egress bandwidth fees associated with typical cloud storage services.
 
-
 </RelatedProduct>
 
-***
+---
 
 ## More resources
 
 <CardGrid>
 
-<LinkTitleCard title="Built with Durable Objects" href="https://workers.cloudflare.com/built-with/collections/durable-objects/" icon="pen">
-Browse what other developers are building with Durable Objects.
+<LinkTitleCard
+	title="Built with Durable Objects"
+	href="https://workers.cloudflare.com/built-with/collections/durable-objects/"
+	icon="pen"
+>
+	Browse what other developers are building with Durable Objects.
 </LinkTitleCard>
 
-<LinkTitleCard title="Limits" href="/durable-objects/platform/limits/" icon="document">
-Learn about Durable Objects limits.
+<LinkTitleCard
+	title="Limits"
+	href="/durable-objects/platform/limits/"
+	icon="document"
+>
+	Learn about Durable Objects limits.
 </LinkTitleCard>
 
-<LinkTitleCard title="Pricing" href="/durable-objects/platform/pricing/" icon="pen">
-Learn about Durable Objects pricing.
+<LinkTitleCard
+	title="Pricing"
+	href="/durable-objects/platform/pricing/"
+	icon="pen"
+>
+	Learn about Durable Objects pricing.
 </LinkTitleCard>
 
-<LinkTitleCard title="Storage options" href="/workers/platform/storage-options/" icon="document">
-Learn more about storage and database options you can build with Workers.
+<LinkTitleCard
+	title="Storage options"
+	href="/workers/platform/storage-options/"
+	icon="document"
+>
+	Learn more about storage and database options you can build with Workers.
 </LinkTitleCard>
 
-<LinkTitleCard title="Developer Discord" href="https://discord.cloudflare.com" icon="discord">
-Connect with the Workers community on Discord to ask questions, show what you are building, and discuss the platform with other developers.
+<LinkTitleCard
+	title="Developer Discord"
+	href="https://discord.cloudflare.com"
+	icon="discord"
+>
+	Connect with the Workers community on Discord to ask questions, show what you
+	are building, and discuss the platform with other developers.
 </LinkTitleCard>
 
-<LinkTitleCard title="@CloudflareDev" href="https://x.com/cloudflaredev" icon="x.com">
-Follow @CloudflareDev on Twitter to learn about product announcements, and what is new in Cloudflare Developer Platform.
+<LinkTitleCard
+	title="@CloudflareDev"
+	href="https://x.com/cloudflaredev"
+	icon="x.com"
+>
+	Follow @CloudflareDev on Twitter to learn about product announcements, and
+	what is new in Cloudflare Developer Platform.
 </LinkTitleCard>
 
 </CardGrid>

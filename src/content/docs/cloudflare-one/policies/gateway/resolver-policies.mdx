@@ -112,12 +112,17 @@ For more information on creating a DNS policy, refer to [DNS policies](/cloudfla
 
 <Render
 	file="gateway/selectors/domain"
+	product="cloudflare-one"
 	params={{ APIendpoint: "dns.domains" }}
 />
 
 ### Host
 
-<Render file="gateway/selectors/host" params={{ APIendpoint: "dns.fqdn" }} />
+<Render
+	file="gateway/selectors/host"
+	product="cloudflare-one"
+	params={{ APIendpoint: "dns.fqdn" }}
+/>
 
 ### Location
 
@@ -133,11 +138,11 @@ For more information on creating a DNS policy, refer to [DNS policies](/cloudfla
 
 ### Source Continent
 
-Use this selector to filter based on the continent where the query arrived to Gateway from. <Render file="gateway/selectors/source-continent" params={{ one: "dns.src" }} />
+Use this selector to filter based on the continent where the query arrived to Gateway from. <Render product="cloudflare-one" file="gateway/selectors/source-continent" params={{ one: "dns.src" }} />
 
 ### Source Country
 
-Use this selector to filter based on the country where the query arrived to Gateway from. <Render file="gateway/selectors/source-country" params={{ one: "dns.src" }} />
+Use this selector to filter based on the country where the query arrived to Gateway from. <Render product="cloudflare-one" file="gateway/selectors/source-country" params={{ one: "dns.src" }} />
 
 ### Source IP
 
@@ -153,8 +158,16 @@ Use this selector to filter based on the country where the query arrived to Gate
 
 ## Value
 
-<Render file="gateway/value" params={{ one: "hostnames", two: "Host" }} />
+<Render
+	file="gateway/value"
+	product="cloudflare-one"
+	params={{ one: "hostnames", two: "Host" }}
+/>
 
 ## Logical operators
 
-<Render file="gateway/logical-operators" params={{ one: "Identity" }} />
+<Render
+	file="gateway/logical-operators"
+	product="cloudflare-one"
+	params={{ one: "Identity" }}
+/>

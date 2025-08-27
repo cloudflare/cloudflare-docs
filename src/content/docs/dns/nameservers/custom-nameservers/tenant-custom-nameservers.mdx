@@ -17,6 +17,7 @@ import { Example, Render, APIRequest } from "~/components";
 
 <Render
 	file="acns-tcns-intro"
+	product="dns"
 	params={{
 		one: "Tenant",
 		two: "T",
@@ -36,10 +37,15 @@ For this configuration to be possible, a few conditions apply:
 
 <Render
 	file="acns-tcns-conditions"
+	product="dns"
 	params={{ one: "tenant", two: "the tenant owner", three: "Tenant owners" }}
 />
 
-<Render file="acns-tcns-byoip" params={{ one: "Tenant", two: "tenant" }} />
+<Render
+	file="acns-tcns-byoip"
+	product="dns"
+	params={{ one: "Tenant", two: "tenant" }}
+/>
 
 ## For account owners
 

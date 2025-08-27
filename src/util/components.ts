@@ -84,6 +84,25 @@ export async function getPartialsUsage(): Promise<Record<string, Usage>> {
 			withFileTypes: true,
 		});
 
+		const partialEntities = await readdir("./src/content/partials/", {
+			recursive: true,
+			withFileTypes: true,
+		});
+
+		// Populate all partials with zero usage
+		const partialFiles = partialEntities.filter(
+			(entity) => entity.isFile() && entity.name.endsWith(".mdx"),
+		);
+		for (const file of partialFiles) {
+			const parentPath =
+				process.platform === "win32"
+					? file.parentPath.replaceAll("\\", "/")
+					: file.parentPath;
+			const product = parentPath.split("/")[3];
+			const partialName = `${product}/${file.name.replace(".mdx", "")}`;
+			partials[partialName] = { count: 0, pages: new Set() };
+		}
+
 		const files = entities.filter(
 			(entity) => entity.isFile() && entity.name.endsWith(".mdx"),
 		);
@@ -132,6 +151,5 @@ export async function getPartialsUsage(): Promise<Record<string, Usage>> {
 			});
 		}
 	}
-
 	return partials;
 }

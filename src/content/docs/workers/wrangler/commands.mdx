@@ -324,6 +324,9 @@ None of the options for this command are required. Also, many can be set in your
   - Specify the [Workers for Platforms dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/get-started/configuration/#2-create-a-dispatch-namespace) to upload this Worker to.
 - `--metafile` <Type text="string" /> <MetaInfo text="optional" />
   - Specify a file to write the build metadata from esbuild to. If flag is used without a path string, this defaults to `bundle-meta.json` inside the directory specified by `--outdir`. This can be useful for understanding the bundle size.
+- `--containers-rollout` <Type text="immediate | gradual" /> <MetaInfo text="optional" />
+  - Specify the [rollout strategy](/containers/faq#how-do-container-updates-and-rollouts-work) for [Containers](/containers) associated with the Worker. If set to `immediate`, 100% of container instances will be updated in one rollout step, overriding any configuration in `rollout_step_percentage`. Note that `rollout_active_grace_period`, if configured, still applies.
+  - Defaults to `gradual`, where the default rollout is 10% then 100% of instances.
 
 <Render file="wrangler-commands/global-flags" product="workers" />
 

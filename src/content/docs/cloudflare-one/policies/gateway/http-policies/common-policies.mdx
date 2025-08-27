@@ -291,6 +291,78 @@ When accessing origin servers with certificates not signed by a public certifica
 
 For more information on supported file types, refer to [Download and Upload File Types](/cloudflare-one/policies/gateway/http-policies/#download-and-upload-file-types).
 
+## Isolate or block shadow IT applications
+
+Isolate shadow IT applications discovered by the [Application Library](/cloudflare-one/applications/app-library/) that have not been reviewed yet or are currently under review, and block applications that are not approved by your organization.
+
+For more information on reviewing shadow IT applications, refer to [Review applications](/cloudflare-one/applications/app-library/#review-applications).
+
+### 1. Isolate unreviewed or in review applications
+
+Isolate applications if their approval status is _Unreviewed_ or _In review_.
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+| Selector           | Operator | Value        | Logic | Action  |
+| ------------------ | -------- | ------------ | ----- | ------- |
+| Application Status | is       | _Unreviewed_ | Or    | Isolate |
+| Application Status | is       | _In review_  |       |         |
+
+</TabItem>
+
+<TabItem label="API">
+
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "Isolate unreviewed or in review application status",
+		description:
+			"Isolate Shadow IT applications that have not been reviewed or are in review in the Application Library",
+		enabled: true,
+		action: "isolate",
+		filters: ["http"],
+		traffic:
+			'any(app.statuses[*] == "unreviewed") or any(app.statuses[*] == "in review")',
+		identity: "",
+		device_posture: "",
+	}}
+/>
+
+</TabItem> </Tabs>
+
+### 2. Block unapproved applications
+
+Block applications if their approval status is _Unapproved_.
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+| Selector           | Operator | Value        | Action |
+| ------------------ | -------- | ------------ | ------ |
+| Application Status | is       | _Unapproved_ | Block  |
+
+</TabItem>
+
+<TabItem label="API">
+
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "Block unapproved application status",
+		description:
+			"Block Shadow IT applications that have been marked as unapproved in the Application Library",
+		enabled: true,
+		action: "block",
+		filters: ["http"],
+		traffic: 'any(app.statuses[*] == "unapproved")',
+		identity: "",
+		device_posture: "",
+	}}
+/>
+
+</TabItem> </Tabs>
+
 ## Block Google services
 
 To enable Gateway inspection for Google Drive traffic, you must [add a Cloudflare certificate to Google Drive](/cloudflare-one/connections/connect-devices/user-side-certificates/manual-deployment/#google-drive).

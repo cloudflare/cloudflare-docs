@@ -17,6 +17,7 @@ To create Bulk Redirects via API, you must:
 
 <Render
 	file="url-forwarding/requires-proxied-site"
+	product="rules"
 	params={{ forwardingRuleName: "Bulk Redirects" }}
 />
 
@@ -189,7 +190,11 @@ The following request of the [Create an account ruleset](/api/resources/rulesets
 }
 ```
 
-<Render file="terraform-use-ref-field" params={{ addDocsLocation: true }} />
+<Render
+	file="terraform-use-ref-field"
+	product="rules"
+	params={{ addDocsLocation: true }}
+/>
 
 If there is already a phase entry point ruleset for the `http_request_redirect` phase, use the [Update an account ruleset](/api/resources/rulesets/methods/update/) operation instead, like in the following example:
 

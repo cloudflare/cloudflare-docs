@@ -52,12 +52,6 @@ const positionals = definition.positionalArgs
 	args={positionals ? command.concat(` ${positionals}`) : command}
 />
 
-<AnchorHeading
-	depth={3}
-	title="Arguments"
-	slug={`${command.replaceAll(" ", "-")}-arguments`}
-/>
-
 <ul>
 	{
 		Object.entries(definition.args)

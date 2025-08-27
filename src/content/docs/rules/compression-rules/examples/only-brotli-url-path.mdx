@@ -20,7 +20,6 @@ The following example rule will configure only Brotli compression for a specific
 **When incoming requests match**
 
 - Custom filter expression:
-
   - _URI Path_ _equals_ `/download/assets.tar`
 
 **Then**
@@ -53,6 +52,10 @@ The following example sets the rules of an existing [entry point ruleset](/rules
 	}}
 />
 
-<Render file="terraform-use-ref-field" params={{ addDocsLocation: true }} />
+<Render
+	file="terraform-use-ref-field"
+	product="rules"
+	params={{ addDocsLocation: true }}
+/>
 
 </TabItem> </Tabs>

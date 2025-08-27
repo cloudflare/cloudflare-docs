@@ -137,7 +137,11 @@ You can configure device profiles to match against the following selectors, or c
 
 Apply a device profile based on the user's email.
 
-<Render file="gateway/selectors/user-email" params={{ UIname: "User email" }} />
+<Render
+	file="gateway/selectors/user-email"
+	product="cloudflare-one"
+	params={{ UIname: "User email" }}
+/>
 
 ### User group emails
 
@@ -145,6 +149,7 @@ Apply a device profile based on an [IdP group](/cloudflare-one/policies/gateway/
 
 <Render
 	file="gateway/selectors/user-group-email"
+	product="cloudflare-one"
 	params={{ UIname: "User group emails" }}
 />
 
@@ -154,6 +159,7 @@ Apply a device profile based on an [IdP group](/cloudflare-one/policies/gateway/
 
 <Render
 	file="gateway/selectors/user-group-ids"
+	product="cloudflare-one"
 	params={{ UIname: "User group IDs" }}
 />
 
@@ -163,6 +169,7 @@ Apply a device profile based on an [IdP group](/cloudflare-one/policies/gateway/
 
 <Render
 	file="gateway/selectors/user-group-names"
+	product="cloudflare-one"
 	params={{ UIname: "User group names" }}
 />
 

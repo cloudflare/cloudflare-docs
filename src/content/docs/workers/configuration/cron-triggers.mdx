@@ -173,7 +173,7 @@ Some common time intervals that may be useful for setting up your Cron Trigger:
 
 ## Test Cron Triggers locally
 
-Test Cron Triggers using Wrangler with [`wrangler dev`](/workers/wrangler/commands/#dev). This will expose a `/cdn-cgi/handler/scheduled` route which can be used to test using a HTTP request.
+Test Cron Triggers using Wrangler with [`wrangler dev`](/workers/wrangler/commands/#dev), or using the [Cloudflare Vite plugin](https://developers.cloudflare.com/workers/vite-plugin/). This will expose a `/cdn-cgi/handler/scheduled` route which can be used to test using a HTTP request.
 
 ```sh
 curl "http://localhost:8787/cdn-cgi/handler/scheduled"
