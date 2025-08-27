@@ -2,9 +2,9 @@
 import { z } from "astro:schema";
 import { experimental_getWranglerCommands } from "wrangler";
 import AnchorHeading from "./AnchorHeading.astro";
-import Type from "./Type.astro";
 import { PackageManagers } from "starlight-package-managers";
-import MetaInfo from "./MetaInfo.astro";
+import WranglerArg from "./WranglerArg.astro";
+import Details from "./Details.astro";
 
 function getCommand(path: string) {
 	const segments = path.trim().split(/\s+/);
@@ -41,10 +41,6 @@ if (!definition.args) {
 
 const { globalFlags } = experimental_getWranglerCommands();
 
-const args = Object.entries(definition.args).concat(
-	Object.entries(globalFlags as unknown as typeof definition.args),
-);
-
 const positionals = definition.positionalArgs
 	?.map((p) => `[${p.toUpperCase()}]`)
 	.join(" ");
@@ -60,37 +56,20 @@ const positionals = definition.positionalArgs
 
 <ul>
 	{
-		args
-			.filter(([_, value]) => !value.hidden && value.type !== undefined)
+		Object.entries(definition.args)
+			.filter(([_, value]) => !value.hidden)
 			.map(([key, value]) => {
-				const description = value.description ?? value.describe;
-				const required = value.demandOption;
-				const defaultValue = value.default;
-				const alias = value.alias;
-				const positional = definition.positionalArgs?.includes(key);
-
-				const name = positional ? `[${key.toUpperCase()}]` : `--${key}`;
-
-				let aliasText;
-				if (alias) {
-					if (Array.isArray(alias)) {
-						aliasText = `aliases: --${alias.join(", --")}`;
-					} else {
-						aliasText = `alias: --${alias}`;
-					}
-				}
-
-				return (
-					<li>
-						<code>{name}</code> <Type text={value.type} />{" "}
-						{aliasText && <MetaInfo text={aliasText} />}
-						{required && <MetaInfo text="required" />}
-						{defaultValue !== undefined && (
-							<MetaInfo text={`default: ${defaultValue}`} />
-						)}
-						<p>{description}</p>
-					</li>
-				);
+				return <WranglerArg key={key} definition={value} />;
 			})
 	}
 </ul>
+
+<Details header="Global flags">
+	<ul>
+		{
+			Object.entries(globalFlags).map(([key, value]) => {
+				return <WranglerArg key={key} definition={value} />;
+			})
+		}
+	</ul>
+</Details>
