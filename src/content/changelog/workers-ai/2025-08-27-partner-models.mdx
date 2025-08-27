@@ -20,3 +20,38 @@ Read the [blog](https://blog.cloudflare.com/workers-ai-partner-models) for more 
 You can filter out new partner models with the `Partner` capability on our [Models](/workers-ai/models) page.
 
 As well, we're introducing WebSocket support for some of our audio models, which you can filter though the `Realtime` capability on our [Models](/workers-ai/models) page. WebSockets allows you to create a bi-directional connection to our inference server with low latency — perfect for those that are building voice agents.
+
+An example python snippet on how to use WebSockets with our new Aura model:
+
+```
+import json
+import os
+import asyncio
+import websockets
+
+uri = f"wss://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/@cf/deepgram/aura-1"
+
+input = [
+    "Line one, out of three lines that will be provided to the aura model.",
+    "Line two, out of three lines that will be provided to the aura model.",
+    "Line three, out of three lines that will be provided to the aura model. This is a last line.",
+]
+
+
+async def text_to_speech():
+    async with websockets.connect(uri, additional_headers={"Authorization": os.getenv("CF_TOKEN")}) as websocket:
+        print("connection established")
+        for line in input:
+            print(f"sending `{line}`")
+            await websocket.send(json.dumps({"type": "Speak", "text": line}))
+
+            print("line was sent, flushing")
+            await websocket.send(json.dumps({"type": "Flush"}))
+            print("flushed, recving")
+            resp = await websocket.recv()
+            print(f"response received {resp}")
+
+
+if __name__ == "__main__":
+    asyncio.run(text_to_speech())
+```
