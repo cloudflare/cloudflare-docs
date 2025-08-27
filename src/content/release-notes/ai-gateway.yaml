@@ -3,6 +3,14 @@ link: "/ai-gateway/changelog/"
 productName: AI Gateway
 productLink: "/ai-gateway/"
 entries:
+  - publish_date: "2025-08-25"
+    title: Dynamic routing
+    description: |-
+      Introduced [Dynamic routing](/ai-gateway/routing/dynamic-routing/) to help manage AI provider interactions effectively, ensuring your applications remain responsive and reliable.
+  - publish_date: "2025-08-21"
+    title: Bring your own keys (BYOK)
+    description: |-
+      Introduced [Bring your own keys (BYOK)](/ai-gateway/configuration/byok/) allowing you to save your ai provider keys directly in the AI Gateway dashboard.
   - publish_date: "2025-06-18"
     title: New GA providers
     description: |-

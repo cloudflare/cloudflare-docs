@@ -171,6 +171,8 @@
 /ai-gateway/configuration/caching/ /ai-gateway/features/caching/ 301
 /ai-gateway/configuration/rate-limiting/ /ai-gateway/features/rate-limiting/ 301
 /ai-gateway/configuration/custom-metadata/ /ai-gateway/observability/custom-metadata/ 301
+/ai-gateway/universal/ /ai-gateway/usage/universal/ 301
+/ai-gateway/chat-completion/ /ai-gateway/usage/chat-completion/ 301
 
 # agents
 /agents/capabilities/mcp-server/ /agents/model-context-protocol/ 301
