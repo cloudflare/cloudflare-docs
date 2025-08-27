@@ -44,8 +44,6 @@ const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 		const globalSearchLink = document.getElementById('global-search-link') as HTMLButtonElement;
 		const sidebarContent = document.querySelector('.sidebar-content');
 
-		track("use sidebar search", { query: searchInput });
-
 		if (!searchInput || !sidebarContent || !noResultsMessage || !globalSearchLink) return;
 
 		const originalState: Map<Element, boolean> = new Map();
@@ -97,6 +95,7 @@ const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 		function filterSidebarItems(query: string) {
 			const items = sidebarContent!.querySelectorAll('li');
 			const detailsElements = sidebarContent!.querySelectorAll('details');
+			track("use sidebar search", { query: query });
 
 			if (!query.trim()) {
 				// Reset to original state
