@@ -4,6 +4,8 @@ styleGuide:
   component: WranglerCommand
 ---
 
+import { Type, MetaInfo } from "~/components";
+
 The `WranglerCommand` component documents the available options for a given command.
 
 This is generated using the Wrangler version in the [`cloudflare-docs` repository](https://github.com/cloudflare/cloudflare-docs/blob/production/package.json).
@@ -23,3 +25,10 @@ import { WranglerCommand } from "~/components";
 
 <WranglerCommand command="d1 execute" />
 ```
+
+## Arguments
+
+- `command` <Type text="string" /> <MetaInfo text="required" />
+  - The name the command.
+- `headingLevel` <Type text="boolean" /> <MetaInfo text="(default: 2) optional" />
+  - The heading level `h2` that the command should be added at on the page.
