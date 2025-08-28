@@ -5,9 +5,10 @@ import WranglerCommand from "./WranglerCommand.astro";
 
 const props = z.object({
 	namespace: z.string(),
+	headingLevel: z.number().default(2)
 });
 
-const { namespace } = props.parse(Astro.props);
+const { namespace, headingLevel } = props.parse(Astro.props);
 
 const { registry } = experimental_getWranglerCommands();
 
@@ -40,7 +41,7 @@ flattenSubtree(node.subtree);
 			);
 		}
 		return (
-			<WranglerCommand command={definition.command.replace("wrangler ", "")} />
+			<WranglerCommand command={definition.command.replace("wrangler ", "")} headingLevel={headingLevel} />
 		);
 	})
 }

@@ -14,6 +14,7 @@ import {
 	Type,
 	MetaInfo,
 	WranglerConfig,
+	WranglerNamespace,
 	PackageManagers,
 } from "~/components";
 
@@ -149,7 +150,7 @@ Interact with Cloudflare's D1 service.
 
 Manage [Hyperdrive](/hyperdrive/) database configurations.
 
-<Render file="wrangler-commands/hyperdrive" product="workers" />
+<WranglerNamespace namespace="hyperdrive" headingLevel={3}/>
 
 ---
 
@@ -157,7 +158,7 @@ Manage [Hyperdrive](/hyperdrive/) database configurations.
 
 Interact with a [Vectorize](/vectorize/) vector database.
 
-<Render file="wrangler-commands/vectorize" product="workers" />
+<Render product="workers" file="wrangler-commands/vectorize" />
 
 ---
 
