@@ -3,6 +3,7 @@ pcx_content_type: concept
 title: Bindings (env)
 head: []
 description: Worker Bindings that allow for interaction with other Cloudflare Resources.
+next: false
 ---
 
 import { DirectoryListing, WranglerConfig } from "~/components";
@@ -103,7 +104,7 @@ Bindings are located on the `env` object, which can be accessed in several ways:
 
   ```js
   import { env } from "cloudflare:workers";
-  console.log(`Hi, ${this.env.Name}`);
+  console.log(`Hi, ${env.Name}`);
   ```
 
 ### Importing `env` as a global

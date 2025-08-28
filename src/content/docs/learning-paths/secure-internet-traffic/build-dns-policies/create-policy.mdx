@@ -5,7 +5,7 @@ sidebar:
   order: 1
 ---
 
-import { Render, Tabs, TabItem } from "~/components";
+import { Render, Tabs, TabItem, APIRequest } from "~/components";
 
 DNS policies determine how Gateway should handle a DNS request. When a user sends a DNS request, Gateway matches the request against your filters and either allows the query to resolve, blocks the query, or responds to the query with a different IP.
 
@@ -36,26 +36,26 @@ For more information, refer to [DNS policies](/cloudflare-one/policies/gateway/d
 
 To create a new DNS policy using cURL:
 
-```sh
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
-  --header 'Content-Type: application/json' \
-  --header "Authorization: Bearer <API_TOKEN>" \
-	--data '{
-		"name": "All-DNS-SecurityCategories-Blocklist",
-		"description": "Block known security risks based on Cloudflare's threat intelligence",
-		"precedence": 0,
-		"enabled": true,
-		"action": "block",
-		"filters": [
-			"dns"
-		],
-		"traffic": "any(dns.security_category[*] in {68 178 80 83 176 175 117 131 134 151 153})",
-		"rule_settings": {
-			"block_page_enabled": true,
-			"block_reason": "This domain was blocked due to being classified as a security risk to your organization"
-		}
-	}'
-```
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "All-DNS-SecurityCategories-Blocklist",
+		description:
+			"Block known security risks based on Cloudflare's threat intelligence",
+		precedence: 0,
+		enabled: true,
+		action: "block",
+		filters: ["dns"],
+		traffic:
+			"any(dns.security_category[*] in {68 178 80 83 176 175 117 131 134 151 153})",
+		rule_settings: {
+			block_page_enabled: true,
+			block_reason:
+				"This domain was blocked due to being classified as a security risk to your organization",
+		},
+	}}
+/>
 
 </TabItem>
 

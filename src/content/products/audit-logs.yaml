@@ -5,3 +5,7 @@ product:
   group: Core platform
   url: /fundamentals/account/account-security/review-audit-logs/
   show: false
+
+meta:
+  title: Cloudflare Audit Logs docs
+  author: "@cloudflare"

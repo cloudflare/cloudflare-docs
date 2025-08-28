@@ -1,0 +1,48 @@
+---
+import { z } from "astro:schema";
+import { marked } from "marked";
+
+import Type from "./Type.astro";
+import MetaInfo from "./MetaInfo.astro";
+
+const props = z.object({
+	key: z.string(),
+	definition: z.custom<any>(),
+});
+
+const { key, definition } = props.parse(Astro.props);
+
+const type = definition.type ?? definition.choices;
+const description = definition.description ?? definition.describe;
+const required = definition.demandOption;
+const defaultValue = definition.default;
+const alias = definition.alias;
+const positional = definition.positionalArgs?.includes(key);
+
+const name = positional ? `[${key.toUpperCase()}]` : `--${key}`;
+
+let typeText;
+if (Array.isArray(type)) {
+	typeText = type.map((t) => `"${t}"`).join(" | ");
+} else {
+	typeText = type;
+}
+
+let aliasText;
+if (alias) {
+	if (Array.isArray(alias)) {
+		aliasText = `aliases: --${alias.join(", --")}`;
+	} else {
+		aliasText = `alias: --${alias}`;
+	}
+}
+---
+
+<li>
+	<code>{name}</code>
+	<Type text={typeText} />{" "}
+	{aliasText && <MetaInfo text={aliasText} />}
+	{required && <MetaInfo text="required" />}
+	{defaultValue !== undefined && <MetaInfo text={`default: ${defaultValue}`} />}
+	<Fragment set:html={marked.parse(description)} />
+</li>

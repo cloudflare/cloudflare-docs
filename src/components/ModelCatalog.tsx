@@ -22,6 +22,8 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 
 	// List of model names to pin at the top
 	const pinnedModelNames = [
+		"@cf/openai/gpt-oss-120b",
+		"@cf/openai/gpt-oss-20b",
 		"@cf/meta/llama-4-scout-17b-16e-instruct",
 		"@cf/meta/llama-3.3-70b-instruct-fp8-fast",
 		"@cf/meta/llama-3.1-8b-instruct-fast",
@@ -183,7 +185,7 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 
 				<div className="mb-8! hidden md:block">
 					<span className="text-sm font-bold text-gray-600 uppercase dark:text-gray-200">
-						▼ Tasks
+						Tasks
 					</span>
 
 					{tasks.map((task) => (
@@ -216,7 +218,7 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 
 				<div className="mb-8! hidden md:block">
 					<span className="text-sm font-bold text-gray-600 uppercase dark:text-gray-200">
-						▼ Capabilities
+						Capabilities
 					</span>
 
 					{capabilities.map((capability) => (
@@ -251,7 +253,7 @@ const ModelCatalog = ({ models }: { models: WorkersAIModelsSchema[] }) => {
 
 				<div className="hidden md:block">
 					<span className="text-sm font-bold text-gray-600 uppercase dark:text-gray-200">
-						▼ Authors
+						Authors
 					</span>
 
 					{authors.map((author) => (

@@ -5,7 +5,7 @@ sidebar:
   order: 1
 ---
 
-import { FeatureTable, GlossaryTooltip, Badge } from "~/components";
+import { FeatureTable, GlossaryTooltip, Badge, Steps } from "~/components";
 
 Security Analytics displays information about all incoming HTTP requests for your domain, including requests not handled by Cloudflare security products.
 
@@ -32,12 +32,15 @@ Zone/domain-level analytics are included with all plans, though the retention pe
 
 To use Security Analytics:
 
+<Steps>
+
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 
 2. Go to the account or zone/domain dashboard:
-
    - For the zone/domain dashboard, select your domain and go to **Security** > **Analytics**.
    - For the account dashboard, go to **Security Center** > **Security Analytics**.
+
+</Steps>
 
 ## Adjusting displayed data
 
@@ -47,9 +50,13 @@ Adjust the scope of analytics by manually entering filter conditions. You can al
 
 To manually add a filter:
 
+<Steps>
+
 1. Select **Add filter**.
 2. Select a field, an operator, and a value. For example, to filter events by source IP address, select the _Source IP_ field, select the _equals_ operator, and enter the IP address.
 3. Select **Apply**.
+
+</Steps>
 
 Take the following into account when entering filter values:
 
@@ -92,7 +99,6 @@ Each suspicious activity is classified with a severity score that can vary from 
 The main chart displays the following data for the selected time frame, according to the selected tab:
 
 - **Traffic analysis**: Traffic mitigated by the Cloudflare security platform, served by Cloudflare, and served by the origin server, according to the following classification:
-
   - **Mitigated by WAF**: Requests blocked or challenged by Cloudflare's application security products such as the WAF and HTTP DDoS protection. It does not include requests that had the following actions applied: _Log_, _Skip_, and _Allow_.
   - **Served by Cloudflare**: Requests served by the Cloudflare global network such as cached content and redirects.
   - **Served by origin**: Requests served by your origin server.

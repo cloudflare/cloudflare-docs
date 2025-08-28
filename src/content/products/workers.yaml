@@ -8,7 +8,5 @@ product:
 
 meta:
   title: Cloudflare Workers docs
-  description: Documentation for Cloudflare Workers, a serverless execution
-    environment that allows you to create entirely new applications or augment
-    existing ones without configuring or maintaining infrastructure.
+  description: Build, deploy, and scale serverless applications globally with low latency and minimal configuration
   author: "@cloudflare"

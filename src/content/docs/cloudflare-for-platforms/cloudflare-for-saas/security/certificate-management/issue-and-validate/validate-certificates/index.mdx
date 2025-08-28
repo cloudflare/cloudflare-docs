@@ -8,33 +8,32 @@ head:
     content: Validate certificates
 description: Learn which methods you should use to validate Cloudflare for SaaS
   certificates.
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
-<Render file="dcv-definition" product="ssl" /> <br/>
+<Render file="dcv-definition" product="ssl" /> <br />
 
 ## DCV situations
 
 ### Non-wildcard certificates
 
-<Render file="http-dcv-situation" />
+<Render file="http-dcv-situation" product="cloudflare-for-platforms" />
 
 ### Wildcard certificates
 
-<Render file="txt-dcv-situation" /> <br/>
+<Render file="txt-dcv-situation" product="cloudflare-for-platforms" /> <br />
 
-* [DCV Delegation](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/delegated-dcv/) (auto-issuance)
-* [Manual](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/txt/)
+- [DCV Delegation](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/delegated-dcv/) (auto-issuance)
+- [Manual](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/txt/)
 
 ### Minimize downtime
 
 If you want to minimize downtime, explore one of the following methods to issue and deploy the certificate before onboarding your customers:
 
-* [Delegated DCV](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/delegated-dcv/): Place a one-time record at your authoritative DNS that allows Cloudflare to auto-renew all future certificate orders.
-* [TXT validation](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/txt/): Have your customers add a `TXT` record to their authoritative DNS.
-* [Manual HTTP validation](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/http/#http-manual): Add a `TXT` record at your origin.
+- [Delegated DCV](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/delegated-dcv/): Place a one-time record at your authoritative DNS that allows Cloudflare to auto-renew all future certificate orders.
+- [TXT validation](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/txt/): Have your customers add a `TXT` record to their authoritative DNS.
+- [Manual HTTP validation](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/http/#http-manual): Add a `TXT` record at your origin.
 
 ### Minimize customer effort
 

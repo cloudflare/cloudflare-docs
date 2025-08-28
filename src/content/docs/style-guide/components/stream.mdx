@@ -7,39 +7,43 @@ styleGuide:
 ## Import
 
 ```mdx
-import { Stream } from "~/components"
+import { Stream } from "~/components";
 ```
 
 ## Usage
 
-import { Stream } from "~/components"
+import { Stream } from "~/components";
 
 <Stream
-    id="0f5d548ef3f606e6833b78e0193847c4"
-    title="Connect and secure from any network to anywhere"
-		thumbnail="https://pub-d9bf66e086fb4b639107aa52105b49dd.r2.dev/Connect-and-secure-from-any-network-to-anywhere.jpg"
-		chapters={{
-			"Chapter 1": "30s",
-			"Chapter 2": "1m30s",
-			"Chapter 3": "3m15s",
-			"Chapter 4": "3m25s",
-			"Chapter 5": "3m35s",
-		}}
+	id="86f22d1f760b77cdc349f89b25b63c3e"
+	title="Connect and secure from any network to anywhere"
+	thumbnail="https://pub-d9bf66e086fb4b639107aa52105b49dd.r2.dev/Connect-and-secure-from-any-network-to-anywhere.jpg"
+	chapters={{
+		"Chapter 1": "30s",
+		"Chapter 2": "1m30s",
+		"Chapter 3": "3m15s",
+		"Chapter 4": "3m25s",
+		"Chapter 5": "3m35s",
+	}}
 />
+
+<Stream file="warp-1-basics" />
 
 ```mdx
 <Stream
-    id="0f5d548ef3f606e6833b78e0193847c4"
-    title="Connect and secure from any network to anywhere"
-		thumbnail="https://pub-d9bf66e086fb4b639107aa52105b49dd.r2.dev/Connect-and-secure-from-any-network-to-anywhere.jpg"
-		chapters={{
-			"Chapter 1": "30s",
-			"Chapter 2": "1m30s",
-			"Chapter 3": "3m15s",
-			"Chapter 4": "3m25s",
-			"Chapter 5": "3m35s",
-		}}
+	id="86f22d1f760b77cdc349f89b25b63c3e"
+	title="Connect and secure from any network to anywhere"
+	thumbnail="https://pub-d9bf66e086fb4b639107aa52105b49dd.r2.dev/Connect-and-secure-from-any-network-to-anywhere.jpg"
+	chapters={{
+		"Chapter 1": "30s",
+		"Chapter 2": "1m30s",
+		"Chapter 3": "3m15s",
+		"Chapter 4": "3m25s",
+		"Chapter 5": "3m35s",
+	}}
 />
+
+<Stream file="warp-1-basics" />
 ```
 
 ## `<Stream>` Props
@@ -72,6 +76,14 @@ Either a timestamp (i.e `2.5s` or `1m35s`) or a URL to an image.
 
 Optional chapters displayed as cards below the video.
 
+### `expandChapters`
+
+**type:** `boolean`
+
+**default:** `false`
+
+If `chapters` is present, is passed through to the `open` property of the [Details component](/style-guide/components/details/).
+
 ### `showMoreVideos`
 
 **type:** `boolean`
@@ -79,3 +91,9 @@ Optional chapters displayed as cards below the video.
 **default:** `true`
 
 Whether to show the "Watch more videos on our Developer Channel" link below the video.
+
+### `file`
+
+**type:** `string`
+
+If `file` is provided, the `id`, `title`,` thumbnail` and `chapters` properties cannot be used and are instead retrieved from the YAML file in the [`stream`](https://github.com/cloudflare/cloudflare-docs/tree/production/src/content/stream) collection.

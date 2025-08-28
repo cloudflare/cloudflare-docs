@@ -8,5 +8,5 @@ product:
 
 meta:
   title: Cloudflare Page Shield docs
-  description: Provide client-side protection as part of your domain's firewall
+  description: Provide client-side protection for your website visitors
   author: "@cloudflare"

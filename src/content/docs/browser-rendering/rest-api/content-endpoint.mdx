@@ -13,13 +13,13 @@ The `/content` endpoint instructs the browser to navigate to a website and captu
 
 <Tabs syncKey="workersExamples"> <TabItem label="curl">
 
-Go to `https://example.com` and return the rendered HTML.
+Go to `https://developers.cloudflare.com/` and return the rendered HTML.
 
 ```bash
 curl -X 'POST' 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/content' \
   -H 'Content-Type: application/json' \
   -H 'Authorization: Bearer <apiToken>' \
-  -d '{"url": "https://example.com"}'
+  -d '{"url": "https://developers.cloudflare.com/"}'
 ```
 
 </TabItem> <TabItem label="TypeScript SDK">
@@ -28,12 +28,12 @@ curl -X 'POST' 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browse
 import Cloudflare from "cloudflare";
 
 const client = new Cloudflare({
-	apiEmail: process.env["CLOUDFLARE_EMAIL"], // This is the default and can be omitted
-	apiKey: process.env["CLOUDFLARE_API_KEY"], // This is the default and can be omitted
+	apiToken: process.env["CLOUDFLARE_API_TOKEN"],
 });
 
 const content = await client.browserRendering.content.create({
-	account_id: "account_id",
+	account_id: process.env["CLOUDFLARE_ACCOUNT_ID"],
+	url: "https://developers.cloudflare.com/",
 });
 
 console.log(content);

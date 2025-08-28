@@ -9,7 +9,9 @@ import { Render, Tabs, TabItem, GlossaryTooltip } from "~/components";
 
 ## Invoking methods on a Durable Object
 
-All new projects and existing projects with a compatibility date greater than or equal to [`2024-04-03`](/workers/configuration/compatibility-flags/#durable-object-stubs-and-service-bindings-support-rpc) should prefer to invoke [Remote Procedure Call (RPC)](/workers/runtime-apis/rpc/) methods defined on a <GlossaryTooltip term="Durable Object class">Durable Object class</GlossaryTooltip>. Legacy projects can continue to invoke the `fetch` handler on the Durable Object class indefinitely.
+All new projects and existing projects with a compatibility date greater than or equal to [`2024-04-03`](/workers/configuration/compatibility-flags/#durable-object-stubs-and-service-bindings-support-rpc) should prefer to invoke [Remote Procedure Call (RPC)](/workers/runtime-apis/rpc/) methods defined on a <GlossaryTooltip term="Durable Object class">Durable Object class</GlossaryTooltip>.
+
+Projects requiring HTTP request/response flows or legacy projects can continue to invoke the `fetch()` handler on the Durable Object class.
 
 ### Invoke RPC methods
 
@@ -17,7 +19,7 @@ By writing a Durable Object class which inherits from the built-in type `Durable
 
 All RPC calls are [asynchronous](/workers/runtime-apis/rpc/lifecycle/), accept and return [serializable types](/workers/runtime-apis/rpc/), and [propagate exceptions](/workers/runtime-apis/rpc/error-handling/) to the caller without a stack trace. Refer to [Workers RPC](/workers/runtime-apis/rpc/) for complete details.
 
-<Render file="example-rpc" />
+<Render file="example-rpc" product="durable-objects" />
 
 :::note
 
@@ -50,11 +52,8 @@ export class MyDurableObject extends DurableObject {
 // Worker
 export default {
 	async fetch(request, env) {
-		// Every unique ID refers to an individual instance of the Durable Object class
-		const id = env.MY_DURABLE_OBJECT.idFromName("foo");
-
 		// A stub is a client used to invoke methods on the Durable Object
-		const stub = env.MY_DURABLE_OBJECT.get(id);
+		const stub = env.MY_DURABLE_OBJECT.getByName("foo");
 
 		// Methods on the Durable Object are invoked via the stub
 		const response = await stub.fetch(request);
@@ -87,11 +86,8 @@ export class MyDurableObject extends DurableObject {
 // Worker
 export default {
 	async fetch(request, env) {
-		// Every unique ID refers to an individual instance of the Durable Object class
-		const id = env.MY_DURABLE_OBJECT.idFromName("foo");
-
 		// A stub is a client used to invoke methods on the Durable Object
-		const stub = env.MY_DURABLE_OBJECT.get(id);
+		const stub = env.MY_DURABLE_OBJECT.getByName("foo");
 
 		// Methods on the Durable Object are invoked via the stub
 		const response = await stub.fetch(request);
@@ -147,11 +143,8 @@ export class MyDurableObject extends DurableObject {
 // Worker
 export default {
 	async fetch(_request, env, _ctx) {
-		// Every unique ID refers to an individual instance of the Durable Object class
-		const id = env.MY_DURABLE_OBJECT.idFromName("foo");
-
 		// A stub is a client used to invoke methods on the Durable Object
-		const stub = env.MY_DURABLE_OBJECT.get(id);
+		const stub = env.MY_DURABLE_OBJECT.getByName("foo");
 
 		// Invoke the fetch handler on the Durable Object stub
 		let response = await stub.fetch("http://do/hello?name=World");
@@ -205,11 +198,8 @@ export class MyDurableObject extends DurableObject {
 // Worker
 export default {
 	async fetch(_request, env, _ctx) {
-		// Every unique ID refers to an individual instance of the Durable Object class
-		const id = env.MY_DURABLE_OBJECT.idFromName("foo");
-
 		// A stub is a client used to invoke methods on the Durable Object
-		const stub = env.MY_DURABLE_OBJECT.get(id);
+		const stub = env.MY_DURABLE_OBJECT.getByName("foo");
 
 		// Invoke the fetch handler on the Durable Object stub
 		let response = await stub.fetch("http://do/hello?name=World");

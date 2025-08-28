@@ -8,7 +8,5 @@ product:
 
 meta:
   title: Cloudflare Magic WAN docs
-  description: Magic WAN replaces legacy WAN architectures with Cloudflare’s
-    network, providing global connectivity, cloud-based security, performance,
-    and control through one simple user interface.
+  description: Replace legacy WAN and securely connect any traffic source to Cloudflare's network
   author: "@cloudflare"

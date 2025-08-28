@@ -8,7 +8,7 @@ sidebar:
 
 import { Render, TabItem, Tabs, WranglerConfig } from "~/components";
 
-<Render file="workers_sites" />
+<Render file="workers_sites" product="workers" />
 
 Workers Sites require [Wrangler](https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler) — make sure to use the [latest version](/workers/wrangler/install-and-update/#update-wrangler).
 
@@ -29,7 +29,6 @@ To deploy a pre-existing static site project, start with a pre-generated site. W
    ```
 
    This command adds/update the following files:
-
    - `wrangler.jsonc`: The file containing project configuration.
    - `package.json`: Wrangler `devDependencies` are added.
    - `tsconfig.json`: Added if not already there to support writing the Worker in TypeScript.
@@ -47,7 +46,6 @@ To deploy a pre-existing static site project, start with a pre-generated site. W
    </WranglerConfig>
 
    The default directories for the most popular static site generators are listed below:
-
    - Hugo: `public`
    - Gatsby: `public`
    - Jekyll: `_site`

@@ -8,7 +8,7 @@ sidebar:
 import { Details, InlineBadge, Render } from "~/components";
 
 :::note
-To use HTTP policies, install the [Cloudflare root certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/).
+To use HTTP policies, install a [Cloudflare root certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/) or a [custom certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/custom-certificate/).
 :::
 
 HTTP policies allow you to intercept all HTTP and HTTPS requests and either block, allow, or override specific elements such as websites, IP addresses, and file types. HTTP policies operate on Layer 7 for all TCP (and [optionally UDP](/cloudflare-one/policies/gateway/initial-setup/http/#1-connect-to-gateway)) traffic sent over ports 80 and 443.
@@ -23,6 +23,7 @@ An HTTP policy consists of an **Action** as well as a logical expression that de
 
 <Render
 	file="gateway/response"
+	product="cloudflare-one"
 	params={{ type: "query", example: "Source IP", example2: "Resolved IP" }}
 />
 
@@ -38,7 +39,7 @@ API value: `allow`
 
 <Details header="Available selectors">
 
-<Render file="gateway/http-allow-block-selectors" />
+<Render file="gateway/http-allow-block-selectors" product="cloudflare-one" />
 
 </Details>
 
@@ -64,7 +65,7 @@ API value: `block`
 
 <Details header="Available selectors">
 
-<Render file="gateway/http-allow-block-selectors" />
+<Render file="gateway/http-allow-block-selectors" product="cloudflare-one" />
 
 </Details>
 
@@ -135,7 +136,7 @@ To redirect URLs with a Block action and the block page, refer to [Redirect to a
 
 In **Policy URL redirect**, you can define what URL to redirect matched requests to. The redirect URL can contain paths and queries. For example, you can redirect `example.com` to `cloudflare.com/path/to/page?querystring=x`.
 
-<Render file="gateway/policy-context" />
+<Render file="gateway/policy-context" product="cloudflare-one" />
 
 When you turn on **Preserve original path and query string**, Gateway will append the original path and query string to the redirected URL. Paths and queries in the redirect URL take precedence over the original URL. For example, if the original URL is `example.com/path/to/page?querystring=X` and the redirect URL is `cloudflare.com/redirect-path?querystring=Y`, Gateway will redirect requests to:
 
@@ -375,7 +376,7 @@ The Quarantine action sends files in matching requests to a file sandbox to scan
 
 In **Sandbox file types**, you can select which file types to quarantine with your policy. You must select at least one file type.
 
-<Render file="gateway/sandbox-file-types" />
+<Render file="gateway/sandbox-file-types" product="cloudflare-one" />
 
 ## Selectors
 
@@ -387,24 +388,53 @@ Gateway matches HTTP traffic against the following selectors, or criteria:
 
 ### Access Infrastructure Target
 
-<Render file="gateway/selectors/all-access-app-targets" />
+<Render
+	file="gateway/selectors/all-access-app-targets"
+	product="cloudflare-one"
+/>
 
 ### Access Private App
 
-<Render file="gateway/selectors/all-access-private-app-destinations" />
+<Render
+	file="gateway/selectors/all-access-private-app-destinations"
+	product="cloudflare-one"
+/>
+
+### Application Approval Status
+
+The review approval status of an application from [Shadow IT Discovery](/cloudflare-one/insights/analytics/shadow-it-discovery/) or the [Application Library](/cloudflare-one/applications/app-library/). For more information, refer to [Review applications](/cloudflare-one/applications/app-library/#review-applications).
+
+| UI name            | API example                          |
+| ------------------ | ------------------------------------ |
+| Application Status | `any(app.statuses[*] == "approved")` |
 
 ### Application
 
-<Render file="gateway/selectors/application" params={{ policyType: "HTTP" }} />
+<Render
+	file="gateway/selectors/application"
+	product="cloudflare-one"
+	params={{ policyType: "HTTP" }}
+/>
 
 :::caution[Multiple API selectors required for Terraform]
 When using Terraform to create a policy with the [Do Not Inspect](#do-not-inspect) action, you must use the `app.hosts_ids` and `app.supports_ids` selectors. For example, to create a Do Not Inspect policy for Google Cloud Platform traffic, create a policy with both `any(app.hosts_ids[*] in {1245})` and `any(app.supports_ids[*] in {1245})`.
 :::
 
+#### Application Granular Controls
+
+When using the _is_ operator with the _Application_ selector, you can use Application Granular Controls to choose specific actions and operations to match application traffic. For example, you can block file uploads to ChatGPT without blocking all ChatGPT traffic:
+
+| Selector    | Operator | Value     | Controls | Action |
+| ----------- | -------- | --------- | -------- | ------ |
+| Application | is       | _ChatGPT_ | _Upload_ | Block  |
+
+You can match traffic based on **Application Controls**, which group multiple user actions together, or **Operations**, which allow for granular control of supported API-level actions for an application. For a list of supported granular controls, refer to [Application controls](/cloudflare-one/policies/gateway/application-app-types/#application-controls).
+
 ### Content Categories
 
 <Render
 	file="gateway/selectors/net-http-content-categories"
+	product="cloudflare-one"
 	params={{ APIendpoint: "http.conn.content_category" }}
 />
 
@@ -416,6 +446,7 @@ Only applies to traffic sent through the [WARP client](/cloudflare-one/connectio
 
 <Render
 	file="gateway/selectors/destination-continent"
+	product="cloudflare-one"
 	params={{ one: "http.dst_ip" }}
 />
 
@@ -427,6 +458,7 @@ Only applies to traffic sent through the [WARP client](/cloudflare-one/connectio
 
 <Render
 	file="gateway/selectors/destination-country"
+	product="cloudflare-one"
 	params={{ one: "http.dst_ip" }}
 />
 
@@ -436,18 +468,21 @@ Only applies to traffic sent through the [WARP client](/cloudflare-one/connectio
 Only applies to traffic sent through the [WARP client](/cloudflare-one/connections/connect-devices/warp/set-up-warp/#gateway-with-warp-default).
 :::
 
-| UI name        | API example                        |
-| -------------- | ---------------------------------- |
-| Destination IP | `http.conn.dst_ip == "10.0.0.0/8"` |
+<Render
+	file="gateway/selectors/destination-ip"
+	product="cloudflare-one"
+	params={{ APIendpoint: "http.conn.dst_ip" }}
+/>
 
 ### Device Posture
 
-<Render file="gateway/selectors/device-posture" />
+<Render file="gateway/selectors/device-posture" product="cloudflare-one" />
 
 ### Domain
 
 <Render
 	file="gateway/selectors/domain"
+	product="cloudflare-one"
 	params={{ APIendpoint: "http.conn.domains" }}
 />
 
@@ -518,7 +553,7 @@ These selectors will scan file signatures in the HTTP body. You can select from 
 
 **Unscannable**
 
-<Render file="gateway/policies/unscannable-files" />
+<Render file="gateway/policies/unscannable-files" product="cloudflare-one" />
 
 </Details>
 
@@ -550,10 +585,13 @@ Scans HTTP traffic for the presence of social security numbers and other PII. Yo
 
 <Render
 	file="gateway/selectors/host"
+	product="cloudflare-one"
 	params={{ APIendpoint: "http.conn.hostname" }}
 />
 
 ### HTTP Method
+
+The HTTP request method used in the traffic.
 
 | UI name     | API example                    |
 | ----------- | ------------------------------ |
@@ -561,45 +599,51 @@ Scans HTTP traffic for the presence of social security numbers and other PII. Yo
 
 ### HTTP Response
 
+The HTTP response status code received by the traffic.
+
 | UI name | API example                          |
 | ------- | ------------------------------------ |
 | URL     | `http.response.status_code == "200"` |
 
 ### Proxy Endpoint
 
-<Render file="gateway/selectors/proxy-endpoint" />
+<Render file="gateway/selectors/proxy-endpoint" product="cloudflare-one" />
 
 ### Security Risks
 
 <Render
 	file="gateway/selectors/security-risks"
+	product="cloudflare-one"
 	params={{ APIendpoint: "http.conn.security_category" }}
 />
 
 ### Source Continent
 
-The continent of the user making the request. <Render file="gateway/selectors/source-continent" params={{ one: "http.src_ip" }} />
+The continent of the user making the request. <Render file="gateway/selectors/source-continent" product="cloudflare-one" params={{ one: "http.src_ip" }} />
 
 ### Source Country
 
-The country of the user making the request. <Render file="gateway/selectors/source-country" params={{ one: "http.src_ip" }} />
+The country of the user making the request. <Render file="gateway/selectors/source-country" product="cloudflare-one" params={{ one: "http.src_ip" }} />
 
 ### Source Internal IP
 
 <Render
 	file="gateway/selectors/source-internal-ip"
+	product="cloudflare-one"
 	params={{ one: "HTTP", two: "http.conn.internal_src_ip" }}
 />
 
 ### Source IP
 
-| UI name   | API example                        |
-| --------- | ---------------------------------- |
-| Source IP | `http.conn.src_ip == "10.0.0.0/8"` |
+<Render
+	file="gateway/selectors/source-ip"
+	product="cloudflare-one"
+	params={{ APIendpoint: "http.conn.src_ip" }}
+/>
 
 ### URL
 
-<Render file="gateway/url-slash" />
+<Render file="gateway/url-slash" product="cloudflare-one" />
 
 | UI name | API example                                             |
 | ------- | ------------------------------------------------------- |
@@ -607,11 +651,15 @@ The country of the user making the request. <Render file="gateway/selectors/sour
 
 ### URL Path
 
+The pathname of a webpage's URL.
+
 | UI name  | API example                             |
 | -------- | --------------------------------------- |
 | URL Path | `http.request.uri.path == \"/foo/bar\"` |
 
 ### URL Path and Query
+
+The pathname and query of a webpage's URL.
 
 | UI name            | API example                                                     |
 | ------------------ | --------------------------------------------------------------- |
@@ -619,37 +667,46 @@ The country of the user making the request. <Render file="gateway/selectors/sour
 
 ### URL Query
 
-| UI name   | API example                          |
-| --------- | ------------------------------------ |
-| URL Query | `not(http.request.uri.query in $%s)` |
+The query of a webpage's URL.
+
+| UI name   | API example                                 |
+| --------- | ------------------------------------------- |
+| URL Query | `http.request.uri.query == "ab%242=%2A342"` |
 
 ### Users
 
-<Render file="gateway/selectors/users" />
+<Render file="gateway/selectors/users" product="cloudflare-one" />
 
 ### Virtual Network
 
 <Render
 	file="gateway/selectors/virtual-network"
+	product="cloudflare-one"
 	params={{ one: "http.conn.vnet_id" }}
 />
 
 ## Comparison operators
 
-<Render file="gateway/comparison-operators" />
+<Render file="gateway/comparison-operators" product="cloudflare-one" />
 
 ## Value
 
-<Render file="gateway/value" params={{ one: "hostnames", two: "Host" }} />
+<Render
+	file="gateway/value"
+	product="cloudflare-one"
+	params={{ one: "hostnames", two: "Host" }}
+/>
 
 ## Logical operators
 
 <Render
 	file="gateway/logical-operators"
+	product="cloudflare-one"
 	params={{ one: "**Identity** or **Device Posture**" }}
 />
 
 <Render
 	file="gateway/response"
+	product="cloudflare-one"
 	params={{ type: "request", example: "Source IP", example2: "a DLP Profile" }}
 />

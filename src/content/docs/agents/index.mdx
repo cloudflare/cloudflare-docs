@@ -1,7 +1,9 @@
 ---
 title: Build Agents on Cloudflare
-type: overview
+
 pcx_content_type: overview
+tags:
+  - AI
 sidebar:
   order: 1
 head:
@@ -22,6 +24,7 @@ import {
 	TabItem,
 	Tabs,
 	TypeScriptExample,
+	WranglerConfig,
 } from "~/components";
 
 The Agents SDK enables you to build and deploy AI-powered agents that can autonomously perform tasks, communicate with clients in real time, call AI models, persist state, schedule tasks, run asynchronous workflows, browse the web, query data from your database, support human-in-the-loop interactions, and [a lot more](/agents/api-reference/).
@@ -50,7 +53,7 @@ And then define your first Agent by creating a class that extends the `Agent` cl
 <TypeScriptExample>
 
 ```ts
-import { Agent, AgentNamespace } from 'agents';
+import { Agent, AgentNamespace } from "agents";
 
 export class MyAgent extends Agent {
 	// Define methods on the Agent:
@@ -64,6 +67,21 @@ export class MyAgent extends Agent {
 ```
 
 </TypeScriptExample>
+
+Lastly, add the [Durable Objects](/durable-objects/) binding to your wrangler file:
+
+<WranglerConfig>
+```toml
+[[durable_objects.bindings]]
+name = "MyAgent"
+class_name = "MyAgent"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["MyAgent"]
+
+```
+</WranglerConfig>
 
 Dive into the [Agent SDK reference](/agents/api-reference/agents-api/) to learn more about how to use the Agents SDK package and defining an `Agent`.
 

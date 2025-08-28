@@ -2,6 +2,8 @@
 pcx_content_type: concept
 title: Playwright MCP
 description: Deploy a Playwright MCP server that uses Browser Rendering to provide browser automation capabilities to your agents.
+tags:
+  - MCP
 sidebar:
   order: 6
   badge: Beta
@@ -22,6 +24,10 @@ This server enables LLMs to interact with web pages through structured accessibi
 * Fast and lightweight. Uses Playwright's accessibility tree, not pixel-based input.
 * LLM-friendly. No vision models needed, operates purely on structured data.
 * Deterministic tool application. Avoids ambiguity common with screenshot-based approaches.
+
+:::note
+The current version of Cloudflare Playwright MCP **v0.0.5** is in sync with upstream Playwright MCP **v0.0.30**.
+:::
 
 ## Deploying
 

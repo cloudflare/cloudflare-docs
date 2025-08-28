@@ -3,11 +3,9 @@ pcx_content_type: how-to
 title: Switch between Zero Trust organizations
 sidebar:
   order: 3
-
 ---
 
-
-import { Details, Render, TabItem, Tabs } from "~/components"
+import { Details, Render, TabItem, Tabs } from "~/components";
 
 <Details header="Feature availability">
 
@@ -17,25 +15,24 @@ import { Details, Render, TabItem, Tabs } from "~/components"
 
 | System   | Availability | Minimum WARP version |
 | -------- | ------------ | -------------------- |
-| Windows  | ✅            | 2024.1.159.0         |
-| macOS    | ✅            | 2024.1.160.0         |
-| Linux    | ✅            | 2024.2.62.0          |
-| iOS      | ✅            | 1.7                  |
-| Android  | ✅            | 1.4                  |
-| ChromeOS | ✅            | 1.4                  |
-
+| Windows  | ✅           | 2024.1.159.0         |
+| macOS    | ✅           | 2024.1.160.0         |
+| Linux    | ✅           | 2024.2.62.0          |
+| iOS      | ✅           | 1.7                  |
+| Android  | ✅           | 1.4                  |
+| ChromeOS | ✅           | 1.4                  |
 
 </Details>
 
 In Cloudflare WARP, users can switch between multiple Zero Trust organizations (or other [MDM parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/)) that administrators specify in an MDM file. Common use cases include:
 
-* Allow IT security staff to switch between test and production environments.
-* Allow Managed Service Providers to support multiple customer accounts.
-* Allow users to switch between the default WARP ingress IPs and the [Cloudflare China ingress IPs](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/#override_warp_endpoint).
+- Allow IT security staff to switch between test and production environments.
+- Allow Managed Service Providers to support multiple customer accounts.
+- Allow users to switch between the default WARP ingress IPs and the [Cloudflare China ingress IPs](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/#override_warp_endpoint).
 
 ## MDM file format
 
-To enable multiple organizations, administrators need to modify their [MDM file](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/) to take an array of configurations.  Each configuration must include a `display_name` parameter that will be visible to users in the WARP client GUI. Because display names are listed in the same order as they appear in the MDM file, we recommend putting the most used configurations at the top of the file. When a user opens the WARP client for the first time, they will be prompted to log into the first configuration in the list.
+To enable multiple organizations, administrators need to modify their [MDM file](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/) to take an array of configurations. Each configuration must include a `display_name` parameter that will be visible to users in the WARP client GUI. Because display names are listed in the same order as they appear in the MDM file, we recommend putting the most used configurations at the top of the file. When a user opens the WARP client for the first time, they will be prompted to log into the first configuration in the list.
 
 An MDM file supports a maximum of 25 configurations. The following example includes three configurations.
 
@@ -85,10 +82,18 @@ An MDM file supports a maximum of 25 configurations. The following example inclu
 
 <Tabs> <TabItem label="Windows, macOS, and Linux">
 
-<Render file="warp/switch-orgs" params={{ one: "Select the gear icon.", two: "Preferences > Account" }} />
+<Render
+	file="warp/switch-orgs"
+	product="cloudflare-one"
+	params={{ one: "Select the gear icon.", two: "Preferences > Account" }}
+/>
 
 </TabItem> <TabItem label="iOS and Android">
 
-<Render file="warp/switch-orgs" params={{ one: "Go to Settings > Advanced.", two: "Settings > Account" }} />
+<Render
+	file="warp/switch-orgs"
+	product="cloudflare-one"
+	params={{ one: "Go to Settings > Advanced.", two: "Settings > Account" }}
+/>
 
 </TabItem> </Tabs>

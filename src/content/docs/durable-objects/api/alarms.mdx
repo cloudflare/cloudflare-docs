@@ -39,7 +39,10 @@ Alarms can be used to build distributed primitives, like queues or batching of w
 
 ### `setAlarm`
 
-- <code>{" "}setAlarm(scheduledTimeMs <Type text="number" />)</code>
+- <code>
+  	{" "}
+  	setAlarm(scheduledTimeMs <Type text="number" />)
+  </code>
   : <Type text="void" />
 
   - Set the time for the alarm to run. Specify the time as the number of milliseconds elapsed since the UNIX epoch.
@@ -63,11 +66,16 @@ This is due to the fact that, if the Durable Object wakes up after being inactiv
 
 ### `alarm`
 
-- <code>alarm(`alarmInfo`<Type text="Object"/>)</code>: <Type text='void' />
+- <code>
+  	alarm(`alarmInfo`
+  	<Type text="Object" />)
+  </code>
+  : <Type text="void" />
 
   - Called by the system when a scheduled alarm time is reached.
 
   - The optional parameter `alarmInfo` object has two properties:
+
     - `retryCount` <Type text="number"/>: The number of times this alarm event has been retried.
     - `isRetry` <Type text="boolean"/>: A boolean value to indicate if the alarm has been retried. This value is `true` if this alarm event is a retry.
 
@@ -89,8 +97,7 @@ import { DurableObject } from "cloudflare:workers";
 
 export default {
 	async fetch(request, env) {
-		let id = env.ALARM_EXAMPLE.idFromName("foo");
-		return await env.ALARM_EXAMPLE.get(id).fetch(request);
+		return await env.ALARM_EXAMPLE.getByName("foo").fetch(request);
 	},
 };
 
@@ -120,11 +127,13 @@ The following example shows how to use the `alarmInfo` property to identify if t
 
 ```js
 class MyDurableObject extends DurableObject {
-  async alarm(alarmInfo) {
-    if (alarmInfo?.retryCount != 0) {
-      console.log("This alarm event has been attempted ${alarmInfo?.retryCount} times before.");
-    }
-  }
+	async alarm(alarmInfo) {
+		if (alarmInfo?.retryCount != 0) {
+			console.log(
+				"This alarm event has been attempted ${alarmInfo?.retryCount} times before.",
+			);
+		}
+	}
 }
 ```
 

@@ -3,10 +3,9 @@ title: Office 365 directory integration
 pcx_content_type: how-to
 sidebar:
   order: 1
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 Email Security (formerly Area 1) can integrate with Office 365 to retrieve user and group information. This can be used to enforce the Business Email Compromise configuration to prevent user impersonation.
 
@@ -29,10 +28,9 @@ When assigning user roles in the Office 365 console, you will find these roles i
    ![Go to Directories in the dashboard of Email Security, and then select Add Directory to start the authorization process](~/assets/images/email-security/bec/o365/step2-directories.png)
 
 3. In the Add Directory configuration panel, enter the following details:
-
-   * **Directory Type**: Open the drop-down menu and select **Office 365**.
-   * **Directory Name**: Enter a string that represents the directory. This value will be referenced in the Business Email Compromise List configuration section. For example, `Office 365`.
-   * **Sync Frequency**: Update the value to your preference.
+   - **Directory Type**: Open the drop-down menu and select **Office 365**.
+   - **Directory Name**: Enter a string that represents the directory. This value will be referenced in the Business Email Compromise List configuration section. For example, `Office 365`.
+   - **Sync Frequency**: Update the value to your preference.
 
    Select **Authorize** when you are done.
 
@@ -64,8 +62,8 @@ When assigning user roles in the Office 365 console, you will find these roles i
 
 ## 2. Configure the Business Email Compromise list
 
-<Render file="bec-directory-guide-compromise-list" />
+<Render file="bec-directory-guide-compromise-list" product="email-security" />
 
 ## 3. Configure secondary email address (if required)
 
-<Render file="bec-directory-guide-secondary-email" />
+<Render file="bec-directory-guide-secondary-email" product="email-security" />

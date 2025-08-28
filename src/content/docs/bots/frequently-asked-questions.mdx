@@ -6,7 +6,7 @@ sidebar:
   order: 11
 ---
 
-import { Render, RuleID } from "~/components";
+import { Render, RuleID, APIRequest } from "~/components";
 
 ## Bots
 
@@ -85,7 +85,7 @@ To allow traffic from good bots, use the [Verified Bot](/ruleset-engine/rules-la
 
 ### Why might the ja3hash or JA4 be empty in HTTP logs?
 
-<Render file="ja3-ja4-null" />
+<Render file="ja3-ja4-null" product="bots" />
 
 ---
 
@@ -157,7 +157,7 @@ For **Business** and **Enterprise** (with no Bot Management add-on) plans
   3. Set each of **Definitely automated traffic**, **Likely automated** and **Verified bots** to **Allow**.
   4. Turn **Static resource protection** and **JavaScript detections** off.
 
-<Render file="flexible-sbfm" />
+<Render file="flexible-sbfm" product="bots" />
 
 You cannot bypass or skip Bot Fight Mode using the _Skip_ action in WAF custom rules or using Page Rules. _Skip_, _Bypass_, and _Allow_ actions apply to rules or rulesets running on the [Ruleset Engine](/ruleset-engine/). While Super Bot Fight Mode rules are implemented in the Ruleset Engine, Bot Fight Mode checks are not. This is why you can skip Super Bot Fight Mode, but not Bot Fight Mode. If you need to skip Bot Fight Mode, consider using [Super Bot Fight Mode](/bots/get-started/super-bot-fight-mode/).
 
@@ -171,19 +171,19 @@ This is a known issue the Bots team is working to resolve in the near future. In
 
 1. List the existing Rulesets at the zone level.
 
-   ```bash
-   curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets" \
-   --header "Authorization: Bearer <API_TOKEN>"
-   ```
+    <APIRequest
+      path="/zones/{zone_id}/rulesets"
+      method="GET"
+    />
 
 2. From the output in step 1, find the ruleset ID that is associated with the zone's SBFM configuration. You should be able to see `"kind": "zone"` and `"phase": "http_request_sbfm"` for that ruleset.
 
 3. Use the ruleset ID you found to delete the SBFM ruleset.
 
-   ```bash
-   curl --request DELETE "https://api.cloudflare.com/client/v4/zones/{zone_id}/rulesets/{ruleset_id}" \
-   --header "Authorization: Bearer <API_TOKEN>"
-   ```
+      <APIRequest
+        path="/zones/{zone_id}/rulesets/{ruleset_id}"
+        method="DELETE"
+      />
 
 Note that you need to replace `<API_TOKEN>` with your own [API token](/fundamentals/api/get-started/create-token/).
 
@@ -232,8 +232,8 @@ Cloudflare uses [`http-signature-directory` tool](https://crates.io/crates/http-
 
 ### My message is failing validation. What could be the cause?
 
-- Ensure you have a [`Signature-Agent` header](/bots/concepts/bot/verified-bots/web-bot-auth/#signature-agent-header), and that its value is in double-quotes.
-- Ensure you include `signature-agent` in the component list in your [`Signature-Input` header](/bots/concepts/bot/verified-bots/web-bot-auth/#signature-agent-header).
+- Ensure you have a [`Signature-Agent` header](/bots/reference/bot-verification/web-bot-auth/#signature-agent-header), and that its value is in double-quotes.
+- Ensure you include `signature-agent` in the component list in your [`Signature-Input` header](/bots/reference/bot-verification/web-bot-auth/#signature-agent-header).
 - Ensure your `expires` timestamp is not too short, such that, by the time it arrives at Cloudflare servers, it has already expired. A minute is often sufficient.
 - Ensure you are not signing components containing non-ASCII values, or on the unsupported list.
 

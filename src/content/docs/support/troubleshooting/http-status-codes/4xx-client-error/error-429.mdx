@@ -18,10 +18,15 @@ Servers use this status code to prevent excessive API requests from overloading 
 
 ### Cloudflare-specific information
 
-- **Cloudflare API limits**
+#### Cloudflare API limits
 
 <Render file="api-rate-limits" product="fundamentals" />
 
-- **Website end users**
+#### R2 managed public buckets
+
+Cloudflare applies rate limiting to requests for R2 managed public buckets accessed via `r2.dev`. This helps protect customers from abuse and overuse of public buckets. For details, refer to [Rate limiting on managed public buckets through `r2.dev`](/r2/platform/limits/#rate-limiting-on-managed-public-buckets-through-r2dev).
+
+#### Website end users
 
 Cloudflare will generate a `429` response when a request is being [rate limited](https://www.cloudflare.com/rate-limiting/). If visitors to your site encounter this error, it will be visible in the [Rate Limiting Analytics](/waf/reference/legacy/old-rate-limiting/#analytics) dashboard.
+

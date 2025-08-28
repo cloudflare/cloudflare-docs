@@ -1,5 +1,5 @@
 ---
-updated: 2024-11-21
+reviewed: 2024-11-21
 difficulty: Beginner
 pcx_content_type: tutorial
 title: Build a Retrieval Augmented Generation (RAG) AI
@@ -10,7 +10,6 @@ products:
 tags:
   - AI
   - Hono
-languages:
   - JavaScript
 sidebar:
   order: 2
@@ -370,7 +369,7 @@ app.get("/", async (c) => {
 	let notes = [];
 	if (vecId) {
 		const query = `SELECT * FROM notes WHERE id = ?`;
-		const { results } = await c.env.DB.prepare(query).bind(vecId).all();
+		const { results } = await c.env.DB.prepare(query).bind(vecId).run();
 		if (results) notes = results.map((vec) => vec.text);
 	}
 

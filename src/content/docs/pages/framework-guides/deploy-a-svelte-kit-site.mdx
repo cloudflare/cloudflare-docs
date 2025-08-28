@@ -38,15 +38,15 @@ After you have installed your project dependencies, start your application:
 npm run dev
 ```
 
-<Render file="tutorials-before-you-start" />
+<Render file="tutorials-before-you-start" product="pages" />
 
-<Render file="framework-guides/create-github-repository" />
+<Render file="framework-guides/create-github-repository" product="pages" />
 
 ## SvelteKit Cloudflare configuration
 
 To use SvelteKit with Cloudflare Pages, you need to add the [Cloudflare adapter](https://kit.svelte.dev/docs/adapter-cloudflare) to your application.
 
-<Render file="c3-adapter" />
+<Render file="c3-adapter" product="pages" />
 
 1. Install the Cloudflare Adapter by running `npm i --save-dev @sveltejs/adapter-cloudflare` in your terminal.
 2. Include the adapter in `svelte.config.js`:
@@ -121,12 +121,13 @@ If you are using any adapter different from the default SvelteKit adapter, remem
 
 ## Deploy with Cloudflare Pages
 
-<Render file="deploy-via-c3" params={{ name: "Svelte" }} />
+<Render file="deploy-via-c3" product="pages" params={{ name: "Svelte" }} />
 
 ### Deploy via the Cloudflare dashboard
 
 <Render
 	file="deploy-to-pages-steps-with-preset"
+	product="pages"
 	params={{ name: "SvelteKit" }}
 />
 
@@ -171,4 +172,8 @@ export const GET = (({ url }) => {
 For more information about SvelteKit API Routes, refer to the [SvelteKit documentation](https://kit.svelte.dev/docs/routing#server).
 :::
 
-<Render file="framework-guides/learn-more" params={{ one: "Svelte" }} />
+<Render
+	file="framework-guides/learn-more"
+	product="pages"
+	params={{ one: "Svelte" }}
+/>

@@ -84,12 +84,21 @@ If you set a custom counting expression, it will not automatically extend the ru
 For example, you might want to perform rate limiting for clients sending more than five requests to `/api/` resulting in a `403` HTTP status code from the origin server. In this case, the matching expression would be `starts_with(http.request.uri.path, "/api/")` and the counting expression would be `http.response.code eq 403 and starts_with(http.request.uri.path, "/api/")`. If the counting expression did not include the matching expression (that is, if you had set the counting expression to `http.response.code eq 403`), any response with a `403` status code on any URL would increase the counter.
 :::
 
+### When rate exceeds
+
+- Field name in the API: _N/A_ (different API fields required according to the selected option)
+
+The rate limiting counting can be:
+
+- **Request based**: Performs rate limiting based on the number of incoming requests during a given period. This is the only counting method when complexity-based rate limiting is not available.
+- **Complexity based**: Performs rate limiting based on the [complexity](/waf/rate-limiting-rules/request-rate/#complexity-based-rate-limiting) or cost of handling requests during a given period. Only available to Enterprise customers with Advanced Rate Limiting.
+
 ### When rate exceeds > Requests
 
 - Data type: <Type text="Integer" />
 - Field name in the API: `requests_per_period`
 
-The number of requests over the period of time that will trigger the rule.
+The number of requests over the period of time that will trigger the rule. Applies to request-based rate limiting.
 
 ### When rate exceeds > Period
 
@@ -99,6 +108,20 @@ The number of requests over the period of time that will trigger the rule.
 The period of time to consider (in seconds) when evaluating the request rate. The available values [vary according to your Cloudflare plan](/waf/rate-limiting-rules/#availability).
 
 The available API values are: `10`, `60` (one minute), `120` (two minutes), `300` (five minutes), `600` (10 minutes), or `3600` (one hour).
+
+### When rate exceeds > Score per period
+
+- Data type: <Type text="Integer" />
+- Field name in the API: `score_per_period`
+
+Maximum score per period. When this value is exceeded, the rule action will execute. Applies to [complexity-based rate limiting](/waf/rate-limiting-rules/request-rate/#complexity-based-rate-limiting).
+
+### When rate exceeds > Response header name
+
+- Data type: <Type text="String" />
+- Field name in the API: `score_response_header_name`
+
+Name of HTTP header in the response, set by the origin server, with the score for the current request. Applies to [complexity-based rate limiting](/waf/rate-limiting-rules/request-rate/#complexity-based-rate-limiting).
 
 ### Then take action
 
@@ -111,9 +134,9 @@ Use one of the following values in the API: `block`, `challenge`, `js_challenge`
 
 If you select the _Block_ action, you can define a custom response using the following parameters:
 
-- [**With response type**](#with-response-type-for-block-action)
-- [**With response code**](#with-response-code-for-block-action)
-- [**Response body**](#response-body-for-block-action)
+- [With response type](#with-response-type-for-block-action)
+- [With response code](#with-response-code-for-block-action)
+- [Response body](#response-body-for-block-action)
 
 #### With response type (for _Block_ action)
 

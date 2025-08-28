@@ -75,6 +75,8 @@ In Logpush, you can configure [filters](/logs/logpush/logpush-job/filters/) and 
 
 ## Enable logging on your Worker
 
+### Local development
+
 Enable logging on your Worker by adding a new property, `logpush = true`, to your Wrangler file. This can be added either in the top-level configuration or under an [environment](/workers/wrangler/environments/). Any new Workers with this property will automatically get picked up by the Logpush job.
 
 <WranglerConfig>
@@ -102,6 +104,16 @@ curl --request PUT \
 --form 'metadata={"main_module": "my-worker.js", "logpush": true}' \
 --form '"my-worker.js"=@./my-worker.js;type=application/javascript+module'
 ```
+
+### Dashboard
+
+To enable Logpush logging via the dashboard:
+
+1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+2. Go to **Compute (Workers)**.
+3. Select your Worker.
+4. Go to **Settings** > **Observability**.
+5. For **Logpush**, select **Enable** (this is only available if you have already [created a logpush job](/workers/observability/logs/logpush/#create-a-logpush-job)).
 
 ## Limits
 

@@ -23,6 +23,20 @@ const ModelBadges = ({ model }: { model: WorkersAIModelsSchema }) => {
 			};
 		}
 
+		if (property_id === "partner" && value === "true") {
+			return {
+				variant: "note",
+				text: "Partner",
+			};
+		}
+
+		if (property_id === "realtime" && value === "true") {
+			return {
+				variant: "note",
+				text: "Real-time",
+			};
+		}
+
 		if (property_id === "planned_deprecation_date") {
 			const timestamp = Math.floor(new Date(value as string).getTime() / 1000);
 

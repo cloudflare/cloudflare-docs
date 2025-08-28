@@ -2,8 +2,6 @@
 link: "/realtime/changelog/"
 productName: Realtime
 productLink: "/realtime/"
-productArea: Developer platform
-productAreaLink: /workers/platform/changelog/platform/
 entries:
   - publish_date: "2024-09-25"
     title: TURN service is generally available (GA)
