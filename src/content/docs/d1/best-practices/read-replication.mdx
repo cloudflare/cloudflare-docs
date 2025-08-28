@@ -410,6 +410,9 @@ To see the impact of read replication and check the how D1 requests are processe
   - `served_by_primary`
 - The [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers/d1), where you can view your database metrics breakdown by region that processed D1 requests.
 
+## Pricing
+D1 read replication is built into D1, so you don’t pay extra storage or compute costs for read replicas. You incur the exact same D1 [usage billing](/d1/platform/pricing/#billing-metrics) with or without replicas, based on `rows_read` and `rows_written` by your queries.
+
 ## Known limitations
 
 There are some known limitations for D1 read replication.
