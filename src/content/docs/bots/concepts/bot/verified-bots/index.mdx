@@ -55,8 +55,12 @@ The bot must be verified using one of the following validation methods:
 
 You can segment your verified bot traffic by its type and purpose by adding the Verified Bot Categories field `cf.verified_bot_category` as a filter criteria in [WAF Custom rules](/waf/custom-rules/), [Advanced Rate Limiting](/waf/rate-limiting-rules/), and Late Transform rules.
 
-:::note
+:::caution
 The Verified Bot Categories field is not compatible with legacy Firewall rules.
+:::
+
+:::note
+Verified Bot Categories is available on all plans.
 :::
 
 | Name                       | String value                 | Example                                                                 |
@@ -79,6 +83,10 @@ The Verified Bot Categories field is not compatible with legacy Firewall rules.
 | Webhooks                   | `Webhooks`                   | Payment processors, WordPress Integration tools                         |
 | Other                      | `Other`                      |                                                                         |
 
-### Availability
+---
 
-Verified Bot Categories is available on all plans.
+## Availability
+
+Verified bots are excluded by default when [Bot Fight Mode](/bots/get-started/bot-fight-mode/) is enabled to block definite bots.
+
+[Super Bot Fight Mode](/bots/get-started/super-bot-fight-mode/) and [Enterprise Bot Management](/bots/get-started/bot-management/) customers have the option to block or allow verified bots.
