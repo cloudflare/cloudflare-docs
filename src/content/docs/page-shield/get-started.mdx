@@ -9,7 +9,7 @@ head:
 description: Learn how to get started with client-side resource monitoring.
 ---
 
-import { Tabs, TabItem, Render } from "~/components";
+import { Tabs, TabItem, Render, Steps } from "~/components";
 
 ## Activate client-side resource monitoring
 
@@ -17,27 +17,48 @@ To enable client-side resource monitoring:
 
 <Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
 
+<Steps>
+
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Go to **Security** > **Page Shield**.
 3. Select **Enable Page Shield**.
+
+</Steps>
 
 If you do not have access to Page Shield in the Cloudflare dashboard, check if your user has one of the [necessary roles](/page-shield/reference/roles-and-permissions/).
 
 </TabItem> <TabItem label="New dashboard" icon="rocket">
 
+<Steps>
+
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Go to **Security** > **Settings** and filter by **Client-side abuse**.
 3. Turn on **Continuous script monitoring**.
+
+</Steps>
 
 If you do not have access to resource monitoring in the Cloudflare dashboard, check if your user has one of the [necessary roles](/page-shield/reference/roles-and-permissions/).
 
 </TabItem> </Tabs>
 
-## Review detected scripts
+## Review detected resources
 
 When you enable client-side resource monitoring, it may take a while to get the list of detected scripts in your domain.
 
-Review the scripts displayed in the [resource monitoring dashboard](/page-shield/detection/monitor-connections-scripts/), checking them for signs of malicious activity.
+To review the scripts detected by Cloudflare:
+
+<Steps>
+
+1. Go to the client-side resources page:
+   - Old dashboard: Go to **Security** > **Page Shield**.
+   - New security dashboard: Go to **Security** > **Web assets** > **Client-side resources** tab.
+
+2. Review the list of detected scripts, checking for any unknown or unexpected scripts.<br/>
+   [Depending on your plan](/page-shield/#availability), Cloudflare will also:
+   - Inform you if a script is [considered malicious](/page-shield/how-it-works/malicious-script-detection/).
+   - [Show the details](/page-shield/detection/monitor-connections-scripts/#script-and-connection-details) about each detected script.
+
+</Steps>
 
 Depending on your plan, you may be able to also review the connections made by scripts in your domain's pages and check them for malicious activity.
 
@@ -48,7 +69,7 @@ Depending on your plan, you may be able to also review the connections made by s
 	product="page-shield"
 	params={{
 		availabilityDetails:
-			"The available alert types depend on your Cloudflare plan.",
+			"The [available alert types](/page-shield/alerts/alert-types/) depend on your Cloudflare plan.",
 	}}
 />
 
@@ -60,12 +81,30 @@ Depending on your plan, you may be able to also review the connections made by s
 Only available to Enterprise customers with a paid add-on.
 :::
 
-[Policies](/page-shield/policies/), called content security rules in the [new security dashboard](/security/), define allowed resources on your websites. Create policies to implement a positive security model [^1].
-
-1. [Create a policy](/page-shield/policies/create-dashboard/) with the _Log_ action.
-
-2. After some time, [review the list of policy violations](/page-shield/policies/violations/) to make sure the policy is correct. Update the policy if needed.
-
-3. Change the policy action to _Allow_ to start blocking resources not covered by the policy.
+[Policies](/page-shield/policies/) — called content security rules in the [new security dashboard](/security/) — define allowed resources on your websites. Create policies to implement a positive security model[^1].
 
 [^1]: A positive security model is one that defines what is allowed and rejects everything else. In contrast, a negative security model defines what will be rejected and accepts the rest.
+
+### 1. Create a policy with the Log action
+
+When you create a policy with the [_Log_ action](/page-shield/policies/#policy-actions), Cloudflare logs any resources not covered by the policy, without blocking any resources. Use this action to validate a new policy before deploying it.
+
+<Render
+	file="policy-create"
+	params={{ policyAction: "Log" }}
+	product="page-shield"
+/>
+
+### 2. Review policy violations
+
+Resources not covered by the policy you created will be reported as [policy violations](/page-shield/policies/violations/). After some time, review the list of policy violations to make sure the policy is correct.
+
+<Render file="policy-review-violations" product="page-shield" />
+
+Update the policy if needed.
+
+### 3. Change policy action to Allow
+
+Once you have verified that your policy is correct, change the policy action from _Log_ to _Allow_.
+
+When you use the [_Allow_ action](/page-shield/policies/#policy-actions), Cloudflare starts blocking any resources not explicitly allowed by the policy.
