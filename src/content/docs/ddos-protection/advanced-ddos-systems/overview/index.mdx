@@ -46,9 +46,9 @@ The automatic threshold system calculates thresholds every 10 minutes for both n
 
 These checks are performed independently for SYN Flood Protection, Out-of-State TCP Flood Protection, and Advanced DNS Protection. The criteria does not require the presence of any rules to be configured. Accounts initially provisioned by the automatic system will have default thresholds. Otherwise, thresholds may be unconfigured if they are not set by Cloudflare.
 
-After seven days, the system calculates a rate and burst threshold for each of the protection components. The burst threshold is calculated as five times the rate threshold.
+After seven days, the system calculates a rate and burst threshold for each of the protection components. However, they are not applied. Cloudflare must review the draft thresholds produced by the automatic calculation system before creating real thresholds for your traffic. 
 
-Thresholds are applied globally per account and there is no minimum packets-per-second (pps) requirement for threshold calculation.
+Thresholds are applied globally per account. There is no minimum packets-per-second (pps) requirement for threshold calculation, but for those under 100 pps, the system will default to a reasonable non-zero rate and burst. 
 
 Thresholds are derived using the 95th percentile (P95) of observed traffic over the preceding seven days:
 
