@@ -5,7 +5,7 @@ sidebar:
   order: 8
 ---
 
-The MCP server [(Model Context Protocol)](cloudflare.com/learning/ai/what-is-model-context-protocol-mcp/) for Digital Experience Monitoring (DEX) is an AI tool that allows customers to ask a question like, "Show me the connectivity and performance metrics for the device used by carly&#8204;@acme.com", and receive an answer that contains data from the DEX API.
+The MCP server [(Model Context Protocol)](https://cloudflare.com/learning/ai/what-is-model-context-protocol-mcp/) for Digital Experience Monitoring (DEX) is an AI tool that allows customers to ask a question like, "Show me the connectivity and performance metrics for the device used by carly&#8204;@acme.com", and receive an answer that contains data from the DEX API.
 
 Any Cloudflare One customer using a Free, PayGo, or Enterprise account can access the DEX MCP Server. This feature is available to everyone.
 
@@ -46,13 +46,13 @@ You need a Claude Pro account (or higher subscription) to configure an MCP serve
 
    ```json
    {
-     "globalShortcut": "",
-     "mcpServers": {
-       "cloudflare-dex-analysis": {
-         "command": "npx",
-         "args": ["mcp-remote", "https://dex.mcp.cloudflare.com/sse"]
-       }
-     }
+   	"globalShortcut": "",
+   	"mcpServers": {
+   		"cloudflare-dex-analysis": {
+   			"command": "npx",
+   			"args": ["mcp-remote", "https://dex.mcp.cloudflare.com/sse"]
+   		}
+   	}
    }
    ```
 
@@ -71,7 +71,6 @@ You will need to use a CLI of your choice and npm or homebrew to install and acc
 2. Navigate to the `settings.json` file for your Gemini CLI install and open it in a text editor of your choice.
 
    File path for the `settings.json` file in different operating systems:
-
    - Windows: `%USERPROFILE%\.gemini\settings.json`
    - Mac and Linux: `~/.gemini/settings.json`
 
@@ -79,13 +78,13 @@ You will need to use a CLI of your choice and npm or homebrew to install and acc
 
    ```json
    {
-     "globalShortcut": "",
-     "mcpServers": {
-       "cloudflare-dex-analysis": {
-         "command": "npx",
-         "args": ["mcp-remote", "https://dex.mcp.cloudflare.com/sse"]
-       }
-     }
+   	"globalShortcut": "",
+   	"mcpServers": {
+   		"cloudflare-dex-analysis": {
+   			"command": "npx",
+   			"args": ["mcp-remote", "https://dex.mcp.cloudflare.com/sse"]
+   		}
+   	}
    }
    ```
 
