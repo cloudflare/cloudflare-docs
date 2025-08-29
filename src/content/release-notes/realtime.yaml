@@ -3,6 +3,15 @@ link: "/realtime/changelog/"
 productName: Realtime
 productLink: "/realtime/"
 entries:
+  - publish_date: "2025-08-29"
+    title: Media Transport Adapters (WebSocket) open beta
+    description: |-
+      Open beta for Media Transport Adapters (WebSocket adapter) to bridge audio between WebRTC and WebSocket.
+
+      - Ingest (WebSocket → WebRTC) and Stream (WebRTC → WebSocket)
+      - Opus for WebRTC tracks; PCM over WebSocket via Protocol Buffers
+
+      Docs: [Adapters](/realtime/sfu/media-transport-adapters/), [WebSocket adapter](/realtime/sfu/media-transport-adapters/websocket-adapter/)
   - publish_date: "2024-09-25"
     title: TURN service is generally available (GA)
     description: |-
