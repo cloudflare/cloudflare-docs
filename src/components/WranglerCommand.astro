@@ -29,10 +29,11 @@ function getCommand(path: string) {
 
 const props = z.object({
 	command: z.string(),
-	headingLevel: z.number().default(2)
+	headingLevel: z.number().default(2),
+	description: z.string().optional(),
 });
 
-let { command, headingLevel } = props.parse(Astro.props);
+let { command, headingLevel, description } = props.parse(Astro.props);
 
 const definition = getCommand(command);
 
@@ -45,10 +46,11 @@ const { globalFlags } = experimental_getWranglerCommands();
 const positionals = definition.positionalArgs
 	?.map((p) => `[${p.toUpperCase()}]`)
 	.join(" ");
-
 ---
 
 <AnchorHeading depth={headingLevel} title={command} />
+
+<p>{description ? description : definition.metadata.description}</p>
 
 <PackageManagers
 	pkg="wrangler"

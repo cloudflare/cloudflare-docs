@@ -14,6 +14,7 @@ import {
 	Type,
 	MetaInfo,
 	WranglerConfig,
+	WranglerCommand,
 	WranglerNamespace,
 	PackageManagers,
 } from "~/components";
@@ -99,36 +100,7 @@ You can then run them using your package manager of choice:
 
 ---
 
-## `docs`
-
-Open the Cloudflare developer documentation in your default browser.
-
-```txt
-wrangler docs [<COMMAND>]
-```
-
-- `COMMAND` <Type text="string" /> <MetaInfo text="optional" />
-  - The Wrangler command you want to learn more about. This opens your default browser to the section of the documentation that describes the command.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-## `init`
-
-Create a new project via the [create-cloudflare-cli (C3) tool](/workers/get-started/guide/#1-create-a-new-worker-project). A variety of web frameworks are available to choose from as well as templates. Dependencies are installed by default, with the option to deploy your project immediately.
-
-```txt
-wrangler init [<NAME>] [OPTIONS]
-```
-
-- `NAME` <Type text="string" /> <MetaInfo text="optional (default: name of working directory)" />
-  - The name of the Workers project. This is both the directory name and `name` property in the generated [Wrangler configuration](/workers/wrangler/configuration/).
-- `--yes` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Answer yes to any prompts for new projects.
-- `--from-dash` <Type text="string" /> <MetaInfo text="optional" />
-  - Fetch a Worker initialized from the dashboard. This is done by passing the flag and the Worker name. `wrangler init --from-dash <WORKER_NAME>`.
-  - The `--from-dash` command will not automatically sync changes made to the dashboard after the command is used. Therefore, it is recommended that you continue using the CLI.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
+<WranglerCommand command="docs" description="Open the Cloudflare developer documentation in your default browser." />
 
 ---
 
@@ -898,34 +870,7 @@ wrangler workflows trigger <WORKFLOW_NAME> <PARAMS> [OPTIONS]
 wrangler workflows trigger my-workflow '{"hello":"world"}'
 ```
 
-## `tail`
-
-Start a session to livestream logs from a deployed Worker.
-
-```txt
-wrangler tail <WORKER> [OPTIONS]
-```
-
-- `WORKER` <Type text="string" /> <MetaInfo text="required" />
-  - The name of your Worker or the route the Worker is running on.
-- `--format` <Type text="'json'|'pretty'" /> <MetaInfo text="optional" />
-  - The format of the log entries.
-- `--status` <Type text="'ok'|'error'|'canceled'" /> <MetaInfo text="optional" />
-  - Filter by invocation status.
-- `--header` <Type text="string" /> <MetaInfo text="optional" />
-  - Filter by HTTP header.
-- `--method` <Type text="string" /> <MetaInfo text="optional" />
-  - Filter by HTTP method.
-- `--sampling-rate` <Type text="number" /> <MetaInfo text="optional" />
-  - Add a fraction of requests to log sampling rate (between `0` and `1`).
-- `--search` <Type text="string" /> <MetaInfo text="optional" />
-  - Filter by a text match in `console.log` messages.
-- `--ip` <Type text="(string|'self')\[]" />" <MetaInfo text="optional" />
-  - Filter by the IP address the request originates from. Use `"self"` to show only messages from your own IP.
-- `--version-id` <Type text="string" /> <MetaInfo text="optional" />
-  - Filter by Worker version.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
+<WranglerCommand command="tail" />
 
 After starting `wrangler tail`, you will receive a live feed of console and exception logs for each request your Worker receives.
 
@@ -1299,15 +1244,7 @@ If you are using `CLOUDFLARE_API_TOKEN` instead of OAuth, and you can logout by 
 
 ---
 
-## `whoami`
-
-Retrieve your user information and test your authentication configuration.
-
-```txt
-wrangler whoami
-```
-
-<Render file="wrangler-commands/global-flags" product="workers" />
+<WranglerCommand command="whoami" />
 
 ---
 
