@@ -28,6 +28,11 @@ import {
 
 [![Deploy to Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/templates/tree/main/react-router-starter-template)
 
+:::note
+SPA mode and prerendering are not currently supported when using the [Cloudflare Vite plugin](/workers/vite-plugin/).
+If you wish to use React Router in an SPA then we recommend starting with the [React template](/workers/framework-guides/web-apps/react/) and using React Router [as a library](https://reactrouter.com/start/data/installation).
+:::
+
 ## What is React Router?
 
 [React Router v7](https://reactrouter.com/) is a full-stack React framework for building web applications.
@@ -69,10 +74,6 @@ It combines with the [Cloudflare Vite plugin](/workers/vite-plugin/) to provide 
         	- `ssr` is set to `true`, meaning that your application will use server-side rendering.
         	- `future.unstable_viteEnvironmentApi` is set to `true` to enable compatibility with the [Cloudflare Vite plugin](/workers/vite-plugin/).
 
-        :::note
-        SPA mode and prerendering are not currently supported when using the [Cloudflare Vite plugin](/workers/vite-plugin/).
-        If you wish to use React Router in an SPA then we recommend starting with the [React template](/workers/framework-guides/web-apps/react/) and using React Router [as a library](https://reactrouter.com/start/data/installation).
-        :::
 
         `vite.config.ts` is your [Vite config file](https://vite.dev/config/).
         The React Router and Cloudflare plugins are included in the `plugins` array.
