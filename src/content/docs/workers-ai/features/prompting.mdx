@@ -56,8 +56,18 @@ Typically, the role can be one of three options:
   use them to set rules and how you expect the AI to behave.
 - <strong>user</strong> - User messages are where you actually query the AI by
   providing a question or a conversation.
-- <strong>assistant</strong> - Assistant messages hint to the AI about the
-  desired output format. Not all models support this role.
+- **assistant** – Assistant messages can be used to guide the AI toward a desired output format 
+  (for example, enforcing JSON structure or Markdown formatting). 
+
+  ⚠️ **Model support:** Not all Workers AI text-generation models currently support the `assistant` role. 
+  Models based on chat-style templates (such as LLaMA 2 Chat or Mistral-Instruct) are more likely to respect it, 
+  while some base instruct models may ignore these messages. 
+
+  If you include `assistant` in your prompt with a model that doesn’t support it, the message will simply be ignored.  
+
+  ✅ **Recommendation:** For best results, use **scoped prompts**, which provide a unified interface across models. 
+  This way, your application logic doesn’t depend on which roles each model implements. 
+
 
 OpenAI has a [good explanation](https://platform.openai.com/docs/guides/text-generation#messages-and-roles) of how they use these roles with their GPT models. Even though chat templates are flexible, other text generation models tend to follow the same conventions.
 
