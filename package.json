@@ -55,7 +55,7 @@
 		"@types/node": "24.3.0",
 		"@types/react": "19.0.7",
 		"@types/react-dom": "19.0.4",
-		"@typescript-eslint/parser": "8.40.0",
+		"@typescript-eslint/parser": "8.41.0",
 		"algoliasearch": "5.36.0",
 		"astro": "5.13.2",
 		"astro-breadcrumbs": "3.3.1",
