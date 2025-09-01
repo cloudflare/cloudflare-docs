@@ -33,6 +33,8 @@ export class MyDurableObject extends DurableObject {
 
   - This method can be `async`.
 
+  - Durable Objects support [RPC calls](/durable-objects/best-practices/create-durable-object-stubs-and-send-requests/) as of a compatibility date greater or equal to [2024-04-03](/workers/configuration/compatibility-flags/#durable-object-stubs-and-service-bindings-support-rpc). Users should call RPC methods over `fetch()` if their application design does not follow HTTP request/response flow.
+
 ### `alarm`
 
 - <code>alarm(`alarmInfo`<Type text="Object"/>)</code>: <Type text="Promise <void>"/>

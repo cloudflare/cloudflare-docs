@@ -7,7 +7,7 @@ head: []
 description: Cloudflare reports any violations to your content security rules (also known as policies).
 ---
 
-import { Details, GlossaryTooltip } from "~/components";
+import { Details, Render, GlossaryTooltip } from "~/components";
 
 :::note
 Only available to Enterprise customers with a paid add-on.
@@ -19,15 +19,7 @@ Information about policy violations is also available via [GraphQL API](/analyti
 
 ## Review policy violations in the dashboard
 
-To view policy violation information:
-
-- Old dashboard: Go to **Security** > **Page Shield** > **Policies**.
-- New dashboard: Go to **Security** > **Security rules**, and filter by **Content security rules**.
-
-The displayed information includes the following:
-
-- A sparkline next to the policy/rule name, showing violations in the past seven days.
-- For policies with associated violations, an expandable details section for each policy, with the top resources present in violation events and a sparkline per top resource.
+<Render file="policy-review-violations" product="page-shield" />
 
 ## Get policy violations via GraphQL API
 

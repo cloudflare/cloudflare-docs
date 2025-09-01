@@ -1,5 +1,5 @@
 ---
-productName: AI Audit
+productName: AI Crawl Control
 entries:
   - term: robots.txt
     general_definition: |-

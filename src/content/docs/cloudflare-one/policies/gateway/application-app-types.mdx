@@ -47,6 +47,20 @@ Gateway sorts applications into the following app type groups:
 | Video Streaming                                | Video streaming applications                                                                                                |
 | [Do Not Inspect](#do-not-inspect-applications) | Applications incompatible with the TLS certificate required by the [Gateway proxy](/cloudflare-one/policies/gateway/proxy/) |
 
+## Application hostnames
+
+Applications categorized by Cloudflare may independently rely on a number of different internal and external resources to provide functionality. To enable effective behavior of Allow and Block Gateway policies, Zero Trust separates application definitions into [hostnames](#hostnames) and [support hostnames](#support-hostnames).
+
+### Hostnames
+
+Hostnames are domains that are core to the application and not [used by other applications](#overlapping-hostnames). These are the domains that are specifically blocked when you block an application. The App Library surfaces these hostnames in the [Hostnames table](/cloudflare-one/applications/app-library/#overview) for an application.
+
+### Support hostnames
+
+Support hostnames are shared resources which applications may call in order to function. Applications can use support hostnames for content delivery, application behavior, or third-party system integrations. Blocking these hostnames may result in unexpected behavior for other policies. In addition, not taking a specific action on one of these hostnames may affect the application's behavior, even if the application hostnames are allowed. For example, assume that `file-sharing-service.com` relies on `content-delivery.com`. If you allow access to `file-sharing-service.com` and its associated subdomains but not `content-delivery.com`, some of the functionality of `file-sharing-service.com` may break when Gateway matches the traffic.
+
+To ensure effective application behavior, Gateway only uses support hostnames in Allow policies. Cloudflare explicitly allows support hostname connections in these policies but will not block the connections in Block policies. For example, many Google applications use `accounts.google.com` for authentication. In a Zero Trust environment with highly restrictive policies, `accounts.google.com` must be allowed for many applications to function correctly. If you use an application with `accounts.google.com` in its support hostnames in an Allow policy, Gateway will allow both `accounts.google.com` and the application's domains.
+
 ## Application controls
 
 With [Application Granular Controls](/cloudflare-one/policies/gateway/http-policies/#application-granular-controls), you can choose specific actions and operations to match application traffic. Supported applications and operations include:

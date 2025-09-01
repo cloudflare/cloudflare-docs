@@ -166,7 +166,7 @@ You will need to append this parameter to the URL you are protecting:
 The authentication token parameter (`verify=<VALUE>` in the example) must be the last parameter in the query string.
 :::
 
-### Testing the generated token parameter
+### Test the generated token parameter
 
 If you are on an Enterprise plan, you can test if URLs are being generated correctly on the origin server by doing the following:
 
@@ -175,7 +175,7 @@ If you are on an Enterprise plan, you can test if URLs are being generated corre
 
 ---
 
-## Protecting several paths using the same secret
+## Protect several paths using the same secret
 
 You can use the same secret key to protect several URI paths.
 
@@ -184,3 +184,45 @@ This is illustrated in the previous example, where `http.request.uri` is passed 
 Since `http.request.uri` includes the path to the asset and that value is extracted for each request, the validation function evaluates all request URIs to `downloads.example.com` using the same secret key.
 
 Note that while you can use the same secret key to authenticate several paths, you must generate an HMAC token for each unique message you want to authenticate.
+
+## Protect an entire URI path prefix with a single signature
+
+You can protect an entire fixed-length URI path prefix with a single HMAC signature (it would also use the same secret). To achieve this, supply a URI path prefix (instead of the full URI path) and the original query string as the [`MessageMAC`](/ruleset-engine/rules-language/functions/#messagemac) argument for the [`is_timed_hmac_valid_v0()`](/ruleset-engine/rules-language/functions/#hmac-validation) function.
+
+Use the [`substring()`](/ruleset-engine/rules-language/functions/#substring) function to obtain the prefix from the full URI path.
+
+In the following example, the URI path prefix requiring a single HMAC signature is always 51 characters long (`x` is a character placeholder):
+
+```txt
+/case-studies/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/
+```
+
+In this case, you would need to use a different HMAC signature for every different URI path prefix of length 51.
+
+If you wanted to block requests for case study files failing the HMAC validation, you could create a custom rule similar to the following:
+
+<Example>
+
+Rule expression:
+
+```txt
+  (http.host eq "downloads.example.com" and starts_with(http.request.uri.path, "/case-studies") and not is_timed_hmac_valid_v0("mysecrettoken", concat(substring(http.request.uri.path, 0, 51), "?", http.request.uri.query), 10800, http.request.timestamp.sec, 1))
+```
+
+Action:
+
+- Block
+
+</Example>
+
+Example URI paths of valid incoming requests:
+
+```txt
+/case-studies/12345678-90ab-4cde-f012-3456789abcde/foobar-report.pdf?1755877101-5WOroVcDINdl2%2BQZxZFHJcJ6l%2Fep4HGIrX3DtSXzWO0%3D
+/case-studies/12345678-90ab-4cde-f012-3456789abcde/acme-corp.pdf?1755877101-5WOroVcDINdl2%2BQZxZFHJcJ6l%2Fep4HGIrX3DtSXzWO0%3D
+/case-studies/768bf477-22d5-4545-857d-b155510119ff/another-company-report.pdf?1755878057-jeMS5S1F3MIgxvL61UmiX4vODiWtuLfcPV6q%2B0Y3Rig%3D
+```
+
+The first two URI paths can use the same HMAC signature because they share the same 51-character prefix (`/case-studies/12345678-90ab-4cde-f012-3456789abcde/`) that is validated by the custom rule.
+
+The third URI path needs a different HMAC signature, since the prefix is different.

@@ -1,4 +1,4 @@
-name: Realtime TURN Service
+name: TURN Service
 
 product:
   title: TURN Service
@@ -7,4 +7,6 @@ product:
   url: /realtime/turn/
 
 meta:
+  title: Cloudflare TURN service docs
   description: Ensure connectivity with a relay point for traffic between WebRTC clients
+  author: "@cloudflare"

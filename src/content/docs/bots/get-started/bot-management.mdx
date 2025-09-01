@@ -19,6 +19,8 @@ This Enterprise product provides the most flexibility to customers by:
 - Allowing customers to take action on this score with [WAF custom rules](/waf/custom-rules/) or [`Workers`](/workers/runtime-apis/request/#incomingrequestcfproperties).
 - Allowing customers to view this score in Bot Analytics or Logs.
 
+---
+
 ## Enable Bot Management for Enterprise
 
 Bot Management is automatically enabled for Enterprise zones entitled with the add-on.
@@ -53,6 +55,8 @@ Bot Management is automatically enabled for Enterprise zones entitled with the a
 If you are not seeing Bot Management enabled on your zone or if you still see **Add Bot Management** on the Cloudflare dashboard, contact your account team for the proper entitlements.
 :::
 
+---
+
 ## Setup
 
 Cloudflare recommends that you deploy the following basic settings and customize them according to the traffic in your zone.
@@ -68,12 +72,6 @@ Refer to [Block AI bots](/bots/additional-configurations/block-ai-bots/).
 :::note
 You can view blocked AI bot traffic via [Security Analytics](/waf/analytics/security-analytics/).
 :::
-
-### Enable JavaScript detections
-
-Enabling [JavaScript detections](/bots/additional-configurations/javascript-detections/) validates that the browser can run JavaScript, and is stored in the `cf.bot_management.js_detection.passed` variable.
-
-<Render file="javascript-detections-enable" params={{ one: "Bot Management" }} product="cloudflare-challenges" />
 
 ### Deploy default templates
 

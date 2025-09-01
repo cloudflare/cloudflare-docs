@@ -5,7 +5,7 @@ sidebar:
   order: 4
 ---
 
-import { Details } from "~/components";
+import { Details, Steps } from "~/components";
 
 Cloudflare China Network provides a nearest-to-client nameservice by default. The DNS request is resolved on the data center nearest to the client out of China, and the HTTP request is served on the data center nearest to the client. The closest Cloudflare data center outside of China is adopted for clients outside of China, and the JD Cloud data center in China is adopted for clients in China.
 
@@ -29,6 +29,8 @@ The following table compares the default DNS offering with the In-China Nameserv
 ## General setup
 
 After you [enable the Cloudflare China Network service](/china-network/get-started/), do the following:
+
+<Steps>
 
 1. Contact your Cloudflare sales team to enable the feature. Currently you cannot enable it in the Cloudflare dashboard.
 
@@ -55,5 +57,7 @@ After you [enable the Cloudflare China Network service](/china-network/get-start
    </Details>
 
 3. Test your configuration by checking if the domain resolves correctly.
+
+</Steps>
 
 For further assistance, contact your account team.

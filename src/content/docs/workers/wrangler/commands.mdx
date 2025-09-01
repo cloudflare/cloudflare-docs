@@ -14,6 +14,8 @@ import {
 	Type,
 	MetaInfo,
 	WranglerConfig,
+	WranglerCommand,
+	WranglerNamespace,
 	PackageManagers,
 } from "~/components";
 
@@ -98,18 +100,9 @@ You can then run them using your package manager of choice:
 
 ---
 
-## `docs`
+<WranglerCommand command="docs" description="Open the Cloudflare developer documentation in your default browser." />
 
-Open the Cloudflare developer documentation in your default browser.
-
-```txt
-wrangler docs [<COMMAND>]
-```
-
-- `COMMAND` <Type text="string" /> <MetaInfo text="optional" />
-  - The Wrangler command you want to learn more about. This opens your default browser to the section of the documentation that describes the command.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
+---
 
 ## `init`
 
@@ -149,7 +142,7 @@ Interact with Cloudflare's D1 service.
 
 Manage [Hyperdrive](/hyperdrive/) database configurations.
 
-<Render file="wrangler-commands/hyperdrive" product="workers" />
+<WranglerNamespace namespace="hyperdrive" headingLevel={3}/>
 
 ---
 
@@ -157,7 +150,7 @@ Manage [Hyperdrive](/hyperdrive/) database configurations.
 
 Interact with a [Vectorize](/vectorize/) vector database.
 
-<Render file="wrangler-commands/vectorize" product="workers" />
+<Render product="workers" file="wrangler-commands/vectorize" />
 
 ---
 
@@ -897,34 +890,7 @@ wrangler workflows trigger <WORKFLOW_NAME> <PARAMS> [OPTIONS]
 wrangler workflows trigger my-workflow '{"hello":"world"}'
 ```
 
-## `tail`
-
-Start a session to livestream logs from a deployed Worker.
-
-```txt
-wrangler tail <WORKER> [OPTIONS]
-```
-
-- `WORKER` <Type text="string" /> <MetaInfo text="required" />
-  - The name of your Worker or the route the Worker is running on.
-- `--format` <Type text="'json'|'pretty'" /> <MetaInfo text="optional" />
-  - The format of the log entries.
-- `--status` <Type text="'ok'|'error'|'canceled'" /> <MetaInfo text="optional" />
-  - Filter by invocation status.
-- `--header` <Type text="string" /> <MetaInfo text="optional" />
-  - Filter by HTTP header.
-- `--method` <Type text="string" /> <MetaInfo text="optional" />
-  - Filter by HTTP method.
-- `--sampling-rate` <Type text="number" /> <MetaInfo text="optional" />
-  - Add a fraction of requests to log sampling rate (between `0` and `1`).
-- `--search` <Type text="string" /> <MetaInfo text="optional" />
-  - Filter by a text match in `console.log` messages.
-- `--ip` <Type text="(string|'self')\[]" />" <MetaInfo text="optional" />
-  - Filter by the IP address the request originates from. Use `"self"` to show only messages from your own IP.
-- `--version-id` <Type text="string" /> <MetaInfo text="optional" />
-  - Filter by Worker version.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
+<WranglerCommand command="tail" />
 
 After starting `wrangler tail`, you will receive a live feed of console and exception logs for each request your Worker receives.
 
@@ -1298,15 +1264,7 @@ If you are using `CLOUDFLARE_API_TOKEN` instead of OAuth, and you can logout by 
 
 ---
 
-## `whoami`
-
-Retrieve your user information and test your authentication configuration.
-
-```txt
-wrangler whoami
-```
-
-<Render file="wrangler-commands/global-flags" product="workers" />
+<WranglerCommand command="whoami" />
 
 ---
 

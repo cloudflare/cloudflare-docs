@@ -1,11 +1,9 @@
 ---
-title: Grok
+title: xAI
 pcx_content_type: get-started
 ---
 
 import { Render } from "~/components";
-
-[Grok](https://docs.x.ai/docs#getting-started) is a general purpose model that can be used for a variety of tasks, including generating and understanding text, code, and function calling.
 
 ## Endpoint
 
@@ -23,8 +21,8 @@ When making requests to Grok, ensure you have the following:
 
 - Your AI Gateway Account ID.
 - Your AI Gateway gateway name.
-- An active Grok API token.
-- The name of the Grok model you want to use.
+- An active xAI API token.
+- The name of the xAI model you want to use.
 
 ## Examples
 
@@ -33,9 +31,9 @@ When making requests to Grok, ensure you have the following:
 ```bash title="Request"
 curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/grok/v1/chat/completions \
   --header 'content-type: application/json' \
-  --header 'Authorization: Bearer {grok_api_token}' \
+  --header 'Authorization: Bearer {xai_api_token}' \
   --data '{
-    "model": "grok-beta",
+    "model": "grok-4",
     "messages": [
         {
             "role": "user",
@@ -59,7 +57,7 @@ const openai = new OpenAI({
 });
 
 const completion = await openai.chat.completions.create({
-	model: "grok-beta",
+	model: "grok-4",
 	messages: [
 		{
 			role: "system",
@@ -91,7 +89,7 @@ client = OpenAI(
 )
 
 completion = client.chat.completions.create(
-    model="grok-beta",
+    model="grok-4",
     messages=[
         {"role": "system", "content": "You are Grok, a chatbot inspired by the Hitchhiker's Guide to the Galaxy."},
         {"role": "user", "content": "What is the meaning of life, the universe, and everything?"},

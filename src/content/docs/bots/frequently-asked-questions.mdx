@@ -232,8 +232,8 @@ Cloudflare uses [`http-signature-directory` tool](https://crates.io/crates/http-
 
 ### My message is failing validation. What could be the cause?
 
-- Ensure you have a [`Signature-Agent` header](/bots/concepts/bot/verified-bots/web-bot-auth/#signature-agent-header), and that its value is in double-quotes.
-- Ensure you include `signature-agent` in the component list in your [`Signature-Input` header](/bots/concepts/bot/verified-bots/web-bot-auth/#signature-agent-header).
+- Ensure you have a [`Signature-Agent` header](/bots/reference/bot-verification/web-bot-auth/#signature-agent-header), and that its value is in double-quotes.
+- Ensure you include `signature-agent` in the component list in your [`Signature-Input` header](/bots/reference/bot-verification/web-bot-auth/#signature-agent-header).
 - Ensure your `expires` timestamp is not too short, such that, by the time it arrives at Cloudflare servers, it has already expired. A minute is often sufficient.
 - Ensure you are not signing components containing non-ASCII values, or on the unsupported list.
 

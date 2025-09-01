@@ -5,7 +5,7 @@ sidebar:
   order: 5
 ---
 
-import { Render, RuleID, APIRequest, Tabs, TabItem } from "~/components";
+import { Render, RuleID, APIRequest, Tabs, TabItem, Steps } from "~/components";
 
 :::note
 This feature requires an Enterprise plan with a paid add-on.
@@ -46,17 +46,25 @@ You can turn the managed ruleset on or off, and configure the following settings
 
 To enable Cloudflare Sensitive Data Detection:
 
+<Steps>
+
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
 2. Go to **Security** > **Settings** and filter by **Detections**.
 3. Turn on **Sensitive data detection**.
 
+</Steps>
+
 To adjust the scope of the managed ruleset or turn off specific rules:
+
+<Steps>
 
 1. In the **Settings** page, under **Sensitive data detection**, select **Configured ruleset**.
 2. To apply the managed ruleset for a subset of incoming requests, select **Custom filter expression** and define the filter expression.
 3. Select **Next**.
 4. To turn specific rules on or off, select **Browse rules** and use the toggle next to each rule to turn it on or off.
 5. Select **Next**, and then select **Save**.
+
+</Steps>
 
 </TabItem> </Tabs>
 

@@ -19,7 +19,7 @@
 # AI
 
 /src/content/docs/agents/ @irvinebroque @rita3ko @elithrar @thomasgauvin @threepointone @cloudflare/pcx-technical-writing
-/src/content/docs/ai-gateway/ @palashgo @thebongy @kathayl @mchenco @kodster28 @cloudflare/pcx-technical-writing
+/src/content/docs/ai-gateway/ @abhishekkankani @palashgo @thebongy @kathayl @mchenco @kodster28 @cloudflare/pcx-technical-writing
 /src/content/docs/workers-ai/ @rita3ko @craigsdennis @markdembo @mchenco @kodster28 @cloudflare/pcx-technical-writing
 /src/content/docs/vectorize/ @elithrar @vy-ton @sejoker @mchenco @cloudflare/pcx-technical-writing
 /src/content/partials/vectorize/ @elithrar @mchenco @sejoker @cloudflare/pcx-technical-writing
@@ -95,7 +95,7 @@
 /src/content/docs/d1/ @elithrar @rozenmd @vy-ton @joshthoward @oxyjun @harshil1712 @cloudflare/pcx-technical-writing
 /src/content/release-notes/d1.yaml @elithrar @rozenmd @vy-ton @joshthoward @oxyjun @cloudflare/pcx-technical-writing
 /src/content/partials/d1/ @elithrar @rozenmd @vy-ton @joshthoward @oxyjun @harshil1712 @cloudflare/pcx-technical-writing
-/src/content/docs/ai-audit/ @oxyjun @kodster28 @cloudflare/pcx-technical-writing
+/src/content/docs/ai-crawl-control/ @oxyjun @kodster28 @cloudflare/pcx-technical-writing
 /src/content/docs/durable-objects/ @elithrar @vy-ton @joshthoward @oxyjun @harshil1712 @mikenomitch @cloudflare/pcx-technical-writing @cloudflare/workers-runtime-1
 /src/content/release-notes/durable-objects.yaml @elithrar @rozenmd @vy-ton @joshthoward @oxyjun @cloudflare/pcx-technical-writing
 /src/content/docs/email-routing/ @cloudflare/pcx-technical-writing
@@ -165,8 +165,8 @@
 
 # MoQ
 
-/src/content/docs/moq/ @englishm @renandincer @cloudflare/pcx-technical-writing
-/src/content/products/moq.yml @englishm @renandincer @cloudflare/pcx-technical-writing
+/src/content/docs/moq/ @englishm @renandincer @nils-ohlmeier @cloudflare/pcx-technical-writing
+/src/content/products/moq.yml @englishm @renandincer @nils-ohlmeier @cloudflare/pcx-technical-writing
 
 # Performance products
 

@@ -9,7 +9,11 @@ head:
     content: Decrypt the payload content in the command line
 ---
 
+import { Steps } from "~/components";
+
 Use the `matched-data-cli` tool to decrypt a payload in the command line.
+
+<Steps>
 
 1. [Download](https://github.com/cloudflare/matched-data-cli/releases) the `matched-data-cli` tool for your platform from the **Releases** page on GitHub, under **Assets**.
 
@@ -39,6 +43,8 @@ Use the `matched-data-cli` tool to decrypt a payload in the command line.
    decrypt -k private_key.txt encrypted_payload.txt
    ```
 
+</Steps>
+
 :::note
 
 If you are using macOS and you get an error when running the `matched-data-cli` tool, refer to [Troubleshooting macOS errors](/waf/managed-rules/payload-logging/command-line/generate-key-pair/#troubleshooting-macos-errors).
@@ -58,7 +64,7 @@ printf "AzTY6FHajXYXuDMUte82wrd+1n5CEHPoydYiyd3FMg5IEQAAAAAAAAA0lOhGXBclw8pWU5jb
 decrypt -k private_key.txt encrypted_payload.txt
 ```
 
-```sh output
+```txt output
 test matched data
 ```
 

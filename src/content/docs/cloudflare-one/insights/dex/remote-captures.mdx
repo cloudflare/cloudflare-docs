@@ -7,22 +7,7 @@ sidebar:
 
 import { Details, Render } from "~/components";
 
-<Details header="Feature availability">
-
-| [WARP modes](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/)   | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
-| ------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| <ul> <li> Gateway with WARP </li> <li> Secure Web Gateway without DNS Filtering </li> </ul> | All plans                                                     |
-
-| System   | Availability | Minimum WARP version |
-| -------- | ------------ | -------------------- |
-| Windows  | ✅           | 2024.12.492.0        |
-| macOS    | ✅           | 2024.12.492.0        |
-| Linux    | ✅           | 2024.12.492.0        |
-| iOS      | ❌           |                      |
-| Android  | ❌           |                      |
-| ChromeOS | ❌           |                      |
-
-</Details>
+<Render file="dex/pcaps-run-availability" product="cloudflare-one" />
 
 Remote captures allow administrators to collect packet captures (PCAPs) and WARP diagnostic logs directly from end user devices. This data can be used to troubleshoot network problems, investigate security incidents, and identify performance bottlenecks.
 
@@ -36,11 +21,7 @@ Remote captures allow administrators to collect packet captures (PCAPs) and WARP
 
 ## Download remote captures
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **DEX** > **Remote captures**.
-2. Find a successful capture.
-3. Select the three-dot menu and select **Download**.
-
-This will download a ZIP file to your local machine called `<capture-id>.zip`. DEX will store capture data according to our [log retention policy](/cloudflare-one/insights/logs/#log-retention).
+<Render file="dex/pcaps-download" product="cloudflare-one" />
 
 ### Device PCAP contents
 
@@ -55,6 +36,10 @@ You can analyze `.pcap` files using Wireshark or another third-party packet capt
 ### WARP Diag contents
 
 Refer to [WARP diagnostic logs](/cloudflare-one/connections/connect-devices/warp/troubleshooting/warp-logs/#warp-diag-logs) for a description of each file.
+
+## View WARP diagnostics summary (beta)
+
+<Render file="dex/pcaps-view-warp-diag" product="cloudflare-one" />
 
 ## Limitations
 

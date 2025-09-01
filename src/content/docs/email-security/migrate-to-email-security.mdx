@@ -5,11 +5,36 @@ sidebar:
   order: 9
 ---
 
+import { Render } from "~/components";
+
 This page aims at showing you how to perform Area 1 actions in [Zero Trust Email Security](/cloudflare-one/email-security/), and new terminology introduced in Email Security.
 
 :::note
 Your Area 1 data and configuration settings are available in Email Security.
 :::
+
+<Render file="contact-support" product="email-security" />
+
+## Contact support
+
+:::note
+Starting from October 1, 2025, access and support for Email Security will only be available through the Cloudflare dashboard. Your Email Security protection will not change, but you will no longer be able to access the Area 1 dashboard or send support requests to `@area1security.com` email addresses. For help accessing the Cloudflare dashboard, reach out to successteam@cloudflare.com.
+:::
+
+In Area 1, you can reach out to support via the following email addresses:
+
+- support@area1security.com
+- phishguard@area1security.com (for PhishGuard customers only)
+
+In Email Security, you can:
+
+- Go to the [Cloudflare Help Center](https://www.support.cloudflare.com/s/?language=en_US)
+- [Contact Cloudflare Support](/support/contacting-cloudflare-support/)
+- [Raise a ticket](/support/contacting-cloudflare-support/#getting-help-with-an-issue) and enter the correct answer to the following questions:
+  - What type of question do you have? **Technical - Other Products**
+  - In what area can we help you? **Email Security**
+
+Alternatively, if you are a PhishGuard customer, you can [contact support](https://dash.cloudflare.com/?to=/:account/support) in the Cloudflare dashboard.
 
 ## Invite users
 
@@ -25,16 +50,18 @@ Once you have added new account members, you will have to assign each member an 
 
 | Area 1              | Email Security                                                     | Description                                                  |
 |---------------------|--------------------------------------------------------------------|--------------------------------------------------------------|
-| Super Admin         | Email Security Analyst + Email Security Config Admin = Super Admin | Has full access to all products on Zero Trust Email Security |
-| Configuration Admin | Email Security Configuration Admin                                 | Admin, cannot take actions on emails or see emails           |
-| SOC Analyst         | Email Security Analyst                                             | Admin, can take actions on emails and see emails             |
-| Viewer              | Email Security Reporting                                           | Can see metrics                                              |
+| N/A | Cloudflare Zero Trust | Can edit Cloudflare [Zero Trust](/cloudflare-one/). Has administrator access to all Zero Trust products including Access, Gateway, WARP, Tunnel, Browser Isolation, CASB, DLP, DEX, and Email Security. | 
+| Super Admin         | Email Security Analyst + Email Security Configuration Admin = Super Admin | Has full access to all admin features in Email Security |
+| Configuration Admin | Email Security Configuration Admin                                 | Has administrator access. Cannot take actions on emails, or read emails           |
+| SOC Analyst         | Email Security Analyst                                             | Has analyst access. Can take action on emails and read emails.            |
+| Viewer              | Email Security Reporting                                           | Can read metrics                                              |
 |N/A | Cloudflare Zero Trust PII | Can read PII in Zero Trust (this includes Email Security)
+|N/A | Email Security Policy Admin | Can read all settings, but only write allow policies, trusted domains, and blocked senders |
 
 ## Create webhooks
 
 :::note
-Starting from October 2025, Area 1 webhooks will be visible in Zero Trust Email Security, but non-configurable. Use [Logpush](/cloudflare-one/insights/logs/enable-logs/#enable-user-action-logs) to create new webhooks or configure webhooks.
+Starting from October 1, 2025, Area 1 webhooks will be visible in Zero Trust Email Security, but non-configurable. Use [Logpush](/cloudflare-one/insights/logs/enable-logs/#enable-user-action-logs) to create new webhooks or configure webhooks.
 :::
 
 In Area 1, you can [create alert webhooks](/email-security/email-configuration/domains-and-routing/alert-webhooks/#create-an-alert-webhook).
@@ -62,7 +89,7 @@ You can also check the status of APIs through the [Cloudflare Status API](https:
 ## Email reports
 
 :::note
-Starting from October 2025, weekly and daily email reports will no longer be available. Go to [Monitoring](/cloudflare-one/email-security/email-monitoring/) in Email Security to monitor your inbox.
+Starting from October 1, 2025, weekly and daily email reports will no longer be available. Go to [Monitoring](/cloudflare-one/email-security/email-monitoring/) in Email Security to monitor your inbox.
 :::
 
 In Area 1, you receive daily or weekly updates of the number of emails dispositioned.
@@ -72,34 +99,12 @@ In Email Security, you can view [email monitoring](/cloudflare-one/email-securit
 ## Email alerts for detections
 
 :::note
-Starting from October 2025, emails alerts for detections will no longer be available. As an alternative, use [Logpush](/cloudflare-one/insights/logs/enable-logs/#enable-detection-logs). 
+Starting from October 1, 2025, emails alerts for detections will no longer be available. As an alternative, use [Logpush](/cloudflare-one/insights/logs/enable-logs/#enable-detection-logs). 
 :::
 
 In Area 1, you receive an email when an email is assigned a disposition.
 
 In Email Security, you enable [Logpush](/cloudflare-one/insights/logs/enable-logs/#enable-detection-logs) to enable detection logs.
-
-## Contact support
-
-:::note
-Starting from October 2025, we will no longer receive support requests via email to any `@area1security.com` address. We will transition to receiving support requests from the Cloudflare dashboard.
-:::
-
-In Area 1, you can reach out to support via the following email addresses:
-
-- support@area1security.com
-- phishguard@area1security.com (for PhishGuard customers only)
-
-In Email Security, you can:
-
-- Go to the [Cloudflare Help Center](https://www.support.cloudflare.com/s/?language=en_US)
-- [Contact Cloudflare Support](/support/contacting-cloudflare-support/)
-- [Raise a ticket](/support/contacting-cloudflare-support/#getting-help-with-an-issue) and enter the correct answer to the following questions:
-  - What type of question do you have? **Technical - Other Products**
-  - In what area can we help you? **Email Security**
-- Email phishguard@area1security.com (for PhishGuard customers only).
-
-If you are PhishGuard customer, you will be informed when you can start raising PhishGuard tickets in the Cloudflare dashboard. 
 
 ## Search emails
 

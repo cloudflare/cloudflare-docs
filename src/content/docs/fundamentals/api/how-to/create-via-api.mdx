@@ -106,20 +106,24 @@ To fetch all available permission groups and their IDs, use the [List permission
 
 ```json output
 {
-	"result": [
-		{
-			"id": "19637fbb73d242c0a92845d8db0b95b1",
-			"name": "AI Audit Read",
-			"description": "Grants access to reading AI Audit",
-			"scopes": ["com.cloudflare.api.account.zone"]
-		},
-		{
-			"id": "1ba6ab4cacdb454b913bbb93e1b8cb8c",
-			"name": "AI Audit Write",
-			"description": "Grants access to reading and editing AI Audit",
-			"scopes": ["com.cloudflare.api.account.zone"]
-		}
-		// (...)
+  "result": [
+    {
+      "id": "19637fbb73d242c0a92845d8db0b95b1",
+      "name": "AI Crawl Control Read",
+      "description": "Grants access to reading AI Crawl Control",
+      "scopes": [
+        "com.cloudflare.api.account.zone"
+      ]
+    },
+    {
+      "id": "1ba6ab4cacdb454b913bbb93e1b8cb8c",
+      "name": "AI Crawl Control Write",
+      "description": "Grants access to reading and editing AI Crawl Control",
+      "scopes": [
+        "com.cloudflare.api.account.zone"
+      ]
+    },
+    // (...)
 	]
 }
 ```
