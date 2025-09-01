@@ -8,7 +8,6 @@ description: Runtime helpers for writing tests, exported from the `cloudflare:te
 
 ---
 
-
 The Workers Vitest integration provides runtime helpers for writing tests in the `cloudflare:test` module. The `cloudflare:test` module is provided by the `@cloudflare/vitest-pool-workers` package, but can only be imported from test files that execute in the Workers runtime.
 
 ## `cloudflare:test` module definition
@@ -282,7 +281,10 @@ To test projects that use Workflows `isolatedStorage` **must** be set to `false`
           const instance = await introspectWorkflowInstance(env.MY_WORKFLOW, "123456");
           await instance.modify(async (m) => {
             await m.disableSleeps();
-            await m.mockEvent({ type: "user-approval" }, { approval: true });
+            await m.mockEvent({
+              type: "user-approval",
+              payload: { approved: true, approverId: "user-123" },
+            });
           });
 
           // 2. EXECUTION
@@ -299,7 +301,7 @@ To test projects that use Workflows `isolatedStorage` **must** be set to `false`
         * `modify(fn: (m: WorkflowInstanceModifier) => Promise<void>)`: Applies modifications to the Workflow instance's behavior.
         * `waitForStepResult(step: { name: string; index?: number })`: Waits for a specific step to complete and return a result. If multiple steps share the same name, use the optional `index` property (1-based, defaults to `1`) to target a specific occurrence.
         * `waitForStatus(status: InstanceStatus["status"])`: Waits for the Workflow instance to reach a specific [status](/workflows/build/workers-api/#instancestatus) (e.g., 'running', 'complete').
-        * `cleanUp()`: Cleans up the Workflow instance's state. It is crucial to call this after each test to ensure isolation.
+        * `cleanUp()`: Cleans up the Workflow instance's state, which is crucial for test isolation. If this function isn't called, the instance's state will persist across subsequent tests. For example, an instance that becomes completed in one test will already be completed at the start of the next.
 
 * `introspectWorkflow(workflow: Workflow)`: Promise\<WorkflowIntrospector>
     * Creates an **introspector** for a Workflow where instance IDs are unknown beforehand. This allows for defining modifications that will apply to **all subsequently created instances**.
@@ -313,7 +315,10 @@ To test projects that use Workflows `isolatedStorage` **must** be set to `false`
           const introspector = await introspectWorkflow(env.MY_WORKFLOW);
           await introspector.modifyAll(async (m) => {
             await m.disableSleeps();
-            await m.mockEvent({ type: "user-approval" }, { approval: true });
+            await m.mockEvent({
+              type: "user-approval",
+              payload: { approved: true, approverId: "user-123" },
+            });
           });
 
           // 2. EXECUTION
@@ -348,5 +353,61 @@ To test projects that use Workflows `isolatedStorage` **must** be set to `false`
         * `forceStepTimeout(step: { name: string; index?: number }, times?: number)`: Forces a `step.do()` to fail by timing out immediately.
         * `mockEvent(event: { type: string; payload: unknown })`: Sends a mock event to the Workflow instance, causing a `step.waitForEvent()` to resolve with the provided payload.
         * `forceEventTimeout(step: { name: string; index?: number })`: Forces a `step.waitForEvent()` to time out instantly, causing the step to fail.
+        
+        <br/>
+        ```ts
+        import { env, introspectWorkflowInstance } from "cloudflare:test";
 
-        When targeting a step, use its `name`. If multiple steps share the same name, use the optional `index` property (1-based, defaults to `1`) to specify the occurrence.
+        it("should apply all modifier functions", async () => {
+          // 1. CONFIGURATION
+          const instance = await introspectWorkflowInstance(env.COMPLEX_WORKFLOW, "123456");
+
+          // Modify instance behavior
+          await instance.modify(async (m) => {
+            // Disables all sleeps to make the test run instantly
+            await m.disableSleeps();
+
+            // Mocks the successful result of a data-fetching step
+            await m.mockStepResult(
+              { name: "get-order-details" },
+              { orderId: "abc-123", amount: 99.99 }
+            );
+
+            // Mocks an incoming event to satisfy a `step.waitForEvent()`
+            await m.mockEvent({
+              type: "user-approval",
+              payload: { approved: true, approverId: "user-123" },
+            });
+
+            // Forces a step to fail once with a specific error to test retry logic
+            await m.mockStepError(
+              { name: "process-payment" },
+              new Error("Payment gateway timeout"),
+              1 // Fail only the first time
+            );
+
+            // Forces a `step.do()` to time out immediately
+            await m.forceStepTimeout({ name: "notify-shipping-partner" });
+
+            // Forces a `step.waitForEvent()` to time out
+            await m.forceEventTimeout({ name: "wait-for-fraud-check" });
+          });
+
+          // 2. EXECUTION
+          await env.COMPLEX_WORKFLOW.create({ id: "123456" });
+
+          // 3. ASSERTION
+          expect(await instance.waitForStepResult({ name: "get-order-details" })).toEqual({
+            orderId: "abc-123",
+            amount: 99.99,
+          });
+          // Given the forced timeouts, the workflow will end in an errored state
+          await instance.waitForStatus("errored");
+
+          // 4. CLEANUP
+          await instance.cleanUp();
+        });
+        ```
+
+      When targeting a step, use its `name`. If multiple steps share the same name, use the optional `index` property (1-based, defaults to `1`) to specify the occurrence.
+    
