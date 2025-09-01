@@ -90,14 +90,14 @@ def to_js(obj):
 
 class Default(WorkerEntrypoint):
     async def fetch(self, request):
-        # Bindings are available on the 'env' parameter
+        # Bindings are available on the 'env' attribute
         # https://developers.cloudflare.com/queues/
 
         # The default contentType is "json"
         # We can also pass plain text strings
-        await env.QUEUE.send("hello", contentType="text")
+        await self.env.QUEUE.send("hello", contentType="text")
         # Send a JSON payload
-        await env.QUEUE.send(to_js({"hello": "world"}))
+        await self.env.QUEUE.send(to_js({"hello": "world"}))
 
         # Return a response
         return Response.json({"write": "success"})
@@ -110,7 +110,7 @@ from workers import WorkerEntrypoint, Response
 
 class Default(WorkerEntrypoint):
     async def fetch(self, request):
-        results = await env.DB.prepare("PRAGMA table_list").run()
+        results = await self.env.DB.prepare("PRAGMA table_list").run()
         # Return a JSON response
         return Response.json(results)
 ```
