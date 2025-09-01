@@ -1284,18 +1284,12 @@ Upload a new [version](/workers/configuration/versions-and-deployments/#versions
 	headingLevel={3}
 />
 
-### `deploy`
+<WranglerCommand
+	command="versions deploy"
+description="Deploy a previously created [version](/workers/configuration/versions-and-deployments/#versions) of your Worker all at once or create a [gradual deployment](/workers/configuration/versions-and-deployments/gradual-deployments/) to incrementally shift traffic to a new version by following an interactive prompt."
+    headingLevel={3}
 
-Deploy a previously created [version](/workers/configuration/versions-and-deployments/#versions) of your Worker all at once or create a [gradual deployment](/workers/configuration/versions-and-deployments/gradual-deployments/) to incrementally shift traffic to a new version by following an interactive prompt.
-
-```txt
-wrangler versions deploy [OPTIONS]
-```
-
-- `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific Worker rather than inheriting from the [Wrangler configuration file](/workers/wrangler/configuration/).
-
-<Render file="wrangler-commands/global-flags" product="workers" />
+/>
 
 :::note
 
@@ -1306,18 +1300,19 @@ For example:
 
 :::
 
-### `list`
+<WranglerCommand
+	command="versions list"
+description="Retrieve details for the 10 most recent versions. Details include `Version ID`, `Created on`, `Author`, `Source`, and optionally, `Tag` or `Message`."
+    headingLevel={3}
 
-Retrieve details for the 10 most recent versions. Details include `Version ID`, `Created on`, `Author`, `Source`, and optionally, `Tag` or `Message`.
+/>
 
-```txt
-wrangler versions list [OPTIONS]
-```
+<WranglerCommand
+	command="versions view"
 
-- `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific Worker rather than inheriting from the [Wrangler configuration file](/workers/wrangler/configuration/).
+    headingLevel={3}
 
-<Render file="wrangler-commands/global-flags" product="workers" />
+/>
 
 ### `secret put`
 
