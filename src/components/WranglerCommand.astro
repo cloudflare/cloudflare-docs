@@ -5,6 +5,7 @@ import AnchorHeading from "./AnchorHeading.astro";
 import { PackageManagers } from "starlight-package-managers";
 import WranglerArg from "./WranglerArg.astro";
 import Details from "./Details.astro";
+import { marked } from "marked";
 
 function getCommand(path: string) {
 	const segments = path.trim().split(/\s+/);
@@ -37,6 +38,8 @@ let { command, headingLevel, description } = props.parse(Astro.props);
 
 const definition = getCommand(command);
 
+description ??= definition.metadata.description;
+
 if (!definition.args) {
 	throw new Error(`[WranglerCommand] "${command}" has no arguments`);
 }
@@ -48,9 +51,9 @@ const positionals = definition.positionalArgs
 	.join(" ");
 ---
 
-<AnchorHeading depth={headingLevel} title={command} />
+<AnchorHeading depth={headingLevel} title={`\`${command}\``} />
 
-<p>{description ? description : definition.metadata.description}</p>
+<Fragment set:html={marked.parse(description)} />
 
 <PackageManagers
 	pkg="wrangler"

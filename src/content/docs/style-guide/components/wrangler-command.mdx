@@ -21,7 +21,10 @@ import { WranglerCommand } from "~/components";
 ```mdx live
 import { WranglerCommand } from "~/components";
 
-<WranglerCommand command="deploy" />
+<WranglerCommand
+	command="deploy"
+	description={"Deploy a [Worker](/workers/)"}
+/>
 
 <WranglerCommand command="d1 execute" />
 ```
@@ -33,4 +36,4 @@ import { WranglerCommand } from "~/components";
 - `headingLevel` <Type text="boolean" /> <MetaInfo text="(default: 2) optional" />
   - The heading level that the command name should be added at on the page, i.e `2` for a `h2`.
 - `description` <Type text="string" /> <MetaInfo text="optional" />
-	- A description to render below the command heading. If not set, defaults to the value specified in the Wrangler help API.
+  - A description to render below the command heading. If not set, defaults to the value specified in the Wrangler help API.
