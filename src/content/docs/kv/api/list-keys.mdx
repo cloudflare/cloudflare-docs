@@ -126,8 +126,6 @@ export default {
 
 
 ```python
-With cloudflare python workers:
-
 async fetch(request, env, ctx):
     value = await env.NAMESPACE.list(prefix = "user:1:")
     return Response(value.keys)
