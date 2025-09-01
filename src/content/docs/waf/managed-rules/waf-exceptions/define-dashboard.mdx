@@ -98,6 +98,44 @@ To add an exception at the account level (Enterprise plans only):
 
 </Steps>
 
+## 5. (Optional) Edit the exception
+
+To edit an exception at the zone level:
+
+<Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
+
+<Steps>
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
+2. Go to **Security** > **WAF** > **Managed rules** tab.
+3. Find the exception you want to edit and select its name. Exceptions are rules listed with **Action** = **Skip**.
+4. Once you have finished making changes, select **Save**.
+
+</Steps>
+
+To delete an exception listed in the **Managed rules** tab, select the three dots next to it and select **Delete**.
+
+</TabItem> <TabItem label="New dashboard" icon="rocket">
+
+<Steps>
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
+2. Go to **Security** > **Security rules** and filter by **Managed Rules**.
+3. Find the exception you want to edit and select its name. Exceptions are rules listed with **Action** = **Skip**.
+4. Once you have finished making changes, select **Save**.<br/>
+   Alternatively, to delete the exception, select **Delete exception**.
+
+</Steps>
+</TabItem> </Tabs>
+
+To edit an exception at the account level (Enterprise plans only):
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
+2. Go to **Security** > **WAF** > **Managed rules** tab.
+3. Find the exception you want to edit and select its name. Exceptions are rules listed with **Action** = **Skip**.
+4. Once you have finished making changes, select **Save**.<br/>
+   Alternatively, to delete the exception, select **Delete exception**.
+
 :::note
 Exceptions only apply to rules executing a managed ruleset listed after them. For example, if you are skipping a rule belonging to the Cloudflare OWASP Core Ruleset, make sure the exception is listed in the rules list before the _Execute_ rule deploying this managed ruleset.
 :::
