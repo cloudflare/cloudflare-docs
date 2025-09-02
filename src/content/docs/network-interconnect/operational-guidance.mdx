@@ -13,12 +13,12 @@ Also refer to [Monitoring and alerts](/network-interconnect/monitoring-and-alert
 
 Cloudflare performs regular network maintenance that may impact CNI connectivity.
 
-- **Maintenance Impact**: Maintenance windows average six hours.Customers who are not redundantly connected to diverse devices, for instance in single-homed PoPs will experience a complete service disruption on CNI in that location.
+- **Maintenance Impact**: Maintenance windows average six hours. Customers who are not redundantly connected to diverse devices, for instance in single-homed PoPs, will experience a complete service disruption on CNI in that location.
 - **Designing for Availability**: For critical applications, deploy CNI in locations that support diversity on the device level (multi-homed PoPs) to ensure protection against a single point of hardware failure and routine maintenance. Cloudflare does not guarantee coordinated maintenance between PoP locations. This means connecting to two different PoPs does not ensure protection against coincident service disruption.
 
 ## Troubleshooting
 
-When facing connectivity problems, your first action should be to check for broader service disruptions. Visit `https://www.cloudflarestatus.com/` to see if any scheduled maintenance or active incidents are impacting services. This helps determine if the issue originates outside your network. Refer to [Monitoring and alerts](/network-interconnect/monitoring-and-alerts).
+When facing connectivity problems, your first action should be to check for broader service disruptions. Visit `https://www.cloudflarestatus.com/` to see if any scheduled maintenance or active incidents are impacting services. This helps determine if the issue originates outside your network. Refer to [Monitoring and alerts](/network-interconnect/monitoring-and-alerts/).
 
 If no system-wide problems are reported, gather the following information before submitting a support case. Providing comprehensive details facilitates a faster resolution:
 
