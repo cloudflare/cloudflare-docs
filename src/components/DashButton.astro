@@ -22,4 +22,4 @@ const { name } = route;
 const { href } = new URL(route.deeplink, "https://dash.cloudflare.com");
 ---
 
-<LinkButton href={href}>Go to {name}</LinkButton>
+<LinkButton href={href} icon="external">Go to <strong>{name}</strong></LinkButton>
