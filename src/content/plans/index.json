@@ -2761,7 +2761,7 @@
 					"free": "Yes",
 					"pro": "Yes",
 					"biz": "Yes",
-					"ent": "Yes"
+					"ent": "Contact your account team"
 				},
 				"b_initial_quota": {
 					"title": "Hostnames included",
@@ -2769,7 +2769,7 @@
 					"free": "100",
 					"pro": "100",
 					"biz": "100",
-					"ent": "0"
+					"ent": "Custom"
 				},
 				"c_max_hostnames": {
 					"title": "Max hostnames",
