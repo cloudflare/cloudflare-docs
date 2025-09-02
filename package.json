@@ -57,7 +57,7 @@
 		"@types/react-dom": "19.0.4",
 		"@typescript-eslint/parser": "8.41.0",
 		"algoliasearch": "5.36.0",
-		"astro": "5.13.2",
+		"astro": "5.13.5",
 		"astro-breadcrumbs": "3.3.1",
 		"astro-icon": "1.1.5",
 		"astro-live-code": "0.0.6",
