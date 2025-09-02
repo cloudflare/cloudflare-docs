@@ -132,7 +132,7 @@ To create your first D1 database:
     {
     	"d1_databases": [
     		{
-    			"binding": "DB",
+    			"binding": "prod_d1_tutorial",
     			"database_name": "prod-d1-tutorial",
     			"database_id": "<unique-ID-for-your-database>"
     		}
@@ -190,7 +190,7 @@ But if you wish to add the binding manually, follow the steps below:
 
    ```toml
    [[d1_databases]]
-   binding = "DB" # available in your Worker on env.DB
+   binding = "prod_d1_tutorial" # available in your Worker on env.DB
    database_name = "prod-d1-tutorial"
    database_id = "<unique-ID-for-your-database>"
    ```
@@ -199,7 +199,7 @@ But if you wish to add the binding manually, follow the steps below:
 
    Specifically:
 
-   - The value (string) you set for `binding` is the **binding name**, and is used to reference this database in your Worker. In this tutorial, name your binding `DB`.
+   - The value (string) you set for `binding` is the **binding name**, and is used to reference this database in your Worker. In this tutorial, name your binding `prod_d1_tutorial`.
    - The binding name must be [a valid JavaScript variable name](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#variables). For example, `binding = "MY_DB"` or `binding = "productionDB"` would both be valid names for the binding.
    - Your binding is available in your Worker at `env.<BINDING_NAME>` and the D1 [Workers Binding API](/d1/worker-api/) is exposed on this binding.
 
@@ -221,7 +221,7 @@ You create bindings by adding them to the Worker you have created.
 3. Select **Settings**.
 4. Scroll to **Bindings**, then select **Add**.
 5. Select **D1 database**.
-6. Name your binding in **Variable name**, then select the `prod-d1-tutorial` D1 database you created in [step 2](/d1/get-started/#2-create-a-database) from the dropdown menu. For this tutorial, name your binding `DB`.
+6. Name your binding in **Variable name**, then select the `prod-d1-tutorial` D1 database you created in [step 2](/d1/get-started/#2-create-a-database) from the dropdown menu. For this tutorial, name your binding `prod_d1_tutorial`.
 7. Select **Deploy** to deploy your binding. When deploying, there are two options:
 	- **Deploy:** Immediately deploy the binding to 100% of your audience.
 	- **Save version:** Save a version of the binding which you can deploy in the future.
@@ -275,19 +275,20 @@ After correctly preparing your [Wrangler configuration file](/workers/wrangler/c
    ```
 
    ```txt output
-   🌀 Mapping SQL input into an array of statements
-   🌀 Executing on local database production-db-backend (<DATABASE_ID>) from .wrangler/state/v3/d1:
-   ┌────────────┬─────────────────────┬───────────────────┐
-   │ CustomerId │ CompanyName         │ ContactName       │
-   ├────────────┼─────────────────────┼───────────────────┤
-   │ 1          │ Alfreds Futterkiste │ Maria Anders      │
-   ├────────────┼─────────────────────┼───────────────────┤
-   │ 4          │ Around the Horn     │ Thomas Hardy      │
-   ├────────────┼─────────────────────┼───────────────────┤
-   │ 11         │ Bs Beverages        │ Victoria Ashworth │
-   ├────────────┼─────────────────────┼───────────────────┤
-   │ 13         │ Bs Beverages        │ Random Name       │
-   └────────────┴─────────────────────┴───────────────────┘
+    🌀 Executing on local database jun-d1-db-gs-2025 (cf91ec5c-fa77-4d49-ad8e-e22921b996b2) from .wrangler/state/v3/d1:
+    🌀 To execute on your remote database, add a --remote flag to your wrangler command.
+    🚣 1 command executed successfully.
+    ┌────────────┬─────────────────────┬───────────────────┐
+    │ CustomerId │ CompanyName         │ ContactName       │
+    ├────────────┼─────────────────────┼───────────────────┤
+    │ 1          │ Alfreds Futterkiste │ Maria Anders      │
+    ├────────────┼─────────────────────┼───────────────────┤
+    │ 4          │ Around the Horn     │ Thomas Hardy      │
+    ├────────────┼─────────────────────┼───────────────────┤
+    │ 11         │ Bs Beverages        │ Victoria Ashworth │
+    ├────────────┼─────────────────────┼───────────────────┤
+    │ 13         │ Bs Beverages        │ Random Name       │
+    └────────────┴─────────────────────┴───────────────────┘
    ```
 
 </Steps>
@@ -333,7 +334,7 @@ After you have set up your database, run an SQL query from within your Worker.
     export interface Env {
     	// If you set another name in the Wrangler config file for the value for 'binding',
     	// replace "DB" with the variable name you defined.
-    	DB: D1Database;
+    	prod_d1_tutorial: D1Database;
     }
 
     export default {
@@ -342,7 +343,7 @@ After you have set up your database, run an SQL query from within your Worker.
 
     		if (pathname === "/api/beverages") {
     			// If you did not use `DB` as your binding name, change it here
-    			const { results } = await env.DB.prepare(
+    			const { results } = await env.prod_d1_tutorial.prepare(
     				"SELECT * FROM Customers WHERE CompanyName = ?",
     			)
     				.bind("Bs Beverages")
@@ -367,7 +368,7 @@ After you have set up your database, run an SQL query from within your Worker.
             pathname = urlparse(request.url).path
             if pathname == "/api/beverages":
                 query = (
-                    await self.env.DB.prepare(
+                    await self.env.prod_d1_tutorial.prepare(
                         "SELECT * FROM Customers WHERE CompanyName = ?",
                     )
                     .bind("Bs Beverages")
@@ -384,7 +385,7 @@ After you have set up your database, run an SQL query from within your Worker.
     In the code above, you:
 
     1. Define a binding to your D1 database in your code. This binding matches the `binding` value you set in the [Wrangler configuration file](/workers/wrangler/configuration/) under `d1_databases`.
-    2. Query your database using `env.DB.prepare` to issue a [prepared query](/d1/worker-api/d1-database/#prepare) with a placeholder (the `?` in the query).
+    2. Query your database using `env.prod_d1_tutorial.prepare` to issue a [prepared query](/d1/worker-api/d1-database/#prepare) with a placeholder (the `?` in the query).
     3. Call `bind()` to safely and securely bind a value to that placeholder. In a real application, you would allow a user to pass the `CompanyName` they want to list results for. Using `bind()` prevents users from executing arbitrary SQL (known as "SQL injection") against your application and deleting or otherwise modifying your database.
     4. Execute the query by calling [`run()`](/d1/worker-api/prepared-statements/#run) to return all rows (or none, if the query returns none).
     5. Return your query results, if any, in JSON format with `Response.json(results)`.
@@ -410,7 +411,7 @@ You can query your D1 database using your Worker.
 
     		if (pathname === "/api/beverages") {
     			// If you did not use `DB` as your binding name, change it here
-    			const { results } = await env.DB.prepare(
+    			const { results } = await env.prod_d1_tutorial.prepare(
     				"SELECT * FROM Customers WHERE CompanyName = ?"
     			)
     				.bind("Bs Beverages")
@@ -465,23 +466,23 @@ To deploy your Worker to production using Wrangler, you must first repeat the [d
     npx wrangler d1 execute prod-d1-tutorial --remote --command="SELECT * FROM Customers"
     ```
     ```txt output
-    ⛅️ wrangler 4.13.2
-    -------------------
 
-    🌀 Executing on remote database prod-d1-tutorial (<DATABASE_ID>):
-    🌀 To execute on your local development database, remove the --remote flag from your wrangler command.
-    🚣 Executed 1 command in 0.4069ms
-    ┌────────────┬─────────────────────┬───────────────────┐
-    │ CustomerId │ CompanyName         │ ContactName       │
-    ├────────────┼─────────────────────┼───────────────────┤
-    │ 1          │ Alfreds Futterkiste │ Maria Anders      │
-    ├────────────┼─────────────────────┼───────────────────┤
-    │ 4          │ Around the Horn     │ Thomas Hardy      │
-    ├────────────┼─────────────────────┼───────────────────┤
-    │ 11         │ Bs Beverages        │ Victoria Ashworth │
-    ├────────────┼─────────────────────┼───────────────────┤
-    │ 13         │ Bs Beverages        │ Random Name       │
-    └────────────┴─────────────────────┴───────────────────┘
+   ⛅️ wrangler 4.33.1
+	───────────────────
+	🌀 Executing on remote database jun-d1-db-gs-2025 (cf91ec5c-fa77-4d49-ad8e-e22921b996b2):
+	🌀 To execute on your local development database, remove the --remote flag from your wrangler command.
+	🚣 Executed 1 command in 0.1797ms
+	┌────────────┬─────────────────────┬───────────────────┐
+	│ CustomerId │ CompanyName         │ ContactName       │
+	├────────────┼─────────────────────┼───────────────────┤
+	│ 1          │ Alfreds Futterkiste │ Maria Anders      │
+	├────────────┼─────────────────────┼───────────────────┤
+	│ 4          │ Around the Horn     │ Thomas Hardy      │
+	├────────────┼─────────────────────┼───────────────────┤
+	│ 11         │ Bs Beverages        │ Victoria Ashworth │
+	├────────────┼─────────────────────┼───────────────────┤
+	│ 13         │ Bs Beverages        │ Random Name       │
+	└────────────┴─────────────────────┴───────────────────┘
     ```
 
 3. Deploy your Worker to make your project accessible on the Internet. Run:
@@ -490,17 +491,17 @@ To deploy your Worker to production using Wrangler, you must first repeat the [d
    npx wrangler deploy
    ```
    ```txt output
-   ⛅️ wrangler 4.13.2
-   -------------------
+   ⛅️ wrangler 4.33.1
+   ────────────────────
+   Total Upload: 0.52 KiB / gzip: 0.33 KiB
+   Your Worker has access to the following bindings:
+   Binding                                        Resource
+   env.prod_d1_tutorial (prod-d1-tutorial)        D1 Database
 
-   Total Upload: 0.19 KiB / gzip: 0.16 KiB
-   Your worker has access to the following bindings:
-   - D1 Databases:
-     - DB: prod-d1-tutorial (<DATABASE_ID>)
-   Uploaded d1-tutorial (3.76 sec)
-   Deployed d1-tutorial triggers (2.77 sec)
-     https://d1-tutorial.<YOUR_SUBDOMAIN>.workers.dev
-   Current Version ID: <VERSION_ID>
+   Uploaded prod-d1-tutorial (4.17 sec)
+   Deployed prod-d1-tutorial triggers (3.49 sec)
+   https://prod-d1-tutorial.pcx-team.workers.dev
+   Current Version ID: 42c82f1c-ff2b-4dce-9ea2-265adcccd0d5
    ```
 
    You can now visit the URL for your newly created project to query your live database.
