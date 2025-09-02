@@ -1,0 +1,505 @@
+[
+	{
+		"name": "Account home",
+		"deeplink": "/?to=/:account/home"
+	},
+	{
+		"name": "Discover",
+		"deeplink": "/?to=/:account/discover"
+	},
+	{
+		"name": "Domain registration",
+		"deeplink": "/?to=/:account/registrar/domains"
+	},
+	{
+		"name": "Manage domains",
+		"deeplink": "/?to=/:account/registrar/domains",
+		"parent": ["Domain registration"]
+	},
+	{
+		"name": "Transfer domains",
+		"deeplink": "/?to=/:account/registrar/transfer",
+		"parent": ["Domain registration"]
+	},
+	{
+		"name": "Register domains",
+		"deeplink": "/?to=/:account/registrar/register",
+		"parent": ["Domain registration"]
+	},
+	{
+		"name": "Log Explorer",
+		"deeplink": "/?to=/:account/log-explorer"
+	},
+	{
+		"name": "Log search",
+		"deeplink": "/?to=/:account/log-explorer/log-search",
+		"parent": ["Log Explorer"]
+	},
+	{
+		"name": "Custom dashboards",
+		"deeplink": "/?to=/:account/log-explorer/dashboards",
+		"parent": ["Log Explorer"]
+	},
+	{
+		"name": "Manage datasets",
+		"deeplink": "/?to=/:account/log-explorer/manage-sources",
+		"parent": ["Log Explorer"]
+	},
+	{
+		"name": "Analytics & Logs",
+		"deeplink": "/?to=/:account/analytics"
+	},
+	{
+		"name": "Account analytics",
+		"deeplink": "/?to=/:account/analytics",
+		"parent": ["Analytics & Logs"]
+	},
+	{
+		"name": "Network analytics",
+		"deeplink": "/?to=/:account/network-analytics",
+		"parent": ["Analytics & Logs"]
+	},
+	{
+		"name": "Web analytics",
+		"deeplink": "/?to=/:account/web-analytics",
+		"parent": ["Analytics & Logs"]
+	},
+	{
+		"name": "Logpush",
+		"deeplink": "/?to=/:account/logs",
+		"parent": ["Analytics & Logs"]
+	},
+	{
+		"name": "Carbon Impact Report",
+		"deeplink": "/?to=/:account/carbon",
+		"parent": ["Analytics & Logs"]
+	},
+	{
+		"name": "Magic monitoring",
+		"deeplink": "/?to=/:account/network-monitoring",
+		"parent": ["Analytics & Logs"]
+	},
+	{
+		"name": "Security Center",
+		"deeplink": "/?to=/:account/security-center"
+	},
+	{
+		"name": "Security insights",
+		"deeplink": "/?to=/:account/security-center",
+		"parent": ["Security Center"]
+	},
+	{
+		"name": "Security analytics",
+		"deeplink": "/?to=/:account/security-center/analytics",
+		"parent": ["Security Center"]
+	},
+	{
+		"name": "Security events",
+		"deeplink": "/?to=/:account/security-center/events",
+		"parent": ["Security Center"]
+	},
+	{
+		"name": "Infrastructure",
+		"deeplink": "/?to=/:account/security-center/inventory",
+		"parent": ["Security Center"]
+	},
+	{
+		"name": "Investigate",
+		"deeplink": "/?to=/:account/security-center/investigate",
+		"parent": ["Security Center"]
+	},
+	{
+		"name": "Security reports",
+		"deeplink": "/?to=/:account/security-center/reports",
+		"parent": ["Security Center"]
+	},
+	{
+		"name": "Brand Protection",
+		"deeplink": "/?to=/:account/security-center/brand-protection",
+		"parent": ["Security Center"]
+	},
+	{
+		"name": "Threat intelligence",
+		"deeplink": "/?to=/:account/security-center/threat-intelligence",
+		"parent": ["Security Center"]
+	},
+	{
+		"name": "Trace",
+		"deeplink": "/?to=/:account/trace"
+	},
+	{
+		"name": "WAF",
+		"deeplink": "/?to=/:account/application-security/waf"
+	},
+	{
+		"name": "Internal DNS",
+		"deeplink": "/?to=/:account/internal-dns"
+	},
+	{
+		"name": "DNS Firewall",
+		"deeplink": "/?to=/:account/dns-firewall"
+	},
+	{
+		"name": "Turnstile",
+		"deeplink": "/?to=/:account/turnstile"
+	},
+	{
+		"name": "Load balancing",
+		"deeplink": "/?to=/:account/load-balancing"
+	},
+	{
+		"name": "Interconnects",
+		"deeplink": "/?to=/:account/interconnects"
+	},
+	{
+		"name": "Magic Transit",
+		"deeplink": "/?to=/:account/magic-transit"
+	},
+	{
+		"name": "Configuration",
+		"deeplink": "/?to=/:account/magic-transit/configuration",
+		"parent": ["Magic Transit"]
+	},
+	{
+		"name": "Network health",
+		"deeplink": "/?to=/:account/magic-transit/tunnel-healthchecks",
+		"parent": ["Magic Transit"]
+	},
+	{
+		"name": "Packet captures",
+		"deeplink": "/?to=/:account/magic-transit/packet-captures/captures",
+		"parent": ["Magic Transit"]
+	},
+	{
+		"name": "Magic Firewall",
+		"deeplink": "/?to=/:account/network-security/magic_firewall"
+	},
+	{
+		"name": "L3/4 DDoS protection",
+		"deeplink": "/?to=/:account/network-security/ddos"
+	},
+	{
+		"name": "DDoS Managed Rules",
+		"deeplink": "/?to=/:account/network-security/ddos",
+		"parent": ["L3/4 DDoS protection"]
+	},
+	{
+		"name": "IP addresses",
+		"deeplink": "/?to=/:account/ip-addresses/proxy-ips"
+	},
+	{
+		"name": "Address maps",
+		"deeplink": "/?to=/:account/ip-addresses/proxy-ips",
+		"parent": ["IP addresses"]
+	},
+	{
+		"name": "Zero Trust",
+		"deeplink": "one.dash.cloudflare.com"
+	},
+	{
+		"name": "Magic WAN",
+		"deeplink": "/?to=/:account/magic-wan/overview"
+	},
+	{
+		"name": "Overview",
+		"deeplink": "/?to=/:account/magic-wan/overview",
+		"parent": ["Magic WAN"]
+	},
+	{
+		"name": "Sites",
+		"deeplink": "/?to=/:account/magic-wan/sites",
+		"parent": ["Magic WAN"]
+	},
+	{
+		"name": "Configuration",
+		"deeplink": "/?to=/:account/magic-wan/configuration",
+		"parent": ["Magic WAN"]
+	},
+	{
+		"name": "Network health",
+		"deeplink": "/?to=/:account/magic-wan/tunnel-healthchecks",
+		"parent": ["Magic WAN"]
+	},
+	{
+		"name": "Packet captures",
+		"deeplink": "/?to=/:account/magic-wan/packet-captures/captures",
+		"parent": ["Magic WAN"]
+	},
+	{
+		"name": "Compute (Workers)",
+		"deeplink": "/?to=/:account/workers-and-pages"
+	},
+	{
+		"name": "Workers & Pages",
+		"deeplink": "/?to=/:account/workers-and-pages",
+		"parent": ["Compute (Workers)"]
+	},
+	{
+		"name": "Durable Objects",
+		"deeplink": "/?to=/:account/workers/durable-objects",
+		"parent": ["Compute (Workers)"]
+	},
+	{
+		"name": "Containers",
+		"deeplink": "/?to=/:account/workers/containers",
+		"parent": ["Compute (Workers)"]
+	},
+	{
+		"name": "Workers observability",
+		"deeplink": "/?to=/:account/workers-and-pages/observability",
+		"parent": ["Compute (Workers)"]
+	},
+	{
+		"name": "Workflows",
+		"deeplink": "/?to=/:account/workers/workflows",
+		"parent": ["Compute (Workers)"]
+	},
+	{
+		"name": "Browser Rendering",
+		"deeplink": "/?to=/:account/workers/browser-rendering",
+		"parent": ["Compute (Workers)"]
+	},
+	{
+		"name": "Workers plans",
+		"deeplink": "/?to=/:account/workers/plans",
+		"parent": ["Compute (Workers)"]
+	},
+	{
+		"name": "Secrets Store",
+		"deeplink": "/?to=/:account/secrets-store"
+	},
+	{
+		"name": "Workers for Platforms",
+		"deeplink": "/?to=/:account/workers-for-platforms"
+	},
+	{
+		"name": "Storage & Databases",
+		"deeplink": "/?to=/:account/workers/kv/namespaces"
+	},
+	{
+		"name": "KV storage",
+		"deeplink": "/?to=/:account/workers/kv/namespaces",
+		"parent": ["Storage & Databases"]
+	},
+	{
+		"name": "D1 SQL database",
+		"deeplink": "/?to=/:account/workers/d1",
+		"parent": ["Storage & Databases"]
+	},
+	{
+		"name": "Hyperdrive",
+		"deeplink": "/?to=/:account/workers/hyperdrive",
+		"parent": ["Storage & Databases"]
+	},
+	{
+		"name": "Pipelines",
+		"deeplink": "/?to=/:account/workers/pipelines",
+		"parent": ["Storage & Databases"]
+	},
+	{
+		"name": "Queues",
+		"deeplink": "/?to=/:account/workers/queues",
+		"parent": ["Storage & Databases"]
+	},
+	{
+		"name": "Analytics engine",
+		"deeplink": "/?to=/:account/workers/analytics-engine",
+		"parent": ["Storage & Databases"]
+	},
+	{
+		"name": "R2 object storage",
+		"deeplink": "/?to=/:account/r2/overview"
+	},
+	{
+		"name": "Overview",
+		"deeplink": "/?to=/:account/r2/overview",
+		"parent": ["R2 object storage"]
+	},
+	{
+		"name": "Data migration",
+		"deeplink": "/?to=/:account/r2/slurper",
+		"parent": ["R2 object storage"]
+	},
+	{
+		"name": "AI",
+		"deeplink": "/?to=/:account/ai/workers-ai"
+	},
+	{
+		"name": "Workers AI",
+		"deeplink": "/?to=/:account/ai/workers-ai",
+		"parent": ["AI"]
+	},
+	{
+		"name": "Vectorize",
+		"deeplink": "/?to=/:account/ai/vectorize",
+		"parent": ["AI"]
+	},
+	{
+		"name": "AI Gateway",
+		"deeplink": "/?to=/:account/ai/ai-gateway",
+		"parent": ["AI"]
+	},
+	{
+		"name": "AutoRAG",
+		"deeplink": "/?to=/:account/ai/autorag",
+		"parent": ["AI"]
+	},
+	{
+		"name": "Stream",
+		"deeplink": "/?to=/:account/stream"
+	},
+	{
+		"name": "Videos",
+		"deeplink": "/?to=/:account/stream/videos",
+		"parent": ["Stream"]
+	},
+	{
+		"name": "Live inputs",
+		"deeplink": "/?to=/:account/stream/inputs",
+		"parent": ["Stream"]
+	},
+	{
+		"name": "Transformations",
+		"deeplink": "/?to=/:account/stream/video-transformations",
+		"parent": ["Stream"]
+	},
+	{
+		"name": "Analytics",
+		"deeplink": "/?to=/:account/stream/analytics",
+		"parent": ["Stream"]
+	},
+	{
+		"name": "Images",
+		"deeplink": "/?to=/:account/images"
+	},
+	{
+		"name": "Overview",
+		"deeplink": "/?to=/:account/images",
+		"parent": ["Images"]
+	},
+	{
+		"name": "Variants",
+		"deeplink": "/?to=/:account/images/variants",
+		"parent": ["Images"]
+	},
+	{
+		"name": "Keys",
+		"deeplink": "/?to=/:account/images/keys",
+		"parent": ["Images"]
+	},
+	{
+		"name": "Sourcing kit",
+		"deeplink": "/?to=/:account/images/sourcing-kit",
+		"parent": ["Images"]
+	},
+	{
+		"name": "Transformations",
+		"deeplink": "/?to=/:account/images/delivery-zones",
+		"parent": ["Images"]
+	},
+	{
+		"name": "Realtime",
+		"deeplink": "/?to=/:account/realtime"
+	},
+	{
+		"name": "RealtimeKit",
+		"deeplink": "/?to=/:account/realtime/kit",
+		"parent": ["Realtime"]
+	},
+	{
+		"name": "TURN Server",
+		"deeplink": "/?to=/:account/realtime/turn",
+		"parent": ["Realtime"]
+	},
+	{
+		"name": "Serverless SFU",
+		"deeplink": "/?to=/:account/realtime/sfu",
+		"parent": ["Realtime"]
+	},
+	{
+		"name": "Tag management",
+		"deeplink": "/?to=/:account/tag-management"
+	},
+	{
+		"name": "Tag setup",
+		"deeplink": "/?to=/:account/tag-management/zaraz",
+		"parent": ["Tag management"]
+	},
+	{
+		"name": "Consent",
+		"deeplink": "/?to=/:account/tag-management/consent",
+		"parent": ["Tag management"]
+	},
+	{
+		"name": "History",
+		"deeplink": "/?to=/:account/tag-management/history",
+		"parent": ["Tag management"]
+	},
+	{
+		"name": "Monitoring",
+		"deeplink": "/?to=/:account/tag-management/monitoring",
+		"parent": ["Tag management"]
+	},
+	{
+		"name": "Settings",
+		"deeplink": "/?to=/:account/tag-management/settings",
+		"parent": ["Tag management"]
+	},
+	{
+		"name": "Zaraz plans",
+		"deeplink": "/?to=/:account/tag-management/plans",
+		"parent": ["Tag management"]
+	},
+	{
+		"name": "Google Tag Gateway",
+		"deeplink": "/?to=/:account/tag-management/google-tag-gateway",
+		"parent": ["Tag management"]
+	},
+	{
+		"name": "Manage Account",
+		"deeplink": "/?to=/:account/members"
+	},
+	{
+		"name": "Members",
+		"deeplink": "/?to=/:account/members",
+		"parent": ["Manage Account"]
+	},
+	{
+		"name": "Account API tokens",
+		"deeplink": "/?to=/:account/api-tokens",
+		"parent": ["Manage Account"]
+	},
+	{
+		"name": "Audit logs",
+		"deeplink": "/?to=/:account/audit-log",
+		"parent": ["Manage Account"]
+	},
+	{
+		"name": "Billing",
+		"deeplink": "/?to=/:account/billing",
+		"parent": ["Manage Account"]
+	},
+	{
+		"name": "Settings",
+		"deeplink": "/?to=/:account/configurations",
+		"parent": ["Manage Account"]
+	},
+	{
+		"name": "Abuse reports",
+		"deeplink": "/?to=/:account/abuse-reports",
+		"parent": ["Manage Account"]
+	},
+	{
+		"name": "Blocked content",
+		"deeplink": "/?to=/:account/blocked-content",
+		"parent": ["Manage Account"]
+	},
+	{
+		"name": "Notifications",
+		"deeplink": "/?to=/:account/notifications"
+	},
+	{
+		"name": "Bulk redirects",
+		"deeplink": "/?to=/:account/bulk-redirects"
+	}
+]

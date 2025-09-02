@@ -8,7 +8,7 @@ head:
     content: Overview
 ---
 
-import { Description, Plan, RelatedProduct } from "~/components"
+import { Description, Plan, RelatedProduct, Render } from "~/components"
 
 <Description>
 Connect your network infrastructure directly to Cloudflare
@@ -16,7 +16,41 @@ Connect your network infrastructure directly to Cloudflare
 
 <Plan type="enterprise" />
 
-Cloudflare Network Interconnect (CNI) allows you to connect your network infrastructure directly with Cloudflare – rather than using the public Internet – for a more reliable and secure experience. With CNI, you can bring Cloudflare's full suite of network functions to your physical network edge.
+Cloudflare Network Interconnect (CNI) allows you to connect your network infrastructure directly to Cloudflare — rather than using the public Internet — for a more reliable and secure experience. With CNI, you can bring Cloudflare's full suite of network functions to your physical network edge.
+
+## Why Use CNI? Key Benefits
+
+Enterprises use CNI to achieve:
+- **Enhanced Performance**: Gain lower latency and more consistent network throughput.
+- **Increased Security**: Reduce your network's attack surface by connecting privately and avoiding the public Internet.
+
+## Connection Types
+
+Choose the model that best fits your infrastructure and operational needs.
+
+| | Direct Interconnect | Partner Interconnect |
+| - | - | - |
+| **Port type** | A dedicated physical fiber connection between your network equipment and Cloudflare's hardware in a shared data center. | A virtual connection to Cloudflare established through one of our global connectivity partners. |
+| **Operations** | You are responsible for procuring and managing the physical cross-connect to Cloudflare's equipment. | Your partner manages the connection logistics, often through a software-defined networking portal. |
+| **Ideal use case** | For customers collocated with Cloudflare who require maximum control, performance, and reliability. | For customers who are not in the same data center as Cloudflare or prefer a managed connectivity solution. |
+
+## Dataplane
+
+Cloudflare's data centers may support one or more interconnect dataplanes. The dataplane is the type of equipment that terminates your direct connection:
+- **Dataplane v1.0**: A peering connection to a Cloudflare edge data center that supports GRE tunnels for connecting with the Magic Networking overlay.
+- **Dataplane v1.1**: An enhanced version of the 1.0 dataplane that supports GRE-less delivery for Magic Transit Direct Server Return.
+
+When you review the [available locations](/network-interconnect/static/cni-locations-04-08-2025.pdf) (PDF), you can see which dataplane version(s) are available.
+
+## Product Use Cases
+
+<Render file="cni-product-use-cases" product="networking-services" />
+
+### Designing for high availability
+
+To protect against a single point of failure, it is critical to design your CNI deployment for resilience. For business-critical applications, seek Cloudflare locations that support diversity on the device level, which ensures your connections terminate on physically separate hardware.
+
+Refer to [Service Expectations](/network-interconnect/get-started/#service-expectations) for more information.
 
 ***
 

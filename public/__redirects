@@ -372,6 +372,25 @@
 /network-interconnect/set-up-cni/configure-bgp/ /network-interconnect/classic-cni/set-up/configure-bgp-bfd/ 301
 /network-interconnect/set-up-cni/peering-portal/ /network-interconnect/pni-and-peering/ 301
 
+/network-interconnect/about/ /network-interconnect/ 301
+/network-interconnect/alerts/ /network-interconnect/monitoring-and-alerts/ 301
+/network-interconnect/classic-cni/alerts/ /network-interconnect/ 301
+/network-interconnect/classic-cni/ /network-interconnect/ 301
+/network-interconnect/classic-cni/set-up/configure-bgp-bfd/ /network-interconnect/ 301
+/network-interconnect/classic-cni/set-up/configure-cross-connect/ /network-interconnect/ 301
+/network-interconnect/classic-cni/set-up/ /network-interconnect/ 301
+/network-interconnect/classic-cni/set-up/partners/console-connect/ /network-interconnect/ 301
+/network-interconnect/classic-cni/set-up/partners/equinix-fabric/ /network-interconnect/ 301
+/network-interconnect/classic-cni/set-up/partners/ /network-interconnect/ 301
+/network-interconnect/classic-cni/set-up/partners/megaport/ /network-interconnect/ 301
+/network-interconnect/classic-cni/set-up/partners/packet-fabric/ /network-interconnect/ 301
+/network-interconnect/classic-cni/set-up/scope-config/ /network-interconnect/ 301
+/network-interconnect/cloud-cni/ /network-interconnect/ 301
+/network-interconnect/express-cni/bgp-peering/ /network-interconnect/ 301
+/network-interconnect/express-cni/create-interconnects/ /network-interconnect/ 301
+/network-interconnect/express-cni/ /network-interconnect/ 301
+/network-interconnect/pni-and-peering/ /network-interconnect/ 301
+
 # Constellation
 /constellation/ /workers-ai/ 301
 
