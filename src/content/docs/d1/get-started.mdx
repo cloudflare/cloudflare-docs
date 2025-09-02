@@ -139,6 +139,7 @@ To create your first D1 database:
     	]
     }
     ```
+3. When prompted: `Would you like Wrangler to add it on your behalf?`, select `Yes`. This will automatically add the binding to your Wrangler configuration file.
 
 </Steps>
 
@@ -176,11 +177,13 @@ To bind your D1 database to your Worker:
 
 <Tabs syncKey='CLIvDash'> <TabItem label='CLI'>
 
-You create bindings by updating your Wrangler file.
+You can automatically add the binding to your Wrangler configuration file when you run the `wrangler d1 create` command (step 3 of [2. Create a database](/d1/get-started/#2-create-a-database)).
+
+But if you wish to add the binding manually, follow the steps below:
 
 <Steps>
 
-1. Copy the lines obtained from [step 2](/d1/get-started/#2-create-a-database) from your terminal.
+1. Copy the lines obtained from step 2 of [2. Create a database](/d1/get-started/#2-create-a-database) from your terminal.
 2. Add them to the end of your Wrangler file.
 
    <WranglerConfig>
