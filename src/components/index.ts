@@ -14,6 +14,7 @@ export { default as ComponentUsage } from "./ComponentUsage.astro";
 export { default as ComponentsUsage } from "./ComponentsUsage.astro";
 export { default as CopyPageButton } from "./CopyPageButton.tsx";
 export { default as CURL } from "./CURL.astro";
+export { default as DashButton } from "./DashButton.astro";
 export { default as Description } from "./Description.astro";
 export { default as Details } from "./Details.astro";
 export { default as DirectoryListing } from "./DirectoryListing.astro";

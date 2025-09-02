@@ -1,0 +1,25 @@
+---
+import { z } from "astro:schema";
+import { LinkButton } from "@astrojs/starlight/components";
+import Routes from "~/content/dash-routes/index.json";
+
+const props = z
+	.object({
+		url: z.string(),
+	})
+	.strict();
+
+const { url } = props.parse(Astro.props);
+
+const route = Routes.find((route) => route.deeplink === url);
+
+if (!route) {
+	throw new Error(`[DashButton] No route found for ${url}`);
+}
+
+const { name } = route;
+
+const { href } = new URL(route.deeplink, "https://dash.cloudflare.com");
+---
+
+<LinkButton href={href}>Go to {name}</LinkButton>

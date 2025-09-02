@@ -1,0 +1,35 @@
+---
+title: DashButton
+styleGuide:
+  component: DashButton
+---
+
+import AvailableDashRoutes from "~/components/AvailableDashRoutes.astro";
+
+This component creates a [LinkButton](/style-guide/components/buttons/) that links to a Cloudflare dashboard deeplink.
+
+## Import
+
+```mdx live
+import { DashButton } from "~/components";
+```
+
+## Usage
+
+```mdx live
+import { DashButton } from "~/components";
+
+<DashButton url="/?to=/:account/workers-and-pages" />
+```
+
+## `<DashButton>` Props
+
+### `url`
+
+**type:** `string`
+
+The Cloudflare dashboard deeplink to navigate to. See the below list for available routes.
+
+## Available routes
+
+<AvailableDashRoutes />
