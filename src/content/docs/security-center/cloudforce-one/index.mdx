@@ -6,7 +6,7 @@ sidebar:
 
 ---
 
-import { Details } from "~/components"
+import { Details, DashButton } from "~/components"
 
 :::note
 You must have a Cloudforce One subscription to access Cloudforce One on the dashboard.
@@ -16,8 +16,9 @@ Cloudforce One is a threat intelligence solution that offers threat research rep
 
 To access Cloudforce One:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to **Security Center** > **Threat Intelligence**.
+1. In the Cloudflare dashboard, go to the **Threat Intelligence** page.
+
+   <DashButton url="/?to=/:account/security-center/threat-intelligence" />
 
 You can also use Cloudforce One via [REST API](https://developers.cloudflare.com/api/resources/cloudforce_one/subresources/requests/subresources/assets/).
 
@@ -31,9 +32,12 @@ Cloudforce One Threat Intelligence displays the following information:
 ## Submit RFIs
 
 To submit RFIs (Request for Information):
- 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to **Security Center** > **Threat Intelligence** > **Requests for Information**.
+
+1. In the Cloudflare dashboard, go to the **Threat Intelligence** page.
+
+   <DashButton url="/?to=/:account/security-center/threat-intelligence" />
+
+2. Select **Requests for Information**.
 3. Select **New Request**.
 4. Fill in the required fields, then select **Save**.
 
@@ -41,15 +45,15 @@ To submit RFIs (Request for Information):
 
 The Cloudflare dashboard presents the following request types when you want to configure a Cloudforce One Requests for Information:
 
-- **Binary Analysis - IOCs**: Conduct high level malware analysis to produce [indicators](https://www.cloudflare.com/en-gb/learning/security/what-are-indicators-of-compromise/) such as a call-back domain or IP address. 
+- **Binary Analysis - IOCs**: Conduct high level malware analysis to produce [indicators](https://www.cloudflare.com/en-gb/learning/security/what-are-indicators-of-compromise/) such as a call-back domain or IP address.
 
 - **Binary Analysis - Report**: A thorough analysis of a malware sample to produce an attribution assessment and extract the configuration of the sample for further analysis. Useful for customers that are investigating a problem or trying to develop detection logic in an [EDR](https://en.wikipedia.org/wiki/Endpoint_detection_and_response) or network sensor.
 
-- **DDoS Attack**: Confirm if an attack is happening against a specific website to share any available indicators and potential attribution. 
+- **DDoS Attack**: Confirm if an attack is happening against a specific website to share any available indicators and potential attribution.
 
 - **Indicator Analysis - IOCs**: Conduct DNS lookups, origin pivots, and account pivots to provide indicators such as DNS resolutions, origin IPs, and subdomains. Analysis can include account registration patterns and victimology.
 
-- **Indicator Analysis - Report**: A thorough analysis of indicators written in a formal, structured format. In addition to listing [Indicator of compromise (IOCs)](https://www.cloudflare.com/en-gb/learning/security/what-are-indicators-of-compromise/), the report explains how IOCs function within the attack chain, and adds context by linking IOCs to specific campaigns and/or threat actors and their TTPs. 
+- **Indicator Analysis - Report**: A thorough analysis of indicators written in a formal, structured format. In addition to listing [Indicator of compromise (IOCs)](https://www.cloudflare.com/en-gb/learning/security/what-are-indicators-of-compromise/), the report explains how IOCs function within the attack chain, and adds context by linking IOCs to specific campaigns and/or threat actors and their TTPs.
 
 - **Passive DNS Resolution**: Research the pair of an IP address to the domain it resolved to during a specified period of time.
 
@@ -82,9 +86,9 @@ To delete your RFI, the status must be `Open`. Go to the RFI you want to delete,
 
 ### Upload and download attachment
 
-You can also choose to upload and download an attachment. 
+You can also choose to upload and download an attachment.
 
-Under **Attachments**, select the file you want to upload, then select **Save**. 
+Under **Attachments**, select the file you want to upload, then select **Save**.
 
 To download an attachment, select **Download** on the attachment.
 
@@ -94,8 +98,9 @@ Threat events allow you to protect your assets and respond to emerging threats.
 
 To access and analyze threat intelligence data on the dashboard:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Select **Security Center** > **Threat Intelligence**.
+1. In the Cloudflare dashboard, go to the **Threat Intelligence** page.
+
+   <DashButton url="/?to=/:account/security-center/threat-intelligence" />
 
 You can also access threat events via the [API](/api/resources/cloudforce_one/subresources/threat_events/).
 
@@ -129,8 +134,10 @@ You can use Cloudy, Cloudflare's AI Agent, to receive an analysis and summary of
 
 To analyze threat events using Cloudy:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to **Security Center** > **Threat Intelligence**.
-3. Go to **Threat Events** > **Analyze with Cloudy**.
+1. In the Cloudflare dashboard, go to the **Threat Intelligence** page.
+
+   <DashButton url="/?to=/:account/security-center/threat-intelligence" />
+
+2. Go to **Threat Events** > **Analyze with Cloudy**.
 
 Cloudy will show you the top threat events, analyze them, and give you a summary of threat events. You can also decide to receive an analysis based on **Attacker**, **Indicator**, and more. For example, you can enter "Give me a summary of threat events for ABC Attacker". Cloudy will then summarize threat events for ABC attacker.

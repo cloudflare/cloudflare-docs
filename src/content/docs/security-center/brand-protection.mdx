@@ -7,7 +7,7 @@ sidebar:
     text: Beta
 ---
 
-import { AvailableNotifications, Render } from "~/components";
+import { AvailableNotifications, Render, DashButton } from "~/components";
 
 :::note[User permission]
 While the Brand Protection tool is in beta, all Cloudflare Enterprise customers have automatic access to Brand Protection, including five saved queries. Only Admin, Super Admin and users with a Brand Protection role can access Brand Protection
@@ -19,22 +19,22 @@ While the Brand Protection tool is in beta, all Cloudflare Enterprise customers 
 
 To start searching for new domains that might be trying to impersonate your brand:
 
-1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+1. In the Cloudflare dashboard, go to the **Brand Protection** page.
 
-2. Go to **Security Center** > **Brand Protection**.
+   <DashButton url="/?to=/:account/security-center/brand-protection" />
 
-3. In **String query**, provide a name for your query. You can add multiple brand phrases on the same query, and the results will generate matches for all of those. Once you entered the string queries, select **Search matches**.
+2. In **String query**, provide a name for your query. You can add multiple brand phrases on the same query, and the results will generate matches for all of those. Once you entered the string queries, select **Search matches**.
 
-4. In the **Character distance**, select from `0-3`. The number of characters the results can differ from your domain.
+3. In the **Character distance**, select from `0-3`. The number of characters the results can differ from your domain.
 
    :::note
 
    If a brand phrase or search term has less than five characters, you can only choose a max distance of `0` (zero).
    :::
 
-5. You can select **Save query** to monitor it in the future and perform other actions, such as delete, clone and set up alerts, according to your Paid plan limits.
+4. You can select **Save query** to monitor it in the future and perform other actions, such as delete, clone and set up alerts, according to your Paid plan limits.
 
-6. To export all matches from a saved query, select your **Query name** > select the three dots > **Export matches**.
+5. To export all matches from a saved query, select your **Query name** > select the three dots > **Export matches**.
 
 In the section **Monitor Strings**, you can check all the string queries that you selected to monitor. You can delete, clone, or create notifications for a string query. Refer to [Brand Protection Alerts](#brand-protection-alerts) to set up notifications.
 
@@ -46,20 +46,20 @@ You can only submit an abuse report if your domain is with [Cloudflare Registrar
 
 To submit abuse reports directly from the dashboard:
 
-1. Go to the **Query name** you want to report.
-2. Select **Report to Cloudflare**.
-3. Fill in the details to submit an abuse report.
-4. Select **Submit**.
+1. Go to **Monitor Strings**, select the query you want to report.
+3. Select **Report to Cloudflare**.
+4. Fill in the details to submit an abuse report.
+5. Select **Submit**.
 
 ## Logo queries
 
 To set up a new logo query:
 
-1. Go to **Security Center** > **Monitor Logos** and select **Add logo**.
-2. Add a name for your query and upload your logo. Only the `.png`, `.jpeg`, and `.jpg` file extensions are supported.
-3. Select **Save logo**.
+1. Select **Monitor Logos** and select **Add logo**.
+3. Add a name for your query and upload your logo. Only the `.png`, `.jpeg`, and `.jpg` file extensions are supported.
+4. Select **Save logo**.
 
-The browser will return to the **Monitor Images** overview page, where you can access your query and configure notifications.
+The browser will return to the **Monitored Logos** page, where you can access your query and configure notifications.
 
 ## Investigate a query
 
