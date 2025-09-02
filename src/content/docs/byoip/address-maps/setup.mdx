@@ -6,7 +6,7 @@ sidebar:
   label: Setup
 ---
 
-import { GlossaryTooltip, APIRequest } from "~/components";
+import { GlossaryTooltip, APIRequest, DashButton } from "~/components";
 
 Consider the sections below to learn how to set up address maps.
 
@@ -20,13 +20,15 @@ To avoid any errors if you have [static IPs](/byoip/concepts/static-ips/), Cloud
 
 If you are using BYOIP instead, refer to the following steps:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to **IP Addresses** > **Address Maps**.
-3. Select **Create an address map**.
-4. Choose the scope of the address map.
-5. Add the zones and IP addresses that you want to map.
-6. Name your address map.
-7. Review the information and select **Save and Deploy**.
+1. In the Cloudflare dashboard, go to the **Address Maps** page.
+
+   <DashButton url="/?to=/:account/ip-addresses/proxy-ips" />
+
+2. Select **Create an address map**.
+3. Choose the scope of the address map.
+4. Add the zones and IP addresses that you want to map.
+5. Name your address map.
+6. Review the information and select **Save and Deploy**.
 
 :::note
 Creating an address map does not automatically change DNS configuration. DNS responses only begin to change when a zone or account is added to a map. Additionally, address maps that are not yet enabled will not take effect in DNS responses.
@@ -34,11 +36,13 @@ Creating an address map does not automatically change DNS configuration. DNS res
 
 ## Manage address maps
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to **IP Addresses** > **Address Maps**.
-3. Go to your address map and select **Review**.
-4. Edit your address map.
-5. Review the information and select **Save**.
+1. In the Cloudflare dashboard, go to the **Address Maps** page.
+
+   <DashButton url="/?to=/:account/ip-addresses/proxy-ips" />
+
+2. Go to your address map and select **Review**.
+3. Edit your address map.
+4. Review the information and select **Save**.
 
 :::note
 You can also enable, disable, and delete address maps. This will likely change the IP addresses used for your zones.

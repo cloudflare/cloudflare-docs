@@ -14,6 +14,7 @@ import {
 	GlossaryTooltip,
 	APIRequest,
 	Render,
+	DashButton,
 } from "~/components";
 
 [Magic Transit](/magic-transit/) customers using BYOIP can also benefit from the performance, reliability, and security that Cloudflare offers for HTTP-based applications. [Service bindings](/byoip/service-bindings/) allow BYOIP customers to selectively route traffic on a per-IP address basis to the CDN pipeline (which includes [Cache](/cache/), [Web Application Firewall (WAF)](/waf/), and more).
@@ -71,13 +72,15 @@ If you need to map only specific subdomains (and not all proxied DNS records) to
 <Tabs syncKey="dashPlusAPI">
 <TabItem label="Dashboard" no-code="true">
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to **IP Addresses** > **Address Maps**.
-3. Select **Create an address map**.
-4. Choose the scope of the address map.
-5. Add the zones and IP addresses that you want to map.
-6. Name your address map.
-7. Review the information and select **Save and Deploy**.
+1. In the Cloudflare dashboard, go to the **Address Maps** page.
+
+   <DashButton url="/?to=/:account/ip-addresses/proxy-ips" />
+
+2. Select **Create an address map**.
+3. Choose the scope of the address map.
+4. Add the zones and IP addresses that you want to map.
+5. Name your address map.
+6. Review the information and select **Save and Deploy**.
 
 </TabItem>
 <TabItem label="API" no-code="true">
