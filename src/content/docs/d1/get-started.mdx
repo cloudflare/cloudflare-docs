@@ -449,10 +449,16 @@ To deploy your Worker to production using Wrangler, you must first repeat the [d
     npx wrangler d1 execute prod-d1-tutorial --remote --file=./schema.sql
     ```
     ```txt output
-    ✔ ⚠️ This process may take some time, during which your D1 database will be unavailable to serve queries.
-    Ok to proceed? y
+    🌀 Executing on remote database prod-d1-tutorial (<DATABASE_ID>):
+    🌀 To execute on your local development database, remove the --remote flag from your wrangler command.
+    Note: if the execution fails to complete, your DB will return to its original state and you can safely retry.
+    ├ 🌀 Uploading <DATABASE_ID>.a7f10c4651cc3a26.sql
+    │ 🌀 Uploading complete.
+    │
+    🌀 Starting import...
+    🌀 Processed 3 queries.
     🚣 Executed 3 queries in 0.00 seconds (5 rows read, 6 rows written)
-   	Database is currently at bookmark 00000002-00000004-00004ef1-ad4a06967970ee3b20860c86188a4b31.
+    Database is currently at bookmark 00000000-0000000a-00004f6d-b85c16a3dbcf077cb8f258b4d4eb965e.
     ┌────────────────────────┬───────────┬──────────────┬────────────────────┐
     │ Total queries executed │ Rows read │ Rows written │ Database size (MB) │
     ├────────────────────────┼───────────┼──────────────┼────────────────────┤
