@@ -22,4 +22,16 @@ const { name } = route;
 const { href } = new URL(route.deeplink, "https://dash.cloudflare.com");
 ---
 
-<LinkButton href={href} icon="external">Go to <strong>{name}</strong></LinkButton>
+<LinkButton href={href} icon="external"
+	>Go to <strong>{name}</strong></LinkButton
+>
+
+<style>
+	.sl-link-button {
+		padding: 0.1875rem 0.5rem;
+
+		svg {
+			--sl-icon-size: 1rem !important;
+		}
+	}
+</style>
