@@ -6,7 +6,7 @@ sidebar:
   order: 2
 ---
 
-import { Render, PackageManagers, Steps, FileTree, Tabs, TabItem, TypeScriptExample, WranglerConfig } from "~/components";
+import { Render, PackageManagers, Steps, FileTree, Tabs, TabItem, TypeScriptExample, WranglerConfig, DashButton } from "~/components";
 
 This guide instructs you through:
 
@@ -89,12 +89,11 @@ For example: `CI=true npm create cloudflare@latest d1-tutorial --type=simple --g
 </TabItem> <TabItem label='Dashboard'>
 
 <Steps>
-1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to your account > **Compute (Workers)** > **Workers & Pages**.
-3. Select **Create**.
-4. Under **Start from a template**, select **Hello world**.
-5. Name your Worker. For this tutorial, name your Worker `d1-tutorial`.
-6. Select **Deploy**.
+1. <DashButton url="/?to=/:account/workers-and-pages" />
+2. Select **Create application**.
+3. Select **Start with Hello World!** > **Get started**.
+4. Name your Worker. For this tutorial, name your Worker `d1-tutorial`.
+5. Select **Deploy**.
 </Steps>
 </TabItem> </Tabs>
 
@@ -148,7 +147,7 @@ This creates a new D1 database and outputs the [binding](/workers/runtime-apis/b
 </TabItem> <TabItem label='Dashboard'>
 
 <Steps>
-1. Go to **Storage & Databases** > **D1 SQL Database**.
+1. <DashButton url="/?to=/:account/workers/d1" />
 2. Select **Create Database**.
 3. Name your database. For this tutorial, name your D1 database `prod-d1-tutorial`.
 4. (Optional) Provide a location hint. Location hint is an optional parameter you can provide to indicate your desired geographical location for your database. Refer to [Provide a location hint](/d1/configuration/data-location/#provide-a-location-hint) for more information.
@@ -216,18 +215,13 @@ You can also bind your D1 database to a [Pages Function](/pages/functions/). For
 You create bindings by adding them to the Worker you have created.
 
 <Steps>
-1. Go to **Compute (Workers)** > **Workers & Pages**.
+1. <DashButton url="/?to=/:account/workers-and-pages" />
 2. Select the `d1-tutorial` Worker you created in [step 1](/d1/get-started/#1-create-a-worker).
-3. Select **Settings**.
-4. Scroll to **Bindings**, then select **Add**.
-5. Select **D1 database**.
+3. Go to the **Bindings** tab.
+4. Select **Add binding**.
+5. Select **D1 database** > **Add binding**.
 6. Name your binding in **Variable name**, then select the `prod-d1-tutorial` D1 database you created in [step 2](/d1/get-started/#2-create-a-database) from the dropdown menu. For this tutorial, name your binding `prod_d1_tutorial`.
-7. Select **Deploy** to deploy your binding. When deploying, there are two options:
-	- **Deploy:** Immediately deploy the binding to 100% of your audience.
-	- **Save version:** Save a version of the binding which you can deploy in the future.
-
-    For this tutorial, select **Deploy**.
-
+7. Select **Add binding**.
 </Steps>
 
 </TabItem>
@@ -298,7 +292,7 @@ After correctly preparing your [Wrangler configuration file](/workers/wrangler/c
 Use the Dashboard to create a table and populate it with data.
 
 <Steps>
-1. Go to **Storage & Databases** > **D1 SQL Database**.
+1. <DashButton url="/?to=/:account/workers/d1" />
 2. Select the `prod-d1-tutorial` database you created in [step 2](/d1/get-started/#2-create-a-database).
 3. Select **Console**.
 4. Paste the following SQL snippet.
@@ -399,7 +393,7 @@ After configuring your Worker, you can test your project locally before you depl
 You can query your D1 database using your Worker.
 
 <Steps>
-1. Go to **Compute (Workers)** > **Workers & Pages**.
+1. <DashButton url="/?to=/:account/workers-and-pages" />
 2. Select the `d1-tutorial` Worker you created.
 3. Select the **Edit code** icon (**\<\/\>**).
 4. Clear the contents of the `worker.js` file, then paste the following code:
@@ -521,7 +515,7 @@ To deploy your Worker to production using Wrangler, you must first repeat the [d
 </TabItem> <TabItem label='Dashboard'>
 <Steps>
 
-1. Go to **Compute (Workers)** > **Workers & Pages**.
+1. <DashButton url="/?to=/:account/workers-and-pages" />
 2. Select your `d1-tutorial` Worker.
 3. Select **Deployments**.
 4. From the **Version History** table, select **Deploy version**.
@@ -575,7 +569,7 @@ npx wrangler d1 delete prod-d1-tutorial
 </TabItem><TabItem label='Dashboard'>
 
 <Steps>
-1. Go to **Storages & Databases** > **D1 SQL Database**.
+1. <DashButton url="/?to=/:account/workers/d1" />
 
 2. Select your `prod-d1-tutorial` D1 database.
 
@@ -606,7 +600,7 @@ npx wrangler delete d1-tutorial
 </TabItem> <TabItem label='Dashboard'>
 
 <Steps>
-1. Go to **Compute (Workers)** > **Workers & Pages**.
+1. <DashButton url="/?to=/:account/workers-and-pages" />
 
 2. Select your `d1-tutorial` Worker.
 
