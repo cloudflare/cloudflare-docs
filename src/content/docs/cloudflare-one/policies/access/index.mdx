@@ -44,14 +44,14 @@ For example, this second configuration lets any user from Portugal with a `@team
 
 ### Block
 
-The Block action prevents users from reaching an application behind Access.
-
-For example, this configuration blocks every request to the application, except for requests from `user-1@team.com`:
+The Block action prevents users who meet certain critera from reaching an application behind Access. For example, the following policy blocks requests from Russian source IPs that are not on your [list of approved IPs](/cloudflare-one/policies/gateway/lists/).
 
 | Action | Rule type | Selector | Value             |
 | ------ | --------- | -------- | ----------------- |
-| Block  | Include   | Everyone | `Everyone`        |
-|        | Exclude   | Email    | `user-1@team.com` |
+| Block  | Include   | Country  | `Russian Federation` |
+|        | Exclude   | IP list  | `Corporate IP allowlist` |
+
+Block policies are best used in conjunction with [Allow policies](#allow) as a way to carve out exceptions in those Allow policies. Since Access is deny by default, users who do not match a Block policy will still be denied access unless they explicitly match an Allow policy.
 
 ### Bypass
 
