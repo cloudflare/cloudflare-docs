@@ -19,9 +19,11 @@ The container runtime automatically sets the following variables:
 - `CLOUDFLARE_REGION` - a region name
 - `CLOUDFLARE_DURABLE_OBJECT_ID` - the ID of the Durable Object that the container is bound to
 
-## Custom environment variables
+## User-defined environment variables
 
-Custom environment variables can be set when defining a Container in your Worker:
+You can set environment variables when defining a Container in your Worker, or when starting a container instance.
+
+For example:
 
 ```javascript
 class MyContainer extends Container {
@@ -33,6 +35,4 @@ class MyContainer extends Container {
 }
 ```
 
-:::note
-If you supply environment variables with the same names, supplied values will override predefined values.
-:::
+More details about defining environment variables and secrets can be found in [this example](/containers/examples/env-vars-and-secrets).

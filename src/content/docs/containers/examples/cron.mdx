@@ -1,5 +1,4 @@
 ---
-
 summary: Running a container on a schedule using Cron Triggers
 pcx_content_type: example
 title: Cron Container
@@ -43,9 +42,7 @@ Use a cron expression in your Wrangler config to specify the schedule:
 	},
 	"migrations": [
 		{
-			"new_sqlite_classes": [
-				"CronContainer"
-			],
+			"new_sqlite_classes": ["CronContainer"],
 			"tag": "v1"
 		}
 	]
@@ -61,7 +58,6 @@ import { Container, getContainer } from "@cloudflare/containers";
 
 export class CronContainer extends Container {
 	sleepAfter = "5m";
-	manualStart = true;
 }
 
 export default {
@@ -71,13 +67,16 @@ export default {
 		);
 	},
 
+	// scheduled is called when a cron trigger fires
 	async scheduled(
 		_controller: any,
 		env: { CRON_CONTAINER: DurableObjectNamespace<CronContainer> },
 	) {
-		await getContainer(env.CRON_CONTAINER).startContainer({
-			envVars: {
-				MESSAGE: "Start Time: " + new Date().toISOString(),
+		await getContainer(env.CRON_CONTAINER).startAndWaitForPorts({
+			startOptions: {
+				envVars: {
+					MESSAGE: "Start Time: " + new Date().toISOString(),
+				},
 			},
 		});
 	},
