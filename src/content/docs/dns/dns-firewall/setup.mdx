@@ -10,7 +10,7 @@ description: Set up DNS Firewall to protect upstream nameservers from DDoS
   attacks and reduce load by caching DNS responses.
 ---
 
-import { TabItem, Tabs } from "~/components";
+import { TabItem, Tabs, DashButton } from "~/components";
 
 ## Prerequisites
 
@@ -26,9 +26,11 @@ Prior to setting up DNS Firewall, you need:
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. Log in to the [Cloudflare account](https://dash.cloudflare.com) with DNS Firewall.
-2. On the account homepage, click **DNS Firewall**.
-3. Click **Add Firewall Cluster**.
+1. In the Cloudflare dashboard, go to the **DNS Firewall** page.
+
+   <DashButton url="/?to=/:account/dns-firewall" />
+
+3. Select **Add Firewall Cluster**.
 4. Fill out the required fields, including:
    - **IP Addresses**: The upstream IPv4 and/or IPv6 addresses of your authoritative nameservers.
    - **Minimum Cache TTL**: Recommended setting of **30 seconds**.
