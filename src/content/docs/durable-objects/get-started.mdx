@@ -12,6 +12,7 @@ import {
 	PackageManagers,
 	WranglerConfig,
 	TypeScriptExample,
+	DashButton
 } from "~/components";
 
 This guide will instruct you through:
@@ -304,7 +305,9 @@ To deploy your Durable Object Worker:
 npx wrangler deploy
 ```
 
-Once deployed, you should be able to see your newly created Durable Object Worker on the [Cloudflare dashboard](https://dash.cloudflare.com/), **Workers & Pages** > **Overview**.
+Once deployed, you should be able to see your newly created Durable Object Worker on the Cloudflare dashboard.
+
+<DashButton url="/?to=/:account/workers-and-pages" />
 
 Preview your Durable Object Worker at `<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev`.
 
