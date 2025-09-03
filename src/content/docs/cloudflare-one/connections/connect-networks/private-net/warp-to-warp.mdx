@@ -45,9 +45,6 @@ Once enrolled, your users and services will be able to connect to the virtual IP
 
 ## Troubleshooting
 
-### Check your local firewall
+### Check your firewall
 
-<Render
-	file="tunnel/warp-connector-local-firewall"
-	product="cloudflare-one"
-/>
+Verify that your local firewall allows traffic from the <GlossaryTooltip term="CGNAT IP">WARP CGNAT IPs</GlossaryTooltip>. For example, Windows Firewall blocks inbound traffic from `100.96.0.0/12` by default. On Windows devices, you will need to add a firewall rule that allows incoming requests from `100.96.0.0/12` for the desired protocols and/or ports.
