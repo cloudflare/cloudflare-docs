@@ -2,13 +2,16 @@
 {}
 ---
 
-import { Steps } from "~/components";
+import { Steps, DashButton } from "~/components";
 
 To configure an alert:
 
 <Steps>
 
-1. Go to Account Home > **Notifications**.
+1. In the Cloudflare dashboard, go to the **Notifications** page.
+
+   <DashButton url="/?to=/:account/notifications" />
+
 2. Choose **Add** and then select **Page Shield** in the **Product** dropdown.
 3. Select an [alert type](/page-shield/alerts/alert-types/).
 4. Enter the notification name and description.
@@ -17,5 +20,3 @@ To configure an alert:
 7. Select **Create**.
 
 </Steps>
-
-To edit, delete, or disable an alert, go to your [account notifications](https://dash.cloudflare.com/?to=/:account/notifications).
