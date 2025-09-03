@@ -6,7 +6,7 @@ sidebar:
   order: 4
 ---
 
-import { Example, Render, Tabs, TabItem } from "~/components";
+import { Example, Render, Tabs, TabItem, DashButton } from "~/components";
 
 <Render file="internal-reference-zone-intro" product="dns" />
 
@@ -25,8 +25,11 @@ A wildcard record (`*.example.local`) in the matching internal zone will take pr
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
-2. Go to **Internal DNS** and select a zone.
+1. In the Cloudflare dashboard, go to the **Internal DNS** page.
+
+   <DashButton url="/?to=/:account/internal-dns" />
+
+2. Select a zone.
 3. Within the selected zone, go to **Reference zone**.
 4. Select **Add reference zone**. If your zone already has a reference zone set up, you must first remove it. As explained in the [configuration conditions](#configuration-conditions), each internal zone can only reference one other zone at a time.
 5. Find the zone you want to use as reference and choose **Select** in the respective row.

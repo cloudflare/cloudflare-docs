@@ -3,10 +3,13 @@ params:
   - conditional?
 ---
 
-import { Details, Render } from "~/components";
+import { Details, Render, DashButton } from "~/components";
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
-2. Go to **Internal DNS** and select **Create an internal zone**.
+1. In the Cloudflare dashboard, go to the **Internal DNS** page.
+
+   <DashButton url="/?to=/:account/internal-dns" />
+
+2. Select **Create an internal zone**.
 3. Give your internal zone a name.
 
 { props.conditional === "get-started-detail" && (
