@@ -297,8 +297,6 @@ If `experimental_remote: true` is specified in Wrangler configuration for any of
 
 - [**Durable Objects**](/workers/wrangler/configuration/#durable-objects): Enabling remote connections for Durable Objects may be supported in the future, but currently will always run locally. However, using Durable Objects in combination with remote bindings is possible. Refer to [Using remote resources with Durable Objects and Workflows](#using-remote-resources-with-durable-objects-and-workflows) below.
 
-- [**RPC on service bindings**](/workers/runtime-apis/bindings/service-bindings/rpc/): While you can make `fetch()` calls on remote service bindings, you cannot currently call RPC methods on remote service bindings.
-
 - [**Workflows**](/workflows/): Enabling remote connections for Workflows may be supported in the future, but currently will only run locally. However, using Workflows in combination with remote bindings is possible. Refer to [Using remote resources with Durable Objects and Workflows](#using-remote-resources-with-durable-objects-and-workflows) below.
 
 - [**Environment Variables (`vars`)**](/workers/wrangler/configuration/#environment-variables): Environment variables are intended to be distinct between local development and deployed environments. They are easily configurable locally (such as in a `.dev.vars` file or directly in Wrangler configuration).
