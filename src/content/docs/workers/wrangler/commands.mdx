@@ -100,7 +100,10 @@ You can then run them using your package manager of choice:
 
 ---
 
-<WranglerCommand command="docs" description="Open the Cloudflare developer documentation in your default browser." />
+<WranglerCommand
+	command="docs"
+	description="Open the Cloudflare developer documentation in your default browser."
+/>
 
 ---
 
@@ -142,7 +145,7 @@ Interact with Cloudflare's D1 service.
 
 Manage [Hyperdrive](/hyperdrive/) database configurations.
 
-<WranglerNamespace namespace="hyperdrive" headingLevel={3}/>
+<WranglerNamespace namespace="hyperdrive" headingLevel={3} />
 
 ---
 
@@ -1274,40 +1277,19 @@ If you are using `CLOUDFLARE_API_TOKEN` instead of OAuth, and you can logout by 
 The minimum required wrangler version to use these commands is 3.40.0. For versions before 3.73.0, you will need to add the `--x-versions` flag.
 :::
 
-### `upload`
+<WranglerCommand
+	command="versions upload"
+	description="
+Upload a new [version](/workers/configuration/versions-and-deployments/#versions) of your Worker that is not deployed immediately."
+	headingLevel={3}
+/>
 
-Upload a new [version](/workers/configuration/versions-and-deployments/#versions) of your Worker that is not deployed immediately.
+<WranglerCommand
+	command="versions deploy"
+description="Deploy a previously created [version](/workers/configuration/versions-and-deployments/#versions) of your Worker all at once or create a [gradual deployment](/workers/configuration/versions-and-deployments/gradual-deployments/) to incrementally shift traffic to a new version by following an interactive prompt."
+    headingLevel={3}
 
-```txt
-wrangler versions upload [OPTIONS]
-```
-
-- `--tag` <Type text="string" /> <MetaInfo text="optional" />
-  - Add a version tag. Accepts empty string.
-- `--message` <Type text="string" /> <MetaInfo text="optional" />
-  - Add a version message. Accepts empty string.
-- `--preview-alias` <Type text="string" /> <MetaInfo text="optional" />
-  - Creates an alias to this version.
-- `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific Worker rather than inheriting from the [Wrangler configuration file](/workers/wrangler/configuration/).
-- `--env` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific environment.
-    <Render file="vite-environments" product="workers" />
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `deploy`
-
-Deploy a previously created [version](/workers/configuration/versions-and-deployments/#versions) of your Worker all at once or create a [gradual deployment](/workers/configuration/versions-and-deployments/gradual-deployments/) to incrementally shift traffic to a new version by following an interactive prompt.
-
-```txt
-wrangler versions deploy [OPTIONS]
-```
-
-- `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific Worker rather than inheriting from the [Wrangler configuration file](/workers/wrangler/configuration/).
-
-<Render file="wrangler-commands/global-flags" product="workers" />
+/>
 
 :::note
 
@@ -1318,18 +1300,19 @@ For example:
 
 :::
 
-### `list`
+<WranglerCommand
+	command="versions list"
+description="Retrieve details for the 10 most recent versions. Details include `Version ID`, `Created on`, `Author`, `Source`, and optionally, `Tag` or `Message`."
+    headingLevel={3}
 
-Retrieve details for the 10 most recent versions. Details include `Version ID`, `Created on`, `Author`, `Source`, and optionally, `Tag` or `Message`.
+/>
 
-```txt
-wrangler versions list [OPTIONS]
-```
+<WranglerCommand
+	command="versions view"
 
-- `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific Worker rather than inheriting from the [Wrangler configuration file](/workers/wrangler/configuration/).
+    headingLevel={3}
 
-<Render file="wrangler-commands/global-flags" product="workers" />
+/>
 
 ### `secret put`
 

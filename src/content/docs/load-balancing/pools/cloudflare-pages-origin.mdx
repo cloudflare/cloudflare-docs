@@ -12,7 +12,7 @@ sidebar:
 
 
 
-import { GlossaryTooltip } from "~/components"
+import { GlossaryTooltip, DashButton } from "~/components"
 
 This tutorial is intended as an introductory example of how you can leverage Cloudflare's global traffic management.
 
@@ -35,16 +35,16 @@ Make sure you:
 
 ## Create health monitor
 
-
-
 Although you can create all the components in the **Create Load Balancer** workflow, using the **Manage Monitors** and **Manage Pools** sections separately makes it easier to test and troubleshoot the configurations of each of these components before bringing them together in a load balancer.
 
 Monitors define the criteria based on which an endpoint will be considered healthy or not. Start by setting up a monitor as follows.
 
-1. Log in to your Cloudflare account.
-2. Go to **Load Balancing**.
-3. Select the **Monitors** tab and then **Create monitor**.
-4. Give the monitor a descriptive name and confirm the other fields are filled in as the following:
+1. In the Cloudflare dashboard, go to the **Load Balancing** page.
+
+   <DashButton url="/?to=/:account/load-balancing" />
+
+2. Select the **Monitors** tab and then **Create monitor**.
+3. Give the monitor a descriptive name and confirm the other fields are filled in as the following:
 
 
 
@@ -56,7 +56,7 @@ Monitors define the criteria based on which an endpoint will be considered healt
 
 
 
-5. Under **Advanced health check settings**, keep the default values and enable the **Follow Redirects** option.
+4. Under **Advanced health check settings**, keep the default values and enable the **Follow Redirects** option.
 
    When you are using a service like Cloudflare Pages, it is possible that requests from the health monitor - as well as the ones from your visitors - are redirected before reaching their destination. Enabling this option prevents the monitor from reporting an unhealthy endpoint when it actually has only been redirected (with a `301` code, for example).
 
@@ -67,7 +67,7 @@ You can name the monitor after the parameters you have defined. For example: `HT
 This way you can easily remember the criteria a certain monitor is using when you decide to attach it to other endpoints as well.
 :::
 
-6. Select **Save** to confirm.
+5. Select **Save** to confirm.
 
 
 
@@ -84,7 +84,9 @@ The endpoint pointing to [Cloudflare Pages](/pages/) must have **host header** f
 Failing to add the host header will result in [response code mismatch error](/load-balancing/troubleshooting/common-error-codes/#response-code-mismatch-error) for the monitor, and [Error 1000: DNS points to prohibited IP](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1000/) for visitors (if the load balancer is enabled despite the unhealthy monitor status).
 :::
 
-1. Go to **Load Balancing**.
+1. In the Cloudflare dashboard, go to the **Load Balancing** page.
+
+   <DashButton url="/?to=/:account/load-balancing" />
 
 2. Select the **Pools** tab and then **Create monitor**.
 
@@ -141,11 +143,13 @@ Failing to add the host header will result in [response code mismatch error](/lo
 
 ## Check the endpoints health status
 
-
-
 Before setting up the load balancer:
 
-1. Go to **Load Balancing** > **Pools** tab.
+1. In the Cloudflare dashboard, go to the **Load Balancing** page.
+
+   <DashButton url="/?to=/:account/load-balancing" />
+
+1. Go to the **Pools** tab.
 2. Find the pools you created in the list and check if their status is `Healthy`. You might have to refresh the page.
 3. Expand each pool entry to confirm that the health status for endpoints within them is also `Healthy`.
 
@@ -159,35 +163,40 @@ Revise your pools and monitor configurations to confirm they followed the instru
 
 After confirming the endpoints and monitors are set up correctly and return the expected health status, create the load balancer:
 
-1. Go to **Load Balancing** > **Create load balancer**.
+1. In the Cloudflare dashboard, go to the **Load Balancing** page.
 
-2. On the **Hostname** page, configure the following and select **Next**.
+   <DashButton url="/?to=/:account/load-balancing" />
+
+2. Select **Create load balancer**.
+
+3. On the **Hostname** page, configure the following and select **Next**.
    * Enter a **Hostname**, which is the DNS name at which the load balancer is available. Suggestion: for now, you can just add a temporary hostname such as `lb` (so the complete field value would look like `lb.<your_domain>`).
    * Toggle the orange cloud icon to update the [proxy mode](/load-balancing/understand-basics/proxy-modes/), which affects how traffic is routed and which IP addresses are advertised.
    * Select your preferred option for [session affinity](/load-balancing/understand-basics/session-affinity/) and [adaptive routing](/load-balancing/understand-basics/adaptive-routing/).
 
-3. On the **Add a Pool** page, configure the following and select **Next**.
+4. On the **Add a Pool** page, configure the following and select **Next**.
    * Select the first pool you created previously and select **Add Pool**.
    * Do the same for the second pool and reorder them if needed. For the purposes of this tutorial, your production website pool would be the first (`primary`) and the Cloudflare Pages pool would be the second (`secondary`).
    * If needed, update the [**Fallback Pool**](/load-balancing/understand-basics/health-details/#fallback-pools). For the purposes of this tutorial, you can leave this pointing to your secondary pool.
 
-4. On the **Monitors** page, review the monitors attached to your pools and the expected health status, and select **Next**.
+5. On the **Monitors** page, review the monitors attached to your pools and the expected health status, and select **Next**.
 
-5. On the **Traffic Steering** page, make sure **Off** is selected. This means the load balancer will follow the order established on the **Add a Pool** section (Step 3 above), achieving an [Active - Passive Failover](/load-balancing/load-balancers/common-configurations/#active---passive-failover) configuration.
+6. On the **Traffic Steering** page, make sure **Off** is selected. This means the load balancer will follow the order established on the **Add a Pool** section (Step 3 above), achieving an [Active - Passive Failover](/load-balancing/load-balancers/common-configurations/#active---passive-failover) configuration.
 
-6. For the purposes of this tutorial, leave the [**Custom Rules**](/load-balancing/additional-options/load-balancing-rules/) option empty.
+7. For the purposes of this tutorial, leave the [**Custom Rules**](/load-balancing/additional-options/load-balancing-rules/) option empty.
 
-7. On the **Review** page, review your configuration and select **Save as Draft**.
+8. On the **Review** page, review your configuration and select **Save as Draft**.
 
 A DNS record of the type `LB` will be created under [**DNS** > **Records**](https://dash.cloudflare.com/?to=/:account/:zone/dns/records) with the hostname you have defined, and a corresponding load balancer will be added to [**Load Balancing**](https://dash.cloudflare.com/?to=/:account/load-balancing)
 
 ## Optional - Deploy on a test hostname
 
-
-
 If you have used a temporary hostname for your load balancer, follow the steps below to deploy and test it.
 
-1. Go to **Load Balancing**.
+1. In the Cloudflare dashboard, go to the **Load Balancing** page.
+
+   <DashButton url="/?to=/:account/load-balancing" />
+
 2. In the **Load Balancers** list, locate the load balancer you created under a test hostname (such as `lb`) and enable it.
 3. On your browser, request the temporary hostname (`lb.example.com`). You should see the website or application hosted at your primary origin server.
 4. Go back to the **Manage Load Balancers** list, select to expand the test load balancer, and disable the primary pool.
@@ -201,8 +210,6 @@ After you confirm everything is working correctly, make sure you re-enable the p
 :::
 
 ## Route production traffic to load balancer
-
-
 
 Now that you have set up your load balancer and verified everything is working correctly, you can put the load balancer on a live domain or subdomain:
 

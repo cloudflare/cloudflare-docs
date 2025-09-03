@@ -6,6 +6,8 @@ sidebar:
 
 ---
 
+import { DashButton } from "~/components";
+
 Cloudflare sorts domains into categories based on their content and security type. You can request categorization changes via the [dashboard](#via-the-cloudflare-dashboard), [Cloudflare Radar](#via-cloudflare-radar), or the [API](#via-the-api).
 
 For a detailed list of categories, refer to [Domain categories](/cloudflare-one/policies/gateway/domain-categories/).
@@ -14,24 +16,24 @@ For a detailed list of categories, refer to [Domain categories](/cloudflare-one/
 
 To request a categorization change via the Cloudflare dashboard:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+1. In the Cloudflare dashboard, go to the **Investigate** page.
 
-2. Go to **Security Center** > **Investigate**.
+   <DashButton url="/?to=/:account/security-center/investigate" />
 
-3. Search for the domain you want to change.
+2. Search for the domain you want to change.
 
-4. In **Domain overview**, select **Request to change categorization**.
+3. In **Domain overview**, select **Request to change categorization**.
 
-5. Choose whether to change a [security category](/cloudflare-one/policies/gateway/domain-categories/#security-categories) or a [content category](/cloudflare-one/policies/gateway/domain-categories/#content-categories).
+4. Choose whether to change a [security category](/cloudflare-one/policies/gateway/domain-categories/#security-categories) or a [content category](/cloudflare-one/policies/gateway/domain-categories/#content-categories).
 
-6. Choose which categories you want to add or remove from the domain.
+5. Choose which categories you want to add or remove from the domain.
 
    :::note[Content category limit]
 
-   A domain cannot have more than two associated content categories. To propose changes to categories of a domain with more than two existing categories, remove one or more of the existing categories. 
+   A domain cannot have more than two associated content categories. To propose changes to categories of a domain with more than two existing categories, remove one or more of the existing categories.
    :::
 
-7. Select **Submit** to submit your request for review.
+6. Select **Submit** to submit your request for review.
 
 Requesting a security category change will trigger a deeper investigation by Cloudflare to confirm that the submission is valid. Requesting a content category change also requires Cloudflare validation, but the turnaround time for these submissions is usually shorter as it requires less investigation.
 
@@ -39,7 +41,7 @@ Your category change requests will be revised by the Cloudflare team depending o
 
 :::caution
 
-Cloudflare does not guarantee the category change will be approved. 
+Cloudflare does not guarantee the category change will be approved.
 :::
 
 ## Via Cloudflare Radar

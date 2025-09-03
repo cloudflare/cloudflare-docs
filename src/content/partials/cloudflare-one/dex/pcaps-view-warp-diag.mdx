@@ -4,9 +4,9 @@
 
 import { Details } from "~/components";
 
-The WARP diagnostics summary highlights what Cloudflare determines to be the most important detection events in a `warp-diag` log. You can use the WARP diagnostic summary to help analyze your [log files](/cloudflare-one/connections/connect-devices/warp/troubleshooting/warp-logs/#warp-diag-logs) and identify the root cause of client issues. WARP diagnostic summaries are only available for logs [collected via the dashboard](#collect-logs-via-the-dashboard).
+The WARP diagnostics analyzer highlights what Cloudflare determines to be the most important detection events in a `warp-diag` log. You can use the detection report to help parse your [log files](/cloudflare-one/connections/connect-devices/warp/troubleshooting/warp-logs/#warp-diag-logs) and identify the root cause of client issues. The WARP diagnostic analyzer is only available for logs [collected via the dashboard](#collect-logs-via-the-dashboard).
 
-To access your WARP diagnostic summary:
+To access the WARP diagnostic analyzer:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **DEX** > **Remote captures**.
 2. Locate an existing `warp-diag` log from the list or select **Run diagnostics** to generate a new `warp-diag` log.
@@ -33,4 +33,4 @@ To access your WARP diagnostic summary:
 	</Details>
 4. Select a detection type for more information about the event and recommended next steps.
 
-Cloudflare will store the `warp-diag` log and its summary per our [log retention policy](/cloudflare-one/insights/logs/#log-retention). To save a copy onto your local machine, [download the log file](#download-remote-captures) and go to the **JSON file** tab to copy the summary in JSON format.
+Cloudflare will store the `warp-diag` log and its detection report per our [log retention policy](/cloudflare-one/insights/logs/#log-retention). To save a copy onto your local machine, [download the log file](#download-remote-captures) and go to the **JSON file** tab to copy the report in JSON format.
