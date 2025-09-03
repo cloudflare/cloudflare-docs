@@ -7,7 +7,7 @@ tags:
   - AI
 ---
 
-import { TabItem, Tabs, Details, Render } from "~/components";
+import { TabItem, Tabs, Details, Render, DashButton } from "~/components";
 
 This tutorial explains how to use [Cloudflare AI Gateway](/ai-gateway/) and Zero Trust to create a functional and secure website wrapper for an AI agent. Cloudflare Zero Trust administrators can protect access to the wrapper with [Cloudflare Access](/cloudflare-one/policies/access/). Additionally, you can enforce [Gateway policies](/cloudflare-one/policies/gateway/) to control how your users interact with AI agents, including executing AI agents in an isolated browser with [Browser Isolation](/cloudflare-one/policies/browser-isolation/), enforcing [Data Loss Prevention](/cloudflare-one/policies/data-loss-prevention/) profiles to prevent your users from sharing sensitive data, and scanning content to avoid answers from AI agents that violate internal corporate guidelines. Creating an AI agent wrapper is also an effective way to enforce tenant control if you have an enterprise plan for a specific AI provider, such as ChatGPT Enterprise.
 
@@ -24,14 +24,16 @@ Make sure you have:
 
 First, create an AI gateway to control your AI app.
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to **AI** > **AI Gateway**.
-3. Select **Create Gateway**.
-4. Name your gateway.
-5. Select **Create**.
-6. Configure your desired options for the gateway.
-7. [Connect your AI provider](/ai-gateway/get-started/#connect-application) to proxy queries to your AI agent of choice using your AI gateway.
-8. (Optional) Turn on [Authenticated Gateway](/ai-gateway/configuration/authentication/). The Authenticated Gateway feature ensures your AI gateway can only be called securely by enforcing a token in the form of a request header `cf-aig-authorization`.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to the **AI Gateway** page.
+
+   <DashButton url="/?to=/:account/ai/ai-gateway" />
+
+2. Select **Create Gateway**.
+3. Name your gateway.
+4. Select **Create**.
+5. Configure your desired options for the gateway.
+6. [Connect your AI provider](/ai-gateway/get-started/#connect-application) to proxy queries to your AI agent of choice using your AI gateway.
+7. (Optional) Turn on [Authenticated Gateway](/ai-gateway/configuration/authentication/). The Authenticated Gateway feature ensures your AI gateway can only be called securely by enforcing a token in the form of a request header `cf-aig-authorization`.
    1. Go to **AI** > **AI Gateway**.
    2. Select your AI gateway, then go to **Settings**.
    3. Turn on **Authenticated Gateway**, then choose **Confirm**.
@@ -44,7 +46,10 @@ For more information, refer to [Getting started with AI Gateway](/ai-gateway/get
 
 [Guardrails](/ai-gateway/features/guardrails/) is an built-in AI Gateway security feature that allows Cloudflare to identify unsafe or inappropriate content in prompts and responses based on selected categories.
 
-1. Go to **AI** > **AI Gateway**.
+1. In the Cloudflare dashboard, go to the **AI Gateway** page.
+
+   <DashButton url="/?to=/:account/ai/ai-gateway" />
+
 2. Select your AI gateway.
 3. Go to **Guardrails**.
 4. Turn on Guardrails.
@@ -93,14 +98,16 @@ You can now build the Worker using the `index.js` file created by Wrangler.
 
 </TabItem> <TabItem label="Dashboard">
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to **Workers & Pages** > **Workers & Pages**.
-3. Select **Create**.
-4. In **Workers**, choose the **Hello world** template.
-5. Name your worker, then select **Deploy**.
-6. Select your Worker, then go to the **Settings** tab.
-7. Go to **Variables and Secrets**, then select **Add**.
-8. Choose _Secret_ as the type, name your secret (for example, `OPENAI_API_KEY`), and enter the value of your AI provider's API key in **Value**.
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+
+2. Select **Create**.
+3. In **Workers**, choose the **Hello world** template.
+4. Name your worker, then select **Deploy**.
+5. Select your Worker, then go to the **Settings** tab.
+6. Go to **Variables and Secrets**, then select **Add**.
+7. Choose _Secret_ as the type, name your secret (for example, `OPENAI_API_KEY`), and enter the value of your AI provider's API key in **Value**.
 
 You can now build the Worker using the online code editor by selecting **Edit code** on your Worker page.
 
@@ -377,7 +384,10 @@ If you built your Worker remotely using the [code editor](/workers/get-started/d
 
 To ensure that the Worker is only accessible from the custom hostname:
 
-1. Go to **Workers & Pages** > **Workers & Pages**.
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+
 2. Select your Worker.
 3. Go to **Settings**.
 4. Within **Domains & Routes**, select **Add**.
