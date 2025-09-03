@@ -70,6 +70,20 @@ Deploy AI applications safely with real-time content moderation. Automatically d
 
 </Feature>
 
+<Feature header="Data Loss Prevention (DLP)" href="/ai-gateway/features/dlp/">
+
+Protect your organization from inadvertent exposure of sensitive data through AI interactions. Scan prompts and responses for PII, financial data, and other sensitive information.
+
+**Key benefits:**
+
+- Real-time scanning of AI prompts and responses
+- Detection of PII, financial, healthcare, and custom data patterns
+- Configurable actions: flag or block sensitive content
+- Integration with Cloudflare's enterprise DLP solution
+- Compliance support for GDPR, HIPAA, and PCI DSS
+
+</Feature>
+
 <Feature header="Authentication" href="/ai-gateway/configuration/authentication/">
 
 Secure your AI Gateway with token-based authentication. Control access to your gateways and protect against unauthorized usage.
@@ -157,19 +171,19 @@ Override default pricing with your negotiated rates or custom cost models. Apply
 
 ## Feature Comparison by Use Case
 
-| Use Case                   | Recommended Features                        |
-| -------------------------- | ------------------------------------------- |
-| **Cost Optimization**      | Caching, Rate Limiting, Custom Costs        |
-| **High Availability**      | Fallbacks using Dynamic Routing             |
-| **Security & Compliance**  | Guardrails, Authentication, BYOK, Logging   |
-| **Performance Monitoring** | Analytics, Logging, Custom Metadata         |
-| **A/B Testing**            | Dynamic Routing, Custom Metadata, Analytics |
+| Use Case                   | Recommended Features                            |
+| -------------------------- | ----------------------------------------------- |
+| **Cost Optimization**      | Caching, Rate Limiting, Custom Costs            |
+| **High Availability**      | Fallbacks using Dynamic Routing                 |
+| **Security & Compliance**  | Guardrails, DLP, Authentication, BYOK, Logging  |
+| **Performance Monitoring** | Analytics, Logging, Custom Metadata             |
+| **A/B Testing**            | Dynamic Routing, Custom Metadata, Analytics     |
 
 ## Getting Started with Features
 
 1. **Start with the basics**: Enable [Caching](/ai-gateway/features/caching/) and [Analytics](/ai-gateway/observability/analytics/) for immediate benefits
 2. **Add reliability**: Configure Fallbacks and Rate Limiting using [Dynamic routing](/ai-gateway/features/dynamic-routing/)
-3. **Enhance security**: Implement [Guardrails](/ai-gateway/features/guardrails/) and [Authentication](/ai-gateway/configuration/authentication/)
+3. **Enhance security**: Implement [Guardrails](/ai-gateway/features/guardrails/), [DLP](/ai-gateway/features/dlp/), and [Authentication](/ai-gateway/configuration/authentication/)
 
 ---
 

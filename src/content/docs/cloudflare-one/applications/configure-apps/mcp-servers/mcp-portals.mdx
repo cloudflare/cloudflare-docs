@@ -54,8 +54,7 @@ The MCP server status indicates the synchronization status of the MCP server to 
 
 | Status | Description |
 | ------ | ----------- |
-| Error  | The server's authentication failed or was interrupted. To fix the issue, [reauthenticate the server](#reauthenticate-the-mcp-server). |
-| Inactive | The latest synchronization of tools, prompts, and resources failed due to expired or incorrect credentials. To fix the issue, [reauthenticate](#reauthenticate-the-mcp-server) and [resync](#synchronize-the-mcp-server) the server.|
+| Error  | The server's authentication failed due to expired or incorrect credentials. To fix the issue, [reauthenticate the server](#reauthenticate-the-mcp-server). |
 | Waiting | The server's tools, prompts, and resources are being synchronized. |
 | Ready | The server was successfully synchronized and all tools, prompts, and resources are available. |
 
@@ -72,7 +71,7 @@ You will be redirected to log in to your OAuth provider. The account used to aut
 
 ### Synchronize the MCP server
 
-If your MCP server updates its tools and prompts, you can instruct Cloudflare Access to refresh the server profile in Zero Trust:
+Cloudflare Access automatically synchronizes with your MCP server every 24 hours. To manually refresh the MCP server in Zero Trust:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Applications** > **AI controls**.
 2. Select the **MCP servers** tab and find the server that you want to refresh.
