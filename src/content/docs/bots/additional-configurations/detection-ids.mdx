@@ -114,7 +114,7 @@ Using the detection IDs below, you can detect and mitigate account takeover atta
 | ------------ | ---------------------------------------- |
 | `201326592`  | Observes all login failures to the zone. |
 | `201326593`  | Observes all login traffic to the zone.  |
-| `201326598`  | Sets a dynamic threshold based on the normal traffic that is unique to the zone.<br /><br /> When the ID matches a login failure, Bot Management sets the [bot score](/bots/concepts/bot-score/) to 29 and [anomaly detection](/bots/concepts/bot-detection-engines/#anomaly-detection-enterprise) as its score source. |
+| `201326598`  | Sets a dynamic threshold based on the normal traffic that is unique to the zone.<br /><br /> When the ID matches a login failure, Bot Management sets the [bot score](/bots/concepts/bot-score/) to 29 and uses [anomaly detection](/bots/concepts/bot-detection-engines/#anomaly-detection-enterprise) as its score source. |
 
 ### Challenges for account takeover detections
 
@@ -184,7 +184,7 @@ The rule can be enhanced with Leaked Credential Checks. Refer to the [WAF docume
 
 | Detection ID | Description                              |
 | ------------ | ---------------------------------------- |
-| `50331651`   | Observes traffic from residential proxy networks and similar commercial proxies. <br /><br />When the ID matches a request, Bot Management sets the bot score to 29 and anomaly detection as its score source. |
+| `50331651`   | Observes traffic from residential proxy networks and similar commercial proxies. <br /><br />When the ID matches a request, Bot Management sets the bot score to 29 and uses [anomaly detection](/bots/concepts/bot-detection-engines/#anomaly-detection-enterprise) as its score source. |
 
 ## Availability
 
