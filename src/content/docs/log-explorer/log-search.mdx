@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import { TabItem, Tabs, Render } from "~/components";
+import { TabItem, Tabs, Render, DashButton } from "~/components";
 
 Log Explorer enables you to store and explore your Cloudflare logs directly within the Cloudflare dashboard or API, giving you visibility into your logs without the need to forward them to third-party services. Logs are stored on Cloudflare's global network using the R2 object storage platform and can be queried via the dashboard or SQL API.
 
@@ -13,14 +13,16 @@ Log Explorer enables you to store and explore your Cloudflare logs directly with
 
 You can filter and view your logs via the Cloudflare dashboard or the API.
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
-2. Go to **Log Explorer** > **Log Search**.
-3. Select the **Dataset** you want to use and in **Columns** select the dataset fields. If you selected a zone scoped dataset, select the zone you would like to use.
-4. Enter a **Limit**. A limit is the maximum number of results to return, for example, 50.
-5. Select the **Time period** from which you want to query, for example, the previous 12 hours.
-6. Select **Add filter** to create your query. Select a **Field**, an **Operator**, and a **Value**, then select **Apply**.
-7. A query preview is displayed. Select **Custom SQL** to change the query.
-8. Select **Run query** when you are done. The results are displayed below within the **Query results** section.
+1. In the Cloudflare dashboard, go to the **Log Explorer** > **Log Search** page.
+
+   <DashButton url="/?to=/:account/log-explorer/log-search" />
+
+2. Select the **Dataset** you want to use and in **Columns** select the dataset fields. If you selected a zone scoped dataset, select the zone you would like to use.
+3. Enter a **Limit**. A limit is the maximum number of results to return, for example, 50.
+4. Select the **Time period** from which you want to query, for example, the previous 12 hours.
+5. Select **Add filter** to create your query. Select a **Field**, an **Operator**, and a **Value**, then select **Apply**.
+6. A query preview is displayed. Select **Custom SQL** to change the query.
+7. Select **Run query** when you are done. The results are displayed below within the **Query results** section.
 
 For example, to find an HTTP request with a specific [Ray ID](/fundamentals/reference/cloudflare-ray-id/), go to **Custom SQL**, and enter the following SQL query:
 

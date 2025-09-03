@@ -7,7 +7,7 @@ sidebar:
   order: 5
 ---
 
-import { Render } from "~/components";
+import { Render, DashButton } from "~/components";
 
 Below you will find answers to our most commonly asked questions. If you cannot find the answer you are looking for, refer to the [community page](https://community.cloudflare.com/c/website-application-performance/88) to explore more resources.
 
@@ -49,11 +49,13 @@ Differences between Real User Monitoring (RUM) analytics and traffic analytics i
 
 ## How do I disable Real User Monitoring (RUM) if it has been enabled from the Observatory test result page?
 
-Enabling RUM creates a Web Analytics configuration entry for the hostname at the account level, under **Analytics & Logs > Web Analytics**.
+Enabling RUM creates a Web Analytics configuration entry for the hostname at the account level.
 
 If you wish to disable RUM, follow these steps:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
-2. Go to **Analytics & Logs > Web Analytics**.
-3. Select **Manage Site** for the hostname for which you wish to disable RUM.
-4. Select **Delete**.
+1. In the Cloudflare dashboard, go to the **Web Analytics** page.
+
+   <DashButton url="/?to=/:account/web-analytics" />
+
+2. Select **Manage Site** for the hostname for which you wish to disable RUM.
+3. Select **Delete**.

@@ -5,7 +5,7 @@ sidebar:
   order: 4
 ---
 
-import { TabItem, Tabs, Render } from "~/components";
+import { TabItem, Tabs, Render, DashButton } from "~/components";
 
 Log Explorer allows you to enable or disable which datasets are available to query in Log Search.
 
@@ -24,10 +24,12 @@ Log Explorer currently supports the following datasets:
 
 In order for Log Explorer to begin storing logs, you need to enable the desired datasets. You can do this via the dashboard or the API.
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
-2. Go to **Log Explorer** > **Manage datasets**.
-3. Select **Add dataset** to select the datasets you want to query. 
-4. Choose a dataset and then a zone. Then, select **Add**. You can always return to this page to enable more datasets or manage your existing ones.
+1. In the Cloudflare dashboard, go to the **Log Explorer** > **Manage datasets** page.
+
+   <DashButton url="/?to=/:account/log-explorer/manage-sources" />
+
+2. Select **Add dataset** to select the datasets you want to query. 
+3. Choose a dataset and then a zone. Then, select **Add**. You can always return to this page to enable more datasets or manage your existing ones.
 
 :::note
 It may take a few minutes for the logs to become available for querying.
