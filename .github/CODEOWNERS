@@ -58,8 +58,8 @@
 /src/content/docs/cloudflare-one/applications/ @kennyj42 @ranbel @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-one/identity/ @kennyj42 @ranbel @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-one/policies/access/ @kennyj42 @ranbel @cloudflare/pcx-technical-writing
-/src/content/docs/cloudflare-one/connections/connect-devices/ @kkrum @kokolocomotion1 @ranbel @cloudflare/pcx-technical-writing
-/src/content/docs/cloudflare-one/connections/connect-networks/ @ranbel @cloudflare/pcx-technical-writing
+/src/content/docs/cloudflare-one/connections/connect-devices/ @ranbel @cloudflare/pcx-technical-writing
+/src/content/docs/cloudflare-one/connections/connect-networks/ @nikitacano @ranbel @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-one/applications/casb/ @maxvp @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-one/policies/gateway/ @maxvp @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-one/policies/browser-isolation/ @maxvp @ranbel @cloudflare/pcx-technical-writing
