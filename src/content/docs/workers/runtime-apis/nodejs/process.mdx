@@ -7,18 +7,14 @@ import { Render } from "~/components";
 
 <Render file="nodejs-compat-howto" product="workers" />
 
-The [`process`](https://nodejs.org/dist/latest-v19.x/docs/api/process.html) module in Node.js provides a number of useful APIs related to the current process. Within a serverless environment like Workers, most of these APIs are not relevant or meaningful, but some are useful for cross-runtime compatibility. Within Workers, the following APIs are available:
+The [`process`](https://nodejs.org/dist/latest-v22.x/docs/api/process.html) module in Node.js provides a number of useful APIs related to the current process.
 
-```js
-import { env, nextTick } from "node:process";
+Initially Workers only supported `nextTick`, `env`, `exit`, `getBuiltinModule`, `platform` and `features` on process,
+which was then updated with the [`enable_nodejs_process_v2`](/workers/configuration/compatibility-flags/#enable-process-v2-implementation) flag to include most Node.js process features.
 
-env["FOO"] = "bar";
-console.log(env["FOO"]); // Prints: bar
+Refer to the [Node.js documentation for `process`](https://nodejs.org/dist/latest-v22.x/docs/api/process.html) for more information.
 
-nextTick(() => {
-	console.log("next tick");
-});
-```
+Workers-specific implementation details apply when adapting Node.js support for a serverless environment, which are described in more detail below.
 
 ## `process.env`
 
@@ -77,5 +73,66 @@ process.env === env; // false! they are no longer the same object
 
 The Workers implementation of `process.nextTick()` is a wrapper for the standard Web Platform API [`queueMicrotask()`](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/queueMicrotask).
 
-Refer to the [Node.js documentation for `process`](https://nodejs.org/dist/latest-v19.x/docs/api/process.html) for more information.
+```js
+import { env, nextTick } from "node:process";
+
+env["FOO"] = "bar";
+console.log(env["FOO"]); // Prints: bar
+
+nextTick(() => {
+	console.log("next tick");
+});
 ```
+
+## Stdio
+
+`process.stdout`, `process.stderr` and `process.stdin` are supported as streams. `stdin` is treated as an empty readable stream.
+`stdout` and `stderr` are treated as non-TTY writable streams, with line buffering when integrating with inspector and structured
+logging output.
+
+The line buffer is cleared by either a newline or the next microtask, so that synchronous writes without newline characters will always
+remain contiguous on the same line.
+
+For example, the following will behave as if calling `console.log('one')` followed by `console.log('two')`:
+
+```js
+// equivalent to `console.log('one');`
+process.stdout.write('o');
+process.stdout.write('n');
+process.stdout.write('e');
+await 0;
+// equivalent to `console.log('two')`
+process.stdout.write('t');
+process.stdout.write('w');
+process.stdout.write('o');
+process.stdout.write('\n');
+// equivalent to `console.log('')`
+process.stdout.write('\n');
+```
+
+## Filesystem
+
+`process.cwd()` is initialized to `/bundle`.
+
+`process.chdir()` may be used to alter the current working directory, and is respected by FS operations when using `enable_nodejs_fs_module`.
+
+## Hrtime
+
+`process.hrtime` is now available, but currently provides an unaccurate timer for compatiblity only.
+
+## Unsupported Features
+
+The following process properties are currently entirely unsupported and return `undefined`: `binding`, `channel`, `connected`, `debugPort`, `dlopen`,
+`exitCode`, `finalization`, `getActiveResourcesInfo`, `hasUncaughtExceptionCaptureCallback`, `kill`, `memoryUsage`, `noDeprecation`, `permission`,
+`ref`, `release`, `report`, `resourceUsage`, `send`, `setUncaughtExceptionCaptureCallback`, `sourceMapsEnabled`, `threadCpuUsage`,
+`throwDeprecation`, `traceDeprecation`, `unref`.
+
+These unimplemented features may be feature-detected via conditional gating patterns like:
+
+```js
+if (process.dlopen) {
+	// use dlopen when available
+}
+```
+
+Any of these remaining unimplemented features may be implemented in future.
