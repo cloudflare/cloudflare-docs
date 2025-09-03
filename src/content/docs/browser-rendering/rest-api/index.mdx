@@ -22,6 +22,8 @@ Before you begin, make sure you [create a custom API Token](/fundamentals/api/ge
 
 :::note[Note]
 
-Currently, the Cloudflare dashboard displays usage metrics exclusively for the [Workers Bindings method](/browser-rendering/workers-bindings/). Usage data for the REST API is not yet available in the dashboard. We are actively working on adding REST API usage metrics to the dashboard.
+You can monitor Browser Rendering usage in two ways: 
+- [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers/browser-rendering): View aggregate metrics, including total REST API requests and total browser hours used.  
+- `X-Browser-Ms-Used` header: Returned in every REST API response, reporting browser time used for that request (in milliseconds). 
 
 :::
