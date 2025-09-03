@@ -100,7 +100,9 @@ Create a new Worker to read and write to your KV namespace.
 </TabItem> <TabItem label = 'Dashboard'>
 
 <Steps>
-1. <DashButton url="/?to=/:account/workers-and-pages" />
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
 2. Select **Create application**.
 3. Select **Start with Hello World!** > **Get started**.
 4. Name your Worker. For this tutorial, name your Worker `kv-tutorial`.
@@ -158,7 +160,9 @@ To create a KV namespace via Wrangler:
 </TabItem><TabItem label = 'Dashboard'>
 
 <Steps>
-1. <DashButton url="/?to=/:account/workers/kv/namespaces" />
+1. In the Cloudflare dashboard, go to the **Workers KV** page.
+
+   <DashButton url="/?to=/:account/workers/kv/namespaces" />
 2. Select **Create instance**.
 3. Enter a name for your namespace. For this tutorial, use `kv_tutorial_namespace`.
 4. Select **Create**.
@@ -204,7 +208,9 @@ To bind your KV namespace to your Worker:
 </TabItem><TabItem label='Dashboard'>
 
 <Steps>
-1. <DashButton url="/?to=/:account/workers-and-pages" />
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
 2. Select the `kv-tutorial` Worker you created in [step 1](/kv/get-started/#1-create-a-worker-project).
 3. Got to the **Bindings** tab, then select **Add binding**.
 4. Select **KV namespace** > **Add binding**.
@@ -264,7 +270,9 @@ npx wrangler kv key put --namespace-id=xxxxxxxxxxxxxxxx "<KEY>" "<VALUE>" --remo
 
 </TabItem><TabItem label = 'Dashboard'>
 <Steps>
-1. <DashButton url="/?to=/:account/workers/kv/namespaces" />
+1. In the Cloudflare dashboard, go to the **Workers KV** page.
+
+   <DashButton url="/?to=/:account/workers/kv/namespaces" />
 2. Select the KV namespace you created (`kv_tutorial_namespace`).
 3. Go to the **KV Pairs** tab.
 4. Enter a `<KEY>` of your choice.
@@ -312,7 +320,9 @@ Refer to the [`kv bulk` documentation](/kv/reference/kv-commands/#kv-bulk) to wr
 
 You can view key-value pairs directly from the dashboard.
 <Steps>
-1. <DashButton url="/?to=/:account/workers/kv/namespaces" />
+1. In the Cloudflare dashboard, go to the **Workers KV** page.
+
+   <DashButton url="/?to=/:account/workers/kv/namespaces" />
 2. Go to the KV namespace you created (`kv_tutorial_namespace`).
 3. Go to the **KV Pairs** tab.
 </Steps>
@@ -375,7 +385,9 @@ The code above:
 </TabItem><TabItem label = 'Dashboard'>
 
 <Steps>
-1. <DashButton url="/?to=/:account/workers-and-pages" />
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
 2. Go to the `kv-tutorial` Worker you created.
 3. Select **Edit Code**.
 4. Clear the contents of the `workers.js` file, then paste the following code.
@@ -424,7 +436,9 @@ Deploy your Worker to Cloudflare's global network.
 </TabItem><TabItem label='Dashboard'>
 <Steps>
 
-1. <DashButton url="/?to=/:account/workers-and-pages" />
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
 2. Select your `kv-tutorial` Worker.
 3. Select **Deployments**.
 4. From the **Version History** table, select **Deploy version**.
