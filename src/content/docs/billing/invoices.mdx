@@ -5,6 +5,8 @@ sidebar:
   order: 10
 ---
 
+import { DashButton } from "~/components";
+
 You will receive an invoice in the **Billing** section of your Cloudflare account when you:
 
 * Change your Cloudflare plan type.
@@ -22,8 +24,10 @@ Enterprise customers receive invoices directly from the Cloudflare accounting te
 
 To enable Cloudflare invoice emails which are sent when you add or remove subscriptions from your account:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Go to **Manage Account** > **Billing**.
+1. In the Cloudflare dashboard, go to the **Billing** page.
+
+    <DashButton url="/?to=/:account/billing" />
+    
 3. Select **Invoices & Documents**.
 4. From **Billing email preferences**, toggle the notification switch to **On**.
 
@@ -35,9 +39,11 @@ After you enable email invoices, you will receive invoices via email:
 
 ## Download invoice
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Go to **Manage Account** > **Billing**.
-3. Select **Invoices & Documents**.
+1. In the Cloudflare dashboard, go to the **Billing** page.
+
+    <DashButton url="/?to=/:account/billing" />
+
+2. Select **Invoices & Documents**.
 4. Find the invoice you want to download and select the icon next to the invoice number.
 
 :::note
