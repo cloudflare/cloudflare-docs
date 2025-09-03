@@ -1,0 +1,7 @@
+---
+{}
+---
+
+import { GlossaryTooltip } from "~/components";
+
+Your local firewall may be blocking traffic from the WARP client <GlossaryTooltip term="CGNAT IP">CGNAT IPs</GlossaryTooltip>. For example, Windows Firewall blocks inbound traffic from `100.96.0.0/12` by default; you will need to add a firewall rule that allows incoming requests from `100.96.0.0/12` for the desired protocols and/or ports.
