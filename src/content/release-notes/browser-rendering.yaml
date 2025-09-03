@@ -3,6 +3,10 @@ link: "/browser-rendering/changelog/"
 productName: Browser Rendering
 productLink: "/browser-rendering/"
 entries:
+  - publish_date: "2025-09-02"
+    title: Added `X-Browser-Ms-Used` response header
+    description: |-
+      * Each REST API response now includes the `X-Browser-Ms-Used` response header, which reports the browser time (in milliseconds) used by the request. 
   - publish_date: "2025-08-20"
     title: Browser Rendering billing goes live
     description: |-
