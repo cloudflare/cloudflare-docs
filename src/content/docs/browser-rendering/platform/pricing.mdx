@@ -23,7 +23,7 @@ You can monitor your Browser Rendering usage in the [Cloudflare dashboard](https
 Cloudflare calculates concurrent browsers as the **monthly average of your daily peak usage**. In other words, we record **the peak number of concurrent browsers each day** and then average those values over the month. This approach reflects your typical traffic and ensures you are not disproportionately charged for brief spikes in browser concurrency.
 </Details>
 
-### Examples of Workers Paid pricing
+## Examples of Workers Paid pricing
 <br/>
 #### Example: REST API pricing
 If a Workers Paid user uses the REST API for 50 hours during the month, the estimated cost for the month is as follows.
@@ -47,3 +47,12 @@ For **concurrent browsers**:
 
 For **browser duration** and **concurrent browsers**:
 <br/>$3.60 + $10.00 = $13.60
+
+## FAQ
+
+### How do I estimate my Browser Rendering costs?
+
+You can monitor your Browser Rendering usage in the [Cloudflare dashboard](https://dash.cloudflare.com). Go to **Compute (Workers)** > **Browser Rendering**. Then, you can use [the pricing page](/browser-rendering/platform/pricing/) to estimate your costs.
+
+###  Do failed API calls, such as those that time out, add to billable browser hours? --> PRICING
+No. If a request to the Browser Rendering REST API fails with a `waitForTimeout` error, the browser session is not charged.
