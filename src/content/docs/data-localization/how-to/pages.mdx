@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import { TabItem, Tabs } from "~/components";
+import { TabItem, Tabs, DashButton } from "~/components";
 
 In the following sections, we will give you some details about how to configure Pages with Regional Services and Customer Metadata Boundary.
 
@@ -15,13 +15,15 @@ To configure Regional Services for hostnames [proxied](/dns/proxy-status/) throu
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select an account.
-2. Go to the **Workers & Pages** tab.
-3. Select your Pages project.
-4. Follow these steps to [create a Custom Domain](/pages/configuration/custom-domains/).
-5. Go to the **DNS** of the zone you configured the Custom Domain for.
-6. From the **Region** dropdown, select the region you would like to use on your domain.
-7. Select **Save**.
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+
+2. Select your Pages project.
+3. Follow these steps to [create a Custom Domain](/pages/configuration/custom-domains/).
+4. Go to the **DNS** of the zone you configured the Custom Domain for.
+5. From the **Region** dropdown, select the region you would like to use on your domain.
+6. Select **Save**.
 
 </TabItem>
 
