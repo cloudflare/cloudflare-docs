@@ -9,15 +9,11 @@ head:
     content: Deploy a WAF managed ruleset in the dashboard for an account
 ---
 
-import { Render, Steps } from "~/components";
+import { Render, Steps, DashButton } from "~/components";
 
 :::note
 This feature requires an Enterprise plan with a paid add-on.
 :::
-
-You deploy managed rulesets for an account in Account Home > **WAF** > **Managed rulesets** tab.
-
-![Example WAF Managed Rules configuration in the Managed rulesets tab under Account Home > WAF.](~/assets/images/waf/account/managed-rulesets-dashboard.png)
 
 To deploy a managed ruleset for a single zone, refer to [Deploy a managed ruleset in the dashboard for a zone](/waf/managed-rules/deploy-zone-dashboard/).
 
@@ -25,9 +21,13 @@ To deploy a managed ruleset for a single zone, refer to [Deploy a managed rulese
 
 <Steps>
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+1. In the Cloudflare dashboard, go to the **WAF** page.
 
-2. Go to Account Home > **WAF** > **Managed rulesets** tab.
+   <DashButton url="/?to=/:account/application-security/waf" />
+
+2. Go to the **Managed rulesets** tab.
+
+   ![Example WAF Managed Rules configuration in the Managed rulesets tab.](~/assets/images/waf/account/managed-rulesets-dashboard.png)
 
 3. Select **Deploy** > **Deploy managed ruleset**.
 
@@ -73,9 +73,11 @@ To configure an entire managed ruleset:
 
 <Steps>
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+1. In the Cloudflare dashboard, go to the **WAF** page.
 
-2. Go to Account Home > **WAF** > **Managed rulesets** tab.
+   <DashButton url="/?to=/:account/application-security/waf" />
+
+2. Go to the **Managed rulesets** tab.
 
 3. Select the rule description of the _Execute_ rule that deploys the managed ruleset you want to configure. Alternatively, select the three dots > **Edit**.
 
@@ -111,9 +113,11 @@ You can browse the available rules in a managed ruleset and search for individua
 
 <Steps>
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+1. In the Cloudflare dashboard, go to the **WAF** page.
 
-2. Go to Account Home > **WAF** > **Managed rulesets** tab.
+   <DashButton url="/?to=/:account/application-security/waf" />
+
+2. Go to the **Managed rulesets** tab.
 
 3. Select the rule description of the _Execute_ rule that deploys the managed ruleset you want to configure. Alternatively, select the three dots > **Edit**.
 
@@ -131,8 +135,11 @@ You can browse the available rules in a managed ruleset and search for individua
 
 <Steps>
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to Account Home > **WAF** > **Managed rulesets** tab.
+1. In the Cloudflare dashboard, go to the **WAF** page.
+
+   <DashButton url="/?to=/:account/application-security/waf" />
+
+2. Go to the **Managed rulesets** tab.
 3. Under **Deployed managed rulesets** and next to the rule you want to delete, select the three dots > **Delete** and confirm the operation.
 
 </Steps>

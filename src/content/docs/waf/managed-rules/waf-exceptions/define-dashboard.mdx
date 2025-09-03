@@ -10,7 +10,7 @@ description: Use the Cloudflare dashboard to create exceptions that skip the
   execution of WAF managed rulesets or specific ruleset rules.
 ---
 
-import { Tabs, TabItem, Steps } from "~/components";
+import { Tabs, TabItem, Steps, DashButton } from "~/components";
 
 ## 1. Go to the zone or account dashboard page
 
@@ -42,8 +42,11 @@ To add an exception at the account level (Enterprise plans only):
 
 <Steps>
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account.
-2. Go to Account Home > **WAF** > **Managed rulesets** tab.
+1. In the Cloudflare dashboard, go to the **WAF** page.
+
+   <DashButton url="/?to=/:account/application-security/waf" />
+
+2. Go to the **Managed rulesets** tab.
 3. Select **Deploy** > **Deploy managed exception**.
 
 </Steps>
@@ -132,8 +135,11 @@ To edit an exception at the account level (Enterprise plans only):
 
 <Steps>
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account.
-2. Go to Account Home > **WAF** > **Managed rulesets** tab.
+1. In the Cloudflare dashboard, go to the **WAF** page.
+
+   <DashButton url="/?to=/:account/application-security/waf" />
+
+2. Go to the **Managed rulesets** tab.
 3. Find the exception you want to edit and select its name. Exceptions are rules listed with **Action** = **Skip**.
 4. Once you have finished making changes, select **Save**.<br/>
    Alternatively, to delete the exception, select **Delete exception**.

@@ -5,14 +5,17 @@ sidebar:
   order: 5
 ---
 
-import { Render, Steps } from "~/components";
+import { Render, Steps, DashButton } from "~/components";
 
 To create a list, follow these steps:
 
 <Steps>
 
-1. Log in to your [Cloudflare account](https://dash.cloudflare.com) and select your account.
-2. Go to Account Home > **Manage Account** > **Configurations**, and then select **Lists**.
+1. In the Cloudflare dashboard, go to the **Settings** page.
+
+   <DashButton url="/?to=/:account/configurations" />
+
+2. Go to **Lists**.
 3. Select **Create new list**.
 4. Enter a name for your list, observing the [list name guidelines](/waf/tools/lists/#list-names).
 5. (Optional) Enter a description for the list, with a maximum length of 500 characters.
@@ -27,8 +30,13 @@ To create a list, follow these steps:
 <Steps>
 
 1. (Optional) If you wish to add items to an existing list:
-   1. Go to Account Home > **Manage Account** > **Configurations** > **Lists**.
-   2. Select **Edit** next to the list you want to edit.
+   1. Go to the **Settings** page.
+
+      <DashButton url="/?to=/:account/configurations" />
+
+   2. Go to **Lists**.
+   3. Select **Edit** next to the list you want to edit.
+
 2. Select **Add items**.
 3. To [add items to the list manually](#add-items-to-a-list-manually), use the available text inputs on the page.
 4. To [add items using a CSV file](#add-items-using-a-csv-file), select **Upload CSV**.

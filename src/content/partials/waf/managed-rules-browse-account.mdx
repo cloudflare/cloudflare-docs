@@ -2,13 +2,15 @@
 {}
 ---
 
-import { Steps } from "~/components";
+import { Steps, DashButton } from "~/components";
 
 <Steps>
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account.
+1. In the Cloudflare dashboard, go to the **WAF** page.
 
-2. Go to Account Home > **WAF** > **Managed rulesets** tab.
+   <DashButton url="/?to=/:account/application-security/waf" />
+
+2. Go to the **Managed rulesets** tab.
 
 3. If you have already deployed the managed ruleset you want to configure, find the rule deploying that managed ruleset and select the rule description. Alternatively, select the three dots > **Edit** next to an _Execute_ rule deploying the managed ruleset.
 

@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import { FeatureTable, GlossaryTooltip, Steps } from "~/components";
+import { FeatureTable, GlossaryTooltip, Steps, DashButton } from "~/components";
 
 Security Events allows you to review <GlossaryTooltip term="mitigated request">mitigated requests</GlossaryTooltip> and helps you tailor your security configurations.
 
@@ -31,7 +31,9 @@ To open Security Events for a given zone:
 - Old dashboard: Go to **Security** > **Events**.
 - New security dashboard: Go to **Security** > **Analytics** > **Events** tab.
 
-Additionally, Enterprise customers have access to the account-level dashboard in Account Home > **Security Center** > **Security Events**.
+Additionally, Enterprise customers have access to the account-level dashboard:
+
+<DashButton url="/?to=/:account/security-center/events" />
 
 ## Adjust displayed data
 

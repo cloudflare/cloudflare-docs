@@ -10,21 +10,23 @@ head:
     content: Work with WAF custom rulesets in the dashboard
 ---
 
-import { Render, Steps } from "~/components";
+import { Render, Steps, DashButton } from "~/components";
 
 :::note
 This feature requires an Enterprise plan with a paid add-on.
 :::
 
-Custom rulesets are configured at the account level. To work with custom rulesets, go to Account Home > **WAF** > **Custom rulesets**.
+Custom rulesets are configured at the account level.
 
 ## Create and deploy a custom ruleset
 
 <Steps>
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+1. In the Cloudflare dashboard, go to the **WAF** page.
 
-2. Go to Account Home > **WAF** > **Custom rulesets**.
+   <DashButton url="/?to=/:account/application-security/waf" />
+
+2. Go to the **Custom rulesets** tab.
 
    ![Custom rulesets page in the Cloudflare dashboard](~/assets/images/waf/account/custom-rulesets-dashboard.png)
 
@@ -62,9 +64,11 @@ Custom rulesets are configured at the account level. To work with custom ruleset
 
 <Steps>
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+1. In the Cloudflare dashboard, go to the **WAF** page.
 
-2. Go to Account Home > **WAF** > **Custom rulesets**.
+   <DashButton url="/?to=/:account/application-security/waf" />
+
+2. Go to the **Custom rulesets** tab.
 
    ![Custom rulesets page in the Cloudflare dashboard](~/assets/images/waf/account/custom-rulesets-dashboard.png)
 
@@ -84,8 +88,11 @@ Deployed custom rulesets will only apply to incoming traffic of Enterprise domai
 
 <Steps>
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to Account Home > **WAF** > **Custom rulesets**.
+1. In the Cloudflare dashboard, go to the **WAF** page.
+
+   <DashButton url="/?to=/:account/application-security/waf" />
+
+2. Go to the **Custom rulesets** tab.
 3. To delete a custom ruleset, select the three dots next to it > **Delete**.
 4. To confirm the delete operation, select **Delete**.
 

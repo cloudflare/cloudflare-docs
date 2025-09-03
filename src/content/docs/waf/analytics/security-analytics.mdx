@@ -5,7 +5,13 @@ sidebar:
   order: 1
 ---
 
-import { FeatureTable, GlossaryTooltip, Badge, Steps } from "~/components";
+import {
+	FeatureTable,
+	GlossaryTooltip,
+	Badge,
+	Steps,
+	DashButton,
+} from "~/components";
 
 Security Analytics displays information about all incoming HTTP requests for your domain, including requests not handled by Cloudflare security products.
 
@@ -38,7 +44,9 @@ To use Security Analytics:
 
 2. Go to the account or zone/domain dashboard:
    - For the zone/domain dashboard, select your domain and go to **Security** > **Analytics**.
-   - For the account dashboard, go to **Security Center** > **Security Analytics**.
+   - For the account dashboard, go to the **Security Analytics** page.
+
+     <DashButton url="/?to=/:account/security-center/analytics" />
 
 </Steps>
 
