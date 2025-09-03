@@ -5,7 +5,7 @@ sidebar:
     order: 1
 ---
 
-import { Steps } from "~/components";
+import { Steps, DashButton } from "~/components";
 
 
 The Cloudflare dashboard provides a user-friendly interface for creating and managing widgets.
@@ -13,36 +13,21 @@ The Cloudflare dashboard provides a user-friendly interface for creating and man
 ## Create a widget
 
 <Steps>
-    1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account.
-    2. Go to **Turnstile**.
-    3. Select **Add widget**.
-    4. Fill out the required information:
+    1. In the Cloudflare dashboard, go to the **Turnstile** page.
+    
+        <DashButton url="/?to=/:account/turnstile" />
+    2. Select **Add widget**.
+    3. Fill out the required information:
         - **Widget name**: A descriptive name for your widget.
         - **Hostname management**: Domains where the widget will be used.
         - **Widget mode**: Choose from Managed, Non-Interactive, or Invisible.
-    5. (Optional) Configure **Pre-clearance support** for single-page applications.
-    6. Select **Create** to save your widget.
-    7. Copy your sitekey and secret key, and store the secret key securely.
+    4. (Optional) Configure **Pre-clearance support** for single-page applications.
+    5. Select **Create** to save your widget.
+    6. Copy your sitekey and secret key, and store the secret key securely.
 </Steps>
 
 ## Manage existing widgets
 
-### View widget details
+You can view your widget details on the Cloudflare dashboard by selecting any existing widget to access analytics, settings, and performance metrics.
 
-<Steps>
-    1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account.
-    2. Go to **Turnstile**.
-    3. Select any existing widget to view its configuration.
-    4. Access analytics, settings, and performance metrics.
-</Steps>
-
-### Update widget configuration
-
-<Steps>
-    1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account.
-    2. Go to **Turnstile**.
-    3. Select any existing widget to view its configuration.
-    4. Select **Settings**.
-    5. Modify hostnames, mode, or other settings.
-    6. Select **Save** to apply changes.
-</Steps>
+To update the widget configuration, go to any existing widget and select **Settings**. Select **Save** to apply your changes.

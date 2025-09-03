@@ -6,6 +6,8 @@ sidebar:
 
 ---
 
+import { DashButton, Steps } from "~/components"
+
 You can associate hostnames with your widget to control where it can be used using Hostname Management. Managing your hostnames ensures that Turnstile works seamlessly with your setup, whether you add standalone hostnames or leverage zones registered to your Cloudflare account.
 
 ## Hostname limits
@@ -22,12 +24,15 @@ You can add a hostname to your Turnstile widget even if it is not on the Cloudfl
 
 To add a custom hostname:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to **Turnstile**.
-3. On an existing widget, select **Settings**.
-4. Select **Add Hostnames** under Hostname Management.
-5. Add a custom hostname or choose from an existing hostname.
-6. Select **Add**.
+<Steps>
+  1. In the Cloudflare dashboard, go to the **Turnstile** page.
+    
+      <DashButton url="/?to=/:account/turnstile" />
+  2. On an existing widget, select **Settings**.
+  3. Select **Add Hostnames** under Hostname Management.
+  4. Add a custom hostname or choose from an existing hostname.
+  5. Select **Add**.
+</Steps>
 
 ## Add hostnames with a registered zone
 
