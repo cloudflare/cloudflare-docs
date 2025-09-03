@@ -8,7 +8,7 @@ products:
   - Origin Rules
 ---
 
-import { Example } from "~/components";
+import { Example, DashButton } from "~/components";
 
 This example configures an origin rule and a DNS record to point to an R2 bucket configured with a custom domain.
 
@@ -23,8 +23,11 @@ When configuring your R2 bucket's custom domain, use a custom domain that you do
 
 ## 1. Configure custom domain in your Pages project
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to **R2 Object Storage** and select your bucket.
+1. In the Cloudflare dashboard, go to the **R2 object storage** page.
+
+   <DashButton url="/?to=/:account/r2/overview" />
+
+2. Select your bucket.
 3. On the bucket page, select **Settings**.
 4. Under **Public access** > **Custom Domains**, select **Connect Domain**.
 5. Enter the domain name you want to connect to — `imagesbucket.example.com` in this example — and select **Continue**.

@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import { Details } from "~/components";
+import { Details, DashButton } from "~/components";
 
 ## Before you start
 
@@ -61,13 +61,15 @@ The following HTML code is an example error page for 5XX errors without styling:
 
 To update an account-level custom error page:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to **Manage Account** > **Configurations**.
-3. Select **Error Pages** and identify your desired custom error page type.
-4. (Optional) To preview the current error page (default or custom), select the link in the **Show** column.
-5. To edit the error page, select three dots > **Edit** next to the page type you previously identified.
-6. To use Cloudflare's default page, select **Cloudflare default page.** To provide a custom error page, select **Custom page** and enter the URL of the custom error page you created.
-7. Select **Confirm**.
+1. In the Cloudflare dashboard, go to the **Settings** page.
+
+   <DashButton url="/?to=/:account/configurations" />
+
+2. Go to **Error Pages** and identify your desired custom error page type.
+3. (Optional) To preview the current error page (default or custom), select the link in the **Show** column.
+4. To edit the error page, select the three dots > **Edit** next to the page type you previously identified.
+5. To use Cloudflare's default page, select **Cloudflare default page.** To provide a custom error page, select **Custom page** and enter the URL of the custom error page you created.
+6. Select **Confirm**.
 
 ### Zone-level custom error page
 
@@ -76,7 +78,7 @@ To edit a zone-level custom error page:
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
 2. Go to **Error Pages** and identify your desired custom error page type.
 3. (Optional) To preview the current error page (default or custom), select the link in the **Show** column.
-4. To edit the error page, select three dots > **Edit** next to the page type you previously identified.
+4. To edit the error page, select the three dots > **Edit** next to the page type you previously identified.
 5. To use Cloudflare's default page, select **Cloudflare default page.** To provide a custom error page, select **Custom page** and enter the URL of the custom error page you created.
 6. Select **Confirm**.
 
