@@ -18,8 +18,6 @@ Decomposes tasks into a sequence of steps, where each LLM call processes the out
 
 ![Figure 1: Prompt Chaining](~/assets/images/agents/01-prompt-chaining.jpg)
 
-[**Interactive Demo**](https://ai.cloudflare.com/anthropic-agent-patterns)
-
 <GitHubCode
 	repo="cloudflare/agents"
 	file="guides/anthropic-patterns/src/flows/01 sequential.txt"
@@ -32,8 +30,6 @@ Decomposes tasks into a sequence of steps, where each LLM call processes the out
 Classifies input and directs it to specialized followup tasks, allowing for separation of concerns.
 
 ![Figure 2: Routing](~/assets/images/agents/2_Routing.jpg)
-
-[**Interactive Demo**](https://ai.cloudflare.com/anthropic-agent-patterns)
 
 <GitHubCode
 	repo="cloudflare/agents"
@@ -48,7 +44,6 @@ Enables simultaneous task processing through sectioning or voting mechanisms.
 
 ![Figure 3: Parallelization](~/assets/images/agents/3_Parallelization.jpg)
 
-[**Interactive Demo**](https://ai.cloudflare.com/anthropic-agent-patterns)
 
 <GitHubCode
 	repo="cloudflare/agents"
@@ -63,8 +58,6 @@ A central LLM dynamically breaks down tasks, delegates to Worker LLMs, and synth
 
 ![Figure 4: Orchestrator Workers](~/assets/images/agents/4_Orchestrator-Workers.jpg)
 
-[**Interactive Demo**](https://ai.cloudflare.com/anthropic-agent-patterns)
-
 <GitHubCode
 	repo="cloudflare/agents"
 	file="guides/anthropic-patterns/src/flows/04 orchestrator.txt"
@@ -77,8 +70,6 @@ A central LLM dynamically breaks down tasks, delegates to Worker LLMs, and synth
 One LLM generates responses while another provides evaluation and feedback in a loop.
 
 ![Figure 5: Evaluator-Optimizer](~/assets/images/agents/5_Evaluator-Optimizer.jpg)
-
-[**Interactive Demo**](https://ai.cloudflare.com/anthropic-agent-patterns)
 
 <GitHubCode
 	repo="cloudflare/agents"
