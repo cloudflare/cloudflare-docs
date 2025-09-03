@@ -38,21 +38,13 @@ Standard storage is designed for data that is accessed frequently. This is the d
 ### Infrequent Access storage <Badge text="Beta" variant="caution" size="small" />
 
 :::note[Open Beta]
-
-
 This feature is currently in beta. To report bugs or request features, go to the #r2 channel in the [Cloudflare Developer Discord](https://discord.cloudflare.com) or fill out the [feedback form](https://forms.gle/5FqffSHcsL8ifEG8A).
-
-
 :::
 
 Infrequent Access storage is ideal for data that is accessed less frequently. This storage class offers lower storage cost compared to Standard storage, but includes [retrieval fees](/r2/pricing/#data-retrieval) and a 30 day [minimum storage duration](/r2/pricing/#minimum-storage-duration) requirement.
 
 :::note
-
-
 For objects stored in Infrequent Access storage, you will be charged for the object for the minimum storage duration even if the object was deleted, moved, or replaced before the specified duration.
-
-
 :::
 
 #### Example use cases
@@ -76,11 +68,7 @@ To learn more about how to specify the storage class for new objects, refer to t
 ### Use object lifecycle rules to transition objects to Infrequent Access storage
 
 :::note
-
-
 Once an object is stored in Infrequent Access, it cannot be transitioned to Standard Access using lifecycle policies.
-
-
 :::
 
 To learn more about how to transition objects from Standard storage to Infrequent Access storage, refer to [Object lifecycles](/r2/buckets/object-lifecycles/).
