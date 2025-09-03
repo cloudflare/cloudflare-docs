@@ -39,11 +39,7 @@ Alarms can be used to build distributed primitives, like queues or batching of w
 
 ### `setAlarm`
 
-- <code>
-  	{" "}
-  	setAlarm(scheduledTimeMs <Type text="number" />)
-  </code>
-  : <Type text="void" />
+- <code> setAlarm(scheduledTimeMs <Type text="number" />) </code>: <Type text="void" />
 
   - Set the time for the alarm to run. Specify the time as the number of milliseconds elapsed since the UNIX epoch.
   - If you call `setAlarm` when there is already one scheduled, it will override the existing alarm.
@@ -66,11 +62,7 @@ This is due to the fact that, if the Durable Object wakes up after being inactiv
 
 ### `alarm`
 
-- <code>
-  	alarm(`alarmInfo`
-  	<Type text="Object" />)
-  </code>
-  : <Type text="void" />
+- <code>alarm(alarmInfo <Type text="Object" />)</code>: <Type text="void" />
 
   - Called by the system when a scheduled alarm time is reached.
 

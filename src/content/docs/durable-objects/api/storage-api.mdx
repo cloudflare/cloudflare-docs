@@ -113,10 +113,7 @@ export class MyDurableObject extends DurableObject {
 
 ### `exec`
 
-<code>
-	exec(query: <Type text="string" />, ...bindings: <Type text="any[]" />)
-</code>
-: <Type text="SqlStorageCursor" />
+<code>exec(query: <Type text="string" />, ...bindings: <Type text="any[]" />)</code>: <Type text="SqlStorageCursor" />
 
 #### Parameters
 
@@ -199,19 +196,13 @@ The PITR API represents points in time using 'bookmarks'. A bookmark is a mostly
 
 ### `getBookmarkForTime`
 
-<code>
-	ctx.storage.getBookmarkForTime(timestamp: <Type text="number | Date" />)
-</code>
-: <Type text="Promise<string>" />
+<code>ctx.storage.getBookmarkForTime(timestamp: <Type text="number | Date" />)</code>: <Type text="Promise<string>" />
 
 - Returns a bookmark representing approximately the given point in time, which must be within the last 30 days. If the timestamp is represented as a number, it is converted to a date as if using `new Date(timestamp)`.
 
 ### `onNextSessionRestoreBookmark`
 
-<code>
-	ctx.storage.onNextSessionRestoreBookmark(bookmark: <Type text="string" />)
-</code>
-: <Type text="Promise<string>" />
+<code>ctx.storage.onNextSessionRestoreBookmark(bookmark: <Type text="string" />)</code>: <Type text="Promise<string>" />
 
 - Configures the Durable Object so that the next time it restarts, it should restore its storage to exactly match what the storage contained at the given bookmark. After calling this, the application should typically invoke `ctx.abort()` to restart the Durable Object, thus completing the point-in-time recovery.
 
@@ -228,25 +219,11 @@ ctx.storage.onNextSessionRestoreBookmark(bookmark);
 
 ### `get`
 
-- <code>
-  	get(key <Type text="string" />, options <Type text="Object" />{" "}
-  	<MetaInfo text="optional" />)
-  </code>
-  : <Type text="Promise<any>" />- Retrieves the value associated with the given
-  key. The type of the returned value will be whatever was previously written
-  for the key, or undefined if the key does not exist.
+- <code>ctx.storage.get(key <Type text="string" />, options <Type text="Object" />{" "}<MetaInfo text="optional" />)</code>: <Type text="Promise<any>" />
+  - Retrieves the value associated with the given key. The type of the returned value will be whatever was previously written for the key, or undefined if the key does not exist.
 
-- <code>
-  	get(keys <Type text="Array<string>" />, options <Type text="Object" />{" "}
-  	<MetaInfo text="optional" />)
-  </code>
-  : <Type text="Promise<Map<string, any>>" />- Retrieves the values associated
-  with each of the provided keys. The type of each returned value in the
-  [`Map`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map)
-  will be whatever was previously written for the corresponding key. Results in
-  the `Map` will be sorted in increasing order of their UTF-8 encodings, with
-  any requested keys that do not exist being omitted. Supports up to 128 keys at
-  a time.
+- <code>ctx.storage.get(keys <Type text="Array<string>" />, options <Type text="Object" /> <MetaInfo text="optional" />)</code>: <Type text="Promise<Map<string, any>>" />
+  - Retrieves the values associated with each of the provided keys. The type of each returned value in the [`Map`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) will be whatever was previously written for the corresponding key. Results in the `Map` will be sorted in increasing order of their UTF-8 encodings, with any requested keys that do not exist being omitted. Supports up to 128 keys at a time.
 
 #### Supported options
 
@@ -258,50 +235,27 @@ ctx.storage.onNextSessionRestoreBookmark(bookmark);
 
 ### `put`
 
-- <code>
-  	put(key <Type text="string" />, value <Type text="any" />, options{" "}
-  	<Type text="Object" /> <MetaInfo text="optional" />)
-  </code>
-  : <Type text="Promise" />- Stores the value and associates it with the given
-  key. The value can be any type supported by the [structured clone
-  algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm),
-  which is true of most types.
+- <code>put(key <Type text="string" />, value <Type text="any" />, options <Type text="Object" /> <MetaInfo text="optional" />)</code>: <Type text="Promise" />
+  - Stores the value and associates it with the given key. The value can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm), which is true of most types.
 
-  The size of keys and values have different limits depending on the Durable Object storage backend you are using. Refer to either:
-  - [SQLite-backed Durable Object limits](/durable-objects/platform/limits/#sqlite-backed-durable-objects-general-limits)
-  - [KV-backed Durable Object limits](/durable-objects/platform/limits/#key-value-backed-durable-objects-general-limits).<br/><br/>
+    The size of keys and values have different limits depending on the Durable Object storage backend you are using. Refer to either:
+    - [SQLite-backed Durable Object limits](/durable-objects/platform/limits/#sqlite-backed-durable-objects-general-limits)
+    - [KV-backed Durable Object limits](/durable-objects/platform/limits/#key-value-backed-durable-objects-general-limits).<br/><br/>
 
-- <code>
-  	put(entries <Type text="Object" />, options <Type text="Object" />{" "}
-  	<MetaInfo text="optional" />)
-  </code>
-  : <Type text="Promise" />- Takes an Object and stores each of its keys and
-  values to storage. - Each value can be any type supported by the [structured
-  clone
-  algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm),
-  which is true of most types. - Supports up to 128 key-value pairs at a time.
-  The size of keys and values have different limits depending on the flavor of
-  Durable Object you are using. Refer to either: - [SQLite-backed Durable Object
-  limits](/durable-objects/platform/limits/#sqlite-backed-durable-objects-general-limits)
-  - [KV-backed Durable Object
-  limits](/durable-objects/platform/limits/#key-value-backed-durable-objects-general-limits)
+- <code>put(entries <Type text="Object" />, options <Type text="Object" /> <MetaInfo text="optional" />)</code>: <Type text="Promise" />
+  - Takes an Object and stores each of its keys and values to storage.
+  - Each value can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm), which is true of most types.
+  - Supports up to 128 key-value pairs at a time. The size of keys and values have different limits depending on the flavor of Durable Object you are using. Refer to either:
+    - [SQLite-backed Durable Object limits](/durable-objects/platform/limits/#sqlite-backed-durable-objects-general-limits)
+    - [KV-backed Durable Object limits](/durable-objects/platform/limits/#key-value-backed-durable-objects-general-limits)
 
 ### `delete`
 
-- <code>
-  	delete(key <Type text="string" />, options <Type text="Object" />{" "}
-  	<MetaInfo text="optional" />)
-  </code>
-  : <Type text="Promise<boolean>" />- Deletes the key and associated value.
-  Returns `true` if the key existed or `false` if it did not.
+- <code>delete(key <Type text="string" />, options <Type text="Object" /> <MetaInfo text="optional" />)</code>: <Type text="Promise<boolean>" />
+  - Deletes the key and associated value. Returns `true` if the key existed or `false` if it did not.
 
-- <code>
-  	delete(keys <Type text="Array<string>" />, options <Type text="Object" />{" "}
-  	<MetaInfo text="optional" />)
-  </code>
-  : <Type text="Promise<number>" />- Deletes the provided keys and their
-  associated values. Supports up to 128 keys at a time. Returns a count of the
-  number of key-value pairs deleted.
+- <code>delete(keys <Type text="Array<string>" />, options <Type text="Object" /> <MetaInfo text="optional" />)</code>: <Type text="Promise<number>" />
+  - Deletes the provided keys and their associated values. Supports up to 128 keys at a time. Returns a count of the number of key-value pairs deleted.
 
 #### Supported options
 
@@ -335,12 +289,8 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
 ### `list`
 
-- <code>
-  	list(options <Type text="Object" /> <MetaInfo text="optional" />)
-  </code>
-  : <Type text="Promise<Map<string, any>>" />- Returns all keys and values
-  associated with the current Durable Object in ascending sorted order based on
-  the keys' UTF-8 encodings.
+- <code>list(options <Type text="Object" /> <MetaInfo text="optional" />)</code>: <Type text="Promise<Map<string, any>>" />
+  - Returns all keys and values associated with the current Durable Object in ascending sorted order based on the keys' UTF-8 encodings.
   - The type of each returned value in the [`Map`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) will be whatever was previously written for the corresponding key.
 
   - Be aware of how much data may be stored in your Durable Object before calling this version of `list` without options because all the data will be loaded into the Durable Object's memory, potentially hitting its [limit](/durable-objects/platform/limits/). If that is a concern, pass options to `list` as documented below.
@@ -376,13 +326,8 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
 ### `getAlarm`
 
-- <code>
-  	getAlarm(options <Type text="Object" /> <MetaInfo text="optional" />)
-  </code>
-  : <Type text="Promise<Number | null>" />- Retrieves the current alarm time (if
-  set) as integer milliseconds since epoch. The alarm is considered to be set if
-  it has not started, or if it has failed and any retry has not begun. If no
-  alarm is set, `getAlarm()` returns `null`.
+- <code>getAlarm(options <Type text="Object" /> <MetaInfo text="optional" />)</code>: <Type text="Promise<Number | null>" />
+  - Retrieves the current alarm time (if set) as integer milliseconds since epoch. The alarm is considered to be set if it has not started, or if it has failed and any retry has not begun. If no alarm is set, `getAlarm()` returns `null`.
 
 #### Supported options
 
@@ -390,22 +335,15 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
 ### `setAlarm`
 
-- <code>
-  	setAlarm(scheduledTime <Type text="Date | number" />, options{" "}
-  	<Type text="Object" /> <MetaInfo text="optional" />)
-  </code>
-  : <Type text="Promise" />- Sets the current alarm time, accepting either a
-  JavaScript `Date`, or integer milliseconds since epoch.
+- <code>setAlarm(scheduledTime <Type text="Date | number" />, options <Type text="Object" /> <MetaInfo text="optional" />)</code>: <Type text="Promise" />
+  - Sets the current alarm time, accepting either a JavaScript `Date`, or integer milliseconds since epoch.
 
   If `setAlarm()` is called with a time equal to or before `Date.now()`, the alarm will be scheduled for asynchronous execution in the immediate future. If the alarm handler is currently executing in this case, it will not be canceled. Alarms can be set to millisecond granularity and will usually execute within a few milliseconds after the set time, but can be delayed by up to a minute due to maintenance or failures while failover takes place.
 
 ### `deleteAlarm`
 
-- <code>
-  	deleteAlarm(options <Type text="Object" /> <MetaInfo text="optional" />)
-  </code>
-  : <Type text="Promise" />- Deletes the alarm if one exists. Does not cancel
-  the alarm handler if it is currently executing.
+- <code>deleteAlarm(options <Type text="Object" /> <MetaInfo text="optional" />)</code>: <Type text="Promise" />
+  - Deletes the alarm if one exists. Does not cancel the alarm handler if it is currently executing.
 
 #### Supported options
 
@@ -415,23 +353,10 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
 ### `deleteAll`
 
-- <code>
-  	deleteAll(options <Type text="Object" /> <MetaInfo text="optional" />)
-  </code>
-  : <Type text="Promise" />- Deletes all stored data, effectively deallocating
-  all storage used by the Durable Object. For Durable Objects with a key-value
-  storage backend, `deleteAll()` removes all keys and associated values for an
-  individual Durable Object. For Durable Objects with a [SQLite storage
-  backend](/durable-objects/best-practices/access-durable-objects-storage/#create-sqlite-backed-durable-object-class),
-  `deleteAll()` removes the entire contents of a Durable Object's private SQLite
-  database, including both SQL data and key-value data. - For Durable Objects
-  with a key-value storage backend, an in-progress `deleteAll()` operation can
-  fail, which may leave a subset of data undeleted. Durable Objects with a
-  SQLite storage backend do not have a partial `deleteAll()` issue because
-  `deleteAll()` operations are atomic (all or nothing). - `deleteAll()` does not
-  proactively delete [alarms](/durable-objects/api/alarms/). Use
-  [`deleteAlarm()`](/durable-objects/api/alarms/#deletealarm) to delete an
-  alarm.
+- <code>deleteAll(options <Type text="Object" /> <MetaInfo text="optional" />)</code>: <Type text="Promise" />
+  - Deletes all stored data, effectively deallocating all storage used by the Durable Object. For Durable Objects with a key-value storage backend, `deleteAll()` removes all keys and associated values for an individual Durable Object. For Durable Objects with a [SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#create-sqlite-backed-durable-object-class), `deleteAll()` removes the entire contents of a Durable Object's private SQLite database, including both SQL data and key-value data.
+  - For Durable Objects with a key-value storage backend, an in-progress `deleteAll()` operation can fail, which may leave a subset of data undeleted. Durable Objects with a SQLite storage backend do not have a partial `deleteAll()` issue because `deleteAll()` operations are atomic (all or nothing).
+  - `deleteAll()` does not proactively delete [alarms](/durable-objects/api/alarms/). Use [`deleteAlarm()`](/durable-objects/api/alarms/#deletealarm) to delete an alarm.
 
 ### `transactionSync`
 
@@ -470,6 +395,6 @@ The `put()` method returns a `Promise`, but most applications can discard this p
 
 ## Related resources
 
-- [Durable Objects: Easy, Fast, Correct – Choose Three](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/)
+- [Durable Objects: Easy, Fast, Correct  Choose Three](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/)
 - [Zero-latency SQLite storage in every Durable Object blog](https://blog.cloudflare.com/sqlite-in-durable-objects/)
 - [WebSockets API](/durable-objects/best-practices/websockets/)
