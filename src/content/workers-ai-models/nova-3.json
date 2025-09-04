@@ -111,7 +111,7 @@
                     "type": "string",
                     "description": "Arbitrary key-value pairs that are attached to the API response for usage in downstream processing"
                 },
-                "filter_words": {
+                "filler_words": {
                     "type": "boolean",
                     "description": "Filler Words can help transcribe interruptions in your audio, like 'uh' and 'um'"
                 },
@@ -195,6 +195,26 @@
                 "utt_split": {
                     "type": "number",
                     "description": "Seconds to wait before detecting a pause between words in submitted audio."
+                },
+                "channels": {
+                    "type": "number",
+                    "description": "The number of channels in the submitted audio"
+                },
+                "interim_results": {
+                    "type": "boolean",
+                    "description": "Specifies whether the streaming endpoint should provide ongoing transcription updates as more audio is received. When set to true, the endpoint sends continuous updates, meaning transcription results may evolve over time. Note: Supported only for webosockets."
+                },
+                "endpointing": {
+                    "type": "string",
+                    "description": "Indicates how long model will wait to detect whether a speaker has finished speaking or pauses for a significant period of time. When set to a value, the streaming endpoint immediately finalizes the transcription for the processed time range and returns the transcript with a speech_final parameter set to true. Can also be set to false to disable endpointing"
+                },
+                "vad_events": {
+                    "type": "boolean",
+                    "description": "Indicates that speech has started. You'll begin receiving Speech Started messages upon speech starting. Note: Supported only for webosockets."
+                },
+                "utterance_end_ms": {
+                    "type": "boolean",
+                    "description": "Indicates how long model will wait to send an UtteranceEnd message after a word has been transcribed. Use with interim_results. Note: Supported only for webosockets."
                 }
             },
             "required": [

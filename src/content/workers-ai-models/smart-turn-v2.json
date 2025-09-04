@@ -24,6 +24,10 @@
                     "currency": "USD"
                 }
             ]
+        },
+        {
+            "property_id": "realtime",
+            "value": "true"
         }
     ],
     "schema": {

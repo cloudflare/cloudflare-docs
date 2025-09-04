@@ -12,10 +12,6 @@
     "tags": [],
     "properties": [
         {
-            "property_id": "partner",
-            "value": "true"
-        },
-        {
             "property_id": "price",
             "value": [
                 {
@@ -29,6 +25,10 @@
                     "currency": "USD"
                 }
             ]
+        },
+        {
+            "property_id": "partner",
+            "value": "true"
         }
     ],
     "schema": {
@@ -68,7 +68,12 @@
                 },
                 "num_steps": {
                     "type": "integer",
-                    "default": 4,
+                    "minimum": 1,
+                    "maximum": 40,
+                    "description": "The number of diffusion steps; higher values can improve quality but take longer"
+                },
+                "steps": {
+                    "type": "integer",
                     "minimum": 1,
                     "maximum": 40,
                     "description": "The number of diffusion steps; higher values can improve quality but take longer"
