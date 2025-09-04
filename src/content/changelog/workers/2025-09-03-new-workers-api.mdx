@@ -93,7 +93,7 @@ const deployment = await client.workers.scripts.deployments.create(worker.name, 
 });
 ````
 #### Example: Terraform
-For those using Terraform, you can now track the Worker's existence without needing to also manage its configuration and deployments. This gives you flexibility to use Wrangler for building and deploying your code, while still using Terraform as your source of truth for your Worker's infrastructure.
+If you use Terraform, you can now declare the Worker in your Terraform configuration and manage configuration outside of Terraform in your Worker's [`wrangler.jsonc` file](/workers/wrangler/configuration/) and deploy code changes using [Wrangler](/workers/wrangler/).
 
 ```tf
 resource "cloudflare_worker" "my_worker" {
