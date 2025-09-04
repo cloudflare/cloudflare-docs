@@ -10,16 +10,17 @@ description: Learn how to view and use data from Network Analytics.
 
 ---
 
-import { GlossaryTooltip, Render } from "~/components"
+import { GlossaryTooltip, Render, DashButton } from "~/components"
 
 <Render file="network-analytics-requirements" product="analytics" />
 
 ## View the Network Analytics dashboard
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select an account that has access to Magic Transit or Spectrum.
+1. In the Cloudflare dashboard, go to the **Network Analytics** page.
 
-2. Go to Account Home > **Analytics & Logs** > **Network Analytics**.
+   <DashButton url="/?to=/:account/network-analytics" />
 
+2. Select an account that has access to Magic Transit or Spectrum.
 3. Configure the displayed data. You can [adjust the time range](/analytics/network-analytics/configure/time-range/), [select the main metric](/analytics/network-analytics/configure/displayed-data/#select-high-level-metric) (total packets or total bytes), [apply filters](/analytics/network-analytics/configure/displayed-data/#apply-filters), and more.
 
 ## Get Network Analytics data via API
