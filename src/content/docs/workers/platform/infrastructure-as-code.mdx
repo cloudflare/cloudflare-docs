@@ -352,6 +352,37 @@ EOF
 </TabItem>
 </Tabs>
 
+### Python Workers
+
+[Python Workers](/workers/languages/python/) (open beta) have their own special `text/x-python` content type and `python_workers` compatibility flag for uploading using the multipart/form-data API.
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/<account_id>/workers/scripts/my-hello-world-script \
+  -X PUT \
+  -H 'Authorization: Bearer <api_token>' \
+  -F 'metadata={
+        "main_module": "my-hello-world-script.py",
+        "bindings": [
+          {
+            "type": "plain_text",
+            "name": "MESSAGE",
+            "text": "Hello World!"
+          }
+        ],
+        "compatibility_date": "$today",
+        "compatibility_flags": [
+          "python_workers"
+        ]
+      };type=application/json' \
+  -F 'my-hello-world-script.py=@-;filename=my-hello-world-script.py;type=text/x-python' <<EOF
+from workers import WorkerEntrypoint, Response
+
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        return Response(self.env.MESSAGE)
+EOF
+```
+
 ## Considerations with Durable Objects
 
 [Durable Object](/durable-objects/) migrations are applied with deployments. This means you can't bind to a Durable Object in a Version if a deployment doesn't exist i.e. migrations haven't been applied. For example, running this in Terraform will fail the first time the plan is applied:
