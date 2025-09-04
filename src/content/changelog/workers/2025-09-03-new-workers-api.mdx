@@ -58,7 +58,7 @@ The new API enables proper separation of concerns between infrastructure and app
 ```ts
 // Step 1: Platform team creates the Worker resource (no code needed)
 const worker = await client.workers.beta.workers.create({
-  "payment-service",
+  name: "payment-service",
   account_id: "...",
   observability: {
     enabled: true,
