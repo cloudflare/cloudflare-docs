@@ -34,7 +34,7 @@ curl -X PUT "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/workers/s
 
 This API worked for creating a basic Worker, uploading all of its code, and deploying it immediately — but came with challenges:
 
-- **A Worker couldn't exist without code**: To create a Worker, you had to upload its code in the same operation. While this doesn't pose a problem for smaller teams, this prevented platform teams in larger organizations from provisioning Workers with the proper settings, and then handing them off to development teams to deploy the actual code.
+- **A Worker couldn't exist without code**: To create a Worker, you had to upload its code in the same API request. This prevented platform teams in larger organizations from provisioning Workers with the proper settings, and then handing them off to development teams to deploy the actual code.
 
 - **Updating settings was confusing and fragmented**: With the existing API, configuration is scattered across eight different endpoints with overlapping responsibilities. This made it challenging for human developers (and even more difficult for automated agents) to reliably update a Worker's settings. You had to guess between [`/settings`](/api/resources/workers/subresources/scripts/subresources/schedules/methods/update/) and [`/script-settings`](/api/resources/workers/subresources/scripts/subresources/settings/methods/edit/), with not a lot of clarity about which endpoint updated all versions or a specific version of a Worker.
 
