@@ -73,7 +73,7 @@ const version = await client.workers.beta.workers.versions.create(worker.id, {
   bindings: [ /*...*/ ],
   modules: [
     {
-      name: "payment-service",
+      name: "worker.js",
       content_type: "application/javascript+module",
       content_base64: Buffer.from(scriptContent).toString("base64"),
     },
