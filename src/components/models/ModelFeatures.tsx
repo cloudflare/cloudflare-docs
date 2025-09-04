@@ -29,7 +29,7 @@ const ModelFeatures = ({ model }: { model: WorkersAIModelsSchema }) => {
 							{properties.planned_deprecation_date && (
 								<tr>
 									<td>
-										{Date.now() >
+										{Date.now() <
 										Math.floor(
 											new Date(properties.planned_deprecation_date).getTime() /
 												1000,
