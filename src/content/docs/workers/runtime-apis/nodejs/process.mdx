@@ -92,22 +92,7 @@ logging output.
 
 The line buffer works by storing writes to stdout or stderr until either a newline character `\n` is encountered or until the next microtask, when the log is then flushed to the output.
 
-This way, synchronous writes without newline characters will always remain contiguous on the same line. For example, the following will behave as if calling `console.log('one')` followed by `console.log('two')`:
-
-```js
-// equivalent to `console.log('one');`
-process.stdout.write('o');
-process.stdout.write('n');
-process.stdout.write('e');
-await 0;
-// equivalent to `console.log('two')`
-process.stdout.write('t');
-process.stdout.write('w');
-process.stdout.write('o');
-process.stdout.write('\n');
-// equivalent to `console.log('')`
-process.stdout.write('\n');
-```
+This ensures compatibility with inspector and structured logging outputs.
 
 ## Filesystem
 
