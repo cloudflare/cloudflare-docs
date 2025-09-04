@@ -6,6 +6,8 @@ sidebar:
 
 ---
 
+import { DashButton } from "~/components";
+
 :::note
 
 This feature is only available if your account has at least one zone on a Business or higher plan. For more information, refer to our [plans](https://www.cloudflare.com/plans/). 
@@ -24,8 +26,10 @@ According to PagerDuty, you will need an account with the following permissions 
 
 ## Connect PagerDuty to a Cloudflare account
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
-2. Go to **Notifications** > **Destinations**.
+1. In the Cloudflare dashboard, go to the **Notifications** page.
+  
+    <DashButton url="/?to=/:account/notifications" />
+2. Go to **Destinations**.
 3. In the **Connected notification services** card, select **Connect**.
 4. Log in to your [PagerDuty account](https://www.pagerduty.com/) to connect it to your Cloudflare account.
 5. Choose the services you want to use and select **Connect**.
@@ -41,8 +45,10 @@ Disconnecting PagerDuty will disable any notifications being sent to PagerDuty w
 
 If other delivery destinations were selected, then those notifications will still be routed as configured.
 
-1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
-2. Go to **Notifications** > **Destinations**.
+1. In the Cloudflare dashboard, go to the **Notifications** page.
+  
+    <DashButton url="/?to=/:account/notifications" />
+2. Go to **Destinations**.
 3. In the **Connected notification services** card, select **View** on the PagerDuty service you want to disconnect.
 4. Select **Disconnect** > **Confirm**.
 5. Log in to your [PagerDuty account](https://www.pagerduty.com/) and make the required changes.
