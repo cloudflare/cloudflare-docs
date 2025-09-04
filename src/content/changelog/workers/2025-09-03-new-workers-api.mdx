@@ -1,7 +1,7 @@
 ---
 title: A new, simpler REST API for Cloudflare Workers (Beta)
 description: Simpler Workers API, SDK methods, and Terraform resources for directly managing Workers, Versions, and Deployments
-date: 2025-09-03
+date: 2025-09-04
 ---
 You can now manage [**Workers**](/api/resources/workers/subresources/beta/subresources/workers/methods/create/), [**Versions**](/api/resources/workers/subresources/beta/subresources/workers/models/worker/#(schema)), and [**Deployments**](/api/resources/workers/subresources/scripts/subresources/content/methods/update/) as separate resources with a new, resource-oriented API (Beta).
 
@@ -9,14 +9,14 @@ This new API is supported in the [Cloudflare Terraform provider](https://registr
 
 ### Try it out
 - [**New beta API endpoints**](/api/resources/workers/subresources/beta/)
-- [**Cloudflare TypeScript SDK v4.6.0**](https://github.com/cloudflare/cloudflare-typescript)
+- [**Cloudflare TypeScript SDK v5.0.0**](https://github.com/cloudflare/cloudflare-typescript)
+- [**Cloudflare Go SDK v6.0.0**](https://github.com/cloudflare/cloudflare-go)
 - [**Terraform provider v5.9.0**](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs): [`cloudflare_worker`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/worker) , [`cloudflare_worker_version`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/worker_version), and [`cloudflare_workers_deployments`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/workers_deployment) resources.
 - See full examples in our [Infrastructure as Code (IaC) guide](/workers/platform/infrastructure-as-code)
 
 
-![**Before and after**](~/assets/images/workers/platform/endpoints.png)
-
-## Before: Eight endpoints with mixed responsibilities
+## Before: Eight+ endpoints with mixed responsibilities
+![**Before**](~/assets/images/workers/platform/api-before.png)
 The existing API was originally designed for simple, one-shot script uploads.
 
 ```sh
@@ -41,6 +41,7 @@ This API worked for creating a basic Worker, uploading all of its code, and depl
 - **Scripts used names as primary identifiers**: The existing API uses the Worker script name as the primary identifier for a Worker, which meant that if you wanted to rename a Worker via API, you needed to deploy an entirely new script and update every reference across your infrastructure. If you were using Terraform, renaming a Worker could inadvertently result in destroying the Worker altogether.
 
 ## After: Three resources with clear boundaries
+![**After**](~/assets/images/workers/platform/api-after.png)
 The new API has three core resources with distinct boundaries: [**Worker**](/api/resources/workers/subresources/beta/subresources/workers/methods/create/), [**Versions**](/api/resources/workers/subresources/beta/subresources/workers/models/worker/#(schema)), and [**Deployment**](/api/resources/workers/subresources/scripts/subresources/content/methods/update/). All endpoints now use clean JSON payloads, with script content embedded as `base64`-encoded string, a simpler and more reliable approach than the previous `multipart/form-data` format.
 - **Worker**: The parent resource representing your application. It has a stable UUID and holds persistent settings like `name`, `tags`, and `logpush`. You can now create a Worker to establish its identity and settings **before** any code is uploaded.
 
