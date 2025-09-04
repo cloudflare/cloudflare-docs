@@ -17,7 +17,9 @@ This new API is supported in the [Cloudflare Terraform provider](https://registr
 
 ## Before: Eight+ endpoints with mixed responsibilities
 ![**Before**](~/assets/images/workers/platform/api-before.png)
-The existing API was originally designed for simple, one-shot script uploads.
+
+
+The existing API was originally designed for simple, one-shot script uploads:
 
 ```sh
 curl -X PUT "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/workers/scripts/$SCRIPT_NAME" \
@@ -34,32 +36,34 @@ curl -X PUT "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/workers/s
 
 This API worked for creating a basic Worker, uploading all of its code, and deploying it immediately — but came with challenges:
 
-- **A Worker couldn't exist without code**: To create a Worker, you had to upload its code in the same API request. This prevented platform teams in larger organizations from provisioning Workers with the proper settings, and then handing them off to development teams to deploy the actual code.
+- **A Worker couldn't exist without code**: To create a Worker, you had to upload its code in the same API request. This meant platform teams couldn't provision Workers with the proper settings, and then hand them off to development teams to deploy the actual code.
 
-- **Updating settings was confusing and fragmented**: With the existing API, configuration is scattered across eight different endpoints with overlapping responsibilities. This made it challenging for human developers (and even more difficult for AI agents) to reliably update a Worker's settings. You had to guess between [`/settings`](/api/resources/workers/subresources/scripts/subresources/schedules/methods/update/) and [`/script-settings`](/api/resources/workers/subresources/scripts/subresources/settings/methods/edit/), with not a lot of clarity about which endpoint updated all versions or a specific version of a Worker.
+- **Several endpoints implicitly created deployments**: Simple updates like adding a secret or changing a script's content would implicitly create a new version and immediately deploy it.
 
-- **Scripts used names as primary identifiers**: The existing API uses the Worker script name as the primary identifier for a Worker, which meant that if you wanted to rename a Worker via API, you needed to deploy an entirely new script and update every reference across your infrastructure. If you were using Terraform, renaming a Worker could inadvertently result in destroying the Worker altogether.
+- **Updating a setting was confusing**: Configuration was scattered across eight endpoints with overlapping responsibilities.  This ambiguity made it difficult for human developers (and even more so for AI agents) to reliably update a Worker via API.
+
+- **Scripts used names as primary identifiers**: This meant simple renames could turn into a risky migration, requiring you to create a brand new Worker and update every reference. If you were using Terraform, this could inadvertently destroy your Worker altogether.
 
 ## After: Three resources with clear boundaries
 ![**After**](~/assets/images/workers/platform/api-after.png)
 The new API introduces cleaner resource management with three core resources: [**Worker**](/api/resources/workers/subresources/beta/subresources/workers/methods/create/), [**Versions**](/api/resources/workers/subresources/beta/subresources/workers/models/worker/#(schema)), and [**Deployment**](/api/resources/workers/subresources/scripts/subresources/content/methods/update/).
 
-:::note
-[Workers](/api/resources/workers/subresources/beta/subresources/workers/) and [Versions](/api/resources/workers/subresources/beta/subresources/workers/subresources/versions/) use the new `/workers/` beta endpoints, while [Deployments](/api/resources/workers/subresources/scripts/subresources/deployments/) remain on the existing `/scripts/` endpoint. Pair the new endpoints with the existing Deployment API for a complete workflow.
-:::
-
-All endpoints now use simple JSON payloads, with script content embedded as `base64`-encoded strings —- a more consistent and reliable approach than the previous `multipart/form-data` format.
+All endpoints now use simple JSON payloads, with script content embedded as `base64`-encoded strings -- a more consistent and reliable approach than the previous `multipart/form-data` format.
 - **Worker**: The parent resource representing your application. It has a stable UUID and holds persistent settings like `name`, `tags`, and `logpush`. You can now create a Worker to establish its identity and settings **before** any code is uploaded.
 
 - **Version**: An immutable snapshot of your code and its specific configuration, like bindings and `compatibility_date`. Creating a new version is a safe action that doesn't affect live traffic.
 
 - **Deployment**: An explicit action that directs traffic to a specific version.
 
+:::note
+[Workers](/api/resources/workers/subresources/beta/subresources/workers/) and [Versions](/api/resources/workers/subresources/beta/subresources/workers/subresources/versions/) use the new `/workers/` beta endpoints, while [Deployments](/api/resources/workers/subresources/scripts/subresources/deployments/) remain on the existing `/scripts/` endpoint. Pair the new endpoints with the existing Deployment API for a complete workflow.
+:::
+
 ## Why this matters
 
-### Separation of concerns
+### You can now create Workers before uploading code
 
-The new API enables proper separation of concerns between infrastructure and application teams.
+Workers are now standalone resources that can be created and configured without any code. Platform teams can provision Workers with the right settings, then hand them off to development teams for implementation.
 
 #### Example: Typescript SDK
 ```ts
@@ -112,8 +116,40 @@ resource "cloudflare_worker" "my_worker" {
 # resource "cloudflare_workers_deployment" "my_worker_deployment" {}
 ```
 
-### No more confusing `/settings` API endpoints
-Configuration now has an obvious home. Worker settings persist across all versions of the Worker, and Version settings are specific to a code snapshot.
+### Deployments are always explicit, never implicit
+
+Creating a version and deploying it are now always explicit, separate actions - never implicit side effects. To update version-specific settings (like bindings), you create a new version with those changes. The existing deployed version remains unchanged until you explicitly deploy the new one.
+
+```sh
+# Step 1: Create a new version with updated settings (doesn't affect live traffic)
+POST /workers/workers/{id}/versions
+{
+  "compatibility_date": "$today",
+  "bindings": [
+    {
+      "name": "MY_NEW_ENV_VAR",
+      "text": "new_value",
+      "type": "plain_text"
+    }
+  ],
+  "modules": [...]
+}
+
+# Step 2: Explicitly deploy when ready (now affects live traffic)
+POST /workers/scripts/{script_name}/deployments
+{
+  "strategy": "percentage",
+  "versions": [
+    {
+      "percentage": 100,
+      "version_id": "new_version_id"
+    }
+  ]
+}
+```
+
+### Settings are clearly organized by scope
+Configuration is now logically divided: [**Worker settings**](/api/resources/workers/subresources/beta/subresources/workers/) (like `name` and `tags`) persist across all versions, while [**Version settings**](/api/resources/workers/subresources/beta/subresources/workers/subresources/versions/) (like `bindings` and `compatibility_date`) are specific to each code snapshot.
 
 ```sh
 # Worker settings (the parent resource)
@@ -146,7 +182,7 @@ GET /workers/workers/payment-service                  # Name (convenient for hum
 ```
 This dual approach means:
   - Developers can use readable names for debugging.
-  - Automation can rely on stable UUIDs to prevent errors when Workers are renamed
+  - Automation can rely on stable UUIDs to prevent errors when Workers are renamed.
   - Terraform can rename Workers without destroying and recreating them.
 
 
@@ -157,6 +193,6 @@ This dual approach means:
 
 ## Technical notes
 
-- The preexisting Workers REST API remains fully supported. Once the new API exits beta, we'll provide a migration timeline with ample notice and comprehensive migration guides.
-- Legacy Terraform resources and SDK methods will continue to work through the current major version. When deprecated in a future major version, we'll provide migration guides and plenty of notice.
-- While the Deployments API currently remains on the `/scripts/` endpoint, we plan to introduce a new Deployments endpoint under `/workers/` to match the new API structure. Both endpoints will coexist, allowing you to choose which to use.
+- The pre-existing Workers REST API remains fully supported. Once the new API exits beta, we'll provide a migration timeline with ample notice and comprehensive migration guides.
+- Existing Terraform resources and SDK methods will continue to be fully supported through the current major version.
+- While the Deployments API currently remains on the `/scripts/` endpoint, we plan to introduce a new Deployments endpoint under `/workers/` to match the new API structure.
