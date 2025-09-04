@@ -6,7 +6,7 @@ enable_flag: "enable_nodejs_process_v2"
 disable_flag: "disable_nodejs_process_v2"
 ---
 
-When enabled, the `enable_nodejs_process_v2` flag along with the [`nodejs_compat`](/workers/runtime-apis/nodejs/) compat flag
+When enabled after 2025-09-15, the `enable_nodejs_process_v2` flag along with the [`nodejs_compat`](/workers/runtime-apis/nodejs/) compat flag
 ensures a comprehensive Node.js-compatible `process` implementation, updating from the previous minimal process implementation
 that only provided the limited `nextTick`, `env`, `exit`, `getBuiltinModule`, `platform` and `features` properties.
 

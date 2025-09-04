@@ -7,14 +7,14 @@ import { Render } from "~/components";
 
 <Render file="nodejs-compat-howto" product="workers" />
 
-The [`process`](https://nodejs.org/dist/latest-v22.x/docs/api/process.html) module in Node.js provides a number of useful APIs related to the current process.
+The [`process`](https://nodejs.org/docs/latest/api/process.html) module in Node.js provides a number of useful APIs related to the current process.
 
 Initially Workers only supported `nextTick`, `env`, `exit`, `getBuiltinModule`, `platform` and `features` on process,
 which was then updated with the [`enable_nodejs_process_v2`](/workers/configuration/compatibility-flags/#enable-process-v2-implementation) flag to include most Node.js process features.
 
-Refer to the [Node.js documentation for `process`](https://nodejs.org/dist/latest-v22.x/docs/api/process.html) for more information.
+Refer to the [Node.js documentation for `process`](https://nodejs.org/docs/latest/api/process.html) for more information.
 
-Workers-specific implementation details apply when adapting Node.js support for a serverless environment, which are described in more detail below.
+Workers-specific implementation details apply when adapting Node.js process support for a serverless environment, which are described in more detail below.
 
 ## `process.env`
 
@@ -86,14 +86,13 @@ nextTick(() => {
 
 ## Stdio
 
-`process.stdout`, `process.stderr` and `process.stdin` are supported as streams. `stdin` is treated as an empty readable stream.
+[`process.stdout`](https://nodejs.org/docs/latest/api/process.html#processstdout), [`process.stderr`](https://nodejs.org/docs/latest/api/process.html#processstderr) and [`process.stdin`](https://nodejs.org/docs/latest/api/process.html#processstdin) are supported as streams. `stdin` is treated as an empty readable stream.
 `stdout` and `stderr` are treated as non-TTY writable streams, with line buffering when integrating with inspector and structured
 logging output.
 
-The line buffer is cleared by either a newline or the next microtask, so that synchronous writes without newline characters will always
-remain contiguous on the same line.
+The line buffer works by storing writes to stdout or stderr until either a newline character `\n` is encountered or until the next microtask, when the log is then flushed to the output.
 
-For example, the following will behave as if calling `console.log('one')` followed by `console.log('two')`:
+This way, synchronous writes without newline characters will always remain contiguous on the same line. For example, the following will behave as if calling `console.log('one')` followed by `console.log('two')`:
 
 ```js
 // equivalent to `console.log('one');`
@@ -112,13 +111,13 @@ process.stdout.write('\n');
 
 ## Filesystem
 
-`process.cwd()` is initialized to `/bundle`.
+[`process.cwd()`](https://nodejs.org/docs/latest/api/process.html#processcwd) is the _current workding directory_, used as the default path for all filesystem operations, and is initialized to `/bundle`.
 
-`process.chdir()` may be used to alter the current working directory, and is respected by FS operations when using `enable_nodejs_fs_module`.
+[`process.chdir()`](https://nodejs.org/docs/latest/api/process.html#processchdirdirectory) allows modifying the `cwd` and is respected by FS operations when using `enable_nodejs_fs_module`.
 
 ## Hrtime
 
-`process.hrtime` is now available, but currently provides an unaccurate timer for compatiblity only.
+While [`process.hrtime`](https://nodejs.org/docs/latest/api/process.html#processhrtimetime) high-resolution timer is available, it provides an inaccurate timer for compatibility only.
 
 ## Unsupported Features
 
@@ -134,5 +133,3 @@ if (process.dlopen) {
 	// use dlopen when available
 }
 ```
-
-Any of these remaining unimplemented features may be implemented in future.
