@@ -20,6 +20,10 @@
             "value": "4096"
         },
         {
+            "property_id": "planned_deprecation_date",
+            "value": "2025-10-01"
+        },
+        {
             "property_id": "terms",
             "value": "https://huggingface.co/TheBloke/deepseek-coder-6.7B-base-AWQ"
         }

@@ -24,6 +24,10 @@
             "value": "https://huggingface.co/deepseek-ai/deepseek-math-7b-instruct"
         },
         {
+            "property_id": "planned_deprecation_date",
+            "value": "2025-10-01"
+        },
+        {
             "property_id": "terms",
             "value": "https://github.com/deepseek-ai/DeepSeek-Math/blob/main/LICENSE-MODEL"
         }

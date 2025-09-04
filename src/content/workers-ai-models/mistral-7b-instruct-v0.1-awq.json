@@ -22,6 +22,10 @@
         {
             "property_id": "info",
             "value": "https://huggingface.co/TheBloke/Mistral-7B-Instruct-v0.1-AWQ"
+        },
+        {
+            "property_id": "planned_deprecation_date",
+            "value": "2025-10-01"
         }
     ],
     "schema": {
