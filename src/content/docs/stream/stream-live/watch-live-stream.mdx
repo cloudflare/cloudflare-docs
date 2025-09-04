@@ -8,7 +8,7 @@ sidebar:
   order: 3
 ---
 
-import { Render } from "~/components";
+import { Render,DashButton } from "~/components";
 
 When a [Live Input](/stream/stream-live/start-stream-live/) begins receiving a
 broadcast, a new video is automatically created if the input's `mode` property
@@ -60,11 +60,13 @@ You can also retrieve the embed code or manifest URLs from Dash or the API.
 
 To get the Stream built-in player embed code or HLS Manifest URL for a custom player:
 
-1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Select **Stream** > **Live Inputs**.
-3. Select a live input from the list.
-4. Locate the **Embed** and **HLS Manifest URL** beneath the video.
-5. Determine which option to use and then select **Click to copy** beneath your choice.
+1. In the Cloudflare dashboard, go to the **Live inputs** page.
+
+   <DashButton url="/?to=/:account/stream/inputs" />
+
+2. Select a live input from the list.
+3. Locate the **Embed** and **HLS Manifest URL** beneath the video.
+4. Determine which option to use and then select **Click to copy** beneath your choice.
 
 The embed code or manifest URL retrieved in Dash will reference the Live Input ID.
 

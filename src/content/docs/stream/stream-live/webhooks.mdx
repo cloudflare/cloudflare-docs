@@ -6,7 +6,7 @@ sidebar:
 
 ---
 
-import { AvailableNotifications } from "~/components"
+import { AvailableNotifications,DashButton } from "~/components"
 
 Stream Live offers webhooks to notify your service when an Input connects, disconnects, or encounters an error with Stream Live.
 
@@ -14,18 +14,21 @@ Stream Live offers webhooks to notify your service when an Input connects, disco
 
 ## Subscribe to Stream Live Webhooks
 
-1. Log in to your Cloudflare account and click **Notifications**.
-2. From the **Notifications** page, click the **Destinations** tab.
-3. On the **Destinations** page under **Webhooks**, click **Create**.
-4. Enter the information for your webhook and click **Save and Test**.
-5. To create the notification, from the **Notifications** page, click the **All Notifications** tab.
-6. Next to **Notifications**, click **Add**.
-7. Under the list of products, locate **Stream** and click **Select**.
+1. In the Cloudflare dashboard, go to the **Notifications** page.
+
+   <DashButton url="/?to=/:account/notifications" />
+
+2. Select the **Destinations** tab.
+3. On the **Destinations** page under **Webhooks**, select **Create**.
+4. Enter the information for your webhook and select **Save and Test**.
+5. To create the notification, from the **Notifications** page, select the **All Notifications** tab.
+6. Next to **Notifications**, select **Add**.
+7. Under the list of products, locate **Stream** and select **Select**.
 8. Enter a name and optional description.
-9. Under **Webhooks**, click **Add webhook** and click your newly created webhook.
-10. Click **Next**.
+9. Under **Webhooks**, select **Add webhook** and select your newly created webhook.
+10. Select **Next**.
 11. By default, you will receive webhook notifications for all Live Inputs. If you only wish to receive webhooks for certain inputs, enter a comma-delimited list of Input IDs in the text field.
-12. When you are done, click **Create**.<br/><br/>
+12. When you are done, select **Create**.<br/><br/>
 
 ```json title="Example webhook payload"
 {

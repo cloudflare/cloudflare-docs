@@ -5,6 +5,7 @@ sidebar:
   order: 2
 
 ---
+import { DashButton } from "~/components";
 
 ## Basic Uploads
 
@@ -12,9 +13,11 @@ For files smaller than 200 MB, you can use simple form-based uploads.
 
 ## Upload through the Cloudflare dashboard
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
-2. From the navigation menu, select **Stream**.
-3. On the **Overview** page, drag and drop your video into the **Quick upload** area. You can also click to browse for the file on your machine.
+1. In the Cloudflare dashboard, go to the **Stream** page.
+
+   <DashButton url="/?to=/:account/stream" />
+
+2. Drag and drop your video into the **Quick upload** area. You can also click to browse for the file on your machine.
 
 After the video finishes uploading, the video appears in the list.
 
