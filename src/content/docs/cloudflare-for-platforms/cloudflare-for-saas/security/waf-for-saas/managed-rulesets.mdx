@@ -9,6 +9,8 @@ head:
 
 ---
 
+import { DashButton } from "~/components";
+
 If you are interested in [WAF for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/security/waf-for-saas/) but unsure of where to start, Cloudflare recommends using WAF Managed Rules. The Cloudflare security team creates and manages a variety of rules designed to detect common attack vectors and protect applications from vulnerabilities. These rules are offered in [managed rulesets](/waf/managed-rules/), like Cloudflare Managed and OWASP, which can be deployed with different settings and sensitivity levels.
 
 ***
@@ -43,17 +45,15 @@ After the association is complete, the JSON blob is added to the defined custom 
 
 ## 2. Deploy Rulesets
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and navigate to your account.
+1. In the Cloudflare dashboard, go to the **WAF** page.
 
-2. Select Account Home > **WAF**.
+   <DashButton url="/?to=/:account/application-security/waf" />
 
 :::note
-
-
 **WAF** at the account level will only be visible on Enterprise plans. If you do not see this option, contact your account manager.
-
-
 :::
+
+2. Select **Managed rulesets**.
 
 3. Select **Deploy a managed ruleset**.
 
