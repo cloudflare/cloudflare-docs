@@ -1,12 +1,21 @@
 ---
-{}
-
+params:
+  - appType
 ---
 
 Configure how users will authenticate:
 
-1. Select the [**Identity providers**](/cloudflare-one/identity/idp-integration/) you want to enable for your application.
+<ol>
+<li>
+Select the [**Identity providers**](/cloudflare-one/identity/idp-integration/) you want to enable for your application.
+</li>
+<li>
+(Recommended) If you plan to only allow access via a single IdP, turn on **Instant Auth**. End users will not be shown the [Cloudflare Access login page](/cloudflare-one/applications/login-page/). Instead, Cloudflare will redirect users directly to your SSO login event.
+</li>
 
-2. (Recommended) If you plan to only allow access via a single IdP, turn on **Instant Auth**. End users will not be shown the [Cloudflare Access login page](/cloudflare-one/applications/login-page/). Instead, Cloudflare will redirect users directly to your SSO login event.
+{ props.appType === "rdp" ?
+(<> <li> <b>WARP authentication identity</b> is not supported for browser-based RDP and should remain turned off. </li> </>) :
+(<> <li> (Optional) Under <b>WARP authentication identity</b>, allow users to authenticate to the application using their <a href="/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-sessions/"> WARP session identity</a>. </li> </>)
+}
 
-3. (Optional) Under **WARP authentication identity**, allow users to authenticate to the application using their [WARP session identity](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-sessions/).
+</ol>
