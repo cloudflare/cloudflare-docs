@@ -1,25 +1,24 @@
 ---
 pcx_content_type: configuration
 title: url
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
-<Render file="nodejs-compat-howto" />
+<Render file="nodejs-compat-howto" product="workers" />
 
 ## domainToASCII
 
 Returns the Punycode ASCII serialization of the domain. If domain is an invalid domain, the empty string is returned.
 
 ```js
-import { domainToASCII } from 'node:url';
+import { domainToASCII } from "node:url";
 
-console.log(domainToASCII('español.com'));
+console.log(domainToASCII("español.com"));
 // Prints xn--espaol-zwa.com
-console.log(domainToASCII('中文.com'));
+console.log(domainToASCII("中文.com"));
 // Prints xn--fiq228c.com
-console.log(domainToASCII('xn--iñvalid.com'));
+console.log(domainToASCII("xn--iñvalid.com"));
 // Prints an empty string
 ```
 
@@ -30,12 +29,12 @@ Returns the Unicode serialization of the domain. If domain is an invalid domain,
 It performs the inverse operation to `domainToASCII()`.
 
 ```js
-import { domainToUnicode } from 'node:url';
+import { domainToUnicode } from "node:url";
 
-console.log(domainToUnicode('xn--espaol-zwa.com'));
+console.log(domainToUnicode("xn--espaol-zwa.com"));
 // Prints español.com
-console.log(domainToUnicode('xn--fiq228c.com'));
+console.log(domainToUnicode("xn--fiq228c.com"));
 // Prints 中文.com
-console.log(domainToUnicode('xn--iñvalid.com'));
+console.log(domainToUnicode("xn--iñvalid.com"));
 // Prints an empty string
 ```

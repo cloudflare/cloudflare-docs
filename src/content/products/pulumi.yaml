@@ -9,5 +9,5 @@ product:
 
 meta:
   title: Pulumi docs
-  description: Create, deploy, and manage Cloudflare resources in various programming languages.
+  description: Create, deploy, and manage Cloudflare resources in various programming languages
   author: "@cloudflare"

@@ -8,6 +8,8 @@ banner:
     id: pages-migrate-to-workers
 ---
 
+import { DashButton } from "~/components";
+
 With Deploy Hooks, you can trigger deployments using event sources beyond commits in your source repository. Each event source may obtain its own unique URL, which will receive HTTP POST requests in order to initiate new deployments. This feature allows you to integrate Pages with new or existing workflows. For example, you may:
 
 - Automatically deploy new builds whenever content in a Headless CMS changes
@@ -16,10 +18,11 @@ With Deploy Hooks, you can trigger deployments using event sources beyond commit
 
 To create a Deploy Hook:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. In Account Home, select **Workers & Pages**.
-3. In **Overview**, select your Pages project.
-4. Go to **Settings** > **Builds & deployments** and select **Add deploy hook** to start configuration.
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+2. Select your Pages project.
+3. Go to **Settings** > **Builds** and select **Add deploy hook** to start configuration.
 
 ![Add a deploy hook on the Cloudflare dashboard](~/assets/images/pages/platform/deploy-hooks-add.png)
 

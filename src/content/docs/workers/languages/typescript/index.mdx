@@ -89,7 +89,7 @@ You can now remove any imports from `@cloudflare/workers-types` in your Worker c
 ```json
 {
 	"compilerOptions": {
-		"types": ["worker-configuration.d.ts"]
+		"types": ["./worker-configuration.d.ts"]
 	}
 }
 ```
@@ -107,7 +107,7 @@ Then add this to your `tsconfig.json`.
 ```json
 {
 	"compilerOptions": {
-		"types": ["worker-configuration.d.ts", "node"]
+		"types": ["./worker-configuration.d.ts", "node"]
 	}
 }
 ```

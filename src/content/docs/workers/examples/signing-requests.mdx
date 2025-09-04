@@ -1,10 +1,9 @@
 ---
-type: example
+
 summary: Verify a signed request using the HMAC and SHA-256 algorithms or return a 403.
 tags:
   - Security
   - WebCrypto
-languages:
   - JavaScript
   - TypeScript
   - Python
@@ -12,7 +11,7 @@ preview:
   - true
 pcx_content_type: example
 title: Sign requests
-updated: 2024-01-11
+reviewed: 2024-01-11
 sidebar:
   order: 1001
 description: Verify a signed request using the HMAC and SHA-256 algorithms or return a 403.
@@ -28,7 +27,7 @@ import { TabItem, Tabs } from "~/components";
 
 :::note
 
-This example Worker makes use of the [Node.js Buffer API](/workers/runtime-apis/nodejs/buffer/), which is available as part of the Worker's runtime [Node.js compatibility mode](/workers/runtime-apis/nodejs/). To run this Worker, you will need to [enable the `nodejs_compat` compatibility flag](/workers/runtime-apis/nodejs/#get-started).
+This example Worker makes use of the [Node.js Buffer API](/workers/runtime-apis/nodejs/buffer/), which is available as part of the Workers runtime [Node.js compatibility mode](/workers/runtime-apis/nodejs/). To run this Worker, you will need to [enable the `nodejs_compat` compatibility flag](/workers/runtime-apis/nodejs/#get-started).
 :::
 
 You can both verify and generate signed requests from within a Worker using the [Web Crypto APIs](https://developer.mozilla.org/en-US/docs/Web/API/Crypto/subtle).
@@ -375,6 +374,7 @@ export default app;
 </TabItem> <TabItem label="Python" icon="seti:python">
 
 ```py
+from workers import WorkerEntrypoint
 from pyodide.ffi import to_js as _to_js
 from js import Response, URL, TextEncoder, Buffer, fetch, Object, crypto
 
@@ -386,75 +386,76 @@ encoder = TextEncoder.new()
 # How long an HMAC token should be valid for, in seconds
 EXPIRY = 60
 
-async def on_fetch(request, env):
-    # Get the secret key
-    secret_key_data = encoder.encode(env.SECRET_DATA if hasattr(env, "SECRET_DATA") else "my secret symmetric key")
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        # Get the secret key
+        secret_key_data = encoder.encode(getattr(self.env, "SECRET_DATA", None) or "my secret symmetric key")
 
-    # Import the secret as a CryptoKey for both 'sign' and 'verify' operations
-    key = await crypto.subtle.importKey(
-        "raw",
-        secret_key_data,
-        to_js({"name": "HMAC", "hash": "SHA-256"}),
-        False,
-        ["sign", "verify"]
-    )
-
-    url = URL.new(request.url)
-
-    if url.pathname.startswith("/generate/"):
-        url.pathname = url.pathname.replace("/generate/", "/", 1)
-
-        timestamp = int(Date.now() / 1000)
-
-        # Data to authenticate
-        data_to_authenticate = f"{url.pathname}{timestamp}"
-
-        # Sign the data
-        mac = await crypto.subtle.sign(
-            "HMAC",
-            key,
-            encoder.encode(data_to_authenticate)
+        # Import the secret as a CryptoKey for both 'sign' and 'verify' operations
+        key = await crypto.subtle.importKey(
+            "raw",
+            secret_key_data,
+            to_js({"name": "HMAC", "hash": "SHA-256"}),
+            False,
+            ["sign", "verify"]
         )
 
-        # Convert to base64
-        base64_mac = Buffer.from(mac).toString("base64")
+        url = URL.new(request.url)
 
-        # Set the verification parameter
-        url.searchParams.set("verify", f"{timestamp}-{base64_mac}")
+        if url.pathname.startswith("/generate/"):
+            url.pathname = url.pathname.replace("/generate/", "/", 1)
 
-        return Response.new(f"{url.pathname}{url.search}")
-    else:
-        # Verify the request
-        if not "verify" in url.searchParams:
-            return Response.new("Missing query parameter", status=403)
+            timestamp = int(Date.now() / 1000)
 
-        verify_param = url.searchParams.get("verify")
-        timestamp, hmac = verify_param.split("-")
+            # Data to authenticate
+            data_to_authenticate = f"{url.pathname}{timestamp}"
 
-        asserted_timestamp = int(timestamp)
+            # Sign the data
+            mac = await crypto.subtle.sign(
+                "HMAC",
+                key,
+                encoder.encode(data_to_authenticate)
+            )
 
-        data_to_authenticate = f"{url.pathname}{asserted_timestamp}"
+            # Convert to base64
+            base64_mac = Buffer.from(mac).toString("base64")
 
-        received_mac = Buffer.from(hmac, "base64")
+            # Set the verification parameter
+            url.searchParams.set("verify", f"{timestamp}-{base64_mac}")
 
-        # Verify the signature
-        verified = await crypto.subtle.verify(
-            "HMAC",
-            key,
-            received_mac,
-            encoder.encode(data_to_authenticate)
-        )
+            return Response.new(f"{url.pathname}{url.search}")
+        else:
+            # Verify the request
+            if not "verify" in url.searchParams:
+                return Response.new("Missing query parameter", status=403)
 
-        if not verified:
-            return Response.new("Invalid MAC", status=403)
+            verify_param = url.searchParams.get("verify")
+            timestamp, hmac = verify_param.split("-")
 
-        # Check expiration
-        if Date.now() / 1000 > asserted_timestamp + EXPIRY:
-            expiry_date = Date.new((asserted_timestamp + EXPIRY) * 1000)
-            return Response.new(f"URL expired at {expiry_date}", status=403)
+            asserted_timestamp = int(timestamp)
 
-    # Proxy to example.com if verification passes
-    return fetch(URL.new(f"https://example.com{url.pathname}"), request)
+            data_to_authenticate = f"{url.pathname}{asserted_timestamp}"
+
+            received_mac = Buffer.from(hmac, "base64")
+
+            # Verify the signature
+            verified = await crypto.subtle.verify(
+                "HMAC",
+                key,
+                received_mac,
+                encoder.encode(data_to_authenticate)
+            )
+
+            if not verified:
+                return Response.new("Invalid MAC", status=403)
+
+            # Check expiration
+            if Date.now() / 1000 > asserted_timestamp + EXPIRY:
+                expiry_date = Date.new((asserted_timestamp + EXPIRY) * 1000)
+                return Response.new(f"URL expired at {expiry_date}", status=403)
+
+        # Proxy to example.com if verification passes
+        return fetch(URL.new(f"https://example.com{url.pathname}"), request)
 ```
 
 </TabItem> </Tabs>

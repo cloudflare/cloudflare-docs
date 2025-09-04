@@ -19,6 +19,13 @@ Refer to <a href={props.trafficSteeringPage}>Traffic Steering</a> for more infor
 - Regional scoping of traffic to reduce latency
 - BGP peering
 
+{ props.magicWord === "Magic Transit" && (
+  <>
+		<Render file="routing/anycast-warning" product="networking-services" />
+	</>
+)
+}
+
 ## Configure static routes
 
 ### Create a static route
@@ -248,7 +255,7 @@ Example:
 
 ## Configure BGP routes
 
-BGP peering is available when using a [Direct CNI](/network-interconnect/express-cni/) as an on-ramp.
+BGP peering is available when using a [Direct CNI](/network-interconnect/) as an on-ramp.
 
 ### Choose an ASN for BGP peering
 

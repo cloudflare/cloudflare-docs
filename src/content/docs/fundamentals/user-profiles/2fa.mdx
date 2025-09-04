@@ -43,7 +43,7 @@ You can configure a security key, such as a Yubikey, to use with your account. B
 On a Windows device, you may need to set up Windows Hello or register your security key to your Microsoft account. Review the Windows documentation for more details.
 
 1. Once your security key is plugged in, go to **Profile** > **Authentication**.
-2. From **Two-Factor Authentication, select **Set up**.
+2. From **Two-Factor Authentication**, select **Set up**.
 3. From **Security Key Authentication**, select **Add**.
 4. Enter your Cloudflare password on the **Add a Security Key** screen, then select **Next**.
 5. Interact with your security key to add it to your Cloudflare account. Ensure that the dialog is for the security key setup. If the Windows Hello dialog appears on a Windows device, select **Cancel**. The security key dialog box will then appear. Depending on your system, you may be required to register a PIN for the security key.
@@ -154,10 +154,12 @@ If you do not have access to your 2FA account or backup codes and cannot current
 4. A 6-digit access code will be sent to the email address associated with your Cloudflare account.
 5. Enter the temporary access code into the Cloudflare Dashboard and select **Verify email**.
 6. Select **Verify device**. This checks whether you are using a device that has previously logged into your account.
-7. If you receive a "Device verification failed" message:
+
+If you see **Device verified**, you will receive an email within 3-5 days with instructions to regain access to your account. It is important to note this process cannot be expedited, so you will need to wait until that email arrives before you can proceed.
+
+If you see **Device verification failed**, you may be able to try again considering the following:
 
    * If you clear your cookies often or are logging in from a different IP address, you have wiped Cloudflare's memory of your device and will need to use a different device to verify.
-   * For security reasons, you must wait three to five days after completing verification to receive your temporary access code.
    * Your browser may be set to clear cookies on exit or after browser or OS upgrades. This interferes with the device verification process.
    * You may be using anti-malware or other software that automatically clears your browser cookies and makes your device unregognizable by Cloudflare's Dashboard.
 

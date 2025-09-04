@@ -8,7 +8,7 @@ banner:
     id: pages-migrate-to-workers
 ---
 
-import { PagesBuildPreset, Render, PackageManagers } from "~/components";
+import { PagesBuildPreset, Render, PackageManagers, DashButton } from "~/components";
 
 [React](https://reactjs.org/) is a popular framework for building reactive and powerful front-end applications, built by the open-source team at Facebook.
 
@@ -40,18 +40,23 @@ From here you can run your application with:
 npm run dev
 ```
 
-<Render file="tutorials-before-you-start" />
+<Render file="tutorials-before-you-start" product="pages" />
 
-<Render file="framework-guides/create-github-repository_no_init" />
+<Render
+	file="framework-guides/create-github-repository_no_init"
+	product="pages"
+/>
 
 ## Deploy with Cloudflare Pages
 
-<Render file="deploy-via-c3" params={{ name: "React" }} />
+<Render file="deploy-via-c3" product="pages" params={{ name: "React" }} />
 
 ### Deploy via the Cloudflare dashboard
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+2. Select **Create application** > **Pages** > **Import an existing Git repository**.
 3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, provide the following information:
 
 <div>
@@ -77,4 +82,8 @@ By default, Cloudflare Pages assumes you are developing a single-page applicatio
 
 :::
 
-<Render file="framework-guides/learn-more" params={{ one: "React" }} />
+<Render
+	file="framework-guides/learn-more"
+	product="pages"
+	params={{ one: "React" }}
+/>

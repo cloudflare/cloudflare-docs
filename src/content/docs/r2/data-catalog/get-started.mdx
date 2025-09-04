@@ -17,6 +17,7 @@ import {
 	TypeScriptExample,
 	WranglerConfig,
 	LinkCard,
+	DashButton,
 } from "~/components";
 
 ## Overview
@@ -56,7 +57,9 @@ This guide will instruct you through:
 <TabItem label='Dashboard'>
 
 <Steps>
-1. From the Cloudflare dashboard, select **R2 Object Storage** from the sidebar.
+1. In the Cloudflare dashboard, go to the **R2 object storage** page.
+
+   <DashButton url="/?to=/:account/r2/overview" />
 2. Select **Create bucket**.
 3. Enter the bucket name: r2-data-catalog-tutorial
 4. Select **Create bucket**.
@@ -75,13 +78,15 @@ Then, enable the catalog on your chosen R2 bucket:
         npx wrangler r2 bucket catalog enable r2-data-catalog-tutorial
         ```
 
-When you run this command, take note of the "Warehouse" and "Catalog URI". You will need these later. 
+When you run this command, take note of the "Warehouse" and "Catalog URI". You will need these later.
 
 </TabItem>
 <TabItem label='Dashboard'>
 
 <Steps>
-1. From the Cloudflare dashboard, select **R2 Object Storage** from the sidebar.
+1. In the Cloudflare dashboard, go to the **R2 object storage** page.
+
+   <DashButton url="/?to=/:account/r2/overview" />
 2. Select the bucket: r2-data-catalog-tutorial.
 3. Switch to the **Settings** tab, scroll down to **R2 Data Catalog**, and select **Enable**.
 4. Once enabled, note the **Catalog URI** and **Warehouse name**.
@@ -94,8 +99,9 @@ When you run this command, take note of the "Warehouse" and "Catalog URI". You w
 Iceberg clients (including [PyIceberg](https://py.iceberg.apache.org/)) must authenticate to the catalog with a [Cloudflare API token](/fundamentals/api/get-started/create-token/) that has both R2 and catalog permissions.
 
 <Steps>
-1. From the Cloudflare dashboard, select **R2 Object Storage** from the sidebar.
+1. In the Cloudflare dashboard, go to the **R2 object storage** page.
 
+   <DashButton url="/?to=/:account/r2/overview" />
 2. Expand the **API** dropdown and select **Manage API tokens**.
 
 3. Select **Create API token**.

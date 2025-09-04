@@ -7,6 +7,8 @@ sidebar:
 noindex: true
 ---
 
+import { DashButton } from "~/components";
+
 Cloudflare Rate Limiting automatically identifies and mitigates excessive request rates for specific URLs or for an entire domain.
 
 :::caution
@@ -268,11 +270,19 @@ You can use the following method to redirect a rate-limited client to a specific
 
    Take note of the public URL of the page you created.
 
-2. In the Cloudflare dashboard, go to Account Home > **Configurations** > **Custom Pages**.
+2. In the Cloudflare dashboard, go to the **Settings** page.
 
-3. Under **429 errors**, select **Custom Pages**.
+   <DashButton url="/?to=/:account/configurations" />
 
-4. Enter the URL of the page you created on your server — the page containing the meta `refresh` tag — and select **Publish**.
+3. Go to **Error Pages**.
+
+4. Next to **Rate limiting block**, select the three dots > **Edit**.
+
+5. Select **Custom page**.
+
+6. In **Custom page address**, enter the URL of the page you created on your server — the page containing the meta `refresh` tag.
+
+7. Select **Save**.
 
 Follow the same approach if you wish to return plain text or JSON content but the response is larger than 32 KB. In this case, the redirect URL would be the URL of the plain text or JSON resource you would like to display.
 

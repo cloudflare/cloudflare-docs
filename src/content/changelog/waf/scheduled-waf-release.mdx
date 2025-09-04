@@ -1,83 +1,123 @@
 ---
-title: WAF Release - Scheduled changes for 2025-07-28
-description: WAF managed ruleset changes scheduled for 2025-07-28
-date: 2025-07-21
+title: WAF Release - Scheduled changes for 2025-09-08
+description: WAF managed ruleset changes scheduled for 2025-09-08
+date: 2025-09-01
 scheduled: true
 ---
 
 import { RuleID } from "~/components";
 
 <table style="width: 100%">
-	<thead>
-		<tr>
-			<th>Announcement Date</th>
-			<th>Release Date</th>
-			<th>Release Behavior</th>
-			<th>Legacy Rule ID</th>
-			<th>Rule ID</th>
-			<th>Description</th>
-			<th>Comments</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-	    <td>2025-07-21</td>
-	    <td>2025-07-28</td>
-	    <td>Log</td>
-	    <td>100804</td>
-	    <td>
-	        <RuleID id="6ab3bd3b58fb4325ac2d3cc73461ec9e" />
-	    </td>
-	    <td>BerriAI - SSRF - CVE:CVE-2024-6587</td>
-	    <td>This is a New Detection</td>
+  <thead>
+    <tr>
+      <th>Announcement Date</th>
+      <th>Release Date</th>
+      <th>Release Behavior</th>
+      <th>Legacy Rule ID</th>
+      <th>Rule ID</th>
+      <th>Description</th>
+      <th>Comments</th>
     </tr>
-		<tr>
-			<td>2025-07-21</td>
-			<td>2025-07-28</td>
-			<td>Log</td>
-			<td>100812</td>
-			<td>
-				<RuleID id="2e6c4d02f42a4c3ca90649d50cb13e1d" />
-			</td>
-			<td>Fortinet FortiWeb - Remote Code Execution - CVE:CVE-2025-25257</td>
-			<td>This is a New Detection</td>
-		</tr>
-		<tr>
-			<td>2025-07-21</td>
-			<td>2025-07-28</td>
-			<td>Log</td>
-			<td>100813</td>
-			<td>
-				<RuleID id="fd360d8fd9994e6bab6fb06067fae7f7" />
-			</td>
-			<td>Apache Tomcat - DoS - CVE:CVE-2025-31650</td>
-			<td>This is a New Detection</td>
-		</tr>
-		<tr>
-			<td>2025-07-21</td>
-			<td>2025-07-28</td>
-			<td>Log</td>
-			<td>100815</td>
-			<td>
-				<RuleID id="f9e01e28c5d6499cac66364b4b6a5bb1" />
-			</td>
-			<td>
-				MongoDB - Remote Code Execution - CVE:CVE-2024-53900, CVE:CVE-2025-23061
-			</td>
-			<td>This is a New Detection</td>
-		</tr>
-		<tr>
-			<td>2025-07-21</td>
-			<td>2025-07-28</td>
-			<td>Log</td>
-			<td>100816</td>
-			<td>
-				<RuleID id="700d4fcc7b1f481a80cbeee5688f8e79" />
-			</td>
-			<td>
-				MongoDB - Remote Code Execution - CVE:CVE-2024-53900, CVE:CVE-2025-23061
-			</td>
-			<td>This is a New Detection</td>
-		</tr>
-	</tbody>
+  </thead>
+  <tbody>
+    <tr>
+      <td>2025-09-01</td>
+      <td>2025-09-08</td>
+      <td>Log</td>
+      <td>100007D</td>
+      <td>
+        <RuleID id="7c5812a31fd94996b3299f7e963d7afc" />
+      </td>
+      <td>Command Injection - Common Attack Commands Args</td>
+      <td>Beta detection. This will be merged into the original rule "Command Injection - Common Attack Commands" (ID: <RuleID id="89557ce9b26e4d4dbf29e90c28345b9b" />)</td>
+    </tr>
+    <tr>
+      <td>2025-09-01</td>
+      <td>2025-09-08</td>
+      <td>Log</td>
+      <td>100617</td>
+      <td>
+        <RuleID id="cd528243d6824f7ab56182988230a75b" />
+      </td>
+      <td>Next.js - SSRF - CVE:CVE-2025-57822</td>
+      <td>This is a New Detection</td>
+    </tr>
+    <tr>
+      <td>2025-09-01</td>
+      <td>2025-09-08</td>
+      <td>Log</td>
+      <td>100659_BETA</td>
+      <td>
+        <RuleID id="503b337dac5c409d8f833a6ba22dabf1" />
+      </td>
+      <td>Common Payloads for Server-Side Template Injection - Beta</td>
+      <td>Beta detection. This will be merged into the original rule "Common Payloads for Server-Side Template Injection" (ID: <RuleID id="21c7a963e1b749e7b1753238a28a42c4" />)</td>
+    </tr>    
+    <tr>
+      <td>2025-09-01</td>
+      <td>2025-09-08</td>
+      <td>Log</td>
+      <td>100824B</td>
+      <td>
+        <RuleID id="6d24266148f24f5e9fa487f8b416b7ca" />
+      </td>
+      <td>CrushFTP - Remote Code Execution - CVE:CVE-2025-54309 - 3</td>
+      <td>This is a New Detection</td>
+    </tr>    
+    <tr>
+      <td>2025-09-01</td>
+      <td>2025-09-08</td>
+      <td>Log</td>
+      <td>100848</td>
+      <td>
+        <RuleID id="154b217c43d04f11a13aeff05db1fa6b" />
+      </td>
+      <td>ScriptCase - Auth Bypass - CVE:CVE-2025-47227</td>
+      <td>This is a New Detection</td>
+    </tr>
+    <tr>
+      <td>2025-09-01</td>
+      <td>2025-09-08</td>
+      <td>Log</td>
+      <td>100849</td>
+      <td>
+        <RuleID id="cad6f1c8c6d44ef59929e6532c62d330" />
+      </td>
+      <td>ScriptCase - Command Injection - CVE:CVE-2025-47228</td>
+      <td>This is a New Detection</td>
+    </tr>
+    <tr>
+      <td>2025-09-01</td>
+      <td>2025-09-08</td>
+      <td>Log</td>
+      <td>100872</td>
+      <td>
+        <RuleID id="e7464139fd3e44938b56716bef971afd" />
+      </td>
+      <td>WordPress:Plugin:InfiniteWP Client - Missing Authorization - CVE:CVE-2020-8772</td>
+      <td>This is a New Detection</td>
+    </tr>
+    <tr>
+      <td>2025-09-01</td>
+      <td>2025-09-08</td>
+      <td>Log</td>
+      <td>100873</td>
+      <td>
+        <RuleID id="0181ebb2cc234f2d863412e1bab19b0b" />
+      </td>
+      <td>Sar2HTML - Command Injection - CVE:CVE-2025-34030</td>
+      <td>This is a New Detection</td>
+    </tr>
+    <tr>
+      <td>2025-09-01</td>
+      <td>2025-09-08</td>
+      <td>Log</td>
+      <td>100875</td>
+      <td>
+        <RuleID id="34d5c7c7b08b40eaad5b2bb3f24c0fbe" />
+      </td>
+      <td>Zhiyuan OA - Remote Code Execution - CVE:CVE-2025-34040</td>
+      <td>This is a New Detection</td>
+    </tr>
+  </tbody>
 </table>

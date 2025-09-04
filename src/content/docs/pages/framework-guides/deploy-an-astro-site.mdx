@@ -12,7 +12,7 @@ import {
 	PagesBuildPreset,
 	Render,
 	PackageManagers,
-	Stream,
+	YouTube,
 } from "~/components";
 
 [Astro](https://astro.build) is an all-in-one web framework for building fast, content-focused websites. By default, Astro builds websites that have zero JavaScript runtime code.
@@ -23,11 +23,7 @@ In this guide, you will create a new Astro application and deploy it using Cloud
 
 ### Video Tutorial
 
-<Stream
-	id="d308a0e06bfaefd12115b34076ba99a4"
-	title="Build a Full-Stack Application using Astro and Cloudflare Workers"
-	thumbnail="3s"
-/>
+<YouTube id="c_IBs1crl4k" />
 
 ## Set up a new project
 
@@ -51,7 +47,7 @@ Astro will ask:
 
 You can deploy an Astro Server-side Rendered (SSR) site to Cloudflare Pages using the [`@astrojs/cloudflare` adapter](https://github.com/withastro/adapters/tree/main/packages/cloudflare#readme). SSR sites render on Pages Functions and allow for dynamic functionality and customizations.
 
-<Render file="c3-adapter" />
+<Render file="c3-adapter" product="pages" />
 
 Add the [`@astrojs/cloudflare` adapter](https://github.com/withastro/adapters/tree/main/packages/cloudflare#readme) to your project's `package.json` by running:
 
@@ -59,17 +55,21 @@ Add the [`@astrojs/cloudflare` adapter](https://github.com/withastro/adapters/tr
 npm run astro add cloudflare
 ```
 
-<Render file="tutorials-before-you-start" />
+<Render file="tutorials-before-you-start" product="pages" />
 
-<Render file="framework-guides/create-github-repository" />
+<Render file="framework-guides/create-github-repository" product="pages" />
 
 ## Deploy with Cloudflare Pages
 
-<Render file="deploy-via-c3" params={{ name: "Astro" }} />
+<Render file="deploy-via-c3" product="pages" params={{ name: "Astro" }} />
 
 ### Deploy via the Cloudflare dashboard
 
-<Render file="deploy-to-pages-steps-with-preset" params={{ name: "Astro" }} />
+<Render
+	file="framework-guides/learn-more"
+	product="pages"
+	params={{ name: "Astro" }}
+/>
 
 <div>
 
@@ -118,7 +118,7 @@ Use bindings in Astro components and API routes by using `context.locals` from [
 
 Refer to the following example of how to access a KV namespace with TypeScript.
 
-First, you need to define Cloudflare runtime and KV type by updating the `env.d.ts`. Make sure you have generated Cloudflare runtime types by running [`wrangler types`](/pages/functions/typescript/). 
+First, you need to define Cloudflare runtime and KV type by updating the `env.d.ts`. Make sure you have generated Cloudflare runtime types by running [`wrangler types`](/pages/functions/typescript/).
 
 ```typescript
 /// <reference types="astro/client" />
@@ -161,4 +161,8 @@ const value = await myKV.get("key");
 
 To learn more about the Astro Cloudflare runtime, refer to the [Access to the Cloudflare runtime](https://docs.astro.build/en/guides/integrations-guide/cloudflare/#access-to-the-cloudflare-runtime) in the Astro documentation.
 
-<Render file="framework-guides/learn-more" params={{ one: "Astro" }} />
+<Render
+	file="framework-guides/learn-more"
+	product="pages"
+	params={{ one: "Astro" }}
+/>

@@ -10,7 +10,7 @@ head:
     content: Resolver policies
 ---
 
-import { Render, Badge } from "~/components";
+import { Render, Badge, GlossaryTooltip } from "~/components";
 
 :::note
 Only available on Enterprise plans.
@@ -52,6 +52,8 @@ To get started with resolving internal DNS queries with resolver policies, refer
 
 If your resolver is only reachable by a client device and not by Gateway via a Cloudflare tunnel, Magic WAN tunnel, or other public Internet connections, you should configure [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/) for your device. If both Local Domain Fallback and resolver policies are configured for the same device, Cloudflare will apply your client-side Local Domain Fallback rules first. If you onboard DNS queries to Gateway with the WARP client and route them with resolver policies, the source IP of the queries will be the IP address assigned by the WARP client.
 
+<Render file="warp/ldf-best-practice" product="cloudflare-one" />
+
 ## Resolver connections
 
 Resolver policies support TCP and UDP connections. Custom resolvers can point to the Internet via IPv4 or IPv6, or to a private network service, such as a [Magic tunnel](/magic-transit/how-to/configure-tunnel-endpoints/). Policies default to port `53`. You can change which port your resolver uses by customizing it in your policy.
@@ -83,7 +85,7 @@ Gateway will filter, resolve, and log your queries regardless of endpoint.
 
 ## Create a resolver policy
 
-<Render file="gateway/create-resolver-policy" />
+<Render file="gateway/create-resolver-policy" product="cloudflare-one" />
 
 For more information on creating a DNS policy, refer to [DNS policies](/cloudflare-one/policies/gateway/dns-policies/).
 
@@ -93,63 +95,79 @@ For more information on creating a DNS policy, refer to [DNS policies](/cloudfla
 
 ### Content Categories
 
-<Render file="gateway/selectors/dns-content-categories" />
+<Render
+	file="gateway/selectors/dns-content-categories"
+	product="cloudflare-one"
+/>
 
 ### DNS Resolver IP
 
-<Render file="gateway/selectors/dns-resolver-ip" />
+<Render file="gateway/selectors/dns-resolver-ip" product="cloudflare-one" />
 
 ### DoH Subdomain
 
-<Render file="gateway/selectors/doh-subdomain" />
+<Render file="gateway/selectors/doh-subdomain" product="cloudflare-one" />
 
 ### Domain
 
 <Render
 	file="gateway/selectors/domain"
+	product="cloudflare-one"
 	params={{ APIendpoint: "dns.domains" }}
 />
 
 ### Host
 
-<Render file="gateway/selectors/host" params={{ APIendpoint: "dns.fqdn" }} />
+<Render
+	file="gateway/selectors/host"
+	product="cloudflare-one"
+	params={{ APIendpoint: "dns.fqdn" }}
+/>
 
 ### Location
 
-<Render file="gateway/selectors/location" />
+<Render file="gateway/selectors/location" product="cloudflare-one" />
 
 ### Query Record Type
 
-<Render file="gateway/selectors/query-record-type" />
+<Render file="gateway/selectors/query-record-type" product="cloudflare-one" />
 
 ### Security Categories
 
-<Render file="gateway/selectors/security-categories" />
+<Render file="gateway/selectors/security-categories" product="cloudflare-one" />
 
 ### Source Continent
 
-Use this selector to filter based on the continent where the query arrived to Gateway from. <Render file="gateway/selectors/source-continent" params={{ one: "dns.src" }} />
+Use this selector to filter based on the continent where the query arrived to Gateway from. <Render product="cloudflare-one" file="gateway/selectors/source-continent" params={{ one: "dns.src" }} />
 
 ### Source Country
 
-Use this selector to filter based on the country where the query arrived to Gateway from. <Render file="gateway/selectors/source-country" params={{ one: "dns.src" }} />
+Use this selector to filter based on the country where the query arrived to Gateway from. <Render product="cloudflare-one" file="gateway/selectors/source-country" params={{ one: "dns.src" }} />
 
 ### Source IP
 
-<Render file="gateway/selectors/source-ip-dns" />
+<Render file="gateway/selectors/source-ip-dns" product="cloudflare-one" />
 
 ### Users
 
-<Render file="gateway/selectors/users" />
+<Render file="gateway/selectors/users" product="cloudflare-one" />
 
 ## Comparison operators
 
-<Render file="gateway/comparison-operators" />
+<Render file="gateway/comparison-operators" product="cloudflare-one" />
 
 ## Value
 
-<Render file="gateway/value" params={{ one: "hostnames", two: "Host" }} />
+<Render
+	file="gateway/value"
+	product="cloudflare-one"
+	params={{ one: "hostnames", two: "Host" }}
+/>
 
 ## Logical operators
 
-<Render file="gateway/logical-operators" params={{ one: "Identity" }} />
+<Render
+	file="gateway/logical-operators"
+	product="cloudflare-one"
+	params={{ one: "Identity" }}
+/>

@@ -1,5 +1,7 @@
 ---
 title: Authorization
+tags:
+  - MCP
 sidebar:
   order: 2
   group:
@@ -75,7 +77,13 @@ sequenceDiagram
 
 Remember — [authentication is different from authorization](https://www.cloudflare.com/learning/access-management/authn-vs-authz/). Your MCP Server can handle authorization itself, while still relying on an external authentication service to first authenticate users. The [example](/agents/guides/remote-mcp-server) in getting started provides a mock authentication flow. You will need to implement your own authentication handler — either handling authentication yourself, or using an external authentication services.
 
-### (2) Third-party OAuth Provider
+### (2) Cloudflare Access integration
+
+You can use Cloudflare Access as a Single Sign-On (SSO) provider to authorize users to your MCP server. Users log in using a [configured identity provider](/cloudflare-one/identity/idp-integration/) or a [one-time PIN](/cloudflare-one/identity/one-time-pin/), and they are only granted access if their identity matches your [Access policies](/cloudflare-one/policies/access/).
+
+To deploy an [example MCP server](https://github.com/cloudflare/ai/tree/main/demos/remote-mcp-cf-access) with Cloudflare Access as the OAuth provider, refer to [Secure MCP servers with Access for SaaS](/cloudflare-one/applications/configure-apps/mcp-servers/saas-mcp/).
+
+### (3) Third-party OAuth Provider
 
 The [OAuth Provider Library](https://github.com/cloudflare/workers-oauth-provider) can be configured to use a third-party OAuth provider, such as GitHub or Google. You can see a complete example of this in the [GitHub example](/agents/guides/remote-mcp-server/#add-authentication).
 
@@ -122,9 +130,9 @@ sequenceDiagram
 
 Read the docs for the [Workers oAuth Provider Library](https://github.com/cloudflare/workers-oauth-provider) for more details.
 
-### (3) Bring your own OAuth Provider
+### (4) Bring your own OAuth Provider
 
-If your application already implements an OAuth Provider itself, or you use [Stytch](https://stytch.com/), [Auth0](https://auth0.com/), [WorkOS](https://workos.com/), or authorization-as-a-service provider, you can use this in the same way that you would use a third-party OAuth provider, described above in (2).
+If your application already implements an OAuth Provider itself, or you use authorization-as-a-service provider, you can use this in the same way that you would use a third-party OAuth provider, described above in (2).
 
 You can use the auth provider to:
 - Allow users to authenticate to your MCP server through email, social logins, SSO (single sign-on), and MFA (multi-factor authentication).
@@ -133,6 +141,7 @@ You can use the auth provider to:
 - Enforce the permissions so that agents can only invoke permitted tools.
 
 #### Stytch
+
 Get started with a [remote MCP server that uses Stytch](https://stytch.com/docs/guides/connected-apps/mcp-servers) to allow users to sign in with email, Google login or enterprise SSO and authorize their AI agent to view and manage their company's OKRs on their behalf. Stytch will handle restricting the scopes granted to the AI agent based on the user's role and permissions within their organization. When authorizing the MCP Client, each user will see a consent page that outlines the permissions that the agent is requesting that they are able to grant based on their role.
 
 [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/ai/tree/main/demos/mcp-stytch-b2b-okr-manager)
@@ -142,6 +151,7 @@ For more consumer use cases, deploy a remote MCP server for a To Do app that use
 [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/ai/tree/main/demos/mcp-stytch-consumer-todo-list)
 
 #### Auth0
+
 Get started with a remote MCP server that uses Auth0 to authenticate users through email, social logins, or enterprise SSO to interact with their todos and personal data through AI agents. The MCP server securely connects to API endpoints on behalf of users, showing exactly which resources the agent will be able to access once it gets consent from the user. In this implementation, access tokens are automatically refreshed during long running interactions.
 
 To set it up, first deploy the protected API endpoint:
@@ -157,6 +167,12 @@ Then, deploy the MCP server that handles authentication through Auth0 and secure
 Get started with a remote MCP server that uses WorkOS's AuthKit to authenticate users and manage the permissions granted to AI agents. In this example, the MCP server dynamically exposes tools based on the user's role and access rights. All authenticated users get access to the `add` tool, but only users who have been assigned the `image_generation` permission in WorkOS can grant the AI agent access to the image generation tool. This showcases how MCP servers can conditionally expose capabilities to AI agents based on the authenticated user's role and permission.
 
 [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/ai/tree/main/demos/remote-mcp-authkit)
+
+#### Descope
+
+Get started with a remote MCP server that uses [Descope](https://www.descope.com/) Inbound Apps to authenticate and authorize users (for example, email, social login, SSO) to interact with their data through AI agents. Leverage Descope custom scopes to define and manage permissions for more fine-grained control.
+
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/ai/tree/main/demos/remote-mcp-server-descope-auth)
 
 ## Using Authentication Context in Your MCP Server
 
@@ -196,7 +212,7 @@ function requirePermission(permission, handler) {
         status: 403
       };
     }
-    
+
     // If permission check passes, execute the handler
     return handler(request, context);
   };
@@ -208,7 +224,7 @@ async init() {
   this.server.tool("basicTool", "Available to all users", {}, async () => {
     // Implementation for all users
   });
-  
+
   // Protected tool using the permission wrapper
   this.server.tool(
     "adminAction",
@@ -221,7 +237,7 @@ async init() {
       };
     })
   );
-  
+
   // Conditionally register tools based on user permissions
   if (this.props.permissions?.includes("special_feature")) {
     this.server.tool("specialTool", "Special feature", {}, async () => {
@@ -231,7 +247,7 @@ async init() {
 }
 ```
 
-Benefits: 
+Benefits:
 - Authorization check at the tool level ensures proper access control
 - Allows you to define permission checks once and reuse them across tools
 - Provides clear feedback to users when permission is denied

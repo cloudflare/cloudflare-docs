@@ -10,7 +10,7 @@ sidebar:
 
 import { Render, Example, Details, GlossaryTooltip } from "~/components";
 
-While your [DNS records](/dns/manage-dns-records/) make your website or application available to visitors and other web services, the **Proxy status** of a DNS record defines how Cloudflare treats incoming DNS queries for that record.
+While your [DNS records](/dns/manage-dns-records/) make your website or application available to visitors and other web services, the proxy status of a DNS record defines how Cloudflare treats incoming DNS queries for that record.
 
 The records you can proxy through Cloudflare are [records used for IP address resolution](/dns/manage-dns-records/reference/dns-record-types/#ip-address-resolution) — meaning A, AAAA, or CNAME records.
 
@@ -34,7 +34,7 @@ When you [add a domain](/fundamentals/manage-domains/add-site/) to Cloudflare, C
 
 ### Example
 
-<Render file="proxy-status-dns-table" />
+<Render file="proxy-status-dns-table" product="dns" />
 
 This means that:
 
@@ -68,10 +68,10 @@ If you have multiple A or AAAA records on the same name and at least one of them
 <Example>
 DNS management for **example.com**:
 
-| Type | Name    | Content      | Proxy status | TTL    |
-| ---- | ------- | ------------ | ------------ | ------ |
-| A    | `blog`  | `192.0.2.1`  | Proxied      | Auto   |
-| A    | `blog`  | `192.0.2.5`  | DNS only     | Auto   |
+| Type | Name   | Content     | Proxy status | TTL  |
+| ---- | ------ | ----------- | ------------ | ---- |
+| A    | `blog` | `192.0.2.1` | Proxied      | Auto |
+| A    | `blog` | `192.0.2.5` | DNS only     | Auto |
 
 In this example, all traffic intended for `blog.example.com` will be treated as if both records were **Proxied**.
 

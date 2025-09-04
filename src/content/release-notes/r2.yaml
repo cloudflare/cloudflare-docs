@@ -2,8 +2,6 @@
 link: "/r2/platform/release-notes/"
 productName: R2
 productLink: "/r2/"
-productArea: Developer platform
-productAreaLink: /workers/platform/changelog/platform/
 entries:
   - publish_date: "2025-07-03"
     description: |-

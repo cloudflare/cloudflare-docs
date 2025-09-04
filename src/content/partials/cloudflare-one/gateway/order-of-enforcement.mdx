@@ -24,7 +24,7 @@ flowchart TB
         http1{{"Do Not Inspect policies"}}
         http2["Isolate policies  <br>(with Browser Isolation add-on)"]
         http3["Allow, Block, Do Not Scan, Quarantine, and Redirect policies, DLP, and anti-virus scanning"]
-        https["HTTP (port 80) or<br>HTTPS (port 443)?"]
+        https["HTTP or HTTPS?"]
   end
  subgraph Proxy["Proxy"]
         HTTP
@@ -89,17 +89,13 @@ Connections to Zero Trust will always appear in your [Zero Trust network session
 Gateway applies your policies in the following order:
 
 1. DNS policies with selectors evaluated before resolution
-2. DNS policies with selectors evaluated after resolution
-3. HTTP policies
+2. Resolver policies (if applicable)
+3. DNS policies with selectors evaluated after resolution
 4. Network policies
-5. Resolver policies (if applicable)
-6. Egress policies (if applicable)
+5. Egress policies (if applicable)
+6. HTTP policies
 
-DNS policies are standalone. For example, if you block a site with a DNS policy but do not create a corresponding HTTP policy, users can still access the site if they know its IP address.
-
-Next, Gateway evaluates HTTP policies in [a specific order](#http-policies). For example, if you block a specific source IP in an HTTP policy but allow the IP range in a network policy, the IP address will be blocked.
-
-Lastly, if traffic passes your HTTP policies, Gateway checks the traffic against your network policies. For example, even if you create a Do Not Inspect HTTP policy for a site, it can be blocked by a subsequent network policy.
+DNS and resolver policies are standalone. For example, if you block a site with a DNS policy but do not create a corresponding HTTP policy, users can still access the site if they know its IP address.
 
 ### HTTP/3 traffic
 
@@ -183,7 +179,14 @@ If Gateway traffic is headed to a private IP address protected as an Access appl
 
 Suppose you have a list of policies arranged in the following order of precedence:
 
-- DNS policies: <Render file="gateway/order-of-precedence-dns" product="cloudflare-one" />
+- DNS policies:
+
+  | Precedence | Selector | Operator      | Value              | Action |
+  | ---------- | -------- | ------------- | ------------------ | ------ |
+  | 1          | Host     | is            | `example.com`      | Block  |
+  | 2          | Host     | is            | `test.example.com` | Allow  |
+  | 3          | Domain   | matches regex | `.\`               | Block  |
+
 - HTTP policies:
 
   | Precedence | Selector | Operator | Value               | Action         |
@@ -201,15 +204,16 @@ Suppose you have a list of policies arranged in the following order of precedenc
 
 When a user goes to `https://test.example.com`, Gateway performs the following operations:
 
-1. Evaluate DNS request against DNS policies: <Render file="gateway/order-of-precedence-dns-order" product="cloudflare-one" />
+1. Evaluate DNS request against DNS policies:
+   1. Policy #1 does not match `test.example.com` — move on to check Policy #2.
+   2. Policy #2 matches, so DNS resolution is allowed.
+   3. Policy #3 is not evaluated because there has already been an explicit match.
 
 2. Evaluate HTTPS request against HTTP policies:
-
    1. Policy #2 is evaluated first because Do Not Inspect [always takes precedence](#http-policies) over Allow and Block. Since there is no match, move on to check Policy #1.
    2. Policy #1 does not match `test.example.com`. Since there are no matching Block policies, the request passes the HTTP filter and moves on to network policy evaluation.
 
 3. Evaluate HTTPS request against network policies:
-
    1. Policy #1 does not match because port 80 is used for standard HTTP, not HTTPS.
    2. Policy #2 matches, so the request is allowed and proxied to the upstream server.
    3. Policy #3 is not evaluated because there has already been an explicit match.

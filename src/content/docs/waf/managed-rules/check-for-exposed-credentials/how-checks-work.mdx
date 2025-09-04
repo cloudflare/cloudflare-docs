@@ -14,7 +14,7 @@ WAF rules can include a check for exposed credentials. When enabled in a given r
 
 At this point, the WAF looks up the username/password pair in the request against a database of publicly available stolen credentials. When both the rule expression and the exposed credentials check are true, there is a rule match, and Cloudflare performs the action configured in the rule.
 
-<Render file="leaked-credentials-recommend-detection" />
+<Render file="leaked-credentials-recommend-detection" product="waf" />
 
 ## Example
 

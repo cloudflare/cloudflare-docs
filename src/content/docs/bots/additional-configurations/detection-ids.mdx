@@ -25,6 +25,8 @@ You can use `cf.bot_management.detection_ids` fields in tools such as:
 
 Bot Detection IDs and tags are also available in [Bot Analytics](/bots/bot-analytics/) and [Security Analytics](/waf/analytics/security-analytics/).
 
+---
+
 ## Detection tags
 
 Detection tags refer to the category associated with the detection ID at the time that Cloudflare has fingerprinted a bot. For example, if a detection tag is `go`, this means that Cloudflare has observed traffic from that detection ID from a Go programming language bot.
@@ -33,6 +35,8 @@ Detection tags refer to the category associated with the detection ID at the tim
 
 Detection tags are available in Security Analytics, but not in the Security Events.
 :::
+
+---
 
 ## Bot Detection IDs via Logpush
 
@@ -77,6 +81,7 @@ You can create or edit existing Logpush jobs to include the new Bot Detection ID
 	</TabItem> 
 </Tabs>
 
+---
 
 ## Use cases
 
@@ -99,6 +104,8 @@ and http.request.method eq "POST"
 and not any(cf.bot_management.detection_ids[*] in {3355446 12577893})
 ```
 
+---
+
 ## Account takeover detections
 
 Using the detection IDs below, you can detect and mitigate account takeover attacks. You can monitor the number of login requests for a given software and network combination, as well as the percentage of login errors. When it reaches a suspicious level, you can prevent these attacks by using [custom rules](/waf/custom-rules/), [rate limiting rules](/waf/rate-limiting-rules/), and [Workers](/workers/).
@@ -107,7 +114,7 @@ Using the detection IDs below, you can detect and mitigate account takeover atta
 | ------------ | ---------------------------------------- |
 | `201326592`  | Observes all login failures to the zone. |
 | `201326593`  | Observes all login traffic to the zone.  |
-| `201326598`  | Sets a dynamic threshold based on the normal traffic that is unique to the zone.<br /><br /> When the ID matches a login failure, Bot Management sets the [bot score](/bots/concepts/bot-score/) to 2 and [anomaly detection](/bots/concepts/bot-detection-engines/#anomaly-detection-enterprise) as its score source. |
+| `201326598`  | Sets a dynamic threshold based on the normal traffic that is unique to the zone.<br /><br /> When the ID matches a login failure, Bot Management sets the [bot score](/bots/concepts/bot-score/) to 29 and uses [anomaly detection](/bots/concepts/bot-detection-engines/#anomaly-detection-enterprise) as its score source. |
 
 ### Challenges for account takeover detections
 
@@ -172,6 +179,12 @@ To use rate limiting rules with account takeover detections:
 The rule can be enhanced with Leaked Credential Checks. Refer to the [WAF documentation](/waf/detections/leaked-credentials/) for more information on how to include leaked credentials and account takeover detections in a rate limiting rule. 
 
 :::
+
+## Additional detections
+
+| Detection ID | Description                              |
+| ------------ | ---------------------------------------- |
+| `50331651`   | Observes traffic from residential proxy networks and similar commercial proxies. <br /><br />When the ID matches a request, Bot Management sets the bot score to 29 and uses [anomaly detection](/bots/concepts/bot-detection-engines/#anomaly-detection-enterprise) as its score source. |
 
 ## Availability
 

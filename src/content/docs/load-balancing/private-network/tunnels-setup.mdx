@@ -68,7 +68,7 @@ The specific configuration will vary depending on your use case. Refer to the fo
 
 <TabItem label="Dashboard">
 
-<Render file="pool-create" />
+<Render file="pool-create" product="load-balancing" />
 
 </TabItem>
 
@@ -87,19 +87,19 @@ All origins with private IPs must have `virtual_network_id` specified.
 :::
 
 <APIRequest
-  path="/accounts/{account_id}/load_balancers/pools/{pool_id}"
-  method="PATCH"
-  json={{
-    origins: [
-      {
-        name: "origin-1",
-        address: "10.0.0.1",
-        enabled: true,
-        weight: 1,
-        virtual_network_id: "a5624d4e-044a-4ff0-b3e1-e2465353d4b4"
-      }
-    ]
-  }}
+	path="/accounts/{account_id}/load_balancers/pools/{pool_id}"
+	method="PATCH"
+	json={{
+		origins: [
+			{
+				name: "origin-1",
+				address: "10.0.0.1",
+				enabled: true,
+				weight: 1,
+				virtual_network_id: "a5624d4e-044a-4ff0-b3e1-e2465353d4b4",
+			},
+		],
+	}}
 />
 
 </TabItem>

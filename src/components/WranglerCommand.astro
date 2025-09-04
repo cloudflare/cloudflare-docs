@@ -1,0 +1,82 @@
+---
+import { z } from "astro:schema";
+import { experimental_getWranglerCommands } from "wrangler";
+import AnchorHeading from "./AnchorHeading.astro";
+import { PackageManagers } from "starlight-package-managers";
+import WranglerArg from "./WranglerArg.astro";
+import Details from "./Details.astro";
+import { marked } from "marked";
+
+function getCommand(path: string) {
+	const segments = path.trim().split(/\s+/);
+
+	const { registry } = experimental_getWranglerCommands();
+
+	let node = registry.subtree;
+	for (const segment of segments) {
+		const next = node.get(segment);
+
+		if (!next) break;
+
+		if (next.subtree.size === 0 && next.definition?.type === "command") {
+			return next.definition;
+		}
+
+		node = next.subtree;
+	}
+
+	throw new Error(`[WranglerCommand] Command "${path}" not found`);
+}
+
+const props = z.object({
+	command: z.string(),
+	headingLevel: z.number().default(2),
+	description: z.string().optional(),
+});
+
+let { command, headingLevel, description } = props.parse(Astro.props);
+
+const definition = getCommand(command);
+
+description ??= definition.metadata.description;
+
+if (!definition.args) {
+	throw new Error(`[WranglerCommand] "${command}" has no arguments`);
+}
+
+const { globalFlags } = experimental_getWranglerCommands();
+
+const positionals = definition.positionalArgs
+	?.map((p) => `[${p.toUpperCase()}]`)
+	.join(" ");
+---
+
+<AnchorHeading depth={headingLevel} title={`\`${command}\``} />
+
+<Fragment set:html={marked.parse(description)} />
+
+<PackageManagers
+	pkg="wrangler"
+	type="exec"
+	args={positionals ? command.concat(` ${positionals}`) : command}
+/>
+
+<ul>
+	{
+		Object.entries(definition.args)
+			.filter(([_, value]) => !value.hidden)
+			.map(([key, value]) => {
+				return <WranglerArg key={key} definition={value} />;
+			})
+	}
+</ul>
+
+<Details header="Global flags">
+	<ul>
+		{
+			Object.entries(globalFlags).map(([key, value]) => {
+				return <WranglerArg key={key} definition={value} />;
+			})
+		}
+	</ul>
+</Details>

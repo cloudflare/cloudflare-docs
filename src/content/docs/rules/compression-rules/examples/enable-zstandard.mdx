@@ -18,7 +18,6 @@ The following example rule will turn on Zstandard compression for response conte
 **When incoming requests match**
 
 - Custom filter expression:
-
   - _Media Type_ _is in_ `text/html, text/richtext, text/plain, text/css, text/x-script, text/x-component, text/x-java-source, text/x-markdown, application/javascript, application/x-javascript, text/javascript, text/js, image/x-icon, image/vnd.microsoft.icon, application/x-perl, application/x-httpd-cgi, text/xml, application/xml, application/rss+xml, application/vnd.api+json, application/x-protobuf, application/json, multipart/bag, multipart/mixed, application/xhtml+xml, font/ttf, font/otf, font/x-woff, image/svg+xml, application/vnd.ms-fontobject, application/ttf, application/x-ttf, application/otf, application/x-otf, application/truetype, application/opentype, application/x-opentype, application/font-woff, application/eot, application/font, application/font-sfnt, application/wasm, application/javascript-binast, application/manifest+json, application/ld+json, application/graphql+json, application/geo+json`
 
 **Then**
@@ -50,6 +49,10 @@ The following example sets the rules of an existing [entry point ruleset](/rules
 	}}
 />
 
-<Render file="terraform-use-ref-field" params={{ addDocsLocation: true }} />
+<Render
+	file="terraform-use-ref-field"
+	product="rules"
+	params={{ addDocsLocation: true }}
+/>
 
 </TabItem> </Tabs>

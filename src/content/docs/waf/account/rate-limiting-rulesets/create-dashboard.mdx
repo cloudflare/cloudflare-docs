@@ -9,7 +9,7 @@ head:
     content: Create a rate limiting ruleset in the dashboard for an account
 ---
 
-import { Render } from "~/components";
+import { Render, Steps, DashButton } from "~/components";
 
 :::note
 This feature requires an Enterprise plan with a paid add-on.
@@ -19,11 +19,13 @@ At the account level, rate limiting rules are grouped into rate limiting ruleset
 
 ## 1. Create a custom rate limiting ruleset
 
-To create a new custom rate limiting ruleset:
+<Steps>
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account.
+1. In the Cloudflare dashboard, go to the **WAF** page.
 
-2. Go to Account Home > **WAF** > **Rate limiting rulesets**.
+   <DashButton url="/?to=/:account/application-security/waf" />
+
+2. Go to the **Rate limiting rulesets** tab.
 
 3. To create a new empty ruleset, select **Create ruleset**. To duplicate an existing ruleset, select the three dots next to it > **Duplicate**.
 
@@ -59,13 +61,19 @@ To create a new custom rate limiting ruleset:
 
 16. Create additional rate limiting rules as needed, and then select **Create** to create the ruleset.
 
+</Steps>
+
 ## 2. Deploy the custom rate limiting ruleset
 
 To deploy a custom rate limiting ruleset to one or more zones on an Enterprise plan:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account.
+<Steps>
 
-2. Go to Account Home > **WAF** > **Rate limiting rulesets**.
+1. In the Cloudflare dashboard, go to the **WAF** page.
+
+   <DashButton url="/?to=/:account/application-security/waf" />
+
+2. Go to the **Rate limiting rulesets** tab.
 
 3. Under **Your custom rate limiting rulesets** and next to the rate limiting ruleset you wish to deploy, select **Deploy**.
 
@@ -79,12 +87,15 @@ To deploy a custom rate limiting ruleset to one or more zones on an Enterprise p
 
 6. To deploy your rule immediately, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
 
+</Steps>
+
 The **Deployed custom rate limiting rulesets** list will show a rule for each deployed custom rate limiting ruleset.
 
 ## Configure a custom response for blocked requests
 
 <Render
 	file="custom-response-blocked-requests"
+	product="waf"
 	params={{
 		responseType: "rate limiting",
 		defaultStatusCode: "429",

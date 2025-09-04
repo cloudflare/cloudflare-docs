@@ -62,9 +62,9 @@ let request = new Request(input, options)
 
 An object containing properties that you want to apply to the request.
 
-* `cache` `undefined | 'no-store'` optional
+* `cache` `undefined | 'no-store' | 'no-cache'` optional
 
-	* Standard HTTP `cache` header. Only `cache: 'no-store'` is supported.
+	* Standard HTTP `cache` header. Only `cache: 'no-store'` and `cache: 'no-cache'` are supported.
 	Any other cache header will result in a `TypeError` with the message `Unsupported cache mode: <attempted-cache-mode>`.
 
 * `cf` RequestInitCfProperties optional
@@ -199,7 +199,7 @@ All properties of an incoming `Request` object (the request you receive from the
 * `signal` AbortSignal read-only
   * The `AbortSignal` corresponding to this request. If you use the [`enable_request_signal`](/workers/configuration/compatibility-flags/#enable-requestsignal-for-incoming-requests) compatibility flag, you can attach an event listener to the signal. This allows you to perform cleanup tasks or write to logs before your Worker's invocation ends.
     For example, if you run the Worker below, and then abort the request from the client, a log will be written:
-    <Render file="request-signal-example" />
+    <Render file="request-signal-example" product="workers" />
 
 * `url` string read-only
 
@@ -241,11 +241,15 @@ All plans have access to:
 
 * `isEUCountry` string | null
 
-  * If the country of the incoming request is in the EU, this will return `"1"`. Otherwise, this property will be omitted.
+  * If the country of the incoming request is in the EU, this will return `"1"`. Otherwise, this property is either omitted or `false`.
 
 * `httpProtocol` string
 
   * HTTP Protocol, for example, `"HTTP/2"`.
+
+* `hostMetadata` Object | undefined
+
+  * Only populated when the incoming request is from a zone with custom hostname metadata. Refer to the Cloudflare for Platforms documentation for more about what you can add as [custom hostname metadata](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/custom-metadata/), and how it is exposed on the `hostMetadata` field.
 
 * `requestPriority` string | null
 

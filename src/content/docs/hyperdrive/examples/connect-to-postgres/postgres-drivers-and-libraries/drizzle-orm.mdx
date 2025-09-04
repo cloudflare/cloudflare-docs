@@ -87,9 +87,6 @@ export default {
 		// Sample query to get all users
 		const allUsers = await db.select().from(users);
 
-		// Clean up the connection
-		ctx.waitUntil(sql.end());
-
 		return Response.json(allUsers);
 	},
 } satisfies ExportedHandler<Env>;

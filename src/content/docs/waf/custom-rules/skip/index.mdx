@@ -8,13 +8,15 @@ head:
     content: Configure a custom rule with the Skip action
 ---
 
-import { TabItem, Tabs } from "~/components";
+import { TabItem, Tabs, Steps } from "~/components";
 
 Use the _Skip_ action in a custom rule to skip one or more security features. A rule configured with the _Skip_ action is also known as a skip rule.
 
 For more information on the available options, refer to [Available skip options](/waf/custom-rules/skip/options/).
 
 <Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
+
+<Steps>
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
 
@@ -32,7 +34,11 @@ For more information on the available options, refer to [Available skip options]
 
 7. Save your changes.
 
+</Steps>
+
 </TabItem> <TabItem label="New dashboard" icon="rocket">
+
+<Steps>
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
 
@@ -49,6 +55,8 @@ For more information on the available options, refer to [Available skip options]
 6. Configure the desired [skip options](/waf/custom-rules/skip/options/).
 
 7. Save your changes.
+
+</Steps>
 
 </TabItem> <TabItem label="API">
 

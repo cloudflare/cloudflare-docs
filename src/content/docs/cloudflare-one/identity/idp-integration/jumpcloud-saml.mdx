@@ -28,21 +28,23 @@ The following steps are specific to setting up JumpCloud with Cloudflare Access.
 7. Review the application summary and select **Configure Application**.
 
 8. In the **SSO** tab, configure the following settings:
-	1. In **IdP Entity ID**, enter your Cloudflare team domain:
+   1. In **IdP Entity ID**, enter your Cloudflare team domain:
 
-		```txt
-		https://<your-team-name>.cloudflareaccess.com/
-		```
-		You can find your team name in Zero Trust under **Settings** > **Custom Pages**.
+      ```txt
+      https://<your-team-name>.cloudflareaccess.com/
+      ```
 
-	2. Set both **SP Entity ID** and **ACS URL** to the following callback URL:
+      You can find your team name in Zero Trust under **Settings** > **Custom Pages**.
 
-		```txt
-		https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
-		```
-	3. (Optional) Configure SAML attributes that you want to send to Cloudflare Access.
+   2. Set both **SP Entity ID** and **ACS URL** to the following callback URL:
 
-	4. Scroll up to **JumpCloud Metadata** and select **Export Metadata**. Save this XML file for use in a [later step](#2-add-jumpcloud-to-zero-trust).
+      ```txt
+      https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
+      ```
+
+   3. (Optional) Configure SAML attributes that you want to send to Cloudflare Access.
+
+   4. Scroll up to **JumpCloud Metadata** and select **Export Metadata**. Save this XML file for use in a [later step](#2-add-jumpcloud-to-zero-trust).
 
 9. In the **User Groups** tab, [assign user groups](https://jumpcloud.com/support/get-started-applications-saml-sso#managing-employee-access-to-applications) to this application.
 
@@ -74,7 +76,8 @@ The JumpCloud integration allows you to synchronize user groups and automaticall
 
 <Render
 	file="access/enable-scim-on-dashboard"
-	params={{ idp: "JumpCloud"}}
+	product="cloudflare-one"
+	params={{ idp: "JumpCloud" }}
 />
 
 ### 2. Configure SCIM in JumpCloud
@@ -82,7 +85,7 @@ The JumpCloud integration allows you to synchronize user groups and automaticall
 1. In the [JumpCloud Admin Portal](https://console.jumpcloud.com/#/home), go to **SSO Applications**.
 2. Select the Cloudflare application that was created when you [Set up JumpCloud as a SAML provider](/cloudflare-one/identity/idp-integration/jumpcloud-saml/#set-up-jumpcloud-as-a-saml-provider).
 3. Select the **SSO** tab.
-3. To provision user groups, select **Include group attribute** and enter `groups`. The group attribute name has to exactly match `groups` or else it will be sent as a SAML attribute.
+4. To provision user groups, select **Include group attribute** and enter `groups`. The group attribute name has to exactly match `groups` or else it will be sent as a SAML attribute.
 5. Select the **Identity Management** tab.
 6. Make sure that **Enable management of User Groups and Group Membership in this application** is turned on.
 7. Select **Configure**.
@@ -91,21 +94,21 @@ The JumpCloud integration allows you to synchronize user groups and automaticall
 10. Select **Activate**. You will receive a confirmation that the Identity Management integration has been successfully verified.
 11. Select **Save**.
 
-<Render file="access/verify-scim-provisioning"/>
+<Render file="access/verify-scim-provisioning" product="cloudflare-one" />
 
 ### Provisioning attributes
 
 Provisioning attributes define the user and group properties that JumpCloud will synchronize with Cloudflare Access. By default, JumpCloud will send the following attributes during a SCIM update event:
 
-| JumpCloud user attribute| Cloudflare Access attribute |
-| ------------------ | ----------------------- |
-| `email` 					 | `email`            |
-| `firstname`        | `givenName`        |
-| `lastname`         | `surname`          |
+| JumpCloud user attribute | Cloudflare Access attribute |
+| ------------------------ | --------------------------- |
+| `email`                  | `email`                     |
+| `firstname`              | `givenName`                 |
+| `lastname`               | `surname`                   |
 
 | JumpCloud group attribute | Cloudflare Access attribute |
-| ------------------ | ----------------------- |
-| `name` 					   | `groups`            |
+| ------------------------- | --------------------------- |
+| `name`                    | `groups`                    |
 
 ## Example API configuration
 

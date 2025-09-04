@@ -1,0 +1,39 @@
+---
+{}
+---
+
+import { Tabs, TabItem } from "~/components";
+
+To view WARP logs on desktop devices:
+
+<Tabs> <TabItem label="macOS">
+
+1. Open a Terminal window.
+2. Run the `warp-diag` tool:
+   ```sh
+   warp-diag
+   ```
+
+This will place a `warp-debugging-info-<date>-<time>.zip` on your desktop.
+
+</TabItem> <TabItem label="Windows">
+
+1. Open a Command Prompt or PowerShell window.
+2. Run the `warp-diag` tool:
+   ```bash
+   C:\Users\JohnDoe>warp-diag
+   ```
+
+This will place a `warp-debugging-info-<date>-<time>.zip` on your desktop.
+
+</TabItem> <TabItem label="Linux">
+
+1. Open a Terminal window.
+2. Run the `warp-diag` tool:
+   ```sh
+   warp-diag
+   ```
+
+This will place a `warp-debugging-info-<date>-<time>.zip` in the same folder you ran the command from.
+
+</TabItem> </Tabs>

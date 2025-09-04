@@ -48,7 +48,7 @@ Review the following environments flow:
 
 4.  Environments are used with the `--env` or `-e` flag on Wrangler commands. For example, you can develop the Worker in the `dev` environment by running `npx wrangler dev -e=dev`, and deploy it with `npx wrangler deploy -e=dev`.
 
-        <Render file="vite-environments" />
+        <Render file="vite-environments" product="workers" />
 
 </Steps>
 
@@ -112,11 +112,15 @@ env.staging.service ={ binding = "<BINDING_NAME>", service = "worker-a-staging" 
 
 </WranglerConfig>
 
-### Secrets
+### Secrets for production
 
 You may assign environment-specific [secrets](/workers/configuration/secrets/) by running the command [`wrangler secret put <KEY> -env`](/workers/wrangler/commands/#put). You can also create `dotenv` type files named `.dev.vars.<environment-name>`.
 
 Like other environment variables, secrets are [non-inheritable](/workers/wrangler/configuration/#non-inheritable-keys) and must be defined per environment.
+
+### Secrets in local development
+
+<Render file="secrets-in-dev" product="workers" />
 
 ---
 

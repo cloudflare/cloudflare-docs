@@ -8,7 +8,7 @@ banner:
     id: pages-migrate-to-workers
 ---
 
-import { APIRequest } from "~/components";
+import { APIRequest, DashButton } from "~/components";
 
 The [Pages API](/api/resources/pages/subresources/projects/methods/list/) empowers you to build automations and integrate Pages with your development workflow. At a high level, the API endpoints let you manage deployments and builds and configure projects. Cloudflare supports [Deploy Hooks](/pages/configuration/deploy-hooks/) for headless CMS deployments. Refer to the [API documentation](https://api.cloudflare.com/) for a full breakdown of object types and endpoints.
 
@@ -18,10 +18,11 @@ The [Pages API](/api/resources/pages/subresources/projects/methods/list/) empowe
 
 To create an API token:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
-2. Select the user icon on the top right of your dashboard > **My Profile**.
-3. Select [**API Tokens**](https://dash.cloudflare.com/profile/api-tokens) > **Create Token**.
-4. You can go to **Edit Cloudflare Workers** template > **Use template** or go to **Create Custom Token** > **Get started**. If you create a custom token, you will need to make sure to add the **Cloudflare Pages** permission with **Edit** access.
+1. In the Cloudflare dashboard, go to the **Account API tokens** page.
+
+   <DashButton url="/?to=/:account/api-tokens" />
+2. Select **Create Token**.
+3. You can go to **Edit Cloudflare Workers** template > **Use template** or go to **Create Custom Token** > **Get started**. If you create a custom token, you will need to make sure to add the **Cloudflare Pages** permission with **Edit** access.
 
 ### Make requests
 

@@ -5,6 +5,8 @@ sidebar:
   order: 20
 ---
 
+import { DashButton } from "~/components";
+
 Hyperdrive exposes analytics that allow you to inspect query volume, query latency and cache ratios size across all and/or each Hyperdrive configuration in your account.
 
 ## Metrics
@@ -27,10 +29,11 @@ Metrics can be queried (and are retained) for the past 31 days.
 
 Per-database analytics for Hyperdrive are available in the Cloudflare dashboard. To view current and historical metrics for a Hyperdrive configuration:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Go to [**Workers & Pages** > **Hyperdrive**](https://dash.cloudflare.com/?to=/:account/workers/hyperdrive).
-3. Select an existing Hyperdrive configuration.
-4. Select the **Metrics** tab.
+1. In the Cloudflare dashboard, go to the **Hyperdrive** page.
+
+   <DashButton url="/?to=/:account/workers/hyperdrive" />
+2. Select an existing Hyperdrive configuration.
+3. Select the **Metrics** tab.
 
 You can optionally select a time window to query. This defaults to the last 24 hours.
 

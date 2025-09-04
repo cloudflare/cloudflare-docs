@@ -11,6 +11,8 @@ head:
 
 ---
 
+import { DashButton } from "~/components";
+
 :::note
 
 Currently, this feature is only available to Enterprise customers.
@@ -28,9 +30,11 @@ To dive deeper into the mitigations performed by Cloudflare security products, u
 
 To download a monthly application security report:
 
-1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Go to **Security Center** > **Security Reports**.
-3. For a given month and year, select **Download** to download the report for that particular month.
+1. In the Cloudflare dashboard, go to the **Security Reports** page.
+
+   <DashButton url="/?to=/:account/security-center/reports" />
+
+2. For a given month and year, select **Download** to download the report for that particular month.
 
 :::caution
 

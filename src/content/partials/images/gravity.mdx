@@ -4,7 +4,8 @@
 
 import { Tabs, TabItem } from "~/components";
 
-When cropping with `fit: "cover"` and `fit: "crop"`, this parameter defines the side or point that should not be cropped. Available options are:
+Specifies how an image should be cropped when used with `fit=cover` and `fit=crop`.
+Available options are `auto`, `face`, a side (`left`, `right`, `top`, `bottom`), and relative coordinates (`XxY` with a valid range of `0.0` to `1.0`):
 
 - `auto`\
   Selects focal point based on saliency detection (using maximum symmetric surround algorithm).
@@ -16,6 +17,13 @@ When cropping with `fit: "cover"` and `fit: "crop"`, this parameter defines the 
 :::note
 You must subtract the height of the image before you calculate the focal point.
 :::
+
+- `face`\
+	Automatically sets the focal point based on detected faces in an image. This can be combined with the `zoom` parameter to specify how closely the image should be cropped towards the faces.
+
+	The new focal point is determined by a minimum bounding box that surrounds all detected faces. If no faces are found, then the focal point will fall back to the center of the image.
+
+	This feature uses an open-source model called RetinaFace through WorkersAI. Our model pipeline is limited only to facial detection, or identifying the pixels that represent a human face. We do not support facial identification or recognition. Read more about Cloudflare's [approach to responsible AI](https://www.cloudflare.com/trust-hub/responsible-ai/).
 
 <Tabs>
   <TabItem label="URL format">
@@ -29,6 +37,10 @@ You must subtract the height of the image before you calculate the focal point.
     OR
 
     gravity=0x1
+
+    OR
+
+    gravity=face
     ```
 
   </TabItem>
@@ -43,6 +55,10 @@ You must subtract the height of the image before you calculate the focal point.
     OR
 
     g=0x1
+
+    OR
+
+    g=face
     ```
 
   </TabItem>
@@ -58,6 +74,9 @@ OR
 
 cf: {image: {gravity: {x:0.5, y:0.2}}}
 
+OR
+
+cf: {image: {gravity: "face"}}
 ```
 </TabItem>
 </Tabs>

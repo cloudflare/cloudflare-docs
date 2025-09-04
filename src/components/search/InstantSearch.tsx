@@ -225,12 +225,13 @@ export default function InstantSearchComponent() {
 				preserveSharedStateOnUnmount: true,
 			}}
 		>
-			<Configure filters="type:content" />
+			<Configure filters="type:content" facetingAfterDistinct={true} />
 			<div className="space-y-4">
 				<SearchBox />
 				<div className="not-content flex gap-2">
 					<FilterDropdown attribute="product" label="Products" />
 					<FilterDropdown attribute="tags" label="Tags" />
+					<FilterDropdown attribute="contentType" label="Page type" />
 				</div>
 				<InfiniteHits />
 			</div>

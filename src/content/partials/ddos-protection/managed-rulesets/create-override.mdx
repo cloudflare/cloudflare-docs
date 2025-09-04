@@ -2,11 +2,13 @@
 {}
 ---
 
-import { Details, Render, Steps } from "~/components"
+import { Details, Render, Steps, DashButton } from "~/components"
 
 <Steps>
-  1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-  2. Go to Account Home > **L3/4 DDoS** > **Network-layer DDoS Protection**.
+  1. In the Cloudflare dashboard, go to the **L3/4 DDoS protection** page.
+
+	  <DashButton url="/?to=/:account/network-security/ddos" />
+  2. Go to **Network-layer DDoS Protection**.
   3. Select **Deploy a DDoS override**.
   4. In **Set scope**, specify if you wish to apply the override to all incoming packets or to a subset of the packets.
   5. If you are creating an override for a subset of the incoming packets, define the [custom expression](/ddos-protection/managed-rulesets/network/network-overrides/override-expressions/) that matches the incoming packets you wish to target in the override, using either the Rule Builder or the Expression Editor.

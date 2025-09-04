@@ -3,7 +3,7 @@ pcx_content_type: how-to
 title: Astro
 sidebar:
   order: 2
-tags: ["ssg", "full-stack"]
+tags: ["ssg", "full-stack", "Astro"]
 description: Create an Astro application and deploy it to Cloudflare Workers with Workers Assets.
 ---
 
@@ -87,8 +87,7 @@ If your Astro project is entirely pre-rendered, follow these steps:
     ```json
     {
     	"name": "my-astro-app",
-    	// Update to today's date
-    	"compatibility_date": "2025-03-25",
+    	"compatibility_date": "$today",
     	"assets": {
     		"directory": "./dist"
     	}

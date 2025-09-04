@@ -1,12 +1,12 @@
 ---
-title: Use Secrets Store with Workers
+title: Workers integration
 pcx_content_type: tutorial
 sidebar:
   order: 1
-  label: Use with Workers
+  label: Workers
 ---
 
-import { WranglerConfig, Tabs, TabItem, APIRequest } from "~/components";
+import { WranglerConfig, Tabs, TabItem, APIRequest, DashButton } from "~/components";
 
 [Cloudflare Secrets Store](/secrets-store/) is a secure, centralized location in which account-level secrets are stored and managed. The secrets are securely encrypted and stored across all Cloudflare data centers.
 
@@ -56,8 +56,11 @@ npx wrangler secrets-store secret create <STORE_ID> --name MY_SECRET_NAME --scop
 
 </TabItem> <TabItem label="Dashboard">
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to **Secrets Store** and select **Create secret**.
+1. In the Cloudflare dashboard, go to the **Secrets Store** page.
+
+   <DashButton url="/?to=/:account/secrets-store" />
+
+2. Select **Create secret**.
 3. Fill in the required fields, choosing _Workers_ as the **Permission scope**. Once the secret is saved, the secret value will no longer be available for viewing.
 4. (Optional) Select **Add additional secret** to create more than one secret at a time.
 5. Select **Save** to confirm.
@@ -120,8 +123,11 @@ secrets_store_secrets = [
 
 ### Via Dashboard
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to **Workers & Pages** and select a Workers application.
+1. In the Cloudflare dashboard, go to **Workers & Pages**.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+
+2. Select a Workers application.
 3. Go to **Settings** > **Bindings** and select **Add**.
 4. On the **Add a resource binding** side panel, choose **Secrets Store**.
 5. Fill in the required fields:

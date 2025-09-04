@@ -5,9 +5,9 @@ title: assert
 
 import { Render } from "~/components";
 
-<Render file="nodejs-compat-howto" />
+<Render file="nodejs-compat-howto" product="workers" />
 
-The `assert` module in Node.js provides a number of useful assertions that are useful when building tests.
+The [`node:assert`](https://nodejs.org/docs/latest/api/assert.html) module in Node.js provides a number of useful assertions that are useful when building tests.
 
 ```js
 import { strictEqual, deepStrictEqual, ok, doesNotReject } from "node:assert";

@@ -1,0 +1,16 @@
+---
+import { Code } from "@astrojs/starlight/components";
+import Routes from "~/content/dash-routes/index.json";
+---
+
+<ul>
+	{
+		Routes.map((route) => (
+			<li>
+				<strong>{(route.parent ?? []).concat(route.name).join(" > ")}</strong>
+				<br />
+				<Code lang="mdx" code={`<DashButton url="${route.deeplink}" />`} />
+			</li>
+		))
+	}
+</ul>

@@ -6,7 +6,7 @@ sidebar:
 
 ---
 
-import { AvailableNotifications } from "~/components"
+import { AvailableNotifications, DashButton } from "~/components"
 
 Logpush jobs may fail for a few reasons, for instance because the destination is unreachable, because of a change in permissions at the customers’ origin, or because a Logpush job did not complete at least one successful push in the last 24 hour.
 
@@ -20,12 +20,14 @@ Alerts are sent via the [Cloudflare Notifications](/notifications/) system. They
 
 You can add an alert for **Failing Logpush Job Disabled** via the **Notifications** section of the dashboard. Note that alerts can be configured at the account level and apply to all jobs within an account.
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
-2. Navigate to **Notifications**.
-3. Next, select **Add**.
-4. Select the alert **Failing Logpush Job Disabled**.
-5. Configure the alert: choose a name, add a description (optional), select the notification services, Webhooks and enter the email where you want to be notified.
-6. Select **Save**.
+1. In the Cloudflare dashboard, go to the **Notifications** page.
+
+   <DashButton url="/?to=/:account/notifications" />
+
+2. Next, select **Add**.
+3. Select the alert **Failing Logpush Job Disabled**.
+4. Configure the alert: choose a name, add a description (optional), select the notification services, Webhooks and enter the email where you want to be notified.
+5. Select **Save**.
 
 When you complete these steps, you will receive an email alert if your Logpush job is disabled.
 

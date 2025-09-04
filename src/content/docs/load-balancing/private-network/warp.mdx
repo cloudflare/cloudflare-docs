@@ -7,6 +7,8 @@ sidebar:
 
 ---
 
+import { DashButton } from "~/components"
+
 To use Private Network Load Balancing, you must first set up a Cloudflare Tunnel and a Virtual Local Area Network in the [Cloudflare Zero Trust Dashboard](http://one.dash.cloudflare.com). This guide walks you through all required steps, from setup to optional configurations.
 
 ## 1. Create Tunnel and Virtual Network
@@ -55,13 +57,17 @@ Pools can be created using either the Cloudflare dashboard or the API. Refer to 
 
 ## 3. Create an Account Load Balancer with a Private IP
 
-1. Go to **Load Balancing** at the account level and select **Create a Load Balancer**.
-2. Select **Private Load Balancer**.
-3. On the next step you can choose to associate this load balancer with either:
+1. In the Cloudflare dashboard, go to the **Load Balancing** page.
+
+   <DashButton url="/?to=/:account/load-balancing" />
+
+2. Select **Create a Load Balancer**.
+3. Select **Private Load Balancer**.
+4. On the next step you can choose to associate this load balancer with either:
  - A CGNAT IP from the Cloudflare range or
  - A custom [RFC1918 address](https://datatracker.ietf.org/doc/html/rfc1918).
-4. Add a descriptive name to identify your Load Balancer.
-5. Proceed through the setup.
+5. Add a descriptive name to identify your Load Balancer.
+6. Proceed through the setup.
 
 After selecting an IP address and completing the setup, you will be redirected to the Load Balancing dashboard. You can locate your load balancer using the search bar or by filtering for **Private** load balancers. Be sure to note the assigned IP address as it will be required in the following steps.
 

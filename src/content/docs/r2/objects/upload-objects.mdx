@@ -5,7 +5,7 @@ sidebar:
   order: 1
 ---
 
-import { Steps, Tabs, TabItem, Render } from "~/components"
+import { Steps, Tabs, TabItem, Render, DashButton } from "~/components"
 
 You can upload objects to your bucket from using API (both [Workers Binding API](/r2/api/workers/workers-api-reference/) or [compatible S3 API](/r2/api/s3/api/)), rclone, Cloudflare dashboard, or Wrangler.
 
@@ -38,8 +38,10 @@ For more information, refer to our [rclone example](/r2/examples/rclone/).
 To upload objects to your bucket from the Cloudflare dashboard:
 
 <Steps>
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select **R2**.
-2. From the **R2** page in the dashboard, locate and select your bucket.
+1. In the Cloudflare dashboard, go to the **R2 object storage** page.
+
+   <DashButton url="/?to=/:account/r2/overview" />
+2. Select your bucket.
 3. Select **Upload**.
 4. Choose to either drag and drop your file into the upload area or **select from computer**.
 </Steps>

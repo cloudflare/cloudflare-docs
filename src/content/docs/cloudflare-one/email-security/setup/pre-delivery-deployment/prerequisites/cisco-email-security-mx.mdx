@@ -5,13 +5,16 @@ sidebar:
   order: 5
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 ![A schematic showing where Email Security sits in the life cycle of an email received](~/assets/images/email-security/deployment/inline-setup/Cisco_to_Email_Security_MX_Inline.png)
 
-In this tutorial, you will learn how to configure Cisco IronPort with Email Security as MX record. 
+In this tutorial, you will learn how to configure Cisco IronPort with Email Security as MX record.
 
-<Render file="email-security/deployment/mx-deployment-prereq"/>
+<Render
+	file="email-security/deployment/mx-deployment-prereq"
+	product="cloudflare-one"
+/>
 
 ## 1. Add a Sender Group for Email Security Email Protection IPs
 
@@ -52,4 +55,7 @@ Refer to [Cisco's documentation](https://www.cisco.com/c/en/us/support/docs/secu
 
 ## 4. Set up MX/Inline
 
-<Render file="email-security/deployment/set-up-mx-inline-step"/>
+<Render
+	file="email-security/deployment/set-up-mx-inline-step"
+	product="cloudflare-one"
+/>

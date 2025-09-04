@@ -6,7 +6,7 @@ sidebar:
 
 ---
 
-import { GlossaryTooltip } from "~/components";
+import { GlossaryTooltip, DashButton } from "~/components";
 
 <GlossaryTooltip term="Durable Object">Durable Objects</GlossaryTooltip> expose analytics for Durable Object namespace-level and request-level metrics.
 
@@ -21,11 +21,12 @@ A Durable Object namespace is a set of Durable Objects that can be addressed by 
 
 Per-namespace analytics for Durable Objects are available in the Cloudflare dashboard. To view current and historical metrics for a namespace:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Go to [**Workers & Pages** > **Durable Objects**](https://dash.cloudflare.com/?to=/:account/workers/durable-objects).
-3. View account-level Durable Objects usage.
-4. Select an existing namespace.
-5. Select the **Metrics** tab.
+1. In the Cloudflare dashboard, go to the **Durable Objects** page.
+
+   <DashButton url="/?to=/:account/workers/durable-objects" />
+2. View account-level Durable Objects usage.
+3. Select an existing namespace.
+4. Select the **Metrics** tab.
 
 You can optionally select a time window to query. This defaults to the last 24 hours.
 

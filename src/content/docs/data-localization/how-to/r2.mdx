@@ -5,7 +5,7 @@ sidebar:
   order: 6
 ---
 
-import { Details } from "~/components";
+import { Details, DashButton } from "~/components";
 
 In the following sections, we will give you some details about how to configure R2 with Regional Services and Customer Metadata Boundary.
 
@@ -13,11 +13,13 @@ In the following sections, we will give you some details about how to configure 
 
 To configure Regional Services for hostnames [proxied](/dns/proxy-status/) through Cloudflare and ensure that processing of requesting objects from a [R2 Bucket](/r2/buckets/) occurs only in-region, follow these steps:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select an account.
-2. Go to the **R2** tab.
-3. Follow the steps to [create a Bucket](/r2/buckets/create-buckets/).
-4. [Connect a bucket to a custom domain](/r2/buckets/public-buckets/#connect-a-bucket-to-a-custom-domain).
-5. Run the [API POST](/data-localization/regional-services/get-started/#configure-regional-services-via-api) command on the configured bucket custom domain to create a `regional_hostnames` with a specific region.
+1. In the Cloudflare dashboard, go to the **R2** page.
+ 
+   <DashButton url="/?to=/:account/r2/overview" />
+
+2. Follow the steps to [create a Bucket](/r2/buckets/create-buckets/).
+3. [Connect a bucket to a custom domain](/r2/buckets/public-buckets/#connect-a-bucket-to-a-custom-domain).
+4. Run the [API POST](/data-localization/regional-services/get-started/#configure-regional-services-via-api) command on the configured bucket custom domain to create a `regional_hostnames` with a specific region.
 
 Regional Services only applies to the custom domain configured for an R2 Bucket.
 

@@ -5,13 +5,15 @@ sidebar:
   order: 9
 ---
 
-import { GlossaryDefinition, GlossaryTooltip } from "~/components";
+import { GlossaryDefinition, GlossaryTooltip, Details } from "~/components";
 
 Gateway allows you to create DNS, Network, and HTTP policies based on applications and app types. You can select individual applications or groups of app types to filter specific traffic on your network.
 
 ## Applications
 
 When you choose the _Application_ selector in a Gateway policy builder, the **Value** field will include all supported applications and their respective app types. Alternatively, you can use the [Gateway API](/api/resources/zero_trust/subresources/gateway/subresources/app_types/methods/list/) to fetch a list of applications, app types, and ID numbers.
+
+To manage a consolidated list of applications across Zero Trust, you can use the [Application Library](/cloudflare-one/applications/app-library/).
 
 ## App types
 
@@ -45,6 +47,94 @@ Gateway sorts applications into the following app type groups:
 | Video Streaming                                | Video streaming applications                                                                                                |
 | [Do Not Inspect](#do-not-inspect-applications) | Applications incompatible with the TLS certificate required by the [Gateway proxy](/cloudflare-one/policies/gateway/proxy/) |
 
+## Application hostnames
+
+Applications categorized by Cloudflare may independently rely on a number of different internal and external resources to provide functionality. To enable effective behavior of Allow and Block Gateway policies, Zero Trust separates application definitions into [hostnames](#hostnames) and [support hostnames](#support-hostnames).
+
+### Hostnames
+
+Hostnames are domains that are core to the application and not [used by other applications](#overlapping-hostnames). These are the domains that are specifically blocked when you block an application. The App Library surfaces these hostnames in the [Hostnames table](/cloudflare-one/applications/app-library/#overview) for an application.
+
+### Support hostnames
+
+Support hostnames are shared resources which applications may call in order to function. Applications can use support hostnames for content delivery, application behavior, or third-party system integrations. Blocking these hostnames may result in unexpected behavior for other policies. In addition, not taking a specific action on one of these hostnames may affect the application's behavior, even if the application hostnames are allowed. For example, assume that `file-sharing-service.com` relies on `content-delivery.com`. If you allow access to `file-sharing-service.com` and its associated subdomains but not `content-delivery.com`, some of the functionality of `file-sharing-service.com` may break when Gateway matches the traffic.
+
+To ensure effective application behavior, Gateway only uses support hostnames in Allow policies. Cloudflare explicitly allows support hostname connections in these policies but will not block the connections in Block policies. For example, many Google applications use `accounts.google.com` for authentication. In a Zero Trust environment with highly restrictive policies, `accounts.google.com` must be allowed for many applications to function correctly. If you use an application with `accounts.google.com` in its support hostnames in an Allow policy, Gateway will allow both `accounts.google.com` and the application's domains.
+
+## Application controls
+
+With [Application Granular Controls](/cloudflare-one/policies/gateway/http-policies/#application-granular-controls), you can choose specific actions and operations to match application traffic. Supported applications and operations include:
+
+<Details header="ChatGPT (app ID `1199`)">
+
+| Operation name     | Operation ID | Application Control name | Application Control ID | Contains payload | Operation Group | Operation Group ID |
+| ------------------ | ------------ | ------------------------ | ---------------------- | ---------------- | --------------- | ------------------ |
+| SendPrompt         | `8004`       | Prompt                   | `1652`                 | ✅               | Chat            | `1650`             |
+| UploadFile         | `8008`       | Upload                   | `1653`                 | ❌               | Chat            | `1650`             |
+| UploadFilePayload  | `8013`       | Upload                   | `1653`                 | ✅               | Chat            | `1650`             |
+| ShareResponse      | `8006`       | Share                    | `1654`                 | ❌               | Chat            | `1650`             |
+| ShareCanvas        | `8007`       | Share                    | `1654`                 | ❌               | Chat            | `1650`             |
+| TranscribeVoice    | `8011`       | Voice                    | `1655`                 | ❌               | Chat            | `1650`             |
+| EnableVoiceMode    | `8003`       | Voice                    | `1655`                 | ❌               | Chat            | `1650`             |
+| AllowTraining      | `8009`       |                          |                        | ❌               | Settings        | `1651`             |
+| AllowVoiceTraining | `8010`       |                          |                        | ❌               | Settings        | `1651`             |
+| AllowVideoTraining | `8016`       |                          |                        | ❌               | Settings        | `1651`             |
+| ExportData         | `8020`       |                          |                        | ❌               | Settings        | `1651`             |
+
+</Details>
+
+<Details header="Google Gemini (app ID `1340`)">
+
+| Operation name    | Operation ID | Application Control name | Application Control ID | Contains payload | Operation Group | Operation Group ID |
+| ----------------- | ------------ | ------------------------ | ---------------------- | ---------------- | --------------- | ------------------ |
+| SendPrompt        | `8021`       | Prompt                   | `1657`                 | ✅               | Chat            | `1656`             |
+| UploadFile        | `8022`       | Upload                   | `1658`                 | ❌               | Chat            | `1656`             |
+| UploadFilePayload | `8023`       | Upload                   | `1658`                 | ✅               | Chat            | `1656`             |
+| TranscribeVoice   | `8025`       | Voice                    | `1659`                 | ❌               | Chat            | `1656`             |
+
+</Details>
+
+<Details header="Perplexity (app ID `1937`)">
+
+| Operation name         | Operation ID | Application Control name | Application Control ID | Contains payload | Operation Group | Operation Group ID |
+| ---------------------- | ------------ | ------------------------ | ---------------------- | ---------------- | --------------- | ------------------ |
+| SendPrompt             | `11947`      | Prompt                   | `2598`                 | ✅               | Chat            | `2596`             |
+| ClarifyingPrompt       | `11951`      | Prompt                   | `2598`                 | ✅               | Chat            | `2596`             |
+| CreateUploadUrl        | `11948`      | Upload                   | `2599`                 | ❌               | Chat            | `2596`             |
+| UploadFile             | `11955`      | Upload                   | `2599`                 | ✅               | Chat            | `2596`             |
+| UploadOrganizationFile | `11950`      | Upload                   | `2599`                 | ❌               | Settings        | `2597`             |
+| ShareChat              | `11952`      | Share                    | `2600`                 | ❌               | Chat            | `2596`             |
+| VoiceTranscription     | `11953`      | Voice                    | `2601`                 | ❌               | Chat            | `2596`             |
+| ExportChat             | `11949`      |                          |                        | ❌               | Chat            | `2596`             |
+| DeleteThread           | `11954`      |                          |                        | ❌               | Chat            | `2596`             |
+| DeleteOrganizationFile | `11956`      |                          |                        | ❌               | Settings        | `2597`             |
+
+</Details>
+
+<Details header="Claude (app ID `2430`)">
+
+| Operation name        | Operation ID | Application Control name | Application Control ID | Contains payload | Operation Group | Operation Group ID |
+| --------------------- | ------------ | ------------------------ | ---------------------- | ---------------- | --------------- | ------------------ |
+| SendPrompt            | `10048`      | Prompt                   | `2127`                 | ✅               | Chat            | `2126`             |
+| PromptCompletion      | `10050`      | Prompt                   | `2127`                 | ✅               | Chat            | `2126`             |
+| RetryPromptCompletion | `10040`      | Prompt                   | `2127`                 | ✅               | Chat            | `2126`             |
+| UploadFile            | `10039`      | Upload                   | `2128`                 | ✅               | Chat            | `2126`             |
+| ConvertDocument       | `10041`      | Upload                   | `2128`                 | ✅               | Chat            | `2126`             |
+| ShareConversation     | `10043`      | Share                    | `2129`                 | ❌               | Chat            | `2126`             |
+| GetShares             | `10052`      | Share                    | `2129`                 | ❌               | Chat            | `2126`             |
+| CreateConversation    | `10038`      |                          |                        | ❌               | Chat            | `2126`             |
+| GetConversation       | `10046`      |                          |                        | ❌               | Chat            | `2126`             |
+| UpdateConversation    | `10047`      |                          |                        | ❌               | Chat            | `2126`             |
+| DeleteConversation    | `10045`      |                          |                        | ❌               | Chat            | `2126`             |
+| UpdateAccount         | `10036`      |                          |                        | ❌               | Settings        | `2125`             |
+| InitiateDataExport    | `10037`      |                          |                        | ❌               | Settings        | `2125`             |
+| GiveFeedback          | `10042`      |                          |                        | ❌               | Chat            | `2126`             |
+| SetConversationTitle  | `10044`      |                          |                        | ❌               | Chat            | `2126`             |
+| GetOrganisation       | `10049`      |                          |                        | ❌               | Settings        | `2125`             |
+| GetFilePreview        | `10051`      |                          |                        | ❌               | Chat            | `2126`             |
+
+</Details>
+
 ## Usage
 
 ### Overlapping hostnames
@@ -57,8 +147,9 @@ To ensure Gateway evaluates traffic with your desired precedence, order your mos
 
 Gateway automatically groups applications incompatible with TLS decryption into the _Do Not Inspect_ app type. As Cloudflare identifies incompatible applications, Gateway will periodically update this app type to add new applications. To ensure Gateway does not intercept any current or future incompatible traffic, you can [create a Do Not Inspect HTTP policy](/cloudflare-one/policies/gateway/http-policies/#do-not-inspect) with the entire _Do Not Inspect_ app type selected.
 
-:::note[Install Cloudflare certificate manually to allow TLS decryption]
+When managing applications with the [Application Library](/cloudflare-one/applications/app-library/), Do Not Inspect applications will appear under the corresponding application. For example, the App Library will group _Google Drive (Do Not Inspect)_ under **Google Drive**.
 
+:::note[Install Cloudflare certificate manually to allow TLS decryption]
 Instead of creating a Do Not Inspect policy for an application, you may be able to configure the application to [trust a Cloudflare certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/manual-deployment/#add-the-certificate-to-applications). Doing so will allow the application to function without losing visibility into your traffic.
 :::
 

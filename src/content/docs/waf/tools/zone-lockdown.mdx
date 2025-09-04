@@ -6,7 +6,7 @@ sidebar:
   order: 4
 ---
 
-import { FeatureTable, TabItem, Tabs, APIRequest } from "~/components";
+import { FeatureTable, TabItem, Tabs, Steps, APIRequest } from "~/components";
 
 Zone Lockdown specifies a list of one or more IP addresses, CIDR ranges, or networks that are the only IPs allowed to access a domain, subdomain, or URL. You can configure multiple destinations, including IPv4/IPv6 addresses, in a single zone lockdown rule.
 
@@ -36,6 +36,8 @@ The number of available zone lockdown rules depends on your Cloudflare plan.
 
 <Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
 
+<Steps>
+
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
 
 2. Go to **Security** > **WAF**, and select the **Tools** tab.
@@ -52,11 +54,15 @@ The number of available zone lockdown rules depends on your Cloudflare plan.
 
 8. Select **Save and Deploy lockdown rule**.
 
+</Steps>
+
 </TabItem> <TabItem label="New dashboard" icon="rocket">
 
 :::note
 Zone Lockdown is only available in the new security dashboard if you have configured at least one zone lockdown rule. Cloudflare recommends that you use [custom rules](/waf/custom-rules/) instead of zone lockdown rules.
 :::
+
+<Steps>
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
 
@@ -71,6 +77,8 @@ Zone Lockdown is only available in the new security dashboard if you have config
 6. (Optional) If you are creating a zone lockdown rule that overlaps with an existing rule, expand **Advanced Options** and enter a priority for the rule in **Priority**. The lower the number, the higher the priority. Higher priority rules take precedence.
 
 7. Select **Save and Deploy lockdown rule**.
+
+</Steps>
 
 </TabItem> <TabItem label="API">
 

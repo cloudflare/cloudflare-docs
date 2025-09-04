@@ -46,12 +46,15 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
 import Cloudflare from "cloudflare";
 
 const client = new Cloudflare({
-	apiEmail: process.env["CLOUDFLARE_EMAIL"], // This is the default and can be omitted
-	apiKey: process.env["CLOUDFLARE_API_KEY"], // This is the default and can be omitted
+	apiToken: process.env["CLOUDFLARE_API_TOKEN"],
 });
 
 const snapshot = await client.browserRendering.snapshot.create({
-	account_id: "account_id",
+	account_id: process.env["CLOUDFLARE_ACCOUNT_ID"],
+	url: "https://example.com/",
+	addScriptTag: [
+        { content: "document.body.innerHTML = \"Snapshot Page\";" }
+    ]
 });
 
 console.log(snapshot.content);

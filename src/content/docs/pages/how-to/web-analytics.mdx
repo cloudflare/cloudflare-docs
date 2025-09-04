@@ -8,7 +8,7 @@ banner:
     id: pages-migrate-to-workers
 ---
 
-import { Render } from "~/components";
+import { Render, DashButton } from "~/components";
 
 <Render file="web-analytics-definition" product="web-analytics" />
 
@@ -16,15 +16,16 @@ import { Render } from "~/components";
 
 Cloudflare Pages offers a one-click setup for Web Analytics:
 
-<Render file="web-analytics-setup" />
+<Render file="web-analytics-setup" product="pages" />
 
 ## View metrics
 
 To view the metrics associated with your Pages project:
 
-1. Log in to [Cloudflare dashboard](https://dash.cloudflare.com/login).
-2. From Account Home, select **Analytics & Logs** > **Web Analytics**.
-3. Select the analytics associated with your Pages project.
+1. In the Cloudflare dashboard, go to the **Web Analytics** page.
+
+   <DashButton url="/?to=/:account/web-analytics" />
+2. Select the analytics associated with your Pages project.
 
 For more details about how to use Web Analytics, refer to the [Web Analytics documentation](/web-analytics/data-metrics/).
 

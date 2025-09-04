@@ -13,6 +13,7 @@ import {
 	PagesBuildEnvironment,
 	PagesBuildEnvironmentLanguages,
 	PagesBuildEnvironmentTools,
+	DashButton,
 } from "~/components";
 
 Cloudflare Pages' build environment has broad support for a variety of languages, such as Ruby, Node.js, Python, PHP, and Go.
@@ -86,9 +87,11 @@ The v3 build system updates the default tools, libraries and languages to their 
 
 To migrate to this new version, configure your Pages project settings in the dashboard:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Select **Workers & Pages** > in **Overview**, select your Pages project.
-3. Go to **Settings** > **Build & deployments** > **Build system version** and select the latest version.
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+2. Select your Pages project.
+3. Go to **Deployments** > **All deployments** > and select the latest version.
 
 If you were previously relying on the default versions of any languages or tools in the build system, your build may fail when migrating to v3. To fix this, you must specify the version you wish to use by [overriding](/pages/configuration/build-image/#overriding-default-versions) the default versions.
 

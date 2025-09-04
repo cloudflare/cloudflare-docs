@@ -1,9 +1,7 @@
 ---
-pcx_content_type: navigation
+pcx_content_type: overview
 title: Verified bots
 sidebar:
-  group:
-    hideIndex: true
   order: 2
 learning_center:
   title: What is a bot?
@@ -11,10 +9,84 @@ learning_center:
 
 ---
 
-import { Render, DirectoryListing } from "~/components";
+import { GlossaryTooltip } from "~/components";
 
-<Render file="verified-bots" />
+A verified bot is a bot which has been added to Cloudflare's list of <GlossaryTooltip term="verified bot">verified bots</GlossaryTooltip>.
 
-Refer to the pages below for additional resources on verified bots.
+You can request for your bot to be added to Cloudflare's bots and agents directory by filling out an [online application](https://dash.cloudflare.com/?to=/:account/configurations/verified-bots) in the Cloudflare dashboard.
 
-<DirectoryListing />
+:::note
+A bot cannot be registered as both a verified bot and a signed agent. Review Cloudflare's [signed agents](/bots/concepts/bot/signed-agents/) to determine how to identify your bot.
+:::
+
+## Verified bot requirement
+
+For a bot to be verified, it must meet the following requirements:
+
+1. The bot must follow [verified bots policy](/bots/concepts/bot/verified-bots/policy/).
+2. The bot must be verified using one of the following verification methods:
+   - [Web Bot Auth](/bots/reference/bot-verification/web-bot-auth/)
+   - [IP validation](/bots/reference/bot-verification/ip-validation/)
+
+Once Cloudflare approves a verified bot, it should appear on [Cloudflare Radar's bots and agents directory](https://radar.cloudflare.com/verified-bots).
+
+---
+
+## Transient false negatives
+
+Once Cloudflare lists a bot as a verified bot, this entry is cached and may get delisted if no traffic is seen in the Cloudflare network coming from the bot for a defined period of time.
+
+It takes 24 hours for an inactive IP to be removed as a verified bot.
+
+A bot can remain unlisted until Cloudflare sees traffic being sourced from the bot. When the bot is revalidated, it is listed as a verified bot again.
+
+---
+
+## Verification methods
+
+The bot must be verified using one of the following validation methods:
+
+- [Web Bot Auth](/bots/reference/bot-verification/web-bot-auth/)
+- [IP validation](/bots/reference/bot-verification/ip-validation/)
+
+---
+
+## Categories
+
+You can segment your verified bot traffic by its type and purpose by adding the Verified Bot Categories field `cf.verified_bot_category` as a filter criteria in [WAF Custom rules](/waf/custom-rules/), [Advanced Rate Limiting](/waf/rate-limiting-rules/), and Late Transform rules.
+
+:::caution
+The Verified Bot Categories field is not compatible with legacy Firewall rules.
+:::
+
+:::note
+Verified Bot Categories is available on all plans.
+:::
+
+| Name                       | String value                 | Example                                                                 |
+| -------------------------- | ---------------------------- | ----------------------------------------------------------------------- |
+| Academic research          | `Academic Research`          | Library of Congress, TurnItInBot, Bibliothèque nationale de France      |
+| Accessibility              | `Accessibility`              | Accessible Web Bot                                                      |
+| Advertising or marketing   | `Advertising & Marketing`    | Google Adsbot                                                           |
+| Aggregators                | `Aggregator`                 | Pinterest, Indeed Jobsbot                                               |
+| AI Assistant               | `AI Assistant`               | Perplexity-User, DuckAssistBot                                          |
+| AI Crawler                 | `AI Crawler`                 | Google Bard, ChatGPT bot                                                |
+| AI Search                  | `AI Search`                  | OAI-SearchBot                                                           |
+| Archiver                   | `Archiver`                   | Internet Archive, CommonCrawl                                           |
+| Feed fetcher               | `Feed Fetcher`               | RSS or Podcast feed updaters                                            |
+| Monitoring or analytics    | `Monitoring & Analytics`     | Uptime Monitors                                                         |
+| Page preview               | `Page Preview`               | Facebook, Slack, Twitter, or Discord Link Preview tools                 |
+| Search engine crawler      | `Search Engine Crawler`      | Googlebot, Bingbot, Yandexbot, Baidubot                                 |
+| Search engine optimization | `Search Engine Optimization` | Google Lighthouse, GT Metrix, Pingdom, AddThis                          |
+| Security                   | `Security`                   | Vulnerability Scanners, SSL Domain Control Validation (DCV) Check Tools |
+| Social media marketing     | `Social Media Marketing`     | Brandwatch                                                              |
+| Webhooks                   | `Webhooks`                   | Payment processors, WordPress Integration tools                         |
+| Other                      | `Other`                      |                                                                         |
+
+---
+
+## Availability
+
+Verified bots are excluded by default when [Bot Fight Mode](/bots/get-started/bot-fight-mode/) is enabled to block definite bots.
+
+[Super Bot Fight Mode](/bots/get-started/super-bot-fight-mode/) and [Enterprise Bot Management](/bots/get-started/bot-management/) customers have the option to block or allow verified bots.

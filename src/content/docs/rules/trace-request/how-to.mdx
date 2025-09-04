@@ -11,7 +11,7 @@ head:
 description: Learn how to use Cloudflare Trace in the dashboard and with the API.
 ---
 
-import { GlossaryTooltip } from "~/components";
+import { GlossaryTooltip, DashButton } from "~/components";
 
 ## Use Trace in the dashboard
 
@@ -22,14 +22,15 @@ import { GlossaryTooltip } from "~/components";
 
 ### 2. Build a trace
 
-1. In the [Cloudflare dashboard](https://dash.cloudflare.com), go to Account Home > **Trace**.
+1. In the Cloudflare dashboard, go to the **Trace** page.
+
+   <DashButton url="/?to=/:account/trace" />
 
 2. Enter a URL to trace. The URL must include a hostname that belongs to your account.
 
 3. Select an HTTP method. If you select _POST_, _PUT_, or _PATCH_, you should enter a value in **Request Body**.
 
 4. (Optional) Define any custom request properties to simulate the conditions of a specific HTTP/S request. You can customize the following request properties:
-
    - **Protocol** (HTTP protocol version)
    - **User Agent and Request Headers**
    - **Cookies**

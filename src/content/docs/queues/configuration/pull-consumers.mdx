@@ -8,7 +8,7 @@ head:
     content: Cloudflare Queues - Pull consumers
 ---
 
-import { WranglerConfig } from "~/components";
+import { WranglerConfig, DashButton } from "~/components";
 
 A pull-based consumer allows you to pull from a queue over HTTP from any environment and/or programming language outside of Cloudflare Workers. A pull-based consumer can be useful when your message consumption rate is limited by upstream infrastructure or long-running tasks.
 
@@ -102,7 +102,8 @@ You may authenticate and run multiple concurrent pull-based consumers against a 
 
 To create an API token:
 
-1. Go to the API tokens page of the [Cloudflare dashboard](https://dash.cloudflare.com/profile/api-tokens/).
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
+2. Go to **My Profile** > [API Tokens](https://dash.cloudflare.com/profile/api-tokens).
 2. Select **Create Token**.
 3. Scroll to the bottom of the page and select **Create Custom Token**.
 4. Give the token a name. For example, `queue-pull-token`.

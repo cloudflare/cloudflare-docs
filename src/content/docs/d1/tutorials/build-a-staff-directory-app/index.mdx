@@ -1,5 +1,5 @@
 ---
-updated: 2024-03-21
+reviewed: 2024-03-21
 difficulty: Intermediate
 pcx_content_type: tutorial
 title: Build a Staff Directory Application
@@ -7,7 +7,6 @@ products:
   - Pages
 tags:
   - Hono
-languages:
   - TypeScript
   - SQL
 description: Build a staff directory using D1. Users access employee info; admins add new employees within the app.
@@ -185,7 +184,7 @@ export const findAllEmployees = async (db: D1Database) => {
       JOIN locations ON employees.location_id = locations.location_id
       JOIN departments ON employees.department_id = departments.department_id
       `;
-	const { results } = await db.prepare(query).all();
+	const { results } = await db.prepare(query).run();
 	const employees = results;
 	return employees;
 };

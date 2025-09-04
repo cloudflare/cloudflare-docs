@@ -1,11 +1,12 @@
 ---
 pcx_content_type: concept
 title: Metrics and analytics
+reviewed: 2025-09-02
 sidebar:
   order: 10
 ---
 
-import { Details } from "~/components";
+import { Details, DashButton } from "~/components";
 
 D1 exposes database analytics that allow you to inspect query volume, query latency, and storage size across all and/or each database in your account.
 
@@ -40,10 +41,11 @@ Refer to the [Pricing documentation](/d1/platform/pricing/) for more details on 
 
 Per-database analytics for D1 are available in the Cloudflare dashboard. To view current and historical metrics for a database:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Go to [**Workers & Pages** > **D1**](https://dash.cloudflare.com/?to=/:account/workers/d1).
-3. Select an existing database.
-4. Select the **Metrics** tab.
+1. In the Cloudflare dashboard, go to the **D1** page.
+
+   <DashButton url="/?to=/:account/workers/d1" />
+2. Select an existing D1 database.
+3. Select the **Metrics** tab.
 
 You can optionally select a time window to query. This defaults to the last 24 hours.
 

@@ -9,7 +9,7 @@ banner:
     id: pages-migrate-to-workers
 ---
 
-import { Details, PagesBuildPresetsTable } from "~/components";
+import { Details, PagesBuildPresetsTable, DashButton } from "~/components";
 
 You may tell Cloudflare Pages how your site needs to be built as well as where its output files will be located.
 
@@ -41,10 +41,11 @@ If you are not using a preset, use `exit 0` as your **Build command**.
 
 If your project makes use of environment variables to build your site, you can provide custom environment variables:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. In **Account Home**, select **Workers & Pages**.
-3. In **Overview**, select your Pages project.
-4. Select **Settings** > **Environment variables**.
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+2. Select your Pages project.
+3. Select **Settings** > **Environment variables**.
 
 The following system environment variables are injected by default (but can be overridden):
 

@@ -1,0 +1,39 @@
+---
+title: WranglerCommand
+styleGuide:
+  component: WranglerCommand
+---
+
+import { Type, MetaInfo } from "~/components";
+
+The `WranglerCommand` component documents the available options for a given command.
+
+This is generated using the Wrangler version in the [`cloudflare-docs` repository](https://github.com/cloudflare/cloudflare-docs/blob/production/package.json).
+
+## Import
+
+```mdx
+import { WranglerCommand } from "~/components";
+```
+
+## Usage
+
+```mdx live
+import { WranglerCommand } from "~/components";
+
+<WranglerCommand
+	command="deploy"
+	description={"Deploy a [Worker](/workers/)"}
+/>
+
+<WranglerCommand command="d1 execute" />
+```
+
+## Arguments
+
+- `command` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the command, i.e `d1 execute`.
+- `headingLevel` <Type text="boolean" /> <MetaInfo text="(default: 2) optional" />
+  - The heading level that the command name should be added at on the page, i.e `2` for a `h2`.
+- `description` <Type text="string" /> <MetaInfo text="optional" />
+  - A description to render below the command heading. If not set, defaults to the value specified in the Wrangler help API.
