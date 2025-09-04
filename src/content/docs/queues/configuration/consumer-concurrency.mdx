@@ -5,7 +5,7 @@ sidebar:
   order: 5
 ---
 
-import { WranglerConfig } from "~/components";
+import { WranglerConfig, DashButton } from "~/components";
 
 Consumer concurrency allows a [consumer Worker](/queues/reference/how-queues-works/#consumers) processing messages from a queue to automatically scale out horizontally to keep up with the rate that messages are being written to a queue.
 
@@ -66,11 +66,13 @@ You can configure the concurrency of your consumer Worker in two ways:
 
 To configure the concurrency settings for your consumer Worker from the dashboard:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Select **Workers & Pages** > **Queues**.
-3. Select your queue > **Settings**.
-4. Select **Edit Consumer** under Consumer details.
-5. Set **Maximum consumer invocations** to a value between `1` and `250`. This value represents the maximum number of concurrent consumer invocations available to your queue.
+1. In the Cloudflare dashboard, go to the **Queues** page.
+
+	 <DashButton url="/?to=/:account/workers/queues" />
+
+2. Select your queue > **Settings**.
+3. Select **Edit Consumer** under Consumer details.
+4. Set **Maximum consumer invocations** to a value between `1` and `250`. This value represents the maximum number of concurrent consumer invocations available to your queue.
 
 To remove a fixed maximum value, select **auto (recommended)**.
 

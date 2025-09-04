@@ -12,7 +12,7 @@ tags:
   - SQL
 ---
 
-import { Render, PackageManagers, Details, WranglerConfig } from "~/components";
+import { Render, PackageManagers, Details, WranglerConfig, DashButton } from "~/components";
 
 In this tutorial, you will learn how to build a data lake of website interaction events (clickstream data), using Pipelines.
 
@@ -406,17 +406,21 @@ Now, you can access the application at the deployed URL. When you click on the `
 
 ## 9. View the data in R2
 
-You can view the data in the R2 bucket. If you are not signed in to the Cloudflare dashboard, sign in and navigate to the [R2 overview](https://dash.cloudflare.com/?to=/:account/r2/overview) page.
+To view the data in the R2 bucket:
 
-Open the bucket you configured for your pipeline in Step 3. You can see files, representing the clickstream data. These files are newline delimited JSON files. Each row in a file represents one click event. Download one of the files, and open it in your preferred text editor to see the output:
+1. In the Cloudflare dashboard, go to R2's **Overview** page.
 
-```json
-{"timestamp":"2025-04-06T16:24:29.213Z","session_id":"1234567890abcdef","user_id":"user965","event_data":{"event_id":673,"event_type":"product_view","page_url":"https://<URL>.workers.dev/","timestamp":"2025-04-06T16:24:29.213Z","product_id":2},"device_info":{"browser":"Chrome","os":"Linux","device":"Mobile","userAgent":"Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Mobile Safari/537.36"},"referrer":""}
-{"timestamp":"2025-04-06T16:24:30.436Z","session_id":"1234567890abcdef","user_id":"user998","event_data":{"event_id":787,"event_type":"product_view","page_url":"https://<URL>.workers.dev/","timestamp":"2025-04-06T16:24:30.436Z","product_id":4},"device_info":{"browser":"Chrome","os":"Linux","device":"Mobile","userAgent":"Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Mobile Safari/537.36"},"referrer":""}
-{"timestamp":"2025-04-06T16:24:31.330Z","session_id":"1234567890abcdef","user_id":"user22","event_data":{"event_id":529,"event_type":"product_view","page_url":"https://<URL>.workers.dev/","timestamp":"2025-04-06T16:24:31.330Z","product_id":4},"device_info":{"browser":"Chrome","os":"Linux","device":"Mobile","userAgent":"Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Mobile Safari/537.36"},"referrer":""}
-{"timestamp":"2025-04-06T16:24:31.879Z","session_id":"1234567890abcdef","user_id":"user750","event_data":{"event_id":756,"event_type":"product_view","page_url":"https://<URL>.workers.dev/","timestamp":"2025-04-06T16:24:31.879Z","product_id":4},"device_info":{"browser":"Chrome","os":"Linux","device":"Mobile","userAgent":"Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Mobile Safari/537.36"},"referrer":""}
-{"timestamp":"2025-04-06T16:24:33.978Z","session_id":"1234567890abcdef","user_id":"user333","event_data":{"event_id":467,"event_type":"product_view","page_url":"https://<URL>.workers.dev/","timestamp":"2025-04-06T16:24:33.978Z","product_id":6},"device_info":{"browser":"Chrome","os":"Linux","device":"Mobile","userAgent":"Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Mobile Safari/537.36"},"referrer":""}
-```
+	 <DashButton url="/?to=/:account/r2/overview" />
+
+2. Open the bucket you configured for your pipeline in Step 3. You can see files, representing the clickstream data. These files are newline delimited JSON files. Each row in a file represents one click event. Download one of the files, and open it in your preferred text editor to see the output:
+
+   ```json
+   {"timestamp":"2025-04-06T16:24:29.213Z","session_id":"1234567890abcdef","user_id":"user965","event_data":{"event_id":673,"event_type":"product_view","page_url":"https://<URL>.workers.dev/","timestamp":"2025-04-06T16:24:29.213Z","product_id":2},"device_info":{"browser":"Chrome","os":"Linux","device":"Mobile","userAgent":"Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Mobile Safari/537.36"},"referrer":""}
+   {"timestamp":"2025-04-06T16:24:30.436Z","session_id":"1234567890abcdef","user_id":"user998","event_data":{"event_id":787,"event_type":"product_view","page_url":"https://<URL>.workers.dev/","timestamp":"2025-04-06T16:24:30.436Z","product_id":4},"device_info":{"browser":"Chrome","os":"Linux","device":"Mobile","userAgent":"Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Mobile Safari/537.36"},"referrer":""}
+   {"timestamp":"2025-04-06T16:24:31.330Z","session_id":"1234567890abcdef","user_id":"user22","event_data":{"event_id":529,"event_type":"product_view","page_url":"https://<URL>.workers.dev/","timestamp":"2025-04-06T16:24:31.330Z","product_id":4},"device_info":{"browser":"Chrome","os":"Linux","device":"Mobile","userAgent":"Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Mobile Safari/537.36"},"referrer":""}
+   {"timestamp":"2025-04-06T16:24:31.879Z","session_id":"1234567890abcdef","user_id":"user750","event_data":{"event_id":756,"event_type":"product_view","page_url":"https://<URL>.workers.dev/","timestamp":"2025-04-06T16:24:31.879Z","product_id":4},"device_info":{"browser":"Chrome","os":"Linux","device":"Mobile","userAgent":"Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Mobile Safari/537.36"},"referrer":""}
+   {"timestamp":"2025-04-06T16:24:33.978Z","session_id":"1234567890abcdef","user_id":"user333","event_data":{"event_id":467,"event_type":"product_view","page_url":"https://<URL>.workers.dev/","timestamp":"2025-04-06T16:24:33.978Z","product_id":6},"device_info":{"browser":"Chrome","os":"Linux","device":"Mobile","userAgent":"Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Mobile Safari/537.36"},"referrer":""}
+   ```
 
 ## 10. Optional: Connect a query engine to your R2 bucket and query the data
 Once you have collected the raw events in R2, you might want to query the events, to answer questions such as "how many events occurred?". You can connect a query engine, such as MotherDuck, to your R2 bucket.

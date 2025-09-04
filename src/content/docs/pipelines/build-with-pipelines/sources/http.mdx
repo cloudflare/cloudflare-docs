@@ -8,7 +8,7 @@ head:
     content: Configure HTTP endpoint
 ---
 
-import { Render, PackageManagers } from "~/components";
+import { Render, PackageManagers, DashButton } from "~/components";
 
 Pipelines support data ingestion over HTTP. When you create a new pipeline using the default settings you will receive a globally scalable ingestion endpoint. To ingest data, make HTTP POST requests to the endpoint.
 
@@ -54,12 +54,16 @@ $ npx wrangler pipelines create [PIPELINE-NAME] --r2-bucket [R2-BUCKET-NAME] --r
 Once authentication is turned on, you will need to include a Cloudflare API token in your request headers.
 
 ### Get API token
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Navigate to your [API Keys](https://dash.cloudflare.com/profile/api-tokens).
-3. Select **Create Token**.
-4. Choose the template for Workers Pipelines. Select **Continue to summary** > **Create token**. Make sure to copy the API token and save it securely.
+
+1. In the Cloudflare dashboard, go to the **Account API tokens** page.
+
+	 <DashButton url="/?to=/:account/api-tokens" />
+
+2. Select **Create Token**.
+3. Choose the template for Workers Pipelines. Select **Continue to summary** > **Create token**. Make sure to copy the API token and save it securely.
 
 ### Making authenticated requests
+
 Include the API token you created in the previous step in the headers for your request:
 
 ```sh
