@@ -12,7 +12,7 @@ description: With account-level custom nameservers, you can use the same custom
   provide the nameservers names do not have to exist as zones in Cloudflare.
 ---
 
-import { Example, Render, Tabs, TabItem } from "~/components";
+import { Example, Render, Tabs, TabItem, DashButton } from "~/components";
 
 <Render
 	file="acns-tcns-intro"
@@ -62,8 +62,11 @@ For this configuration to be possible, a few conditions apply:
 <Tabs syncKey="dashPlusAPI">
 <TabItem label="Dashboard">
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Go to **Manage Account** > **Configurations** > **DNS Settings**.
+1. In the Cloudflare dashboard, go to the account **Settings** page.
+
+   <DashButton url="/?to=/:account/configurations" />
+
+2. Go to **DNS Settings**.
 3. For **Account custom nameservers**, select **Configure custom nameservers**.
 4. Insert a fully qualified domain name for **Nameserver name** and choose a **Nameserver set**. Follow the [configuration conditions](#configuration-conditions).
 
@@ -131,8 +134,11 @@ To make ACNS the default option for all new zones added to your account from now
 <Tabs syncKey="dashPlusAPI">
 <TabItem label="Dashboard">
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Go to **Manage Account** > **Configurations**.
+1. In the Cloudflare dashboard, go to the account **Settings** page.
+
+   <DashButton url="/?to=/:account/configurations" />
+
+2. Go to **DNS Settings**.
 3. For **DNS zone defaults**, select **Configure defaults**.
 4. Change the **Nameserver assignment method** to **Account custom nameservers**.
 
@@ -182,8 +188,11 @@ Following the [configuration conditions](#configuration-conditions), each set mu
 <Tabs syncKey="dashPlusAPI">
 <TabItem label="Dashboard">
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Go to **Manage Account** > **Configurations** > **DNS Settings**.
+1. In the Cloudflare dashboard, go to the account **Settings** page.
+
+   <DashButton url="/?to=/:account/configurations" />
+
+2. Go to **DNS Settings**.
 3. For **Account custom nameservers**, select **Delete** next to the ACNS name.
 
 </TabItem>
