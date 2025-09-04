@@ -12,4 +12,4 @@ that only provided the limited `nextTick`, `env`, `exit`, `getBuiltinModule`, `p
 
 To continue using the previous minimal implementation after the compat date, set the `disable_nodejs_process_v2` flag instead.
 
-Most Node.js-supported process properties are implemented where possible, with undefined exports for unsupported features. See the Wo[process documentation](/workers/runtime-apis/nodejs/process/) for Workers-specific implementation details.
+Most Node.js-supported process properties are implemented where possible, with undefined exports for unsupported features. See the [process documentation](/workers/runtime-apis/nodejs/process/) for Workers-specific implementation details.
