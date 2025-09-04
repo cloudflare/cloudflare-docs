@@ -354,7 +354,7 @@ EOF
 
 ## Considerations with Durable Objects
 
-[Durable Object](/durable-objects/) migrations are applied with deployments. This means you can't bind to a durable object in a Version if a deployment doesn't exist i.e. migrations haven't been applied. For example, running this in Terraform will fail the first time the plan is applied:
+[Durable Object](/durable-objects/) migrations are applied with deployments. This means you can't bind to a Durable Object in a Version if a deployment doesn't exist i.e. migrations haven't been applied. For example, running this in Terraform will fail the first time the plan is applied:
 
 ```tf
 resource "cloudflare_worker" "my_worker" {
