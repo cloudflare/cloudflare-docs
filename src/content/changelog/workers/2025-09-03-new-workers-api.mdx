@@ -42,7 +42,13 @@ This API worked for creating a basic Worker, uploading all of its code, and depl
 
 ## After: Three resources with clear boundaries
 ![**After**](~/assets/images/workers/platform/api-after.png)
-The new API has three core resources with distinct boundaries: [**Worker**](/api/resources/workers/subresources/beta/subresources/workers/methods/create/), [**Versions**](/api/resources/workers/subresources/beta/subresources/workers/models/worker/#(schema)), and [**Deployment**](/api/resources/workers/subresources/scripts/subresources/content/methods/update/). All endpoints now use clean JSON payloads, with script content embedded as `base64`-encoded string, a simpler and more reliable approach than the previous `multipart/form-data` format.
+The new API introduces cleaner resource management with three core resources: [**Worker**](/api/resources/workers/subresources/beta/subresources/workers/methods/create/), [**Versions**](/api/resources/workers/subresources/beta/subresources/workers/models/worker/#(schema)), and [**Deployment**](/api/resources/workers/subresources/scripts/subresources/content/methods/update/).
+
+:::note
+[Workers](/api/resources/workers/subresources/beta/subresources/workers/) and [Versions](/api/resources/workers/subresources/beta/subresources/workers/subresources/versions/) use the new `/workers/` beta endpoints, while [Deployments](/api/resources/workers/subresources/scripts/subresources/deployments/) remain on the existing `/scripts/` endpoint. Pair the new endpoints with the existing Deployment API for a complete workflow.
+:::
+
+All endpoints now use simple JSON payloads, with script content embedded as `base64`-encoded strings —- a more consistent and reliable approach than the previous `multipart/form-data` format.
 - **Worker**: The parent resource representing your application. It has a stable UUID and holds persistent settings like `name`, `tags`, and `logpush`. You can now create a Worker to establish its identity and settings **before** any code is uploaded.
 
 - **Version**: An immutable snapshot of your code and its specific configuration, like bindings and `compatibility_date`. Creating a new version is a safe action that doesn't affect live traffic.
@@ -151,5 +157,6 @@ This dual approach means:
 
 ## Technical notes
 
-- You can still use the preexisting Workers REST API, and it remains fully supported.
-- Legacy Terraform resources and SDK methods will be supported until the next major version.
+- The preexisting Workers REST API remains fully supported. Once the new API exits beta, we'll provide a migration timeline with ample notice and comprehensive migration guides.
+- Legacy Terraform resources and SDK methods will continue to work through the current major version. When deprecated in a future major version, we'll provide migration guides and plenty of notice.
+- While the Deployments API currently remains on the `/scripts/` endpoint, we plan to introduce a new Deployments endpoint under `/workers/` to match the new API structure. Both endpoints will coexist, allowing you to choose which to use.
