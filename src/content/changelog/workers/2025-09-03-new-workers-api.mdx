@@ -68,7 +68,7 @@ const worker = await client.workers.beta.workers.create({
 // Step 2: Development team adds code and creates a version later
 const version = await client.workers.beta.workers.versions.create(worker.id, {
   account_id: "...",
-  main_module: "payment-service-script",
+  main_module: "worker.js",
   compatibility_date: "$today",
   bindings: [ /*...*/ ],
   modules: [
