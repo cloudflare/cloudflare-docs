@@ -105,7 +105,7 @@ resource "cloudflare_worker" "my_worker" {
 # resource "cloudflare_workers_deployment" "my_worker_deployment" {}
 ```
 
-### Predictable settings
+### No more confusing `/settings` API endpoints
 Configuration now has an obvious home. Worker settings persist across all versions of the Worker, and Version settings are specific to a code snapshot.
 
 ```sh
@@ -128,7 +128,7 @@ POST /workers/workers/{id}/versions
 }
 ```
 
-### Dual addressing for stability and convenience
+### `/workers` API endpoints now support UUIDs (in addition to names)
 
 The `/workers/workers/` path now supports addressing a Worker by both its immutable UUID and its mutable name.
 
@@ -139,7 +139,7 @@ GET /workers/workers/payment-service                  # Name (convenient for hum
 ```
 This dual approach means:
   - Developers can use readable names for debugging.
-  - Automation can rely on stable UUIDs to prevent errors.
+  - Automation can rely on stable UUIDs to prevent errors when Workers are renamed
   - Terraform can rename Workers without destroying and recreating them.
 
 
@@ -150,5 +150,5 @@ This dual approach means:
 
 ## Technical notes
 
-- Current APIs remain operational during beta, and any deprecation notice will come with a defined support period.
+- You can still use the preexisting Workers REST API, and it remains fully supported.
 - Legacy Terraform resources and SDK methods will be supported until the next major version.
