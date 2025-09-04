@@ -5,8 +5,8 @@ _build:
   list: never
 
 name: "Enable Node.js HTTP server modules"
-sort_date: "2025-09-05"
-enable_date: "2025-09-05"
+sort_date: "2025-09-01"
+enable_date: "2025-09-01"
 enable_flag: "enable_nodejs_http_server_modules"
 disable_flag: "disable_nodejs_http_server_modules"
 ---
