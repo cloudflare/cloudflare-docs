@@ -5,7 +5,7 @@ sidebar:
   order: 6
 ---
 
-import { AvailableNotifications, Render, APIRequest } from "~/components";
+import { AvailableNotifications, Render, APIRequest, DashButton } from "~/components";
 
 You can provide automated systems with service tokens to authenticate against your Zero Trust policies. Cloudflare Access will generate service tokens that consist of a Client ID and a Client Secret. Automated systems or applications can then use these values to reach an application protected by Access.
 
@@ -123,11 +123,12 @@ An alert can be configured to notify a week before a service token expires to al
 
 To configure a service token expiration alert:
 
-1. In the [Cloudflare dashboard](https://dash.cloudflare.com), go to the **Notifications** tab.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com), go to the **Notifications** page.
+		<DashButton url="/?to=/:account/notifications" />
 2. Select **Add**.
 3. Select _Expiring Access Service Token_.
 4. Enter a name for your alert and an optional description.
 5. (Optional) Add other recipients for the notification email.
 6. Select **Save**.
 
-Your alert has been set and is now visible in the **Notifications** tab of the Cloudflare dashboard.
+Your alert has been set and is now visible on the **Notifications** page.
