@@ -20,8 +20,8 @@ import timers from "node:timers";
 export default {
   async fetch(): Promise<Response> {
     console.log("first");
-    const { promise: promise1, resolve: resolve1 } = Promise.withResolvers();
-    const { promise: promise2, resolve: resolve2 } = Promise.withResolvers();
+    const { promise: promise1, resolve: resolve1 } = Promise.withResolvers<void>();
+    const { promise: promise2, resolve: resolve2 } = Promise.withResolvers<void>();
     timers.setTimeout(() => {
       console.log("last");
       resolve1();
