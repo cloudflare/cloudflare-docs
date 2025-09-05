@@ -7,6 +7,8 @@ sidebar:
 
 Browser Rendering uses a managed Chromium environment that includes a standard set of fonts. When you generate a screenshot or PDF, text is rendered using the fonts available in this environment. 
 
+If your webpage specifies a font that is not supported yet, Chromium will automatically fall back to a similar supported font. If you would like to use a font that is not currently supported, reach out to us on [Cloudflare Discord](https://discord.cloudflare.com/).
+
 ## Generic CSS font family support
 
 The following generic CSS font families are supported:
@@ -57,8 +59,3 @@ Browser Rendering includes additional font packages for non-Latin scripts and em
 - Noto Color Emoji  
 - TLWG Thai fonts  
 - WenQuanYi Zen Hei (Chinese) 
-
-## Notes
-
-- If your webpage specifies a font that is not supported yet, Chromium will automatically fall back to a similar supported font. 
-- If you would like to use a font that is not currently supported, reach out to us on [Cloudflare Discord](https://discord.cloudflare.com/).
