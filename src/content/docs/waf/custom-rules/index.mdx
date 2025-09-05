@@ -13,6 +13,14 @@ Custom rules are evaluated in order, and some actions like _Block_ will stop the
 
 To define sets of custom rules that apply to more than one zone, use [custom rulesets](/waf/account/custom-rulesets/), which require an Enterprise plan with a paid add-on.
 
+:::note
+
+Custom rulesets at the account level require an Enterprise plan with a paid add-on.
+
+At the zone level, all customers can create and deploy custom rulesets. However, the Cloudflare dashboard currently does not support working with custom rulesets at the zone level. You will need to use the Cloudflare API to configure or deploy these rulesets.
+
+:::
+
 ## Availability
 
 <FeatureTable id="security.waf_c_custom_rules" />

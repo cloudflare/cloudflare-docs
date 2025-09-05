@@ -15,22 +15,26 @@ import { Render, APIRequest } from "~/components";
 This feature requires an Enterprise plan with a paid add-on.
 :::
 
-To deploy custom rules at the account level, you must create a custom ruleset with one or more rules. Use the [Rulesets API](/ruleset-engine/rulesets-api/) to work with custom rulesets using the API.
+To deploy custom rules at the account level, you must create a custom ruleset with one or more rules.
+
+At the zone level you can create both [custom rules](/waf/custom-rules/create-api/) and custom rulesets. You must deploy a custom ruleset so that it gets executed.
+
+Use the [Rulesets API](/ruleset-engine/rulesets-api/) to work with custom rulesets using the API.
 
 If you are using Terraform, refer to [WAF custom rules configuration using Terraform](/terraform/additional-configurations/waf-custom-rules/#create-and-deploy-a-custom-ruleset).
 
+<Render file="custom-ruleset-zone-limitation" product="ruleset-engine" />
+
 ## Procedure
 
-To deploy a custom ruleset in your account, follow these general steps:
+To deploy a custom ruleset, follow these general steps:
 
 1. Create a custom ruleset in the `http_request_firewall_custom` phase with one or more rules.
-2. Deploy the ruleset to the [entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset) of the `http_request_firewall_custom` phase at the account level.
-
-Currently, you can only deploy WAF custom rulesets at the account level.
+2. Deploy the ruleset to the [entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset) of the `http_request_firewall_custom` phase.
 
 ### 1. Create a custom ruleset
 
-The following example creates a custom ruleset with a single rule in the `rules` array.
+The following example creates a custom ruleset at the account level with a single rule in the `rules` array.
 
 <APIRequest
 	path="/accounts/{account_id}/rulesets"
@@ -55,7 +59,7 @@ Save the ruleset ID in the response for the next step.
 
 ### 2. Deploy the custom ruleset
 
-To deploy the custom ruleset, add a rule with `"action": "execute"` to the `http_request_firewall_custom` phase entry point ruleset at the account level.
+To deploy the custom ruleset, add a rule with `"action": "execute"` to the `http_request_firewall_custom` phase entry point ruleset.
 
 1.  <Render
     	file="rulesets/api-account/step1-get-entrypoint"
@@ -118,7 +122,7 @@ To deploy the custom ruleset, add a rule with `"action": "execute"` to the `http
     />
 
     :::caution
-    You can only apply custom rulesets to incoming traffic of zones on an Enterprise plan. To enforce this requirement, you must include `cf.zone.plan eq "ENT"` in the expression of the `execute` rule deploying the custom ruleset.
+    At the account level, you can only apply custom rulesets to incoming traffic of zones on an Enterprise plan. To enforce this requirement, you must include `cf.zone.plan eq "ENT"` in the expression of the `execute` rule deploying the custom ruleset.
     :::
 
 3.  <Render
@@ -157,10 +161,10 @@ Use the different operations in the [Rulesets API](/ruleset-engine/rulesets-api/
 
 | Task                               | Procedure                                                                                                                                                                                                                                                       |
 | ---------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Get list of custom rulesets        | <p>Use the [List account rulesets][1] operation and search for rulesets with `"kind": "custom"` and `"phase": "http_request_firewall_custom"`. The response will include the ruleset IDs.</p><p>For more information, refer to [List existing rulesets][2].</p> |
-| List all rules in a custom ruleset | <p>Use the [Get an account ruleset][3] operation with the custom ruleset ID to obtain the list of configured rules and their IDs.</p><p>For more information, refer to [View a specific ruleset][4].</p>                                                        |
-| Update a custom rule               | <p>Use the [Update an account ruleset rule][5] operation. You will need to provide the custom ruleset ID and the rule ID.</p><p>For more information, refer to [Update a rule in a ruleset][6].</p>                                                             |
-| Delete a custom rule               | <p>Use the [Delete an account ruleset rule][7] operation. You will need to provide the custom ruleset ID and the rule ID.</p><p>For more information, refer to [Delete a rule in a ruleset][8].</p>                                                             |
+| Get list of custom rulesets        | <p>Use the [List account or zone rulesets][1] operation and search for rulesets with `"kind": "custom"` and `"phase": "http_request_firewall_custom"`. The response will include the ruleset IDs.</p><p>For more information, refer to [List existing rulesets][2].</p> |
+| List all rules in a custom ruleset | <p>Use the [Get an account or zone ruleset][3] operation with the custom ruleset ID to obtain the list of configured rules and their IDs.</p><p>For more information, refer to [View a specific ruleset][4].</p>                                                        |
+| Update a custom rule               | <p>Use the [Update an account or zone ruleset rule][5] operation. You will need to provide the custom ruleset ID and the rule ID.</p><p>For more information, refer to [Update a rule in a ruleset][6].</p>                                                             |
+| Delete a custom rule               | <p>Use the [Delete an account or zone ruleset rule][7] operation. You will need to provide the custom ruleset ID and the rule ID.</p><p>For more information, refer to [Delete a rule in a ruleset][8].</p>                                                             |
 
 [1]: /api/resources/rulesets/methods/list/
 [2]: /ruleset-engine/rulesets-api/view/#list-existing-rulesets

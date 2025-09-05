@@ -12,11 +12,13 @@ head:
 
 import { Render, Steps, DashButton } from "~/components";
 
-:::note
-This feature requires an Enterprise plan with a paid add-on.
-:::
+:::note[Notes]
 
-Custom rulesets are configured at the account level.
+Custom rulesets at the account level require an Enterprise plan with a paid add-on.
+
+You can create and deploy custom rulesets at the account or zone level. However, the Cloudflare dashboard currently does not support working with custom rulesets at the zone level. You will need to use the Cloudflare API to configure or deploy these rulesets.
+
+:::
 
 ## Create and deploy a custom ruleset
 
