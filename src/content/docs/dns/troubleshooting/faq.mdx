@@ -241,7 +241,21 @@ example.com CNAME example.com.cdn.cloudflare.net
 ## Why am I getting a warning for hostname not covered even if I have a custom certificate?
 
 If the [custom certificate](/ssl/edge-certificates/custom-certificates/) has been in place before our new certificate management pipeline, the following warning is displayed but can be discarded.
-
 `This hostname is not covered by a certificate.`
 
 The warning will be gone when you upload a new custom certificate, or start using another type of certificate for this hostname.
+
+
+---
+
+## I've updated my CNAME to a new SaaS provider, but I still see content from the old provider
+
+When a SaaS provider is leveraging our [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/) solution, they create a [Custom Hostname](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/) on their Cloudflare zone.
+Then a [CNAME record needs to be created](/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/how-it-works/) on the client zone, to point to the SaaS provider service.
+When changing SaaS providers, if the old SaaS provider provisioned a specific custom hostname for the record (`mystore.example.com`) and the new SaaS provider provisioned a wildcard custom hostname (`*.example.com`), the old custom hostname will still take precedence.
+This is expected as per the [Certificate and hostname priority](https://developers.cloudflare.com/ssl/reference/certificate-and-hostname-priority/#hostname-priority).
+
+In this case there are 2 ways forward:
+- (*Recommended*) Ask the new SaaS provider to provision a specific custom hostname for you instead of the wildcard (`mystore.example.com` instead of `*.example.com`).
+- Ask the Super Administrator of your account to contact [Cloudflare Support](/support/contacting-cloudflare-support/) to request an update of the SaaS configuration.
+
