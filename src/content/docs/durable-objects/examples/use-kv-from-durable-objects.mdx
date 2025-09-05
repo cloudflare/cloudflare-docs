@@ -79,6 +79,7 @@ export class YourDurableObject extends DurableObject {
 		public state: DurableObjectState,
 		env: Env,
 	) {
+		super(state, env);
 		this.state = state;
 		// Ensure you pass your bindings and environmental variables into
 		// each Durable Object when it is initialized
