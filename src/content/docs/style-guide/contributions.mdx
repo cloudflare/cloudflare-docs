@@ -10,7 +10,7 @@ The [Cloudflare Docs](https://developers.cloudflare.com/) are open source and ho
 
 To contribute to our docs, you will need to [create an account on GitHub](https://docs.github.com/en/get-started/start-your-journey/creating-an-account-on-github) (if you do not have one already) and log in. Then you have three options:
 * [GitHub issue](#create-a-github-issue): Quickly submit a general suggestion.
-* [Quick edit (edit button)](#quick-edit): Quickly create a pull request. This is best if you want to edit a single page in your web browser, and do not need to preview your changes.
+* [Quick edit (edit button)](#quick-edit): Quickly create a pull request. This is best if you want to edit a single page in your web browser and do not need to preview your changes.
 * [Full development](#full-development): Create a pull request. This is best if you want to edit multiple pages and preview your changes. This can be done in your web browser (with [Codespaces](https://docs.github.com/codespaces)) or on your local machine (with [Visual Studio Code](https://code.visualstudio.com/)).
 
 In addition to using the [Cloudflare Style Guide](/style-guide/) for guidance on grammar and style, we recommend browsing our [components](/style-guide/components/) to add additional formatting such as [notes](/style-guide/documentation-content-strategy/component-attributes/notes-tips-warnings/) and [code blocks](/style-guide/components/code/).
@@ -39,21 +39,29 @@ The page's markdown opens.
 7. Select **Propose changes** > **Create pull request** > **Create pull request** again.
 
 ## Full development
-To edit and create a pull request with the full development workflow:
+To edit and create a pull request with the [full development workflow](https://docs.github.com/en/codespaces/developing-in-a-codespace/using-source-control-in-your-codespace):
 1. [Log in to GitHub](https://github.com/login) and [fork the cloudflare-docs repository](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo).
 2. If you are editing in your web browser (with [Codespaces](https://docs.github.com/en/codespaces)), move on to step 3.
 <br/>If you are editing on your local machine (with [Visual Studio Code](https://code.visualstudio.com/)):
 	* (Required) Install [Node.js](https://nodejs.org/en) (version 22 or later).
 	* (Recommended, but not required) Install [Volta](https://volta.sh/) for easier package management.
 	* (Required) [Clone the fork to your local machine.](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)
-3. [Create a branch from your fork](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-and-deleting-branches-within-your-repository) (or from your clone).
+3. Create a branch from your fork (or from your clone).
 3. Make your edits.
 :::note[Preview your edits]
-To preview your edits, you need to install `npm`. Follow the prompts to install it or run `npm install`. Then, run `npm run dev`. A link will appear in the terminal, `https://localhost:1111/`, where you can preview your edits. This link automatically updates with any new edits you make.
+To preview your edits, you need to install `npm`.
+ ```bash
+ npm install
+ ```
+Then, run `npm run dev`.
+ ```bash
+ npm run dev
+ ```
+A link will appear in the terminal, `https://localhost:1111/`, where you can preview your edits. This link automatically updates with any new edits you make.
 :::
-5. [Commit your changes](https://docs.github.com/en/codespaces/developing-in-a-codespace/using-source-control-in-your-codespace).
-6. [Push your commits](https://docs.github.com/en/get-started/using-git/pushing-commits-to-a-remote-repository) to your branch and then back to your fork.
-7. Return to GitHub and [create a pull request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request) from your committed changes. In the description form, add the product you changed in brackets and a brief description of your changes. For example “[Images] Fixed broken link."
+5. Commit your changes.
+6. Push your commits to your branch and then back to your fork.
+7. Return to GitHub and create a pull request from your committed changes. In the description form, add the product you changed in brackets and a brief description of your changes. For example “[Images] Fixed broken link."
 
 ## After you create an issue or PR
 After you create an issue or PR, a member of the Cloudflare organization will review your suggestion. Here is what to expect:
