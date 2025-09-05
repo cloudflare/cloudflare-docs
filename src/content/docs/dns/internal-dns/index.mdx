@@ -34,6 +34,13 @@ Manage DNS records that should only be accessible within your private network. I
 
 <Render file="internal-dns-beta-note" product="dns" />
 
+:::caution
+If you simply need to configure internal records that resolve to Cloudflare, you can create a CNAME record on your local DNS that points to `<hostname>.cdn.cloudflare.net`:
+`example.com CNAME example.com.cdn.cloudflare.net`
+
+See our [DNS FAQ entry](/dns/troubleshooting/faq/#how-to-configure-records-on-local-dns-servers)
+:::
+
 ## Architecture overview
 
 You can use different [connectivity options](/dns/internal-dns/connectivity/) to on-ramp your traffic to Cloudflare. Then, Cloudflare Gateway resolver acts as an interface between the DNS client and internal DNS zones.
