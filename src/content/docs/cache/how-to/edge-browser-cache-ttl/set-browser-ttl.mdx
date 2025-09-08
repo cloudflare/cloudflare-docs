@@ -19,8 +19,6 @@ Nevertheless, the value you set via Cache Rule will be ignored if `Cache-Control
 
 ## Set Browser Cache TTL
 
-The Cloudflare UI and [API](/api/resources/zones/subresources/settings/methods/edit/) both prohibit setting Browser Cache TTL to 0 for non-Enterprise domains.
-
 :::note[Note]
 
 
@@ -34,11 +32,3 @@ If you modify cached assets, the new asset is not displayed to repeat visitors b
 3. Under **Browser Cache TTL**, select the drop-down menu to select the desired cache expiration time.
 
 The **Respect Existing Headers** option tells Cloudflare to honor the settings in the `Cache-Control` headers from your origin web server.
-
-:::note[Respect Existing Headers Availability]
-
-
-For all plan types, you can set Browser Cache TTL to Respect Existing Headers at a zone level (zone setting) or you can use a Cache Rule.
-
-
-:::

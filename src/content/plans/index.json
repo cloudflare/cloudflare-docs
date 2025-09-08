@@ -176,9 +176,9 @@
 					"ent": "30 seconds"
 				},
 				"minimum_cache_rules": {
-					"title": "Minimum Browser Cache TTL (Cache Rules)",
-					"free": "2 hours",
-					"pro": "1 hour",
+					"title": "Minimum Browser Cache TTL",
+					"free": "1 second",
+					"pro": "1 second",
 					"biz": "1 second",
 					"ent": "1 second"
 				},
