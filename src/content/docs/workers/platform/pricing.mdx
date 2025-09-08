@@ -7,7 +7,7 @@ head: []
 description: Workers plans and pricing information.
 ---
 
-import { GlossaryTooltip, Render } from "~/components";
+import { GlossaryTooltip, Render, DashButton } from "~/components";
 
 By default, users have access to the Workers Free plan. The Workers Free plan includes limited usage of Workers, Pages Functions, Workers KV and Hyperdrive. Read more about the [Free plan limits](/workers/platform/limits/#worker-limits).
 
@@ -113,15 +113,18 @@ Changing the usage model only affects billable usage, and has no technical impli
 
 To change your default account-wide usage model:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers-and-pages) and select your account.
-2. In Account Home, select **Workers & Pages**.
-3. Find **Usage Model** on the right-side menu > **Change**.
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+
+2. Find **Usage Model** on the right-side menu > **Change**.
 
 Usage models may be changed at the individual Worker level:
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers/services/view/:worker/production/settings) and select your account.
-2. In Account Home, select **Workers & Pages**.
-3. In **Overview**, select your Worker > **Settings** > **Usage Model**.
+   <DashButton url="/?to=/:account/workers-and-pages" />
+
+2. In **Overview**, select your Worker > **Settings** > **Usage Model**.
 
 Existing Workers will not be impacted when changing the default usage model. You may change the usage model for individual Workers without affecting your account-wide default usage model.
 

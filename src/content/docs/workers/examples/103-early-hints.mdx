@@ -13,6 +13,7 @@ sidebar:
   order: 1001
 description: Allow a client to request static assets while waiting for the HTML response.
 ---
+import { DashButton } from "~/components";
 
 If you want to get started quickly, click on the button below.
 
@@ -26,7 +27,10 @@ import { TabItem, Tabs } from "~/components";
 
 To ensure Early Hints are enabled on your zone:
 
-1. Log in to the [Cloudflare Dashboard](https://dash.cloudflare.com) and select your account and website.
+1. In the Cloudflare dashboard, go to the **Account home** page.
+
+   <DashButton url="/?to=/:account/home" />
+
 2. Go to **Speed** > **Optimization** > **Content Optimization**.
 3. Enable the **Early Hints** toggle to on.
 

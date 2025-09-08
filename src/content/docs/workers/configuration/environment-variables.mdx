@@ -5,7 +5,7 @@ head: []
 description: You can add environment variables, which are a type of binding, to attach text strings or JSON values to your Worker.
 ---
 
-import { Render, TabItem, Tabs, WranglerConfig } from "~/components";
+import { Render, TabItem, Tabs, WranglerConfig, DashButton } from "~/components";
 
 ## Background
 
@@ -79,15 +79,16 @@ Learn about [environments in Wrangler](/workers/wrangler/environments).
 ## Add environment variables via the dashboard
 
 To add environment variables via the dashboard:
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
 
-1. Log in to [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Select **Workers & Pages**.
-3. In **Overview**, select your Worker.
-4. Select **Settings**.
-5. Under **Variables and Secrets**, select **Add**.
-6. Select a **Type**, input a **Variable name**, and input its **Value**. This variable will be made available to your Worker.
-7. (Optional) To add multiple environment variables, select **Add variable**.
-8. Select **Deploy** to implement your changes.
+   <DashButton url="/?to=/:account/workers-and-pages" />
+
+2. In **Overview**, select your Worker.
+3. Select **Settings**.
+4. Under **Variables and Secrets**, select **Add**.
+5. Select a **Type**, input a **Variable name**, and input its **Value**. This variable will be made available to your Worker.
+6. (Optional) To add multiple environment variables, select **Add variable**.
+7. Select **Deploy** to implement your changes.
 
 :::caution[Plaintext strings and secrets]
 Select the **Secret** type if your environment variable is a [secret](/workers/configuration/secrets/). Alternatively, consider [Cloudflare Secrets Store](/secrets-store/), for account-level secrets.

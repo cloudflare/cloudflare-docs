@@ -5,7 +5,7 @@ head: []
 description: Enable your Worker to be executed on a schedule.
 ---
 
-import { Render, WranglerConfig, TabItem, Tabs } from "~/components";
+import { Render, WranglerConfig, TabItem, Tabs, DashButton } from "~/components";
 
 ## Background
 
@@ -113,9 +113,11 @@ crons = ["0 * * * *"]
 
 To add Cron Triggers in the Cloudflare dashboard:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. In Account Home, select **Workers & Pages**.
-3. In **Overview**, select your Worker > **Settings** > **Triggers** > **Cron Triggers**.
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+
+2. In **Overview**, select your Worker > **Settings** > **Triggers** > **Cron Triggers**.
 
 ## Supported cron expressions
 
@@ -195,11 +197,13 @@ curl "http://localhost:8787/cdn-cgi/handler/scheduled?cron=*+*+*+*+*&time=174585
 
 To view the execution history of Cron Triggers, view **Cron Events**:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. In Account Home, go to **Workers & Pages**.
-3. In **Overview**, select your **Worker**.
-4. Select **Settings**.
-5. Under **Trigger Events**, select **View events**.
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+
+2. In **Overview**, select your **Worker**.
+3. Select **Settings**.
+4. Under **Trigger Events**, select **View events**.
 
 Cron Events stores the 100 most recent invocations of the Cron scheduled event. [Workers Logs](/workers/observability/logs/workers-logs) also records invocation logs for the Cron Trigger with a longer retention period and a filter & query interface. If you are interested in an API to access Cron Events, use Cloudflare's [GraphQL Analytics API](/analytics/graphql-api).
 
@@ -217,8 +221,11 @@ Refer to [Metrics and Analytics](/workers/observability/metrics-and-analytics/) 
 
 To delete a Cron Trigger on a deployed Worker via the dashboard:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Go to **Workers & Pages**, and select your Worker.
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+
+2. Select your Worker.
 3. Go to **Triggers** > select the three dot icon next to the Cron Trigger you want to remove > **Delete**.
 
 #### Via the [Wrangler configuration file](/workers/wrangler/configuration/)
@@ -252,12 +259,14 @@ Renewable energy can be purchased in a number of ways, including through on-site
 
 Green Compute can be configured at the account level:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. In Account Home, select **Workers & Pages**.
-3. In the **Account details** section, find **Compute Setting**.
-4. Select **Change**.
-5. Select **Green Compute**.
-6. Select **Confirm**.
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+
+2. In the **Account details** section, find **Compute Setting**.
+3. Select **Change**.
+4. Select **Green Compute**.
+5. Select **Confirm**.
 
 ## Related resources
 

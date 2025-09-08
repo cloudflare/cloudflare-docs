@@ -13,6 +13,7 @@ sidebar:
 description: Set up custom domain for Images using a Worker or serve images
   using a prefix path and Cloudflare registered domain.
 ---
+import { DashButton } from "~/components";
 
 If you want to get started quickly, click on the button below.
 
@@ -23,10 +24,11 @@ This creates a repository in your GitHub account and deploys the application to 
 import { TabItem, Tabs } from "~/components";
 
 To serve images from a custom domain:
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
-2. Select your account > select **Workers & Pages**.
-3. Select **Create application** > **Workers** > **Create Worker** and create your Worker.
+   <DashButton url="/?to=/:account/workers-and-pages" />
+
+2. Select **Create application** > **Workers** > **Create Worker** and create your Worker.
 4. In your Worker, select **Quick edit** and paste the following code.
 
 <Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
