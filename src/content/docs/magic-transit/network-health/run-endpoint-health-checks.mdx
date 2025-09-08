@@ -9,7 +9,7 @@ sidebar:
 
 ---
 
-import { CURL, Render } from '~/components';
+import { CURL, Render, DashButton } from '~/components';
 
 Magic Transit uses endpoint health checks to determine the overall health of your [inter-network connections](/magic-transit/reference/gre-ipsec-tunnels/). Probes originate from Cloudflare infrastructure, outside customer network namespaces, and target IP addresses deep within your network, beyond the tunnel-terminating border router. These "long distance" probes are purely diagnostic.
 
@@ -136,8 +136,11 @@ You can set up alerts to be notified when the state of your endpoint's health is
 ```
 
 2. Take note of the `id` value for the endpoint you want to get alerts for.
-3. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account.
-4. Go to **Notifications** > **Add**.
+3. In the Cloudflare dash, go to the **Notifications** page.
+
+<DashButton url="/?to=/:account/notifications" />
+
+4. Select **Add**.
 5. From the drop down menu, select *Magic Transit*.
 6. Select **Magic Endpoint Health Check Alert**.
 7. Provide a name for your new notification and optionally provide a description.

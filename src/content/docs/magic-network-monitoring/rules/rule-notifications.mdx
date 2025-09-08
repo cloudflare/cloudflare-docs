@@ -4,7 +4,7 @@ pcx_content_type: how-to
 sidebar:
   order: 4
 ---
-import { Render } from "~/components"
+import { Render, DashButton } from "~/components"
 
 After configuring one or multiple rule types in Magic Network Monitoring, customers can also choose to receive notifications via email, webhook, or PagerDuty when a rule is triggered.
 
@@ -35,8 +35,11 @@ You can read [Cloudflare's Notifications documentation](/notifications/) for mor
 
 To configure static threshold notifications:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
-2. Go to **Notifications** > **Add**.
+1. In the Cloudflare dash, go to the **Notifications** page.
+
+<DashButton url="/?to=/:account/notifications" />
+
+2. Select **Add**.
 3. Select **Magic Transit** from the product dropdown menu.
 4. Find the **Magic Network Monitoring: Volumetric Attack** alert, and select **Select**.
 5. Fill in the notification configuration details.
@@ -46,8 +49,11 @@ To configure static threshold notifications:
 
 To configure dynamic threshold notifications:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
-2. Go to **Notifications** > **Add**.
+1. In the Cloudflare dash, go to the **Notifications** page.
+
+<DashButton url="/?to=/:account/notifications" />
+
+2. Select **Add**.
 3. Select **Magic Transit** from the product dropdown menu.
 4. Find the **Magic Network Monitoring: Volumetric Attack** alert, and select **Select**.
 5. Fill in the notification configuration details.
@@ -57,8 +63,11 @@ To configure dynamic threshold notifications:
 
 To configure sFlow DDoS attack notifications:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
-2. Go to **Notifications** > **Add**.
+1. In the Cloudflare dash, go to the **Notifications** page.
+
+<DashButton url="/?to=/:account/notifications" />
+
+2. Select **Add**.
 3. Select **Magic Transit** from the product dropdown menu.
 4. Find the **Magic Network Monitoring: DDoS Attack** alert, and select **Select**.
 5. Fill in the notification configuration details.

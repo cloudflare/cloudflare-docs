@@ -5,6 +5,8 @@ sidebar:
   order: 8
 ---
 
+import { DashButton } from "~/components";
+
 Cloudflare customers can inspect metrics for a specific Magic WAN Connector in the Cloudflare dashboard. The Magic WAN Connector device metrics measured by Cloudflare include:
 
 - CPU load
@@ -14,10 +16,12 @@ Cloudflare customers can inspect metrics for a specific Magic WAN Connector in t
 
 To check for Connector metrics:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to **Magic WAN** > **Configuration** > **Connectors**.
-3. Select the Connector you want to check metrics for.
-4. In the side panel that opens, scroll down to **Usage information**.
+1. In the Cloudflare dash, go to the **Configuration* page.
+
+<DashButton url="/?to=/:account/magic-wan/configuration" />
+
+2. In the **Connectors** tab, select the Connector you want to check metrics for.
+3. In the side panel that opens, scroll down to **Usage information**.
 
 ### Query metrics with GraphQL
 
