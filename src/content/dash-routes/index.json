@@ -8,10 +8,6 @@
 		"deeplink": "/?to=/:account/discover"
 	},
 	{
-		"name": "Domain registration",
-		"deeplink": "/?to=/:account/registrar/domains"
-	},
-	{
 		"name": "Manage domains",
 		"deeplink": "/?to=/:account/registrar/domains",
 		"parent": ["Domain registration"]
@@ -46,10 +42,6 @@
 		"parent": ["Log Explorer"]
 	},
 	{
-		"name": "Analytics & Logs",
-		"deeplink": "/?to=/:account/analytics"
-	},
-	{
 		"name": "Account analytics",
 		"deeplink": "/?to=/:account/analytics",
 		"parent": ["Analytics & Logs"]
@@ -78,10 +70,6 @@
 		"name": "Magic monitoring",
 		"deeplink": "/?to=/:account/network-monitoring",
 		"parent": ["Analytics & Logs"]
-	},
-	{
-		"name": "Security Center",
-		"deeplink": "/?to=/:account/security-center"
 	},
 	{
 		"name": "Security insights",
@@ -175,17 +163,9 @@
 		"deeplink": "/?to=/:account/network-security/magic_firewall"
 	},
 	{
-		"name": "L3/4 DDoS protection",
-		"deeplink": "/?to=/:account/network-security/ddos"
-	},
-	{
 		"name": "DDoS Managed Rules",
 		"deeplink": "/?to=/:account/network-security/ddos",
 		"parent": ["L3/4 DDoS protection"]
-	},
-	{
-		"name": "IP addresses",
-		"deeplink": "/?to=/:account/ip-addresses/proxy-ips"
 	},
 	{
 		"name": "Address maps",
@@ -194,11 +174,7 @@
 	},
 	{
 		"name": "Zero Trust",
-		"deeplink": "one.dash.cloudflare.com"
-	},
-	{
-		"name": "Magic WAN",
-		"deeplink": "/?to=/:account/magic-wan/overview"
+		"deeplink": "https://one.dash.cloudflare.com"
 	},
 	{
 		"name": "Overview",
@@ -226,10 +202,6 @@
 		"parent": ["Magic WAN"]
 	},
 	{
-		"name": "Compute (Workers)",
-		"deeplink": "/?to=/:account/workers-and-pages"
-	},
-	{
 		"name": "Workers & Pages",
 		"deeplink": "/?to=/:account/workers-and-pages",
 		"parent": ["Compute (Workers)"]
@@ -245,7 +217,7 @@
 		"parent": ["Compute (Workers)"]
 	},
 	{
-		"name": "Workers observability",
+		"name": "Observability",
 		"deeplink": "/?to=/:account/workers-and-pages/observability",
 		"parent": ["Compute (Workers)"]
 	},
@@ -273,11 +245,7 @@
 		"deeplink": "/?to=/:account/workers-for-platforms"
 	},
 	{
-		"name": "Storage & Databases",
-		"deeplink": "/?to=/:account/workers/kv/namespaces"
-	},
-	{
-		"name": "KV storage",
+		"name": "Workers KV",
 		"deeplink": "/?to=/:account/workers/kv/namespaces",
 		"parent": ["Storage & Databases"]
 	},
@@ -302,13 +270,9 @@
 		"parent": ["Storage & Databases"]
 	},
 	{
-		"name": "Analytics engine",
+		"name": "Analytics Engine",
 		"deeplink": "/?to=/:account/workers/analytics-engine",
 		"parent": ["Storage & Databases"]
-	},
-	{
-		"name": "R2 object storage",
-		"deeplink": "/?to=/:account/r2/overview"
 	},
 	{
 		"name": "Overview",
@@ -319,10 +283,6 @@
 		"name": "Data migration",
 		"deeplink": "/?to=/:account/r2/slurper",
 		"parent": ["R2 object storage"]
-	},
-	{
-		"name": "AI",
-		"deeplink": "/?to=/:account/ai/workers-ai"
 	},
 	{
 		"name": "Workers AI",
@@ -369,10 +329,6 @@
 		"parent": ["Stream"]
 	},
 	{
-		"name": "Images",
-		"deeplink": "/?to=/:account/images"
-	},
-	{
 		"name": "Overview",
 		"deeplink": "/?to=/:account/images",
 		"parent": ["Images"]
@@ -400,6 +356,11 @@
 	{
 		"name": "Realtime",
 		"deeplink": "/?to=/:account/realtime"
+	},
+	{
+		"name": "Agents",
+		"deeplink": "/?to=/:account/realtime/agents",
+		"parent": ["Realtime"]
 	},
 	{
 		"name": "RealtimeKit",
@@ -454,10 +415,6 @@
 		"name": "Google Tag Gateway",
 		"deeplink": "/?to=/:account/tag-management/google-tag-gateway",
 		"parent": ["Tag management"]
-	},
-	{
-		"name": "Manage Account",
-		"deeplink": "/?to=/:account/members"
 	},
 	{
 		"name": "Members",
