@@ -6,12 +6,16 @@ sidebar:
   label: Create in the dashboard
 ---
 
-import { Details, Render, DashButton } from "~/components";
+import { Details, Render, DashButton, Steps } from "~/components";
 
 To create Bulk Redirects in the Cloudflare dashboard you must:
 
+<Steps>
+
 1. Create a Bulk Redirect List with one or more URL redirects.
 2. Create a Bulk Redirect Rule to enable the URL redirects in the list.
+
+</Steps>
 
 You can create Bulk Redirect Lists and Bulk Redirect Rules in the Cloudflare dashboard:
 
@@ -29,6 +33,8 @@ However, the lists and rules only exist at the account level and every zone in t
 ## 1. Create a Bulk Redirect List
 
 {/* prettier-ignore-start */}
+
+<Steps>
 
 1. In the Cloudflare dashboard, go to the **Bulk redirects** page.
 
@@ -70,6 +76,8 @@ However, the lists and rules only exist at the account level and every zone in t
 
 6. Select **Continue to Redirect Rules** to go to the rule creation page, and follow the instructions in the next section. You must create a Bulk Redirect Rule to enable the URL redirects you defined.
 
+</Steps>
+
 {/* prettier-ignore-end */}
 
 :::note[Notes]
@@ -79,6 +87,8 @@ However, the lists and rules only exist at the account level and every zone in t
 :::
 
 ## 2. Create a Bulk Redirect Rule
+
+<Steps>
 
 1. (Optional) If you are not using the Bulk Redirect List creation wizard according to the instructions in the previous section:
    1. In the Cloudflare dashboard, go to the **Bulk redirects** page.
@@ -96,3 +106,5 @@ However, the lists and rules only exist at the account level and every zone in t
 5. To save and deploy the Bulk Redirect Rule, select **Save and Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
 
    <Render file="rules-creation-dash-dns-popup" product="rules" />
+
+</Steps>

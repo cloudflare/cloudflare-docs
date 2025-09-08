@@ -11,16 +11,22 @@ description: Create a redirect rule to redirect all requests to a different
   service (port 80).
 ---
 
+import { Steps } from "~/components";
+
 In this example the original domain was replaced with a different domain. All functionality was maintained, except for the HTTP service (port 80) which was discontinued.
+
+<Steps>
 
 1. Create a Bulk Redirect List with the following URL redirect:
 
-- **Source URL**: `example.com/`
-- **Target URL**: `https://example.net/`
-- **Subpath matching**: Enabled
-- **Preserve query string**: Enabled
+   - **Source URL**: `example.com/`
+   - **Target URL**: `https://example.net/`
+   - **Subpath matching**: Enabled
+   - **Preserve query string**: Enabled
 
 2. Create a Bulk Redirect Rule that enables this list.
+
+</Steps>
 
 This configuration will perform the following redirects:
 

@@ -6,7 +6,9 @@ sidebar:
   label: Create a rule in the dashboard
 ---
 
-import { Render } from "~/components";
+import { Render, Steps } from "~/components";
+
+<Steps>
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
 2. Go to **Rules** > **Overview**.
@@ -19,3 +21,5 @@ import { Render } from "~/components";
 9. To save and deploy your rule, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
 
    <Render file="rules-creation-dash-dns-popup" product="rules" />
+
+</Steps>

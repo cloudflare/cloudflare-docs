@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import { Details, DashButton } from "~/components";
+import { Details, DashButton, Steps } from "~/components";
 
 ## Before you start
 
@@ -61,6 +61,8 @@ The following HTML code is an example error page for 5XX errors without styling:
 
 To update an account-level custom error page:
 
+<Steps>
+
 1. In the Cloudflare dashboard, go to the **Settings** page.
 
    <DashButton url="/?to=/:account/configurations" />
@@ -71,9 +73,13 @@ To update an account-level custom error page:
 5. To use Cloudflare's default page, select **Cloudflare default page.** To provide a custom error page, select **Custom page** and enter the URL of the custom error page you created.
 6. Select **Confirm**.
 
+</Steps>
+
 ### Zone-level custom error page
 
 To edit a zone-level custom error page:
+
+<Steps>
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
 2. Go to **Error Pages** and identify your desired custom error page type.
@@ -81,6 +87,8 @@ To edit a zone-level custom error page:
 4. To edit the error page, select the three dots > **Edit** next to the page type you previously identified.
 5. To use Cloudflare's default page, select **Cloudflare default page.** To provide a custom error page, select **Custom page** and enter the URL of the custom error page you created.
 6. Select **Confirm**.
+
+</Steps>
 
 ### Fetch custom error page again
 

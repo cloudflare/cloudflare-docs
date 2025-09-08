@@ -9,7 +9,11 @@ description: Create a redirect rule to redirect all URLs for a domain to point
   to the root of a new domain, including any subdomains of the old domain.
 ---
 
+import { Steps } from "~/components";
+
 In this example, an old website was discontinued and replaced by a new one in a different domain. The functionality is different, and all URLs should now point to the root of the new domain. The same applies to any subdomains of the old domain.
+
+<Steps>
 
 1. Create a Bulk Redirect List with the following URL redirect:
 
@@ -20,6 +24,8 @@ In this example, an old website was discontinued and replaced by a new one in a 
    - **Preserve path suffix**: Disabled
 
 2. Create a Bulk Redirect Rule that enables this list.
+
+</Steps>
 
 This configuration will perform the following redirects:
 

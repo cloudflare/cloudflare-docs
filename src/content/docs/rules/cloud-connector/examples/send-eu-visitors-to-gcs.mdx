@@ -7,7 +7,11 @@ products:
   - Cloud Connector
 ---
 
+import { Steps } from "~/components";
+
 To route requests from visitors in the European Union to a Google Cloud Storage bucket:
+
+<Steps>
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
 2. Go to **Rules** > **Cloud Connector**.
@@ -22,5 +26,7 @@ To route requests from visitors in the European Union to a Google Cloud Storage 
    `(ip.src.is_in_european_union)`<br />
    This expression targets traffic from European Union users.
 9. Select **Deploy** to activate the rule.
+
+</Steps>
 
 This configuration will route traffic from EU visitors to your Google Cloud Storage bucket. Make sure to replace `<YOUR_HOSTNAME>` with your actual hostname and adjust the example paths according to your setup.

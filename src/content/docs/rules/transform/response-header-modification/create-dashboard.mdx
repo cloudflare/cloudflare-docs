@@ -6,11 +6,13 @@ sidebar:
   label: Create a rule in the dashboard
 ---
 
-import { Render } from "~/components";
+import { Render, Steps } from "~/components";
 
 Refer to the [Rules examples gallery](/rules/transform/examples/?operation=Response+modification) for examples of rule definitions.
 
 To create a rule:
+
+<Steps>
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
 
@@ -48,3 +50,5 @@ To create a rule:
 11. To save and deploy your rule, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
 
     <Render file="rules-creation-dash-dns-popup" product="rules" />
+
+</Steps>

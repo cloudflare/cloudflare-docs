@@ -7,7 +7,11 @@ products:
   - Cloud Connector
 ---
 
+import { Steps } from "~/components";
+
 To route requests to `/images` on your domain to an AWS S3 bucket:
+
+<Steps>
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
 2. Go to **Rules** > **Cloud Connector**.
@@ -25,5 +29,7 @@ To route requests to `/images` on your domain to an AWS S3 bucket:
    `http.request.full_uri wildcard "http*://<YOUR_HOSTNAME>/images/*"`<br />
    Replace `<YOUR_HOSTNAME>` with desired hostname.
 9. Select **Deploy** to activate the rule.
+
+</Steps>
 
 This setup will route all traffic matching `http*://<YOUR_HOSTNAME>/images/*` (HTTPS and HTTP requests) to your S3 bucket. Make sure to replace `<YOUR_HOSTNAME>` with your actual hostname and adjust the example paths according to your setup.
