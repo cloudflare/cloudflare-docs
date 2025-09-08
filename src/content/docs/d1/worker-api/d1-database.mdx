@@ -274,7 +274,8 @@ const session = env.DB.withSession("<parameter>");
 
 #### Guidance
 
-You can return the last encountered `bookmark` for a given Session using [`session.getBookmark()`](/d1/worker-api/d1-database/#getbookmark).
+- To use read replication, you have to use the D1 Sessions API, otherwise all queries will continue to be executed only by the primary database.
+- You can return the last encountered `bookmark` for a given Session using [`session.getBookmark()`](/d1/worker-api/d1-database/#getbookmark).
 
 ## `D1DatabaseSession` methods
 
