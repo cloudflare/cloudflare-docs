@@ -5,7 +5,7 @@ head: []
 description: Review Workers errors and exceptions.
 ---
 
-import { TabItem, Tabs } from "~/components";
+import { TabItem, Tabs, DashButton } from "~/components";
 
 Review Workers errors and exceptions.
 
@@ -230,10 +230,11 @@ Runtime errors will occur within the runtime, do not throw up an error page, and
 ## Identify errors: Workers Metrics
 
 To review whether your application is experiencing any downtime or returning any errors:
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. In **Account Home**, select **Workers & Pages**.
-3. In **Overview**, select your Worker and review your Worker's metrics.
+   <DashButton url="/?to=/:account/workers-and-pages" />
+
+2. In **Overview**, select your Worker and review your Worker's metrics.
 
 ### Worker Errors
 

@@ -7,7 +7,7 @@ head: []
 description: Cloudflare Workers plan and platform limits.
 ---
 
-import { Render, WranglerConfig } from "~/components";
+import { Render, WranglerConfig, DashButton } from "~/components";
 
 ## Account plan limits
 
@@ -142,11 +142,13 @@ Cloudflare’s abuse protection methods do not affect well-intentioned traffic. 
 
 You can also confirm if you have been rate limited by anti-abuse Worker Rate Limiting by logging into the Cloudflare dashboard, selecting your account and zone, and going to **Security** > **Events**. Find the event and expand it. If the **Rule ID** is `worker`, this confirms that it is the anti-abuse Worker Rate Limiting.
 
-The burst rate and daily request limits apply at the account level, meaning that requests on your `*.workers.dev` subdomain count toward the same limit as your zones. Upgrade to a [Workers Paid plan](https://dash.cloudflare.com/?account=workers/plans) to automatically lift these limits.
+The burst rate and daily request limits apply at the account level, meaning that requests on your `*.workers.dev` subdomain count toward the same limit as your zones.
 
 :::caution
 
-If you are currently being rate limited, upgrade to a [Workers Paid plan](https://dash.cloudflare.com/?account=workers/plans) to lift burst rate and daily request limits.
+If you are currently being rate limited, in the Cloudflare dashboard go to the **Workers plans** page to update to a Workers Paid plan to lift burst rate and daily request limits.
+
+<DashButton url="/?to=/:account/workers/plans" />
 
 :::
 
@@ -155,9 +157,11 @@ If you are currently being rate limited, upgrade to a [Workers Paid plan](https:
 Accounts using the Workers Free plan are subject to a burst rate limit of 1,000 requests per minute. Users visiting a rate limited site will receive a Cloudflare `1015` error page. However if you are calling your Worker programmatically, you can detect the rate limit page and handle it yourself by looking for HTTP status code `429`.
 
 Workers being rate-limited by Anti-Abuse Protection are also visible from the Cloudflare dashboard:
+1. In the Cloudflare dashboard, go to the **Security events** page.
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and your website.
-2. Select **Security** > **Events** > scroll to **Sampled logs**.
+   <DashButton url="/?to=/:account/security-center/events" />
+
+2. Scroll to **Sampled logs**.
 3. Review the log for a Web Application Firewall block event with a `ruleID` of `worker`.
 
 ### Daily request
@@ -181,9 +185,11 @@ Each [isolate](/workers/reference/how-workers-works/#isolates) of your Worker's 
 When an isolate running your Worker exceeds 128 MB of memory, the Workers runtime handles this gracefully instead of failing immediately. It allows in-flight requests to complete while simultaneously creating a new isolate for your Worker for new requests. While this approach typically allows in-flight requests to complete, during periods of extremely high load, some incoming requests may be cancelled to maintain system stability.
 
 To view out-of-memory errors (OOM), as well as CPU limit overages:
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Select **Workers & Pages** and in **Overview**, select the Worker you would like to investigate.
+   <DashButton url="/?to=/:account/workers-and-pages" />
+
+2. Select the Worker you would like to investigate.
 3. Under **Metrics**, select **Errors** > **Invocation Statuses** and examine **Exceeded Memory**.
 
 To avoid exceeding memory limits, where possible you should avoid buffering large objects or responses in memory, and instead use streaming APIs such as [`TransformStream`](/workers/runtime-apis/streams/transformstream/) or [`node:stream`](/workers/runtime-apis/nodejs/streams/) to stream responses. Manipulating streams allows you to avoid buffering entire responses in memory.

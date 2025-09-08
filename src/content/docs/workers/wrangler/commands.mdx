@@ -17,6 +17,7 @@ import {
 	WranglerCommand,
 	WranglerNamespace,
 	PackageManagers,
+	DashButton,
 } from "~/components";
 
 Wrangler offers a number of commands to manage your Cloudflare Workers.
@@ -1260,8 +1261,10 @@ wrangler logout
 
 If you are using `CLOUDFLARE_API_TOKEN` instead of OAuth, and you can logout by deleting your API token in the Cloudflare dashboard:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
-2. Go to **My Profile** > **API Tokens**.
+1. In the Cloudflare dashboard, go to the **Account API tokens** page.
+
+   <DashButton url="/?to=/:account/api-tokens" />
+
 3. Select the three-dot menu on your Wrangler token.
 4. Select **Delete**.
 

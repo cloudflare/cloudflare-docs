@@ -4,6 +4,7 @@ title: Rollbacks
 head: []
 description: Revert to an older version of your Worker.
 ---
+import { DashButton } from "~/components";
 
 You can roll back to a previously deployed [version](/workers/configuration/versions-and-deployments/#versions) of your Worker using [Wrangler](/workers/wrangler/commands/#rollback) or the Cloudflare dashboard. Rolling back to a previous version of your Worker will immediately create a new [deployment](/workers/configuration/versions-and-deployments/#deployments) with the version specified and become the active deployment across all your deployed routes and domains.
 
@@ -14,9 +15,11 @@ To roll back to a specified version of your Worker via Wrangler, use the [`wrang
 ## Via the Cloudflare Dashboard
 
 To roll back to a specified version of your Worker via the Cloudflare dashboard:
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers) and select your account.
-2. Go to **Workers & Pages** > select your Worker > **Deployments**.
+   <DashButton url="/?to=/:account/workers-and-pages" />
+
+2. Select your Worker > **Deployments**.
 3. Select the three dot icon on the right of the version you would like to roll back to and select **Rollback**.
 
 :::caution
