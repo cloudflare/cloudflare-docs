@@ -65,6 +65,22 @@ export default function ProductSelect({ products, groups }: Props) {
 			select.value = option.value;
 			select.dispatchEvent(event);
 		}
+
+		const search = document.querySelector<HTMLAnchorElement>(
+			"#changelog-search-button",
+		);
+
+		if (search) {
+			if (
+				options
+					.find((opt) => opt.label === "Products")
+					?.options?.includes(option)
+			) {
+				search.href = `/search/?contentType=Changelog+entry&product=${encodeURIComponent(option.label)}`;
+			} else {
+				search.href = `/search/?contentType=Changelog+entry`;
+			}
+		}
 	};
 
 	return (
