@@ -11,27 +11,27 @@ export default () => {
 						break;
 					}
 					case "javascript": {
-						context.codeBlock.props.title ??= "index.js";
+						context.codeBlock.props.title ??= "JavaScript";
 						break;
 					}
 					case "js": {
-						context.codeBlock.props.title ??= "index.js";
+						context.codeBlock.props.title ??= "JavaScript";
 						break;
 					}
 					case "py": {
-						context.codeBlock.props.title ??= "index.py";
+						context.codeBlock.props.title ??= "Python";
 						break;
 					}
 					case "python": {
-						context.codeBlock.props.title ??= "index.py";
+						context.codeBlock.props.title ??= "Python";
 						break;
 					}
 					case "typescript": {
-						context.codeBlock.props.title ??= "index.ts";
+						context.codeBlock.props.title ??= "TypeScript";
 						break;
 					}
 					case "ts": {
-						context.codeBlock.props.title ??= "index.ts";
+						context.codeBlock.props.title ??= "TypeScript";
 						break;
 					}
 					default: {
