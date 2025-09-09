@@ -7,3 +7,7 @@ updates:
       prefix: "[Docs Site] "
     schedule:
       interval: "daily"
+    assignees:
+      - "kodster28"
+    reviewers:
+      - "kodster28"
