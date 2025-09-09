@@ -227,17 +227,6 @@ This is important because, if a domain is in a _Moved_ state for a [long enough 
 
 ---
 
-## How to configure records on local DNS servers?
-
-You can create CNAME records pointing to `cdn.cloudflare.net` in your local DNS to locally resolve hostnames through Cloudflare.
-For example, if you need to resolve `example.com` through Cloudflare in your local DNS server, you need to create a CNAME record such as:
-
-```txt
-example.com CNAME example.com.cdn.cloudflare.net
-```
-
----
-
 ## Why am I getting a warning for hostname not covered even if I have a custom certificate?
 
 If the [custom certificate](/ssl/edge-certificates/custom-certificates/) has been in place before our new certificate management pipeline, the following warning is displayed but can be discarded.
