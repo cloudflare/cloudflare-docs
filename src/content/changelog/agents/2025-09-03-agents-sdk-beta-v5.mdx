@@ -1,17 +1,19 @@
 ---
-title: Agents SDK v0.1.0-beta and workers-ai-provider v2.0.0 add AI SDK v5 support
+title: Agents SDK v0.1.0 and workers-ai-provider v2.0.0 with AI SDK v5 support
 description: The latest release updates the Agents SDK with full AI SDK v5 compatibility, updated workers-ai-provider v2.0.0 with enhanced streaming and tool support, seamless legacy message migration, tool confirmation detection, and React hooks for building production-ready AI chat interfaces.
 products:
   - agents
   - workers
-date: 2025-09-04
+date: 2025-09-09
 ---
 
-We've shipped a major release for the [Agents SDK](https://github.com/cloudflare/agents) and [workers-ai-provider](https://github.com/cloudflare/ai), bringing full compatibility with [AI SDK v5](https://ai-sdk.dev/docs/introduction) and introducing automatic message migration that handles all legacy formats transparently.
+We've shipped a new release for the [Agents SDK](https://github.com/cloudflare/agents) bringing full compatibility with [AI SDK v5](https://ai-sdk.dev/docs/introduction) and introducing automatic message migration that handles all legacy formats transparently.
 
-This update includes workers-ai-provider v2.0.0 with improved streaming and tool support, tool confirmation detection, enhanced React hooks with automatic tool resolution, improved error handling for streaming responses, and seamless migration utilities that work behind the scenes.
+This release includes improved streaming and tool support, tool confirmation detection (for "human in the loop" systems), enhanced React hooks with automatic tool resolution, improved error handling for streaming responses, and seamless migration utilities that work behind the scenes.
 
 This makes it ideal for building production AI chat interfaces with Cloudflare Workers AI models, agent workflows, human-in-the-loop systems, or any application requiring reliable message handling across SDK versions — all while maintaining backward compatibility.
+
+Additionally, we've updated workers-ai-provider v2.0.0, the official provider for Cloudflare Workers AI models, to be compatible with AI SDK v5.
 
 #### useAgentChat(options)
 
@@ -195,13 +197,6 @@ import { useAgentChat } from "agents/ai-react";
 const model = createWorkersAI({
 	binding: env.AI,
 })("@cf/meta/llama-3.2-3b-instruct");
-
-// Use with agent chat
-const { messages, sendMessage } = useAgentChat({
-	agent,
-	experimental_automaticToolResolution: true,
-	tools,
-});
 ```
 
 #### Enhanced File and Image Support
@@ -261,6 +256,7 @@ import { useChat } from "@ai-sdk/react";
 
 - [Migration Guide](https://github.com/cloudflare/agents/blob/main/docs/migration-to-ai-sdk-v5.md) - Comprehensive migration documentation
 - [AI SDK v5 Documentation](https://ai-sdk.dev/docs/migration-guides/migration-guide-5-0) - Official AI SDK migration guide
+- Example PR showing the migration from AI SDK v4 to v5: [# TODO with agents starter PR]()
 - [GitHub Issues](https://github.com/cloudflare/agents/issues) - Report bugs or request features
 
 ## Feedback Welcome
