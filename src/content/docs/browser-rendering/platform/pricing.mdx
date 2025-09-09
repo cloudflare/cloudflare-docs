@@ -4,7 +4,7 @@ title: Pricing
 sidebar:
   order: 31
 ---
-import { Details } from "~/components"
+import { DashButton } from "~/components"
 
 There are two ways to use Browser Rendering. Depending on the method you use, here is how billing works:
 - [**REST API**](/browser-rendering/rest-api/): Charged for **Duration** only ($/browser hour)
@@ -14,14 +14,6 @@ There are two ways to use Browser Rendering. Depending on the method you use, he
 |----------------|---------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------|----------|
 | **Workers Free** | 10 minutes per day | 3 concurrent browsers | N/A |
 | **Workers Paid** | 10 hours per month | 10 concurrent browsers (averaged monthly) | **1. REST API**: $0.09 per additional browser hour <br />**2. Workers Bindings**: $0.09 per additional browser hour <br /> $2.00 per additional concurrent browser |
-
-<Details header="Where can I monitor my usage?">
-You can monitor your Browser Rendering usage in the [Cloudflare dashboard](https://dash.cloudflare.com). Go to **Compute (Workers)** > **Browser Rendering**.
-</Details>
-
-<Details header="How is the number of concurrent browsers calculated?">
-Cloudflare calculates concurrent browsers as the **monthly average of your daily peak usage**. In other words, we record **the peak number of concurrent browsers each day** and then average those values over the month. This approach reflects your typical traffic and ensures you are not disproportionately charged for brief spikes in browser concurrency.
-</Details>
 
 ## Examples of Workers Paid pricing
 <br/>
@@ -52,7 +44,14 @@ For **browser duration** and **concurrent browsers**:
 
 ### How do I estimate my Browser Rendering costs?
 
-You can monitor your Browser Rendering usage in the [Cloudflare dashboard](https://dash.cloudflare.com). Go to **Compute (Workers)** > **Browser Rendering**. Then, you can use [the pricing page](/browser-rendering/platform/pricing/) to estimate your costs.
+To monitor your Browser Rendering usage in the Cloudflare dashboard, go to the **Browser Rendering** page.
+
+   <DashButton url="/?to=/:account/workers/browser-rendering" />
+
+Then, you can use [the pricing page](/browser-rendering/platform/pricing/) to estimate your costs.
 
 ###  Do failed API calls, such as those that time out, add to billable browser hours?
 No. If a request to the Browser Rendering REST API fails with a `waitForTimeout` error, the browser session is not charged.
+
+### How is the number of concurrent browsers calculated?
+Cloudflare calculates concurrent browsers as the **monthly average of your daily peak usage**. In other words, we record **the peak number of concurrent browsers each day** and then average those values over the month. This approach reflects your typical traffic and ensures you are not disproportionately charged for brief spikes in browser concurrency.

@@ -4,6 +4,7 @@ title: REST API
 sidebar:
   order: 2
 ---
+import { DashButton } from "~/components";
 
 The REST API is a RESTful interface that provides endpoints for common browser actions such as capturing screenshots, extracting HTML content, generating PDFs, and more.
 The following are the available options:
@@ -22,8 +23,9 @@ Before you begin, make sure you [create a custom API Token](/fundamentals/api/ge
 
 :::note[Note]
 
-You can monitor Browser Rendering usage in two ways: 
-- [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers/browser-rendering): View aggregate metrics, including total REST API requests and total browser hours used.  
-- `X-Browser-Ms-Used` header: Returned in every REST API response, reporting browser time used for that request (in milliseconds). 
+You can monitor Browser Rendering usage in two ways:
+- In the Cloudflare dashboard, go to the **Browser Rendering** page to view aggregate metrics, including total REST API requests and total browser hours used.
+   <DashButton url="/?to=/:account/workers/browser-rendering" />
+- `X-Browser-Ms-Used` header: Returned in every REST API response, reporting browser time used for that request (in milliseconds).
 
 :::
