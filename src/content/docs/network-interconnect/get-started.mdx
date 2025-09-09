@@ -111,14 +111,14 @@ Once your physical cross-connect or virtual circuit is provisioned, the next pha
 After you confirm connectivity with successful ping tests, the next step is to establish the BGP session.
 
 1. Cloudflare will configure its side of the BGP session, and notify you once ready.
-2. You will configure your side of the BGP session and accept the routes.
+2. You will configure your side of the BGP session and accept the routes you need.
 3. Once the session is established, traffic will begin to flow over the CNI. Contact your solutions engineer to verify that traffic is routing as expected.
 
 #### BGP configuration options and use cases
 
 Depending on the Cloudflare services you use, your BGP configuration may vary:
 
-- **Standard Peering**: This is the most common scenario, where BGP is used to exchange routes between your network and Cloudflare. Cloudflare learns your network routes, which is useful for services like CDN-only deployments or on-demand Magic Transit. It is important to note that prefixes Cloudflare learns via CNI remain local to that specific data center and are not propagated to other Cloudflare locations.
+- **Standard Peering**:  This is the most common scenario, where BGP is used to exchange routes between your network and Cloudflare. Cloudflare learns your network routes, which is useful for services like CDN-only deployments or on-demand Magic Transit. It is important to note that this is not peering with the Magic Transit routing table, which is global. Instead, this is peering with the specific data center's Internet edge network. This means that prefixes Cloudflare learns via CNI remain local to that specific data center and are not propagated to other Cloudflare locations.
 - **Magic Transit with Controlled Advertisement**: Magic Transit customers can use a second BGP session to control which prefixes are advertised to the Internet. In this setup, Cloudflare advertises no prefixes to you, and you advertise only the specific prefixes you want Cloudflare to announce on your behalf.
 
 #### Important note on accepting routes from Cloudflare
