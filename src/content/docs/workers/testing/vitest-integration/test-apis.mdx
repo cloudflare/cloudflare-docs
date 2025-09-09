@@ -263,9 +263,12 @@ The Workers Vitest integration provides runtime helpers for writing tests in the
 
 
 
-:::caution[Workflows currently require `isolatedStorage` to be disabled]
+:::caution[Workflows with `isolatedStorage`]
 
-To test projects that use Workflows `isolatedStorage` **must** be set to `false` in the project's `vitest.config.ts` file.
+To ensure proper test isolation in Workflows with isolated storage, introspectors should be cleaned up at the end of each test.
+This is accomplished by either:
+* **Automatic**: Using an `await using` statement on the introspector.
+* **Manual**: Explicitly calling the introspector `cleanUp()` method.
 
 :::
 
@@ -278,7 +281,7 @@ To test projects that use Workflows `isolatedStorage` **must** be set to `false`
 
         it("should disable all sleeps, mock an event and complete", async () => {
           // 1. CONFIGURATION
-          const instance = await introspectWorkflowInstance(env.MY_WORKFLOW, "123456");
+          await using instance = await introspectWorkflowInstance(env.MY_WORKFLOW, "123456");
           await instance.modify(async (m) => {
             await m.disableSleeps();
             await m.mockEvent({
@@ -293,15 +296,15 @@ To test projects that use Workflows `isolatedStorage` **must** be set to `false`
           // 3. ASSERTION
           await instance.waitForStatus("complete");
 
-          // 4. CLEANUP
-          await instance.cleanUp();
+          // 4. CLEANUP: automatic disposal
         });
         ```
     * The returned `WorkflowInstanceIntrospector` object has the following methods:
-        * `modify(fn: (m: WorkflowInstanceModifier) => Promise<void>)`: Applies modifications to the Workflow instance's behavior.
-        * `waitForStepResult(step: { name: string; index?: number })`: Waits for a specific step to complete and return a result. If multiple steps share the same name, use the optional `index` property (1-based, defaults to `1`) to target a specific occurrence.
-        * `waitForStatus(status: InstanceStatus["status"])`: Waits for the Workflow instance to reach a specific [status](/workflows/build/workers-api/#instancestatus) (e.g., 'running', 'complete').
-        * `cleanUp()`: Cleans up the Workflow instance's state, which is crucial for test isolation. If this function isn't called, the instance's state will persist across subsequent tests. For example, an instance that becomes completed in one test will already be completed at the start of the next.
+        * `modify(fn: (m: WorkflowInstanceModifier) => Promise<void>): Promise<void>`: Applies modifications to the Workflow instance's behavior.
+        * `waitForStepResult(step: { name: string; index?: number }): Promise<unknown>`: Waits for a specific step to complete and returns a result. If multiple steps share the same name, use the optional `index` property (1-based, defaults to `1`) to target a specific occurrence.
+        * `waitForStatus(status: InstanceStatus["status"]): Promise<void>`: Waits for the Workflow instance to reach a specific [status](/workflows/build/workers-api/#instancestatus) (e.g., 'running', 'complete').
+        * `cleanUp(): Promise<void>`: Cleans up the Workflow instance's state, which is crucial for test isolation. If this function isn't called and `await using` is not used, the instance's state will persist across subsequent tests. For example, an instance that becomes completed in one test will already be completed at the start of the next.
+        * `[Symbol.asyncDispose](): Provides automatic cleanup. It's invoked by the `await using` statement, which calls `cleanUp()`.
 
 * `introspectWorkflow(workflow: Workflow)`: Promise\<WorkflowIntrospector>
     * Creates an **introspector** for a Workflow where instance IDs are unknown beforehand. This allows for defining modifications that will apply to **all subsequently created instances**.
@@ -312,7 +315,7 @@ To test projects that use Workflows `isolatedStorage` **must** be set to `false`
 
         it("should disable all sleeps, mock an event and complete", async () => {
           // 1. CONFIGURATION
-          const introspector = await introspectWorkflow(env.MY_WORKFLOW);
+          await using introspector = await introspectWorkflow(env.MY_WORKFLOW);
           await introspector.modifyAll(async (m) => {
             await m.disableSleeps();
             await m.mockEvent({
@@ -324,17 +327,16 @@ To test projects that use Workflows `isolatedStorage` **must** be set to `false`
           // 2. EXECUTION
           await env.MY_WORKFLOW.create();
 
-          // 3. ASSERTION & CLEANUP
+          // 3. ASSERTION
           const instances = introspector.get();
           for(const instance of instances) {
             await instance.waitForStatus("complete");
-            await instance.cleanUp();
           }
 
-          introspector.cleanUp();
+          // 4. CLEANUP: automatic disposal
         });
         ```
-      The workflow instance doesn't have to be created inside the test. The workflow instance creation doesn't have to be direct. The introspector will capture **all** instances created after it is initialized. For example, you could trigger the creation of **one or multiple** instances via a single `fetch` event to your Worker:
+      The workflow instance doesn't have to be created directly inside the test. The introspector will capture **all** instances created after it is initialized. For example, you could trigger the creation of **one or multiple** instances via a single `fetch` event to your Worker:
       ```js
       // This also works for the EXECUTION phase:
       await SELF.fetch("https://example.com/trigger-workflows");
@@ -343,15 +345,16 @@ To test projects that use Workflows `isolatedStorage` **must** be set to `false`
     * The returned `WorkflowIntrospector` object has the following methods:
         * `modifyAll(fn: (m: WorkflowInstanceModifier) => Promise<void>)`: Applies modifications to all Workflow instances created after calling `introspectWorkflow`.
         * `get()`: Returns all `WorkflowInstanceIntrospector` objects from instances created after `introspectWorkflow` was called.
-        * `cleanUp()`: Cleans up and stops the introspection process for the Workflow. This is crucial to prevent modifications and captured instances from leaking between tests.
+        * `cleanUp()`: Cleans up and stops the introspection process for the Workflow. All `WorkflowInstanceIntrospector` from created instances will also be cleaned. This is crucial to prevent modifications and captured instances from leaking between tests. After calling this method, the `WorkflowIntrospector` should not be reused.
+        * `[Symbol.asyncDispose](): Promise<void>`: Provides automatic cleanup. It's invoked by the `await using` statement, which calls `cleanUp()`. 
 
 * `WorkflowInstanceModifier`
     * This object is provided to the `modify` and `modifyAll` callbacks to mock or alter the behavior of a Workflow instance's steps, events, and sleeps.
         * `disableSleeps(steps?: { name: string; index?: number }[])`: Disables sleeps, causing `step.sleep()` and `step.sleepUntil()` to resolve immediately. If `steps` is omitted, all sleeps are disabled.
         * `mockStepResult(step: { name: string; index?: number }, stepResult: unknown)`: Mocks the result of a `step.do()`, causing it to return the specified value instantly without executing the step's implementation.
-        * `mockStepError(step: { name: string; index?: number }, error: Error, times?: number)`: Forces a `step.do()` to throw an error, simulating a failure. Use the `times` parameter to test retry logic.
-        * `forceStepTimeout(step: { name: string; index?: number }, times?: number)`: Forces a `step.do()` to fail by timing out immediately.
-        * `mockEvent(event: { type: string; payload: unknown })`: Sends a mock event to the Workflow instance, causing a `step.waitForEvent()` to resolve with the provided payload.
+        * `mockStepError(step: { name: string; index?: number }, error: Error, times?: number)`: Forces a `step.do()` to throw an error, simulating a failure. `times` is an optional number that sets how many times the step should error. If `times` is omitted, the step will error on every attempt, making the Workflow instance fail.
+        * `forceStepTimeout(step: { name: string; index?: number }, times?: number)`: Forces a `step.do()` to fail by timing out immediately. `times` is an optional number that sets how many times the step should timeout. If `times` is omitted, the step will timeout on every attempt, making the Workflow instance fail.
+        * `mockEvent(event: { type: string; payload: unknown })`: Sends a mock event to the Workflow instance, causing a `step.waitForEvent()` to resolve with the provided payload. `type` must match the `waitForEvent` type.
         * `forceEventTimeout(step: { name: string; index?: number })`: Forces a `step.waitForEvent()` to time out instantly, causing the step to fail.
         
         <br/>
