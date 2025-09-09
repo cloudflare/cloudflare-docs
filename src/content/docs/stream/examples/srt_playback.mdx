@@ -9,11 +9,18 @@ sidebar:
 description: Example of sub 1s latency video playback using SRT and ffplay
 ---
 
-import { Render } from "~/components";
+import { Render, DashButton } from "~/components";
 
 <Render file="prereqs_first_start_live_streaming" product="stream" />
 
-Copy the **SRT Playback URL** for your live input from the [Stream Dashboard](https://dash.cloudflare.com/?to=/:account/stream/inputs) or the [Stream API](/stream/stream-live/start-stream-live/#use-the-api), and paste it into the URL below, replacing `<SRT_PLAYBACK_URL>`:
+Copy the SRT Playback URL for your live input from either:
+- The **Live inputs** page of the Cloudflare dashboard.
+
+   <DashButton url="/?to=/:account/stream/inputs" />
+
+- The [Stream API](/stream/stream-live/start-stream-live/#use-the-api)
+
+Paste it into the URL below, replacing `<SRT_PLAYBACK_URL>`:
 
 ```sh title="SRT playback with ffplay"
 ffplay -analyzeduration 1 -fflags -nobuffer -probesize 32 -sync ext '<SRT_PLAYBACK_URL>'

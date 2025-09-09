@@ -5,7 +5,7 @@ sidebar:
   order: 12
 
 ---
-import { Steps, Details } from "~/components"
+import { Steps, Details, DashButton } from "~/components"
 
 In addition to following the live stream troubleshooting steps in this guide, make sure that your video settings align with [Cloudflare live stream recommendations](/stream/stream-live/start-stream-live/#recommendations-requirements-and-limitations). If you use OBS, you can also check these [OBS-specific recommendations](/stream/examples/obs-from-scratch/#6-optional-optimize-settings).
 
@@ -14,7 +14,11 @@ In addition to following the live stream troubleshooting steps in this guide, ma
 If your live stream is buffering, freezing, experiencing latency issues, or having other similar issues, try these troubleshooting steps:
 
 <Steps>
-1. Go to the [Cloudflare dashboard](https://dash.cloudflare.com) > **Stream** > **Live Inputs** > the Live Input in use > **Metrics** tab.
+1. In the Cloudflare dashboard, go to the **Live inputs** page.
+
+   <DashButton url="/?to=/:account/stream/inputs" />
+
+2. For the live input in use, select the **Metrics** tab.
 
 2. Look at your **Keyframe Interval** chart.
 

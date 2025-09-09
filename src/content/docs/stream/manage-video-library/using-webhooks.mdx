@@ -6,13 +6,15 @@ sidebar:
 
 ---
 
-import { Details } from "~/components"
+import { Details, DashButton } from "~/components"
 
 Webhooks notify your service when videos successfully finish processing and are ready to stream or if your video enters an error state.
 
 ## Subscribe to webhook notifications
 
-To subscribe to receive webhook notifications on your service or modify an existing subscription, you will need a [Cloudflare API token](https://dash.cloudflare.com/profile/api-tokens).
+To subscribe to receive webhook notifications on your service or modify an existing subscription, generate an API token on the **Account API tokens** page of the Cloudflare dashboard.
+
+<DashButton url="/?to=/:account/api-tokens" />
 
 The webhook notification URL must include the protocol. Only `http://` or `https://` is supported.
 

@@ -5,7 +5,7 @@ sidebar:
   order: 1
 ---
 
-import { Render, Badge } from "~/components";
+import { Render, Badge, DashButton } from "~/components";
 
 Cloudflare Stream is compatible with all video players that support HLS and DASH, which are standard formats for streaming media with broad support across all web browsers, mobile operating systems and media streaming devices.
 
@@ -39,7 +39,10 @@ https://customer-<CODE>.cloudflarestream.com/<UID>/manifest/video.m3u8?protocol=
 
 ### Dashboard
 
-1. Log into the [Stream Dashboard](https://dash.cloudflare.com/?to=/:account/stream).
+1. In the Cloudflare dashboard, go to the **Stream** page.
+
+   <DashButton url="/?to=/:account/stream" />
+
 2. From the list of videos, locate your video and select it.
 3. From the **Settings** tab, locate the **HLS Manifest URL** and **Dash Manifest URL**.
 4. Select **Click to copy** under the option you want to use.

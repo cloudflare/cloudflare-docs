@@ -3,6 +3,7 @@ pcx_content_type: how-to
 title: Clip videos
 
 ---
+import { DashButton } from "~/components";
 
 With video clipping, also referred to as "trimming" or changing the length of the video, you can change the start and end points of a video so viewers only see a specific "clip" of the video. For example, if you have a 20 minute video but only want to share a five minute clip from the middle of the video, you can clip the video to remove the content before and after the five minute clip.
 
@@ -55,7 +56,11 @@ curl --location --request POST 'https://api.cloudflare.com/client/v4/accounts/<Y
     }'
 ```
 
-You can check whether your video is ready to play after selecting your account from the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/stream). While the clipped video processes, the video status response displays **Queued**. When the clipping process is complete, the video status changes to **Ready** and displays the new name of the clipped video and the new duration.
+You can check whether your video is ready to play on the **Stream** page of the Cloudflare dashboard.
+
+<DashButton url="/?to=/:account/stream" />
+
+While the clipped video processes, the video status response displays **Queued**. When the clipping process is complete, the video status changes to **Ready** and displays the new name of the clipped video and the new duration.
 
 To receive a notification when your video is done processing and ready to play, you can [subscribe to webhook notifications](/stream/manage-video-library/using-webhooks/).
 
