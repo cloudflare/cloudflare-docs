@@ -123,7 +123,7 @@ Depending on the Cloudflare services you use, your BGP configuration may vary:
 
 #### Important note on accepting routes from Cloudflare
 
-If you wish to use the CNI for egress traffic from your network to Cloudflare-advertised prefixes (such as anycast or BYOIP addresses), you can accept the BGP prefixes you receive from Cloudflare (typically there will be around 4,000 routes advertised by Cloudflare). However, be aware that there is a 1 Gbps capacity limitation for traffic you send to Cloudflare over the CNI link.
+If you wish to use the CNI for egress traffic from your network to Cloudflare-advertised prefixes (such as anycast or BYOIP addresses), you can accept the BGP prefixes you receive from Cloudflare (typically there will be around 4,000 to 6,000 routes advertised by Cloudflare).
 
 #### Optional: Bidirectional Forwarding Detection (BFD)
 
