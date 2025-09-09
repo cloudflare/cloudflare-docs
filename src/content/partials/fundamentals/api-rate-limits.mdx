@@ -32,3 +32,13 @@ Some specific API calls have their own limits and are documented separately, suc
 - [Gateway Lists API](/cloudflare-one/policies/gateway/lists/#api-rate-limit)
 
 Enterprise customers can also [contact Cloudflare Support](/support/contacting-cloudflare-support/) to raise the Client API per user, GraphQL, or API token limits to a higher value.
+
+The following headers that are always returned on calls to the Cloudflare API:
+
+ - `X-RateLimit-Limit`: Total Number of requests the caller can make
+ - `X-RateLimit-Remaining`: Number of requests before Rate Limit kicks in
+
+And these headers are returned only when a rate limit has been reached (error code: 429):
+
+- `Retry-After`: Number of Seconds until more capacity is available, rounded up
+- `X-RateLimit-Reset`: RFC 1123 Formatted Date as to when more capacity is available
