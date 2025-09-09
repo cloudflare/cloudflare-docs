@@ -33,10 +33,15 @@ Some behaviors are different from standard Cloudflare nameservers:
 <Details header="Example">
 
 <Example>
-	DNS management for **example.com** | **Type** | **Name** | **Content** | |
-	-------- | -------- | ------------------------- | | NS | www |
-	ns1.externalhost.com | | NS | www | ns2.externalhost.com | | TXT | www |
-	"5bb16e6b5a444eedb48ace40c471bcc9" | | A | www | `192.0.2.1` |
+DNS management for **example.com**
+
+| **Type** | **Name** | **Content** |
+| -------- | -------- | ------------------------- |
+| NS | www | ns1.externalhost.com |
+| NS | www | ns2.externalhost.com |
+| TXT | www | "5bb16e6b5a444eedb48ace40c471bcc9" |
+| A | www | `192.0.2.1` |
+
 </Example>
 
 In this example, the TXT record and the A record for `www.example.com` will not be served.
