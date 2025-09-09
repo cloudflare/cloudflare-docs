@@ -95,18 +95,18 @@ The process of provisioning a CNI typically takes two to four weeks, depending o
 
 Cloudflare partners with leading connectivity providers globally. To provision a Partner Interconnect, you will initiate a connection request from your chosen provider's administrative portal. Cloudflare will then review and accept the request to activate the virtual circuit.
 
-### How-To: Configure BGP and Routing
+### How-To: Configure BGP and routing
 
 Once your physical cross-connect or virtual circuit is provisioned, the next phase is to configure IP routing using Border Gateway Protocol (BGP). This process typically takes about one week to complete.
 
-#### Step 1: IP Address Provisioning
+#### Step 1: IP Address provisioning
 
 1. Cloudflare will send you a set of IPv4 and IPv6 addresses for your connection.
 2. Assign the provided IPs to your router's interface that connects to Cloudflare.
 3. Perform ping tests between your router and Cloudflare's router to confirm that the physical or virtual link is active and passing packets correctly.
    - **For Partner Interconnects**: If you are using a partner like Megaport, ensure you have configured the correct VLAN provided by your Customer Success Manager, as an incorrect VLAN can cause IP provisioning to fail.
 
-#### Step 2: BGP Session Establishment
+#### Step 2: BGP session establishment
 
 After you confirm connectivity with successful ping tests, the next step is to establish the BGP session.
 
@@ -114,14 +114,14 @@ After you confirm connectivity with successful ping tests, the next step is to e
 2. You will configure your side of the BGP session and accept the routes.
 3. Once the session is established, traffic will begin to flow over the CNI. Contact your solutions engineer to verify that traffic is routing as expected.
 
-#### BGP Configuration Options and Use Cases
+#### BGP configuration options and use cases
 
 Depending on the Cloudflare services you use, your BGP configuration may vary:
 
 - **Standard Peering**: This is the most common scenario, where BGP is used to exchange routes between your network and Cloudflare. Cloudflare learns your network routes, which is useful for services like CDN-only deployments or on-demand Magic Transit. It is important to note that prefixes Cloudflare learns via CNI remain local to that specific data center and are not propagated to other Cloudflare locations.
 - **Magic Transit with Controlled Advertisement**: Magic Transit customers can use a second BGP session to control which prefixes are advertised to the Internet. In this setup, Cloudflare advertises no prefixes to you, and you advertise only the specific prefixes you want Cloudflare to announce on your behalf.
 
-#### Important Note on Accepting Routes from Cloudflare
+#### Important note on accepting routes from Cloudflare
 
 If you wish to use the CNI for egress traffic from your network to Cloudflare-advertised prefixes (such as anycast or BYOIP addresses), you can accept the BGP prefixes you receive from Cloudflare (typically there will be around 4,000 routes advertised by Cloudflare). However, be aware that there is a 1 Gbps capacity limitation for traffic you send to Cloudflare over the CNI link.
 
