@@ -5,7 +5,7 @@ sidebar:
   order: 3
 ---
 
-import { Details, GlossaryTooltip, TabItem, Tabs } from "~/components";
+import { Details, GlossaryTooltip, TabItem, Tabs, DashButton } from "~/components";
 
 After a <GlossaryTooltip term="data packet">packet</GlossaryTooltip> capture is requested and the capture is collected, the output is contained within one or more files in PCAP file format. Before starting a `full` type packet capture, you must first follow instructions for [configuring a bucket](/magic-firewall/packet-captures/pcaps-bucket-setup/).
 
@@ -38,12 +38,16 @@ For help determining which data center to select for a packet capture, visit [ht
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select you account.
-2. Select **Magic Transit** or **Magic WAN**.
-3. In **Captures**, select **Start a capture**.
-4. Select the **Captures** tab > **Start a capture**.
-5. Choose the type of capture you want to perform, and select **Next**.
-6. Fill out the required fields to begin the capture and then select **Start**.
+1. In the Cloudflare dashboard, go to the **Packet captures** page in Magic Transit or Magic WAN.
+
+	To set up a packet capture in Magic Transit: <DashButton url="/?to=/:account/magic-transit/packet-captures/captures" />
+
+	To set up a packet capture in Magic WAN: <DashButton url="/?to=/:account/magic-wan/packet-captures/captures" />
+
+2. In **Captures**, select **Start a capture**.
+3. Select the **Captures** tab > **Start a capture**.
+4. Choose the type of capture you want to perform, and select **Next**.
+5. Fill out the required fields to begin the capture and then select **Start**.
 
 The main **Packet captures** page displays a list of captures.
 
@@ -163,10 +167,13 @@ The response is a JSON body that contains the details of the job running to buil
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select you account.
-2. Select **Magic Transit** or **Magic WAN**.
-3. In **Packet captures**, select **Start a capture**.
-4. Select the **Captures** tab.
+1. In the Cloudflare dashboard, go to the **Packet captures** page in Magic Transit or Magic WAN.
+
+	To set up a packet capture in Magic Transit: <DashButton url="/?to=/:account/magic-transit/packet-captures/captures" />
+
+	To set up a packet capture in Magic WAN: <DashButton url="/?to=/:account/magic-wan/packet-captures/captures" />
+2. In **Packet captures**, select **Start a capture**.
+3. Select the **Captures** tab.
 
 </TabItem> <TabItem label="API">
 
@@ -218,11 +225,14 @@ After your request finishes processing, you can download your packet captures.
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select you account.
-2. Select **Magic Transit** or **Magic WAN**.
-3. In **Packet captures**, select **Start a capture**.
-4. Select the **Captures** tab.
-5. Locate your packet capture you want to download, and select **Download**.
+1. In the Cloudflare dashboard, go to the **Packet captures** page in Magic Transit or Magic WAN.
+
+	To set up a packet capture in Magic Transit: <DashButton url="/?to=/:account/magic-transit/packet-captures/captures" />
+
+	To set up a packet capture in Magic WAN: <DashButton url="/?to=/:account/magic-wan/packet-captures/captures" />
+2. In **Packet captures**, select **Start a capture**.
+3. Select the **Captures** tab.
+4. Locate your packet capture you want to download, and select **Download**.
 
 Packet captures are available to download when the **Status** displays **Success**.
 
@@ -251,10 +261,13 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/pcaps/{pcap_id}/
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select you account.
-2. Select **Magic Transit** or **Magic WAN**.
-3. In **Packet captures**, select **Start a capture**.
-4. Select the **Captures** tab.
+1. In the Cloudflare dashboard, go to the **Packet captures** page in Magic Transit or Magic WAN.
+
+	To set up a packet capture in Magic Transit: <DashButton url="/?to=/:account/magic-transit/packet-captures/captures" />
+
+	To set up a packet capture in Magic WAN: <DashButton url="/?to=/:account/magic-wan/packet-captures/captures" />
+2. In **Packet captures**, select **Start a capture**.
+3. Select the **Captures** tab.
 
 The list of packet captures associated with your account displays.
 
