@@ -7,7 +7,3 @@ updates:
       prefix: "[Docs Site] "
     schedule:
       interval: "daily"
-    assignees:
-      - "KianNH"
-    reviewers:
-      - "KianNH"
