@@ -100,7 +100,7 @@
 		"react": "19.0.0",
 		"react-dom": "19.0.0",
 		"react-icons": "5.5.0",
-		"react-instantsearch": "7.16.2",
+		"react-instantsearch": "7.16.3",
 		"react-markdown": "10.1.0",
 		"react-select": "5.10.2",
 		"redirects-in-workers": "0.0.7",
