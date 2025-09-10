@@ -7,7 +7,7 @@ sidebar:
   order: 9
 ---
 
-import { Tabs, TabItem } from "~/components";
+import { Tabs, TabItem, Render } from "~/components";
 
 The `/json` endpoint extracts structured data from a webpage. You can specify the expected output using either a `prompt` or a `response_format` parameter which accepts a JSON schema. The endpoint returns the extracted data in JSON format. By default, this endpoint leverages [Workers AI](/workers-ai/). If you would like to specify your own AI model for the extraction, you can use the `custom_ai` parameter.
 
@@ -349,3 +349,8 @@ In this example, Browser Rendering first calls Anthropic's Claude Sonnet 4 model
   }
 ]
 ```
+
+<Render
+  file="setting-custom-user-agent"
+  product="browser-rendering"
+/>
