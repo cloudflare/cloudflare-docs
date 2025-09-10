@@ -1,0 +1,55 @@
+---
+pcx_content_type: reference
+title: SSH
+sidebar:
+  order: 10
+---
+
+import { WranglerConfig } from "~/components";
+
+This page describes how SSH works and how to use it in Cloudflare Containers.
+Anyone with write access to a Container can SSH into it with Wrangler as long as SSH is enabled.
+
+## How to configure SSH
+
+SSH can be configured in your [Container's configuration](/workers/wrangler/configuration/#containers) with the `ssh` and `authorized_keys` properties.
+
+Note that the `ssh.enabled` only dictates whether or not you can SSH into a Container through Wrangler.
+If `ssh.enabled` is false but keys are still present in `authorized_keys`, the SSH service may still be started on the Container.
+
+## How to SSH into a Container with Wrangler
+
+In order to SSH into a Container with Wrangler, you must first enable Wrangler SSH.
+A basic configuration of this can look like the following:
+
+<WranglerConfig>
+
+```json
+{
+	"containers": [
+        {
+            // other options here...
+            "ssh": {
+                "enabled": true, // If this is false, you will not be able to SSH into the Container with Wrangler
+            },
+            "authorized_keys": [
+                { "name": "<NAME>", "public_key": "<YOUR_PUBLIC_KEY_HERE>" }
+            ]
+        }
+    ]
+}
+```
+
+</WranglerConfig>
+
+For more information on configuring SSH, see [How to configure SSH](#how-to-configure-ssh) above.
+
+Next, the instance you would like to SSH into must be running.
+Trying to SSH into a Container will not start it if it is stopped.
+Additionally, an active SSH connection alone will not keep a Container alive.
+
+Once SSH is configured and the Container is running, you can open the SSH connection with:
+
+```bash
+wrangler containers ssh <INSTANCE_ID>
+```
