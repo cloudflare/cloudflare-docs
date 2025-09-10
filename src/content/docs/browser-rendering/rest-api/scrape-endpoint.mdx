@@ -5,7 +5,7 @@ sidebar:
   order: 7
 ---
 
-import { Tabs, TabItem } from "~/components";
+import { Tabs, TabItem, Render } from "~/components";
 
 The `/scrape` endpoint extracts structured data from specific elements on a webpage, returning details such as element dimensions and inner HTML.
 
@@ -101,3 +101,10 @@ Many more options exist, like setting HTTP credentials using `authenticate`, set
     - `html` _(string)_ - Inner HTML of the element.
     - `attributes` _(array of objects)_ - List of extracted attributes such as `href` for links.
     - `height`, `width`, `top`, `left` _(number)_ - Position and dimensions of the element.
+
+## Advanced Usage
+
+<Render
+  file="setting-custom-user-agent"
+  product="browser-rendering"
+/>
