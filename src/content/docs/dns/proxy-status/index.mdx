@@ -76,6 +76,23 @@ DNS management for **example.com**:
 In this example, all traffic intended for `blog.example.com` will be treated as if both records were **Proxied**.
 
 </Example>
+</Details>
+
+Cloudflare will also proxy a request if a hostname on the CNAME chain is proxied.
+
+<Details header="Example">
+<Example>
+DNS management for **example.com**:
+
+| Type | Name   | Content     | Proxy status | TTL  |
+| ---- | ------ | ----------- | ------------ | ---- |
+| CNAME   | `example.com` | `origin.example.net` | DNS only     | Auto |
+| CNAME   | `origin.example.net` | `<origin>` | Proxied     | Auto |
+
+In this example, all traffic intended for `example.com` will be treated as **Proxied**.
+
+</Example>
+
 
 </Details>
 
