@@ -41,6 +41,7 @@ jobs:
 
           if [ -n "$FILES" ]; then
             echo "Found files with invalid file extensions:\n\n$FILES"
+            exit 1
           fi
 
       - run: npm ci
