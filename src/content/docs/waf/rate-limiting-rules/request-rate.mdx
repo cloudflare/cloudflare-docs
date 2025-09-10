@@ -9,16 +9,16 @@ head:
     content: How Cloudflare determines the request rate
 ---
 
-import { Example } from "~/components";
+import { Example, GlossaryTooltip } from "~/components";
 
-Cloudflare keeps separate rate counters for rate limiting rules for each value combination of the rule characteristics.
+Cloudflare keeps separate rate counters for rate limiting rules for each value combination of the <GlossaryTooltip term="rule characteristics">rule characteristics</GlossaryTooltip>.
 
 Consider a rule configured with the following characteristics:
 
 - IP address
 - HTTP header `x-api-key`
 
-In this case, two incoming requests with the **same** value for the HTTP header `X-API-Key` with **different** IP addresses are counted separately, since the value combination is different. Additionally, counters are not shared across data centers.
+In this case, two incoming requests with the same value for the HTTP header `X-API-Key` but with different IP addresses are counted separately, since the value combination is different. Additionally, counters are not shared across data centers.
 
 The counting model of this rate limiting rule is based on the number of incoming requests. Enterprise customers with Advanced Rate Limiting can also configure rules whose counting model is based on the complexity of serving incoming requests. Refer to [Complexity-based rate limiting](#complexity-based-rate-limiting) for more information.
 
