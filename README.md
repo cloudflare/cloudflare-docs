@@ -2,14 +2,6 @@
 
 Welcome to the open-source repository for all [Cloudflare Developer Documentation](https://developers.cloudflare.com/).
 
-Everyone, including those who are not part of the Cloudflare organization, are encouraged to contribute.
-- If you are not a Cloudflare employee, learn how to contribute in the [contribution page](https://developers.cloudflare.com/style-guide/contributions/) of the Cloudflare Style Guide.
-- If you are a Cloudflare employee, reach out via our Developer Docs space in Google chat.
-
-Consult the [Cloudflare Style Guide](https://developers.cloudflare.com/style-guide/) on everything from grammar, to formatting, to frontmatter requirements. Browse our [components](/style-guide/components/) to add additional formatting such as [notes](/style-guide/documentation-content-strategy/component-attributes/notes-tips-warnings/) and [code blocks](/style-guide/components/code/).
-
-Thank you for helping us to maintain quality documentation.
-
 ## License and Legal Notices
 
 Except as otherwise noted, Cloudflare and any contributors grant you a license to the Cloudflare Developer Documentation and other content in this repository under the [Creative Commons Attribution 4.0 International Public License](https://creativecommons.org/licenses/by/4.0/legalcode), see the [LICENSE file](https://github.com/cloudflare/cloudflare-docs/blob/production/LICENSE), and grant you a license to any code in the repository under the [MIT License](https://opensource.org/licenses/MIT), see the [LICENSE-CODE file](https://github.com/cloudflare/cloudflare-docs/blob/production/LICENSE-CODE).
