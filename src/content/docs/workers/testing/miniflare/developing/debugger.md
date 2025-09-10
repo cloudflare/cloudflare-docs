@@ -47,18 +47,18 @@ configuration, and click the green play button to start debugging.
 
 Create a new configuration, by clicking **Add Configuration** in the top right.
 
-![WebStorm add configuration button](./debugger-webstorm-node-add.png)
+![WebStorm add configuration button](~/assets/images/workers/testing/miniflare/developing/debugger-webstorm-node-add.png)
 
 Click the **plus** button in the top left of the popup and create a new
 **Node.js/Chrome** configuration. Set the **Host** field to `localhost` and the
 **Port** field to `9229`. Then click **OK**.
 
-![WebStorm Node.js debug configuration](./debugger-webstorm-settings.png)
+![WebStorm Node.js debug configuration](~/assets/images/workers/testing/miniflare/developing/debugger-webstorm-settings.png)
 
 With the new configuration selected, click the green debug button to start
 debugging.
 
-![WebStorm configuration debug button](./debugger-webstorm-node-run.png)
+![WebStorm configuration debug button](~/assets/images/workers/testing/miniflare/developing/debugger-webstorm-node-run.png)
 
 ## DevTools
 
