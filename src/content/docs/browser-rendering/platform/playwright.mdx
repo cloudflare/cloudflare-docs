@@ -203,9 +203,7 @@ Using the above, the browser will stay open for up to 10 minutes, even if inacti
 
 ### Setting a Custom User Agent
 
-To specify a custom user agent in Playwright, set it in the options when creating a new browser context with `browser.newContext()`. All pages subsequently created from this context will use the new user agent. 
-
-use the `page.setUserAgent()` method. This is useful if the target website serves different content based on the user agent.
+To specify a custom user agent in Playwright, set it in the options when creating a new browser context with `browser.newContext()`. All pages subsequently created from this context will use the new user agent. This is useful if the target website serves different content based on the user agent.
 
 ```js
 const context = await browser.newContext({
@@ -214,7 +212,7 @@ const context = await browser.newContext({
 });
 ```
 
-Note: Modifying `UserAgent` will not bypass bot protection as requests from Browser Rendering will always be identified as a bot.  
+Note: Modifying `userAgent` will not bypass bot protection as requests from Browser Rendering will always be identified as a bot.  
 
 
 ## Session management
