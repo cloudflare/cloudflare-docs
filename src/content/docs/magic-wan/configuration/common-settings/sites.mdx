@@ -2,12 +2,12 @@
 title: Set up a site
 pcx_content_type: how-to
 sidebar:
-  order: 2
+  order: 1
   badge:
     text: Beta
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 Sites represent the local network of a data center, office, or other physical location, and combine all on-ramps available there. Sites also allow you to check, at a glance, the state of your on-ramps and set up health alert settings so that you get notified when there are issues with the site's on-ramps.
 
@@ -24,9 +24,9 @@ To use a site, start by setting up your on-ramps. These can be [GRE or IPsec tun
 7. Select **Continue**.
 8. In **Define alert settings** you set up alerts to notify you when there are issues with your site's on-ramps. If you want to set up alerts later, select **Skip this for now** to complete your setup. Otherwise, continue reading.
 9. In **Magic WAN Health Check Alert** > **Notification name**, enter a name for the site's alert.
-9. Under **Alert settings**, choose how you want to be notified when there is an issue. You can add webhooks as well as email addresses.
-10. In **Alert sensitivity level** define the threshold for Magic Tunnel health alerts to be fired. Refer to [How Cloudflare calculates Magic Tunnel health alerts](/magic-wan/reference/how-cloudflare-calculates-magic-tunnel-health-alerts/) for more information.
-11. Select **Complete setup** to finish setting up your site.
+10. Under **Alert settings**, choose how you want to be notified when there is an issue. You can add webhooks as well as email addresses.
+11. In **Alert sensitivity level** define the threshold for Magic Tunnel health alerts to be fired. Refer to [How Cloudflare calculates Magic Tunnel health alerts](/magic-wan/reference/how-cloudflare-calculates-magic-tunnel-health-alerts/) for more information.
+12. Select **Complete setup** to finish setting up your site.
 
 Your site is now set up. If you have other sites you need to set up, repeat the steps above. If you did not set up alerts, we strongly recommend that you do it. Otherwise you will not be notified when there is a problem with one of your on-ramps.
 
@@ -34,7 +34,11 @@ Your site is now set up. If you have other sites you need to set up, repeat the 
 
 ## Site analytics
 
-<Render file="analytics/site-analytics"	product="networking-services" params={{ instructions: "" }}/>
+<Render
+	file="analytics/site-analytics"
+	product="networking-services"
+	params={{ instructions: "" }}
+/>
 
 ---
 
@@ -60,4 +64,7 @@ If you add geographic coordinates to your site, it will show up in the Network m
 
 ### Set thresholds for Magic WAN site health
 
-<Render file="analytics/set-thresholds-site-health"	product="networking-services" />
+<Render
+	file="analytics/set-thresholds-site-health"
+	product="networking-services"
+/>
