@@ -150,6 +150,8 @@ Optionally, you can use BGP to control the advertisement status of your prefix â
 
 Prefixes can be advertised from Cloudflare's network in a supported on-demand method such as BGP Control, or dynamically via the UI, API, or [Magic Network Monitoring](/magic-transit/magic-network-monitoring/). During the onboarding of your on-demand prefixes, please specify whether you want BGP-controlled advertisement or dynamic advertisement (via dashboard/API/Magic Network Monitoring).
 
+Our network architecture utilizes multiple, redundant Route Reflectors, ensuring that the failure of any single reflector does not impact overall network resiliency or traffic forwarding. For maximum resiliency, we recommend peering with all three of Cloudflare's redundant Route Reflectors, as this architecture ensures the failure of any single reflector does not impact overall network availability or traffic forwarding.
+
 To begin using BGP control, contact your account team with the following information:
 
 - BGP endpoint IP addresses
