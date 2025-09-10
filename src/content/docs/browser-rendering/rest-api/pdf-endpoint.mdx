@@ -5,7 +5,7 @@ sidebar:
   order: 5
 ---
 
-import { Tabs, TabItem } from "~/components";
+import { Tabs, TabItem, Render } from "~/components";
 
 The `/pdf` endpoint instructs the browser to generate a PDF of a webpage or custom HTML using Cloudflare's headless browser rendering service.
 
@@ -137,3 +137,8 @@ curl -X POST https://api.cloudflare.com/client/v4/accounts/<acccountID>/browser-
 }' \
   --output "cloudflare.pdf"
 ```
+
+<Render
+  file="setting-custom-user-agent"
+  product="browser-rendering"
+/>
