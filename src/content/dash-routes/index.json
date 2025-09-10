@@ -766,9 +766,5 @@
 	{
 		"name": "Web3",
 		"deeplink": "/?to=/:account/:zone/web3"
-	},
-	{
-		"name": "Recents",
-		"deeplink": "N/A"
 	}
 ]
