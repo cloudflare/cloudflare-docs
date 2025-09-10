@@ -5,7 +5,7 @@ sidebar:
   order: 10
 ---
 
-import { Tabs, TabItem } from "~/components";
+import { Tabs, TabItem, Render } from "~/components";
 
 The `/links` endpoint retrieves all links from a webpage. It can be used to extract all links from a page, including those that are hidden.
 
@@ -212,3 +212,8 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
 	]
 }
 ```
+
+<Render
+  file="setting-custom-user-agent"
+  product="browser-rendering"
+/>
