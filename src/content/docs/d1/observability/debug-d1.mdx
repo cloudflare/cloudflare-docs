@@ -79,6 +79,16 @@ Before retrying any failed operation:
 
 </Example>
 
+## Automatic retries
+
+D1 detects read-only queries and automatically attempts up to 2 retries to execute those queries in the event of failures with retryable errors.
+
+D1 ensures that any retry attempt does not cause database writes, making the automatic retries safe from side-effects, even if a query slips through the read-only detection. D1 achieves this by checking for modifications after every query execution, and if any write occurred due to a retry attempt, the query is rolled back.
+
+:::note
+Only read-only queries (queries containing only the following SQLite keywords: `SELECT`, `EXPLAIN`, `WITH`) are retried. Queries containing any [SQLite keyword](https://sqlite.org/lang_keywords.html) that leads to database writes are not retried.
+:::
+
 ## View logs
 
 View a stream of live logs from your Worker by using [`wrangler tail`](/workers/observability/logs/real-time-logs#view-logs-using-wrangler-tail) or via the [Cloudflare dashboard](/workers/observability/logs/real-time-logs#view-logs-from-the-dashboard).

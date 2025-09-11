@@ -1,0 +1,31 @@
+---
+title: Retry queries
+pcx_content_type: concept
+sidebar:
+  order: 3
+
+---
+
+import { GitHubCode } from "~/components";
+
+D1 automatically retries read-only queries up to 2 more times when it encounters a retryable error.
+
+But it can be useful to retry queries from your application when you encounter an [error](/d1/observability/debug-d1/#error-list).
+
+## Example of retrying queries
+
+Consider the following example, taken from the [D1 read replication starter template](https://github.com/cloudflare/templates/blob/main/d1-starter-sessions-api-template/src/index.ts#L108).
+
+```ts
+function shouldRetry(err: unknown, nextAttempt: number) {
+  const errMsg = String(err);
+  const isRetryableError =
+    errMsg.includes("Network connection lost") ||
+    errMsg.includes("storage caused object to be reset") ||
+    errMsg.includes("reset because its code was updated");
+  if (nextAttempt <= 5 && isRetryableError) {
+    return true;
+  }
+  return false;
+}
+```
