@@ -245,8 +245,8 @@
 /api-shield/security/sequence-mitigation/configure/ /api-shield/security/sequence-mitigation/api/ 301
 
 #autorag
-/autorag/usage/recipes/ /autorag/how-to/ 301
-/autorag/configuration/metadata-filtering/ /autorag/configuration/metadata/ 301
+/autorag/usage/recipes/ /ai-search/how-to/ 301
+/autorag/configuration/metadata-filtering/ /ai-search/configuration/metadata/ 301
 
 # bots
 /bots/about/plans/ /bots/plans/ 301

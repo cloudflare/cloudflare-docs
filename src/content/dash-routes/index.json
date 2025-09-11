@@ -300,7 +300,7 @@
 		"parent": ["AI"]
 	},
 	{
-		"name": "AutoRAG",
+		"name": "AI Search",
 		"deeplink": "/?to=/:account/ai/autorag",
 		"parent": ["AI"]
 	},

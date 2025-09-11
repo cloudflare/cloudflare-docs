@@ -31,7 +31,7 @@ entries:
   - publish_date: "2025-09-05"
     title: Introducing EmbeddingGemma from Google
     description: |-
-      - We’re excited to be a launch partner alongside Google to bring their newest embedding model to Workers AI. We're excited to introduce EmbeddingGemma delivers best-in-class performance for its size, enabling RAG and semantic search use cases. Take a look at [`@cf/google/embeddinggemma-300m`](/workers-ai/models/embeddinggemma-300m) for more details. Now available to use for embedding in AutoRAG too.
+      - We’re excited to be a launch partner alongside Google to bring their newest embedding model to Workers AI. We're excited to introduce EmbeddingGemma delivers best-in-class performance for its size, enabling RAG and semantic search use cases. Take a look at [`@cf/google/embeddinggemma-300m`](/workers-ai/models/embeddinggemma-300m) for more details. Now available to use for embedding in AI Search too.
   - publish_date: "2025-08-27"
     title: Introducing Partner models to the Workers AI catalog
     description: |-
