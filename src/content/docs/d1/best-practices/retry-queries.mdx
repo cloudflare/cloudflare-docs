@@ -8,9 +8,11 @@ sidebar:
 
 import { GitHubCode } from "~/components";
 
-D1 automatically retries read-only queries up to 2 more times when it encounters a retryable error.
+It can be useful to retry queries from your application when you encounter an [error](/d1/observability/debug-d1/#error-list). From the list of `D1_ERROR`s, refer to the Recommended action column to determine if a query should be retried.
 
-But it can be useful to retry queries from your application when you encounter an [error](/d1/observability/debug-d1/#error-list).
+:::note
+D1 automatically retries read-only queries up to 2 more times when it encounters a retryable error.
+:::
 
 ## Example of retrying queries
 
