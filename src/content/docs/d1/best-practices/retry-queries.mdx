@@ -25,7 +25,7 @@ You can use libraries abstracting that already like [`@cloudflare/actors`](https
 import { tryWhile } from "@cloudflare/actors";
 
 function queryD1Example(d1: D1Database, sql: string) {
-  return tryWhile(async () => {
+  return await tryWhile(async () => {
     return await d1.prepare(sql).run();
   }, shouldRetry);
 }
