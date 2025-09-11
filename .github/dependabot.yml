@@ -8,6 +8,6 @@ updates:
     schedule:
       interval: "daily"
     assignees:
-      - "KianNH"
+      - "kodster28"
     reviewers:
-      - "KianNH"
+      - "kodster28"

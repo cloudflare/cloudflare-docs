@@ -27,6 +27,23 @@ jobs:
             node_modules/.astro/assets
           key: static
 
+      - run: |
+          FILES=$(
+            find src/content \
+              -type f \
+              -not -name '*.mdx' \
+              -not -name '*.md' \
+              -not -name '*.json' \
+              -not -name '*.yml' \
+              -not -name '*.yaml' \
+              -not -name '*.txt'
+          )
+
+          if [ -n "$FILES" ]; then
+            echo "Found files with invalid file extensions:\n\n$FILES"
+            exit 1
+          fi
+
       - run: npm ci
 
       - run: npx tsx bin/post-codeowners-comment/index.ts

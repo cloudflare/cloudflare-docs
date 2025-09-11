@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import { GlossaryTooltip, TabItem, Tabs } from "~/components";
+import { GlossaryTooltip, TabItem, Tabs, DashButton } from "~/components";
 
 Before you can begin a full <GlossaryTooltip term="data packet">packet</GlossaryTooltip> capture, you must first configure a bucket that Cloudflare can use to upload your files. Setting up a bucket is not required for sample packet captures.
 
@@ -17,13 +17,16 @@ Learn how to set up a bucket for use with full packet captures.
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select you account.
-2. Select **Magic Transit** or **Magic WAN**.
-3. From the **Packet captures** page, select the **Buckets** tab.
-4. Select **Add a bucket**.
-5. Under **Bucket configuration**, select a bucket service and select **Next**.
-6. Enter the information related to your bucket for your service provider.
-7. When you are done, select **Next**.
+1. In the Cloudflare dashboard, go to the **Packet captures** page in Magic Transit or Magic WAN.
+
+	To set up a bucket in Magic Transit: <DashButton url="/?to=/:account/magic-transit/packet-captures/captures" />
+
+	To set up a bucket in Magic WAN: <DashButton url="/?to=/:account/magic-wan/packet-captures/captures" />
+2. Select the **Buckets** tab.
+3. Select **Add a bucket**.
+4. Under **Bucket configuration**, select a bucket service and select **Next**.
+5. Enter the information related to your bucket for your service provider.
+6. When you are done, select **Next**.
 
 The **Prove ownership** step of the **Bucket configuration** displays.
 
@@ -126,10 +129,13 @@ View a list of all buckets configured on your account.
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select you account.
-2. Select **Magic Transit** or **Magic WAN**.
-3. In **Packet captures**, select **Start a capture**.
-4. Select the **Buckets** tab.
+1. In the Cloudflare dashboard, go to the **Packet captures** page in Magic Transit or Magic WAN.
+
+	To set up a packet capture in Magic Transit: <DashButton url="/?to=/:account/magic-transit/packet-captures/captures" />
+
+	To set up a packet capture in Magic WAN: <DashButton url="/?to=/:account/magic-wan/packet-captures/captures" />
+2. In **Packet captures**, select **Start a capture**.
+3. Select the **Buckets** tab.
 
 The list of buckets associated with your account displays.
 
@@ -169,8 +175,11 @@ To start collecting packet captures with R2, you first need to configure it prop
 
 ### Create bucket and API token
 
-1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select you account.
-2. Select **R2** > **Create bucket**.
+1. In the Cloudflare dashboard, go to the **R2** page.
+
+	<DashButton url="/?to=/:account/r2/overview" />
+
+2. Select **Create bucket**.
 3. Give your bucket a name > **Create bucket**.
 4. Go to the R2 Overview page, and select **Manage R2 API Tokens**.
 5. Select **Create API Token**.

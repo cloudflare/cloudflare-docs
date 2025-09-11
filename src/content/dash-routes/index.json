@@ -458,5 +458,313 @@
 	{
 		"name": "Bulk redirects",
 		"deeplink": "/?to=/:account/bulk-redirects"
+	},
+	{
+		"name": "Overview",
+		"deeplink": "/?to=/:account/domains/overview",
+		"parent": ["Domain management"]
+	},
+	{
+		"name": "Overview",
+		"deeplink": "/?to=/:account/:zone/"
+	},
+	{
+		"name": "AI Crawl Control",
+		"deeplink": "/?to=/:account/:zone/ai"
+	},
+	{
+		"name": "Log Explorer",
+		"deeplink": "/?to=/:account/:zone/log-explorer"
+	},
+	{
+		"name": "Log search",
+		"deeplink": "/?to=/:account/:zone/log-explorer/log-search",
+		"parent": ["Log Explorer"]
+	},
+	{
+		"name": "Custom dashboards",
+		"deeplink": "/?to=/:account/:zone/log-explorer/dashboards",
+		"parent": ["Log Explorer"]
+	},
+	{
+		"name": "Manage datasets",
+		"deeplink": "/?to=/:account/:zone/log-explorer/manage-sources",
+		"parent": ["Log Explorer"]
+	},
+	{
+		"name": "Analytics & Logs",
+		"deeplink": "/?to=/:account/:zone/analytics"
+	},
+	{
+		"name": "HTTP Traffic",
+		"deeplink": "/?to=/:account/:zone/analytics/traffic",
+		"parent": ["Analytics & Logs"]
+	},
+	{
+		"name": "Web analytics",
+		"deeplink": "/?to=/:account/:zone/analytics/web/overview",
+		"parent": ["Analytics & Logs"]
+	},
+	{
+		"name": "Security",
+		"deeplink": "/?to=/:account/:zone/analytics/security",
+		"parent": ["Analytics & Logs"]
+	},
+	{
+		"name": "Performance",
+		"deeplink": "/?to=/:account/:zone/analytics/performance",
+		"parent": ["Analytics & Logs"]
+	},
+	{
+		"name": "Edge Reachability",
+		"deeplink": "/?to=/:account/:zone/analytics/edgeReachability",
+		"parent": ["Analytics & Logs"]
+	},
+	{
+		"name": "Workers",
+		"deeplink": "/?to=/:account/:zone/analytics/workers",
+		"parent": ["Analytics & Logs"]
+	},
+	{
+		"name": "Logpush",
+		"deeplink": "/?to=/:account/:zone/analytics/logs",
+		"parent": ["Analytics & Logs"]
+	},
+	{
+		"name": "Instant Logs",
+		"deeplink": "/?to=/:account/:zone/analytics/instant-logs",
+		"parent": ["Analytics & Logs"]
+	},
+	{
+		"name": "Version Management",
+		"deeplink": "/?to=/:account/:zone/versioning"
+	},
+	{
+		"name": "DNS",
+		"deeplink": "/?to=/:account/:zone/dns"
+	},
+	{
+		"name": "Records",
+		"deeplink": "/?to=/:account/:zone/dns/records",
+		"parent": ["DNS"]
+	},
+	{
+		"name": "Analytics",
+		"deeplink": "/?to=/:account/:zone/dns/analytics",
+		"parent": ["DNS"]
+	},
+	{
+		"name": "Settings",
+		"deeplink": "/?to=/:account/:zone/dns/settings",
+		"parent": ["DNS"]
+	},
+	{
+		"name": "Email",
+		"deeplink": "/?to=/:account/:zone/email"
+	},
+	{
+		"name": "Email Routing",
+		"deeplink": "/?to=/:account/:zone/email/routing",
+		"parent": ["Email"]
+	},
+	{
+		"name": "DMARC Management",
+		"deeplink": "/?to=/:account/:zone/email/dmarc-management",
+		"parent": ["Email"]
+	},
+	{
+		"name": "Email Security",
+		"deeplink": "/?to=/:account/:zone/email/security",
+		"parent": ["Email"]
+	},
+	{
+		"name": "Spectrum",
+		"deeplink": "/?to=/:account/:zone/spectrum"
+	},
+	{
+		"name": "Overview",
+		"deeplink": "/?to=/:account/:zone/ssl-tls",
+		"parent": ["SSL/TLS"]
+	},
+	{
+		"name": "Edge Certificates",
+		"deeplink": "/?to=/:account/:zone/ssl-tls/edge-certificates",
+		"parent": ["SSL/TLS"]
+	},
+	{
+		"name": "Staging Certificates",
+		"deeplink": "/?to=/:account/:zone/ssl-tls/staging-certificates",
+		"parent": ["SSL/TLS"]
+	},
+	{
+		"name": "Client Certificates",
+		"deeplink": "/?to=/:account/:zone/ssl-tls/client-certificates",
+		"parent": ["SSL/TLS"]
+	},
+	{
+		"name": "Origin Server",
+		"deeplink": "/?to=/:account/:zone/ssl-tls/origin",
+		"parent": ["SSL/TLS"]
+	},
+	{
+		"name": "Custom Hostnames",
+		"deeplink": "/?to=/:account/:zone/ssl-tls/custom-hostnames",
+		"parent": ["SSL/TLS"]
+	},
+	{
+		"name": "Security",
+		"deeplink": "/?to=/:account/:zone/security"
+	},
+	{
+		"name": "Overview",
+		"deeplink": "/?to=/:account/:zone/security/overview",
+		"parent": ["Security"]
+	},
+	{
+		"name": "Analytics",
+		"deeplink": "/?to=/:account/:zone/security/analytics",
+		"parent": ["Security"]
+	},
+	{
+		"name": "Web assets",
+		"deeplink": "/?to=/:account/:zone/security/web-assets",
+		"parent": ["Security"]
+	},
+	{
+		"name": "Security rules",
+		"deeplink": "/?to=/:account/:zone/security/security-rules",
+		"parent": ["Security"]
+	},
+	{
+		"name": "Settings",
+		"deeplink": "/?to=/:account/:zone/security/settings",
+		"parent": ["Security"]
+	},
+	{
+		"name": "Access",
+		"deeplink": "/?to=/:account/:zone/access"
+	},
+	{
+		"name": "Speed",
+		"deeplink": "/?to=/:account/:zone/speed"
+	},
+	{
+		"name": "Observatory",
+		"deeplink": "/?to=/:account/:zone/speed/test",
+		"parent": ["Speed"]
+	},
+	{
+		"name": "Optimization",
+		"deeplink": "/?to=/:account/:zone/speed/optimization",
+		"parent": ["Speed"]
+	},
+	{
+		"name": "Overview",
+		"deeplink": "/?to=/:account/:zone/caching",
+		"parent": ["Caching"]
+	},
+	{
+		"name": "Configuration",
+		"deeplink": "/?to=/:account/:zone/caching/configuration",
+		"parent": ["Caching"]
+	},
+	{
+		"name": "Cache Rules",
+		"deeplink": "/?to=/:account/:zone/caching/cache-rules",
+		"parent": ["Caching"]
+	},
+	{
+		"name": "Tiered Cache",
+		"deeplink": "/?to=/:account/:zone/caching/tiered-cache",
+		"parent": ["Caching"]
+	},
+	{
+		"name": "Cache Reserve",
+		"deeplink": "/?to=/:account/:zone/caching/cache-reserve",
+		"parent": ["Caching"]
+	},
+	{
+		"name": "Workers Routes",
+		"deeplink": "/?to=/:account/:zone/workers"
+	},
+	{
+		"name": "Rules",
+		"deeplink": "/?to=/:account/:zone/rules"
+	},
+	{
+		"name": "Overview",
+		"deeplink": "/?to=/:account/:zone/rules/overview",
+		"parent": ["Rules"]
+	},
+	{
+		"name": "Snippets",
+		"deeplink": "/?to=/:account/:zone/rules/snippets",
+		"parent": ["Rules"]
+	},
+	{
+		"name": "Cloud Connector",
+		"deeplink": "/?to=/:account/:zone/rules/cloud-connector",
+		"parent": ["Rules"]
+	},
+	{
+		"name": "Trace",
+		"deeplink": "/?to=/:account/:zone/rules/trace/search",
+		"parent": ["Rules"]
+	},
+	{
+		"name": "Page Rules",
+		"deeplink": "/?to=/:account/:zone/rules/page-rules",
+		"parent": ["Rules"]
+	},
+	{
+		"name": "Settings",
+		"deeplink": "/?to=/:account/:zone/rules/settings",
+		"parent": ["Rules"]
+	},
+	{
+		"name": "Error Pages",
+		"deeplink": "/?to=/:account/:zone/error-pages"
+	},
+	{
+		"name": "Network",
+		"deeplink": "/?to=/:account/:zone/network"
+	},
+	{
+		"name": "Argo Smart Routing",
+		"deeplink": "/?to=/:account/:zone/traffic",
+		"parent": ["Traffic"]
+	},
+	{
+		"name": "Load balancing",
+		"deeplink": "/?to=/:account/:zone/traffic/load-balancing",
+		"parent": ["Traffic"]
+	},
+	{
+		"name": "Load Balancing Analytics",
+		"deeplink": "/?to=/:account/:zone/traffic/load-balancing-analytics",
+		"parent": ["Traffic"]
+	},
+	{
+		"name": "Health Checks",
+		"deeplink": "/?to=/:account/:zone/traffic/health-checks",
+		"parent": ["Traffic"]
+	},
+	{
+		"name": "Health Check Analytics",
+		"deeplink": "/?to=/:account/:zone/traffic/health-check-analytics",
+		"parent": ["Traffic"]
+	},
+	{
+		"name": "Waiting Room",
+		"deeplink": "/?to=/:account/:zone/traffic/waiting-rooms",
+		"parent": ["Traffic"]
+	},
+	{
+		"name": "Scrape Shield",
+		"deeplink": "/?to=/:account/:zone/content-protection"
+	},
+	{
+		"name": "Web3",
+		"deeplink": "/?to=/:account/:zone/web3"
 	}
 ]
