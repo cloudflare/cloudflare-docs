@@ -17,6 +17,6 @@ The retry success ratio among all retryable errors is lower, indicating that the
 
 ![D1 automatically query retries success ratio](~/assets/images/changelog/d1/d1-auto-retry-success-ratio.png)
 
-D1 ensures that any retry attempt does not cause database writes, making the automatic retries safe from side-effects, even if a query slips through the read-only detection. D1 achieves this by checking for modifications after every query execution, and if any write occurred due to a retry attempt, the query is rolled back.
+D1 ensures that any retry attempt does not cause database writes, making the automatic retries safe from side-effects, even if a query causing changes slips through the read-only detection. D1 achieves this by checking for modifications after every query execution, and if any write occurred due to a retry attempt, the query is rolled back.
 
 The read-only query detection heuristics are simple for now, and there is room for improvement to capture more cases of queries that can be retried, so this is just the beginning.
