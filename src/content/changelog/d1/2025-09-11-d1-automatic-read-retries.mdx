@@ -1,13 +1,13 @@
 ---
 title: D1 automatically retries read-only queries
-description: D1 now detects read-only queries and automatically attempts up to 2 retries to execute those queries in the event of failures with retryable errors.
+description: D1 now detects read-only queries and automatically attempts up to two retries to execute those queries in the event of failures with retryable errors.
 products:
   - d1
   - workers
 date: 2025-09-11
 ---
 
-D1 now detects read-only queries and automatically attempts up to 2 retries to execute those queries in the event of failures with retryable errors. You can view the number of execution attempts in the returned [response metadata](/d1/worker-api/return-object/#d1result) property `total_attempts`.
+D1 now detects read-only queries and automatically attempts up to two retries to execute those queries in the event of failures with retryable errors. You can access the number of execution attempts in the returned [response metadata](/d1/worker-api/return-object/#d1result) property `total_attempts`.
 
 At the moment, only read-only queries are retried, that is, queries containing only the following SQLite keywords: `SELECT`, `EXPLAIN`, `WITH`. Queries containing any [SQLite keyword](https://sqlite.org/lang_keywords.html) that leads to database writes are not retried.
 

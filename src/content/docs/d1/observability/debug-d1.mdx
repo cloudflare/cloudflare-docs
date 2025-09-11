@@ -81,7 +81,7 @@ Before retrying any failed operation:
 
 ## Automatic retries
 
-D1 detects read-only queries and automatically attempts up to 2 retries to execute those queries in the event of failures with retryable errors.
+D1 detects read-only queries and automatically attempts up to two retries to execute those queries in the event of failures with retryable errors.
 
 D1 ensures that any retry attempt does not cause database writes, making the automatic retries safe from side-effects, even if a query causing modifications slips through the read-only detection. D1 achieves this by checking for modifications after every query execution, and if any write occurred due to a retry attempt, the query is rolled back.
 
