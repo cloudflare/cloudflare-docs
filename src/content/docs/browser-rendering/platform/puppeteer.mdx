@@ -67,7 +67,9 @@ await page.setUserAgent(
 );
 ```
 
-Note: Modifying `userAgent` will not bypass bot protection as requests from Browser Rendering will always be identified as a bot.  
+:::note
+The `userAgent` parameter does not bypass bot protection. Requests from Browser Rendering will always be identified as a bot. 
+:::
 
 ## Session management
 
