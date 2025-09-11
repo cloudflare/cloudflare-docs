@@ -1,5 +1,4 @@
 ---
-
 summary: Forwarding a Websocket request to a Container
 pcx_content_type: example
 title: Websocket to Container
@@ -8,11 +7,11 @@ sidebar:
 description: Forwarding a Websocket request to a Container
 ---
 
-WebSocket requests are automatically forwarded to a container using the default`fetch`
+WebSocket requests are automatically forwarded to a container using the default `fetch`
 method on the `Container` class:
 
 ```js
-import { Container, getContainer } from "@cloudflare/workers-types";
+import { Container, getContainer } from "@cloudflare/containers";
 
 export class MyContainer extends Container {
 	defaultPort = 8080;
@@ -27,6 +26,5 @@ export default {
 };
 ```
 
-Additionally, the `containerFetch` method can be used to forward WebSocket requests as well.
-
+View a full example in the [Container class repository](https://github.com/cloudflare/containers/tree/main/examples/websocket).
 {/* TODO: Add more advanced examples - like kicking off a WS request then passing messages to container from the WS */}

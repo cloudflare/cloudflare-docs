@@ -25,7 +25,7 @@ by a datacenter in a location with the best latency between itself and the reque
 A different datacenter may be selected to optimize overall latency, if [Smart Placement](/workers/configuration/smart-placement/)
 is on, or if the nearest location is under heavy load.
 
-Because all Container requests are passed through a Worker, end-users cannot make TCP or
+Because all Container requests are passed through a Worker, end-users cannot make non-HTTP TCP or
 UDP requests to a Container instance. If you have a use case that requires inbound TCP
 or UDP from an end-user, please [let us know](https://forms.gle/AGSq54VvUje6kmKu8).
 
@@ -81,25 +81,29 @@ This location will again be the nearest location to the originating request with
 Each container instance runs inside its own VM, which provides strong
 isolation from other workloads running on Cloudflare's network. Containers
 should be built for the `linux/amd64` architecture, and should stay within
-[size limits](/containers/platform-details/limits). [Logging](/containers/faq/#how-do-container-logs-work), metrics collection, and
-networking are automatically set up on each container, if configured by the developer.
+[size limits](/containers/platform-details/limits).
 
-### After a request
+[Logging](/containers/faq/#how-do-container-logs-work), metrics collection, and
+[networking](/containers/faq/#how-do-i-allow-or-disallow-egress-from-my-container) are automatically set up on each container, as configured by the developer.
+
+### Container shutdown
 
 Cloudflare will not actively shut off a container instance after a specific amount of
-time. If you do not set `sleepAfter` on your Container class, or stop the instance
+time. If you do not set [`sleepAfter`](https://github.com/cloudflare/containers/blob/main/README.md#properties) on your Container class, or stop the instance
 manually, it will continue to run unless its host server is restarted. This
 happens on an irregular cadence, but frequently enough where Cloudflare does not
 guarantee that any instance will run for any set period of time.
 
+You can manually shutdown a container instance by calling `stop()` or `destroy()` on it - refer to the [Container package docs](https://github.com/cloudflare/containers/blob/main/README.md#container-methods) for more details.
+
 When a container instance is going to be shut down, it is sent a `SIGTERM` signal,
 and then a `SIGKILL` signal after 15 minutes. You should perform any necessary
-cleanup to ensure a graceful shutdown in this time. The container instance
-will be rebooted elsewhere shortly after this.
+cleanup to ensure a graceful shutdown in this time.
+
+#### Persistent disk
 
 All disk is ephemeral. When a Container instance goes to sleep, the next time
 it is started, it will have a fresh disk as defined by its container image.
-
 Persistent disk is something the Cloudflare team is exploring in the future, but
 is not slated for the near term.
 
