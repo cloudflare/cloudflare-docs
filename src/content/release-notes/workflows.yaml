@@ -3,6 +3,12 @@ link: "/workflows/reference/changelog/"
 productName: Workflows
 productLink: "/workflows/"
 entries:
+  - publish_date: "2025-09-12"
+    title: "Test Workflows locally"
+    description: |-
+      Workflows can now be tested with new test APIs available in the "cloudflare:test" module.
+      
+      More information available in the Vitest integration [docs](/workers/testing/vitest-integration/test-apis/#workflows).
   - publish_date: "2025-05-07"
     title: "Search for specific Workflows"
     description: |-

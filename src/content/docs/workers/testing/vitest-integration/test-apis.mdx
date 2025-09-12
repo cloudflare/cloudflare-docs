@@ -272,6 +272,12 @@ This is accomplished by either:
 
 :::
 
+:::note[Version]
+
+Available in `@cloudflare/vitest-pool-workers` version **0.9.0**!
+
+:::
+
 * `introspectWorkflowInstance(workflow: Workflow, instanceId: string)`: Promise\<WorkflowInstanceIntrospector>
     * Creates an **introspector** for a specific Workflow instance, used to **modify** its behavior, **await** outcomes, and **clear** its state during tests. This is the primary entry point for testing individual Workflow instances with a known ID.
         <br/>
