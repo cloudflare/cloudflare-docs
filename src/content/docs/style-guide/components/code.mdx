@@ -113,7 +113,7 @@ export default {
 ```
 ````
 
-## GraphQL API explorer
+## GraphQL API Explorer
 
 Add `graphql-api-explorer` to the opening code fence to create a `graphql` code block with a **Run in GraphQL API Explorer** button that leads to [GraphQL API Explorer](https://graphql.cloudflare.com/explorer).
 
@@ -141,7 +141,7 @@ query ASingleDatasetExample($zoneTag: string, $start: Time, $end: Time) {
 ```
 ````
 
-## Variables
+### Variables
 
 In the GraphQL API Explorer, the **Variables** section is automatically filled based on the names and types of the variables defined in your query:
 - Variables that include `start` and are of type `Time` are set to six hours before the current time
@@ -156,7 +156,7 @@ In the GraphQL API Explorer, the **Variables** section is automatically filled b
 
 You can also add custom variables by setting their values as a JSON string in the `graphql-api-explorer` metadata. The custom variables will be merged with the automatically populated variables.
 
-For example, here the custom value is `custom-variable`:
+In the following example, the custom value is `custom-variable`:
 
 ````mdx
 ```graphql graphql-api-explorer='{"uID": "custom-variable"}' title="A GraphQL query"
