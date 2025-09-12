@@ -15,7 +15,7 @@ spotlight:
   author_bio_source: LinkedIn
 ---
 
-import { TabItem, Tabs, WranglerConfig, PackageManagers } from "~/components";
+import { TabItem, Tabs, WranglerConfig, PackageManagers, DashButton } from "~/components";
 
 In this tutorial, you will put together a Cloudflare Worker that creates and serves a sitemap using data from [Sanity.io](https://www.sanity.io), a headless CMS.
 
@@ -318,17 +318,19 @@ In this step, you will make the Worker available on a new subdomain using a buil
 
 One of the benefits of using a subdomain is that you do not have to worry about this sitemap conflicting with your root domain's sitemap, since both are probably using the `/sitemap.xml` path.
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
 
-2. In Account Home, select **Workers & Pages**, and then select your Worker.
+<DashButton url="/?to=/:account/workers-and-pages" />
 
-3. Go to **Settings** > **Triggers** > **Custom Domains** > **Add Custom Domain**.
+2. Select your Worker.
+
+3. Go to **Settings** > **Domains & Routes** and select **Add** > ** Custom domain.
 
 4. Enter the domain or subdomain you want to configure for your Worker.
 
    For this tutorial, use a subdomain on the domain that is in your sitemap. For example, if your sitemap outputs URLs like `www.example.com` then a suitable subdomain is `cms.example.com`.
 
-5. Select **Add Custom Domain**.
+5. Select **Add domain**.
 
    After adding the subdomain, Cloudflare automatically adds the proper DNS record binding the Worker to the subdomain.
 

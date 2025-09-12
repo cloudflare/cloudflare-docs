@@ -341,6 +341,10 @@ Upon receiving a request, the code above does the following:
 </TabItem>
 </Tabs>
 
+### Run in development mode (optional)
+
+You can start your project in development mode. If you want to connect to the local database configured in your `wrangler.jsonc` with `localConnectionString` (e.g. `localhost:5432`), you can now run `wrangler dev`. This will connect directly to your database from your local Worker project emulation (Hyperdrive caching will not take effect, and the local database must not require SSL). To develop using a remote database, you can connect to your Hyperdrive configuration by running `wrangler dev --remote`.
+
 ## 6. Deploy your Worker
 
 You can now deploy your Worker to make your project accessible on the Internet. To deploy your Worker, run:

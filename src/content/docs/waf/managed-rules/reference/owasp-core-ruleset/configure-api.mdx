@@ -138,6 +138,9 @@ This example sets the Cloudflare OWASP Core Ruleset's paranoia level for a zone 
     		expression: "true",
     		enabled: true,
     	}}
+    	code={{
+    		mark: [{ range: "8-19" }],
+    	}}
     	roles={false}
     />
 
@@ -296,6 +299,9 @@ This example configures the managed ruleset score threshold and the performed ac
    		},
    		expression: "true",
    		enabled: true,
+   	}}
+   	code={{
+   		mark: [{ range: "12-13" }],
    	}}
    	roles={false}
    />

@@ -1,29 +1,53 @@
 ---
-title: Select AI crawlers to charge
-pcx_content_type: concept
+title: Select crawlers to charge
+pcx_content_type: how-to
 sidebar:
-  order: 13
+  order: 4
 ---
 
 import { Steps } from "~/components";
 
 ```mermaid
 graph LR
-A[Set up your<br>Cloudflare Account] --> B[Connect to<br>Stripe]
-B --> C[Set pay per<br>crawl price]
-C --> D[Select AI crawlers<br>to charge]:::highlight
-D --> E[Monitor<br>metrics]
+A[Enable in<br>account settings] --> B[Set a pay per <br/>crawl price ]
+B --> C[Select crawlers<br>to charge]:::highlight
+C --> D[Monitor<br>activity]
+D --> E[Manage<br>payouts]
 classDef highlight fill:#F6821F,color:white
+
+click A "/ai-crawl-control/features/pay-per-crawl/use-pay-per-crawl-as-site-owner/enable-in-account-settings/"
+click B "/ai-crawl-control/features/pay-per-crawl/use-pay-per-crawl-as-site-owner/set-a-pay-per-crawl-price/"
+click D "/ai-crawl-control/features/pay-per-crawl/use-pay-per-crawl-as-site-owner/monitor-activity/"
+click E "/ai-crawl-control/features/pay-per-crawl/use-pay-per-crawl-as-site-owner/manage-payouts/"
 ```
 
-Once you have set a pay per crawl price, AI Crawl Control automatically sets the default action for all applicable AI crawlers as **Charge**. However, you can control which action to take for each AI crawler.
+Once you have enabled pay per crawl and set a price, you can specify which AI crawlers to charge for accessing your content.
 
 {/* prettier-ignore */}
 <Steps>
-1. Go to the **AI Crawlers** tab.
-2. Use the selection slider in the **Actions** column to configure the setting for each AI crawler.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
+2. Go to **AI Crawl Control**.
+3. Go to the **Crawlers** tab.
+4. For each crawler, choose an action from the **Actions** column:
+   - **Charge**: Charge the set price for successful content access
+   - **Allow**: Allow free access without charging
+   - **Block**: Block access completely
 </Steps>
 
-AI crawlers for which you select **Charge** will be prompted to pay your configured pay per crawl price each time they attempt to scrape content from a zone.
+:::tip[Search Engine Crawlers and SEO]
+Use the **Category** column to identify which bots are **Search Engine Crawlers**. Setting these crawlers to **Block** or **Charge** may negatively impact your site's SEO performance, as search engines may not be able to properly index your content.
+:::
 
-Refer to [Manage AI crawlers](/ai-crawl-control/features/manage-ai-crawlers/) for more information on how to manage AI crawlers.
+## Bulk actions
+
+To configure multiple crawlers at once:
+
+{/* prettier-ignore */}
+<Steps>
+1. Use the filters (Name, Operator, Category) to narrow down the crawler list.
+2. Select the crawlers you want to configure by checking their boxes.
+3. Bulk action options will appear above the table.
+4. Select the desired action and apply the changes.
+</Steps>
+
+For more information on managing AI crawlers, refer to [Manage AI crawlers](/ai-crawl-control/features/manage-ai-crawlers/).

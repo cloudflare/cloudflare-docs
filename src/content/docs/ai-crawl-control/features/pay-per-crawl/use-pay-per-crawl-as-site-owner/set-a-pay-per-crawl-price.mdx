@@ -1,32 +1,40 @@
 ---
 title: Set a pay per crawl price
-pcx_content_type: concept
+pcx_content_type: how-to
 sidebar:
-  order: 10
+  order: 3
 ---
 
 import { Steps } from "~/components";
 
 ```mermaid
 graph LR
-A[Set up your<br>Cloudflare Account] --> B[Connect to<br>Stripe]
-B --> C[Set pay per<br>crawl price]:::highlight
-C --> D[Select AI crawlers<br>to charge]
-D --> E[Monitor<br>metrics]
+A[Enable in<br>account settings] --> B[Set a pay per <br/>crawl price ]:::highlight
+B --> C[Select crawlers<br>to charge]
+C --> D[Monitor<br>activity]
+D --> E[Manage<br>payouts]
 classDef highlight fill:#F6821F,color:white
+
+click A "/ai-crawl-control/features/pay-per-crawl/use-pay-per-crawl-as-site-owner/enable-in-account-settings/"
+click C "/ai-crawl-control/features/pay-per-crawl/use-pay-per-crawl-as-site-owner/select-crawlers-to-charge/"
+click D "/ai-crawl-control/features/pay-per-crawl/use-pay-per-crawl-as-site-owner/monitor-activity/"
+click E "/ai-crawl-control/features/pay-per-crawl/use-pay-per-crawl-as-site-owner/manage-payouts/"
 ```
-Once you have connected your Stripe account, you can set your pay per crawl price.
+
+Once your domain's visibility is set to **Visible** in Account Settings, you can set a pay per crawl price and enable pay per crawl for that domain.
 
 {/* prettier-ignore */}
 <Steps>
-1. From the [Cloudflare dashboard](https://dash.cloudflare.com/), select your account and domain.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
 2. Go to **AI Crawl Control**.
 3. Go to the **Settings** tab.
-4. From **Pay Per Crawl**, select the **Edit** icon under **Pay Per Crawl price**.
-5. Enter the pay per crawl price you wish to set. Note that smallest unit of payment is 0.01 USD.
+4. In the **Pay Per Crawl** card, select **Enable**.
+5. Set your per crawl price - this is the amount charged for each successful content retrieval (HTTP 200 response) by an AI crawler.
 6. Select **Save**.
 </Steps>
 
-:::note
-When you configure a pay per crawl price, AI Crawl Control automatically sets the default action for all applicable AI crawlers as **Charge**.
+After enabling and setting a price, the domain's status in Account Settings will change to **Enabled**.
+
+:::note[Pricing considerations]
+The minimum price is $0.01 USD per crawl. Consider your content value and expected crawler volume when setting your price.
 :::

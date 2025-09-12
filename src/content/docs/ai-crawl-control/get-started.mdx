@@ -34,13 +34,13 @@ To only block specific AI crawlers:
 {/* prettier-ignore */}
 <Steps>
 1. Go to **AI Crawl Control**.
-2. From the **AI Crawlers** tab, go to the list of AI crawlers.
+2. From the **Crawlers** tab, go to the list of AI crawlers.
 3. Review the AI crawlers that are accessing your domain.
 4. From the **Block** column, select the option **Block**.
 </Steps>
 
 :::note[Quality of AI crawler detection]
-On the free plan, AI Crawl Control identifies AI crawlers based on their [user agent strings](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/User-Agent). This enables AI Crawl Control to detect easy-to-detect (well-known) AI crawlers.
+On the free plan, AI Crawl Control identifies AI crawlers based on their [user agent strings](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/User-Agent). This enables AI Crawl Control to detect well-known, self-identifying AI crawlers.
 
 Upgrade your plan to enable a more thorough detection using Cloudflare's [Bot Management detection ID](/bots/reference/bot-management-variables/#ruleset-engine-fields) field.
 :::
@@ -52,7 +52,7 @@ To only block specific AI crawlers:
 {/* prettier-ignore */}
 <Steps>
 1. Go to **AI Crawl Control**.
-2. From the **AI Crawlers** tab, go to the list of AI crawlers.
+2. From the **Crawlers** tab, go to the list of AI crawlers.
 3. Review key information such as:
    - Bot operator
    - Number of requests sent by the AI crawler

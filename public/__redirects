@@ -153,6 +153,12 @@
 /ai-audit/features/enforce-robots-txt/ /ai-crawl-control/features/analyze-ai-crawlers/ 301
 /ai-audit/features/analyze-ai-crawlers/ /ai-crawl-control/features/analyze-ai-traffic/ 301
 
+# ai crawl control
+/ai-crawl-control/reference/faq/ /ai-crawl-control/features/pay-per-crawl/faq/ 301
+/ai-crawl-control/features/pay-per-crawl/use-pay-per-crawl-as-site-owner/set-up-cloudflare-account/ /ai-crawl-control/features/pay-per-crawl/use-pay-per-crawl-as-site-owner/enable-in-account-settings/ 301
+/ai-crawl-control/features/pay-per-crawl/use-pay-per-crawl-as-site-owner/connect-to-stripe/ /ai-crawl-control/features/pay-per-crawl/use-pay-per-crawl-as-site-owner/manage-payouts/ 301
+/ai-crawl-control/features/pay-per-crawl/use-pay-per-crawl-as-site-owner/monitor-metrics/ /ai-crawl-control/features/pay-per-crawl/use-pay-per-crawl-as-site-owner/monitor-activity/ 301
+
 # AI Gateway
 /ai-gateway/get-started/configuring-settings/ /ai-gateway/get-started/ 301
 /ai-gateway/get-started/connecting-applications/ /ai-gateway/get-started/ 301
@@ -209,7 +215,7 @@
 /analytics/analytics-integrations/google-cloud/ /analytics/analytics-integrations/ 301
 /analytics/dashboards/ /log-explorer/custom-dashboards/ 301
 /analytics/analytics-integrations/looker/ /analytics/analytics-integrations/ 301
-/analytics/network-analytics/reference/network-analytics-v1/ /analytics/graphql-api/migration-guides/network-analytics-v2/ 301 
+/analytics/network-analytics/reference/network-analytics-v1/ /analytics/graphql-api/migration-guides/network-analytics-v2/ 301
 
 # email-security
 /email-security/reporting/search/detection-search/ /email-security/reporting/search/ 301

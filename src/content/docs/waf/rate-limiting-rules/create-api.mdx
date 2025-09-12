@@ -91,6 +91,9 @@ The new rule defines a [custom response](/waf/rate-limiting-rules/create-zone-da
 			mitigation_timeout: 600,
 		},
 	}}
+	code={{
+		mark: [{ range: "9-13" }],
+	}}
 	roles={false}
 />
 
@@ -121,6 +124,7 @@ The new rule does not consider requests for cached assets when calculating the r
 			requests_to_origin: true,
 		},
 	}}
+	code={{ mark: [17] }}
 	roles={false}
 />
 
@@ -151,6 +155,9 @@ The new rule is a complexity-based rate limiting rule that takes the `my-score` 
 			mitigation_timeout: 600,
 			counting_expression: "",
 		},
+	}}
+	code={{
+		mark: [{ range: "13-14" }],
 	}}
 	roles={false}
 />
