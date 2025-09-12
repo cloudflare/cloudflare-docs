@@ -84,9 +84,9 @@ During local development, your Worker code interacts with these bindings using t
 		{
 			"bucket_name": "screenshots-bucket",
 			"binding": "screenshots_bucket",
-			"remote": true
-		}
-	]
+			"remote": true,
+		},
+	],
 }
 ```
 
@@ -118,9 +118,9 @@ If preview configuration is present for a binding, setting `remote: true` will e
 			"bucket_name": "screenshots-bucket",
 			"binding": "screenshots_bucket",
 			"preview_bucket_name": "preview-screenshots-bucket",
-			"remote": true
-		}
-	]
+			"remote": true,
+		},
+	],
 }
 ```
 
@@ -354,54 +354,56 @@ The function:
 Here's a basic example of using Miniflare with `maybeStartOrUpdateRemoteProxySession` to provide a local dev session with remote bindings. This example uses a single hardcoded KV binding.
 
 <TypeScriptExample>
+
 ```ts
 import { Miniflare, MiniflareOptions } from "miniflare";
 import { maybeStartOrUpdateRemoteProxySession } from "wrangler";
 
 let mf: Miniflare | null;
 
-let remoteProxySessionDetails: Awaited<ReturnType<typeof maybeStartOrUpdateRemoteProxySession>> | null = null;
+let remoteProxySessionDetails: Awaited<
+	ReturnType<typeof maybeStartOrUpdateRemoteProxySession>
+> | null = null;
 
 async function startOrUpdateDevSession() {
-remoteProxySessionDetails = await maybeStartOrUpdateRemoteProxySession({
-bindings: {
-MY_KV: {
-type: 'kv_namespace',
-id: 'kv-id',
-remote: true,
-}
-}
-},
-remoteProxySessionDetails
-);
+	remoteProxySessionDetails = await maybeStartOrUpdateRemoteProxySession(
+		{
+			bindings: {
+				MY_KV: {
+					type: "kv_namespace",
+					id: "kv-id",
+					remote: true,
+				},
+			},
+		},
+		remoteProxySessionDetails,
+	);
 
-    const miniflareOptions: MiniflareOptions = {
-    	scriptPath: "./worker.js",
-    	kvNamespaces: {
-    		MY_KV: {
-    			id: "kv-id",
-    			remoteProxyConnectionString:
-    			remoteProxySessionDetails?.session.remoteProxyConnectionString,
-    		},
-    	},
-    };
+	const miniflareOptions: MiniflareOptions = {
+		scriptPath: "./worker.js",
+		kvNamespaces: {
+			MY_KV: {
+				id: "kv-id",
+				remoteProxyConnectionString:
+					remoteProxySessionDetails?.session.remoteProxyConnectionString,
+			},
+		},
+	};
 
-    if (!mf) {
-    	mf = new Miniflare(miniflareOptions);
-    } else {
-    	mf.setOptions(miniflareOptions);
-    }
-
+	if (!mf) {
+		mf = new Miniflare(miniflareOptions);
+	} else {
+		mf.setOptions(miniflareOptions);
+	}
 }
 
 // ... tool logic that invokes `startOrUpdateDevSession()` ...
 
 // ... once the dev session is no longer needed run
 // `remoteProxySessionDetails?.session.dispose()`
-
 ```
-</TypeScriptExample>
 
+</TypeScriptExample>
 
 ## `wrangler dev --remote` (Legacy)
 
@@ -425,5 +427,3 @@ When using remote development, all bindings automatically connect to their remot
 ### Limitations
 
 - When you run a remote development session using the `--remote` flag, a limit of 50 [routes](/workers/configuration/routing/routes/) per zone is enforced. Learn more in[ Workers platform limits](/workers/platform/limits/#number-of-routes-per-zone-when-using-wrangler-dev---remote).
-
-```
