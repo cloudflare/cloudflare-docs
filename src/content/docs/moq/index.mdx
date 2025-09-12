@@ -33,7 +33,7 @@ For the most up-to-date documentation on the protocol, please visit the IETF wor
   
   In section 7.3.1, `draft-ietf-moq-transport-07` [specifies](https://www.ietf.org/archive/id/draft-ietf-moq-transport-07.html#section-7.3.1):
   
-  ```
+  ```txt
   STREAM_HEADER_SUBGROUP Message {
     Track Alias (i),
     Group ID (i),
@@ -43,7 +43,7 @@ For the most up-to-date documentation on the protocol, please visit the IETF wor
   ```
   
   Whereas our implementation expects and produces:
-  ```
+  ```txt
   STREAM_HEADER_SUBGROUP Message {
     Subscribe ID (i),
     Track Alias (i),
@@ -53,4 +53,4 @@ For the most up-to-date documentation on the protocol, please visit the IETF wor
   }
   ```
   
-  This was erroroneously left over from a previous draft version and will be fixed in a future release. Thanks to [@yuki-uchida](https://github.com/yuki-uchida) for reporting!
+  This was erroroneously left over from a previous draft version and will be fixed in a future release. Thank you to [@yuki-uchida](https://github.com/yuki-uchida) for reporting.
