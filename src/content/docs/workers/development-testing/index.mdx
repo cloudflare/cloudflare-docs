@@ -69,7 +69,7 @@ During local development, your Worker code interacts with these bindings using t
 
 ## Remote bindings
 
-**Remote bindings** are bindings that are configured to connect to the deployed, remote resource during local development _instead_ of the locally simulated resource. You can configure remote bindings by setting `remote: true` in the binding definition.
+**Remote bindings** are bindings that are configured to connect to the deployed, remote resource during local development _instead_ of the locally simulated resource. Remote bindings are supported by [**Wrangler**](/workers/wrangler/), the [**Cloudflare Vite plugin**](/workers/vite-plugin/), and the `@cloudflare/vitest-pool-workers` package. You can configure remote bindings by setting `remote: true` in the binding definition.
 
 ### Example configuration
 
@@ -363,16 +363,16 @@ let mf: Miniflare | null;
 let remoteProxySessionDetails: Awaited<ReturnType<typeof maybeStartOrUpdateRemoteProxySession>> | null = null;
 
 async function startOrUpdateDevSession() {
-    remoteProxySessionDetails = await maybeStartOrUpdateRemoteProxySession({
-        bindings: {
-            MY_KV: {
-                type: 'kv_namespace',
-                id: 'kv-id',
-                remote: true,
-            }
-        }
-    },
-    remoteProxySessionDetails
+remoteProxySessionDetails = await maybeStartOrUpdateRemoteProxySession({
+bindings: {
+MY_KV: {
+type: 'kv_namespace',
+id: 'kv-id',
+remote: true,
+}
+}
+},
+remoteProxySessionDetails
 );
 
     const miniflareOptions: MiniflareOptions = {
