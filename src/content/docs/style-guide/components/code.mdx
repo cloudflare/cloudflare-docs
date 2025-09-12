@@ -143,7 +143,7 @@ query ASingleDatasetExample($zoneTag: string, $start: Time, $end: Time) {
 
 ## Variables
 
-In the GraphQL API Explorer, the Variables section is automatically filled based on the names and types of the variables defined in your query:
+In the GraphQL API Explorer, the **Variables** section is automatically filled based on the names and types of the variables defined in your query:
 - Variables that include `start` and are of type `Time` are set to six hours before the current time
 - Variables that include `end` and are of type `Time` are set to the current time
 - Variables that include `start` and are of type `Date` are set to 24 hours before the current date
@@ -152,10 +152,13 @@ In the GraphQL API Explorer, the Variables section is automatically filled based
 - Variables that include `accountTag` and are of type `string` are set to "ACCOUNT_ID"
 - Variables that include `id` and are of type `string` are set to "REPLACE_WITH_ID"
 - Variables that include `limit` and are of type `int` are set to 100
-- Any variable with a type of `string` is set to "REPLACE_WITH_STRING"
+- Any other variable with a type of `string` is set to "REPLACE_WITH_STRING"
 
-You can also add custom variables by setting their values as a JSON string in the `graphql-api-explorer` metadata. The custom variables will be merged with the automatically populated variables. For example:
+You can also add custom variables by setting their values as a JSON string in the `graphql-api-explorer` metadata. The custom variables will be merged with the automatically populated variables.
 
+For example, here the custom value is `custom-variable`:
+
+````mdx
 ```graphql graphql-api-explorer='{"uID": "custom-variable"}' title="A GraphQL query"
 query GraphqlExample($zoneTag: string, $start: Time, $end: Time) {
  viewer {
@@ -165,8 +168,9 @@ query GraphqlExample($zoneTag: string, $start: Time, $end: Time) {
  }
 }
 ```
+````
 
-Variables:
+So, the **Variables** would look something like this:
 
 ```
 {"zoneTag":"ZONE_ID", "start":"2025-09-11T14:00:00Z", "end":"2025-09-11T20:00:00Z", "uId": "custom-variable"}
