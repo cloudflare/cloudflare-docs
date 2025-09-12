@@ -303,11 +303,11 @@ Wrangler provides programmatic utilities to help tooling authors support remote 
 
 **Key APIs include:**
 
-- [`experimental_startRemoteProxySession`](#experimental_startRemoteProxySession): Starts a proxy session that allows interaction with remote bindings.
+- [`startRemoteProxySession`](#startRemoteProxySession): Starts a proxy session that allows interaction with remote bindings.
 - [`unstable_convertConfigBindingsToStartWorkerBindings`](#unstable_convertconfigbindingstostartworkerbindings): Utility for converting binding definitions.
 - [`experimental_maybeStartOrUpdateProxySession`](#experimental_maybestartorupdatemixedmodesession): Convenience function to easily start or update a proxy session.
 
-#### `experimental_startRemoteProxySession`
+#### `startRemoteProxySession`
 
 This function starts a proxy session for a given set of bindings. It accepts options to control session behavior, including an `auth` option with your Cloudflare account ID and API token for remote binding access.
 
@@ -321,15 +321,15 @@ It returns an object with:
 #### `unstable_convertConfigBindingsToStartWorkerBindings`
 
 The `unstable_readConfig` utility returns an `Unstable_Config` object which includes the definition of the bindings included in the configuration file. These bindings definitions
-are however not directly compatible with `experimental_startRemoteProxySession`. It can be quite convenient to however read the binding declarations with `unstable_readConfig` and then
-pass them to `experimental_startRemoteProxySession`, so for this wrangler exposes `unstable_convertConfigBindingsToStartWorkerBindings` which is a simple utility to convert
-the bindings in an `Unstable_Config` object into a structure that can be passed to `experimental_startRemoteProxySession`.
+are however not directly compatible with `startRemoteProxySession`. It can be quite convenient to however read the binding declarations with `unstable_readConfig` and then
+pass them to `startRemoteProxySession`, so for this wrangler exposes `unstable_convertConfigBindingsToStartWorkerBindings` which is a simple utility to convert
+the bindings in an `Unstable_Config` object into a structure that can be passed to `startRemoteProxySession`.
 
 :::note
-This type conversion is temporary. In the future, the types will be unified so you can pass the config object directly to `experimental_startRemoteProxySession`.
+This type conversion is temporary. In the future, the types will be unified so you can pass the config object directly to `startRemoteProxySession`.
 :::
 
-#### `experimental_maybeStartOrUpdateRemoteProxySession`
+#### `maybeStartOrUpdateRemoteProxySession`
 
 This wrapper simplifies proxy session management. It takes:
 
@@ -347,23 +347,23 @@ The function:
 - If there are no remote bindings to be used (nor a pre-existing proxy session) it returns null, signaling that no proxy session is needed.
 - If the details of an existing proxy session have been provided it updates the proxy session accordingly.
 - Otherwise if starts a new proxy session.
-- Returns the proxy session details (that can later be passed as the second argument to `experimental_maybeStartOrUpdateRemoteProxySession`).
+- Returns the proxy session details (that can later be passed as the second argument to `maybeStartOrUpdateRemoteProxySession`).
 
 #### Example
 
-Here's a basic example of using Miniflare with `experimental_maybeStartOrUpdateRemoteProxySession` to provide a local dev session with remote bindings. This example uses a single hardcoded KV binding.
+Here's a basic example of using Miniflare with `maybeStartOrUpdateRemoteProxySession` to provide a local dev session with remote bindings. This example uses a single hardcoded KV binding.
 
 <TypeScriptExample>
 ```ts
 import { Miniflare, MiniflareOptions } from "miniflare";
-import { experimental_maybeStartOrUpdateRemoteProxySession } from "wrangler";
+import { maybeStartOrUpdateRemoteProxySession } from "wrangler";
 
 let mf: Miniflare | null;
 
-let remoteProxySessionDetails: Awaited<ReturnType<typeof experimental_maybeStartOrUpdateRemoteProxySession>> | null = null;
+let remoteProxySessionDetails: Awaited<ReturnType<typeof maybeStartOrUpdateRemoteProxySession>> | null = null;
 
 async function startOrUpdateDevSession() {
-remoteProxySessionDetails = await experimental_maybeStartOrUpdateRemoteProxySession({
+remoteProxySessionDetails = await maybeStartOrUpdateRemoteProxySession({
 bindings: {
 MY_KV: {
 type: 'kv_namespace',
@@ -426,3 +426,4 @@ When using remote development, all bindings automatically connect to their remot
 
 - When you run a remote development session using the `--remote` flag, a limit of 50 [routes](/workers/configuration/routing/routes/) per zone is enforced. Learn more in[ Workers platform limits](/workers/platform/limits/#number-of-routes-per-zone-when-using-wrangler-dev---remote).
 
+```
