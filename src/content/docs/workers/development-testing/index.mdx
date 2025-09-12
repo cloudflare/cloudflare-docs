@@ -363,16 +363,16 @@ let mf: Miniflare | null;
 let remoteProxySessionDetails: Awaited<ReturnType<typeof maybeStartOrUpdateRemoteProxySession>> | null = null;
 
 async function startOrUpdateDevSession() {
-remoteProxySessionDetails = await maybeStartOrUpdateRemoteProxySession({
-bindings: {
-MY_KV: {
-type: 'kv_namespace',
-id: 'kv-id',
-remote: true,
-}
-}
-},
-remoteProxySessionDetails
+    remoteProxySessionDetails = await maybeStartOrUpdateRemoteProxySession({
+        bindings: {
+            MY_KV: {
+                type: 'kv_namespace',
+                id: 'kv-id',
+                remote: true,
+            }
+        }
+    },
+    remoteProxySessionDetails
 );
 
     const miniflareOptions: MiniflareOptions = {
