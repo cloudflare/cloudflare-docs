@@ -99,3 +99,35 @@ wrangler containers push [TAG] [OPTIONS]
 - `--path-to-docker` <Type text="string" /> <MetaInfo text="optional" />
   - Path to your docker binary if it's not on `$PATH`.
   - Default: "docker"
+
+<AnchorHeading title="`ssh`" slug="containers-ssh" depth={3} />
+
+```txt
+wrangler containers ssh [CONTAINER_ID] [OPTIONS]
+```
+
+- `CONTAINER_ID` <Type text="string" /> <MetaInfo text="required" />
+  - The ID of the Container to SSH into.
+- `--cipher` <Type text="string" /> <MetaInfo text="optional" />
+  - SSH option for cipher_spec
+- `--log-file` <Type text="string" /> <MetaInfo text="optional" />
+  - SSH option for log_file
+- `--escape-char` <Type text="string" /> <MetaInfo text="optional" />
+  - SSH option for escape_char
+- `--config-file` <Type text="string" /> <MetaInfo text="optional" />
+  - SSH option for config-file
+- `--pkcs11` <Type text="string" /> <MetaInfo text="optional" />
+  - SSH option for pkcs11
+- `--identity-file` <Type text="string" /> <MetaInfo text="optional" />
+  - SSH option for identity_file
+- `--mac-spec` <Type text="string" /> <MetaInfo text="optional" />
+  - SSH option for mac_spec
+- `--ctl-cmd` <Type text="string" /> <MetaInfo text="optional" />
+  - SSH option for ctl_cmd
+- `--option` <Type text="string" /> <MetaInfo text="optional" />
+  - SSH option for option
+- `--tag` <Type text="string" /> <MetaInfo text="optional" />
+  - SSH option for tag
+- `--ctl-path` <Type text="string" /> <MetaInfo text="optional" />
+  - SSH option for ctl_path
+
