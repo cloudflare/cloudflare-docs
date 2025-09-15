@@ -2,4 +2,9 @@
 {}
 ---
 
-To forward DNS traffic from the subnet to Cloudflare Gateway, your router should point DNS queries to either WARP Connector's [local DNS proxy](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#dns-traffic) (for example, `10.0.0.100:53`) or directly to the Gateway DNS resolver IPs (`172.64.36.1` and `172.64.36.2`).
+To forward DNS traffic from the subnet to Cloudflare Gateway, your router should point DNS queries to the shared IP addresses for the Gateway DNS resolver:
+
+- `172.64.36.1`
+- `172.64.36.2`
+
+You will also need to [add an IP route](#add-ip-route-to-router) which routes these Gateway resolver IPs to the WARP Connector host machine.
