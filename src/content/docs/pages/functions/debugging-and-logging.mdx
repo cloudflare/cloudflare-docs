@@ -10,6 +10,8 @@ banner:
     id: pages-migrate-to-workers
 ---
 
+import { DashButton } from "~/components";
+
 Access your Functions logs by using the Cloudflare dashboard or the [Wrangler CLI](/workers/wrangler/commands/#deployment-tail).
 
 Logs are a powerful debugging tool that can help you test and monitor the behavior of your Pages Functions once they have been deployed. Logs are available for every deployment of your Pages project.
@@ -94,9 +96,10 @@ The output of each `wrangler pages deployment tail` log is a structured JSON obj
 
 To view logs for your `production` or `preview` environments associated with any deployment:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. In **Account Home**, select **Workers & Pages**.
-3. Select your Pages project, go to the deployment you want to view logs for and select **View details** > **Functions**.
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+2. Select your Pages project, go to the deployment you want to view logs for and select **View details** > **Functions**.
 
 Logging is available for all customers (Free, Paid, Enterprise).
 

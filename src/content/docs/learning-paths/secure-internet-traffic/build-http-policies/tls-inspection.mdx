@@ -5,7 +5,14 @@ sidebar:
   order: 1
 ---
 
-import { GlossaryTooltip, Render, TabItem, Tabs, Badge } from "~/components";
+import {
+	GlossaryTooltip,
+	Render,
+	TabItem,
+	Tabs,
+	Badge,
+	APIRequest,
+} from "~/components";
 
 TLS inspection (also known as TLS decryption or HTTPS inspection) allows Cloudflare Gateway to perform deeper traffic analysis and take actions like scanning request bodies for sensitive data, upgrading to a remote browser isolation session, and redirecting based on the complete URL and path of requests.
 
@@ -87,57 +94,38 @@ For example, if users are issued a corporate-managed iPhone with limited permiss
 
 1. Create a list of device serial numbers that you do not want to inspect.
 
-   ```bash
-   curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/lists \
-   --header "X-Auth-Email: <EMAIL>" \
-   --header "X-Auth-Key: <API_KEY>" \
-   --header "Content-Type: application/json" \
-   --data '{
-     "description": "The serial numbers for administrators",
-     "items": [
-       {
-         "value": "8GE8721REF"
-       }
-     ],
-     "name": "Admin Serial Numbers",
-     "type": "SERIAL"
-   }'
-   ```
+   <APIRequest
+   	path="/accounts/{account_id}/gateway/lists"
+   	method="POST"
+   	json={{
+   		description: "The serial numbers for administrators",
+   		items: [
+   			{
+   				value: "8GE8721RE",
+   			},
+   		],
+   		name: "Admin Serial Numbers",
+   		type: "SERIAL",
+   	}}
+   />
 
 2. Create a Do Not Inspect policy that checks the device against the list of serial numbers.
 
-   ```bash
-   curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
-   --header "X-Auth-Email: <EMAIL>" \
-   --header "X-Auth-Key: <API_KEY>" \
-   --header "Content-Type: application/json" \
-   --data '{
-     "name": "Do not inspect corporate devices",
-     "conditions": [
-       {
-         "type": "device_posture",
-         "expression": {
-           "any": {
-             "in": {
-               "lhs": {
-                 "splat": "device_posture.checks.passed"
-               },
-               "rhs": [
-                 "{serial_number_list_uuid}"
-               ]
-             }
-           }
-         }
-       }
-     ],
-     "action": "off",
-     "precedence": 14002,
-     "enabled": true,
-     "filters": [
-       "http"
-     ]
-   }'
-   ```
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "Do not inspect corporate devices",
+		traffic: "",
+		identity: "",
+		device_posture:
+			'any(device_posture.checks.passed[*] in {"<SERIAL_NUMBER_LIST_UUID>"})',
+		action: "off",
+		precedence: 14002,
+		enabled: true,
+		filters: ["http"],
+	}}
+/>
 
 </TabItem> </Tabs>
 
@@ -151,28 +139,16 @@ If you filter your network-connected devices with Magic WAN tunnels, the WARP Co
 
 </TabItem> <TabItem label="API">
 
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---header "Content-Type: application/json" \
---data '{
-  "name": "Do not inspect corporate devices",
-  "conditions": [
-    {
-      "type": "traffic",
-      "expression": {
-        "in": {
-          "lhs": "http.conn.internal_src_ip",
-          "rhs": [
-            {
-              "cidr": "203.0.113.0/24"
-            }
-          ]
-        }
-      }
-    }
-  ]
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "Do not inspect corporate devices",
+		traffic: "http.conn.internal_src_ip in {203.0.113.0/24}",
+		identity: "",
+		device_posture: "",
+		action: "off",
+	}}
+/>
 
 </TabItem> </Tabs>

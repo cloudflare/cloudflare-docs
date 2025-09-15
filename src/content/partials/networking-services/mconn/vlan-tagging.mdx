@@ -3,10 +3,9 @@ params:
   - url
 ---
 
-import { Aside, Markdown } from "~/components";
+import { Markdown } from "~/components";
 
-<Aside title="VLAN tagging">
-
+:::note[VLAN tagging]
 Virtual Connector supports creating subinterfaces through the use of [802.1Q VLAN tagging](https://en.wikipedia.org/wiki/IEEE_802.1Q).
 
 Use VLAN ID <code>0</code> when:
@@ -17,5 +16,4 @@ Use VLAN ID <code>0</code> when:
 You can also configure subinterfaces on the Virtual Connector by associating the network interface with a Port Group or Distributed Port Group trunk and specifying a VLAN ID in addition to the port associated with the network interface (VLAN ID <code>1</code>-<code>4094</code>).
 
 Refer to <Markdown text={props.url} /> for more information.
-
-</Aside>
+:::

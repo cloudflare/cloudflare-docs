@@ -4,10 +4,9 @@ title: Run test
 sidebar:
   order: 2
 description: Learn how to use Cloudflare's Observatory to assess the performance of your website.
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 ## Run Synthetic test
 
@@ -23,7 +22,7 @@ import { Render } from "~/components"
 
 6. After the test finishes running, you will get a Lighthouse score and you will have access to the list of the tests run. The test result page will give you details regarding the performance of your website, both for the desktop and mobile versions. Refer to [Understand test results](/speed/speed-test/test-results/) for more information.
 
-<Render file="user-agents" />
+<Render file="user-agents" product="speed" />
 
 ### Recommendations
 
@@ -51,43 +50,47 @@ RUM uses a lightweight JavaScript beacon to collect the information Observatory 
 
 Quota limits for the number of tests you can run per month are currently the following:
 
-
-
-
-
 <table>
-  <tr>
-    <th>Plan</th>
-    <th>Number of one-off tests</th>
-    <th>Number of recurring tests</th>
-    <th>Frequency of recurring tests</th>
-    <th>Regions</th>
-  </tr>
-  <tr>
-    <td>Free</td>
-    <td>30</td>
-    <td>1</td>
-    <td>Weekly</td>
-    <td>Iowa, USA</td>
-  </tr>
-  <tr>
-    <td>Pro</td>
-    <td>50</td>
-    <td>5</td>
-    <td>Daily</td>
-    <td rowspan="3">Everything in Free and <br/> - South Carolina, USA <br/> - North Virginia, USA <br/> - Dallas, USA <br/> - Oregon, USA <br/> - Hamina, Finland <br/> - Madrid, Spain <br/> - St. Ghislain, Belgium <br/> - Eemshaven, Netherlands <br/> - Milan, Italy <br/> - Paris, France <br/> - Changhua County, Taiwan <br/> - Tokyo, Japan <br/> - Osaka, Japan <br/> - Tel Aviv, Israel <br/> - London, England <br/> - Jurong West, Singapore <br/> - Sydney, Australia <br/> - Frankfurt, Germany <br/> - Mumbai, India <br/> - São Paulo, Brazil</td>
-  </tr>
-  <tr>
-    <td>Business</td>
-    <td>100</td>
-    <td>10</td>
-    <td>Daily</td>
-  </tr>
-  <tr>
-    <td>Enterprise</td>
-    <td>150</td>
-    <td>15</td>
-    <td>Daily</td>
-  </tr>
+	<tr>
+		<th>Plan</th>
+		<th>Number of one-off tests</th>
+		<th>Number of recurring tests</th>
+		<th>Frequency of recurring tests</th>
+		<th>Regions</th>
+	</tr>
+	<tr>
+		<td>Free</td>
+		<td>30</td>
+		<td>1</td>
+		<td>Weekly</td>
+		<td>Iowa, USA</td>
+	</tr>
+	<tr>
+		<td>Pro</td>
+		<td>50</td>
+		<td>5</td>
+		<td>Daily</td>
+		<td rowspan="3">
+			Everything in Free and <br /> - South Carolina, USA <br /> - North
+			Virginia, USA <br /> - Dallas, USA <br /> - Oregon, USA <br /> - Hamina,
+			Finland <br /> - Madrid, Spain <br /> - St. Ghislain, Belgium <br /> -
+			Eemshaven, Netherlands <br /> - Milan, Italy <br /> - Paris, France <br />{" "}
+			- Changhua County, Taiwan <br /> - Tokyo, Japan <br /> - Osaka, Japan{" "}
+			<br /> - Tel Aviv, Israel <br /> - London, England <br /> - Jurong West,
+			Singapore <br /> - Sydney, Australia <br /> - Frankfurt, Germany <br /> -
+			Mumbai, India <br /> - São Paulo, Brazil
+		</td>
+	</tr>
+	<tr>
+		<td>Business</td>
+		<td>100</td>
+		<td>10</td>
+		<td>Daily</td>
+	</tr>
+	<tr>
+		<td>Enterprise</td>
+		<td>150</td>
+		<td>15</td>
+		<td>Daily</td>
+	</tr>
 </table>
-

@@ -5,11 +5,13 @@ sidebar:
   order: 10
 ---
 
-import { Render } from "~/components";
-
 Cloudflare Gateway allows you to block known and potential security risks on the public Internet, as well as specific categories of content. Domains are categorized by [Cloudflare Radar](/radar/glossary/#content-categories).
 
-<Render file="gateway/domain-categories" />
+Cloudflare categorizes domains into content categories and security categories, which cover security risks and security threats:
+
+- **Content categories**: An upstream vendor supplies content categories for domains. These categories help us organize domains into broad topic areas. However, the specific criteria and methods used by our vendor may not be disclosed.
+- **Security risks**: Cloudflare determines security risks for domains using internal models. These models analyze various factors, including the age of a domain and its reputation. This allows us to identify potentially risky domains.
+- **Security threats**: To identify malicious domains that pose security threats, Cloudflare employs a mix of internal data sources, machine learning models, commercial feeds, and open-source threat intelligence.
 
 You can block security and content categories by creating DNS or HTTP policies. Once you have configured your policies, you will be able to inspect network activity and the associated categories in your Gateway logs.
 
@@ -70,7 +72,6 @@ Subdomains that have not been assigned a category will inherit the category of t
 | Vehicles               | Sites related vehicles, automobiles, including news, reviews, and other hobbyist information.                                                                                     |
 | Violence               | Sites hosting and/or promoting violent content.                                                                                                                                   |
 | Weather                | Sites related to weather.                                                                                                                                                         |
-
 
 ### Miscellaneous subcategories
 

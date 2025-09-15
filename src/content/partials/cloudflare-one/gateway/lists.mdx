@@ -2,7 +2,7 @@
 {}
 ---
 
-import { TabItem, Tabs } from "~/components";
+import { TabItem, Tabs, APIRequest } from "~/components";
 
 ## Create a list from a CSV file
 
@@ -37,26 +37,27 @@ To upload the list to Zero Trust:
 <TabItem label="Terraform (v5)">
 
 1. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_token):
-	- `Zero Trust Write`
+   - `Zero Trust Write`
 
 2. Decode the contents of the CSV file and store it as a local value:
 
-	```tf
-	locals {
-		ip_list = csvdecode(file("${path.module}/list-test.csv"))
-	}
-	```
+   ```tf
+   locals {
+   	ip_list = csvdecode(file("${path.module}/list-test.csv"))
+   }
+   ```
+
 3. Create a list using the [`cloudflare_zero_trust_list`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_list) resource:
 
-	```tf
-	resource "cloudflare_zero_trust_list" "ips_from_csv" {
-		account_id  = var.cloudflare_account_id
-		name        = "IPs imported from CSV"
-		description = "Managed by Terraform"
-		type        = "IP"
-		items 			= local.ip_list
-	}
-	```
+   ```tf
+   resource "cloudflare_zero_trust_list" "ips_from_csv" {
+   	account_id  = var.cloudflare_account_id
+   	name        = "IPs imported from CSV"
+   	description = "Managed by Terraform"
+   	type        = "IP"
+   	items 			= local.ip_list
+   }
+   ```
 
 </TabItem>
 </Tabs>
@@ -77,61 +78,69 @@ You can now use this list in the policy builder by choosing the _in list_ operat
 
 <TabItem label="API">
 
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/lists \
---header "Content-Type: application/json" \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---data '{
-  "description": "Private application IPs",
-  "items": [{"value": "10.226.0.177/32"},{"value": "10.226.1.177/32"}],
-  "name": "Corporate IP list",
-  "type": "IP"
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/gateway/lists"
+	method="POST"
+	json={{
+		description: "Private application IPs",
+		items: [
+			{
+				value: "10.226.0.177/32",
+			},
+			{
+				value: "10.226.1.177/32",
+			},
+		],
+		name: "Corporate IP list",
+		type: "IP",
+	}}
+/>
 
 </TabItem>
 <TabItem label="Terraform (v5)">
 
 1. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_token):
-	- `Zero Trust Write`
+   - `Zero Trust Write`
 
 2. Create a list using the [`cloudflare_zero_trust_list`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_list) resource.
 
-	Example list of IPs:
-	```tf
-	resource "cloudflare_zero_trust_list" "wiki_IPs" {
-		account_id  = var.cloudflare_account_id
-		name        = "Company Wiki IP addresses"
-		description = "Managed by Terraform"
-		type        = "IP"
-		items = [
-			{
-				description = "Example IP address range"
-				value = "192.0.2.0/24",
-			},
-			{
-				value = "198.51.100.0/24"
-			}
-		]
-	}
-	```
+   Example list of IPs:
 
-	Example list of domains:
-	```tf
-	resource "cloudflare_zero_trust_list" "wiki_domains" {
-		account_id  = var.cloudflare_account_id
-		name        = "Company Wiki Domains"
-		description = "Managed by Terraform"
-		type        = "DOMAIN"
-		items = [
-			{
-				value = "wiki.example.com"
-			},
-			{
-				value = "wiki2.example.com"
-			}]
-	}
-	```
+   ```tf
+   resource "cloudflare_zero_trust_list" "wiki_IPs" {
+   	account_id  = var.cloudflare_account_id
+   	name        = "Company Wiki IP addresses"
+   	description = "Managed by Terraform"
+   	type        = "IP"
+   	items = [
+   		{
+   			description = "Example IP address range"
+   			value = "192.0.2.0/24",
+   		},
+   		{
+   			value = "198.51.100.0/24"
+   		}
+   	]
+   }
+   ```
+
+   Example list of domains:
+
+   ```tf
+   resource "cloudflare_zero_trust_list" "wiki_domains" {
+   	account_id  = var.cloudflare_account_id
+   	name        = "Company Wiki Domains"
+   	description = "Managed by Terraform"
+   	type        = "DOMAIN"
+   	items = [
+   		{
+   			value = "wiki.example.com"
+   		},
+   		{
+   			value = "wiki2.example.com"
+   		}]
+   }
+   ```
 
 </TabItem>
 </Tabs>

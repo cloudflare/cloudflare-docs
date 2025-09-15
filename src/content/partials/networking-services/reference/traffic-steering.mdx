@@ -327,7 +327,7 @@ For more on {props.productName} tunnel weights, contact your Cloudflare customer
 
 ## BGP information
 
-When using a [Direct CNI](/network-interconnect/express-cni/) connection as an on-ramp, {props.productName} customers can also use BGP peering between their networks and their Magic routing table.
+When using a [Direct CNI](/network-interconnect/) connection as an on-ramp, {props.productName} customers can also use BGP peering between their networks and their Magic routing table.
 
 Using BGP peering with a CNI allows customers to:
 
@@ -344,7 +344,7 @@ With this functionality, customers can:
 
 {props.productName} BGP peering is with the Magic networking routing table (as opposed to peering with the Cloudflare Internet global network). BGP peers configured by following this guide will receive advertisements for all prefixes in the Magic routing table plus any additional prefixes configured in the per-interconnect <a href={props.setupBgpPeering}>Advertised prefix list</a>.
 
-If instead you are seeking to do public peering with the Cloudflare ASN 13335 at one of the Cloudflare data centers, refer to [PNI and peering setup](/network-interconnect/pni-and-peering/). Note that it is not currently possible to share Magic network BGP peering and PNI on the same physical interconnect port.
+If instead you are seeking to do public peering with the Cloudflare ASN 13335 at one of the Cloudflare data centers, refer to [PNI and peering setup](/network-interconnect/). Note that it is not currently possible to share Magic network BGP peering and PNI on the same physical interconnect port.
 
 ### BGP route distribution and convergence
 

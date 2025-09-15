@@ -7,20 +7,20 @@ sidebar:
 
 import { Render } from "~/components";
 
-<Render file="warp/mdm-intro" />
+<Render file="warp/mdm-intro" product="cloudflare-one" />
 
 This page provides generic instructions for an automated deployment. If you want to deploy the WARP client manually, refer to the [instructions for manual deployment](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/).
 
 :::caution
 
-<Render file="warp/mdm-dash-conflict" />
+<Render file="warp/mdm-dash-conflict" product="cloudflare-one" />
 
 :::
 
 ## Prerequisites
 
 - Refer to the [Download page](/cloudflare-one/connections/connect-devices/warp/download-warp/#windows) to review system requirements and download the installer for your operating system.
-- <Render file="warp/connectivity-status-check" />
+- <Render file="warp/connectivity-status-check" product="cloudflare-one" />
 
 ## Windows
 
@@ -34,7 +34,23 @@ To install the WARP client, run the following command:
 msiexec /i "Cloudflare_WARP_<VERSION>.msi" /qn ORGANIZATION="your-team-name" SUPPORT_URL="http://support.example.com"
 ```
 
-Refer to [deployment parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/) for a description of each argument.
+#### Supported properties
+
+The WARP MSI installer supports the following [public properties](https://learn.microsoft.com/en-us/windows/win32/msi/public-properties):
+
+- `ORGANIZATION`
+- `GATEWAY_UNIQUE_ID`
+- `AUTH_CLIENT_ID`
+- `AUTH_CLIENT_SECRET`
+- `ONBOARDING`
+- `OVERRIDE_API_ENDPOINT`
+- `OVERRIDE_DOH_ENDPOINT`
+- `OVERRIDE_WARP_ENDPOINT`
+- `SERVICE_MODE`
+- `SUPPORT_URL`
+- `SWITCH_LOCKED`
+
+Refer to [deployment parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/) for a description of each property.
 
 ### Uninstall WARP
 
@@ -179,8 +195,10 @@ To proceed with the installation, here is an example of the XML code you will ne
 ```xml
 <key>organization</key>
 <string>your-team-name</string>
-<key>enable</key>
+<key>switch_locked</key>
 <true />
+<key>auto_connect</key>
+<integer>0</integer>
 <key>gateway_unique_id</key>
 <string>your_gateway_doh_subdomain</string>
 <key>service_mode</key>

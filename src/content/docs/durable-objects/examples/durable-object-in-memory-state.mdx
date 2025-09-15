@@ -1,5 +1,4 @@
 ---
-type: example
 summary: Create a Durable Object that stores the last location it was accessed
   from in-memory.
 pcx_content_type: example
@@ -25,10 +24,9 @@ export default {
 };
 
 async function handleRequest(request, env) {
-	let id = env.LOCATION.idFromName("A");
-	let obj = env.LOCATION.get(id);
+	let stub = env.LOCATION.getByName("A");
 	// Forward the request to the remote Durable Object.
-	let resp = await obj.fetch(request);
+	let resp = await stub.fetch(request);
 	// Return the response to the client.
 	return new Response(await resp.text());
 }
@@ -36,7 +34,7 @@ async function handleRequest(request, env) {
 // Durable Object
 export class Location extends DurableObject {
 	constructor(state, env) {
-		this.state = state;
+		super(state, env);
 		// Upon construction, you do not have a location to provide.
 		// This value will be updated as people access the Durable Object.
 		// When the Durable Object is evicted from memory, this will be reset.

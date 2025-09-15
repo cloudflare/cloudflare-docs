@@ -6,7 +6,7 @@ sidebar:
 
 ---
 
-import { Render } from "~/components"
+import { Render, DashButton } from "~/components"
 
 Users can investigate the details of an IP address, domain name, URL, or Autonomous System Number (ASN). You can find the Investigate feature in your Cloudflare account's Security Center and in [Cloudflare Radar](https://radar.cloudflare.com/scan).
 
@@ -55,8 +55,11 @@ When you search for a hash, the Cloudflare dashboard will provide a URL report f
 
 To search using a hash:
 
-1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to **Security Center** > **Investigate**. Enter the hash, then select **Search**.
+1. In the Cloudflare dashboard, go to the **Investigate** page.
+
+   <DashButton url="/?to=/:account/security-center/investigate" />
+
+2. Enter the hash, then select **Search**.
 3. Select **View report** to view the report for your URL.
 
 ## URL
@@ -67,8 +70,11 @@ Different Cloudflare plans will have different [scan limitations](/security-cent
 
 If you want to scan a URL:
 
-1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to **Security Center** > **Investigate**. Enter the URL, then select **Search**.
+1. In the Cloudflare dashboard, go to the **Investigate** page.
+
+   <DashButton url="/?to=/:account/security-center/investigate" />
+
+2. Enter the URL, then select **Search**.
 
 Alternatively, to scan a URL, go to [Cloudflare Radar](https://radar.cloudflare.com/) > **URL scanner**. Enter the URL, then select **Publish**.
 
@@ -92,6 +98,9 @@ You can download a report of your scan in HAR or JSON format.
 
 To download a report:
 
-1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Select **Investigate** > Enter your domain > Select **Search**.
-3. Once the report has been generated, select **Download** > Choose between **Download HAR** or **Download JSON**.
+1. In the Cloudflare dashboard, go to the **Investigate** page.
+
+   <DashButton url="/?to=/:account/security-center/investigate" />
+
+2. Enter your domain and select **Search**.
+3. Once the report has been generated, select **Download** and choose between **Download HAR** or **Download JSON**.

@@ -51,8 +51,8 @@ const topCards = [
 			},
 		],
 		cta: {
-			text: "View all products",
-			href: "/products/",
+			text: "View all docs",
+			href: "/directory/",
 		},
 	},
 	{
@@ -66,7 +66,7 @@ const topCards = [
 		],
 		cta: {
 			text: "View all developer products",
-			href: "/products/?product-group=Developer+platform",
+			href: "/directory/?product-group=Developer+platform",
 		},
 	},
 	{
@@ -84,7 +84,7 @@ const topCards = [
 		],
 		cta: {
 			text: "View all AI products",
-			href: "/products/?product-group=AI",
+			href: "/directory/?product-group=AI",
 		},
 	},
 	{
@@ -104,7 +104,7 @@ const topCards = [
 		],
 		cta: {
 			text: "View all Cloudflare One products",
-			href: "/products/?product-group=Cloudflare+One",
+			href: "/directory/?product-group=Cloudflare+One",
 		},
 	},
 ];
@@ -217,7 +217,7 @@ const recommendedSection = {
 								<a
 									href={link.href}
 									target={link.target}
-									class="text-black! hover:text-accent! dark:text-accent-high! dark:hover:text-black!"
+									class="hover:text-accent! dark:text-accent-high! text-black! dark:hover:text-black!"
 								>
 									{link.text}
 								</a>

@@ -6,7 +6,7 @@ sidebar:
   label: Setup
 ---
 
-import { APIRequest } from "~/components";
+import { DashButton, APIRequest, } from "~/components";
 
 [Web Application Firewall (WAF)](/waf/) allows you to create additional security measures through Cloudflare. As a SaaS provider, you can link custom rules, rate limiting rules, and managed rules to your custom hostnames. This provides more control to keep your domains safe from malicious traffic.
 
@@ -21,12 +21,12 @@ Before you can use WAF for SaaS, you need to create a custom hostname. Review [G
 You can also create a custom hostname through the API:
 
 <APIRequest
-  path="/zones/{zone_id}/custom_hostnames"
-  method="POST"
-  json={{
-		"hostname": "<CUSTOM_HOSTNAME>",
-		"ssl": {
-			wildcard: false
+	path="/zones/{zone_id}/custom_hostnames"
+	method="POST"
+	json={{
+		hostname: "<CUSTOM_HOSTNAME>",
+		ssl: {
+			wildcard: false,
 		},
 	}}
 />
@@ -41,28 +41,23 @@ To apply WAF to your custom hostname, you need to create an association between 
 
 3. Locate your custom hostname ID by making a `GET` call in the API:
 
-<APIRequest
-  path="/zones/{zone_id}/custom_hostnames"
-  method="GET"
-/>
+<APIRequest path="/zones/{zone_id}/custom_hostnames" method="GET" />
 
 4. Plan your [custom metadata](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/custom-metadata/). It is fully customizable. In the example below, we have chosen the tag `"security_level"` to which we expect to assign three values (low, medium, and high).
 
 :::note
-
 One instance of low, medium, and high rules could be rate limiting. You can specify three different thresholds: low - 100 requests/minute, medium - 85 requests/minute, high - 50 requests/minute, for example. Another possibility is a WAF custom rule in which low challenges requests and high blocks them.
-
 :::
 
 5. Make an API call in the format below using your Cloudflare email and the IDs gathered above:
 
 <APIRequest
-  path="/zones/{zone_id}/custom_hostnames/{custom_hostname_id}"
-  method="PATCH"
-  json={{
-		"custom_metadata": {
-    "customer_id": "12345",
-    "security_level": "low"
+	path="/zones/{zone_id}/custom_hostnames/{custom_hostname_id}"
+	method="PATCH"
+	json={{
+		custom_metadata: {
+			customer_id: "12345",
+			security_level: "low",
 		},
 	}}
 />
@@ -102,12 +97,14 @@ This assigns custom metadata to your custom hostname so that it has a security t
 
 To build rules through the dashboard:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and navigate to your account and website.
+1. In the Cloudflare dashboard, go to the **WAF** page.
 
-2. Select **Security** > **WAF**.
+		<DashButton url="/?to=/:account/application-security/waf" />
 
-3. Follow the instructions on the dashboard specific to custom rules, rate limiting rules, or managed rules, depending on your security goal.
+2. Follow the instructions on the dashboard specific to custom rules, rate limiting rules, or managed rules, depending on your security goal.
 
-4. Once the rule is active, you should see it under the applicable tab (custom rules, rate limiting, or managed rules).
+3. Once the rule is active, you should see it under the applicable tab (custom rules, rate limiting, or managed rules).
 
-![Rule Active](~/assets/images/cloudflare-for-platforms/active-rule.png)
+   :::caution
+   This API call will replace any existing rate limiting rules in the zone.
+   :::

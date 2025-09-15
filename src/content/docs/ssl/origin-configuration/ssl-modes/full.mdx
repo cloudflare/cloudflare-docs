@@ -36,17 +36,17 @@ In addition to **Full** encryption, you can also set up [Authenticated Origin Pu
 
 Before enabling **Full** mode, make sure your origin allows HTTPS connections on port 443 and presents a certificate (self-signed, [Cloudflare Origin CA](/ssl/origin-configuration/origin-ca/), or purchased from a Certificate Authority). Otherwise, your visitors may experience a [525 error](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-525/).
 
-<Render file="ssl-mode-errors" />
+<Render file="ssl-mode-errors" product="ssl" />
 
 ### Process
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-<Render file="change-encryption-mode-dash" />
+<Render file="change-encryption-mode-dash" product="ssl" />
 
 </TabItem> <TabItem label="API">
 
-<Render file="change-encryption-mode-api" />
+<Render file="change-encryption-mode-api" product="ssl" />
 
 </TabItem> </Tabs>
 

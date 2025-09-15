@@ -9,7 +9,11 @@ description: Learn how to configure your zone with Shopify.
 
 import { Render } from "~/components";
 
-<Render file="provider-guide-intro" params={{ providerName: "Shopify" }} />
+<Render
+	file="provider-guide-intro"
+	params={{ providerName: "Shopify" }}
+	product="cloudflare-for-platforms"
+/>
 
 ## Benefits
 
@@ -47,11 +51,18 @@ If you cannot activate your domain using [proxied DNS records](/dns/proxy-status
 
 ## Product compatibility
 
-<Render file="provider-guide-compatibility" />
+<Render
+	file="provider-guide-compatibility"
+	product="cloudflare-for-platforms"
+/>
 
 ## Additional support
 
-<Render file="provider-guide-help" params={{ providerName: "Shopify" }} />
+<Render
+	file="provider-guide-help"
+	params={{ providerName: "Shopify" }}
+	product="cloudflare-for-platforms"
+/>
 
 ### DNS CAA records
 

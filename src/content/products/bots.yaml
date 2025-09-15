@@ -8,7 +8,5 @@ product:
 
 meta:
   title: Cloudflare bot solutions docs
-  description:
-    Cloudflare’s bot solutions identify and mitigate automated traffic
-    to protect your domain from bad bots.
+  description: Protect your domain from bad bot traffic
   author: "@cloudflare"

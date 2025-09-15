@@ -7,7 +7,10 @@ entries:
 
   - term: "namespace"
     general_definition: |-
-      A container for a collection of Durable Objects that all share the same Durable Object (class) definition. A single namespace can have (tens of) millions of Durable Objects. Metrics are scoped per namespace.
+      A logical collection of Durable Objects that all share the same Durable Object (class) definition. A single namespace can have (tens of) millions of Durable Objects. Metrics are scoped per namespace.
+
+      - The binding name of the namespace (as it will be exposed inside Worker code) is defined in the Wrangler file under the `durable_objects.bindings.name` key. Note that the binding name may not uniquely identify a namespace within an account. Instead, each namespace has a unique namespace ID, which you can view from the Cloudflare dashboard.
+      - You can instantiate a unique Durable Object within a namespace using [Durable Object namespace methods](/durable-objects/api/namespace/#methods).
 
   - term: "Durable Object"
     general_definition: |-

@@ -2,7 +2,6 @@
 import { z } from "astro:schema";
 import { indexPlans } from "~/util/plans";
 import { marked } from "marked";
-import GlossaryTooltip from "~/components/GlossaryTooltip.astro";
 
 type Props = z.infer<typeof props>;
 
@@ -46,33 +45,9 @@ const markdown = (content: any) => {
 	<tbody>
 		{
 			features.map((feature) => {
-				const renderTitle = (title: string) => {
-					const placeholder = "[[GLOSSARY_TOOLTIP_SNIPPETS_SUBREQUEST]]";
-
-					if (title.includes(placeholder)) {
-						const [beforePlaceholder, afterPlaceholder] =
-							title.split(placeholder);
-
-						return (
-							<>
-								{beforePlaceholder}
-								<GlossaryTooltip
-									term="Snippets subrequest"
-									prepend="A subrequest is "
-								>
-									subrequests
-								</GlossaryTooltip>
-								{afterPlaceholder}
-							</>
-						);
-					}
-
-					return markdown(title);
-				};
-
 				return (
 					<tr>
-						<th set:html={renderTitle(feature.title)} />
+						<th set:html={markdown(feature.title)} />
 						{hasFree && <td set:html={markdown(feature.free)} />}
 						{hasPro && <td set:html={markdown(feature.pro)} />}
 						{hasBiz && <td set:html={markdown(feature.biz)} />}

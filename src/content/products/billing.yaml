@@ -6,4 +6,6 @@ product:
   group: Core platform
 
 meta:
-  description: Manage billing for your account.
+  title: Cloudflare Billing docs
+  description: Manage billing, plans, and subscriptions for your account
+  author: "@cloudflare"

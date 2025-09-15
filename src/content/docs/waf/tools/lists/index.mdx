@@ -7,6 +7,8 @@ sidebar:
 
 import { FeatureTable, Render } from "~/components";
 
+<Render file="survey" product="waf" />
+
 Use lists to refer to a group of items (such as IP addresses) collectively, by name, in rule expressions of Cloudflare products. You can create your own custom lists or use lists managed by Cloudflare, such as [Managed IP Lists](/waf/tools/lists/managed-lists/#managed-ip-lists).
 
 Lists have the following advantages:
@@ -49,7 +51,7 @@ Both the Cloudflare dashboard and the Cloudflare API support lists:
 - To reference a list in an API expression, refer to [Values: Lists](/ruleset-engine/rules-language/values/#lists) in the Rules language reference.
 
 :::caution
-Currently, not all Cloudflare products support lists in their expressions. Refer to the documentation of each [individual product](/products/) for details on list support.
+Currently, not all Cloudflare products support lists in their expressions. Refer to the documentation of each [individual product](/directory/) for details on list support.
 :::
 
 ### Search list items

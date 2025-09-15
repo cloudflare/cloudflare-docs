@@ -24,7 +24,7 @@ This HTTP validation should succeed as long as your customer is pointing to your
 
 ### Wildcard custom hostnames
 
-<Render file="wildcard-hostname-reqs" />
+<Render file="wildcard-hostname-reqs" product="cloudflare-for-platforms" />
 
 This means that - if you choose to use wildcard custom hostnames - you will need a way to share these DCV tokens with your customer.
 
@@ -34,17 +34,17 @@ This means that - if you choose to use wildcard custom hostnames - you will need
 
 Once you [create a new hostname](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/issue-certificates/) and choose this validation method, your tokens will be ready after a few seconds.
 
-<Render file="txt-validation_preamble" />
+<Render file="txt-validation_preamble" product="cloudflare-for-platforms" />
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="API">
 
-<Render file="txt-validation_api" />
+<Render file="txt-validation_api" product="cloudflare-for-platforms" />
 
 </TabItem>
 
 <TabItem label="Dashboard">
 
-<Render file="txt-validation_dashboard" />
+<Render file="txt-validation_dashboard" product="cloudflare-for-platforms" />
 
 </TabItem> </Tabs>
 
@@ -54,9 +54,9 @@ You will then need to share these TXT tokens with your customers.
 
 ### 3. Add DNS records (customer)
 
-<Render file="txt-validation_post" />
+<Render file="txt-validation_post" product="cloudflare-for-platforms" />
 
-<Render file="ssl-for-saas-validate-patch" />
+<Render file="ssl-for-saas-validate-patch" product="cloudflare-for-platforms" />
 
 ### 4. (Optional) Fetch new tokens
 

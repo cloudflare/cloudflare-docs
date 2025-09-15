@@ -1,39 +1,42 @@
 ---
 pcx_content_type: how-to
 source: https://support.cloudflare.com/hc/en-us/articles/4729826525965-Configuring-URL-forwarding-or-redirects-with-Page-Rules
-title: URL forwarding
+title: URL forwarding with Page Rules
 sidebar:
   order: 1
-head:
-  - tag: title
-    content: URL forwarding | Page Rules
-
+  label: URL forwarding
 ---
 
-import { Render } from "~/components"
+import { Render, Steps } from "~/components";
 
 Page Rules allow you to forward or redirect traffic to a different URL, though they are just one of the [options provided by Cloudflare](/fundamentals/reference/redirects/).
 
-<Render file="page-rules-migration" />
+<Render file="page-rules-migration" product="rules" />
 
-***
+---
 
 ## Redirect with Page Rules
 
 To configure URL forwarding or redirects using Page Rules:
 
+<Steps>
+
 1. Log in to your [Cloudflare account](https://dash.cloudflare.com), and select your account and domain.
 2. Go to **Rules** > **Page Rules**.
 3. Under **Page Rules**, select **Create Page Rule**.
-4. Under **If the URL matches**, enter the URL or URL pattern that should match the rule. 
+4. Under **If the URL matches**, enter the URL or URL pattern that should match the rule.
 5. In **Pick a Setting**, choose **Forwarding URL** from the drop-down menu.
-6. For **Select status code**, choose *301 - Permanent Redirect* or *302 - Temporary Redirect*.
+6. For **Select status code**, choose _301 - Permanent Redirect_ or _302 - Temporary Redirect_.
 7. Enter the destination URL.
 8. Select **Save and Deploy Page Rule**.
 
-<Render file="page-rule-proxied-dns-warning" />
+</Steps>
 
-***
+:::note
+Page Rules require a [proxied DNS record](/dns/proxy-status/) to work. Page Rules will not apply to subdomains that do not exist in DNS or are not being directed to Cloudflare.
+:::
+
+---
 
 ## Forwarding examples
 
@@ -67,7 +70,7 @@ https://example.com/products
 
 If you enter the address above in the forwarding box and select **Add Rule**, within a few seconds any requests that match the pattern you entered will automatically be forwarded with an `HTTP 302` redirect status code to the new URL.
 
-***
+---
 
 ## Advanced forwarding options
 

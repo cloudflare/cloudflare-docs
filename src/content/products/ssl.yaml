@@ -8,7 +8,5 @@ product:
 
 meta:
   title: Cloudflare SSL/TLS docs
-  description: Cloudflare wants to encrypt as much web traffic as possible to
-    prevent data theft and other tampering. We are the first Internet
-    performance and security company to offer free SSL/TLS protection.
+  description: Encrypt your web traffic to prevent data theft and other tampering
   author: "@cloudflare"

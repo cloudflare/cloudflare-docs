@@ -1,6 +1,7 @@
 # homepage
 /api /api/ 301
-/docs/ /products/ 301
+/docs/ /directory/ 301
+/products/ /directory/ 301
 /zero-trust/ /products/?product-group=Cloudflare+One 301
 /dashboard-landing/ / 301
 /tutorials/ /search/?content_type%5B0%5D=Tutorial 301
@@ -38,6 +39,13 @@
 /waf/change-log/index.xml /changelog/rss/waf.xml 301
 /waf/change-log/general-updates/index.xml /changelog/rss/waf.xml 301
 
+## area changelog feeds
+
+/fundamentals/reference/changelog/performance/index.xml /changelog/rss/application-performance.xml 301
+/fundamentals/reference/changelog/platform/index.xml /changelog/rss/core-platform.xml 301
+/fundamentals/reference/changelog/security/index.xml /changelog/rss/application-security.xml 301
+/workers/platform/changelog/platform/index.xml /changelog/rss/developer-platform.xml 301
+
 ## legacy
 /release-notes/index.xml /changelog/rss/index.xml 301
 /release-notes/ /changelog/ 301
@@ -69,14 +77,14 @@
 /1.1.1.1/encrypted-dns/dns-over-https/make-api-requests/ /1.1.1.1/encryption/dns-over-https/make-api-requests/ 301
 /1.1.1.1/encrypted-dns/dns-over-https/make-api-requests/dns-json/ /1.1.1.1/encryption/dns-over-https/make-api-requests/dns-json/ 301
 /1.1.1.1/encrypted-dns/dns-over-tls/ /1.1.1.1/encryption/dns-over-tls/ 301
-/1.1.1.1/fun-stuff/dns-in-google-sheets/ /1.1.1.1/other-ways-to-use-1.1.1.1/dns-in-google-sheets/ 301
-/1.1.1.1/fun-stuff/dns-over-discord/ /1.1.1.1/other-ways-to-use-1.1.1.1/dns-over-discord/ 301
-/1.1.1.1/fun-stuff/dns-over-sms/ /1.1.1.1/other-ways-to-use-1.1.1.1/ 301
-/1.1.1.1/fun-stuff/dns-over-tor/ /1.1.1.1/other-ways-to-use-1.1.1.1/dns-over-tor/ 301
+/1.1.1.1/fun-stuff/dns-in-google-sheets/ /1.1.1.1/additional-options/dns-in-google-sheets/ 301
+/1.1.1.1/fun-stuff/dns-over-discord/ /1.1.1.1/additional-options/dns-over-discord/ 301
+/1.1.1.1/fun-stuff/dns-over-sms/ /1.1.1.1/additional-options/ 301
+/1.1.1.1/fun-stuff/dns-over-tor/ /1.1.1.1/additional-options/dns-over-tor/ 301
 /1.1.1.1/ipv6-networks/ /1.1.1.1/infrastructure/ipv6-networks/ 301
 /1.1.1.1/network-operators/ /1.1.1.1/infrastructure/network-operators/ 301
 /1.1.1.1/nitty-gritty-details/ /1.1.1.1/faq/ 301
-/1.1.1.1/other-ways-to-use-1.1.1.1/dns-over-telegram/ /1.1.1.1/other-ways-to-use-1.1.1.1/ 301
+/1.1.1.1/other-ways-to-use-1.1.1.1/dns-over-telegram/ /1.1.1.1/additional-options/ 301
 /1.1.1.1/privacy/firefox/ /1.1.1.1/privacy/cloudflare-resolver-firefox/ 301
 /1.1.1.1/setting-up-1.1.1.1/ /1.1.1.1/setup/ 301
 /1.1.1.1/setting-up-1.1.1.1/android/ /1.1.1.1/setup/android/ 301
@@ -141,9 +149,15 @@
 /ai/ /use-cases/ai/ 301
 
 # ai-audit
-/ai-audit/features/detect-ai-crawlers/ /ai-audit/features/analyze-ai-crawlers/ 301
-/ai-audit/features/enforce-robots-txt/ /ai-audit/features/analyze-ai-crawlers/ 301
-/ai-audit/features/analyze-ai-crawlers/ /ai-audit/features/analyze-ai-traffic/ 301
+/ai-audit/features/detect-ai-crawlers/ /ai-crawl-control/features/analyze-ai-crawlers/ 301
+/ai-audit/features/enforce-robots-txt/ /ai-crawl-control/features/analyze-ai-crawlers/ 301
+/ai-audit/features/analyze-ai-crawlers/ /ai-crawl-control/features/analyze-ai-traffic/ 301
+
+# ai crawl control
+/ai-crawl-control/reference/faq/ /ai-crawl-control/features/pay-per-crawl/faq/ 301
+/ai-crawl-control/features/pay-per-crawl/use-pay-per-crawl-as-site-owner/set-up-cloudflare-account/ /ai-crawl-control/features/pay-per-crawl/use-pay-per-crawl-as-site-owner/enable-in-account-settings/ 301
+/ai-crawl-control/features/pay-per-crawl/use-pay-per-crawl-as-site-owner/connect-to-stripe/ /ai-crawl-control/features/pay-per-crawl/use-pay-per-crawl-as-site-owner/manage-payouts/ 301
+/ai-crawl-control/features/pay-per-crawl/use-pay-per-crawl-as-site-owner/monitor-metrics/ /ai-crawl-control/features/pay-per-crawl/use-pay-per-crawl-as-site-owner/monitor-activity/ 301
 
 # AI Gateway
 /ai-gateway/get-started/configuring-settings/ /ai-gateway/get-started/ 301
@@ -155,11 +169,16 @@
 /ai-gateway/integration/vercel-ai-sdk/ /ai-gateway/integrations/vercel-ai-sdk/ 301
 /ai-gateway/integration/aig-workers-ai-binding/ /ai-gateway/integrations/aig-workers-ai-binding/ 301
 /ai-gateway/integration/ /ai-gateway/integrations/ 301
-/ai-gateway/providers/open-router/ /ai-gateway/providers/openrouter/ 301
-/ai-gateway/providers/universal/ /ai-gateway/universal/ 301
-/ai-gateway/configuration/websockets-api/ /ai-gateway/websockets-api/ 301
-/ai-gateway/configuration/websockets-api/non-realtime-api/ /ai-gateway/websockets-api/non-realtime-api/ 301
-/ai-gateway/configuration/websockets-api/realtime-api/ /ai-gateway/websockets-api/realtime-api/ 301
+/ai-gateway/providers/open-router/ /ai-gateway/usage/providers/openrouter/ 301
+/ai-gateway/providers/universal/ /ai-gateway/usage/universal/ 301
+/ai-gateway/configuration/websockets-api/ /ai-gateway/usage/websockets-api/ 301
+/ai-gateway/configuration/websockets-api/non-realtime-api/ /ai-gateway/usage/websockets-api/non-realtime-api/ 301
+/ai-gateway/configuration/websockets-api/realtime-api/ /ai-gateway/usage/websockets-api/realtime-api/ 301
+/ai-gateway/configuration/caching/ /ai-gateway/features/caching/ 301
+/ai-gateway/configuration/rate-limiting/ /ai-gateway/features/rate-limiting/ 301
+/ai-gateway/configuration/custom-metadata/ /ai-gateway/observability/custom-metadata/ 301
+/ai-gateway/universal/ /ai-gateway/usage/universal/ 301
+/ai-gateway/chat-completion/ /ai-gateway/usage/chat-completion/ 301
 
 # agents
 /agents/capabilities/mcp-server/ /agents/model-context-protocol/ 301
@@ -189,12 +208,14 @@
 /support/analytics/learn-more/cloudflare-analytics-with-workers/ /analytics/account-and-zone-analytics/analytics-with-workers/ 301
 /support/analytics/learn-more/how-does-cloudflare-calculate-total-threats-stopped/ /analytics/account-and-zone-analytics/total-threats-stopped/ 301
 /support/analytics/learn-more/status-code-metrics-in-cloudflare-site-analytics/ /analytics/account-and-zone-analytics/status-codes/ 301
-/support/analytics/learn-more/understanding-cloudflare-network-analytics-v1/ /analytics/network-analytics/reference/network-analytics-v1/ 301
+/support/analytics/learn-more/understanding-cloudflare-network-analytics-v1/ /analytics/graphql-api/migration-guides/network-analytics-v2/ 301
 /support/analytics/learn-more/what-are-the-types-of-threats/ /analytics/account-and-zone-analytics/threat-types/ 301
 /analytics/graphql-api/tutorials/build-your-own-analytics/ /analytics/graphql-api/tutorials/ 301
 /analytics/graphql-api/tutorials/export-graphql-to-csv/ /analytics/graphql-api/tutorials/ 301
 /analytics/analytics-integrations/google-cloud/ /analytics/analytics-integrations/ 301
 /analytics/dashboards/ /log-explorer/custom-dashboards/ 301
+/analytics/analytics-integrations/looker/ /analytics/analytics-integrations/ 301
+/analytics/network-analytics/reference/network-analytics-v1/ /analytics/graphql-api/migration-guides/network-analytics-v2/ 301
 
 # email-security
 /email-security/reporting/search/detection-search/ /email-security/reporting/search/ 301
@@ -251,6 +272,10 @@
 /bots/get-started/pro/ /bots/get-started/super-bot-fight-mode/ 301
 /bots/additional-configurations/javascript-detections/ /cloudflare-challenges/challenge-types/javascript-detections/ 301
 /bots/troubleshooting/frequently-asked-questions/ /bots/frequently-asked-questions/ 301
+/bots/concepts/bot/verified-bots/categories/ /bots/concepts/bot/verified-bots/#categories 301
+/bots/concepts/bot/verified-bots/ip-validation/ /bots/reference/bot-verification/ip-validation/ 301
+/bots/concepts/bot/verified-bots/web-bot-auth/ /bots/reference/bot-verification/web-bot-auth/ 301
+/bots/concepts/bot/verified-bots/overview/  /bots/concepts/bot/verified-bots/ 301
 
 #browser-rendering
 /browser-rendering/get-started/browser-rendering-with-DO/ /browser-rendering/workers-bindings/browser-rendering-with-do/ 301
@@ -321,6 +346,20 @@
 
 # Cloudflare Calls
 /calls/turn/overview/ /realtime/turn/ 301
+/realtime/limits/ /realtime/sfu/limits/ 302
+/realtime/sessions-tracks/ /realtime/sfu/sessions-tracks/ 302
+/realtime/get-started/ /realtime/sfu/get-started/ 302
+/realtime/calls-vs-sfus/ /realtime/sfu/calls-vs-sfus/ 302
+/realtime/https-api /realtime/sfu/https-api/ 302
+/realtime/datachannels/ /realtime/sfu/datachannels/ 302
+/realtime/simulcast/ /realtime/sfu/simulcast/ 302
+/realtime/demos/ /realtime/sfu/demos/ 302
+/realtime/example-architecture/ /realtime/sfu/example-architecture/ 302
+/realtime/pricing/ /realtime/sfu/pricing/ 302
+/realtime/changelog/ /realtime/sfu/changelog/ 302
+/realtime/realtimekit/get-started /realtime/realtimekit/getting-started/ 302
+/realtime/introduction/ /realtime/realtimekit/introduction/ 302
+/realtime/concepts/ /realtime/realtimekit/concepts/ 302
 
 # china network
 /support/about-cloudflare/enterprise-documentation/understanding-and-configuring-an-icp-number/ /china-network/concepts/icp/ 301
@@ -339,6 +378,25 @@
 /network-interconnect/set-up-cni/ /network-interconnect/classic-cni/set-up/ 301
 /network-interconnect/set-up-cni/configure-bgp/ /network-interconnect/classic-cni/set-up/configure-bgp-bfd/ 301
 /network-interconnect/set-up-cni/peering-portal/ /network-interconnect/pni-and-peering/ 301
+
+/network-interconnect/about/ /network-interconnect/ 301
+/network-interconnect/alerts/ /network-interconnect/monitoring-and-alerts/ 301
+/network-interconnect/classic-cni/alerts/ /network-interconnect/ 301
+/network-interconnect/classic-cni/ /network-interconnect/ 301
+/network-interconnect/classic-cni/set-up/configure-bgp-bfd/ /network-interconnect/ 301
+/network-interconnect/classic-cni/set-up/configure-cross-connect/ /network-interconnect/ 301
+/network-interconnect/classic-cni/set-up/ /network-interconnect/ 301
+/network-interconnect/classic-cni/set-up/partners/console-connect/ /network-interconnect/ 301
+/network-interconnect/classic-cni/set-up/partners/equinix-fabric/ /network-interconnect/ 301
+/network-interconnect/classic-cni/set-up/partners/ /network-interconnect/ 301
+/network-interconnect/classic-cni/set-up/partners/megaport/ /network-interconnect/ 301
+/network-interconnect/classic-cni/set-up/partners/packet-fabric/ /network-interconnect/ 301
+/network-interconnect/classic-cni/set-up/scope-config/ /network-interconnect/ 301
+/network-interconnect/cloud-cni/ /network-interconnect/ 301
+/network-interconnect/express-cni/bgp-peering/ /network-interconnect/ 301
+/network-interconnect/express-cni/create-interconnects/ /network-interconnect/ 301
+/network-interconnect/express-cni/ /network-interconnect/ 301
+/network-interconnect/pni-and-peering/ /network-interconnect/ 301
 
 # Constellation
 /constellation/ /workers-ai/ 301
@@ -667,7 +725,6 @@
 /fundamentals/get-started/reference/ /fundamentals/reference/ 301
 /fundamentals/get-started/reference/http-request-headers/ /fundamentals/reference/http-request-headers/ 301
 /fundamentals/get-started/reference/network-ports/ /fundamentals/reference/network-ports/ 301
-/fundamentals/get-started/ /fundamentals/setup/ 301
 /fundamentals/get-started/setup/allow-cloudflare-ip-addresses/ /fundamentals/concepts/cloudflare-ip-addresses/ 301
 
 #fundamentals revamp cont
@@ -1241,6 +1298,8 @@
 /security-center/indicator-feeds/get-started/ /security-center/indicator-feeds/ 301
 
 # spectrum
+/spectrum/changelog/ /spectrum/ 301
+/spectrum/changelog/index.xml /changelog/rss/index.xml 301
 /spectrum/getting-started/ /spectrum/get-started/ 301
 /spectrum/getting-started/byoip/ /spectrum/about/byoip/ 301
 /spectrum/getting-started/getting-started/ /spectrum/get-started/ 301
@@ -1514,6 +1573,10 @@
 # time-services_redirects
 /time-services/nts/usage/ /time-services/nts/ 301
 
+# tenant
+/tenant/changelog/ /tenant/ 301
+/tenant/changelog/index.xml /changelog/rss/index.xml 301
+
 # turnstile
 /turnstile/get-started/domain-management/ /turnstile/reference/domain-management/ 301
 /turnstile/get-started/migrating-from-recaptcha/ /turnstile/migration/recaptcha/ 301
@@ -1536,6 +1599,17 @@
 /turnstile/concepts/widget-types/ /turnstile/concepts/widget/ 301
 /turnstile/concepts/domain-management/ /turnstile/concepts/hostname-management/ 301
 /turnstile/troubleshooting/challenge-solve-issues/ /cloudflare-challenges/troubleshooting/challenge-solve-issues/ 301
+/turnstile/concepts/ephemeral-id/ /turnstile/additional-configuration/ephemeral-id/ 301
+/turnstile/concepts/hostname-management/ /turnstile/additional-configuration/hostname-management/ 301
+/turnstile/concepts/pre-clearance-support/ /cloudflare-challenges/concepts/clearance/ 301
+/turnstile/api-reference/ /turnstile/get-started/widget-management/api/ 301
+/turnstile/concepts/appearance-modes/ /turnstile/get-started/client-side-rendering/widget-configurations/ 301
+/turnstile/demos/ /turnstile/tutorials/ 301
+/turnstile/get-started/pre-clearance/ /cloudflare-challenges/concepts/clearance/ 301
+/turnstile/get-started/terraform/ /turnstile/get-started/widget-management/terraform/ 301
+/turnstile/glossary/ /turnstile/ 301
+/turnstile/get-started/supported-browsers/ /cloudflare-challenges/reference/supported-browsers/ 301
+/turnstile/troubleshooting/troubleshooting-faqs/ /turnstile/frequently-asked-questions/#troubleshooting 301
 
 # waf
 /waf/about/ /waf/concepts/ 301
@@ -1605,9 +1679,12 @@
 /waf/reference/migration-guides/old-rate-limiting-deprecation/ /waf/reference/legacy/old-rate-limiting/upgrade/ 301
 /waf/reference/migration-guides/waf-managed-rules-migration/ /waf/reference/legacy/old-waf-managed-rules/upgrade/ 301
 /waf/reference/migration-guides/firewall-rules-to-custom-rules/ /waf/reference/legacy/firewall-rules-upgrade/ 301
+/waf/managed-rules/handle-false-positives/ /waf/managed-rules/troubleshooting/ 301
 
 # waiting-room
 /waiting-room/how-to/mobile-traffic/ /waiting-room/how-to/json-response/ 301
+/waiting-room/changelog/ /waiting-room/ 301
+/waiting-room/changelog/index.xml /changelog/rss/index.xml 301
 
 # warp-client
 /warp-client/get-started/macOS/ /warp-client/get-started/macos/ 301
@@ -2030,6 +2107,7 @@
 /cloudflare-one/api-terraform/gateway-api-examples/dns-policy/ /cloudflare-one/policies/gateway/dns-policies/common-policies/ 301
 /cloudflare-one/api-terraform/gateway-api-examples/network-policy/ /cloudflare-one/policies/gateway/network-policies/common-policies/ 301
 /cloudflare-one/api-terraform/gateway-api-examples/http-policy/ /cloudflare-one/policies/gateway/http-policies/common-policies/ 301
+/cloudflare-one/api-terraform/scoped-api-tokens/ /fundamentals/api/get-started/create-token/ 301
 /cloudflare-one/applications/casb/troubleshooting/ /cloudflare-one/applications/casb/troubleshooting/troubleshoot-integrations/ 301
 /cloudflare-one/applications/configure-apps/self-hosted-apps/ /cloudflare-one/applications/configure-apps/self-hosted-public-app/ 301
 /cloudflare-one/applications/non-http/arbitrary-tcp/ /cloudflare-one/applications/non-http/cloudflared-authentication/arbitrary-tcp/ 301
@@ -2186,6 +2264,7 @@
 
 ### DYNAMIC REDIRECTS ###
 /*/index.html.md /:splat/index.md 301
+/1.1.1.1/other-ways-to-use-1.1.1.1/* /1.1.1.1/additional-options/:splat 301
 /api-next/* /api/:splat 301
 /changelog-next/* /changelog/:splat 301
 /browser-rendering/quick-actions-rest-api/* /browser-rendering/rest-api/:splat 301
@@ -2222,6 +2301,9 @@
 /fundamentals/setup/manage-members/* /fundamentals/manage-members/:splat 301
 /logs/get-started/enable-destinations/* /logs/logpush/logpush-job/enable-destinations/:splat 301
 /logs/reference/log-fields/* /logs/logpush/logpush-job/datasets/:splat 301
+
+# AI Crawl Control
+/ai-audit/* /ai-crawl-control/:splat 301
 
 # Cloudflare One / Zero Trust
 /cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/as-a-service/* /cloudflare-one/connections/connect-networks/configure-tunnels/local-management/as-a-service/:splat 301
@@ -2317,3 +2399,10 @@
 
 # Calls
 /calls/* /realtime/:splat 301
+
+# AI Gateway
+/ai-gateway/providers/* /ai-gateway/usage/providers/:splat 301
+/ai-gateway/guardrails/* /ai-gateway/features/guardrails/:splat 301
+/ai-gateway/websockets-api/* /ai-gateway/usage/websockets-api/:splat 301
+
+

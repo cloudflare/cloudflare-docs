@@ -23,6 +23,8 @@ Here are some options to fix or workaround this issue:
 
 - Add your self-signed SSL certificate to the [Custom Origin Trust Store](/ssl/origin-configuration/custom-origin-trust-store/). This allows the Cloudflare edge to recognize your self-signed SSL certificate as valid.
 
+- Use a [Cloudflare Origin CA certificate](/ssl/origin-configuration/origin-ca/) at your origin.
+
 - Request your server administrator or hosting provider to review the origin web server's SSL certificates and verify that:
   - Certificate is not expired.
   - Certificate is not revoked.

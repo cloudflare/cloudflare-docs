@@ -11,10 +11,9 @@ description: Edit expressions in the Cloudflare dashboard using the Expression
   in which you type the expression.
 ---
 
-In the Cloudflare dashboard, there are two options for editing [expressions](/ruleset-engine/rules-language/expressions/):
+import { Render } from "~/components";
 
-- **Expression Builder**: Allows you to create expressions using drop-down lists, emphasizing a visual approach to defining an expression.
-- **Expression Editor**: A text-only interface that supports advanced features, such as grouping symbols and functions for transforming and validating values.
+<Render file="expression-builder-editor" product="ruleset-engine" />
 
 In general, you can switch back and forth between the Expression Builder and the Expression Editor. However, the Expression Builder does not support [nested expressions](#create-nested-expressions) or the [raw string syntax](/ruleset-engine/rules-language/values/#raw-string-syntax).
 

@@ -8,15 +8,17 @@ banner:
     id: pages-migrate-to-workers
 ---
 
+import { DashButton } from "~/components";
+
 In this guide, you will learn how to add a custom domain (`staging.example.com`) that will point to a specific branch (`staging`) on your Pages project.
 
 This will allow you to have a custom domain that will always show the latest build for a specific branch on your Pages project.
 
 :::note
 
-Currently, this setup is only supported when using Cloudflare DNS.
+This setup is only supported when using a proxied Cloudflare DNS record.
 
-If you attempt to follow this guide using an external DNS provider, your custom alias will be sent to the production branch of your Pages project.
+If you attempt to follow this guide using an external DNS provider or an unproxied DNS record, your custom alias will be sent to the production branch of your Pages project.
 
 :::
 
@@ -28,12 +30,13 @@ Next, add a custom domain under your Pages project for your desired custom domai
 
 To do this:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
-2. In Account Home, go to **Workers & Pages**.
-3. Select your Pages project.
-4. Select **Custom domains** > **Setup a custom domain**.
-5. Input the domain you would like to use, such as `staging.example.com`
-6. Select **Continue** > **Activate domain**
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+2. Select your Pages project.
+3. Select **Custom domains** > **Setup a custom domain**.
+4. Input the domain you would like to use, such as `staging.example.com`
+5. Select **Continue** > **Activate domain**
 
 ![After selecting your custom domain, you will be asked to activate it.](~/assets/images/pages/how-to//pages_custom_domain-2.png)
 

@@ -1,5 +1,5 @@
 ---
-updated: 2023-04-01
+reviewed: 2023-04-01
 difficulty: Intermediate
 pcx_content_type: tutorial
 title: Deploy a static WordPress site
@@ -11,6 +11,8 @@ banner:
   dismissible:
     id: pages-migrate-to-workers
 ---
+
+import { DashButton } from "~/components";
 
 ## Overview
 
@@ -43,9 +45,11 @@ In the **Activity Log**, find the **ZIP archive created** message and select **C
 
 With your ZIP file downloaded, deploy your site to Pages:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Upload assets**.
-3. Name your project > **Create project**.
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+2. Select **Create application** > **Pages** > **Use direct upload**.
+3. Name your project, then select **Create project**.
 4. Drag and drop your ZIP file (or unzipped folder of assets) or select it from your computer.
 5. After your files have been uploaded, select **Deploy site**.
 

@@ -5,7 +5,7 @@ sidebar:
   order: 3
 ---
 
-import { Render, TabItem, Tabs } from "~/components";
+import { Render, TabItem, Tabs, APIRequest } from "~/components";
 
 In order to use Data Loss Prevention (DLP) tools within Cloudflare Zero Trust, you first need to define your DLP profiles. [DLP profiles](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/) are complex objects with dictionaries, pre-built detections, and custom logic that you can reference as selectors within your Gateway policies.
 
@@ -45,22 +45,20 @@ To help this better match the needs of your organization, you can also build a c
 
 </TabItem> <TabItem label="API">
 
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---header "Content-Type: application/json" \
---data '{
-  "action": "block",
-  "description": "Detect secrets and AWS keys",
-  "enabled": true,
-  "filters": [
-    "http"
-  ],
-  "name": "Secrets and AWS keys",
-  "precedence": 0,
-  "traffic": "any(dlp.profiles[*] in <CREDENTIALS_DLP_PROFILE_UUID>) or any(dlp.profiles[*] in <AWS_DLP_PROFILE_UUID>)""
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		action: "block",
+		description: "Detect secrets and AWS keys",
+		enabled: true,
+		filters: ["http"],
+		name: "Secrets and AWS keys",
+		precedence: 0,
+		traffic:
+			"any(dlp.profiles[] in <CREDENTIALS_DLP_PROFILE_UUID>) or any(dlp.profiles[] in <AWS_DLP_PROFILE_UUID>)",
+	}}
+/>
 
 </TabItem> </Tabs>
 
@@ -96,23 +94,20 @@ For example, you can use a custom expression to detect when your users share pro
 
 <TabItem label="API">
 
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---header "Content-Type: application/json" \
---data '{
-  "action": "block",
-  "description": "Detect product SKUs shared by users in organization",
-  "enabled": true,
-  "filters": [
-    "http"
-  ],
-  "name": "Detect product SKU leaks",
-  "precedence": 0,
-  "traffic": "any(dlp.profiles[*] in <SKU_DLP_PROFILE_UUID>)",
-  "identity": "identity.email matches \"[a-z0-9]{0,15}@example.com\""
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		action: "block",
+		description: "Detect product SKUs shared by users in organization",
+		enabled: true,
+		filters: ["http"],
+		name: "Detect product SKU leaks",
+		precedence: 0,
+		traffic: "any(dlp.profiles[*] in <SKU_DLP_PROFILE_UUID>)",
+		identity: 'identity.email matches "[a-z0-9]{0,15}@example.com"',
+	}}
+/>
 
 </TabItem> </Tabs>
 
@@ -155,22 +150,21 @@ Many organizations want to detect and log financial information egressing from u
 
 <TabItem label="API">
 
-```bash title="Block financial information shared with AI"
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rules \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-  "action": "block",
-  "description": "Prevent financial information from being shared with AI tools",
-  "enabled": true,
-  "filters": [
-    "http"
-  ],
-  "name": "Block AI financial info",
-  "precedence": 0,
-  "traffic": "any(dlp.profiles[*] in <FINANCIAL_INFO_DLP_PROFILE_UUID>) and any(http.request.uri.content_category[*] in {184})"
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		action: "block",
+		description:
+			"Prevent financial information from being shared with AI tools",
+		enabled: true,
+		filters: ["http"],
+		name: "Block AI financial info",
+		precedence: 0,
+		traffic:
+			"any(dlp.profiles[] in <FINANCIAL_INFO_DLP_PROFILE_UUID>) and any(http.request.uri.content_category[] in {184})",
+	}}
+/>
 
 </TabItem> </Tabs>
 

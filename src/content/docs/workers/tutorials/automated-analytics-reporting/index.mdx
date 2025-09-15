@@ -1,5 +1,5 @@
 ---
-updated: 2024-11-20
+reviewed: 2024-11-20
 difficulty: Beginner
 pcx_content_type: tutorial
 title: Automate analytics reporting with Cloudflare Workers and email routing
@@ -11,7 +11,7 @@ spotlight:
   author: Aleksej Komnenovic
   author_bio_link: https://www.linkedin.com/in/komnenovic/
   author_bio_source: LinkedIn
-languages:
+tags:
   - JavaScript
 ---
 
@@ -21,6 +21,7 @@ import {
 	TabItem,
 	Tabs,
 	WranglerConfig,
+	DashButton,
 } from "~/components";
 
 In this tutorial, you will create a [Cloudflare Worker](https://workers.cloudflare.com/) that fetches analytics data about your account from Cloudflare's [GraphQL Analytics API](https://developers.cloudflare.com/analytics/graphql-api/). You will be able to view the account analytics data in your browser and receive a scheduled email report.
@@ -445,9 +446,11 @@ Once you put the secrets, preview your analytics data at `account-analytics.<YOU
 
 If you want to disable a public URL for your Worker, you can do so by following these steps:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
 
-2. In Account Home, select **Workers & Pages**, then select `account-analytics` Worker.
+   <DashButton url="/?to=/:account/workers-and-pages" />
+
+2. Select `account-analytics` Worker.
 
 3. Go to **Settings** > **Domains & Routes**.
 

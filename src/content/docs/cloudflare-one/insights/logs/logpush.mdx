@@ -5,11 +5,13 @@ sidebar:
   order: 8
 ---
 
+import { GlossaryTooltip } from "~/components";
+
 :::note
 Only available on Enterprise plans.
 :::
 
-With Cloudflare's [Logpush](/logs/logpush/) service, you can configure the automatic export of Zero Trust logs to third-party storage destinations or to security information and event management (SIEM) tools. Once exported, your team can analyze and audit the data as needed.
+With Cloudflare's [Logpush](/logs/logpush/) service, you can configure the automatic export of Zero Trust logs to third-party storage destinations or to third-party <GlossaryTooltip term="SIEM" >security information and event management (SIEM)</GlossaryTooltip> solutions. Once exported, your team can analyze and audit the data as needed.
 
 ## Export Zero Trust logs with Logpush
 
@@ -29,19 +31,19 @@ To configure Logpush for Zero Trust logs:
 8. (Optional) In **Advanced settings**, choose the timestamp format you prefer and whether you want to enable log sampling.
 9. Select **Submit**.
 
-The setup of your Logpush integration is now complete. Logpush will send updated logs every five minutes to your selected destination.
+The setup of your Logpush integration is now complete. Logpush will send updated logs every five minutes to your selected destination. You can configure multiple destinations and add additional fields to your logs by returning to the **Logpush** page.
 
-You can configure multiple destinations and add additional fields to your logs by returning to the **Logpush** page.
+For more information on supported destinations, refer to [Enable destinations](/logs/logpush/logpush-job/enable-destinations/).
 
 ## Zero Trust datasets
 
 Refer to [Logpush datasets](/logs/logpush/logpush-job/datasets/) for a list of all available fields.
 
-| Dataset                                                                                            | Description                                                                                                                                                 |
-| -------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Dataset                                                                                                    | Description                                                                                                                                                 |
+| ---------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [Access Requests](/logs/logpush/logpush-job/datasets/account/access_requests/)                             | HTTP requests to sites protected by Cloudflare Access                                                                                                       |
 | [Audit Logs](/logs/logpush/logpush-job/datasets/account/audit_logs/)                                       | Authentication events through Cloudflare Access                                                                                                             |
-| [Browser Isolation User Actions](/logs/logpush/logpush-job/datasets/account/biso_user_actions/)                                       | Data transfer actions performed by a user in the remote browser                                                                                                            |
+| [Browser Isolation User Actions](/logs/logpush/logpush-job/datasets/account/biso_user_actions/)            | Data transfer actions performed by a user in the remote browser                                                                                             |
 | [CASB Findings](/logs/logpush/logpush-job/datasets/account/casb_findings/)                                 | Security issues detected by Cloudflare CASB                                                                                                                 |
 | [Device Posture Results](/logs/logpush/logpush-job/datasets/account/device_posture_results/)               | Device posture status from the WARP client                                                                                                                  |
 | [DLP Forensic Copies](/logs/logpush/logpush-job/datasets/account/dlp_forensic_copies/)                     | Entire HTTP requests or payloads of HTTP requests captured by [Cloudflare DLP](/cloudflare-one/policies/data-loss-prevention/dlp-policies/logging-options/) |

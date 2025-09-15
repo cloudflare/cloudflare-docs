@@ -13,6 +13,8 @@ import { Render, APIRequest } from "~/components";
 
 To deploy rate limiting rules at the account level, you must create a rate limiting ruleset with one or more rules. Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create and deploy rate limiting rulesets via API.
 
+For more information on rule parameters, refer to [Rate limiting parameters](/waf/rate-limiting-rules/parameters/).
+
 :::note
 At the API level, a rate limiting ruleset is a regular [custom ruleset](/waf/account/custom-rulesets/) with one or more rate limiting rules that you create in the `http_ratelimit` phase. The concept of custom rate limiting ruleset exists in the Cloudflare dashboard to make it clear that you are configuring and deploying rate limiting rules at the account level. This page with API instructions uses the same terminology.
 :::
@@ -77,6 +79,7 @@ To deploy the rate limiting ruleset, add a rule with `"action": "execute"` to th
 
 1.  <Render
     	file="rulesets/api-account/step1-get-entrypoint"
+    	product="waf"
     	params={{ phaseName: "http_ratelimit" }}
     />
 
@@ -112,6 +115,7 @@ To deploy the rate limiting ruleset, add a rule with `"action": "execute"` to th
 
 2.  <Render
     	file="rulesets/api-account/step2-create-rule"
+    	product="waf"
     	params={{
     		deploymentItem: "rate limiting ruleset",
     	}}
@@ -134,10 +138,11 @@ To deploy the rate limiting ruleset, add a rule with `"action": "execute"` to th
     	roles="account"
     />
 
-    <Render file="account-enterprise-zones-only-api" />
+    <Render file="account-enterprise-zones-only-api" product="waf" />
 
 3.  <Render
     	file="rulesets/api-account/step3-create-ruleset"
+    	product="waf"
     	params={{
     		deploymentItem: "rate limiting ruleset",
     		scope: "all incoming requests of Enterprise zones in your account",

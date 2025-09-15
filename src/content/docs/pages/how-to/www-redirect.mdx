@@ -8,7 +8,7 @@ banner:
     id: pages-migrate-to-workers
 ---
 
-import { Example } from "~/components";
+import { Example, DashButton } from "~/components";
 
 Learn how to redirect a `www` subdomain to your apex domain (`example.com`).
 
@@ -18,9 +18,10 @@ This setup assumes that you already have a [custom domain](/pages/configuration/
 
 To redirect your `www` subdomain to your domain apex:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Go to **Bulk Redirects**.
-3. [Create a bulk redirect list](/rules/url-forwarding/bulk-redirects/create-dashboard/#1-create-a-bulk-redirect-list) modeled after the following (but replacing the values as appropriate):
+1. In the Cloudflare dashboard, go to the **Bulk Redirects** page.
+
+   <DashButton url="/?to=/:account/bulk-redirects" />
+2. [Create a bulk redirect list](/rules/url-forwarding/bulk-redirects/create-dashboard/#1-create-a-bulk-redirect-list) modeled after the following (but replacing the values as appropriate):
 
 <Example>
 

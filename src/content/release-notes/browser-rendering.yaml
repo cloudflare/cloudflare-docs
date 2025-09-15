@@ -2,17 +2,27 @@
 link: "/browser-rendering/changelog/"
 productName: Browser Rendering
 productLink: "/browser-rendering/"
-productArea: Developer platform
-productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2025-09-02"
+    title: Added `X-Browser-Ms-Used` response header
+    description: |-
+      * Each REST API response now includes the `X-Browser-Ms-Used` response header, which reports the browser time (in milliseconds) used by the request. 
+  - publish_date: "2025-08-20"
+    title: Browser Rendering billing goes live
+    description: |-
+      * Billing for Browser Rendering begins today, August 20th, 2025. See [pricing page](/browser-rendering/platform/pricing/) for full details. You can monitor usage via the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers/browser-rendering).
+  - publish_date: "2025-08-18"
+    title: Wrangler updates to local dev
+    description: |-
+      * Improved the local development experience by updating the method for downloading the dev mode browser and added support for [`/v1/sessions` endpoint](/platform/puppeteer/#list-open-sessions), allowing you to list open browser rendering sessions. Upgrade to `wrangler@4.31.0` to get started.
   - publish_date: "2025-07-29"
     title: Updates to Playwright, local dev support, and REST API
     description: |-
       * [Playwright](/browser-rendering/platform/playwright/) upgraded to [Playwright v1.54.1](https://github.com/microsoft/playwright/releases/tag/v1.54.1) and [Playwright MCP](/browser-rendering/platform/playwright-mcp/) upgraded to be in sync with upstream Playwright MCP v0.0.30.
       * Local development with `npx wrangler dev` now supports [Playwright](/browser-rendering/platform/playwright/) when using Browser Rendering. Upgrade to the latest version of wrangler to get started.
-      * The [`/content` endpoint](/browser-rendering/rest-api/content-endpoint/) now returns the page's title, making it easier to identify pages. 
+      * The [`/content` endpoint](/browser-rendering/rest-api/content-endpoint/) now returns the page's title, making it easier to identify pages.
       * The [`/json` endpoint](/browser-rendering/rest-api/json-endpoint/) now allows you to specify your own AI model for the extraction, using the `custom_ai` parameter.
-      * The default viewport size on the [`/screenshot` endpoint](/browser-rendering/rest-api/screenshot-endpoint/) has been increased from 800x600 to 1920x1080. You can still override the viewport via request options. 
+      * The default viewport size on the [`/screenshot` endpoint](/browser-rendering/rest-api/screenshot-endpoint/) has been increased from 800x600 to 1920x1080. You can still override the viewport via request options.
   - publish_date: "2025-07-25"
     title: "@cloudflare/puppeteer 1.0.4 released"
     description: |-

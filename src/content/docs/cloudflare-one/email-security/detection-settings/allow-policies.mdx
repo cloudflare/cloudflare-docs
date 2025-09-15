@@ -9,6 +9,40 @@ import { Example, Details } from "~/components"
 
 Email Security allows you to configure allow policies. An allow policy exempts messages that match certain patterns from normal detection scanning.
 
+## How allow policies work
+
+Allow policies are crucial for legitimate messages that may otherwise be blocked due to, for example, an incorrect setup.
+
+<Example title="Example of allow policy">
+
+An example of allow policy is a phishing simulation product. You want to configure a phishing simulation product as **Accept sender** so Email Security does not scan the messages (or crawl links) in these simulated messages.
+
+</Example>
+
+Allow policies can be configured to match messages based on specific criteria such as individual email addresses, IP address ranges, or domains. This flexibility allows you to exempt legitimate messages from specific sources, even if those sources have low spam reputation or send bulk messages from their own servers.
+
+Allow policies are used to mitigate false positives. When an email has been marked as malicious or suspicious, but you still want to receive that email, you configure that email as part of an allow policy.
+
+### Accept sender
+
+Allow policies in Email Security give you the option to choose **Accept sender**. 
+
+Accept sender creates exceptions for messages that would otherwise be marked as spam, bulk, or spoof. However, Email Security will continue to scan the message for maliciousness.
+
+It is recommended to choose this option, as it is the safest option to protect your email inbox from malicious or suspicious activities.
+
+<Example title="Example of a use case where marketing emails that are legitimate have been blocked">
+
+When a marketing email does not follow the correct template, it may be marked as malicious or spam. It may not be possible to change the template. However, in this scenario, the marketing email is legitimate. 
+
+To make sure that users still receive the marketing email, you will have to select **Accept sender** and add the marketing domain in **Rule Type** > **Domains**.
+
+**Accept sender** and **Domains** combined exempt marketing emails that may not follow the correct template. 
+
+</Example>
+
+## Configure allow policies
+
 To configure allow policies:
 
 1. Log in to [Zero Trust](https://one.dash.cloudflare.com/).
@@ -23,10 +57,10 @@ To configure allow policies:
                - **Exempt recipient**: Message to this recipient will bypass all detections.
                - **Accept sender**: Messages from this sender will be exempted from Spam, Spoof, and Bulk dispositions. Refer to [Allow policy configuration use cases](#use-case-1) for use case examples on how to configure allow policies for accept sender.
        - **Rule type**: Specify the scope of your policy. Choose one of the following:
-           - **Email addresses**: Must be a valid email.
-           - **IP addresses**: Can only be IPv4. IPv6 and CIDR are invalid entries.
+           - **Email addresses**: Must be a valid email. Enter an email address whose emails are going to be exempted.
+           - **IP addresses**: This is the IP address of the email server. Any email address sent from this email server is going to be allowed. The IP address can only be IPv4. IPv6 and CIDR are invalid entries.
            - **Domains**: Must be a valid domain.
-           - **Regular expressions**: Must be valid Java expressions. Regular expressions are matched with fields related to the sender email address (envelope from, header from, reply-to), the originating IP address, and the server name for the email.
+           - **Regular expressions**: Must be valid Java expressions. Regular expressions are matched with fields related to the sender email address (envelope from, header from, reply-to), the originating IP address, and the server name for the email. For example, you can enter `.*@domain\.com` to exempt any email address that ends with `domain.com`.
      - **(Recommended) Sender verification**: This option enforces DMARC, SPF, or DKIM authentication. If you choose to enable this option, Email Security will only honor policies that pass authentication.
        - **Notes**: Provide additional information about your allow policy.
    - **Uploading an allow policy**: Upload a file no larger than 150 KB. The file can only contain `Pattern`, `Pattern Type`, `Verify Email`, `Trusted Sender`, `Exempt Recipient`, `Acceptable Sender`, `Notes` fields. The first row must be a header row. Refer to [CSV uploads](/cloudflare-one/email-security/detection-settings/allow-policies/#csv-uploads) for an example file.

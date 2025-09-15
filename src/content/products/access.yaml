@@ -7,5 +7,5 @@ product:
 
 meta:
   title: Cloudflare Access docs
-  description: Determine who can reach your application using policies.
+  description: Determine who can reach your application using policies
   author: "@cloudflare"

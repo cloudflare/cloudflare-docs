@@ -9,9 +9,15 @@ description: Encryption modes allow you to control how Cloudflare connects to
   validated.
 ---
 
-import { DirectoryListing, Render, TabItem, Tabs, APIRequest } from "~/components";
+import {
+	DirectoryListing,
+	Render,
+	TabItem,
+	Tabs,
+	APIRequest,
+} from "~/components";
 
-<Render file="encryption-mode-definition" /> <br />
+<Render file="encryption-mode-definition" product="ssl" /> <br />
 
 If possible, Cloudflare strongly recommends using [**Full**](/ssl/origin-configuration/ssl-modes/full/) or [**Full (strict)**](/ssl/origin-configuration/ssl-modes/full-strict/) modes to prevent malicious connections to your origin.
 
@@ -40,9 +46,8 @@ Automatic SSL/TLS will not change your setting to a less secure encryption mode.
 #### Additional details
 
 - **Scan frequency**: Automatic scans currently occur approximately once per month, though they may happen more frequently in some cases (for example, configuration changes or upgrades). Scans stop when:
-
-   - The site is already using the most secure mode (for example, **Full (strict)**), or
-   - You switch from auto mode to **Custom SSL/TLS**.
+  - The site is already using the most secure mode (for example, **Full (strict)**), or
+  - You switch from auto mode to **Custom SSL/TLS**.
 
 - **Error checking before upgrades**: To prevent disruptions, Cloudflare checks for `5XX` errors (like `502` or `503`) and evaluates whether the HTTP and HTTPS content is consistent before upgrading a zone's encryption mode.
 
@@ -53,13 +58,13 @@ Automatic SSL/TLS will not change your setting to a less secure encryption mode.
 If you want to opt a zone out via the API, you can make this API call on or before the grace period expiration date.
 
 <APIRequest
-  path="/zones/{zone_id}/settings/{setting_id}"
-  method="PATCH"
-  json={{
-		"value":"custom"
+	path="/zones/{zone_id}/settings/{setting_id}"
+	method="PATCH"
+	json={{
+		value: "custom",
 	}}
-		parameters={{
-		setting_id: "ssl_automatic_mode"
+	parameters={{
+		setting_id: "ssl_automatic_mode",
 	}}
 />
 
@@ -96,7 +101,6 @@ If you wanted to opt out multiple zones:
    done
    ```
 
-
 5. Open your command line and run:
 
    ```bash
@@ -113,11 +117,11 @@ To use Custom SSL/TLS, select the custom option (if you prefer to manually set t
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-<Render file="change-encryption-mode-dash" />
+<Render file="change-encryption-mode-dash" product="ssl" />
 
 </TabItem> <TabItem label="API">
 
-<Render file="change-encryption-mode-api" />
+<Render file="change-encryption-mode-api" product="ssl" />
 
 </TabItem> </Tabs>
 

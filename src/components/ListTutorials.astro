@@ -35,7 +35,7 @@ const docs = await getCollection("docs", (entry) => {
 
 tutorials.push(...docs);
 
-tutorials.sort((a, b) => Number(b.data.updated) - Number(a.data.updated));
+tutorials.sort((a, b) => Number(b.data.reviewed) - Number(a.data.reviewed));
 
 const timeAgo = (date?: Date) => {
 	if (!date) return undefined;
@@ -68,7 +68,7 @@ const timeAgo = (date?: Date) => {
 						<td>
 							<Fragment set:html={anchor} />
 						</td>
-						<td>{timeAgo(tutorial.data.updated)}</td>
+						<td>{timeAgo(tutorial.data.reviewed)}</td>
 						<td>📝 Tutorial</td>
 						<td>{tutorial.data.difficulty}</td>
 					</tr>

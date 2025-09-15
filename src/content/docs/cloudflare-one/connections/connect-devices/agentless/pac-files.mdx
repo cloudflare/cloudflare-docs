@@ -5,7 +5,13 @@ sidebar:
   order: 1
 ---
 
-import { Details, GlossaryDefinition, TabItem, Tabs } from "~/components";
+import {
+	Details,
+	GlossaryDefinition,
+	TabItem,
+	Tabs,
+	APIRequest,
+} from "~/components";
 
 :::note
 Only available on Enterprise plans.
@@ -40,7 +46,6 @@ All devices you add to the proxy endpoint will be able to access your Cloudflare
 3. Give your endpoint any name.
 
 4. Enter the public source IP address of your device(s) in CIDR notation. For example:
-
    - **IPv4**: `192.0.2.0/8`
    - **IPv6**: `2001:0db8:0000:0000:0000:1234:5678:0000/109`
 
@@ -62,15 +67,16 @@ https://<SUBDOMAIN>.proxy.cloudflare-gateway.com
 
 1. [Create a proxy endpoint](/api/resources/zero_trust/subresources/gateway/subresources/proxy_endpoints/methods/create/) with the following call:
 
-   ```bash
-   curl https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/gateway/proxy_endpoints \
-   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
-   --header "Content-Type: application/json" \
-   --data '{"name": "any_name", "ips": ["<PUBLIC_IP>", "<PUBLIC_IP2>", "<PUBLIC_IP3>"]}'
-   ```
+   <APIRequest
+   	path="/accounts/{account_id}/gateway/proxy_endpoints"
+   	method="POST"
+   	json={{
+   		name: "any_name",
+   		ips: ["<PUBLIC_IP>", "<PUBLIC_IP2>", "<PUBLIC_IP3>"],
+   	}}
+   />
 
    Replace `<PUBLIC_IP>` with the source IP address of your device in CIDR notation. For example:
-
    - **IPv4**: `192.0.2.0/8`
    - **IPv6**: `2001:0db8:0000:0000:0000:1234:5678:0000/32`
 
@@ -210,10 +216,10 @@ To get the domain of a proxy endpoint:
 
 1. Use the [List proxy endpoints](/api/resources/zero_trust/subresources/gateway/subresources/proxy_endpoints/methods/list/) operation to get a list of your proxy endpoints and their details. For example:
 
-   ```bash
-   curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/proxy_endpoints \
-   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
-   ```
+   <APIRequest
+   	path="/accounts/{account_id}/gateway/proxy_endpoints"
+   	method="GET"
+   />
 
    ```json {8} output
    {

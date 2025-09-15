@@ -6,10 +6,9 @@ sidebar:
   label: Setup
 head: []
 description: Encrypt traffic between Cloudflare and your origin web server and reduce origin bandwidth consumption.
-
 ---
 
-import { FeatureTable, GlossaryTooltip, Render } from "~/components"
+import { FeatureTable, GlossaryTooltip, Render } from "~/components";
 
 If your origin only receives traffic from <GlossaryTooltip term="proxy status">proxied records</GlossaryTooltip>, use Cloudflare origin CA certificates to encrypt traffic between Cloudflare and your origin web server and reduce bandwidth consumption. Once deployed, these certificates are compatible with [Strict SSL mode](/ssl/origin-configuration/ssl-modes/full-strict/).
 
@@ -24,7 +23,7 @@ Using Cloudflare origin CA certificates does not prevent you from using [delegat
 
 <FeatureTable id="ssl.origin_certificates" />
 
-***
+---
 
 ## Deploy an Origin CA certificate
 
@@ -36,18 +35,18 @@ To create an Origin CA certificate in the dashboard:
 2. Choose a domain.
 3. Go to **SSL/TLS** > **Origin Server**.
 4. Select **Create Certificate**.
-:::note[API Access required]
-Users who do not have [**API Access**](https://dash.cloudflare.com/?to=/:account/members) will receive an error while trying to perform this action. Refer to [Troubleshooting](/ssl/origin-configuration/origin-ca/troubleshooting/#this-zone-is-either-not-part-of-your-account-or-you-do-not-have-access-to-it) for guidance.
-:::
+   :::note[API Access required]
+   Users who do not have [**API Access**](https://dash.cloudflare.com/?to=/:account/members) will receive an error while trying to perform this action. Refer to [Troubleshooting](/ssl/origin-configuration/origin-ca/troubleshooting/#this-zone-is-either-not-part-of-your-account-or-you-do-not-have-access-to-it) for guidance.
+   :::
 5. Choose either:
-   * **Generate private key and CSR with Cloudflare**: Private key type can be RSA or ECC.
-   * **Use my private key and CSR**: Paste the Certificate Signing Request into the text field.
+   - **Generate private key and CSR with Cloudflare**: Private key type can be RSA or ECC.
+   - **Use my private key and CSR**: Paste the Certificate Signing Request into the text field.
 6. List the [hostnames (including wildcards)](#hostname-and-wildcard-coverage) the certificate should protect with SSL encryption. The zone apex and first level wildcard hostname are included by default.
 7. Choose a **Certificate Validity** period.
 8. Select **Create**.
 9. Choose the **Key Format**:
-   * Servers using OpenSSL — like Apache and NGINX — generally expect PEM files (Base64-encoded ASCII), but also work with binary DER files.
-   * Servers using Windows and Apache Tomcat require PKCS#7 (a `.p7b` file).
+   - Servers using OpenSSL — like Apache and NGINX — generally expect PEM files (Base64-encoded ASCII), but also work with binary DER files.
+   - Servers using Windows and Apache Tomcat require PKCS#7 (a `.p7b` file).
 10. Copy the signed **Origin Certificate** and **Private Key** into separate files. For security reasons, you cannot see the **Private Key** after you exit this screen.
 11. Select **OK**.
 
@@ -62,16 +61,16 @@ To add an Origin CA certificate to your origin web server
 1. Upload the Origin CA certificate (created in [Step 1](#1-create-an-origin-ca-certificate)) to your origin web server.
 2. Update your web server configuration:
 
-* [Apache httpd](https://www.digicert.com/kb/csr-ssl-installation/apache-openssl.htm)
-* [GoDaddy Hosting](https://www.digitalcandy.agency/website-tips/cloudflare-origin-ca-free-ssl-installation-on-godaddy/)
-* [Microsoft IIS 7](https://www.digicert.com/csr-ssl-installation/iis-7.htm#ssl_certificate_install)
-* [Microsoft IIS 8 and 8.5](https://www.digicert.com/csr-ssl-installation/iis-8-and-8.5.htm#ssl_certificate_install)
-* [Microsoft IIS 10](https://www.digicert.com/kb/csr-creation-ssl-installation-iis-10.htm)
-* [NGINX](https://www.digicert.com/kb/csr-ssl-installation/nginx-openssl.htm)
-* [Apache Tomcat](https://www.digicert.com/csr-ssl-installation/tomcat-keytool.htm#ssl_certificate_install)
-* [Amazon Web Services](https://www.digicert.com/ssl-certficate-installation-amazon-web-services.htm)
-* [Apache cPanel](https://www.digicert.com/kb/ssl-certificate-installation-apache-cpanel.htm)
-* [Ubuntu Server with Apache2](https://www.digicert.com/kb/csr-ssl-installation/ubuntu-server-with-apache2-openssl.htm#ssl_certificate_install)
+- [Apache httpd](https://www.digicert.com/kb/csr-ssl-installation/apache-openssl.htm)
+- [GoDaddy Hosting](https://www.digitalcandy.agency/website-tips/cloudflare-origin-ca-free-ssl-installation-on-godaddy/)
+- [Microsoft IIS 7](https://www.digicert.com/csr-ssl-installation/iis-7.htm#ssl_certificate_install)
+- [Microsoft IIS 8 and 8.5](https://www.digicert.com/csr-ssl-installation/iis-8-and-8.5.htm#ssl_certificate_install)
+- [Microsoft IIS 10](https://www.digicert.com/kb/csr-creation-ssl-installation-iis-10.htm)
+- [NGINX](https://www.digicert.com/kb/csr-ssl-installation/nginx-openssl.htm)
+- [Apache Tomcat](https://www.digicert.com/csr-ssl-installation/tomcat-keytool.htm#ssl_certificate_install)
+- [Amazon Web Services](https://www.digicert.com/ssl-certficate-installation-amazon-web-services.htm)
+- [Apache cPanel](https://www.digicert.com/kb/ssl-certificate-installation-apache-cpanel.htm)
+- [Ubuntu Server with Apache2](https://www.digicert.com/kb/csr-ssl-installation/ubuntu-server-with-apache2-openssl.htm#ssl_certificate_install)
 
 :::note
 If you do not see your server in the list above, search the [DigiCert documentation](https://www.digicert.com/search-results) or contact your hosting provider, web admin, or server vendor.
@@ -92,7 +91,8 @@ If all your origin hosts are protected by Origin CA certificates or publicly tru
 If you have origin hosts that are not protected by certificates, set the **SSL/TLS encryption** mode for a specific application to **Full (strict)** by using a [Page Rule](/rules/page-rules/).
 
 :::caution
-<Render file="origin-ca-pause-error" />
+
+<Render file="origin-ca-pause-error" product="ssl" />
 :::
 
 ## Revoke an Origin CA certificate
@@ -115,8 +115,8 @@ To revoke a certificate:
 
 Some origin web servers require upload of the Cloudflare Origin CA root certificate or certificate chain. Use the following links to download either an ECC or an RSA version and upload to your origin web server:
 
-* [Cloudflare Origin ECC PEM](/ssl/static/origin_ca_ecc_root.pem) (do not use with Apache cPanel)
-* [Cloudflare Origin RSA PEM](/ssl/static/origin_ca_rsa_root.pem)
+- [Cloudflare Origin ECC PEM](/ssl/static/origin_ca_ecc_root.pem) (do not use with Apache cPanel)
+- [Cloudflare Origin RSA PEM](/ssl/static/origin_ca_rsa_root.pem)
 
 ### Hostname and wildcard coverage
 
@@ -128,9 +128,9 @@ Wildcards may only cover one level, but can be used multiple times on the same c
 
 To automate processes involving Origin CA certificates, use the following API calls. To authenticate, use either [Origin CA Keys](/fundamentals/api/get-started/ca-keys/) or an [API token](/fundamentals/api/get-started/create-token/) with **Permissions** that include `Zone`-`SSL and Certificates`-`Edit`.
 
-| Operation                                                          | Method   | Endpoint                           |
-| ------------------------------------------------------------------ | -------- | ---------------------------------- |
-| [List certificates](/api/resources/origin_ca_certificates/methods/list/)   | `GET`    | `certificates?zone_id=<<ZONE_ID>>` |
+| Operation                                                                   | Method   | Endpoint                           |
+| --------------------------------------------------------------------------- | -------- | ---------------------------------- |
+| [List certificates](/api/resources/origin_ca_certificates/methods/list/)    | `GET`    | `certificates?zone_id=<<ZONE_ID>>` |
 | [Create certificate](/api/resources/origin_ca_certificates/methods/create/) | `POST`   | `certificates`                     |
 | [Get certificate](/api/resources/origin_ca_certificates/methods/get/)       | `GET`    | `certificates/<<ID>>`              |
 | [Revoke certificate](/api/resources/origin_ca_certificates/methods/delete/) | `DELETE` | `certificates/<<ID>>`              |

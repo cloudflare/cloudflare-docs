@@ -56,6 +56,14 @@
 		"display_name": "Debian 12 (arm64)"
 	},
 	{
+		"platform": "trixie-intel",
+		"display_name": "Debian 13 (x86-64)"
+	},
+	{
+		"platform": "trixie-arm",
+		"display_name": "Debian 13 (arm64)"
+	},
+	{
 		"platform": "centos8-intel",
 		"display_name": "CentOS / RHEL 8 (x86-64)"
 	},

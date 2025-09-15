@@ -1,11 +1,9 @@
 ---
-updated: 2024-09-24
+reviewed: 2024-09-24
 difficulty: Intermediate
 pcx_content_type: tutorial
 title: Build a seat booking app with SQLite in Durable Objects
-products:
-  - Durable Objects
-languages:
+tags:
   - TypeScript
   - SQL
 ---
@@ -376,8 +374,7 @@ export default {
 			);
 		}
 
-		const id = env.FLIGHT.idFromName(flightId);
-		const stub = env.FLIGHT.get(id);
+		const stub = env.FLIGHT.getByName(flightId);
 		return stub.fetch(request);
 	},
 } satisfies ExportedHandler<Env>;

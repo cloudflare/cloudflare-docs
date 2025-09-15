@@ -8,7 +8,7 @@ head:
     content: Common HTTP policies
 ---
 
-import { Render, Tabs, TabItem } from "~/components";
+import { Render, Tabs, TabItem, APIRequest } from "~/components";
 
 The following policies are commonly used to secure HTTP traffic.
 
@@ -32,23 +32,20 @@ Block all subdomains that use a host.
 
 <TabItem label="API">
 
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
---header "Content-Type: application/json" \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---data '{
-  "name": "Block sites by hostname",
-  "description": "Block all subdomains that use a specific hostname",
-  "enabled": true,
-  "action": "block",
-  "filters": [
-    "http"
-  ],
-  "traffic": "http.request.host matches \".*example\\.com\"",
-  "identity": "",
-  "device_posture": ""
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "Block sites by hostname",
+		description: "Block all subdomains that use a specific hostname",
+		enabled: true,
+		action: "block",
+		filters: ["http"],
+		traffic: 'http.request.host matches ".*example\.com"',
+		identity: "",
+		device_posture: "",
+	}}
+/>
 
 </TabItem> </Tabs>
 
@@ -66,23 +63,20 @@ Block a section of a site without blocking the entire site. For example, you can
 
 <TabItem label="API">
 
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
---header "Content-Type: application/json" \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---data '{
-  "name": "Block sites by URL",
-  "description": "Block specific parts of a site without blocking the hostname",
-  "enabled": true,
-  "action": "block",
-  "filters": [
-    "http"
-  ],
-  "traffic": "http.request.uri matches \"/r/gaming\"",
-  "identity": "",
-  "device_posture": ""
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "Block sites by URL",
+		description: "Block specific parts of a site without blocking the hostname",
+		enabled: true,
+		action: "block",
+		filters: ["http"],
+		traffic: 'http.request.uri matches "/r/gaming"',
+		identity: "",
+		device_posture: "",
+	}}
+/>
 
 </TabItem> </Tabs>
 
@@ -106,7 +100,7 @@ Block content categories which go against your organization's acceptable use pol
 
 ## Check user identity
 
-<Render file="gateway/policies/check-user-identity" />
+<Render file="gateway/policies/check-user-identity" product="cloudflare-one" />
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -119,23 +113,21 @@ Block content categories which go against your organization's acceptable use pol
 
 <TabItem label="API">
 
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
---header "Content-Type: application/json" \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---data '{
-  "name": "Check user identity",
-  "description": "Block access to Salesforce by temporary employees and contractors",
-  "enabled": true,
-  "action": "block",
-  "filters": [
-    "http"
-  ],
-  "traffic": "any(app.ids[*] in {606})",
-  "identity": "any(identity.groups.name[*] in {\"Contractors\"})",
-  "device_posture": ""
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "Check user identity",
+		description:
+			"Block access to Salesforce by temporary employees and contractors",
+		enabled: true,
+		action: "block",
+		filters: ["http"],
+		traffic: "any(app.ids[] in {606})",
+		identity: 'any(identity.groups.name[] in {"Contractors"})',
+		device_posture: "",
+	}}
+/>
 
 </TabItem> </Tabs>
 
@@ -155,23 +147,21 @@ Gateway [evaluates Do Not Inspect policies first](/cloudflare-one/policies/gatew
 
 <TabItem label="API">
 
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
---header "Content-Type: application/json" \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---data '{
-  "name": "Bypass incompatible applications",
-  "description": "Skip TLS decryption for applications that are incompatible with Gateway",
-  "enabled": true,
-  "action": "off",
-  "filters": [
-    "http"
-  ],
-  "traffic": "any(app.type.ids[*] in {16})",
-  "identity": "",
-  "device_posture": ""
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "Bypass incompatible applications",
+		description:
+			"Skip TLS decryption for applications that are incompatible with Gateway",
+		enabled: true,
+		action: "off",
+		filters: ["http"],
+		traffic: "any(app.type.ids[*] in {16})",
+		identity: "",
+		device_posture: "",
+	}}
+/>
 
 </TabItem> </Tabs>
 
@@ -197,23 +187,21 @@ Perform an [OS version check](/cloudflare-one/identity/devices/warp-client-check
 
 <TabItem label="API">
 
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
---header "Content-Type: application/json" \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---data '{
-  "name": "Require OS version",
-  "description": "Perform an OS version check for minimum version",
-  "enabled": true,
-  "action": "allow",
-  "filters": [
-    "http"
-  ],
-  "traffic": "",
-  "identity": "",
-  "device_posture": "any(device_posture.checks.passed[*] in {\"<POSTURE_CHECK_UUID>\"})"
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "Require OS version",
+		description: "Perform an OS version check for minimum version",
+		enabled: true,
+		action: "allow",
+		filters: ["http"],
+		traffic: "",
+		identity: "",
+		device_posture:
+			'any(device_posture.checks.passed[*] in {"<POSTURE_CHECK_UUID>"})',
+	}}
+/>
 
 To get the UUIDs of your device posture checks, use the [List device posture rules](/api/resources/zero_trust/subresources/devices/subresources/posture/methods/list/) endpoint.
 
@@ -236,23 +224,22 @@ Since the file path will be different for each operating system, you can configu
 
 <TabItem label="API">
 
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
---header "Content-Type: application/json" \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---data '{
-  "name": "Check for specific file",
-  "description": "Ensure users have a specific file on their device regardless of operating system",
-  "enabled": true,
-  "action": "allow",
-  "filters": [
-    "http"
-  ],
-  "traffic": "",
-  "identity": "",
-  "device_posture": "any(device_posture.checks.passed[*] in {\"<POSTURE_CHECK_1_UUID>\"}) or any(device_posture.checks.passed[*] in {\"<POSTURE_CHECK_2_UUID>\"})"
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "Check for specific file",
+		description:
+			"Ensure users have a specific file on their device regardless of operating system",
+		enabled: true,
+		action: "allow",
+		filters: ["http"],
+		traffic: "",
+		identity: "",
+		device_posture:
+			'any(device_posture.checks.passed[] in {"<POSTURE_CHECK_1_UUID>"}) or any(device_posture.checks.passed[] in {"<POSTURE_CHECK_2_UUID>"})',
+	}}
+/>
 
 To get the UUIDs of your device posture checks, use the [List device posture rules](/api/resources/zero_trust/subresources/devices/subresources/posture/methods/list/) endpoint.
 
@@ -280,31 +267,101 @@ When accessing origin servers with certificates not signed by a public certifica
 
 <TabItem label="API">
 
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
---header "Content-Type: application/json" \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---data '{
-  "name": "Bypass internal site inspection",
-  "description": "Bypass TLS decryption for internal sites with self-signed certificates",
-  "enabled": true,
-  "action": "off",
-  "filters": [
-    "http"
-  ],
-  "traffic": "any(http.conn.domains[*] in {\"internal.example.com\"})",
-  "identity": "",
-  "device_posture": ""
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "Bypass internal site inspection",
+		description:
+			"Bypass TLS decryption for internal sites with self-signed certificates",
+		enabled: true,
+		action: "off",
+		filters: ["http"],
+		traffic: 'any(http.conn.domains[*] in {"internal.example.com"})',
+		identity: "",
+		device_posture: "",
+	}}
+/>
 
 </TabItem> </Tabs>
 
 ## Block file types
 
-<Render file="gateway/policies/block-file-types" />
+<Render file="gateway/policies/block-file-types" product="cloudflare-one" />
 
 For more information on supported file types, refer to [Download and Upload File Types](/cloudflare-one/policies/gateway/http-policies/#download-and-upload-file-types).
+
+## Isolate or block shadow IT applications
+
+Isolate shadow IT applications discovered by the [Application Library](/cloudflare-one/applications/app-library/) that have not been reviewed yet or are currently under review, and block applications that are not approved by your organization.
+
+For more information on reviewing shadow IT applications, refer to [Review applications](/cloudflare-one/applications/app-library/#review-applications).
+
+### 1. Isolate unreviewed or in review applications
+
+Isolate applications if their approval status is _Unreviewed_ or _In review_.
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+| Selector           | Operator | Value        | Logic | Action  |
+| ------------------ | -------- | ------------ | ----- | ------- |
+| Application Status | is       | _Unreviewed_ | Or    | Isolate |
+| Application Status | is       | _In review_  |       |         |
+
+</TabItem>
+
+<TabItem label="API">
+
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "Isolate unreviewed or in review application status",
+		description:
+			"Isolate Shadow IT applications that have not been reviewed or are in review in the Application Library",
+		enabled: true,
+		action: "isolate",
+		filters: ["http"],
+		traffic:
+			'any(app.statuses[*] == "unreviewed") or any(app.statuses[*] == "in review")',
+		identity: "",
+		device_posture: "",
+	}}
+/>
+
+</TabItem> </Tabs>
+
+### 2. Block unapproved applications
+
+Block applications if their approval status is _Unapproved_.
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+| Selector           | Operator | Value        | Action |
+| ------------------ | -------- | ------------ | ------ |
+| Application Status | is       | _Unapproved_ | Block  |
+
+</TabItem>
+
+<TabItem label="API">
+
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "Block unapproved application status",
+		description:
+			"Block Shadow IT applications that have been marked as unapproved in the Application Library",
+		enabled: true,
+		action: "block",
+		filters: ["http"],
+		traffic: 'any(app.statuses[*] == "unapproved")',
+		identity: "",
+		device_posture: "",
+	}}
+/>
+
+</TabItem> </Tabs>
 
 ## Block Google services
 
@@ -325,23 +382,21 @@ Block file downloads from Google Drive.
 
 <TabItem label="API">
 
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
---header "Content-Type: application/json" \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---data '{
-  "name": "Block Google Drive downloads",
-  "description": "Block file downloads from Google Drive",
-  "enabled": true,
-  "action": "block",
-  "filters": [
-    "http"
-  ],
-  "traffic": "any(app.ids[*] in {554}) and http.request.uri.path_and_query matches \".*(e=download\\|export).*\"",
-  "identity": "",
-  "device_posture": ""
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "Block Google Drive downloads",
+		description: "Block file downloads from Google Drive",
+		enabled: true,
+		action: "block",
+		filters: ["http"],
+		traffic:
+			'any(app.ids[] in {554}) and http.request.uri.path_and_query matches ".(e=download\|export).*"',
+		identity: "",
+		device_posture: "",
+	}}
+/>
 
 </TabItem> </Tabs>
 
@@ -361,23 +416,21 @@ Block file uploads from Google Drive.
 
 <TabItem label="API">
 
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
---header "Content-Type: application/json" \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---data '{
-  "name": "Block Google Drive uploads",
-  "description": "Block file uploads to Google Drive",
-  "enabled": true,
-  "action": "block",
-  "filters": [
-    "http"
-  ],
-  "traffic": "any(app.ids[*] in {554}) and http.upload.mime matches \".*\" and not(http.request.host == \"drivefrontend-pa.clients6.google.com\")",
-  "identity": "",
-  "device_posture": ""
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "Block Google Drive uploads",
+		description: "Block file uploads to Google Drive",
+		enabled: true,
+		action: "block",
+		filters: ["http"],
+		traffic:
+			'any(app.ids[] in {554}) and http.upload.mime matches "." and not(http.request.host == "drivefrontend-pa.clients6.google.com")',
+		identity: "",
+		device_posture: "",
+	}}
+/>
 
 </TabItem> </Tabs>
 
@@ -396,23 +449,55 @@ Block file downloads from Gmail.
 
 <TabItem label="API">
 
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
---header "Content-Type: application/json" \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---data '{
-  "name": "Block Gmail downloads",
-  "description": "Block file downloads from Gmail",
-  "enabled": true,
-  "action": "block",
-  "filters": [
-    "http"
-  ],
-  "traffic": "http.request.host == \"mail-attachment.googleusercontent.com\" and http.request.uri.path_and_query matches \"/attachment/u/0\"",
-  "identity": "",
-  "device_posture": ""
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "Block Gmail downloads",
+		description: "Block file downloads from Gmail",
+		enabled: true,
+		action: "block",
+		filters: ["http"],
+		traffic:
+			'http.request.host == "mail-attachment.googleusercontent.com" and http.request.uri.path_and_query matches "/attachment/u/0"',
+		identity: "",
+		device_posture: "",
+	}}
+/>
+
+</TabItem> </Tabs>
+
+### Block Google Translate proxy
+
+Block use of Google Translate to translate entire webpages.
+
+When translating a website, Google Translate proxies webpages with the `translate.goog` domain. Your users may be able to use this service to bypass other Gateway policies. If you block `translate.goog`, users will still be able to access other Google Translate features.
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+| Selector | Operator      | Value                      | Action |
+| -------- | ------------- | -------------------------- | ------ |
+| Domain   | matches regex | `^(.+\.)?translate\.goog$` | Block  |
+
+</TabItem>
+
+<TabItem label="API">
+
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "Block Google Translate for websites",
+		description: "Block use of Google Translate to translate entire webpages",
+		enabled: true,
+		action: "block",
+		filters: ["http"],
+		traffic:
+			'any(http.request.domains[*] matches "^(.+\\.)?translate\\.goog$")',
+		identity: "",
+		device_posture: "",
+	}}
+/>
 
 </TabItem> </Tabs>
 
@@ -430,22 +515,19 @@ Gateway does not inspect or log [WebSocket](https://datatracker.ietf.org/doc/htm
 
 <TabItem label="API">
 
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/rule \
---header "Content-Type: application/json" \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---data '{
-  "name": "Filter WebSocket",
-  "description": "Filter WebSocket traffic with HTTP response code 101",
-  "enabled": true,
-  "action": "allow",
-  "filters": [
-    "http"
-  ],
-  "traffic": "http.response.status_code == 101",
-  "identity": "",
-  "device_posture": ""
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "Filter WebSocket",
+		description: "Filter WebSocket traffic with HTTP response code 101",
+		enabled: true,
+		action: "allow",
+		filters: ["http"],
+		traffic: "http.response.status_code == 101",
+		identity: "",
+		device_posture: "",
+	}}
+/>
 
 </TabItem> </Tabs>

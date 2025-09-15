@@ -152,14 +152,15 @@ CASB will begin remediating the instance.
 
 Remediated findings will appear in **CASB** > **Posture Findings** > **Remediated findings**. The status of the finding will change depending on what action CASB has taken:
 
-| Status     | Description                                                          |
-| ---------- | -------------------------------------------------------------------- |
-| Pending    | CASB has set the finding to be remediated.                           |
-| Queued     | CASB has queued the finding for remediation.                         |
-| Processing | CASB is currently remediating the finding.                           |
-| Completed  | CASB successfully remediated the finding.                            |
-| Failed     | CASB unsuccessfully remediated the finding.                          |
-| Rejected   | CASB does not have the correct permissions to remediate the finding. |
+| Status     | Description                                                                                                     |
+| ---------- | --------------------------------------------------------------------------------------------------------------- |
+| Pending    | CASB has set the finding to be remediated.                                                                      |
+| Queued     | CASB has queued the finding for remediation.                                                                    |
+| Processing | CASB is currently remediating the finding.                                                                      |
+| Validating | CASB successfully completed the remediation and is waiting for confirmation that the finding has been resolved. |
+| Completed  | CASB successfully remediated the finding and validated that the finding has been resolved.                      |
+| Failed     | CASB unsuccessfully remediated the finding.                                                                     |
+| Rejected   | CASB does not have the correct permissions to remediate the finding.                                            |
 
 If the status is **Completed**, remediation succeeded. If the status is **Failed** or **Rejected**, remediation failed, and you can select the finding to take action again.
 

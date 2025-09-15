@@ -8,7 +8,7 @@ banner:
     id: pages-migrate-to-workers
 ---
 
-import { Example } from "~/components";
+import { Example, DashButton } from "~/components";
 
 Learn how to use [Bulk Redirects](/rules/url-forwarding/bulk-redirects/) to redirect your `*.pages.dev` subdomain to your [custom domain](/pages/configuration/custom-domains/).
 
@@ -18,8 +18,10 @@ You may want to do this to ensure that your site's content is served only on the
 
 To redirect a `<project>.pages.dev` subdomain to your custom domain:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/pages/view/:pages-project/domains), and select your account.
-2. Select **Workers & Pages** and select your Pages application.
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+2. Select your Pages project.
 3. Go to **Custom domains** and make sure that your custom domain is listed. If it is not, add it by clicking **Set up a custom domain**.
 4. Go **Bulk Redirects**.
 5. [Create a bulk redirect list](/rules/url-forwarding/bulk-redirects/create-dashboard/#1-create-a-bulk-redirect-list) modeled after the following (but replacing the values as appropriate):

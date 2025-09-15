@@ -11,6 +11,8 @@ learning_center:
 
 import { Tabs, TabItem, Steps, Render } from '~/components';
 
+<Render file="survey" product="waf" />
+
 Bot Management for Enterprise is a paid add-on that provides sophisticated bot protection for your domain. Customers can identify automated traffic, take appropriate action, and view detailed analytics within the dashboard.
 
 This Enterprise product provides the most flexibility to customers by:
@@ -18,6 +20,8 @@ This Enterprise product provides the most flexibility to customers by:
 - Generating a [bot score](/bots/concepts/bot-score/) of 1-99 for every request. Scores below 30 are commonly associated with bot traffic.
 - Allowing customers to take action on this score with [WAF custom rules](/waf/custom-rules/) or [`Workers`](/workers/runtime-apis/request/#incomingrequestcfproperties).
 - Allowing customers to view this score in Bot Analytics or Logs.
+
+---
 
 ## Enable Bot Management for Enterprise
 
@@ -53,13 +57,15 @@ Bot Management is automatically enabled for Enterprise zones entitled with the a
 If you are not seeing Bot Management enabled on your zone or if you still see **Add Bot Management** on the Cloudflare dashboard, contact your account team for the proper entitlements.
 :::
 
+---
+
 ## Setup
 
 Cloudflare recommends that you deploy the following basic settings and customize them according to the traffic in your zone.
 
 ### Enable the latest Machine Learning version
 
-<Render file="latest-ml-model-enable" />
+<Render file="latest-ml-model-enable" product="bots" />
 
 ### Block AI Bots
 
@@ -68,12 +74,6 @@ Refer to [Block AI bots](/bots/additional-configurations/block-ai-bots/).
 :::note
 You can view blocked AI bot traffic via [Security Analytics](/waf/analytics/security-analytics/).
 :::
-
-### Enable JavaScript detections
-
-Enabling [JavaScript detections](/bots/additional-configurations/javascript-detections/) validates that the browser can run JavaScript, and is stored in the `cf.bot_management.js_detection.passed` variable.
-
-<Render file="javascript-detections-enable" params={{ one: "Bot Management" }} product="cloudflare-challenges" />
 
 ### Deploy default templates
 

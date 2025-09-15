@@ -17,7 +17,10 @@ You can securely publish internal tools and applications by adding Cloudflare Ac
 
 ## 1. Add your application to Access
 
-<Render file="access/self-hosted-app/generic-public-app" />
+<Render
+	file="access/self-hosted-app/generic-public-app"
+	product="cloudflare-one"
+/>
 
 ## 2. Connect your origin to Cloudflare
 
@@ -31,7 +34,7 @@ If your application is already publicly routable, a Tunnel is not strictly requi
 
 ## 3. Validate the Access token
 
-<Render file="access/secure-tunnel-with-access" />
+<Render file="access/secure-tunnel-with-access" product="cloudflare-one" />
 
 Users can now connect to your self-hosted application after authenticating with Cloudflare Access.
 

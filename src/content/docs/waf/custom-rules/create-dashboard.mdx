@@ -1,6 +1,6 @@
 ---
 pcx_content_type: how-to
-type: overview
+
 title: Create a custom rule in the dashboard
 sidebar:
   order: 2
@@ -10,9 +10,11 @@ head:
     content: Create a custom rule in the dashboard
 ---
 
-import { Render, Tabs, TabItem } from "~/components";
+import { Render, Tabs, TabItem, Steps } from "~/components";
 
 <Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
+
+<Steps>
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
 
@@ -32,7 +34,11 @@ import { Render, Tabs, TabItem } from "~/components";
 
 8. To save and deploy your rule, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
 
+</Steps>
+
 </TabItem> <TabItem label="New dashboard" icon="rocket">
+
+<Steps>
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
 
@@ -53,6 +59,8 @@ import { Render, Tabs, TabItem } from "~/components";
 
 8. To save and deploy your rule, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
 
+</Steps>
+
 </TabItem> </Tabs>
 
 ## Configure a custom response for blocked requests
@@ -63,6 +71,7 @@ This feature is only available on Pro plans and above.
 
 <Render
 	file="custom-response-blocked-requests"
+	product="waf"
 	params={{
 		responseType: "WAF block",
 		defaultStatusCode: "403",

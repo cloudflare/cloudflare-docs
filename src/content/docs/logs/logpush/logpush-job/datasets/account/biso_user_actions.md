@@ -27,6 +27,12 @@ Type: `string`
 
 The domain name in the URL.
 
+## Metadata
+
+Type: `string`
+
+Additional information specific to a user action (JSON string).
+
 ## Timestamp
 
 Type: `int or string`
@@ -44,6 +50,12 @@ The user action type ('copy', 'paste', 'download', etc.).
 Type: `string`
 
 The URL of the webpage where a user action was performed.
+
+## UserEmail
+
+Type: `string`
+
+The user email.
 
 ## UserID
 

@@ -6,4 +6,6 @@ Disallow: /constellation
 Disallow: /cdn-cgi/
 Disallow: /email-security/
 
+Content-Usage: tdm=y
+
 Sitemap: https://developers.cloudflare.com/sitemap-index.xml

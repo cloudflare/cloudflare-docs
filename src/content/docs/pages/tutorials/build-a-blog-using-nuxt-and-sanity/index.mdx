@@ -1,17 +1,16 @@
 ---
-updated: 2022-08-03
+reviewed: 2022-08-03
 pcx_content_type: tutorial
 difficulty: Intermediate
 title: Build a blog using Nuxt.js and Sanity.io on Cloudflare Pages
 tags:
   - Nuxt
   - Vue
-languages:
   - JavaScript
 description: Build a blog application using Nuxt.js and Sanity.io and deploy it on Cloudflare Pages.
 ---
 
-import { Stream, PackageManagers } from "~/components";
+import { PackageManagers, DashButton } from "~/components";
 
 In this tutorial, you will build a blog application using Nuxt.js and Sanity.io and deploy it on Cloudflare Pages. Nuxt.js is a powerful static site generator built on the front-end framework Vue.js. Sanity.io is a headless CMS tool built for managing your application's data without needing to maintain a database.
 
@@ -348,8 +347,6 @@ In `pages/index.vue`, you can use the `block-content` component to render a summ
 </style>
 ```
 
-<Stream id="cdf12588663302139f022c26c4e5cede" title="Nuxt & Sanity video" />
-
 There are many other things inside of your blog schema that you can add to your project. As an exercise, consider one of the following to continue developing your understanding of how to build with a headless CMS:
 
 - Create `pages/authors.vue`, and render a list of authors (similar to `pages/index.vue`, but for objects with `_type == "author"`)
@@ -363,9 +360,12 @@ To push your project to GitHub, [create a new repository](https://repo.new), and
 
 After you have pushed your project to GitHub, deploy your site to Pages:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. In Account Home, select **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
-3. Select the new GitHub repository that you created and, in the **Set up builds and deployments** section, choose _Nuxt_. Pages will set the correct fields for you automatically.
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+2. Select **Create application** > **Pages** > **Import an existing Git repository**.
+3. Select the new GitHub repository that you created and select **Begin setup**.
+4. In the **Set up builds and deployments** section, under **Build settings** > **Framework preset**, choose _Nuxt_. Pages will set the correct fields for you automatically.
 
 When your site has been deployed, you will receive a unique URL to view it in production.
 

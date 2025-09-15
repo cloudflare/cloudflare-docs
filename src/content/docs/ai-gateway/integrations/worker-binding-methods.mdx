@@ -1,7 +1,7 @@
 ---
 title: AI Gateway Binding Methods
 pcx_content_type: tutorial
-updated: 2025-04-01
+reviewed: 2025-04-01
 ---
 
 import { Render, PackageManagers } from "~/components";
@@ -146,7 +146,7 @@ const anthropic = createAnthropic({
 
 The `run` method allows you to execute universal requests. Users can pass either a single universal request object or an array of them. This method supports all AI Gateway providers.
 
-Refer to the [Universal endpoint documentation](/ai-gateway/universal/) for details about the available inputs.
+Refer to the [Universal endpoint documentation](/ai-gateway/usage/universal/) for details about the available inputs.
 
 ```typescript
 const resp = await gateway.run({
@@ -162,7 +162,7 @@ const resp = await gateway.run({
 ```
 
 - **Returns**: `Promise<Response>`
-- **Example Use Case**: Perform a [universal request](/ai-gateway/universal/) to any supported provider.
+- **Example Use Case**: Perform a [universal request](/ai-gateway/usage/universal/) to any supported provider.
 
 ## Conclusion
 

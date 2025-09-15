@@ -32,20 +32,20 @@ In this example, we will create a WARP Connector for subnet `10.0.0.0/24` and in
 
 ## 1. Install a WARP Connector
 
-<Render file="tunnel/warp-connector-install" />
+<Render file="tunnel/warp-connector-install" product="cloudflare-one" />
 
 ## 2. (Recommended) Create a device profile
 
-<Render file="tunnel/warp-connector-device-profile" />
+<Render file="tunnel/warp-connector-device-profile" product="cloudflare-one" />
 
 ## 3. Route traffic from WARP Connector to subnet
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Networks** > **Routes**.
 2. Select **Create route**.
 3. In **CIDR**, enter the private IPv4 address range that you wish to route through this WARP Connector (for example, `10.0.0.0/24`). WARP Connector does not currently support IPv6 routes.
-    :::note
-    If you do not already have a private network range, you can choose a subnet from one of these [pre-defined CIDRs](https://datatracker.ietf.org/doc/html/rfc1918#section-3).
-    :::
+   :::note
+   If you do not already have a private network range, you can choose a subnet from one of these [pre-defined CIDRs](https://datatracker.ietf.org/doc/html/rfc1918#section-3).
+   :::
 4. For **Tunnel**, select the name of your WARP Connector (_Subnet-10.0.0.0/24_).
 5. Select **Create**.
 6. In your WARP Connector device profile, [configure Split Tunnels](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) so that traffic to your private network CIDR (`10.0.0.0/24`) routes through the WARP tunnel. For example, if you are using **Exclude** mode, delete `10.0.0.0/8` from Split Tunnels and re-add the following IPs: `10.0.1.0/24`, `10.0.2.0/23`, `10.0.4.0/22`, `10.0.8.0/21`, `10.0.16.0/20`, `10.0.32.0/19`, `10.0.64.0/18`, `10.0.128.0/17`, `10.1.0.0/16`, `10.2.0.0/15`, `10.4.0.0/14`, `10.8.0.0/13`, `10.16.0.0/12`, `10.32.0.0/11`, `10.64.0.0/10`, `10.128.0.0/9`
@@ -85,25 +85,37 @@ Depending on where you installed the WARP Connector, you may need to configure o
 
 ### Option 1: Default gateway
 
-<Render file="tunnel/warp-connector-default-gateway" />
+<Render file="tunnel/warp-connector-default-gateway" product="cloudflare-one" />
 
 ### Option 2: Alternate gateway
 
-<Render file="tunnel/warp-connector-alternate-gateway" />
+<Render
+	file="tunnel/warp-connector-alternate-gateway"
+	product="cloudflare-one"
+/>
 
 #### Add route to router
 
 For example, for devices on subnet `10.0.0.0/24` to reach applications behind subnet `192.168.1.0/24`, add a rule on the router that routes `192.168.1.0/24` to the WARP Connector host machine (`10.0.0.100`).
 
-<Render file="tunnel/warp-connector-alternate-gateway-flow" />
+<Render
+	file="tunnel/warp-connector-alternate-gateway-flow"
+	product="cloudflare-one"
+/>
 
 ### Option 3: Intermediate gateway
 
-<Render file="tunnel/warp-connector-intermediate-gateway" />
+<Render
+	file="tunnel/warp-connector-intermediate-gateway"
+	product="cloudflare-one"
+/>
 
 #### Add route to devices
 
-<Render file="tunnel/warp-connector-route-all-traffic" />
+<Render
+	file="tunnel/warp-connector-route-all-traffic"
+	product="cloudflare-one"
+/>
 
 Alternatively, you can configure only certain routes to egress through WARP Connector. For example, you may only want to filter traffic destined to internal applications and devices, but allow public Internet traffic to bypass Cloudflare.
 
@@ -129,10 +141,9 @@ route /p add <DESTINATION-IP> mask 255.255.255.255 <WARP-CONNECTOR-IP>
 
 </TabItem> </Tabs>
 
-
 #### Verify routes
 
-<Render file="tunnel/warp-connector-verify-routes" />
+<Render file="tunnel/warp-connector-verify-routes" product="cloudflare-one" />
 
 ## 5. Install another WARP Connector
 
@@ -176,4 +187,8 @@ You can now test the connection between the two subnets. For example, on the `10
 If you are testing with curl using private hostnames, add the `--ipv4` flag to your curl commands.
 :::
 
-[^1]: <Render file="tunnel/warp-connector-linux-packages" />
+[^1]:
+    <Render
+    	file="tunnel/warp-connector-linux-packages"
+    	product="cloudflare-one"
+    />

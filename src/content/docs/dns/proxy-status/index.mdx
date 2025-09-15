@@ -34,7 +34,7 @@ When you [add a domain](/fundamentals/manage-domains/add-site/) to Cloudflare, C
 
 ### Example
 
-<Render file="proxy-status-dns-table" />
+<Render file="proxy-status-dns-table" product="dns" />
 
 This means that:
 
@@ -68,10 +68,10 @@ If you have multiple A or AAAA records on the same name and at least one of them
 <Example>
 DNS management for **example.com**:
 
-| Type | Name    | Content      | Proxy status | TTL    |
-| ---- | ------- | ------------ | ------------ | ------ |
-| A    | `blog`  | `192.0.2.1`  | Proxied      | Auto   |
-| A    | `blog`  | `192.0.2.5`  | DNS only     | Auto   |
+| Type | Name   | Content     | Proxy status | TTL  |
+| ---- | ------ | ----------- | ------------ | ---- |
+| A    | `blog` | `192.0.2.1` | Proxied      | Auto |
+| A    | `blog` | `192.0.2.5` | DNS only     | Auto |
 
 In this example, all traffic intended for `blog.example.com` will be treated as if both records were **Proxied**.
 

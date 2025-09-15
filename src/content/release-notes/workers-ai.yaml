@@ -2,9 +2,26 @@
 link: "/workers-ai/changelog/"
 productName: Workers AI
 productLink: "/workers-ai/"
-productArea: Developer platform
-productAreaLink: /workers/platform/changelog/platform/
 entries:
+  - publish_date: "2025-09-05"
+    title: Introducing EmbeddingGemma from Google
+    description: |-
+      - We’re excited to be a launch partner alongside Google to bring their newest embedding model to Workers AI. We're excited to introduce EmbeddingGemma delivers best-in-class performance for its size, enabling RAG and semantic search use cases. Take a look at [`@cf/google/embeddinggemma-300m`](/workers-ai/models/embeddinggemma-300m) for more details. Now available to use for embedding in AutoRAG too.
+  - publish_date: "2025-08-27"
+    title: Introducing Partner models to the Workers AI catalog
+    description: |-
+      - Read the [blog](https://blog.cloudflare.com/workers-ai-partner-models) for more details
+      - [`@cf/deepgram/aura-1`](/workers-ai/models/aura-1) is a text-to-speech model that allows you to input text and have it come to life in a customizable voice
+      - [`@cf/deepgram/nova-3`](/workers-ai/models/nova-3) is speech-to-text model that transcribes multilingual audio at a blazingly fast speed
+      - [`@cf/pipecat-ai/smart-turn-v2`](/workers-ai/models/smart-turn-v2) helps you detect when someone is done speaking
+      - [`@cf/leonardo/lucid-origin`](/workers-ai/models/lucid-origin) is a text-to-image model that generates images with sharp graphic design, stunning full-HD renders, or highly specific creative direction
+      - [`@cf/leonardo/phoenix-1.0`](/workers-ai/models/phoenix-1.0) is a text-to-image model with exceptional prompt adherence and coherent text
+      - WebSocket support added for audio models like `@cf/deepgram/aura-1`, `@cf/deepgram/nova-3`, `@cf/pipecat-ai/smart-turn-v2`
+  - publish_date: "2025-08-05"
+    title: Adding gpt-oss models to our catalog
+    description: |-
+      - Check out the [blog](https://blog.cloudflare.com/openai-gpt-oss-on-workers-ai) for more details about the new models
+      - Take a look at the [`gpt-oss-120b`](/workers-ai/models/gpt-oss-120b) and [`gpt-oss-20b`](/workers-ai/models/gpt-oss-20b) model pages for more information about schemas, pricing, and context windows
   - publish_date: "2025-04-09"
     title: Pricing correction for @cf/myshell-ai/melotts
     description: |-
@@ -58,7 +75,7 @@ entries:
   - publish_date: "2024-06-18"
     title: Native support for AI Gateways
     description: |-
-      Workers AI now natively supports [AI Gateway](/ai-gateway/providers/workersai/#worker).
+      Workers AI now natively supports [AI Gateway](/ai-gateway/usage/providers/workersai/#worker).
 
   - publish_date: "2024-06-11"
     title: Deprecation announcement for `@cf/meta/llama-2-7b-chat-int8`

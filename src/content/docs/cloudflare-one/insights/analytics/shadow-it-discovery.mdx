@@ -1,100 +1,61 @@
 ---
 pcx_content_type: reference
-title: Shadow IT Discovery
+title: Shadow IT SaaS analytics
 sidebar:
-  order: 5
+  order: 4
 ---
 
 import { Render } from "~/components";
 
-Shadow IT Discovery provides visibility into the SaaS applications and private network origins your users are visiting. This information allows you to create identity and device-driven Zero Trust policies to secure your users and data.
+Shadow IT SaaS analytics provides visibility into the SaaS applications your users are visiting. This information allows you to create identity and device-driven Zero Trust policies to secure your users and data.
 
-To view Shadow IT Discovery in [Zero Trust](https://one.dash.cloudflare.com), go to **Analytics**, then select **Shadow IT Discovery**.
+To access Shadow IT SaaS analytics, in [Zero Trust](https://one.dash.cloudflare.com), go to **Analytics** > **Dashboards**, then select **Shadow IT: SaaS analytics**.
 
-## Turn on Shadow IT Discovery
+## Prerequisites
 
-To allow Zero Trust to discover shadow IT in your traffic:
+To allow Cloudflare to discover shadow IT in your traffic, you must set up [HTTP filtering](/cloudflare-one/policies/gateway/initial-setup/http/).
 
-- Turn on the [Gateway proxy](/cloudflare-one/policies/gateway/proxy/) for HTTP and network traffic.
-- Turn on [TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/) to inspect HTTPS traffic.
-- Ensure any network traffic you want to inspect is not routed around Gateway by a [Split Tunnel](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/).
+## Use Shadow IT SaaS analytics
 
-## SaaS applications
+### 1. Review applications
 
-For an overview of SaaS applications your users have visited, go to **Analytics** > **Access** > **SaaS**. This tab displays the following information:
+The first step in using the Shadow IT SaaS analytics dashboard is to review applications in the [Application Library](/cloudflare-one/applications/app-library/). The App Library synchronizes application review statuses with approval statuses from the Shadow IT Discovery SaaS analytics dashboard.
 
-- **Unique application users**: Chart showing the number of different users who accessed SaaS applications over time.
-- **Top approved applications**: SaaS applications marked as [**Approved**](#approval-status) which had the greatest number of unique visitors.
-- **Top unapproved applications**: SaaS applications marked as [**Unapproved**](#approval-status) which had the greatest number of unique visitors.
-- **Zero Trust**: Metrics for your Access applications including the total number of accessed applications, failed logins, and connected users over the selected time period.
-- **Logins**: Chart showing the number of logins for an individual Access application over time.
-- **Top applications accessed**: Access applications with the greatest number of logins.
-- **Top connected users**: Users who logged in to the greatest number of Access applications.
+<Render file="app-library-review-apps" product="cloudflare-one" />
 
-### Review discovered applications
+### 2. Monitor usage
 
-You can view a list of all discovered SaaS applications and mark them as approved or unapproved. To review an application:
+Review the Shadow IT SaaS analytics dashboard for application usage. Filter the view based on:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Analytics**, then select **Shadow IT Discovery**
-2. Go to **SaaS**.
-3. In the **Unique application users** chart, select **Review all**. The table displays the following fields:
+    | Field            | Description                                                                                                                  |
+    | ---------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+    | Application      | SaaS application's name and logo.                                                                                            |
+    | Application type | [Application type](/cloudflare-one/policies/gateway/application-app-types/#app-types) assigned by Cloudflare Zero Trust.     |
+    | Status           | Application's approval status.                                                                           |
+    | Secured          | Whether the application is currently secured behind Cloudflare Access.                                                       |
+    | Users            | Number of users who connected to the application over the period of time specified on the Shadow IT Discovery overview page. |
 
-| Field            | Description                                                                                                                  |
-| ---------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| Application      | SaaS application's name and logo.                                                                                            |
-| Application type | [Application type](/cloudflare-one/policies/gateway/application-app-types/#app-types) assigned by Cloudflare Zero Trust.     |
-| Status           | Application's [approval status](#approval-status).                                                                           |
-| Secured          | Whether the application is currently secured behind Cloudflare Access.                                                       |
-| Users            | Number of users who connected to the application over the period of time specified on the Shadow IT Discovery overview page. |
+To manage application statuses in bulk, select **Set Application Statuses** to review applications your users commonly visit and update their approval statuses.
 
-3. Select a specific application to view details.
-4. Assign a new [approval status](#approval-status) according to your organization's preferences.
+### 3. Create policies
 
-The application's status will now be updated across charts and visualizations on the **SaaS** tab. You can block unapproved applications by creating a [Gateway policy](/cloudflare-one/policies/gateway/).
+After marking applications, you can create [HTTP policies](/cloudflare-one/policies/gateway/http-policies/) based on application review status. For example, you can create policies that:
 
-## Private network origins
+- Launch all **Unreviewed** and **In review** applications in an [isolated browser](/cloudflare-one/policies/gateway/http-policies/common-policies/#1-isolate-unreviewed-or-in-review-applications).
+- [Block access](/cloudflare-one/policies/gateway/http-policies/common-policies/#2-block-unapproved-applications) to all **Unapproved** applications.
+- Limit file upload capabilities for specific application statuses.
 
-To see an overview of the private network origins your users have visited, go to **Analytics** > **Access** > **Private Network**. This tab displays the following information:
+To create an HTTP status policy directly from Shadow IT Discovery:
 
-- **Unique origin users**: Chart showing the number of different users accessing your private network over time.
-- **Top approved origins**: Origins marked as [**Approved**](#approval-status) which had the greatest number of unique visitors.
-- **Top unapproved origins**: Origins marked as [**Unapproved**](#approval-status) which had the greatest number of unique visitors.
-- **Zero Trust**: Metrics for your Access applications including the total number of accessed applications, failed logins, and connected users over the selected time period.
-- **Logins**: Chart showing the number of logins for an individual Access application over time.
-- **Top applications accessed**: Access applications with the greatest number of logins.
-- **Top connected users**: Users who logged in to the greatest number of Access applications.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Analytics** > **Dashboards**, then select **Shadow IT: SaaS analytics**.
+2. Select **Set application statuses**.
+3. Select **Manage HTTP status policies**, then choose an application status and select **Create policy**.
 
-### Review discovered origins
+## Available insights
 
-You can view a list of all discovered origins and mark them as approved or unapproved. To review a private network origin:
+The Shadow IT SaaS analytics dashboard includes several insights to help you monitor and manage SaaS application usage.
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Analytics**, then select **Shadow IT Discovery**
-2. Go to **Private Network**.
-3. In the **Unique origin users** chart, select **Review all**. The discovered origins that appear on this page are defined by unique combinations of IP address, port, and protocol.
-
-| Field      | Description                                                                                                             |
-| ---------- | ----------------------------------------------------------------------------------------------------------------------- |
-| IP address | Origin's internal IP address in your private network.                                                                   |
-| Port       | Port used to connect to the origin.                                                                                     |
-| Protocol   | Protocol used to connect to the origin.                                                                                 |
-| Hostname   | Hostname used to access the origin.                                                                                     |
-| Status     | Origin's [approval status](#approval-status)                                                                            |
-| Users      | Number of users who connected to the origin over the period of time specified on the Shadow IT Discovery overview page. |
-
-3. Select a specific origin to view details.
-4. Assign a new [approval status](#approval-status) according to your organization's preferences.
-
-The origin's status will now be updated across charts and visualizations on the **Private Network** tab. You can block unapproved origins by creating a [Gateway policy](/cloudflare-one/policies/gateway/).
-
-## Approval status
-
-Within Shadow IT Discovery, applications are labeled according to their status. The default status for a discovered application is **Unreviewed**. Your organization can determine the status of each application and change their status at any time.
-
-<Render file="approval-status-block" />
-
-| Status     | Description                                                                                            |
-| ---------- | ------------------------------------------------------------------------------------------------------ |
-| Approved   | Applications that have been marked as sanctioned by your organization.                                 |
-| Unapproved | Applications that have been marked as unsanctioned by your organization.                               |
-| In review  | Applications in the process of being reviewed by your organization.                                    |
-| Unreviewed | Unknown applications that are neither sanctioned nor being reviewed by your organization at this time. |
+- **Number of applications by status**: A breakdown of how many applications have been categorized into each [approval status](#1-review-applications). The list of applications is available in the [App Library](/cloudflare-one/applications/app-library/).
+- **Data transferred per application status**: A time-series graph showing the amount of data (in gigabytes) transferred to an application in the given status.
+- **User count per application status**: A time-series graph showing the number of users who have interacted with at least one application in a given status. For example, a user can use an **Approved** application shortly followed by an **In review** application, contributing to counts for both of those statuses.
+- **Top-N metrics**: A collection of metrics providing insights into top applications, users, devices, and countries.

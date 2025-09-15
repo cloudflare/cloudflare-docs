@@ -5,7 +5,7 @@ sidebar:
   order: 5
 ---
 
-import { Render, RuleID, APIRequest, Tabs, TabItem } from "~/components";
+import { Render, RuleID, APIRequest, Tabs, TabItem, Steps } from "~/components";
 
 :::note
 This feature requires an Enterprise plan with a paid add-on.
@@ -46,17 +46,25 @@ You can turn the managed ruleset on or off, and configure the following settings
 
 To enable Cloudflare Sensitive Data Detection:
 
+<Steps>
+
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
 2. Go to **Security** > **Settings** and filter by **Detections**.
 3. Turn on **Sensitive data detection**.
 
+</Steps>
+
 To adjust the scope of the managed ruleset or turn off specific rules:
+
+<Steps>
 
 1. In the **Settings** page, under **Sensitive data detection**, select **Configured ruleset**.
 2. To apply the managed ruleset for a subset of incoming requests, select **Custom filter expression** and define the filter expression.
 3. Select **Next**.
 4. To turn specific rules on or off, select **Browse rules** and use the toggle next to each rule to turn it on or off.
 5. Select **Next**, and then select **Save**.
+
+</Steps>
 
 </TabItem> </Tabs>
 
@@ -72,6 +80,7 @@ This example deploys the Cloudflare Sensitive Data Detection managed ruleset to 
 
 1.  <Render
     	file="rulesets/api-zone/step1-get-entrypoint"
+    	product="waf"
     	params={{ phaseName: "http_response_firewall_managed" }}
     />
 
@@ -107,6 +116,7 @@ This example deploys the Cloudflare Sensitive Data Detection managed ruleset to 
 
 2.  <Render
     	file="rulesets/api-zone/step2-create-rule"
+    	product="waf"
     	params={{
     		deploymentItem:
     			"Cloudflare Sensitive Data Detection managed ruleset (with ID `e22d83c647c64a3eae91b71b499d988e`)",
@@ -164,6 +174,7 @@ This example deploys the Cloudflare Sensitive Data Detection managed ruleset to 
 
 3.  <Render
     	file="rulesets/api-zone/step3-create-ruleset"
+    	product="waf"
     	params={{
     		deploymentItem:
     			"Cloudflare Sensitive Data Detection managed ruleset (with ID `e22d83c647c64a3eae91b71b499d988e`)",
@@ -196,13 +207,14 @@ This example deploys the Cloudflare Sensitive Data Detection managed ruleset to 
 
 <Render
 	file="managed-rulesets/api-next-steps"
+	product="waf"
 	params={{
 		rulesetName: "Cloudflare Sensitive Data Detection managed ruleset",
 		customizableAction: false,
 	}}
 />
 
-<Render file="managed-rulesets/api-more-resources" />
+<Render file="managed-rulesets/api-more-resources" product="waf" />
 
 ## Review detected leaks
 

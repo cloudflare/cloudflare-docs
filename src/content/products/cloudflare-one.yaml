@@ -9,5 +9,6 @@ product:
 
 meta:
   title: Cloudflare Zero Trust docs
-  description: Cloudflare Zero Trust replaces legacy security perimeters with Cloudflare's network, providing secure access to any application, on any device, in any location.
+  description: Replace legacy security perimeters with Cloudflare's network to protect your organization
   author: "@cloudflare"
+  

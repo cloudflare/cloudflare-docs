@@ -14,7 +14,10 @@ import {
 	Type,
 	MetaInfo,
 	WranglerConfig,
+	WranglerCommand,
+	WranglerNamespace,
 	PackageManagers,
+	DashButton,
 } from "~/components";
 
 Wrangler offers a number of commands to manage your Cloudflare Workers.
@@ -27,7 +30,7 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`hyperdrive`](#hyperdrive) - Manage your Hyperdrives.
 - [`deploy`](#deploy) - Deploy your Worker to Cloudflare.
 - [`dev`](#dev) - Start a local server for developing your Worker.
-- [`delete`](#delete-1) - Delete your Worker from Cloudflare.
+- [`delete`](#delete) - Delete your Worker from Cloudflare.
 - [`kv namespace`](#kv-namespace) - Manage Workers KV namespaces.
 - [`kv key`](#kv-key) - Manage key-value pairs within a Workers KV namespace.
 - [`kv bulk`](#kv-bulk) - Manage multiple key-value pairs within a Workers KV namespace in batches.
@@ -98,18 +101,12 @@ You can then run them using your package manager of choice:
 
 ---
 
-## `docs`
+<WranglerCommand
+	command="docs"
+	description="Open the Cloudflare developer documentation in your default browser."
+/>
 
-Open the Cloudflare developer documentation in your default browser.
-
-```txt
-wrangler docs [<COMMAND>]
-```
-
-- `COMMAND` <Type text="string" /> <MetaInfo text="optional" />
-  - The Wrangler command you want to learn more about. This opens your default browser to the section of the documentation that describes the command.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
+---
 
 ## `init`
 
@@ -149,7 +146,7 @@ Interact with Cloudflare's D1 service.
 
 Manage [Hyperdrive](/hyperdrive/) database configurations.
 
-<Render file="wrangler-commands/hyperdrive" product="workers" />
+<WranglerNamespace namespace="hyperdrive" headingLevel={3} />
 
 ---
 
@@ -157,7 +154,7 @@ Manage [Hyperdrive](/hyperdrive/) database configurations.
 
 Interact with a [Vectorize](/vectorize/) vector database.
 
-<Render file="wrangler-commands/vectorize" product="workers" />
+<Render product="workers" file="wrangler-commands/vectorize" />
 
 ---
 
@@ -277,7 +274,7 @@ None of the options for this command are required. Also, many can be set in your
   - Skip Wrangler's build steps. Particularly useful when using custom builds. Refer to [Bundling](https://developers.cloudflare.com/workers/wrangler/bundling/) for more information.
 - `--env` <Type text="string" /> <MetaInfo text="optional" />
   - Perform on a specific environment.
-    <Render file="vite-environments" />
+    <Render file="vite-environments" product="workers" />
 - `--outdir` <Type text="string" /> <MetaInfo text="optional" />
   - Path to directory where Wrangler will write the bundled Worker files.
 - `--compatibility-date` <Type text="string" /> <MetaInfo text="optional" />
@@ -324,6 +321,9 @@ None of the options for this command are required. Also, many can be set in your
   - Specify the [Workers for Platforms dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/get-started/configuration/#2-create-a-dispatch-namespace) to upload this Worker to.
 - `--metafile` <Type text="string" /> <MetaInfo text="optional" />
   - Specify a file to write the build metadata from esbuild to. If flag is used without a path string, this defaults to `bundle-meta.json` inside the directory specified by `--outdir`. This can be useful for understanding the bundle size.
+- `--containers-rollout` <Type text="immediate | gradual" /> <MetaInfo text="optional" />
+  - Specify the [rollout strategy](/containers/faq#how-do-container-updates-and-rollouts-work) for [Containers](/containers) associated with the Worker. If set to `immediate`, 100% of container instances will be updated in one rollout step, overriding any configuration in `rollout_step_percentage`. Note that `rollout_active_grace_period`, if configured, still applies.
+  - Defaults to `gradual`, where the default rollout is 10% then 100% of instances.
 
 <Render file="wrangler-commands/global-flags" product="workers" />
 
@@ -772,13 +772,13 @@ wrangler workflows instances list <WORKFLOW_NAME> [OPTIONS]
 Describe a specific instance of a Workflow, including its current status, any persisted state, and per-step outputs.
 
 ```sh
-wrangler workflows instances describe <WORKFLOW_NAME> <ID> [OPTIONS]
+wrangler workflows instances describe <WORKFLOW_NAME> [ID] [OPTIONS]
 ```
 
 - `WORKFLOW_NAME` <Type text="string" /> <MetaInfo text="required" />
   - The name of a registered Workflow.
-- `ID` <Type text="string" /> <MetaInfo text="required" />
-  - The ID of a Workflow instance. You can optionally provide `latest` to refer to the most recently created instance of a Workflow.
+- `ID` <Type text="string" /> <MetaInfo text="(default: latest) optional" />
+  - The ID of a Workflow instance. You can optionally provide `latest` to refer to the most recently created instance of a Workflow. Defaults to `latest` if no ID is provided.
 
 <Render file="wrangler-commands/global-flags" product="workers" />
 
@@ -894,34 +894,7 @@ wrangler workflows trigger <WORKFLOW_NAME> <PARAMS> [OPTIONS]
 wrangler workflows trigger my-workflow '{"hello":"world"}'
 ```
 
-## `tail`
-
-Start a session to livestream logs from a deployed Worker.
-
-```txt
-wrangler tail <WORKER> [OPTIONS]
-```
-
-- `WORKER` <Type text="string" /> <MetaInfo text="required" />
-  - The name of your Worker or the route the Worker is running on.
-- `--format` <Type text="'json'|'pretty'" /> <MetaInfo text="optional" />
-  - The format of the log entries.
-- `--status` <Type text="'ok'|'error'|'canceled'" /> <MetaInfo text="optional" />
-  - Filter by invocation status.
-- `--header` <Type text="string" /> <MetaInfo text="optional" />
-  - Filter by HTTP header.
-- `--method` <Type text="string" /> <MetaInfo text="optional" />
-  - Filter by HTTP method.
-- `--sampling-rate` <Type text="number" /> <MetaInfo text="optional" />
-  - Add a fraction of requests to log sampling rate (between `0` and `1`).
-- `--search` <Type text="string" /> <MetaInfo text="optional" />
-  - Filter by a text match in `console.log` messages.
-- `--ip` <Type text="(string|'self')\[]" />" <MetaInfo text="optional" />
-  - Filter by the IP address the request originates from. Use `"self"` to show only messages from your own IP.
-- `--version-id` <Type text="string" /> <MetaInfo text="optional" />
-  - Filter by Worker version.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
+<WranglerCommand command="tail" />
 
 After starting `wrangler tail`, you will receive a live feed of console and exception logs for each request your Worker receives.
 
@@ -1210,154 +1183,13 @@ Manage your [Pipelines](/pipelines/).
 
 <Render file="wrangler-commands/pipelines" product="workers" />
 
+---
+
 ## `queues`
 
 Manage your Workers [Queues](/queues/) configurations.
 
-### `create`
-
-Create a new queue.
-
-```txt
-wrangler queues create <name> [OPTIONS]
-```
-
-- `name` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the queue to create.
-- `--delivery-delay-secs` <Type text="number" /> <MetaInfo text="optional" />
-  - How long a published message should be delayed for, in seconds. Must be a positive integer.
-- `--message-retention-period-secs` <Type text="number" /> <MetaInfo text="optional" />
-  - How long a published message is retained in the Queue. Must be a positive integer between 60 and 1209600 (14 days). Defaults to 345600 (4 days).
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `update`
-
-Update an existing queue.
-
-```txt
-wrangler queues update <name> [OPTIONS]
-```
-
-- `name` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the queue to update.
-- `--delivery-delay-secs` <Type text="number" /> <MetaInfo text="optional" />
-  - How long a published message should be delayed for, in seconds. Must be a positive integer.
-- `--message-retention-period-secs` <Type text="number" /> <MetaInfo text="optional" />
-  - How long a published message is retained on the Queue. Must be a positive integer between 60 and 1209600 (14 days). Defaults to 345600 (4 days).
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `delete`
-
-Delete an existing queue.
-
-```txt
-wrangler queues delete <name> [OPTIONS]
-```
-
-- `name` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the queue to delete.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `list`
-
-List all queues in the current account.
-
-```txt
-wrangler queues list [OPTIONS]
-```
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `info`
-
-Get information on individual queues.
-
-```txt
-wrangler queues info <name>
-```
-
-- `name` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the queue to inspect.
-
-### `consumer`
-
-Manage queue consumer configurations.
-
-### `consumer add <script-name>`
-
-Add a Worker script as a [queue consumer](/queues/reference/how-queues-works/#consumers).
-
-```txt
-wrangler queues consumer add <queue-name> <script-name> [OPTIONS]
-```
-
-- `queue-name` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the queue to add the consumer to.
-- `script-name` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the Workers script to add as a consumer of the named queue.
-- `--batch-size` <Type text="number" /> <MetaInfo text="optional" />
-  - Maximum number of messages per batch. Must be a positive integer.
-- `--batch-timeout` <Type text="number" /> <MetaInfo text="optional" />
-  - Maximum number of seconds to wait to fill a batch with messages. Must be a positive integer.
-- `--message-retries` <Type text="number" /> <MetaInfo text="optional" />
-  - Maximum number of retries for each message. Must be a positive integer.
-- `--max-concurrency` <Type text="number" /> <MetaInfo text="optional" />
-  - The maximum number of concurrent consumer invocations that will be scaled up to handle incoming message volume. Must be a positive integer.
-- `--retry-delay-secs` <Type text="number" /> <MetaInfo text="optional" />
-  - How long a retried message should be delayed for, in seconds. Must be a positive integer.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `consumer remove`
-
-Remove a consumer from a queue.
-
-```txt
-wrangler queues consumer remove <queue-name> <script-name>
-```
-
-- `queue-name` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the queue to remove the consumer from.
-- `script-name` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the Workers script to remove as the consumer.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `purge`
-
-Permanently delete all messages in a queue.
-
-```txt
-wrangler queues purge <queue-name>
-```
-
-- `queue-name` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the queue from which messages should be deleted.
-
-### `pause-delivery`
-
-Pause message delivery from a Queue to consumers (including push consumers, and HTTP pull consumers)
-
-```txt
-wrangler queues pause-delivery <queue-name>
-```
-
-- `queue-name` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the queue which delivery should be paused.
-
-### `resume-delivery`
-
-Resume delivery from a Queue to consumers (including push consumers, and HTTP pull consumers)
-
-```txt
-wrangler queues resume-delivery <queue-name>
-```
-
-- `queue-name` <Type text="string" /> <MetaInfo text="required" />
-  - The name of the queue from which delivery should be resumed.
+<Render file="wrangler-commands/queues" product="workers" />
 
 ---
 
@@ -1429,22 +1261,16 @@ wrangler logout
 
 If you are using `CLOUDFLARE_API_TOKEN` instead of OAuth, and you can logout by deleting your API token in the Cloudflare dashboard:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
-2. Go to **My Profile** > **API Tokens**.
+1. In the Cloudflare dashboard, go to the **Account API tokens** page.
+
+   <DashButton url="/?to=/:account/api-tokens" />
+
 3. Select the three-dot menu on your Wrangler token.
 4. Select **Delete**.
 
 ---
 
-## `whoami`
-
-Retrieve your user information and test your authentication configuration.
-
-```txt
-wrangler whoami
-```
-
-<Render file="wrangler-commands/global-flags" product="workers" />
+<WranglerCommand command="whoami" />
 
 ---
 
@@ -1454,40 +1280,19 @@ wrangler whoami
 The minimum required wrangler version to use these commands is 3.40.0. For versions before 3.73.0, you will need to add the `--x-versions` flag.
 :::
 
-### `upload`
+<WranglerCommand
+	command="versions upload"
+	description="
+Upload a new [version](/workers/configuration/versions-and-deployments/#versions) of your Worker that is not deployed immediately."
+	headingLevel={3}
+/>
 
-Upload a new [version](/workers/configuration/versions-and-deployments/#versions) of your Worker that is not deployed immediately.
+<WranglerCommand
+	command="versions deploy"
+description="Deploy a previously created [version](/workers/configuration/versions-and-deployments/#versions) of your Worker all at once or create a [gradual deployment](/workers/configuration/versions-and-deployments/gradual-deployments/) to incrementally shift traffic to a new version by following an interactive prompt."
+    headingLevel={3}
 
-```txt
-wrangler versions upload [OPTIONS]
-```
-
-- `--tag` <Type text="string" /> <MetaInfo text="optional" />
-  - Add a version tag. Accepts empty string.
-- `--message` <Type text="string" /> <MetaInfo text="optional" />
-  - Add a version message. Accepts empty string.
-- `--preview-alias` <Type text="string" /> <MetaInfo text="optional" />
-  - Creates an alias to this version.
-- `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific Worker rather than inheriting from the [Wrangler configuration file](/workers/wrangler/configuration/).
-- `--env` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific environment.
-    <Render file="vite-environments" />
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `deploy`
-
-Deploy a previously created [version](/workers/configuration/versions-and-deployments/#versions) of your Worker all at once or create a [gradual deployment](/workers/configuration/versions-and-deployments/gradual-deployments/) to incrementally shift traffic to a new version by following an interactive prompt.
-
-```txt
-wrangler versions deploy [OPTIONS]
-```
-
-- `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific Worker rather than inheriting from the [Wrangler configuration file](/workers/wrangler/configuration/).
-
-<Render file="wrangler-commands/global-flags" product="workers" />
+/>
 
 :::note
 
@@ -1498,18 +1303,19 @@ For example:
 
 :::
 
-### `list`
+<WranglerCommand
+	command="versions list"
+description="Retrieve details for the 10 most recent versions. Details include `Version ID`, `Created on`, `Author`, `Source`, and optionally, `Tag` or `Message`."
+    headingLevel={3}
 
-Retrieve details for the 10 most recent versions. Details include `Version ID`, `Created on`, `Author`, `Source`, and optionally, `Tag` or `Message`.
+/>
 
-```txt
-wrangler versions list [OPTIONS]
-```
+<WranglerCommand
+	command="versions view"
 
-- `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific Worker rather than inheriting from the [Wrangler configuration file](/workers/wrangler/configuration/).
+    headingLevel={3}
 
-<Render file="wrangler-commands/global-flags" product="workers" />
+/>
 
 ### `secret put`
 
@@ -1874,7 +1680,6 @@ wrangler cert upload certificate-authority --ca-cert <PATH> [OPTIONS]
 ```
 
 - `--ca-cert` <Type text="string" /> <MetaInfo text="required" />
-
   - A path to the Certificate Authority (CA) chain certificate to upload.
 
 - `--name` <Type text="string" /> <MetaInfo text="optional" />

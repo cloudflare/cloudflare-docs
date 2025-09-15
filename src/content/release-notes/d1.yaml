@@ -2,8 +2,6 @@
 link: "/d1/platform/release-notes/"
 productName: D1
 productLink: "/d1/"
-productArea: Developer platform
-productAreaLink: /workers/platform/changelog/platform/
 entries:
   - publish_date: "2025-07-01"
     title: Maximum D1 storage per account for the Workers paid plan is now 1 TB

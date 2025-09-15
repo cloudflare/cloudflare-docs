@@ -1,6 +1,6 @@
 ---
 import { z } from "astro:schema";
-import { Aside, Code } from "@astrojs/starlight/components";
+import { Code } from "@astrojs/starlight/components";
 import Details from "~/components/Details.astro";
 
 type Props = z.infer<typeof props>;
@@ -68,17 +68,4 @@ curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/
 	<Details header="curl">
 		<Code code={curl} lang="sh" />
 	</Details>
-
-	<Aside type="note" title="OpenAI compatible endpoints">
-		Workers AI also supports OpenAI compatible API endpoints for{" "}
-		<code>/v1/chat/completions</code>, <code>/v1/responses</code>, and <code
-			>/v1/embeddings</code
-		>. For more details, refer to{" "}
-		<a href="/workers-ai/configuration/open-ai-compatibility/">
-			Configurations
-		</a>
-		.
-	</Aside>
-</>
-)
 

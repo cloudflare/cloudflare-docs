@@ -142,7 +142,7 @@ export default defineConfig({
 									"{props.*}",
 									"/",
 									"/glossary/",
-									"/products/",
+									"/directory/",
 									"/rules/snippets/examples/?operation=*",
 									"/rules/transform/examples/?operation=*",
 									"/ruleset-engine/rules-language/fields/reference/**",

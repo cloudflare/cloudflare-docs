@@ -1,7 +1,7 @@
 ---
 title: Configure JWT validation via the API
 pcx_content_type: how-to
-type: overview
+
 sidebar:
   order: 2
   label: API
@@ -21,7 +21,7 @@ A token configuration defines a JSON Web Key Set (JWKs), which is used to valida
 
 :::note
 
-A zone may have up to four token configurations. 
+A zone may have up to four token configurations.
 :::
 
 Token configurations require the following information:
@@ -179,7 +179,7 @@ To find the operation ID, refer to [Endpoint Management](/api-shield/management-
 
 A request must also match an operation covered by this rule to trigger an action.
 
-Refer to [Apply a rule to operations](#apply-a-rule-to-operations) for more information. 
+Refer to [Apply a rule to operations](#apply-a-rule-to-operations) for more information.
 :::
 
 A token validation rule's expression defines a security policy that a request must meet.
@@ -234,7 +234,7 @@ You can configure which operations JWT validation is enforced on using the `sele
 
 :::note
 
-Selectors will also apply to new operations. New operations that match an existing selector will automatically be covered by that token validation rule. 
+Selectors will also apply to new operations. New operations that match an existing selector will automatically be covered by that token validation rule.
 :::
 
 For example, the following selector will apply a rule to all operations in `v1.example.com` and `v2.example.com`, except for two operations on these hosts:
@@ -522,7 +522,7 @@ The input to updating the keys is the same as when creating a configuration wher
 
 Cloudflare will remove any fields that are unnecessary from each key and will drop keys that we do not support.
 
-It is highly recommended to validate the output of the <GlossaryTooltip term="API call">API call</GlossaryTooltip> to check that the resulting keys appear as intended. 
+It is highly recommended to validate the output of the <GlossaryTooltip term="API call">API call</GlossaryTooltip> to check that the resulting keys appear as intended.
 :::
 
 Use the `PUT` command to update keys.
@@ -624,7 +624,7 @@ Here is an overview of how JWT validation processes incoming requests:
 
 :::note
 
-The absence of matching keys directly marks the JWT as invalid. 
+The absence of matching keys directly marks the JWT as invalid.
 :::
 
 4. We validate the authenticity of the JWT by checking the signature using the selected key.
@@ -632,14 +632,14 @@ The absence of matching keys directly marks the JWT as invalid.
 
 :::note
 
-We allow a mismatch of up to 60 seconds to account for clock drifts between the Cloudflare network and the JWT issuer. A token may still be regarded as valid one minute after it was supposed to expire when both clocks are perfectly in sync. 
+We allow a mismatch of up to 60 seconds to account for clock drifts between the Cloudflare network and the JWT issuer. A token may still be regarded as valid one minute after it was supposed to expire when both clocks are perfectly in sync.
 :::
 
 6. Should the JWT contain a NBF claim (not before time), we validate that the JWT is already valid.
 
 :::note
 
-The same accuracy applies as for EXP claims. As such, a token may be already regarded as valid one minute before its NBF claim in case of perfect synchronization between issuer and validator. 
+The same accuracy applies as for EXP claims. As such, a token may be already regarded as valid one minute before its NBF claim in case of perfect synchronization between issuer and validator.
 :::
 
 7. The final validation result and whether a token was present at all is made available to the WAF which applies the policy’s configured action (`log`/`block`).

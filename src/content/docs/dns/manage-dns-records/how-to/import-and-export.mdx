@@ -13,7 +13,7 @@ Use import and export to have more control over your DNS records and make proces
 
 ### Limits
 
-- <Render file="zone-file-size-limit" />
+- <Render file="zone-file-size-limit" product="dns" />
 - The API rate limit is three requests per minute per user.
 
 ### Format your zone file
@@ -39,10 +39,10 @@ To import a zone file using the dashboard:
 To import records using the API, send a [POST request](/api/resources/dns/subresources/records/methods/import/) with a properly [formatted file](#format-your-zone-file).
 
 <APIRequest
-  path="/zones/{zone_id}/dns_records/import"
+	path="/zones/{zone_id}/dns_records/import"
 	method="POST"
 	form={{
-		file:"@your_formatted_file.txt"
+		file: "@your_formatted_file.txt",
 	}}
 />
 
@@ -67,10 +67,7 @@ To export records using the dashboard:
 
 To export records using the API, send a [GET request](/api/resources/dns/subresources/records/methods/export/).
 
-<APIRequest
-  path="/zones/{zone_id}/dns_records/export"
-	method="GET"
-/>
+<APIRequest path="/zones/{zone_id}/dns_records/export" method="GET" />
 
 </TabItem> </Tabs>
 
@@ -122,7 +119,7 @@ On export, [proxied DNS records](/dns/proxy-status/) will present a tag `cf-prox
 When importing zone files, the value in the `cf-proxied` tag will take precedence in determining whether a record should be proxied. This means that:
 
 - If the tag is present, its value will be considered for the respective record regardless of the **Proxy imported DNS records** option being selected (via dashboard), or the `proxied` parameter being generally set to `true` or `false` (via API).
-- If the tag is absent, the proxied status will fall back to the general import option, meaning **Proxy imported DNS records** selected or not (via dashboard)  or the `proxied` parameter set to `true` or `false` (via API).
+- If the tag is absent, the proxied status will fall back to the general import option, meaning **Proxy imported DNS records** selected or not (via dashboard) or the `proxied` parameter set to `true` or `false` (via API).
 
 #### cf-flatten-cname
 

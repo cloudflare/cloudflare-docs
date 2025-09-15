@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import ReactSelect from "./ReactSelect";
 import type { CollectionEntry } from "astro:content";
+import { formatDistance } from "date-fns";
 
 type DocsData = keyof CollectionEntry<"docs">["data"];
 type VideosData = keyof CollectionEntry<"stream">["data"];
@@ -12,6 +13,8 @@ interface Props {
 	facets: Record<string, string[]>;
 	filters?: ResourcesData[];
 	columns: number;
+	showDescriptions: boolean;
+	showLastUpdated: boolean;
 }
 
 export default function ResourcesBySelector({
@@ -19,8 +22,15 @@ export default function ResourcesBySelector({
 	facets,
 	filters,
 	columns,
+	showDescriptions,
+	showLastUpdated,
 }: Props) {
 	const [selectedFilter, setSelectedFilter] = useState<string | null>(null);
+
+	const timeAgo = (date?: Date) => {
+		if (!date) return undefined;
+		return formatDistance(date, new Date(), { addSuffix: true });
+	};
 
 	const handleFilterChange = (option: any) => {
 		setSelectedFilter(option?.value || null);
@@ -89,6 +99,18 @@ export default function ResourcesBySelector({
 							? `/videos/${page.data.url}/`
 							: `/${page.id}/`;
 
+					// title can either be set directly in title or added as a meta.title property when we want something different for sidebar and SEO titles
+					let title;
+
+					if (page.collection === "docs") {
+						const titleItem = page.data.head.find(
+							(item) => item.tag === "title",
+						);
+						title = titleItem ? titleItem.content : page.data.title;
+					} else {
+						title = page.data.title;
+					}
+
 					return (
 						<a
 							key={page.id}
@@ -96,11 +118,18 @@ export default function ResourcesBySelector({
 							className="flex flex-col gap-2 rounded-sm border border-solid border-gray-200 p-6 text-black no-underline hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-800"
 						>
 							<p className="decoration-accent underline decoration-2 underline-offset-4">
-								{page.data.title}
+								{title}
 							</p>
-							<span className="line-clamp-3" title={page.data.description}>
-								{page.data.description}
-							</span>
+							{showDescriptions && (
+								<span className="line-clamp-3" title={page.data.description}>
+									{page.data.description}
+								</span>
+							)}
+							{showLastUpdated && "reviewed" in page.data && (
+								<span className="line-clamp-3" title={page.data.description}>
+									Updated {timeAgo(page.data.reviewed)}
+								</span>
+							)}
 						</a>
 					);
 				})}

@@ -7,11 +7,12 @@ rss: file
 import { Render } from "~/components";
 
 <Render
-  file="casb/integration-description"
-  params={{
-    integrationName: "Atlassian Confluence",
-    integrationAccountType: "Atlassian Confluence Cloud account",
-  }}
+	file="casb/integration-description"
+	product="cloudflare-one"
+	params={{
+		integrationName: "Atlassian Confluence",
+		integrationAccountType: "Atlassian Confluence Cloud account",
+	}}
 />
 
 :::note
@@ -42,8 +43,12 @@ These permissions follow the principle of least privilege to ensure that only th
 ## Security findings
 
 <Render
-  file="casb/security-findings"
-  params={{ integrationName: "Atlassian Confluence", slugRelativePath: "atlassian-confluence" }}
+	file="casb/security-findings"
+	product="cloudflare-one"
+	params={{
+		integrationName: "Atlassian Confluence",
+		slugRelativePath: "atlassian-confluence",
+	}}
 />
 
 ### Access security

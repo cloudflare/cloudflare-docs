@@ -5,7 +5,31 @@ sidebar:
   order: 3
 ---
 
-Email Security allows you to exempt known partner and internal domains from typical detection scanning. Adding trusted domains helps to reduce false positives on [malicious, suspicious, and spoof dispositions](/cloudflare-one/email-security/reference/dispositions-and-attributes/).
+Email Security allows you to exempt known partner and internal domains from typical detection scanning. Adding trusted domains helps to reduce false positives on [malicious, suspicious, and spoof dispositions](/cloudflare-one/email-security/reference/dispositions-and-attributes/). Email Security only checks the date when the domain is created.
+
+## How trusted domains work
+
+Trusted domains are not for the email message itself, but for entire domains. 
+
+By default, Email Security automatically detects lookalike domains. Lookalike domains can be something like this: `thisisdomain.com` and `thisisadomain.com`. Both domains almost look identical.
+
+If an email is received from a domain that looks like a configured domain, this will trigger a detection. Trusted domain is configured to ignore this detection. 
+
+In [Additional detections](/cloudflare-one/email-security/detection-settings/additional-detections/), you can configure malicious domain and suspicious [domain age](/cloudflare-one/email-security/detection-settings/additional-detections/).
+
+Malicious domain age means that someone may create a domain today, similar to a target, and start sending emails with that domain. This is usually how many phish campaigns start. In this case, the domain is usually marked as Malicious. Malicious domain age is usually set to 7 days.
+
+Suspicious domain age means that after 7 days (this number corresponds to the Malicious domain age), a domain may not be malicious, but it can still be suspicious. Email Security will mark these domains as Suspicious. It is recommended to configure the **Suspicious domain age** between 30 and 45 days.
+
+To view whether a domain is malicious or suspicious:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Investigation**.
+2. Run a screen. For example, select **Run screen** for **Malicious emails**, then select **Run screen**.
+3. Under **Your matching messages**, if any message displays **Domain Age** under **Threat types**, that means that the domain age is too low, and therefore the disposition assigned is Malicious. If the domain is legitimate, you can add it as a trusted domain:
+    - Go to **Settings** > **Trusted Domains**.
+    - Under **Domain Info**, add the domain, and select **New Domain**. This will mark the domain whose age is low as a trusted domain.
+
+## Configure trusted domains
 
 To configure a trusted domain:
 

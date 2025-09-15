@@ -7,7 +7,7 @@ head: []
 description: Cloudflare Workers plan and platform limits.
 ---
 
-import { Render, WranglerConfig } from "~/components";
+import { Render, WranglerConfig, DashButton } from "~/components";
 
 ## Account plan limits
 
@@ -21,13 +21,13 @@ import { Render, WranglerConfig } from "~/components";
 | [Worker startup time](#worker-startup-time)                                      | 400 ms       | 400 ms       |
 | [Number of Workers](#number-of-workers)<sup>1</sup>                              | 100          | 500          |
 | Number of [Cron Triggers](/workers/configuration/cron-triggers/)<br/>per account | 5            | 250          |
-| Number of [Static Asset](#static-assets) files per Worker version                | 20000        | 20000        |
+| Number of [Static Asset](#static-assets) files per Worker version                | 20,000       | 100,000      |
 | Individual [Static Asset](#static-assets) file size                              | 25 MiB       | 25 MiB       |
 
 <sup>1</sup> If you are running into limits, your project may be a good fit for
 [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/).
 
-<Render file="limits_increase" />
+<Render file="limits_increase" product="workers" />
 
 ---
 
@@ -84,7 +84,7 @@ doing additional work, this time spent waiting **is not** counted towards CPU ti
 
 **Most Workers requests consume less than 1-2 milliseconds of CPU time**, but you can increase the maximum CPU time from the default 30 seconds to 5 minutes (300,000 milliseconds) if you have CPU-bound tasks, such as large JSON payloads that need to be serialized, cryptographic key generation, or other data processing tasks.
 
-<Render file="isolate-cpu-flexibility" />
+<Render file="isolate-cpu-flexibility" product="workers" />
 
 To understand your CPU usage:
 
@@ -142,11 +142,13 @@ Cloudflare’s abuse protection methods do not affect well-intentioned traffic. 
 
 You can also confirm if you have been rate limited by anti-abuse Worker Rate Limiting by logging into the Cloudflare dashboard, selecting your account and zone, and going to **Security** > **Events**. Find the event and expand it. If the **Rule ID** is `worker`, this confirms that it is the anti-abuse Worker Rate Limiting.
 
-The burst rate and daily request limits apply at the account level, meaning that requests on your `*.workers.dev` subdomain count toward the same limit as your zones. Upgrade to a [Workers Paid plan](https://dash.cloudflare.com/?account=workers/plans) to automatically lift these limits.
+The burst rate and daily request limits apply at the account level, meaning that requests on your `*.workers.dev` subdomain count toward the same limit as your zones.
 
 :::caution
 
-If you are currently being rate limited, upgrade to a [Workers Paid plan](https://dash.cloudflare.com/?account=workers/plans) to lift burst rate and daily request limits.
+If you are currently being rate limited, in the Cloudflare dashboard go to the **Workers plans** page to update to a Workers Paid plan to lift burst rate and daily request limits.
+
+<DashButton url="/?to=/:account/workers/plans" />
 
 :::
 
@@ -155,9 +157,11 @@ If you are currently being rate limited, upgrade to a [Workers Paid plan](https:
 Accounts using the Workers Free plan are subject to a burst rate limit of 1,000 requests per minute. Users visiting a rate limited site will receive a Cloudflare `1015` error page. However if you are calling your Worker programmatically, you can detect the rate limit page and handle it yourself by looking for HTTP status code `429`.
 
 Workers being rate-limited by Anti-Abuse Protection are also visible from the Cloudflare dashboard:
+1. In the Cloudflare dashboard, go to the **Security events** page.
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and your website.
-2. Select **Security** > **Events** > scroll to **Sampled logs**.
+   <DashButton url="/?to=/:account/security-center/events" />
+
+2. Scroll to **Sampled logs**.
 3. Review the log for a Web Application Firewall block event with a `ruleID` of `worker`.
 
 ### Daily request
@@ -181,9 +185,11 @@ Each [isolate](/workers/reference/how-workers-works/#isolates) of your Worker's 
 When an isolate running your Worker exceeds 128 MB of memory, the Workers runtime handles this gracefully instead of failing immediately. It allows in-flight requests to complete while simultaneously creating a new isolate for your Worker for new requests. While this approach typically allows in-flight requests to complete, during periods of extremely high load, some incoming requests may be cancelled to maintain system stability.
 
 To view out-of-memory errors (OOM), as well as CPU limit overages:
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Select **Workers & Pages** and in **Overview**, select the Worker you would like to investigate.
+   <DashButton url="/?to=/:account/workers-and-pages" />
+
+2. Select the Worker you would like to investigate.
 3. Under **Metrics**, select **Errors** > **Invocation Statuses** and examine **Exceeded Memory**.
 
 To avoid exceeding memory limits, where possible you should avoid buffering large objects or responses in memory, and instead use streaming APIs such as [`TransformStream`](/workers/runtime-apis/streams/transformstream/) or [`node:stream`](/workers/runtime-apis/nodejs/streams/) to stream responses. Manipulating streams allows you to avoid buffering entire responses in memory.
@@ -337,7 +343,7 @@ If you are having trouble staying under this limit, consider [profiling using De
 
 When you attempt to deploy a Worker using the [Wrangler CLI](/workers/wrangler/), but your deployment is rejected because your Worker exceeds the maximum startup time, Wrangler will automatically generate a CPU profile that you can import into Chrome DevTools or open directly in VSCode. You can use this to learn what code in your Worker uses large amounts of CPU time at startup. Refer to [`wrangler check startup`](/workers/wrangler/commands/#startup) for more details.
 
-<Render file="limits_increase" />
+<Render file="limits_increase" product="workers" />
 
 ---
 
@@ -353,7 +359,7 @@ If you need more than 500 Workers, consider using [Workers for Platforms](/cloud
 
 ### Number of routes per zone
 
-Each zone has a limit of 1,000 [routes](/workers/configuration/routing/routes/). If you require more than 1,000 routes on your zone, consider using [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) or request an increase to this limit.
+Each zone has a limit of 1,000 [routes](/workers/configuration/routing/routes/). If you require more than 1,000 routes on your zone, consider using [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/).
 
 ### Number of routes per zone when using `wrangler dev --remote`
 
@@ -361,11 +367,11 @@ When you run a [remote development](/workers/development-testing/#remote-binding
 
 ### Number of custom domains per zone
 
-Each zone has a limit of 100 [custom domains](/workers/configuration/routing/custom-domains/). If you require more than 100 custom domains on your zone, consider using a wildcard [route](/workers/configuration/routing/routes/) or request an increase to this limit.
+Each zone has a limit of 100 [custom domains](/workers/configuration/routing/custom-domains/). If you require more than 100 custom domains on your zone, consider using a wildcard [route](/workers/configuration/routing/routes/).
 
 ### Number of routed zones per Worker
 
-When configuring [routing](/workers/configuration/routing/), the maximum number of zones that can be referenced by a Worker is 1,000. If you require more than 1,000 zones on your Worker, consider using [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) or request an increase to this limit.
+When configuring [routing](/workers/configuration/routing/), the maximum number of zones that can be referenced by a Worker is 1,000. If you require more than 1,000 zones on your Worker, consider using [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/).
 
 ---
 
@@ -404,7 +410,13 @@ If your Worker is on a Bundled plan, your limits are the same as the Workers Pai
 
 ### Files
 
-There is a 20,000 file count limit per [Worker version](/workers/configuration/versions-and-deployments/), and a 25 MiB individual file size limit. This matches the [limits in Cloudflare Pages](/pages/platform/limits/) today.
+There is a 20,000 file count limit per [Worker version](/workers/configuration/versions-and-deployments/) for free users, and a 100,000 file count limit for paid users.
+
+There is a 25 MiB individual file size limit for all users.
+
+:::note
+To use the increased limits in Wrangler you must use version 4.34.0 or higher.
+:::
 
 ### Headers
 

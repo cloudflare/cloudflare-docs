@@ -17,6 +17,10 @@ For example, you may not always want the direct traffic because it can come from
 
 If you want to protect your traffic and ensure it travels efficiently, you need to configure Cloudflare to be in front of whatever you are trying to protect, such as your application, service, or server. How you put your resources behind Cloudflare's network will depend on the type of traffic and how you want to control it.
 
+:::note
+Cloudflare supports all HTTP methods, with the exception of `CONNECT`, `TRACE`, and `PURGE`, which are restricted. Requests that use restricted methods are not proxied through Cloudflare's network. Note that other Cloudflare products may apply different restrictions on HTTP methods, and behavior can vary depending on the service.
+:::
+
 ## On-ramp and off-ramp traffic
 
 Traffic that enters Cloudflare's network is referred to as "on-ramping," and traffic that exits Cloudflare's network is referred to as "off-ramping." You may also know this as ingress and egress or "routing your traffic" through a network.

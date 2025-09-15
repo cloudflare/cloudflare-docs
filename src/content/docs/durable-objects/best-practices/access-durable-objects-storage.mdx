@@ -3,20 +3,24 @@ title: Access Durable Objects Storage
 pcx_content_type: concept
 sidebar:
   order: 3
-
 ---
 
 import { Render, GlossaryTooltip, WranglerConfig } from "~/components";
 
-<GlossaryTooltip term="Durable Object">Durable Objects</GlossaryTooltip> are a powerful compute API that provides a compute with storage building block. Each Durable Object has its own private, transactional, and strongly consistent storage. Durable Objects <GlossaryTooltip term="Storage API">Storage API</GlossaryTooltip> provides access to a Durable Object's attached storage.
+<GlossaryTooltip term="Durable Object">Durable Objects</GlossaryTooltip> are a
+powerful compute API that provides a compute with storage building block. Each
+Durable Object has its own private, transactional, and strongly consistent
+storage. Durable Objects
+<GlossaryTooltip term="Storage API">Storage API</GlossaryTooltip> provides
+access to a Durable Object's attached storage.
 
 A Durable Object's [in-memory state](/durable-objects/reference/in-memory-state/) is preserved as long as the Durable Object is not evicted from memory. Inactive Durable Objects with no incoming request traffic can be evicted. There are normal operations like [code deployments](/workers/configuration/versions-and-deployments/) that trigger Durable Objects to restart and lose their in-memory state. For these reasons, you should use Storage API to persist state durably on disk that needs to survive eviction or restart of Durable Objects.
 
 ## Access storage
 
-<Render file="recommend-sqlite-do" product="durable-objects"/>
+<Render file="recommend-sqlite-do" product="durable-objects" />
 
-<Render file="do-sqlite-storage-no-bill-note"/>
+<Render file="do-sqlite-storage-no-bill-note" product="durable-objects" />
 
 [Storage API methods](/durable-objects/api/storage-api/#methods) are available on `ctx.storage` parameter passed to the Durable Object constructor. Storage API has several methods, including SQL, point-in-time recovery (PITR), key-value (KV), and alarm APIs.
 
@@ -48,22 +52,22 @@ A common pattern is to initialize a Durable Object from [persistent storage](/du
 import { DurableObject } from "cloudflare:workers";
 
 export class Counter extends DurableObject {
-  value: number;
+	value: number;
 
-  constructor(ctx: DurableObjectState, env: Env) {
-    super(ctx, env);
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
 
-    // `blockConcurrencyWhile()` ensures no requests are delivered until
-    // initialization completes.
-    ctx.blockConcurrencyWhile(async () => {
-      // After initialization, future reads do not need to access storage.
-      this.value = (await ctx.storage.get("value")) || 0;
-    });
-  }
+		// `blockConcurrencyWhile()` ensures no requests are delivered until
+		// initialization completes.
+		ctx.blockConcurrencyWhile(async () => {
+			// After initialization, future reads do not need to access storage.
+			this.value = (await ctx.storage.get("value")) || 0;
+		});
+	}
 
-  async getCounterValue() {
-    return this.value;
-  }
+	async getCounterValue() {
+		return this.value;
+	}
 }
 ```
 
@@ -75,26 +79,25 @@ However if you ever write using [Storage API](/durable-objects/api/storage-api/)
 
 ```ts
 export class MyDurableObject extends DurableObject<Env> {
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+	}
 
-  constructor(ctx: DurableObjectState, env: Env) {
-    super(ctx, env);
-  }
+	// Clears Durable Object storage
+	async clearDo(): Promise<void> {
+		// If you've configured a Durable Object alarm
+		await this.ctx.storage.deleteAlarm();
 
-  // Clears Durable Object storage
-  async clearDo():Promise<void> {
-    // If you've configured a Durable Object alarm
-    await this.ctx.storage.deleteAlarm();
-
-    // This will delete all the storage associated with this Durable Object instance
-    // This will also delete the Durable Object instance itself
-    await this.ctx.storage.deleteAll();
-  }
+		// This will delete all the storage associated with this Durable Object instance
+		// This will also delete the Durable Object instance itself
+		await this.ctx.storage.deleteAll();
+	}
 }
 ```
 
 ## SQL API Examples
 
-<Render file="durable-objects-sql" />
+<Render file="durable-objects-sql" product="durable-objects" />
 
 ## TypeScript and query results
 
@@ -116,32 +119,45 @@ type User = {
 	name: string;
 	email_address: string;
 	version: number;
-}
+};
 ```
 
 This type can then be passed as the type parameter to a `sql.exec()` call:
 
 ```ts
 // The type parameter is passed between angle brackets before the function argument:
-const result = this.ctx.storage.sql.exec<User>("SELECT id, name, email_address, version FROM users WHERE id = ?", user_id).one()
+const result = this.ctx.storage.sql
+	.exec<User>(
+		"SELECT id, name, email_address, version FROM users WHERE id = ?",
+		user_id,
+	)
+	.one();
 // result will now have a type of "User"
 
 // Alternatively, if you are iterating over results using a cursor
-let cursor = this.sql.exec<User>("SELECT id, name, email_address, version FROM users WHERE id = ?", user_id)
+let cursor = this.sql.exec<User>(
+	"SELECT id, name, email_address, version FROM users WHERE id = ?",
+	user_id,
+);
 for (let row of cursor) {
 	// Each row object will be of type User
 }
 
 // Or, if you are using raw() to convert results into an array, define an array type:
 type UserRow = [
-  id: string,
-  name: string,
-  email_address: string,
-  version: number,
+	id: string,
+	name: string,
+	email_address: string,
+	version: number,
 ];
 
 // ... and then pass it as the type argument to the raw() method:
-let cursor = sql.exec("SELECT id, name, email_address, version FROM users WHERE id = ?", user_id).raw<UserRow>();
+let cursor = sql
+	.exec(
+		"SELECT id, name, email_address, version FROM users WHERE id = ?",
+		user_id,
+	)
+	.raw<UserRow>();
 
 for (let row of cursor) {
 	// row is of type User
@@ -155,8 +171,8 @@ You can represent the shape of any result type you wish, including more complex 
 
 Creating indexes for your most queried tables and filtered columns reduces how much data is scanned and improves query performance at the same time. If you have a read-heavy workload (most common), this can be particularly advantageous. Writing to columns referenced in an index will add at least one (1) additional row written to account for updating the index, but this is typically offset by the reduction in rows read due to the benefits of an index.
 
-<Render file="durable-objects-vs-d1" />
+<Render file="durable-objects-vs-d1" product="durable-objects" />
 
 ## Related resources
 
-* [Zero-latency SQLite storage in every Durable Object blog post](https://blog.cloudflare.com/sqlite-in-durable-objects)
+- [Zero-latency SQLite storage in every Durable Object blog post](https://blog.cloudflare.com/sqlite-in-durable-objects)

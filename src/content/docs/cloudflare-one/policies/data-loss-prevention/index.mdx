@@ -38,15 +38,15 @@ To get started, refer to [Scan SaaS applications with DLP](/cloudflare-one/appli
 
 ### Formats
 
-DLP supports scanning the following file types:
+DLP supports reporting and scanning the following file types:
 
 - Text and CSV
 - Microsoft Office 2007 and later (`.docx`, `.xlsx,` `.pptx`), including Microsoft 365
 - PDF
 - ZIP files containing the above
 
-DLP will scan the text contained in Microsoft Office and PDF files.
+DLP will scan the text contained in text, Microsoft Office, and PDF files.
 
 ### Size
 
-The maximum file size is 100 MB. Size limitation is assessed against the file after unzipping. ZIP files can be recursively compressed a maximum of 10 times.
+DLP can scan files less than or equal to 100 MB in size. ZIP files can be recursively compressed a maximum of 10 times, and each content file within the ZIP file must be less than or equal to 200 MB in uncompressed size.

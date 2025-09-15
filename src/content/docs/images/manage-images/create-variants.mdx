@@ -5,6 +5,7 @@ sidebar:
   order: 10
 
 ---
+import { DashButton } from "~/components";
 
 Variants let you specify how images should be resized for different use cases. By default, images are served with a `public` variant, but you can create up to 100 variants to fit your needs. Follow these steps to create a variant.
 
@@ -14,10 +15,13 @@ Cloudflare Images can deliver SVG files but will not resize them because it is a
 Resize via the Cloudflare dashboard.
 :::
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
-2. Select **Images** > **Variants**.
-3. Name your variant and select **Add New Variant**.
-4. Define variables for your new variant, such as resizing options, type of fit, and specific metadata options.
+1. In the Cloudflare dashboard, go to the **Variants** page.
+
+   <DashButton url="/?to=/:account/images/variants" />
+
+2. Select **Create variant**.
+2. Name your variant and select **Create**.
+3. Define variables for your new variant, such as resizing options, type of fit, and specific metadata options.
 
 ## Resize via the API
 

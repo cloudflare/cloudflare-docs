@@ -28,6 +28,11 @@ import {
 
 [![Deploy to Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/templates/tree/main/react-router-starter-template)
 
+:::note
+SPA mode and prerendering are not currently supported when using the [Cloudflare Vite plugin](/workers/vite-plugin/).
+If you wish to use React Router in an SPA then we recommend starting with the [React template](/workers/framework-guides/web-apps/react/) and using React Router [as a library](https://reactrouter.com/start/data/installation).
+:::
+
 ## What is React Router?
 
 [React Router v7](https://reactrouter.com/) is a full-stack React framework for building web applications.
@@ -69,10 +74,6 @@ It combines with the [Cloudflare Vite plugin](/workers/vite-plugin/) to provide 
         	- `ssr` is set to `true`, meaning that your application will use server-side rendering.
         	- `future.unstable_viteEnvironmentApi` is set to `true` to enable compatibility with the [Cloudflare Vite plugin](/workers/vite-plugin/).
 
-        :::note
-        SPA mode and prerendering are not currently supported when using the [Cloudflare Vite plugin](/workers/vite-plugin/).
-        If you wish to use React Router in an SPA then we recommend starting with the [React template](/workers/framework-guides/web-apps/react/) and using React Router [as a library](https://reactrouter.com/start/data/installation).
-        :::
 
         `vite.config.ts` is your [Vite config file](https://vite.dev/config/).
         The React Router and Cloudflare plugins are included in the `plugins` array.
@@ -132,7 +133,7 @@ As you have direct access to your Worker entry file (`workers/app.ts`), you can 
 
     ```ts title="workers/app.ts"
     import { createRequestHandler } from "react-router";
-    import { WorkflowEntrypoint, WorkflowStep, WorkflowEvent } from 'cloudflare:workers';
+    import { WorkflowEntrypoint, type WorkflowStep, type WorkflowEvent } from 'cloudflare:workers';
 
     declare global {
     	interface CloudflareEnvironment extends Env {}
@@ -188,7 +189,8 @@ As you have direct access to your Worker entry file (`workers/app.ts`), you can 
     And then use it in your application:
 
     ```ts title="app/routes/home.tsx"
-    export function action({ context }: Route.LoaderArgs) {
+    export async function action({ context }: Route.LoaderArgs) {
+    	const env = context.cloudflare.env;
     	const instance = await env.MY_WORKFLOW.create({ params: { "hello": "world" })
     	return { id: instance.id, details: instance.status() };
     }
@@ -196,4 +198,44 @@ As you have direct access to your Worker entry file (`workers/app.ts`), you can 
 
 </Details>
 
-<Render file="frameworks-bindings" />
+### Static assets
+
+By default, the Remix template for Cloudflare Pages Functions does not handle static assets, but you can configure it to do so.
+
+First, configure your `wrangler.toml` file to serve a directory.
+
+```toml title="wrangler.toml"
+[[d1_databases]]
+binding = "DB"
+database_name = "remix-app"
+database_id = "<YOUR_DATABASE_ID>"
+
+[[r2_buckets]]
+binding = "MY_BUCKET"
+bucket_name = "my-bucket"
+
+[site]
+bucket = "./public"
+```
+
+Then, you must modify your server handler to serve static assets from that directory.
+
+```ts title="functions/[[path]].ts"
+import { createPagesFunctionHandler } from "@remix-run/cloudflare-pages";
+import { type Env } from "../app/lib/env";
+
+// @ts-ignore
+import * as build from "../build";
+
+export const onRequest = createPagesFunctionHandler<Env>({
+  build,
+  getLoadContext: (context) => ({
+    cloudflare: {
+      ...context,
+      env: { ...context.env, ASSETS: undefined },
+    },
+  }),
+});
+```
+
+<Render file="frameworks-bindings" product="workers" />

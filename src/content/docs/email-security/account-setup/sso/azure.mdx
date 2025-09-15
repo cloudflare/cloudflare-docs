@@ -6,10 +6,9 @@ sidebar:
 head:
   - tag: title
     content: Azure integration guide
-
 ---
 
-import { GlossaryTooltip, Render } from "~/components"
+import { GlossaryTooltip, Render } from "~/components";
 
 This tutorial will walk you through the steps for configuring a non-gallery enterprise application within Azure Active Directory to establish a <GlossaryTooltip term="SAML">SAML</GlossaryTooltip> SSO connection with Email Security (formerly Area 1).
 
@@ -54,9 +53,8 @@ This tutorial will walk you through the steps for configuring a non-gallery ente
 9. Select **Save** and the cross button to exit **Basic SAML Configuration**.
 
 10. Select the pencil icon to edit **SAML Certificates** and make the following changes:
-
-    * **Signing Option**: Select *Sign SAML response* from the drop-down menu.
-    * **Signing Algorithm**: Select *SHA-1* from the drop-down menu.
+    - **Signing Option**: Select _Sign SAML response_ from the drop-down menu.
+    - **Signing Algorithm**: Select _SHA-1_ from the drop-down menu.
 
     ![Select Sign SAML response and SHA-1 from the menu](~/assets/images/email-security/sso/azure/step10-saml-signing-certificate.png)
 
@@ -89,7 +87,7 @@ Now that the application configuration is complete, update **User Assignments** 
 
    ![Enable SSO](~/assets/images/email-security/sso/generic/step4-sso.png)
 
-5. In **SSO Enforcement**, choose one of the settings according to your specific needs: <Render file="sso-enforcement" />
+5. In **SSO Enforcement**, choose one of the settings according to your specific needs: <Render file="sso-enforcement" product="email-security" />
 
 6. For **SAML SSO Domain**, enter `login.microsoftonline.com`.
 
@@ -124,10 +122,10 @@ Verify that the User Assignments and Application Properties of your new Azure AD
 
 If you have trouble connecting your Azure account to Email Security, make sure that:
 
-* The user exists in the Email Security dashboard.
-* The **Identifier** and **Reply URLs** in Azure AD are correct (refer to **Basic SAML Configuration** in step 7 of [Azure Active Directory configuration](#1-azure-active-directory-configuration)).
-* **Sign SAML response** and **SHA-1** are selected in Azure AD (refer to **SAML Certificates** in step 9 of [Azure Active Directory configuration](#1-azure-active-directory-configuration)).
-* The SAML SSO Domain is set correctly in the Email Security dashboard (refer to step 6 in [Configure Email Security to connect to Azure](#2-configure-email-security-to-connect-to-azure)).
-* The name ID identifier is set to **Email Address**.
+- The user exists in the Email Security dashboard.
+- The **Identifier** and **Reply URLs** in Azure AD are correct (refer to **Basic SAML Configuration** in step 7 of [Azure Active Directory configuration](#1-azure-active-directory-configuration)).
+- **Sign SAML response** and **SHA-1** are selected in Azure AD (refer to **SAML Certificates** in step 9 of [Azure Active Directory configuration](#1-azure-active-directory-configuration)).
+- The SAML SSO Domain is set correctly in the Email Security dashboard (refer to step 6 in [Configure Email Security to connect to Azure](#2-configure-email-security-to-connect-to-azure)).
+- The name ID identifier is set to **Email Address**.
 
 If all else fails, enable Chrome browser debug logs. Then, log your activity when SSO is initiated, and contact [Cloudflare support](/support/contacting-cloudflare-support/).

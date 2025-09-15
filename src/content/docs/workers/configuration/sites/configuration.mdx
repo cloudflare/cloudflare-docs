@@ -8,7 +8,7 @@ sidebar:
 
 import { Render, WranglerConfig } from "~/components";
 
-<Render file="workers_sites" />
+<Render file="workers_sites" product="workers" />
 
 Workers Sites require the latest version of [Wrangler](https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler).
 
@@ -17,11 +17,9 @@ Workers Sites require the latest version of [Wrangler](https://github.com/cloudf
 There are a few specific configuration settings for Workers Sites in your Wrangler file:
 
 - `bucket` required
-
   - The directory containing your static assets, path relative to your [Wrangler configuration file](/workers/wrangler/configuration/). Example: `bucket = "./public"`.
 
 - `include` optional
-
   - A list of gitignore-style patterns for files or directories in `bucket` you exclusively want to upload. Example: `include = ["upload_dir"]`.
 
 - `exclude` optional
