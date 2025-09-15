@@ -12,6 +12,8 @@ sidebar:
   order: 3
 ---
 
+import { Steps, DashButton } from "~/components";
+
 This tutorial will guide you on how to integrate Cloudflare Turnstile, [Web Application Firewall (WAF)](/waf/), and [Bot Management](/bots/get-started/bot-management/) into an existing authentication system. This combination creates a robust defense against various threats, including automated attacks and malicious login attempts.
 
 ## Overview
@@ -39,13 +41,16 @@ If your site is on Cloudflare's network and subscribed to an Enterprise plan, yo
 
 ### Issue challenges for potential bot traffic
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to **Security** > **WAF**.
-3. Create a new custom WAF rule by selecting "Edit expression":
-   - Field: "Bot Score"
-   - Operator: "less than or equal to"
-   - Value: "30"
-   - Action: "Managed Challenge"
+<Steps>
+	1. In the Cloudflare dashboard, go to the **WAF** page.
+	
+		<DashButton url="/?to=/:account/application-security/waf" />
+	2. Create a new custom WAF rule by selecting **Edit expression**:
+		- Field: "Bot Score"
+		- Operator: "less than or equal to"
+		- Value: "30"
+		- Action: "Managed Challenge"
+</Steps>
 
 This configuration challenges requests with a low bot score, leveraging network signals to identify potential threats before they reach your application. You may customize the score threshold based on your specific use case.
 
@@ -53,11 +58,14 @@ This configuration challenges requests with a low bot score, leveraging network 
 
 Turnstile can be used on any site, regardless of whether it is on Cloudflare's network:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to **Security** > **Turnstile**.
-3. Select **Add widget** and fill out the necessary information.
-4. Add your domain to the Turnstile configuration.
-5. Select **Create**.
+<Steps>
+    1. In the Cloudflare dashboard, go to the **Turnstile** page.
+    
+        <DashButton url="/?to=/:account/turnstile" />
+    2. Select **Add widget** and fill out the necessary information.
+	3. Add your domain to the Turnstile configuration.
+	4. Select **Create**.
+</Steps>
 
 Turnstile adds an extra layer of security by analyzing browser and client-side signals, complementing the server-side checks performed by WAF and Bot Management.
 

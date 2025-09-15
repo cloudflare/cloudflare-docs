@@ -3,6 +3,10 @@ link: "/workers/platform/changelog/"
 productName: Workers
 productLink: "/workers/"
 entries:
+  - publish_date: "2025-08-21"
+    description: |-
+      - Updated v8 to version 14.0.
+      - `Uint8Array` type in JavaScript now supports base64 and hex operations.
   - publish_date: "2025-08-14"
     description: |-
       - Enable V8 Sandbox for improved isolation and security.

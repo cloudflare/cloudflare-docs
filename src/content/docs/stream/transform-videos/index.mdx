@@ -6,6 +6,7 @@ sidebar:
   badge:
     text: Beta
 ---
+import { DashButton } from "~/components";
 
 You can optimize and manipulate videos stored _outside_ of Cloudflare Stream with Media Transformations. Transformed videos and images are served from one of your zones on Cloudflare.
 
@@ -19,10 +20,12 @@ Cloudflare will automatically cache every transformed video or image on our glob
 
 To enable transformations on your zone:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
-2. Go to **Stream** > **Transformations**.
-3. Locate the specific zone where you want to enable transformations.
-4. Select **Enable** for zone.
+1. In the Cloudflare dashboard, go to the **Transformations** page.
+
+   <DashButton url="/?to=/:account/stream/video-transformations" />
+
+2. Locate the specific zone where you want to enable transformations.
+3. Select **Enable** for the zone.
 
 ## Transform a video by URL
 

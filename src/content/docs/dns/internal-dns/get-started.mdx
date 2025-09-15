@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import { TabItem, Tabs, Details, Example, Render } from "~/components";
+import { TabItem, Tabs, Details, Example, Render, DashButton } from "~/components";
 
 Follow this guide to get started with Internal DNS.
 
@@ -73,10 +73,14 @@ Follow this guide to get started with Internal DNS.
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. Go to **Internal DNS** and select a zone.
-2. Within the selected zone, go to **Reference zone**.
-3. Select **Add reference zone**.
-4. Find the zone you want to use as reference and choose **Select** in the respective row.
+1. In the Cloudflare dashboard, go to the **Internal DNS** page.
+
+   <DashButton url="/?to=/:account/internal-dns" />
+
+2. Select a zone.
+3. Within the selected zone, go to **Reference zone**.
+4. Select **Add reference zone**.
+5. Find the zone you want to use as reference and choose **Select** in the respective row.
 
 </TabItem> <TabItem label="API">
 

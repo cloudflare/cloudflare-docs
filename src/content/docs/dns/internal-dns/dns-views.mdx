@@ -6,7 +6,7 @@ sidebar:
   label: Views
 ---
 
-import { Details, Render, Tabs, TabItem } from "~/components";
+import { Details, Render, Tabs, TabItem, DashButton } from "~/components";
 
 Internal DNS views are logical groupings of [internal DNS zones](/dns/internal-dns/internal-zones/). As explained in the [architecture overview](/dns/internal-dns/#architecture-overview), DNS views are referenced by [Gateway resolver policies](/cloudflare-one/policies/gateway/resolver-policies/) to define how a specific query should be resolved.
 
@@ -39,8 +39,11 @@ It is also possible to delete a DNS view that is being referenced by a Gateway r
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
-2. Go to **Internal DNS** > **Views**.
+1. In the Cloudflare dashboard, go to the **Internal DNS** page.
+
+   <DashButton url="/?to=/:account/internal-dns" />
+
+2. Go to **Internal DNS Views**.
 3. Find the view you want to delete.
 4. Select the three dots in the corresponding row and choose _Delete_.
 5. In the confirmation dialog, select **Delete** again to proceed.

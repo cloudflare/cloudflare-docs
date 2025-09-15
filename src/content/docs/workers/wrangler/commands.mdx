@@ -14,7 +14,10 @@ import {
 	Type,
 	MetaInfo,
 	WranglerConfig,
+	WranglerCommand,
+	WranglerNamespace,
 	PackageManagers,
+	DashButton,
 } from "~/components";
 
 Wrangler offers a number of commands to manage your Cloudflare Workers.
@@ -98,18 +101,12 @@ You can then run them using your package manager of choice:
 
 ---
 
-## `docs`
+<WranglerCommand
+	command="docs"
+	description="Open the Cloudflare developer documentation in your default browser."
+/>
 
-Open the Cloudflare developer documentation in your default browser.
-
-```txt
-wrangler docs [<COMMAND>]
-```
-
-- `COMMAND` <Type text="string" /> <MetaInfo text="optional" />
-  - The Wrangler command you want to learn more about. This opens your default browser to the section of the documentation that describes the command.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
+---
 
 ## `init`
 
@@ -149,7 +146,7 @@ Interact with Cloudflare's D1 service.
 
 Manage [Hyperdrive](/hyperdrive/) database configurations.
 
-<Render file="wrangler-commands/hyperdrive" product="workers" />
+<WranglerNamespace namespace="hyperdrive" headingLevel={3} />
 
 ---
 
@@ -157,7 +154,7 @@ Manage [Hyperdrive](/hyperdrive/) database configurations.
 
 Interact with a [Vectorize](/vectorize/) vector database.
 
-<Render file="wrangler-commands/vectorize" product="workers" />
+<Render product="workers" file="wrangler-commands/vectorize" />
 
 ---
 
@@ -897,34 +894,7 @@ wrangler workflows trigger <WORKFLOW_NAME> <PARAMS> [OPTIONS]
 wrangler workflows trigger my-workflow '{"hello":"world"}'
 ```
 
-## `tail`
-
-Start a session to livestream logs from a deployed Worker.
-
-```txt
-wrangler tail <WORKER> [OPTIONS]
-```
-
-- `WORKER` <Type text="string" /> <MetaInfo text="required" />
-  - The name of your Worker or the route the Worker is running on.
-- `--format` <Type text="'json'|'pretty'" /> <MetaInfo text="optional" />
-  - The format of the log entries.
-- `--status` <Type text="'ok'|'error'|'canceled'" /> <MetaInfo text="optional" />
-  - Filter by invocation status.
-- `--header` <Type text="string" /> <MetaInfo text="optional" />
-  - Filter by HTTP header.
-- `--method` <Type text="string" /> <MetaInfo text="optional" />
-  - Filter by HTTP method.
-- `--sampling-rate` <Type text="number" /> <MetaInfo text="optional" />
-  - Add a fraction of requests to log sampling rate (between `0` and `1`).
-- `--search` <Type text="string" /> <MetaInfo text="optional" />
-  - Filter by a text match in `console.log` messages.
-- `--ip` <Type text="(string|'self')\[]" />" <MetaInfo text="optional" />
-  - Filter by the IP address the request originates from. Use `"self"` to show only messages from your own IP.
-- `--version-id` <Type text="string" /> <MetaInfo text="optional" />
-  - Filter by Worker version.
-
-<Render file="wrangler-commands/global-flags" product="workers" />
+<WranglerCommand command="tail" />
 
 After starting `wrangler tail`, you will receive a live feed of console and exception logs for each request your Worker receives.
 
@@ -1291,22 +1261,16 @@ wrangler logout
 
 If you are using `CLOUDFLARE_API_TOKEN` instead of OAuth, and you can logout by deleting your API token in the Cloudflare dashboard:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
-2. Go to **My Profile** > **API Tokens**.
+1. In the Cloudflare dashboard, go to the **Account API tokens** page.
+
+   <DashButton url="/?to=/:account/api-tokens" />
+
 3. Select the three-dot menu on your Wrangler token.
 4. Select **Delete**.
 
 ---
 
-## `whoami`
-
-Retrieve your user information and test your authentication configuration.
-
-```txt
-wrangler whoami
-```
-
-<Render file="wrangler-commands/global-flags" product="workers" />
+<WranglerCommand command="whoami" />
 
 ---
 
@@ -1316,40 +1280,19 @@ wrangler whoami
 The minimum required wrangler version to use these commands is 3.40.0. For versions before 3.73.0, you will need to add the `--x-versions` flag.
 :::
 
-### `upload`
+<WranglerCommand
+	command="versions upload"
+	description="
+Upload a new [version](/workers/configuration/versions-and-deployments/#versions) of your Worker that is not deployed immediately."
+	headingLevel={3}
+/>
 
-Upload a new [version](/workers/configuration/versions-and-deployments/#versions) of your Worker that is not deployed immediately.
+<WranglerCommand
+	command="versions deploy"
+description="Deploy a previously created [version](/workers/configuration/versions-and-deployments/#versions) of your Worker all at once or create a [gradual deployment](/workers/configuration/versions-and-deployments/gradual-deployments/) to incrementally shift traffic to a new version by following an interactive prompt."
+    headingLevel={3}
 
-```txt
-wrangler versions upload [OPTIONS]
-```
-
-- `--tag` <Type text="string" /> <MetaInfo text="optional" />
-  - Add a version tag. Accepts empty string.
-- `--message` <Type text="string" /> <MetaInfo text="optional" />
-  - Add a version message. Accepts empty string.
-- `--preview-alias` <Type text="string" /> <MetaInfo text="optional" />
-  - Creates an alias to this version.
-- `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific Worker rather than inheriting from the [Wrangler configuration file](/workers/wrangler/configuration/).
-- `--env` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific environment.
-    <Render file="vite-environments" product="workers" />
-
-<Render file="wrangler-commands/global-flags" product="workers" />
-
-### `deploy`
-
-Deploy a previously created [version](/workers/configuration/versions-and-deployments/#versions) of your Worker all at once or create a [gradual deployment](/workers/configuration/versions-and-deployments/gradual-deployments/) to incrementally shift traffic to a new version by following an interactive prompt.
-
-```txt
-wrangler versions deploy [OPTIONS]
-```
-
-- `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific Worker rather than inheriting from the [Wrangler configuration file](/workers/wrangler/configuration/).
-
-<Render file="wrangler-commands/global-flags" product="workers" />
+/>
 
 :::note
 
@@ -1360,18 +1303,19 @@ For example:
 
 :::
 
-### `list`
+<WranglerCommand
+	command="versions list"
+description="Retrieve details for the 10 most recent versions. Details include `Version ID`, `Created on`, `Author`, `Source`, and optionally, `Tag` or `Message`."
+    headingLevel={3}
 
-Retrieve details for the 10 most recent versions. Details include `Version ID`, `Created on`, `Author`, `Source`, and optionally, `Tag` or `Message`.
+/>
 
-```txt
-wrangler versions list [OPTIONS]
-```
+<WranglerCommand
+	command="versions view"
 
-- `--name` <Type text="string" /> <MetaInfo text="optional" />
-  - Perform on a specific Worker rather than inheriting from the [Wrangler configuration file](/workers/wrangler/configuration/).
+    headingLevel={3}
 
-<Render file="wrangler-commands/global-flags" product="workers" />
+/>
 
 ### `secret put`
 

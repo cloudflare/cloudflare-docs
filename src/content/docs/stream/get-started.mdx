@@ -5,6 +5,7 @@ sidebar:
   order: 2
 
 ---
+import { DashButton } from "~/components";
 
 :::note[Before you get started:]
 
@@ -21,7 +22,9 @@ You must first [create a Cloudflare account](/fundamentals/account/create-accoun
 
 ### Step 1: Upload an example video from a public URL
 
-You can upload videos directly from the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/stream) or using the API.
+You can upload videos using the API or directly on the **Stream** page of the Cloudflare dashboard.
+
+<DashButton url="/?to=/:account/stream" />
 
 To use the API, replace the `API_TOKEN` and `ACCOUNT_ID` values with your credentials in the example below.
 
@@ -85,7 +88,9 @@ To play video on your website with the [Stream Player](/stream/viewing-videos/us
 </iframe>
 ```
 
-The embed code above can also be found in the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/stream).
+The embed code above can also be found on the **Stream** page of the Cloudflare dashboard.
+
+<DashButton url="/?to=/:account/stream" />
 
 <figure data-type="stream">
   <div class="AspectRatio" style="--aspect-ratio: calc(16 / 9)">
@@ -107,7 +112,9 @@ The embed code above can also be found in the [Cloudflare dashboard](https://das
 
 ### Step 1: Create a live input
 
-You can create a live input via the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/stream/inputs/create) or using the API.
+You can create a live input using the API or the **Live inputs** page of the Cloudflare dashboard.
+
+<DashButton url="/?to=/:account/stream/inputs" />
 
 To use the API, replace the `API_TOKEN` and `ACCOUNT_ID` values with your credentials in the example below.
 
@@ -159,7 +166,9 @@ To play the live stream you just started on your website with the [Stream Player
 </iframe>
 ```
 
-The embed code above can also be found in the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/stream).
+The embed code above can also be found on the **Stream** page of the Cloudflare dashboard.
+
+<DashButton url="/?to=/:account/stream" />
 
 ### Next steps
 

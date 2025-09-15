@@ -4,7 +4,7 @@ title: Clearance
 sidebar:
   order: 2
 ---
-import { Render } from "~/components";
+import { Render, DashButton, Steps } from "~/components";
 
 ## `cf_clearance` cookies
 
@@ -78,17 +78,24 @@ For more details on managing hostnames, refer to the [Hostname Management docume
 
 #### Enable pre-clearance on a new site
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
-2. Go to **Turnstile** > **Add widget**.
-3. Under **Would you like to opt for pre-clearance for this site?** select **Yes**.
-4. Choose the pre-clearance level from the select box.
-5. Select **Create**.
+<Steps>
+  1. In the Cloudflare dashboard, go to the **Turnstile** page.
+    
+      <DashButton url="/?to=/:account/turnstile" />
+  2. Select **Add widget**.
+  3. Under **Would you like to opt for pre-clearance for this site?** select **Yes**.
+  4. Choose the pre-clearance level from the select box.
+  5. Select **Create**.
+</Steps>
 
 #### Enable pre-clearance on an existing site
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
-2. Go to **Turnstile**.
-3. Go to the existing widget or site and select **Settings**.
-4. Under **Would you like to opt for pre-clearance for this site?** select **Yes**.
-5. Choose the pre-clearance level from the select box.
-6. Select **Update**.
+<Steps>
+  1. In the Cloudflare dashboard, go to the **Turnstile** page.
+    
+      <DashButton url="/?to=/:account/turnstile" />
+  2. Go to the existing widget or site and select **Settings**.
+  3. Under **Would you like to opt for pre-clearance for this site?** select **Yes**.
+  4. Choose the pre-clearance level from the select box.
+  5. Select **Update**.
+</Steps>

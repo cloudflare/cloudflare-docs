@@ -5,10 +5,13 @@ sidebar:
   order: 3
 ---
 
+import { Steps } from "~/components";
+
 View the content of the matched rule payload in the dashboard by entering your private key.
 
-1. Open [Security Events](/waf/analytics/security-events/):
+<Steps>
 
+1. Open [Security Events](/waf/analytics/security-events/):
    - Old dashboard: Go to **Security** > **Events**.
    - New security dashboard: Go to **Security** > **Analytics** > **Events** tab.
 
@@ -23,6 +26,8 @@ View the content of the matched rule payload in the dashboard by entering your p
    :::note
    The private key is not sent to a Cloudflare server. The decryption occurs entirely in the browser.
    :::
+
+</Steps>
 
 If the private key you entered decrypts the encrypted payload successfully, the dashboard will show the name of the fields that matched and the matched string in clear text, along with some text appearing before and after the match.
 

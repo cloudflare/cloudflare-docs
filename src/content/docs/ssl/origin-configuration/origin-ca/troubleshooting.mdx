@@ -7,7 +7,7 @@ sidebar:
   label: Troubleshooting
 ---
 
-import { GlossaryTooltip, Render } from "~/components";
+import { GlossaryTooltip, Render, DashButton } from "~/components";
 
 Consider the following common issues and troubleshooting steps when using [Cloudflare origin CA](/ssl/origin-configuration/origin-ca/).
 
@@ -60,7 +60,9 @@ If the user does not have **API Access**, this error is returned.
 
 ### Solution
 
-Make sure that the user creating the certificate has access to the API. You can check under **Account Home** > **Manage Account** > **Members**:
+Make sure that the user creating the certificate has access to the API. You can check in the account **Members** page.
+
+   <DashButton url="/?to=/:account/members" />
 
 - The default setting for the account is specified in the card **Enable API Access**.
 - Specific user API Access (which can override the default setting) is presented after selecting the user in the list of members.

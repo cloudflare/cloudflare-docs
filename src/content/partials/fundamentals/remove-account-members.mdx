@@ -2,17 +2,19 @@
 {}
 ---
 
-import { TabItem, Tabs } from "~/components";
+import { DashButton, TabItem, Tabs } from "~/components";
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 To revoke a member's access to your account:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
-2. Go to **Manage Account** > **Members**.
-3. Locate an account member and expand their record.
-4. Click **Revoke**.
-5. Click **Yes, revoke access**.
+1. In the Cloudflare dashboard, go to **Members**.
+
+<DashButton url="/?to=/:account/members" />
+
+2. Locate an account member and expand their record.
+3. Click **Revoke**.
+4. Click **Yes, revoke access**.
 
 </TabItem> <TabItem label="API">
 

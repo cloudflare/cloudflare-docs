@@ -7,7 +7,9 @@ sidebar:
     label: Malicious uploads
 ---
 
-import { GlossaryTooltip, Type } from "~/components";
+import { GlossaryTooltip, Type, Render } from "~/components";
+
+<Render file="survey" product="waf" />
 
 The malicious uploads detection, also called uploaded content scanning, is a WAF [traffic detection](/waf/concepts/#detection-versus-mitigation) that scans content being uploaded to your application.
 

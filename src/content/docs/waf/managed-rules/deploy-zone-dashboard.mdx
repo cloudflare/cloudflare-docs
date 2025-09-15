@@ -9,7 +9,7 @@ head:
     content: Deploy a WAF managed ruleset in the dashboard
 ---
 
-import { Render, Tabs, TabItem } from "~/components";
+import { Render, Tabs, TabItem, Steps } from "~/components";
 
 The instructions on this page will guide you through deploying and configuring a managed ruleset for a zone.
 
@@ -21,6 +21,8 @@ To deploy a managed ruleset with the default configuration:
 
 <Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
 
+<Steps>
+
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 
 2. Go to **Security** > **WAF** > **Managed rules** tab.
@@ -29,13 +31,19 @@ To deploy a managed ruleset with the default configuration:
 
    ![Example WAF Managed Rules configuration in the Managed rules tab under Security > WAF. There are two managed rulesets already deployed, and one managed ruleset available for deployment.](~/assets/images/waf/waf-managed-rules-tab.png)
 
+</Steps>
+
 This operation deploys the managed ruleset for the current zone, creating a new rule with the _Execute_ action.
 
 </TabItem> <TabItem label="New dashboard" icon="rocket">
 
+<Steps>
+
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
 2. Go to **Security** > **Settings** and filter by **Web application exploits**.
 3. Turn on the managed ruleset you want to deploy.
+
+</Steps>
 
 </TabItem> </Tabs>
 
@@ -43,15 +51,23 @@ This operation deploys the managed ruleset for the current zone, creating a new 
 
 <Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
 
+<Steps>
+
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Go to **Security** > **WAF** > **Managed rules** tab.
 3. Next to the managed ruleset you want to turn on or off, switch the **Enabled** toggle.
 
+</Steps>
+
 </TabItem> <TabItem label="New dashboard" icon="rocket">
+
+<Steps>
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
 2. Go to **Security** > **Settings** and filter by **Web application exploits**.
 3. Next to the managed ruleset you want to turn on or off, set the toggle to **On** or **Off**, respectively.
+
+</Steps>
 
 </TabItem> </Tabs>
 
@@ -74,6 +90,8 @@ To configure rule field values for all the rules in a managed ruleset:
 
 <Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
 
+<Steps>
+
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 
 2. Go to **Security** > **WAF** > **Managed rules** tab.
@@ -90,7 +108,11 @@ To configure rule field values for all the rules in a managed ruleset:
 
 6. If you are editing a deployed managed ruleset, select **Save**. If you have not deployed the managed ruleset yet, select **Deploy** to deploy the ruleset immediately, or **Save as Draft** to save your deployment settings for later.
 
+</Steps>
+
 </TabItem> <TabItem label="New dashboard" icon="rocket">
+
+<Steps>
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
 
@@ -109,6 +131,8 @@ To configure rule field values for all the rules in a managed ruleset:
    ![The Configure Managed Ruleset page displaying the available options to override all the rules in the ruleset. In the displayed managed ruleset you can override the ruleset action.](~/assets/images/waf/waf-configure-ruleset.png)
 
 7. Select **Save**.
+
+</Steps>
 
 </TabItem> </Tabs>
 
@@ -162,15 +186,23 @@ You can browse the available rules in a managed ruleset and search for individua
 
 <Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
 
+<Steps>
+
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
 2. Go to **Security** > **WAF** > **Managed rules** tab.
 3. Next to the rule or exception (skip rule) you want to delete, select the three dots > **Delete** and confirm the operation.
 
+</Steps>
+
 </TabItem> <TabItem label="New dashboard" icon="rocket">
+
+<Steps>
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
 2. Go to **Security** > **Security rules**.
 3. In the rules table, search for the managed ruleset you want to configure/browse. At the top of the page, you can filter the rules to show **Managed rules** only.
 4. Next to the managed ruleset deployment rule (execute rule) or exception (skip rule) you want to delete, select the three dots > **Delete** and confirm the operation.
+
+</Steps>
 
 </TabItem> </Tabs>

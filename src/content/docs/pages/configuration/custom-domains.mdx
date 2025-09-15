@@ -8,7 +8,7 @@ banner:
     id: pages-migrate-to-workers
 ---
 
-import { Render } from "~/components";
+import { Render, DashButton } from "~/components";
 
 When deploying your Pages project, you may wish to point custom domains (or subdomains) to your site.
 
@@ -62,9 +62,11 @@ Then, in **DNS** > **Records**:
 2. Select **Edit**.
 3. Select **Delete**.
 
-Next, in Account Home, go to **Workers & Pages**:
+Next, in the Cloudflare dashboard, go to the **Workers & Pages** page.
 
-1. In **Overview**, select your Pages project.
+<DashButton url="/?to=/:account/workers-and-pages" />
+
+1. Select your Pages project.
 2. Go to **Custom domains**.
 3. Select the **three dot icon** next to your custom domain > **Remove domain**.
 

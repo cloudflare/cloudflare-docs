@@ -3,19 +3,19 @@
 
 ---
 
+import { DashButton } from "~/components";
+
 Since this is a service with [usage-based billing](/billing/usage-based-billing/), Cloudflare recommends that you set up usage-based billing notifications to avoid unexpected bills.
 
 To set up those notifications:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
+1. In the Cloudflare dashboard, go to **Notifications**.
 
-2. Select your account.
+<DashButton url="/?to=/:account/notifications" />
 
-3. Go to **Notifications**.
+2. On **Alert Type** of **Usage Based Billing**, click **Select**.
 
-4. On **Alert Type** of **Usage Based Billing**, click **Select**.
-
-5. Fill out the following information:
+3. Fill out the following information:
 
    * **Name**
    * **Product**
@@ -26,4 +26,4 @@ To set up those notifications:
    Some plans also have access to alerts through [PagerDuty](/notifications/get-started/configure-pagerduty/) and [Webhooks](/notifications/get-started/configure-webhooks/).
    :::
 
-6. Select **Save**.
+4. Select **Save**.

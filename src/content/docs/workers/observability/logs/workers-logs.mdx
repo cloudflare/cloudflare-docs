@@ -7,7 +7,7 @@ sidebar:
   order: 2
 ---
 
-import { TabItem, Tabs, Steps, Render, WranglerConfig } from "~/components";
+import { TabItem, Tabs, Steps, Render, WranglerConfig, DashButton } from "~/components";
 
 Workers Logs lets you automatically collect, store, filter, and analyze logging data emitted from Cloudflare Workers. Data is written to your Cloudflare Account, and you can query it in the dashboard for each of your Workers. All newly created Workers will come with the observability setting enabled by default.
 
@@ -56,14 +56,14 @@ You must add the observability setting for your Worker to write logs to Workers 
 
 ## View logs from the dashboard
 
-Access logs for your Worker from the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers/services/view/:worker/production/observability/logs/).
+Access logs for your Worker from the Cloudflare dashboard:
 
-<Steps>
-	1. Log in to the [Cloudflare
-	dashboard](https://dash.cloudflare.com/?to=/:account/workers/services/view/:worker/production/observability/logs/)
-	and select your account. 2. In Account Home, go to **Workers & Pages**. 3. In
-	**Overview**, select your **Worker**. 4. Select **Logs**.
-</Steps>
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+
+2. In **Overview**, select your **Worker**.
+3. Select **Logs**.
 
 ## Best Practices
 

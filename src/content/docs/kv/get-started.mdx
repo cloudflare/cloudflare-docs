@@ -8,7 +8,7 @@ sidebar:
   order: 2
 ---
 
-import { Render, PackageManagers, Steps, FileTree, Details, Tabs, TabItem, WranglerConfig, GitHubCode } from "~/components";
+import { Render, PackageManagers, Steps, FileTree, Details, Tabs, TabItem, WranglerConfig, GitHubCode, DashButton } from "~/components";
 
 Workers KV provides low-latency, high-throughput global storage to your [Cloudflare Workers](/workers/) applications. Workers KV is ideal for storing user configuration data, routing data, A/B testing configurations and authentication tokens, and is well suited for read-heavy workloads.
 
@@ -100,12 +100,13 @@ Create a new Worker to read and write to your KV namespace.
 </TabItem> <TabItem label = 'Dashboard'>
 
 <Steps>
-1. Log in to your Cloudflare dashboard and select your account.
-2. Go to [your account > **Workers & Pages** > **Overview**](https://dash.cloudflare.com/?to=/:account/workers-and-pages).
-3. Select **Create**.
-4. Select **Create Worker**.
-5. Name your Worker. For this tutorial, name your Worker `kv-tutorial`.
-6. Select **Deploy**.
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+2. Select **Create application**.
+3. Select **Start with Hello World!** > **Get started**.
+4. Name your Worker. For this tutorial, name your Worker `kv-tutorial`.
+5. Select **Deploy**.
 </Steps>
 </TabItem>
 </Tabs>
@@ -159,10 +160,12 @@ To create a KV namespace via Wrangler:
 </TabItem><TabItem label = 'Dashboard'>
 
 <Steps>
-1. Go to [**Storage & Databases** > **KV**](https://dash.cloudflare.com/?to=/:account/workers/kv/namespaces).
-2. Select **Create a namespace**.
+1. In the Cloudflare dashboard, go to the **Workers KV** page.
+
+   <DashButton url="/?to=/:account/workers/kv/namespaces" />
+2. Select **Create instance**.
 3. Enter a name for your namespace. For this tutorial, use `kv_tutorial_namespace`.
-4. Select **Add**.
+4. Select **Create**.
 </Steps>
 
 </TabItem></Tabs>
@@ -205,13 +208,14 @@ To bind your KV namespace to your Worker:
 </TabItem><TabItem label='Dashboard'>
 
 <Steps>
-1. Go to [**Workers & Pages** > **Overview**](https://dash.cloudflare.com/?to=/:account/workers-and-pages).
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
 2. Select the `kv-tutorial` Worker you created in [step 1](/kv/get-started/#1-create-a-worker-project).
-3. Select **Settings**.
-4. Scroll to **Bindings**, then select **Add**.
-5. Select **KV namespace**.
-6. Name your binding (`BINDING_NAME`) in **Variable name**, then select the KV namespace (`kv_tutorial_namespace`) you created in [step 2](/kv/get-started/#2-create-a-kv-namespace) from the dropdown menu.
-7. Select **Deploy** to deploy your binding.
+3. Got to the **Bindings** tab, then select **Add binding**.
+4. Select **KV namespace** > **Add binding**.
+5. Name your binding (`BINDING_NAME`) in **Variable name**, then select the KV namespace (`kv_tutorial_namespace`) you created in [step 2](/kv/get-started/#2-create-a-kv-namespace) from the dropdown menu.
+6. Select **Add binding** to deploy your binding.
 </Steps>
 </TabItem></Tabs>
 
@@ -266,9 +270,11 @@ npx wrangler kv key put --namespace-id=xxxxxxxxxxxxxxxx "<KEY>" "<VALUE>" --remo
 
 </TabItem><TabItem label = 'Dashboard'>
 <Steps>
-1. Go to [**Storage & Databases** > **KV**](https://dash.cloudflare.com/?to=/:account/workers/kv/namespaces).
-2. Select the KV namespace you created (`kv_tutorial_namespace`), then select **View**.
-3. Select **KV Pairs**.
+1. In the Cloudflare dashboard, go to the **Workers KV** page.
+
+   <DashButton url="/?to=/:account/workers/kv/namespaces" />
+2. Select the KV namespace you created (`kv_tutorial_namespace`).
+3. Go to the **KV Pairs** tab.
 4. Enter a `<KEY>` of your choice.
 5. Enter a `<VALUE>` of your choice.
 6. Select **Add entry**.
@@ -314,9 +320,11 @@ Refer to the [`kv bulk` documentation](/kv/reference/kv-commands/#kv-bulk) to wr
 
 You can view key-value pairs directly from the dashboard.
 <Steps>
-1. Go to your account > **Storage & Databases** > **KV**.
-2. Go to the KV namespace you created (`kv_tutorial_namespace`), then select **View**.
-3. Select **KV Pairs**.
+1. In the Cloudflare dashboard, go to the **Workers KV** page.
+
+   <DashButton url="/?to=/:account/workers/kv/namespaces" />
+2. Go to the KV namespace you created (`kv_tutorial_namespace`).
+3. Go to the **KV Pairs** tab.
 </Steps>
 </TabItem></Tabs>
 
@@ -377,7 +385,9 @@ The code above:
 </TabItem><TabItem label = 'Dashboard'>
 
 <Steps>
-1. Go to **Workers & Pages** > **Overview**.
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
 2. Go to the `kv-tutorial` Worker you created.
 3. Select **Edit Code**.
 4. Clear the contents of the `workers.js` file, then paste the following code.
@@ -398,7 +408,7 @@ The code above:
 	3. Uses JavaScript's [`try...catch`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch) exception handling to catch potential errors. When writing or reading from any service, such as Workers KV or external APIs using `fetch()`, you should expect to handle exceptions explicitly.
 
 	The browser should simply return the `VALUE` corresponding to the `KEY` you have specified with the `get()` method.
-2. Select **Save**.
+2. Select the dropdown arrow next to **Deploy** and select **Save**.
 
 </Steps>
 
@@ -426,7 +436,9 @@ Deploy your Worker to Cloudflare's global network.
 </TabItem><TabItem label='Dashboard'>
 <Steps>
 
-1. Go to **Workers & Pages** > **Overview**.
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
 2. Select your `kv-tutorial` Worker.
 3. Select **Deployments**.
 4. From the **Version History** table, select **Deploy version**.

@@ -2,15 +2,15 @@
 {}
 ---
 
-import { TabItem, Tabs } from "~/components";
+import { DashButton, TabItem, Tabs } from "~/components";
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 To add a member to your account:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
+1. In the Cloudflare dashboard, go to **Members**.
 
-2. Go to **Manage Account** > **Members**.
+<DashButton url="/?to=/:account/members" />
 
 3. Select **Invite**.
 

@@ -5,7 +5,7 @@ sidebar:
   order: 3
 ---
 
-import { Render } from "~/components";
+import { DashButton, Render } from "~/components";
 
 <Render file="version-definition" product="version-management" />
 
@@ -20,7 +20,10 @@ If you need to test out different implementations of configurations at the same 
 
 To create a new version:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
+1. Log in to the Cloudflare dashboard.
+
+<DashButton url="/?to=/:account/home" />
+
 2. Select your account and zone.
 3. Go to **Version Management**.
 4. On an existing version, select **Clone**. This will copy over all configurations from that version.

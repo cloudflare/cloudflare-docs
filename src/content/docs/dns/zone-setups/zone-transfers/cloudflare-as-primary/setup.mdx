@@ -8,7 +8,7 @@ head:
     content: Set up outgoing zone transfers (Cloudflare as Primary)
 ---
 
-import { Render, TabItem, Tabs, APIRequest } from "~/components";
+import { Render, TabItem, Tabs, APIRequest, DashButton } from "~/components";
 
 With [outgoing zone transfers](/dns/zone-setups/zone-transfers/cloudflare-as-primary/), you can keep Cloudflare as your primary DNS provider and use one or more secondary providers for increased availability and fault tolerance.
 
@@ -64,16 +64,18 @@ You only need to create a peer DNS server if you want:
 
 To create a peer using the dashboard:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
-2. Go to **Manage Account** > **Configurations**.
-3. Select **DNS Zone Transfers**.
-4. For **Peer DNS servers**, select **Create**.
-5. Enter the following information, paying particular attention to:
+1. In the Cloudflare dashboard, go to the account **Settings** page.
+
+   <DashButton url="/?to=/:account/configurations" />
+
+2. Go to **DNS Settings**.
+3. Under **DNS Zone Transfers**, for **Peer DNS servers**, select **Create**.
+4. Enter the following information, paying particular attention to:
    - **IP**: If configured, specifies where Cloudflare sends NOTIFY requests to.
    - **Port**: Specifies the IP Port for the NOTIFY IP.
    - **Enable incremental (IXFR) zone transfers**: Does not apply when you are using Cloudflare as your primary DNS provider (Cloudflare zones always accept IXFR requests).
    - **Link an existing TSIG**: If desired, link the TSIG you [previously created](#1-create-tsig-optional).
-6. Select **Create**.
+5. Select **Create**.
 
 </TabItem> <TabItem label="API">
 

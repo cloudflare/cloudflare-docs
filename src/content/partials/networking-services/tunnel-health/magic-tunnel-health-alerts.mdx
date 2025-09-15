@@ -7,7 +7,16 @@ params:
   - healthChecks
 ---
 
-import { APIRequest, Code, Details, GlossaryTooltip, Render, Tabs, TabItem } from "~/components";
+import {
+  APIRequest,
+  Code,
+  Details,
+  GlossaryTooltip,
+  Render,
+  Tabs,
+  TabItem,
+  DashButton,
+} from "~/components";
 
 {props.productName} customers can configure Magic Tunnel health alerts to receive email, webhook, and PagerDuty notifications when the percentage of successful <GlossaryTooltip term="tunnel health-check">health checks</GlossaryTooltip> for a Magic Tunnel drops below the selected <a href={props.magicTunnelHealthCheckCalculation}>service-level objective (SLO)</a>.
 
@@ -51,8 +60,11 @@ Refer to <a href={props.magicTunnelHealthCheckCalculation}>How Cloudflare calcul
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
-2. Select **Notifications** > **Add**.
+1. In the Cloudflare dashboard, go to the **Notifications** page.
+
+	 <DashButton url="/?to=/:account/notifications" />
+
+2. Select **Add**.
 3. From the **Product** drop-down menu, select **{props.productName}**.
 4. Select **Magic Tunnel Health Check Alert** > **Select** to add a notification. You can add alerts by tunnel or by data center (beta).
 

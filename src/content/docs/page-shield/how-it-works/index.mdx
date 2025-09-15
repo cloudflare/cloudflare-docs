@@ -10,7 +10,9 @@ description: Page Shield tracks resources (such as scripts) loaded by your
   malicious resources.
 ---
 
-import { GlossaryTooltip } from "~/components";
+import { GlossaryTooltip, Render } from "~/components";
+
+<Render file="survey" product="waf" />
 
 Page Shield helps manage client-side resources loaded by your website visitors, including scripts, their connections, and [cookies](https://www.cloudflare.com/learning/privacy/what-are-cookies/). It can trigger alert notifications when resources change or are considered malicious.
 

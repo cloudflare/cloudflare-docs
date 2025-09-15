@@ -7,11 +7,15 @@ sidebar:
   label: Handle an alert
 ---
 
-If you receive a client-side resource alert, sometimes you need to perform some manual investigation to confirm the nature of the script. Use the guidance provided in this page as a starting point for your investigation.
+import { Steps } from "~/components";
+
+If you receive a [client-side resource alert](/page-shield/alerts/alert-types/), sometimes you need to perform some manual investigation to confirm the nature of the script. Use the guidance provided in this page as a starting point for your investigation.
 
 ## 1. Understand what triggered the alert
 
 Start by identifying the [detection system](/page-shield/how-it-works/malicious-script-detection/) that triggered the alert. A link is provided in the alert that will send you directly to the Cloudflare dashboard to the relevant resource that needs reviewing. Alternatively, do the following:
+
+<Steps>
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Navigate to the client-side resource monitoring page:
@@ -20,7 +24,9 @@ Start by identifying the [detection system](/page-shield/how-it-works/malicious-
 3. Select **Scripts** or **Connections** and search for the resource mentioned on the alert you received.
 4. Select **Details** next to the resource you identified. The example screenshot below shows a malicious script resource.
 
-![Dialog box showing the details of a script considered malicious.](~/assets/images/page-shield/handle-alert-malicious-script-example.png)
+   ![Dialog box showing the details of a script considered malicious.](~/assets/images/page-shield/handle-alert-malicious-script-example.png)
+
+</Steps>
 
 The details page will specify which detection system triggered the alert. Check the values of the following fields:
 
@@ -34,15 +40,23 @@ Different detection mechanisms may consider the script malicious at the same tim
 
 If you received an alert for a potentially malicious script:
 
+<Steps>
+
 1. Navigate to the page on your website that is loading the script or performing the connection. Open a browser and navigate to one of the URLs in the **Page URLs** field (shown in the script details dialog box).
 
 2. Open the browser's developer tools to confirm that the script is being loaded. You can check this in the developer tools' **Network** tab, searching for the script name, URL, or hostname.
 
+</Steps>
+
 If you received an alert for a potentially malicious connection:
+
+<Steps>
 
 1. Go to the page on your website where the connection that triggered the alert is being made. Open a browser and go to one of the URLs specified in the **Page URLs** field (shown in the connection details dialog box).
 
 2. Open the browser's developer tools to confirm that the connection is being made. You can check this in the developer tools' **Network** tab, searching for the target hostname of the connection.
+
+</Steps>
 
 If you find the script or connection, this means the script is being loaded (or the connection is being established) for all website visitors — proceed to [step 3](#3-check-the-script-reputation).
 
@@ -70,9 +84,13 @@ If you believe that Cloudflare's classification is a false positive, contact you
 
 You could use a virtual machine to perform some of the following analysis:
 
+<Steps>
+
 1. Open the script URL and get the script source code. If the script is obfuscated or encoded, this could be a sign that the script is malicious.
 2. Scan the script source code for any hostnames or IP addresses.
 3. For each hostname or IP address you identified, use Cloudflare's Security Center Investigate platform to look up threat information and/or search online for potential Indicators of Compromise.
+
+</Steps>
 
 ---
 

@@ -10,7 +10,14 @@ sidebar:
     text: Beta
 ---
 
-import { GlossaryTooltip, Tabs, TabItem, Details, Type } from "~/components";
+import {
+	GlossaryTooltip,
+	Tabs,
+	TabItem,
+	Details,
+	Steps,
+	Type,
+} from "~/components";
 
 Firewall for AI is a detection that can help protect your services powered by <GlossaryTooltip term="LLM">large language models</GlossaryTooltip> (LLMs) against abuse. This model-agnostic detection currently helps you do the following:
 
@@ -36,9 +43,13 @@ Firewall for AI is available in closed beta to Enterprise customers proxying tra
 Firewall for AI is only available in the new [application security dashboard](/security/).
 :::
 
+<Steps>
+
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Go to **Security** > **Settings** and filter by **Detections**.
 3. Turn on **Firewall for AI**.
+
+</Steps>
 
 </TabItem> <TabItem label="API">
 

@@ -127,6 +127,22 @@ const details = await env.YOUR_INDEX.describe();
 
 Retrieves the configuration of a given index directly, including its configured `dimensions` and distance `metric`.
 
+### List Vectors
+
+List all vector identifiers in an index using paginated requests, returning up to 1000 vector identifiers per page.
+
+```sh
+wrangler vectorize list-vectors <index-name> [--count=<number>] [--cursor=<cursor-string>]
+```
+
+**Parameters:**
+
+- `<index-name>` - The name of your Vectorize index
+- `--count` (optional) - Number of vector IDs to return per page. Must be between 1 and 1000 (default: 100)
+- `--cursor` (optional) - Pagination cursor from the previous response to continue listing from that position
+
+For detailed guidance on pagination behavior and best practices, refer to [List vectors best practices](/vectorize/best-practices/list-vectors/).
+
 ### Create Metadata Index
 
 Enable metadata filtering on the specified property. Limited to 10 properties.

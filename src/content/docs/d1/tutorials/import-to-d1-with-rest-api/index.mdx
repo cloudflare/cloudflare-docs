@@ -10,7 +10,7 @@ tags:
   - SQL
 ---
 
-import { Render, Steps, PackageManagers } from "~/components";
+import { Render, Steps, PackageManagers, DashButton } from "~/components";
 
 In this tutorial, you will learn how to import a database into D1 using the [REST API](/api/resources/d1/subresources/database/methods/import/).
 
@@ -38,8 +38,10 @@ To create the table, follow these steps:
 
 <Steps>
 
-1. Go to **Storage & Databases** > **D1**.
-2. Select **Create**.
+1. In the Cloudflare dashboard, go to the **D1** page.
+
+   <DashButton url="/?to=/:account/workers/d1" />
+2. Select **Create database**.
 3. Name your database. For this tutorial, name your D1 database `d1-import-tutorial`.
 4. (Optional) Provide a location hint. Location hint is an optional parameter you can provide to indicate your desired geographical location for your database. Refer to [Provide a location hint](/d1/configuration/data-location/#provide-a-location-hint) for more information.
 5. Select **Create**.
@@ -80,8 +82,8 @@ To create the table, follow these steps:
 3. In your `index.js` file, define the following variables:
 
    - `TARGET_TABLE`: The target table name
-   - `ACCOUNT_ID`: The account ID (you can find this in the Cloudflare dashboard > **Workers & Pages**)
-   - `DATABASE_ID`: The D1 database ID (you can find this in the Cloudflare dashboard > **Storage & Databases** > **D1 SQL Database** > your database)
+   - `ACCOUNT_ID`: The account ID. Refer to **Account Details** in **Workers & Pages**.
+   - `DATABASE_ID`: The D1 database ID. Go to your data base to see your database ID.
    - `D1_API_KEY`: The D1 API token generated in [step 1](/d1/tutorials/import-to-d1-with-rest-api#1-create-a-d1-api-token)
 
    :::caution

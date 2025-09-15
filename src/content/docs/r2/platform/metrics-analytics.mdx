@@ -3,9 +3,11 @@ pcx_content_type: concept
 title: Metrics and analytics
 ---
 
+import { DashButton } from "~/components"
+
 R2 exposes analytics that allow you to inspect the requests and storage of the buckets in your account.
 
-The metrics displayed for a bucket in the [Cloudflare dashboard](https://dash.cloudflare.com/) are queried from Cloudflare’s [GraphQL Analytics API](/analytics/graphql-api/). You can access the metrics [programmatically](#query-via-the-graphql-api) via GraphQL or HTTP client.
+The metrics displayed for a bucket in the [Cloudflare dashboard](https://dash.cloudflare.com/) are queried from Cloudflare's [GraphQL Analytics API](/analytics/graphql-api/). You can access the metrics [programmatically](#query-via-the-graphql-api) via GraphQL or HTTP client.
 
 ## Metrics
 
@@ -50,9 +52,11 @@ Therefore, if you want to query metrics about a bucket which has a specified jur
 
 Per-bucket analytics for R2 are available in the Cloudflare dashboard. To view current and historical metrics for a bucket:
 
-2. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-3. Go to the [R2 tab](https://dash.cloudflare.com/?to=/:account/r2) and select your bucket.
-4. Select the **Metrics** tab.
+1. In the Cloudflare dashboard, go to the **R2 object storage** page.
+
+   <DashButton url="/?to=/:account/r2/overview" />
+2. Select your bucket.
+3. Select the **Metrics** tab.
 
 You can optionally select a time window to query. This defaults to the last 24 hours.
 

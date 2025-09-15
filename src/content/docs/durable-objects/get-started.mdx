@@ -12,6 +12,7 @@ import {
 	PackageManagers,
 	WranglerConfig,
 	TypeScriptExample,
+	DashButton
 } from "~/components";
 
 This guide will instruct you through:
@@ -169,13 +170,10 @@ export class MyDurableObject extends DurableObject<Env> {
 from workers import DurableObject
 
 class MyDurableObject(DurableObject):
-    def __init__(self, ctx, env):
-        super().__init__(ctx, env)
-
     async def say_hello(self):
-        result = self.ctx.storage.sql \
-            .exec("SELECT 'Hello, World!' as greeting") \
-            .one()
+        result = self.ctx.storage.sql.exec(
+            "SELECT 'Hello, World!' as greeting"
+        ).one()
 
         return result.greeting
 ```
@@ -228,9 +226,9 @@ from workers import handler, Response, WorkerEntrypoint
 from urllib.parse import urlparse
 
 class Default(WorkerEntrypoint):
-    async def fetch(request, env, ctx):
+    async def fetch(request):
         url = urlparse(request.url)
-        stub = env.MY_DURABLE_OBJECT.getByName(url.path)
+        stub = self.env.MY_DURABLE_OBJECT.getByName(url.path)
         greeting = await stub.say_hello()
         return Response(greeting)
 ```
@@ -307,7 +305,9 @@ To deploy your Durable Object Worker:
 npx wrangler deploy
 ```
 
-Once deployed, you should be able to see your newly created Durable Object Worker on the [Cloudflare dashboard](https://dash.cloudflare.com/), **Workers & Pages** > **Overview**.
+Once deployed, you should be able to see your newly created Durable Object Worker on the Cloudflare dashboard.
+
+<DashButton url="/?to=/:account/workers-and-pages" />
 
 Preview your Durable Object Worker at `<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev`.
 
@@ -355,20 +355,17 @@ from workers import DurableObject, handler, Response
 from urllib.parse import urlparse
 
 class MyDurableObject(DurableObject):
-    def __init__(self, ctx, env):
-        super().__init__(ctx, env)
-
     async def say_hello(self):
-        result = self.ctx.storage.sql \
-            .exec("SELECT 'Hello, World!' as greeting") \
-            .one()
+        result = self.ctx.storage.sql.exec(
+            "SELECT 'Hello, World!' as greeting"
+        ).one()
 
         return result.greeting
 
 class Default(WorkerEntrypoint):
-    async def fetch(self, request, env, ctx):
+    async def fetch(self, request):
         url = urlparse(request.url)
-        stub = env.MY_DURABLE_OBJECT.getByName(url.path)
+        stub = self.env.MY_DURABLE_OBJECT.getByName(url.path)
         greeting = await stub.say_hello()
         return Response(greeting)
 ```

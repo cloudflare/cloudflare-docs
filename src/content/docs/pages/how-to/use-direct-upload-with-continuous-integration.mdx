@@ -8,6 +8,8 @@ banner:
     id: pages-migrate-to-workers
 ---
 
+import { DashButton } from "~/components";
+
 Cloudflare Pages supports directly uploading prebuilt assets, allowing you to use custom build steps for your applications and deploy to Pages with [Wrangler](/workers/wrangler/install-and-update/). This guide will teach you how to deploy your application to Pages, using continuous integration.
 
 ## Deploy with Wrangler
@@ -25,13 +27,14 @@ $ CLOUDFLARE_ACCOUNT_ID=<ACCOUNT_ID> npx wrangler pages deploy <DIRECTORY> --pro
 
 To generate an API token:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/profile/api-tokens).
-2. Select **My Profile** from the dropdown menu of your user icon on the top right of your dashboard.
-3. Select **API Tokens** > **Create Token**.
-4. Under **Custom Token**, select **Get started**.
-5. Name your API Token in the **Token name** field.
-6. Under **Permissions**, select _Account_, _Cloudflare Pages_ and _Edit_:
-7. Select **Continue to summary** > **Create Token**.
+1. In the Cloudflare dashboard, go to the **API Tokens** page.
+
+   <DashButton url="/?to=/:account/api-tokens" />
+2. Select **Create Token**.
+3. Under **Custom Token**, select **Get started**.
+4. Name your API Token in the **Token name** field.
+5. Under **Permissions**, select _Account_, _Cloudflare Pages_ and _Edit_:
+6. Select **Continue to summary** > **Create Token**.
 
 ![Follow the instructions above to create an API token for Cloudflare Pages](~/assets/images/pages/how-to/select-api-token-for-pages.png)
 

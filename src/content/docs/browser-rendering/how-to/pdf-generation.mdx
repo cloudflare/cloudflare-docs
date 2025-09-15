@@ -9,6 +9,15 @@ import { Aside, WranglerConfig, PackageManagers } from "~/components";
 
 As seen in [this Workers bindings guide](/browser-rendering/workers-bindings/screenshots/), Browser Rendering can be used to generate screenshots for any given URL. Alongside screenshots, you can also generate full PDF documents for a given webpage, and can also provide the webpage markup and style ourselves.
 
+You can generate PDFs with Browser Rendering in two ways:
+
+- **[REST API](/browser-rendering/rest-api/)**: Use the the [/pdf endpoint](/browser-rendering/rest-api/pdf-endpoint/). This is ideal if you don't need to customize rendering behavior. 
+- **[Workers Bindings](/browser-rendering/workers-bindings/)**: Use [Puppeteer](/browser-rendering/platform/puppeteer/) or [Playwright](/browser-rendering/platform/playwright/) with Workers Bindings for additional control and customization. 
+
+Choose the method that best fits your use case.
+
+The following example shows you how to generate a PDF using [Puppeteer](/browser-rendering/platform/puppeteer/).
+
 ## Prerequisites
 
 1. Use the `create-cloudflare` CLI to generate a new Hello World Cloudflare Worker script:

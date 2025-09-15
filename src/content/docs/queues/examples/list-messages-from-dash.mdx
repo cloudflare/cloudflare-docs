@@ -8,9 +8,9 @@ head:
   - tag: title
     content: Cloudflare Queues - Listing and acknowledging messages from the dashboard
 description: Use the dashboard to fetch and acknowledge the messages currently in a queue.
-
 ---
-import {Steps} from "~/components";
+
+import { Steps, DashButton } from "~/components";
 
 ## List messages from the dashboard
 
@@ -19,12 +19,14 @@ Listing messages from the dashboard allows you to debug Queues or queue producer
 To list messages in the dashboard:
 
 <Steps>
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Select **Storage & Databases** > **Queues**.
-3. Select the queue to preview messages from.
-4. Select the **Messages** tab.
-5. Select **List**.
-6. When the list of messages loads, select the blue arrow to the right of each row to expand the message preview.
+1. In the Cloudflare dashboard, go to the **Queues** page.
+
+	 <DashButton url="/?to=/:account/workers/queues" />
+
+2. Select the queue to preview messages from.
+3. Select the **Messages** tab.
+4. Select **List**.
+5. When the list of messages loads, select the blue arrow to the right of each row to expand the message preview.
 </Steps>
 
 This will preview a batch of messages currently in the Queue.

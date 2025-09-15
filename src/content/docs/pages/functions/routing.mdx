@@ -10,7 +10,7 @@ banner:
     id: pages-migrate-to-workers
 ---
 
-import { Details, FileTree, PagesBuildPresetsTable } from "~/components";
+import { Details, FileTree, PagesBuildPresetsTable, DashButton } from "~/components";
 
 Functions utilize file-based routing. Your `/functions` directory structure determines the designated routes that your Functions will run on. You can create a `/functions` directory with as many levels as needed for your project's use case. Review the following directory:
 
@@ -193,10 +193,11 @@ Below is another example of a `_routes.json` file. Any route inside the `/build`
 
 If on the Workers Free plan, you can configure how Pages behaves when your daily free tier allowance of Pages Functions requests is exhausted. If, for example, you are performing authentication checks or other critical functionality in your Pages Functions, you may wish to disable your Pages project when the allowance is exhausted.
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. From **Account Home**, go to **Workers & Pages**.
-3. In **Overview**, select your Pages project.
-4. Go to **Settings** > **Runtime** > **Fail open / closed**.
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+2. Select your Pages project.
+3. Go to **Settings** > **Runtime** > **Fail open / closed**.
 
 "Fail open" means that static assets will continue to be served, even if Pages Functions would ordinarily have run first. "Fail closed" means an error page will be returned, rather than static assets.
 

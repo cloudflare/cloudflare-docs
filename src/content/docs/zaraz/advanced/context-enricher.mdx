@@ -6,6 +6,8 @@ sidebar:
 
 ---
 
+import { DashButton } from "~/components";
+
 The Zaraz Context Enricher is a tool to modify or enrich [the context](/zaraz/reference/context/) that is being used across Zaraz using a Cloudflare Worker. The Context Enricher allows you access to the client and system variables.
 
 ## Creating a Worker
@@ -14,8 +16,10 @@ To use a Context Enricher, you first need to create a new Cloudflare Worker. You
 
 To create a new Worker in the Cloudflare dashboard:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
-2. Go to **Workers & Pages** and select **Create application**.
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+	<DashButton url="/?to=/:account/workers-and-pages" />
+2. Select **Create application**.
 3. Give a name to your Worker and select **Deploy**.
 4. Select **Edit code**.
 
@@ -43,10 +47,11 @@ Keep reading for more complete examples of different use cases or refer to [Zara
 
 Now that your Worker is published, you can select it in your Zaraz settings:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
-2. Go to **Zaraz** > **Settings**.
-3. Select your Context Enricher Worker.
-4. Save your settings.
+1. In the Cloudflare dashboard, go to the **Settings** page.
+
+	<DashButton url="/?to=/:account/tag-management/settings" />
+2. Select your Context Enricher Worker.
+3. Save your settings.
 
 Your Context Enricher will now run on all Zaraz requests in that given zone.
 

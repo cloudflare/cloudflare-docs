@@ -98,8 +98,8 @@ export async function getPartialsUsage(): Promise<Record<string, Usage>> {
 				process.platform === "win32"
 					? file.parentPath.replaceAll("\\", "/")
 					: file.parentPath;
-			const product = parentPath.split("/")[3];
-			const partialName = `${product}/${file.name.replace(".mdx", "")}`;
+			const folderPath = parentPath.split("/").splice(3).join("/");
+			const partialName = `${folderPath}/${file.name.replace(".mdx", "")}`;
 			partials[partialName] = { count: 0, pages: new Set() };
 		}
 

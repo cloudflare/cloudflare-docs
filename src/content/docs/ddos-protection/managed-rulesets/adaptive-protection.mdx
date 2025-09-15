@@ -7,7 +7,7 @@ sidebar:
 
 ---
 
-import { Tabs, TabItem, Steps } from "~/components"
+import { Tabs, TabItem, Steps, DashButton } from "~/components"
 
 Adaptive DDoS Protection learns your unique traffic patterns and adapts to them to provide better protection against sophisticated DDoS attacks on layer 7 and layers 3/4, depending on your subscribed Cloudflare services.
 
@@ -71,9 +71,10 @@ To view traffic flagged by L3/4 Adaptive DDoS Protection rules:
 <Tabs syncKey="dashNewNav"> 
   <TabItem label="Old dashboard">
     <Steps>
-      1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-      2. Go to Account Home > **Analytics & Logs** > **Network Analytics**.
-      3. Filter by rule ID.
+      1. In the Cloudflare dashboard, go to the Network analytics page.
+
+          <DashButton url="/?to=/:account/network-analytics" />
+      2. Filter by rule ID.
     </Steps>
   </TabItem>
   <TabItem label="New dashboard" icon="rocket">

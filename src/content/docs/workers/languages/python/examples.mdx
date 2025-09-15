@@ -18,7 +18,7 @@ from workers import WorkerEntrypoint, Response
 from urllib.parse import urlparse, parse_qs
 
 class Default(WorkerEntrypoint):
-    async def fetch(self, request, env):
+    async def fetch(self, request):
         # Parse the incoming request URL
         url = urlparse(request.url)
         # Parse the query parameters into a Python dictionary
@@ -89,15 +89,15 @@ def to_js(obj):
    return _to_js(obj, dict_converter=Object.fromEntries)
 
 class Default(WorkerEntrypoint):
-    async def fetch(self, request, env):
-        # Bindings are available on the 'env' parameter
+    async def fetch(self, request):
+        # Bindings are available on the 'env' attribute
         # https://developers.cloudflare.com/queues/
 
         # The default contentType is "json"
         # We can also pass plain text strings
-        await env.QUEUE.send("hello", contentType="text")
+        await self.env.QUEUE.send("hello", contentType="text")
         # Send a JSON payload
-        await env.QUEUE.send(to_js({"hello": "world"}))
+        await self.env.QUEUE.send(to_js({"hello": "world"}))
 
         # Return a response
         return Response.json({"write": "success"})
@@ -109,8 +109,8 @@ class Default(WorkerEntrypoint):
 from workers import WorkerEntrypoint, Response
 
 class Default(WorkerEntrypoint):
-    async def fetch(self, request, env):
-        results = await env.DB.prepare("PRAGMA table_list").run()
+    async def fetch(self, request):
+        results = await self.env.DB.prepare("PRAGMA table_list").run()
         # Return a JSON response
         return Response.json(results)
 ```

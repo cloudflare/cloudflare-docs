@@ -48,7 +48,7 @@ To view DLP payload logs:
 
 1. Go to **Logs** > **Gateway** > **HTTP**.
 2. Go to the DLP log you are interested in reviewing and expand the row.
-3. Select **Decrypt Payload Log**.
+3. Select **Decrypt payload log**.
 4. Enter your private key and select **Decrypt**.
 
 You will see the [ID of the matched DLP Profile](/api/resources/zero_trust/subresources/dlp/subresources/profiles/methods/list/) followed by the decrypted payload.
@@ -91,6 +91,18 @@ You can enable payload logging for any Allow or Block HTTP policy that uses the 
 4. Select **Save**.
 
 Data Loss Prevention will now store the user prompt and AI model response for requests that match this policy.
+
+### View prompt logs
+
+To view generative AI prompt log details:
+
+1. Go to **Logs** > **Gateway** > **HTTP**.
+2. Go to the DLP log you are interested in reviewing and expand the row.
+3. Select **Decrypt payload log**.
+4. Enter your private key and select **Decrypt**.
+5. In **Summary** > **GenAI prompt captured**, select **View prompt**.
+
+Gateway logs will provide a summary of the conversation, including the topic and AI model used, and the user prompt and AI model's raw response if available. A text prompt must be present for DLP to capture the prompt.
 
 ## Send DLP forensic copies to Logpush destination
 
