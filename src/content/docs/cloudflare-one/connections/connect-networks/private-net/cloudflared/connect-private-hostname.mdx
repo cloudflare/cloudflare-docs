@@ -82,8 +82,8 @@ Configuration steps vary depending on your [device on-ramp](/cloudflare-one/conn
 
 <Details header="WARP clients">
 1. In [Split Tunnels](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/), ensure that the IPs listed above route through the WARP tunnel. For example, if you are using the default Split Tunnels Exclude configuration and your application and DNS resolver have private IPs in the range `10.0.0.0/8`, delete `100.64.0.0/10` and `10.0.0.0/8` from the Split Tunnels list. We recommend adding back the IPs that are not explicitly used by your network — refer to our [Split Tunnels calculator](/cloudflare-one/connections/connect-networks/private-net/cloudflared/connect-cidr/#3-route-private-network-ips-through-warp) for details.
-2. In [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/), delete the top-level domain for your private hostname.
-3. In [Gateway resolver policies](/cloudflare-one/policies/gateway/resolver-policies/#create-a-resolver-policy), delete any existing entries that match your private hostname.
+2. In [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/), delete the top-level domain for your private hostname. This configures WARP to send the DNS query to Cloudflare Gateway for resolution.
+
 </Details>
 
 <Details header="WARP Connector">
@@ -96,7 +96,7 @@ Configuration steps vary depending on your [device on-ramp](/cloudflare-one/conn
 <Details header="Magic WAN">
 
 1. Ensure that the IPs listed above route through Magic WAN to Cloudflare.
-2. [Point the DNS resolver](/magic-wan/zero-trust/cloudflare-gateway/) for your Magic WAN network to Cloudflare Gateway.
+2. [Point the DNS resolver](/magic-wan/zero-trust/cloudflare-gateway/#dns-filtering) for your Magic WAN network to Cloudflare Gateway.
 
 </Details>
 
