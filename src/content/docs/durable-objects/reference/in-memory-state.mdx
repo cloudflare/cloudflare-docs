@@ -15,12 +15,12 @@ A common pattern is to initialize a Durable Object from [persistent storage](/du
 
 ```js
 export class Counter {
-	constructor(state, env) {
-		this.state = state;
+	constructor(ctx, env) {
+		this.ctx = ctx;
 		// `blockConcurrencyWhile()` ensures no requests are delivered until
 		// initialization completes.
-		this.state.blockConcurrencyWhile(async () => {
-			let stored = await this.state.storage.get("value");
+		this.ctx.blockConcurrencyWhile(async () => {
+			let stored = await this.ctx.storage.get("value");
 			// After initialization, future reads do not need to access storage.
 			this.value = stored || 0;
 		});

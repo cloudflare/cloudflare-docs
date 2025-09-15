@@ -84,8 +84,8 @@ An example might look like:
 
 ```js
 export class DurableObject {
-	constructor(state, env) {
-		this.state = state;
+	constructor(ctx, env) {
+		this.ctx = ctx;
 		this.env = env;
 	}
 

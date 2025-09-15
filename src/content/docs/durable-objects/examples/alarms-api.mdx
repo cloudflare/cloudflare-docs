@@ -29,10 +29,10 @@ const SECONDS = 10;
 
 // Durable Object
 export class Batcher extends DurableObject {
-	constructor(state, env) {
-		super(state, env);
-		this.storage = state.storage;
-		this.state.blockConcurrencyWhile(async () => {
+	constructor(ctx, env) {
+		super(ctx, env);
+		this.storage = ctx.storage;
+		this.ctx.blockConcurrencyWhile(async () => {
 			let vals = await this.storage.list({ reverse: true, limit: 1 });
 			this.count = vals.size == 0 ? 0 : parseInt(vals.keys().next().value);
 		});
