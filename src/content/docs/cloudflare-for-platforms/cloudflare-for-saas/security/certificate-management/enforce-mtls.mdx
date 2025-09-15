@@ -42,7 +42,7 @@ Minimum TLS version exists both as a [zone-level setting](/ssl/edge-certificates
 
 - For custom hostnames created via API, it is possible not to explicitly define a value for `min_tls_version`. When that is the case, whatever value is defined as your zone's minimum TLS version will be applied. To confirm whether a given custom hostname has a specific minimum TLS version set, use the following API call.
 
-<Details header="Check custom hostname settings TLS settings">
+<Details header="Check custom hostname TLS settings">
 
 <APIRequest
   path="/zones/{zone_id}/custom_hostnames/{custom_hostname_id}"
