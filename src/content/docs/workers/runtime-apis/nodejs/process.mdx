@@ -87,8 +87,7 @@ nextTick(() => {
 ## Stdio
 
 [`process.stdout`](https://nodejs.org/docs/latest/api/process.html#processstdout), [`process.stderr`](https://nodejs.org/docs/latest/api/process.html#processstderr) and [`process.stdin`](https://nodejs.org/docs/latest/api/process.html#processstdin) are supported as streams. `stdin` is treated as an empty readable stream.
-`stdout` and `stderr` are treated as non-TTY writable streams, with line buffering when integrating with inspector and structured
-logging output.
+`stdout` and `stderr` are non-TTY writable streams, which output to normal logging output only with `stdout: ` and `stderr: ` prefixing.
 
 The line buffer works by storing writes to stdout or stderr until either a newline character `\n` is encountered or until the next microtask, when the log is then flushed to the output.
 
