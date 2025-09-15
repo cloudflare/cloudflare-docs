@@ -1,0 +1,74 @@
+---
+title: "WAF Release - 2025-09-15"
+description: Cloudflare WAF managed rulesets 2025-09-15 release
+date: 2025-09-15
+---
+
+import { RuleID } from "~/components";
+
+**This week's update**
+
+This week’s focus highlights newly disclosed vulnerabilities in DevOps tooling, data visualization platforms, and enterprise CMS solutions. These issues include sensitive information disclosure and remote code execution, putting organizations at risk of credential leakage, unauthorized access, and full system compromise.
+
+**Key Findings**
+
+* Argo CD (CVE-2025-55190): Exposure of sensitive information could allow attackers to access credential data stored in configurations, potentially leading to compromise of Kubernetes workloads and secrets.Next.js (CVE-2025-57822): Improper handling of redirects in custom middleware can lead to server-side request forgery (SSRF) when user-supplied headers are forwarded. Attackers could exploit this to access internal services or cloud metadata endpoints. The issue has been resolved in versions 14.2.32 and 15.4.7. Developers using custom middleware should upgrade and verify proper redirect handling in `next()` calls.
+
+* DataEase (CVE-2025-57773): Insufficient input validation enables JNDI injection and insecure deserialization, resulting in remote code execution (RCE). Successful exploitation grants attackers control over the application server.
+
+* Sitecore (CVE-2025-53694): A sensitive information disclosure flaw allows unauthorized access to confidential information stored in Sitecore deployments, raising the risk of data breaches and privilege escalation.
+
+**Impact**
+
+These vulnerabilities expose organizations to serious risks, including credential theft, unauthorized access, and full system compromise. Argo CD’s flaw may expose Kubernetes secrets, DataEase exploitation could give attackers remote execution capabilities, and Sitecore’s disclosure issue increases the likelihood of sensitive data leakage and business impact.
+
+Administrators are strongly advised to apply vendor patches immediately, rotate exposed credentials, and review access controls to mitigate these risks.
+
+<table style="width: 100%">
+  <thead>
+    <tr>
+      <th>Ruleset</th>
+      <th>Rule ID</th>
+      <th>Legacy Rule ID</th>
+      <th>Description</th>
+      <th>Previous Action</th>
+      <th>New Action</th>
+      <th>Comments</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Cloudflare Managed Ruleset</td>
+      <td>
+        <RuleID id="199cce9ab21e40bcb535f01b2ee2085f" />
+      </td>
+      <td>100646</td>
+      <td>Argo CD - Information Disclosure - CVE:CVE-2025-55190s</td>
+      <td>Log</td>
+      <td>Disabled</td>
+      <td>This is a New Detection</td>
+    </tr>
+    <tr>
+      <td>Cloudflare Managed Ruleset</td>
+      <td>
+        <RuleID id="e513bb21b6a44f9cbfcd2462f5e20788" />
+      </td>
+      <td>100874</td>
+      <td>DataEase - JNDI injection - CVE:CVE-2025-57773</td>
+      <td>Log</td>
+      <td>Disabled</td>
+      <td>This is a New Detection</td>
+    </tr>
+    <tr>
+      <td>Cloudflare Managed Ruleset</td>
+      <td>
+        <RuleID id="be097f5a71a04f27aa87b60d005a12fd" />
+      </td>
+      <td>100880</td>
+      <td>Sitecore - Information Disclosure - CVE:CVE-2025-53694</td>
+      <td>Log</td>
+      <td>Block</td>
+      <td>This is a New Detection</td>
+    </tr>
+  </tbody>
+</table>
