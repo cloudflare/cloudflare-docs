@@ -4,11 +4,6 @@ title: Routing static assets
 head:
   - tag: title
     content: Routing static assets | Full-stack (SSR) | Next.js apps
-banner:
-  content: We recommend using <strong>Cloudflare Workers</strong> for new projects. For existing Pages projects, see our <a href="/workers/static-assets/migrate-from-pages/">migration guide</a> and <a href="/workers/static-assets/migrate-from-pages/#compatibility-matrix">compatibility matrix</a>.
-  type: note
-  dismissible:
-    id: pages-migrate-to-workers
 ---
 
 When you use a JavaScript framework like Next.js on Cloudflare Pages, the framework adapter (ex: `@cloudflare/next-on-pages`) automatically generates a [`_routes.json` file](/pages/functions/routing/#create-a-_routesjson-file), which defines specific paths of your app's static assets. This file tells Cloudflare, `for these paths, don't run the Worker, you can just serve the static asset on this path` (an image, a chunk of client-side JavaScript, etc.)

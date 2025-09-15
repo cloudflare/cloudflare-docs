@@ -4,11 +4,6 @@ title: Caching
 head:
   - tag: title
     content: Caching and data revalidation in your Next.js app
-banner:
-  content: We recommend using <strong>Cloudflare Workers</strong> for new projects. For existing Pages projects, see our <a href="/workers/static-assets/migrate-from-pages/">migration guide</a> and <a href="/workers/static-assets/migrate-from-pages/#compatibility-matrix">compatibility matrix</a>.
-  type: note
-  dismissible:
-    id: pages-migrate-to-workers
 ---
 
 [`@cloudflare/next-on-pages`](https://github.com/cloudflare/next-on-pages) supports [caching](https://nextjs.org/docs/app/building-your-application/data-fetching/fetching-caching-and-revalidating#caching-data) and [revalidating](https://nextjs.org/docs/app/building-your-application/data-fetching/fetching-caching-and-revalidating#revalidating-data) data returned by subrequests you make in your app by calling [`fetch()`](/workers/runtime-apis/fetch/).
