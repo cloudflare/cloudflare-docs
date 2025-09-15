@@ -53,6 +53,10 @@ If the user has an active browser session with the IdP, WARP will use the existi
 
 - [Microsoft Entra ID](/cloudflare-one/identity/idp-integration/entra-id/#force-user-interaction-during-warp-reauthentication)
 
+## Manually reauthenticate
+
+<Render file="warp/manually-reauth" product="cloudflare-one" />
+
 ## Limitations
 
 - **Only one user per device** — If a device is already registered with User A, User B will not be able to log in on that device through the re-authentication flow. To switch the device registration to a different user, User A must first log out from Zero Trust (if [Allow device to leave organization](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#allow-device-to-leave-organization) is enabled), or an admin can revoke the registration from **My Team** > **Devices**. User B can then properly [enroll](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/).

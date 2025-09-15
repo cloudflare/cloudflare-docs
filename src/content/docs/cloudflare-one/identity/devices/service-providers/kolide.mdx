@@ -3,17 +3,27 @@ pcx_content_type: how-to
 title: Kolide
 sidebar:
   order: 4
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
-<Render file="posture/service-provider-intro" params={{ one: "Kolide" }} />
+<Render
+	file="posture/service-provider-intro"
+	params={{ one: "Kolide" }}
+	product="cloudflare-one"
+/>
 
 ## Prerequisites
 
-* Kolide agent is deployed on the device.
-* <Render file="posture/prereqs-warp-is-deployed" params={{ name: "Service providers", link: "/cloudflare-one/identity/devices/service-providers/" }} />
+- Kolide agent is deployed on the device.
+- <Render
+  	file="posture/prereqs-warp-is-deployed"
+  	product="cloudflare-one"
+  	params={{
+  		name: "Service providers",
+  		link: "/cloudflare-one/identity/devices/service-providers/",
+  	}}
+  />
 
 ## Set up Kolide as a service provider
 
@@ -27,14 +37,23 @@ import { Render } from "~/components"
 
 ### 2. Add Kolide as a service provider
 
-<Render file="posture/add-service-provider" params={{ provider: "Kolide" }} />
+<Render
+	file="posture/add-service-provider"
+	product="cloudflare-one"
+	params={{ provider: "Kolide" }}
+/>
+
 5. Enter the **Client secret** you noted down above.
 6. Choose a **Polling frequency** for how often Cloudflare Zero Trust should query Kolide for information.
 7. Select **Test and save**.
 
 ### 3. Configure the posture check
 
-<Render file="posture/configure-posture-check" params={{ one: "Kolide" }} />
+<Render
+	file="posture/configure-posture-check"
+	product="cloudflare-one"
+	params={{ one: "Kolide" }}
+/>
 
 ## Device posture attributes
 

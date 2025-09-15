@@ -133,6 +133,7 @@ resource "cloudflare_zero_trust_gateway_policy" "dns_restrict_quarantined_users"
 
 <Render
 	file="zero-trust/content-categories-description"
+	product="learning-paths"
 	params={{ policyType: "DNS" }}
 />
 
@@ -364,6 +365,7 @@ resource "cloudflare_zero_trust_gateway_policy" "dns_resolvedip_blocklist_rule" 
 
 <Render
 	file="zero-trust/blocklist-domain-host"
+	product="learning-paths"
 	params={{ blocklistPolicyType: "DNS" }}
 />
 

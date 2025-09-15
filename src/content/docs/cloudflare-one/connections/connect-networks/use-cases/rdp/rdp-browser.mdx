@@ -36,7 +36,11 @@ Browser-based RDP can be used in conjunction with [routing over WARP](/cloudflar
 
 ## 2. Add a target
 
-<Render file="access/add-target" params={{ protocol: "rdp" }} />
+<Render
+	file="access/add-target"
+	params={{ protocol: "rdp" }}
+	product="cloudflare-one"
+/>
 
 ## 3. Create a DNS record
 
@@ -111,7 +115,7 @@ The DNS record does not need to point to an active destination IP address or hos
 Ensure that only **Allow** or **Block** policies are present. **Bypass** and **Service Auth** are not supported for browser-rendered applications.
 :::
 
-13. <Render file="access/access-choose-idps" product="cloudflare-one" />
+13. <Render file="access/access-choose-idps" product="cloudflare-one" params={{ appType: "rdp" }}/>
 
 14. Select **Next**.
 
@@ -264,4 +268,5 @@ The login flow differs slightly when using an Microsoft Entra ID-bound username:
 - **Clipboard size limit**: Data copied between the local machine and the browser-based RDP session may not exceed 500 KB.
 - **Clipboard controls**: Admins do not have the ability to restrict copy/paste actions between the remote machine and the user's local clipboard.
 - **File transfers**: Users cannot copy/paste files from their local machine to the remote machine and vice versa.
+- **Print to local printer**: Users cannot print information from their browser-based RDP session to a printer in their local network.
 - **Network Level Authentication for Entra-joined accounts**: Browser-based RDP does not support PKU2U authentication which is required for [Network Level Authentication (NLA)](https://learn.microsoft.com/en-us/windows-server/remote/remote-desktop-services/remotepc/remote-desktop-allow-access#why-allow-connections-only-with-network-level-authentication) with Entra-joined accounts. Connecting to Entra-joined accounts requires disabling enforcement of NLA on the remote Windows machine. You can disable NLA from **Settings** > **System** > **Remote Desktop**, or use the Local Group Policy Editor to disable **Require user authentication for remote connections by using Network Level Authentication**.

@@ -40,7 +40,11 @@ In the API response, save the certificate `id` since it will be required in step
 
 ## 2. Configure origin to accept client certificates
 
-<Render file="aop-configure-origin" params={{ one: " ", two: " " }} />
+<Render
+	file="aop-configure-origin"
+	params={{ one: " ", two: " " }}
+	product="ssl"
+/>
 
 ## 3. Enable Authenticated Origin Pulls (globally)
 

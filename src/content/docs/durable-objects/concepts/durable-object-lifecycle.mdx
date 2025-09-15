@@ -39,7 +39,6 @@ Assuming a Durable Object does not run, the first incoming request or event (lik
 
 At this point the Durable Object is in the **active in-memory state**.
 
-If it continuously receives requests or events within 10 seconds of each other, the Durable Object will remain in this state.
 
 Once all incoming requests or events have been processed, the Durable Object remains idle in-memory for a few seconds either in a hibernateable state or in a non-hibernateable state.
 

@@ -12,6 +12,7 @@ import { Tabs, TabItem, Badge, Render, APIRequest } from "~/components";
 
 <Render
 	file="access/short-lived-certs-intro"
+	product="cloudflare-one"
 	params={{ intro: "Furthermore, Access for Infrastructure replaces" }}
 />
 
@@ -34,11 +35,19 @@ To connect your devices to Cloudflare:
 
 ## 3. Route server IPs through WARP
 
-<Render file="tunnel/warp-to-tunnel-route-ips" params={{ one: "SSH server" }} />
+<Render
+	file="tunnel/warp-to-tunnel-route-ips"
+	params={{ one: "SSH server" }}
+	product="cloudflare-one"
+/>
 
 ## 4. Add a target
 
-<Render file="access/add-target" params={{ protocol: "generic" }} />
+<Render
+	file="access/add-target"
+	params={{ protocol: "generic" }}
+	product="cloudflare-one"
+/>
 
 ## 5. Add an infrastructure application
 
@@ -107,7 +116,11 @@ Follow these instructions to encrypt and download SSH command logs from Zero Tru
 
 #### Enable SSH command logging
 
-<Render file="ssh/upload-ssh-key" params={{ note: "" }} />
+<Render
+	file="ssh/upload-ssh-key"
+	params={{ note: "" }}
+	product="cloudflare-one"
+/>
 
 #### Disable SSH command logging
 

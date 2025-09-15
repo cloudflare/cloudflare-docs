@@ -9,8 +9,12 @@ head:
 
 ---
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
-2. Go to **Zaraz** > **Tools Configuration** > **Variables**.
+import { DashButton } from "~/components";
+
+1. In the Cloudflare dashboard, go to the **Tag setup** page.
+
+	<DashButton url="/?to=/:account/tag-management" />
+2. Go to **Tools Configuration** > **Variables**.
 3. Locate the variable you want to edit, and select **Edit** to make your changes.
 4. Select **Save** to save your edits.
 
@@ -20,8 +24,10 @@ head:
 You cannot delete a variable being used in tools or triggers.
 :::
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
-2. Go to **Zaraz** > **Tools Configuration** > **Third-party tools**.
+1. In the Cloudflare dashboard, go to the **Tag setup** page.
+
+	<DashButton url="/?to=/:account/tag-management" />
+2. Go to **Tools Configuration** > **Third-party tools**.
 3. Locate any tools using the variable, and delete the variable from those tools.
 4. Select **Zaraz** > **Tools Configuration** > **Triggers**.
 5. Locate all the triggers using the variable, and delete the variable from those triggers.

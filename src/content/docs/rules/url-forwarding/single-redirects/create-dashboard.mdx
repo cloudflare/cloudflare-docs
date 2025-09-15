@@ -6,7 +6,9 @@ sidebar:
   label: Create rule in the dashboard
 ---
 
-import { Render } from "~/components";
+import { Render, Steps } from "~/components";
+
+<Steps>
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
 2. Go to **Rules** > **Overview**.
@@ -29,7 +31,10 @@ import { Render } from "~/components";
 
    <Render file="rules-creation-dash-dns-popup" product="rules" />
 
+</Steps>
+
 <Render
 	file="url-forwarding/requires-proxied-site"
+	product="rules"
 	params={{ forwardingRuleName: "Single Redirects" }}
 />

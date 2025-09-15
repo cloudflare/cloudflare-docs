@@ -5,12 +5,16 @@ sidebar:
   order: 2
 ---
 
-Once you have your triggers ready, you can use them to configure your actions. An action defines a specific task that your tool will perform. 
+import { DashButton } from "~/components";
+
+Once you have your triggers ready, you can use them to configure your actions. An action defines a specific task that your tool will perform.
 
 To create an action, first [add a third-party tool](/zaraz/get-started/). If you have already added a third-party tool, follow these steps to create an action.
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
-2. Go to **Zaraz** > **Tools Configuration**.
+1. In the Cloudflare dashboard, go to the **Tag setup** page.
+
+	<DashButton url="/?to=/:account/tag-management" />
+2. Go to **Tools Configuration**.
 3. Under **Third-party tools**, locate the tool you want to configure an action for, and select **Edit**.
 4. Under Custom actions select **Create action**.
 5. Give the action a descriptive name.

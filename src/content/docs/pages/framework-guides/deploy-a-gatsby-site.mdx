@@ -37,7 +37,12 @@ npx gatsby new my-gatsby-site https://github.com/alxshelepenok/gatsby-starter-lu
 
 ## Deploy with Cloudflare Pages
 
-<Render file="deploy-to-pages-steps-with-preset" params={{ name: "Gatsby" }} />
+<Render
+	file="deploy-to-pages-steps-with-preset"
+	product="pages"
+	params={{ name: "Gatsby" }}
+	product="pages"
+/>
 
 <PagesBuildPreset framework="gatsby" />
 
@@ -62,4 +67,8 @@ If you have a dynamic route, such as `/users/[id]`, create your proxy redirect b
 /users/* /users/:id 200
 ```
 
-<Render file="framework-guides/learn-more" params={{ one: "Gatsby" }} />
+<Render
+	file="framework-guides/learn-more"
+	product="pages"
+	params={{ one: "Gatsby" }}
+/>

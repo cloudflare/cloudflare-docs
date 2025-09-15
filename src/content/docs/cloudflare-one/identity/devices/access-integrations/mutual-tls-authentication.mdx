@@ -29,11 +29,15 @@ The mTLS certificate is used only to verify the client certificate. It does not 
 
 - An [Access application](/cloudflare-one/applications/configure-apps/self-hosted-public-app/) for the hostname that you would like to secure with mTLS.
 - A CA that issues client certificates for your devices.
-   <Render file="byo-ca-mtls-cert-requirements" product="ssl" />
+  <Render file="byo-ca-mtls-cert-requirements" product="ssl" />
 
 ### Add mTLS to your Access application
 
-<Render file="access/add-mtls-cert"  product="cloudflare-one" params={{ product: "access"}}/>
+<Render
+	file="access/add-mtls-cert"
+	product="cloudflare-one"
+	params={{ product: "access" }}
+/>
 
 5. In **Associated hostnames**, enter the fully-qualified domain names (FQDN) that will use this certificate.
 
@@ -41,28 +45,31 @@ The mTLS certificate is used only to verify the client certificate. It does not 
 
 6. Save the policy.
 
-9. Go to **Access** > **Policies**.
+7. Go to **Access** > **Policies**.
 
-10. [Create an Access policy](/cloudflare-one/policies/access/policy-management/#create-a-policy) using one of the following [selectors](/cloudflare-one/policies/access/#selectors):
-  	- **Valid Certificate**: Any client certificate that can authenticate with the Root CA will be allowed to proceed.
-	- **Common Name**: Only client certificates with a specific common name will be allowed to proceed.
+8. [Create an Access policy](/cloudflare-one/policies/access/policy-management/#create-a-policy) using one of the following [selectors](/cloudflare-one/policies/access/#selectors):
+   - **Valid Certificate**: Any client certificate that can authenticate with the Root CA will be allowed to proceed.
+   - **Common Name**: Only client certificates with a specific common name will be allowed to proceed.
 
-11. If this is for a client who does not need to log in through an IdP, set the policy **Action** to _Service Auth_.
+9. If this is for a client who does not need to log in through an IdP, set the policy **Action** to _Service Auth_.
 
-	<Example>
- 	**Example mTLS policy**
-	| Action | Rule type | Selector | Value             |
-	| ------ | --------- | -------- | ----------------- |
-	| Service Auth  | Include   | Common Name | `John Doe`        |
-	</Example>
+   <Example>
 
-12. Save the policy, then go to **Access** > **Applications**.
+   **Example mTLS policy**
 
-13. Select the application you would like to enforce mTLS on and select **Configure**. The application must be included in the **Associated hostnames** list from Step 5.
+   | Action       | Rule type | Selector    | Value      |
+   | ------------ | --------- | ----------- | ---------- |
+   | Service Auth | Include   | Common Name | `John Doe` |
 
-14. In the **Policies** tab, add your mTLS policy.
+   </Example>
 
-15. Save the application.
+10. Save the policy, then go to **Access** > **Applications**.
+
+11. Select the application you would like to enforce mTLS on and select **Configure**. The application must be included in the **Associated hostnames** list from Step 5.
+
+12. In the **Policies** tab, add your mTLS policy.
+
+13. Save the application.
 
 You can now authenticate to the application using a client certificate. For instructions on how to present a client certificate, refer to [Test mTLS](#test-mtls).
 
@@ -106,7 +113,11 @@ The command adds the client certificate to the trusted store on your device. Onl
 :::
 
 1. Navigate to the directory containing the client certificate and key.
-<Render file="keychain-access" params={{ cert: "client.pem" }} />
+   <Render
+   	file="keychain-access"
+   	product="cloudflare-one"
+   	params={{ cert: "client.pem" }}
+   />
 
 Assuming your browser uses the macOS system store, you can now connect to the mTLS application through the browser.
 
@@ -122,64 +133,64 @@ This section covers how to use [OpenSSL](https://www.openssl.org/) to generate a
 
 1. Generate the root CA private key:
 
-	```sh
-	 openssl genrsa -aes256 -out rootCA.key 4096
-	 ```
+   ```sh
+    openssl genrsa -aes256 -out rootCA.key 4096
+   ```
 
-	When prompted, enter a password to use with `rootCA.key`.
+   When prompted, enter a password to use with `rootCA.key`.
 
 2. Create a self-signed root certificate called `rootCA.pem`:
 
-	```sh
-	openssl req -x509 -new -nodes -key rootCA.key -sha256 -days 3650 -out rootCA.pem
-	```
+   ```sh
+   openssl req -x509 -new -nodes -key rootCA.key -sha256 -days 3650 -out rootCA.pem
+   ```
 
-	You will be prompted to enter your private key password and fill in some optional fields. For testing purposes, you can leave the optional fields blank.
+   You will be prompted to enter your private key password and fill in some optional fields. For testing purposes, you can leave the optional fields blank.
 
 #### Generate an intermediate certificate
 
 1. Generate the intermediate CA private key:
 
-	```sh
-	 openssl genrsa -aes256 -out intermediate.key 4096
-	 ```
+   ```sh
+    openssl genrsa -aes256 -out intermediate.key 4096
+   ```
 
-	When prompted, enter a password to use with `intermediate.key`.
+   When prompted, enter a password to use with `intermediate.key`.
 
 2. Create a certificate signing request (CSR) for the intermediate certificate:
 
-	```sh
-	openssl req -new -sha256 -key intermediate.key -out intermediate.csr
-	```
+   ```sh
+   openssl req -new -sha256 -key intermediate.key -out intermediate.csr
+   ```
 
-	You will be prompted to enter your private key password and fill in some optional fields. For testing purposes, you can leave the optional fields blank.
+   You will be prompted to enter your private key password and fill in some optional fields. For testing purposes, you can leave the optional fields blank.
 
 3. Create a CA Extension file called `v3_intermediate_ca.ext`. For example,
 
-	```txt
-	subjectKeyIdentifier = hash
-	authorityKeyIdentifier = keyid:always,issuer
-	basicConstraints = critical, CA:true
-	keyUsage = critical, cRLSign, keyCertSign
-	```
+   ```txt
+   subjectKeyIdentifier = hash
+   authorityKeyIdentifier = keyid:always,issuer
+   basicConstraints = critical, CA:true
+   keyUsage = critical, cRLSign, keyCertSign
+   ```
 
-	Make sure that `basicConstraints` includes the `CA:true` property. This property allows the intermediate certificate to act as a CA and sign client certificates.
+   Make sure that `basicConstraints` includes the `CA:true` property. This property allows the intermediate certificate to act as a CA and sign client certificates.
 
 4. Sign the intermediate certificate with the root CA:
 
-	```sh
-	 openssl x509 -req -in intermediate.csr -CA rootCA.pem -CAkey rootCA.key -CAcreateserial -out intermediate.pem -days 1825 -sha256 -extfile v3_intermediate_ca.ext
-	 ```
+   ```sh
+    openssl x509 -req -in intermediate.csr -CA rootCA.pem -CAkey rootCA.key -CAcreateserial -out intermediate.pem -days 1825 -sha256 -extfile v3_intermediate_ca.ext
+   ```
 
 #### Create a CA chain file
 
 1. Combine the intermediate and root certificates into a single file:
 
-	```sh
-	cat intermediate.pem rootCA.pem > ca-chain.pem
-	```
+   ```sh
+   cat intermediate.pem rootCA.pem > ca-chain.pem
+   ```
 
-	The intermediate certificate should be at the top of the file, followed by its signing certificate.
+   The intermediate certificate should be at the top of the file, followed by its signing certificate.
 
 2. Upload the contents of `ca-chain.pem` to Cloudflare Access. For instructions, refer to [Add mTLS to your Access application](#add-mtls-to-your-access-application).
 
@@ -187,33 +198,33 @@ This section covers how to use [OpenSSL](https://www.openssl.org/) to generate a
 
 1. Generate a private key for the client:
 
-	```sh
-	 openssl genrsa -out client.key 2048
-	 ```
+   ```sh
+    openssl genrsa -out client.key 2048
+   ```
 
 2. Create a CSR for the client certificate:
 
-	```sh
-	openssl req -new -key client.key -out client.csr
-	```
+   ```sh
+   openssl req -new -key client.key -out client.csr
+   ```
 
-	You will be prompted to fill in some optional fields. For testing purposes, you can set **Common Name** to something like `John Doe`.
+   You will be prompted to fill in some optional fields. For testing purposes, you can set **Common Name** to something like `John Doe`.
 
 3. Sign the client certificate with the intermediate certificate:
 
-	```sh
-	 openssl x509 -req -in client.csr -CA intermediate.pem -CAkey intermediate.key -CAcreateserial -out client.pem -days 365 -sha256
-	 ```
+   ```sh
+    openssl x509 -req -in client.csr -CA intermediate.pem -CAkey intermediate.key -CAcreateserial -out client.pem -days 365 -sha256
+   ```
 
 4. Validate the client certificate against the certificate chain:
 
-	```sh
-	openssl verify -CAfile ca-chain.pem client.pem
-	```
+   ```sh
+   openssl verify -CAfile ca-chain.pem client.pem
+   ```
 
-	```sh output
-	client.pem: OK
-	```
+   ```sh output
+   client.pem: OK
+   ```
 
 You can now use the client certificate (`client.pem`) and its key (`client.key`) to [test mTLS](#test-mtls).
 
@@ -236,7 +247,6 @@ Use the instructions under Installation to install the toolkit, and ensure that 
 1. Create a new directory to store the root CA.
 
 2. Within that directory, create two new files:
-
    - **CSR**. Create a file named `ca-csr.json` and add the following JSON blob, then save the file.
 
      ```json

@@ -12,6 +12,8 @@ reviewed: 2022-03-02
 difficulty: Medium
 ---
 
+import { DashButton } from "~/components";
+
 Use the GraphQL Analytics API to review data for Magic Firewall network traffic related to rules matching your traffic. This contains both rules you configured in the Magic Firewall dashboard, and the rules managed by Cloudflare as a part of [Magic Firewall Managed rules](/magic-firewall/how-to/enable-managed-rulesets/) and [Magic Firewall IDS](/magic-firewall/about/ids/) features.
 
 Before you begin, you must have an [API token](/analytics/graphql-api/getting-started/authentication/). For additional help getting started with GraphQL Analytics, refer to [GraphQL Analytics API](/analytics/graphql-api/).
@@ -29,11 +31,13 @@ To construct a Magic Firewall GraphQL query for an object, you will need a Cloud
 
 To construct queries to gather analytics for a particular rule, you need the rule ID for each firewall rule.
 
-1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select you account.
-2. Select **Magic Firewall**.
-3. Locate the rule you need the rule ID for from the list, and select **Edit**.
-4. Locate the **Rule ID**, and select the copy button.
-5. Select **Cancel** to return to the **Magic Firewall** page.
+1. In the Cloudflare dashboard, go to the **Magic Firewall** page.
+
+   <DashButton url="/?to=/:account/network-security/magic_firewall" />
+
+2. In the **Custom rules** tab, locate the rule you need the rule ID for from the list and select the three dots > **Edit**.
+3. Locate the **Rule ID** and select the copy button.
+4. Select **Cancel** to return to the **Magic Firewall** page.
 
 ## Explore GraphQL schema with Magic Firewall query example
 

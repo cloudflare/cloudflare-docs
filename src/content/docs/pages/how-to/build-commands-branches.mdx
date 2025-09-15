@@ -9,6 +9,8 @@ banner:
     id: pages-migrate-to-workers
 ---
 
+import { DashButton } from "~/components";
+
 This guide will instruct you how to set build commands on specific branches. You will use the `CF_PAGES_BRANCH` environment variable to run a script on a specified branch as opposed to your Production branch. This guide assumes that you have a Cloudflare account and a Pages project.
 
 ## Set up
@@ -42,8 +44,10 @@ fi
 
 To put your changes into effect:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. In Account Home, select **Workers & Pages** > in **Overview**, select your Pages project.
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+2. Select your Pages project.
 3. Go to **Settings** > **Build & deployments** > **Build configurations** > **Edit configurations**.
 4. Update the **Build command** field value to `bash build.sh` and select **Save**.
 

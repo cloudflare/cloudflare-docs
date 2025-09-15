@@ -5,7 +5,7 @@ sidebar:
   order: 3
 ---
 
-import { Details, TabItem, Tabs } from "~/components";
+import { Details, Render, TabItem, Tabs } from "~/components";
 
 <Details header="Feature availability">
 
@@ -202,17 +202,7 @@ SHA256 Fingerprint=DD4F4806C57A5BBAF1AA5B080F0541DA75DB468D0A1FE731310149500CCD8
 
 </TabItem> <TabItem label="Remote server">
 
-To obtain the SHA-256 fingerprint of a remote server:
-
-```sh
-openssl s_client -connect <private-server-IP>:443 < /dev/null 2> /dev/null | openssl x509 -noout -fingerprint -sha256 | tr -d :
-```
-
-The output will look something like:
-
-```txt
-SHA256 Fingerprint=DD4F4806C57A5BBAF1AA5B080F0541DA75DB468D0A1FE731310149500CCD8662
-```
+<Render file="warp/managed-networks-sha-256" product="cloudflare-one"/>
 
 </TabItem> </Tabs>
 
@@ -312,3 +302,4 @@ To check if the WARP client detects the network location:
 
 - [Device profiles](/cloudflare-one/connections/connect-devices/warp/configure-warp/device-profiles/) - How to create and manage the device profiles you apply via managed networks.
 - [WARP settings](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/) - Defines how WARP behaves and what users can do.
+- [WARP troubleshooting guide](/cloudflare-one/connections/connect-devices/warp/troubleshooting/troubleshooting-guide/) - Troubleshoot common WARP issues.

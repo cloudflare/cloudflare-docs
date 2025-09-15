@@ -8,7 +8,7 @@ head:
     content: Add load balancing to Spectrum applications
 ---
 
-import { Render } from "~/components";
+import { Render, DashButton } from "~/components";
 
 You can configure [Spectrum](/spectrum/) with Load Balancing to bring resiliency to your TCP or UDP based applications.
 
@@ -22,15 +22,19 @@ The exact settings will vary depending on your use case. Refer to the following 
 
 ### 1. Configure your load balancer
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select an account where the Load Balancing add-on is [enabled](/load-balancing/get-started/enable-load-balancing/).
+1. In the Cloudflare dashboard, go to the **Load Balancing** page.
 
-2. Go to **Load Balancing** and select **Create load balancer**.
+   <DashButton url="/?to=/:account/load-balancing" />
 
-3. On the **Load Balancer Setup**, select **Public load balancer**
+2. Select an account where the Load Balancing add-on is [enabled](/load-balancing/get-started/enable-load-balancing/).
 
-4. Choose the website to which you want to add this load balancer.
+3. Go to **Load Balancing** and select **Create load balancer**.
 
-5. On the **Hostname** page, define the settings presented and select **Next**.
+4. On the **Load Balancer Setup**, select **Public load balancer**
+
+5. Choose the website to which you want to add this load balancer.
+
+6. On the **Hostname** page, define the settings presented and select **Next**.
    - Enter a **Hostname**, which is the DNS name at which the load balancer is available. For more details on record priority, refer to [DNS records for load balancing](/load-balancing/load-balancers/dns-records/).
      :::caution
 
@@ -40,19 +44,19 @@ The exact settings will vary depending on your use case. Refer to the following 
    - Keep the orange cloud icon enabled, meaning the load balancer is proxied. This refers to the [proxy mode](/load-balancing/understand-basics/proxy-modes/) and, with Spectrum, traffic is always proxied.
    - Keep **Session Affinity** and **Failover across pools** disabled as these features are not supported with Spectrum.
 
-6. On the **Add a Pool** page, define the settings presented and select **Next**.
+7. On the **Add a Pool** page, define the settings presented and select **Next**.
    - Select one or more existing pools or [create a new pool](/load-balancing/pools/create-pool/#create-a-pool) [^1].
    - If needed, update the [fallback pool](/load-balancing/understand-basics/health-details/#fallback-pools) [^2].
 
-7. On the **Monitors** page, define the settings presented and select **Next**.
+8. On the **Monitors** page, define the settings presented and select **Next**.
    - Review the monitors attached to your pools.
    - If needed, you can attach an existing monitor or [create a new monitor](/load-balancing/monitors/create-monitor/#create-a-monitor).
 
-8. On the **Traffic Steering** page, choose an option for [Traffic steering](/load-balancing/understand-basics/traffic-steering/steering-policies/) and select **Next**.
+9. On the **Traffic Steering** page, choose an option for [Traffic steering](/load-balancing/understand-basics/traffic-steering/steering-policies/) and select **Next**.
 
-9. Keep **Custom Rules** page empty as this feature is not supported with Spectrum.
+10. Keep **Custom Rules** page empty as this feature is not supported with Spectrum.
 
-10. On the **Review** page:
+11. On the **Review** page:
 
 - Review your configuration and make any changes.
   - If you set traffic steering to **Off**, re-order the pools in your load balancer to adjust the fallback order.

@@ -10,7 +10,7 @@ import { Render } from "~/components";
 
 [Cloudflare Gateway](/cloudflare-one/policies/gateway/), our comprehensive Secure Web Gateway, allows you to set up policies to inspect DNS, network, HTTP, and egress traffic.
 
-You can apply network and HTTP Gateway policies alongside [Magic Firewall](/magic-firewall/) policies (for L3/4 traffic filtering) to Internet-bound traffic or private traffic entering the Cloudflare network via Magic WAN.
+You can apply network and HTTP Gateway policies alongside [Magic Firewall](/magic-firewall/) policies (for L3/4 traffic filtering) to Internet-bound traffic or private traffic entering the Cloudflare network via Magic WAN. Additionally, you can configure Gateway to [resolve DNS queries](#dns-filtering) from Magic WAN.
 
 ## HTTPS filtering
 
@@ -32,6 +32,28 @@ If your organization onboards users to Magic WAN via an [on-ramp other than WARP
 | --------- | -------- | ---------------- | -------------- |
 | Source IP | in       | `203.0.113.0/24` | Do Not Inspect |
 
+## DNS filtering
+
+You can configure the DNS resolver for your Magic WAN networks to the shared IP addresses for the Gateway DNS resolver. The Gateway DNS resolver IPs are `172.64.36.1` and `172.64.36.2`. When you resolve DNS queries from Magic WAN through Gateway, Gateway will log the queries with the private source IP. You can use the private source IP to create [resolver policies](/cloudflare-one/policies/gateway/resolver-policies/) for queries intended for [internal DNS records](/cloudflare-one/policies/gateway/resolver-policies/#internal-dns).
+
+```mermaid
+flowchart LR
+ subgraph subGraph0["Data center"]
+    direction TB
+        InternalDNS(["Internal DNS"])
+        ResolverPolicies["Resolver policies"]
+        CloudflareGatewayDNSResolver["Gateway DNS resolver"]
+  end
+    ResolverPolicies -- Retain and use</br>Source Internal IP --> InternalDNS
+    CloudflareGatewayDNSResolver -- <br> --> ResolverPolicies
+    WarpConnector["WARP Connector"] -- DHCP/DNS resolver --> IPSecTunnel["IPsec tunnel"]
+    MagicWAN["Magic WAN"] -- DHCP/DNS resolver --> IPSecTunnel
+    IPSecTunnel -- Shared IP endpoints --> CloudflareGatewayDNSResolver
+    ResolverPolicies@{ shape: proc}
+    WarpConnector@{ shape: in-out}
+    MagicWAN@{ shape: in-out}
+```
+
 ## Outbound Internet traffic
 
 By default, the following traffic routed through Magic WAN tunnels and destined to public IP addresses is proxied/filtered through Cloudflare Gateway:
@@ -50,6 +72,7 @@ By default, TCP, UDP, and ICMP traffic routed through Magic WAN tunnels and dest
 Contact your account team to enable Gateway filtering for traffic destined to routes behind Magic WAN tunnels.
 
 If enabled, by default TCP/UDP traffic meeting **all** the following criteria will be proxied/filtered by Cloudflare Gateway:
+
 - Both source and destination IPs are part of either [RFC1918](https://datatracker.ietf.org/doc/html/rfc1918) space, [WARP](/cloudflare-one/connections/connect-devices/warp/), [BYO](/byoip/) or [Leased IPs](/magic-transit/cloudflare-ips/)
 - Source port must be a client port strictly higher than `1023`
 - Destination port is a well-known port lower than `1024`

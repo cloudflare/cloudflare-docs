@@ -15,6 +15,10 @@ import { DirectoryListing, WranglerConfig } from "~/components"
 
 Add the following to your [Wrangler configuration file](/workers/wrangler/configuration/) to create a [binding](/workers/runtime-apis/bindings/) to a Workers Analytics Engine dataset. A dataset is like a table in SQL: the rows and columns should have consistent meaning.
 
+:::note
+You do not need to manually create a dataset in the Cloudflare dashboard. Workers Analytics Engine datasets are created automatically the first time you write to them after defining the binding in your Wrangler configuration.
+:::
+
 <WranglerConfig>
 
 ```toml

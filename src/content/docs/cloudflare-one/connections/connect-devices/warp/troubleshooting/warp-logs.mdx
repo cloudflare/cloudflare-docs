@@ -6,7 +6,7 @@ sidebar:
   label: Diagnostic logs
 ---
 
-import { TabItem, Tabs, Stream } from "~/components";
+import { Render, Stream, TabItem, Tabs } from "~/components";
 
 The WARP client provides diagnostic logs that you can use to troubleshoot connectivity issues on a device.
 
@@ -29,45 +29,25 @@ The WARP client provides diagnostic logs that you can use to troubleshoot connec
 
 ## macOS/Windows/Linux
 
-### Retrieve logs
+### Collect logs via the CLI
 
-To view WARP logs on desktop devices:
+<Render file="warp/warpdiag-run" product="cloudflare-one" />
 
-<Tabs> <TabItem label="macOS">
+### Collect logs via the dashboard
 
-1. Open a Terminal window.
-2. Run the `warp-diag` tool:
-   ```sh
-   warp-diag
-   ```
+<Render file="dex/pcaps-run-availability" product="cloudflare-one" />
 
-This will place a `warp-debugging-info-<date>-<time>.zip` on your desktop.
+You can collect WARP diagnostic logs remotely from the Zero Trust dashboard by using Digital Experience Monitoring (DEX) [remote captures](/cloudflare-one/insights/dex/remote-captures/).
 
-</TabItem> <TabItem label="Windows">
+<Render file="dex/pcaps-run" product="cloudflare-one" />
 
-1. Open a Command Prompt or PowerShell window.
-2. Run the `warp-diag` tool:
-   ```bash
-   C:\Users\JohnDoe>warp-diag
-   ```
+#### Download remote captures
 
-This will place a `warp-debugging-info-<date>-<time>.zip` on your desktop.
+<Render file="dex/pcaps-download" product="cloudflare-one" />
 
-</TabItem> <TabItem label="Linux">
+#### WARP diagnostics analyzer (beta)
 
-1. Open a Terminal window.
-2. Run the `warp-diag` tool:
-   ```sh
-   warp-diag
-   ```
-
-This will place a `warp-debugging-info-<date>-<time>.zip` in the same folder you ran the command from.
-
-</TabItem> </Tabs>
-
-:::note
-You can also use Digital Experience Monitoring to run `warp-diag` commands on remote devices. For more information, refer to [Remote captures](/cloudflare-one/insights/dex/remote-captures/).
-:::
+<Render file="dex/pcaps-view-warp-diag" product="cloudflare-one" />
 
 ### `warp-diag` logs
 
@@ -172,7 +152,7 @@ Always check the timestamps at the end of each log file to verify the time range
 
 ## iOS/Android/ChromeOS
 
-### Retrieve logs
+### Collect logs
 
 To view WARP logs on mobile devices:
 

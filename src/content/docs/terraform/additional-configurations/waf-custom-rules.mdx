@@ -60,7 +60,12 @@ resource "cloudflare_ruleset" "zone_custom_firewall" {
 }
 ```
 
-<Render file="add-new-rule" params={{ ruleType: "custom rule" }} /> <br />
+<Render
+	file="add-new-rule"
+	product="terraform"
+	params={{ ruleType: "custom rule" }}
+/>
+<br />
 
 ## Create and deploy a custom ruleset (account-level configuration) {/* create-and-deploy-a-custom-ruleset */}
 
@@ -95,6 +100,7 @@ resource "cloudflare_ruleset" "account_firewall_custom_ruleset" {
 
 <Render
 	file="add-new-rule"
+	product="terraform"
 	params={{ ruleType: "custom rule in the custom ruleset" }}
 />
 <br />

@@ -130,6 +130,21 @@ npx wrangler vectorize query <INDEX_NAME> [OPTIONS]
 - `--filter` <Type text="string" /> <MetaInfo text="optional" />
   - Filter vectors based on this metadata filter. Example: `'{ 'p1': 'abc', 'p2': { '$ne': true }, 'p3': 10, 'p4': false, 'nested.p5': 'abcd' }'`
 
+<AnchorHeading title="`list-vectors`" slug="vectorize-list-vectors" depth={3} />
+
+List vector identifiers in a Vectorize index in a paginated manner.
+
+```sh
+npx wrangler vectorize list-vectors <INDEX_NAME> [OPTIONS]
+```
+
+- `INDEX_NAME` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the Vectorize index from which vector identifiers need to be listed.
+- `--count` <Type text="number" /> <MetaInfo text="optional" />
+  - Number of vector IDs to return per page. Must be between 1 and 1000 (default: `100`).
+- `--cursor` <Type text="string" /> <MetaInfo text="optional" />
+  - Pagination cursor from the previous response to continue listing from that position.
+
 <AnchorHeading title="`get-vectors`" slug="vectorize-get-vectors" depth={3} />
 
 Fetch vectors from a Vectorize index using the provided ids.

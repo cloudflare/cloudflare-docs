@@ -5,6 +5,11 @@ title: Multipart upload metadata
 
 import { Type, MetaInfo } from "~/components";
 
+:::note
+
+There is a new API for uploading Workers. Refer to [these docs](/workers/platform/infrastructure-as-code#cloudflare-rest-api) for more information.
+:::
+
 If you're using the [Workers Script Upload API](/api/resources/workers/subresources/scripts/methods/update/) or [Version Upload API](/api/resources/workers/subresources/scripts/subresources/versions/methods/create/) directly, `multipart/form-data` uploads require you to specify a `metadata` part. This metadata defines the Worker's configuration in JSON format, analogue to the [wrangler.toml file](/workers/wrangler/configuration/).
 
 ## Sample `metadata`

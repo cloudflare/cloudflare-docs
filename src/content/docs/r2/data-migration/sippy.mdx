@@ -8,7 +8,7 @@ sidebar:
   order: 2
 ---
 
-import { Render } from "~/components";
+import { Render, DashButton, Steps } from "~/components";
 
 Sippy is a data migration service that allows you to copy data from other cloud providers to R2 as the data is requested, without paying unnecessary cloud egress fees typically associated with moving large amounts of data.
 
@@ -42,11 +42,15 @@ Before getting started, you will need:
 
 ### Enable Sippy via the Dashboard
 
-1. From the Cloudflare dashboard, select **R2** from the sidebar.
+<Steps>
+1. In the Cloudflare dashboard, go to the **R2 object storage** page.
+
+   <DashButton url="/?to=/:account/r2/overview" />
 2. Select the bucket you'd like to migrate objects to.
 3. Switch to the **Settings** tab, then scroll down to the **On Demand Migration** card.
 4. Select **Enable** and enter details for the AWS / GCS bucket you'd like to migrate objects from. The credentials you enter must have permissions to read from this bucket. Cloudflare also recommends scoping your credentials to only allow reads from this bucket.
 5. Select **Enable**.
+</Steps>
 
 ### Enable Sippy via Wrangler
 
@@ -78,41 +82,20 @@ If your bucket is setup with [jurisdictional restrictions](/r2/reference/data-lo
 
 When enabled, Sippy exposes metrics that help you understand the progress of your ongoing migrations.
 
-<table>
-	<tbody>
-		<th colspan="5" rowspan="1" style="width:220px">
-			Metric
-		</th>
-		<th colspan="5" rowspan="1">
-			Description
-		</th>
-		<tr>
-			<td colspan="5" rowspan="1">
-				Requests served by Sippy
-			</td>
-			<td colspan="5" rowspan="1">
-				The percentage of overall requests served by R2 over a period of time.{" "}
-				<br />A higher percentage indicates that fewer requests need to be made
-				to the source bucket.
-			</td>
-		</tr>
-		<tr>
-			<td colspan="5" rowspan="1">
-				Data migrated by Sippy
-			</td>
-			<td colspan="5" rowspan="1">
-				The amount of data that has been copied from the source bucket to R2
-				over a period of time. Reported in bytes.
-			</td>
-		</tr>
-	</tbody>
-</table>
+| Metric | Description |
+|--------|-------------|
+| Requests served by Sippy | The percentage of overall requests served by R2 over a period of time. A higher percentage indicates that fewer requests need to be made to the source bucket. |
+| Data migrated by Sippy | The amount of data that has been copied from the source bucket to R2 over a period of time. Reported in bytes. |
 
 To view current and historical metrics:
 
-2. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-3. Go to the [R2 tab](https://dash.cloudflare.com/?to=/:account/r2) and select your bucket.
-4. Select the **Metrics** tab.
+<Steps>
+1. In the Cloudflare dashboard, go to the **R2 object storage** page.
+
+   <DashButton url="/?to=/:account/r2/overview" />
+2. Select your bucket.
+3. Select the **Metrics** tab.
+</Steps>
 
 You can optionally select a time window to query. This defaults to the last 24 hours.
 
@@ -120,10 +103,14 @@ You can optionally select a time window to query. This defaults to the last 24 h
 
 ### Dashboard
 
-1. From the Cloudflare dashboard, select **R2** from the sidebar.
+<Steps>
+1. In the Cloudflare dashboard, go to the **R2 object storage** page.
+
+   <DashButton url="/?to=/:account/r2/overview" />
 2. Select the bucket you'd like to disable Sippy for.
 3. Switch to the **Settings** tab and scroll down to the **On Demand Migration** card.
 4. Press **Disable**.
+</Steps>
 
 ### Wrangler
 
@@ -148,88 +135,12 @@ Cloudflare currently supports copying data from the following cloud object stora
 
 When Sippy is enabled, it changes the behavior of certain actions on your R2 bucket across [Workers](/r2/api/workers/), [S3 API](/r2/api/s3/), and [public buckets](/r2/buckets/public-buckets/).
 
-<table>
-	<tbody>
-		<th colspan="5" rowspan="1" style="width:220px">
-			Action
-		</th>
-		<th colspan="5" rowspan="1">
-			New behavior
-		</th>
-		<tr>
-			<td colspan="5" rowspan="1">
-				GetObject
-			</td>
-			<td colspan="5" rowspan="1">
-				Calls to GetObject will first attempt to retrieve the object from your
-				R2 bucket. If the object is not present, the object will be served from
-				the source storage bucket and simultaneously uploaded to the requested
-				R2 bucket.
-				<br />
-				<br />
-				Additional considerations:
-				<ul>
-					<li>
-						Modifications to objects in the source bucket will not be reflected
-						in R2 after the initial copy. Once an object is stored in R2, it
-						will not be re-retrieved and updated.
-					</li>
-					<li>
-						Only user-defined metadata that is prefixed by{" "}
-						<code>x-amz-meta-</code> in the HTTP response will be migrated.
-						Remaining metadata will be omitted.
-					</li>
-					<li>
-						For larger objects (greater than 199 MiB), multiple GET requests may
-						be required to fully copy the object to R2.
-					</li>
-					<li>
-						If there are multiple simultaneous GET requests for an object which
-						has not yet been fully copied to R2, Sippy may fetch the object from
-						the source storage bucket multiple times to serve those requests.
-					</li>
-				</ul>
-			</td>
-		</tr>
-		<tr>
-			<td colspan="5" rowspan="1">
-				HeadObject
-			</td>
-			<td colspan="5" rowspan="1">
-				Behaves similarly to GetObject, but only retrieves object metadata. Will
-				not copy objects to the requested R2 bucket.
-			</td>
-		</tr>
-		<tr>
-			<td colspan="5" rowspan="1">
-				PutObject
-			</td>
-			<td colspan="5" rowspan="1">
-				No change to behavior. Calls to PutObject will add objects to the
-				requested R2 bucket.
-			</td>
-		</tr>
-		<tr>
-			<td colspan="5" rowspan="1">
-				DeleteObject
-			</td>
-			<td colspan="5" rowspan="1">
-				No change to behavior. Calls to DeleteObject will delete objects in the
-				requested R2 bucket.
-				<br />
-				<br />
-				Additional considerations:
-				<ul>
-					<li>
-						If deletes to objects in R2 are not also made in the source storage
-						bucket, subsequent GetObject requests will result in objects being
-						retrieved from the source bucket and copied to R2.
-					</li>
-				</ul>
-			</td>
-		</tr>
-	</tbody>
-</table>
+| Action | New behavior |
+|--------|-------------|
+| GetObject | Calls to GetObject will first attempt to retrieve the object from your R2 bucket. If the object is not present, the object will be served from the source storage bucket and simultaneously uploaded to the requested R2 bucket.<br/><br/>Additional considerations:<ul><li>Modifications to objects in the source bucket will not be reflected in R2 after the initial copy. Once an object is stored in R2, it will not be re-retrieved and updated.</li><li>Only user-defined metadata that is prefixed by `x-amz-meta-` in the HTTP response will be migrated. Remaining metadata will be omitted.</li><li>For larger objects (greater than 199 MiB), multiple GET requests may be required to fully copy the object to R2.</li><li>If there are multiple simultaneous GET requests for an object which has not yet been fully copied to R2, Sippy may fetch the object from the source storage bucket multiple times to serve those requests.</li></ul> |
+| HeadObject | Behaves similarly to GetObject, but only retrieves object metadata. Will not copy objects to the requested R2 bucket. |
+| PutObject | No change to behavior. Calls to PutObject will add objects to the requested R2 bucket. |
+| DeleteObject | No change to behavior. Calls to DeleteObject will delete objects in the requested R2 bucket.<br/><br/>Additional considerations:<ul><li>If deletes to objects in R2 are not also made in the source storage bucket, subsequent GetObject requests will result in objects being retrieved from the source bucket and copied to R2.</li></ul> |
 
 Actions not listed above have no change in behavior. For more information, refer to [Workers API reference](/r2/api/workers/workers-api-reference/) or [S3 API compatibility](/r2/api/s3/api/).
 
@@ -241,26 +152,26 @@ To copy objects from Amazon S3, Sippy requires access permissions to your bucket
 
 To create credentials with the correct permissions:
 
+<Steps>
 1. Log in to your AWS IAM account.
 2. Create a policy with the following format and replace `<BUCKET_NAME>` with the bucket you want to grant access to:
-
-```json
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Action": ["s3:ListBucket*", "s3:GetObject*"],
-      "Resource": [
-        "arn:aws:s3:::<BUCKET_NAME>",
-        "arn:aws:s3:::<BUCKET_NAME>/*"
-      ]
-    }
-  ]
-}
-```
-
+	```json
+	{
+		"Version": "2012-10-17",
+		"Statement": [
+			{
+				"Effect": "Allow",
+				"Action": ["s3:ListBucket*", "s3:GetObject*"],
+				"Resource": [
+					"arn:aws:s3:::<BUCKET_NAME>",
+					"arn:aws:s3:::<BUCKET_NAME>/*"
+				]
+			}
+		]
+	}
+	```
 3. Create a new user and attach the created policy to that user.
+</Steps>
 
 You can now use both the Access Key ID and Secret Access Key when enabling Sippy.
 
@@ -270,11 +181,13 @@ To copy objects from Google Cloud Storage (GCS), Sippy requires access permissio
 
 To create credentials with the correct permissions:
 
+<Steps>
 1. Log in to your Google Cloud console.
 2. Go to **IAM & Admin** > **Service Accounts**.
 3. Create a service account with the predefined `Storage Object Viewer` role.
 4. Go to the **Keys** tab of the service account you created.
 5. Select **Add Key** > **Create a new key** and download the JSON key file.
+</Steps>
 
 You can now use this JSON key file when enabling Sippy via Wrangler or API.
 

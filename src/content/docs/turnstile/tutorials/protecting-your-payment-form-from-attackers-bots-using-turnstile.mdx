@@ -20,7 +20,7 @@ sidebar:
   order: 2
 ---
 
-import { Render, TabItem, Tabs, PackageManagers } from "~/components";
+import { Render, TabItem, Tabs, PackageManagers, DashButton, Steps } from "~/components";
 
 This tutorial shows how you can build a more secure payment form using Turnstile. You can learn how to block bot access on the checkout page and trigger additional authentication flows by integrating Turnstile with Stripe.
 
@@ -33,9 +33,13 @@ This tutorial shows how you can build a more secure payment form using Turnstile
 
 First, you will need to prepare a Cloudflare Turnstile widget to use for this application.
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to **Turnstile** and [create a new Turnstile widget](/turnstile/get-started/).
-3. Copy the sitekey and the secret key to use in the next step.
+<Steps>
+  1. In the Cloudflare dashboard, go to the **Turnstile** page.
+    
+      <DashButton url="/?to=/:account/turnstile" />
+  2. [Create a new Turnstile widget](/turnstile/get-started/).
+  3. Copy the sitekey and the secret key to use in the next step.
+</Steps>
 
 ## 2. Create a new Worker project
 

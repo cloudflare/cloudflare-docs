@@ -10,6 +10,21 @@ export default () => {
 						context.codeBlock.props.title ??= "PowerShell";
 						break;
 					}
+					case "javascript":
+					case "js": {
+						context.codeBlock.props.title ??= "JavaScript";
+						break;
+					}
+					case "py":
+					case "python": {
+						context.codeBlock.props.title ??= "Python";
+						break;
+					}
+					case "typescript":
+					case "ts": {
+						context.codeBlock.props.title ??= "TypeScript";
+						break;
+					}
 					default: {
 						return;
 					}

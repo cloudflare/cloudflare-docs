@@ -51,6 +51,7 @@ To generate a sample root CA for testing, refer to [Generate mTLS certificates](
 
 1. <Render
    	file="upload-mtls-cert"
+   	product="cloudflare-one"
    	params={{
    		key: "The private key is only required if you are using this custom certificate for Gateway HTTPS inspection.",
    		cert: "signing certificate",
@@ -64,7 +65,6 @@ To generate a sample root CA for testing, refer to [Generate mTLS certificates](
 4. Select **Client certificate**.
 
 5. You will be prompted for the following information:
-
    1. **Name**: Enter a unique name for this device posture check.
    2. **Operating system**: Select your operating system.
    3. **OS locations**: Specify the location(s) where the client certificate is installed.
@@ -72,8 +72,10 @@ To generate a sample root CA for testing, refer to [Generate mTLS certificates](
       	- Local machine trust store - User trust store
       </Details>
       <Details header="macOS">
-			  - System keychain
-			</Details>
+      
+      - System keychain
+      
+      </Details>
       <Details header="Linux">
       	- NSSDB (`/etc/pki/nssdb`) - To search a custom location, enter the
       	absolute file path(s) to the certificate and private key (for example
@@ -86,7 +88,7 @@ To generate a sample root CA for testing, refer to [Generate mTLS certificates](
    5. **Common name**: (Optional) To check for a Common Name (CN) on the client certificate, enter a string with optional `${serial_number}` and `${hostname}` variables (for example, `${serial_number}_mycompany`). WARP will search for an exact, case-insensitive match. If you do not specify a common name, WARP will ignore the common name field on the certificate.
    6. **Check for Extended Key Usage**: (Optional) Check whether the client certificate has one or more attributes set. Supported values are **Client authentication** (`1.3.6.1.5.5.7.3.2`) and/or **Email** (`1.3.6.1.5.5.7.3.4`).
    7. **Check for private key**: (Recommended) When enabled, WARP checks that the device has a private key associated with the client certificate.
-	 8. **Subject Alternative Name**: (Optional) To check for a Subject Alternative Name (SAN) on the client certificate, enter a string with optional `${serial_number}` and `${hostname}` variables (for example, `${serial_number}_mycompany`). WARP will search for an exact, case-insensitive match. You can add multiple SANs to the posture check — a certificate only needs to match one SAN for the check to pass.
+   8. **Subject Alternative Name**: (Optional) To check for a Subject Alternative Name (SAN) on the client certificate, enter a string with optional `${serial_number}` and `${hostname}` variables (for example, `${serial_number}_mycompany`). WARP will search for an exact, case-insensitive match. You can add multiple SANs to the posture check — a certificate only needs to match one SAN for the check to pass.
 
 6. Select **Save**.
 

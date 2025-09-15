@@ -8,7 +8,7 @@ sidebar:
   order: 1
 ---
 
-import { InlineBadge, Render } from "~/components";
+import { InlineBadge, Render, DashButton } from "~/components";
 
 Super Slurper allows you to quickly and easily copy objects from other cloud providers to an R2 bucket of your choice.
 
@@ -26,7 +26,9 @@ For migration use cases that do not meet the above criteria, we recommend using 
 
 ## Use Super Slurper to migrate data to R2
 
-1. From the Cloudflare dashboard, select **R2** > **Data Migration**.
+1. In the Cloudflare dashboard, go to the **R2 data migration** page.
+
+   <DashButton url="/?to=/:account/r2/slurper" />
 2. Select **Migrate files**.
 3. Select the source cloud storage provider that you will be migrating data from.
 4. Enter your source bucket name and associated credentials and select **Next**.

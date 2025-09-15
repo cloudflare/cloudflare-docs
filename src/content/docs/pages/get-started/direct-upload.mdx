@@ -13,7 +13,7 @@ banner:
     id: pages-migrate-to-workers
 ---
 
-import { Render } from "~/components";
+import { Render, DashButton } from "~/components";
 
 Direct Upload enables you to upload your prebuilt assets to Pages and deploy them to the Cloudflare global network. You should choose Direct Upload over Git integration if you want to [integrate your own build platform](/pages/how-to/use-direct-upload-with-continuous-integration/) or upload from your local computer.
 
@@ -121,11 +121,12 @@ For step-by-step directions on how to use Wrangler and continuous integration to
 
 To deploy with drag and drop:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
-2. In **Account Home**, select your account > **Workers & Pages**.
-3. Select **Create application** > **Pages** > **Upload assets**.
-4. Enter your project name in the provided field and drag and drop your assets.
-5. Select **Deploy**.
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+2. Select **Create application** > **Pages** > **Use direct upload**.
+3. Enter your project name in the provided field and drag and drop your assets.
+4. Select **Deploy site**.
 
 Your project will be served from `<PROJECT_NAME>.pages.dev`. Next drag and drop your build output directory into the uploading frame. Once your files have been successfully uploaded, select **Save and Deploy** and continue to your newly deployed project.
 

@@ -79,10 +79,7 @@ export class YourDurableObject extends DurableObject {
 		public state: DurableObjectState,
 		env: Env,
 	) {
-		this.state = state;
-		// Ensure you pass your bindings and environmental variables into
-		// each Durable Object when it is initialized
-		this.env = env;
+		super(state, env);
 	}
 
 	async fetch(request: Request) {

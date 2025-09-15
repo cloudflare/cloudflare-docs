@@ -32,7 +32,7 @@ class MyDurableObject(DurableObject):
         return Response(result.greeting)
 
 class Default(WorkerEntrypoint):
-    async def fetch(self, request, env, ctx):
+    async def fetch(self, request):
         url = urlparse(request.url)
         id = env.MY_DURABLE_OBJECT.idFromName(url.path)
         stub = env.MY_DURABLE_OBJECT.get(id)

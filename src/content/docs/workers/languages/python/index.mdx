@@ -146,8 +146,8 @@ Then, you can access the `API_HOST` environment variable via the `env` parameter
 from workers import WorkerEntrypoint, Response
 
 class Default(WorkerEntrypoint):
-    async def fetch(self, request, env):
-        return Response(env.API_HOST)
+    async def fetch(self, request):
+        return Response(self.env.API_HOST)
 ```
 
 ## Further Reading

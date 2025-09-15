@@ -32,7 +32,7 @@ Storage options can also be used by your front-end application built with Cloudf
 There are three options for SQL-based databases available when building applications with Workers.
 
 * **Hyperdrive** if you have an existing Postgres or MySQL database, require large (1TB, 100TB or more) single databases, and/or want to use your existing database tools. You can also connect Hyperdrive to database platforms like [PlanetScale](https://planetscale.com/) or [Neon](https://neon.tech/).
-* **D1** for lightweight, serverless applications that are read-heavy, have global users that benefit from D1's [read replication](/d1/best-practices/read-replication/), and do not require you to manage and maintain a traditional RDBMS. You can connect to
+* **D1** for lightweight, serverless applications that are read-heavy, have global users that benefit from D1's [read replication](/d1/best-practices/read-replication/), and do not require you to manage and maintain a traditional RDBMS.
 * **Durable Objects** for stateful serverless workloads, per-user or per-customer SQL state, and building distributed systems (D1 and Queues are built on Durable Objects) where Durable Object's [strict serializability](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/) enables global ordering of requests and storage operations.
 
 ### Session storage

@@ -21,6 +21,7 @@ When creating a DNS policy, you can select as many security risk categories and 
 
 <Render
 	file="gateway/response"
+	product="cloudflare-one"
 	params={{ type: "query", example: "Source IP", example2: "Resolved IP" }}
 />
 
@@ -286,7 +287,11 @@ Gateway matches DNS queries against the following selectors, or criteria:
 
 ### Application
 
-<Render file="gateway/selectors/application" params={{ policyType: "DNS" }} />
+<Render
+	file="gateway/selectors/application"
+	product="cloudflare-one"
+	params={{ policyType: "DNS" }}
+/>
 
 ### Authoritative Nameserver IP
 
@@ -354,12 +359,17 @@ Use this selector to filter DNS responses by their `TXT` records.
 
 <Render
 	file="gateway/selectors/domain"
+	product="cloudflare-one"
 	params={{ APIendpoint: "dns.domains" }}
 />
 
 ### Host
 
-<Render file="gateway/selectors/host" params={{ APIendpoint: "dns.fqdn" }} />
+<Render
+	file="gateway/selectors/host"
+	product="cloudflare-one"
+	params={{ APIendpoint: "dns.fqdn" }}
+/>
 
 ### Indicator Feeds
 
@@ -430,11 +440,11 @@ Use this selector to match a dynamic list of [category IDs](/cloudflare-one/poli
 
 ### Source Continent
 
-Use this selector to filter based on the continent where the query arrived to Gateway from. <Render file="gateway/selectors/source-continent" params={{ one: "dns.src" }} />
+Use this selector to filter based on the continent where the query arrived to Gateway from. <Render file="gateway/selectors/source-continent" product="cloudflare-one" params={{ one: "dns.src" }} />
 
 ### Source Country
 
-Use this selector to filter based on the country where the query arrived to Gateway from. <Render file="gateway/selectors/source-country" params={{ one: "dns.src" }} />
+Use this selector to filter based on the country where the query arrived to Gateway from. <Render file="gateway/selectors/source-country" product="cloudflare-one" params={{ one: "dns.src" }} />
 
 ### Source IP
 
@@ -450,11 +460,19 @@ Use this selector to filter based on the country where the query arrived to Gate
 
 ## Value
 
-<Render file="gateway/value" params={{ one: "hostnames", two: "Host" }} />
+<Render
+	file="gateway/value"
+	product="cloudflare-one"
+	params={{ one: "hostnames", two: "Host" }}
+/>
 
 ## Logical operators
 
-<Render file="gateway/logical-operators" params={{ one: "Identity" }} />
+<Render
+	file="gateway/logical-operators"
+	product="cloudflare-one"
+	params={{ one: "Identity" }}
+/>
 
 ## Limitations
 

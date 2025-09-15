@@ -5,6 +5,8 @@ sidebar:
   order: 3
 ---
 
+import {DashButton} from "~/components";
+
 [Cross-Origin Resource Sharing (CORS)](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) is a standardized method that prevents domain X from accessing the resources of domain Y. It does so by using special headers in HTTP responses from domain Y, that allow your browser to verify that domain Y permits domain X to access these resources.
 
 While CORS can help protect your data from malicious websites, CORS is also used to interact with objects in your bucket and configure policies on your bucket.
@@ -73,9 +75,11 @@ curl --request PUT <URL> --header "Content-Type: text/plain" --data "123"
 
 ## Add CORS policies from the dashboard
 
-1. From the Cloudflare dashboard, select **R2**.
+1. In the Cloudflare dashboard, go to the **R2 object storage** page.
+
+   <DashButton url="/?to=/:account/r2/overview" />
 2. Locate and select your bucket from the list.
-3. From your bucket’s page, select **Settings**.
+3. Select **Settings**.
 4. Under **CORS Policy**, select **Add CORS policy**.
 5. From the **JSON** tab, manually enter or copy and paste your policy into the text box.
 6. When you are done, select **Save**.

@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import { Render } from "~/components";
+import { Render, DashButton } from "~/components";
 
 ## Add a primary payment method
 
@@ -15,11 +15,13 @@ A primary payment method is required to process payment for Cloudflare products 
 Customers on an [Enterprise plan](https://www.cloudflare.com/plans/enterprise/contact/) have [additional payment options](/billing/create-billing-profile/#payment-options) such as wire and ACH, as well as yearly or quarterly billing.
 :::
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Go to **Manage account** > **Billing**.
-3. Select **Payment**. If no payment method is on file, the **Payment methods** dialog opens automatically.
-4. Select **Manage** next to your current payment method. The **Manage payment methods** dialog opens.
-5. Enter the required information based on the payment options below:
+1. In the Cloudflare dashboard, go to the **Billing** page.
+
+    <DashButton url="/?to=/:account/billing" />
+
+2. Select **Payment**. If no payment method is on file, the **Payment methods** dialog opens automatically.
+3. Select **Manage** next to your current payment method. The **Manage payment methods** dialog opens.
+4. Enter the required information based on the payment options below:
    **Credit card**:
    1. Enter the required information under the **Credit Card Details** form.
    2. If applicable, add your business information to your invoice, including your **Company** and **VAT/GST Number**.
@@ -34,9 +36,9 @@ Customers on an [Enterprise plan](https://www.cloudflare.com/plans/enterprise/co
 Because some countries tax goods and services on personal accounts, you may be asked to indicate whether your Cloudflare account is personal or business to determine tax eligibility.
 :::
 
-6. Review the payment method and contact information to ensure it is accurate.
-7. To finish, select **Confirm**.
-8. Ensure your new payment method appears in the **Payment Method** section.
+5. Review the payment method and contact information to ensure it is accurate.
+6. To finish, select **Confirm**.
+7. Ensure your new payment method appears in the **Payment Method** section.
 
 Enterprise customers must email [ar@cloudflare.com](mailto:ar@cloudflare.com) with the last four digits of the credit card and its expiration date.
 
@@ -46,13 +48,15 @@ Optionally, add a backup payment method to use if the primary payment method fai
 
 <Render file="two-payment-methods" product="billing" />
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
-2. Go to **Manage account** > **Billing**.
-3. Select **Payment**.
-4. From **Payment methods**, select **Manage**.
-5. From **Backup**, select **Add** to enter a backup payment method.
-6. Enter the required information based on your preferred payment method (credit card or PayPal) and select **Confirm**.
-7. To make the backup payment method the primary method, select **Make primary payment method**.
+1. In the Cloudflare dashboard, go to the **Billing** page.
+
+    <DashButton url="/?to=/:account/billing" />
+
+2. Select **Payment**.
+3. From **Payment methods**, select **Manage**.
+4. From **Backup**, select **Add** to enter a backup payment method.
+5. Enter the required information based on your preferred payment method (credit card or PayPal) and select **Confirm**.
+6. To make the backup payment method the primary method, select **Make primary payment method**.
 
 ## Payment options
 

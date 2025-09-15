@@ -42,11 +42,15 @@ npm start
 
 ## Deploy with Cloudflare Pages
 
-<Render file="deploy-via-c3" params={{ name: "Qwik" }} />
+<Render file="deploy-via-c3" product="pages" params={{ name: "Qwik" }} />
 
 ### Deploy via the Cloudflare dashboard
 
-<Render file="deploy-to-pages-steps-with-preset" params={{ name: "Qwik" }} />
+<Render
+	file="framework-guides/learn-more"
+	product="pages"
+	params={{ name: "Qwik" }}
+/>
 
 <PagesBuildPreset framework="qwik" />
 
@@ -82,4 +86,8 @@ export const useGetServerTime = routeLoader$(({ platform }) => {
 });
 ```
 
-<Render file="framework-guides/learn-more" params={{ one: "Qwik" }} />
+<Render
+	file="framework-guides/learn-more"
+	product="pages"
+	params={{ one: "Qwik" }}
+/>

@@ -121,12 +121,13 @@ If you are using any adapter different from the default SvelteKit adapter, remem
 
 ## Deploy with Cloudflare Pages
 
-<Render file="deploy-via-c3" params={{ name: "Svelte" }} />
+<Render file="deploy-via-c3" product="pages" params={{ name: "Svelte" }} />
 
 ### Deploy via the Cloudflare dashboard
 
 <Render
 	file="deploy-to-pages-steps-with-preset"
+	product="pages"
 	params={{ name: "SvelteKit" }}
 />
 
@@ -171,4 +172,8 @@ export const GET = (({ url }) => {
 For more information about SvelteKit API Routes, refer to the [SvelteKit documentation](https://kit.svelte.dev/docs/routing#server).
 :::
 
-<Render file="framework-guides/learn-more" params={{ one: "Svelte" }} />
+<Render
+	file="framework-guides/learn-more"
+	product="pages"
+	params={{ one: "Svelte" }}
+/>

@@ -2,7 +2,6 @@
 pcx_content_type: integration-guide
 title: pfSense
 reviewed: 2024-06-20
-
 ---
 
 This tutorial includes the steps required to configure IPsec tunnels to connect a pfSense firewall to Cloudflare Magic WAN.
@@ -60,6 +59,10 @@ Use the Cloudflare dashboard or API to [configure two IPsec tunnels](/magic-wan/
    - **Health check type**: _Request_
    - **Health check direction**: _Bidirectional_
 4. Select **Add pre-shared key later** > **Add tunnels**.
+
+:::note
+If site-to-site traffic is a requirement for your use case, you need to enable replay protection. Refer to [Add tunnels](/magic-wan/configuration/manually/how-to/configure-tunnel-endpoints/#add-tunnels) > IPsec tunnel to learn how to enable this feature.
+:::
 
 ### Generate pre-shared keys
 

@@ -9,6 +9,7 @@ import { Render } from "~/components";
 
 <Render
 	file="casb/integration-description"
+	product="cloudflare-one"
 	params={{
 		integrationName: props.integrationName,
 		integrationAccountType: props.environmentName,
@@ -23,6 +24,7 @@ import { Render } from "~/components";
 
 <Render
 	file="casb/integration-perms"
+	product="cloudflare-one"
 	params={{
 		parentIntegration: "Google Workspace",
 		parentSlug: "google-workspace",
@@ -33,6 +35,7 @@ import { Render } from "~/components";
 
 <Render
 	file="casb/security-findings"
+	product="cloudflare-one"
 	params={{
 		integrationName: props.integrationName,
 		slugRelativePath: props.slugifiedName,

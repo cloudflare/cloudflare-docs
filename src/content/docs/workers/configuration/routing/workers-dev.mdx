@@ -3,7 +3,7 @@ pcx_content_type: concept
 title: workers.dev
 ---
 
-import { WranglerConfig } from "~/components";
+import { WranglerConfig, DashButton } from "~/components";
 
 Cloudflare Workers accounts come with a `workers.dev` subdomain that is configurable in the Cloudflare dashboard. Your `workers.dev` subdomain allows you getting started quickly by deploying Workers without first onboarding your custom domain to Cloudflare.
 
@@ -13,9 +13,11 @@ It's recommended to run production Workers on a [Workers route or custom domain]
 
 `workers.dev` subdomains take the format: `<YOUR_ACCOUNT_SUBDOMAIN>.workers.dev`. To change your `workers.dev` subdomain:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Select **Workers & Pages**.
-3. Select **Change** next to **Your subdomain**.
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+
+2. Select **Change** next to **Your subdomain**.
 
 All Workers are assigned a `workers.dev` route when they are created or renamed following the syntax `<YOUR_WORKER_NAME>.<YOUR_SUBDOMAIN>.workers.dev`. The [`name`](/workers/wrangler/configuration/#inheritable-keys) field in your Worker configuration is used as the subdomain for the deployed Worker.
 
@@ -25,8 +27,11 @@ All Workers are assigned a `workers.dev` route when they are created or renamed 
 
 To disable the `workers.dev` route for a Worker:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Go to **Workers & Pages** and in **Overview**, select your Worker.
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+
+2. In **Overview**, select your Worker.
 3. Go to **Settings** > **Domains & Routes**.
 4. On `workers.dev` click "Disable".
 5. Confirm you want to disable.

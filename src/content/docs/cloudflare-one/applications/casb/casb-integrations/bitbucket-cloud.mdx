@@ -7,8 +7,12 @@ rss: file
 import { Render } from "~/components";
 
 <Render
-  file="casb/integration-description"
-  params={{ integrationName: "Bitbucket Cloud", integrationAccountType: "Bitbucket Cloud Cloud account" }}
+	file="casb/integration-description"
+	product="cloudflare-one"
+	params={{
+		integrationName: "Bitbucket Cloud",
+		integrationAccountType: "Bitbucket Cloud Cloud account",
+	}}
 />
 
 :::note
@@ -45,8 +49,12 @@ These permissions follow the principle of least privilege to ensure that only th
 ## Security findings
 
 <Render
-  file="casb/security-findings"
-  params={{ integrationName: "Bitbucket Cloud", slugRelativePath: "bitbucket-cloud" }}
+	file="casb/security-findings"
+	product="cloudflare-one"
+	params={{
+		integrationName: "Bitbucket Cloud",
+		slugRelativePath: "bitbucket-cloud",
+	}}
 />
 
 ### Repository security

@@ -3,10 +3,15 @@ title: Events and parameters
 pcx_content_type: concept
 sidebar:
   order: 6
-
 ---
 
-import { MetaInfo, Render, Type, WranglerConfig, TypeScriptExample } from "~/components";
+import {
+	MetaInfo,
+	Render,
+	Type,
+	WranglerConfig,
+	TypeScriptExample,
+} from "~/components";
 
 When a Workflow is triggered, it can receive an optional event. This event can include data that your Workflow can act on, including request details, user data fetched from your database (such as D1 or KV) or from a webhook, or messages from a Queue consumer.
 
@@ -16,9 +21,9 @@ Events are a powerful part of a Workflow, as you often want a Workflow to act on
 
 You can pass parameters to a Workflow in three ways:
 
-* As an optional argument to the `create` method on a [Workflow binding](/workers/wrangler/commands/#trigger) when triggering a Workflow from a Worker.
-* Via the `--params` flag when using the `wrangler` CLI to trigger a Workflow.
-* Via the `step.waitForEvent` API, which allows a Workflow instance to wait for an event (and optional data) to be received _while it is running_. Workflow instances can be sent events from external services over HTTP or via the Workers API for Workflows.
+- As an optional argument to the `create` method on a [Workflow binding](/workers/wrangler/commands/#trigger) when triggering a Workflow from a Worker.
+- Via the `--params` flag when using the `wrangler` CLI to trigger a Workflow.
+- Via the `step.waitForEvent` API, which allows a Workflow instance to wait for an event (and optional data) to be received _while it is running_. Workflow instances can be sent events from external services over HTTP or via the Workers API for Workflows.
 
 You can pass any JSON-serializable object as a parameter.
 
@@ -34,21 +39,21 @@ Store state durably by returning it from your `step.do` callbacks.
 
 ```ts
 export default {
-  async fetch(req: Request, env: Env) {
-    let someEvent = { url: req.url, createdTimestamp: Date.now() }
-    // Trigger our Workflow
-    // Pass our event as the second parameter to the `create` method
-    // on our Workflow binding.
-    let instance = await env.MY_WORKFLOW.create({
-      id: crypto.randomUUID(),
-      params: someEvent
-    });
+	async fetch(req: Request, env: Env) {
+		let someEvent = { url: req.url, createdTimestamp: Date.now() };
+		// Trigger our Workflow
+		// Pass our event as the second parameter to the `create` method
+		// on our Workflow binding.
+		let instance = await env.MY_WORKFLOW.create({
+			id: crypto.randomUUID(),
+			params: someEvent,
+		});
 
-    return Response.json({
-      id: instance.id,
-      details: await instance.status(),
-    });
-  },
+		return Response.json({
+			id: instance.id,
+			details: await instance.status(),
+		});
+	},
 };
 ```
 
@@ -59,6 +64,7 @@ To pass parameters via the `wrangler` command-line interface, pass a JSON string
 ```sh
 npx wrangler@latest workflows trigger workflows-starter '{"some":"data"}'
 ```
+
 ```sh output
 🚀 Workflow instance "57c7913b-8e1d-4a78-a0dd-dce5a0b7aa30" has been queued successfully
 ```
@@ -82,7 +88,10 @@ For example, to wait for billing webhook:
 export class MyWorkflow extends WorkflowEntrypoint<Env, Params> {
 	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
 		// Other steps in your Workflow
-		let event = await step.waitForEvent<IncomingStripeWebhook>("receive invoice paid webhook from Stripe", { type: "stripe-webhook", timeout: "1 hour" })
+		let event = await step.waitForEvent<IncomingStripeWebhook>(
+			"receive invoice paid webhook from Stripe",
+			{ type: "stripe-webhook", timeout: "1 hour" },
+		);
 		// Rest of your Workflow
 	}
 }
@@ -92,9 +101,9 @@ export class MyWorkflow extends WorkflowEntrypoint<Env, Params> {
 
 The above example:
 
-* Calls `waitForEvent` with a `type` of `stripe-webhook` - the corresponding `sendEvent` call would thus be `await instance.sendEvent({type: "stripe-webhook", payload: webhookPayload})`.
-* Uses a TypeScript [type parameter](https://www.typescriptlang.org/docs/handbook/2/generics.html) to type the return value of `step.waitForEvent` as our `IncomingStripeWebhook`.
-* Continues on with the rest of the Workflow.
+- Calls `waitForEvent` with a `type` of `stripe-webhook` - the corresponding `sendEvent` call would thus be `await instance.sendEvent({type: "stripe-webhook", payload: webhookPayload})`.
+- Uses a TypeScript [type parameter](https://www.typescriptlang.org/docs/handbook/2/generics.html) to type the return value of `step.waitForEvent` as our `IncomingStripeWebhook`.
+- Continues on with the rest of the Workflow.
 
 ### Send events to running workflows
 
@@ -104,27 +113,30 @@ Workflow instances that are waiting on events using the `waitForEvent` API can b
 
 ```ts
 export default {
-  async fetch(req: Request, env: Env) {
-    const instanceId = new URL(req.url).searchParams.get("instanceId")
-    const webhookPayload = await req.json<Payload>()
+	async fetch(req: Request, env: Env) {
+		const instanceId = new URL(req.url).searchParams.get("instanceId");
+		const webhookPayload = await req.json<Payload>();
 
-    let instance = await env.MY_WORKFLOW.get(instanceId);
-    // Send our event, with `type` matching the event type defined in
-    // our step.waitForEvent call
-    await instance.sendEvent({type: "stripe-webhook", payload: webhookPayload})
+		let instance = await env.MY_WORKFLOW.get(instanceId);
+		// Send our event, with `type` matching the event type defined in
+		// our step.waitForEvent call
+		await instance.sendEvent({
+			type: "stripe-webhook",
+			payload: webhookPayload,
+		});
 
-    return Response.json({
-      status: await instance.status(),
-    });
-  },
+		return Response.json({
+			status: await instance.status(),
+		});
+	},
 };
 ```
 
 </TypeScriptExample>
 
-* Similar to the [`waitForEvent`](#wait-for-events) example in this guide, the `type` property in our `waitForEvent` and `sendEvent` fields must match.
-* To send multiple events to a Workflow that has multiple `waitForEvent` calls, call `sendEvent` with the corresponding `type` property set.
-* Events can also be sent using the REST API (HTTP API)'s [Events endpoint](/api/resources/workflows/subresources/instances/subresources/events/methods/create/).
+- Similar to the [`waitForEvent`](#wait-for-events) example in this guide, the `type` property in our `waitForEvent` and `sendEvent` fields must match.
+- To send multiple events to a Workflow that has multiple `waitForEvent` calls, call `sendEvent` with the corresponding `type` property set.
+- Events can also be sent using the REST API (HTTP API)'s [Events endpoint](/api/resources/workflows/subresources/instances/subresources/events/methods/create/).
 
 ## TypeScript and type parameters
 
@@ -132,12 +144,12 @@ By default, the `WorkflowEvent` passed to the `run` method of your Workflow defi
 
 ```ts
 export type WorkflowEvent<T> = {
-  // The data passed as the parameter when the Workflow instance was triggered
-  payload: T;
-  // The timestamp that the Workflow was triggered
-  timestamp: Date;
-  // ID of the current Workflow instance
-  instanceId: string;
+	// The data passed as the parameter when the Workflow instance was triggered
+	payload: T;
+	// The timestamp that the Workflow was triggered
+	timestamp: Date;
+	// ID of the current Workflow instance
+	instanceId: string;
 };
 ```
 
@@ -147,9 +159,9 @@ You can optionally type these events by defining your own type and passing it as
 // Define a type that conforms to the events your Workflow instance is
 // instantiated with
 interface YourEventType {
-  userEmail: string;
-  createdTimestamp: number;
-  metadata?: Record<string, string>;
+	userEmail: string;
+	createdTimestamp: number;
+	metadata?: Record<string, string>;
 }
 ```
 
@@ -174,4 +186,4 @@ export class MyWorkflow extends WorkflowEntrypoint {
 }
 ```
 
-<Render file="workflows-type-parameters"/>
+<Render file="workflows-type-parameters" product="workflows" />

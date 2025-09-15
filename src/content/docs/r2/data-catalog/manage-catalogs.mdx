@@ -16,6 +16,7 @@ import {
 	TypeScriptExample,
 	WranglerConfig,
 	LinkCard,
+	DashButton,
 } from "~/components";
 
 Learn how to:
@@ -30,7 +31,9 @@ Enabling the catalog on a bucket turns on the REST catalog interface and provide
 ### Dashboard
 
 <Steps>
-1. From the Cloudflare dashboard, select **R2 Object Storage** from the sidebar.
+1. In the Cloudflare dashboard, go to the **R2 object storage** page.
+
+   <DashButton url="/?to=/:account/r2/overview" />
 2. Select the bucket you want to enable as a data catalog.
 3. Switch to the **Settings** tab, scroll down to **R2 Data Catalog**, and select **Enable**.
 4. Once enabled, note the **Catalog URI** and **Warehouse name**.
@@ -53,7 +56,9 @@ When you disable the catalog on a bucket, it immediately stops serving requests 
 ### Dashboard
 
 <Steps>
-1. From the Cloudflare dashboard, select **R2 Object Storage** from the sidebar.
+1. In the Cloudflare dashboard, go to the **R2 object storage** page.
+
+   <DashButton url="/?to=/:account/r2/overview" />
 2. Select the bucket where you want to disable the data catalog.
 3. Switch to the **Settings** tab, scroll down to **R2 Data Catalog**, and select **Disable**.
 </Steps>

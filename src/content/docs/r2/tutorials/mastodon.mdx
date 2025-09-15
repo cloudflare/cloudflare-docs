@@ -6,6 +6,8 @@ reviewed: 2023-01-31
 
 ---
 
+import { DashButton } from "~/components";
+
 [Mastodon](https://joinmastodon.org/) is a popular [fediverse](https://en.wikipedia.org/wiki/Fediverse) software. This guide will explain how to configure R2 to be the object storage for a self hosted Mastodon instance, for either [a new instance](#set-up-a-new-instance) or [an existing instance](#migrate-to-r2).
 
 ## Set up a new instance
@@ -26,16 +28,17 @@ If you move from R2 to another S3 compatible service later on, you can continue 
 
 ### 2. Create and set up an R2 bucket
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/?account=r2).
-2. From **Account Home**, select **R2**.
-3. From **R2**, select **Create bucket**.
-4. Enter your bucket name and then select **Create bucket**. This name is internal when setting up your Mastodon instance and is not publicly accessible.
-5. Once the bucket is created, navigate to the **Settings** tab of this bucket and copy the value of **S3 API**.
-6. From the **Settings** tab, select **Connect Domain** and enter the hostname from step 1.
-7. Navigate back to the R2's overview page and select **Manage R2 API Tokens**.
-8. Select **Create API token**.
-9. Name your token `Mastodon` by selecting the pencil icon next to the API name and grant it the **Edit** permission. Select **Create API Token** to finalize token creation.
-10. Copy the values of **Access Key ID** and **Secret Access Key**.
+1. In the Cloudflare dashboard, go to the **R2 object storage** page.
+
+   <DashButton url="/?to=/:account/r2/overview" />
+2. Select **Create bucket**.
+3. Enter your bucket name and then select **Create bucket**. This name is internal when setting up your Mastodon instance and is not publicly accessible.
+4. Once the bucket is created, navigate to the **Settings** tab of this bucket and copy the value of **S3 API**.
+5. From the **Settings** tab, select **Connect Domain** and enter the hostname from step 1.
+6. Navigate back to the R2's overview page and select **Manage R2 API Tokens**.
+7. Select **Create API token**.
+8. Name your token `Mastodon` by selecting the pencil icon next to the API name and grant it the **Edit** permission. Select **Create API Token** to finalize token creation.
+9. Copy the values of **Access Key ID** and **Secret Access Key**.
 
 ### 3. Configure R2 for Mastodon
 

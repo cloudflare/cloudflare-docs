@@ -7,6 +7,8 @@ sidebar:
 
 import { Render, Tabs, TabItem, Details, APIRequest } from "~/components";
 
+<Render file="survey" product="waf" />
+
 :::note
 This feature requires an Enterprise plan with a paid add-on.
 :::
@@ -109,6 +111,7 @@ The following `POST` request for the [Create an account ruleset](/api/resources/
 
 <Render
 	file="managed-ruleset-config-options"
+	product="waf"
 	params={{
 		overridesUrl:
 			"/waf/account/managed-rulesets/deploy-dashboard/#configure-a-managed-ruleset",

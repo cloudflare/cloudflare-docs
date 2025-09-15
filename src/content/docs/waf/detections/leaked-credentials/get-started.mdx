@@ -8,7 +8,15 @@ head:
     content: Get started with leaked credentials detection
 ---
 
-import { Render, TabItem, Tabs, Details, APIRequest } from "~/components";
+import {
+	Render,
+	TabItem,
+	Tabs,
+	Details,
+	Steps,
+	GlossaryTooltip,
+	APIRequest,
+} from "~/components";
 
 ## 1. Turn on the detection
 
@@ -81,17 +89,23 @@ For additional examples, refer to [Example mitigation rules](/waf/detections/lea
 
 ### Handle detected leaked credentials at the origin server
 
-Additionally, you may want to handle leaked credentials detected by Cloudflare at your [origin server](https://www.cloudflare.com/learning/cdn/glossary/origin-server/).
+Additionally, you may want to handle leaked credentials detected by Cloudflare at your <GlossaryTooltip term="origin server">origin server</GlossaryTooltip>:
+
+<Steps>
 
 1. [Turn on](/rules/transform/managed-transforms/configure/) the **Add Leaked Credentials Checks Header** managed transform.
 
 2. For requests received at your origin server containing the `Exposed-Credential-Check` header, you could redirect your end users to your reset password page when detecting previously leaked credentials.
+
+</Steps>
 
 ## 4. (Optional) Configure a custom detection location
 
 To check for leaked credentials in a way that is not covered by the default configuration, add a [custom detection location](/waf/detections/leaked-credentials/#custom-detection-locations).
 
 <Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
+
+<Steps>
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Go to **Security** > **Settings**.
@@ -112,7 +126,11 @@ To check for leaked credentials in a way that is not covered by the default conf
 
 5. Select **Save**.
 
+</Steps>
+
 </TabItem> <TabItem label="New dashboard" icon="rocket">
+
+<Steps>
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Go to **Security** > **Settings** and filter by **Detections**.
@@ -133,6 +151,8 @@ To check for leaked credentials in a way that is not covered by the default conf
    Refer to the [`lookup_json_string()`](/ruleset-engine/rules-language/functions/#lookup_json_string) documentation for more information on this function.
 
 6. Select **Save**.
+
+</Steps>
 
 </TabItem> <TabItem label="API">
 

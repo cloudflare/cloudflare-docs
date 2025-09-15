@@ -5,7 +5,7 @@ head: []
 description: Incrementally deploy code changes to your Workers with gradual deployments.
 ---
 
-import { Example } from "~/components";
+import { Example, DashButton } from "~/components";
 
 Gradual Deployments give you the ability to incrementally deploy new [versions](/workers/configuration/versions-and-deployments/#versions) of Workers by splitting traffic across versions.
 
@@ -19,7 +19,7 @@ Using gradual deployments, you can:
 
 ## Use gradual deployments
 
-The following section guides you through an example usage of gradual deployments. You will choose to use either [Wrangler](/workers/configuration/versions-and-deployments/gradual-deployments/#via-wrangler) or the [Cloudflare dashboard](/workers/configuration/versions-and-deployments/gradual-deployments/#via-the-cloudflare-dashboard) to:
+The following section guides you through an example usage of gradual deployments. You will choose to use either [Wrangler](/workers/configuration/versions-and-deployments/gradual-deployments/#via-wrangler) or the Cloudflare dashboard to:
 
 - Create a new Worker.
 - Publish a new version of that Worker without deploying it.
@@ -88,9 +88,11 @@ npx wrangler versions deploy
 
 ### Via the Cloudflare dashboard
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers) and select your account.
-2. Go to **Workers & Pages**.
-3. Select **Create application** > **Hello World** template > deploy your Worker.
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+
+2. Select **Create application** > **Hello World** template > deploy your Worker.
 4. Once the Worker is deployed, go to the online code editor through **Edit code**. Edit the Worker code (change the `Response` content) and upload the Worker.
 5. To save changes, select the **down arrow** next to **Deploy** > **Save**. This will create a new version of your Worker.
 6. Create a new deployment that splits traffic between the two versions created in step 3 and 5 by going to **Deployments** and selecting **Deploy Version**.
@@ -157,7 +159,7 @@ curl -s https://example.com -H 'Cloudflare-Workers-Version-Overrides: my-worker-
 
 The dictionary can contain multiple key-value pairs. Each key indicates the name of the Worker the override should be applied to. The value indicates the version ID that should be used and must be a [String](https://www.rfc-editor.org/rfc/rfc8941#name-strings).
 
-A version override will only be applied if the specified version is in the current deployment. The versions in the current deployment can be found using the [`wrangler deployments list`](/workers/wrangler/commands/#list-5) command or on the [Workers Dashboard](https://dash.cloudflare.com/?to=/:account/workers) under Worker > Deployments > Active Deployment.
+A version override will only be applied if the specified version is in the current deployment. The versions in the current deployment can be found using the [`wrangler deployments list`](/workers/wrangler/commands/#list-5) command or on the **Workers & Pages** page of the Cloudflare dashboard > Select your Workers > Deployments > Active Deployment.
 
 :::note[Verifying that the version override was applied]
 

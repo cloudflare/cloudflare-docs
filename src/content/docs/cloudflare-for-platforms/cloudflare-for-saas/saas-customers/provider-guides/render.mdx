@@ -11,6 +11,7 @@ import { Render } from "~/components";
 
 <Render
 	file="provider-guide-intro"
+	product="cloudflare-for-platforms"
 	params={{
 		providerName: "Render",
 		providerUrl: "https://render.com",
@@ -22,6 +23,7 @@ import { Render } from "~/components";
 
 <Render
 	file="provider-guide-benefits"
+	product="cloudflare-for-platforms"
 	params={{ providerName: "Render", providerAssets: "services" }}
 />
 
@@ -62,7 +64,11 @@ If your root domain needs to route somewhere besides Render, add individual subd
 
 ## Additional support
 
-<Render file="provider-guide-help" params={{ providerName: "Render" }} />
+<Render
+	file="provider-guide-help"
+	params={{ providerName: "Render" }}
+	product="cloudflare-for-platforms"
+/>
 
 ### Resolving SSL errors
 

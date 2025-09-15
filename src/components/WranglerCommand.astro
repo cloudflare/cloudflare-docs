@@ -1,50 +1,38 @@
 ---
 import { z } from "astro:schema";
-import { experimental_getWranglerCommands } from "wrangler";
 import AnchorHeading from "./AnchorHeading.astro";
-import Type from "./Type.astro";
 import { PackageManagers } from "starlight-package-managers";
-import MetaInfo from "./MetaInfo.astro";
-
-function getCommand(path: string) {
-	const segments = path.trim().split(/\s+/);
-
-	const { subtree } = experimental_getWranglerCommands();
-
-	let node = subtree;
-	for (const segment of segments) {
-		const next = node.get(segment);
-
-		if (!next) break;
-
-		if (next.subtree.size === 0 && next.definition?.type === "command") {
-			return next.definition;
-		}
-
-		node = next.subtree;
-	}
-
-	throw new Error(`[WranglerCommand] Command "${path}" not found`);
-}
+import WranglerArg from "./WranglerArg.astro";
+import Details from "./Details.astro";
+import { marked } from "marked";
+import { commands, getCommand } from "~/util/wrangler";
 
 const props = z.object({
 	command: z.string(),
+	headingLevel: z.number().default(2),
+	description: z.string().optional(),
 });
 
-let { command } = props.parse(Astro.props);
+let { command, headingLevel, description } = props.parse(Astro.props);
 
 const definition = getCommand(command);
+
+description ??= definition.metadata.description;
 
 if (!definition.args) {
 	throw new Error(`[WranglerCommand] "${command}" has no arguments`);
 }
+
+const { globalFlags } = commands;
 
 const positionals = definition.positionalArgs
 	?.map((p) => `[${p.toUpperCase()}]`)
 	.join(" ");
 ---
 
-<AnchorHeading depth={2} title={command} />
+<AnchorHeading depth={headingLevel} title={`\`${command}\``} />
+
+<Fragment set:html={marked.parse(description)} />
 
 <PackageManagers
 	pkg="wrangler"
@@ -52,45 +40,22 @@ const positionals = definition.positionalArgs
 	args={positionals ? command.concat(` ${positionals}`) : command}
 />
 
-<AnchorHeading
-	depth={3}
-	title="Arguments"
-	slug={`${command.replaceAll(" ", "-")}-arguments`}
-/>
-
 <ul>
 	{
 		Object.entries(definition.args)
 			.filter(([_, value]) => !value.hidden)
 			.map(([key, value]) => {
-				const description = value.description ?? value.describe;
-				const required = value.demandOption;
-				const defaultValue = value.default;
-				const alias = value.alias;
-				const positional = definition.positionalArgs?.includes(key);
-
-				const name = positional ? `[${key.toUpperCase()}]` : `--${key}`;
-
-				let aliasText;
-				if (alias) {
-					if (Array.isArray(alias)) {
-						aliasText = `aliases: --${alias.join(", --")}`;
-					} else {
-						aliasText = `alias: --${alias}`;
-					}
-				}
-
-				return (
-					<li>
-						<code>{name}</code> <Type text={value.type} />{" "}
-						{aliasText && <MetaInfo text={aliasText} />}
-						{required && <MetaInfo text="required" />}
-						{defaultValue !== undefined && (
-							<MetaInfo text={`default: ${defaultValue}`} />
-						)}
-						<p>{description}</p>
-					</li>
-				);
+				return <WranglerArg key={key} definition={value} />;
 			})
 	}
 </ul>
+
+<Details header="Global flags">
+	<ul>
+		{
+			Object.entries(globalFlags).map(([key, value]) => {
+				return <WranglerArg key={key} definition={value} />;
+			})
+		}
+	</ul>
+</Details>

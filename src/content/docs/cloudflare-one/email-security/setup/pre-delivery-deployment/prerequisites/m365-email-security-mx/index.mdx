@@ -5,13 +5,16 @@ sidebar:
   order: 3
 ---
 
-import { Render, Markdown, GlossaryTooltip } from "~/components"
+import { Render, Markdown, GlossaryTooltip } from "~/components";
 
 ![A schematic showing where Email Security is in the life cycle of an email received](src/assets/email-security/Email_Security_O365_MXInline.png)
 
 In this tutorial, you will learn how to configure Microsoft 365 with Email Security as its MX record.
 
-<Render file="email-security/deployment/mx-deployment-prereq"/>
+<Render
+	file="email-security/deployment/mx-deployment-prereq"
+	product="cloudflare-one"
+/>
 
 ## 1. Add Email Security IP addresses to Allow List
 
@@ -19,20 +22,20 @@ In this tutorial, you will learn how to configure Microsoft 365 with Email Secur
 2. In **Always allow messages from the following IP addresses or address range**, add IP addresses and CIDR blocks mentioned in Egress IPs.
 3. Select **Save**.
 4. Microsoft recommends disabling SPF Hard fail when an email solution is placed in front of it:
-    - Return to the [Anti-spam option](https://security.microsoft.com/antispam).
-    - Select **Default anti-spam policy**.
-    - Select **[Edit spam threshold and properties](https://learn.microsoft.com/en-us/defender-office-365/anti-spam-bulk-complaint-level-bcl-about)** > **Mark as spam** > **SPF record: hard fail**, and ensure it is set to **Off**.
+   - Return to the [Anti-spam option](https://security.microsoft.com/antispam).
+   - Select **Default anti-spam policy**.
+   - Select **[Edit spam threshold and properties](https://learn.microsoft.com/en-us/defender-office-365/anti-spam-bulk-complaint-level-bcl-about)** > **Mark as spam** > **SPF record: hard fail**, and ensure it is set to **Off**.
 5. Select **Save**.
 
 ## 2. Configure Enhanced Filtering
 
 ### Create an inbound connector
 
-1. [Set up a connector](https://learn.microsoft.com/en-us/exchange/mail-flow-best-practices/use-connectors-to-configure-mail-flow/set-up-connectors-to-route-mail#1-set-up-a-connector-from-your-email-server-to-microsoft-365-or-office-365). 
+1. [Set up a connector](https://learn.microsoft.com/en-us/exchange/mail-flow-best-practices/use-connectors-to-configure-mail-flow/set-up-connectors-to-route-mail#1-set-up-a-connector-from-your-email-server-to-microsoft-365-or-office-365).
 2. Select **Partner organization** under **Connection from**.
-    - Provide a name for the connector:
-        - **Name**: ```Email Security Inbound Connector```
-        - **Description**: ```Inbound connector for Enhanced Filtering```
+   - Provide a name for the connector:
+     - **Name**: `Email Security Inbound Connector`
+     - **Description**: `Inbound connector for Enhanced Filtering`
 3. In **Authenticating sent email**, select **By verifying that the IP address of the sending server matches one of the following IP addresses, which belongs to your partner organization.**
 4. Enter all of the egress IPs in the [Egress IPs](/cloudflare-one/email-security/setup/pre-delivery-deployment/egress-ips/) page.
 5. In **Security restrictions**, accept the default **Reject email messages if they aren't sent over TLS** setting.
@@ -56,15 +59,17 @@ To configure anti-spam policies:
 5. Select the **Anti-spam inbound policy (Default)** text (not the checkbox).
 6. In **Actions**, scroll down and select **Edit actions**.
 7. Set the following conditions and actions (you might need to scroll up or down to find them):
-- **Spam**: *Move messages to Junk Email folder*.
-- **High confidence spam**: *Quarantine message*.
+
+- **Spam**: _Move messages to Junk Email folder_.
+- **High confidence spam**: _Quarantine message_.
   - **Select quarantine policy**: _AdminOnlyAccessPolicy_.
-- **Phishing**: *Quarantine message*.
+- **Phishing**: _Quarantine message_.
   - **Select quarantine policy**: _AdminOnlyAccessPolicy_.
-- **High confidence phishing**: *Quarantine message*.
+- **High confidence phishing**: _Quarantine message_.
   - **Select quarantine policy**: _AdminOnlyAccessPolicy_.
 - **Retain spam in quarantine for this many days**: Default is 15 days. Email Security recommends 15-30 days.
   - Select the spam actions in the above step:
+
 8. Select **Save**.
 
 ## 4. Create transport rules
@@ -75,13 +80,12 @@ To create the transport rules that will send emails with certain [dispositions](
 2. Go to **Mail flow** > **Rules**.
 3. Select **Add a Rule** > **Create a new rule**.
 4. Set the following rule conditions:
-
    - **Name**: _Email Security Deliver to Junk Email folder_.
-   - **Apply this rule if**: *The message headers* > *includes any of these words*.
+   - **Apply this rule if**: _The message headers_ > _includes any of these words_.
      - **Enter text**: `X-CFEmailSecurity-Disposition` > **Save**.
      - **Enter words**: `BULK` > **Add** > **Save**.
    - **Apply this rule if**: Select **+** to add a second condition.
-   - **And**: *The sender* > *IP address is in any of these ranges or exactly matches* > enter the egress IPs mentioned in <a href="/cloudflare-one/email-security/setup/pre-delivery-deployment/egress-ips/" target="_blank">Egress IPs</a>.
+   - **And**: _The sender_ > _IP address is in any of these ranges or exactly matches_ > enter the egress IPs mentioned in <a href="/cloudflare-one/email-security/setup/pre-delivery-deployment/egress-ips/" target="_blank">Egress IPs</a>.
    - **Do the following** - _Modify the message properties_ > _Set the Spam Confidence Level (SCL)_ > _5_.
 
 5. Select **Next**.
@@ -90,14 +94,14 @@ To create the transport rules that will send emails with certain [dispositions](
 8. Select the rule **Email Security Deliver to Junk Email folder** you have just created, and **Enable**.
 9. Select **Add a Rule** > **Create a new rule**.
 10. Set the following rule conditions:
-
     - **Name**: `Email Security Deliver to Junk Email folder`.
-    - **Apply this rule if**: *The message headers* > *includes any of these words*.
+    - **Apply this rule if**: _The message headers_ > _includes any of these words_.
       - **Enter text**: `X-CFEmailSecurity-Disposition` > **Save**.
       - **Enter words**: `MALICIOUS`, `UCE`, `SPOOF` > **Add** > **Save**.
     - **Apply this rule if**: Select **+** to add a second condition.
-    - **And**: *The sender* > *IP address is in any of these ranges or exactly matches* > enter the egress IPs in the <a href="/cloudflare-one/email-security/setup/pre-delivery-deployment/egress-ips/" target="_blank">Egress IPs</a>.
+    - **And**: _The sender_ > _IP address is in any of these ranges or exactly matches_ > enter the egress IPs in the <a href="/cloudflare-one/email-security/setup/pre-delivery-deployment/egress-ips/" target="_blank">Egress IPs</a>.
     - **Do the following**: _Redirect the message to_ > _hosted quarantine_.
+
 11. Select **Next**.
 12. You can use the default values on this screen. Select **Next**.
 13. Review your settings and select **Finish** > **Done**.
@@ -105,7 +109,10 @@ To create the transport rules that will send emails with certain [dispositions](
 
 ## 5. Set up MX/Inline
 
-<Render file="email-security/deployment/set-up-mx-inline-step"/>
+<Render
+	file="email-security/deployment/set-up-mx-inline-step"
+	product="cloudflare-one"
+/>
 
 ## 6. (Recommended) Secure Microsoft 365 from MX records bypass
 
@@ -128,7 +135,6 @@ This step should not be performed until 72 hours after all domains in your Micro
 5. Select **Next**.
 
 6. Set the following options:
-
    - **Name** - `Secure M365 Inbound`
    - **Description** - `Only accept inbound email from Email Security`
 

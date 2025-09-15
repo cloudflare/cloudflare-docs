@@ -43,6 +43,7 @@ Using a custom certificate is required if you need your domain to be [FIPS](http
 
 <Render
 	file="aop-configure-origin"
+	product="ssl"
 	params={{
 		one: "To use the Cloudflare certificate, download it from step 1 above, rename the .PEM file, and then upload it to `/path/to/origin-pull-ca.pem` before applying the settings.",
 		two: " To use the Cloudflare certificate, download it from step 1 above, rename the .PEM file, and then upload it to `/etc/nginx/certs/cloudflare.crt` before applying the settings.",

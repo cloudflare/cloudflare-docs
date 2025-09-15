@@ -25,7 +25,8 @@ This guide covers how to connect WARP client user devices to a private network b
 ## Prerequisites
 
 - A Linux host [^1] on the subnet.
-- Verify that your firewall allows inbound/outbound traffic over the [WARP IP addresses, ports, and domains](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/).
+- For WARP Connector to connect to Cloudflare services, your firewall should allow inbound/outbound traffic for the [WARP IP addresses, ports, and domains](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/).
+- For WARP clients to connect to your subnet, your firewall should allow inbound traffic from the <GlossaryTooltip term="CGNAT IP">WARP CGNAT IP range</GlossaryTooltip>: `100.96.0.0/12`
 
 ## 1. Install a WARP Connector
 
@@ -125,3 +126,5 @@ You can now send a request from a WARP client user device to a device behind WAR
     	file="tunnel/warp-connector-linux-packages"
     	product="cloudflare-one"
     />
+
+

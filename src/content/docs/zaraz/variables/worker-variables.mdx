@@ -6,6 +6,8 @@ sidebar:
 
 ---
 
+import { DashButton } from "~/components";
+
 Zaraz Worker Variables are a powerful type of variable that you can configure and then use in your actions and triggers. Unlike string and masked variables, Worker Variables are dynamic. This means you can use a Cloudflare Worker to determine the value of the variable, allowing you to use them for countless purposes. For example:
 
 1. A Worker Variable that calculates the sum of all products in the cart
@@ -18,8 +20,10 @@ To use a Worker Variable, you first need to create a new Cloudflare Worker. You 
 
 To create a new Worker in the Cloudflare dashboard:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
-2. Go to **Workers & Pages** and select **Create application**.
+1. In the Cloudflare dashboard, go to the **Workers and Pages** page.
+
+	<DashButton url="/?to=/:account/workers-and-pages" />
+2. Select **Create application**.
 3. Give a name to your Worker and select **Deploy**.
 4. Select **Edit code**.
 
@@ -47,11 +51,12 @@ Keep reading for more complete examples of different use cases or refer to [Zara
 
 Once your Worker is published, configuring a Worker Variable is easy.
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
-2. Go to **Tag Management** > **Tag Setup**.
-3. Select the domain for which you want to configure variables. 
-4. Select the **Variables** tab.
-5. Select **Create variable**.
+1. In the Cloudflare dashboard, go to the **Tag setup** page.
+
+	<DashButton url="/?to=/:account/tag-management" />
+2. Select the domain for which you want to configure variables.
+3. Select the **Variables** tab.
+4. Select **Create variable**.
 5. Give your variable a name, choose **Worker** as the Variable type, and select your newly created Worker.
 6. Save your variable.
 
@@ -61,13 +66,14 @@ Now that your Worker Variable is configured, you can use it in your actions and 
 
 To use your Worker Variable:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
-2. Go to **Tag Management** > **Tag Setup**
-3. Select the domain for which you want to configure variables. 
-4. Select **Edit** next to a tool that you have already configured.
-5. Select an action or add a new one.
-6. Select the plus sign at the right of the text fields.
-7. Select your Worker Variable from the list.
+1. In the Cloudflare dashboard, go to the **Tag setup** page.
+
+	<DashButton url="/?to=/:account/tag-management" />
+2. Select the domain for which you want to configure variables.
+3. Select **Edit** next to a tool that you have already configured.
+4. Select an action or add a new one.
+5. Select the plus sign at the right of the text fields.
+6. Select your Worker Variable from the list.
 
 ## Example Worker Variables
 

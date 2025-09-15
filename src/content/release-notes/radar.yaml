@@ -3,6 +3,22 @@ link: "/radar/release-notes/"
 productName: Radar
 productLink: "/radar/"
 entries:
+  - publish_date: "2025-08-27"
+    title: Add industry and vertical to AI Bots and Web Crawlers, and bot kind to Bots
+    description: |-
+      * Added vertical and industry dimensions/filters to:
+        * [`/ai/bots/summary/{dimension}`](/api/resources/radar/subresources/ai/subresources/timeseries_groups/methods/summary/)
+        * [`/ai/bots/timeseries_groups/{dimension}`](/api/resources/radar/subresources/ai/subresources/timeseries_groups/methods/timeseries_groups/)
+        * [`/bots/crawlers/summary/{dimension}`](/api/resources/radar/subresources/bots/subresources/web_crawlers/methods/summary/)
+        * [`/bots/crawlers/timeseries_groups/{dimension}`](/api/resources/radar/subresources/bots/subresources/web_crawlers/methods/timeseries_groups/)
+      * Added bot kind dimension/filter to:
+        * [`/bots/summary/{dimension}`](/api/resources/radar/subresources/bots/methods/summary/)
+        * [`/bots/timeseries_groups/{dimension}`](/api/resources/radar/subresources/bots/methods/timeseries_groups/)
+      * Added new `botKind` filter to:
+        * [`/bots/timeseries`](/api/resources/radar/subresources/bots/methods/timeseries/)
+      * Added new `kind` property/filter to:
+        * [`/bots`](/api/resources/radar/subresources/bots/methods/list/)
+        * [`/bots/{bot_slug}`](/api/resources/radar/subresources/bots/methods/get/)
   - publish_date: "2025-08-14"
     title: Add AI Bots crawl purpose
     description: |-

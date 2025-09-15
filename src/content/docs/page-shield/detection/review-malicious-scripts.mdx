@@ -8,7 +8,7 @@ description: Learn how to review scripts and connections that Page Shield
   considered malicious.
 ---
 
-import { Render } from "~/components";
+import { Render, Steps } from "~/components";
 
 :::note
 Only available to Enterprise customers with a paid add-on.
@@ -19,6 +19,8 @@ Cloudflare displays scripts and connections considered malicious at the top of t
 ## Review malicious scripts
 
 To review the scripts considered malicious:
+
+<Steps>
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 
@@ -41,11 +43,15 @@ To review the scripts considered malicious:
 
 5. Based on the displayed information, and with the help of the [last seen/first seen fields in the script details](/page-shield/detection/monitor-connections-scripts/#view-details), review and update the pages where the malicious script was detected.
 
+</Steps>
+
 You can configure alerts for detected malicious scripts. Refer to [Alerts](/page-shield/alerts/) for more information.
 
 ## Review malicious connections
 
 To review the connections considered malicious:
+
+<Steps>
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 
@@ -63,3 +69,5 @@ To review the connections considered malicious:
    For more information, refer to [Malicious script and connection detection](/page-shield/how-it-works/malicious-script-detection/).
 
 5. Based on the displayed information, and with the help of the [last seen/first seen fields in the connection details](/page-shield/detection/monitor-connections-scripts/#view-details), review and update the pages where the malicious connection was detected.
+
+</Steps>

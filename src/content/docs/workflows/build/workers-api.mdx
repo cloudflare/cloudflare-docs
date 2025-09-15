@@ -3,10 +3,15 @@ title: Workers API
 pcx_content_type: concept
 sidebar:
   order: 2
-
 ---
 
-import { MetaInfo, Render, Type, TypeScriptExample, WranglerConfig } from "~/components";
+import {
+	MetaInfo,
+	Render,
+	Type,
+	TypeScriptExample,
+	WranglerConfig,
+} from "~/components";
 
 This guide details the Workflows API within Cloudflare Workers, including methods, types, and usage examples.
 
@@ -17,30 +22,30 @@ The `WorkflowEntrypoint` class is the core element of a Workflow definition. A W
 ```ts
 export class MyWorkflow extends WorkflowEntrypoint<Env, Params> {
 	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
-	  // Steps here
+		// Steps here
 	}
-};
+}
 ```
 
 ### run
 
-* <code>run(event: WorkflowEvent&lt;T&gt;, step: WorkflowStep): Promise&lt;T&gt;</code>
-
-  * `event` - the event passed to the Workflow, including an optional `payload` containing data (parameters)
-  * `step` - the `WorkflowStep` type that provides the step methods for your Workflow
+{/* prettier-ignore */}
+- <code>run(event: WorkflowEvent&lt;T&gt;, step: WorkflowStep): Promise&lt;T&gt;</code>
+  - `event` - the event passed to the Workflow, including an optional `payload` containing data (parameters)
+  - `step` - the `WorkflowStep` type that provides the step methods for your Workflow
 
 The `run` method can optionally return data, which is available when querying the instance status via the [Workers API](/workflows/build/workers-api/#instancestatus), [REST API](/api/resources/workflows/subresources/instances/subresources/status/) and the Workflows dashboard. This can be useful if your Workflow is computing a result, returning the key to data stored in object storage, or generating some kind of identifier you need to act on.
 
 ```ts
 export class MyWorkflow extends WorkflowEntrypoint<Env, Params> {
 	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
-	  // Steps here
-		let someComputedState = await step.do("my step", async () => { })
+		// Steps here
+		let someComputedState = await step.do("my step", async () => {});
 
 		// Optional: return state from our run() method
-		return someComputedState
+		return someComputedState;
 	}
-};
+}
 ```
 
 The `WorkflowEvent` type accepts an optional [type parameter](https://www.typescriptlang.org/docs/handbook/2/generics.html#working-with-generic-type-variables) that allows you to provide a type for the `payload` property within the `WorkflowEvent`.
@@ -53,17 +58,16 @@ Finally, any JS control-flow primitive (if conditions, loops, try-catches, promi
 
 ```ts
 export type WorkflowEvent<T> = {
-  payload: Readonly<T>;
-  timestamp: Date;
-  instanceId: string;
+	payload: Readonly<T>;
+	timestamp: Date;
+	instanceId: string;
 };
 ```
 
-* The `WorkflowEvent` is the first argument to a Workflow's `run` method, and includes an optional `payload` parameter and a `timestamp` property.
-
-  * `payload` - a default type of `any` or type `T` if a type parameter is provided.
-  * `timestamp` - a `Date` object set to the time the Workflow instance was created (triggered).
-  * `instanceId` - the ID of the associated instance.
+- The `WorkflowEvent` is the first argument to a Workflow's `run` method, and includes an optional `payload` parameter and a `timestamp` property.
+  - `payload` - a default type of `any` or type `T` if a type parameter is provided.
+  - `timestamp` - a `Date` object set to the time the Workflow instance was created (triggered).
+  - `instanceId` - the ID of the associated instance.
 
 Refer to the [events and parameters](/workflows/build/events-and-parameters/) documentation for how to handle events within your Workflow code.
 
@@ -71,12 +75,13 @@ Refer to the [events and parameters](/workflows/build/events-and-parameters/) do
 
 ### step
 
-* <code>step.do(name: string, callback: (): RpcSerializable): Promise&lt;T&gt;</code>
-* <code>step.do(name: string, config?: WorkflowStepConfig, callback: (): RpcSerializable): Promise&lt;T&gt;</code>
-
-  * `name` - the name of the step.
-  * `config` (optional) - an optional `WorkflowStepConfig` for configuring [step specific retry behaviour](/workflows/build/sleeping-and-retrying/).
-  * `callback` - an asynchronous function that optionally returns serializable state for the Workflow to persist.
+{/* prettier-ignore */}
+- <code>step.do(name: string, callback: (): RpcSerializable): Promise&lt;T&gt;</code>
+- <code>step.do(name: string, config?: WorkflowStepConfig, callback: ():
+  	RpcSerializable): Promise&lt;T&gt;</code>
+  - `name` - the name of the step.
+  - `config` (optional) - an optional `WorkflowStepConfig` for configuring [step specific retry behaviour](/workflows/build/sleeping-and-retrying/).
+  - `callback` - an asynchronous function that optionally returns serializable state for the Workflow to persist.
 
 :::note[Returning state]
 
@@ -88,16 +93,16 @@ Objects that include `Function` or `Symbol` types, and objects with circular ref
 
 :::
 
-* <code>step.sleep(name: string, duration: WorkflowDuration): Promise&lt;void&gt;</code>
+{/* prettier-ignore */}
+- <code>step.sleep(name: string, duration: WorkflowDuration): Promise&lt;void&gt;</code>
+  - `name` - the name of the step.
+  - `duration` - the duration to sleep until, in either seconds or as a `WorkflowDuration` compatible string.
+  - Refer to the [documentation on sleeping and retrying](/workflows/build/sleeping-and-retrying/) to learn more about how Workflows are retried.
 
-  * `name` - the name of the step.
-  * `duration` - the duration to sleep until, in either seconds or as a `WorkflowDuration` compatible string.
-  * Refer to the [documentation on sleeping and retrying](/workflows/build/sleeping-and-retrying/) to learn more about how Workflows are retried.
-
-* <code>step.sleepUntil(name: string, timestamp: Date | number): Promise&lt;void&gt;</code>
-
-  * `name` - the name of the step.
-  * `timestamp` - a JavaScript `Date` object or seconds from the Unix epoch to sleep the Workflow instance until.
+{/* prettier-ignore */}
+- <code>step.sleepUntil(name: string, timestamp: Date | number): Promise&lt;void&gt;</code>
+  - `name` - the name of the step.
+  - `timestamp` - a JavaScript `Date` object or seconds from the Unix epoch to sleep the Workflow instance until.
 
 :::note
 
@@ -107,10 +112,9 @@ More information about the limits imposed on Workflow can be found in the [Workf
 
 :::
 
-* <code>step.waitForEvent(name: string, options: ): Promise&lt;void&gt;</code>
-
-  * `name` - the name of the step.
-  * `options` - an object with properties for `type`, which determines which event type this `waitForEvent` call will match on when calling `instance.sendEvent`, and an optional `timeout` property, which defines how long the `waitForEvent` call will block for before throwing a timeout exception. The default timeout is 24 hours.
+- <code>step.waitForEvent(name: string, options: ): Promise&lt;void&gt;</code>
+  - `name` - the name of the step.
+  - `options` - an object with properties for `type`, which determines which event type this `waitForEvent` call will match on when calling `instance.sendEvent`, and an optional `timeout` property, which defines how long the `waitForEvent` call will block for before throwing a timeout exception. The default timeout is 24 hours.
 
 <TypeScriptExample>
 
@@ -118,7 +122,10 @@ More information about the limits imposed on Workflow can be found in the [Workf
 export class MyWorkflow extends WorkflowEntrypoint<Env, Params> {
 	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
 		// Other steps in your Workflow
-		let event = await step.waitForEvent<IncomingStripeWebhook>("receive invoice paid webhook from Stripe", { type: "stripe-webhook", timeout: "1 hour" })
+		let event = await step.waitForEvent<IncomingStripeWebhook>(
+			"receive invoice paid webhook from Stripe",
+			{ type: "stripe-webhook", timeout: "1 hour" },
+		);
 		// Rest of your Workflow
 	}
 }
@@ -132,25 +139,25 @@ Review the documentation on [events and parameters](/workflows/build/events-and-
 
 ```ts
 export type WorkflowStepConfig = {
-  retries?: {
-    limit: number;
-    delay: string | number;
-    backoff?: WorkflowBackoff;
-  };
-  timeout?: string | number;
+	retries?: {
+		limit: number;
+		delay: string | number;
+		backoff?: WorkflowBackoff;
+	};
+	timeout?: string | number;
 };
 ```
 
-* A `WorkflowStepConfig` is an optional argument to the `do` method of a `WorkflowStep` and defines properties that allow you to configure the retry behaviour of that step.
+- A `WorkflowStepConfig` is an optional argument to the `do` method of a `WorkflowStep` and defines properties that allow you to configure the retry behaviour of that step.
 
 Refer to the [documentation on sleeping and retrying](/workflows/build/sleeping-and-retrying/) to learn more about how Workflows are retried.
 
 ## NonRetryableError
 
-* <code>throw new NonRetryableError(message: <Type text='string' />, name <Type text='string' /> <MetaInfo text='optional' />)</code>: <Type text='NonRetryableError' />
-
-  * Throws an error that forces the current Workflow instance to fail and not be retried.
-  * Refer to the [documentation on sleeping and retrying](/workflows/build/sleeping-and-retrying/) to learn more about how Workflows are retried.
+{/* prettier-ignore */}
+- <code>throw new NonRetryableError(message: <Type text="string" />, name <Type text="string" /> <MetaInfo text="optional" />)</code>: <Type text="NonRetryableError" />
+  - Throws an error that forces the current Workflow instance to fail and not be retried.
+  - Refer to the [documentation on sleeping and retrying](/workflows/build/sleeping-and-retrying/) to learn more about how Workflows are retried.
 
 ## Call Workflows from Workers
 
@@ -176,6 +183,7 @@ binding = "MY_WORKFLOW"
 # this is class that extends the Workflow class in src/index.ts
 class_name = "MyWorkflow"
 ```
+
 </WranglerConfig>
 
 ### Bind from Pages
@@ -227,8 +235,8 @@ It is part of the generated types produced by [`wrangler types`](/workers/wrangl
 
 ```ts title="./worker-configuration.d.ts"
 interface Env {
-  // The 'MY_WORKFLOW' variable should match the "binding" value set in the Wrangler config file
-  MY_WORKFLOW: Workflow;
+	// The 'MY_WORKFLOW' variable should match the "binding" value set in the Wrangler config file
+	MY_WORKFLOW: Workflow;
 }
 ```
 
@@ -238,9 +246,9 @@ The `Workflow` type exports the following methods:
 
 Create (trigger) a new instance of the given Workflow.
 
-* <code>create(options?: WorkflowInstanceCreateOptions): Promise&lt;WorkflowInstance&gt;</code>
-
-  * `options` - optional properties to pass when creating an instance, including a user-provided ID and payload parameters.
+{/* prettier-ignore */}
+- <code>create(options?: WorkflowInstanceCreateOptions): Promise&lt;WorkflowInstance&gt;</code>
+  - `options` - optional properties to pass when creating an instance, including a user-provided ID and payload parameters.
 
 An ID is automatically generated, but a user-provided ID can be specified (up to 64 characters [^1]). This can be useful when mapping Workflows to users, merchants or other identifiers in your system. You can also provide a JSON object as the `params` property, allowing you to pass data for the Workflow instance to act on as its [`WorkflowEvent`](/workflows/build/events-and-parameters/).
 
@@ -248,8 +256,8 @@ An ID is automatically generated, but a user-provided ID can be specified (up to
 // Create a new Workflow instance with your own ID and pass params to the Workflow instance
 let instance = await env.MY_WORKFLOW.create({
 	id: myIdDefinedFromOtherSystem,
-	params: { "hello": "world" }
-})
+	params: { hello: "world" },
+});
 return Response.json({
 	id: instance.id,
 	details: await instance.status(),
@@ -258,7 +266,7 @@ return Response.json({
 
 Returns a `WorkflowInstance`.
 
-<Render file="workflows-type-parameters"/>
+<Render file="workflows-type-parameters" product="workflows" />
 
 To provide an optional type parameter to the `Workflow`, pass a type argument with your type when defining your Workflow bindings:
 
@@ -300,18 +308,18 @@ Create (trigger) a batch of new instance of the given Workflow, up to 100 instan
 
 This is useful when you are scheduling multiple instances at once. A call to `createBatch` is treated the same as a call to `create` (for a single instance) and allows you to work within the [instance creation limit](/workflows/reference/limits/).
 
-* <code>createBatch(batch: WorkflowInstanceCreateOptions[]): Promise&lt;WorkflowInstance[]&gt;</code>
-
-  * `batch` - list of Options to pass when creating an instance, including a user-provided ID and payload parameters.
+{/* prettier-ignore */}
+- <code>createBatch(batch: WorkflowInstanceCreateOptions[]): Promise&lt;WorkflowInstance[]&gt;</code>
+  - `batch` - list of Options to pass when creating an instance, including a user-provided ID and payload parameters.
 
 Each element of the `batch` list is expected to include both `id` and `params` properties:
 
 ```ts
 // Create a new batch of 3 Workflow instances, each with its own ID and pass params to the Workflow instances
 const listOfInstances = [
-  { id: "id-abc123", params: { "hello": "world-0" } },
-  { id: "id-def456", params: { "hello": "world-1" } },
-  { id: "id-ghi789", params: { "hello": "world-2" } }
+	{ id: "id-abc123", params: { hello: "world-0" } },
+	{ id: "id-def456", params: { hello: "world-1" } },
+	{ id: "id-ghi789", params: { hello: "world-2" } },
 ];
 let instances = await env.MY_WORKFLOW.createBatch(listOfInstances);
 ```
@@ -322,26 +330,25 @@ Returns an array of `WorkflowInstance`.
 
 Get a specific Workflow instance by ID.
 
-* <code>get(id: string): Promise&lt;WorkflowInstance&gt;</code>
-
-  * `id` - the ID of the Workflow instance.
+- <code>get(id: string): Promise&lt;WorkflowInstance&gt;</code>
+  - `id` - the ID of the Workflow instance.
 
 Returns a `WorkflowInstance`. Throws an exception if the instance ID does not exist.
 
 ```ts
 // Fetch an existing Workflow instance by ID:
 try {
-  let instance = await env.MY_WORKFLOW.get(id)
-  return Response.json({
-	  id: instance.id,
-	  details: await instance.status(),
-  });
+	let instance = await env.MY_WORKFLOW.get(id);
+	return Response.json({
+		id: instance.id,
+		details: await instance.status(),
+	});
 } catch (e: any) {
-  // Handle errors
-  // .get will throw an exception if the ID doesn't exist or is invalid.
-  const msg = `failed to get instance ${id}: ${e.message}`
-  console.error(msg)
-  return Response.json({error: msg}, { status: 400 })
+	// Handle errors
+	// .get will throw an exception if the ID doesn't exist or is invalid.
+	const msg = `failed to get instance ${id}: ${e.message}`;
+	console.error(msg);
+	return Response.json({ error: msg }, { status: 400 });
 }
 ```
 
@@ -351,14 +358,14 @@ Optional properties to pass when creating an instance.
 
 ```ts
 interface WorkflowInstanceCreateOptions {
-  /**
-   * An id for your Workflow instance. Must be unique within the Workflow.
-   */
-  id?: string;
-  /**
-   * The event payload the Workflow instance is triggered with
-   */
-  params?: unknown;
+	/**
+	 * An id for your Workflow instance. Must be unique within the Workflow.
+	 */
+	id?: string;
+	/**
+	 * The event payload the Workflow instance is triggered with
+	 */
+	params?: unknown;
 }
 ```
 
@@ -368,27 +375,27 @@ Represents a specific instance of a Workflow, and provides methods to manage the
 
 ```ts
 declare abstract class WorkflowInstance {
-  public id: string;
-  /**
-   * Pause the instance.
-   */
-  public pause(): Promise<void>;
-  /**
-   * Resume the instance. If it is already running, an error will be thrown.
-   */
-  public resume(): Promise<void>;
-  /**
-   * Terminate the instance. If it is errored, terminated or complete, an error will be thrown.
-   */
-  public terminate(): Promise<void>;
-  /**
-   * Restart the instance.
-   */
-  public restart(): Promise<void>;
-  /**
-   * Returns the current status of the instance.
-   */
-  public status(): Promise<InstanceStatus>;
+	public id: string;
+	/**
+	 * Pause the instance.
+	 */
+	public pause(): Promise<void>;
+	/**
+	 * Resume the instance. If it is already running, an error will be thrown.
+	 */
+	public resume(): Promise<void>;
+	/**
+	 * Terminate the instance. If it is errored, terminated or complete, an error will be thrown.
+	 */
+	public terminate(): Promise<void>;
+	/**
+	 * Restart the instance.
+	 */
+	public restart(): Promise<void>;
+	/**
+	 * Returns the current status of the instance.
+	 */
+	public status(): Promise<InstanceStatus>;
 }
 ```
 
@@ -396,45 +403,44 @@ declare abstract class WorkflowInstance {
 
 Return the id of a Workflow.
 
-* <code>id: string</code>
+- <code>id: string</code>
 
 ### status
 
 Return the status of a running Workflow instance.
 
-* <code>status(): Promise&lt;InstanceStatus&gt;</code>
+- <code>status(): Promise&lt;InstanceStatus&gt;</code>
 
 ### pause
 
 Pause a running Workflow instance.
 
-* <code>pause(): Promise&lt;void&gt;</code>
+- <code>pause(): Promise&lt;void&gt;</code>
 
 ### resume
 
 Resume a paused Workflow instance.
 
-* <code>resume(): Promise&lt;void&gt;</code>
+- <code>resume(): Promise&lt;void&gt;</code>
 
 ### restart
 
 Restart a Workflow instance.
 
-* <code>restart(): Promise&lt;void&gt;</code>
+- <code>restart(): Promise&lt;void&gt;</code>
 
 ### terminate
 
 Terminate a Workflow instance.
 
-* <code>terminate(): Promise&lt;void&gt;</code>
+- <code>terminate(): Promise&lt;void&gt;</code>
 
 ### sendEvent
 
 [Send an event](/workflows/build/events-and-parameters/) to a running Workflow instance.
 
-* <code>sendEvent(): Promise&lt;void&gt;</code>
-
-  * `options` - the event `type` and `payload` to send to the Workflow instance. The `type` must match the `type` in the corresponding `waitForEvent` call in your Workflow.
+- <code>sendEvent(): Promise&lt;void&gt;</code>
+  - `options` - the event `type` and `payload` to send to the Workflow instance. The `type` must match the `type` in the corresponding `waitForEvent` call in your Workflow.
 
 Return `void` on success; throws an exception if the Workflow is not running or is an errored state.
 
@@ -442,19 +448,22 @@ Return `void` on success; throws an exception if the Workflow is not running or 
 
 ```ts
 export default {
-  async fetch(req: Request, env: Env) {
-    const instanceId = new URL(req.url).searchParams.get("instanceId")
-    const webhookPayload = await req.json<Payload>()
+	async fetch(req: Request, env: Env) {
+		const instanceId = new URL(req.url).searchParams.get("instanceId");
+		const webhookPayload = await req.json<Payload>();
 
-    let instance = await env.MY_WORKFLOW.get(instanceId);
-    // Send our event, with `type` matching the event type defined in
-    // our step.waitForEvent call
-    await instance.sendEvent({type: "stripe-webhook", payload: webhookPayload})
+		let instance = await env.MY_WORKFLOW.get(instanceId);
+		// Send our event, with `type` matching the event type defined in
+		// our step.waitForEvent call
+		await instance.sendEvent({
+			type: "stripe-webhook",
+			payload: webhookPayload,
+		});
 
-    return Response.json({
-      status: await instance.status(),
-    });
-  },
+		return Response.json({
+			status: await instance.status(),
+		});
+	},
 };
 ```
 
@@ -470,19 +479,19 @@ Details the status of a Workflow instance.
 
 ```ts
 type InstanceStatus = {
-  status:
-    | "queued" // means that instance is waiting to be started (see concurrency limits)
-    | "running"
-    | "paused"
-    | "errored"
-    | "terminated" // user terminated the instance while it was running
-    | "complete"
-    | "waiting" // instance is hibernating and waiting for sleep or event to finish
-    | "waitingForPause" // instance is finishing the current work to pause
-    | "unknown";
-  error?: string;
-  output?: object;
+	status:
+		| "queued" // means that instance is waiting to be started (see concurrency limits)
+		| "running"
+		| "paused"
+		| "errored"
+		| "terminated" // user terminated the instance while it was running
+		| "complete"
+		| "waiting" // instance is hibernating and waiting for sleep or event to finish
+		| "waitingForPause" // instance is finishing the current work to pause
+		| "unknown";
+	error?: string;
+	output?: object;
 };
 ```
 
-[^1]: Match pattern: _```^[a-zA-Z0-9_][a-zA-Z0-9-_]*$```_
+[^1]: Match pattern: `^[a-zA-Z0-9_][a-zA-Z0-9-_]*$`

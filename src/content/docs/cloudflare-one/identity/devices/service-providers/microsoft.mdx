@@ -3,28 +3,38 @@ pcx_content_type: how-to
 title: Microsoft Endpoint Manager
 sidebar:
   order: 4
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
-<Render file="posture/service-provider-intro" params={{ one: "Microsoft" }} />
+<Render
+	file="posture/service-provider-intro"
+	params={{ one: "Microsoft" }}
+	product="cloudflare-one"
+/>
 
 ## Prerequisites
 
 Device posture with Microsoft Endpoint Manager requires:
 
-* An Intune license
-* Microsoft Endpoint Manager is managing the device.
-* <Render file="posture/prereqs-warp-is-deployed" params={{ name: "Service providers", link: "/cloudflare-one/identity/devices/service-providers/" }} />
+- An Intune license
+- Microsoft Endpoint Manager is managing the device.
+- <Render
+  	file="posture/prereqs-warp-is-deployed"
+  	product="cloudflare-one"
+  	params={{
+  		name: "Service providers",
+  		link: "/cloudflare-one/identity/devices/service-providers/",
+  	}}
+  />
 
 ## 1. Obtain Microsoft Graph settings
 
 The following values are required:
 
-* Client secret
-* Application (client) ID
-* Direct (tenant) ID
+- Client secret
+- Application (client) ID
+- Direct (tenant) ID
 
 To retrieve those values:
 
@@ -43,14 +53,23 @@ To retrieve those values:
 
 ## 2. Add Intune as a service provider
 
-<Render file="posture/add-service-provider" params={{ provider: "Microsoft Endpoint Manager" }} />
+<Render
+	file="posture/add-service-provider"
+	product="cloudflare-one"
+	params={{ provider: "Microsoft Endpoint Manager" }}
+/>
+
 5. Enter the **Client ID**, **Client secret** and **Customer ID** as you noted down above.
 6. Select a **Polling frequency** for how often Cloudflare Zero Trust should query Microsoft Graph API for information.
 7. Select **Test and save**.
 
 ## 3. Configure the posture check
 
-<Render file="posture/configure-posture-check" params={{ one: "Microsoft Endpoint Manager" }} />
+<Render
+	file="posture/configure-posture-check"
+	product="cloudflare-one"
+	params={{ one: "Microsoft Endpoint Manager" }}
+/>
 
 ## Device posture attributes
 

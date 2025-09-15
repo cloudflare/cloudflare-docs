@@ -63,7 +63,11 @@ resource "cloudflare_ruleset" "zone_rl" {
 }
 ```
 
-<Render file="add-new-rule" params={{ ruleType: "rate limiting rule" }} />
+<Render
+	file="add-new-rule"
+	product="terraform"
+	params={{ ruleType: "rate limiting rule" }}
+/>
 <br />
 
 ## Create a rate limiting rule at the account level
@@ -125,7 +129,11 @@ resource "cloudflare_ruleset" "account_rl_entrypoint" {
 }
 ```
 
-<Render file="add-new-rule" params={{ ruleType: "rate limiting rule" }} />
+<Render
+	file="add-new-rule"
+	product="terraform"
+	params={{ ruleType: "rate limiting rule" }}
+/>
 <br />
 
 ## Create an advanced rate limiting rule
@@ -168,5 +176,9 @@ resource "cloudflare_ruleset" "zone_rl_custom_response" {
 }
 ```
 
-<Render file="add-new-rule" params={{ ruleType: "rate limiting rule" }} />
+<Render
+	file="add-new-rule"
+	product="terraform"
+	params={{ ruleType: "rate limiting rule" }}
+/>
 <br />
