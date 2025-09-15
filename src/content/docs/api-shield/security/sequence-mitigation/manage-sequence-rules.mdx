@@ -10,10 +10,12 @@ head:
     content: Manage sequence rules
 
 ---
-import { Steps, Tabs, TabItem } from "~/components"
+import { Steps, Tabs, TabItem, Render } from "~/components"
+
+Cloudflare recommends creating sequence rules using WAF custom rules. Refer to the [sequence custom rules documentation](/api-shield/security/sequence-mitigation/custom-rules/) for more information.
 
 :::note
-Cloudflare recommends creating sequence rules using WAF custom rules. Refer to the [sequence custom rules documentation](/api-shield/security/sequence-mitigation/custom-rules/) for more information.
+<Render file="sequence-mitigation-availability" product="api-shield" />
 :::
 
 ## Create a sequence rule

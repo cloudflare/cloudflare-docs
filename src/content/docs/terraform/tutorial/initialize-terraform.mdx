@@ -8,7 +8,7 @@ head:
     content: Introduction to Terraform init
 ---
 
-import { Render } from "~/components";
+import { DashButton, Render } from "~/components";
 
 This tutorial shows you how to get started with Terraform. You just signed up your domain (`example.com`) on Cloudflare to manage everything in Terraform and now you will create a DNS record pointing `www.example.com` to a web server at `203.0.113.10`.
 
@@ -177,4 +177,6 @@ To see the full results returned from the API call:
 terraform show
 ```
 
-You can also check the [Cloudflare dashboard](https://dash.cloudflare.com) and go to **DNS** > **Records**.
+You can also check the Cloudflare dashboard and go to **DNS** > **Records**.
+
+<DashButton url="/?to=/:account/home" />

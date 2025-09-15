@@ -19,9 +19,9 @@ Also, [some behaviors are different](/dns/foundation-dns/setup/#differences-from
 
 ## Anycast network groups
 
-To increase resiliency, advanced nameserver IPs are advertised by only one of two <GlossaryTooltip term="anycast">anycast</GlossaryTooltip> network groups.
+To increase resiliency, the advertisement of advanced nameserver IPs is organized into three <GlossaryTooltip term="anycast">anycast</GlossaryTooltip> network groups.
 
-The two groups consist of data centers that are geographically equally distributed.
+Two groups consist of IPs advertised from geographically distributed data centers, and a third group consists of IPs advertised from all data centers in the Cloudflare network.
 
 <Details header="United Kingdom example">
 
@@ -29,15 +29,15 @@ The two groups consist of data centers that are geographically equally distribut
 | --------------- | ----- | -------------------- |
 | `108.162.198.1` | A     | London and Edinburgh |
 | `172.64.40.1`   | B     | Manchester           |
-| `162.159.60.1`  | A     | London and Edinburgh |
+| `162.159.60.1`  | C     | Manchester, London, and Edinburgh |
 
 </Details>
 
 In DNS resolution, a resolver eventually acquires a list of all IPs where authoritative nameservers for a domain can be reached, and will then usually prefer the IP with the best resolution performance.
 
-When, instead of advertising all IPs in all data centers, this group logic is applied, resiliency is improved because, if one of the data centers experiences a localized issue, the resolver can fall back to an IP advertised by the next closest data center.
+When, instead of advertising all IPs in all data centers, this group logic is applied, resiliency is improved because, if one of the data centers experiences a localized issue, the resolver can fall back to an IP advertised by the next closest data center. The third group adds another layer of redundancy, further enhancing resiliency.
 
-Refer to [our blog post](https://blog.cloudflare.com/foundation-dns-launch) for an in-depth explanation.
+Refer to [our blog post](https://blog.cloudflare.com/foundation-dns-launch) for an in-depth explanation of the distributed groups logic.
 
 ## Dedicated release process
 

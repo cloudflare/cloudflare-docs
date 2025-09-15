@@ -34,7 +34,15 @@ Errors could occur if using code for a prior version if the structure of data ha
 
 ### Rollbacks limit
 
-You can only roll back to the 10 most recently published versions.
+You can only roll back to the 100 most recently published versions.
+
+:::note
+
+When using Wrangler in interactive mode, only the 10 most recent versions will be displayed for selection. To roll back to an older version (beyond the 10 most recent), you must specify the version ID directly on the command line. Refer to the [`wrangler versions deploy`](/workers/wrangler/commands/#versions-deploy) documentation for details on specifying version IDs.
+
+We plan to address this limitation soon to allow displaying all 100 available versions in interactive mode.
+
+:::
 
 ### Bindings
 

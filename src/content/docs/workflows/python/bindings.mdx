@@ -9,6 +9,13 @@ sidebar:
 ---
 import { WranglerConfig } from "~/components"
 
+:::caution[Python Workflows are in beta, as well as the underlying platform.]
+
+You must add both `python_workflows` and `python_workers` compatibility flags to your `wrangler.toml` file.
+
+Also, Python Workflows requires `compatibility_date = "2025-08-01"`, or lower, to be set in your `wrangler.toml` file.
+:::
+
 The Python Workers platform leverages FFI to access bindings to Cloudflare resources. Refer to the [bindings](/workers/languages/python/ffi/#using-bindings-from-python-workers) documentation for more information.
 
 From the configuration perspective, enabling Python Workflows requires adding the `python_workflows` compatibility flag to your `wrangler.toml` file.
@@ -67,6 +74,7 @@ Create (trigger) a new instance of a given Workflow.
 
 ```python
 from pyodide.ffi import to_js
+from js import Object
 
 async def on_fetch(request, env, ctx):
     event = {"foo": "bar"}
@@ -93,6 +101,7 @@ Each element of the `batch` list is expected to include both `id` and `params` p
 
 ```python
 from pyodide.ffi import to_js
+from js import Object
 
 # Create a new batch of 3 Workflow instances, each with its own ID and pass params to the Workflow instances
 listOfInstances = [
@@ -134,6 +143,7 @@ Send an event to a workflow instance.
 
 ```python
 from pyodide.ffi import to_js
+from js import Object
 
 await env.MY_WORKFLOW.send_event(to_js({ "type": "my-event-type", "payload": { "foo": "bar" } }, dict_converter=Object.fromEntries))
 ```

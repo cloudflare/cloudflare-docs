@@ -35,6 +35,10 @@ entries:
     associated_products:
       - Magic Firewall
 
+  - term: LLM
+    general_definition: |-
+      a machine learning model that can comprehend and generate human language text. It works by analyzing massive data sets of language.
+
   - term: mitigated request
     general_definition: |-
       a request to which Cloudflare applied a terminating action such as block or challenge.
@@ -43,9 +47,17 @@ entries:
     general_definition: |-
       classifies rules of the OWASP managed ruleset according to their aggressiveness.
 
+  - term: prompt injection
+    general_definition: |-
+      the process of overwriting the system prompt for a large language model (LLM), which instructs the LLM on how to respond to user input.
+
   - term: rate limiting
     general_definition: |-
       rate limiting is a technique used in computer systems to control the rate at which requests are processed. It can be used as a security measure to prevent attacks, or to limit resource usage in your origin servers.
+
+  - term: rule characteristics
+    general_definition: |-
+      the set of parameters of a rate limiting rule that define how Cloudflare tracks the rate for the rule.
 
   - term: SIEM
     general_definition: |-
@@ -57,11 +69,3 @@ entries:
   - term: threat score
     general_definition: |-
       the threat score was a score from `0` (zero risk) to `100` (high risk) classifying the IP reputation of a visitor. Currently, the threat score is always `0` (zero).
-
-  - term: LLM
-    general_definition: |-
-      a machine learning model that can comprehend and generate human language text. It works by analyzing massive data sets of language.
-
-  - term: prompt injection
-    general_definition: |-
-      the process of overwriting the system prompt for a large language model (LLM), which instructs the LLM on how to respond to user input.

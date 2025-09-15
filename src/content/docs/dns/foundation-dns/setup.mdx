@@ -27,7 +27,25 @@ Before opting in for advanced nameservers, consider the following:
 
 Some behaviors are different from standard Cloudflare nameservers:
 
-- Wildcard records: if moving from standard Cloudflare nameservers to Foundation DNS advanced nameservers, make sure to explicitly create records for subdomains currently covered by wildcard records (`*.example.com`).
+- Wildcard records are still supported but, with advanced nameservers, a wildcard record (`*.example.com`) will not apply to a subdomain that is an empty non-terminal. An empty non-terminal is a node in the DNS tree that has no records associated with it but has descendants that do, as exemplified below.
+
+<Details header="Example">
+
+<Example>
+
+DNS management for **example.com**
+
+| **Type** | **Name** | **Content** |
+| -------- | -------- | ------------------------- |
+| A | * | `192.0.2.1` |
+| A | a.b | `192.0.2.5` |
+
+</Example>
+
+In this example, `a.b.example.com` is a descendant of `b.example.com`, and `b.example.com` is an empty non-terminal. This means that the wildcard `*.example.com` will not apply to `b.example.com`.
+
+</Details>
+
 - Subdomain delegation: once a subdomain is delegated via NS records, Cloudflare will not serve any other records (such as A, TXT, or CNAME) on that subdomain from the parent zone, even if those records exist.
 
 <Details header="Example">

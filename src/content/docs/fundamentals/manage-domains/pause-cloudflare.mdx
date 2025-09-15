@@ -4,9 +4,13 @@ title: Pause Cloudflare
 
 ---
 
+import { DashButton } from "~/components";
+
 To troubleshoot your site, you can pause Cloudflare globally. This will send traffic directly to your origin web server instead of Cloudflare's reverse proxy. Paused domains also cannot use Cloudflare services like [Rules](/rules/), [WAF](/waf/), and [SSL/TLS certificates](/ssl/edge-certificates/). Consider turning on [Development Mode](/fundamentals/manage-domains/pause-cloudflare/#enable-development-mode) to bypass caching while preserving protection.
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
+1. Log in to the Cloudflare dashboard and select your account and domain.
+
+<DashButton url="/?to=/:account/home" />
 
 2. Within **Overview**, choose **Advanced Actions** > **Pause Cloudflare on Site**.
 

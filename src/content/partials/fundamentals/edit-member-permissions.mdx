@@ -2,14 +2,16 @@
 {}
 ---
 
-import { TabItem, Tabs } from "~/components";
+import { DashButton, TabItem, Tabs } from "~/components";
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 To edit member permissions using the dashboard:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
-2. Go to **Manage Account** > **Members**.
+1. In the Cloudflare dashboard, go to **Members**.
+
+<DashButton url="/?to=/:account/members" />
+
 3. Select a member record, then select **Edit**.
 4. Update the scope and roles of their permissions.
 5. Select **Continue to summary**.

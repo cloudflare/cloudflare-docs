@@ -59,7 +59,7 @@ While some D1 errors can be resolved by retrying the operation, retrying is only
 
 Before retrying any failed operation:
 - Verify your query is idempotent (for example, read-only operations, or queries such as `CREATE TABLE IF NOT EXISTS`).
-- Consider implementing application-level checks to identify if the operation can be retried, and retrying only when it is safe and necessary.
+- Consider [implementing application-level checks](/d1/best-practices/retry-queries/) to identify if the operation can be retried, and retrying only when it is safe and necessary.
 :::
 
 | `D1_ERROR` type                                                             | Description                                                                                                                                                               | Recommended action                                                                                                                                |
@@ -78,6 +78,16 @@ Before retrying any failed operation:
 | `D1 DB exceeded its CPU time limit and was reset.`                          | A query is taking up a lot of CPU time (e.g. scanning over 9 GB table, or attempting a large import/export).                                                              | App action: Split the query into smaller shards.                                                                                                  |
 
 </Example>
+
+## Automatic retries
+
+D1 detects read-only queries and automatically attempts up to two retries to execute those queries in the event of failures with retryable errors.
+
+D1 ensures that any retry attempt does not cause database writes, making the automatic retries safe from side-effects, even if a query causing modifications slips through the read-only detection. D1 achieves this by checking for modifications after every query execution, and if any write occurred due to a retry attempt, the query is rolled back.
+
+:::note
+Only read-only queries (queries containing only the following SQLite keywords: `SELECT`, `EXPLAIN`, `WITH`) are retried. Queries containing any [SQLite keyword](https://sqlite.org/lang_keywords.html) that leads to database writes are not retried.
+:::
 
 ## View logs
 

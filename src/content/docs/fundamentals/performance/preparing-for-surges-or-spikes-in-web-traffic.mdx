@@ -4,13 +4,17 @@ title: Prepare for surges or spikes in web traffic
 
 ---
 
+import { DashButton } from "~/components";
+
 ## Use Cloudflare Cache features to optimize caching
 
 By default, Cloudflare [caches static content](/cache/concepts/default-cache-behavior/) such as images, CSS, and JavaScript. However, you can extend Cloudflare caching to work with HTML by creating custom [Cache Rules](/cache/how-to/cache-rules/).
 
 ### Cache more requests
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
+1. Log in to the Cloudflare dashboard and select your account and domain.
+
+<DashButton url="/?to=/:account/home" />
 
 2. Go to **Caching** > **Cache Rules** and select **Create rule**.
 

@@ -21,12 +21,12 @@ Before you can use WAF for SaaS, you need to create a custom hostname. Review [G
 You can also create a custom hostname through the API:
 
 <APIRequest
-  path="/zones/{zone_id}/custom_hostnames"
-  method="POST"
-  json={{
-		"hostname": "<CUSTOM_HOSTNAME>",
-		"ssl": {
-			wildcard: false
+	path="/zones/{zone_id}/custom_hostnames"
+	method="POST"
+	json={{
+		hostname: "<CUSTOM_HOSTNAME>",
+		ssl: {
+			wildcard: false,
 		},
 	}}
 />
@@ -41,28 +41,23 @@ To apply WAF to your custom hostname, you need to create an association between 
 
 3. Locate your custom hostname ID by making a `GET` call in the API:
 
-<APIRequest
-  path="/zones/{zone_id}/custom_hostnames"
-  method="GET"
-/>
+<APIRequest path="/zones/{zone_id}/custom_hostnames" method="GET" />
 
 4. Plan your [custom metadata](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/custom-metadata/). It is fully customizable. In the example below, we have chosen the tag `"security_level"` to which we expect to assign three values (low, medium, and high).
 
 :::note
-
 One instance of low, medium, and high rules could be rate limiting. You can specify three different thresholds: low - 100 requests/minute, medium - 85 requests/minute, high - 50 requests/minute, for example. Another possibility is a WAF custom rule in which low challenges requests and high blocks them.
-
 :::
 
 5. Make an API call in the format below using your Cloudflare email and the IDs gathered above:
 
 <APIRequest
-  path="/zones/{zone_id}/custom_hostnames/{custom_hostname_id}"
-  method="PATCH"
-  json={{
-		"custom_metadata": {
-    "customer_id": "12345",
-    "security_level": "low"
+	path="/zones/{zone_id}/custom_hostnames/{custom_hostname_id}"
+	method="PATCH"
+	json={{
+		custom_metadata: {
+			customer_id: "12345",
+			security_level: "low",
 		},
 	}}
 />
@@ -73,41 +68,35 @@ This assigns custom metadata to your custom hostname so that it has a security t
 
 1. Locate the custom metadata field in the Ruleset Engine where the WAF runs. This can be used to trigger different configurations of products such as [WAF custom rules](/waf/custom-rules/), [rate limiting rules](/waf/rate-limiting-rules/), and [Transform Rules](/rules/transform/).
 
-2. Build your rules either [through the dashboard](/waf/custom-rules/create-dashboard/) or via the API. An example rate limiting rule, corresponding to `"security_level"` low, is shown below as an API call.
+2. Build your rules either through the dashboard or via the API.
 
-<APIRequest
-  path="/zones/{zone_id}/rulesets/phases/{ruleset_phase}/entrypoint"
-  method="PUT"
-  json={{
-		"rules": [
-			{
-				"action": "block",
-				"ratelimit": {
-					"characteristics": [
-						"cf.colo.id",
-						"ip.src"
-					],
-					"period": 10,
-					"requests_per_period": 2,
-					"mitigation_timeout": 60
-				},
-				"expression": "lookup_json_string(cf.hostname.metadata, \"security_level\") eq \"low\" and http.request.uri contains \"login\""
-			}
-		]
-	}}
-	parameters={{
-		ruleset_phase: "http_ratelimit"
-	}}
-/>
+   To build rules through the dashboard, follow the instructions specific to [custom rules](/waf/custom-rules/create-dashboard/), [rate limiting rules](/waf/rate-limiting-rules/create-zone-dashboard/), or [managed rules](/waf/managed-rules/deploy-zone-dashboard/), depending on your security goal.
 
-To build rules through the dashboard:
+   An example rate limiting rule, corresponding to `"security_level"` low, is shown below as an API call.
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and navigate to your account and website.
+   <APIRequest
+   	path="/zones/{zone_id}/rulesets/phases/{ruleset_phase}/entrypoint"
+   	method="PUT"
+   	json={{
+   		rules: [
+   			{
+   				action: "block",
+   				ratelimit: {
+   					characteristics: ["cf.colo.id", "ip.src"],
+   					period: 10,
+   					requests_per_period: 2,
+   					mitigation_timeout: 60,
+   				},
+   				expression:
+   					'lookup_json_string(cf.hostname.metadata, "security_level") eq "low" and http.request.uri contains "login"',
+   			},
+   		],
+   	}}
+   	parameters={{
+   		ruleset_phase: "http_ratelimit",
+   	}}
+   />
 
-2. Select **Security** > **WAF**.
-
-3. Follow the instructions on the dashboard specific to custom rules, rate limiting rules, or managed rules, depending on your security goal.
-
-4. Once the rule is active, you should see it under the applicable tab (custom rules, rate limiting, or managed rules).
-
-![Rule Active](~/assets/images/cloudflare-for-platforms/active-rule.png)
+   :::caution
+   This API call will replace any existing rate limiting rules in the zone.
+   :::
