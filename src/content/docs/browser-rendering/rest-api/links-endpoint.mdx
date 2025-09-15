@@ -125,7 +125,7 @@ console.log(links);
 
 ### Retrieve only visible links
 
-In this example we can pass a `visibleLinksOnly` parameter to only return links that are visible on the page.
+Pass a `visibleLinksOnly` parameter to only return links that are visible on the page.
 
 ```bash
 curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/links' \
@@ -217,7 +217,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
 
 ### Retrieve only links from the same domain
 
-In this example we can pass a `excludeExternalLinks` parameter to only return links that are from the same domain of the site. Default setting is `false`. 
+Pass a `excludeExternalLinks` parameter to only exclude links pointing to external domains. By default, this is set to `false`.
 
 ```bash
 curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/links' \
