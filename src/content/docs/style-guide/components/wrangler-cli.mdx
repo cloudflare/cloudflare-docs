@@ -12,6 +12,7 @@ This is generated using the Wrangler version in the [`cloudflare-docs` repositor
 
 ## Import
 
+{/* prettier-ignore */}
 ```mdx
 import { WranglerCLI } from "~/components";
 ```
@@ -41,3 +42,6 @@ import { WranglerCLI } from "~/components";
 
 - `flags` <Type text="Record<string, any>" />
   - Any named argument values, i.e `name: "my-worker"` for the optional `name` argument on `deploy`.
+
+- `showArgs` <Type text="boolean" /> <MetaInfo text="default (false)" />
+  - Show the available arguments in a [`Details` component](/style-guide/components/details/) below the command.

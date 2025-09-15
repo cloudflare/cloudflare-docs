@@ -1,7 +1,9 @@
 ---
 import { z } from "astro:schema";
 import { PackageManagers } from "starlight-package-managers";
-import { getCommand } from "~/util/wrangler";
+import { commands, getCommand } from "~/util/wrangler";
+import WranglerArg from "./WranglerArg.astro";
+import Details from "./Details.astro";
 
 function validateArg(value: any, expected: string): boolean {
 	if (Array.isArray(expected)) {
@@ -23,11 +25,14 @@ const props = z.object({
 	command: z.string(),
 	positionals: z.array(z.string()).optional(),
 	flags: z.record(z.string(), z.any()).optional(),
+	showArgs: z.boolean().default(false),
 });
 
-const { command, positionals, flags } = props.parse(Astro.props);
+const { command, positionals, flags, showArgs } = props.parse(Astro.props);
 
 const definition = getCommand(command);
+
+const { globalFlags } = commands;
 
 let args = [];
 
@@ -72,3 +77,29 @@ if (positionals) {
 	type="exec"
 	args={`${command} ${args.join(" ")}`}
 />
+
+{
+	showArgs && definition.args && (
+		<Details header="Arguments">
+			<p>
+				<strong>Command flags</strong>
+			</p>
+			<ul>
+				{Object.entries(definition.args)
+					.filter(([_, value]) => !value.hidden)
+					.map(([key, value]) => {
+						return <WranglerArg key={key} definition={value} />;
+					})}
+			</ul>
+
+			<p>
+				<strong>Global flags</strong>
+			</p>
+			<ul>
+				{Object.entries(globalFlags).map(([key, value]) => {
+					return <WranglerArg key={key} definition={value} />;
+				})}
+			</ul>
+		</Details>
+	)
+}
