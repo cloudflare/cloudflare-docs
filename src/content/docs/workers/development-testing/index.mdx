@@ -66,6 +66,7 @@ During local development, your Worker code interacts with these bindings using t
 
 - By default, bindings connect to **local resource simulations** (except for [AI bindings](/workers-ai/configuration/bindings/), as AI models always run remotely).
 - You can override this default behavior and **connect to the remote resource**, on a per-binding basis. This lets you connect to real, production resources while still running your Worker code locally.
+- When using `wrangler dev`, you can temporarily disable all remote resources (and connect only to local resources) by providing the `--local` flag (i.e. `wrangler dev --local`)
 
 ## Remote bindings
 
