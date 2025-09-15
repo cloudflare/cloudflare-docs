@@ -123,6 +123,8 @@ console.log(links);
 </TabItem> </Tabs>
 ## Advanced usage
 
+### Retrieve only visible links
+
 In this example we can pass a `visibleLinksOnly` parameter to only return links that are visible on the page.
 
 ```bash
@@ -211,6 +213,20 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
 		"https://www.cloudflare.com/trademark/"
 	]
 }
+```
+
+### Retrieve only links from the same domain
+
+In this example we can pass a `excludeExternalLinks` parameter to only return links that are from the same domain of the site. Default setting is `false`. 
+
+```bash
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/links' \
+  -H 'Authorization: Bearer <apiToken>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "url": "https://developers.cloudflare.com/",
+    "excludeExternalLinks": true
+  }'
 ```
 
 <Render
