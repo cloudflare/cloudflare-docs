@@ -113,34 +113,15 @@ export default {
 ```
 ````
 
-## GraphQL API explorer
+## GraphQL API Explorer
 
-If you add the `graphql-api-explorer` option to the opening code fence for a `graphql` code block, it will
-add a "Run in GraphQL API Explorer" link that will take the user to the [GraphQL API explorer](https://graphql.cloudflare.com/explorer).
+Add `graphql-api-explorer` to the opening code fence to create a `graphql` code block with a **Run in GraphQL API Explorer** button that leads to [GraphQL API Explorer](https://graphql.cloudflare.com/explorer).
 
-### Live demo
+:::note
+This button only works if the person selecting it is logged in or has an API token saved.
+:::
 
-```graphql graphql-api-explorer title="A GraphQL query"
-query ASingleDatasetExample($zoneTag: string, $start: Time, $end: Time) {
-	viewer {
-		zones(filter: { zoneTag: $zoneTag }) {
-			firewallEventsAdaptive(
-				filter: { datetime_gt: $start, datetime_lt: $end }
-				limit: 2
-				orderBy: [datetime_DESC]
-			) {
-				action
-				datetime
-				host: clientRequestHTTPHost
-			}
-		}
-	}
-}
-```
-
-### How to use
-
-````mdx "graphql-api-explorer"
+````mdx live
 ```graphql graphql-api-explorer title="A GraphQL query"
 query ASingleDatasetExample($zoneTag: string, $start: Time, $end: Time) {
 	viewer {
@@ -159,3 +140,38 @@ query ASingleDatasetExample($zoneTag: string, $start: Time, $end: Time) {
 }
 ```
 ````
+
+### Variables
+
+In the GraphQL API Explorer, the **Variables** section is automatically filled based on the names and types of the variables defined in your query:
+- Variables that include `start` and are of type `Time` are set to six hours before the current time
+- Variables that include `end` and are of type `Time` are set to the current time
+- Variables that include `start` and are of type `Date` are set to 24 hours before the current date
+- Variables that include `end` and are of type `Date` are set to the current date
+- Variables that include `zoneTag` and are of type `string` are set to "ZONE_ID"
+- Variables that include `accountTag` and are of type `string` are set to "ACCOUNT_ID"
+- Variables that include `id` and are of type `string` are set to "REPLACE_WITH_ID"
+- Variables that include `limit` and are of type `int` are set to 100
+- Any other variable with a type of `string` is set to "REPLACE_WITH_STRING"
+
+You can also add custom variables by setting their values as a JSON string in the `graphql-api-explorer` metadata. The custom variables will be merged with the automatically populated variables.
+
+In the following example, the custom value is `custom-variable`:
+
+````mdx
+```graphql graphql-api-explorer='{"uID": "custom-variable"}' title="A GraphQL query"
+query GraphqlExample($zoneTag: string, $start: Time, $end: Time) {
+ viewer {
+   zones(filter: { zoneTag: $zoneTag }) {
+     ...
+   }
+ }
+}
+```
+````
+
+So, the **Variables** would look something like this:
+
+```
+{"zoneTag":"ZONE_ID", "start":"2025-09-11T14:00:00Z", "end":"2025-09-11T20:00:00Z", "uId": "custom-variable"}
+```

@@ -5,7 +5,7 @@ sidebar:
   order: 6
 ---
 
-import { Tabs, TabItem } from "~/components";
+import { Tabs, TabItem, Render } from "~/components";
 
 The `/snapshot` endpoint captures both the HTML content and a screenshot of the webpage in one request. It returns the HTML as a text string and the screenshot as a Base64-encoded image.
 
@@ -102,5 +102,9 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
 	}
 }
 ```
+<Render
+  file="setting-custom-user-agent"
+  product="browser-rendering"
+/>
 
 Many more options exist, like setting HTTP credentials using `authenticate`, setting `cookies`, and using `gotoOptions` to control page load behaviour - check the endpoint [reference](/api/resources/browser_rendering/subresources/snapshot/) for all available parameters.

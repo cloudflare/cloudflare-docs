@@ -8,6 +8,8 @@ sidebar:
 
 import { GlossaryTooltip, Steps, Tabs, TabItem, Render } from "~/components"
 
+<Render file="survey" product="waf" />
+
 <GlossaryTooltip term="JSON web token (JWT)">JSON web tokens (JWT)</GlossaryTooltip> are often used as part of an authentication component on many web applications today. Since JWTs are crucial to identifying users and their access, ensuring the token’s integrity is important.
 
 API Shield’s JWT validation stops JWT replay attacks and JWT tampering by cryptographically verifying incoming JWTs before they are passed to your API origin. JWT validation will also stop requests with expired tokens or tokens that are not yet valid.

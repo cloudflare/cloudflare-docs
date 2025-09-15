@@ -7,7 +7,9 @@ sidebar:
     label: Leaked credentials
 ---
 
-import { Type } from "~/components";
+import { Type, Render } from "~/components";
+
+<Render file="survey" product="waf" />
 
 The leaked credentials [traffic detection](/waf/detections/) scans incoming requests for credentials (usernames and passwords) previously leaked from [data breaches](https://www.cloudflare.com/learning/security/what-is-a-data-breach/).
 

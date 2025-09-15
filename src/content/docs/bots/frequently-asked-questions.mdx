@@ -165,30 +165,6 @@ Bot Fight Mode can still trigger if you have IP Access rules, but it cannot trig
 
 ---
 
-### Super Bot Fight Mode feature (SBFM) is still blocking requests even though the feature is turned off, why?
-
-This is a known issue the Bots team is working to resolve in the near future. In the meantime, there is a workaround to resolve such issue. You will need to run the following API command to check and remove the SBFM ruleset:
-
-1. List the existing Rulesets at the zone level.
-
-    <APIRequest
-      path="/zones/{zone_id}/rulesets"
-      method="GET"
-    />
-
-2. From the output in step 1, find the ruleset ID that is associated with the zone's SBFM configuration. You should be able to see `"kind": "zone"` and `"phase": "http_request_sbfm"` for that ruleset.
-
-3. Use the ruleset ID you found to delete the SBFM ruleset.
-
-      <APIRequest
-        path="/zones/{zone_id}/rulesets/{ruleset_id}"
-        method="DELETE"
-      />
-
-Note that you need to replace `<API_TOKEN>` with your own [API token](/fundamentals/api/get-started/create-token/).
-
----
-
 ## Web Bot Auth
 
 ### What key algorithms does Cloudflare support?

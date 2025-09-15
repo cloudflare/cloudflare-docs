@@ -5,57 +5,69 @@ sidebar:
   order: 8
 ---
 
-import { DashButton } from "~/components";
+Cloudflare customers can inspect metrics for a specific Magic WAN Connector in the Cloudflare dashboard. These metrics help you troubleshoot potential issues with your Connector. Refer to [Troubleshooting](/magic-wan/configuration/connector/troubleshooting/) for more information.
 
-Cloudflare customers can inspect metrics for a specific Magic WAN Connector in the Cloudflare dashboard. The Magic WAN Connector device metrics measured by Cloudflare include:
-
-- CPU load
-- System temperature (this is always zero for Virtual Connector)
-- Disk utilization
-- Memory utilization
-
-To check for Connector metrics:
-
-1. In the Cloudflare dash, go to the **Configuration* page.
-
-<DashButton url="/?to=/:account/magic-wan/configuration" />
-
-2. In the **Connectors** tab, select the Connector you want to check metrics for.
-3. In the side panel that opens, scroll down to **Usage information**.
-
-### Query metrics with GraphQL
+## Query metrics with GraphQL
 
 Customers can query Cloudflare's GraphQL API to fetch their Magic WAN Connector device metrics. The Cloudflare dashboard displays Magic WAN Connector device metrics over the past one hour. Via the GraphQL API, customers can query for up to 30 days of historical Magic WAN Connector device metrics.
 
 For example:
 
 ```graphql graphql-api-explorer
-query MagicWanDeviceMetrics(
-	$accountTag: string!
-	$datetimeStart: Time
-	$datetimeEnd: Time
+query telemetry(
+  $accountTag: string
+  $snapshotsFilter: AccountMconnTelemetrySnapshotsAdaptiveGroupsFilter_InputObject!
+  $snapshotMountsFilter: AccountMconnTelemetrySnapshotMountsAdaptiveGroupsFilter_InputObject!
+  $snapshotThermalsFilter: AccountMconnTelemetrySnapshotThermalsAdaptiveGroupsFilter_InputObject!
+  $limit: int64!
 ) {
-	viewer {
-		accounts(filter: { accountTag: $accountTag }) {
-			mconnTelemetrySnapshotsAdaptiveGroups(
-				limit: 100
-				filter: {
-					datetime_geq: $datetimeStart
-					datetime_lt: $datetimeEnd
-				}
-			) {
-				max {
-					loadAverage1m
-					cpuCount
-					memoryFreeBytes
-					memoryTotalBytes
-				}
-				dimensions {
-					connectorId
-				}
-			}
-		}
-	}
+  viewer {
+    accounts(filter: { accountTag: $accountTag }) {
+      snapshots: mconnTelemetrySnapshots(
+        filter: $snapshotsFilter
+        limit: $limit
+        orderBy: [datetimeFiveMinutes_DESC]
+      ) {
+        max {
+          cpuCount
+          loadAverage1m
+          memoryFreeBytes
+          memoryTotalBytes
+        }
+        dimensions {
+          connectorId
+          datetimeFiveMinutes
+        }
+      }
+      snapshotMounts: mconnTelemetrySnapshotMounts(
+        filter: $snapshotMountsFilter
+        limit: $limit
+        orderBy: [datetimeFiveMinutes_DESC]
+      ) {
+        max {
+          availableBytes
+          totalBytes
+        }
+        dimensions {
+          connectorId
+          datetimeFiveMinutes
+        }
+      }
+      snapshotThermals: mconnTelemetrySnapshotThermals(
+        filter: $snapshotThermalsFilter
+        limit: $limit
+        orderBy: [datetimeFiveMinutes_DESC, connectorId_DESC]
+      ) {
+        max {
+          currentCelcius
+        }
+        dimensions {
+          connectorId
+          datetimeFiveMinutes
+        }
+      }
+    }
+  }
 }
 ```
 
