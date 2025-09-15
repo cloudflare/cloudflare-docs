@@ -9,6 +9,12 @@ entries:
       Workflows can now be tested with new test APIs available in the "cloudflare:test" module.
       
       More information available in the Vitest integration [docs](/workers/testing/vitest-integration/test-apis/#workflows).
+  - publish_date: "2025-08-22"
+    title: "Python Workflows is now open beta"
+    description: |-
+      [Python Workflows](/workflows/python/) is now in open beta, and available to any developer a free or paid Workers plan.
+
+      More information available in the [changelog](/changelog/2025-08-22-workflows-python-beta/).
   - publish_date: "2025-05-07"
     title: "Search for specific Workflows"
     description: |-

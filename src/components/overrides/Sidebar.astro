@@ -22,8 +22,9 @@ const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 		type="text"
 		id="sidebar-search"
 		placeholder="Search sidebar..."
-		class="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-orange-500 dark:focus:border-orange-500 transition-colors duration-200"
+		class="w-full px-3 py-2 pr-10 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-orange-500 dark:focus:border-orange-500 transition-colors duration-200"
 	/>
+	<div class="sidebar-search-icon"></div>
 </div>
 
 <!-- No Results Message -->
@@ -37,7 +38,9 @@ const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 <Default><slot /></Default>
 
 <script>
-	import { track } from "~/util/zaraz"
+	import { track } from "~/util/zaraz";
+	import { openGlobalSearch } from "~/util/search";
+
 	function initSidebarSearch() {
 		const searchInput = document.getElementById('sidebar-search') as HTMLInputElement;
 		const noResultsMessage = document.getElementById('sidebar-no-results') as HTMLElement;
@@ -230,31 +233,33 @@ const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 		globalSearchLink.addEventListener('click', () => {
 			const currentQuery = searchInput.value.trim();
 			if (currentQuery) {
-				// Try multiple selectors for DocSearch
-				const docSearchButton = document.querySelector('#docsearch button') as HTMLButtonElement ||
-					document.querySelector('.DocSearch-Button') as HTMLButtonElement ||
-					document.querySelector('[data-docsearch-button]') as HTMLButtonElement;
-
-				if (docSearchButton) {
-					// Click the DocSearch button to open the modal
-					docSearchButton.click();
-
-					// Wait for modal to open and set the search term
-					setTimeout(() => {
-						const searchInput = document.querySelector('.DocSearch-Input') as HTMLInputElement ||
-							document.querySelector('#docsearch-input') as HTMLInputElement ||
-							document.querySelector('[data-docsearch-input]') as HTMLInputElement;
-
-						if (searchInput) {
-							searchInput.value = currentQuery;
-							searchInput.focus();
-							// Trigger search
-							searchInput.dispatchEvent(new Event('input', { bubbles: true }));
-						}
-					}, 100);
-				}
+				openGlobalSearch(currentQuery);
 			}
 		});
+
+		document.addEventListener(
+			"keydown",
+			(keyboardEvent) => {
+				const target = keyboardEvent.target;
+
+				const isInput =
+					target instanceof EventTarget &&
+					(("tagName" in target &&
+						(target.tagName === "INPUT" ||
+							target.tagName === "TEXTAREA" ||
+							target.tagName === "SELECT")) ||
+						("isContentEditable" in target && target.isContentEditable));
+
+				if (keyboardEvent.key === "/" && !isInput) {
+					keyboardEvent.preventDefault();
+					keyboardEvent.stopPropagation();
+					searchInput.focus();
+				}
+			},
+			{
+				capture: true,
+			},
+		);
 	}
 
 	// Initialize when DOM is loaded
@@ -269,6 +274,21 @@ const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
 </script>
 
 <style is:global>
+	.sidebar-search-icon {
+		position: absolute;
+		right: 12px;
+		top: 50%;
+		transform: translateY(-50%);
+		width: 1em;
+		height: 1em;
+		-webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M17 2H7a5 5 0 0 0-5 5v10a5 5 0 0 0 5 5h10a5 5 0 0 0 5-5V7a5 5 0 0 0-5-5Zm3 15a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v10Z'%3E%3C/path%3E%3Cpath d='M15.293 6.707a1 1 0 1 1 1.414 1.414l-8.485 8.486a1 1 0 0 1-1.414-1.415l8.485-8.485Z'%3E%3C/path%3E%3C/svg%3E");
+		mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M17 2H7a5 5 0 0 0-5 5v10a5 5 0 0 0 5 5h10a5 5 0 0 0 5-5V7a5 5 0 0 0-5-5Zm3 15a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v10Z'%3E%3C/path%3E%3Cpath d='M15.293 6.707a1 1 0 1 1 1.414 1.414l-8.485 8.486a1 1 0 0 1-1.414-1.415l8.485-8.485Z'%3E%3C/path%3E%3C/svg%3E");
+		-webkit-mask-size: 100%;
+		mask-size: 100%;
+		background-color: currentColor;
+		pointer-events: none;
+	}
+
 	:root {
 		.sidebar-content {
 			--sl-color-hairline-light: #cacaca !important;

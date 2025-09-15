@@ -54,4 +54,9 @@ Then, you can use [the pricing page](/browser-rendering/platform/pricing/) to es
 No. If a request to the Browser Rendering REST API fails with a `waitForTimeout` error, the browser session is not charged.
 
 ### How is the number of concurrent browsers calculated?
-Cloudflare calculates concurrent browsers as the **monthly average of your daily peak usage**. In other words, we record **the peak number of concurrent browsers each day** and then average those values over the month. This approach reflects your typical traffic and ensures you are not disproportionately charged for brief spikes in browser concurrency.
+Cloudflare calculates concurrent browsers as the monthly average of your daily peak usage. In other words, we record the peak number of concurrent browsers each day and then average those values over the month. This approach reflects your typical traffic and ensures you are not disproportionately charged for brief spikes in browser concurrency.
+
+### How is billing time calculated?
+At the end of each day, Cloudflare totals all of your browser usage for that day in seconds. At the end of each billing cycle, we add up all of the daily totals to find the monthly total of browser hours, rounded to the nearest hour.
+
+For example, if you only use 1 minute of browser time in a day, that day counts as 1 minute. If you do that every day for a 30-day month, your total would be 30 minutes. For billing, we round that up to 1 browser hour.
