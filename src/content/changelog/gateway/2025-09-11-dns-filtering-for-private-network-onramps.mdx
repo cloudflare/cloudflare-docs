@@ -1,0 +1,17 @@
+---
+title: Private Network Access to Gateway Resolver for Magic WAN and WARP Connector.
+description: Magic WAN and WARP Connector traffic can now route DNS queries privately to Gateway Resolver without public internet exposure.
+products:
+  - gateway
+  - magic-wan
+  - cloudflare-tunnel
+date: "2025-09-11"
+---
+
+[Magic WAN](/magic-wan/zero-trust/cloudflare-gateway/) and [WARP Connector](/cloudflare-one/connections/connect-networks/private-net/warp-connector/) customers can now securely route their DNS traffic to Gateway Resolver without exposing traffit to the public internet.
+
+This feature enables DNS resolution and filtering for traffic coming from private networks while preserving source Internal IP visibility.
+This ensures Magic WAN customers have full integration with our Cloudflare One features including Internal DNS and hostname-based policies.
+
+To enable DNS filtering, change your Magic WAN or WARP Connector DNS settings to use Cloudflare's shared resolver IPs.
+Once resolution is configured, you can use `source Internal IPs` as a traffic selector in your [resolver policies](/cloudflare-one/policies/gateway/resolver-policies/) for routing private DNS traffic to your [Internal DNS](/dns/internal-dns/).
