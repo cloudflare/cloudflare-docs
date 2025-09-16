@@ -2474,7 +2474,7 @@
 			}
 		},
 		"mirage": {
-			"title": "Mirage",
+			"title": "Mirage (deprecated)",
 			"link": "/speed/optimization/images/mirage/",
 			"properties": {
 				"availability": {

@@ -126,9 +126,9 @@ entries:
       - Updated v8 to version 12.7.
   - publish_date: "2024-07-11"
     description: |-
-      - Added community contributed tutorial on how to create [custom access control for files in R2 using D1 and Workers](/developer-spotlight/tutorials/custom-access-control-for-files/).
-      - Added community contributed tutorial on how to [send form submissions using Astro and Resend](/developer-spotlight/tutorials/handle-form-submission-with-astro-resend/).
-      - Added community contributed tutorial on how to [create a sitemap from Sanity CMS with Workers](/developer-spotlight/tutorials/create-sitemap-from-sanity-cms/).
+      - Added community contributed tutorial on how to create [custom access control for files in R2 using D1 and Workers](https://web.archive.org/web/20250714020752/https://developers.cloudflare.com/developer-spotlight/tutorials/custom-access-control-for-files/).
+      - Added community contributed tutorial on how to [send form submissions using Astro and Resend](https://web.archive.org/web/20250715071959/https://developers.cloudflare.com/developer-spotlight/tutorials/handle-form-submission-with-astro-resend/).
+      - Added community contributed tutorial on how to [create a sitemap from Sanity CMS with Workers](https://web.archive.org/web/20250713111832/https://developers.cloudflare.com/developer-spotlight/tutorials/create-sitemap-from-sanity-cms/).
   - publish_date: "2024-07-03"
     description: |-
       - The [`node:crypto`](/workers/runtime-apis/nodejs/crypto/) implementation now includes the scrypt(...) and scryptSync(...) APIs.

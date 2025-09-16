@@ -26,28 +26,26 @@ The following products and features are available on the Cloudflare China Networ
 
 ## Developer Services
 
-| Product/Feature                                                           | Description                                                                                                                                                                    |
-| ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| [Workers](/workers/)                                                      | A serverless execution environment running on the Cloudflare global network.                                                                                                   |
-| [Workers KV](/kv/)                                                        | Configuration data, service routing metadata, personalization (A/B testing).                                                                                                   |
-| [R2](/r2/)[^2]                                                            | Object storage for all your data.                                                                                                                                              |
-| [KV](/kv/)                                                                | Configuration data, service routing metadata, personalization (A/B testing).                                                                                                   |
-| [Assets](/workers/static-assets/)                                         | Upload static assets (HTML, CSS, images and other files) as part of your Worker — Cloudflare will handle caching and serving them to web browsers.                             |
-| [Environment variables](/workers/configuration/environment-variables/)    | Attach text strings or JSON values to your Worker.                                                                                                                             |
-| [Images](/images/transform-images/bindings/)[^3]                          | Store, transform, optimize, and deliver images at scale.                                                                                                                       |
-| [mTLS](/workers/runtime-apis/bindings/mtls/)                              | Securely connect to backend servers over [mTLS](https://www.cloudflare.com/learning/access-management/what-is-mutual-tls/).                                                    |
-| [Rate Limiting](/workers/runtime-apis/bindings/rate-limit/)               | Define rate limits and write code around them in your Worker.                                                                                                                  |
-| [Secrets](/workers/configuration/secrets/)                                | Attach encrypted text values to your Worker.                                                                                                                                   |
-| [Service bindings](/workers/runtime-apis/bindings/service-bindings/)      | Service bindings allow one Worker to call into another, without going through a publicly-accessible URL.                                                                       |
-| [Tail Workers](/workers/observability/logs/tail-workers/)                 | Receives information about the execution of other Workers.                                                                                                                     |
-| [Version metadata](/workers/runtime-apis/bindings/version-metadata/)      | Access metadata associated with a version from inside the Workers runtime.                                                                                                     |
-| [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) | Deploy custom code on behalf of your users or let your users directly deploy their own code to your platform, managing infrastructure.                                         |
-| [Pages](/pages/)                                                          | Deploy dynamic front-end applications in record time.                                                                                                                          |
+| Product/Feature                                                           | Description                                                                                                                                        |
+| ------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Workers](/workers/)                                                      | A serverless execution environment running on the Cloudflare global network.                                                                       |
+| [Workers KV](/kv/)                                                        | Configuration data, service routing metadata, personalization (A/B testing).                                                                       |
+| [R2](/r2/)[^2]                                                            | Object storage for all your data.                                                                                                                  |
+| [KV](/kv/)                                                                | Configuration data, service routing metadata, personalization (A/B testing).                                                                       |
+| [Assets](/workers/static-assets/)                                         | Upload static assets (HTML, CSS, images and other files) as part of your Worker — Cloudflare will handle caching and serving them to web browsers. |
+| [Environment variables](/workers/configuration/environment-variables/)    | Attach text strings or JSON values to your Worker.                                                                                                 |
+| [Images](/images/transform-images/bindings/)[^3]                          | Store, transform, optimize, and deliver images at scale.                                                                                           |
+| [mTLS](/workers/runtime-apis/bindings/mtls/)                              | Securely connect to backend servers over [mTLS](https://www.cloudflare.com/learning/access-management/what-is-mutual-tls/).                        |
+| [Rate Limiting](/workers/runtime-apis/bindings/rate-limit/)               | Define rate limits and write code around them in your Worker.                                                                                      |
+| [Secrets](/workers/configuration/secrets/)                                | Attach encrypted text values to your Worker.                                                                                                       |
+| [Service bindings](/workers/runtime-apis/bindings/service-bindings/)      | Service bindings allow one Worker to call into another, without going through a publicly-accessible URL.                                           |
+| [Tail Workers](/workers/observability/logs/tail-workers/)                 | Receives information about the execution of other Workers.                                                                                         |
+| [Version metadata](/workers/runtime-apis/bindings/version-metadata/)      | Access metadata associated with a version from inside the Workers runtime.                                                                         |
+| [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) | Deploy custom code on behalf of your users or let your users directly deploy their own code to your platform, managing infrastructure.             |
+| [Pages](/pages/)                                                          | Deploy dynamic front-end applications in record time.                                                                                              |
 
-[^1]: Turnstile is not available within Mainland China.
-
+[^1]: [Turnstile](/turnstile/) is not available within Mainland China.
 [^2]: R2 buckets cannot be created within Mainland China and [custom domains](/r2/buckets/public-buckets/#add-your-domain-to-cloudflare) are not supported within Mainland China. However, R2 can be extended into Mainland China through [Global Acceleration](/china-network/concepts/global-acceleration/).
-
 [^3]: Image Resizing works [within Workers](/images/transform-images/transform-via-workers/), but may not be available [through URL format](/images/transform-images/transform-via-url/).
 
 ## Network Services
@@ -66,4 +64,4 @@ The following products and features are available on the Cloudflare China Networ
 | [Instant Logs](/logs/instant-logs/) | Live Tail your Cloudflare HTTP logs in the Cloudflare dashboard. |
 | [Logpush](/logs/logpush/)           | Push your Cloudflare HTTP logs to a storage service.             |
 
-For more details or specific product features, contact your account team.
+For more details or specific product features, refer to the [FAQ](/china-network/faq/) page or contact your account team.

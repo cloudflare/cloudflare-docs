@@ -5,7 +5,9 @@ sidebar:
   order: 3
 ---
 
-import { GlossaryTooltip } from "~/components";
+import { GlossaryTooltip, Render } from "~/components";
+
+<Render file="survey" product="waf" />
 
 A rate limiting rule defines a <GlossaryTooltip term="rate limiting">rate limit</GlossaryTooltip> for requests matching an expression, and the action to perform when that rate limit is reached. At the account level, rate limiting rules are always grouped into rate limiting rulesets, which you then deploy.
 

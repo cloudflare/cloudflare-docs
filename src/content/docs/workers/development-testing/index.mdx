@@ -67,9 +67,9 @@ During local development, your Worker code interacts with these bindings using t
 - By default, bindings connect to **local resource simulations** (except for [AI bindings](/workers-ai/configuration/bindings/), as AI models always run remotely).
 - You can override this default behavior and **connect to the remote resource**, on a per-binding basis. This lets you connect to real, production resources while still running your Worker code locally.
 
-## Remote bindings <InlineBadge preset="beta"/>
+## Remote bindings
 
-**Remote bindings** are bindings that are configured to connect to the deployed, remote resource during local development _instead_ of the locally simulated resource. You can configure remote bindings by setting `experimental_remote: true` in the binding definition.
+**Remote bindings** are bindings that are configured to connect to the deployed, remote resource during local development _instead_ of the locally simulated resource. Remote bindings are supported by [**Wrangler**](/workers/wrangler/), the [**Cloudflare Vite plugin**](/workers/vite-plugin/), and the `@cloudflare/vitest-pool-workers` package. You can configure remote bindings by setting `remote: true` in the binding definition.
 
 ### Example configuration
 
@@ -84,7 +84,7 @@ During local development, your Worker code interacts with these bindings using t
 		{
 			"bucket_name": "screenshots-bucket",
 			"binding": "screenshots_bucket",
-			"experimental_remote": true,
+			"remote": true,
 		},
 	],
 }
@@ -92,50 +92,7 @@ During local development, your Worker code interacts with these bindings using t
 
 </WranglerConfig>
 
-When remote bindings are configured, your Worker still **executes locally**, only the underlying resources your bindings connect to change. For all bindings marked with `experimental_remote: true`, Miniflare will route its operations (such as `env.MY_KV.put()`) to the deployed resource. All other bindings not explicitly configured with `experimental_remote: true` continue to use their default local simulations.
-
-### Using Wrangler with remote bindings
-
-If you're using [Wrangler](/workers/wrangler/) for local development and have remote bindings configured, you'll need to use the following experimental command:
-
-<PackageManagers type="exec" pkg="wrangler" args="dev --x-remote-bindings" />
-
-### Using Vite with remote bindings
-
-If you're using Vite via [the Cloudflare Vite plugin](/workers/vite-plugin/), you'll need to add support for remote bindings in your Vite configuration (`vite.config.ts`):
-
-```ts title="vite.config.ts" {8}
-import { cloudflare } from "@cloudflare/vite-plugin";
-import { defineConfig } from "vite";
-
-export default defineConfig({
-	plugins: [
-		cloudflare({
-			configPath: "wrangler.jsonc",
-			experimental: { remoteBindings: true },
-		}),
-	],
-});
-```
-
-### Using Vitest with remote bindings
-
-You can also use Vitest with configured remote bindings by enabling support in your Vitest configuration file (`vitest.config.ts`):
-
-```ts title="vitest.config.ts" {7}
-import { defineWorkersConfig } from "@cloudflare/vitest-pool-workers/config";
-
-export default defineWorkersConfig({
-	test: {
-		poolOptions: {
-			workers: {
-				experimental_remoteBindings: true,
-				wrangler: { configPath: "./wrangler.jsonc" },
-			},
-		},
-	},
-});
-```
+When remote bindings are configured, your Worker still **executes locally**, only the underlying resources your bindings connect to change. For all bindings marked with `remote: true`, Miniflare will route its operations (such as `env.MY_KV.put()`) to the deployed resource. All other bindings not explicitly configured with `remote: true` continue to use their default local simulations.
 
 ### Targeting preview resources
 
@@ -145,7 +102,7 @@ To protect production data, you can create and specify preview resources in your
 - [Preview buckets for R2 storage](/workers/wrangler/configuration/#r2-buckets): `preview_bucket_name`.
 - [Preview database IDs for D1](/workers/wrangler/configuration/#d1-databases): `preview_database_id`
 
-If preview configuration is present for a binding, setting `experimental_remote: true` will ensure that remote bindings connect to that designated remote preview resource.
+If preview configuration is present for a binding, setting `remote: true` will ensure that remote bindings connect to that designated remote preview resource.
 
 **For example:**
 
@@ -161,7 +118,7 @@ If preview configuration is present for a binding, setting `experimental_remote:
 			"bucket_name": "screenshots-bucket",
 			"binding": "screenshots_bucket",
 			"preview_bucket_name": "preview-screenshots-bucket",
-			"experimental_remote": true,
+			"remote": true,
 		},
 	],
 }
@@ -169,7 +126,7 @@ If preview configuration is present for a binding, setting `experimental_remote:
 
 </WranglerConfig>
 
-Running `wrangler dev --x-remote-bindings` with the above configuration means that:
+Running `wrangler dev` with the above configuration means that:
 
 - Your Worker code runs locally
 - All calls made to `env.screenshots_bucket` will use the `preview-screenshots-bucket` resource, rather than the production `screenshots-bucket`.
@@ -178,7 +135,7 @@ Running `wrangler dev --x-remote-bindings` with the above configuration means th
 
 We recommend configuring specific bindings to connect to their remote counterparts. These services often rely on Cloudflare's network infrastructure or have complex backends that are not fully simulated locally.
 
-The following bindings are recommended to have `experimental_remote: true` in your Wrangler configuration:
+The following bindings are recommended to have `remote: true` in your Wrangler configuration:
 
 #### [Browser Rendering](/workers/wrangler/configuration/#browser-rendering):
 
@@ -189,7 +146,7 @@ To interact with a real headless browser for rendering. There is no current loca
 {
 	"browser": {
 		"binding": "MY_BROWSER",
-		"experimental_remote": true
+		"remote": true
 	},
 }
 ```
@@ -204,7 +161,7 @@ To utilize actual AI models deployed on Cloudflare's network for inference. Ther
 {
 	"ai": {
 		"binding": "AI",
-		"experimental_remote": true
+		"remote": true
 	},
 }
 ```
@@ -221,7 +178,7 @@ To connect to your production Vectorize indexes for accurate vector search and s
 		{
 			"binding": "MY_VECTORIZE_INDEX",
 			"index_name": "my-prod-index",
-			"experimental_remote": true
+			"remote": true
 		}
 	],
 }
@@ -239,12 +196,12 @@ To verify that the certificate exchange and validation process work as expected.
 		{
 			"binding": "MY_CLIENT_CERT_FETCHER",
 			"certificate_id": "<YOUR_UPLOADED_CERT_ID>",
-			"experimental_remote": true
+			"remote": true
 			}
 	]
 }
 
-```
+````
 </WranglerConfig>
 
 #### [Images](/workers/wrangler/configuration/#images):
@@ -256,22 +213,22 @@ To connect to a high-fidelity version of the Images API, and verify that all tra
 {
 	"images": {
 		"binding": "IMAGES" ,
-		"experimental_remote": true
+		"remote": true
 	}
 }
-```
+````
 
 </WranglerConfig>
 
 :::note
-If `experimental_remote: true` is not specified for Browser Rendering, Vectorize, mTLS, or Images, Cloudflare **will issue a warning**. This prompts you to consider enabling it for a more production-like testing experience.
+If `remote: true` is not specified for Browser Rendering, Vectorize, mTLS, or Images, Cloudflare **will issue a warning**. This prompts you to consider enabling it for a more production-like testing experience.
 
-If a Workers AI binding has `experimental_remote` set to `false`, Cloudflare will **produce an error**. If the property is omitted, Cloudflare will connect to the remote resource and issue a warning to add the property to configuration.
+If a Workers AI binding has `remote` set to `false`, Cloudflare will **produce an error**. If the property is omitted, Cloudflare will connect to the remote resource and issue a warning to add the property to configuration.
 :::
 
 #### [Dispatch Namespaces](/cloudflare-for-platforms/workers-for-platforms/get-started/developing-with-wrangler/):
 
-Workers for Platforms users can configure `experimental_remote: true` in dispatch namespace binding definitions:
+Workers for Platforms users can configure `remote: true` in dispatch namespace binding definitions:
 
 <WranglerConfig>
 ```jsonc title="wrangler.jsonc"
@@ -280,7 +237,7 @@ Workers for Platforms users can configure `experimental_remote: true` in dispatc
 		{
 			"binding": "DISPATCH_NAMESPACE",
 			"namespace": "testing",
-			"experimental_remote":true
+			"remote":true
 		}
 	]
 }
@@ -291,9 +248,9 @@ This allows you to run your [dynamic dispatch Worker](/cloudflare-for-platforms/
 
 ### Unsupported remote bindings
 
-Certain bindings are not supported for remote connections during local development (`experimental_remote: true`). These will always use local simulations or local values.
+Certain bindings are not supported for remote connections (i.e. with `remote: true`) during local development. These will always use local simulations or local values.
 
-If `experimental_remote: true` is specified in Wrangler configuration for any of the following unsupported binding types, Cloudflare **will issue an error**. See [all supported and unsupported bindings for remote bindings](/workers/development-testing/bindings-per-env/).
+If `remote: true` is specified in Wrangler configuration for any of the following unsupported binding types, Cloudflare **will issue an error**. See [all supported and unsupported bindings for remote bindings](/workers/development-testing/bindings-per-env/).
 
 - [**Durable Objects**](/workers/wrangler/configuration/#durable-objects): Enabling remote connections for Durable Objects may be supported in the future, but currently will always run locally. However, using Durable Objects in combination with remote bindings is possible. Refer to [Using remote resources with Durable Objects and Workflows](#using-remote-resources-with-durable-objects-and-workflows) below.
 
@@ -325,13 +282,12 @@ There are two recommended patterns for this:
 
 - **Local Durable Objects/Workflows with remote bindings:**
 
-	When you enable remote bindings in your [Wrangler configuration](/workers/wrangler/configuration), your locally running Durable Objects and Workflows can access remote resources. This allows such bindings, although run locally, to interact with remote resources during local development.
+  When you enable remote bindings in your [Wrangler configuration](/workers/wrangler/configuration), your locally running Durable Objects and Workflows can access remote resources. This allows such bindings, although run locally, to interact with remote resources during local development.
 
 - **Accessing remote Durable Objects/Workflows via service bindings:**
 
-	To interact with remote Durable Object or Workflow instances, deploy a Worker that defines those. Then, in your local Worker, configure a remote [service binding](/workers/runtime-apis/bindings/service-bindings/) pointing to the deployed Worker.
-	Your local Worker will be then able to interact with the remote deployed Worker, which in turn can communicate with the remote Durable Objects/Workflows. Using this method, you can create a communication channel via the remote service binding, effectively using the deployed Worker as a proxy interface to the remote bindings during local development.
-
+  To interact with remote Durable Object or Workflow instances, deploy a Worker that defines those. Then, in your local Worker, configure a remote [service binding](/workers/runtime-apis/bindings/service-bindings/) pointing to the deployed Worker.
+  Your local Worker will be then able to interact with the remote deployed Worker, which in turn can communicate with the remote Durable Objects/Workflows. Using this method, you can create a communication channel via the remote service binding, effectively using the deployed Worker as a proxy interface to the remote bindings during local development.
 
 ### Important Considerations
 
@@ -347,11 +303,11 @@ Wrangler provides programmatic utilities to help tooling authors support remote 
 
 **Key APIs include:**
 
-- [`experimental_startRemoteProxySession`](#experimental_startRemoteProxySession): Starts a proxy session that allows interaction with remote bindings.
+- [`startRemoteProxySession`](#startRemoteProxySession): Starts a proxy session that allows interaction with remote bindings.
 - [`unstable_convertConfigBindingsToStartWorkerBindings`](#unstable_convertconfigbindingstostartworkerbindings): Utility for converting binding definitions.
 - [`experimental_maybeStartOrUpdateProxySession`](#experimental_maybestartorupdatemixedmodesession): Convenience function to easily start or update a proxy session.
 
-#### `experimental_startRemoteProxySession`
+#### `startRemoteProxySession`
 
 This function starts a proxy session for a given set of bindings. It accepts options to control session behavior, including an `auth` option with your Cloudflare account ID and API token for remote binding access.
 
@@ -365,15 +321,15 @@ It returns an object with:
 #### `unstable_convertConfigBindingsToStartWorkerBindings`
 
 The `unstable_readConfig` utility returns an `Unstable_Config` object which includes the definition of the bindings included in the configuration file. These bindings definitions
-are however not directly compatible with `experimental_startRemoteProxySession`. It can be quite convenient to however read the binding declarations with `unstable_readConfig` and then
-pass them to `experimental_startRemoteProxySession`, so for this wrangler exposes `unstable_convertConfigBindingsToStartWorkerBindings` which is a simple utility to convert
-the bindings in an `Unstable_Config` object into a structure that can be passed to `experimental_startRemoteProxySession`.
+are however not directly compatible with `startRemoteProxySession`. It can be quite convenient to however read the binding declarations with `unstable_readConfig` and then
+pass them to `startRemoteProxySession`, so for this wrangler exposes `unstable_convertConfigBindingsToStartWorkerBindings` which is a simple utility to convert
+the bindings in an `Unstable_Config` object into a structure that can be passed to `startRemoteProxySession`.
 
 :::note
-This type conversion is temporary. In the future, the types will be unified so you can pass the config object directly to `experimental_startRemoteProxySession`.
+This type conversion is temporary. In the future, the types will be unified so you can pass the config object directly to `startRemoteProxySession`.
 :::
 
-#### `experimental_maybeStartOrUpdateRemoteProxySession`
+#### `maybeStartOrUpdateRemoteProxySession`
 
 This wrapper simplifies proxy session management. It takes:
 
@@ -391,32 +347,36 @@ The function:
 - If there are no remote bindings to be used (nor a pre-existing proxy session) it returns null, signaling that no proxy session is needed.
 - If the details of an existing proxy session have been provided it updates the proxy session accordingly.
 - Otherwise if starts a new proxy session.
-- Returns the proxy session details (that can later be passed as the second argument to `experimental_maybeStartOrUpdateRemoteProxySession`).
+- Returns the proxy session details (that can later be passed as the second argument to `maybeStartOrUpdateRemoteProxySession`).
 
 #### Example
 
-Here's a basic example of using Miniflare with `experimental_maybeStartOrUpdateRemoteProxySession` to provide a local dev session with remote bindings. This example uses a single hardcoded KV binding.
+Here's a basic example of using Miniflare with `maybeStartOrUpdateRemoteProxySession` to provide a local dev session with remote bindings. This example uses a single hardcoded KV binding.
 
 <TypeScriptExample>
+
 ```ts
 import { Miniflare, MiniflareOptions } from "miniflare";
-import { experimental_maybeStartOrUpdateRemoteProxySession } from "wrangler";
+import { maybeStartOrUpdateRemoteProxySession } from "wrangler";
 
 let mf: Miniflare | null;
 
-let remoteProxySessionDetails: Awaited<ReturnType<typeof experimental_maybeStartOrUpdateRemoteProxySession>> | null = null;
+let remoteProxySessionDetails: Awaited<
+	ReturnType<typeof maybeStartOrUpdateRemoteProxySession>
+> | null = null;
 
 async function startOrUpdateDevSession() {
-	remoteProxySessionDetails = await experimental_maybeStartOrUpdateRemoteProxySession({
-		bindings: {
+	remoteProxySessionDetails = await maybeStartOrUpdateRemoteProxySession(
+		{
+			bindings: {
 				MY_KV: {
-					type: 'kv_namespace',
-					id: 'kv-id',
-					experimental_remote: true,
-				}
-			}
+					type: "kv_namespace",
+					id: "kv-id",
+					remote: true,
+				},
+			},
 		},
-		remoteProxySessionDetails
+		remoteProxySessionDetails,
 	);
 
 	const miniflareOptions: MiniflareOptions = {
@@ -425,7 +385,7 @@ async function startOrUpdateDevSession() {
 			MY_KV: {
 				id: "kv-id",
 				remoteProxyConnectionString:
-				remoteProxySessionDetails?.session.remoteProxyConnectionString,
+					remoteProxySessionDetails?.session.remoteProxyConnectionString,
 			},
 		},
 	};
@@ -441,10 +401,9 @@ async function startOrUpdateDevSession() {
 
 // ... once the dev session is no longer needed run
 // `remoteProxySessionDetails?.session.dispose()`
-
 ```
-</TypeScriptExample>
 
+</TypeScriptExample>
 
 ## `wrangler dev --remote` (Legacy)
 
@@ -468,4 +427,3 @@ When using remote development, all bindings automatically connect to their remot
 ### Limitations
 
 - When you run a remote development session using the `--remote` flag, a limit of 50 [routes](/workers/configuration/routing/routes/) per zone is enforced. Learn more in[ Workers platform limits](/workers/platform/limits/#number-of-routes-per-zone-when-using-wrangler-dev---remote).
-

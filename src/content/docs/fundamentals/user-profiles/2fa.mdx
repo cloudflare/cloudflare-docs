@@ -4,7 +4,7 @@ pcx_content_type: how-to
 
 ---
 
-import { Render } from "~/components"
+import { DashButton, Render } from "~/components"
 
 
 <Render file="2fa-enable" product="support" />
@@ -99,6 +99,9 @@ Regenerating your backup codes will invalidate your previous codes.
 :::
 
 1. Log in to the Cloudflare dashboard.
+
+      <DashButton url="/?to=/:account/home" />
+
 2. Select **My Profile**.
 3. Select **Authentication**.
 4. Select **Regenerate** to generate and save a new set of two-factor backup codes.
@@ -113,6 +116,9 @@ If you are not the Super Administrator of an organization with **2FA Enforcement
 :::
 
 1. Log in to the Cloudflare dashboard.
+
+      <DashButton url="/?to=/:account/home" />
+
 2. Select **Profile**.
 3. Select the **Authentication**.
    - To remove your security key:
@@ -135,6 +141,9 @@ When setting up 2FA, you should have saved your backup codes in a secure locatio
 
 1. Retrieve the backup code from where you stored it.
 2. Go to the [Cloudflare login page](https://dash.cloudflare.com/login), enter your username and password and select **Log in**.
+
+      <DashButton url="/?to=/:account/home" />
+
 3. You should see a page titled **Two-Factor Authentication**
    * If it has a text box, enter one of your backup codes and select **Log in**.
    * If instead you see "Insert your security key and touch it", cancel any prompts from your browser that appear and select **try another authentication method or backup code**. Proceed to enter one of your backup codes and select **Log in**.
@@ -149,6 +158,9 @@ Once you use a backup code, it becomes invalid.
 If you do not have access to your 2FA account or backup codes and cannot currently generate a 2FA code, use a verified device that you have logged in from before to request a temporary access code.
 
 1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com/login).
+
+      <DashButton url="/?to=/:account/home" />
+
 2. On the **Two-Factor Authentication** page, select **Try recovery** on **Lost all 2FA devices and backup codes?**.
 3. Select **Begin recovery**.
 4. A 6-digit access code will be sent to the email address associated with your Cloudflare account.

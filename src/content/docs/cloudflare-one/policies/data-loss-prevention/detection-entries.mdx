@@ -135,17 +135,19 @@ Your new document entry will replace the original document entry. If your file u
 
 ## AI prompt topics
 
-DLP uses [Application Granular Controls](/cloudflare-one/policies/gateway/http-policies/#application-granular-controls) to detect and categorize prompts submitted to generative AI tools. Application Granular Controls analyzes prompts for both content and user intent. Supported prompt topic detections include:
+DLP uses [Application Granular Controls](/cloudflare-one/policies/gateway/http-policies/#application-granular-controls) to detect and categorize prompts submitted to generative AI tools. Application Granular Controls analyzes prompts for both content and user intent. Supported AI prompt protection detections include:
 
-| Detection entry                       | Description                                                                                      |
-| ------------------------------------- | ------------------------------------------------------------------------------------------------ |
-| Content: PII                          | Prompt contains personal information such as names, SSNs, or email addresses                     |
-| Content: Credentials and Secrets      | Prompt contains API keys, passwords, or other sensitive credentials                              |
-| Content: Source Code                  | Prompt contains actual source code, code snippets, or proprietary algorithms                     |
-| Content: Customer Data                | Prompt contains customer names, projects, business activities, or confidential customer contexts |
-| Content: Financial Information        | Prompt contains financial numbers or confidential business data                                  |
-| Intent: PII                           | Prompt requests specific personal information about individuals                                  |
-| Intent: Code Abuse and Malicious Code | Prompt requests malicious code for attacks, exploits, or harmful activities                      |
-| Intent: Jailbreak                     | Prompt attempts to circumvent AI security policies                                               |
+| Detection entry                       | Description                                                                                       |
+| ------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| Content: PII                          | Prompt contains personal information such as names, SSNs, or email addresses.                     |
+| Content: Credentials and Secrets      | Prompt contains API keys, passwords, or other sensitive credentials.                              |
+| Content: Source Code                  | Prompt contains actual source code, code snippets, or proprietary algorithms.                     |
+| Content: Customer Data                | Prompt contains customer names, projects, business activities, or confidential customer contexts. |
+| Content: Financial Information        | Prompt contains financial numbers or confidential business data.                                  |
+| Intent: PII                           | Prompt requests specific personal information about individuals.                                  |
+| Intent: Code Abuse and Malicious Code | Prompt requests malicious code for attacks, exploits, or harmful activities.                      |
+| Intent: Jailbreak                     | Prompt attempts to circumvent AI security policies.                                               |
 
-To use an AI prompt topic, add it as an existing entry to a [custom DLP profile](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/#build-a-custom-profile).
+Each detection entry is categorized as either Content or Intent. Content focuses on the specific text or data the user provides the generative AI tool. It is the information the AI needs to process and analyze to generate a response. Intent focuses on the user's goal or objective for the AI's response. It dictates the type of output the user wants to receive. This category is particularly useful for customers who are using SaaS connectors or MCPs that provide the AI application access to internal data sources that contain sensitive information.
+
+To use an AI prompt topic, configure the corresponding [predefined DLP profile](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/predefined-profiles/#ai-prompt) or add it as an existing entry to a [custom DLP profile](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/#build-a-custom-profile). AI prompt protection is available for ChatGPT, Google Gemini, Perplexity, and Claude.

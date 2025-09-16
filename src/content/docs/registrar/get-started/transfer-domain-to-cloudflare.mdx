@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import { Render } from "~/components";
+import { DashButton, Render, } from "~/components";
 
 Transferring your domain to Cloudflare tells your registry that a different registrar can now set those authoritative records for you. The relationship is based on trust. Registries only trust one registrar at any given time to make changes on your behalf.
 
@@ -64,7 +64,11 @@ This code is often referred to as an authorization code, auth code, authinfo cod
 
 ### 5. Initiate your transfer to Cloudflare
 
-From your Cloudflare Account Home, go to [**Transfer Domains**](https://dash.cloudflare.com/?to=/:account/domains/transfer). Cloudflare Registrar will display the zones available for transfer.
+From your Cloudflare Account Home, go to the **Transfer Domains** page.
+ 
+<DashButton url="/?to=/:account/registrar/transfer" />
+
+Cloudflare Registrar will display the zones available for transfer.
 
 You will be presented with the price for each transfer. When you transfer a domain, you are required by ICANN to pay to extend its registration by one year from the expiration date. You can remove domains from your transfer by selecting **x**.
 

@@ -258,3 +258,169 @@ The Workers Vitest integration provides runtime helpers for writing tests in the
 
   * Applies all un-applied [D1 migrations](/d1/reference/migrations/) stored in the `migrations` array to database `db`, recording migrations state in the `migrationsTableName` table. `migrationsTableName` defaults to `d1_migrations`. Call the [`readD1Migrations()`](/workers/testing/vitest-integration/configuration/#readd1migrationsmigrationspath) function from the `@cloudflare/vitest-pool-workers/config` package inside Node.js to get the `migrations` array. Refer to the [D1 recipe](https://github.com/cloudflare/workers-sdk/tree/main/fixtures/vitest-pool-workers-examples/d1) for an example project using migrations.
 
+
+### Workflows
+
+
+
+:::caution[Workflows with `isolatedStorage`]
+
+To ensure proper test isolation in Workflows with isolated storage, introspectors should be disposed at the end of each test.
+This is accomplished by either:
+* Using an `await using` statement on the introspector.
+* Explicitly calling the introspector `dispose()` method.
+
+:::
+
+:::note[Version]
+
+Available in `@cloudflare/vitest-pool-workers` version **0.9.0**!
+
+:::
+
+* `introspectWorkflowInstance(workflow: Workflow, instanceId: string)`: Promise\<WorkflowInstanceIntrospector>
+    * Creates an **introspector** for a specific Workflow instance, used to **modify** its behavior, **await** outcomes, and **clear** its state during tests. This is the primary entry point for testing individual Workflow instances with a known ID.
+        <br/>
+
+        ```ts
+        import { env, introspectWorkflowInstance } from "cloudflare:test";
+
+        it("should disable all sleeps, mock an event and complete", async () => {
+          // 1. CONFIGURATION
+          await using instance = await introspectWorkflowInstance(env.MY_WORKFLOW, "123456");
+          await instance.modify(async (m) => {
+            await m.disableSleeps();
+            await m.mockEvent({
+              type: "user-approval",
+              payload: { approved: true, approverId: "user-123" },
+            });
+          });
+
+          // 2. EXECUTION
+          await env.MY_WORKFLOW.create({ id: "123456" });
+
+          // 3. ASSERTION
+          await expect(instance.waitForStatus("complete")).resolves.not.toThrow();
+
+          // 4. DISPOSE: is implicit and automatic here.
+        });
+        ```
+    * The returned `WorkflowInstanceIntrospector` object has the following methods:
+        * `modify(fn: (m: WorkflowInstanceModifier) => Promise<void>): Promise<void>`: Applies modifications to the Workflow instance's behavior.
+        * `waitForStepResult(step: { name: string; index?: number }): Promise<unknown>`: Waits for a specific step to complete and returns a result. If multiple steps share the same name, use the optional `index` property (1-based, defaults to `1`) to target a specific occurrence.
+        * `waitForStatus(status: InstanceStatus["status"]): Promise<void>`: Waits for the Workflow instance to reach a specific [status](/workflows/build/workers-api/#instancestatus) (e.g., 'running', 'complete').
+        * `dispose(): Promise<void>`: Disposes the Workflow instance, which is crucial for test isolation. If this function isn't called and `await using` is not used, isolated storage will fail and the instance's state will persist across subsequent tests. For example, an instance that becomes completed in one test will already be completed at the start of the next.
+        * `[Symbol.asyncDispose](): Provides automatic dispose. It's invoked by the `await using` statement, which calls `dispose()`.
+
+* `introspectWorkflow(workflow: Workflow)`: Promise\<WorkflowIntrospector>
+    * Creates an **introspector** for a Workflow where instance IDs are unknown beforehand. This allows for defining modifications that will apply to **all subsequently created instances**.
+        <br/>
+
+        ```ts
+        import { env, introspectWorkflow, SELF } from "cloudflare:test";
+
+        it("should disable all sleeps, mock an event and complete", async () => {
+          // 1. CONFIGURATION
+          await using introspector = await introspectWorkflow(env.MY_WORKFLOW);
+          await introspector.modifyAll(async (m) => {
+            await m.disableSleeps();
+            await m.mockEvent({
+              type: "user-approval",
+              payload: { approved: true, approverId: "user-123" },
+            });
+          });
+
+          // 2. EXECUTION
+          await env.MY_WORKFLOW.create();
+
+          // 3. ASSERTION
+          const instances = introspector.get();
+          for(const instance of instances) {
+            await expect(instance.waitForStatus("complete")).resolves.not.toThrow();
+          }
+
+          // 4. DISPOSE: is implicit and automatic here.
+        });
+        ```
+      The workflow instance doesn't have to be created directly inside the test. The introspector will capture **all** instances created after it is initialized. For example, you could trigger the creation of **one or multiple** instances via a single `fetch` event to your Worker:
+      ```js
+      // This also works for the EXECUTION phase:
+      await SELF.fetch("https://example.com/trigger-workflows");
+      ```
+
+    * The returned `WorkflowIntrospector` object has the following methods:
+        * `modifyAll(fn: (m: WorkflowInstanceModifier) => Promise<void>): Promise<void>`: Applies modifications to all Workflow instances created after calling `introspectWorkflow`.
+        * `get(): Promise<WorkflowInstanceIntrospector[]>`: Returns all `WorkflowInstanceIntrospector` objects from instances created after `introspectWorkflow` was called.
+        * `dispose(): Promise<void>`: Disposes the Workflow introspector. All `WorkflowInstanceIntrospector` from created instances will also be disposed. This is crucial to prevent modifications and captured instances from leaking between tests. After calling this method, the `WorkflowIntrospector` should not be reused.
+        * `[Symbol.asyncDispose](): Promise<void>`: Provides automatic dispose. It's invoked by the `await using` statement, which calls `dispose()`. 
+
+* `WorkflowInstanceModifier`
+    * This object is provided to the `modify` and `modifyAll` callbacks to mock or alter the behavior of a Workflow instance's steps, events, and sleeps.
+        * `disableSleeps(steps?: { name: string; index?: number }[])`: Disables sleeps, causing `step.sleep()` and `step.sleepUntil()` to resolve immediately. If `steps` is omitted, all sleeps are disabled.
+        * `mockStepResult(step: { name: string; index?: number }, stepResult: unknown)`: Mocks the result of a `step.do()`, causing it to return the specified value instantly without executing the step's implementation.
+        * `mockStepError(step: { name: string; index?: number }, error: Error, times?: number)`: Forces a `step.do()` to throw an error, simulating a failure. `times` is an optional number that sets how many times the step should error. If `times` is omitted, the step will error on every attempt, making the Workflow instance fail.
+        * `forceStepTimeout(step: { name: string; index?: number }, times?: number)`: Forces a `step.do()` to fail by timing out immediately. `times` is an optional number that sets how many times the step should timeout. If `times` is omitted, the step will timeout on every attempt, making the Workflow instance fail.
+        * `mockEvent(event: { type: string; payload: unknown })`: Sends a mock event to the Workflow instance, causing a `step.waitForEvent()` to resolve with the provided payload. `type` must match the `waitForEvent` type.
+        * `forceEventTimeout(step: { name: string; index?: number })`: Forces a `step.waitForEvent()` to time out instantly, causing the step to fail.
+        
+        <br/>
+        ```ts
+        import { env, introspectWorkflowInstance } from "cloudflare:test";
+
+        // This example showcases explicit disposal
+        it("should apply all modifier functions", async () => {
+          // 1. CONFIGURATION
+          const instance = await introspectWorkflowInstance(env.COMPLEX_WORKFLOW, "123456");
+
+          try {
+            // Modify instance behavior
+            await instance.modify(async (m) => {
+              // Disables all sleeps to make the test run instantly
+              await m.disableSleeps();
+
+              // Mocks the successful result of a data-fetching step
+              await m.mockStepResult(
+                { name: "get-order-details" },
+                { orderId: "abc-123", amount: 99.99 }
+              );
+
+              // Mocks an incoming event to satisfy a `step.waitForEvent()`
+              await m.mockEvent({
+                type: "user-approval",
+                payload: { approved: true, approverId: "user-123" },
+              });
+
+              // Forces a step to fail once with a specific error to test retry logic
+              await m.mockStepError(
+                { name: "process-payment" },
+                new Error("Payment gateway timeout"),
+                1 // Fail only the first time
+              );
+
+              // Forces a `step.do()` to time out immediately
+              await m.forceStepTimeout({ name: "notify-shipping-partner" });
+
+              // Forces a `step.waitForEvent()` to time out
+              await m.forceEventTimeout({ name: "wait-for-fraud-check" });
+            });
+
+            // 2. EXECUTION
+            await env.COMPLEX_WORKFLOW.create({ id: "123456" });
+
+            // 3. ASSERTION
+            expect(await instance.waitForStepResult({ name: "get-order-details" })).toEqual({
+              orderId: "abc-123",
+              amount: 99.99,
+            });
+            // Given the forced timeouts, the workflow will end in an errored state
+            await expect(instance.waitForStatus("errored")).resolves.not.toThrow();
+
+          } catch {
+            // 4. DISPOSE
+            await instance.dispose();
+          }
+        });
+        ```
+
+      When targeting a step, use its `name`. If multiple steps share the same name, use the optional `index` property (1-based, defaults to `1`) to specify the occurrence.
+    

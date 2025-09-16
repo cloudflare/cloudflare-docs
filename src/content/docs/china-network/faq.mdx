@@ -7,13 +7,13 @@ head: []
 description: Review FAQs for Cloudflare's China Network.
 ---
 
-## Requirements
+## Prerequisites and onboarding
 
 ### What are the requirements to enable the Cloudflare China Network service from Cloudflare?
 
 Refer to [Get started](/china-network/get-started/) for more information.
 
-### Can I use my current account to access the Cloudflare China Network service or do I need a separate account?
+### Can I use my current account to access the Cloudflare China Network service?
 
 Yes, you can use your current Cloudflare account and dashboard.
 
@@ -27,7 +27,7 @@ Cloudflare requires that you have a valid [ICP (Internet Content Provider)](/chi
 
 Cloudflare has taken numerous steps to ensure your security and the integrity of your data in China. Your identification information such as email addresses, password hashes, and billing information are never stored on the Cloudflare China Network or shared with the Cloudflare partner except for Zone configuration information and bindings with Cloudflare’s Developer Suite which are stored on the China Network operated by our partners in China upon your enabling the China Service for a particular Zone.
 
-## Licensing and onboarding
+## Compliance
 
 ### Does Cloudflare have an MIIT license to provide CDN services in China?
 
@@ -39,7 +39,7 @@ No, neither Cloudflare nor JD Cloud is responsible for [ICP (Internet Content Pr
 
 ### Why is my ICP filing/license revoked?
 
-The application and revocation of ICP filings or licenses is managed by China's local authorities. Usually either the customer or the agency processing the ICP application receive a notification with more details. Cloudflare cannot provide the ICP revocation reasons.
+The application and revocation of ICP filings or licenses is managed by China's local authorities. Usually, either the customer or the agency processing the ICP application receive a notification with more details. Cloudflare cannot provide the ICP revocation reasons.
 
 ### What would happen if my ICP filing/license got revoked?
 
@@ -50,8 +50,12 @@ To mitigate the impact on your Internet properties, Cloudflare would reroute the
 
 The JD Cloud network is proxying content inside of China for customers who have purchased the Cloudflare China Network subscription. To ensure compliance with China’s regulation on Internet information services and with [JD Cloud's service terms](https://docs.jdcloud.com/cn/product-service-agreement/starshield-terms-of-service), JD Cloud must review the content of all the domains before onboarding those domains to their network. They can approve or reject any domain based on the nature of its content. For more information, contact your sales team.
 
-## Technical questions
+## Products and features
 
 ### How does IPv6 work on the Cloudflare China Network?
 
 All sites hosted in Mainland China must have IPv6 enabled. The Cloudflare China Network feature automatically enables IPv6 for domains to fulfill this requirement and it is not possible to disable it. According to Cloudflare's tests, IPv6 connections in Mainland China are more reliable and offer better latency.
+
+### Is Turnstile available in Mainland China?
+
+[Turnstile](/turnstile/) is not supported in Mainland China. Therefore, both China Network zones and [global zones](/fundamentals/concepts/accounts-and-zones/#zones) with users visiting their content from Mainland China may experience issues with Turnstile.
