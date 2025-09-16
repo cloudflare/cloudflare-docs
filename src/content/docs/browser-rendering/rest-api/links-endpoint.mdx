@@ -217,7 +217,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
 
 ### Retrieve only links from the same domain
 
-Pass a `excludeExternalLinks` parameter to only exclude links pointing to external domains. By default, this is set to `false`.
+Set the `excludeExternalLinks` parameter to `true` to exclude links pointing to external domains. By default, this is set to `false`.
 
 ```bash
 curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/links' \
