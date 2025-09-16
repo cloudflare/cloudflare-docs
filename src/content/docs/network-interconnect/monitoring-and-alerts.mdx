@@ -5,7 +5,7 @@ sidebar:
   order: 5
 ---
 
-import { Render } from "~/components"
+import { Render, DashButton } from "~/components"
 
 You can configure notifications for upcoming CNI maintenance events using the Notifications feature in the Cloudflare dashboard. It is recommended to subscribe to two types of notifications to stay fully informed.
 
@@ -23,20 +23,24 @@ You can configure notifications for upcoming CNI maintenance events using the No
 
 ### Enable CNI Connection Maintenance Alert (beta)
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to **Notifications**.
-3. Select **Add**.
-4. From the product drop-down menu, select **Cloudflare Network Interconnect**.
-5. Select **Connection Maintenance Alert**.
-6. Give your notification a name and an optional description.
-7. Choose your preferred notification method (for example, email address).
-8. Select **Save**.
+1. In the Cloudflare dashboard, go to the **Notifications** page.
+
+<DashButton url="/?to=/:account/notifications" />
+
+2. Select **Add**.
+3. From the product drop-down menu, select **Cloudflare Network Interconnect**.
+4. Select **Connection Maintenance Alert**.
+5. Give your notification a name and an optional description.
+6. Choose your preferred notification method (for example, email address).
+7. Select **Save**.
 
 ### Enable Cloudflare Status Maintenance Notification
 
 1. First, identify the PoP code for your CNI circuit:
-   - Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-   - Navigate to **Magic Transit / WAN > Configuration > Interconnects**.
+   - In the Cloudflare dashboard, go to the **Configuration** page in Magic Transit or Magic WAN.
+	   - For Magic Transit: <DashButton url="/?to=/:account/magic-transit/configuration" />
+		 - For Magic WAN: <DashButton url="/?to=/:account/magic-wan/configuration" />
+   - Select the **Interconnects** tab.
    - Select the CNI you want to enable notifications for.
    - In the menu that appears, note the Data Center code (for example, `gru-b`).
 2. Now, configure the alert:

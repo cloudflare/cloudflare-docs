@@ -8,7 +8,7 @@ head:
     content: Custom Errors
 ---
 
-import { FeatureTable, Render } from "~/components";
+import { FeatureTable, Render, Steps } from "~/components";
 
 Use Custom Errors to return custom content to your website visitors in case of HTTP errors returned by an origin server or by a Cloudflare product (including Workers), or when showing a [security challenge](/cloudflare-challenges/).
 
@@ -25,12 +25,16 @@ Cloudflare has a set of default pages for presenting errors and challenges to yo
 
 When an error of a [specific type](/rules/custom-errors/reference/error-page-types/) occurs, Cloudflare does the following:
 
+<Steps>
+
 1. Search for a configured Error Page at the account level for the specific error.
 2. Search for a configured Error Page at the zone level for the specific error (it will have priority over the account-level Error Page, if any).
 3. Search for a matching custom error rule at the account level. The rule will have priority over 500 and 1000 class Error Pages at the account or zone level.
 4. Search for a matching custom error rule at the zone level. The rule will have priority over 500 and 1000 class Error Pages at the account or zone level and over custom error rules at the account level.
 5. If a security rule like a [WAF custom rule](/waf/custom-rules/) or a [rate limiting rule](/waf/rate-limiting-rules/) triggers a custom block response instead of a default Cloudflare WAF block page, the rule-specific block response will have priority over Error Pages or a matching custom error rule.
 6. If any of the previous configurations apply, serve the custom error content to the visitor. If not, serve the default error page for the specific error type.
+
+</Steps>
 
 :::note
 To customize a challenge page or a block page, use an Error Page, since Custom Error Rules will not be applied to security actions originating from Cloudflare products. Keep in mind that [custom WAF response](/waf/custom-rules/create-dashboard/#configure-a-custom-response-for-blocked-requests) takes precedence over an Error Page and custom error rules.

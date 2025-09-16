@@ -10,7 +10,18 @@ params:
   - finalInstructions
 ---
 
-import { AnchorHeading, Aside, Card, Code, GlossaryTooltip, Markdown, Render, Tabs, TabItem } from "~/components";
+import {
+	AnchorHeading,
+	Aside,
+	Card,
+	Code,
+	GlossaryTooltip,
+	Markdown,
+	Render,
+	Tabs,
+	TabItem,
+	DashButton,
+} from "~/components";
 
 { props.magicWord === "virtual" && (
 	<>
@@ -322,6 +333,8 @@ To add a Connector on-ramp:
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
+<Render file="mconn/wan-two-tunnels" product="networking-services" />
+
 1. In **WAN configuration**, select **Create**. You can create one or more [wide area networks (WANs)](https://www.cloudflare.com/learning/network-layer/what-is-a-wan/). Configuring multiple WANs will create multiple <GlossaryTooltip term="IPsec tunnel">IPsec</GlossaryTooltip> tunnels (one IPsec tunnel per WAN port). This allows the Connector to load balance traffic over WANs of equal priority. It also allows Connector to failover between circuits according to their <GlossaryTooltip term="tunnel health-check" link="/magic-wan/reference/tunnel-health-checks/">health</GlossaryTooltip>. Refer to [WAN settings](/magic-wan/configuration/connector/reference/#wan-settings) for more details.
 		:::note
 		This is not the same as a high availability (HA) configuration. HA configurations need two Connectors to work. Refer to [About high availability configurations](#about-high-availability-configurations) for more information.
@@ -513,8 +526,11 @@ After finishing your Connector configuration, you need to add it to a site. <Ren
 
 When you are ready to connect your Magic WAN Connector to the Cloudflare network:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to **Magic WAN** > **Configuration** > **Connectors**.
+1. In the Cloudflare dashboard, go to Magic WAN's **Configuration** page.
+
+   <DashButton url="/?to=/:account/magic-wan/configuration" />
+
+2. Go to **Connectors**.
 3. Find the Connector you want to activate, select the three dots next to it > **Edit**. Make sure you verify the serial number to choose the right connector you want to activate.
 4. In the new window, the **Status** dropdown will show as **Deactivated**. Select it to change the status to **Activated**.
 5. The **Interrupt window** is the time period when the Magic WAN Connector software can update, which may result in interruption to existing connections. Choose a time period to minimize disruption to your sites. Refer to [Interrupt window](/magic-wan/configuration/connector/maintenance/interrupt-service-window/) for more details on how to define when the Connector can update its systems.
@@ -769,10 +785,13 @@ Magic WAN Connector automatically creates [IPsec tunnels](/magic-wan/reference/g
 
 To check the IPsec tunnels and static routes created by your Magic WAN Connector:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to **Magic WAN** > **Sites**.
-3. Select the name of the site for which you want to check the Connector's IPsec tunnels and static routes, and select **Edit**.
-4. Select **Tunnels** to check IPsec tunnels, and **Routes** for the static routes.
+1. In the Cloudflare dashboard, go to the **Sites** page.
+
+   <DashButton url="/?to=/:account/magic-wan/sites" />
+
+2. Select the name of the site for which you want to check the Connector's IPsec tunnels and static routes, and select **Edit**.
+
+3. Select **Tunnels** to check IPsec tunnels, and **Routes** for the static routes.
 
 ---
 

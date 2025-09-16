@@ -16,13 +16,13 @@ To view AI Crawl Control metrics:
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Go to **AI Crawl Control**.
 
-You can find meaningful information across both **AI Crawlers** and **Metrics** tabs.
+You can find meaningful information across both **Crawlers** and **Metrics** tabs.
 
 ## View AI crawler activity
 
-The **AI Crawlers** tab provides you with the following information:
+The **Crawlers** tab provides you with the following information:
 
-- Complete list of detected AI crawlers and their operators
+- Total number of requests to crawl your website from common AI crawlers
 - Number of requests made by each AI crawler
 - Number of `robots.txt` violations for each crawler
 
@@ -30,24 +30,17 @@ The **AI Crawlers** tab provides you with the following information:
 
 The **Metrics** tab provides you with the following metrics to help you understand how AI crawlers are interacting with your website.
 
-| Metric                               | Description                                                                   |
-| ------------------------------------ | ----------------------------------------------------------------------------- |
-| Total requests                       | The total number of requests to crawl your website, from all AI crawlers      |
-| Blocked requests                     | The number of crawler requests you have blocked, from any rule                |
-| Allowed requests                     | The number of crawler requests you have allowed                               |
-| Hosts                                | The owner of the AI crawler                                                   |
-| Overall popular paths                | The most popular pages crawled by AI crawlers, from all AI crawlers           |
-| Most active AI crawlers by operators | The AI crawler owners with the highest number of requests to access your site |
-| Request by AI crawlers               | A graph which displays the number of crawl requests from each AI crawler      |
-| Most popular paths by AI crawlers    | The most popular pages crawled by AI crawlers, for each AI crawler            |
-| Referrals                            | A graph which displays the number of referrals from each AI operator          |
-| Referers                             | The list of referers who directed traffic to your site                        |
-
-:::note[Requests in AI Crawl Control metrics]
-The number of requests in AI Crawl Control metrics are specifically requests which were met with HTTP code 200 (the request was successfully served, with actual content).
-
-AI Crawl Control metrics filter all other HTTP codes.
-:::
+| Metric                               | Description                                                                                                                                                                                       |
+| ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Total requests                       | The total number of requests to crawl your website, from all AI crawlers                                                                                                                          |
+| Allowed requests                     | The number of crawler requests that received a successful response from your site                                                                                                                 |
+| Unsuccessful requests                | The number of crawler requests that failed (HTTP 4xx or 5xx) as a result of a blocked request, other security rules, or website errors such as a crawler attempting to access a non-existent page |
+| Overall popular paths                | The most popular pages crawled by AI crawlers, from all AI crawlers                                                                                                                               |
+| Most active AI crawlers by operators | The AI crawler owners with the highest number of requests to access your site                                                                                                                     |
+| Request by AI crawlers               | A graph which displays the number of crawl requests from each AI crawler                                                                                                                          |
+| Most popular paths by AI crawlers    | The most popular pages crawled by AI crawlers, for each AI crawler                                                                                                                                |
+| Referrals                            | A graph which displays the number of visits that were directed to your site from each AI operator                                                                                                 |
+| Referers                             | The list of referers who directed visits to your site                                                                                                                                             |
 
 ## Filter date range
 

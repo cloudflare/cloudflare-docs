@@ -3,6 +3,11 @@ link: /page-shield/changelog/
 productName: Page Shield
 productLink: "/page-shield/"
 entries:
+  - publish_date: "2025-09-12"
+    title: Scoped alerts now support policies in log mode
+    description: |-
+      [Scoped alerts](/page-shield/alerts/) now take into account your Page Shield policies deployed in log mode. This allows you to simulate an end-to-end workflow before switching your policies to [allow mode](/page-shield/policies/#policy-actions).
+
   - publish_date: "2025-05-20"
     title: Updated machine learning (ML) model
     description: |-

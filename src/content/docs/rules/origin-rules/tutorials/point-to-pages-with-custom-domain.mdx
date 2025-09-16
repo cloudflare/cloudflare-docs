@@ -8,9 +8,9 @@ products:
   - Origin Rules
 ---
 
-import { Example, DashButton } from "~/components";
+import { Example, DashButton, Steps } from "~/components";
 
-This example configures an origin rule and a DNS record to point to a Pages deployment with a custom domain.
+This tutorial will instruct you how to configure an origin rule and a DNS record to point to a Pages deployment with a custom domain.
 
 The procedure will use the following example values:
 
@@ -27,6 +27,8 @@ When configuring your Pages custom domain, use a custom domain that you do not p
 
 To add the custom domain to your Pages deployment:
 
+<Steps>
+
 1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
 
    <DashButton url="/?to=/:account/workers-and-pages" />
@@ -35,6 +37,8 @@ To add the custom domain to your Pages deployment:
 3. Go to **Custom domains**.
 4. Select **Set up a custom domain**.
 5. Enter `blogmirror.example.com` and select **Continue**.
+
+</Steps>
 
 When you add the custom domain to your Pages deployment, Cloudflare automatically creates a `CNAME` DNS record for the custom domain.
 
@@ -69,6 +73,8 @@ In this example, the URL that website visitors will access starts with `/blog`. 
 
 Use a URL rewrite to remove the `/blog` segment from the URL path.
 
+<Steps>
+
 1. Go to **Rules** > **Overview**.
 2. Select **Create rule** > **URL Rewrite Rule**.
 3. Enter a descriptive name for the rule in **Rule name**.
@@ -88,6 +94,8 @@ Use a URL rewrite to remove the `/blog` segment from the URL path.
    | [`/`] `blog/*` | [`/`] `${1}` |
 
 7. Select **Deploy**.
+
+</Steps>
 
 :::note
 Cloudflare provides a rule template in the dashboard called **Rewrite Path for Object Storage Bucket** that you can use and adapt to configure the URL rewrite rule.

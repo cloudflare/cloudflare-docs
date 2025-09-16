@@ -97,7 +97,7 @@ const SECONDS = 1000;
 
 export class AlarmExample extends DurableObject {
 	constructor(ctx, env) {
-		this.ctx = ctx;
+		super(ctx, env);
 		this.storage = ctx.storage;
 	}
 	async fetch(request) {

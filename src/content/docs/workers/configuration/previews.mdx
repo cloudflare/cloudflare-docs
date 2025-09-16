@@ -8,7 +8,7 @@ sidebar:
 description: Preview URLs allow you to preview new versions of your project without deploying it to production.
 ---
 
-import { Render, WranglerConfig } from "~/components";
+import { Render, WranglerConfig, DashButton } from "~/components";
 
 # Overview
 
@@ -57,7 +57,11 @@ The [`wrangler versions upload`](/workers/wrangler/commands/#upload) command upl
 
 #### View versioned preview URLs on the Workers dashboard
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers) and select your project.
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+
+2. Select your Worker.
 2. Go to the **Deployments** tab, and find the version you would like to view.
 
 ### Aliased preview URLs
@@ -93,12 +97,13 @@ The resulting alias would be associated with this version, and immediately avail
 When enabled, all preview URLs are available publicly. You can use [Cloudflare Access](/cloudflare-one/policies/access/) to require visitors to authenticate before accessing preview URLs. You can limit access to yourself, your teammates, your organization, or anyone else you specify in your [access policy](/cloudflare-one/policies/access).
 
 To limit your preview URLs to authorized emails only:
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
 
-1. Log in to the [Cloudflare Access dashboard](https://one.dash.cloudflare.com/?to=/:account/access/apps).
-2. Select your account.
-3. Add an application.
-4. Select **Self Hosted**.
-5. Name your application (for example, "my-worker") and add your `workers.dev` subdomain as the **Application domain**.
+   <DashButton url="/?to=/:account/workers-and-pages" />
+
+2. Select **Create application**.
+3. Select **Self Hosted**.
+4. Name your application (for example, "my-worker") and add your `workers.dev` subdomain as the **Application domain**.
 
 For example, if you want to secure preview URLs for a Worker running on `my-worker.my-subdomain.workers.dev`.
 
@@ -126,9 +131,11 @@ Note:
 ### From the Dashboard
 
 To toggle Preview URLs for a Worker:
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Go to **Workers & Pages** and in **Overview**, select your Worker.
+   <DashButton url="/?to=/:account/workers-and-pages" />
+
+2. In **Overview**, select your Worker.
 3. Go to **Settings** > **Domains & Routes**.
 4. For Preview URLs, click **Enable** or **Disable**.
 5. Confirm your action.

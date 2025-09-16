@@ -21,6 +21,7 @@ import {
 	FloatingPortal,
 } from "@floating-ui/react";
 import { PiCaretDownBold } from "react-icons/pi";
+import { subDays } from "date-fns";
 import { setSearchParams } from "~/util/url";
 import he from "he";
 
@@ -73,6 +74,13 @@ function InfiniteHits(props: UseInfiniteHitsProps) {
 					.map(([, value]) => value);
 
 				const title = hierarchy ? hierarchy.join(" > ") : "Documentation";
+				const today = new Date();
+				const futureDate = subDays(today, item.lastModified);
+				const options: Intl.DateTimeFormatOptions = {
+					year: "numeric",
+					month: "long",
+					day: "numeric",
+				};
 
 				return (
 					<a
@@ -84,6 +92,11 @@ function InfiniteHits(props: UseInfiniteHitsProps) {
 						<p className="line-clamp-2">
 							<Highlight attribute="content" hit={item} />
 						</p>
+						{item.lastModified && (
+							<span className="text-cl1-gray-4! dark:text-cl1-gray-7! mt-2 text-sm">
+								{futureDate.toLocaleDateString("en-US", options)}
+							</span>
+						)}
 					</a>
 				);
 			})}

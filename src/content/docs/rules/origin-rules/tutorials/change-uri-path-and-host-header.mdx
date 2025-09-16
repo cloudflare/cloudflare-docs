@@ -8,9 +8,9 @@ products:
   - Origin Rules
 ---
 
-import { Example } from "~/components";
+import { Example, Steps } from "~/components";
 
-This guide will instruct you how to modify both the URI path and the `Host` header of incoming requests using [Transform Rules](/rules/transform/) and Origin Rules.
+This tutorial will instruct you how to modify both the URI path and the `Host` header of incoming requests using [Transform Rules](/rules/transform/) and Origin Rules.
 
 Your website visitors will be routed from `https://<YOUR_SOURCE_HOSTNAME>/uploads/*` to `https://<YOUR_TARGET_HOSTNAME>/*`.
 
@@ -22,6 +22,8 @@ In this tutorial you will do the following:
 By following these steps, you can effectively manage both URI paths and `Host` headers to route traffic appropriately and optimize request handling.
 
 ## 1. Create a URL rewrite
+
+<Steps>
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
 2. Go to **Rules** > **Overview**.
@@ -57,11 +59,15 @@ By following these steps, you can effectively manage both URI paths and `Host` h
 
 8. Select **Deploy**.
 
+</Steps>
+
 ## 2. Create an origin rule
 
 :::note
 If you are routing traffic to an object storage bucket, use [Cloud Connector](/rules/cloud-connector/) instead of an origin rule.
 :::
+
+<Steps>
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
 2. Go to **Rules** > **Overview**.
@@ -111,9 +117,11 @@ If you are routing traffic to an object storage bucket, use [Cloud Connector](/r
 
 9. Select **Deploy**.
 
+</Steps>
+
 ## Final remarks
 
-After completing this setup, incoming traffic for `https://<YOUR_SOURCE_HOSTNAME>/uploads/*` will be routed to `https://<YOUR_TARGET_HOSTNAME>/*`.
+After completing this tutorial, incoming traffic for `https://<YOUR_SOURCE_HOSTNAME>/uploads/*` will be routed to `https://<YOUR_TARGET_HOSTNAME>/*`.
 
 Ensure the filters for the [URL rewrite](/rules/transform/url-rewrite/) and the [origin rule](/rules/origin-rules/) (or [Cloud Connector](/rules/cloud-connector/) rule) are precise to avoid unintended rule executions.
 

@@ -3,6 +3,10 @@ link: "/workers-ai/changelog/"
 productName: Workers AI
 productLink: "/workers-ai/"
 entries:
+  - publish_date: "2025-09-05"
+    title: Introducing EmbeddingGemma from Google
+    description: |-
+      - We’re excited to be a launch partner alongside Google to bring their newest embedding model to Workers AI. We're excited to introduce EmbeddingGemma delivers best-in-class performance for its size, enabling RAG and semantic search use cases. Take a look at [`@cf/google/embeddinggemma-300m`](/workers-ai/models/embeddinggemma-300m) for more details. Now available to use for embedding in AutoRAG too.
   - publish_date: "2025-08-27"
     title: Introducing Partner models to the Workers AI catalog
     description: |-
@@ -53,7 +57,7 @@ entries:
   - publish_date: "2024-07-11"
     title: New community-contributed tutorial
     description: |-
-      - Added community contributed tutorial on how to [create APIs to recommend products on e-commerce sites using Workers AI and Stripe](/developer-spotlight/tutorials/creating-a-recommendation-api/).
+      - Added community contributed tutorial on how to [create APIs to recommend products on e-commerce sites using Workers AI and Stripe](https://web.archive.org/web/20250714161553/https://developers.cloudflare.com/developer-spotlight/tutorials/creating-a-recommendation-api/).
 
   - publish_date: "2024-06-27"
     title: Introducing embedded function calling

@@ -34,7 +34,7 @@ async function handleRequest(request, env) {
 // Durable Object
 export class Location extends DurableObject {
 	constructor(state, env) {
-		this.state = state;
+		super(state, env);
 		// Upon construction, you do not have a location to provide.
 		// This value will be updated as people access the Durable Object.
 		// When the Durable Object is evicted from memory, this will be reset.

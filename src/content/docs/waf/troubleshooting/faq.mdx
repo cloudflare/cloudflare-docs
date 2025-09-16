@@ -30,31 +30,27 @@ If you are using a regular expression, it is recommended that you test it with a
 
 If you have [SSL/TLS certificates](/ssl/) managed by Cloudflare, every time a certificate is issued or renewed, a [domain control validation (DCV)](/ssl/edge-certificates/changing-dcv-method/dcv-flow/) must happen. When a certificate is in `pending_validation` state and there are valid DCV tokens in place, some Cloudflare security features such as [custom rules](/waf/custom-rules/) and [Managed Rules](/waf/managed-rules/) will be automatically disabled on specific DCV paths (for example, `/.well-known/pki-validation/` and `/.well-known/acme-challenge/`).
 
-### Why is Cloudflare blocking a specific IP address?
 
-Cloudflare may block an IP address due to various reasons:
+### Why have I been blocked?
 
-- **Security mitigation actions**: Cloudflare protects websites from various online threats, including malicious traffic, DDoS attacks, and common vulnerabilities. If your IP address is associated with suspicious or malicious activity, it might trigger a security check and block requests.
+Cloudflare may block requests when it detects activity that could be unsafe. Common reasons include:
 
-- **High security settings**: The website owner might have set their Cloudflare security settings to a high level, making the filtering of incoming traffic stricter. In this situation, even legitimate users may get blocked or have to solve challenges.
+- Security protection against malicious traffic, DDoS attacks, or other threats.
+- Excessive requests in a short time (rate limiting).
+- Bot-like or automated traffic.
+- IP addresses listed on public blocklists, such as [Project Honey Pot](https://projecthoneypot.org/).
 
-- **Excessive requests**: Cloudflare may block an IP address if it detects an unusually high number of requests in a short period, in which case it will rate limiting subsequent requests. This is a protective measure against potential abuse or attacks.
+If you are a site visitor:
 
-- **Traffic from malicious bots**: Cloudflare employs bot detection mechanisms to distinguish between legitimate users and automated bots. If traffic from your IP address behaves like traffic from a malicious bot, it could get blocked.
+- Contact the site owner, providing details of your actions when the block occurred and the Cloudflare Ray ID displayed at the bottom of the error page.
+- Avoid suspicious inputs or automated scripts.
+- Check your IP reputation through [Project Honey Pot](https://projecthoneypot.org/).
 
-- **Blocklisted IPs**: Cloudflare might block IP addresses listed on public blocklists due to their association with known malicious activities.
+If you are the site owner:
 
-If your IP address is blocked, try the following:
-
-- **Check Cloudflare Security Events**: Use the [Security Events](/waf/analytics/security-events/) log to check for specific reasons your IP might be getting blocked. Look for details on the type of threat or activity that triggered the block.
-
-- **Contact the website owner**: If you are a legitimate user and your IP is wrongly blocked, contact the website owner or administrator. They may be able to allowlist your IP or investigate the issue further.
-
-- **Verify your own website traffic**: Check for abnormal activity. If you manage a website behind Cloudflare, ensure that your site's traffic is legitimate and not triggering security measures inadvertently.
-
-- **Check your IP reputation**: Verify whether your IP address is listed on public blocklists, such as [Project Honey Pot](https://projecthoneypot.org/). If so, take steps to address any issues that may have led to the listing.
-
-- **Adjust your security settings**: If you are a website owner using Cloudflare, consider adjusting security settings to find the right balance between protection and accessibility.
+- Adjust security settings to balance protection with accessibility.
+- Monitor blocked requests in your Cloudflare dashboard.
+- Allowlist trusted IPs or fine-tune WAF/bot rules to reduce false positives.
 
 ## Bots
 

@@ -9,7 +9,7 @@ tags:
   - JavaScript
 ---
 
-import { Render, WranglerConfig } from "~/components";
+import { Render, WranglerConfig, DashButton } from "~/components";
 
 In this tutorial, you will deploy a serverless, real-time chat application that runs using [Durable Objects](/durable-objects/).
 
@@ -75,10 +75,14 @@ custom_domain = true
 
 To test your live application:
 
-1. Open your `edge-chat-demo.<SUBDOMAIN>.workers.dev` subdomain. Your subdomain can be found in the [Cloudflare dashboard](https://dash.cloudflare.com) > **Workers & Pages** > your Worker > **Triggers** > **Routes** > select the `edge-chat-demo.<SUBDOMAIN>.workers.dev` route.
-2. Enter a name in the **your name** field.
-3. Choose whether to enter a public room or create a private room.
-4. Send the link to other participants. You will be able to view room participants on the right side of the screen.
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+
+2. Select your Worker > **Triggers** > **Routes** > Select the `edge-chat-demo.<SUBDOMAIN>.workers.dev` route.
+3. Enter a name in the **your name** field.
+4. Choose whether to enter a public room or create a private room.
+5. Send the link to other participants. You will be able to view room participants on the right side of the screen.
 
 ## Uninstall your application
 
@@ -108,11 +112,12 @@ deleted_classes = ["ChatRoom", "RateLimiter"]
 Then run `npx wrangler deploy`.
 
 To delete your Worker:
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. In Account Home, select **Workers & Pages**.
-3. In **Overview**, select your Worker.
-4. Select **Manage Service** > **Delete**. For complete instructions on set up and deletion, refer to the `README.md` in your cloned repository.
+   <DashButton url="/?to=/:account/workers-and-pages" />
+
+2. In **Overview**, select your Worker.
+3. Select **Manage Service** > **Delete**. For complete instructions on set up and deletion, refer to the `README.md` in your cloned repository.
 
 By completing this tutorial, you have deployed a real-time chat application with Durable Objects and Cloudflare Workers.
 

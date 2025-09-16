@@ -8,9 +8,10 @@ params:
   - routePrioritization
   - chooseWeights
   - productGatewayOrEgress
+  - dashButtonPath
 ---
 
-import { Aside, APIRequest, Markdown, Render, TabItem, Tabs } from "~/components";
+import { Aside, APIRequest, Markdown, Render, TabItem, Tabs, DashButton } from "~/components";
 
 Magic Networking uses a routing table to steer your traffic via next-hop from Cloudflare's global network to your connected networks. Entries can be added to the Magic routing table via static route configuration or via routes learned through BGP peering (only available over Direct CNI).
 
@@ -32,20 +33,22 @@ Refer to <a href={props.trafficSteeringPage}>Traffic Steering</a> for more infor
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
-2. Go to **{props.productName}** > **Configuration**.
-3. From the **Routes** tab, select **Create** to add a new route.
-4. Enter a descriptive name for your route in **Description**.
-5. In **Prefix**, enter your range of IP addresses. For example, `10.10.10.100/24`.
-6. In **Tunnel/Next hop** select which tunnel you want your route to go through. Choose from the tunnels you have created in <a href={props.tunnelEndpoints}>Configure tunnel endpoints</a>.
-7. Choose the **Priority** for your route. Lower numbers have higher priorities.
+1. In the Cloudflare dashboard, go to {props.productName}'s **Configuration** page.
+
+	 <DashButton url={props.dashButtonPath} />
+
+2. From the **Routes** tab, select **Create** to add a new route.
+3. Enter a descriptive name for your route in **Description**.
+4. In **Prefix**, enter your range of IP addresses. For example, `10.10.10.100/24`.
+5. In **Tunnel/Next hop** select which tunnel you want your route to go through. Choose from the tunnels you have created in <a href={props.tunnelEndpoints}>Configure tunnel endpoints</a>.
+6. Choose the **Priority** for your route. Lower numbers have higher priorities.
 	:::note
 	<Render file="longest-prefix-match" product="networking-services/reference" /> Have this in mind when configuring priorities for your routes. Refer to <a href={props.routePrioritization}>Route prioritization</a> for more information.
 	:::
-8. (Optional) Choose a **Weight** for your route. Refer to <a href={props.chooseWeights}>Set priority and weights for static routes</a> for examples.
-9. (Optional) If you need to scope your route to a specific region, you can do it in **Region code**.
-10. (Optional) We highly recommend testing your route before adding it by selecting **Test routes**.
-11. Select **Add routes** when you are done.
+7. (Optional) Choose a **Weight** for your route. Refer to <a href={props.chooseWeights}>Set priority and weights for static routes</a> for examples.
+8. (Optional) If you need to scope your route to a specific region, you can do it in **Region code**.
+9. (Optional) We highly recommend testing your route before adding it by selecting **Test routes**.
+10. Select **Add routes** when you are done.
 
 </TabItem> <TabItem label="API">
 
@@ -263,8 +266,11 @@ The Magic routing table is managed by the customer, who can select both the Clou
 
 By default, each BGP peering session will use the same Cloudflare-side ASN to represent peering with the {props.productName} routing table. This ASN is called the **CF Account ASN** and is set to `13335`. This can be configured to a private 2-byte ASN (for example, any values between `64512` and `65534`). To set this ASN:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account.
-2. Go to **{props.productName}** > **Configuration** > **BGP**.
+1. In the Cloudflare dashboard, go to {props.productName}'s **Configuration** page.
+
+	 <DashButton url={props.dashButtonPath} />
+
+2. Go to **BGP configuration**.
 3. In **CF Account ASN**, enter Cloudflare's ASN.
 4. Select **Update**.
 
@@ -313,8 +319,11 @@ You need to configure two ASNs:
 
 If you already have set up your Cloudflare account ASN, you can skip steps two and three below.
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
-2. Go to **{props.productName}** > **Configuration** > **BGP configuration**.
+1. In the Cloudflare dashboard, go to {props.productName}'s **Configuration** page.
+
+	 <DashButton url={props.dashButtonPath} />
+
+2. Go to **BGP configuration**.
 3. In **CF Account ASN**, enter Cloudflare's ASN.
 4. Go to **Interconnects**.
 5. Find the Direct CNI interconnect you want to configure with BGP > select the **three dots** next to it > **Configure BGP**.
