@@ -65,8 +65,8 @@ By default, running `wrangler dev` / `vite dev` (when using the [Vite plugin](/w
 During local development, your Worker code interacts with these bindings using the exact same API calls (such as `env.MY_KV.put()`) as it would in a deployed environment. These local resources are initially empty, but you can populate them with data, as documented in [Adding local data](/workers/development-testing/local-data/).
 
 - By default, bindings connect to **local resource simulations** (except for [AI bindings](/workers-ai/configuration/bindings/), as AI models always run remotely).
-- You can override this default behavior and **connect to the remote resource**, on a per-binding basis. This lets you connect to real, production resources while still running your Worker code locally.
-- When using `wrangler dev`, you can temporarily disable all remote resources (and connect only to local resources) by providing the `--local` flag (i.e. `wrangler dev --local`)
+- You can override this default behavior and **connect to the remote resource** on a per-binding basis with [remote bindings](/workers/development-testing/#remote-bindings). This lets you connect to real, production resources while still running your Worker code locally.
+- When using `wrangler dev`, you can temporarily disable all [remote bindings](/workers/development-testing/#remote-bindings) (and connect only to local resources) by providing the `--local` flag (i.e. `wrangler dev --local`)
 
 ## Remote bindings
 
