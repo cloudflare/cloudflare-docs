@@ -125,7 +125,7 @@ console.log(links);
 
 ### Retrieve only visible links
 
-Pass a `visibleLinksOnly` parameter to only return links that are visible on the page.
+Set the `visibleLinksOnly` parameter to `true` to only return links that are visible on the page. By default, this is set to `false`.
 
 ```bash
 curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/links' \
