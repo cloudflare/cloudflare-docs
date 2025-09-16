@@ -14,6 +14,7 @@ import {
 	WranglerConfig,
 	MetaInfo,
 	Type,
+	DashButton
 } from "~/components";
 
 This guide will instruct you through how to use the AutoRAG REST API to make a query to your AutoRAG.
@@ -22,9 +23,12 @@ This guide will instruct you through how to use the AutoRAG REST API to make a q
 
 You need an API token with the `AutoRAG - Read` and `AutoRAG Edit` permissions to use the REST API. To create a new token:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Go to **AI** > **AutoRAG** and select your AutoRAG.
-3. Select **Use AutoRAG** then select **API**.
+1. In the Cloudflare dashboard, go to the **AutoRAG** page.
+
+<DashButton url="/?to=/:account/ai/autorag" />
+
+2. Select your AutoRAG.
+3. Select **Use AutoRAG** and then select **API**.
 4. Select **Create an API Token**.
 5. Review the prefilled information then select **Create API Token**.
 6. Select **Copy API Token** and save that value for future use.

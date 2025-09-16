@@ -14,9 +14,7 @@ In the [Configure HTTPS settings](/terraform/tutorial/configure-https-settings/)
 
 Specifically, you will increase the security level for a URL known to be expensive to render and cannot be cached: `https://www.example.com/expensive-db-call`. Additionally, you will add a redirect from the previous URL used to host this page.
 
-<Render file="v4-code-snippets" product="terraform" />
-
-## 1. Create a new branch and append the page rule
+## 1. Create Page Rules configuration
 
 Create a new branch and append the configuration.
 
@@ -24,235 +22,65 @@ Create a new branch and append the configuration.
 git checkout -b step5-pagerule
 ```
 
-```bash output
-Switched to a new branch 'step5-pagerule'
-```
-
-```sh
-
-cat >> cloudflare.tf <<'EOF'
-resource "cloudflare_page_rule" "increase-security-on-expensive-page" {
+Page Rules let you override zone settings for specific URL patterns. Add two Page Rules to your `main.tf`:
+```hcl
+# Increase security for expensive database operations
+resource "cloudflare_page_rule" "expensive_endpoint_security" {
   zone_id  = var.zone_id
-  target   = "www.${var.domain}/expensive-db-call"
+  target   = "${var.domain}/expensive-db-call"
   priority = 1
-
-  actions {
+  
+  actions = {
     security_level = "under_attack"
   }
 }
 
-resource "cloudflare_page_rule" "redirect-to-new-db-page" {
+# Redirect old URLs to new location
+resource "cloudflare_page_rule" "legacy_redirect" {
   zone_id  = var.zone_id
-  target   = "www.${var.domain}/old-location.php"
+  target   = "${var.domain}/old-location.php"
   priority = 2
-
-  actions {
-    forwarding_url {
-      url = "https://www.${var.domain}/expensive-db-call"
+  
+  actions = {
+    forwarding_url = {
+      url         = "https://www.${var.domain}/expensive-db-call"
       status_code = 301
     }
   }
 }
-EOF
 ```
+The first rule increases security to "Under Attack" mode for your database endpoint. The second rule redirects old URLs with a 301 permanent redirect.
 
-## 2. Preview and merge the changes
-
-Preview the changes Terraform will make and then merge them into the `master` branch.
-
+## 2. Preview and apply the changes:
 ```sh
 terraform plan
+terraform apply
 ```
-
-```sh output
-cloudflare_record.www-asia: Refreshing state... [id=fda39d8c9bf909132e82a36bab992864]
-cloudflare_record.www: Refreshing state... [id=c38d3103767284e7cd14d5dad3ab8669]
-cloudflare_zone_settings_override.example-com-settings: Refreshing state... [id=e2e6491340be87a3726f91fc4148b126]
-cloudflare_load_balancer_monitor.get-root-https: Refreshing state... [id=4238142473fcd48e89ef1964be72e3e0]
-cloudflare_load_balancer_pool.www-servers: Refreshing state... [id=906d2a7521634783f4a96c062eeecc6d]
-cloudflare_load_balancer.www-lb: Refreshing state... [id=cb94f53f150e5c1a65a07e43c5d4cac4]
-
-Terraform used the selected providers to generate the following execution plan.
-Resource actions are indicated with the following symbols:
-  + create
-
-Terraform will perform the following actions:
-
-  # cloudflare_page_rule.increase-security-on-expensive-page will be created
-  + resource "cloudflare_page_rule" "increase-security-on-expensive-page" {
-      + id       = (known after apply)
-      + priority = 1
-      + status   = "active"
-      + target   = "www.example.com/expensive-db-call"
-      + zone_id  = "e2e6491340be87a3726f91fc4148b126"
-
-      + actions {
-          + always_use_https    = false
-          + disable_apps        = false
-          + disable_performance = false
-          + disable_security    = false
-          + disable_zaraz       = false
-          + security_level      = "under_attack"
-        }
-    }
-
-  # cloudflare_page_rule.redirect-to-new-db-page will be created
-  + resource "cloudflare_page_rule" "redirect-to-new-db-page" {
-      + id       = (known after apply)
-      + priority = 2
-      + status   = "active"
-      + target   = "www.example.com/old-location.php"
-      + zone_id  = "e2e6491340be87a3726f91fc4148b126"
-
-      + actions {
-          + always_use_https    = false
-          + disable_apps        = false
-          + disable_performance = false
-          + disable_security    = false
-          + disable_zaraz       = false
-
-          + forwarding_url {
-              + status_code = 301
-              + url         = "https://www.example.com/expensive-db-call"
-            }
-        }
-    }
-
-Plan: 2 to add, 0 to change, 0 to destroy.
-
-------------------------------------------------------------------------
-
-Note: You didn't use the -out option to save this plan, so Terraform can't
-guarantee to take exactly these actions if you run "terraform apply" now.
+## 3. Verify changes:
+Test the redirect functionality:
+```bash
+curl -I https://example.com/old-location.php
 ```
-
-```sh
-
-git add cloudflare.tf
-git commit -m "Step 5 - Add two Page Rules."
+Expected output:
+```bash output
+HTTP/1.1 301 Moved Permanently
+Location: https://example.com/expensive-db-call
 ```
-
-```sh output
-[step5-pagerule d4fec16] Step 5 - Add two Page Rules.
- 1 file changed, 23 insertions(+)
+Test the increased security (Under Attack mode returns a challenge page):
+```bash
+curl -I https://example.com/expensive-db-call
 ```
-
-```sh
-git checkout master
+Expected output:
+```bash output
+HTTP/1.1 503 Service Temporarily Unavailable
 ```
+The 503 response indicates the Under Attack mode is active, presenting visitors with a challenge page before allowing access to protect against DDoS attacks.
 
-```sh output
-Switched to branch 'master'
-```
-
-```sh
-git merge step5-pagerule
-```
-
-```sh output
-Updating 7a2ac34..d4fec16
-Fast-forward
- cloudflare.tf | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
-```
-
-## 3. Apply and verify the changes
-
-First, test request the (now missing) old location of the expensive-to-render page.
-
-```sh
-curl -vso /dev/null https://www.example.com/old-location.php 2>&1 | grep "< HTTP\|Location"
-```
-
-```sh output
-< HTTP/1.1 404 Not Found
-```
-
-As expected, the location cannot be found. Apply the Page Rules, including the redirect that should fix this error.
-
-```sh
-terraform apply --auto-approve
-```
-
-```sh output
-cloudflare_record.www-asia: Refreshing state... [id=fda39d8c9bf909132e82a36bab992864]
-cloudflare_load_balancer_monitor.get-root-https: Refreshing state... [id=4238142473fcd48e89ef1964be72e3e0]
-cloudflare_zone_settings_override.example-com-settings: Refreshing state... [id=e2e6491340be87a3726f91fc4148b126]
-cloudflare_record.www: Refreshing state... [id=c38d3103767284e7cd14d5dad3ab8669]
-cloudflare_load_balancer_pool.www-servers: Refreshing state... [id=906d2a7521634783f4a96c062eeecc6d]
-cloudflare_load_balancer.www-lb: Refreshing state... [id=cb94f53f150e5c1a65a07e43c5d4cac4]
-
-Terraform used the selected providers to generate the following execution plan.
-Resource actions are indicated with the following symbols:
-  + create
-
-Terraform will perform the following actions:
-
-  # cloudflare_page_rule.increase-security-on-expensive-page will be created
-  + resource "cloudflare_page_rule" "increase-security-on-expensive-page" {
-      + id       = (known after apply)
-      + priority = 1
-      + status   = "active"
-      + target   = "www.example.com/expensive-db-call"
-      + zone_id  = "e2e6491340be87a3726f91fc4148b126"
-
-      + actions {
-          + always_use_https    = false
-          + disable_apps        = false
-          + disable_performance = false
-          + disable_security    = false
-          + disable_zaraz       = false
-          + security_level      = "under_attack"
-        }
-    }
-
-  # cloudflare_page_rule.redirect-to-new-db-page will be created
-  + resource "cloudflare_page_rule" "redirect-to-new-db-page" {
-      + id       = (known after apply)
-      + priority = 2
-      + status   = "active"
-      + target   = "www.example.com/old-location.php"
-      + zone_id  = "e2e6491340be87a3726f91fc4148b126"
-
-      + actions {
-          + always_use_https    = false
-          + disable_apps        = false
-          + disable_performance = false
-          + disable_security    = false
-          + disable_zaraz       = false
-
-          + forwarding_url {
-              + status_code = 301
-              + url         = "https://www.example.com/expensive-db-call"
-            }
-        }
-    }
-
-cloudflare_page_rule.redirect-to-new-db-page: Creating...
-cloudflare_page_rule.increase-security-on-expensive-page: Creating...
-cloudflare_page_rule.redirect-to-new-db-page: Creation complete after 3s [id=c5c40ff2dc12416b5fe4d0541980c591]
-cloudflare_page_rule.increase-security-on-expensive-page: Creation complete after 6s [id=1c13fdb84710c4cc8b11daf7ffcca449]
-
-Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
-```
-
-With the Page Rules in place, try that call again, along with a test for the Under Attack mode:
-
-```sh
-curl -vso /dev/null https://www.example.com/old-location.php 2>&1 | grep "< HTTP\|Location"
-```
-
-```sh output
-< HTTP/1.1 301 Moved Permanently
-< Location: https://www.example.com/expensive-db-call
-```
-
-```sh
-curl -vso /dev/null https://www.example.com/expensive-db-call 2>&1 | grep "< HTTP"
-```
-
-```sh output
-< HTTP/1.1 503 Service Temporarily Unavailable
+## 4. Commit and merge the changes:
+```bash
+git add main.tf
+git commit -m "Step 5 - Add two Page Rules"
+git push
 ```
 
 The call works as expected. In the first case, the Cloudflare global network responds with a `301` redirecting the browser to the new location. In the second case, the Cloudflare global network initially responds with a `503`, which is consistent with the Under Attack mode.

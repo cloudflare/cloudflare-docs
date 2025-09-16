@@ -211,8 +211,8 @@ Logpull\_options has been replaced with Custom Log Formatting output\_options. P
 If you are still using logpull\_options, here are the options that you can customize:
 
 1. **Fields** (optional): Refer to [Datasets](/logs/logpush/logpush-job/datasets/) for the currently available fields. The list of fields is also accessible directly from the API: `https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/datasets/{dataset_id}/fields`. Default fields: `https://api.cloudflare.com/client/v4/zones/{zone_id}/logpush/datasets/{dataset_id}/fields/default`.
-2. **Timestamp format** (optional): The format in which timestamp fields will be returned. Value options: `unixnano` (default), `unix`, `rfc3339`.
-3. **Redaction for CVE-2021-44228** (optional): This option will replace every occurrence of `${` with `x{`.  To enable it, set `CVE-2021-44228=true`.
+2. **Timestamp format** (optional): The format in which timestamp fields will be returned. Value options: `unixnano` (nanoseconds unit - default), `unix` (seconds unit), `rfc3339` (seconds unit).
+3. **Redaction for CVE-2021-44228** (optional): This option will replace every occurrence of `${` with `x{`.  To enable it, set `"CVE-2021-44228": "true"`.
 
 :::note[Note]
 

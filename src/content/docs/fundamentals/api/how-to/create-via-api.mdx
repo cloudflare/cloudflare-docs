@@ -10,6 +10,11 @@ import { Render, Tabs, TabItem, APIRequest } from "~/components";
 
 Generate new API tokens on the fly via the API. Before you can do this, you must create an API token in the Cloudflare dashboard that can create subsequent tokens.
 
+:::note
+
+The API Token Template [**Create additional tokens**](/fundamentals/api/reference/template/) must be used to generate the token. The option for **API Tokens::Edit** is not available in any other template or in the Custom Token builder.
+:::
+
 ## Generating the initial token
 
 Before you can create tokens via the API, you need to [generate the initial token](/fundamentals/api/get-started/create-token/) via the Cloudflare dashboard.

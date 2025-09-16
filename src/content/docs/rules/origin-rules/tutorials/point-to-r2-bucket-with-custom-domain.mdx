@@ -8,9 +8,9 @@ products:
   - Origin Rules
 ---
 
-import { Example, DashButton } from "~/components";
+import { Example, DashButton, Steps } from "~/components";
 
-This example configures an origin rule and a DNS record to point to an R2 bucket configured with a custom domain.
+This tutorial will instruct you how to configure an origin rule and a DNS record to point to an R2 bucket configured with a custom domain.
 
 The procedure will use the following example values:
 
@@ -23,6 +23,8 @@ When configuring your R2 bucket's custom domain, use a custom domain that you do
 
 ## 1. Configure custom domain in your Pages project
 
+<Steps>
+
 1. In the Cloudflare dashboard, go to the **R2 object storage** page.
 
    <DashButton url="/?to=/:account/r2/overview" />
@@ -32,6 +34,8 @@ When configuring your R2 bucket's custom domain, use a custom domain that you do
 4. Under **Public access** > **Custom Domains**, select **Connect Domain**.
 5. Enter the domain name you want to connect to — `imagesbucket.example.com` in this example — and select **Continue**.
 6. Review the new record that will be added to the DNS table and select **Connect Domain**.
+
+</Steps>
 
 Your domain is now connected. The status takes a few minutes to change from **Initializing** to **Active**, and you may need to refresh to review the status update. If the status has not changed, select the **...** next to your bucket and select **Retry connection**.
 
@@ -72,6 +76,8 @@ In our example, the URL that website visitors will access starts with `/images`.
 
 Use a URL rewrite to remove the `/images` segment from the URL path. Cloudflare provides a rule template in the dashboard called **Rewrite Path for Object Storage Bucket** that you can use to configure the required rewrite.
 
+<Steps>
+
 1. Go to **Rules** > **Overview**.
 2. Select **Create rule** > **URL Rewrite Rule**.
 3. Enter a descriptive name for the rule in **Rule name**.
@@ -91,6 +97,8 @@ Use a URL rewrite to remove the `/images` segment from the URL path. Cloudflare 
    | [`/`] `images/*` | [`/`] `${1}` |
 
 7. Select **Deploy**.
+
+</Steps>
 
 :::note
 Cloudflare provides a rule template in the dashboard called **Rewrite Path for Object Storage Bucket** that you can use and adapt to configure the URL rewrite rule.

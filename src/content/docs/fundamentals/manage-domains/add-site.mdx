@@ -4,7 +4,7 @@ pcx_content_type: tutorial
 
 ---
 
-import { GlossaryTooltip, Render } from "~/components"
+import { DashButton, GlossaryTooltip, Render } from "~/components"
 
 If you purchased your domain from a different provider, you can still connect the domain to Cloudflare. After you connect your domain to Cloudflare, Cloudflare will act as the [reverse proxy](/fundamentals/concepts/how-cloudflare-works/#cloudflare-as-a-reverse-proxy) and [DNS provider](/fundamentals/concepts/how-cloudflare-works/#cloudflare-as-a-dns-provider) for your site.
 
@@ -20,8 +20,11 @@ To use Cloudflare as a reverse proxy but maintain your DNS provider, refer to [p
 
 ## 1. Onboard a domain in Cloudflare
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
-2. Select **Add** > **Connect a domain**.
+1. Log in to the Cloudflare dashboard.
+
+      <DashButton url="/?to=/:account/home" />
+
+2. Select **Onboard a domain**.
 3. Enter your website's <GlossaryTooltip term="apex domain">apex domain</GlossaryTooltip> (for example, `example.com`), choose how you would like to add your [DNS records](/dns/manage-dns-records/), and select **Continue**.
    :::note
    If Cloudflare is unable to identify your domain as a registered domain, make sure you are using an existing [top-level domain](https://www.cloudflare.com/learning/dns/top-level-domain/) (`.com`, `.net`, `.biz`, or others).

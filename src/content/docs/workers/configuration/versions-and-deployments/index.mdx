@@ -4,6 +4,7 @@ title: Versions & Deployments
 head: []
 description: Upload versions of Workers and create deployments to release new versions.
 ---
+import { DashButton } from "~/components";
 
 Versions track changes to your Worker. Deployments configure how those changes are deployed to your traffic.
 
@@ -77,15 +78,17 @@ See examples of creating a Worker, Versions, and Deployments directly with the A
 
 #### Via Wrangler
 
-Wrangler allows you to view the 10 most recent versions and deployments. Refer to the [`versions list`](/workers/wrangler/commands/#list-4) and [`deployments`](/workers/wrangler/commands/#list-5) documentation to view the commands.
+Wrangler allows you to view the 100 most recent versions and deployments. Refer to the [`versions list`](/workers/wrangler/commands/#list-4) and [`deployments`](/workers/wrangler/commands/#list-5) documentation to view the commands.
 
 #### Via the Cloudflare dashboard
 
 To view your deployments in the Cloudflare dashboard:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers) and select your account.
-2. Go to **Workers & Pages**.
-3. Select your Worker > **Deployments**.
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+
+2. Select your Worker > **Deployments**.
 
 ## Limits
 

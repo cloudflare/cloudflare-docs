@@ -11,11 +11,13 @@ sidebar:
 
 ---
 
-import { TabItem, Tabs, Steps, Render, WranglerConfig, YouTube, Markdown } from "~/components"
+import { TabItem, Tabs, Render, WranglerConfig, YouTube, Markdown, DashButton, Steps } from "~/components"
 
 The Query Builder helps you write structured queries to investigate and visualize your telemetry data. The Query Builder searches the Workers Observability dataset, which currently includes all logs stored by [Workers Logs](/workers/observability/logs/workers-logs/).
 
-The Query Builder can be found in the [Workers' Observability tab in the Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers-and-pages/observability/investigate/).
+The Query Builder can be found in the **Observability** page of the Cloudflare dashboard:
+
+<DashButton url="/?to=/:account/workers-and-pages/observability" />
 
 <YouTube id="nu4pTU8fR78" />
 
@@ -36,15 +38,16 @@ The Query Builder is available to all developers and requires no enablement. Que
 
 ## Write a query in the Cloudflare dashboard
 
-<Steps>
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers-and-pages/observability/investigate/) and select your account.
-2. In Account Home, go to **Workers & Pages**.
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+
+2. Select your Worker.
 3. Select **Observability** in the left-hand navigation panel, and then the **Investigate** tab.
 4. Select a **Visualization**.
 5. Optional: Add fields to Filter, Group By, Order By, and Limit. For more information, see what [composes a query](/workers/observability/query-builder/#query-composition).
 6. Optional: Select the appropriate time range.
 7. Select **Run**. The query will automatically run whenever changes are made.
-</Steps>
 
 ## Query composition
 
@@ -161,11 +164,13 @@ Queries can be starred by users. Starred queries are unique to the user, and not
 
 Saved queries can be deleted from the **Queries** tab. If you delete a query, the query is deleted for all users in the account.
 
-<Steps>
-1. Select the [Queries](https://dash.cloudflare.com/?to=/:account/workers-and-pages/observability/queries) tab in the Observability dashboard.
-2. On the right-hand side, select the three dots for additional actions.
-3. Select **Delete Query** and follow the instructions.
-</Steps>
+1. In the Cloudflare dashboard, go to the **Observability** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages/observability" />
+
+2. Select the **Queries** tab.
+3. On the right-hand side, select the three dots for additional actions.
+4. Select **Delete Query** and follow the instructions.
 
 ## Share queries
 

@@ -59,11 +59,17 @@ While the limits above define the maximum number of concurrent browser sessions 
 
 If you recently upgraded to the [Workers Paid plan](/workers/platform/pricing/) but still encounter the 10-minute per day limit, redeploy your Worker to ensure your usage is correctly associated with the new plan.
 
-### How can I manage concurrency and session isolation with Browser Rendering?
+<Render
+  file="manage-concurrency-faq"
+  product="browser-rendering"
+/>
 
-If you are hitting concurrency [limits](/browser-rendering/platform/limits/#workers-paid), or want to optimize concurrent browser usage with the [Workers Binding method](/browser-rendering/workers-bindings/), here are a few tips:
+### Can I increase the browser timeout?
 
-- Optimize with tabs or shared browsers: Instead of launching a new browser for each task, consider opening multiple tabs or running multiple actions within the same browser instance. 
-- [Reuse sessions](/browser-rendering/workers-bindings/reuse-sessions/): You can optimize your setup and decrease startup time by reusing sessions instead of launching a new browser every time. If you are concerned about maintaining test isolation (for example, for tests that depend on a clean environment) we recommend using [incognito browser contexts](https://pptr.dev/api/puppeteer.browser.createbrowsercontext), which isolate cookies and cache with other sessions. 
+By default, a browser instance will time out after 60 seconds of inactivity. If you want to keep the browser open longer, you can use the [`keep_alive` option](/browser-rendering/platform/puppeteer/#keep-alive) which allows you to extend the timeout to up to 10 minutes.
 
-If you are still running into concurrency limits you can [request a higher limit](https://forms.gle/CdueDKvb26mTaepa9). 
+### Is there a maximum session duration?
+
+There is no fixed maximum lifetime for a browser session as long as it remains active. By default, a browser will close after one minute of inactivity, but you can [extend this inactivity window](#can-i-increase-the-browser-timeout). Sessions will also be closed when Browser Rendering rolls out a new release.
+
+

@@ -9,7 +9,7 @@ head:
 noindex: true
 ---
 
-import { Render, Type, MetaInfo, WranglerConfig } from "~/components";
+import { Render, Type, MetaInfo, WranglerConfig, DashButton } from "~/components";
 
 <Render file="wrangler-v1-deprecation" product="workers" />
 
@@ -107,7 +107,14 @@ wrangler logout
 
 This command only invalidates OAuth tokens acquired through the `wrangler login` command. However, it will try to delete the configuration file regardless of your authorization method.
 
-If you wish to delete your API token, log in to the Cloudflare dashboard and go to **Overview** > **Get your API token** in the right side menu > select the three-dot menu on your Wrangler token and select **Delete** if you wish to delete your API token.
+To delete your API token:
+
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+
+2. In the **Overview** > **Get your API token** in the right side menu.
+3. Select the three-dot menu on your Wrangler token and select **Delete**.
 
 ---
 
@@ -166,7 +173,7 @@ After you have registered a subdomain, add `workers_dev` to your Wrangler file.
 To publish to your own domain, specify these three fields in your Wrangler file.
 
 - `zone_id` string
-  - The Cloudflare zone ID, for example, `zone_id = "b6558acaf2b4cad1f2b51c5236a6b972"`, which can be found in the [Cloudflare dashboard](https://dash.cloudflare.com).
+  - The Cloudflare zone ID, for example, `zone_id = "b6558acaf2b4cad1f2b51c5236a6b972"`, which can be found in the Cloudflare dashboard.
 
 - `route` string
   - The route you would like to publish to, for example, `route = "example.com/my-worker/*"`.

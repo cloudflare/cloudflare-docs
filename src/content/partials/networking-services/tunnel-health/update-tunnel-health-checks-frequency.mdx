@@ -6,7 +6,15 @@ params:
   - addTunnelsPath
 ---
 
-import { CURL, AnchorHeading, GlossaryTooltip, Markdown, TabItem, Tabs } from "~/components";
+import {
+	CURL,
+	AnchorHeading,
+	GlossaryTooltip,
+	Markdown,
+	TabItem,
+	Tabs,
+	DashButton,
+} from "~/components";
 
 By default, Cloudflare servers send <GlossaryTooltip term="tunnel health-check" link={props.healthChecksUrl}>health checks</GlossaryTooltip> to each <GlossaryTooltip term="GRE tunnel">GRE</GlossaryTooltip>, CNI, or <GlossaryTooltip term="IPsec tunnel">IPsec</GlossaryTooltip> tunnel endpoint you configure to receive traffic from {props.productName}.
 
@@ -51,10 +59,9 @@ Below is an example of how to adjust tunnel health check frequency to `low`. Not
 	url="https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/ipsec_tunnels/{ipsec_tunnel_id}"
 	method="PUT"
 	json={{
-		"health_check":
-			{
-				"rate": "low"
-			}
+		health_check: {
+			rate: "low",
+		},
 	}}
 />
 
@@ -62,21 +69,20 @@ Below is an example of how to adjust tunnel health check frequency to `low`. Not
 </TabItem> </Tabs>
 
 { props.magicProduct === "Magic WAN" && (
+
   <>
 		<AnchorHeading depth={2} title="Configure Connector" />
+  	<ol>
+   		<li><p>In the Cloudflare dashboard, go to the <strong>Sites</strong> page.</p>
+   			<DashButton url="/?to=/:account/magic-wan/sites" />
+ 			</li>
 
-		<Markdown
-		text={`
-		1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-		2. Go to **Magic WAN** > **Sites**.
-		3. Select your site > **Edit**.
-		4. In **Network** > **WAN configuration** > select your WAN > **Edit**
-		5. Change the **Health check rate** to your desire rate.
-		6. Select **Save**.
-		`}
-		inline={false}
-		/>
-
+   		<li>Select your site &gt; <strong>Edit</strong>.</li>
+   		<li>In <strong>Network</strong> &gt; <strong>WAN configuration</strong> &gt; select your WAN &gt; <strong>Edit</strong>.</li>
+   		<li>Change the <strong>Health check rate</strong> to your desire rate.</li>
+   		<li>Select <strong>Save</strong>.</li>
+   	</ol>
   </>
-  )
+
+	)
 }

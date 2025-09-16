@@ -6,6 +6,8 @@ sidebar:
 
 ---
 
+import { DashButton } from "~/components";
+
 Origin CA keys are often used as the value of header `X-AUTH-USER-SERVICE-KEY` when interacting with [Origin CA certificates](/ssl/origin-configuration/origin-ca/) API. It is also used by [Keyless SSL](/ssl/keyless-ssl/) key server.
 
 :::note
@@ -25,5 +27,8 @@ The key value always starts with `v1.0-`.
 To retrieve your Origin CA keys:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
+
+    <DashButton url="/?to=/:account/home" />
+
 2. Go to **User Profile** > **API Tokens**.
 3. In the **API Keys** section, select `Origin CA Key`.

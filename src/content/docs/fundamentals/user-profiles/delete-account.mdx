@@ -4,6 +4,8 @@ title: Delete your Cloudflare account
 
 ---
 
+import { DashButton } from "~/components";
+
 :::note
 These steps do not apply to accounts under contract. Contact your account team for more information.
 :::
@@ -43,7 +45,10 @@ However, this may not be the same for users who have a lock on their account (fo
 
 All domains, subscriptions, and billing information on your account will be removed from Cloudflare.
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
+1. Log in to the Cloudflare dashboard.
+
+    <DashButton url="/?to=/:account/home" />
+
 2. Select **My Profile**.
 3. Select **Delete this user**.
 4. Select **Delete user**.

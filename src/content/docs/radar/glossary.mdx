@@ -178,6 +178,12 @@ The Internet Quality Index estimates connection performance under average utiliz
 
 The IQI methodology requires a minimum number of measurements to generate estimates. As a result, graphs for smaller countries and ASNs may display occasional gaps, especially during nighttime. These gaps do not indicate outages. The number of measurements underlying IQI does not necessarily correlate with the volume of traffic observed by Cloudflare in a specific country or ASN.
 
+## IRR AS-SETs
+
+An IRR AS-SET is a named collection of Autonomous System Numbers (ASNs) within the Internet Routing Registry (IRR) used to define and manage BGP routing policies. By grouping related networks, such as customers and downstream peers, under a single identifier, network operators can automate the creation of BGP filters, which are essential for preventing the propagation of BGP route leaks. AS-SETs can be hierarchical, meaning they can include other AS-SETs as members, creating a scalable but complex structure. To quantify this complexity, the "AS Cone" measures the total number of unique ASNs in a fully expanded set (its downstream footprint), while "Upstreams" measures how many other AS-SETs include it directly or indirectly, providing insight into its role in the global routing system. 
+
+An AS-SET does not inherently includes its owner networks. Cloudflare Radar infers the owner by matching the AS-SET name on [PeeringDB](https://www.peeringdb.com/) or by the name itself. When an AS-SET's owner can be inferred via both methods, we prefer the PeeringDB information.
+
 ## Leaked credentials
 
 [Leaked credentials detection](/waf/detections/leaked-credentials/) scans incoming HTTP requests for known authentication patterns from common web apps and any custom detection locations that were configured. Cloudflare Radar provides visibility into aggregate trends in authentication requests, including the detection of leaked credentials.
