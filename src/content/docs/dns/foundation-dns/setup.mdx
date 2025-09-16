@@ -27,7 +27,7 @@ Before opting in for advanced nameservers, consider the following:
 
 Some behaviors are different from standard Cloudflare nameservers:
 
-- Wildcard records are still supported but, with advanced nameservers, a wildcard record (`*.example.com`) will not apply to a subdomain that is an empty non-terminal. An empty non-terminal is a node in the DNS tree that has no records associated with it but has descendants that do, as exemplified below.
+- Wildcard records are still supported but, with advanced nameservers, a wildcard record (`*.example.com`) will not apply to a subdomain that is an empty non-terminal. An empty non-terminal is a node in the DNS tree that has no records associated with it but has descendants that do, as exemplified below. This behavior is in compliance with [RFC 4592](https://www.rfc-editor.org/rfc/rfc4592.html), which defines the role of empty non-terminals in wildcard resolution.
 
 <Details header="Example">
 
