@@ -66,6 +66,6 @@ Use the following troubleshooting strategies if you are running into issues whil
 
 - Check your [Gateway network logs](/cloudflare-one/insights/logs/gateway-logs/#network-logs) to see whether your UDP DNS resolutions are being allowed or blocked.
 
-- Ensure that your internal DNS resolver is available over a routable private IP address. You can check that by trying the `dig` commands on your machine running `cloudflared`.
+- Ensure that your internal DNS resolver is available over a routable private IP address. You can check that by trying the `dig` command on your machine running `cloudflared`.
 
 - Check your set up by using `dig ... +tcp` to force the DNS resolution to use TCP instead of UDP.
