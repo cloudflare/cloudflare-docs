@@ -188,7 +188,7 @@ If your private hostname points to an HTTPS application on port 443, you can sec
 
 ##### Non-HTTPS applications
 
-Access policies and Gateway network policies only support hostname-based filtering for applications on port 443. If your application runs on a non-443 port, you will need to allow or block network traffic using the [Destination IP](/cloudflare-one/policies/gateway/network-policies/#destination-ip) selector. Then, add a Gateway DNS policy to allow or block the [Host](/cloudflare-one/policies/gateway/dns-policies/#host) or [Domain](/cloudflare-one/policies/gateway/dns-policies/#domain) from resolving.
+Access policies and Gateway network policies only support hostname-based filtering for applications on port `443`. If your application runs on a non-`443` port, you will need to allow or block network traffic using the [Destination IP](/cloudflare-one/policies/gateway/network-policies/#destination-ip) selector. Then, add a Gateway DNS policy to allow or block the [Host](/cloudflare-one/policies/gateway/dns-policies/#host) or [Domain](/cloudflare-one/policies/gateway/dns-policies/#domain) from resolving.
 		<Details header="Example network policies">
 		The following example consists of two policies: the first allows specific users to reach your application, and the second blocks all other traffic.
 
