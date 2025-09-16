@@ -7,7 +7,7 @@ sidebar:
   order: 6
 ---
 
-import { Steps } from "~/components";
+import { Steps, DashButton } from "~/components";
 
 ```mermaid
 graph LR
@@ -31,8 +31,11 @@ A person with **Administrator** or **Super Administrator** access must set up th
 
 {/* prettier-ignore */}
 <Steps>
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to **Manage Account** > **Settings** > **Pay Per Crawl**.
+1. In the Cloudflare dashboard, go to **Manage Account** > **Settings**.
+
+   <DashButton url="/?to=/:account/configurations" />
+
+2. Select **Pay Per Crawl**.
 3. In the **Stripe account** section, select **Connect**.
 4. Select **Continue to Stripe**.
 5. Complete Stripe's onboarding process, including:

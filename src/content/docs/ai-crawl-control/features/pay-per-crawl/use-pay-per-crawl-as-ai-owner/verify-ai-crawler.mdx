@@ -5,7 +5,7 @@ sidebar:
   order: 10
 ---
 
-import { Steps } from "~/components";
+import { Steps, DashButton } from "~/components";
 
 ```mermaid
 graph LR
@@ -49,9 +49,11 @@ Submit a form to add your AI crawler to Cloudflare's list of verified bots.
 
 {/* prettier-ignore */}
 <Steps>
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account.
-2. Go to **Manage Account** > **Configurations**.
-3. Go to the **Verified Bots** tab.
-4. Fill out the form.
-5. Select **Submit**.
+1. In the Cloudflare dashboard, go to **Manage Account** > **Settings**.
+
+   <DashButton url="/?to=/:account/configurations" />
+
+2. Go to the **Bot Submission Form** tab.
+3. Fill out the form.
+4. Select **Submit**.
 </Steps>
