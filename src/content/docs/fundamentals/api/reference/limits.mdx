@@ -13,9 +13,9 @@ import { Render } from "~/components";
 
 The following headers are returned when calling REST APIs:
 
-- `x-ratelimit-limit`: The total number of requests a caller can make.
-- `x-ratelimit-remaining`: The number of remaining requests before the rate limit takes effect.
+- `ratelimit-limit`: The total number of requests a caller can make.
+- `ratelimit-remaining`: The number of remaining requests before the rate limit takes effect.
 - `retry-after`: The number of seconds, rounded up, until more capacity is available.
-- `x-ratelimit-reset`: The `RFC 1123` formatted date when more capacity is available.
+- `ratelimit-reset`: The `RFC 1123` formatted date when more capacity is available.
 
 Cloudflare's SDKs will also automatically work with the headers and back off in response to rate limits.
