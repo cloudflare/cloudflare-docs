@@ -1134,7 +1134,8 @@
 /pages/how-to/deploy-a-jekyll-site/ /pages/framework-guides/deploy-a-jekyll-site/ 301
 /pages/how-to/deploy-a-nextjs-site/ /workers/framework-guides/web-apps/nextjs 301
 /pages/framework-guides/deploy-a-nextjs-site/ /workers/framework-guides/web-apps/nextjs 301
-/pages/framework-guides/nextjs/* /workers/framework-guides/web-apps/nextjs 301
+/pages/framework-guides/nextjs/resources/* /workers/framework-guides/web-apps/nextjs 301
+/pages/framework-guides/nextjs/ssr/* /workers/framework-guides/web-apps/nextjs 301
 /pages/framework-guides/deploy-a-svelte-site/ /pages/framework-guides/deploy-a-svelte-kit-site/ 301
 /pages/how-to/deploy-anything/ /pages/framework-guides/deploy-anything/ 301
 /pages/how-to/deploy-a-react-application/ /pages/framework-guides/deploy-a-react-site/ 301
