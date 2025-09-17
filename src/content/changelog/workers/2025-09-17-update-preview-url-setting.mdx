@@ -1,0 +1,12 @@
+---
+title: Updates to Workers Preview URL Settings
+description: We performed a one-time update to disable preview URLs on Workers with workers.dev disabled to require an explicit opt-in. 
+date: 2025-09-17
+---
+ 
+To prevent the accidental exposure of applications, we've updated how Worker preview URLs (<WORKER_NAME>.<SUBDOMAIN>.workers.dev) are handled.
+
+**What has changed:**
+- New Default Behavior: If a Worker's `workers.dev` route is disabled and its preview URL is not explicitly configured, the preview URL will now default to disabled. However, you can still explicitly enable the preview URL regardless of your `workers.dev` enablement status. 
+- One-Time Update for Existing Workers: We performed a one-time update to disable preview URLs on existing Workers with a disabled `workers.dev` route. This ensures an explicit opt-in is required going forward.
+- Re-enabling Preview URLs: If your preview URL was disabled, you can re-enable it through the Worker's settings page in the dashboard or by updating the Worker's configuration file and deploying with the latest version of Wrangler. 
