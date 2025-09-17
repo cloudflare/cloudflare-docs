@@ -20,7 +20,7 @@ Yes, you can use Workers KV outside of Workers by using the [REST API](/api/reso
 When choosing how to access Workers KV, consider the following:
 
 - **Performance**: Accessing KV via the [Workers Binding API](/kv/api/write-key-value-pairs) is generally faster than using the [REST API](/api/resources/kv/), as it avoids the overhead of HTTP requests.
-- **Rate Limits**: Be aware of the different rate limits for each access method. The [REST API](/api/resources/kv/) has a lower write rate limit compared to the Workers Binding API. Refer to [What is KV's write rate limits?](/kv/reference/faq/#what-is-kvs-write-rate-limit)
+- **Rate Limits**: Be aware of the different rate limits for each access method. The [REST API](/api/resources/kv/) has a lower write rate limit compared to the Workers Binding API. Refer to [What is KV's write rate limit?](/kv/reference/faq/#what-is-kvs-write-rate-limit)
 
 ### Why can I not immediately see the updated value of a key-value pair?
 
