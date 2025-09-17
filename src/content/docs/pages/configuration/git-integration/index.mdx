@@ -3,6 +3,8 @@ pcx_content_type: concept
 title: Git integration
 ---
 
+import { Steps, DashButton } from "~/components";
+
 You can connect each Cloudflare Pages project to a [GitHub](/pages/configuration/git-integration/github-integration) or [GitLab](/pages/configuration/git-integration/gitlab-integration) repository, and Cloudflare will automatically deploy your code every time you push a change to a branch.
 
 :::note
@@ -50,8 +52,14 @@ This can be useful for managing repository access or troubleshooting installatio
 
 If you are using a Git-integrated project and do not want to trigger deployments every time you push a commit, you can use [branch control](/pages/configuration/branch-build-controls/) to disable/pause builds:
 
-1. Go to the **Settings** of your **Pages project** in the [Cloudflare dashboard](https://dash.cloudflare.com).
-2. Navigate to **Build** > edit **Branch control** > turn off **Enable automatic production branch deployments**.
-3. You can also change your Preview branch to **None (Disable automatic branch deployments)** to pause automatic preview deployments.
+<Steps>
+1. Go to **Workers & Pages** in the Cloudflare dashboard.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+
+2. Select your Pages project.
+3. Navigate to **Build** > edit **Branch control** > turn off **Enable automatic production branch deployments**.
+4. You can also change your Preview branch to **None (Disable automatic branch deployments)** to pause automatic preview deployments.
+</Steps>
 
 Then, you can use Wrangler to deploy directly to your Pages project and make changes to your Git repository without automatically triggering a build.

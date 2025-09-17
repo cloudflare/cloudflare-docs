@@ -4,6 +4,8 @@ title: Install private packages
 
 ---
 
+import { Steps, DashButton } from "~/components";
+
 Cloudflare Pages supports custom package registries, allowing you to include private dependencies in your application. While this walkthrough focuses specifically on [npm](https://www.npmjs.com/), the Node package manager and registry, the same approach can be applied to other registry tools.
 
 You will be be adjusting the [environment variables](/pages/configuration/build-configuration/#environment-variables) in your Pages project's **Settings**. An existing website can be modified at any time, but new projects can be initialized with these settings, too. Either way, altering the project settings will not be reflected until its next deployment.
@@ -70,8 +72,13 @@ Your Pages project must then have the matching [environment variables](/pages/co
 
 In the event that your local development no longer works with your new `.npmrc` file, you will need to add some additional changes:
 
+<Steps>
 1. Rename the Pages-compliant `.npmrc` file to `.npmrc.pages`. This should be referencing environment variables.
-
 2. Restore your previous `.npmrc` file – the version that was previously working for you and your teammates.
+3. Go to **Workers & Pages** in the Cloudflare dashboard.
 
-3. Go to your Pages project > **Settings** > **Environment variables**, add a new [environment variable](/pages/configuration/build-configuration/#environment-variables) named [`NPM_CONFIG_USERCONFIG`](https://docs.npmjs.com/cli/v6/using-npm/config#npmrc-files) and set its value to `/opt/buildhome/repo/.npmrc.pages`. If your `.npmrc.pages` file is not in your project's root directory, adjust this path accordingly.
+   <DashButton url="/?to=/:account/workers-and-pages" />
+
+4. Select your Pages project.
+5. Go to **Settings** > **Environment variables**, add a new [environment variable](/pages/configuration/build-configuration/#environment-variables) named [`NPM_CONFIG_USERCONFIG`](https://docs.npmjs.com/cli/v6/using-npm/config#npmrc-files) and set its value to `/opt/buildhome/repo/.npmrc.pages`. If your `.npmrc.pages` file is not in your project's root directory, adjust this path accordingly.
+</Steps>
