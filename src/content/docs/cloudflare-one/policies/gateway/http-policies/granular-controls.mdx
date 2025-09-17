@@ -1,0 +1,132 @@
+---
+pcx_content_type: concept
+title: Application Granular Controls
+sidebar:
+  order: 4
+---
+
+import { Details } from "~/components";
+
+Application Granular Controls enables you to control specific user actions within supported SaaS applications. This allows you to give users access to an application while restricting the actions that they can take within the application.
+
+:::note
+To enable HTTPS inspection, which is required for this feature, you must have [TLS decryption enabled](/learning-paths/replace-vpn/configure-device-agent/enable-tls-decryption/) in your account settings.
+:::
+
+## Create a Gateway policy with Application Granular Controls
+
+To create an HTTP policy with Application Granular Controls:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Gateway** > **Firewall policies**. Select **HTTP**.
+2. Select **Add a policy**.
+3. Give your policy a name (for example, "Block Google Drive Uploads”) and a description.
+4. In the expression builder, define the scope of your policy. In the **Traffic** section, add a condition and specify the **Application** selector.
+5. Select the “is” **Operator** (application granular controls are specific to an application so the condition must reference a single application using the is operator).
+6. In the **Value** field, the applications that support granular controls are grouped in the categories at the top of the list for example “File Sharing (with Granular Controls)”. Select the required application (for example Google Drive).
+7. A fourth **Controls** field will appear, allowing you to select one or more **Application Controls** or individual **Operations** (see below for an explanation of these terms).
+8. Complete your policy expression with any other conditions, select an **Action** and configure any desired policy settings.
+9. Select **Create policy** to save and activate your policy.
+
+The policy will appear in the list of HTTP policies. Here, the [order of precedence](/cloudflare-one/policies/gateway/order-of-enforcement/#order-of-precedence) can be changed and the policy can be disabled or enabled.
+
+## Application Controls vs Operations
+
+Application Granular Controls can be defined at two levels of granularity:
+
+- **Application Controls** are pre-defined controls which represent user intent for example Upload or Download. They are defined by Cloudflare and consist of a set of operations (see below) that have been deemed to be related to that intent. Using application controls within a policy is a quick way of enforcing common controls. For the mapping of operations to application controls, see [Application Controls](/cloudflare-one/policies/gateway/application-app-types/#application-controls).
+- **Operations**: These are the individual API-level actions that an app uses. Defining controls at operation level allows for more fine-grained policies to support advanced use cases for example _block only certain types of downloads_, or to define controls where there is not an existing application control that covers the required intent for example _block comments_. However, because each SaaS application uses a unique set of operations each of which has its own scope, nuances and behaviors, the use of operation level controls often requires analysis to determine applicability for the desired use case. Operation-level controls can also be used in cases where variations to the Cloudflare-defined application controls are needed for example to include or exclude certain operations.
+
+**Operation Groups** are groupings of operations that are defined by the application vendor. Typically these are based on a categorization of the application's capabilities \- different functional areas of the application for example _signature requests_ \- or the entities that the application defines for example _files_ or _folders_. These definitions vary by application. In the Gateway policy builder, operations are shown grouped into these operation groups to facilitate correlating the operations with available vendor API documentation.
+
+The **Contains Payload** column in [Application Controls](/cloudflare-one/policies/gateway/application-app-types/#application-controls) indicates whether a given operation is likely to contain content that is suitable for DLP scanning. This includes operations that contain the content of uploaded or downloaded files, or AI prompts. When a user performs a file upload for example, a sequence of API operations may result, for example setting up the file metadata, uploading the file content, and then finalizing the upload. From a DLP perspective, it can be advantageous to specifically target the operation that contains the file content; the _contains payload_ column identifies which operation that is.
+
+## Application APIs
+
+SaaS applications typically provide multiple APIs to interact with. For each application, we may support the following API types:
+
+- **Web Application API:** these APIs are consumed by the web application that users interact with through their browser.
+- **Platform API**: these APIs are exposed to users to allow for programmatic interaction with the SaaS application. These are typically used by automations, scripts, or even other applications.
+
+When building your HTTP rules using Operations, if both API types are available, you should select Operations that align to the API being used, or include both for greater coverage.
+
+Application controls include Operations for both API types.
+
+## Compatible applications
+
+With [Application Granular Controls](/cloudflare-one/policies/gateway/http-policies/#application-granular-controls), you can choose specific actions and operations to match application traffic.
+
+### AI
+
+<Details header="ChatGPT (app ID `1199`)">
+
+| Operation name     | Operation ID | Application Control name | Application Control ID | Contains payload | Operation Group | Operation Group ID |
+| ------------------ | ------------ | ------------------------ | ---------------------- | ---------------- | --------------- | ------------------ |
+| SendPrompt         | `8004`       | Prompt                   | `1652`                 | ✅               | Chat            | `1650`             |
+| UploadFile         | `8008`       | Upload                   | `1653`                 | —                | Chat            | `1650`             |
+| UploadFilePayload  | `8013`       | Upload                   | `1653`                 | ✅               | Chat            | `1650`             |
+| ShareResponse      | `8006`       | Share                    | `1654`                 | —                | Chat            | `1650`             |
+| ShareCanvas        | `8007`       | Share                    | `1654`                 | —                | Chat            | `1650`             |
+| TranscribeVoice    | `8011`       | Voice                    | `1655`                 | —                | Chat            | `1650`             |
+| EnableVoiceMode    | `8003`       | Voice                    | `1655`                 | —                | Chat            | `1650`             |
+| AllowTraining      | `8009`       |                          |                        | —                | Settings        | `1651`             |
+| AllowVoiceTraining | `8010`       |                          |                        | —                | Settings        | `1651`             |
+| AllowVideoTraining | `8016`       |                          |                        | —                | Settings        | `1651`             |
+| ExportData         | `8020`       |                          |                        | —                | Settings        | `1651`             |
+
+</Details>
+
+<Details header="Google Gemini (app ID `1340`)">
+
+| Operation name    | Operation ID | Application Control name | Application Control ID | Contains payload | Operation Group | Operation Group ID |
+| ----------------- | ------------ | ------------------------ | ---------------------- | ---------------- | --------------- | ------------------ |
+| SendPrompt        | `8021`       | Prompt                   | `1657`                 | ✅               | Chat            | `1656`             |
+| UploadFile        | `8022`       | Upload                   | `1658`                 | —                | Chat            | `1656`             |
+| UploadFilePayload | `8023`       | Upload                   | `1658`                 | ✅               | Chat            | `1656`             |
+| TranscribeVoice   | `8025`       | Voice                    | `1659`                 | —                | Chat            | `1656`             |
+
+</Details>
+
+<Details header="Perplexity (app ID `1937`)">
+
+| Operation name         | Operation ID | Application Control name | Application Control ID | Contains payload | Operation Group | Operation Group ID |
+| ---------------------- | ------------ | ------------------------ | ---------------------- | ---------------- | --------------- | ------------------ |
+| SendPrompt             | `11947`      | Prompt                   | `2598`                 | ✅               | Chat            | `2596`             |
+| ClarifyingPrompt       | `11951`      | Prompt                   | `2598`                 | ✅               | Chat            | `2596`             |
+| CreateUploadUrl        | `11948`      | Upload                   | `2599`                 | —                | Chat            | `2596`             |
+| UploadFile             | `11955`      | Upload                   | `2599`                 | ✅               | Chat            | `2596`             |
+| UploadOrganizationFile | `11950`      | Upload                   | `2599`                 | —                | Settings        | `2597`             |
+| ShareChat              | `11952`      | Share                    | `2600`                 | —                | Chat            | `2596`             |
+| VoiceTranscription     | `11953`      | Voice                    | `2601`                 | —                | Chat            | `2596`             |
+| ExportChat             | `11949`      |                          |                        | —                | Chat            | `2596`             |
+| DeleteThread           | `11954`      |                          |                        | —                | Chat            | `2596`             |
+| DeleteOrganizationFile | `11956`      |                          |                        | —                | Settings        | `2597`             |
+
+</Details>
+
+<Details header="Claude (app ID `2430`)">
+
+| Operation name        | Operation ID | Application Control name | Application Control ID | Contains payload | Operation Group | Operation Group ID |
+| --------------------- | ------------ | ------------------------ | ---------------------- | ---------------- | --------------- | ------------------ |
+| SendPrompt            | `10048`      | Prompt                   | `2127`                 | ✅               | Chat            | `2126`             |
+| PromptCompletion      | `10050`      | Prompt                   | `2127`                 | ✅               | Chat            | `2126`             |
+| RetryPromptCompletion | `10040`      | Prompt                   | `2127`                 | ✅               | Chat            | `2126`             |
+| UploadFile            | `10039`      | Upload                   | `2128`                 | ✅               | Chat            | `2126`             |
+| ConvertDocument       | `10041`      | Upload                   | `2128`                 | ✅               | Chat            | `2126`             |
+| ShareConversation     | `10043`      | Share                    | `2129`                 | —                | Chat            | `2126`             |
+| GetShares             | `10052`      | Share                    | `2129`                 | —                | Chat            | `2126`             |
+| CreateConversation    | `10038`      |                          |                        | —                | Chat            | `2126`             |
+| GetConversation       | `10046`      |                          |                        | —                | Chat            | `2126`             |
+| UpdateConversation    | `10047`      |                          |                        | —                | Chat            | `2126`             |
+| DeleteConversation    | `10045`      |                          |                        | —                | Chat            | `2126`             |
+| UpdateAccount         | `10036`      |                          |                        | —                | Settings        | `2125`             |
+| InitiateDataExport    | `10037`      |                          |                        | —                | Settings        | `2125`             |
+| GiveFeedback          | `10042`      |                          |                        | —                | Chat            | `2126`             |
+| SetConversationTitle  | `10044`      |                          |                        | —                | Chat            | `2126`             |
+| GetOrganisation       | `10049`      |                          |                        | —                | Settings        | `2125`             |
+| GetFilePreview        | `10051`      |                          |                        | —                | Chat            | `2126`             |
+
+</Details>
+
+## File sharing
+
+placeholder
