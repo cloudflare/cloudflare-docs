@@ -5,6 +5,8 @@ pcx_content_type: tutorial
 title: Connect through Cloudflare Access using kubectl
 ---
 
+import { DashButton } from "~/components";
+
 You can connect to machines over `kubectl` using Cloudflare's Zero Trust platform.
 
 **This walkthrough covers how to:**
@@ -97,7 +99,9 @@ ingress:
 
 You can now create a DNS record that will route traffic to this Tunnel. Multiple DNS records can point to a single Tunnel and will send traffic to the configured service as long as the hostname is defined with an [ingress rule](/cloudflare-one/connections/connect-networks/do-more-with-tunnels/local-management/configuration-file/#file-structure-for-public-hostnames).
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account. Select your domain and go to **DNS** > **Records**.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and go to the **DNS Records** page for your domain.
+
+	<DashButton url="/?to=/:account/:zone/dns/records" />
 
 2. Select **Add record**. Choose `CNAME` as the record type. For **Name**, choose the hostname where you want to create a Tunnel. This should match the hostname of the Access policy.
 
