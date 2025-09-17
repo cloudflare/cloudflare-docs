@@ -501,7 +501,7 @@ Use these selectors to limit the file size of upload or download transactions. F
 ### Download and Upload File Types
 
 :::caution[Deprecated selectors]
-The **Download File Types** and **Upload File Types** selectors supersede the **Download File Type** and **Upload File Type** selectors. Gateway will still evaluate policies with the previous selectors. However, Cloudflare recommends migrating any policies with deprecated selectors to the new corresponding selectors.
+The _Download File Types_ and _Upload File Types_ selectors supersede the _Download File Type_ and _Upload File Type_ selectors. Gateway will still evaluate policies with the previous selectors. However, Cloudflare recommends migrating any policies with deprecated selectors to the new corresponding selectors.
 :::
 
 These selectors will scan file signatures in the HTTP body. You can select from file categories or [specific file types](#supported-file-types), such as executables, archives and compressed files, unscannable files, Microsoft 365/Office documents, and Adobe files.
@@ -515,6 +515,8 @@ These selectors will scan file signatures in the HTTP body. You can select from 
 | Upload File Types | `any(http.upload.file.types[*] in {"compressed"})` |
 
 #### Supported file types
+
+Gateway supports the following file types for use with the _Download File Types_ and _Upload File Types_ selectors:
 
 <Details header="Compressed">
 
