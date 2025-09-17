@@ -106,15 +106,4 @@ curl -I https://www.example.com/old-location.php
 curl -I https://www.example.com/expensive-db-call
 ```
 
-### Alternative: Reset to a specific commit
-If you need to go back multiple commits, you can reset to a specific point:
-```bash
-# Go back to before load balancing was added
-git reset --hard a7b8c9d
-
-# Force push (use with caution in team environments)
-git push --force-with-lease
-```
-**Warning**: git reset --hard and force pushing rewrites history. Use git revert for shared repositories where others may have pulled your changes.
-
 Your configuration has been successfully reverted. The Page Rules are removed, and your zone settings are back to the previous state. Git's version control ensures you can always recover or revert changes safely.
