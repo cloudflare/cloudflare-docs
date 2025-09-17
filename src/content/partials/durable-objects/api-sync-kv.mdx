@@ -14,8 +14,7 @@ import {Type, MetaInfo} from "~/components";
 - <code>ctx.storage.kv.put(key <Type text="string" />, value <Type text="any" />)</code>: <Type text="void" />
   - Stores the value and associates it with the given key. The value can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm), which is true of most types.
 
-    The size of keys and values have different limits depending on the Durable Object storage backend you are using. Refer to:
-    - [SQLite-backed Durable Object limits](/durable-objects/platform/limits/#sqlite-backed-durable-objects-general-limits)<br/><br/>
+    For the size of keys and values refer to [SQLite-backed Durable Object limits](/durable-objects/platform/limits/#sqlite-backed-durable-objects-general-limits)
 
 ### `delete`
 
