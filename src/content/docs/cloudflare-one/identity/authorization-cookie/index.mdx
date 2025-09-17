@@ -101,6 +101,12 @@ The selector options are:
 
 Refer to the [Mozilla documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Set-Cookie#samesitesamesite-value) for more information.
 
+:::caution
+
+If you are receiving the `ERR_TOO_MANY_REDIRECTS` errors, make sure your `SameSite` setting is set to None or Lax. Setting the `SameSite` setting to Strict can result in too many redirects.
+
+:::
+
 #### When not to use SameSite
 
 Do not enable `SameSite` restrictions if you have additional sites or applications that rely on a specific application's authorization cookie.
