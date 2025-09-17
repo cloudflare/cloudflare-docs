@@ -23,7 +23,7 @@ its results are atomic and isolated from all other storage operations, even when
 accessing multiple key-value pairs.
 
 <sup>2</sup> KV API methods like `get()`, `put()`, `delete()`, or `list()` store
-data in a hidden SQLite table `__cf_kv`. Note that you will be able to view this table when listing all tables, but you will not be able to access it.
+data in a hidden SQLite table `__cf_kv`. Note that you will be able to view this table when listing all tables, but you will not be able to access its content through the SQL API.
 
 <sup>3</sup> SQLite-backed Durable Objects also use [synchronous KV API methods](/durable-objects/api/sqlite-storage-api/#synchronous-kv-api) using `ctx.storage.kv`, whereas KV-backed Durable Objects only provide [asynchronous KV API methods](/durable-objects/api/legacy-kv-storage-api/#asynchronous-kv-api).
 </Details>
