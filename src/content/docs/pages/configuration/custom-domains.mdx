@@ -3,7 +3,7 @@ pcx_content_type: how-to
 title: Custom domains
 ---
 
-import { Render, DashButton } from "~/components";
+import { Render, DashButton, Steps } from "~/components";
 
 When deploying your Pages project, you may wish to point custom domains (or subdomains) to your site.
 
@@ -49,21 +49,23 @@ To ensure a custom domain is added successfully, you must go through the [Add a 
 
 To detach a custom domain from your Pages project, you must modify your zone's DNS records.
 
-First, log in to the Cloudflare dashboard > select your account in **Account Home** > select your website > **DNS**.
+<Steps>
+1. Go to the **DNS Records** page for your website in the Cloudflare dashboard.
 
-Then, in **DNS** > **Records**:
+   <DashButton url="/?to=/:account/:zone/dns/records" />
 
-1. Locate your Pages project's CNAME record.
-2. Select **Edit**.
-3. Select **Delete**.
+2. Locate your Pages project's CNAME record.
+3. Select **Edit**.
+4. Select **Delete**.
 
-Next, in the Cloudflare dashboard, go to the **Workers & Pages** page.
+5. In the Cloudflare dashboard, go to the **Workers & Pages** page.
 
-<DashButton url="/?to=/:account/workers-and-pages" />
+   <DashButton url="/?to=/:account/workers-and-pages" />
 
-1. Select your Pages project.
-2. Go to **Custom domains**.
-3. Select the **three dot icon** next to your custom domain > **Remove domain**.
+6. Select your Pages project.
+7. Go to **Custom domains**.
+8. Select the **three dot icon** next to your custom domain > **Remove domain**.
+</Steps>
 
 After completing these steps, your Pages project will only be accessible through the `*.pages.dev` subdomain you chose when creating your project.
 
@@ -71,9 +73,11 @@ After completing these steps, your Pages project will only be accessible through
 
 To disable access to your project's provided `*.pages.dev` subdomain:
 
+<Steps>
 1. Use Cloudflare Access over your previews (`*.{project}.pages.dev`). Refer to [Customize preview deployments access](/pages/configuration/preview-deployments/#customize-preview-deployments-access).
 
 2. Redirect the `*.pages.dev` URL associated with your production Pages project to a custom domain. You can use the account-level [Bulk Redirect](/rules/url-forwarding/bulk-redirects/) feature to redirect your `*.pages.dev` URL to a custom domain.
+</Steps>
 
 ## Caching
 

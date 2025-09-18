@@ -59,14 +59,15 @@ All content objects in an incoming request will be checked, namely for requests 
 
 The content scanner will fully check content objects with a size up to 30 MB. For larger content objects, the scanner will analyze the first 30 MB and provide scan results based on that portion of the object.
 
-:::note
+:::note[Notes]
 
-The AV scanner will not scan some particular types of files, namely the following:
+- The AV scanner will not scan some particular types of files, namely the following:
+  - Password-protected archives
+  - Archives with more than three recursion levels
+  - Archives with more than 300 files
+  - PGP-encrypted files
 
-- Password-protected archives
-- Archives with more than three recursion levels
-- Archives with more than 300 files
-- PGP-encrypted files
+- In rare cases, the AV scanner may time out and fail to analyze a content object. When this happens, the `cf.waf.content_scan.has_failed` field will be set to true.
 
 :::
 

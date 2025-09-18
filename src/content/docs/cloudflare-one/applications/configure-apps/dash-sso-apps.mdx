@@ -218,7 +218,7 @@ Users can now log in using their Cloudflare account email and password. To re-en
 
 ## Change your team name
 
-Cloudflare does not allow you to change your <GlossaryTooltip term="team name">team name</GlossaryTooltip> while dashboard SSO is enabled. To change your team name, you must first disable dashboard SSO.
+Cloudflare does not allow you to change your <GlossaryTooltip term="team name">team name</GlossaryTooltip> while dashboard SSO is enabled. To change your team name, you must disable dashboard SSO and reach out to your account team.
 
 :::caution
 Before disabling SSO, make sure you have access to your Cloudflare account email. This will allow you to reset your password in case you get logged out of the Cloudflare dashboard.
@@ -226,8 +226,12 @@ Before disabling SSO, make sure you have access to your Cloudflare account email
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Authentication**.
 2. If SSO is enabled, turn off **Cloudflare dashboard SSO**. This action can only be performed by Super Administrators.
-3. Go to **Settings** > **Custom Pages**.
-4. Under **Team domain**, select **Edit** to enter the new team name. Select **Save**.
-5. In your identity provider, update your Cloudflare integration with the new team name. For example, if you are using a SAML IdP, you will need to update the Single Sign-on URL and Entity ID to `https://<new-team-name>.cloudflareaccess.com/cdn-cgi/access/callback`.
-6. In Zero Trust, go to **Settings** > **Authentication**.
-7. Turn on **Cloudflare dashboard SSO** to re-enable SSO.
+3. Ask your account team to delete your **SSO App** from **Access** > **Applications**. The SSO app cannot be deleted using the Zero Trust dashboard or API.
+4. Go to **Settings** > **Custom Pages**.
+5. Under **Team domain**, select **Edit** to enter the new team name. Select **Save**.
+6. In your identity provider, update your Cloudflare integration with the new team name. For example, if you are using a SAML IdP, you will need to update the Single Sign-on URL and Entity ID to `https://<new-team-name>.cloudflareaccess.com/cdn-cgi/access/callback`.
+7. Ask your account team to reactivate your SSO domain. Once your SSO domain is reactivated, a new **SSO App** application will appear in Zero Trust under **Access** > **Applications**.
+8. In Zero Trust, go to **Settings** > **Authentication**.
+9. Turn on **Cloudflare dashboard SSO** to re-enable SSO.
+
+

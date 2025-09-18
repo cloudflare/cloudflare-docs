@@ -1,12 +1,12 @@
 ---
-title: Metrics and GraphQL analytics
+title: Metrics and analytics
 pcx_content_type: concept
 sidebar:
   order: 6
 
 ---
 
-import { GlossaryTooltip, DashButton } from "~/components";
+import { GlossaryTooltip, DashButton, Steps, WranglerConfig, Render } from "~/components";
 
 <GlossaryTooltip term="Durable Object">Durable Objects</GlossaryTooltip> expose analytics for Durable Object namespace-level and request-level metrics.
 
@@ -17,18 +17,50 @@ The metrics displayed in the [Cloudflare dashboard](https://dash.cloudflare.com/
 A Durable Object namespace is a set of Durable Objects that can be addressed by name, backed by the same class. There is only one Durable Object namespace per class. A Durable Object namespace can contain any number of Durable Objects.
 :::
 
-## View metrics and analytics via the dashboard
+## View metrics and analytics
 
 Per-namespace analytics for Durable Objects are available in the Cloudflare dashboard. To view current and historical metrics for a namespace:
 
+<Steps>
 1. In the Cloudflare dashboard, go to the **Durable Objects** page.
 
    <DashButton url="/?to=/:account/workers/durable-objects" />
 2. View account-level Durable Objects usage.
-3. Select an existing namespace.
+3. Select an existing Durable Object namespace.
 4. Select the **Metrics** tab.
+</Steps>
 
 You can optionally select a time window to query. This defaults to the last 24 hours.
+
+## View logs
+
+You can view Durable Object logs from the Cloudflare dashboard. Logs are aggregated by the script name and the Durable Object class name.
+
+To start using Durable Object logging:
+
+<Steps>
+1. Enable Durable Object logging in the Wrangler configuration file of the Worker that defines your Durable Object class:
+   <WranglerConfig>
+   ```jsonc
+   {
+       "observability": {
+           "enabled": true
+       }
+   }
+   ```
+   </WranglerConfig>
+2. Deploy the latest version of the Worker with the updated binding.
+3. Go to the **Durable Objects** page.
+
+   <DashButton url="/?to=/:account/workers/durable-objects" />
+4. Select an existing Durable Object namespace.
+5. Select the **Logs** tab.
+
+</Steps>
+
+:::note
+For information on log limits (such as maximum log retention period), refer to the [Workers Logs documentation](/workers/observability/logs/workers-logs/#limits).
+:::
 
 ## Query via the GraphQL API
 
@@ -86,3 +118,7 @@ Refer to the [Querying Workers Metrics with GraphQL](/analytics/graphql-api/tuto
 ## Additional resources
 
 - For instructions on setting up a Grafana dashboard to query Cloudflare's GraphQL Analytics API, refer to [Grafana Dashboard starter for Durable Object metrics](https://github.com/TimoWilhelm/grafana-do-dashboard).
+
+## FAQs
+
+<Render file="do-faq-metrics-and-analytics" product="durable-objects" />

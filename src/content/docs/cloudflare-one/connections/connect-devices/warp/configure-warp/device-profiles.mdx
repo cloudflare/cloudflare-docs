@@ -105,6 +105,25 @@ Send a `POST` request to the [Devices API](/api/resources/zero_trust/subresource
 
 ## Verify device profile
 
+### Via the dashboard
+
+To verify the last active device profile for a specific device:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **My Team** > **Devices**.
+2. Under devices, find your device.
+3. Review the device profile under **Last active device profile**.
+
+To verify the last active device profile for a user’s devices:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **My Team** > **Users**.
+2. Under **User name**, find the user you would like to investigate.
+3. Select **Devices** to see all devices used by the user.
+4. Find the device you want to investigate and verify the last active device profile for that device under the **Device profile** column.
+
+Alternatively, you can use [DEX remote captures](/cloudflare-one/insights/dex/remote-captures/) to collect WARP diagnostic logs. The device profile UUID is shown in your [detection report](/cloudflare-one/insights/dex/remote-captures/#warp-diagnostics-analyzer-beta) under `Profile ID`.
+
+### Via the CLI
+
 To check which device profile and profile settings are currently on a device, open a terminal and run:
 
 ```sh
@@ -112,8 +131,6 @@ warp-cli settings
 ```
 
 The device profile UUID is shown in the `Profile ID` field.
-
-Alternatively, if you do not have access to the CLI, you can use [DEX remote captures](/cloudflare-one/insights/dex/remote-captures/) to collect WARP diagnostic logs from the Zero Trust dashboard. The device profile UUID is shown in your [detection report](/cloudflare-one/insights/dex/remote-captures/#warp-diagnostics-analyzer-beta) under `Profile ID`.
 
 ## Selectors
 

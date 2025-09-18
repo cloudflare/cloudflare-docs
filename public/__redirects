@@ -565,6 +565,7 @@
 /durable-objects/get-started/video-series/ /durable-objects/video-tutorials/ 301
 
 /durable-objects/what-are-durable-objects/ /durable-objects/concepts/what-are-durable-objects/ 301
+/durable-objects/observability/graphql-analytics/ /durable-objects/observability/metrics-and-analytics/ 301
 
 # email-routing
 /email-routing/enable-email-routing/ /email-routing/get-started/enable-email-routing/ 301
@@ -1141,10 +1142,10 @@
 /pages/how-to/deploy-a-gatsby-site/ /pages/framework-guides/deploy-a-gatsby-site/ 301
 /pages/how-to/deploy-a-hugo-site/ /pages/framework-guides/deploy-a-hugo-site/ 301
 /pages/how-to/deploy-a-jekyll-site/ /pages/framework-guides/deploy-a-jekyll-site/ 301
-/pages/how-to/deploy-a-nextjs-site/ /pages/framework-guides/nextjs/ 301
-/pages/framework-guides/deploy-a-nextjs-site/ /pages/framework-guides/nextjs/ 301
+/pages/how-to/deploy-a-nextjs-site/ /workers/framework-guides/web-apps/nextjs 301
+/pages/framework-guides/nextjs/resources/* /workers/framework-guides/web-apps/nextjs 301
+/pages/framework-guides/nextjs/ssr/* /workers/framework-guides/web-apps/nextjs 301
 /pages/framework-guides/deploy-a-svelte-site/ /pages/framework-guides/deploy-a-svelte-kit-site/ 301
-/pages/framework-guides/nextjs/deploy-a-nextjs-site/ /pages/framework-guides/nextjs/ssr/get-started/ 301
 /pages/how-to/deploy-anything/ /pages/framework-guides/deploy-anything/ 301
 /pages/how-to/deploy-a-react-application/ /pages/framework-guides/deploy-a-react-site/ 301
 /pages/framework-guides/deploy-a-react-application/ /pages/framework-guides/deploy-a-react-site/ 301

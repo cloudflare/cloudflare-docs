@@ -175,6 +175,7 @@
 /src/content/docs/cache/ @angelampcosta @cloudflare/pcx-technical-writing
 /src/content/docs/health-checks/ @angelampcosta @cloudflare/pcx-technical-writing
 /src/content/docs/load-balancing/ @angelampcosta @cloudflare/pcx-technical-writing
+src/content/docs/smart-shield/ @RebeccaTamachiro @cloudflare/pcx-technical-writing
 /src/content/docs/spectrum/ @angelampcosta @cloudflare/pcx-technical-writing
 /src/content/docs/speed/ @angelampcosta @cloudflare/pcx-technical-writing
 /src/content/docs/web3/ @cloudflare/pcx-technical-writing

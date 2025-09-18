@@ -5,7 +5,7 @@ sidebar:
   order: 4
 ---
 
-import { Steps } from "~/components";
+import { Steps, DashButton } from "~/components";
 
 ```mermaid
 graph LR
@@ -25,10 +25,12 @@ Once you have enabled pay per crawl and set a price, you can specify which AI cr
 
 {/* prettier-ignore */}
 <Steps>
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
-2. Go to **AI Crawl Control**.
-3. Go to the **Crawlers** tab.
-4. For each crawler, choose an action from the **Actions** column:
+1. Go to **AI Crawl Control**.
+
+   <DashButton url="/?to=/:account/:zone/ai" />
+
+2. Go to the **Crawlers** tab.
+3. For each crawler, choose an action from the **Actions** column:
    - **Charge**: Charge the set price for successful content access
    - **Allow**: Allow free access without charging
    - **Block**: Block access completely
