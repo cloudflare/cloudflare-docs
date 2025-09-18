@@ -3,6 +3,31 @@ link: "/workers-ai/changelog/"
 productName: Workers AI
 productLink: "/workers-ai/"
 entries:
+  - publish_date: "2025-09-18"
+    title: Model Catalog updates (types, EmbeddingGemma, model deprecation)
+    description: |-
+      - Workers AI types got updated in the upcoming wrangler release, please use `npm i -D wrangler@latest` to update your packages.
+      - EmbeddingGemma model accuracy has been improved, we recommend re-indexing data to take advantage of the improved accuracy
+      - Some older Workers AI models are being deprecated on October 1st, 2025. We reccommend you use the newer models such as [Llama 4](/workers-ai/models/llama-4-scout-17b-16e-instruct/) and [gpt-oss](/workers-ai/models/gpt-oss-120b/). The following models are being deprecated:
+        - @hf/thebloke/zephyr-7b-beta-awq
+        - @hf/thebloke/mistral-7b-instruct-v0.1-awq
+        - @hf/thebloke/llama-2-13b-chat-awq
+        - @hf/thebloke/openhermes-2.5-mistral-7b-awq
+        - @hf/thebloke/neural-chat-7b-v3-1-awq
+        - @hf/thebloke/llamaguard-7b-awq
+        - @hf/thebloke/deepseek-coder-6.7b-base-awq
+        - @hf/thebloke/deepseek-coder-6.7b-instruct-awq
+        - @cf/deepseek-ai/deepseek-math-7b-instruct
+        - @cf/openchat/openchat-3.5-0106
+        - @cf/tiiuae/falcon-7b-instruct
+        - @cf/thebloke/discolm-german-7b-v1-awq
+        - @cf/qwen/qwen1.5-0.5b-chat
+        - @cf/qwen/qwen1.5-7b-chat-awq
+        - @cf/qwen/qwen1.5-14b-chat-awq
+        - @cf/tinyllama/tinyllama-1.1b-chat-v1.0
+        - @cf/qwen/qwen1.5-1.8b-chat
+        - @hf/nexusflow/starling-lm-7b-beta
+        - @cf/fblgit/una-cybertron-7b-v2-bf16
   - publish_date: "2025-09-05"
     title: Introducing EmbeddingGemma from Google
     description: |-
