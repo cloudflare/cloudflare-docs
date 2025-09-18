@@ -15,8 +15,10 @@ IP Access rules are commonly used to block or challenge suspected malicious traf
 
 :::caution
 
-- Allowing an IP, ASN, or country will bypass any configured [custom rules](/waf/custom-rules/), [rate limiting rules](/waf/rate-limiting-rules/), and firewall rules (deprecated).
-- Allowing a country will **not** bypass [WAF Managed Rules](/waf/managed-rules/) or [WAF managed rules (previous version)](/waf/reference/legacy/old-waf-managed-rules/).
+- Allowing an IP or ASN will bypass any configured [custom rules](/waf/custom-rules/), [rate limiting rules](/waf/rate-limiting-rules/), [WAF Managed Rules](/waf/managed-rules/), and firewall rules (deprecated).
+- Allowing a country will:
+  - Bypass any configured [custom rules](/waf/custom-rules/), [rate limiting rules](/waf/rate-limiting-rules/), and firewall rules (deprecated).
+  - Not bypass [WAF Managed Rules](/waf/managed-rules/) or [WAF managed rules (previous version)](/waf/reference/legacy/old-waf-managed-rules/).
 
 :::
 
