@@ -19,8 +19,8 @@ Yes, you can use Workers KV outside of Workers by using the [REST API](/api/reso
 
 When choosing how to access Workers KV, consider the following:
 
-- **Performance**: Accessing KV via the [Workers Binding API](/kv/api/write-key-value-pairs) is generally faster than using the [REST API](/api/resources/kv/), as it avoids the overhead of HTTP requests.
-- **Rate Limits**: Be aware of the different rate limits for each access method. The [REST API](/api/resources/kv/) has a lower write rate limit compared to the Workers Binding API. Refer to [What is KV's write rate limit?](/kv/reference/faq/#what-is-kvs-write-rate-limit)
+- **Performance**: Accessing Workers KV via the [Workers Binding API](/kv/api/write-key-value-pairs/) is generally faster than using the [REST API](/api/resources/kv/), as it avoids the overhead of HTTP requests.
+- **Rate Limits**: Be aware of the different rate limits for each access method. [REST API](/api/resources/kv/) has a lower write rate limit compared to Workers Binding API. Refer to [What is KV's write rate limit?](/kv/reference/faq/#what-is-the-rate-limit-of-workers-kv)
 
 ### Why can I not immediately see the updated value of a key-value pair?
 
@@ -39,13 +39,13 @@ Refer to [How KV works](/kv/concepts/how-kv-works/).
 No. A bulk request to Workers KV, regardless of the amount of keys included in the request, will count as a single operation. For example, you could make
 500 bulk KV requests and 500 R2 requests for a total of 1000 operations.
 
-### What is KV's write rate limit?
+### What is the rate limit of Workers KV?
 
-KV's write rate limit differs depending on the way you access it.
+Workers KV's write rate limit differs depending on the way you access it.
 
-When writing to KV via the [REST API](/api/resources/kv/), the write rate limit is 1,200 writes per 5 minutes. The same [limits of the REST API](/fundamentals/api/reference/limits/) applies.
+When writing to Workers KV via the [REST API](/api/resources/kv/), the write rate limit is 1,200 writes per 5 minutes. The same [limits of the REST API](/fundamentals/api/reference/limits/) applies.
 
-When writing to KV via the [Workers Binding API](/kv/api/write-key-value-pairs/), the write rate limit is 1 write per second, per key, unlimited across KV keys.
+When writing to Workers KV via the [Workers Binding API](/kv/api/write-key-value-pairs/), the write rate limit is 1 write per second, per key, unlimited across KV keys.
 
 ## Pricing
 
