@@ -646,7 +646,7 @@ To bind KV namespaces to your Worker, assign an array of the below object to the
   - The ID of the KV namespace.
 
 - `preview_id` <Type text="string" /> <MetaInfo text="optional" />
-  - The preview ID of this KV namespace. This option is **required** when using `wrangler dev --remote` to develop against remote resources (but it is not require with [remote bindings](/workers/development-testing/#remote-bindings)). If developing locally (without `--remote`), this is an optional field. `wrangler dev` will use this ID for the KV namespace. Otherwise, `wrangler dev` will use `id`.
+  - The preview ID of this KV namespace. This option is **required** when using `wrangler dev --remote` to develop against remote resources (but is not required with [remote bindings](/workers/development-testing/#remote-bindings)). If developing locally, this is an optional field. `wrangler dev` will use this ID for the KV namespace. Otherwise, `wrangler dev` will use `id`.
 
 :::note
 
