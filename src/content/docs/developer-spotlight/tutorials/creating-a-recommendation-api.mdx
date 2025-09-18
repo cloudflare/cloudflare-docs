@@ -181,7 +181,7 @@ binding = "VECTORIZE_INDEX"
 index_name = "stripe-products"
 ```
 
-To use the created Vectorize index from your Worker, let's add the binding. Open the [Wrangler configuration file](/workers/wrangler/configuration/) and add the copied lines.
+To use the created Vectorize index from your Worker, let's add the relevant [remote binding](/workers/development-testing/#remote-bindings). Open the [Wrangler configuration file](/workers/wrangler/configuration/) and add the copied lines.
 
 <WranglerConfig>
 
@@ -193,11 +193,12 @@ compatibility_date = "2024-06-05"
 [[vectorize]]
 binding = "VECTORIZE_INDEX"
 index_name = "stripe-products"
+remote = true
 ```
 
 </WranglerConfig>
 
-Additionally, let's add the configuration to use Workers AI in the [Wrangler configuration file](/workers/wrangler/configuration/).
+Additionally, let's add the configuration to use Workers AI in the [Wrangler configuration file](/workers/wrangler/configuration/), again as a [remote binding](/workers/development-testing/#remote-bindings).
 
 <WranglerConfig>
 
@@ -209,9 +210,11 @@ compatibility_date = "2024-06-05"
 [[vectorize]]
 binding = "VECTORIZE_INDEX"
 index_name = "stripe-products"
+remote = true
 
 [ai]
 binding = "AI" # available in your Worker on env.AI
+remote = true
 ```
 
 </WranglerConfig>
@@ -244,12 +247,6 @@ app.get("/", (c) => {
 	c.env.VECTORIZE_INDEX; // Vectorize SDK
 	return c.text("Hello Hono!");
 });
-```
-
-Finally, rerun the `npx wrangler dev` command with the `--remote` option. This is necessary because Vectorize indexes are not supported in local mode. If you see the message, `Vectorize bindings are not currently supported in local mode. Please use --remote if you are working with them.`, rerun the command with the `--remote` option added.
-
-```sh
-npx wrangler dev --remote
 ```
 
 ### Create a webhook API to handle product registration events
