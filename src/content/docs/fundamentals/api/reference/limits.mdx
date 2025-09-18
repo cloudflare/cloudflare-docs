@@ -13,9 +13,8 @@ import { Render } from "~/components";
 
 The following headers are returned when calling REST APIs:
 
-- `ratelimit-limit`: The total number of requests a caller can make.
-- `ratelimit-remaining`: The number of remaining requests before the rate limit takes effect.
-- `retry-after`: The number of seconds, rounded up, until more capacity is available.
-- `ratelimit-reset`: The `RFC 1123` formatted date when more capacity is available.
+- `Ratelimit`: List of service limit items, composed of the limit name, the remaining quota (`r`) and the time next window resets (`t`). For example: `"default";r=50;t=30`
+- `Ratelimit-Policy`: List of quota policy items, composed of the policy name, the total quota (`q`) and the time window the quota applies to (`w`). For example: `"burst";q=100;w=60`
+- `retry-after`: The number of seconds, rounded up, until more capacity is available. Note, this header is only returned when the request has exceeded the rate limit.
 
 Cloudflare's SDKs will also automatically work with the headers and back off in response to rate limits.
