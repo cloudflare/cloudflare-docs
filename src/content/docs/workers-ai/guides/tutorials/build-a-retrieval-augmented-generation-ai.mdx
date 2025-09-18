@@ -77,8 +77,14 @@ The Workers command-line interface, [Wrangler](/workers/wrangler/install-and-upd
 After you have created your first Worker, run the [`wrangler dev`](/workers/wrangler/commands/#dev) command in the project directory to start a local server for developing your Worker. This will allow you to test your Worker locally during development.
 
 ```sh
-npx wrangler dev --remote
+npx wrangler dev
 ```
+
+You will now be able to go to [http://localhost:8787](http://localhost:8787) to see your Worker running. Any changes you make to your code will trigger a rebuild, and reloading the page will show you the up-to-date output of your Worker.
+
+## 3. Adding the AI binding
+
+To begin using Cloudflare's AI products, you can add the `ai` block to the [Wrangler configuration file](/workers/wrangler/configuration/) as a [remote binding](/workers/development-testing/#remote-bindings). This will set up a binding to Cloudflare's AI models in your code that you can use to interact with the available AI models on the platform.
 
 :::note
 
@@ -88,12 +94,6 @@ If you have issues with this step or you do not have access to a browser interfa
 
 :::
 
-You will now be able to go to [http://localhost:8787](http://localhost:8787) to see your Worker running. Any changes you make to your code will trigger a rebuild, and reloading the page will show you the up-to-date output of your Worker.
-
-## 3. Adding the AI binding
-
-To begin using Cloudflare's AI products, you can add the `ai` block to the [Wrangler configuration file](/workers/wrangler/configuration/). This will set up a binding to Cloudflare's AI models in your code that you can use to interact with the available AI models on the platform.
-
 This example features the [`@cf/meta/llama-3-8b-instruct` model](/workers-ai/models/llama-3-8b-instruct/), which generates text.
 
 <WranglerConfig>
@@ -101,6 +101,7 @@ This example features the [`@cf/meta/llama-3-8b-instruct` model](/workers-ai/mod
 ```toml
 [ai]
 binding = "AI"
+remote = true
 ```
 
 </WranglerConfig>
