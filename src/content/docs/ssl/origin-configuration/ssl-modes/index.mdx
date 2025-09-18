@@ -47,7 +47,6 @@ Automatic upgrades are applied gradually. Automatic SSL/TLS begins to upgrade th
 
 Flexible → Full/Strict transitions are handled with extra caution since the origin scheme change (HTTP → HTTPS) alters cache keys. In this case, the ramp-up may proceed more slowly to allow cache warm-up before resuming standard increments.
 
-
 #### Additional details
 
 - **Scan frequency**: Automatic scans currently occur approximately once per month, though they may happen more frequently in some cases (for example, configuration changes or upgrades). Scans stop when:
