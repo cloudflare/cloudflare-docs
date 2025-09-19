@@ -132,7 +132,7 @@ Remote Bindings work well together with [Workers Environments](/workers/wrangler
 
 </WranglerConfig>
 
-Running `wrangler dev -e staging` with the above configuration means that:
+Running `wrangler dev -e staging` (or `CLOUDFLARE_ENV=staging vite dev`) with the above configuration means that:
 
 - Your Worker code runs locally
 - All calls made to `env.screenshots_bucket` will use the `preview-screenshots-bucket` resource, rather than the production `screenshots-bucket`.
