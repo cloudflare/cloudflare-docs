@@ -58,7 +58,7 @@ were set previously and will cause unexpected behavior for other Workers running
 same isolate. Specifically, it would cause inconsistency with the `process.env` object when
 accessed via named imports.
 
-```js
+````js
 import * as process from 'node:process';
 import { env } from 'node:process';
 
@@ -82,7 +82,7 @@ console.log(env["FOO"]); // Prints: bar
 nextTick(() => {
 	console.log("next tick");
 });
-```
+````
 
 ## Stdio
 
@@ -102,18 +102,3 @@ This ensures compatibility with inspector and structured logging outputs.
 ## Hrtime
 
 While [`process.hrtime`](https://nodejs.org/docs/latest/api/process.html#processhrtimetime) high-resolution timer is available, it provides an inaccurate timer for compatibility only.
-
-## Unsupported Features
-
-The following `process` properties are currently entirely unsupported and return `undefined`: `binding`, `channel`, `connected`, `debugPort`, `dlopen`,
-`exitCode`, `finalization`, `getActiveResourcesInfo`, `hasUncaughtExceptionCaptureCallback`, `kill`, `memoryUsage`, `noDeprecation`, `permission`,
-`ref`, `release`, `report`, `resourceUsage`, `send`, `setUncaughtExceptionCaptureCallback`, `sourceMapsEnabled`, `threadCpuUsage`,
-`throwDeprecation`, `traceDeprecation`, `unref`.
-
-These unimplemented features may be feature-detected via conditional gating patterns like:
-
-```js
-if (process.dlopen) {
-	// use dlopen when available
-}
-```
