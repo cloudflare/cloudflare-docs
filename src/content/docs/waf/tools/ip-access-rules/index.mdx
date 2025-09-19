@@ -9,25 +9,35 @@ import { GlossaryTooltip, Render } from "~/components";
 
 <Render file="survey" product="waf" />
 
-Use IP Access rules to <GlossaryTooltip term="allowlist">allowlist</GlossaryTooltip>, block, and challenge traffic based on the visitor's IP address, country, or Autonomous System Number (ASN).
+Use IP Access rules to <GlossaryTooltip term="allowlist">allowlist</GlossaryTooltip>, block, and challenge traffic based on the visitor's IP address, Autonomous System Number (ASN), or country.
 
 IP Access rules are commonly used to block or challenge suspected malicious traffic. Another common use of IP Access rules is to allow services that regularly access your site, such as APIs, crawlers, and payment providers.
 
 :::caution
 
-- Allowing an IP or ASN will bypass any configured [custom rules](/waf/custom-rules/), [rate limiting rules](/waf/rate-limiting-rules/), [WAF Managed Rules](/waf/managed-rules/), and firewall rules (deprecated).
-- Allowing a country will:
-  - Bypass any configured [custom rules](/waf/custom-rules/), [rate limiting rules](/waf/rate-limiting-rules/), and firewall rules (deprecated).
-  - Not bypass [WAF Managed Rules](/waf/managed-rules/) or [WAF managed rules (previous version)](/waf/reference/legacy/old-waf-managed-rules/).
+Allowing an IP or ASN will bypass any configured [custom rules](/waf/custom-rules/), [rate limiting rules](/waf/rate-limiting-rules/), [WAF Managed Rules](/waf/managed-rules/), and firewall rules (deprecated).
+
+For important notes about allowing or blocking traffic by country, refer to [Important remarks about allowing/blocking by country](#important-remarks-about-allowingblocking-by-country).
 
 :::
+
+## Important remarks about allowing/blocking by country
+
+Block by country is only available on Enterprise plans.
+
+IP addresses globally allowed by Cloudflare will override an IP Access rule country block, but they will not override a country block via [custom rules](/waf/custom-rules/).
+
+Allowing a country will:
+
+- Bypass any configured [custom rules](/waf/custom-rules/), [rate limiting rules](/waf/rate-limiting-rules/), and firewall rules (deprecated).
+- Not bypass [WAF Managed Rules](/waf/managed-rules/) or [WAF managed rules (previous version)](/waf/reference/legacy/old-waf-managed-rules/).
 
 ## Recommendation: Use custom rules instead
 
 Cloudflare recommends that you create [custom rules](/waf/custom-rules/) instead of IP Access rules to perform IP-based or geography-based blocking (geoblocking):
 
-- For IP-based blocking, use an [IP list](/waf/tools/lists/custom-lists/#ip-lists) in the custom rule expression.
-- For geoblocking, use fields such as _AS Num_, _Country_, and _Continent_ in the custom rule expression.
+- For IP-based blocking, use an [IP list](/waf/tools/lists/custom-lists/#ip-lists) in the custom rule expression. Refer to [Allow traffic from IP addresses in allowlist only](/waf/custom-rules/use-cases/allow-traffic-from-ips-in-allowlist/) for an example.
+- For geoblocking, use fields such as _AS Num_, _Country_, and _Continent_ in the custom rule expression. Refer to [Block traffic from specific countries](/waf/custom-rules/use-cases/block-traffic-from-specific-countries/) for an example.
 
 ---
 
