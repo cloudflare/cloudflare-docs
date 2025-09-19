@@ -14,7 +14,7 @@ entries:
 
       The retry success ratio among all retryable errors is lower, indicating that there are write-queries that could be retried. Therefore, we recommend D1 users to continue applying [retries in their own code](/d1/best-practices/retry-queries/) for queries that are not read-only but are idempotent according to the business logic of the application.
 
-      ![D1 automatically query retries success ratio](/_astro/faster-d1-worker-api.4S7VSUdP_o2jsC.webp)
+      ![D1 automatically query retries success ratio](/_astro/d1-auto-retry-success-ratio.yPw8B0tB_Z1kzKe0.webp)
 
       D1 ensures that any retry attempt does not cause database writes, making the automatic retries safe from side-effects, even if a query causing changes slips through the read-only detection. D1 achieves this by checking for modifications after every query execution, and if any write occurred due to a retry attempt, the query is rolled back.
 
