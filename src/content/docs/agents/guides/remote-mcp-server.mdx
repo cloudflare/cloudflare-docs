@@ -11,12 +11,13 @@ import { Details, Render, PackageManagers } from "~/components";
 
 ## Deploy your first MCP server
 
-This guide will show you how to deploy your own remote MCP server on Cloudflare, with two options:
+This guide will show you how to deploy your own remote MCP server on Cloudflare, with three options:
 
 - **Without authentication** — anyone can connect and use the server (no login required).
 - **With [authentication and authorization](/agents/guides/remote-mcp-server/#add-authentication)** — users sign in before accessing tools, and you can control which tools an agent can call based on the user's permissions.
+- **With [payments required](/agents/guides/remote-mcp-server/#add-payments)** - anyone can connect and use the server on a pay-per-use basis, as long as their agent is equipped with the appropriate payment account.
 
-You can start by deploying a [public MCP server](https://github.com/cloudflare/ai/tree/main/demos/remote-mcp-authless) without authentication, then add user authentication and scoped authorization later. If you already know your server will require authentication, you can skip ahead to the [next section](/agents/guides/remote-mcp-server/#add-authentication).
+You can start by deploying a [public MCP server](https://github.com/cloudflare/ai/tree/main/demos/remote-mcp-authless) without authentication, then add user authentication or payment requirements later. If you already know your server will require [authentication](/agents/guides/remote-mcp-server/#add-authentication) or [payments](/agents/guides/remote-mcp-server/#add-payments), you can skip ahead to those sections.
 
 The button below will guide you through everything you need to do to deploy this [example MCP server](https://github.com/cloudflare/ai/tree/main/demos/remote-mcp-authless) to your Cloudflare account:
 
@@ -226,7 +227,177 @@ wrangler secret put GITHUB_CLIENT_SECRET
 
 Now that you've added the ID and secret of your production OAuth app, you should now be able to connect to your MCP server running at `worker-name.account-name.workers.dev/sse` using the [AI Playground](https://playground.ai.cloudflare.com/), MCP inspector or ([other MCP clients](/agents/guides/remote-mcp-server/#connect-your-mcp-server-to-claude-and-other-mcp-clients)), and authenticate with GitHub.
 
+## Add Payments
+
+Now that you've deployed a public MCP server, let's walk through how to require payments from connected clients.
+
+The public server example you deployed earlier allows any client to connect and invoke tools without making payments. In order for your server to require payments on a pay-per-use basis, you'll need to integrate your server with a payment protocol SDK.
+
+In this example, we use [ATXP](https://atxp.ai) as the payment protocol, but you may also consider alternatives such as [x402](https://x402.org) or [AP2](https://ap2-protocol.org).
+
+You can follow the steps in this guide to create a new MCP server that requires payments, or click the button below to deploy [the example repository](https://github.com/atxp-dev/atxp-cloudflare-mcp-server-example) to your Cloudflare account:
+
+[![Deploy to Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/atxp-dev/atxp-cloudflare-mcp-server-example)
+
+### Step 1 — Create and deploy a new MCP server
+
+Run the following command to create a new MCP server:
+
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args={
+		"atxp-mcp-cloudflare-server -- --template cloudflare/ai/demos/remote-mcp-authless"
+	}
+/>
+
+Now, you have the MCP server setup, with core dependencies installed. Move into that project folder:
+
+```sh
+cd atxp-mcp-cloudflare-server
+```
+
+Then, run the following command to install additonal dependencies and deploy the MCP server:
+
+```sh
+npm install @atxp/cloudflare bignumber.js --save
+npx wrangler@latest deploy
+```
+
+### Step 2 — Receive payments
+
+In order to receive payments using ATXP, you need to create an account. This account will be used to receive payments in USDC when your MCP server’s tools are called.
+
+#### Create and configure an ATXP account
+
+If you don’t have an ATXP account yet, [create one](https://docs.atxp.ai/server/create_an_account) and copy your connection string.
+
+For the ATXP account you just created, add the connection string of the account to a `.dev.vars` file in the root of your project, which [will be used to set secrets in local development](/workers/configuration/secrets/).
+
+```sh
+touch .dev.vars
+echo 'ATXP_CONNECTION_STRING="your-connection-string"' >> .dev.vars
+cat .dev.vars
+```
+
+#### Configure the MCP server to receive payments
+
+Our cloned template provides a basic structure, but we need to modify it to integrate ATXP payments. Replace the contents of `src/index.ts` with the following code that integrates ATXP payments:
+
+```ts ins="index.ts"
+import { McpAgent } from "agents/mcp";
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { z } from "zod";
+import { BigNumber } from "bignumber.js";
+import { requirePayment, atxpCloudflareWorker } from "@atxp/cloudflare";
+
+// Define our MCP agent with ATXP payment integration
+export class MyMCP extends McpAgent {
+	server = new McpServer({
+		name: "ATXP-Protected Greeting MCP Server",
+		version: "1.0.0",
+	});
+
+	async init() {
+		// Payment-protected greeting tool
+		this.server.tool(
+			"greet",
+			"Use this tool to get a personalized greeting.",
+			{
+				name: z.string().optional().describe("The name to include in the greeting"),
+			},
+			async ({ name }) => {
+				// Require payment of 0.01 USDC before processing
+				// Pass the authenticated user and ATXP init params from this.props
+				await requirePayment({
+					price: new BigNumber(0.01),
+				});
+
+				const greeting = name ? `Hello, ${name}!` : "Hello, World!";
+				const userInfo = this.props?.user || "anonymous user";
+				const message = `${greeting} Thanks for your 0.01 USDC payment, ${userInfo}! 💰`;
+
+				return {
+					content: [{ type: "text", text: message }],
+				};
+			}
+		);
+	}
+}
+
+// Use the ATXP Cloudflare Worker wrapper as the default export
+export default {
+	async fetch(request: Request, env: any, ctx: ExecutionContext): Promise<Response> {
+		// Create the handler with environment-based configuration
+		const handler = atxpCloudflareWorker({
+			mcpAgent: MyMCP,
+			payeeName: "ATXP MCP Server Demo",
+			atxpConnectionString: env.ATXP_CONNECTION_STRING,
+		});
+
+		return handler.fetch(request, env, ctx);
+	}
+};
+```
+
+#### Next, run your MCP server locally
+
+Run the following command to start the development server:
+
+```sh
+npm start
+```
+
+Your MCP server is now running on `http://localhost:8788/sse`.
+
+In a new terminal, run the [MCP inspector](https://github.com/modelcontextprotocol/inspector). The MCP inspector is an interactive MCP client that allows you to connect to your MCP server and invoke tools from a web browser.
+
+```sh
+npx @modelcontextprotocol/inspector@latest
+```
+
+Open the MCP inspector in your web browser:
+
+```sh
+open http://localhost:5173
+```
+
+Test the `greet` tool to verify it works correctly.
+
+#### Deploy your MCP server
+
+Once your MCP server is working locally, you can deploy it to Cloudflare Workers.
+
+First, set environment variables in wrangler.jsonc or use wrangler secret put for sensitive values:
+
+```sh
+# For sensitive data like wallet addresses, use secrets:
+wrangler secret put ATXP_CONNECTION_STRING
+```
+
+Deploy your MCP server using Wrangler:
+
+```sh
+npm run deploy
+```
+
+This will deploy your server to Cloudflare Workers and provide you with a URL like `https://atxp-mcp-cloudflare-server.<YOUR_SUBDOMAIN>.workers.dev/sse`.
+
+#### Make a test payment
+
+Now that your MCP server is deployed, you can connect it to MCP clients like [Goose](https://block.github.io/goose/).
+
+Once [connected to Goose](https://docs.atxp.ai/server/guides/cloudflare-tutorial#connect-to-goose) you can manually test the payment flow:
+
+1. Send a message like “Greet me with the name Alice”
+2. Goose will show that payment is required
+3. Click the payment URL to complete the payment
+4. Return to Goose and confirm the tool call was successful
+
+Of course, [agent clients](/agents/guides/paid-chat-agent/) will be able to make payments programmatically.
+
 ## Next steps
 
+- [Build a payment-enabled chat agent](/agents/guides/paid-chat-agent/) with Agents SDK and ATXP.
 - Add [tools](/agents/model-context-protocol/tools/) to your MCP server.
 - Customize your MCP Server's [authentication and authorization](/agents/model-context-protocol/authorization/).

@@ -1,0 +1,179 @@
+---
+pcx_content_type: concept
+title: Build a Payment-enabled Chat Agent
+tags:
+  - MCP
+sidebar:
+  order: 2
+---
+
+# Build an Payment-enabled Chat Agent
+
+This guide will show you how to integrate Agents SDK with [ATXP](https://atxp.ai) for building payment-enabled agents.
+
+## Overview
+
+ATXP is an open protocol enabling agents to access tools on a pay-per-use basis. By combining Agents SDK with ATXP's pay-per-use MCP tools, you can create AI applications with the ability to generate images, search the web, browse websites, and more - all with usage-based pricing.
+
+This guide will show you how to integrate ATXP's MCP tools with Cloudflare Agents to build a chat agent with image generation capabilities. You can find a full working example at [atxp-cloudflare-agent-example](https://github.com/atxp-dev/atxp-cloudflare-agent-example), and you can deploy it to your Cloudflare account using the button below:
+
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/atxp-dev/atxp-cloudflare-agent-example)
+
+## Setup
+
+### Create ATXP account
+
+If you don't have an ATXP account yet, [create one](https://docs.atxp.ai/server/create_an_account) and copy your ATXP connection string. It should look something like this:
+
+```sh
+https://accounts.atxp.ai?connection_token=abc123
+```
+
+If you've already created an ATXP account, you can visit the [ATXP account dashboard](https://accounts.atxp.ai) to get your connection string.
+
+### Configure your project
+
+Create a new Agents SDK project:
+
+```sh
+npx create-cloudflare@latest --template cloudflare/agents-starter my-atxp-agent
+cd my-atxp-agent
+```
+
+Add the ATXP client to your project:
+
+```sh
+npm install @atxp/client
+```
+
+For the ATXP account you just created, add the connection string of the account to a `.dev.vars` file in the root of your project, which [will be used to set secrets in local development](/workers/configuration/secrets/).
+
+```sh
+touch .dev.vars
+echo 'ATXP_CONNECTION_STRING="your-connection-string"' >> .dev.vars
+cat .dev.vars
+```
+
+## Basic integration
+
+Here's how to add ATXP image generation to your Cloudflare Agent:
+
+```typescript src/tools/imageGeneration.ts
+import { tool } from "agents";
+import { z } from "zod";
+import { ATXPAccount, buildStreamableTransport, createMCPClient } from "@atxp/client";
+
+export const generateImage = tool({
+	description: "Generate an image from a text prompt using ATXP",
+	parameters: z.object({
+		prompt: z.string().describe("The text prompt to generate an image from"),
+	}),
+	execute: async ({ prompt }, { env, agent }) => {
+		try {
+			// Initialize ATXP account
+			const account = new ATXPAccount(env.ATXP_CONNECTION_STRING);
+
+			// Create transport for ATXP image server
+			const transport = buildStreamableTransport({
+				mcpServer: 'https://image.mcp.atxp.ai',
+				account,
+			});
+
+			// Create MCP client
+			const client = await createMCPClient({ transport });
+
+			// Generate the image
+			const result = await client.callTool('generate_image', {
+				prompt: prompt,
+				size: '1024x1024'
+			});
+
+			if (result.toolResult.content[0].type === 'text') {
+				const response = JSON.parse(result.toolResult.content[0].text);
+
+				if (response.image_url) {
+					return `Image generated successfully! Here's your image: ![${prompt}](${response.image_url})`;
+				} else {
+					return `Image generation started. Task ID: ${response.task_id}`;
+				}
+			}
+
+			return "Image generation request submitted successfully.";
+		} catch (error) {
+			console.error('Image generation error:', error);
+			return `Failed to generate image: ${error.message}`;
+		}
+	},
+});
+```
+
+```typescript src/tools.ts
+import { generateImage } from "./tools/imageGeneration";
+
+export const tools = {
+	generateImage,
+	// ... other tools
+};
+
+export const executions = {
+	// Add any tools that require confirmation here
+};
+```
+
+```typescript src/server.ts
+import { createAgent } from "agents";
+import { tools, executions } from "./tools";
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const agent = createAgent({
+			model: openai("gpt-4o-mini", {
+				apiKey: env.OPENAI_API_KEY,
+			}),
+			tools,
+			executions,
+			// ... other configuration
+		});
+
+		return agent.fetch(request, { env });
+	},
+};
+```
+
+## Deploy your agent
+
+### Set production secrets
+
+Configure your production environment variables:
+
+```sh
+wrangler secret put OPENAI_API_KEY
+wrangler secret put ATXP_CONNECTION_STRING
+```
+
+### Deploy to Cloudflare
+
+Deploy your agent:
+
+```sh
+npm run deploy
+```
+
+Your agent will be available at your Cloudflare Workers subdomain.
+
+## Test your agent
+
+Once deployed, you can test your agent by asking it to generate images:
+
+```
+User: "Generate an image of a sunset over mountains"
+Agent: "I'll generate an image of a sunset over mountains for you..."
+[Image appears in the chat when complete]
+```
+
+## Next steps
+
+Now that you have a working Cloudflare Agent with ATXP integration, you can explore more:
+
+- [Build a pay-per-use remote MCP server](/agents/guides/remote-mcp-server/#add-payments) with the Agents SDK and ATXP.
+- [Build a Human-in-the-loop Agent](https://github.com/cloudflare/agents/tree/main/guides/human-in-the-loop) using the Agents SDK.
