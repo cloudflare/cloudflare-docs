@@ -26,7 +26,7 @@ If your website already has a `robots.txt` file — verified by a HTTP `200` res
 
 For example, without this feature enabled, the `robots.txt` content of `crawlstop.com` would be:
 
-```txt
+```txt title="Feature not enabled"
 User-agent: *
 Disallow: /lp
 Disallow: /feedback
@@ -37,16 +37,53 @@ Sitemap: https://www.crawlstop.com/sitemap.xml
 
 With the managed `robots.txt` enabled, Cloudflare will prepend our managed content before your original content, resulting in what you can view at https://www.crawlstop.com/robots.txt.
 
-**Robots.txt example**
-<div style="position: relative; padding-top: 56.25%; border: 1px solid orange; border-radius: 5px">
-<iframe
-	src="https://www.crawlstop.com/robots.txt"
-	style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
-	allowfullscreen="true"
-	title="crawltop.com robots.txt file"
-	>
-</iframe>
-</div>
+```txt title="Feature enabled"
+# NOTICE: The collection of content and other data on this
+# site through automated means, including any device, tool,
+# or process designed to data mine or scrape content, is
+# prohibited except (1) for the purpose of search engine indexing or
+# artificial intelligence retrieval augmented generation or (2) with express
+# written permission from this site’s operator.
+
+# To request permission to license our intellectual
+# property and/or other materials, please contact this
+# site’s operator directly.
+
+# BEGIN Cloudflare Managed content
+
+User-agent: Amazonbot
+Disallow: /
+
+User-agent: Applebot-Extended
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: GPTBot
+Disallow: /
+
+User-agent: meta-externalagent
+Disallow: /
+
+# END Cloudflare Managed Content
+User-agent: *
+Disallow: /lp
+Disallow: /feedback
+Disallow: /langtest
+
+
+Sitemap: https://www.crawlstop.com/sitemap.xml
+```
 
 ### No robots.txt file
 
