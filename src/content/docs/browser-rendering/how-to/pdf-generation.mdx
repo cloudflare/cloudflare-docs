@@ -11,8 +11,8 @@ As seen in [this Workers bindings guide](/browser-rendering/workers-bindings/scr
 
 You can generate PDFs with Browser Rendering in two ways:
 
-- **[REST API](/browser-rendering/rest-api/)**: Use the the [/pdf endpoint](/browser-rendering/rest-api/pdf-endpoint/). This is ideal if you don't need to customize rendering behavior. 
-- **[Workers Bindings](/browser-rendering/workers-bindings/)**: Use [Puppeteer](/browser-rendering/platform/puppeteer/) or [Playwright](/browser-rendering/platform/playwright/) with Workers Bindings for additional control and customization. 
+- **[REST API](/browser-rendering/rest-api/)**: Use the the [/pdf endpoint](/browser-rendering/rest-api/pdf-endpoint/). This is ideal if you don't need to customize rendering behavior.
+- **[Workers Bindings](/browser-rendering/workers-bindings/)**: Use [Puppeteer](/browser-rendering/platform/puppeteer/) or [Playwright](/browser-rendering/platform/playwright/) with Workers Bindings for additional control and customization.
 
 Choose the method that best fits your use case.
 
@@ -35,6 +35,12 @@ The following example shows you how to generate a PDF using [Puppeteer](/browser
 ```toml title="wrangler.toml"
 browser = { binding = "BROWSER" }
 ```
+
+:::note
+
+During local development the configuration above will use a local browser simulation, to instead interact with a real headless browser during local development, set `"remote" : true` in the Browser binding configuration. You can learn more in our [remote bindings documentation](/workers/development-testing/#remote-bindings).
+
+:::
 
 </WranglerConfig>
 
@@ -257,7 +263,7 @@ export default {
 };
 ```
 
-You can run this script to test it using [remote bindings](/workers/development-testing/#remote-bindings):
+You can run this script to test it via:
 
 <PackageManagers type="exec" pkg="wrangler" args="dev" />
 

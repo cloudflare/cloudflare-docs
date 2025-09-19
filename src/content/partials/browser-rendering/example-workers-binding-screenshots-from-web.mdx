@@ -154,7 +154,9 @@ If the same `url` is requested again, it will use the cached version in KV inste
 
 #### 6. Test
 
-Run `npx wrangler dev` to test your Worker locally or run [`npx wrangler dev --remote`](/workers/wrangler/commands/#dev) to test your Worker remotely before deploying to Cloudflare's global network.
+Run `npx wrangler dev` to test your Worker locally.
+
+To interact with a real headless browser during local development, set `"remote" : true` in the Browser binding configuration. You can learn more in our [remote bindings documentation](/workers/development-testing/#remote-bindings).
 
 To test taking your first screenshot, go to the following URL:
 
