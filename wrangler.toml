@@ -22,5 +22,5 @@ run_worker_first = true
 binding = "VENDORED_MARKDOWN"
 bucket_name = "vendored-markdown"
 
-[observability.logs]
+[observability]
 enabled = true
