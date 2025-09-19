@@ -1,18 +1,20 @@
 ---
 title: Panic Recovery for Rust Workers
-description: Deployments on workers-rs are now more reliable with improved panic recovery
+description: Deployments on workers-rs are now more reliable with automatic panic recovery
 date: 2025-09-19
 ---
 
 import { WranglerConfig, Aside } from "~/components";
 
-A long-standing problem we've had with [workers-rs](https://github.com/cloudflare/workers-rs) is that its Rust panics are non-recoverable, and can put the worker into an invalid state.
+In [workers-rs](https://github.com/cloudflare/workers-rs), Rust panics were previously non-recoverable. A panic would put the Worker into an invalid state, and further function calls could result in memory overflows or exceptions.
 
-We've been able to implement a solution for panic recovery to ensure more reliable deployments. This new automatic panic recovery feature is enabled for all new workers-rs deployments, as of version 0.6.5, with no further configuration required.
+Now, when a panic occurs, requests in progress during a panic will throw 500 errors, but the Worker will then automatically and instantly recover for future requests.
+
+This ensures more reliable deployents. Automatic panic recovery feature is enabled for all new workers-rs deployments as of version 0.6.5, with no further configuration required.
 
 ## Fixing Rust Panics with Wasm Bindgen
 
-Rust Workers are built with Wasm Bindgen, which treats panics as non-recoverable - the entire Wasm application is considered to be in an invalid state, and any further function calls could result in overflows or memory exceptions.
+Rust Workers are built with Wasm Bindgen, which treats panics as non-recoverable - the entire Wasm application is considered to be in an invalid state.
 
 We now attach a default panic handler in Rust:
 
@@ -47,13 +49,13 @@ One other necessary change here was associating Wasm-created JS objects with an 
 Building on this new Wasm Bindgen feature, layered with our new default panic handler, the last piece was adding a proxy wrapper to ensure all top-level exported class instantiations (such as for Rust Durable Objects) are fully reinitialized when resetting the Wasm instance. This is because
 the workerd runtime will instantiate exported classes, which would then be associated with the Wasm instance. So tracking and reinitializing these exported classes was necessary.
 
-This approach now provides full panic recovery for Rust Workers. Requests in progress during a panic will provide 500 errors, but the worker will then instantly recover for future requests with an instant reset.
+This approach now provides full panic recovery for Rust Workers on subsequent requests.
 
-Of course we never want panics, but when they do happen they are isolated and can be investigated further from the error logs - avoiding broader service disruption.
+Of course, we never want panics, but when they do happen they are isolated and can be investigated further from the error logs - avoiding broader service disruption.
 
 ## WebAssembly Exception Handling
 
-In future, full support for recoverable panics could be implemented without needing reinitialization at all, utilizing the [WebAssembly Exception Handling](https://github.com/WebAssembly/exception-handling/blob/main/proposals/exception-handling/Exceptions.md)
+In the future, full support for recoverable panics could be implemented without needing reinitialization at all, utilizing the [WebAssembly Exception Handling](https://github.com/WebAssembly/exception-handling/blob/main/proposals/exception-handling/Exceptions.md)
 proposal, part of the newly announced [WebAssembly 3.0](https://webassembly.org/news/2025-09-17-wasm-3.0/) specification. This would allow unwinding panics as normal JS errors, and concurrent requests would no longer fail.
 
 **We're making significant improvements to the reliability of [Rust Workers](https://github.com/cloudflare/workers-rs). Join us in `#rust-on-workers` on the [Cloudflare Developers Discord](https://discord.gg/cloudflaredev) to stay updated.**
