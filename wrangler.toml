@@ -24,3 +24,6 @@ bucket_name = "vendored-markdown"
 
 [observability]
 enabled = true
+
+[observability.traces]
+enabled = true
