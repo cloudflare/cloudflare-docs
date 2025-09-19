@@ -10,7 +10,7 @@ In [workers-rs](https://github.com/cloudflare/workers-rs), Rust panics were prev
 
 Now, when a panic occurs, in-flight requests will throw 500 errors, but the Worker will automatically and instantly recover for future requests.
 
-This ensures more reliable deployents. Automatic panic recovery is enabled for all new workers-rs deployments as of version 0.6.5, with no configuration required.
+This ensures more reliable deployments. Automatic panic recovery is enabled for all new workers-rs deployments as of version 0.6.5, with no configuration required.
 
 ## Fixing Rust Panics with Wasm Bindgen
 
