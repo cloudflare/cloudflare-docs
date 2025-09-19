@@ -58,9 +58,9 @@ were set previously and will cause unexpected behavior for other Workers running
 same isolate. Specifically, it would cause inconsistency with the `process.env` object when
 accessed via named imports.
 
-````js
-import * as process from 'node:process';
-import { env } from 'node:process';
+```js
+import * as process from "node:process";
+import { env } from "node:process";
 
 process.env === env; // true! they are the same object
 process.env = {}; // replace the object! Do not do this!
@@ -68,6 +68,7 @@ process.env === env; // false! they are no longer the same object
 
 // From this point forward, any changes to process.env will not be reflected in env,
 // and vice versa!
+```
 
 ## `process.nextTick()`
 
@@ -82,7 +83,7 @@ console.log(env["FOO"]); // Prints: bar
 nextTick(() => {
 	console.log("next tick");
 });
-````
+```
 
 ## Stdio
 
