@@ -2299,7 +2299,7 @@
 /fundamentals/speed/rocket-loader/* /speed/optimization/content/rocket-loader/:splat 301
 /fundamentals/speed/signed-exchanges/* /speed/optimization/other/signed-exchanges/:splat 301
 /fundamentals/speed/speed-test/* /speed/observatory/:splat 301
-/speed/speed-test/:splat 301 /speed/observatory/:splat 301
+/speed/speed-test/* /speed/observatory/:splat 301
 /http-applications/* /version-management/:splat 301
 /http3/* https://www.cloudflare.com/learning/performance/what-is-http3/ 301
 /railgun/* / 301
