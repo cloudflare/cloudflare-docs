@@ -1,0 +1,30 @@
+---
+title: Sinks
+pcx_content_type: navigation
+sidebar:
+  order: 4
+---
+
+import { LinkCard } from "~/components";
+
+Sinks define destinations for your data in Cloudflare Pipelines. They support writing to [R2 Data Catalog](/r2/data-catalog/) as Apache Iceberg tables or to [R2](/r2/) as raw JSON or Parquet files.
+
+## What are Sinks?
+
+Sinks write processed data from pipelines to R2. They provide exactly-once delivery guarantees, ensuring events are never duplicated or dropped.
+
+Sinks can be configured to write files frequently for low-latency ingestion or to write larger, less frequent files for better query performance. Configuration options include batching settings, compression, and output formats.
+
+## Learn more
+
+<LinkCard
+	title="Manage sinks"
+	href="/pipelines/sinks/manage-sinks/"
+	description="Create, configure, and delete sinks using Wrangler or the API."
+/>
+
+<LinkCard
+	title="Available sinks"
+	href="/pipelines/sinks/available-sinks/"
+	description="Learn about supported sink destinations and their configuration options."
+/>

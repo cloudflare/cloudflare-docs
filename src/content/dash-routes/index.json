@@ -261,7 +261,7 @@
 	},
 	{
 		"name": "Pipelines",
-		"deeplink": "/?to=/:account/workers/pipelines",
+		"deeplink": "/?to=/:account/pipelines",
 		"parent": ["Storage & Databases"]
 	},
 	{
