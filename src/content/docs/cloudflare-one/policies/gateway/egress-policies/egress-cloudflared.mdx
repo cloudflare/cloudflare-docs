@@ -40,11 +40,6 @@ To learn more about how Gateway applies hostname-based egress policies, refer to
 
 ## Prerequisites
 
-::::note[Cloudflare Tunnel version requirement]
-If you're aiming to use Cloudflare Tunnel for source IP anchoring and DNS resolution, you must use `cloudflared` version 2025.7.0 or later.
-::::
-
-
 User traffic is on-ramped to Gateway using one of the following methods:
 
 <Render
@@ -55,6 +50,10 @@ User traffic is on-ramped to Gateway using one of the following methods:
 ## 1. Connect your private network
 
 [Connect your private network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/connect-cidr/) to Cloudflare using `cloudflared`. For example, if you want traffic to egress from AWS, connect the private CIDR block of your AWS VPC.
+
+::::note
+Requires `cloudflared` version 2025.7.0 or later.
+::::
 
 ## 2. Add a public hostname route
 
