@@ -28,7 +28,7 @@ Logpush supports [Amazon Kinesis](https://aws.amazon.com/kinesis/) as a destinat
 }
 ```
 
-2. Ensure that the IAM role has permissions to perform the `PutRecord` action on your Kinesis stream. Replace `<AWS_REGION>`, `<YOUR_AWS_ACCOUNT_ID>` and `<STREAM_NAME>` with your own values.
+2. Ensure that the IAM role has permissions to perform the `PutRecord` action on your Kinesis stream. Replace `<AWS_REGION>`, `<YOUR_AWS_ACCOUNT_ID>` and `<STREAM_NAME>` with your own values:
 
 ```java
 {
@@ -43,7 +43,7 @@ Logpush supports [Amazon Kinesis](https://aws.amazon.com/kinesis/) as a destinat
 }
 ```
 
-3. Create a Logpush job, using the following format for the `destination_conf` field. 
+3. Create a Logpush job, using the following format for the `destination_conf` field:
 
 ```bash
 kinesis://<STEAM_NAME>?region=<AWS_REGION>&sts-assume-role-arn=arn:aws:iam::<YOUR_AWS_ACCOUNT_NUMBER>:role/<IAM_ROLE_NAME>
@@ -70,7 +70,7 @@ $ curl https://api.cloudflare.com/client/v4/zones/$ZONE_TAG/logpush/jobs \
 
 ## Configure Kinesis using IAM Access Keys
 
-When configuring your Logpush job using IAM Access Keys, ensure that the IAM user has permission to perform the `PutRecord` action on your Kinesis stream.
+When configuring your Logpush job using IAM Access Keys, ensure that the IAM user has permission to perform the `PutRecord` action on your Kinesis stream:
 
 ```bash
 kinesis://<STREAM_NAME>?region=<AWS_REGION>&access-key-id=<AWS_ACCESS_KEY_ID>&secret-access-key=<AWS_SECRET_ACCESS_KEY>
