@@ -88,11 +88,9 @@ should be built for the `linux/amd64` architecture, and should stay within
 
 ### Container shutdown
 
-Cloudflare will not actively shut off a container instance after a specific amount of
-time. If you do not set [`sleepAfter`](https://github.com/cloudflare/containers/blob/main/README.md#properties) on your Container class, or stop the instance
-manually, it will continue to run unless its host server is restarted. This
-happens on an irregular cadence, but frequently enough where Cloudflare does not
-guarantee that any instance will run for any set period of time.
+If you do not set [`sleepAfter`](https://github.com/cloudflare/containers/blob/main/README.md#properties)
+on your Container class, or stop the instance manually, the container will shut down soon after the container stops receiving requests.
+By setting `sleepAfter`, the container will stay alive for approximately the specified duration.
 
 You can manually shutdown a container instance by calling `stop()` or `destroy()` on it - refer to the [Container package docs](https://github.com/cloudflare/containers/blob/main/README.md#container-methods) for more details.
 
