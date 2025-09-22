@@ -1,0 +1,183 @@
+---
+pcx_content_type: concept
+title: Stagehand
+description: Deploy a Stagehand server that uses Browser Rendering to provide browser automation capabilities to your agents.
+sidebar:
+  order: 7
+  badge: Beta
+---
+
+import {
+	Render,
+	WranglerConfig,
+	TabItem,
+	Tabs,
+	PackageManagers,
+} from "~/components";
+
+[Stagehand](https://www.stagehand.dev/) is ___
+
+You can use Stagehand to ___
+
+
+## Use Stagehand in a Worker
+
+After you deploy, you can interact with the Worker using this URL pattern:
+```
+https://<your-worker>.workers.dev
+```
+In this example, you will search for a movie on https://www.themoviedb.org/ and return the movie's title, year, and director, as well as a screenshot of the webpage.
+
+If you want to skip the steps and get started quickly, select **Deploy to Cloudflare** below.
+
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/playwright-mcp/tree/main/cloudflare/example)
+
+1. Install dependencies:
+	```bash
+	npm ci
+	```
+2. Make sure you have the [browser rendering](/browser-rendering/) in your wrangler configuration file:
+	<WranglerConfig>
+		```jsonc
+			{
+				"name": "cloudflare-stagehand-example",
+				"main": "src/index.ts",
+				"compatibility_flags": ["nodejs_compat", "enable_nodejs_fs_module"],
+				"compatibility_date": "2025-09-01",
+				"workers_dev": true,
+				"upload_source_maps": true,
+				"alias": {
+					"playwright": "@cloudflare/playwright"
+				},
+				"observability": {
+					"enabled": true
+				},
+				"browser": {
+					"binding": "BROWSER",
+					"experimental_remote": true
+				},
+				"ai": {
+					"binding": "AI"
+				}
+			}
+		```
+	</WranglerConfig>
+
+3. Edit the code:
+
+	```ts title="src/index.ts"
+
+	import { Stagehand } from "@browserbasehq/stagehand";
+	import { z } from "zod";
+	import { endpointURLString } from "@cloudflare/playwright";
+	import { createWorkersAI } from "workers-ai-provider";
+	import { AISdkClient } from "./aidsk";
+
+	export default {
+		async fetch(request: Request, env: Env) {
+			const url = new URL(request.url);
+			if (url.pathname !== "/")
+				return new Response("Not found", { status: 404 });
+
+			const workersai = createWorkersAI({ binding: env.AI });
+			// @ts-ignore
+			const model = workersai("@cf/meta/llama-3.3-70b-instruct-fp8-fast");
+
+			const stagehand = new Stagehand({
+				env: "LOCAL",
+				localBrowserLaunchOptions: { cdpUrl: endpointURLString("BROWSER") },
+				llmClient: new AISdkClient({ model }),
+				verbose: 1,
+			});
+
+			await stagehand.init();
+			const page = stagehand.page;
+
+			await page.goto('https://www.themoviedb.org/');
+			// for multi-step actions, use observe
+			const actions = await page.observe('Search for "The Iron Giant" and click the Search button');
+			for (const action of actions)
+				await page.act(action);
+			await page.act('Click the first search result');
+			let movieInfo = await page.extract({
+				instruction: 'Extract movie information',
+				schema: z.object({
+					title: z.string(),
+					year: z.number(),
+					director: z.string(),
+				}),
+			});
+
+			const screenshot = await page.screenshot();
+			await stagehand.close();
+
+			return new Response(`
+				<html>
+					<head>
+						<title>Cloudflare Stagehand Example</title>
+						<style>
+							body {
+								font-family: system-ui, -apple-system, sans-serif;
+							}
+						</style>
+					</head>
+					<body>
+						<h1>Stagehand Example</h1>
+						<p>This example shows how to use <a href="https://www.stagehand.dev/">stagehand</a> to extract information from a web page.</p>
+						<h2>Movie Information</h2>
+						<div>
+							<p><b>Title:</b> ${movieInfo.title}</p>
+							<p><b>Release Year:</b> ${movieInfo.year}</p>
+							<p><b>Director:</b> ${movieInfo.director}</p>
+						</div>
+						<img src="data:image/png;base64,${screenshot.toString('base64')}" />
+					</body>
+				</html>
+			`, {
+				headers: {
+					"Content-Type": "text/html; charset=utf-8",
+				},
+			});
+		},
+	};
+	```
+4. Build the project:
+	```bash
+	npm run build
+	```
+5. Deploy to Cloudflare Workers:
+	```bash
+	npm run deploy
+	```
+
+## Use a custom model
+
+Instead of using a model from [Workers AI](/workers-ai/), you can use a custom model for which you supply your own credentials.
+
+In this example, you will configure Stagehand to use [OpenAI](https://openai.com/). You will need an OpenAI API key. Cloudflare recommends storing your API key with [secrets](/workers/configuration/secrets/).
+
+```typescript
+const stagehand = new Stagehand({
+  env: "LOCAL",
+  localBrowserLaunchOptions: { cdpUrl: endpointURLString("BROWSER") },
+  modelName: "openai/gpt-4.1",
+  modelClientOptions: {
+    apiKey: env.OPENAI_API_KEY,
+  },
+});
+```
+
+## Use Cloudflare AI Gateway
+
+
+```typescript
+const stagehand = new Stagehand({
+  env: "LOCAL",
+  localBrowserLaunchOptions: { cdpUrl: endpointURLString("BROWSER") },
+  modelName: "openai/gpt-4.1",
+  modelClientOptions: {
+    apiKey: env.OPENAI_API_KEY,
+    baseURL: `https://gateway.ai.cloudflare.com/v1/${env.CLOUDFLARE_ACCOUNT_ID}/${env.AI_GATEWAY_ID}/openai`,
+  },
+});
+```
