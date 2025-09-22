@@ -22,6 +22,12 @@ In this tutorial, we’ll walk through how to:
 2. Store the rendered HTML in R2
 3. Connect it to AI Search for querying
 
+:::note
+
+AutoRAG now lets you use your [website](/ai-search/configuration/data-source/website/) as a data source. When enabled, AutoRAG will automatically crawl and parse your site content for you.
+
+:::
+
 ## Step 1. Create a Worker to fetch webpages and upload into R2
 
 We’ll create a Cloudflare Worker that uses Puppeteer to visit your URL, render it, and store the full HTML in your R2 bucket. If you already have an R2 bucket with content you’d like to build a RAG for then you can skip this step.
