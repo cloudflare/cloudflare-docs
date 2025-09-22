@@ -29,7 +29,7 @@ These Workers can now communicate with each other across separate dev commands, 
 ```js title="./api/src/index.ts"
 export default {
   async fetch(request, env) {
-    // Call the auth worker using a service binding
+    // This service binding call now works across dev commands
     const authorized = await env.AUTH.isAuthorized(request);
 
     if (!authorized) {
