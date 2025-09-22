@@ -1,5 +1,5 @@
 diff --git a/node_modules/@astrojs/starlight/components/SidebarSublist.astro b/node_modules/@astrojs/starlight/components/SidebarSublist.astro
-index a027f56..639be81 100644
+index f90d79d..82ac8f0 100644
 --- a/node_modules/@astrojs/starlight/components/SidebarSublist.astro
 +++ b/node_modules/@astrojs/starlight/components/SidebarSublist.astro
 @@ -4,6 +4,7 @@ import type { SidebarEntry } from '../utils/routing/types';
@@ -38,7 +38,7 @@ index ca63d22..ebb1a17 100644
  	return true;
  }
 diff --git a/node_modules/@astrojs/starlight/user-components/Tabs.astro b/node_modules/@astrojs/starlight/user-components/Tabs.astro
-index 6d173df..61eed80 100644
+index d8fa647..3b6e872 100644
 --- a/node_modules/@astrojs/starlight/user-components/Tabs.astro
 +++ b/node_modules/@astrojs/starlight/user-components/Tabs.astro
 @@ -3,10 +3,11 @@ import Icon from './Icon.astro';
