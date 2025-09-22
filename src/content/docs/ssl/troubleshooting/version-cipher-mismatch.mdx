@@ -10,7 +10,7 @@ description: Learn how to troubleshoot ERR_SSL_VERSION_OR_CIPHER_MISMATCH when
   using Cloudflare SSL/TLS.
 ---
 
-import { Render } from "~/components";
+import { Stream, Render } from "~/components";
 
 After you [add a new domain](/fundamentals/manage-domains/add-site/) to Cloudflare, your visitors' browsers might display one of the following errors:
 
@@ -27,17 +27,12 @@ This error occurs when your domain or subdomain is not covered by an SSL/TLS cer
 
 ## Decision tree
 
-```mermaid
-flowchart TD
-accTitle: Troubleshooting ERR_SSL_VERSION_OR_CIPHER_MISMATCH decision tree
-A>Is your certificate active?] -- Yes --> B>Is the DNS record proxied?]
-A -- No --> C[Wait for certificate to activate or pause Cloudflare]
-B -- No --> D[Proxy the DNS record]
-B -- Yes --> E>Are you using a custom certificate?]
-E -- Yes --> F[Custom certificate may be expired]
-E -- No --> G>Are you accessing a multi-level subdomain?]
-G -- Yes --> H[Get an advanced or custom certificate]
-```
+<Stream
+  id="ff42f110f3781b88b02f36bcef96f7f8"
+  title="Manage SSL version or cipher mismatch errors"
+  thumbnail="https://pub-d9bf66e086fb4b639107aa52105b49dd.r2.dev/Mermaid%20thumbnail_Cipher.png"
+/>
+
 
 ---
 
