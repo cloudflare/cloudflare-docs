@@ -1,0 +1,113 @@
+---
+pcx_content_type: concept
+title: Gradual rollouts
+sidebar:
+  order: 4
+head: []
+description: Provide static asset routing solutions for gradual Worker deployments.
+---
+
+import { Example } from "~/components";
+
+[Gradual deployments](/workers/configuration/versions-and-deployments/gradual-deployments/) route requests to different Worker versions based on configured percentages. When your Worker serves static assets, this per-request routing can cause asset reference mismatches that result in 404 errors and broken user experiences.
+
+Modern JavaScript frameworks commonly generate fingerprinted asset filenames during builds. For example, when you build a React application with Vite, your assets might look like:
+
+```
+dist/
+├── index.html
+├── assets/
+│   ├── index-a1b2c3d4.js    # Main bundle with content hash
+│   ├── index-e5f6g7h8.css   # Styles with content hash
+│   └── logo-i9j0k1l2.svg    # Images with content hash
+```
+
+During a gradual rollout between two versions of your application, you might have:
+
+**Version A (old build):**
+
+- `index.html` references `assets/index-a1b2c3d4.js`
+- `assets/index-a1b2c3d4.js` exists
+
+**Version B (new build):**
+
+- `index.html` references `assets/index-m3n4o5p6.js`
+- `assets/index-m3n4o5p6.js` exists
+
+If a user's initial request for `/` goes to Version A, they'll receive HTML that references `index-a1b2c3d4.js`. However, when their browser then requests `/assets/index-a1b2c3d4.js`, that request might be routed to Version B, which only contains `index-m3n4o5p6.js`, resulting in a 404 error.
+
+This issue affects applications built with any framework that fingerprints assets, including:
+
+- **React** (Create React App, Next.js, Vite)
+- **Vue** (Vue CLI, Nuxt.js, Vite)
+- **Angular** (Angular CLI)
+- **Svelte** (SvelteKit, Vite)
+- **Static site generators** that optimize asset loading
+
+## Preventing asset mismatches with version affinity
+
+[Version affinity](/workers/configuration/versions-and-deployments/gradual-deployments/#version-affinity) ensures all requests from the same user are handled by the same Worker version, preventing asset reference mismatches entirely. You can configure this using [Transform Rules](/rules/transform/request-header-modification/) to automatically set the `Cloudflare-Workers-Version-Key` header.
+
+### Session-based affinity
+
+For applications with user sessions, use session identifiers:
+
+<Example>
+
+Text in **Expression Editor**:
+
+```txt
+http.cookie contains "session_id"
+```
+
+Selected operation under **Modify request header**: _Set dynamic_
+
+**Header name**: `Cloudflare-Workers-Version-Key`
+
+**Value**: `http.cookie["session_id"]`
+
+</Example>
+
+### User-based affinity
+
+For authenticated applications, use user identifiers stored in cookies or headers:
+
+<Example>
+
+Text in **Expression Editor**:
+
+```txt
+http.cookie contains "user_id"
+```
+
+Selected operation under **Modify request header**: _Set dynamic_
+
+**Header name**: `Cloudflare-Workers-Version-Key`
+
+**Value**: `http.cookie["user_id"]`
+
+</Example>
+
+## Testing and monitoring
+
+Before rolling out to production, verify that your version affinity setup works correctly:
+
+```bash
+# Test with version affinity - both requests should hit the same version
+curl -H "Cookie: session_id=test123" https://your-worker.example.com/
+curl -H "Cookie: session_id=test123" https://your-worker.example.com/assets/index.js
+```
+
+During gradual rollouts, monitor your Worker's analytics for increased 404 response rates, especially for asset files (`.js`, `.css`, `.png`). Use [Analytics Engine](/analytics/analytics-engine/) or [Logpush](/workers/observability/logs/logpush/) to track these metrics and catch asset mismatch issues early.
+
+## Best practices
+
+When deploying applications with fingerprinted assets using gradual rollouts:
+
+- Use version affinity (preferably session-based) to ensure consistent asset loading
+- Test asset loading using version overrides before increasing rollout percentages
+- Monitor 404 rates during deployments to catch issues quickly
+- Have rollback procedures ready in case asset problems arise
+- Choose session-based or user-based affinity depending on your application's authentication model
+
+With proper version affinity configuration, you can safely perform gradual deployments of applications that use modern build tools and asset optimization without worrying about broken user experiences from missing assets.
