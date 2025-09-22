@@ -1,0 +1,9 @@
+---
+id: fe9344af4ab476bf81f4447000f36db66
+url: strict-ssl-concepts
+title: SSL/TLS concepts
+description: In this video, learn the key concepts relevant to Cloudflare SSL/TLS.
+products:
+  - ssl
+thumbnail:
+  url: https://pub-d9bf66e086fb4b639107aa52105b49dd.r2.dev/Mermaid%20thumbnail_Concepts.png
