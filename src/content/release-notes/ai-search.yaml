@@ -10,7 +10,7 @@ entries:
   - publish_date: "2025-09-23"
     title: Support document file types in AutoRAG
     description: |-
-      `.docx` and `.odt` files can now be converted to Markdown using our [conversion utility](/workers-ai/features/markdown-conversion/), making these files available to index inside your AutoRAG instance.
+      Our [conversion utility](/workers-ai/features/markdown-conversion/) can now convert `.docx` and `.odt` files to Markdown, making these files available to index inside your AutoRAG instance.
   - publish_date: "2025-08-20"
     title: Increased maximum query results to 50
     description: |-
