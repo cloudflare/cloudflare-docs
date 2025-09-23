@@ -15,18 +15,11 @@ Cloudy, currently in beta, is available in several Cloudflare products such as W
 We want to hear your thoughts as you get to meet Cloudy and try out these new AI features. You can send feedback to us at cloudyfeedback@cloudflare.com. Your feedback will help shape our roadmap for AI enhancement, and bring our users smarter, more efficient tooling that helps everyone get more secure.
 :::
 
-## Required roles
-
-A Cloudflare user must have one of the following [roles](/fundamentals/manage-members/roles/) to view Cloudy AI summaries:
-
-- Super Administrator
-- Administrator
-
 ## What data does Cloudy have access to?
 
 Cloudy has access to your Cloudflare configuration. It combines this data with a purpose-built LLM prompt.
 
-Additionally, Cloudy takes Role-Based Access Control (RBAC) restrictions into account: it can only access the same Cloudflare configuration settings as the currently logged in user, based on their [roles and permissions](#required-roles).
+Additionally, Cloudy takes Role-Based Access Control (RBAC) restrictions into account: it can only access the same Cloudflare configuration settings as the currently logged in user, based on their [roles and permissions](/fundamentals/manage-members/roles/).
 
 All your configuration information is only included in the purpose-built prompt — it is not used to train Cloudy or the LLM model(s) powering it.
 

@@ -2,7 +2,7 @@
 pcx_content_type: how-to
 title: Virtual networks
 sidebar:
-  order: 2
+  order: 5
 ---
 
 import { Details, Render, Tabs, TabItem } from "~/components";
@@ -60,7 +60,7 @@ The following example demonstrates how to add two overlapping IP routes to Cloud
          2. Select **Create a tunnel**.
          3. Name your tunnel `Staging tunnel` and select **Save tunnel**.
          4. Install the connector within your staging environment.
-         5. In the **Private Network** tab, add `10.128.0.1/32`.
+         5. In the **CIDR** tab, add `10.128.0.1/32`.
          6. Select **Additional settings**. Under **Virtual networks**, select *staging-vnet*.
          7. Save the tunnel.
          8. Repeat Steps 2a-2g to create another tunnel called `Production tunnel`. Be sure to install the connector within your production environment and assign the route to *production-vnet*.

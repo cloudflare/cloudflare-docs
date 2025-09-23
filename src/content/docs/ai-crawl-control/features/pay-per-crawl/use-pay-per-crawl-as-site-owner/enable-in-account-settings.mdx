@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import { Steps } from "~/components";
+import { Steps, DashButton } from "~/components";
 
 ```mermaid
 graph LR
@@ -35,8 +35,11 @@ An Administrator or Super Administrator with access to all domains must select w
 
 {/* prettier-ignore */}
 <Steps>
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to **Manage Account** > **Settings** > **Pay Per Crawl**.
+1. In the Cloudflare dashboard, go to **Manage Account** > **Settings**.
+
+   <DashButton url="/?to=/:account/configurations" />
+
+2. Select **Pay Per Crawl**.
 3. In the **Domain Access** table, select which domains will have pay per crawl configurations visible.
 4. Set the **Visibility** to **Visible** for each domain you want to configure.
 </Steps>

@@ -13,7 +13,7 @@ sidebar:
   order: 1001
 description: Allow a client to request static assets while waiting for the HTML response.
 ---
-import { DashButton } from "~/components";
+import { DashButton, Steps, TabItem, Tabs } from "~/components";
 
 If you want to get started quickly, click on the button below.
 
@@ -21,18 +21,18 @@ If you want to get started quickly, click on the button below.
 
 This creates a repository in your GitHub account and deploys the application to Cloudflare Workers.
 
-import { TabItem, Tabs } from "~/components";
-
 `103` Early Hints is an HTTP status code designed to speed up content delivery. When enabled, Cloudflare can cache the `Link` headers marked with preload and/or preconnect from HTML pages and serve them in a `103` Early Hints response before reaching the origin server. Browsers can use these hints to fetch linked assets while waiting for the origin’s final response, dramatically improving page load speeds.
 
 To ensure Early Hints are enabled on your zone:
 
-1. In the Cloudflare dashboard, go to the **Account home** page.
+<Steps>
+1. In the Cloudflare dashboard, go to the **Speed settings** page.
 
-   <DashButton url="/?to=/:account/home" />
+   <DashButton url="/?to=/:account/:zone/speed/optimization" />
 
-2. Go to **Speed** > **Optimization** > **Content Optimization**.
+2. Go to **Content Optimization**.
 3. Enable the **Early Hints** toggle to on.
+</Steps>
 
 You can return `Link` headers from a Worker running on your zone to speed up your page load times.
 

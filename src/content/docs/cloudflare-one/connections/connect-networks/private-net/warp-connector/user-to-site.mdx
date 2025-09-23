@@ -59,7 +59,7 @@ Depending on where you installed the WARP Connector, you may need to configure o
 	product="cloudflare-one"
 />
 
-#### Add route to router
+#### Add IP route to router
 
 `100.96.0.0/12` is the default CIDR for all user devices running the [WARP client](/cloudflare-one/connections/connect-devices/warp/). On your router, add a rule that routes the destination IP `100.96.0.0/12` to the WARP Connector host machine (`10.0.0.100`).
 
@@ -75,7 +75,7 @@ Depending on where you installed the WARP Connector, you may need to configure o
 	product="cloudflare-one"
 />
 
-#### Add route to devices
+#### Add IP route to devices
 
 To route all <GlossaryTooltip term="CGNAT IP">CGNAT IP</GlossaryTooltip> traffic through WARP Connector:
 
@@ -100,8 +100,6 @@ route /p add 100.96.0.0/12 mask 255.255.255.255 <WARP-CONNECTOR-IP>
 ```
 
 </TabItem> </Tabs>
-
-#### Verify routes
 
 <Render file="tunnel/warp-connector-verify-routes" product="cloudflare-one" />
 

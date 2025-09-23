@@ -29,6 +29,17 @@ This server enables LLMs to interact with web pages through structured accessibi
 The current version of Cloudflare Playwright MCP **v0.0.5** is in sync with upstream Playwright MCP **v0.0.30**.
 :::
 
+## Quick start
+
+If you are already familiar with Cloudflare Workers and you want to get started with Playwright MCP right away, select this button:
+
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/playwright-mcp/tree/main/cloudflare/example)
+
+This creates a repository in your GitHub account and deploys the application to Cloudflare Workers. Use this option if you are familiar with Cloudflare Workers, and wish to skip the step-by-step guidance.
+
+Check our [GitHub page](https://github.com/cloudflare/playwright-mcp) for more information on how to build and deploy Playwright MCP.
+
+
 ## Deploying
 
 Follow these steps to deploy `@cloudflare/playwright-mcp`:
@@ -78,12 +89,6 @@ npx wrangler deploy
 ```
 
 The server is now available at `https://[my-mcp-url].workers.dev/sse` and you can use it with any MCP client.
-
-Alternatively, use [Deploy to Cloudflare](/workers/platform/deploy-buttons/):
-
-[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/playwright-mcp/tree/main/cloudflare/example)
-
-Check our [GitHub page](https://github.com/cloudflare/playwright-mcp) for more information on how to build and deploy Playwright MCP.
 
 ## Using Playwright MCP
 

@@ -5,7 +5,7 @@ pcx_content_type: concept
 
 import { Render, TabItem, Tabs, APIRequest } from "~/components";
 
-Cache Reserve is a large, persistent data store [implemented on top of R2](/r2/). By pushing a single button in the dashboard, your website’s cacheable content will be written to Cache Reserve. In the same way that [Tiered Cache](/cache/how-to/tiered-cache/) builds a hierarchy of caches between your visitors and your origin, Cache Reserve serves as the ultimate [upper-tier cache](/cache/how-to/tiered-cache/) that will reserve storage space for your assets for as long as you want. This ensures that your content is served from cache longer, shielding your origin from unneeded egress fees.
+<Render file="cache-reserve-intro" product="cache" />
 
 ![Content served from origin and getting cached in Cache Reserve, and Edge Cache Data Centers (T1=upper-tier, T2=lower-tier) on its way back to the client](~/assets/images/cache/content-being-served.png)
 
@@ -41,21 +41,11 @@ If you are an Enterprise customer and are interested in Cache Reserve, contact y
 
 ## Cache Reserve asset eligibility
 
-Not all assets are eligible for Cache Reserve. To be admitted into Cache Reserve, assets must:
-
-- Be cacheable, according to Cloudflare's standard [cacheability factors](/cache),
-- Have a freshness time-to-live (TTL) of at least 10 hours (set by any means such as Cache-Control / [CDN-Cache-Control](/cache/concepts/cache-control/) origin response headers, [Edge Cache TTL](/cache/how-to/edge-browser-cache-ttl/#edge-cache-ttl), [Cache TTL By Status](/cache/how-to/configure-cache-status-code/), or [Cache Rules](/cache/how-to/cache-rules/)),
-- Have a Content-Length response header.
-- When using [Image transformations](/images/manage-images/create-variants/), original files are eligible for Cache Reserve, but resized file variants are not eligible because transformations happen after Cache Reserve in the response flow.
+<Render file="cache-reserve-eligibility" product="cache" />
 
 ## Limits
 
-- Cache Reserve file limits are the same as [R2 limits](/r2/platform/limits/). Note that [CDN cache limits](/cache/concepts/default-cache-behavior/#customization-options-and-limits) still apply. Assets larger than standard limits will not be stored in the standard CDN cache, so these assets will incur Cache Reserve operations costs far more frequently.
-- Origin Range requests are not supported at this time from Cache Reserve.
-- [Vary for images](/cache/advanced-configuration/vary-for-images/) is currently not compatible with Cache Reserve.
-- Requests to [R2 public buckets linked to a zone's domain](/r2/buckets/public-buckets/) will not use Cache Reserve. Enabling Cache Reserve for the connected zone will use Cache Reserve only for requests not destined for the R2 bucket.
-- Cache Reserve makes requests for uncompressed content directly from the origin. Unlike the standard Cloudflare CDN, Cache Reserve does not include the `Accept-Encoding: gzip` header when sending requests to the origin.
-- Cache Reserve is bypassed when using the Cloudflare [O2O](/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/how-it-works/) setup.
+<Render file="cache-reserve-limits" product="cache" />
 
 ## Usage
 
@@ -108,27 +98,10 @@ For example:
 
 ### Operations
 
-Operations are performed by Cache Reserve on behalf of the user to write data from the origin to Cache Reserve and to pass that data downstream to other parts of Cloudflare’s network. These operations are managed internally by Cloudflare.
-
-#### Class A operations (writes)
-
-Class A operations are performed based on cache misses from Cloudflare’s CDN. When a request cannot be served from cache, it will be fetched from the origin and written to cache reserve as well as our edge caches on the way back to the visitor.
-
-#### Class B operations (reads)
-
-Class B operations are performed when data needs to be fetched from Cache Reserve to respond to a miss in the edge cache.
-
-#### Purge
-
-Asset purges are free operations.
-
-Cache Reserve will be instantly purged along with edge cache when you send a purge by URL request.
-
-Other purge methods, such as purge by tag, host, prefix, or purge everything will force an attempt to [revalidate](/cache/concepts/cache-responses/#revalidated) on the subsequent request for the Cache Reserve asset. Note that assets purged this way will still incur storage costs until their retention TTL expires.
-
-:::note
-Note this differs from the standard CDN's purge by tag, host, or prefix features which force a cache miss, requiring the origin to deliver the asset in full.
-:::
+<Render
+  file="cache-reserve-operations"
+  product="cache"
+/>
 
 ## Cache Reserve billing examples
 
@@ -171,16 +144,13 @@ Cache Reserve should be used with [Tiered Cache](/cache/how-to/tiered-cache/) en
 
 ## Cache Reserve Analytics
 
-Cache Reserve Analytics provides insights regarding your Cache Reserve usage. It allows you to check what content is stored in Cache Reserve, how often it is being accessed, how long it has been there and how much egress from your origin it is saving you.
-
-In the **Overview** section, under **Cache Reserve**, you have access to the following metrics:
-
-- **Egress savings (bandwidth)** - is an estimation based on response bytes served from Cache Reserve that did not need to be served from your origin server. These are represented as cache hits.
-- **Requests served by Cache Reserve** - is the number of requests served by Cache Reserve (total).
-- **Data storage summary** - is based on a representative sample of requests. Refer to [Sampling](/analytics/graphql-api/sampling/) for more details about how Cloudflare samples data.
-  - **Current data stored** - is the data stored (currently) over time.
-  - **Aggregate storage usage** - is the total of storage used for the selected timestamp.
-- **Operations** - [Class A](/cache/advanced-configuration/cache-reserve/#class-a-operations-writes) (writes) and [Class B](/cache/advanced-configuration/cache-reserve/#class-b-operations-reads) (reads) operations over time.
+<Render
+  file="cache-reserve-analytics"
+	product="cache"
+	params={{
+		conditional: "dedicated-cache-tile"
+	}}
+/>
 
 ## Cache Reserve clear button
 

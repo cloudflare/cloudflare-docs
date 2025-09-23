@@ -565,6 +565,7 @@
 /durable-objects/get-started/video-series/ /durable-objects/video-tutorials/ 301
 
 /durable-objects/what-are-durable-objects/ /durable-objects/concepts/what-are-durable-objects/ 301
+/durable-objects/observability/graphql-analytics/ /durable-objects/observability/metrics-and-analytics/ 301
 
 # email-routing
 /email-routing/enable-email-routing/ /email-routing/get-started/enable-email-routing/ 301
@@ -1141,10 +1142,10 @@
 /pages/how-to/deploy-a-gatsby-site/ /pages/framework-guides/deploy-a-gatsby-site/ 301
 /pages/how-to/deploy-a-hugo-site/ /pages/framework-guides/deploy-a-hugo-site/ 301
 /pages/how-to/deploy-a-jekyll-site/ /pages/framework-guides/deploy-a-jekyll-site/ 301
-/pages/how-to/deploy-a-nextjs-site/ /pages/framework-guides/nextjs/ 301
-/pages/framework-guides/deploy-a-nextjs-site/ /pages/framework-guides/nextjs/ 301
+/pages/how-to/deploy-a-nextjs-site/ /workers/framework-guides/web-apps/nextjs 301
+/pages/framework-guides/nextjs/resources/* /workers/framework-guides/web-apps/nextjs 301
+/pages/framework-guides/nextjs/ssr/* /workers/framework-guides/web-apps/nextjs 301
 /pages/framework-guides/deploy-a-svelte-site/ /pages/framework-guides/deploy-a-svelte-kit-site/ 301
-/pages/framework-guides/nextjs/deploy-a-nextjs-site/ /pages/framework-guides/nextjs/ssr/get-started/ 301
 /pages/how-to/deploy-anything/ /pages/framework-guides/deploy-anything/ 301
 /pages/how-to/deploy-a-react-application/ /pages/framework-guides/deploy-a-react-site/ 301
 /pages/framework-guides/deploy-a-react-application/ /pages/framework-guides/deploy-a-react-site/ 301
@@ -2297,7 +2298,8 @@
 /fundamentals/speed/amp-real-ulr/* /speed/optimization/other/amp-real-ulr/:splat 301
 /fundamentals/speed/rocket-loader/* /speed/optimization/content/rocket-loader/:splat 301
 /fundamentals/speed/signed-exchanges/* /speed/optimization/other/signed-exchanges/:splat 301
-/fundamentals/speed/speed-test/* /speed/speed-test/:splat 301
+/fundamentals/speed/speed-test/* /speed/observatory/:splat 301
+/speed/speed-test/* /speed/observatory/:splat 301
 /http-applications/* /version-management/:splat 301
 /http3/* https://www.cloudflare.com/learning/performance/what-is-http3/ 301
 /railgun/* / 301
@@ -2419,4 +2421,9 @@
 /ai-gateway/guardrails/* /ai-gateway/features/guardrails/:splat 301
 /ai-gateway/websockets-api/* /ai-gateway/usage/websockets-api/:splat 301
 
-
+# Containers
+/containers/image-management /containers/platform-details/image-management 301
+/containers/scaling-and-routing /containers/platform-details/scaling-and-routing 301
+/containers/architecture /containers/platform-details/architecture 301
+/containers/durable-object-methods /containers/platform-details/durable-object-methods 301
+/containers/platform-details /containers/platform-details/architecture 301

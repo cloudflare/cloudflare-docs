@@ -27,7 +27,7 @@ You can securely publish internal tools and applications by adding Cloudflare Ac
 [Set up a Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/) to publish your internal application. Only users who match your Access policies will be granted access.
 
 :::note
-We recommend [creating an Access application](#1-add-your-application-to-access) before setting up the tunnel route. If you do not have an Access application in place, public hostname routes in Tunnel are available to anyone on the Internet.
+We recommend [creating an Access application](#1-add-your-application-to-access) before setting up the tunnel route. If you do not have an Access application in place, the published application will be available to anyone on the Internet.
 :::
 
 If your application is already publicly routable, a Tunnel is not strictly required. However, you will then need to protect your origin IP using [other methods](/fundamentals/security/protect-your-origin-server/).

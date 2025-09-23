@@ -69,7 +69,7 @@ entries:
     description: |-
       Durable Objects [request billing](/durable-objects/platform/pricing/#billing-metrics) applies a 20:1 ratio for incoming WebSocket messages. For example, 1 million Websocket received messages across connections would be charged as 50,000 Durable Objects requests.
 
-      This is a billing-only calculation and does not impact Durable Objects [metrics and analytics](/durable-objects/observability/graphql-analytics/).
+      This is a billing-only calculation and does not impact Durable Objects [metrics and analytics](/durable-objects/observability/metrics-and-analytics/).
 
   - publish_date: "2024-02-15"
     title: Optional `alarmInfo` parameter for Durable Object Alarms

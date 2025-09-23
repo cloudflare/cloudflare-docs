@@ -107,6 +107,10 @@ entries:
     general_definition: |-
       an identity provider (IdP) stores and manages users' digital identities, enabling single sign-on and authentication for multiple applications.
 
+  - term: initial resolved IP
+    general_definition: |-
+      a unique, ephemeral IP address that Gateway assigns to DNS queries when filtering network traffic by hostname. The IP is randomly selected from the `100.80.0.0/16` (IPv4) or `2606:4700:0cf1:4000::/64` (IPv6) range.
+
   - term: JSON web token
     general_definition: |-
       a compact way to securely transmit information between parties as a JSON object, often used for authentication.

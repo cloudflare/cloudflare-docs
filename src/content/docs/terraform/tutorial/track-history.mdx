@@ -12,6 +12,7 @@ import { Render } from "~/components";
 
 In the [Initialize Terraform](/terraform/tutorial/initialize-terraform/) tutorial, you created and applied basic Cloudflare configuration. Now you'll store this configuration in version control for tracking, peer review, and rollback capabilities.
 
+<Render file="v5-code-snippets" product="terraform" />
 ## 1. Use environment variables for authentication
 
 Remove credentials from your Terraform files before committing to version control. The Cloudflare provider v5 reads authentication from environment variables automatically.

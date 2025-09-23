@@ -8,7 +8,7 @@ head:
     content: TLS Settings — Cloudflare for SaaS
 ---
 
-import { AvailableNotifications, Details, Render, APIRequest } from "~/components";
+import { AvailableNotifications, Details, Render, APIRequest, Tabs, TabItem } from "~/components";
 
 [Mutual TLS (mTLS)](https://www.cloudflare.com/learning/access-management/what-is-mutual-tls/) adds an extra layer of protection to application connections by validating certificates on the server and the client. When building a SaaS application, you may want to enforce mTLS to protect sensitive endpoints related to payment processing, database updates, and more.
 
@@ -42,7 +42,7 @@ Minimum TLS version exists both as a [zone-level setting](/ssl/edge-certificates
 
 - For custom hostnames created via API, it is possible not to explicitly define a value for `min_tls_version`. When that is the case, whatever value is defined as your zone's minimum TLS version will be applied. To confirm whether a given custom hostname has a specific minimum TLS version set, use the following API call.
 
-<Details header="Check custom hostname settings TLS settings">
+<Details header="Check custom hostname TLS settings">
 
 <APIRequest
   path="/zones/{zone_id}/custom_hostnames/{custom_hostname_id}"
@@ -109,10 +109,85 @@ Refer to [Minimum TLS version - SSL/TLS](/ssl/edge-certificates/additional-optio
 
 <Details header="Minimum TLS version for custom hostname">
 
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and website.
 2. Go to **SSL/TLS** > **Custom Hostnames**.
 3. Find the hostname to which you want to apply Minimum TLS Version. Select **Edit**.
 4. Choose the desired TLS version under **Minimum TLS Version** and select **Save**.
+
+</TabItem> <TabItem label="API">
+
+In the API documentation, refer to [SSL properties of a custom hostname](/api/resources/custom_hostnames/methods/edit/). Besides the `settings` specifications, you must include `type` and `method` within the `ssl` object, as explained below.
+
+1. Make a `GET` request to the [Custom Hostname Details](/api/resources/custom_hostnames/methods/get/) endpoint to check what are the current values for `ssl.type` and `ssl.method`.
+
+<APIRequest
+  path="/zones/{zone_id}/custom_hostnames/{custom_hostname_id}"
+  method="GET"
+/>
+
+```json title="Response example" collapse={5-16, 21-40} ""method": "http"," ""type": "dv","
+  "success": true,
+  "result": {
+    "id": "<CUSTOM_HOSTNAME_ID>",
+    "ssl": {
+      "id": "<CERTIFICATE_ID>",
+      "bundle_method": "ubiquitous",
+      "certificate_authority": "<CERTIFICATE_AUTHORITY>",
+      "custom_certificate": "",
+      "custom_csr_id": "",
+      "custom_key": "",
+      "expires_on": "",
+      "hosts": [
+        "app.example.com",
+        "*.app.example.com"
+      ],
+      "issuer": "",
+      "method": "http",
+      "settings": {},
+      "signature": "SHA256WithRSA",
+      "type": "dv",
+      "uploaded_on": "2020-02-06T18:11:23.531995Z",
+      "validation_errors": [
+        {
+          "message": "SERVFAIL looking up CAA for app.example.com"
+        }
+      ],
+      "validation_records": [
+        {
+          "emails": [
+            "administrator@example.com",
+            "webmaster@example.com"
+          ],
+          "http_body": "ca3-574923932a82475cb8592200f1a2a23d",
+          "http_url": "http://app.example.com/.well-known/pki-validation/ca3-da12a1c25e7b48cf80408c6c1763b8a2.txt",
+          "txt_name": "_acme-challenge.app.example.com",
+          "txt_value": "810b7d5f01154524b961ba0cd578acc2"
+        }
+      ],
+      "wildcard": false
+    },
+  }
+```
+
+2. After you take note of these values, make a `PATCH` request to the [Edit Custom Hostname](/api/resources/custom_hostnames/methods/edit/) endpoint, providing both the minimum TLS version you want to define and the same `type` and `method` values that you obtained from the previous step.
+
+<APIRequest
+  path="/zones/{zone_id}/custom_hostnames/{custom_hostname_id}"
+  method="PATCH"
+	json={{
+		ssl: {
+			method: "http",
+			type: "dv",
+			settings: {
+				"min_tls_version:": "1.2"
+				}
+			}
+		}}
+/>
+
+</TabItem> </Tabs>
 
 </Details>
 
@@ -128,12 +203,73 @@ Refer to [Customize cipher suites - SSL/TLS](/ssl/edge-certificates/additional-o
 
 <Details header="Restrict cipher suites for custom hostname">
 
-In the API documentation, refer to [SSL properties of a custom hostname](/api/resources/custom_hostnames/methods/edit/).
+In the API documentation, refer to [SSL properties of a custom hostname](/api/resources/custom_hostnames/methods/edit/). Besides the `settings` specifications, you must include `type` and `method` within the `ssl` object, as explained below.
 
-<Render
-	file="edit-custom-hostname-api"
-	params={{ one: "When making the request," }}
-	product="cloudflare-for-platforms"
+1. Make a `GET` request to the [Custom Hostname Details](/api/resources/custom_hostnames/methods/get/) endpoint to check what are the current values for `ssl.type` and `ssl.method`.
+
+<APIRequest
+  path="/zones/{zone_id}/custom_hostnames/{custom_hostname_id}"
+  method="GET"
+/>
+
+```json title="Response example" collapse={5-16, 21-40} ""method": "http"," ""type": "dv","
+  "success": true,
+  "result": {
+    "id": "<CUSTOM_HOSTNAME_ID>",
+    "ssl": {
+      "id": "<CERTIFICATE_ID>",
+      "bundle_method": "ubiquitous",
+      "certificate_authority": "<CERTIFICATE_AUTHORITY>",
+      "custom_certificate": "",
+      "custom_csr_id": "",
+      "custom_key": "",
+      "expires_on": "",
+      "hosts": [
+        "app.example.com",
+        "*.app.example.com"
+      ],
+      "issuer": "",
+      "method": "http",
+      "settings": {},
+      "signature": "SHA256WithRSA",
+      "type": "dv",
+      "uploaded_on": "2020-02-06T18:11:23.531995Z",
+      "validation_errors": [
+        {
+          "message": "SERVFAIL looking up CAA for app.example.com"
+        }
+      ],
+      "validation_records": [
+        {
+          "emails": [
+            "administrator@example.com",
+            "webmaster@example.com"
+          ],
+          "http_body": "ca3-574923932a82475cb8592200f1a2a23d",
+          "http_url": "http://app.example.com/.well-known/pki-validation/ca3-da12a1c25e7b48cf80408c6c1763b8a2.txt",
+          "txt_name": "_acme-challenge.app.example.com",
+          "txt_value": "810b7d5f01154524b961ba0cd578acc2"
+        }
+      ],
+      "wildcard": false
+    },
+  }
+```
+
+2. After you take note of these values, make a `PATCH` request to the [Edit Custom Hostname](/api/resources/custom_hostnames/methods/edit/) endpoint, providing both the list of authorized cipher suites and the same `type` and `method` values that you obtained from the previous step.
+
+<APIRequest
+  path="/zones/{zone_id}/custom_hostnames/{custom_hostname_id}"
+  method="PATCH"
+	json={{
+		ssl: {
+			method: "http",
+			type: "dv",
+			settings: {
+				"ciphers": ["ECDHE-ECDSA-AES128-GCM-SHA256","ECDHE-RSA-AES128-GCM-SHA256"]
+				}
+			}
+		}}
 />
 
 </Details>

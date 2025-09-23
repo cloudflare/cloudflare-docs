@@ -62,16 +62,16 @@ Make a `POST` request to the [Cloudflare Tunnel](/api/resources/zero_trust/subre
 
 Copy the `id` and `token` values shown in the output. You will need these values to configure and run the tunnel.
 
-The next steps depend on whether you want to [connect an application](#3a-connect-an-application) or [connect a network](#3b-connect-a-network).
+The next steps depend on whether you want to [publish an application to the Internet](#3a-publish-an-application) or [connect a private network](#3b-connect-a-network).
 
-## 3a. Connect an application
+## 3a. Publish an application
 
-Before you connect an application through your tunnel, you must:
+Before you publish an application through your tunnel, you must:
 
 - [Add a website to Cloudflare](/fundamentals/manage-domains/add-site/).
 - [Change your domain nameservers to Cloudflare](/dns/zone-setups/full-setup/setup/).
 
-Follow these steps to connect an application through your tunnel. If you are looking to connect a network, skip to the [Connect a network section](#3b-connect-a-network).
+Follow these steps to publish an application to the Internet. If you are looking to connect a private resource, skip to the [Connect a network](#3b-connect-a-network) section.
 
 1. Make a [`PUT` request](/api/resources/zero_trust/subresources/tunnels/subresources/cloudflared/subresources/configurations/methods/update/) to route your local service URL to a public hostname. For example,
 
@@ -130,7 +130,7 @@ To connect a private network through your tunnel, [add a tunnel route](/api/reso
   }}
 />
 
-To configure Zero Trust policies and connect as a user, refer to [Connect private networks](/cloudflare-one/connections/connect-networks/private-net/cloudflared/).
+`cloudflared` can now route traffic to these destination IPs. To configure Zero Trust policies and connect as a user, refer to [Connect private networks](/cloudflare-one/connections/connect-networks/private-net/cloudflared/).
 
 ## 4. Install and run the tunnel
 

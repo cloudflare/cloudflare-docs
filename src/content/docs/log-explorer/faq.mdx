@@ -1,0 +1,37 @@
+---
+pcx_content_type: faq
+title: FAQ
+structured_data: true
+description: Find answers to common questions about Log Explorer.
+sidebar:
+  order: 152
+---
+
+### Which fields (or columns) are available for querying?
+
+All fields listed in [Datasets](/logs/logpush/logpush-job/datasets/) for the [supported datasets](/log-explorer/manage-datasets/#supported-datasets) are viewable in Log Explorer. 
+
+### Why does my query not complete or time out?
+
+Log Explorer performs best when query parameters focus on narrower ranges of time. You may experience query timeouts when your query would return a large quantity of data. Consider refining your query to improve performance.
+
+### Why do I not see any logs in my queries after enabling the dataset?
+
+Log Explorer starts ingesting logs from the moment you enable the dataset. It will not display logs for events that occurred before the dataset was enabled. Make sure that new events have been generated since enabling the dataset, and check again.
+
+### My query returned an error. How do I figure out what went wrong?
+
+We are actively working on improving error codes. If you receive a generic error, check your SQL syntax (if you are using the custom SQL feature), and make sure you have included a date and a limit. If the query still fails it is likely timing out. Try refining your filters.
+
+### Where is the data stored?
+
+The data is stored in Cloudflare R2. Each Log Explorer dataset is stored on a per-customer level, similar to Cloudflare D1, ensuring that your data is kept separate from that of other customers. In the future, this single-tenant storage model will provide you with the flexibility to create your own retention policies and decide in which regions you want to store your data.
+
+### Does Log Explorer support Customer Metadata Boundary?
+
+Customer Metadata Boundary is currently not supported for Log Explorer.
+
+### Are there any constraints on the log volume that Log Explorer can support?
+
+We are continually scaling the Log Explorer data platform. At present, Log Explorer supports log ingestion rates of up to 50,000 records per second. If your needs exceed this, contact your account team.
+

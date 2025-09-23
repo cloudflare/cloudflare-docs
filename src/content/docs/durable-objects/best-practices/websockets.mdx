@@ -5,7 +5,7 @@ sidebar:
   order: 5
 ---
 
-import { Tabs, TabItem, GlossaryTooltip, Type } from "~/components";
+import { Tabs, TabItem, GlossaryTooltip, Type, WranglerConfig } from "~/components";
 
 This guide covers how to use Durable Objects as WebSocket servers that can connect thousands of clients (per instance), as well as a WebSocket client to connect to other servers or even Durable Objects.
 
@@ -140,7 +140,8 @@ export class WebSocketHibernationServer extends DurableObject {
 
 Similar to the [WebSocket Standard API example](/durable-objects/examples/websocket-server/), to execute this code, configure your Wrangler file to include a Durable Object [binding](/durable-objects/get-started/#4-configure-durable-object-bindings) and [migration](/durable-objects/reference/durable-objects-migrations/) based on the <GlossaryTooltip term="namespace">namespace</GlossaryTooltip> and class name chosen previously.
 
-```toml title="wrangler.toml"
+<WranglerConfig>
+```toml
 name = "websocket-hibernation-server"
 
 [[durable_objects.bindings]]
@@ -151,6 +152,7 @@ class_name = "WebSocketHibernationServer"
 tag = "v1"
 new_sqlite_classes = ["WebSocketHibernationServer"]
 ```
+</WranglerConfig>
 
 A full example can be found in [Build a WebSocket server with WebSocket Hibernation](/durable-objects/examples/websocket-hibernation-server/).
 
@@ -168,11 +170,7 @@ The following are methods available on the **Native Durable Object WebSocket API
 
 #### `WebSocket.serializeAttachment()`
 
-- <code>
-  	{" "}
-  	serializeAttachment(value <Type text="any" />)
-  </code>
-  : <Type text="void" />
+- <code>{" "}serializeAttachment(value <Type text="any" />)</code>: <Type text="void" />
 
   - Keeps a copy of `value` associated with the WebSocket to survive hibernation. The value can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm), which is true of most types. If the value needs to be durable please use [Durable Object Storage](/durable-objects/api/storage-api/).
 
@@ -370,7 +368,8 @@ export class WebSocketServer extends DurableObject {
 
 To execute this code, configure your Wrangler file to include a Durable Object [binding](/durable-objects/get-started/#4-configure-durable-object-bindings) and [migration](/durable-objects/reference/durable-objects-migrations/) based on the <GlossaryTooltip term="namespace">namespace</GlossaryTooltip> and class name chosen previously.
 
-```toml title="wrangler.toml"
+<WranglerConfig>
+```toml
 name = "websocket-server"
 
 [[durable_objects.bindings]]
@@ -381,6 +380,7 @@ class_name = "WebSocketServer"
 tag = "v1"
 new_sqlite_classes = ["WebSocketServer"]
 ```
+</WranglerConfig>
 
 A full example can be found in [Build a WebSocket server](/durable-objects/examples/websocket-server/).
 

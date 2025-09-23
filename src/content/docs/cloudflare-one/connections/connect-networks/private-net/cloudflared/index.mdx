@@ -1,72 +1,17 @@
 ---
-pcx_content_type: how-to
-title: Connect private networks
+pcx_content_type: concept
+title: Connect with cloudflared
+hidden: false
 sidebar:
   order: 1
 ---
 
-import { Render } from "~/components";
+`cloudflared` is a daemon service that can run on nearly any host machine in your private network and proxies local traffic once validated from the Cloudflare network. The Cloudflare Tunnel created by `cloudflared` is outbound-only, meaning that it will only proxy requests initiated from a user to your private network. Requests made by a service or application running behind the tunnel will use the server's default routing table.
 
-A private network has two primary components: the server and the client. The server's infrastructure (whether that is a single application, multiple applications, or a network segment) is connected to Cloudflare's global network by Cloudflare Tunnel. This is done by running the `cloudflared` daemon on the server.
+On the client side, end users connect to Cloudflare's global network using the Cloudflare WARP client. The WARP client can be rolled out to your entire organization in just a few minutes using your in-house MDM tooling. When users connect to an IP address or hostname made available through Cloudflare Tunnel, WARP sends their connection through Cloudflare's network and down the corresponding tunnel to the internal service. Traffic to services behind the tunnel will carry the local source IP address of the host machine running the `cloudflared` daemon.
 
-On the client side, end users connect to Cloudflare's global network using the Cloudflare WARP client. The WARP client can be rolled out to your entire organization in just a few minutes using your in-house MDM tooling. When users connect to an IP made available through Cloudflare Tunnel, WARP sends their connection through Cloudflare's network to the corresponding tunnel.
+![Diagram displaying connections between a device, Cloudflare, and a private network.](~/assets/images/cloudflare-one/connections/private-ips-diagram.png)
 
-![Diagram displaying connections between a device, Cloudflare, and a public cloud.](~/assets/images/cloudflare-one/connections/private-ips-diagram.png)
-
-To enable remote access to your private network, follow the guide below.
-
-## 1. Connect the server to Cloudflare
-
-To connect your infrastructure with Cloudflare Tunnel:
-
-<Render file="tunnel/connect-private-network" product="cloudflare-one" />
-
-2. In the **Private Networks** tab for the tunnel, enter the IP/CIDR range that you wish to route through the tunnel (for example `10.0.0.0/8`).
-
-## 2. Set up the client
-
-<Render file="tunnel/warp-to-tunnel-client" product="cloudflare-one" />
-
-## 3. Route private network IPs through WARP
-
-<Render
-	file="tunnel/warp-to-tunnel-route-ips"
-	product="cloudflare-one"
-	params={{ one: "private network" }}
-/>
-
-## 4. (Recommended) Filter network traffic with Gateway
-
-By default, all WARP devices enrolled in your Zero Trust organization can connect to your private network through Cloudflare Tunnel. You can configure Gateway inspect your network traffic and either block or allow access based on user identity and device posture.
-
-### Enable the Gateway proxy
-
-<Render file="tunnel/enable-gateway-proxy" product="cloudflare-one" />
-
-### Zero Trust policies
-
-Cloudflare Zero Trust allows you to configure security policies using either Access or Gateway. If you have applications clearly defined by IPs or hostnames, we recommend [creating an Access application](/cloudflare-one/applications/non-http/self-hosted-private-app/) and managing user access alongside your SaaS and other web apps. Alternatively, if you prefer to secure a private network using a traditional firewall model, you can build Gateway [network and DNS policies](/learning-paths/replace-vpn/build-policies/) for IP ranges and domains.
-
-## 5. Connect as a user
-
-End users can now reach HTTP or TCP-based services on your network by visiting any IP address in the range you have specified.
-
-### Troubleshooting
-
-#### Device configuration
-
-To check that their device is properly configured, the user can visit `https://help.teams.cloudflare.com/` to ensure that:
-
-- The page returns **Your network is fully protected**.
-- In **HTTP filtering**, both **WARP** and **Gateway Proxy** are enabled.
-- The **Team name** matches the Zero Trust organization from which you created the tunnel.
-
-#### Router configuration
-
-Check the local IP address of the device and ensure that it does not fall within the IP/CIDR range of your private network. For example, some home routers will make DHCP assignments in the `10.0.0.0/24` range, which overlaps with the `10.0.0.0/8` range used by most corporate private networks. When a user's home network shares the same IP addresses as the routes in your tunnel, their device will be unable to connect to your application.
-
-To resolve the IP conflict, you can either:
-
-- Reconfigure the user's router to use a non-overlapping IP range. Compatible routers typically use `192.168.1.0/24`, `192.168.0.0/24` or `172.16.0.0/24`.
-- Tighten the IP range in your Split Tunnel configuration to exclude the `10.0.0.0/24` range. This will only work if your private network does not have any hosts within `10.0.0.0/24`.
-- Change the IP/CIDR of your private network so that it does not overlap with a range commonly used by home networks.
+To enable remote access to your private network, refer to the following guides:
+- [**Connect a private hostname**](/cloudflare-one/connections/connect-networks/private-net/cloudflared/connect-private-hostname/): Route network traffic to an internal application using its hostname.
+- [**Connect an IP/CIDR**](/cloudflare-one/connections/connect-networks/private-net/cloudflared/connect-cidr/): Route traffic to an internal IP address or CIDR range.

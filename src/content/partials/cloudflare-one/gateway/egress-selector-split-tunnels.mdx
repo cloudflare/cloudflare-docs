@@ -1,0 +1,25 @@
+---
+{}
+---
+
+import { Tabs, TabItem, Render } from "~/components"
+
+In your WARP [device profile](/cloudflare-one/connections/connect-devices/warp/configure-warp/device-profiles/), configure [Split Tunnels](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) depending on the mode:
+
+   <Tabs> <TabItem label="Exclude IPs and domains">
+
+   1. [Remove the route](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#remove-a-route) to the IP address `100.64.0.0/10` from your Split Tunnel exclude list.
+   2. [Add routes](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#add-a-route) to exclude the following IP addresses:
+      - `100.64.0.0/12`
+      - `100.81.0.0/16`
+      - `100.82.0.0/15`
+      - `100.84.0.0/14`
+      - `100.88.0.0/13`
+      - `100.96.0.0/11`
+
+   </TabItem> <TabItem label="Include IPs and domains">
+
+   1. Add the required [Zero Trust domains](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#cloudflare-zero-trust-domains) or [IP addresses](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#cloudflare-zero-trust-ip-addresses) to your Split Tunnel include list.
+   2. [Add routes](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#add-a-route) to include the following IP addresses:
+	 	<Render file="gateway/egress-selector-cgnat-ips" product="cloudflare-one" />
+   </TabItem> </Tabs>

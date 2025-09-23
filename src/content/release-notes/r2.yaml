@@ -3,6 +3,9 @@ link: "/r2/platform/release-notes/"
 productName: R2
 productLink: "/r2/"
 entries:
+  - publish_date: "2025-09-22"
+    description: |-
+      - We’ve updated the R2 dashboard with a cleaner look to make it easier to find what you need and take action. You can find instructions for how you can use R2 with the various API interfaces in the side panel, and easily access documentation at the bottom.
   - publish_date: "2025-07-03"
     description: |-
       - The CRC-64/NVME Checksum algorithm is now supported for both single and multipart objects. This also brings support for the `FULL_OBJECT` Checksum Type on Multipart Uploads. See Checksum Type Compatibility [here](/r2/api/s3/api/).

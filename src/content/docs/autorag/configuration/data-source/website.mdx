@@ -13,6 +13,10 @@ You can only crawl domains that you have onboarded onto the same Cloudflare acco
 Refer to [Onboard a domain](/fundamentals/manage-domains/add-site/) for more information on adding a domain to your Cloudflare account.
 :::
 
+:::caution[Bot protection may block crawling]
+If you use Cloudflare products that control or restrict bot traffic such as [Bot Management](/bots/), [WAF](/waf/), or [Turnstile](/turnstile/), the same rules will apply to the AutoRAG crawler. Make sure to configure an exception or an allow-list for the AutoRAG crawler in your settings.
+:::
+
 ## How website crawling works
 When you connect a domain, the crawler looks for your website’s sitemap to determine which pages to visit:  
 

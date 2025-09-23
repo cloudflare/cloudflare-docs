@@ -6,7 +6,7 @@ sidebar:
 
 ---
 
-import { GlossaryTooltip, Example, Steps, Tabs, TabItem } from "~/components";
+import { GlossaryTooltip, Example, Steps, Tabs, TabItem, DashButton } from "~/components";
 
 AI Crawl Control works alongside other Cloudflare products, such as Cloudflare [Web Application Firewall (WAF)](/waf/). WAF checks incoming web and API requests, and filters undesired traffic based on rules. [WAF custom rules](/waf/custom-rules/) allow you to perform certain actions such as enforcing <GlossaryTooltip term="robots.txt">`robots.txt`</GlossaryTooltip>.
 
@@ -85,8 +85,11 @@ In this scenario, you have two custom rules, each directing a different logic fo
 </TabItem> <TabItem label="New dashboard" icon="rocket">
 
 <Steps>
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-2. Go to **Security** > **Security rules** and filter by **Custom rules**.
+1. In the Cloudflare dashboard, go to the **Security rules** page.
+
+   <DashButton url="/?to=/:account/:zone/security/security-rules" />
+
+2. Filter by _Custom rules_.
 3. Identify your custom rule and the AI Crawl Control rule.
 4. Drag the rule you wish to prioritize to the top, or modify your custom rule to ensure it does not conflict with your AI Crawl Control configurations.
 </Steps>

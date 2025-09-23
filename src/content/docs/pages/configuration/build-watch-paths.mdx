@@ -3,14 +3,22 @@ pcx_content_type: concept
 title: Build watch paths
 ---
 
+import { DashButton, Steps } from "~/components";
+
 When you connect a git repository to Pages, by default a change to any file in the repository will trigger a Pages build. You can configure Pages to include or exclude specific paths to specify if Pages should skip a build for a given path. This can be especially helpful if you are using a monorepo project structure and want to limit the amount of builds being kicked off.
 
 ## Configure paths
 
 To configure which paths are included and excluded:
 
-1. In **Overview**, select your Pages project.
-2. Go to **Settings** > **Build** > **Build watch paths**. Pages will default to setting your project’s includes paths to everything (\[\*]) and excludes paths to nothing (`[]`).
+<Steps>
+1. Go to the **Workers & Pages** in the Cloudflare dashboard.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+
+2. Find your Pages project.
+3. Go to **Settings** > **Build** > **Build watch paths**. Pages will default to setting your project's includes paths to everything (\[\*]) and excludes paths to nothing (`[]`).
+</Steps>
 
 The configuration fields can be filled in two ways:
 

@@ -5,7 +5,7 @@ sidebar:
   order: 5
 ---
 
-import { Steps } from "~/components";
+import { Steps, DashButton } from "~/components";
 
 ```mermaid
 graph LR
@@ -27,9 +27,11 @@ After configuring pay per crawl, monitor crawler activity to understand how AI c
 
 {/* prettier-ignore */}
 <Steps>
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
-2. Go to **AI Crawl Control**.
-3. Go to the **Metrics** tab to view detailed analytics.
+1. Go to **AI Crawl Control**.
+
+   <DashButton url="/?to=/:account/:zone/ai" />
+
+2. Go to the **Metrics** tab to view detailed analytics.
 </Steps>
 
 The metrics help you understand:

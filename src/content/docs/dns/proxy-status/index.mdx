@@ -81,7 +81,7 @@ In this example, all traffic intended for `blog.example.com` will be treated as 
 
 ### Protocol optimization
 
-For proxied records, if your domain has [HTTP/2 or HTTP/3 enabled](/speed/optimization/protocol/), Cloudflare automatically generates corresponding [HTTPS Service (HTTPS) records](/dns/manage-dns-records/reference/dns-record-types/#svcb-and-https) on the fly. HTTPS records allow you to provide a client with information about how it should connect to a server upfront, without the need of an initial plaintext HTTP connection.
+For proxied records, if your domain has [HTTP/2 or HTTP/3 enabled](/speed/optimization/protocol/) and is also using [Universal SSL](/ssl/edge-certificates/universal-ssl/), Cloudflare automatically generates corresponding [HTTPS Service (HTTPS) records](/dns/manage-dns-records/reference/dns-record-types/#svcb-and-https) on the fly. HTTPS records allow you to provide a client with information about how it should connect to a server upfront, without the need of an initial plaintext HTTP connection.
 
 :::note
 Both HTTP/2 and HTTP/3 configurations also require that you have an SSL/TLS certificate served by Cloudflare. This means that disabling [Universal SSL](/ssl/edge-certificates/universal-ssl/), for example, could impact this behavior.

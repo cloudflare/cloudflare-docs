@@ -5,7 +5,7 @@ sidebar:
   order: 5
 ---
 
-import { Steps, GlossaryTooltip, Tabs, TabItem, Example, Plan } from "~/components";
+import { Steps, GlossaryTooltip, Tabs, TabItem, Example, Plan, DashButton } from "~/components";
 
 AI Crawl Control enables you to take specific action for each AI crawler.
 
@@ -13,6 +13,9 @@ To manage AI crawlers:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Go to **AI Crawl Control**.
+
+   <DashButton url="/?to=/:account/:zone/ai" />
+
 3. Go to the **Crawlers** tab.
 
 ## Review AI crawler activity
@@ -137,6 +140,9 @@ To edit these values:
 <Steps>
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Go to **AI Crawl Control**.
+
+   <DashButton url="/?to=/:account/:zone/ai" />
+
 3. Go to the **Settings** tab.
 4. Under **Block response**, select **Edit**.
 5. Once you have edited the values, select **Save**.
@@ -168,8 +174,6 @@ Refer to [Configure a custom response for blocked requests](/waf/custom-rules/cr
 You can write a custom message (HTTP response body) to return when blocking an AI crawler.
 
 In the **Response body** text field, enter the response you wish to display for the AI crawler in plain text.
-
-{/* Need guidance on what sort of information they should include */}
 
 ## Related resources
 

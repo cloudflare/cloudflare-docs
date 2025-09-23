@@ -8,7 +8,7 @@ sidebar:
 
 import { Render } from "~/components"
 
-To enable clientless access to your applications, you will need to create a Cloudflare Tunnel that contains public hostname routes. A public hostname route creates a public DNS record that routes traffic to a specific address, protocol, and port associated with a private application. For example, you can define a public hostname (`mywebapp.example.com`) to provide access to a web server running on `https://localhost:8080`. When a user goes to `mywebapp.example.com` in their browser, their request will first route to a Cloudflare data center where it is inspected against your configured security policies. Cloudflare will then forward validated requests down your tunnel to the web server.
+To enable clientless access to your applications, you will need to create a Cloudflare Tunnel that publishes applications to a domain on Cloudflare. A published application creates a public DNS record that routes traffic to a specific address, protocol, and port associated with a private application. For example, you can define a public hostname (`mywebapp.example.com`) to provide access to a web server running on `https://localhost:8080`. When a user goes to `mywebapp.example.com` in their browser, their request will first route to a Cloudflare data center where it is inspected against your configured security policies. Cloudflare will then forward validated requests down your tunnel to the web server.
 
 ![How an HTTP request reaches a private application connected with Cloudflare Tunnel](~/assets/images/cloudflare-one/connections/connect-apps/handshake.jpg)
 
@@ -18,11 +18,11 @@ To create a Cloudflare Tunnel:
 
 <Render file="tunnel/create-tunnel" product="cloudflare-one" />
 
-## Connect an application
+## Publish an application
 
-To add a public hostname route to the tunnel:
+To route an application to a public hostname:
 
-<Render file="tunnel/add-public-hostname" product="cloudflare-one" />
+<Render file="tunnel/add-published-application" product="cloudflare-one" />
 
 All users on the Internet can now connect to this application via its public hostname. In [Module 4: Secure your applications](/learning-paths/clientless-access/access-application/), we will discuss how to restrict access to authorized users.
 
