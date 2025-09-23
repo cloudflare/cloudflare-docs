@@ -66,14 +66,34 @@ Example schema file:
 			"required": true
 		},
 		{
-			"name": "event_type",
-			"type": "string",
-			"required": true
+			"name": "amount",
+			"type": "float64",
+			"required": false
 		},
 		{
-			"name": "amount",
-			"type": "f64",
-			"required": false
+			"name": "tags",
+			"type": "list",
+			"required": false,
+			"items": {
+				"type": "string"
+			}
+		},
+		{
+			"name": "metadata",
+			"type": "struct",
+			"required": false,
+			"fields": [
+				{
+					"name": "source",
+					"type": "string",
+					"required": false
+				},
+				{
+					"name": "priority",
+					"type": "int32",
+					"required": false
+				}
+			]
 		}
 	]
 }
@@ -83,16 +103,16 @@ Example schema file:
 
 - `string` - Text values
 - `int32`, `int64` - Integer numbers
-- `f32`, `f64` - Floating-point numbers
+- `float32`, `float64` - Floating-point numbers
 - `bool` - Boolean true/false
-- `timestamp` - ISO 8601 timestamps
-- `json` - Nested JSON objects
-- `bytes` - Binary data
+- `timestamp` - RFC 3339 timestamps, or numeric values parsed as Unix seconds, milliseconds, or microseconds (depending on unit)
+- `json` - JSON objects
+- `binary` - Binary data (base64-encoded)
 - `list` - Arrays of values
 - `struct` - Nested objects with defined fields
 
 :::note
-Events with invalid schemas are accepted during ingestion but will be dropped during processing. Schema modifications are not supported after stream creation.
+Events that do not match the defined schema are accepted during ingestion but will be dropped during processing. Schema modifications are not supported after stream creation.
 :::
 
 ## View stream configuration
@@ -167,5 +187,5 @@ npx wrangler pipelines streams delete <STREAM_ID>
 ```
 
 :::caution
-Deleting a stream will permanently remove all buffered events that have not been processed. Ensure all data has been delivered to your sink before deletion.
+Deleting a stream will permanently remove all buffered events that have not been processed and will delete any dependent pipelines. Ensure all data has been delivered to your sink before deletion.
 :::

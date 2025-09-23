@@ -7,13 +7,11 @@ sidebar:
 
 import { LinkCard } from "~/components";
 
-Streams are durable, buffered queues that receive and store events for processing in [Cloudflare Pipelines](/pipelines/). They provide reliable data ingestion and can accept events via HTTP endpoints or Worker bindings.
+Streams are durable, buffered queues that receive and store events for processing in [Cloudflare Pipelines](/pipelines/). They provide reliable data ingestion via HTTP endpoints and Worker bindings, ensuring no data loss even during downstream processing delays or failures.
 
-## What are Streams?
+A single stream can be read by multiple pipelines, allowing you to route the same data to different destinations or apply different transformations. For example, you might send user events to both a real-time analytics pipeline and a data warehouse pipeline.
 
-Streams act as the entry point for your data into Pipelines. They durably buffer incoming events, ensuring no data loss even during downstream processing delays or failures. Events are persisted until successfully processed by connected pipelines.
-
-Streams currently accept events in JSON format via [HTTP endpoints](/pipelines/streams/writing-to-streams/) and [Workers bindings](/pipelines/streams/writing-to-streams/). Streams support both structured events with defined schemas and unstructured JSON. When a schema is provided, Streams will validate and enforce it for incoming events.
+Streams currently accept events in JSON format and support both structured events with defined schemas and unstructured JSON. When a schema is provided, streams will validate and enforce it for incoming events.
 
 ## Learn more
 

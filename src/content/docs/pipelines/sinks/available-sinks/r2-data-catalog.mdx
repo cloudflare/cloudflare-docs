@@ -19,7 +19,7 @@ npx wrangler pipelines sinks create my-sink \
   --catalog-token YOUR_CATALOG_TOKEN
 ```
 
-If the specified namespace and table do not exist, the sink will create them automatically.
+The sink will create the specified namespace and table if they do not exist. Sinks cannot be created for existing Iceberg tables.
 
 ## Format
 
@@ -43,10 +43,10 @@ Configure Parquet compression for optimal storage and query performance:
 
 ### Row group size
 
-[Row groups](https://parquet.apache.org/docs/file-format/configurations/) are sets of rows in a Parquet file that are stored together, affecting memory usage and query performance. Configure the target row group size:
+[Row groups](https://parquet.apache.org/docs/file-format/configurations/) are sets of rows in a Parquet file that are stored together, affecting memory usage and query performance. Configure the target row group size in MB:
 
 ```bash
---target-row-group-size 1024MB
+--target-row-group-size 256
 ```
 
 ## Batching and rolling policy
@@ -77,10 +77,5 @@ Set maximum file size in MB before creating a new file:
 R2 Data Catalog sinks require an API token with [R2 Admin Read & Write permissions](/r2/data-catalog/manage-catalogs/#create-api-token-in-the-dashboard). This permission grants the sink access to both R2 Data Catalog and R2 storage.
 
 ```bash
-npx wrangler pipelines sinks create my-sink \
-  --type r2-data-catalog \
-  --bucket my-bucket \
-  --namespace my_namespace \
-  --table my_table \
-  --catalog-token YOUR_CATALOG_TOKEN
+--catalog-token YOUR_CATALOG_TOKEN
 ```

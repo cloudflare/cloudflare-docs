@@ -14,11 +14,11 @@ Cloudflare Pipelines supports a set of primitive and composite data types for SQ
 | `bool`      | `BOOLEAN`                           | `TRUE`, `FALSE`                                      |
 | `int32`     | `INT`, `INTEGER`                    | `0`, `1`, `-2`                                       |
 | `int64`     | `BIGINT`                            | `0`, `1`, `-2`                                       |
-| `f32`       | `FLOAT`, `REAL`                     | `0.0`, `-2.4`, `1E-3`                                |
-| `f64`       | `DOUBLE`                            | `0.0`, `-2.4`, `1E-35`                               |
+| `float32`   | `FLOAT`, `REAL`                     | `0.0`, `-2.4`, `1E-3`                                |
+| `float64`   | `DOUBLE`                            | `0.0`, `-2.4`, `1E-35`                               |
 | `string`    | `VARCHAR`, `CHAR`, `TEXT`, `STRING` | `"hello"`, `"world"`                                 |
 | `timestamp` | `TIMESTAMP`                         | `'2020-01-01'`, `'2023-05-17T22:16:00.648662+00:00'` |
-| `bytes`     | `BYTEA`                             | `X'A123'` (hex)                                      |
+| `binary`    | `BYTEA`                             | `X'A123'` (hex)                                      |
 | `json`      | `JSON`                              | `'{"event": "purchase", "amount": 29.99}'`           |
 
 ## Composite types
@@ -41,21 +41,14 @@ Pipelines provides array functions for manipulating list values, and lists may b
 
 ### Struct types
 
-Structs combine related fields into a single value. In stream schemas, structs are declared using the `struct` type with a `fields` array. In SQL, structs are declared using this syntax: `STRUCT<field_name field_type, ..>`, and may contain any other type, including lists and other structs.
+Structs combine related fields into a single value. In stream schemas, structs are declared using the `struct` type with a `fields` array. In SQL, structs can be created using the `struct` function.
 
-Example struct in SQL:
+Example creating a struct in SQL:
 
 ```sql
-CREATE TABLE events (
-    properties STRUCT <
-      user_id TEXT,
-      amounts INT[],
-      profile STRUCT <
-        first_name TEXT,
-        last_name TEXT
-      >
-    >
-)
+SELECT struct('user123', 'purchase', 29.99) as event_data FROM events
 ```
 
-Struct fields can be accessed via `.` notation, for example `properties.profile.first_name`.
+This creates a struct with fields `c0`, `c1`, `c2` containing the user ID, event type, and amount.
+
+Struct fields can be accessed via `.` notation, for example `event_data.c0` for the user ID.

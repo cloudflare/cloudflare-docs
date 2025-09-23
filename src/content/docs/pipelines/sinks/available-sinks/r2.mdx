@@ -25,10 +25,7 @@ R2 sinks support two output formats:
 Write data as newline-delimited JSON files:
 
 ```bash
-npx wrangler pipelines sinks create my-sink \
-  --type r2 \
-  --bucket my-bucket \
-  --format json
+--format json
 ```
 
 ### Parquet format
@@ -36,11 +33,7 @@ npx wrangler pipelines sinks create my-sink \
 Write data as Parquet files for better query performance and compression:
 
 ```bash
-npx wrangler pipelines sinks create my-sink \
-  --type r2 \
-  --bucket my-bucket \
-  --format parquet \
-  --compression zstd
+--format parquet --compression zstd
 ```
 
 **Compression options for Parquet:**
@@ -52,41 +45,37 @@ npx wrangler pipelines sinks create my-sink \
 - `uncompressed` - No compression
 
 **Row group size:**
-[Row groups](https://parquet.apache.org/docs/file-format/configurations/) are sets of rows in a Parquet file that are stored together, affecting memory usage and query performance. Configure the target row group size:
+[Row groups](https://parquet.apache.org/docs/file-format/configurations/) are sets of rows in a Parquet file that are stored together, affecting memory usage and query performance. Configure the target row group size in MB:
 
 ```bash
---target-row-group-size 1024MB
+--target-row-group-size 256
 ```
 
 ## File organization
 
-Files are written with UUID names within the partitioned directory structure. For example, with prefix `analytics` and default partitioning:
+Files are written with UUID names within the partitioned directory structure. For example, with path `analytics` and default partitioning:
 
 ```
 analytics/year=2025/month=09/day=18/002507a5-d449-48e8-a484-b1bea916102f.parquet
 ```
 
-### Path prefix
+### Path
 
 Set a base directory in your bucket where files will be written:
 
 ```bash
-npx wrangler pipelines sinks create my-sink \
-  --type r2 \
-  --bucket my-bucket \
-  --path analytics/events
+--path analytics/events
 ```
 
 ### Partitioning
 
-R2 sinks automatically partition files by time using a configurable pattern. The default pattern is `year=%Y/month=%m/day=%d`.
+R2 sinks automatically partition files by time using a configurable pattern. The default pattern is `year=%Y/month=%m/day=%d` (Hive-style partitioning).
 
 ```bash
-npx wrangler pipelines sinks create my-sink \
-  --type r2 \
-  --bucket my-bucket \
-  --partitioning "year=%Y/month=%m/day=%d/hour=%H"
+--partitioning "year=%Y/month=%m/day=%d/hour=%H"
 ```
+
+For available format specifiers, refer to [strftime documentation](https://docs.rs/chrono/latest/chrono/format/strftime/index.html).
 
 ## Batching and rolling policy
 
