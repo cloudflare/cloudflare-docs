@@ -15,18 +15,16 @@ import {
 	PackageManagers,
 } from "~/components";
 
-[Stagehand](https://www.stagehand.dev/) is ___
-
-You can use Stagehand to ___
-
+[Stagehand](https://www.stagehand.dev/) is an open-source, AI-powered browser automation library. Rather than dictating exact steps or specifying selectors, Stagehand enables developers to build more reliably and flexibly by combining code with natural-language instructions powered by AI. This makes your agents more resilient to website changes and easier to maintain. 
 
 ## Use Stagehand in a Worker
+
+In this example, you will search for a movie on https://www.themoviedb.org/ and return the movie's title, year, and director, as well as a screenshot of the webpage.
 
 After you deploy, you can interact with the Worker using this URL pattern:
 ```
 https://<your-worker>.workers.dev
 ```
-In this example, you will search for a movie on https://www.themoviedb.org/ and return the movie's title, year, and director, as well as a screenshot of the webpage.
 
 If you want to skip the steps and get started quickly, select **Deploy to Cloudflare** below.
 
@@ -36,7 +34,8 @@ If you want to skip the steps and get started quickly, select **Deploy to Cloudf
 	```bash
 	npm ci
 	```
-2. Make sure you have the [browser rendering](/browser-rendering/) in your wrangler configuration file:
+
+2. Include the [browser rendering](/browser-rendering/) binding in your wrangler configuration file:
 	<WranglerConfig>
 		```jsonc
 			{
@@ -181,3 +180,6 @@ const stagehand = new Stagehand({
   },
 });
 ```
+
+## Stagehand API
+For the full list of Stagehand methods and capabilities, refer to the official [Stagehand API documentation](https://docs.stagehand.dev/first-steps/introduction).
