@@ -2174,6 +2174,7 @@
 /cloudflare-one/connections/connect-networks/private-net/create-private-networks/ /cloudflare-one/connections/connect-networks/private-net/warp-to-warp/ 301
 /cloudflare-one/connections/connect-networks/private-net/private-hostnames-ips/ /cloudflare-one/connections/connect-networks/private-net/cloudflared/private-dns/ 301
 /cloudflare-one/connections/connect-networks/private-net/tunnel-virtual-networks/ /cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/ 301
+/cloudflare-one/connections/connect-networks/private-net/warp-connector/vpc-deployments/ /cloudflare-one/connections/connect-networks/private-net/warp-connector/tips/ 301
 /argo-tunnel/faq/ /cloudflare-one/faq/cloudflare-tunnels-faq/ 301
 /cloudflare-one/policies/browser-isolation/clientless-browser-isolation/ /cloudflare-one/policies/browser-isolation/setup/clientless-browser-isolation/ 301
 /cloudflare-one/connections/connect-devices/agentless/dns-over-https/ /cloudflare-one/connections/connect-devices/agentless/dns/dns-over-https/ 301
