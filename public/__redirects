@@ -2321,6 +2321,9 @@
 # AI Crawl Control
 /ai-audit/* /ai-crawl-control/:splat 301
 
+# AutoRAG to AI search
+/autorag/* /ai-search/:splat 301
+
 # Cloudflare One / Zero Trust
 /cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/as-a-service/* /cloudflare-one/connections/connect-networks/configure-tunnels/local-management/as-a-service/:splat 301
 /cloudflare-one/connections/connect-apps/install-and-setup/deployment-guides/* /cloudflare-one/connections/connect-networks/deployment-guides/:splat 301
