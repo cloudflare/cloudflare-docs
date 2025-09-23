@@ -9,16 +9,15 @@ head:
 description: Cloudflare matches the browser request protocol when connecting to the origin. If the browser uses HTTP, Cloudflare connects to the origin via HTTP; if HTTPS, Cloudflare uses HTTPS without validating the origin’s certificate. This mode is common for origins that use self-signed or otherwise invalid certificates.
 ---
 
-import { Render, TabItem, Tabs } from "~/components";
+import { Stream, Render, TabItem, Tabs } from "~/components";
 
 When you set your encryption mode to **Full**, Cloudflare allows HTTPS connections between your visitor and Cloudflare and makes connections to the origin using the scheme requested by the visitor. If your visitor uses `http`, then Cloudflare connects to the origin using plaintext HTTP and vice versa.
 
-```mermaid
-flowchart LR
-        accTitle: Full SSL/TLS Encryption
-        accDescr: With an encryption mode of Full, your application encrypts traffic going to and coming from Cloudflare but does not validate your origin certificate.
-        A[Browser] <--Encrypted--> B((Cloudflare))<--Encrypted--> C[(Origin server)]
-```
+<Stream
+  id="5ad2c494e2def51ac5bad8ef8948b7d1"
+  title="Configure Full encryption mode"
+  thumbnail="https://pub-d9bf66e086fb4b639107aa52105b49dd.r2.dev/Mermaid%20thumbnail_Full.png"
+/>
 
 ## Use when
 

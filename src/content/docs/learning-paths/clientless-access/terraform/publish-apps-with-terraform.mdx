@@ -7,7 +7,7 @@ sidebar:
 
 import { Details, Render } from "~/components";
 
-This guide covers how to use the [Cloudflare Terraform provider](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs) to quickly publish and secure a private application. In the following example, we will add a new public hostname route to an existing Cloudflare Tunnel, configure how `cloudflared` proxies traffic to the application, and secure the application with Cloudflare Access.
+This guide covers how to use the [Cloudflare Terraform provider](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs) to quickly publish and secure a private application. In the following example, we will add a new published application to an existing Cloudflare Tunnel, configure how `cloudflared` proxies traffic to the application, and secure the application with Cloudflare Access.
 
 ## Prerequisites
 
@@ -73,7 +73,7 @@ To prevent accidentally exposing your Cloudflare credentials, do not save this f
 
 Add the following resources to your Terraform configuration.
 
-### Add public hostname route to Cloudflare Tunnel
+### Add published application to Cloudflare Tunnel
 
 Using the [`cloudflare_tunnel_config`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/tunnel_config) resource, create an ingress rule that maps your application to a public DNS record. This example makes `localhost:8080` available on `app.mycompany.com`, sets the [Connect Timeout](/cloudflare-one/connections/connect-networks/configure-tunnels/cloudflared-parameters/origin-parameters/#connecttimeout), and enables [Access JWT validation](/cloudflare-one/connections/connect-networks/configure-tunnels/cloudflared-parameters/origin-parameters/#access).
 
@@ -105,7 +105,7 @@ resource "cloudflare_tunnel_config" "example_config" {
 
 :::note
 
-Public hostname configurations must include a catch-all ingress rule at the bottom of the file.
+Published application configurations must include a catch-all ingress rule at the bottom of the file.
 :::
 
 ### Create an Access application

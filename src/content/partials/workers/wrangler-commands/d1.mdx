@@ -80,7 +80,7 @@ You must provide either `--command` or `--file` for this command to run successf
 - `--local` <Type text="boolean" /> <MetaInfo text="(default: true) optional" />
   - Execute commands/files against a local database for use with [wrangler dev](/workers/wrangler/commands/#dev).
 - `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
-  - Execute commands/files against a remote D1 database for use with [wrangler dev --remote](/workers/wrangler/commands/#dev).
+  - Execute commands/files against a remote D1 database for use with [remote binding](/workers/development-testing/#remote-bindings) or your deployed Worker.
 - `--persist-to` <Type text="string" /> <MetaInfo text="optional" />
   - Specify directory to use for local persistence (for use in combination with `--local`).
 - `--json` <Type text="boolean" /> <MetaInfo text="optional" />
@@ -101,7 +101,7 @@ wrangler d1 export <DATABASE_NAME> [OPTIONS]
 - `--local` <Type text="boolean" /> <MetaInfo text="(default: true) optional" />
   - Export from a local database for use with [wrangler dev](/workers/wrangler/commands/#dev).
 - `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
-  - Export from a remote D1 database for use with [wrangler dev --remote](/workers/wrangler/commands/#dev).
+  - Export from a remote D1 database.
 - `--output` <Type text="string" /> <MetaInfo text="required" />
   - Path to the SQL file for your export.
 - `--table` <Type text="string" /> <MetaInfo text="optional" />

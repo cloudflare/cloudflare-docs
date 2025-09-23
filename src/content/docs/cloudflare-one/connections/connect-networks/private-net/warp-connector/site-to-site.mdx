@@ -38,7 +38,7 @@ In this example, we will create a WARP Connector for subnet `10.0.0.0/24` and in
 
 <Render file="tunnel/warp-connector-device-profile" product="cloudflare-one" />
 
-## 3. Route traffic from WARP Connector to subnet
+## 3. Route traffic between WARP Connector and Cloudflare
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Networks** > **Routes**.
 2. Select **Create route**.
@@ -65,9 +65,18 @@ The WARP Connector will now forward inbound requests to devices on the subnet.
 
 ```
 
+### DNS filtering
+
+If you would like to filter private DNS queries using Cloudflare Gateway, check [Split Tunnels](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) and ensure that the following IPs route through WARP Connector:
+	- Internal DNS resolver IP
+	- <GlossaryTooltip term="initial resolved IP">Initial resolved IP</GlossaryTooltip> CGNAT range:
+		<Render file="gateway/egress-selector-cgnat-ips" 	product="cloudflare-one"/>
+
+When you resolve DNS queries from WARP Connector through Gateway, Gateway will log the queries with the private source IP. You can use the private source IP to create [resolver policies](/cloudflare-one/policies/gateway/resolver-policies/) for queries intended for [internal DNS records](/cloudflare-one/policies/gateway/resolver-policies/#internal-dns).
+
 ## 4. Route traffic from subnet to WARP Connector
 
-Depending on where you installed the WARP Connector, you may need to configure other devices on the subnet to route outbound requests through WARP Connector.
+The WARP Connector host will automatically forward DNS and network traffic to Cloudflare. Depending on where you installed the WARP Connector, you may need to configure other devices on the subnet to route outbound requests through WARP Connector.
 
 ```mermaid
     flowchart LR
@@ -94,12 +103,19 @@ Depending on where you installed the WARP Connector, you may need to configure o
 	product="cloudflare-one"
 />
 
-#### Add route to router
+#### Add IP route to router
 
 For example, for devices on subnet `10.0.0.0/24` to reach applications behind subnet `192.168.1.0/24`, add a rule on the router that routes `192.168.1.0/24` to the WARP Connector host machine (`10.0.0.100`).
 
 <Render
 	file="tunnel/warp-connector-alternate-gateway-flow"
+	product="cloudflare-one"
+/>
+
+#### Configure DNS resolver on router
+
+<Render
+	file="tunnel/warp-connector-alternate-gateway-dns"
 	product="cloudflare-one"
 />
 
@@ -110,7 +126,7 @@ For example, for devices on subnet `10.0.0.0/24` to reach applications behind su
 	product="cloudflare-one"
 />
 
-#### Add route to devices
+#### Add IP route to devices
 
 <Render
 	file="tunnel/warp-connector-route-all-traffic"
@@ -141,9 +157,14 @@ route /p add <DESTINATION-IP> mask 255.255.255.255 <WARP-CONNECTOR-IP>
 
 </TabItem> </Tabs>
 
-#### Verify routes
-
 <Render file="tunnel/warp-connector-verify-routes" product="cloudflare-one" />
+
+#### Configure DNS resolver on devices
+
+<Render
+	file="tunnel/warp-connector-intermediate-gateway-dns"
+	product="cloudflare-one"
+/>
 
 ## 5. Install another WARP Connector
 
@@ -183,9 +204,10 @@ You can now test the connection between the two subnets. For example, on the `10
 ```
 
 :::note
-
 If you are testing with curl using private hostnames, add the `--ipv4` flag to your curl commands.
 :::
+
+Your [Gateway activity logs](/cloudflare-one/insights/logs/gateway-logs/) will show traffic associated with the email `warp_connector@<your-team-name>.cloudflareaccess.com`.
 
 [^1]:
     <Render

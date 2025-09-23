@@ -7,7 +7,7 @@ sidebar:
   order: 4
 ---
 
-import { Steps } from "~/components";
+import { Steps, DashButton } from "~/components";
 
 ```mermaid
 graph LR
@@ -21,12 +21,14 @@ Connect your Cloudflare account to Stripe to process payments. Pay per crawl use
 
 {/* prettier-ignore */}
 <Steps>
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account.
-2. Go to **Manage Account** > **Configurations**.
-3. Go to the **Pay Per Crawl** tab.
-4. From **Connect to Stripe**, select **Connect**.
-5. Select **Continue to Stripe**.
-6. Follow the on-screen instructions to connect your Cloudflare account to a Stripe account.
+1. In the Cloudflare dashboard, go to **Manage Account** > **Settings**.
+
+   <DashButton url="/?to=/:account/configurations" />
+
+2. Go to the **Pay Per Crawl** tab.
+3. From **Connect to Stripe**, select **Connect**.
+4. Select **Continue to Stripe**.
+5. Follow the on-screen instructions to connect your Cloudflare account to a Stripe account.
    :::note[Use a non-personal email address]
    Cloudflare recommends using a dedicated email to manage your pay per crawl account (for example, `aicrawler@company.com`).
    :::

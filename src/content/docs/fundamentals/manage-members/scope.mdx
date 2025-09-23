@@ -6,6 +6,8 @@ sidebar:
 
 ---
 
+import { DashButton } from "~/components";
+
 Scopes are one of three constituent parts of a policy that allows granting of access to users.
 
 To allow for flexible combinations of access to users, Cloudflare currently has two types of scopes (Account and Domain), with different sets of roles for each scope.
@@ -53,10 +55,12 @@ If you have a set of domains that are all categorized similarly (e.g. all of you
 
 To create a domain group:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account (you must be logged in as a **Super Administrator** and have a [verified email address](/fundamentals/user-profiles/verify-email-address/)).
-2. Go to **Manage Account** > **Configurations** > **Lists**.
-3. For **Domain Group Manager**, select **Create**.
-4. Create your domain group:
+1. In the Cloudflare dashboard, go to the **Settings** > **Lists** page. (You must be logged in as a **Super Administrator** and have a [verified email address](/fundamentals/user-profiles/verify-email-address/)).
+
+    <DashButton url="/?to=/:account/configurations" />
+
+2. For **Domain Group Manager**, select **Create**.
+3. Create your domain group:
 
    1. Select the domains to include.
    2. Add a **Name**.

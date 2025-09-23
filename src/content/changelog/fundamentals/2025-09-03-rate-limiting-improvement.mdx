@@ -15,15 +15,14 @@ As always, if you need any help with rate limits, please contact Support.
 #### New Headers
 
 **Headers that are always returned:**
-- X-RateLimit-Limit: Total Number of requests the caller can make
-- X-RateLimit-Remaining: Number of requests before Rate Limit kicks in
+- `Ratelimit`: List of service limit items, composed of the limit name, the remaining quota (`r`) and the time next window resets (`t`). For example: `"default";r=50;t=30`
+- `Ratelimit-Policy`: List of quota policy items, composed of the policy name, the total quota (`q`) and the time window the quota applies to (`w`). For example: `"burst";q=100;w=60`
 
 **Returned only when a rate limit has been reached (error code: 429):**
 - Retry-After: Number of Seconds until more capacity is available, rounded up
-- X-RateLimit-Reset: RFC 1123 Formatted Date as to when more capacity is available
 
 #### SDK Back offs
-- All SDKs will automatically respond to the headers, instituting a backoff when limits are approached. 
+- All of Cloudflare's latest SDKs will automatically respond to the headers, instituting a backoff when limits are approached. 
 
 ### GraphQL and Edge APIs
 These new headers and back offs are only available for Cloudflare REST APIs, and will not affect GraphQL. 

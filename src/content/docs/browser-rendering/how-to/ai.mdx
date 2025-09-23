@@ -259,10 +259,10 @@ async function getLLMResult(env, prompt: string, schema?: any) {
 }
 ```
 
-You can run this script to test it using Wrangler's `--remote` flag:
+You can run this script to test it using [remote bindings](/workers/development-testing/#remote-bindings):
 
 ```sh
-npx wrangler dev --remote
+npx wrangler dev
 ```
 
 With your script now running, you can go to `http://localhost:8787/` and should see something like the following:

@@ -67,7 +67,7 @@ database_id = "c020574a-5623-407b-be0c-cd192bab9545"
 
 </WranglerConfig>
 
-Note that `wrangler dev` separates local and production (remote) data. A local session does not have access to your production data by default. To access your production (remote) database, pass the `--remote` flag when calling `wrangler dev`. Any changes you make when running in `--remote` mode cannot be undone.
+Note that `wrangler dev` separates local and production (remote) data. A local session does not have access to your production data by default. To access your production (remote) database, set your D1 as a [remote binding](/workers/development-testing/#remote-bindings). Any changes you make when running against a remote database cannot be undone.
 
 Refer to the [`wrangler dev` documentation](/workers/wrangler/commands/#dev) to learn more about how to configure a local development session.
 

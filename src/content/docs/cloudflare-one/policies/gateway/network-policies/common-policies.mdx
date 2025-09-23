@@ -197,11 +197,7 @@ The following example consists of two policies: the first allows specific users 
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-| Selector       | Operator      | Value            | Logic | Action |
-| -------------- | ------------- | ---------------- | ----- | ------ |
-| Destination IP | in            | `10.0.0.0/8`     | And   | Allow  |
-| User Email     | matches regex | `.*@example.com` |       |        |
-
+<Render file="gateway/policies/restrict-access-to-private-networks-allow" product="cloudflare-one" params={{ selector: "Destination IP", value: "10.0.0.0/8" }} />
 </TabItem>
 
 <TabItem label="API">
@@ -228,9 +224,7 @@ The following example consists of two policies: the first allows specific users 
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-| Selector       | Operator | Value        | Action |
-| -------------- | -------- | ------------ | ------ |
-| Destination IP | in       | `10.0.0.0/8` | Block  |
+<Render file="gateway/policies/restrict-access-to-private-networks-block" product="cloudflare-one" />
 
 </TabItem>
 

@@ -6,6 +6,8 @@ sidebar:
 
 ---
 
+import { DashButton } from "~/components";
+
 Specify a time for a visitor’s Browser Cache TTL to accelerate the page load for repeat visitors to your website. To configure cache duration within Cloudflare’s data centers, refer to [Edge Cache TTL](/cache/how-to/cache-rules/settings/#edge-ttl).
 
 By default, Cloudflare honors the cache expiration set in your `Expires` and `Cache-Control` headers. Cloudflare overrides any `Cache-Control` or `Expires` headers with values set via the **Browser Cache TTL** option under **Caching** on your dashboard if:
@@ -27,8 +29,10 @@ If you modify cached assets, the new asset is not displayed to repeat visitors b
 
 :::
 
-1. Log in to your Cloudflare dashboard.
-2. Select **Caching**.
-3. Under **Browser Cache TTL**, select the drop-down menu to select the desired cache expiration time.
+1. In the Cloudflare dashboard, go to the **Caching** page.
+
+   <DashButton url="/?to=/:account/:zone/caching/configuration" />
+
+2. Under **Browser Cache TTL**, select the desired cache expiration time from the drop-down menu.
 
 The **Respect Existing Headers** option tells Cloudflare to honor the settings in the `Cache-Control` headers from your origin web server.

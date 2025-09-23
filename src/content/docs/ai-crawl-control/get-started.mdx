@@ -11,7 +11,7 @@ head:
 description: Learn how to set up AI Crawl Control.
 ---
 
-import { Details, Render, Steps, Tabs, TabItem, GlossaryTooltip } from "~/components";
+import { Details, Render, Steps, Tabs, TabItem, GlossaryTooltip, DashButton } from "~/components";
 
 This guide instructs you on how to:
 
@@ -34,6 +34,9 @@ To only block specific AI crawlers:
 {/* prettier-ignore */}
 <Steps>
 1. Go to **AI Crawl Control**.
+
+   <DashButton url="/?to=/:account/:zone/ai" />
+
 2. From the **Crawlers** tab, go to the list of AI crawlers.
 3. Review the AI crawlers that are accessing your domain.
 4. From the **Block** column, select the option **Block**.
@@ -52,6 +55,9 @@ To only block specific AI crawlers:
 {/* prettier-ignore */}
 <Steps>
 1. Go to **AI Crawl Control**.
+
+   <DashButton url="/?to=/:account/:zone/ai" />
+
 2. From the **Crawlers** tab, go to the list of AI crawlers.
 3. Review key information such as:
    - Bot operator
@@ -76,6 +82,9 @@ Review the AI crawlers detected on your site.
 
 <Steps>
 1. Go to **AI Crawl Control**.
+
+   <DashButton url="/?to=/:account/:zone/ai" />
+
 2. From the **Metrics** tab, view key metrics on AI crawlers.
 </Steps>
 </TabItem>

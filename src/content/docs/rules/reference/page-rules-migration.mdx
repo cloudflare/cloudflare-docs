@@ -97,7 +97,7 @@ Also, to streamline common configurations, the Cloudflare dashboard now includes
 | Forwarding URL              | Redirect Rules (Single Redirects)    | [Migrate Forwarding URL](#migrate-forwarding-url)                           |
 | Host Header Override        | Origin Rules                         | [Migrate Host Header Override](#migrate-host-header-override)               |
 | IP Geolocation Header       | Transform Rules (Managed Transforms) | [Migrate IP Geolocation Header](#migrate-ip-geolocation-header)             |
-| Mirage                      | Configuration Rules                  | [Migrate Mirage](#migrate-mirage)                                           |
+| Mirage (deprecated)         | Configuration Rules                  | [Migrate Mirage](#migrate-mirage)                                           |
 | Opportunistic Encryption    | Configuration Rules                  | [Migrate Opportunistic Encryption](#migrate-opportunistic-encryption)       |
 | Origin Cache Control        | Cache Rules                          | [Migrate Origin Cache Control](#migrate-origin-cache-control)               |
 | Origin Error Page Pass-thru | Cache Rules                          | [Migrate Origin Error Page Pass-thru](#migrate-origin-error-page-pass-thru) |
@@ -629,7 +629,7 @@ You configured a Page Rule turning off Cloudflare Apps (deprecated) for all subd
 The **Disable Performance** setting is deprecated. Any Page Rules with this setting will not be migrated.
 :::
 
-This Page Rules setting turned off Mirage, Polish, and Rocket Loader. You can still turn on or off relevant Cloudflare features one by one using Configuration Rules.
+This Page Rules setting turned off Mirage (deprecated), Polish, and Rocket Loader. You can still turn on or off relevant Cloudflare features one by one using Configuration Rules.
 
 <Tabs> <TabItem label="Dashboard">
 
@@ -1007,13 +1007,13 @@ You configured a Page Rule adding a `CF-IPCountry` HTTP header, for all requests
 
 </TabItem> </Tabs>
 
-### Migrate Mirage
+### Migrate Mirage (deprecated) {/* migrate-mirage */}
 
 <Tabs> <TabItem label="Dashboard">
 
 **Context:**
 
-You configured a Page Rule turning off Mirage for all subdomains of `example.com` and the `example.com` domain itself:
+You configured a Page Rule turning off Mirage (deprecated) for all subdomains of `example.com` and the `example.com` domain itself:
 
 - **URL**: `*example.com/*`
 - **Setting**: _Mirage_

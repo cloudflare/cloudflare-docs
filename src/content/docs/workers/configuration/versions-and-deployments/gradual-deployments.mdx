@@ -93,10 +93,10 @@ npx wrangler versions deploy
    <DashButton url="/?to=/:account/workers-and-pages" />
 
 2. Select **Create application** > **Hello World** template > deploy your Worker.
-4. Once the Worker is deployed, go to the online code editor through **Edit code**. Edit the Worker code (change the `Response` content) and upload the Worker.
-5. To save changes, select the **down arrow** next to **Deploy** > **Save**. This will create a new version of your Worker.
-6. Create a new deployment that splits traffic between the two versions created in step 3 and 5 by going to **Deployments** and selecting **Deploy Version**.
-7. cURL your Worker to test the split deployment.
+3. Once the Worker is deployed, go to the online code editor through **Edit code**. Edit the Worker code (change the `Response` content) and upload the Worker.
+4. To save changes, select the **down arrow** next to **Deploy** > **Save**. This will create a new version of your Worker.
+5. Create a new deployment that splits traffic between the two versions created in step 3 and 5 by going to **Deployments** and selecting **Deploy Version**.
+6. cURL your Worker to test the split deployment.
 
 ```bash
 for j in {0..10}
@@ -106,6 +106,12 @@ done
 ```
 
 You should see 10 responses. Responses will reflect the content returned by the versions in your deployment. Responses will vary depending on the percentages configured in step #6.
+
+## Gradual deployments with static assets
+
+When your Worker serves [static assets](/workers/static-assets/), gradual deployments can cause asset compatibility issues where users receive HTML from one version that references assets only available in another version, leading to 404 errors.
+
+For detailed guidance on handling static assets during gradual rollouts, including specific examples and configuration steps, refer to [Gradual rollouts](/workers/static-assets/routing/advanced/gradual-rollouts/).
 
 ## Version affinity
 

@@ -113,23 +113,23 @@ The following configuration will modify settings in your Cloudflare account.
         	proxied = true
         }
 
-        # Configures tunnel with a public hostname route for clientless access.
-        resource "cloudflare_zero_trust_tunnel_cloudflared_config" "gcp_tunnel_config" {
-        	tunnel_id  = cloudflare_zero_trust_tunnel_cloudflared.gcp_tunnel.id
-        	account_id = var.cloudflare_account_id
-        	config     = {
-        		ingress 	= [
-        			{
-        				hostname = "http_app.${var.cloudflare_zone}"
-        				service  = "http://localhost:80"
-        			},
-        			{
-        				service  = "http_status:404"
-        			}
-        		]
-        	}
-        }
-        ```
+		# Configures tunnel with a published application for clientless access.
+		resource "cloudflare_zero_trust_tunnel_cloudflared_config" "gcp_tunnel_config" {
+			tunnel_id  = cloudflare_zero_trust_tunnel_cloudflared.gcp_tunnel.id
+			account_id = var.cloudflare_account_id
+			config     = {
+				ingress 	= [
+					{
+						hostname = "http_app.${var.cloudflare_zone}"
+						service  = "http://localhost:80"
+					},
+					{
+						service  = "http_status:404"
+					}
+				]
+			}
+		}
+		```
 
 ### Configure GCP resources
 

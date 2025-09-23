@@ -257,9 +257,9 @@ export default {
 };
 ```
 
-You can run this script to test it using Wrangler’s `--remote` flag:
+You can run this script to test it using [remote bindings](/workers/development-testing/#remote-bindings):
 
-<PackageManagers type="exec" pkg="wrangler" args="dev --remote" />
+<PackageManagers type="exec" pkg="wrangler" args="dev" />
 
 With your script now running, you can pass in a `?name` parameter to the local URL (such as `http://localhost:8787/?name=Harley`) and should see the following:
 

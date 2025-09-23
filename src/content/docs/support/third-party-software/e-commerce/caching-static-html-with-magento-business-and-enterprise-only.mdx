@@ -5,6 +5,8 @@ title: Caching Static HTML with Magento (Business and Enterprise only)
 
 ---
 
+import { DashButton } from "~/components";
+
 ## Overview
 
 :::note
@@ -22,17 +24,19 @@ Before logging in to the Magento admin panel or adding something to a shopping c
 
 To cache static HTML using Cloudflare Page Rules:
 
-1\. Log in to your Cloudflare account.
+1. In the Cloudflare dashboard, go to the **Caching** page.
 
-2\. Click on the **Caching** app. 
+   <DashButton url="/?to=/:account/:zone/caching/configuration" />
 
-3\. Scroll down to **Browser Cache TTL** option and choose **Respect Existing Headers**.
+2. Under **Browser Cache TTL**, choose **Respect Existing Headers**.
 
 With this setting in place, you can set the necessary Page Rules to cache anonymize page visits.
 
-4\. Go to **Rules >** **Page Rules**.
+3. In the Cloudflare dashboard, go to the **Rules** page.
 
-5\. Click the **Create Page Rule** button and enter your domain. In the example below, the domain is `www.orangeclouded.com`.
+   <DashButton url="/?to=/:account/:zone/rules/page-rules" />
+
+4. Select **Create Page Rule** and enter your domain. In the example below, the domain is `www.orangeclouded.com`.
 
 * *Cache Everything* will instruct Cloudflare to cache static HTML.
 * When the *Bypass Cache on Cookie* rule matches the criteria we set, Cloudflare won't cache HTML ([though static images and other files will still be cached](/cache/concepts/default-cache-behavior/)). Depending on whether you're using Magento 1 or Magento 2, you will need a different rule:
@@ -43,7 +47,7 @@ With this setting in place, you can set the necessary Page Rules to cache anonym
 
 ![The Create a Page Rule dialog with settings to instruct Cloudflare to cache static HTML, the Bypass Cache on cookie rule instructing Cloudflare not to cache HTML while static images and other files are still cached, and the Edge Cache TTL set to a month.](~/assets/images/support/hc-import-page_rules_caching_static_html_with_magento.png)
 
-6\. Click **Save and Deploy**.
+5. Select **Save and Deploy**.
 
 :::note
 

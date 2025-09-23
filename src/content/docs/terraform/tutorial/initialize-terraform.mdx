@@ -8,7 +8,7 @@ head:
     content: Introduction to Terraform init
 ---
 
-import { Render } from "~/components";
+import { DashButton, Render } from "~/components";
 
 This tutorial shows you how to get started with Terraform. You just signed up your domain (`example.com`) on Cloudflare to manage everything in Terraform and now you will create a DNS record pointing `www.example.com` to a web server at `203.0.113.10`.
 
@@ -16,6 +16,7 @@ Before you begin, ensure you have:
 * [Installed Terraform](/terraform/installing/)
 * [Created an API Token](/fundamentals/api/get-started/create-token/) with permissions to edit resources for this tutorial
 
+<Render file="v5-code-snippets" product="terraform" />
 ## 1. Create your configuration
 
 Create a file named `main.tf`, filling in your own values for the [API token](/fundamentals/api/get-started/create-token/), [zone ID](/fundamentals/account/find-account-and-zone-ids/), [account ID](/fundamentals/account/find-account-and-zone-ids/), and [domain](/fundamentals/manage-domains/add-site/):
@@ -177,4 +178,6 @@ To see the full results returned from the API call:
 terraform show
 ```
 
-You can also check the [Cloudflare dashboard](https://dash.cloudflare.com) and go to **DNS** > **Records**.
+You can also check the Cloudflare dashboard and go to the **DNS** > **Records** page.
+
+<DashButton url="/?to=/:account/home" />

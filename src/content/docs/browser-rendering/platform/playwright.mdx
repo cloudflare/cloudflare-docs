@@ -201,6 +201,22 @@ const browser = await playwright.launch(env.MYBROWSER, { keep_alive: 600000 });
 
 Using the above, the browser will stay open for up to 10 minutes, even if inactive.
 
+### Set a custom user agent
+
+To specify a custom user agent in Playwright, set it in the options when creating a new browser context with `browser.newContext()`. All pages subsequently created from this context will use the new user agent. This is useful if the target website serves different content based on the user agent.
+
+```js
+const context = await browser.newContext({
+  userAgent:
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
+});
+```
+
+:::note
+The `userAgent` parameter does not bypass bot protection. Requests from Browser Rendering will always be identified as a bot. 
+:::
+
+
 ## Session management
 
 In order to facilitate browser session management, we have extended the Playwright API with new methods:

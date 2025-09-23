@@ -1,0 +1,21 @@
+---
+{}
+
+---
+
+import { Render, Details, GlossaryTooltip } from "~/components"
+
+| On-ramp method                                                                             | Compatibility |
+| ------------------------------------------------------------------------------------------ | ------------- |
+| [WARP](/cloudflare-one/connections/connect-devices/warp/)                                  | ✅            |
+| [PAC files](/cloudflare-one/connections/connect-devices/agentless/pac-files/)              | ✅            |
+| [Browser Isolation](/cloudflare-one/policies/browser-isolation/)                           | ✅            |
+| [WARP Connector](/cloudflare-one/connections/connect-networks/private-net/warp-connector/) | ✅            |
+| [Magic WAN](/magic-wan/zero-trust/cloudflare-gateway/)                                     | 🚧[^1]        |
+
+[^1]: Not compatible with [ECMP routing](/magic-wan/reference/traffic-steering/#equal-cost-multi-path-routing). For hostname-based routing to work, DNS queries and the resulting network traffic must reach Cloudflare over the same Magic WAN tunnel. <br/>
+
+<Render
+	file="gateway/egress-selector-warp-version"
+	product="cloudflare-one"
+/>

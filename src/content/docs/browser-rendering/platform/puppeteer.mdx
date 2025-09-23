@@ -57,6 +57,20 @@ const browser = await puppeteer.launch(env.MYBROWSER, { keep_alive: 600000 });
 
 Using the above, the browser will stay open for up to 10 minutes, even if inactive.
 
+### Set a custom user agent
+
+To specify a custom user agent in Puppeteer, use the `page.setUserAgent()` method. This is useful if the target website serves different content based on the user agent.
+
+```js
+await page.setUserAgent(
+  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
+);
+```
+
+:::note
+The `userAgent` parameter does not bypass bot protection. Requests from Browser Rendering will always be identified as a bot. 
+:::
+
 ## Session management
 
 In order to facilitate browser session management, we've added new methods to `puppeteer`:

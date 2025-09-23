@@ -7,7 +7,7 @@ sidebar:
   order: 5
 ---
 
-import { Tabs, TabItem } from '~/components';
+import { DashButton, Tabs, TabItem } from '~/components';
 
 User Groups are a collection of [account members](/fundamentals/manage-members/) that are treated equally from an access control perspective. User Groups can be assigned permission policies, with individual members in the group receiving all permissions of the roles assigned to the User Group. If users also have individually assigned permissions, then their effective permissions are the union of all of their individual permissions, plus the permissions for all of the User Groups they are a member of. 
 
@@ -22,13 +22,15 @@ Cloudflare is actively working on improving this experience to make inherited an
 
 ## Create a User Group manually 
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account. 
-2. Go to **Manage Account** > **Members**.
-4. Select the **Groups** tab.
-5. Select **Create a Group** and enter a name and description for your new group.
-6. Select **Create group** to confirm your changes. The **Group members** tab displays.
-7. Select **Add members**. 
-8. Select the relevant members you want to include in the group and select **Add to Group**.
+1. In the Cloudflare dashboard, go to the **Members** page.
+
+    <DashButton url="/?to=/:account/members" />
+
+2. Select the **Groups** tab.
+3. Select **Create a Group** and enter a name and description for your new group.
+4. Select **Create group** to confirm your changes. The **Group members** tab displays.
+5. Select **Add members**. 
+6. Select the relevant members you want to include in the group and select **Add to Group**.
 
 ### Assign a Permission Policy
 

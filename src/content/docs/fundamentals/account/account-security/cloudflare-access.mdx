@@ -8,17 +8,21 @@ sidebar:
   order: 2
 ---
 
+import { DashButton } from "~/components";
+
 Occasionally, you may want to allow edit access to your account for Cloudflare Support. A typical use case might be migrating a complex or sensitive domain over to Cloudflare.
 
 By default, Cloudflare Support does not have edit access to your account.
 
 To enable editing access by Cloudflare Support:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account (you must be logged in as a **Super Administrator**).
-2. Go to **Manage Account** > **Configurations**.
-3. For **Editing Permission**, switch the toggle to **On**.
-4. Select a duration.
-5. Click **Approve**.
+1. In the Cloudflare dashboard, go to the **Configurations** page. (You must be logged in as a **Super Administrator**).
+
+    <DashButton url="/?to=/:account/configurations" />
+
+2. For **Editing Permission**, switch the toggle to **On**.
+3. Select a duration.
+4. Click **Approve**.
 
 :::note
 
