@@ -1,6 +1,6 @@
 import { Render, PackageManagers, WranglerConfig, Tabs, TabItem } from "~/components";
 
-## 1. Create a Worker project
+### 1. Create a Worker project
 
 [Cloudflare Workers](/workers/) provides a serverless execution environment that allows you to create new applications or augment existing ones without configuring or maintaining infrastructure. Your Worker application is a container to interact with a headless browser to do actions, such as taking screenshots.
 
@@ -22,13 +22,13 @@ Create a new Worker project named `browser-worker` by running:
 	}}
 />
 
-## 2. Install Puppeteer
+### 2. Install Puppeteer
 
 In your `browser-worker` directory, install Cloudflare’s [fork of Puppeteer](/browser-rendering/platform/puppeteer/):
 
 <PackageManagers pkg="@cloudflare/puppeteer" dev />
 
-## 3. Create a KV namespace
+### 3. Create a KV namespace
 
 Browser Rendering can be used with other developer products. You might need a [relational database](/d1/), an [R2 bucket](/r2/) to archive your crawled pages and assets, a [Durable Object](/durable-objects/) to keep your browser instance alive and share it with multiple requests, or [Queues](/queues/) to handle your jobs asynchronously.
 
@@ -43,7 +43,7 @@ npx wrangler kv namespace create BROWSER_KV_DEMO --preview
 
 Take note of the IDs for the next step.
 
-## 4. Configure the Wrangler configuration file
+### 4. Configure the Wrangler configuration file
 
 Configure your `browser-worker` project's [Wrangler configuration file](/workers/wrangler/configuration/) by adding a browser [binding](/workers/runtime-apis/bindings/) and a [Node.js compatibility flag](/workers/configuration/compatibility-flags/#nodejs-compatibility-flag). Bindings allow your Workers to interact with resources on the Cloudflare developer platform. Your browser `binding` name is set by you, this guide uses the name `MYBROWSER`. Browser bindings allow for communication between a Worker and a headless browser which allows you to do actions such as taking a screenshot, generating a PDF, and more.
 
@@ -65,7 +65,7 @@ kv_namespaces = [
 
 </WranglerConfig>
 
-## 5. Code
+### 5. Code
 
 <Tabs> <TabItem label="JavaScript" icon="seti:javascript">
 Update `src/index.js` with your Worker code:
@@ -146,13 +146,13 @@ export default {
 
 </TabItem> </Tabs>
 
-This Worker instantiates a browser using Puppeteer, opens a new page, navigates to what you put in the `"url"` parameter, takes a screenshot of the page, stores the screenshot in KV, closes the browser, and responds with the JPEG image of the screenshot.
+This Worker instantiates a browser using Puppeteer, opens a new page, navigates to the location of the 'url' parameter, takes a screenshot of the page, stores the screenshot in KV, closes the browser, and responds with the JPEG image of the screenshot.
 
 If your Worker is running in production, it will store the screenshot to the production KV namespace. If you are running `wrangler dev`, it will store the screenshot to the dev KV namespace.
 
 If the same `url` is requested again, it will use the cached version in KV instead, unless it expired.
 
-## 6. Test
+### 6. Test
 
 Run `npx wrangler dev` to test your Worker locally or run [`npx wrangler dev --remote`](/workers/wrangler/commands/#dev) to test your Worker remotely before deploying to Cloudflare's global network.
 
@@ -160,7 +160,7 @@ To test taking your first screenshot, go to the following URL:
 
 `<LOCAL_HOST_URL>/?url=https://example.com`
 
-## 7. Deploy
+### 7. Deploy
 
 Run `npx wrangler deploy` to deploy your Worker to the Cloudflare global network.
 
