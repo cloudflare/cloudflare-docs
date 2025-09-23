@@ -17,25 +17,33 @@ import {
 
 [Stagehand](https://www.stagehand.dev/) is an open-source, AI-powered browser automation library. Rather than dictating exact steps or specifying selectors, Stagehand enables developers to build more reliably and flexibly by combining code with natural-language instructions powered by AI. This makes your agents more resilient to website changes and easier to maintain. 
 
+This guide shows you how to deploy a Worker that uses Stagehand, Browser Rendering, and [Workers AI](/workers-ai/) to automate a web task.
+
 ## Use Stagehand in a Worker
 
-In this example, you will search for a movie on https://www.themoviedb.org/ and return the movie's title, year, and director, as well as a screenshot of the webpage.
+In this example, you will use Stagehand to search for a movie on [The Movie Database](https://www.themoviedb.org/), extract its details (title, year, and director), and return the information along with a screenshot of the webpage.
+
+If you want to skip the steps and get started quickly, select **Deploy to Cloudflare** below.
+
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/playwright-mcp/tree/main/cloudflare/example)
 
 After you deploy, you can interact with the Worker using this URL pattern:
 ```
 https://<your-worker>.workers.dev
 ```
 
-If you want to skip the steps and get started quickly, select **Deploy to Cloudflare** below.
+#### 1. Set up your project
 
-[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/playwright-mcp/tree/main/cloudflare/example)
+???DON'T THEY NEED TO INSRALL BROWSERBASE STAGEHAND TOO?
 
-1. Install dependencies:
+Install the necessary dependencies:
 	```bash
 	npm ci
 	```
 
-2. Include the [browser rendering](/browser-rendering/) binding in your wrangler configuration file:
+#### 2. Configure your Worker
+
+Update your wrangler configuration file to include the bindings for Browser Rendering and [Workers AI](/workers-ai/):
 	<WranglerConfig>
 		```jsonc
 			{
@@ -62,7 +70,7 @@ If you want to skip the steps and get started quickly, select **Deploy to Cloudf
 		```
 	</WranglerConfig>
 
-3. Edit the code:
+#### 3. Write the Worker code
 
 	```ts title="src/index.ts"
 
@@ -140,20 +148,31 @@ If you want to skip the steps and get started quickly, select **Deploy to Cloudf
 		},
 	};
 	```
-4. Build the project:
+#### 4. Build the project
+
 	```bash
 	npm run build
 	```
-5. Deploy to Cloudflare Workers:
+#### 5. Deploy to Cloudflare Workers
+
+After you deploy, you can interact with the Worker using this URL pattern:
+```
+https://<your-worker>.workers.dev
+```
+
 	```bash
 	npm run deploy
 	```
 
-## Use a custom model
+## Use Cloudflare AI Gateway
 
-Instead of using a model from [Workers AI](/workers-ai/), you can use a custom model for which you supply your own credentials.
+[AI Gateway](/ai-gateway/) is a service that adds observability to your AI applications. By routing your requests through AI Gateway, you can monitor and debug your AI applications.
 
-In this example, you will configure Stagehand to use [OpenAI](https://openai.com/). You will need an OpenAI API key. Cloudflare recommends storing your API key with [secrets](/workers/configuration/secrets/).
+You can use AI Gateway with both Workers AI and third-party models. 
+
+To use AI Gateway, first create a gateway in the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers/ai-gateway), then add the `baseURL` as shown below. 
+
+???I SWITCHED THE ORDER AROUND. WE SHOULD FIRST SHOW AI GATEWAY WHILE STILL USING WORKERS AI
 
 ```typescript
 const stagehand = new Stagehand({
@@ -161,13 +180,24 @@ const stagehand = new Stagehand({
   localBrowserLaunchOptions: { cdpUrl: endpointURLString("BROWSER") },
   modelName: "openai/gpt-4.1",
   modelClientOptions: {
-    apiKey: env.OPENAI_API_KEY,
+    baseURL: `https://gateway.ai.cloudflare.com/v1/${env.CLOUDFLARE_ACCOUNT_ID}/${env.AI_GATEWAY_ID}/openai`,
   },
 });
 ```
 
-## Use Cloudflare AI Gateway
+## Use a custom model
 
+You can configure Stagehand to use models from third-party providers, including OpenAI or Anthropic, by providing your own credentials.
+
+???DOES THIS ONLY WORK WITH CERTAIN PROVIDERS? ONLY MODELS THAT AIGATEWAY SUPPORTS?
+
+In this example, you will configure Stagehand to use [OpenAI](https://openai.com/). You will need an OpenAI API key. Cloudflare recommends storing your API key as a [secret](/workers/configuration/secrets/).
+
+```bash
+	npx wrangler secret put OPENAI_API_KEY
+	```
+
+Then, configure Stagehand with your provider, model, and API key.
 
 ```typescript
 const stagehand = new Stagehand({
@@ -176,7 +206,6 @@ const stagehand = new Stagehand({
   modelName: "openai/gpt-4.1",
   modelClientOptions: {
     apiKey: env.OPENAI_API_KEY,
-    baseURL: `https://gateway.ai.cloudflare.com/v1/${env.CLOUDFLARE_ACCOUNT_ID}/${env.AI_GATEWAY_ID}/openai`,
   },
 });
 ```
