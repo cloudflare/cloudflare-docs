@@ -9,7 +9,7 @@ head:
     content: Content compression | Brotli
 ---
 
-import { Render } from "~/components";
+import { Stream, Render } from "~/components";
 
 Cloudflare compresses content in two ways: between Cloudflare and your website visitors and between Cloudflare and your origin server.
 
@@ -17,24 +17,11 @@ Cloudflare compresses content in two ways: between Cloudflare and your website v
 
 In addition to Cloudflare's [default caching behavior](/cache/concepts/default-cache-behavior/), Cloudflare supports Gzip, Brotli, and Zstandard compression when delivering content to website visitors.
 
-```mermaid
-flowchart LR
-accTitle: Compressed responses sent to website visitor
-accDescr: Cloudflare can send responses to visitors using Gzip compression, Brotli compression, or no compression.
-
-A[Visitor browser]
-B((Cloudflare))
-C[(Origin server)]
-
-A == "Request" ==> B -.-> C
-C -.-> B == "Response<br>(Gzip / Brotli / Zstandard / No compression)" ==> A
-
-style A stroke-width: 2px
-style B stroke: orange,fill: orange,color: black
-style C stroke-dasharray: 5 5
-linkStyle 0,3 stroke-width: 2px
-linkStyle 1,2 stroke-width: 1px
-```
+<Stream
+  id="9103750883217fcb9274666fd57ebac1"
+  title="Content compression"
+  thumbnail="https://pub-d9bf66e086fb4b639107aa52105b49dd.r2.dev/Mermaid%20thumbnail_Content%20Compression.png"
+/>
 
 :::note
 Customers can enable Zstandard compression through [Compression Rules](/rules/compression-rules/).

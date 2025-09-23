@@ -2421,4 +2421,9 @@
 /ai-gateway/guardrails/* /ai-gateway/features/guardrails/:splat 301
 /ai-gateway/websockets-api/* /ai-gateway/usage/websockets-api/:splat 301
 
-
+# Containers
+/containers/image-management /containers/platform-details/image-management 301
+/containers/scaling-and-routing /containers/platform-details/scaling-and-routing 301
+/containers/architecture /containers/platform-details/architecture 301
+/containers/durable-object-methods /containers/platform-details/durable-object-methods 301
+/containers/platform-details /containers/platform-details/architecture 301

@@ -1,0 +1,27 @@
+---
+title: Access Remote Desktop Protocol (RDP) destinations securely from your browser — now generally available!
+description: Connect to internal Windows servers via a web browser — no VPN or RDP client required.
+date: 2025-09-22
+products:
+  - access
+---
+
+[Browser-based RDP](/cloudflare-one/connections/connect-networks/use-cases/rdp/rdp-browser/) with [Cloudflare Access](/cloudflare-one/policies/access/) is now generally available for all Cloudflare customers. It enables secure, remote Windows server access without VPNs or RDP clients.
+
+Since we announced our [open beta](/changelog/access/#2025-06-30), we've made a few improvements:
+- Support for targets with IPv6.
+- Support for [Magic WAN](/magic-wan/) and [WARP Connector](/cloudflare-one/connections/connect-networks/private-net/warp-connector/) as on-ramps.
+- More robust error messaging on the login page to help you if you encounter an issue.
+- Worldwide keyboard support. Whether your day-to-day is in Portuguese, Chinese, or something in between, your browser-based RDP experience will look and feel exactly like you are using a desktop RDP client.
+- Cleaned up some other miscellaneous issues, including but not limited to enhanced support for Entra ID accounts and support for usernames with spaces, quotes, and special characters.
+
+As a refresher, here are some benefits browser-based RDP provides:
+
+- **Control how users authenticate to internal RDP resources** with single sign-on (SSO), multi-factor authentication (MFA), and granular access policies.
+- **Record who is accessing which servers and when** to support regulatory compliance requirements and to gain greater visibility in the event of a security event.
+- **Eliminate the need to install and manage software on user devices**. You will only need a web browser.
+- **Reduce your attack surface** by keeping your RDP servers off the public Internet and protecting them from common threats like credential stuffing or brute-force attacks.
+
+![Example of a browser-based RDP Access application](~/assets/images/changelog/access/browser-based-rdp-access-app.png)
+
+To get started, refer to [Connect to RDP in a browser](/cloudflare-one/connections/connect-networks/use-cases/rdp/rdp-browser/).

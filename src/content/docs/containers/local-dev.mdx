@@ -2,10 +2,10 @@
 pcx_content_type: reference
 title: Local Development
 sidebar:
-  order: 3
+  order: 6
 ---
 
-You can run both your container and your Worker locally, without additional configuration, by running [`npx wrangler dev`](/workers/wrangler/commands/#dev) (or `vite dev` for Vite projects using the [Cloudflare Vite plugin](/workers/vite-plugin/)) in your project's directory.
+You can run both your container and your Worker locally by simply running [`npx wrangler dev`](/workers/wrangler/commands/#dev) (or `vite dev` for Vite projects using the [Cloudflare Vite plugin](/workers/vite-plugin/)) in your project's directory.
 
 To develop Container-enabled Workers locally, you will need to first ensure that a
 Docker compatible CLI tool and Engine are installed. For instance, you could use [Docker Desktop](https://docs.docker.com/desktop/) or [Colima](https://github.com/abiosoft/colima).
@@ -13,11 +13,15 @@ Docker compatible CLI tool and Engine are installed. For instance, you could use
 When you start a dev session, your container image will be built or downloaded. If your
 [Wrangler configuration](/workers/wrangler/configuration/#containers) sets
 the `image` attribute to a local path, the image will be built using the local Dockerfile.
-If the `image` attribute is set to a URL, the image will be pulled from the associated registry.
+If the `image` attribute is set to a URL, the image will be pulled from the Cloudflare registry.
+
+:::note
+Currently, the Cloudflare Vite-plugin does not support registry links in local development, unlike `wrangler dev`.
+As a workaround, you can create a minimal Dockerfile that uses `FROM <registry-link>`. Make sure to `EXPOSE` a port for local dev as well.
+:::
 
 Container instances will be launched locally when your Worker code calls to create
-a new container. This may happen when calling `.get()` on a `Container` instance or
-by calling `start()` if `manualStart` is set to `true`. Requests will then automatically be routed to the correct locally-running container.
+a new container. Requests will then automatically be routed to the correct locally-running container.
 
 When the dev session ends, all associated container instances should be stopped, but
 local images are not removed, so that they can be reused in subsequent builds.
@@ -25,10 +29,11 @@ local images are not removed, so that they can be reused in subsequent builds.
 :::note
 If your Worker app creates many container instances, your local machine may not be able to run as many containers concurrently as is possible when you deploy to Cloudflare.
 
+Also, `max_instances` configuration option does not apply during local development.
+
 Additionally, if you regularly rebuild containers locally, you may want to clear
 out old container images (using `docker image prune` or similar) to reduce disk used.
 
-Also note that the `max_instances` configuration option is only enforced when running in production on Cloudflare's network. This limit does not apply during local development, so you may run more instances than specified.
 :::
 
 ## Iterating on Container code

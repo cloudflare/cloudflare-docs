@@ -11,8 +11,7 @@ import { WranglerConfig, PackageManagers } from "~/components";
 
 ## Pushing images during `wrangler deploy`
 
-When running `wrangler deploy`, if you set the `image` attribute in you [Wrangler configuration](/workers/wrangler/configuration/#containers)
-file to a path, wrangler will build your container image locally using Docker, then push it to a registry run by Cloudflare.
+When running `wrangler deploy`, if you set the `image` attribute in your [Wrangler configuration](/workers/wrangler/configuration/#containers) to a path to a Dockerfile, Wrangler will build your container image locally using Docker, then push it to a registry run by Cloudflare.
 This registry is integrated with your Cloudflare account and is backed by [R2](/r2/). All authentication is handled automatically by
 Cloudflare both when pushing and pulling images.
 
@@ -33,16 +32,30 @@ Just provide the path to your Dockerfile:
 
 And deploy your Worker with `wrangler deploy`. No other image management is necessary.
 
-On subsequent deploys, Wrangler will only push image layers that have changed, which saves space and time on `wrangler deploy`
-calls after the initial deploy.
+On subsequent deploys, Wrangler will only push image layers that have changed, which saves space and time.
 
 :::note
 Docker or a Docker-compatible CLI tool must be running for Wrangler to build and push images.
+This is not necessary if you are using a pre-built image, as described below.
 :::
 
 ## Using pre-built container images
 
-If you wish to use a pre-built image, first, push it to the Cloudflare Registry:
+Currently, all images must use `registry.cloudflare.com`.
+
+:::note
+We plan to allow other image registries. Cloudflare will download your image, optionally using auth credentials,
+then cache it globally in the Cloudflare Registry.
+
+This is not yet available.
+:::
+
+If you wish to use a pre-built image, first, make sure it exists locally, then push it to the Cloudflare Registry:
+
+```
+docker pull <public-image>
+docker tag <public-image> <image>:<tag>
+```
 
 Wrangler provides a command to push images to the Cloudflare Registry:
 
@@ -52,7 +65,7 @@ Wrangler provides a command to push images to the Cloudflare Registry:
 	args="containers push <image>:<tag>"
 />
 
-Additionally, you can use the `-p` flag with `wrangler containers build` to build and push an image in one step:
+Or, you can use the `-p` flag with `wrangler containers build` to build and push an image in one step:
 
 <PackageManagers
 	type="exec"
@@ -60,14 +73,14 @@ Additionally, you can use the `-p` flag with `wrangler containers build` to buil
 	args="containers build -p -t <tag> ."
 />
 
-Then you can specify the URL in the image attribute:
+This will output an image registry URI that you can then use in your Wrangler configuration:
 
 <WranglerConfig>
 
 ```json
 {
 	"containers": {
-		"image": "registry.cloudflare.com/your-image:tag"
+		"image": "registry.cloudflare.com/your-account-id/your-image:tag"
 		// ...rest of config...
 	}
 }
@@ -75,21 +88,9 @@ Then you can specify the URL in the image attribute:
 
 </WranglerConfig>
 
-Currently, all images must use `registry.cloudflare.com`, which is the default registry for Wrangler.
-
-To use an existing image from another repo, you can pull it, tag it, then push it to the Cloudflare Registry:
-
-```bash
-docker pull <public-image>
-docker tag <public-image> <image>:<tag>
-wrangler containers push <image>:<tag>
-```
-
 :::note
-We plan to allow configuring public images directly in Wrangler config. Cloudflare will
-download your image, optionally using auth credentials, then cache it globally in the Cloudflare Registry.
-
-This is not yet available.
+Currently, the Cloudflare Vite-plugin does not support registry links in local development, unlike `wrangler dev`.
+As a workaround, you can create a minimal Dockerfile that uses `FROM <registry-link>`. Make sure to `EXPOSE` a port in local dev as well.
 :::
 
 ## Pushing images with CI

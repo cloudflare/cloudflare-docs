@@ -3,6 +3,10 @@ link: "/browser-rendering/changelog/"
 productName: Browser Rendering
 productLink: "/browser-rendering/"
 entries:
+  - publish_date: "2025-09-22"
+    title: Added `excludeExternalLinks` parameter to `/links` REST endpoint
+    description: |-
+      * Added `excludeExternalLinks` parameter when using the [`/links` endpoint](/browser-rendering/rest-api/links-endpoint/). When set to `true`, links pointing to outside the domain of the requested URL are excluded.
   - publish_date: "2025-09-02"
     title: Added `X-Browser-Ms-Used` response header
     description: |-

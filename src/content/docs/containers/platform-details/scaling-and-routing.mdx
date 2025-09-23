@@ -7,15 +7,24 @@ sidebar:
 
 ### Scaling container instances with `get()`
 
-Currently, Containers are only scaled manually by calling `BINDING.get()` with a unique ID, then
-starting the container. Unless `manualStart` is set to `true` on the Container class, each
-instance will start when `get()` is called.
+:::note
+This section uses helpers from the [Container package](/containers/container-package).
+:::
 
-```
-// gets 3 container instances
-env.MY_CONTAINER.get(idOne)
-env.MY_CONTAINER.get(idTwo)
-env.MY_CONTAINER.get(idThree)
+Currently, Containers are only scaled manually by getting containers with a unique ID, then
+starting the container. Note that that getting a container does not automatically start it.
+
+```typescript
+// get and start two container instances
+const containerOne = getContainer(
+	env.MY_CONTAINER,
+	idOne,
+).startAndWaitForPorts();
+
+const containerTwo = getContainer(
+	env.MY_CONTAINER,
+	idTwo,
+).startAndWaitForPorts();
 ```
 
 Each instance will run until its `sleepAfter` time has elapsed, or until it is manually stopped.
