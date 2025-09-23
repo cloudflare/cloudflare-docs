@@ -13,7 +13,7 @@ entries:
   - publish_date: "2025-09-23"
     title: 'New document formats supported by Markdown conversion utility'
     description: |-
-      - `.docx` and `.odt` files are supported by our Markdown conversion utility, `toMarkdown`.
+      - `.docx` and `.odt` files are supported by our Markdown conversion utility, [`toMarkdown`](/workers-ai/features/markdown-conversion/).
   - publish_date: "2025-09-18"
     title: Model Catalog updates (types, EmbeddingGemma, model deprecation)
     description: |-
