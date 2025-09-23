@@ -591,7 +591,11 @@ These selectors depend on the `Content-Type` header being present in the request
 
 ### DLP Profile
 
-Scans HTTP traffic for the presence of social security numbers and other PII. You must configure the DLP Profile before you can use this selector in your policy. For more information, refer to our [DLP Profile](/cloudflare-one/policies/data-loss-prevention/) documentation.
+Use [Cloudflare Data Loss Prevention (DLP)](/cloudflare-one/policies/data-loss-prevention/) to scan HTTP traffic for the presence of sensitive data such as personally identifiable information (PII) or source code. You must configure a [DLP profile](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/) before you can use this selector in a policy.
+
+| UI name     | API example                                                          |
+| ----------- | -------------------------------------------------------------------- |
+| DLP Profile | `any(dlp.profiles[*] in {\"a0cabf16-7491-4c9a-ac02-f64cabc66394\"})` |
 
 ### Host
 
