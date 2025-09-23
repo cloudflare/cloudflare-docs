@@ -15,13 +15,13 @@ All fields listed in [Datasets](/logs/logpush/logpush-job/datasets/) for the [su
 
 Log Explorer performs best when query parameters focus on narrower ranges of time. You may experience query timeouts when your query would return a large quantity of data. Consider refining your query to improve performance.
 
-### Why don't I see any logs in my queries after enabling the dataset?
+### Why do I not see any logs in my queries after enabling the dataset?
 
 Log Explorer starts ingesting logs from the moment you enable the dataset. It will not display logs for events that occurred before the dataset was enabled. Make sure that new events have been generated since enabling the dataset, and check again.
 
 ### My query returned an error. How do I figure out what went wrong?
 
-We are actively working on improving error codes. If you receive a generic error, check your SQL syntax (if you are using the custom SQL feature), make sure you have included a date and a limit. If the query still fails it is likely timing out. Try refining your filters.
+We are actively working on improving error codes. If you receive a generic error, check your SQL syntax (if you are using the custom SQL feature), and make sure you have included a date and a limit. If the query still fails it is likely timing out. Try refining your filters.
 
 ### Where is the data stored?
 
@@ -29,7 +29,7 @@ The data is stored in Cloudflare R2. Each Log Explorer dataset is stored on a pe
 
 ### Does Log Explorer support Customer Metadata Boundary?
 
-Customer metadata boundary is currently not supported for Log Explorer.
+Customer Metadata Boundary is currently not supported for Log Explorer.
 
 ### Are there any constraints on the log volume that Log Explorer can support?
 
