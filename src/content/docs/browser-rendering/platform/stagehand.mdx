@@ -34,8 +34,6 @@ https://<your-worker>.workers.dev
 
 #### 1. Set up your project
 
-???DON'T THEY NEED TO INSRALL BROWSERBASE STAGEHAND TOO?
-
 Install the necessary dependencies:
 	```bash
 	npm ci
@@ -172,8 +170,6 @@ You can use AI Gateway with both Workers AI and third-party models.
 
 To use AI Gateway, first create a gateway in the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers/ai-gateway), then add the `baseURL` as shown below. 
 
-???I SWITCHED THE ORDER AROUND. WE SHOULD FIRST SHOW AI GATEWAY WHILE STILL USING WORKERS AI
-
 ```typescript
 const stagehand = new Stagehand({
   env: "LOCAL",
@@ -188,8 +184,6 @@ const stagehand = new Stagehand({
 ## Use a custom model
 
 You can configure Stagehand to use models from third-party providers, including OpenAI or Anthropic, by providing your own credentials.
-
-???DOES THIS ONLY WORK WITH CERTAIN PROVIDERS? ONLY MODELS THAT AIGATEWAY SUPPORTS?
 
 In this example, you will configure Stagehand to use [OpenAI](https://openai.com/). You will need an OpenAI API key. Cloudflare recommends storing your API key as a [secret](/workers/configuration/secrets/).
 
