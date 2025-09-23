@@ -1,0 +1,93 @@
+---
+title: AI Vibe Coding Platform
+pcx_content_type: reference-architecture-diagram
+products:
+  - Workers for Platforms
+  - AI Gateway
+sidebar:
+  order: 0
+  label: AI Vibe Coding Platform
+updated: 2025-08-28
+description: Cloudflare's low-latency, fully serverless compute platform, Workers offers powerful capabilities to enable A/B testing using a server-side implementation.
+---
+
+## Introduction
+
+An AI-powered coding platform (sometimes referred to as a [“vibe coding”](https://www.cloudflare.com/learning/ai/ai-vibe-coding/) platform) enables users to build applications by describing what they want in natural language. These platforms allow anyone to build applications by handling everything from code generation, testing and debugging, to project deployment. 
+
+Building the infrastructure for such a platform introduces a unique set of challenges. AI-generated code is inherently untrusted and must be executed in a secure, sandbox to prevent abuse and ensure isolation between users. To support rapid, conversational development, the platform must provide near-instantaneous feedback loops with live previews and real-time debugging. Finally, the platform needs a way to deploy and host the thousands or millions of applications its users will create, without running up the costs of traditional server infrastructure.
+
+Cloudflare has all the components required to build one of these platforms — from middleware that connects to AI models, to secure sandboxes for code execution, and a serverless deployment platform that scales to millions of applications.
+
+![Figure 1: AI Vibe Coding Platform on Cloudflare](~/assets/images/reference-architecture/ai-vibe-coding/cf-vibe-plat.svg)
+
+To get started with a reference implementation of an AI vibe coding platform immediately, deploy this [starter template](https://github.com/cloudflare/vibesdk) to your Cloudflare account:
+
+[![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/vibesdk)
+
+## Core Architecture Components
+
+![Figure 2: Vibe Hosting Overview](~/assets/images/reference-architecture/ai-vibe-coding/vibe-hosting-overview.svg)
+
+To build an AI-powered coding platform, you will need these key components:
+- **AI for Code Generation:** Integrate with AI models to interpret user prompts and automatically generate code.
+- **Secure Execution Sandbox:**  Provide a secure, isolated environment where users can instantly run and test untrusted, AI-generated code.
+- **Scalable Application Deployment :** Deploy and host AI-generated applications at scale.
+- **Analytics & Observability:** Collect logs and metrics to monitor AI usage, application performance, and platform costs.
+
+## AI Integration and Code generation
+
+#### Connecting to AI Providers for Code Generation
+
+The first step is processing a user's natural language prompt and securely routing it to an AI model to generate code. 
+
+When using various AI providers, you need visibility into costs, the ability to cache responses to reduce expenses, and failover capabilities to ensure reliability. [AI Gateway](/ai-gateway/) acts as a unified control point between your platform and AI providers to deliver these capabilities, enabling: 
+- A [unified access point](/ai-gateway/usage/chat-completion/) to route requests across LLM providers, allowing you to use [models](/workers-ai/models/) from a range of providers (OpenAI, Anthropic, Google, and others)
+- [Caching](/ai-gateway/features/caching/) for popular responses, so when someone asks to "build a todo list app", the gateway can serve a cached response instead of going to the provider (saving inference costs)
+- [Observability](/ai-gateway/observability/analytics/) into the requests, tokens used, and response times across all providers in one place
+- [Cost tracking](/ai-gateway/observability/costs/) across AI providers
+
+#### Making your AI better at building on Cloudflare
+
+If you’re building an AI code generator and want it to be more knowledgeable about how to best build applications on Cloudflare, there are two tools we recommend using: 
+- **[Cloudflare Workers Prompt](/workers/get-started/prompting/#build-workers-using-a-prompt):** Structured prompt with examples that teach AI models about Cloudflare's APIs, configuration patterns, and best practices. Include these in your AI system for higher quality code output.
+- **[Cloudflare’s Documentation MCP server](https://github.com/cloudflare/mcp-server-cloudflare/tree/main/apps/docs-vectorize):**  If your AI tool supports [Model Context Protocol (MCP)](/agents/model-context-protocol/), connect it to Cloudflare's documentation MCP server to get up-to-date knowledge about Cloudflare’s platform. 
+
+## Development environment for executing AI-generated code
+
+Both [Sandboxes](/changelog/2025-06-24-announcing-sandboxes/) and [Containers](/containers/) provide secure, isolated environments for executing untrusted AI-generated code. They offer:
+- **Strong isolation and sandboxing controls** to prevent malicious or buggy code from affecting other instances
+- **Fast startup times** to enable rapid iteration cycles with real-time feedback
+- **Real-time output streaming** of logs and results for live progress updates and debugging
+- **Preview URLs** to allow users to test applications during development
+- **Global edge deployment** on Cloudflare's network for low-latency execution worldwide
+
+**Sandboxes provide a fully-managed solution** that works out-of-the-box, with [pre-built APIs](/changelog/2025-08-05-sandbox-sdk-major-update/) for code execution, output formatting, and developer tools, making them ideal for most AI code execution use cases.
+
+![Figure 3: Vibe Code Development - Sandbox SDK](~/assets/images/reference-architecture/ai-vibe-coding/ai-platform-sandbox.svg)
+
+**Containers offer complete runtime control** through custom Docker images, allowing you to run any language or framework with up to 4GB RAM and dedicated vCPU and are best when you need custom runtimes or resource-intensive workloads.
+
+![Figure 4: Isolated Containers](~/assets/images/reference-architecture/ai-vibe-coding/BYO-sandbox.svg)
+
+## Deploying applications to production
+
+When building an AI-powered coding platform, you need to be able to deploy and host the thousands to millions of applications that the platform will generate.
+
+[Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) provides this infrastructure by enabling you to deploy unlimited applications, with each application running in its own isolated Worker instance, preventing one application from impacting others. 
+
+**With Workers for Platforms, you get:**
+- **Isolation and multitenancy** — every application runs in its own dedicated Worker, a secure and isolated sandbox environment
+- **Egress control and usage limits** — Configure firewall policies for all outgoing requests through an [outbound worker](/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/) and [custom usage limits](/cloudflare-for-platforms/workers-for-platforms/configuration/custom-limits/) to prevent abuse
+- **Dedicated resources per project:** Attach a KV store or database to each application, enabling more powerful functionality while ensuring [resources](/cloudflare-for-platforms/workers-for-platforms/get-started/bindings/) are only accessible by the application they’re attached to.
+- **Logging & Observability** across the platform to gather insights, monitor performance, and troubleshoot issues across applications 
+
+![Figure 5: Complete Vibe Coding Platform](~/assets/images/reference-architecture/ai-vibe-coding/vibe-hosting-analytics.svg)
+
+## Conclusion
+
+Cloudflare provides a complete set of services needed for building AI-powered platforms that need to run, test, and deploy untrusted code at scale. 
+
+Cloudflare has a template AI vibe coding platform that you can deploy, so you can get started with a complete example that handles everything from code generation, sandboxes development with a preview environment, and integration with Workers for Platforms for deploying and hosting the applications at scale. 
+
+[![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/vibesdk)
