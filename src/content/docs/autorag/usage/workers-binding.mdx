@@ -36,7 +36,7 @@ This method searches for relevant results from your data source and generates a 
 ```js
 const answer = await env.AI.autorag("my-autorag").aiSearch({
 	query: "How do I train a llama to deliver coffee?",
-	model: "@cf/meta/llama-3.3-70b-instruct-sd",
+	model: "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
 	rewrite_query: true,
 	max_num_results: 2,
 	ranking_options: {

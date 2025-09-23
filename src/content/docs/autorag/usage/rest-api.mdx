@@ -44,7 +44,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/autorag/rags/{AU
 -H "Authorization: Bearer {API_TOKEN}" \
 -d '{
 	"query": "How do I train a llama to deliver coffee?",
-	"model": @cf/meta/llama-3.3-70b-instruct-sd,
+	"model": @cf/meta/llama-3.3-70b-instruct-fp8-fast,
 	"rewrite_query": false,
 	"max_num_results": 10,
 	"ranking_options": {
