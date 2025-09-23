@@ -28,15 +28,15 @@ Pages are visited, according to the `<priority>` attribute set on the sitemaps, 
 
 ## How to set WAF rules to allowlist AutoRAG crawler
 
-If you have Security rules configured to block bot activity, you can add a rule to allowlist AutoRAG's crawler bot. 
+If you have Security rules configured to block bot activity, you can add a rule to allowlist AutoRAG's crawler bot.
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
 2. Go to **Security** > **Security rules**.
 3. To create a new empty rule, select **Create rule** > **Custom rules**.
-4. Enter a descriptive name for the rule in **Rule name**, for example, "Allow AutoRAG"
-5. Under **When incoming requests match**, use the **Field** drop-down list to choose **Bot Detection ID**. For Operator select equals, and for the Value enter `122933950`.
-6. Under **Then take action**, select the rule action in the **Choose action** dropdown to be **Skip**. 
-7. Under **Place at**, select the order of the rule in the **Select order** dropdown to be **First**. Setting the order as First allows this rule to be applied before subsequent rules.
+4. Enter a descriptive name for the rule in **Rule name**, such as `Allow AutoRAG`.
+5. Under **When incoming requests match**, use the **Field** drop-down list to choose _Bot Detection ID_. For **Operator**, select _equals_. For **Value**, enter `122933950`.
+6. Under **Then take action**, in the **Choose action** dropdown, choose _Skip_. 
+7. Under **Place at**, select the order of the rule in the **Select order** dropdown to be _First_. Setting the order as _First_ allows this rule to be applied before subsequent rules.
 8. To save and deploy your rule, select **Deploy**.
 
 ## Parsing options
