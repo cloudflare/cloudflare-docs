@@ -150,7 +150,7 @@ This Worker instantiates a browser using Puppeteer, opens a new page, navigates 
 
 If your Worker is running in production, it will store the screenshot to the production KV namespace. If you are running `wrangler dev`, it will store the screenshot to the dev KV namespace.
 
-If the same `"url"` is requested again, it will use the cached version in KV instead, unless it expired.
+If the same `url` is requested again, it will use the cached version in KV instead, unless it expired.
 
 ## 6. Test
 
