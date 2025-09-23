@@ -10,6 +10,10 @@ entries:
       - [`@cf/pfnet/plamo-embedding-1b`](/workers-ai/models/plamo-embedding-1b) creates embeddings from Japanese text.
       - [`@cf/aisingapore/gemma-sea-lion-v4-27b-it`](/workers-ai/models/gemma-sea-lion-v4-27b-it) is a fine-tuned model that supports multiple South East Asian languages, including Burmese, English, Indonesian, Khmer, Lao, Malay, Mandarin, Tagalog, Tamil, Thai, and Vietnamese.
       - [`@cf/ai4bharat/indictrans2-en-indic-1B`](/workers-ai/models/indictrans2-en-indic-1B) is a translation model that can translate between 22 indic languages, including Bengali, Gujarati, Hindi, Tamil, Sanskrit and even traditionally low-resourced languages like Kashmiri, Manipuri and Sindhi. 
+  - publish_date: "2025-09-23"
+    title: 'New document formats supported by Markdown conversion utility'
+    description: |-
+      - `.docx` and `.odt` files are supported by our Markdown conversion utility, `toMarkdown`.
   - publish_date: "2025-09-18"
     title: Model Catalog updates (types, EmbeddingGemma, model deprecation)
     description: |-
