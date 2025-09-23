@@ -23,7 +23,4 @@ binding = "VENDORED_MARKDOWN"
 bucket_name = "vendored-markdown"
 
 [observability]
-enabled = false
-
-[observability.traces]
-enabled = false
+enabled = true
