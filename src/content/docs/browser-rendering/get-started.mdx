@@ -14,15 +14,15 @@ There are two ways to use Browser Rendering:
 
 This guide will help you choose the right path for your needs and get you started with your first Browser Rendering project.
 
-# REST API
+## REST API
 
 The REST API is best for situations where you have an existing application and want to perform simple, stateless browser actions.
 
-## Prerequisites
+### Prerequisites
 - Sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages).
 - Create a [Cloudflare API Token](/fundamentals/api/get-started/create-token/) with `Browser Rendering - Edit` permissions.
 
-## Example: Take a screenshot of the Cloudflare homepage
+### Example: Take a screenshot of the Cloudflare homepage
 
 <Render
   file="example-screenshot-from-url"
@@ -35,21 +35,21 @@ The REST API can also be used to:
 - [Generate a PDF](/browser-rendering/rest-api/pdf-endpoint/)
 - [and more...](/browser-rendering/rest-api/)
 
-# Workers Bindings
+## Workers Bindings
 
 Workers Bindings are best for situations where you need to build more complex, multi-step browser automation workflows. You can use familiar tools like [Puppeteer](/browser-rendering/platform/puppeteer/) and [Playwright](/browser-rendering/platform/playwright/).
 
 ### Prerequisites
 <Render file="prereqs" product="workers" />
 
-## Example: Navigate to a URL, take a screenshot, and store in KV
+### Example: Navigate to a URL, take a screenshot, and store in KV
 
 <Render
   file="example-workers-binding-screenshots-from-web"
   product="browser-rendering"
 />
 
-# Next Steps
+## Next Steps
 If you have any feature requests or notice any bugs, share your feedback directly with the Cloudflare team by joining the [Cloudflare Developers community on Discord](https://discord.cloudflare.com/).
 
 - Check out all the [REST API endpoints](/browser-rendering/rest-api/)
