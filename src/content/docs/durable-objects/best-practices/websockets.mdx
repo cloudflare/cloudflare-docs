@@ -172,9 +172,9 @@ The following are methods available on the **Native Durable Object WebSocket API
 
 - <code>{" "}serializeAttachment(value <Type text="any" />)</code>: <Type text="void" />
 
-  - Keeps a copy of `value` associated with the WebSocket to survive hibernation. The value can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm), which is true of most types. If the value needs to be durable please use [Durable Object Storage](/durable-objects/api/storage-api/).
+  - Keeps a copy of `value` associated with the WebSocket to survive hibernation. The value can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm), which is true of most types. If the value needs to be durable please use [Durable Object Storage](/durable-objects/api/sqlite-storage-api/).
 
-  - If you modify `value` after calling this method, those changes will not be retained unless you call this method again. The serialized size of `value` is limited to 2,048 bytes, otherwise this method will throw an error. If you need larger values to survive hibernation, use the [Storage API](/durable-objects/api/storage-api/) and pass the corresponding key to this method so it can be retrieved later.
+  - If you modify `value` after calling this method, those changes will not be retained unless you call this method again. The serialized size of `value` is limited to 2,048 bytes, otherwise this method will throw an error. If you need larger values to survive hibernation, use the [Storage API](/durable-objects/api/sqlite-storage-api/) and pass the corresponding key to this method so it can be retrieved later.
 
 #### `WebSocket.deserializeAttachment()`
 

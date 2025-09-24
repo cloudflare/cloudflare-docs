@@ -5,7 +5,7 @@ sidebar:
   order: 3
 ---
 
-import { APIRequest, Render, Steps } from "~/components";
+import { APIRequest, Render, Steps, DashButton } from "~/components";
 
 ## In the dashboard
 
@@ -13,27 +13,29 @@ import { APIRequest, Render, Steps } from "~/components";
 
 <Steps>
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
-2. Go to **Rules** > **Overview**.
-3. Select **Create rule** > **Custom Error Rule**.
-4. Enter a descriptive name for the rule in **Rule name**.
-5. Under **If incoming requests match**, select one of the following options:
+1. In the Cloudflare dashboard, go to the Rules **Overview** page.
+
+   <DashButton url="/?to=/:account/:zone/rules/overview" />
+
+2. Select **Create rule** > **Custom Error Rule**.
+3. Enter a descriptive name for the rule in **Rule name**.
+4. Under **If incoming requests match**, select one of the following options:
    - **Custom filter expression**: The rule will only apply to traffic matching a custom expression. Define the [rule expression](/ruleset-engine/rules-language/expressions/edit-expressions/) to configure which requests should be rewritten. Use either the Expression Builder or the Expression Editor to define the custom expression. For more information, refer to [Edit expressions in the dashboard](/ruleset-engine/rules-language/expressions/edit-expressions/).
 
    - **All incoming requests**: The rule will apply to all responses with a `400` status code or above, except for block and challenge actions issued by Cloudflare’s security products.
 
-6. In **Deliver a custom error response**, select the response type (either _Custom error asset_ or one of the available inline responses).
+5. In **Deliver a custom error response**, select the response type (either _Custom error asset_ or one of the available inline responses).
 
    If you select _Custom error asset_, select an existing custom error asset in **Asset**, or select **Create new asset** to [create a new custom error asset](#create-a-custom-error-asset-dashboard).
 
    If you select _JSON response_, _HTML response_, _Text response_, or _XML response_, enter the custom error response you want to send to web site visitors in **JSON response**, **HTML response**, **Text response**, or **XML response**, respectively.
    The response can include [error tokens](/rules/custom-errors/reference/error-tokens/) that Cloudflare will replace with real values before sending the response to the visitor. The maximum response size is 10 KB.
 
-7. (Optional) In **Response code**, enter the HTTP status code of the response (an integer value between `400` and `999`). If provided, this value will override the current response status code.
+6. (Optional) In **Response code**, enter the HTTP status code of the response (an integer value between `400` and `999`). If provided, this value will override the current response status code.
 
-8. (Optional) Under **Place at**, define where to place the rule in the rules list: first rule in the list, last rule in the list, or in a custom position (after a given rule).
+7. (Optional) Under **Place at**, define where to place the rule in the rules list: first rule in the list, last rule in the list, or in a custom position (after a given rule).
 
-9. To save and deploy your rule, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
+8. To save and deploy your rule, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
 
 </Steps>
 

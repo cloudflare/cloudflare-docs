@@ -2,10 +2,9 @@
 {}
 ---
 
-The Durable Object Storage API comes with several methods, including [SQL API](/durable-objects/api/storage-api/#sql-api), [point-in-time-recovery (PITR) API](/durable-objects/api/storage-api/#pitr-point-in-time-recovery-api), and [key-value (KV) API](/durable-objects/api/storage-api/#kv-api).
+The Durable Object Storage API comes with several methods, including [SQL API](/durable-objects/api/sqlite-storage-api/#sql-api), [point-in-time-recovery (PITR) API](/durable-objects/api/sqlite-storage-api/#pitr-point-in-time-recovery-api), and [key-value (KV) API](/durable-objects/api/sqlite-storage-api/#synchronous-kv-api).
 
-- Durable Object classes with the recommended, [SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#sqlite-storage-backend) can use SQL API, PITR API, and KV API. KV API methods like `get()`, `put()`, `delete()`, or `list()` store data in a hidden SQLite table.
-- Specifically for Durable Object classes with SQLite storage backend, KV operations which were previously asynchronous (for example, [`get`](/durable-objects/api/storage-api/#get), [`put`](/durable-objects/api/storage-api/#put), [`delete`](/durable-objects/api/storage-api/#delete), [`deleteAll`](/durable-objects/api/storage-api/#deleteall), [`list`](/durable-objects/api/storage-api/#list)) are synchronous, even though they return promises. These methods will have completed their operations before they return the promise.
+- Durable Object classes with the recommended [SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#sqlite-storage-backend) can use SQL API, PITR API, and KV API. KV API methods like `get()`, `put()`, `delete()`, or `list()` store data in a hidden SQLite table.
 - Durable Objects gain access to a persistent KV Durable Object Storage API via the `DurableObjectStorage` interface and accessed by the `DurableObjectState::storage` property. This is frequently accessed via `this.ctx.storage` when the `ctx` parameter passed to the Durable Object constructor.
 - Durable Object classes with the key-value storage backend can only use KV API.
 

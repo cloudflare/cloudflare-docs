@@ -13,7 +13,7 @@ Our connector, `cloudflared`, was designed to be lightweight and flexible enough
 
 For most use cases, we recommend the following baseline configuration:
 
-- Run a [`cloudflared` replica](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-availability/#cloudflared-replicas) on two dedicated host machines per network location. Using two hosts enables server-side redundancy and traffic balancing.
+- Run a [`cloudflared` replica](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-availability/#cloudflared-replicas) on two dedicated host machines per network location. Using two hosts enables server-side redundancy.
 - Size each host with minimum 4GB of RAM and 4 CPU cores.
 - Allocate 50,000 [ports](#number-of-ports) to the `cloudflared` process on each host.
 

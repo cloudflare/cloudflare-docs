@@ -7,7 +7,7 @@ sidebar:
   label: URL forwarding
 ---
 
-import { Render, Steps } from "~/components";
+import { Render, Steps, DashButton } from "~/components";
 
 Page Rules allow you to forward or redirect traffic to a different URL, though they are just one of the [options provided by Cloudflare](/fundamentals/reference/redirects/).
 
@@ -21,14 +21,16 @@ To configure URL forwarding or redirects using Page Rules:
 
 <Steps>
 
-1. Log in to your [Cloudflare account](https://dash.cloudflare.com), and select your account and domain.
-2. Go to **Rules** > **Page Rules**.
-3. Under **Page Rules**, select **Create Page Rule**.
-4. Under **If the URL matches**, enter the URL or URL pattern that should match the rule.
-5. In **Pick a Setting**, choose **Forwarding URL** from the drop-down menu.
-6. For **Select status code**, choose _301 - Permanent Redirect_ or _302 - Temporary Redirect_.
-7. Enter the destination URL.
-8. Select **Save and Deploy Page Rule**.
+1. In the Cloudflare dashboard, go to the **Page Rules** page.
+
+   <DashButton url="/?to=/:account/:zone/rules/page-rules" />
+
+2. Select **Create Page Rule**.
+3. Under **If the URL matches**, enter the URL or URL pattern that should match the rule.
+4. In **Pick a Setting**, choose **Forwarding URL** from the drop-down menu.
+5. For **Select status code**, choose _301 - Permanent Redirect_ or _302 - Temporary Redirect_.
+6. Enter the destination URL.
+7. Select **Save and Deploy Page Rule**.
 
 </Steps>
 

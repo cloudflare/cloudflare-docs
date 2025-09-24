@@ -532,7 +532,7 @@
 /durable-objects/api/hibernatable-websockets-api/ /durable-objects/best-practices/websockets/ 301
 /durable-objects/api/alarms-in-durable-objects/ /durable-objects/api/alarms/ 301
 /durable-objects/api/websockets/ /durable-objects/best-practices/websockets/ 301
-/durable-objects/api/sql-storage/ /durable-objects/api/storage-api/ 301
+/durable-objects/api/sql-storage/ /durable-objects/api/sqlite-storage-api/ 301
 /durable-objects/platform/data-location/ /durable-objects/reference/data-location/ 301
 /durable-objects/platform/environments/ /durable-objects/reference/environments/ 301
 /durable-objects/platform/troubleshooting/ /durable-objects/observability/troubleshooting/ 301
@@ -547,7 +547,7 @@
 /durable-objects/reference/error-handling/ /durable-objects/best-practices/error-handling/ 301
 /durable-objects/reference/troubleshooting/ /durable-objects/observability/troubleshooting/ 301
 /durable-objects/reference/websockets/ /durable-objects/best-practices/websockets/ 301
-/durable-objects/api/transactional-storage-api/ /durable-objects/api/storage-api/ 301
+/durable-objects/api/transactional-storage-api/ /durable-objects/api/sqlite-storage-api/ 301
 /durable-objects/platform/changelog/ /durable-objects/release-notes/ 301
 /durable-objects/changelog/ /durable-objects/release-notes/ 301
 /durable-objects/glossary/ /durable-objects/reference/glossary/ 301
