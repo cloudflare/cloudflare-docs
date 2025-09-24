@@ -29,9 +29,9 @@ When you connect a domain, the crawler looks for your website’s sitemap to det
 
 Pages are visited, according to the `<priority>` attribute set on the sitemaps, if this field is defined.
 
-## How to set WAF rules to allowlist AutoRAG crawler
+## How to set WAF rules to allowlist the crawler
 
-If you have Security rules configured to block bot activity, you can add a rule to allowlist AutoRAG's crawler bot.
+If you have Security rules configured to block bot activity, you can add a rule to allowlist the crawler bot.
 
 <Steps>
 1. In the Cloudflare dashboard, go to the **Security rules** page of your account and domain.
@@ -39,7 +39,7 @@ If you have Security rules configured to block bot activity, you can add a rule 
      <DashButton url="/?to=/:account/:zone/security/security-rules" />
 
 2. To create a new empty rule, select **Create rule** > **Custom rules**.
-3. Enter a descriptive name for the rule in **Rule name**, such as `Allow AutoRAG`.
+3. Enter a descriptive name for the rule in **Rule name**, such as `Allow AI Search`.
 4. Under **When incoming requests match**, use the **Field** drop-down list to choose _Bot Detection ID_. For **Operator**, select _equals_. For **Value**, enter `122933950`.
 5. Under **Then take action**, in the **Choose action** dropdown, choose _Skip_.
 6. Under **Place at**, select the order of the rule in the **Select order** dropdown to be _First_. Setting the order as _First_ allows this rule to be applied before subsequent rules.
