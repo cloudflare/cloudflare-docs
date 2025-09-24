@@ -200,17 +200,18 @@ import { env } from "cloudflare:workers";
 import { acquire, connect } from "@cloudflare/playwright";
 
 async function reuseSameSession() {
-  // acquires a new session
+	// acquires a new session
 	const { sessionId } = await acquire(env.BROWSER);
 
-  for (let i = 0; i < 5; i++) {
-  // connects to the session that was previously acquired  
-	const browser = await connect(env.BROWSER, sessionId);
-  
-    // ...
-  
-    await browser.close();
-  }
+	for (let i = 0; i < 5; i++) {
+		// connects to the session that was previously acquired  
+		const browser = await connect(env.BROWSER, sessionId);
+
+		// ...
+
+		// this will disconnect the browser from the session, but the session will be kept alive
+		await browser.close();
+	}
 }
 ```
 
@@ -309,11 +310,9 @@ The full Playwright API can be found at the [Playwright API documentation](https
 
 The following capabilities are not yet fully supported, but we’re actively working on them:
 
-- [API Testing](https://playwright.dev/docs/api-testing)
 - [Playwright Test](https://playwright.dev/docs/test-configuration) except [Assertions](https://playwright.dev/docs/test-assertions)
 - [Components](https://playwright.dev/docs/test-components)
 - [Firefox](https://playwright.dev/docs/api/class-playwright#playwright-firefox), [Android](https://playwright.dev/docs/api/class-android) and [Electron](https://playwright.dev/docs/api/class-electron), as well as different versions of Chrome
-- [Network](https://playwright.dev/docs/next/network#network)
 - [Videos](https://playwright.dev/docs/next/videos)
 
 This is **not an exhaustive list** — expect rapid changes as we work toward broader parity with the original feature set. You can also check [latest test results](https://playwright-full-test-report.pages.dev/) for a granular up to date list of the features that are fully supported.
