@@ -1,4 +1,4 @@
----
+Stagehand lets you combine code with natural-language instructions powered by AI, eliminating the need to dictate exact steps or specify selectors. With Stagehand, your agents are more resilient to website changes and easier to maintain, helping you build more reliably and flexibly.br---
 pcx_content_type: concept
 title: Stagehand
 description: Deploy a Stagehand server that uses Browser Rendering to provide browser automation capabilities to your agents.
@@ -16,7 +16,7 @@ import {
 	Details,
 } from "~/components";
 
-[Stagehand](https://www.stagehand.dev/) is an open-source, AI-powered browser automation library. Rather than dictating exact steps or specifying selectors, Stagehand enables developers to build more reliably and flexibly by combining code with natural-language instructions powered by AI. This makes your agents more resilient to website changes and easier to maintain.
+[Stagehand](https://www.stagehand.dev/) is an open-source, AI-powered browser automation library. Stagehand lets you combine code with natural-language instructions powered by AI, eliminating the need to dictate exact steps or specify selectors. With Stagehand, your agents are more resilient to website changes and easier to maintain, helping you build more reliably and flexibly.
 
 This guide shows you how to deploy a [Worker](/workers/) that uses Stagehand, Browser Rendering, and [Workers AI](/workers-ai/) to automate a web task.
 
@@ -167,7 +167,7 @@ https://<your-worker>.workers.dev
 
 [AI Gateway](/ai-gateway/) is a service that adds observability to your AI applications. By routing your requests through AI Gateway, you can monitor and debug your AI applications.
 
-To use AI Gateway, first create a gateway in the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers/ai-gateway). In this example, we've named the gateway `stagehand-example-gateway`.
+To use AI Gateway with a third-party model, first create a gateway in the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers/ai-gateway). In this example, we've named the gateway `stagehand-example-gateway`.
 
 ```typescript
 const stagehand = new Stagehand({
