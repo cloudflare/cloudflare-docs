@@ -64,9 +64,15 @@ Here, we've placed a `docId` property in `ctx.props`. The `DocumentApi` class co
 
 ## `exports`
 
+:::note[Compatibility flag required]
+
+To use `ctx.exports`, you must use [the `enable_ctx_exports` compatibility flag](/workers/configuration/compatibility-flags#enable-ctxexports).
+
+:::
+
 `ctx.exports` provides automatically-configured "loopback" bindings for all of your top-level exports.
 
-* For each top-level exports that `extends WorkerEntrypoint` (or simply implements a fetch handler), `ctx.exports` automatically contains a [Service Binding](/workers/runtime-apis/bindings/service-bindings).
+* For each top-level export that `extends WorkerEntrypoint` (or simply implements a fetch handler), `ctx.exports` automatically contains a [Service Binding](/workers/runtime-apis/bindings/service-bindings).
 * For each top-level export that `extends DurableObject` (and which has been configured with storage via a [migration](https://developers.cloudflare.com/durable-objects/reference/durable-objects-migrations/)), `ctx.exports` automatically contains a [Durable Object namespace binding](https://developers.cloudflare.com/durable-objects/api/namespace/).
 
 For example:
