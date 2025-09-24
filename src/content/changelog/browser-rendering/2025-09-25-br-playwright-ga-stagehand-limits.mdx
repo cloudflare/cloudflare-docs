@@ -13,8 +13,6 @@ We’re shipping three updates to Browser Rendering.
 
 To get started with Stagehand, check out this [example guide](/browser-rendering/platform/stagehand/) that uses Stagehand and [Workers AI](/workers-ai/) to search for a movie on [The Movie Database](https://www.themoviedb.org/), extract its details using natural language (title, year, rating, duration, and genre), and return the information along with a screenshot of the webpage.
 
-![Stagehand video](~/assets/images/browser-rendering//stagehand.gif)
-
 ```ts title="Stagehand example"
 const stagehand = new Stagehand({
 	env: "LOCAL",
@@ -51,3 +49,5 @@ let movieInfo = await page.extract({
 
 await stagehand.close();
 ```
+
+![Stagehand video](~/assets/images/browser-rendering//stagehand.gif)
