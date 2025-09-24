@@ -19,7 +19,7 @@ import {
 
 This guide shows you how to deploy a Worker that uses Stagehand, Browser Rendering, and [Workers AI](/workers-ai/) to automate a web task.
 
-## Use Stagehand in a Worker
+## Use Stagehand in a Worker with Workers AI
 
 In this example, you will use Stagehand to search for a movie on [The Movie Database](https://www.themoviedb.org/), extract its details (title, year, and director), and return the information along with a screenshot of the webpage.
 
@@ -153,26 +153,25 @@ https://<your-worker>.workers.dev
 	npm run deploy
 	```
 
-## Use Cloudflare AI Gateway
+## Use Cloudflare AI Gateway with Workers AI
 
 [AI Gateway](/ai-gateway/) is a service that adds observability to your AI applications. By routing your requests through AI Gateway, you can monitor and debug your AI applications.
 
-You can use AI Gateway with both Workers AI and third-party models. 
-
-To use AI Gateway, first create a gateway in the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers/ai-gateway), then add the `baseURL` as shown below. 
+To use AI Gateway, first create a gateway in the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers/ai-gateway). In this example, we've named the gateway `stagehand-example-gateway`. 
 
 ```typescript
 const stagehand = new Stagehand({
-  env: "LOCAL",
-  localBrowserLaunchOptions: { cdpUrl: endpointURLString(env.BROWSER) },
-  modelName: "openai/gpt-4.1",
-  modelClientOptions: {
-    baseURL: `https://gateway.ai.cloudflare.com/v1/${env.CLOUDFLARE_ACCOUNT_ID}/${env.AI_GATEWAY_ID}/openai`,
-  },
-});
+        env: "LOCAL",
+        localBrowserLaunchOptions: { cdpUrl },
+        llmClient: new WorkersAIClient(env.AI, {
+          gateway: {
+            id: "stagehand-example-gateway"
+          }
+        }),
+      });
 ```
 
-## Use third-party model
+## Use a third-party model
 
 If you'd like to use a model outside of Workers AI, you can configure Stagehand to use models from supported [third-party providers](https://docs.stagehand.dev/configuration/models#supported-providers), including OpenAI and Anthropic, by providing your own credentials.
 
@@ -191,6 +190,23 @@ const stagehand = new Stagehand({
   modelName: "openai/gpt-4.1",
   modelClientOptions: {
     apiKey: env.OPENAI_API_KEY,
+  },
+});
+```
+
+## Use Cloudflare AI Gateway with a third-party model
+
+[AI Gateway](/ai-gateway/) is a service that adds observability to your AI applications. By routing your requests through AI Gateway, you can monitor and debug your AI applications.
+
+To use AI Gateway, first create a gateway in the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers/ai-gateway). In this example, we are using [OpenAI with AI Gateway](https://developers.cloudflare.com/ai-gateway/usage/providers/openai/). Make sure to add the `baseURL` as shown below, with your own Account ID and Gateway ID.   
+
+```typescript
+const stagehand = new Stagehand({
+  env: "LOCAL",
+  localBrowserLaunchOptions: { cdpUrl: endpointURLString(env.BROWSER) },
+  modelName: "openai/gpt-4.1",
+  modelClientOptions: {
+    baseURL: `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai`,
   },
 });
 ```
