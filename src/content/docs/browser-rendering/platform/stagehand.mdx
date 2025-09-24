@@ -13,15 +13,17 @@ import {
 	TabItem,
 	Tabs,
 	PackageManagers,
+	Details,
 } from "~/components";
 
-[Stagehand](https://www.stagehand.dev/) is an open-source, AI-powered browser automation library. Rather than dictating exact steps or specifying selectors, Stagehand enables developers to build more reliably and flexibly by combining code with natural-language instructions powered by AI. This makes your agents more resilient to website changes and easier to maintain. 
+[Stagehand](https://www.stagehand.dev/) is an open-source, AI-powered browser automation library. Rather than dictating exact steps or specifying selectors, Stagehand enables developers to build more reliably and flexibly by combining code with natural-language instructions powered by AI. This makes your agents more resilient to website changes and easier to maintain.
 
 This guide shows you how to deploy a Worker that uses Stagehand, Browser Rendering, and [Workers AI](/workers-ai/) to automate a web task.
 
 ## Use Stagehand in a Worker with Workers AI
 
 In this example, you will use Stagehand to search for a movie on [The Movie Database](https://www.themoviedb.org/), extract its details (title, year, and director), and return the information along with a screenshot of the webpage.
+<Details header="See an example of the result"> ![Stagehand example result](~/assets/images/browser-rendering/stagehand-example.png)</Details>
 
 If you want to skip the steps and get started quickly, select **Deploy to Cloudflare** below.
 
@@ -165,7 +167,7 @@ https://<your-worker>.workers.dev
 
 [AI Gateway](/ai-gateway/) is a service that adds observability to your AI applications. By routing your requests through AI Gateway, you can monitor and debug your AI applications.
 
-To use AI Gateway, first create a gateway in the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers/ai-gateway). In this example, we've named the gateway `stagehand-example-gateway`. 
+To use AI Gateway, first create a gateway in the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers/ai-gateway). In this example, we've named the gateway `stagehand-example-gateway`.
 
 ```typescript
 const stagehand = new Stagehand({
@@ -206,7 +208,7 @@ const stagehand = new Stagehand({
 
 [AI Gateway](/ai-gateway/) is a service that adds observability to your AI applications. By routing your requests through AI Gateway, you can monitor and debug your AI applications.
 
-To use AI Gateway, first create a gateway in the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers/ai-gateway). In this example, we are using [OpenAI with AI Gateway](https://developers.cloudflare.com/ai-gateway/usage/providers/openai/). Make sure to add the `baseURL` as shown below, with your own Account ID and Gateway ID.   
+To use AI Gateway, first create a gateway in the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers/ai-gateway). In this example, we are using [OpenAI with AI Gateway](https://developers.cloudflare.com/ai-gateway/usage/providers/openai/). Make sure to add the `baseURL` as shown below, with your own Account ID and Gateway ID.
 
 ```typescript
 const stagehand = new Stagehand({
