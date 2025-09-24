@@ -115,18 +115,26 @@ Then, in your worker code, import the `workersAIClient.ts` file and use it to co
 			await stagehand.init();
 			const page = stagehand.page;
 
-			await page.goto('https://www.themoviedb.org/');
-			// for multi-step actions, use observe
-			const actions = await page.observe('Search for "The Iron Giant" and click the Search button');
+			await page.goto('https://demo.playwright.dev/movies');
+
+			// if search is a multi-step action, stagehand will return an array of actions it needs to act on
+			const actions = await page.observe('Search for "Furiosa"');
 			for (const action of actions)
 				await page.act(action);
-			await page.act('Click the first search result');
+
+			await page.act('Click the search result');
+
+			// normal playwright functions work as expected
+			await page.waitForSelector('.info-wrapper .cast');
+
 			let movieInfo = await page.extract({
 				instruction: 'Extract movie information',
 				schema: z.object({
 					title: z.string(),
 					year: z.number(),
-					director: z.string(),
+					rating: z.number(),
+					genres: z.array(z.string()),
+					duration: z.number().describe("Duration in minutes"),
 				}),
 			});
 
