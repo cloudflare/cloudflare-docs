@@ -110,7 +110,7 @@ Then, in your Worker code, import the `workersAIClient.ts` file and use it to co
 			const stagehand = new Stagehand({
 				env: "LOCAL",
 				localBrowserLaunchOptions: { cdpUrl: endpointURLString(env.BROWSER) },
-				llmClient: new new WorkersAIClient(env.AI),
+				llmClient: new WorkersAIClient(env.AI),
 				verbose: 1,
 			});
 
