@@ -97,7 +97,7 @@ When using Sumo Logic, you may find it helpful to have [Live Tail](https://help.
 * **dataset** - The category of logs you want to receive. Refer to [Datasets](/logs/logpush/logpush-job/datasets/) for the full list of supported datasets; this parameter cannot be changed after the job is created.
 * **output\_options** (optional) - Refer to [Log Output Options](/logs/logpush/logpush-job/log-output-options/).
   * Typically includes the desired fields and timestamp format.
-  * Set the timestamp format to `RFC 3339` (`&timestamps=rfc3339`) for:
+  * Set the timestamp format to `RFC 3339` (`"timestamp_format": "rfc3339"`) for:
     * Google BigQuery usage.
     * Automated timestamp parsing within Sumo Logic; refer to [timestamps from Sumo Logic](https://help.sumologic.com/03Send-Data/Sources/04Reference-Information-for-Sources/Timestamps%2C-Time-Zones%2C-Time-Ranges%2C-and-Date-Formats) for details.
 * **ownership\_challenge** - Challenge token required to prove destination ownership.

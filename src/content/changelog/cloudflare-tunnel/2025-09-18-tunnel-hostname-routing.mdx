@@ -1,0 +1,23 @@
+---
+title: Connect and secure any private or public app by hostname, not IP — with hostname routing for Cloudflare Tunnel
+description: Create Tunnel routes based on hostnames or domains — not just IPs — to simplify Zero Trust and egress policies.
+date: 2025-09-18
+---
+
+import { Render } from "~/components";
+
+You can now route private traffic to [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) based on a hostname or domain, moving beyond the limitations of IP-based routing. This new capability is **free for all Cloudflare One customers**.
+
+Previously, Tunnel routes could only be defined by IP address or [CIDR range](/cloudflare-one/connections/connect-networks/private-net/cloudflared/connect-cidr/). This created a challenge for modern applications with dynamic or ephemeral IP addresses, often forcing administrators to maintain complex and brittle IP lists.
+
+![Hostname-based routing in Cloudflare Tunnel](~/assets/images/changelog/cloudflare-one/tunnel-hostname-routing.webp)
+
+**What’s new:**
+- **Hostname & Domain Routing**: Create routes for individual hostnames (e.g., `payroll.acme.local`) or entire domains (e.g., `*.acme.local`) and direct their traffic to a specific Tunnel.
+- **Simplified Zero Trust Policies**: Build resilient policies in Cloudflare Access and Gateway using stable hostnames, making it dramatically easier to apply per-resource authorization for your private applications.
+- **Precise Egress Control**: Route traffic for public hostnames (e.g., `bank.example.com`) through a specific Tunnel to enforce a dedicated source IP, solving the IP allowlist problem for third-party services.
+- **No More IP Lists**: This feature makes the workaround of maintaining dynamic IP Lists for Tunnel connections obsolete.
+
+Get started in the Tunnels section of the Zero Trust dashboard with your first [private hostname](/cloudflare-one/connections/connect-networks/private-net/cloudflared/connect-private-hostname/) or [public hostname](/cloudflare-one/policies/gateway/egress-policies/egress-cloudflared/) route.
+
+Learn more in our [blog post](https://blog.cloudflare.com/tunnel-hostname-routing/).

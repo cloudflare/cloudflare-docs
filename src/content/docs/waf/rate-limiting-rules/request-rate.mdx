@@ -9,16 +9,16 @@ head:
     content: How Cloudflare determines the request rate
 ---
 
-import { Example } from "~/components";
+import { Example, GlossaryTooltip } from "~/components";
 
-Cloudflare keeps separate rate counters for rate limiting rules for each value combination of the rule characteristics.
+Cloudflare keeps separate rate counters for rate limiting rules for each value combination of the <GlossaryTooltip term="rule characteristics">rule characteristics</GlossaryTooltip>.
 
 Consider a rule configured with the following characteristics:
 
 - IP address
 - HTTP header `x-api-key`
 
-In this case, two incoming requests with the **same** value for the HTTP header `X-API-Key` with **different** IP addresses are counted separately, since the value combination is different. Additionally, counters are not shared across data centers.
+In this case, two incoming requests with the same value for the HTTP header `X-API-Key` but with different IP addresses are counted separately, since the value combination is different. Additionally, counters are not shared across data centers.
 
 The counting model of this rate limiting rule is based on the number of incoming requests. Enterprise customers with Advanced Rate Limiting can also configure rules whose counting model is based on the complexity of serving incoming requests. Refer to [Complexity-based rate limiting](#complexity-based-rate-limiting) for more information.
 
@@ -29,6 +29,8 @@ The counting model of this rate limiting rule is based on the number of incoming
 - The Cloudflare data center ID (`cf.colo.id`) is a mandatory characteristic of every rate limiting rule to ensure that counters are not shared across data centers. This characteristic does not appear in the rule configuration in the dashboard, but you must include it when [creating rate limiting rules via API](/waf/rate-limiting-rules/create-api/).
 
 - The available characteristics depend on your Cloudflare plan. Refer to [Availability](/waf/rate-limiting-rules/#availability) for more information.
+
+- In some situations, Workers subrequests made to the same zone will be counted as separate requests, which will cause the rate limiting rule to trigger sooner than expected. Refer to [Troubleshooting](/waf/rate-limiting-rules/troubleshooting/#some-workers-subrequests-are-counted-as-separate-requests) for details.
 
 :::
 
@@ -55,7 +57,7 @@ Consider the following configuration for a rate limiting rule:
 
 - _Data center ID_ (included by default when creating the rule in the dashboard)
 - _IP_
-- _Headers_ > `x-api-key`
+- _Header value of_ > `x-api-key`
 
 </Example>
 
@@ -94,7 +96,7 @@ Consider the following configuration for a rate limiting rule. The rule counting
 
 - _Data center ID_ (included by default when creating the rule in the dashboard)
 - _IP_
-- _Headers_ > `x-api-key`
+- _Header value of_ > `x-api-key`
 
 **Increment counter when**:
 `http.request.uri.path eq "/form" and http.response.code eq 400`
@@ -135,4 +137,44 @@ Cloudflare keeps counters with the total score of all requests with the same val
 
 If the origin server does not provide the HTTP response header with a score value or if the score value is outside of the allowed range, the corresponding rate limiting counter will not be updated.
 
-For an example of a complexity-based rate limiting rule, refer to [Rule examples](/waf/rate-limiting-rules/use-cases/#example-4).
+### Example C
+
+Consider the following configuration for a rate limiting rule. When there is a rule match, the complexity score counter will increase based on the value in the `x-score` response header provided by the origin server.
+
+<Example>
+
+**_Rate limiting rule #3_**
+
+**If incoming requests match**:<br />
+`(http.request.uri.path eq "/graphql")`
+
+**With the same value of** (characteristics):
+
+- _Data center ID_ (included by default when creating the rule in the dashboard)
+- _Header value of_ > `x-api-key`
+
+**When rate exceeds**: _Complexity based_
+
+- Score per period: `400`
+- Period: _1 minute_
+- Response header name: `x-score`
+
+**Choose action**: _Block_
+
+**With the following behavior**: _Block for the selected duration_
+
+**Duration** (mitigation timeout): _10 minutes_
+
+</Example>
+
+The following diagram shows how Cloudflare handles four incoming requests received during a one-minute period in the context of the above rate limiting rule.
+
+![Rate limiting example with four requests where the rate limiting rule is configured to take into account the complexity score provided in the "x-score" HTTP header. For details, keep reading.](~/assets/images/waf/custom-rules/rate-limiting-example-complexity-based.png)
+
+Since request 1 matches the rule expression, the rate limiting rule is evaluated. The origin responds with a `200` status code and a complexity score of `100` in the `x-score` HTTP response header. Cloudflare creates a request counter for the values of the characteristics in the context of the rate limiting rule, and sets this counter to `100`.
+
+Request 2 matches the rule expression and therefore Cloudflare evaluates the rate limiting rule. The request counter for the characteristics values is still within the maximum score per period. The origin responds with a `200` status code and the request counter is increased by `200`. The current complexity score for the request is now `300`.
+
+Request 3 matches the rule expression and therefore Cloudflare evaluates the rate limiting rule. The request counter for the characteristics values is still within the maximum score per period. The origin responds with a `200` status code and the request counter is increased by `150`. The current complexity score for the request is now `450`.
+
+Request 4 matches the rule expression and therefore Cloudflare evaluates the rate limiting rule. The request is no longer within the maximum score per period defined in the rule (the counter has the value `450` and the maximum score is `400`). Cloudflare applies the action defined in the rate limiting rule configuration, blocking request 4 and any later requests that match the rate limiting rule for ten minutes.

@@ -64,6 +64,30 @@ The Linux client supports all 1.1.1.1 for Families modes, in either WARP on DNS-
 - **Malware protection:** `warp-cli dns families malware`
 - **Malware and adult content:** `warp-cli dns families full`
 
+### Enable WARP+ Unlimited
+
+To enable [WARP+ Unlimited](/warp-client/warp-modes/#warp-unlimited) on Linux, you will need an iOS or Android device that has an existing WARP+ Unlimited subscription.
+
+1. On your iOS or Android device, launch the **1.1.1.1 Faster Internet** app.
+2. Go to **Settings** > **Account** and copy the **Key** value.
+3. On your Linux device, run the following command:
+
+	```sh
+	warp-cli registration license <KEY>
+	```
+4. Verify the new registration:
+
+	```sh
+	warp-cli registration show
+	```
+
+	```sh output
+	Account type: Unlimited
+	...
+	```
+
+Your WARP+ Unlimited subscription is now active on this device.
+
 ### Additional commands
 
 A complete list of all supported commands can be found by running:

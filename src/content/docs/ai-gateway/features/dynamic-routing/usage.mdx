@@ -21,7 +21,7 @@ import OpenAI from "openai";
 const cloudflareToken = "CF_AIG_TOKEN";
 const accountId = "{account_id}";
 const gatewayId = "{gateway_id}";
-const baseURL = `https://gateway.ai.cloudflare.com/v1/${accountId}/${gatewayId}`;
+const baseURL = `https://gateway.ai.cloudflare.com/v1/${accountId}/${gatewayId}/compat`;
 
 const openai = new OpenAI({
 	apiKey: cloudflareToken,

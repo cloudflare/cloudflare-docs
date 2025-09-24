@@ -3,7 +3,7 @@ pcx_content_type: concept
 title: Routes
 ---
 
-import { WranglerConfig } from "~/components";
+import { WranglerConfig, DashButton, Steps } from "~/components";
 
 ## Background
 
@@ -43,11 +43,16 @@ Before you set up a route, make sure you have a DNS record set up for the [domai
 
 To set up a route in the dashboard:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Go to **Workers & Pages** and in **Overview**, select your Worker.
+<Steps>
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+
+2. In **Overview**, select your Worker.
 3. Go to **Settings** > **Domains & Routes** > **Add** > **Route**.
 4. Select the zone and enter the route pattern.
 5. Select **Add route**.
+</Steps>
 
 ### Set up a route in the Wrangler configuration file
 
@@ -71,7 +76,15 @@ zone_id = "<YOUR_ZONE_ID>"
 
 </WranglerConfig>
 
-Add the `zone_name` or `zone_id` option after each route. The `zone_name` and `zone_id` options are interchangeable. If using `zone_id`, find your zone ID by logging in to the [Cloudflare dashboard](https://dash.cloudflare.com) > select your account > select your website > find the **Zone ID** in the lefthand side of **Overview**.
+Add the `zone_name` or `zone_id` option after each route. The `zone_name` and `zone_id` options are interchangeable. If using `zone_id`, find your zone ID by:
+
+<Steps>
+1. Go to the Zone Overview page in the Cloudflare dashboard.
+
+   <DashButton url="/?to=/:account/:zone/" />
+
+2. Find the **Zone ID** in the left-hand side of **Overview**.
+</Steps>
 
 To add multiple routes:
 

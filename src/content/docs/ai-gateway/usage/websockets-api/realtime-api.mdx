@@ -13,6 +13,7 @@ Some AI providers support real-time, low-latency interactions over WebSockets. A
 - [Google AI Studio](https://ai.google.dev/gemini-api/docs/multimodal-live)
 - [Cartesia](https://docs.cartesia.ai/api-reference/tts/tts)
 - [ElevenLabs](https://elevenlabs.io/docs/conversational-ai/api-reference/conversational-ai/websocket)
+- [Fal AI](https://docs.fal.ai/model-apis/model-endpoints/websockets)
 
 ## Authentication
 
@@ -20,6 +21,10 @@ For real-time WebSockets, authentication can be done using:
 
 - Headers (for non-browser environments)
 - `sec-websocket-protocol` (for browsers)
+
+:::note
+Provider specific API Keys can also be alternatively configured on AI Gateway using our [BYOK](/ai-gateway/configuration/bring-your-own-keys) feature. You must still include the `cf-aig-authorization` header in the websocket request.
+:::
 
 ## Examples
 
@@ -131,3 +136,30 @@ ws.send(
 	}),
 );
 ```
+
+### Fal AI
+
+Fal AI supports WebSocket connections for real-time model interactions through their HTTP over WebSocket API.
+
+```javascript
+const ws = new WebSocket(
+	"wss://gateway.ai.cloudflare.com/v1/<account_id>/<gateway>/fal/fal-ai/fast-lcm-diffusion",
+	["fal-api-key.<fal_api_key>", "cf-aig-authorization.<cloudflare_token>"],
+);
+
+ws.on("open", function open() {
+	console.log("Connected to server.");
+});
+
+ws.on("message", function incoming(message) {
+	console.log(message.data);
+});
+
+ws.send(
+	JSON.stringify({
+		prompt: "generate an image of a cat flying an aeroplane",
+	}),
+);
+```
+
+For more information on Fal AI's WebSocket API, see their [HTTP over WebSocket documentation](https://docs.fal.ai/model-apis/model-endpoints/websockets).

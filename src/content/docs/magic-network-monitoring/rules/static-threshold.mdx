@@ -5,6 +5,8 @@ sidebar:
   order: 1
 ---
 
+import { DashButton } from "~/components";
+
 A static threshold rule allows you to define a constant numeric threshold, in terms of bits or packets, for DDoS traffic monitoring. The total traffic across all IP prefixes and IP addresses in the rule is compared to the static rule threshold. If the total traffic exceeds the static rule threshold for the duration of the rule, then an alert is sent.
 
 Customers that send NetFlow and/or sFlow data to Cloudflare can configure static threshold rules.
@@ -60,10 +62,12 @@ Cloudflare recommends that new customers set a rule threshold that is two times 
 
 To find the maximum non-attack traffic for a one minute time interval over the past 14-30 days, you can filter for the specific rule you want to analyze. To do that:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
-2. Go to **Analytics & Logs** > **Magic Monitoring**.
-3. Select **Add filter**.
-4. In **New filter**, use the drop-down menus to create the following filter:
+1. In the Cloudflare dashboard, go to the **Magic Monitoring** page.
+
+<DashButton url="/?to=/:account/network-monitoring" />
+
+2. Select **Add filter**.
+3. In **New filter**, use the drop-down menus to create the following filter:
 
 | Field 						| Operator | Rule name 			|
 | :---- 						| :---- 	 | :---- 		 			|

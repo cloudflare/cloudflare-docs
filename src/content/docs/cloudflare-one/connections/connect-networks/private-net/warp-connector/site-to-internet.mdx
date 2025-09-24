@@ -35,7 +35,7 @@ This guide covers how to connect a private network to the Internet using WARP Co
 
 ## 3. Route traffic from subnet to WARP Connector
 
-Depending on where you installed the WARP Connector, you may need to configure other devices on the subnet to route outbound requests through WARP Connector.
+The WARP Connector host will automatically forward DNS and network traffic to Cloudflare. Depending on where you installed the WARP Connector, you may need to configure other devices on the subnet to route outbound requests through WARP Connector.
 
 ### Option 1: Default gateway
 
@@ -48,12 +48,19 @@ Depending on where you installed the WARP Connector, you may need to configure o
 	product="cloudflare-one"
 />
 
-#### Add route to router
+#### Add IP route to router
 
 For example, for all traffic from the subnet to egress through WARP Connector, add a rule on the router that routes `0.0.0.0` to the WARP Connector host machine (`10.0.0.100`).
 
 <Render
 	file="tunnel/warp-connector-alternate-gateway-flow"
+	product="cloudflare-one"
+/>
+
+#### Configure DNS resolver on router
+
+<Render
+	file="tunnel/warp-connector-alternate-gateway-dns"
 	product="cloudflare-one"
 />
 
@@ -64,16 +71,21 @@ For example, for all traffic from the subnet to egress through WARP Connector, a
 	product="cloudflare-one"
 />
 
-#### Add route to devices
+#### Add IP route to devices
 
 <Render
 	file="tunnel/warp-connector-route-all-traffic"
 	product="cloudflare-one"
 />
 
-#### Verify routes
-
 <Render file="tunnel/warp-connector-verify-routes" product="cloudflare-one" />
+
+#### Configure DNS resolver on devices
+
+<Render
+	file="tunnel/warp-connector-intermediate-gateway-dns"
+	product="cloudflare-one"
+/>
 
 ## 4. Test the WARP Connector
 

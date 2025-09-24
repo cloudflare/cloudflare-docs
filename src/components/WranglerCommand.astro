@@ -1,32 +1,11 @@
 ---
 import { z } from "astro:schema";
-import { experimental_getWranglerCommands } from "wrangler";
 import AnchorHeading from "./AnchorHeading.astro";
 import { PackageManagers } from "starlight-package-managers";
 import WranglerArg from "./WranglerArg.astro";
 import Details from "./Details.astro";
 import { marked } from "marked";
-
-function getCommand(path: string) {
-	const segments = path.trim().split(/\s+/);
-
-	const { registry } = experimental_getWranglerCommands();
-
-	let node = registry.subtree;
-	for (const segment of segments) {
-		const next = node.get(segment);
-
-		if (!next) break;
-
-		if (next.subtree.size === 0 && next.definition?.type === "command") {
-			return next.definition;
-		}
-
-		node = next.subtree;
-	}
-
-	throw new Error(`[WranglerCommand] Command "${path}" not found`);
-}
+import { commands, getCommand } from "~/util/wrangler";
 
 const props = z.object({
 	command: z.string(),
@@ -44,7 +23,7 @@ if (!definition.args) {
 	throw new Error(`[WranglerCommand] "${command}" has no arguments`);
 }
 
-const { globalFlags } = experimental_getWranglerCommands();
+const { globalFlags } = commands;
 
 const positionals = definition.positionalArgs
 	?.map((p) => `[${p.toUpperCase()}]`)

@@ -153,6 +153,12 @@
 /ai-audit/features/enforce-robots-txt/ /ai-crawl-control/features/analyze-ai-crawlers/ 301
 /ai-audit/features/analyze-ai-crawlers/ /ai-crawl-control/features/analyze-ai-traffic/ 301
 
+# ai crawl control
+/ai-crawl-control/reference/faq/ /ai-crawl-control/features/pay-per-crawl/faq/ 301
+/ai-crawl-control/features/pay-per-crawl/use-pay-per-crawl-as-site-owner/set-up-cloudflare-account/ /ai-crawl-control/features/pay-per-crawl/use-pay-per-crawl-as-site-owner/enable-in-account-settings/ 301
+/ai-crawl-control/features/pay-per-crawl/use-pay-per-crawl-as-site-owner/connect-to-stripe/ /ai-crawl-control/features/pay-per-crawl/use-pay-per-crawl-as-site-owner/manage-payouts/ 301
+/ai-crawl-control/features/pay-per-crawl/use-pay-per-crawl-as-site-owner/monitor-metrics/ /ai-crawl-control/features/pay-per-crawl/use-pay-per-crawl-as-site-owner/monitor-activity/ 301
+
 # AI Gateway
 /ai-gateway/get-started/configuring-settings/ /ai-gateway/get-started/ 301
 /ai-gateway/get-started/connecting-applications/ /ai-gateway/get-started/ 301
@@ -202,13 +208,14 @@
 /support/analytics/learn-more/cloudflare-analytics-with-workers/ /analytics/account-and-zone-analytics/analytics-with-workers/ 301
 /support/analytics/learn-more/how-does-cloudflare-calculate-total-threats-stopped/ /analytics/account-and-zone-analytics/total-threats-stopped/ 301
 /support/analytics/learn-more/status-code-metrics-in-cloudflare-site-analytics/ /analytics/account-and-zone-analytics/status-codes/ 301
-/support/analytics/learn-more/understanding-cloudflare-network-analytics-v1/ /analytics/network-analytics/reference/network-analytics-v1/ 301
+/support/analytics/learn-more/understanding-cloudflare-network-analytics-v1/ /analytics/graphql-api/migration-guides/network-analytics-v2/ 301
 /support/analytics/learn-more/what-are-the-types-of-threats/ /analytics/account-and-zone-analytics/threat-types/ 301
 /analytics/graphql-api/tutorials/build-your-own-analytics/ /analytics/graphql-api/tutorials/ 301
 /analytics/graphql-api/tutorials/export-graphql-to-csv/ /analytics/graphql-api/tutorials/ 301
 /analytics/analytics-integrations/google-cloud/ /analytics/analytics-integrations/ 301
 /analytics/dashboards/ /log-explorer/custom-dashboards/ 301
 /analytics/analytics-integrations/looker/ /analytics/analytics-integrations/ 301
+/analytics/network-analytics/reference/network-analytics-v1/ /analytics/graphql-api/migration-guides/network-analytics-v2/ 301
 
 # email-security
 /email-security/reporting/search/detection-search/ /email-security/reporting/search/ 301
@@ -485,6 +492,15 @@
 /ddos-protection/managed-rulesets/adjust-rules/false-positive/ /ddos-protection/managed-rulesets/http/http-overrides/override-examples/#legitimate-traffic-is-incorrectly-identified-as-an-attack-and-causes-a-false-positive 301
 /ddos-protection/managed-rulesets/adjust-rules/ /ddos-protection/managed-rulesets/http/http-overrides/override-examples/ 301
 
+# developer spotlight
+/developer-spotlight/tutorials/ /developer-spotlight/ 301
+/developer-spotlight/tutorials/create-sitemap-from-sanity-cms/ /developer-spotlight/ 301
+/developer-spotlight/tutorials/creating-a-recommendation-api/ /developer-spotlight/ 301
+/developer-spotlight/tutorials/custom-access-control-for-files/ /developer-spotlight/ 301
+/developer-spotlight/tutorials/fullstack-authentication-with-next-js-and-cloudflare-d1/ /developer-spotlight/ 301
+/developer-spotlight/tutorials/handle-form-submission-with-astro-resend/ /developer-spotlight/ 301
+/developer-spotlight/application-guide/ /developer-spotlight/ 301
+
 # dns
 /dns/additional-options/cname-flattening/ /dns/cname-flattening/ 301
 /dns/additional-options/dnssec/ /dns/dnssec/ 301
@@ -549,7 +565,7 @@
 /durable-objects/get-started/video-series/ /durable-objects/video-tutorials/ 301
 
 /durable-objects/what-are-durable-objects/ /durable-objects/concepts/what-are-durable-objects/ 301
-/durable-objects/api/storage-api/ /durable-objects/api/sqlite-storage-api/ 301
+/durable-objects/observability/graphql-analytics/ /durable-objects/observability/metrics-and-analytics/ 301
 
 # email-routing
 /email-routing/enable-email-routing/ /email-routing/get-started/enable-email-routing/ 301
@@ -719,7 +735,6 @@
 /fundamentals/get-started/reference/ /fundamentals/reference/ 301
 /fundamentals/get-started/reference/http-request-headers/ /fundamentals/reference/http-request-headers/ 301
 /fundamentals/get-started/reference/network-ports/ /fundamentals/reference/network-ports/ 301
-/fundamentals/get-started/ /fundamentals/setup/ 301
 /fundamentals/get-started/setup/allow-cloudflare-ip-addresses/ /fundamentals/concepts/cloudflare-ip-addresses/ 301
 
 #fundamentals revamp cont
@@ -1127,10 +1142,10 @@
 /pages/how-to/deploy-a-gatsby-site/ /pages/framework-guides/deploy-a-gatsby-site/ 301
 /pages/how-to/deploy-a-hugo-site/ /pages/framework-guides/deploy-a-hugo-site/ 301
 /pages/how-to/deploy-a-jekyll-site/ /pages/framework-guides/deploy-a-jekyll-site/ 301
-/pages/how-to/deploy-a-nextjs-site/ /pages/framework-guides/nextjs/ 301
-/pages/framework-guides/deploy-a-nextjs-site/ /pages/framework-guides/nextjs/ 301
+/pages/how-to/deploy-a-nextjs-site/ /workers/framework-guides/web-apps/nextjs 301
+/pages/framework-guides/nextjs/resources/* /workers/framework-guides/web-apps/nextjs 301
+/pages/framework-guides/nextjs/ssr/* /workers/framework-guides/web-apps/nextjs 301
 /pages/framework-guides/deploy-a-svelte-site/ /pages/framework-guides/deploy-a-svelte-kit-site/ 301
-/pages/framework-guides/nextjs/deploy-a-nextjs-site/ /pages/framework-guides/nextjs/ssr/get-started/ 301
 /pages/how-to/deploy-anything/ /pages/framework-guides/deploy-anything/ 301
 /pages/how-to/deploy-a-react-application/ /pages/framework-guides/deploy-a-react-site/ 301
 /pages/framework-guides/deploy-a-react-application/ /pages/framework-guides/deploy-a-react-site/ 301
@@ -1604,6 +1619,8 @@
 /turnstile/get-started/terraform/ /turnstile/get-started/widget-management/terraform/ 301
 /turnstile/glossary/ /turnstile/ 301
 /turnstile/get-started/supported-browsers/ /cloudflare-challenges/reference/supported-browsers/ 301
+/turnstile/troubleshooting/troubleshooting-faqs/ /turnstile/frequently-asked-questions/#troubleshooting 301
+/turnstile/tutorials/protecting-your-payment-form-from-attackers-bots-using-turnstile/ /developer-spotlight/ 301
 
 # waf
 /waf/about/ /waf/concepts/ 301
@@ -1899,8 +1916,8 @@
 /workers/configuration/bindings/about-service-bindings/ /workers/runtime-apis/bindings/service-bindings/ 301
 /workers/tutorials/localize-a-website/ /pages/tutorials/localize-a-website/ 301
 /workers/tutorials/manage-projects-with-lerna/ /pages/configuration/monorepos/#monorepo-management-tools 301
-/workers/tutorials/create-sitemap-from-sanity-cms/ /developer-spotlight/tutorials/create-sitemap-from-sanity-cms/ 301
-/workers/tutorials/custom-access-control-for-files-in-r2-using-d1-and-workers/ /developer-spotlight/tutorials/custom-access-control-for-files/ 301
+/workers/tutorials/create-sitemap-from-sanity-cms/ /developer-spotlight/ 301
+/workers/tutorials/custom-access-control-for-files-in-r2-using-d1-and-workers/ /developer-spotlight/ 301
 /workers/tutorials/generate-dynamic-og-images-using-workers/ /workers/tutorials/ 302
 /workers/static-assets/migrate-from-pages/ /workers/static-assets/migration-guides/migrate-from-pages/ 301
 /workers/static-assets/compatibility-matrix/ /workers/static-assets/migration-guides/migrate-from-pages/ 301
@@ -1933,6 +1950,8 @@
 /workers/testing/miniflare/get-started/migrating/ /workers/testing/miniflare/migrations/from-v2/ 301
 /workers/databases/native-integrations/fauna/ /workers/databases/native-integrations/ 301
 /workers/tutorials/store-data-with-fauna/ https://fauna.com/blog/the-future-of-fauna 301
+/workers/tutorials/live-cursors-with-nextjs-rpc-do/ /developer-spotlight/ 301
+/workers/tutorials/automated-analytics-reporting/ /developer-spotlight/ 301
 
 # workers ai
 /workers-ai/models/llm/ /workers-ai/models/#text-generation 301
@@ -1949,9 +1968,11 @@
 /workers-ai/configuration/function-calling/ /workers-ai/function-calling/ 301
 /workers-ai/platform/storage-options/ /workers/platform/storage-options/ 301
 /workers-ai/configuration/workers-ai-sdk/ /workers-ai/configuration/bindings/ 301
-/workers-ai/tutorials/creating-a-recommendation-api/ /developer-spotlight/tutorials/creating-a-recommendation-api/ 301
+/workers-ai/tutorials/creating-a-recommendation-api/ /developer-spotlight/ 301
 /workers/observability/baselime-integration/ /workers/observability/integrations/baselime-integration/ 301
 /workers-ai/tutorials/image-generator-flux/ /workers-ai/tutorials/image-generation-playground/ 301
+/workers-ai/guides/tutorials/build-a-voice-notes-app-with-auto-transcription/ /developer-spotlight/ 301
+/workers-ai/tutorials/build-ai-interview-practice-tool/ /developer-spotlight/ 301
 
 # Workers AI reorganization redirects
 # Function calling
@@ -2277,7 +2298,8 @@
 /fundamentals/speed/amp-real-ulr/* /speed/optimization/other/amp-real-ulr/:splat 301
 /fundamentals/speed/rocket-loader/* /speed/optimization/content/rocket-loader/:splat 301
 /fundamentals/speed/signed-exchanges/* /speed/optimization/other/signed-exchanges/:splat 301
-/fundamentals/speed/speed-test/* /speed/speed-test/:splat 301
+/fundamentals/speed/speed-test/* /speed/observatory/:splat 301
+/speed/speed-test/* /speed/observatory/:splat 301
 /http-applications/* /version-management/:splat 301
 /http3/* https://www.cloudflare.com/learning/performance/what-is-http3/ 301
 /railgun/* / 301
@@ -2399,4 +2421,9 @@
 /ai-gateway/guardrails/* /ai-gateway/features/guardrails/:splat 301
 /ai-gateway/websockets-api/* /ai-gateway/usage/websockets-api/:splat 301
 
-
+# Containers
+/containers/image-management /containers/platform-details/image-management 301
+/containers/scaling-and-routing /containers/platform-details/scaling-and-routing 301
+/containers/architecture /containers/platform-details/architecture 301
+/containers/durable-object-methods /containers/platform-details/durable-object-methods 301
+/containers/platform-details /containers/platform-details/architecture 301

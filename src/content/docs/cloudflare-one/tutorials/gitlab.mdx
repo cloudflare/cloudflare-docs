@@ -6,6 +6,8 @@ pcx_content_type: tutorial
 title: Zero Trust GitLab SSH & HTTP
 ---
 
+import { DashButton } from "~/components";
+
 You can use Cloudflare Access to add Zero Trust rules to a self-hosted instance of GitLab. Combined with Cloudflare Tunnel, users can connect through HTTP and SSH and authenticate with your team's identity provider.
 
 **This walkthrough covers how to:**
@@ -238,13 +240,20 @@ This command should be run as a `systemd` service for long-term use; if it termi
 
 You can now create DNS records for GitLab in the Cloudflare dashboard. Remember, you will still need two records - one for the web application and one for SSH traffic.
 
-In the **DNS** tab, choose the website where you built your [Access policies](/cloudflare-one/policies/access/). Select **Add record** and select `CNAME` from type. In the **Name** field, input `gitlab`. In the **Target** field, input the ID of the Tunnel created followed by `cfargotunnel.com`. In this example, that value is:
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and go to the **DNS Records** page for your domain.
+
+	<DashButton url="/?to=/:account/:zone/dns/records" />
+
+2. Select **Add record**. Choose `CNAME` as the record type.
+3. In the **Name** field, input `gitlab`.
+4. In the **Target** field, input the ID of the Tunnel created followed by `cfargotunnel.com`. In this example, that value is:
 
 ```txt
 6ff42ae2-765d-4adf-8112-31c55c1551ef.cfargotunnel.com
 ```
 
-Select **Save**. Repeat the process again by creating a second `CNAME` record, with the same **Target**, but input `gitlab-ssh` for the **Name**. Both records should then appear, pointing to the same Tunnel. The ingress rules defined in the configuration file above will direct traffic to the appropriate port.
+5. Select **Save**.
+6. Repeat the process again by creating a second `CNAME` record, with the same **Target**, but input `gitlab-ssh` for the **Name**. Both records should then appear, pointing to the same Tunnel. The ingress rules defined in the configuration file above will direct traffic to the appropriate port.
 
 ![View DNS](~/assets/images/cloudflare-one/zero-trust-security/gitlab/view-dns.png)
 

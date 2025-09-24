@@ -13,12 +13,18 @@ import { CardGrid, Description, Feature, LinkTitleCard, Plan, RelatedProduct, Re
 
 <Description>
 
-Speed up your global traffic with a single click 
+Speed up your global traffic with a single click
 </Description>
 
 <Plan id="traffic.argo.properties.availability.summary" />
 
-Argo Smart Routing detects real-time network issues and routes your web traffic across the most efficient network path, avoiding congestion. This results in faster loading times, increased reliability, and reduced costs. These benefits are most apparent for users farthest from your origin server.
+<Render
+  file="argo-intro"
+  product="smart-shield"
+	params={{
+		conditional: "dedicated-argo-tile"
+	}}
+/>
 
 Learn more about the [benefits of Argo Smart Routing](https://www.cloudflare.com/application-services/products/argo-smart-routing/).
 
@@ -40,15 +46,15 @@ Argo Smart Routing includes comprehensive analytics to compare performance impro
 ## Related products
 
 <RelatedProduct header="Tiered Cache" href="/cache/how-to/tiered-cache/" product="cache">
-Increase cache hit ratios to reduce requests to your origin server. 
+Increase cache hit ratios to reduce requests to your origin server.
 </RelatedProduct>
 
 <RelatedProduct header="China Network" href="/china-network/" product="china-network">
-Improve security and performance within mainland China. 
+Improve security and performance within mainland China.
 </RelatedProduct>
 
 <RelatedProduct header="Magic Transit" href="/magic-transit/" product="magic-transit">
-Reduce latency and protect from DDoS attacks using the Cloudflare network. 
+Reduce latency and protect from DDoS attacks using the Cloudflare network.
 </RelatedProduct>
 
 ***

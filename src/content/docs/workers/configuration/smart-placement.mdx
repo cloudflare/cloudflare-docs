@@ -9,7 +9,7 @@ sidebar:
     text: Beta
 ---
 
-import { WranglerConfig } from "~/components";
+import { WranglerConfig, DashButton } from "~/components";
 
 By default, [Workers](/workers/) and [Pages Functions](/pages/functions/) are invoked in a data center closest to where the request was received. If you are running back-end logic in a Worker, it may be more performant to run that Worker closer to your back-end infrastructure rather than the end user. Smart Placement automatically places your workloads in an optimal location that minimizes latency and speeds up your applications.
 
@@ -64,13 +64,15 @@ To enable Smart Placement via Wrangler:
 
 To enable Smart Placement via the dashboard:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. In **Account Home**, select **Workers & Pages**.
-3. In **Overview**,select your Worker.
-4. Select **Settings** > **General**.
-5. Under **Placement**, choose **Smart**.
-6. Wait for Smart Placement to analyze your Worker. Smart Placement requires consistent traffic to the Worker from multiple locations around the world to make a placement decision. The analysis process may take up to 15 minutes.
-7. View your Worker's [request duration analytics](/workers/observability/metrics-and-analytics/#request-duration)
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+
+2. In **Overview**,select your Worker.
+3. Select **Settings** > **General**.
+4. Under **Placement**, choose **Smart**.
+5. Wait for Smart Placement to analyze your Worker. Smart Placement requires consistent traffic to the Worker from multiple locations around the world to make a placement decision. The analysis process may take up to 15 minutes.
+6. View your Worker's [request duration analytics](/workers/observability/metrics-and-analytics/#request-duration)
 
 ## Observability
 

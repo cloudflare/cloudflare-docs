@@ -76,8 +76,8 @@ To complete the following procedure, you will need to:
 
 To configure a private network route for your Cloudflare Tunnel:
 
-1.  In the **Private Network** tab, enter the **Internal IP** of your GCP VM instance (for example, `10.0.0.2`). You can expand the IP range later if necessary.
-2.  In your [Split Tunnel configuration](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#add-a-route), make sure the internal IP is routing through WARP. For example, if you are using Split Tunnels in Exclude mode, delete `10.0.0.0/8`. We recommend re-adding the IPs that are not explicitly used by your GCP VM.
+1. In the **CIDR** tab, enter the **Internal IP** of your GCP VM instance (for example, `10.0.0.2`). You can expand the IP range later if necessary.
+2. In your [Split Tunnel configuration](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#add-a-route), make sure the internal IP is routing through WARP. For example, if you are using Split Tunnels in **Exclude** mode, delete `10.0.0.0/8`. We recommend re-adding the IPs that are not explicitly used by your GCP VM.
 
         To determine which IP addresses to re-add, subtract your GCP instance IPs from `10.0.0.0/8`:
 

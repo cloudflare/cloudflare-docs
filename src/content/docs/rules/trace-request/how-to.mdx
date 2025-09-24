@@ -11,16 +11,22 @@ head:
 description: Learn how to use Cloudflare Trace in the dashboard and with the API.
 ---
 
-import { GlossaryTooltip, DashButton } from "~/components";
+import { GlossaryTooltip, DashButton, Steps } from "~/components";
 
 ## Use Trace in the dashboard
 
 ### 1. Configure one or more Cloudflare products
 
+<Steps>
+
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account.
 2. Set configuration settings at the account level, or select a domain and configure settings for one or more Cloudflare products.
 
+</Steps>
+
 ### 2. Build a trace
+
+<Steps>
 
 1. In the Cloudflare dashboard, go to the **Trace** page.
 
@@ -41,9 +47,13 @@ import { GlossaryTooltip, DashButton } from "~/components";
 
 5. Select **Send Trace**.
 
+</Steps>
+
 ### 3. Assess results
 
 The **Trace results** page shows all evaluated and executed configurations from different Cloudflare products, in evaluation order. Any inactive rules are not evaluated.
+
+<Steps>
 
 1. Analyze the different [steps](#steps-in-trace-results) with evaluated and executed configurations for the current trace. Trace results include matches for all active rules and configurations, whether configured at the account level or for a specific domain or subdomain.
 
@@ -51,12 +61,18 @@ The **Trace results** page shows all evaluated and executed configurations from 
 
 2. (Optional) Update your Cloudflare configuration (at the account or at the domain/subdomain level) and create a new trace to check the impact of your changes.
 
+</Steps>
+
 ### 4. (Optional) Save the trace configuration
 
 To run a trace later with the same configuration:
 
+<Steps>
+
 1. Copy the JSON shown in the dashboard with the current trace configuration.
 2. When creating a new trace, paste it in the JSON box to define all the settings of the new trace.
+
+</Steps>
 
 ## Use Trace via API
 

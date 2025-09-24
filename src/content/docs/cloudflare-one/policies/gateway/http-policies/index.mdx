@@ -501,14 +501,24 @@ Use these selectors to limit the file size of upload or download transactions. F
 ### Download and Upload File Types
 
 :::caution[Deprecated selectors]
-The **Download File Types** and **Upload File Types** selectors supersede the **Download File Type** and **Upload File Type** selectors. Gateway will still evaluate policies with the previous selectors. However, Cloudflare recommends migrating any policies with deprecated selectors to the new corresponding selectors.
+The _Download File Types_ and _Upload File Types_ selectors supersede the _Download File Type_ and _Upload File Type_ selectors. Gateway will still evaluate policies with the previous selectors. However, Cloudflare recommends migrating any policies with deprecated selectors to the new corresponding selectors.
 :::
 
-These selectors will scan file signatures in the HTTP body. You can select from file categories or specific file types, such as executables, archives and compressed files, unscannable files, Microsoft 365/Office documents, and Adobe files:
+These selectors will scan file signatures in the HTTP body. You can select from file categories or [specific file types](#supported-file-types), such as executables, archives and compressed files, unscannable files, Microsoft 365/Office documents, and Adobe files.
 
-<Details header="Supported file types">
+| UI name             | API example                                         |
+| ------------------- | --------------------------------------------------- |
+| Download File Types | `any(http.download.file.types[*] in {"docx" "7z"})` |
 
-**Compressed**
+| UI name           | API example                                        |
+| ----------------- | -------------------------------------------------- |
+| Upload File Types | `any(http.upload.file.types[*] in {"compressed"})` |
+
+#### Supported file types
+
+Gateway supports the following file types for use with the _Download File Types_ and _Upload File Types_ selectors:
+
+<Details header="Compressed">
 
 - 7-Zip archive (`.7z`)
 - `bzip2` archive (`.bz2`)
@@ -519,7 +529,9 @@ These selectors will scan file signatures in the HTTP body. You can select from 
 - `xz` archive (`.xz`)
 - ZIP archive (`.zip`)
 
-**Documents**
+</Details>
+
+<Details header="Documents">
 
 - Microsoft Office/365 files
   - Word document (`.doc`, `.docx`, `.docm`)
@@ -527,7 +539,9 @@ These selectors will scan file signatures in the HTTP body. You can select from 
   - PowerPoint presentation (`.ppt`, `.pptx`, `.pptm`)
 - PDF document (`.pdf`)
 
-**Executable**
+</Details>
+
+<Details header="Executable">
 
 - Dynamic-link library (DLL) file (`.dll`)
 - Executable and Linkable Format (ELF) file (`.elf`)
@@ -537,7 +551,9 @@ These selectors will scan file signatures in the HTTP body. You can select from 
 - Microsoft Windows installer (`.msi`)
 - Microsoft Windows executable (`.exe`)
 
-**Image**
+</Details>
+
+<Details header="Image">
 
 - Adobe Photoshop document (`.psd`)
 - Bitmap image (`.bmp`)
@@ -547,23 +563,19 @@ These selectors will scan file signatures in the HTTP body. You can select from 
 - PNG image (`.png`)
 - WebP image (`.webp`)
 
-**Other**
+</Details>
+
+<Details header="Other">
 
 - BitTorrent file (`.torrent`)
 
-**Unscannable**
+</Details>
+
+<Details header="Unscannable">
 
 <Render file="gateway/policies/unscannable-files" product="cloudflare-one" />
 
 </Details>
-
-| UI name             | API example                                         |
-| ------------------- | --------------------------------------------------- |
-| Download File Types | `any(http.download.file.types[*] in {"docx" "7z"})` |
-
-| UI name           | API example                                        |
-| ----------------- | -------------------------------------------------- |
-| Upload File Types | `any(http.upload.file.types[*] in {"compressed"})` |
 
 ### Download and Upload Mime Type
 

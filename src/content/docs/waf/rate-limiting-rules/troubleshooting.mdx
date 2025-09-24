@@ -1,0 +1,19 @@
+---
+title: Troubleshoot rate limiting rules
+pcx_content_type: troubleshooting
+sidebar:
+  order: 30
+  label: Troubleshooting
+---
+
+## Some Workers subrequests are counted as separate requests
+
+Cloudflare may count Workers subrequests on the same zone as separate requests, which will cause a rate limiting rule to trigger sooner than expected. This behavior happens when the rate limiting rule is configured with [**Also apply rate limiting to cached assets**](/waf/rate-limiting-rules/parameters/#also-apply-rate-limiting-to-cached-assets) set to false.
+
+To prevent this behavior, you must exclude any Workers subrequests coming from the same zone from your rate limiting rule using the [`cf.worker.upstream_zone`](/ruleset-engine/rules-language/fields/reference/cf.worker.upstream_zone/) field. For example, you could add the following sub-expression to your [rate limiting rule expression](/waf/rate-limiting-rules/parameters/#if-incoming-requests-match):
+
+```txt
+and (cf.worker.upstream_zone == "" or cf.worker.upstream_zone != "<YOUR_ZONE>")
+```
+
+The first condition (testing for an empty string) will match direct visitor requests, while the second condition will match subrequests not originating from your zone, effectively excluding subrequests from the same zone from the rate limiting rule.

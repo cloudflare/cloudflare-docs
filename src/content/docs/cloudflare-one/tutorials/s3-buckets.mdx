@@ -92,11 +92,11 @@ Your bucket policy will allow your VPC to access your S3 bucket.
 
 A bucket website endpoint will be available at `http://<your-S3-bucket01>.s3-website.<aws-region>.amazonaws.com`. Because of the bucket policy, this website endpoint will only be accessible from the VPC with the VPC endpoint configured.
 
-### 4. Add a new public hostname to the Cloudflare Tunnel
+### 4. Add a published application to the Cloudflare Tunnel
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Networks** > **Tunnels**
 2. Select your Tunnel, then select **Configure**.
-3. Go to **Public Hostname**, then select **Add a public hostname**.
+3. Go to **Published applications**, then select **Add a public hostname**.
 4. Enter a subdomain your organization will use to access the S3 bucket. For example, `s3-bucket.<your-domain>.com`.
 5. Under **Service**, choose _HTTP_ for **Type**. In **URL**, enter `<your-S3-bucket01>.s3-website.<aws-region>.amazonaws.com`.
 6. In **Additional application settings** > **HTTP Settings**, input the **HTTP Host Header** as `<your-S3-bucket01>.s3-website.<aws-region>.amazonaws.com`.

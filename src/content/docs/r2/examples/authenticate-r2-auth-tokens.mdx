@@ -3,81 +3,62 @@ title: Authenticate against R2 API using auth tokens
 pcx_content_type: Example
 ---
 
-import { Tabs, TabItem } from '~/components';
+import { PackageManagers, Tabs, TabItem } from '~/components';
 
 The following example shows how to authenticate against R2 using the S3 API and an API token.
 
 :::note
 For providing secure access to bucket objects for anonymous users, we recommend using [pre-signed URLs](/r2/api/s3/presigned-urls/) instead.
 
-Pre-signed URLs do not require users to be a member of your organization and enable programmatic application directly.
+Pre-signed URLs do not require users to be a member of your organization and enable direct programmatic access to R2.
 :::
 
-Ensure you have set the following environmental variables prior to running either example. Refer to [Get S3 API credentials from an API token](/r2/api/tokens/#get-s3-api-credentials-from-an-api-token) for more information.
+Ensure you have set the following environment variables prior to running either example. Refer to [Authentication](/r2/api/tokens/) for more information.
 
 ```sh
-export R2_ACCOUNT_ID=your_account_id
-export R2_ACCESS_KEY_ID=your_access_key_id
-export R2_SECRET_ACCESS_KEY=your_secret_access_key
-export R2_BUCKET_NAME=your_bucket_name
+export AWS_REGION=auto
+export AWS_ENDPOINT_URL=https://<account_id>.r2.cloudflarestorage.com
+export AWS_ACCESS_KEY_ID=your_access_key_id
+export AWS_SECRET_ACCESS_KEY=your_secret_access_key
 ```
 
 <Tabs>
   <TabItem label="JavaScript" icon="seti:javascript">
-    Install the `aws-sdk` package for the S3 API:
+    Install the `@aws-sdk/client-s3` package for the S3 API:
 
-    ```sh
-    npm install aws-sdk
+    <PackageManagers pkg="@aws-sdk/client-s3" />
+
+    Run the following Node.js script with `node index.js`. Ensure you change `Bucket` to the name of your bucket, and `Key` to point to an existing file in your R2 bucket.
+
+		Note, tutorial below should function for TypeScript as well.
+
+    ```javascript title="index.js"
+    import { GetObjectCommand, S3Client } from "@aws-sdk/client-s3";
+
+    const s3 = new S3Client();
+
+    const Bucket = "<YOUR_BUCKET_NAME>";
+    const Key = "pfp.jpg";
+
+    const object = await s3.send(
+      new GetObjectCommand({
+        Bucket,
+        Key,
+      }),
+    );
+
+    console.log("Successfully fetched the object", object.$metadata);
+
+    // Process the data as needed
+    // For example, to get the content as a Buffer:
+    // const content = data.Body;
+
+    // Or to save the file (requires 'fs' module):
+    // import { writeFile } from "node:fs/promises";
+    // await writeFile('ingested_0001.parquet', data.Body);
     ```
-
-    ```javascript
-    const AWS = require('aws-sdk');
-
-    const ACCOUNT_ID = process.env.R2_ACCOUNT_ID;
-    const ACCESS_KEY_ID = process.env.R2_ACCESS_KEY_ID;
-    const SECRET_ACCESS_KEY = process.env.R2_SECRET_ACCESS_KEY;
-    const BUCKET_NAME = process.env.R2_BUCKET_NAME;
-
-    // Configure the S3 client for Cloudflare R2
-    const s3Client = new AWS.S3({
-        endpoint: `https://${ACCOUNT_ID}.r2.cloudflarestorage.com`,
-        accessKeyId: ACCESS_KEY_ID,
-        secretAccessKey: SECRET_ACCESS_KEY,
-        signatureVersion: 'v4',
-        region: 'auto' // Cloudflare R2 doesn't use regions, but this is required by the SDK
-    });
-
-    // Specify the object key
-    const objectKey = '2024/08/02/ingested_0001.parquet';
-
-    // Function to fetch the object
-    async function fetchObject() {
-        try {
-            const params = {
-                Bucket: BUCKET_NAME,
-                Key: objectKey
-            };
-
-            const data = await s3Client.getObject(params).promise();
-            console.log('Successfully fetched the object');
-
-            // Process the data as needed
-            // For example, to get the content as a Buffer:
-            // const content = data.Body;
-
-            // Or to save the file (requires 'fs' module):
-            // const fs = require('fs').promises;
-            // await fs.writeFile('ingested_0001.parquet', data.Body);
-
-        } catch (error) {
-            console.error('Failed to fetch the object:', error);
-        }
-    }
-
-    fetchObject();
-    ```
-    </TabItem>
-    <TabItem label="Python" icon="seti:python">
+  </TabItem>
+  <TabItem label="Python" icon="seti:python">
 
     Install the `boto3` S3 API client:
 
@@ -85,48 +66,41 @@ export R2_BUCKET_NAME=your_bucket_name
     pip install boto3
     ```
 
-    Run the following Python script with `python3 get_r2_object.py`. Ensure you change `object_key` to point to an existing file in your R2 bucket.
+    Run the following Python script with `python3 get_r2_object.py`. Ensure you change `bucket` to the name of your bucket, and `object_key` to point to an existing file in your R2 bucket.
 
     ```python title="get_r2_object.py"
-    import os
     import boto3
     from botocore.client import Config
 
-    ACCOUNT_ID = os.environ.get('R2_ACCOUNT_ID')
-    ACCESS_KEY_ID = os.environ.get('R2_ACCESS_KEY_ID')
-    SECRET_ACCESS_KEY = os.environ.get('R2_SECRET_ACCESS_KEY')
-    BUCKET_NAME = os.environ.get('R2_BUCKET_NAME')
-
     # Configure the S3 client for Cloudflare R2
     s3_client = boto3.client('s3',
-        endpoint_url=f'https://{ACCOUNT_ID}.r2.cloudflarestorage.com',
-        aws_access_key_id=ACCESS_KEY_ID,
-        aws_secret_access_key=SECRET_ACCESS_KEY,
-        config=Config(signature_version='s3v4')
+      config=Config(signature_version='s3v4')
     )
 
     # Specify the object key
+    #
+    bucket = '<YOUR_BUCKET_NAME>'
     object_key = '2024/08/02/ingested_0001.parquet'
 
     try:
-        # Fetch the object
-        response = s3_client.get_object(Bucket=BUCKET_NAME, Key=object_key)
+      # Fetch the object
+      response = s3_client.get_object(Bucket=bucket, Key=object_key)
 
-        print('Successfully fetched the object')
+      print('Successfully fetched the object')
 
-        # Process the response content as needed
-        # For example, to read the content:
-        # object_content = response['Body'].read()
+      # Process the response content as needed
+      # For example, to read the content:
+      # object_content = response['Body'].read()
 
-        # Or to save the file:
-        # with open('ingested_0001.parquet', 'wb') as f:
-        #     f.write(response['Body'].read())
+      # Or to save the file:
+      # with open('ingested_0001.parquet', 'wb') as f:
+      #     f.write(response['Body'].read())
 
     except Exception as e:
-        print(f'Failed to fetch the object. Error: {str(e)}')
-    ```
-    </TabItem>
-    <TabItem label="Go" icon="seti:go">
+      print(f'Failed to fetch the object. Error: {str(e)}')
+  ```
+  </TabItem>
+  <TabItem label="Go" icon="seti:go">
 
     Use `go get` to add the `aws-sdk-go-v2` packages to your Go project:
 
@@ -137,84 +111,65 @@ export R2_BUCKET_NAME=your_bucket_name
     go get github.com/aws/aws-sdk-go-v2/service/s3
     ```
 
-    Run the following Go application as a script with `go run main.go`. Ensure you change `objectKey` to point to an existing file in your R2 bucket.
+    Run the following Go application as a script with `go run main.go`. Ensure you change `bucket` to the name of your bucket, and `objectKey` to point to an existing file in your R2 bucket.
 
     ```go
-    package main
+   	package main
 
     import (
-        "context"
-        "fmt"
-        "io"
-        "log"
-        "os"
-
-        "github.com/aws/aws-sdk-go-v2/aws"
-        "github.com/aws/aws-sdk-go-v2/config"
-        "github.com/aws/aws-sdk-go-v2/credentials"
-        "github.com/aws/aws-sdk-go-v2/service/s3"
+  	  "context"
+  	  "fmt"
+  	  "io"
+  	  "log"
+  	  "github.com/aws/aws-sdk-go-v2/aws"
+  	  "github.com/aws/aws-sdk-go-v2/config"
+  	  "github.com/aws/aws-sdk-go-v2/service/s3"
     )
 
     func main() {
-        // Load environment variables
-        accountID := os.Getenv("R2_ACCOUNT_ID")
-        accessKeyID := os.Getenv("R2_ACCESS_KEY_ID")
-        secretAccessKey := os.Getenv("R2_SECRET_ACCESS_KEY")
-        bucketName := os.Getenv("R2_BUCKET_NAME")
+	    cfg, err := config.LoadDefaultConfig(context.TODO())
+	    if err != nil {
+		    log.Fatalf("Unable to load SDK config, %v", err)
+	    }
 
-        // Configure the S3 client for Cloudflare R2
-        r2Resolver := aws.EndpointResolverWithOptionsFunc(func(service, region string, options ...interface{}) (aws.Endpoint, error) {
-            return aws.Endpoint{
-                URL: fmt.Sprintf("https://%s.r2.cloudflarestorage.com", accountID),
-            }, nil
-        })
+	    // Create an S3 client
+	    client := s3.NewFromConfig(cfg)
 
-        cfg, err := config.LoadDefaultConfig(context.TODO(),
-            config.WithEndpointResolverWithOptions(r2Resolver),
-            config.WithCredentialsProvider(credentials.NewStaticCredentialsProvider(accessKeyID, secretAccessKey, "")),
-            config.WithRegion("auto"), // Cloudflare R2 doesn't use regions, but this is required by the SDK
-        )
-        if err != nil {
-            log.Fatalf("Unable to load SDK config, %v", err)
-        }
+	    // Specify the object key
+	    bucket := "<YOUR_BUCKET_NAME>"
+	    objectKey := "pfp.jpg"
 
-        // Create an S3 client
-        client := s3.NewFromConfig(cfg)
+	    // Fetch the object
+	    output, err := client.GetObject(context.TODO(), &s3.GetObjectInput{
+		    Bucket: aws.String(bucket),
+		    Key:    aws.String(objectKey),
+	    })
+	    if err != nil {
+		    log.Fatalf("Unable to fetch object, %v", err)
+	    }
+	    defer output.Body.Close()
 
-        // Specify the object key
-        objectKey := "2024/08/02/ingested_0001.parquet"
+	    fmt.Println("Successfully fetched the object")
 
-        // Fetch the object
-        output, err := client.GetObject(context.TODO(), &s3.GetObjectInput{
-            Bucket: aws.String(bucketName),
-            Key:    aws.String(objectKey),
-        })
-        if err != nil {
-            log.Fatalf("Unable to fetch object, %v", err)
-        }
-        defer output.Body.Close()
+	    // Process the object content as needed
+	    // For example, to save the file:
+	    // file, err := os.Create("ingested_0001.parquet")
+	    // if err != nil {
+	    // 	log.Fatalf("Unable to create file, %v", err)
+	    // }
+	    // defer file.Close()
+	    // _, err = io.Copy(file, output.Body)
+	    // if err != nil {
+	    // 	log.Fatalf("Unable to write file, %v", err)
+	    // }
 
-        fmt.Println("Successfully fetched the object")
-
-        // Process the object content as needed
-        // For example, to save the file:
-        // file, err := os.Create("ingested_0001.parquet")
-        // if err != nil {
-        // 	log.Fatalf("Unable to create file, %v", err)
-        // }
-        // defer file.Close()
-        // _, err = io.Copy(file, output.Body)
-        // if err != nil {
-        // 	log.Fatalf("Unable to write file, %v", err)
-        // }
-
-        // Or to read the content:
-        content, err := io.ReadAll(output.Body)
-        if err != nil {
-            log.Fatalf("Unable to read object content, %v", err)
-        }
-        fmt.Printf("Object content length: %d bytes\n", len(content))
+	    // Or to read the content:
+	    content, err := io.ReadAll(output.Body)
+	    if err != nil {
+		    log.Fatalf("Unable to read object content, %v", err)
+	    }
+	    fmt.Printf("Object content length: %d bytes\n", len(content))
     }
     ```
-    </TabItem>
-  </Tabs>
+  </TabItem>
+</Tabs>

@@ -34,7 +34,23 @@ To install the WARP client, run the following command:
 msiexec /i "Cloudflare_WARP_<VERSION>.msi" /qn ORGANIZATION="your-team-name" SUPPORT_URL="http://support.example.com"
 ```
 
-Refer to [deployment parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/) for a description of each argument.
+#### Supported properties
+
+The WARP MSI installer supports the following [public properties](https://learn.microsoft.com/en-us/windows/win32/msi/public-properties):
+
+- `ORGANIZATION`
+- `GATEWAY_UNIQUE_ID`
+- `AUTH_CLIENT_ID`
+- `AUTH_CLIENT_SECRET`
+- `ONBOARDING`
+- `OVERRIDE_API_ENDPOINT`
+- `OVERRIDE_DOH_ENDPOINT`
+- `OVERRIDE_WARP_ENDPOINT`
+- `SERVICE_MODE`
+- `SUPPORT_URL`
+- `SWITCH_LOCKED`
+
+Refer to [deployment parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/) for a description of each property.
 
 ### Uninstall WARP
 

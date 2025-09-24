@@ -235,6 +235,10 @@ This parameter replaces the old `enabled` property, which can no longer be used 
 
 ### `unique_client_id`
 
+:::note
+Only valid for iOS and Android/ChromeOS.
+:::
+
 Assigns a unique identifier to the device for the [device UUID posture check](/cloudflare-one/identity/devices/warp-client-checks/device-uuid).
 
 **Value Type:** `string`
@@ -268,9 +272,9 @@ Enables multiple user registrations on a Windows device.
 
 Allows WARP to connect with a service token before a user completes the initial Windows login. For more information, refer to [Connect WARP before Windows login](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/windows-prelogin/).
 
-## Per-App VPN parameters (Android)
+## Per-app VPN parameters (Android)
 
-To support the per-app VPN for Android devices, Cloudflare has introduced new MDM parameters. The admin can configure these new MDM parameters via any MDM tool that supports deploying an Android app to managed devices or work profiles.
+[Per-app VPN](https://support.google.com/work/android/answer/9213914?hl=en) parameters allow you to choose the Android apps that can send traffic through the WARP tunnel. Admins can configure these parameters via any MDM tool that supports deploying an Android app to managed devices or work profiles.
 
 ### `app_identifier`
 

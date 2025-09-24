@@ -10,17 +10,37 @@
 
 <script>
 	import { track } from "~/util/zaraz";
+	import { openGlobalSearch } from "~/util/search";
 
 	const { pathname } = window.location;
 
 	const anchor = document.getElementById("404-search-link");
+	const pretty = decodeURIComponent(
+		pathname.replaceAll("/", " ").replaceAll("-", " ").trim(),
+	);
 
 	if (anchor) {
-		const pretty = pathname.replaceAll("/", " ").replaceAll("-", " ").trim();
-
 		anchor.setAttribute("href", `/search/?q=${encodeURIComponent(pretty)}`);
 		anchor.addEventListener("click", () => {
 			track("serp from location", { value: "404", query: pretty });
 		});
 	}
+
+	document.addEventListener(
+		"keydown",
+		(keyboardEvent) => {
+			if (
+				(keyboardEvent.metaKey || keyboardEvent.ctrlKey) &&
+				keyboardEvent.key === "k"
+			) {
+				keyboardEvent.preventDefault();
+				keyboardEvent.stopPropagation();
+
+				openGlobalSearch(pretty);
+			}
+		},
+		{
+			capture: true,
+		},
+	);
 </script>

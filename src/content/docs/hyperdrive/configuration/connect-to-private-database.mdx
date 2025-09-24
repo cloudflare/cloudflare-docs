@@ -46,15 +46,13 @@ First, create a [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks
 
 ### 1.2. Connect your database using a public hostname
 
-Your tunnel must be configured to use a public hostname so that Hyperdrive can route requests to it. If you don't have a hostname on Cloudflare yet, you will need to [register a new hostname](/registrar/get-started/register-domain/) or [add a zone](/dns/zone-setups/) to Cloudflare to proceed.
+Your tunnel must be configured to use a public hostname on Cloudflare so that Hyperdrive can route requests to it. If you don't have a hostname on Cloudflare yet, you will need to [register a new hostname](/registrar/get-started/register-domain/) or [add a zone](/dns/zone-setups/) to Cloudflare to proceed.
 
-<Steps>
-1. In the **Public Hostnames** tab, choose a **Domain** and specify any subdomain or path information. This will be used in your Hyperdrive configuration to route to this tunnel.
+1. In the **Published application routes** tab, choose a **Domain** and specify any subdomain or path information. This will be used in your Hyperdrive configuration to route to this tunnel.
 
 2. In the **Service** section, specify **Type** `TCP` and the URL and configured port of your database, such as `localhost:5432` or `my-database-host.database-provider.com:5432`. This address will be used by the tunnel to route requests to your database.
 
 3. Select **Save tunnel**.
-</Steps>
 
 :::note
 If you are setting up the tunnel through the CLI instead ([locally-managed tunnel](/cloudflare-one/connections/connect-networks/do-more-with-tunnels/local-management/)), you will have to complete these steps manually. Follow the Cloudflare Zero Trust documentation to [add a public hostname to your tunnel](/cloudflare-one/connections/connect-networks/routing-to-tunnel/dns/) and [configure the public hostname to route to the address of your database](/cloudflare-one/connections/connect-networks/do-more-with-tunnels/local-management/configuration-file/).

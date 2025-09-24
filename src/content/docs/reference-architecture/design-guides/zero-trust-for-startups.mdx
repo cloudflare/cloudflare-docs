@@ -264,7 +264,7 @@ We recommend using our Cloudflare Access product for remote access to your inter
 In a lot of cases, you may even use both products for application access. For example, if you're self-hosting [Sentry](https://sentry.io/) — which is not currently available on the public Internet — follow these steps:
 
 1. Set up a public hostname with Cloudflare Access (which your users would navigate to Sentry on).
-2. Install a Cloudflare Tunnel with an associated Public Hostname route to point to your local Sentry service.
+2. Install a Cloudflare Tunnel with an associated **Published application** to point to your local Sentry service.
 3. Integrate Sentry with Access for SaaS as the SSO provider.
 
 Now, users reaching the application from outside your network will already carry the Cloudflare JWT, and will be seamlessly authenticated into your application.

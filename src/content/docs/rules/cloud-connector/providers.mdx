@@ -5,7 +5,7 @@ sidebar:
   order: 5
 ---
 
-import { Render } from "~/components";
+import { Render, Steps } from "~/components";
 
 Cloud Connector currently supports the following cloud providers and services:
 
@@ -43,10 +43,14 @@ The SSL setting applied to requests between Cloud Connector and AWS S3 depends o
 
 ### Get the bucket URL
 
+<Steps>
+
 1. Go to the [Amazon S3 console](https://console.aws.amazon.com/s3/) and select **Buckets** in the navigation pane.
 2. Select the bucket name.
 3. Go to the **Properties** tab.
 4. Select the **Static Website Hosting** card. The **Endpoint** field shows your bucket URL.
+
+</Steps>
 
 For more information, refer to the [Amazon S3 documentation](https://docs.aws.amazon.com/AmazonS3/latest/userguide/EnableWebsiteHosting.html).
 
@@ -66,6 +70,8 @@ Cloud Connector supports both subdomain and URI path-style URLs:
 
 ### Get the bucket URL
 
+<Steps>
+
 1. Go to the [Google Cloud console](https://console.cloud.google.com/storage/browser) and select **Buckets**.
 2. Select the bucket name.
 3. For one of the files already in the bucket, select the link icon in the **Public** column to copy the file's public URL to the clipboard. The file URL will have the following format:
@@ -74,6 +80,8 @@ Cloud Connector supports both subdomain and URI path-style URLs:
 
    To obtain the subdomain bucket URL, refactor the file URL to `<BUCKET_NAME>.storage.googleapis.com` format.<br/>
    To obtain the URI path bucket URL, remove `https://` and `/<BUCKET_NAME>/<OBJECT_NAME>` from the file URL.
+
+</Steps>
 
 If the files in your bucket are not publicly accessible, you must change the bucket permissions. For details, refer to the [Google Cloud Storage documentation](https://cloud.google.com/storage/docs/access-control/making-data-public#buckets).
 
@@ -90,9 +98,13 @@ For Azure Blog Storage, Cloud Connector supports only subdomain URLs like `<BUCK
 
 ### Get the bucket URL
 
+<Steps>
+
 1. Go to the [Azure portal](https://portal.azure.com/) and select your storage account.
 2. In the menu pane, under **Settings**, select **Endpoints**.
 3. Get your bucket URL from the **Blob service** endpoint or the **Static website** endpoint.
+
+</Steps>
 
 If the blob container is not configured for public access, you must change the container settings. For details, refer to the [Azure Storage documentation](https://learn.microsoft.com/en-us/azure/storage/blobs/anonymous-read-access-configure?tabs=portal).
 

@@ -3,6 +3,11 @@ link: "/radar/release-notes/"
 productName: Radar
 productLink: "/radar/"
 entries:
+  - publish_date: "2025-09-22"
+    title: Add IRR AS-SET membership lookup endpoint
+    description: |-
+      * Added IRR AS-SET membership lookup endpoint
+        * [ `/entities/asns/{asn}/as_set` ](/api/resources/radar/subresources/entities/subresources/asns/methods/as_set/)
   - publish_date: "2025-08-27"
     title: Add industry and vertical to AI Bots and Web Crawlers, and bot kind to Bots
     description: |-

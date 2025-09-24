@@ -1,0 +1,75 @@
+---
+pcx_content_type: concept
+title: Organizations
+sidebar:
+  order: 4
+  badge:
+    text: Beta
+---
+
+Cloudflare Organizations simplify the way you manage multiple accounts, domains (also known as zones), and teams by centralizing this information in one location. You can also share configurations between accounts and view aggregate analytics.
+
+:::note
+
+Cloudflare Organizations is currently in closed beta.
+
+:::
+
+## Create an Organization
+
+1. Log in to the [Cloudflare dashboard.](https://dash.cloudflare.com)
+2. Select **Organizations**.
+3. From the **Organizations** page, select **Create organization**.
+4. Enter a name for the organization and select **Create**. The organization overview page displays.
+
+:::note
+
+Users can only create one organization.
+
+:::
+
+## Organization Overview
+
+From the Organization overview, you can view which accounts are assigned to your organization. After you assign an account, you can view the account, copy an account's ID, or rename the account.
+
+### Assign an account to an organization
+
+After you create an organization, determine which accounts will be assigned to the organization.
+
+1. From **Organization Overview**, select **Assign an account**. The list displays Enterprise accounts where you are listed as a Super Administrator.
+2. In the text field, search for the account name and select it.
+3. When you are done, select **Assign to organization**. The organization overview page displays with the newly assigned account.
+
+:::note
+
+To remove an account from your organization, contact your Cloudflare account team.
+
+:::
+
+## Analytics & Logs
+
+Review incoming HTTP traffic for all domains connected to Cloudflare through your organization. The data includes traffic for proxied hostnames, does not reflect your billable usage, and may be based on an adaptive sample.
+
+You can also view specific data associated with your HTTP traffic by adding optional filters. You can also choose to print a report of your data or download the data.
+
+## Shared Configurations
+
+Create and enforce global policies across your organization or sub-organization with [WAF Custom Rulesets](/waf/custom-rules/) and [Gateway policies](/cloudflare-one/policies/gateway/).
+
+By utilizing shared configurations, you can define a WAF custom ruleset that can apply to one or more accounts to be managed in a single place.
+
+## Manage Organization
+
+Rename your organization and add or edit customer identification data related to the organization.
+
+### Rename an organization
+
+1. Select **Organizations** > **Manage Organization**.
+2. From **Organization name**, select **Rename**.
+3. Enter the new name for the organization and select **Rename**.
+
+### Edit customer identification data
+
+1. Select **Organizations** > **Manage Organization**.
+2. From **Customer identification data**, select **Edit**. 
+3. Enter the information in the text fields and select **Save**.
