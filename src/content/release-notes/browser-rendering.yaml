@@ -4,7 +4,7 @@ productName: Browser Rendering
 productLink: "/browser-rendering/"
 entries:
   - publish_date: "2025-09-25"
-    title: Birthday week updates - updates to Playwright, new support for Stagehand, and increased limits
+    title: Updates to Playwright, new support for Stagehand, and increased limits
     description: |-
       * [Playwright](/browser-rendering/platform/playwright/) support in Browser Rendering is now GA. We've upgraded to [Playwright v1.55](https://playwright.dev/docs/release-notes#version-155).
       * Added support for [Stagehand](/browser-rendering/platform/stagehand/), an open source browser automation framework, powered by [Workers AI](/workers-ai). Stagehand enables developers to build more reliably and flexibly by combining code with natural-language instructions.
