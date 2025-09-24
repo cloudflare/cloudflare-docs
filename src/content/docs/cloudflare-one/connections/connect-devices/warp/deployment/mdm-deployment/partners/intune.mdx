@@ -113,14 +113,14 @@ The following steps outline deploying WARP on MacOS using Intune.
 
 ### Prerequisites
 
-- A Microsoft Intune account.
-- A Cloudflare account that has completed the Zero Trust onboarding flow.
+- A [Microsoft Intune account](https://login.microsoftonline.com/).
+- A Cloudflare account that has a [Zero Trust organization](/cloudflare-one/setup/#create-a-zero-trust-organization).
 - macOS devices enrolled in Intune.
 
 ### Deployment order
 
 :::tip[Best practice]
-Deploy configuration profiles before the WARP application itself. This ensures that when the WARP client installs, it already has the required permissions and certificates, avoiding failed installations.
+Deploy configuration profiles before the WARP application itself. This order ensures that when the WARP client installs, it already has the required permissions and certificates, avoiding failed installations.
 :::
 
 - Upload user-side certificate and team domain certificate (2 separate configuration policies).
@@ -255,8 +255,8 @@ By completing this step, you preconfigure WARP with your team settings so it con
 
 ### 4. Upload WARP client `.pkg`
 
-:::tip
-Complete Step 4 one hour after Steps 1, 2, and 3 so clients have enough time to check in and update their device configurations.
+:::tip[Best practice]
+Complete Step 4 one hour after steps 1, 2, and 3 so clients have enough time to check in and update their device configurations.
 :::
 
 1. Log into [Zero Trust](https://one.dash.cloudflare.com/).
