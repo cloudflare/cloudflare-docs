@@ -1,0 +1,39 @@
+---
+title: Pipelines now supports SQL transformations and Apache Iceberg
+description: Transform streaming data with SQL and write to Apache Iceberg tables in R2
+date: 2025-09-25T13:00:00
+products:
+  - pipelines
+hidden: true
+---
+
+import { LinkCard } from "~/components";
+
+Today, we're launching the new [Cloudflare Pipelines](/pipelines/): a streaming data platform that ingests events, transforms them with [SQL](/pipelines/sql-reference/select-statements/), and writes to [R2](/r2/) as [Apache Iceberg](https://iceberg.apache.org/) tables or Parquet files.
+
+Pipelines can receive events via [HTTP endpoints](/pipelines/streams/writing-to-streams/#send-via-http) or [Worker bindings](/pipelines/streams/writing-to-streams/#send-via-workers), transform them with SQL, and deliver to R2 with exactly-once guarantees. This makes it easy to build analytics-ready warehouses for server logs, mobile application events, IoT telemetry, or clickstream data without managing streaming infrastructure.
+
+For example, here's a pipeline that ingests clickstream events and filters out bot traffic while extracting domain information:
+
+```sql
+INSERT into events_table
+SELECT
+  user_id,
+  lower(event) AS event_type,
+  to_timestamp_micros(ts_us) AS event_time,
+  regexp_match(url, '^https?://([^/]+)')[1]  AS domain,
+  url,
+  referrer,
+  user_agent
+FROM events_json
+WHERE event = 'page_view'
+  AND NOT regexp_like(user_agent, '(?i)bot|spider');
+```
+
+Get started by creating a pipeline in the dashboard or running a single command in [Wrangler](/workers/wrangler/):
+
+```bash
+npx wrangler pipelines setup
+```
+
+Check out our [getting started guide](/pipelines/getting-started/) to learn how to create a pipeline that delivers events to an [Iceberg table](/r2/data-catalog/) you can query with R2 SQL. Read more about today's announcement in our [blog post](https://blog.cloudflare.com/cloudflare-data-platform).
