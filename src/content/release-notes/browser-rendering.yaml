@@ -3,6 +3,12 @@ link: "/browser-rendering/changelog/"
 productName: Browser Rendering
 productLink: "/browser-rendering/"
 entries:
+  - publish_date: "2025-09-25"
+    title: Birthday week updates
+    description: |-
+      * [Playwright](/browser-rendering/platform/playwright/) is now Generally Available. We've upgraded to [Playwright v???](new link) and [Playwright MCP](/browser-rendering/platform/playwright-mcp/) which includes...
+      * Stagehand support
+      * Increased limits for REST API and Workers Binding
   - publish_date: "2025-09-22"
     title: Added `excludeExternalLinks` parameter to `/links` REST endpoint
     description: |-
