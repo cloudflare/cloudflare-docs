@@ -16,38 +16,38 @@ To get started with Stagehand, check out this [example guide](/browser-rendering
 ![Stagehand video](~/assets/images/browser-rendering//stagehand.gif)
 
 ```ts title="Stagehand example"
-			const stagehand = new Stagehand({
-				env: "LOCAL",
-				localBrowserLaunchOptions: { cdpUrl: endpointURLString(env.BROWSER) },
-				llmClient: new WorkersAIClient(env.AI),
-				verbose: 1,
-			});
+const stagehand = new Stagehand({
+	env: "LOCAL",
+	localBrowserLaunchOptions: { cdpUrl: endpointURLString(env.BROWSER) },
+	llmClient: new WorkersAIClient(env.AI),
+	verbose: 1,
+});
 
-			await stagehand.init();
-			const page = stagehand.page;
+await stagehand.init();
+const page = stagehand.page;
 
-			await page.goto('https://demo.playwright.dev/movies');
+await page.goto('https://demo.playwright.dev/movies');
 
-			// if search is a multi-step action, stagehand will return an array of actions it needs to act on
-			const actions = await page.observe('Search for "Furiosa"');
-			for (const action of actions)
-				await page.act(action);
+// if search is a multi-step action, stagehand will return an array of actions it needs to act on
+const actions = await page.observe('Search for "Furiosa"');
+for (const action of actions)
+	await page.act(action);
 
-			await page.act('Click the search result');
+await page.act('Click the search result');
 
-			// normal playwright functions work as expected
+// normal playwright functions work as expected
 			await page.waitForSelector('.info-wrapper .cast');
 
-			let movieInfo = await page.extract({
-				instruction: 'Extract movie information',
-				schema: z.object({
-					title: z.string(),
-					year: z.number(),
-					rating: z.number(),
-					genres: z.array(z.string()),
-					duration: z.number().describe("Duration in minutes"),
-				}),
-			});
+let movieInfo = await page.extract({
+	instruction: 'Extract movie information',
+	schema: z.object({
+		title: z.string(),
+		year: z.number(),
+		rating: z.number(),
+		genres: z.array(z.string()),
+		duration: z.number().describe("Duration in minutes"),
+	}),
+});
 
-			await stagehand.close();
+await stagehand.close();
 ```
