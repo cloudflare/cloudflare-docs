@@ -191,6 +191,29 @@ const browser = await playwright.launch(env.MYBROWSER, { keep_alive: 600000 });
 
 Using the above, the browser will stay open for up to 10 minutes, even if inactive.
 
+### Session Reuse
+
+The best way to improve the performance of your browser rendering Worker is to reuse sessions by keeping the browser open after you've finished with it, and connecting to that session each time you have a new request. Playwright handles [`browser.close`](https://playwright.dev/docs/api/class-browser#browser-close) differently from Puppeteer. In Playwright, if the browser was obtained using a `connect` session, the session will disconnect. If the browser was obtained using a `launch` session, the session will close. 
+
+```js
+import { env } from "cloudflare:workers";
+import { acquire, connect } from "@cloudflare/playwright";
+
+async function reuseSameSession() {
+  // acquires a new session
+	const { sessionId } = await acquire(env.BROWSER);
+
+  for (let i = 0; i < 5; i++) {
+  // connects to the session that was previously acquired  
+	const browser = await connect(env.BROWSER, sessionId);
+  
+    // ...
+  
+    await browser.close();
+  }
+}
+```
+
 ### Set a custom user agent
 
 To specify a custom user agent in Playwright, set it in the options when creating a new browser context with `browser.newContext()`. All pages subsequently created from this context will use the new user agent. This is useful if the target website serves different content based on the user agent.
