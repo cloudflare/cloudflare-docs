@@ -6,17 +6,25 @@ sidebar:
 description: Learn how to configure Managed Transforms.
 ---
 
-import { Details, TabItem, Tabs, Render, Steps, APIRequest } from "~/components";
+import {
+	Details,
+	TabItem,
+	Tabs,
+	Render,
+	Steps,
+	APIRequest,
+	DashButton,
+} from "~/components";
 
 <Tabs syncKey="dashPlusAPIPlusTerraform"> <TabItem label="Dashboard">
 
 <Steps>
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
+1. In the Cloudflare dashboard, go to the Rules **Settings** page.
 
-2. Go to **Rules** > **Settings**.
+   <DashButton url="/?to=/:account/:zone/rules/settings" />
 
-3. In the **Managed Transforms** tab, enable or disable the [desired Managed Transforms](/rules/transform/managed-transforms/reference/) by selecting the toggle next to each entry. Some Managed Transforms may not be available in your Cloudflare plan or product subscriptions.
+2. In the **Managed Transforms** tab, enable or disable the [desired Managed Transforms](/rules/transform/managed-transforms/reference/) by selecting the toggle next to each entry. Some Managed Transforms may not be available in your Cloudflare plan or product subscriptions.
 
 </Steps>
 

@@ -6,7 +6,7 @@ sidebar:
   label: Create a rule in the dashboard
 ---
 
-import { Render, Steps } from "~/components";
+import { Render, Steps, DashButton } from "~/components";
 
 Refer to the [Rules examples gallery](/rules/transform/examples/?operation=Request+modification) for examples of rule definitions.
 
@@ -14,38 +14,38 @@ To create a rule:
 
 <Steps>
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
+1. In the Cloudflare dashboard, go to the Rules **Overview** page.
 
-2. Go to **Rules** > **Overview**.
+   <DashButton url="/?to=/:account/:zone/rules/overview" />
 
-3. Select **Create rule** > **Request Header Transform Rule**.
+2. Select **Create rule** > **Request Header Transform Rule**.
 
-4. (Optional) Select one of the rule templates that address common use cases. Then, review and adjust the proposed rule configuration.
+3. (Optional) Select one of the rule templates that address common use cases. Then, review and adjust the proposed rule configuration.
 
-5. Enter a descriptive name for the rule in **Rule name**.
+4. Enter a descriptive name for the rule in **Rule name**.
 
-6. Under **When incoming requests match**, select if you wish to apply the rule to all incoming requests or only to requests that match a custom filter expression.
+5. Under **When incoming requests match**, select if you wish to apply the rule to all incoming requests or only to requests that match a custom filter expression.
 
-7. (Optional) To define a custom expression, use the Expression Builder (specifying one or more values for **Field**, **Operator**, and **Value**) or manually enter an expression using the Expression Editor. For more information, refer to [Edit expressions in the dashboard](/ruleset-engine/rules-language/expressions/edit-expressions/).
+6. (Optional) To define a custom expression, use the Expression Builder (specifying one or more values for **Field**, **Operator**, and **Value**) or manually enter an expression using the Expression Editor. For more information, refer to [Edit expressions in the dashboard](/ruleset-engine/rules-language/expressions/edit-expressions/).
 
    :::note
    Check the [available fields and functions](/rules/transform/request-header-modification/reference/fields-functions/).
    :::
 
-8. For **Modify request header**, select one of the following options:
+7. For **Modify request header**, select one of the following options:
    - _Set static_ — Sets the value of an HTTP request header to a static string value. Overrides the value of an existing header with the same name or adds a new header if it does not exist.
    - _Set dynamic_ — Sets the value of an HTTP request header according to the provided expression. Overrides the value of an existing header with the same name or adds a new header if it does not exist.
    - _Remove_ — Removes the HTTP request header with the provided name, if it exists.
 
-9. Enter the name of the HTTP request header to modify in **Header name** and the static value or expression in **Value**, if you are setting the header value.
+8. Enter the name of the HTTP request header to modify in **Header name** and the static value or expression in **Value**, if you are setting the header value.
 
-10. To modify another HTTP request header in the same rule, select **Set new header**. You can modify up to 30 HTTP request headers in a single rule.
+9. To modify another HTTP request header in the same rule, select **Set new header**. You can modify up to 30 HTTP request headers in a single rule.
 
-    The following example includes the modification of three headers:
+   The following example includes the modification of three headers:
 
-    ![Example configuration performing three request header modifications: set a dynamic header value, set a static header value, and remove an existing header.](~/assets/images/rules/transform/request-header-modification-example.png)
+   ![Example configuration performing three request header modifications: set a dynamic header value, set a static header value, and remove an existing header.](~/assets/images/rules/transform/request-header-modification-example.png)
 
-11. To save and deploy your rule, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
+10. To save and deploy your rule, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
 
     <Render file="rules-creation-dash-dns-popup" product="rules" />
 
