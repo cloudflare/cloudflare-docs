@@ -23,7 +23,7 @@ The following example shows how to query a confidence interval and interpret the
 
 To request a confidence interval, use the `confidence(level: X)` argument in your query.
 
-```json
+```graphql graphql-api-explorer title="A GraphQL query"
 query SingleDatasetWithConfidence($zoneTag: string, $start: Time, $end: Time) {
   viewer {
     zones(filter: {zoneTag: $zoneTag}) {
