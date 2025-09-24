@@ -15,11 +15,11 @@ To get started with Stagehand, check out this [example guide](/browser-rendering
 
 ![Stagehand video](~/assets/images/browser-rendering//stagehand.gif)
 
-```ts title="stagehand example"
-const stagehand = new Stagehand({
+```ts title="Stagehand example"
+			const stagehand = new Stagehand({
 				env: "LOCAL",
 				localBrowserLaunchOptions: { cdpUrl: endpointURLString(env.BROWSER) },
-				llmClient: new new WorkersAIClient(env.AI),
+				llmClient: new WorkersAIClient(env.AI),
 				verbose: 1,
 			});
 
