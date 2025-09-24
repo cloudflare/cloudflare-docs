@@ -99,8 +99,6 @@ export const baseSchema = ({ image }: SchemaContext) =>
 			.string()
 			.optional()
 			.describe("Renders a summary description directly below the page title."),
-		goal: z.string().array().optional(),
-		operation: z.string().array().optional(),
 		noindex: z
 			.boolean()
 			.optional()
