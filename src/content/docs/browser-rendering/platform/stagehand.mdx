@@ -25,7 +25,7 @@ In this example, you will use Stagehand to search for a movie on [The Movie Data
 
 If you want to skip the steps and get started quickly, select **Deploy to Cloudflare** below.
 
-[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/playwright-mcp/tree/main/cloudflare/example)
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/playwright/tree/main/packages/playwright-cloudflare/examples/stagehand)
 
 After you deploy, you can interact with the Worker using this URL pattern:
 ```
@@ -45,21 +45,15 @@ Update your wrangler configuration file to include the bindings for Browser Rend
 	<WranglerConfig>
 		```jsonc
 			{
-				"name": "cloudflare-stagehand-example",
+				"name": "stagehand-example",
 				"main": "src/index.ts",
-				"compatibility_flags": ["nodejs_compat", "enable_nodejs_fs_module"],
-				"compatibility_date": "2025-09-01",
-				"workers_dev": true,
-				"upload_source_maps": true,
-				"alias": {
-					"playwright": "@cloudflare/playwright"
-				},
+				"compatibility_flags": ["nodejs_compat"],
+				"compatibility_date": "2025-09-17",
 				"observability": {
 					"enabled": true
 				},
 				"browser": {
-					"binding": "BROWSER",
-					"experimental_remote": true
+					"binding": "BROWSER"
 				},
 				"ai": {
 					"binding": "AI"
@@ -68,30 +62,53 @@ Update your wrangler configuration file to include the bindings for Browser Rend
 		```
 	</WranglerConfig>
 
+If you are using [Cloudflare Vite plugin](https://developers.cloudflare.com/workers/vite-plugin/), you need to include the following [alias](https://vite.dev/config/shared-options.html#resolve-alias) in `vite.config.ts`:
+
+
+```ts
+export default defineConfig({
+	// ...
+	resolve: {
+		alias: {
+			'playwright': '@cloudflare/playwright',
+		},
+	},
+});
+```
+
+If you're not using the Cloudflare Vite plugin, you need to include the following [module alias](https://developers.cloudflare.com/workers/wrangler/configuration/#module-aliasing) to wrangler configuration:
+
+```jsonc
+{
+	// ...
+	"alias": {
+		"playwright": "@cloudflare/playwright"
+	}
+}
+```
+
 #### 3. Write the Worker code
+
+Copy [workersAIClient.ts](https://github.com/cloudflare/playwright/blob/main/packages/playwright-cloudflare/examples/stagehand/src/worker/workersAIClient.ts) to your project.
+
+Then, in your worker code, import the `workersAIClient.ts` file and use it to configure a new `Stagehand` instance:
 
 	```ts title="src/index.ts"
 
 	import { Stagehand } from "@browserbasehq/stagehand";
 	import { z } from "zod";
 	import { endpointURLString } from "@cloudflare/playwright";
-	import { createWorkersAI } from "workers-ai-provider";
-	import { AISdkClient } from "./aidsk";
+	import { WorkersAIClient } from "./workersAIClient";
 
 	export default {
 		async fetch(request: Request, env: Env) {
-			const url = new URL(request.url);
-			if (url.pathname !== "/")
+			if (new URL(request.url).pathname !== "/")
 				return new Response("Not found", { status: 404 });
-
-			const workersai = createWorkersAI({ binding: env.AI });
-			// @ts-ignore
-			const model = workersai("@cf/meta/llama-3.3-70b-instruct-fp8-fast");
 
 			const stagehand = new Stagehand({
 				env: "LOCAL",
-				localBrowserLaunchOptions: { cdpUrl: endpointURLString("BROWSER") },
-				llmClient: new AISdkClient({ model }),
+				localBrowserLaunchOptions: { cdpUrl: endpointURLString(env.BROWSER) },
+				llmClient: new new WorkersAIClient(env.AI),
 				verbose: 1,
 			});
 
@@ -113,39 +130,13 @@ Update your wrangler configuration file to include the bindings for Browser Rend
 				}),
 			});
 
-			const screenshot = await page.screenshot();
 			await stagehand.close();
 
-			return new Response(`
-				<html>
-					<head>
-						<title>Cloudflare Stagehand Example</title>
-						<style>
-							body {
-								font-family: system-ui, -apple-system, sans-serif;
-							}
-						</style>
-					</head>
-					<body>
-						<h1>Stagehand Example</h1>
-						<p>This example shows how to use <a href="https://www.stagehand.dev/">stagehand</a> to extract information from a web page.</p>
-						<h2>Movie Information</h2>
-						<div>
-							<p><b>Title:</b> ${movieInfo.title}</p>
-							<p><b>Release Year:</b> ${movieInfo.year}</p>
-							<p><b>Director:</b> ${movieInfo.director}</p>
-						</div>
-						<img src="data:image/png;base64,${screenshot.toString('base64')}" />
-					</body>
-				</html>
-			`, {
-				headers: {
-					"Content-Type": "text/html; charset=utf-8",
-				},
-			});
+			return Response.json(movieInfo);
 		},
 	};
 	```
+
 #### 4. Build the project
 
 	```bash
@@ -173,7 +164,7 @@ To use AI Gateway, first create a gateway in the [Cloudflare dashboard](https://
 ```typescript
 const stagehand = new Stagehand({
   env: "LOCAL",
-  localBrowserLaunchOptions: { cdpUrl: endpointURLString("BROWSER") },
+  localBrowserLaunchOptions: { cdpUrl: endpointURLString(env.BROWSER) },
   modelName: "openai/gpt-4.1",
   modelClientOptions: {
     baseURL: `https://gateway.ai.cloudflare.com/v1/${env.CLOUDFLARE_ACCOUNT_ID}/${env.AI_GATEWAY_ID}/openai`,
@@ -181,7 +172,7 @@ const stagehand = new Stagehand({
 });
 ```
 
-## Use a custom model
+## Use third-party model
 
 If you'd like to use a model outside of Workers AI, you can configure Stagehand to use models from supported [third-party providers](https://docs.stagehand.dev/configuration/models#supported-providers), including OpenAI and Anthropic, by providing your own credentials.
 
@@ -196,7 +187,7 @@ Then, configure Stagehand with your provider, model, and API key.
 ```typescript
 const stagehand = new Stagehand({
   env: "LOCAL",
-  localBrowserLaunchOptions: { cdpUrl: endpointURLString("BROWSER") },
+  localBrowserLaunchOptions: { cdpUrl: endpointURLString(env.BROWSER) },
   modelName: "openai/gpt-4.1",
   modelClientOptions: {
     apiKey: env.OPENAI_API_KEY,
