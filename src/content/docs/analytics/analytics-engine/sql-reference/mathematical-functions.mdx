@@ -1,0 +1,54 @@
+---
+title: Mathematical functions
+pcx_content_type: reference
+sidebar:
+  order: 9
+head:
+  - tag: title
+    content: SQL Reference
+
+---
+
+## intDiv
+
+Usage:
+
+```sql
+intDiv(a, b)
+```
+
+Divide a by b, rounding the answer down to the nearest whole number.
+
+## log
+
+Usage:
+
+```sql
+log(<expression>)
+```
+
+`log` returns the natural logarithm of a provided number. `ln` is also available as an alias.
+
+Examples:
+
+```sql
+-- get the natural logarithm of the double1 column
+log(double1)
+```
+
+## pow
+
+Usage:
+
+```sql
+pow(<expression>, <expression>)
+```
+
+`pow` returns the first argument raised to the power of the second argument.
+
+Examples:
+
+```sql
+-- get the square of the double1 column
+pow(double1, 2)
+```
