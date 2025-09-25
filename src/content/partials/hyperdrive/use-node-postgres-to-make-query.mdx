@@ -29,7 +29,11 @@ Create a new `Client` instance and pass the Hyperdrive `connectionString`:
 import { Client } from "pg";
 
 export default {
-	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+	async fetch(
+		request: Request,
+		env: Env,
+		ctx: ExecutionContext,
+	): Promise<Response> {
 		// Create a new client instance for each request.
 		const client = new Client({
 			connectionString: env.HYPERDRIVE.connectionString,
@@ -43,9 +47,6 @@ export default {
 			// Perform a simple query
 			const result = await client.query("SELECT * FROM pg_tables");
 
-			// Clean up the client after the response is returned, before the Worker is killed
-			ctx.waitUntil(client.end());
-
 			return Response.json({
 				success: true,
 				result: result.rows,
@@ -53,7 +54,7 @@ export default {
 		} catch (error: any) {
 			console.error("Database error:", error.message);
 
-			new Response('Internal error occurred', { status: 500 });
+			new Response("Internal error occurred", { status: 500 });
 		}
 	},
 };
