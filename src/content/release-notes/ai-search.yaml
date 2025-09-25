@@ -3,6 +3,10 @@ link: "/ai-search/platform/release-note/"
 productName: AI Search
 productLink: "/ai-search/"
 entries:
+  - publish_date: "2025-09-25"
+    title: AI Search (formerly AutoRAG) now supports more models
+    description: |-
+      Connect your provider keys through AI Gateway to use models like from OpenAI and Anthropic for both embeddings and inference. API updates to align with the new name are coming soon, with existing APIs still supported.
   - publish_date: "2025-08-20"
     title: Increased maximum query results to 50
     description: |-
