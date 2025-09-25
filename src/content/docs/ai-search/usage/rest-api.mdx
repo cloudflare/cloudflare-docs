@@ -1,0 +1,110 @@
+---
+pcx_content_type: concept
+title: REST API
+sidebar:
+  order: 4
+---
+
+import {
+	Badge,
+	Description,
+	Render,
+	TabItem,
+	Tabs,
+	WranglerConfig,
+	MetaInfo,
+	Type,
+	DashButton
+} from "~/components";
+
+This guide will instruct you through how to use the AI Search REST API to make a query to your AI Search.
+
+:::note[AI Search is the new name for AutoRAG]
+API endpoints may still reference `autorag` for the time being. Functionality remains the same, and support for the new naming will be introduced gradually.
+:::
+
+## Prerequisite: Get AI Search API token
+
+You need an API token with the `AI Search - Read` and `AI Search Edit` permissions to use the REST API. To create a new token:
+
+1. In the Cloudflare dashboard, go to the **AI Search** page.
+
+<DashButton url="/?to=/:account/ai/autorag" />
+
+2. Select your AI Search.
+3. Select **Use AI Search** and then select **API**.
+4. Select **Create an API Token**.
+5. Review the prefilled information then select **Create API Token**.
+6. Select **Copy API Token** and save that value for future use.
+
+## AI Search
+
+This REST API searches for relevant results from your data source and generates a response using the model and the retrieved relevant context:
+
+```bash
+
+curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai-search/rags/{AUTORAG_NAME}/ai-search \
+-H 'Content-Type: application/json' \
+-H "Authorization: Bearer {API_TOKEN}" \
+-d '{
+	"query": "How do I train a llama to deliver coffee?",
+	"model": @cf/meta/llama-3.3-70b-instruct-fp8-fast,
+	"rewrite_query": false,
+	"max_num_results": 10,
+	"ranking_options": {
+		"score_threshold": 0.3
+	},
+	"stream": true,
+}'
+
+```
+
+:::note
+
+You can get your `ACCOUNT_ID` by navigating to [Workers & Pages on the dashboard](/fundamentals/account/find-account-and-zone-ids/#find-account-id-workers-and-pages).
+
+:::
+
+### Parameters
+
+<Render file="ai-search-api-params" product="ai-search" />
+
+### Response
+
+This is the response structure without `stream` enabled.
+
+<Render file="ai-search-response" product="ai-search" />
+
+## Search
+
+This REST API searches for results from your data source and returns the relevant results:
+
+```bash
+
+curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai-search/rags/{AUTORAG_NAME}/search \
+-H 'Content-Type: application/json' \
+-H "Authorization: Bearer {API_TOKEN}" \
+-d '{
+	"query": "How do I train a llama to deliver coffee?",
+	"rewrite_query": true,
+	"max_num_results": 10,
+	"ranking_options": {
+		"score_threshold": 0.3
+	},
+}'
+
+```
+
+:::note
+
+You can get your `ACCOUNT_ID` by navigating to Workers & Pages on the dashboard, and copying the Account ID under Account Details.
+
+:::
+
+### Parameters
+
+<Render file="search-api-params" product="ai-search" />
+
+### Response
+
+<Render file="search-response" product="ai-search" />

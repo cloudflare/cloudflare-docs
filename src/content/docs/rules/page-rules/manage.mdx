@@ -6,7 +6,7 @@ sidebar:
   label: Manage
 ---
 
-import { Render, TabItem, Tabs, Steps } from "~/components";
+import { Render, TabItem, Tabs, Steps, DashButton } from "~/components";
 
 You can manage Page Rules in the Cloudflare dashboard or via API.
 
@@ -20,13 +20,15 @@ To create a page rule in the dashboard:
 
 <Steps>
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
-2. Go to **Rules** > **Page Rules**.
-3. Select **Create Page Rule**.
-4. For **URL**, enter the URL or URL pattern that should match the rule ([more details about wildcard matching](/rules/page-rules/reference/wildcard-matching/)).
-5. For **Pick a Setting**, select a [Cloudflare setting](/rules/page-rules/reference/settings/) to adjust. If desired, select **Add a Setting** to adjust multiple Cloudflare settings with the same rule.
-6. In the **Order** dropdown, specify the desired order: _First, Last_ or _Custom_.
-7. To save and deploy your rule, select **Save and Deploy Page Rule**. If you are not ready to deploy your rule, select **Save as Draft**.
+1. In the Cloudflare dashboard, go to the **Page Rules** page.
+
+   <DashButton url="/?to=/:account/:zone/rules/page-rules" />
+
+2. Select **Create Page Rule**.
+3. For **URL**, enter the URL or URL pattern that should match the rule ([more details about wildcard matching](/rules/page-rules/reference/wildcard-matching/)).
+4. For **Pick a Setting**, select a [Cloudflare setting](/rules/page-rules/reference/settings/) to adjust. If desired, select **Add a Setting** to adjust multiple Cloudflare settings with the same rule.
+5. In the **Order** dropdown, specify the desired order: _First, Last_ or _Custom_.
+6. To save and deploy your rule, select **Save and Deploy Page Rule**. If you are not ready to deploy your rule, select **Save as Draft**.
 
    <Render file="rules-creation-dash-dns-popup" product="rules" />
 
@@ -57,9 +59,11 @@ To edit a page rule in the dashboard:
 
 <Steps>
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
-2. Go to **Rules** > **Page Rules**.
-3. For a specific rule:
+1. In the Cloudflare dashboard, go to the **Page Rules** page.
+
+   <DashButton url="/?to=/:account/:zone/rules/page-rules" />
+
+2. For a specific rule:
    - To enable or disable the rule, select the on/off toggle.
    - To modify the URL pattern, settings, and order, select **Edit** (wrench icon). Then, enter the information you want to change.
 
@@ -81,9 +85,11 @@ To delete a page rule in the dashboard:
 
 <Steps>
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
-2. Go to **Rules** > **Page Rules**.
-3. For a specific rule, select **X**. Then, select **Delete**.
+1. In the Cloudflare dashboard, go to the **Page Rules** page.
+
+   <DashButton url="/?to=/:account/:zone/rules/page-rules" />
+
+2. For a specific rule, select **X**. Then, select **Delete**.
 
 </Steps>
 

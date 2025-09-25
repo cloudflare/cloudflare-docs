@@ -3,6 +3,12 @@ link: "/browser-rendering/changelog/"
 productName: Browser Rendering
 productLink: "/browser-rendering/"
 entries:
+  - publish_date: "2025-09-25"
+    title: Updates to Playwright, new support for Stagehand, and increased limits
+    description: |-
+      * [Playwright](/browser-rendering/platform/playwright/) support in Browser Rendering is now GA. We've upgraded to [Playwright v1.55](https://playwright.dev/docs/release-notes#version-155).
+      * Added support for [Stagehand](/browser-rendering/platform/stagehand/), an open source browser automation framework, powered by [Workers AI](/workers-ai). Stagehand enables developers to build more reliably and flexibly by combining code with natural-language instructions.
+      * Increased [limits](/browser-rendering/platform/limits/#workers-paid) for paid plans on both the [REST API](https://developers.cloudflare.com/browser-rendering/rest-api/) and [Workers Bindings](https://developers.cloudflare.com/browser-rendering/workers-bindings/). 
   - publish_date: "2025-09-22"
     title: Added `excludeExternalLinks` parameter to `/links` REST endpoint
     description: |-

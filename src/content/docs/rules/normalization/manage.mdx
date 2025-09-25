@@ -7,13 +7,15 @@ sidebar:
 description: How to configure URL normalization in the Cloudflare dashboard.
 ---
 
-import { Steps } from "~/components";
+import { Steps, DashButton } from "~/components";
 
 <Steps>
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
+1. In the Cloudflare dashboard, go to the Rules **Settings** page.
 
-2. Go to **Rules** > **Settings** and select the **URL Normalization** tab.
+   <DashButton url="/?to=/:account/:zone/rules/settings" />
+
+2. Go to the **URL Normalization** tab.
 
 3. Configure the [available URL normalization settings](/rules/normalization/settings/).
 

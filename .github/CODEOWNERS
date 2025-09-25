@@ -26,7 +26,7 @@
 /src/content/release-notes/workers-ai.yaml @kathayl @mchenco @kodster28 @cloudflare/pcx-technical-writing
 /src/content/release-notes/ai-gateway.yaml @kathayl @mchenco @kodster28 @cloudflare/pcx-technical-writing
 /src/content/release-notes/vectorize.yaml @elithrar @mchenco @sejoker @cloudflare/pcx-technical-writing
-/src/content/docs/autorag/ @rita3ko @irvinebroque @aninibread @cloudflare/pcx-technical-writing
+/src/content/docs/ai-search/ @rita3ko @irvinebroque @aninibread @cloudflare/pcx-technical-writing
 
 # Analytics & Logs
 

@@ -36,6 +36,7 @@ Wrangler offers a number of commands to manage your Cloudflare Workers.
 - [`kv bulk`](#kv-bulk) - Manage multiple key-value pairs within a Workers KV namespace in batches.
 - [`r2 bucket`](#r2-bucket) - Manage Workers R2 buckets.
 - [`r2 object`](#r2-object) - Manage Workers R2 objects.
+- [`r2 sql`](#r2-sql) - Query tables in R2 Data Catalog with R2 SQL.
 - [`secret`](#secret) - Manage the secret variables for a Worker.
 - [`secret bulk`](#secret-bulk) - Manage multiple secret variables for a Worker.
 - [`secrets-store secret`](#secrets-store-secret) - Manage account secrets within a secrets store.
@@ -355,6 +356,11 @@ wrangler delete [<SCRIPT>] [OPTIONS]
 ---
 
 <Render file="wrangler-commands/r2" product="workers" />
+
+---
+## r2 SQL
+
+<Render file="wrangler-commands/r2-sql" product="workers" />
 
 ---
 

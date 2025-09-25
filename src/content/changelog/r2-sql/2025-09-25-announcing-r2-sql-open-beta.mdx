@@ -1,0 +1,31 @@
+---
+title: Announcing R2 SQL
+description: Run SQL queries against Apache Iceberg tables in R2 Data Catalog
+date: 2025-09-25T13:00:00
+products:
+  - r2-sql
+hidden: true
+---
+
+import { LinkCard} from "~/components";
+
+Today, we're launching the **open beta** for [R2 SQL](/r2-sql/): A serverless, distributed query engine that can efficiently analyze petabytes of data in [Apache Iceberg](https://iceberg.apache.org/) tables managed by [R2 Data Catalog](/r2/data-catalog).
+
+R2 SQL is ideal for exploring analytical and time-series data stored in R2, such as logs, events from [Pipelines](/pipelines/), or clickstream and user behavior data.
+
+If you already have a table in R2 Data Catalog, running queries is as simple as:
+
+```bash
+npx wrangler r2 sql query YOUR_WAREHOUSE "
+SELECT
+    user_id,
+    event_type,
+    value
+FROM events.user_events
+WHERE event_type = 'CHANGELOG' or event_type = 'BLOG'
+  AND __ingest_ts > '2025-09-24T00:00:00Z'
+ORDER BY __ingest_ts DESC
+LIMIT 100"
+```
+
+To get started with R2 SQL, check out our [getting started guide](/r2-sql/get-started/) or learn more about supported features in the [SQL reference](/r2-sql/sql-reference/). For a technical deep dive into how we built R2 SQL, read our [blog post](https://blog.cloudflare.com/r2-sql-deep-dive/).

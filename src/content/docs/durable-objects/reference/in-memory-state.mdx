@@ -11,7 +11,7 @@ In-memory state means that each <GlossaryTooltip term="Durable Object">Durable O
 
 Variables in a Durable Object will maintain state as long as your Durable Object is not evicted from memory.
 
-A common pattern is to initialize a Durable Object from [persistent storage](/durable-objects/api/storage-api/) and set instance variables the first time it is accessed. Since future accesses are routed to the same Durable Object, it is then possible to return any initialized values without making further calls to persistent storage.
+A common pattern is to initialize a Durable Object from [persistent storage](/durable-objects/api/sqlite-storage-api/) and set instance variables the first time it is accessed. Since future accesses are routed to the same Durable Object, it is then possible to return any initialized values without making further calls to persistent storage.
 
 ```js
 import { DurableObject } from "cloudflare:workers";

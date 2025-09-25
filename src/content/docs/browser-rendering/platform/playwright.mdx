@@ -4,7 +4,6 @@ title: Playwright
 description: Learn how to use Playwright with Cloudflare Workers for browser automation. Access Playwright API, manage sessions, and optimize browser rendering.
 sidebar:
   order: 5
-  badge: Beta
 ---
 
 import {
@@ -24,10 +23,16 @@ Our version is open sourced and can be found in [Cloudflare's fork of Playwright
 <PackageManagers pkg="@cloudflare/playwright" dev />
 
 :::note
-The current version of the Playwright is **v1.54.0**.
+The current version of the Playwright is [**v1.55.0**](https://github.com/cloudflare/playwright/pull/67).
 :::
 
 ## Use Playwright in a Worker
+
+In this [example](https://github.com/cloudflare/playwright/tree/main/packages/playwright-cloudflare/examples/todomvc), you will run Playwright tests in a Cloudflare Worker using the [todomvc](https://demo.playwright.dev/todomvc) application.
+
+If you want to skip the steps and get started quickly, select **Deploy to Cloudflare** below.
+
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/playwright/tree/main/packages/playwright-cloudflare/examples/todomvc)
 
 Make sure you have the [browser binding](/browser-rendering/platform/wrangler/#bindings) configured in your `wrangler.toml` file:
 
@@ -37,12 +42,9 @@ Make sure you have the [browser binding](/browser-rendering/platform/wrangler/#b
 name = "cloudflare-playwright-example"
 main = "src/index.ts"
 workers_dev = true
-compatibility_flags = ["nodejs_compat_v2"]
-compatibility_date = "2025-03-05"
+compatibility_flags = ["nodejs_compat"]
+compatibility_date = "2025-09-17"
 upload_source_maps = true
-
-[dev]
-port = 9000
 
 [browser]
 binding = "MYBROWSER"
@@ -61,11 +63,7 @@ Let's look at some examples of how to use Playwright:
 Using browser automation to take screenshots of web pages is a common use case. This script tells the browser to navigate to https://demo.playwright.dev/todomvc, create some items, take a screenshot of the page, and return the image in the response.
 
 ```ts
-import { launch, type BrowserWorker } from "@cloudflare/playwright";
-
-interface Env {
-	MYBROWSER: BrowserWorker;
-}
+import { launch } from "@cloudflare/playwright";
 
 export default {
 	async fetch(request: Request, env: Env) {
@@ -105,12 +103,8 @@ A Playwright trace is a detailed log of your workflow execution that captures in
 Here's an example of a worker generating a trace file:
 
 ```ts
-import { launch, type BrowserWorker } from "@cloudflare/playwright";
-import fs from "@cloudflare/playwright/fs";
-
-interface Env {
-	MYBROWSER: BrowserWorker;
-}
+import fs from "fs";
+import { launch } from "@cloudflare/playwright";
 
 export default {
 	async fetch(request: Request, env: Env) {
@@ -154,12 +148,8 @@ export default {
 One of the most common use cases for using Playwright is software testing. Playwright includes test assertion features in its APIs; refer to [Assertions](https://playwright.dev/docs/test-assertions) in the Playwright documentation for details. Here's an example of a Worker doing `expect()` test assertions of the [todomvc](https://demo.playwright.dev/todomvc) demo page:
 
 ```ts
-import { launch, type BrowserWorker } from "@cloudflare/playwright";
+import { launch } from "@cloudflare/playwright";
 import { expect } from "@cloudflare/playwright/test";
-
-interface Env {
-	MYBROWSER: BrowserWorker;
-}
 
 export default {
 	async fetch(request: Request, env: Env) {
@@ -200,6 +190,30 @@ const browser = await playwright.launch(env.MYBROWSER, { keep_alive: 600000 });
 ```
 
 Using the above, the browser will stay open for up to 10 minutes, even if inactive.
+
+### Session Reuse
+
+The best way to improve the performance of your browser rendering Worker is to reuse sessions by keeping the browser open after you've finished with it, and connecting to that session each time you have a new request. Playwright handles [`browser.close`](https://playwright.dev/docs/api/class-browser#browser-close) differently from Puppeteer. In Playwright, if the browser was obtained using a `connect` session, the session will disconnect. If the browser was obtained using a `launch` session, the session will close. 
+
+```js
+import { env } from "cloudflare:workers";
+import { acquire, connect } from "@cloudflare/playwright";
+
+async function reuseSameSession() {
+	// acquires a new session
+	const { sessionId } = await acquire(env.BROWSER);
+
+	for (let i = 0; i < 5; i++) {
+		// connects to the session that was previously acquired  
+		const browser = await connect(env.BROWSER, sessionId);
+
+		// ...
+
+		// this will disconnect the browser from the session, but the session will be kept alive
+		await browser.close();
+	}
+}
+```
 
 ### Set a custom user agent
 
@@ -294,13 +308,11 @@ You should also be able to access this information in the dashboard, albeit with
 
 The full Playwright API can be found at the [Playwright API documentation](https://playwright.dev/docs/api/class-playwright).
 
-Note that `@cloudflare/playwright` is in beta. The following capabilities are not yet fully supported, but we’re actively working on them:
+The following capabilities are not yet fully supported, but we’re actively working on them:
 
-- [API Testing](https://playwright.dev/docs/api-testing)
 - [Playwright Test](https://playwright.dev/docs/test-configuration) except [Assertions](https://playwright.dev/docs/test-assertions)
 - [Components](https://playwright.dev/docs/test-components)
 - [Firefox](https://playwright.dev/docs/api/class-playwright#playwright-firefox), [Android](https://playwright.dev/docs/api/class-android) and [Electron](https://playwright.dev/docs/api/class-electron), as well as different versions of Chrome
-- [Network](https://playwright.dev/docs/next/network#network)
 - [Videos](https://playwright.dev/docs/next/videos)
 
 This is **not an exhaustive list** — expect rapid changes as we work toward broader parity with the original feature set. You can also check [latest test results](https://playwright-full-test-report.pages.dev/) for a granular up to date list of the features that are fully supported.

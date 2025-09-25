@@ -1,9 +1,7 @@
 ---
-
 summary: Add a custom header to requests sent to the origin server with the current timestamp in hexadecimal format.
-goal:
-  - Manage headers
-operation:
+tags:
+  - Headers
   - Request modification
 products:
   - Snippets
@@ -14,26 +12,26 @@ description: Add a custom header to requests sent to the origin server with the 
 
 ```js
 export default {
-    async fetch(request) {
-        // Get the current timestamp
-        const timestamp = Date.now();
+	async fetch(request) {
+		// Get the current timestamp
+		const timestamp = Date.now();
 
-        // Convert the timestamp to hexadecimal format
-        const hexTimestamp = timestamp.toString(16);
+		// Convert the timestamp to hexadecimal format
+		const hexTimestamp = timestamp.toString(16);
 
-        // Clone the request and add the custom header
-        const modifiedRequest = new Request(request, {
-            headers: new Headers(request.headers)
-        });
-        modifiedRequest.headers.set("X-Hex-Timestamp", hexTimestamp);
+		// Clone the request and add the custom header
+		const modifiedRequest = new Request(request, {
+			headers: new Headers(request.headers),
+		});
+		modifiedRequest.headers.set("X-Hex-Timestamp", hexTimestamp);
 
-        // Log the custom header for debugging
-        console.log(`X-Hex-Timestamp: ${hexTimestamp}`);
+		// Log the custom header for debugging
+		console.log(`X-Hex-Timestamp: ${hexTimestamp}`);
 
-        // Pass the modified request to the origin
-        const response = await fetch(modifiedRequest);
+		// Pass the modified request to the origin
+		const response = await fetch(modifiedRequest);
 
-        return response;
-    },
+		return response;
+	},
 };
 ```
