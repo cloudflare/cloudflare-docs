@@ -4,7 +4,7 @@ productName: Workers AI
 productLink: "/workers-ai/"
 entries:
   - publish_date: "2025-09-24"
-    title: New local models available on Worekrs AI
+    title: New local models available on Workers AI
     description: |-
       - We've added support for some regional models on Workers AI in support of uplifting local AI labs and AI sovereignty. Check out the [full blog post here](https://blog.cloudflare.com/sovereign-ai-and-choice).
       - [`@cf/pfnet/plamo-embedding-1b`](/workers-ai/models/plamo-embedding-1b) creates embeddings from Japanese text
