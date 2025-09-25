@@ -46,6 +46,7 @@ If you are using a Let's Encrypt certificate uploaded by yourself as a custom ce
 **Root cause**
 
 The certificate you are trying to upload is invalid. For example, there might be extra lines, or the BEGIN/END text is not correct, or extra characters are added following a copy/paste.
+In the case of an update with the [PATCH API call](/api/resources/custom_certificates/methods/edit/) it can mean the `{custom_certificate_id}` is invalid.
 
 **Solution**
 
@@ -54,6 +55,8 @@ Carefully check the content of the certificate. You may use `openssl` to check a
 ```bash
 openssl x509 -in certificate.crt -noout -text
 ```
+
+Carefully check the `{custom_certificate_id}` parameter when using the API. You can confirm the certificate ID by [listing the existing custom certificates](/api/resources/custom_certificates/methods/list/) (`id` in the response).
 
 ### You have reached the maximum number of custom certificates. (Code: 1212)
 
