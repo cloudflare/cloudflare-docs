@@ -37,27 +37,38 @@ To create a Gateway HTTP policy with Application Granular Controls:
 
 For more information, refer to [HTTP policies](/cloudflare-one/policies/gateway/http-policies/).
 
-## Application Controls vs Operations
+## Control definitions
 
-Application Granular Controls can be defined at two levels of granularity:
+Gateway defines Application Granular Controls at different levels of granularity, including Application Controls and Operations.
 
-- **Application Controls** are pre-defined controls which represent user intent for example Upload or Download. They are defined by Cloudflare and consist of a set of operations (see below) that have been deemed to be related to that intent. Using application controls within a policy is a quick way of enforcing common controls. For the mapping of operations to application controls, see [Application Controls](/cloudflare-one/policies/gateway/application-app-types/#application-controls).
-- **Operations**: These are the individual API-level actions that an app uses. Defining controls at operation level allows for more fine-grained policies to support advanced use cases for example _block only certain types of downloads_, or to define controls where there is not an existing application control that covers the required intent for example _block comments_. However, because each SaaS application uses a unique set of operations each of which has its own scope, nuances and behaviors, the use of operation level controls often requires analysis to determine applicability for the desired use case. Operation-level controls can also be used in cases where variations to the Cloudflare-defined application controls are needed for example to include or exclude certain operations.
+### Application Controls
 
-**Operation Groups** are groupings of operations that are defined by the application vendor. Typically these are based on a categorization of the application's capabilities \- different functional areas of the application for example _signature requests_ \- or the entities that the application defines for example _files_ or _folders_. These definitions vary by application. In the Gateway policy builder, operations are shown grouped into these operation groups to facilitate correlating the operations with available vendor API documentation.
+Application Controls are pre-defined controls which represent user intent, such as uploads or downloads. Cloudflare defines and organizes sets of operations deemed related to specific intents with an application. Application Controls represent the most commonly used controls.
 
-The **Contains Payload** column in [Application Controls](/cloudflare-one/policies/gateway/application-app-types/#application-controls) indicates whether a given operation is likely to contain content that is suitable for DLP scanning. This includes operations that contain the content of uploaded or downloaded files, or AI prompts. When a user performs a file upload for example, a sequence of API operations may result, for example setting up the file metadata, uploading the file content, and then finalizing the upload. From a DLP perspective, it can be advantageous to specifically target the operation that contains the file content; the _contains payload_ column identifies which operation that is.
+### Operations
+
+Operations are the individual API-level actions that an application uses. Defining controls at operation level allows for more fine-grained policies to support use cases such as blocking only certain types of downloads. You can also define controls where there is not an existing application control that covers the required intent, such as blocking comments. However, because each SaaS application uses a unique set of operations with its own scope and behaviors, the use of operation level controls often requires analysis for each desired use case. You can also use operation-level controls in cases where you need variations to the Cloudflare-defined application controls, such as including or excluding certain operations.
+
+Cloudflare provides Operations based on the [available APIs for an application](#application-apis).
+
+#### Operation Groups
+
+Operation Groups are groupings of operations defined by the application vendor. Operation Groups are typically based on a categorization of the different functional areas of the application, such as signature requests, or the entities that the application defines, such as files or folders. These definitions vary by application. Gateway groups operations into these operation groups to match the operations with the corresponding vendor API documentation.
+
+### DLP payloads
+
+Application Granular Controls can apply [Data Loss Prevention (DLP)](/cloudflare-one/policies/data-loss-prevention/) for operations that contain scannable content. This includes operations that contain the content of uploaded or downloaded files or AI prompts. For example, when a user performs a file upload, a sequence of API operations may result, such as setting up the file metadata, uploading the file content, and finalizing the upload. When applying DLP to your Zero Trust traffic, it can be helpful to specifically target an operation that contains file content.
+
+For more information on which operations support DLP payload scanning, refer to the **Contains payload** column in [Compatible applications](#compatible-applications).
 
 ## Application APIs
 
-SaaS applications typically provide multiple APIs to interact with. For each application, we may support the following API types:
+SaaS applications typically provide multiple APIs to interact with. For each application, Application Granular Controls may support the following API types:
 
-- **Web Application API:** these APIs are consumed by the web application that users interact with through their browser.
-- **Platform API**: these APIs are exposed to users to allow for programmatic interaction with the SaaS application. These are typically used by automations, scripts, or even other applications.
+- Web Application API: These APIs are consumed by the web application that users interact with through their browser.
+- Platform API: These APIs are exposed to users to allow for programmatic interaction with the SaaS application. These are typically used by automations, scripts, or other applications.
 
-When building your HTTP rules using Operations, if both API types are available, you should select Operations that align to the API being used, or include both for greater coverage.
-
-Application controls include Operations for both API types.
+[Application Controls](#application-controls) use both API types. If both API types are available when creating HTTP policies using [Operations](#operations), you should select the Operations that align to the API being used, or include both for greater coverage.
 
 ## Compatible applications
 
