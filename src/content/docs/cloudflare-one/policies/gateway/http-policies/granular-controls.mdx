@@ -7,27 +7,35 @@ sidebar:
 
 import { Details } from "~/components";
 
-Application Granular Controls allows you to create Gateway HTTP policies to control specific user actions within supported SaaS applications. This allows you to give users access to an application while restricting the actions that they can take within the application.
+Application Granular Controls allows you to create [Gateway HTTP policies](/cloudflare-one/policies/gateway/http-policies/) to control specific user actions within supported SaaS applications. This allows you to give users access to an application while restricting the actions that they can take within the application.
 
-:::note
-To enable HTTPS inspection, which is required for this feature, you must have [TLS decryption enabled](/learning-paths/replace-vpn/configure-device-agent/enable-tls-decryption/) in your account settings.
-:::
+## Prerequisites
 
-## Create a Gateway policy with Application Granular Controls
+To use Application Granular Controls, you must:
 
-To create an HTTP policy with Application Granular Controls:
+- Install a [Cloudflare certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/) or a [custom certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/custom-certificate/) on your users' devices.
+- Turn on [TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/).
+
+## Create a policy with Application Granular Controls
+
+{/* TODO: Add API and Terraform instructions */}
+
+To create a Gateway HTTP policy with Application Granular Controls:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Gateway** > **Firewall policies**. Select **HTTP**.
 2. Select **Add a policy**.
-3. Give your policy a name (for example, "Block Google Drive Uploads”) and a description.
-4. In the expression builder, define the scope of your policy. In the **Traffic** section, add a condition and specify the **Application** selector.
-5. Select the “is” **Operator** (application granular controls are specific to an application so the condition must reference a single application using the is operator).
-6. In the **Value** field, the applications that support granular controls are grouped in the categories at the top of the list for example “File Sharing (with Granular Controls)”. Select the required application (for example Google Drive).
-7. A fourth **Controls** field will appear, allowing you to select one or more **Application Controls** or individual **Operations** (see below for an explanation of these terms).
-8. Complete your policy expression with any other conditions, select an **Action** and configure any desired policy settings.
-9. Select **Create policy** to save and activate your policy.
+3. Name the policy.
+4. Under **Traffic**, build a logical expression that defines the traffic you want to allow or block. To use Application Granular Controls, you must use the _Application_ selector with the _is_ operator.
+5. In **Value**, select your desired application.
+6. In **Controls**, choose one or more Application Controls or individual Operations. For example, you can create a policy to block file uploads to ChatGPT:
 
-The policy will appear in the list of HTTP policies. Here, the [order of precedence](/cloudflare-one/policies/gateway/order-of-enforcement/#order-of-precedence) can be changed and the policy can be disabled or enabled.
+   | Selector    | Operator | Value     | Controls | Action |
+   | ----------- | -------- | --------- | -------- | ------ |
+   | Application | is       | _ChatGPT_ | _Upload_ | Block  |
+
+7. Select **Create policy**.
+
+For more information, refer to [HTTP policies](/cloudflare-one/policies/gateway/http-policies/).
 
 ## Application Controls vs Operations
 
