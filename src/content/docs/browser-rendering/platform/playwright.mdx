@@ -181,6 +181,54 @@ export default {
 };
 ```
 
+### Storage state
+
+Playwright supports [storage state](https://playwright.dev/docs/api/class-browsercontext#browsercontext-storage-state) to obtain and persist cookies and other storage data.
+
+Here's an example that uses storage state to persist cookies and other storage data in [KV](https://developers.cloudflare.com/kv):
+
+<WranglerConfig>
+
+```jsonc
+{
+	"name": "storage-state-examples",
+	"main": "src/index.ts",
+	"compatibility_flags": ["nodejs_compat"],
+	"compatibility_date": "2025-09-17",
+	"browser": {
+		"binding": "MYBROWSER"
+	},
+	"kv_namespaces": [
+		{
+			"binding": "KV",
+			"id": "<YOUR-KV-NAMESPACE-ID>"
+		}
+	]
+}
+```
+
+</WranglerConfig>
+
+```ts title="src/index.ts"
+// gets persisted storage state from KV or undefined if it doesn't exist
+const storageStateJson = await env.KV.get('storageState');
+const storageState = storageStateJson ? await JSON.parse(storageStateJson) as BrowserContextOptions['storageState'] : undefined;
+
+await using browser = await launch(env.MYBROWSER);
+// creates a new context with storage state persisted in KV
+await using context = await browser.newContext({ storageState });
+
+await using page = await context.newPage();
+
+// do some actions on the page that may update client-side storage
+
+// gets updated storage state: cookies, localStorage and IndexedDB
+const updatedStorageState = await context.storageState({ indexedDB: true });
+
+// persist updated storage state in KV
+await env.KV.put('storageState', JSON.stringify(updatedStorageState));
+```
+
 ### Keep Alive
 
 If users omit the `browser.close()` statement, the browser instance will stay open, ready to be connected to again and [re-used](/browser-rendering/workers-bindings/reuse-sessions/) but it will, by default, close automatically after 1 minute of inactivity. Users can optionally extend this idle time up to 10 minutes, by using the `keep_alive` option, set in milliseconds:
