@@ -123,16 +123,14 @@ The following steps outline deploying WARP on MacOS using Intune.
 Deploy configuration profiles before the WARP application itself. This order ensures that when the WARP client installs, it already has the required permissions and certificates, avoiding failed installations.
 :::
 
-- Upload user-side certificate and team domain certificate (2 separate configuration policies).
+- Upload user-side certificate.
 - Allow system extensions (bundle ID and team identifier policy).
 - Upload MobileConfig (custom configuration policy).
 - Upload and assign the WARP `.pkg` (application policy).
 
-### 1. Upload certificates
+### 1. Upload user-side certificate
 
-You must deploy two certificates via Intune: user-side certificate and team domain certificate.
-
-#### 1.1 User-side certificate
+You must deploy two certificates via Intune: user-side certificate.
 
 1. Log into [Zero Trust](https://one.dash.cloudflare.com/).
 2. Go to **Settings** > **Resources** > under **Certificates**, select **Manage**.
@@ -142,41 +140,35 @@ You must deploy two certificates via Intune: user-side certificate and team doma
 6. Select **Create** > **New Policy**.
 7. For **Profile Type**, select _Templates_ > select **Trusted certificate** as the **Template name** > **Create**.
 8. In **Basics**, input the necessary field(s) > **Next**.
+	:::note[]
+	Naming rec: Cloudflare certificate.
+	:::
 9. For **Deployment Channel**, select **Device Channel**.
-10. Upload your file.
-// this has to be in cer format, and the user only has crt, what steps do they take to remedy this?
+10. Upload your file > **Next**. // this has to be in cer format, but crt will work.
+11. In **Assignments**, select an option (for example, **Add all devices** or **Add all users**) that is valid for your scope. This will be the same scope for all steps. Select **Next**.
+12. Review your configuration in **Review + create** and select **Create**.
 
-#### 1.2 Team domain certificate
-
-1. Go your [team domain](/cloudflare-one/faq/getting-started-faq/#what-is-a-team-domainteam-name) in a browser.
-	```
-	https://<team-name>.cloudflareaccess.com
-	```
-2. Export the TLS certificate as `.cer`.
-3. Repeat the upload steps in 1.1.
-
-By completing this step, you ensure that macOS devices trust WARP’s connection to your team domain and Cloudflare.
+Sharing this certificate with Intune automates the installation of this certificate on your user devices. Creating trust between browsers on a user's device and Cloudflare.
 
 ### 2. Allow WARP system extensions
 
 1. In the [Microsoft Intune admin center](https://intune.microsoft.com) > go to **Devices** > **macOS**.
-2. Under **Manage devices**, select **Configurations**.
+2. Under **Manage devices**, select **Configuration**.
 3. Select **Create** > **New Policy**.
 4. For **Profile type**, select _Settings catalog_ > **Create**.
-5. In **Basics**, input the necessary field(s) > **Next**.
+5. In **Basics**, input the necessary field(s) > **Next**. // name as WARP system extensions
 6. In **Configuration settings**, select **Add settings**.
 7. In the **Settings picker**, search for **System Extensions** under System Configuration.
 8. Enable **Allowed System Extensions**.
 9. Edit instance and add:
 	Bundle Identifier: `com.cloudflare.1.1.1.1`
 	Team Identifier: `68BUP38M2J`
-10. Select a button to save. // which button on which screen?
-11. In **Assignments**, select an option (for example, **Add all devices** or **Add all users**) that is valid for your scope. This will be the same scope for all steps.
-12. Select **Next**.
-13. // step here where they press the button to create
-// full steps here need to fleshed out with UI walkthrough
+10. Select **Save**.
+11. In **Scope tags**, select **Next**.
+12. In **Assignments**, select an option (for example, **Add all devices** or **Add all users**) that is valid for your scope. This will be the same scope for all steps. Select **Next**.
+13. Review your configuration and select **Create**.
 
-This step allows WARP to install withour user interaction. By completing this step, you allow WARP to install and manage its required system extensions without end-user prompts.
+This step allows WARP to install without user interaction. By completing this step, you allow WARP to install and manage its required system extensions without end-user prompts.
 
 ### 3. Upload `MobileConfig` configuration
 
@@ -269,11 +261,11 @@ Complete Step 4 one hour after steps 1, 2, and 3 so clients have enough time to 
 3. Log into the [Microsoft Intune admin center](https://intune.microsoft.com) > **Apps** > **MacOS**.
 4. Select **Create**.
 5. For **App type**, select _macOS app (PKG)_.
-6. In **App information**, select the `.pkg` file you downloaded and input required details.
+6. In **App information**, select the `.pkg` file you downloaded and input required details. Publisher is cloudflare.
 7. In **Requirements**, refer to the OS versions listed in [stable releases for macOS](/cloudflare-one/connections/connect-devices/warp/download-warp/#macos) and find what matches for you.
 8. In **Detection rules**, note that the WARP package will have filed in the App bundle ID and App version.
-9. In **Assignments**, select an option (for example, **Add all devices** or **Add all users**) that is valid for your scope.
-10. Continue on the Microsoft Intune admin center until you can select **Create** to create your policy.
+9. In **Assignments**, select an option (for example, **Add all devices** or **Add all users**) that is valid for your scope. Select **Next**.
+10. Review your configuration in **Review + create** and select **Create**.
 
 By completing this step, you deliver the WARP client to targeted macOS devices, either automatically (assignment scope set as **Required**) or on-demand (assignment scope as **Available**) through your company portal.
 
