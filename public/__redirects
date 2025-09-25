@@ -1454,9 +1454,10 @@
 /support/third-party-software/content-management-system-cms/using-cloudflare-with-bigcommerce/ /cloudflare-for-platforms/cloudflare-for-saas/saas-customers/provider-guides/bigcommerce/ 301
 /support/third-party-software/content-management-system-cms/how-do-i-add-a-wordpress.com-custom-domain-mapping-site-to-cloudflare/ /support/third-party-software/content-management-system-cms/wordpress.com-and-cloudflare/ 301
 /support/third-party-software/content-management-system-cms/how-do-i-use-wordpress-multi-site-wpmu-with-cloudflare/ /automatic-platform-optimization/ 301
-/support/third-party-software/content-management-system-cms/modified_drupal/ /support/third-party-software/content-management-system-cms/caching-html-with-drupal/ 301
+/support/third-party-software/content-management-system-cms/modified_drupal/ /cache/how-to/cache-rules/ 301
 /support/third-party-software/content-management-system-cms/using-cloudflare-with-wix-website-builder/ /dns/manage-dns-records/reference/vendor-specific-records/#wix 301
 /support/third-party-software/content-management-system-cms/wordpress.com-and-cloudflare/ /support/third-party-software/content-management-system-cms/wordpresscom-and-cloudflare/ 301
+/support/third-party-software/content-management-system-cms/can-i-use-wordpress-caching-plugins-like-super-cache-or-w3-total-cache-w3tc-with-cloudflare/ /cache/how-to/cache-rules/ 301
 /support/more-dashboard-apps/cloudflare-scrape-shield/what-does-scrape-shield-do/ /waf/tools/scrape-shield/ 301
 /support/third-party-software/others/how-do-i-get-cloudflare-to-work-with-vaultpress/ /automatic-platform-optimization/ 301
 /support/third-party-software/others/can-i-use-cloudflare-and-varnish-together/ /rules/snippets/ 301
