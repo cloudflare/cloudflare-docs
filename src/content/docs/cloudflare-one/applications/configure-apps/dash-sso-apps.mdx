@@ -86,7 +86,7 @@ Once the verification polling has completed or timed out, you will receive an em
 Enabling Cloudflare Dashboard SSO for an email domain (for example, `@mycompany.com`) will apply globally to all users with that domain, regardless of which accounts those users have access to. All users will be required to authenticate via the specified identity provider, including users registered on Cloudflare prior to the domain being configured for SSO.
 :::
 
-Enable the connector by running the following, again, replacing the `{account_id}` value with your account ID, and additionally replacing the `{sso_connector_id}` with the value you obtained from the `id` field in the response to the previous call.
+Enable the connector by running the following — again, replacing the `{account_id}` value with your account ID, and additionally replacing the `{sso_connector_id}` with the value you obtained from the `id` field in the response to the previous call.
 
 ```bash title="cURL command"
 curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/sso_connectors/{sso_connector_id}" \
@@ -255,7 +255,7 @@ The following API calls will disable SSO enforcement for an account. This action
    }
    ```
 
-Users can now log in using their Cloudflare account email and password. If a user does not have a password, they can use [forgot password](/fundamentals/user-profiles/change-password-or-email/#forgot-your-password) on the login page to create one.
+Users can now log in using their Cloudflare account email and password. If a user does not have a password, they can use the [forgot password](/fundamentals/user-profiles/change-password-or-email/#forgot-your-password) method on the login page to create one.
 
 ## Change your team name
 
