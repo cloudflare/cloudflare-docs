@@ -301,7 +301,7 @@
 	},
 	{
 		"name": "AI Search",
-		"deeplink": "/?to=/:account/ai/autorag",
+		"deeplink": "/?to=/:account/ai/ai-search",
 		"parent": ["AI"]
 	},
 	{
