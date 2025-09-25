@@ -1,3 +1,5 @@
+import { Tabs, TabItem } from "~/components";
+
 ---
 pcx_content_type: reference
 title: Supported fonts
@@ -59,3 +61,100 @@ Browser Rendering includes additional font packages for non-Latin scripts and em
 - Noto Color Emoji  
 - TLWG Thai fonts  
 - WenQuanYi Zen Hei (Chinese) 
+
+## Using custom fonts
+
+Should you need to use an unsupported custom font, make sure it is loaded on your website, if you own it, or add the font using `addStyleTag`.
+
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
+With a CDN source:
+
+```js
+const browser = await puppeteer.launch(env.MYBROWSER);
+const page = await browser.newPage();
+await page.addStyleTag({
+  content: `
+    @font-face {
+      font-family: 'CustomFont';
+      src: url('https://your-cdn.com/fonts/MyFont.woff2') format('woff2');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    body {
+      font-family: 'CustomFont', sans-serif;
+    }
+  `
+});
+```
+
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
+With a CDN source:
+
+```ts
+const browser = await puppeteer.launch(env.MYBROWSER);
+const page = await browser.newPage();
+await page.addStyleTag({
+  content: `
+    @font-face {
+      font-family: 'CustomFont';
+      src: url('https://your-cdn.com/fonts/MyFont.woff2') format('woff2');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    body {
+      font-family: 'CustomFont', sans-serif;
+    }
+  `
+});
+```
+
+</TabItem> </Tabs>
+
+
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
+With a Base64 encoded data source:
+
+```js
+const browser = await puppeteer.launch(env.MYBROWSER);
+const page = await browser.newPage();
+await page.addStyleTag({
+  content: `
+    @font-face {
+      font-family: 'CustomFont';
+      src: url('data:font/woff2;base64,<BASE64_STRING>') format('woff2');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    body {
+      font-family: 'CustomFont', sans-serif;
+    }
+  `
+});
+```
+
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
+With a Base64 encoded data source:
+
+```ts
+const browser = await puppeteer.launch(env.MYBROWSER);
+const page = await browser.newPage();
+await page.addStyleTag({
+  content: `
+    @font-face {
+      font-family: 'CustomFont';
+      src: url('data:font/woff2;base64,<BASE64_STRING>') format('woff2');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    body {
+      font-family: 'CustomFont', sans-serif;
+    }
+  `
+});
+```
+
+</TabItem> </Tabs>
