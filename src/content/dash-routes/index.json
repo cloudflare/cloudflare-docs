@@ -261,7 +261,7 @@
 	},
 	{
 		"name": "Pipelines",
-		"deeplink": "/?to=/:account/workers/pipelines",
+		"deeplink": "/?to=/:account/pipelines",
 		"parent": ["Storage & Databases"]
 	},
 	{
@@ -300,8 +300,8 @@
 		"parent": ["AI"]
 	},
 	{
-		"name": "AutoRAG",
-		"deeplink": "/?to=/:account/ai/autorag",
+		"name": "AI Search",
+		"deeplink": "/?to=/:account/ai/ai-search",
 		"parent": ["AI"]
 	},
 	{

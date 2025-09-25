@@ -106,6 +106,40 @@ wrangler r2 bucket catalog get <NAME> [OPTIONS]
 - `NAME` <Type text="string" /> <MetaInfo text="required" />
   - The name of the R2 bucket whose data catalog status to retrieve.
 
+<AnchorHeading
+	title="`catalog compaction enable`"
+	slug="r2-bucket-catalog-compaction-enable"
+	depth={3}
+/>
+
+Enable compaction on a [R2 Data Catalog](/r2/data-catalog/).
+
+```txt
+wrangler r2 bucket catalog compaction enable <BUCKET> [OPTIONS]
+```
+
+- `BUCKET` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the bucket to enable R2 Data Catalog compaction for.
+- `--token` <Type text="string" /> <MetaInfo text="required" />
+  - The R2 API token with R2 Data Catalog edit permissions
+- `--target-size` <Type text="number" /> <MetaInfo text="required" />
+  - The target file size (in MB) compaction will attempt to generate. Default: 128.
+
+<AnchorHeading
+	title="`catalog compaction disable`"
+	slug="r2-bucket-catalog-compaction-disable"
+	depth={3}
+/>
+
+Disable compaction on a [R2 Data Catalog](/r2/data-catalog/).
+
+```txt
+wrangler r2 bucket catalog compaction disable <BUCKET> [OPTIONS]
+```
+
+- `BUCKET` <Type text="string" /> <MetaInfo text="required" />
+  - The name of the bucket to enable R2 Data Catalog compaction for.
+
 <AnchorHeading title="`cors set`" slug="r2-bucket-cors-set" depth={3} />
 
 Set the [CORS configuration](/r2/buckets/cors/) for an R2 bucket from a JSON file.

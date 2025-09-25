@@ -6,7 +6,7 @@ sidebar:
   label: Create a rule in the dashboard
 ---
 
-import { Render, Steps } from "~/components";
+import { Render, Steps, DashButton } from "~/components";
 
 Refer to the [Rules examples gallery](/rules/transform/examples/?operation=Rewrite+URL) for examples of rule definitions.
 
@@ -14,19 +14,19 @@ To create a rule:
 
 <Steps>
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and website.
+1. In the Cloudflare dashboard, go to the Rules **Overview** page.
 
-2. Go to **Rules** > **Overview**.
+   <DashButton url="/?to=/:account/:zone/rules/overview" />
 
-3. Select **Create rule** > **URL Rewrite Rule**.
+2. Select **Create rule** > **URL Rewrite Rule**.
 
-4. (Optional) Select one of the rule templates that address common use cases. Then, review and adjust the proposed rule configuration.
+3. (Optional) Select one of the rule templates that address common use cases. Then, review and adjust the proposed rule configuration.
 
-5. Enter a descriptive name for the rule in **Rule name**.
+4. Enter a descriptive name for the rule in **Rule name**.
 
    ![The URL rewrite rule creation page in the Cloudflare dashboard.](~/assets/images/rules/transform/create-url-rewrite-rule.png)
 
-6. Under **If incoming requests match**, select one of the following options:
+5. Under **If incoming requests match**, select one of the following options:
    - **Wildcard pattern**: The rule will only apply to traffic matching the wildcard pattern in **Request URL**. Refer to [Wildcard pattern parameters](#wildcard-pattern-parameters) for details.
 
    - **Custom filter expression**: The rule will only apply to traffic matching a custom expression. Define the [rule expression](/ruleset-engine/rules-language/expressions/edit-expressions/) to configure which requests should be rewritten. Use either the Expression Builder or the Expression Editor to define the custom expression. For more information, refer to [Edit expressions in the dashboard](/ruleset-engine/rules-language/expressions/edit-expressions/).
@@ -37,7 +37,7 @@ To create a rule:
 
    - **All incoming requests**: The rule will apply to all traffic.
 
-7. (Optional) Define the action for your URL rewrite rule by selecting one of the available options displayed as radio buttons, and then a value from the drop-down list, depending on the action:
+6. (Optional) Define the action for your URL rewrite rule by selecting one of the available options displayed as radio buttons, and then a value from the drop-down list, depending on the action:
    - If you select **Rewrite to** > _Static_, enter the string that will replace the original URL path (or query string). For example, enter `welcome-gb.html` to rewrite the original URL path to `/welcome-gb.html`.
 
    - If you select **Rewrite to** > _Dynamic_, enter a [rewrite expression](/rules/transform/url-rewrite/reference/fields-functions/#rewrite-expressions) that defines the dynamic URL rewrite to perform.
@@ -46,9 +46,9 @@ To create a rule:
 
    For more information, refer to [URL rewrite parameters](/rules/transform/url-rewrite/reference/parameters/).
 
-8. (Optional) Under **Place at**, define where to place the rule in the rules list: first rule in the list, last rule in the list, or in a custom position (after a given rule).
+7. (Optional) Under **Place at**, define where to place the rule in the rules list: first rule in the list, last rule in the list, or in a custom position (after a given rule).
 
-9. To save and deploy your rule, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
+8. To save and deploy your rule, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
 
    <Render file="rules-creation-dash-dns-popup" product="rules" />
 

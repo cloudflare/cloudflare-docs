@@ -3,6 +3,9 @@ link: "/r2/platform/release-notes/"
 productName: R2
 productLink: "/r2/"
 entries:
+  - publish_date: "2025-09-23"
+    description: |-
+      - Fixed a bug where you could attempt to delete objects even if they had a bucket lock rule applied on the dashboard. Previously, they would momentarily vanish from the table but reappear after a page refresh. Now, the delete action is disabled on locked objects in the dashboard.
   - publish_date: "2025-09-22"
     description: |-
       - We’ve updated the R2 dashboard with a cleaner look to make it easier to find what you need and take action. You can find instructions for how you can use R2 with the various API interfaces in the side panel, and easily access documentation at the bottom.

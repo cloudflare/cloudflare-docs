@@ -3,6 +3,13 @@ link: "/workers-ai/changelog/"
 productName: Workers AI
 productLink: "/workers-ai/"
 entries:
+  - publish_date: "2025-09-24"
+    title: New local models available on Workers AI
+    description: |-
+      - We've added support for some regional models on Workers AI in support of uplifting local AI labs and AI sovereignty. Check out the [full blog post here](https://blog.cloudflare.com/sovereign-ai-and-choice).
+      - [`@cf/pfnet/plamo-embedding-1b`](/workers-ai/models/plamo-embedding-1b) creates embeddings from Japanese text.
+      - [`@cf/aisingapore/gemma-sea-lion-v4-27b-it`](/workers-ai/models/gemma-sea-lion-v4-27b-it) is a fine-tuned model that supports multiple South East Asian languages, including Burmese, English, Indonesian, Khmer, Lao, Malay, Mandarin, Tagalog, Tamil, Thai, and Vietnamese.
+      - [`@cf/ai4bharat/indictrans2-en-indic-1B`](/workers-ai/models/indictrans2-en-indic-1B) is a translation model that can translate between 22 indic languages, including Bengali, Gujarati, Hindi, Tamil, Sanskrit and even traditionally low-resourced languages like Kashmiri, Manipuri and Sindhi. 
   - publish_date: "2025-09-18"
     title: Model Catalog updates (types, EmbeddingGemma, model deprecation)
     description: |-
@@ -31,7 +38,7 @@ entries:
   - publish_date: "2025-09-05"
     title: Introducing EmbeddingGemma from Google
     description: |-
-      - We’re excited to be a launch partner alongside Google to bring their newest embedding model to Workers AI. We're excited to introduce EmbeddingGemma delivers best-in-class performance for its size, enabling RAG and semantic search use cases. Take a look at [`@cf/google/embeddinggemma-300m`](/workers-ai/models/embeddinggemma-300m) for more details. Now available to use for embedding in AutoRAG too.
+      - We’re excited to be a launch partner alongside Google to bring their newest embedding model to Workers AI. We're excited to introduce EmbeddingGemma delivers best-in-class performance for its size, enabling RAG and semantic search use cases. Take a look at [`@cf/google/embeddinggemma-300m`](/workers-ai/models/embeddinggemma-300m) for more details. Now available to use for embedding in AI Search too.
   - publish_date: "2025-08-27"
     title: Introducing Partner models to the Workers AI catalog
     description: |-

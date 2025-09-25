@@ -8,28 +8,28 @@ head:
     content: Configure a Cloud Connector rule in the dashboard
 ---
 
-import { Render, Steps } from "~/components";
+import { Render, Steps, DashButton } from "~/components";
 
 To configure a Cloud Connector rule in the dashboard:
 
 <Steps>
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
+1. In the Cloudflare dashboard, go to the **Cloud Connector** page.
 
-2. Go to **Rules** > **Cloud Connector**.
+   <DashButton url="/?to=/:account/:zone/rules/cloud-connector" />
 
-3. Select your [cloud provider](/rules/cloud-connector/providers/) (Cloudflare R2 or an external provider).
+2. Select your [cloud provider](/rules/cloud-connector/providers/) (Cloudflare R2 or an external provider).
 
-4. If you selected Cloudflare R2 in the previous step, select your bucket and your custom domain, and select **Next**.<br/>
+3. If you selected Cloudflare R2 in the previous step, select your bucket and your custom domain, and select **Next**.<br/>
    If you selected a different storage provider, enter the bucket URL and select **Next**.
 
    :::caution
    The bucket URL must follow a [specific format](/rules/cloud-connector/providers/) according to your provider.
    :::
 
-5. Enter a descriptive name for the rule in **Cloud Connector name**.
+4. Enter a descriptive name for the rule in **Cloud Connector name**.
 
-6. Under **If**, select **Custom filter expression** and [enter an expression](/ruleset-engine/rules-language/expressions/edit-expressions/) to define the traffic that will be redirected to the bucket. For example:
+5. Under **If**, select **Custom filter expression** and [enter an expression](/ruleset-engine/rules-language/expressions/edit-expressions/) to define the traffic that will be redirected to the bucket. For example:
    - To route all requests matching `http*://example.com/images/*` (HTTPS and HTTP requests) you could enter the following expression:<br/>
      `http.request.full_uri wildcard "http*://example.com/images/*"`
    - To route all requests matching `http*://images.example.com/*` (HTTPS and HTTP requests) you could enter the following expression:<br/>
@@ -37,7 +37,7 @@ To configure a Cloud Connector rule in the dashboard:
 
    Alternatively, select **All incoming requests** to redirect all incoming traffic for your zone to the storage bucket you selected.
 
-7. To save and deploy your rule, select **Deploy**. If you are not ready to deploy the rule, select **Save as Draft**.
+6. To save and deploy your rule, select **Deploy**. If you are not ready to deploy the rule, select **Save as Draft**.
 
    <Render file="rules-creation-dash-dns-popup" product="rules" />
 

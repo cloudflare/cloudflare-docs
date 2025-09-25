@@ -73,7 +73,7 @@ Before you publish an application through your tunnel, you must:
 
 Follow these steps to publish an application to the Internet. If you are looking to connect a private resource, skip to the [Connect a network](#3b-connect-a-network) section.
 
-1. Make a [`PUT` request](/api/resources/zero_trust/subresources/tunnels/subresources/cloudflared/subresources/configurations/methods/update/) to route your local service URL to a public hostname. For example,
+1. Make a [`PUT` request](/api/resources/zero_trust/subresources/tunnels/subresources/cloudflared/subresources/configurations/methods/update/) to route your [local service URL](/cloudflare-one/connections/connect-networks/routing-to-tunnel/protocols/) to a public hostname. For example,
 
 		<APIRequest
 			path="/accounts/{account_id}/cfd_tunnel/{tunnel_id}/configurations"

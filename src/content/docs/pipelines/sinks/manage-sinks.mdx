@@ -1,0 +1,101 @@
+---
+pcx_content_type: configuration
+title: Manage sinks
+description: Create, configure, and manage sinks for data storage
+sidebar:
+  order: 1
+---
+
+import { Steps, DashButton } from "~/components";
+
+Learn how to:
+
+- Create and configure sinks for data storage
+- View sink configuration
+- Delete sinks when no longer needed
+
+## Create a sink
+
+Sinks are made available to pipelines as SQL tables using the sink name (e.g., `INSERT INTO my_sink SELECT * FROM my_stream`).
+
+### Dashboard
+
+<Steps>
+1. In the Cloudflare dashboard, go to the **Pipelines** page.
+
+   <DashButton url="/?to=/:account/pipelines" />
+2. Select **Create Pipeline** to launch the pipeline creation wizard.
+3. Complete the wizard to create your sink along with the associated stream and pipeline.
+</Steps>
+
+### Wrangler CLI
+
+To create a sink, run the [`pipelines sinks create`](/workers/wrangler/commands/#pipelines-sinks-create) command:
+
+```bash
+npx wrangler pipelines sinks create <SINK_NAME> \
+  --type r2 \
+  --bucket my-bucket \
+```
+
+For sink-specific configuration options, refer to [Available sinks](/pipelines/sinks/available-sinks/).
+
+Alternatively, to use the interactive setup wizard that helps you configure a stream, sink, and pipeline, run the [`pipelines setup`](/workers/wrangler/commands/#pipelines-setup) command:
+
+```bash
+npx wrangler pipelines setup
+```
+
+## View sink configuration
+
+### Dashboard
+
+<Steps>
+	1. In the Cloudflare dashboard, go to **Pipelines** > **Sinks**.
+
+    2. Select a sink to view its configuration.
+
+</Steps>
+
+### Wrangler CLI
+
+To view a specific sink, run the [`pipelines sinks get`](/workers/wrangler/commands/#pipelines-sinks-get) command:
+
+```bash
+npx wrangler pipelines sinks get <SINK_ID>
+```
+
+To list all sinks in your account, run the [`pipelines sinks list`](/workers/wrangler/commands/#pipelines-sinks-list) command:
+
+```bash
+npx wrangler pipelines sinks list
+```
+
+## Delete a sink
+
+### Dashboard
+
+<Steps>
+	1. In the Cloudflare dashboard, go to **Pipelines** > **Sinks**.
+
+    2. Select the sink you want to delete.
+
+    3. In the **Settings** tab, navigate to **General**, and select **Delete**.
+
+</Steps>
+
+### Wrangler CLI
+
+To delete a sink, run the [`pipelines sinks delete`](/workers/wrangler/commands/#pipelines-sinks-delete) command:
+
+```bash
+npx wrangler pipelines sinks delete <SINK_ID>
+```
+
+:::caution
+Deleting a sink stops all data writes to that destination.
+:::
+
+## Limitations
+
+Sinks cannot be modified after creation. To change sink configuration, you must delete and recreate the sink.

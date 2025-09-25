@@ -245,8 +245,8 @@
 /api-shield/security/sequence-mitigation/configure/ /api-shield/security/sequence-mitigation/api/ 301
 
 #autorag
-/autorag/usage/recipes/ /autorag/how-to/ 301
-/autorag/configuration/metadata-filtering/ /autorag/configuration/metadata/ 301
+/autorag/usage/recipes/ /ai-search/how-to/ 301
+/autorag/configuration/metadata-filtering/ /ai-search/configuration/metadata/ 301
 
 # bots
 /bots/about/plans/ /bots/plans/ 301
@@ -532,7 +532,7 @@
 /durable-objects/api/hibernatable-websockets-api/ /durable-objects/best-practices/websockets/ 301
 /durable-objects/api/alarms-in-durable-objects/ /durable-objects/api/alarms/ 301
 /durable-objects/api/websockets/ /durable-objects/best-practices/websockets/ 301
-/durable-objects/api/sql-storage/ /durable-objects/api/storage-api/ 301
+/durable-objects/api/sql-storage/ /durable-objects/api/sqlite-storage-api/ 301
 /durable-objects/platform/data-location/ /durable-objects/reference/data-location/ 301
 /durable-objects/platform/environments/ /durable-objects/reference/environments/ 301
 /durable-objects/platform/troubleshooting/ /durable-objects/observability/troubleshooting/ 301
@@ -547,7 +547,7 @@
 /durable-objects/reference/error-handling/ /durable-objects/best-practices/error-handling/ 301
 /durable-objects/reference/troubleshooting/ /durable-objects/observability/troubleshooting/ 301
 /durable-objects/reference/websockets/ /durable-objects/best-practices/websockets/ 301
-/durable-objects/api/transactional-storage-api/ /durable-objects/api/storage-api/ 301
+/durable-objects/api/transactional-storage-api/ /durable-objects/api/sqlite-storage-api/ 301
 /durable-objects/platform/changelog/ /durable-objects/release-notes/ 301
 /durable-objects/changelog/ /durable-objects/release-notes/ 301
 /durable-objects/glossary/ /durable-objects/reference/glossary/ 301
@@ -1579,6 +1579,7 @@
 /r2/examples/cloudflare-access/ /r2/tutorials/cloudflare-access/ 301
 /r2/examples/upload-logs-event-notifications/ /r2/tutorials/upload-logs-event-notifications/ 301
 /r2/examples/demo-worker/ /r2/api/workers/workers-api-usage/ 301
+/r2/sql/platform/troubleshooting/ /r2-sql/troubleshooting/ 301
 
 # time-services_redirects
 /time-services/nts/usage/ /time-services/nts/ 301
@@ -2174,6 +2175,7 @@
 /cloudflare-one/connections/connect-networks/private-net/create-private-networks/ /cloudflare-one/connections/connect-networks/private-net/warp-to-warp/ 301
 /cloudflare-one/connections/connect-networks/private-net/private-hostnames-ips/ /cloudflare-one/connections/connect-networks/private-net/cloudflared/private-dns/ 301
 /cloudflare-one/connections/connect-networks/private-net/tunnel-virtual-networks/ /cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/ 301
+/cloudflare-one/connections/connect-networks/private-net/warp-connector/vpc-deployments/ /cloudflare-one/connections/connect-networks/private-net/warp-connector/tips/ 301
 /argo-tunnel/faq/ /cloudflare-one/faq/cloudflare-tunnels-faq/ 301
 /cloudflare-one/policies/browser-isolation/clientless-browser-isolation/ /cloudflare-one/policies/browser-isolation/setup/clientless-browser-isolation/ 301
 /cloudflare-one/connections/connect-devices/agentless/dns-over-https/ /cloudflare-one/connections/connect-devices/agentless/dns/dns-over-https/ 301
@@ -2320,6 +2322,9 @@
 
 # AI Crawl Control
 /ai-audit/* /ai-crawl-control/:splat 301
+
+# AutoRAG to AI search
+/autorag/* /ai-search/:splat 301
 
 # Cloudflare One / Zero Trust
 /cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/as-a-service/* /cloudflare-one/connections/connect-networks/configure-tunnels/local-management/as-a-service/:splat 301

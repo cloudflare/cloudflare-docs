@@ -22,7 +22,7 @@ A Durable Object's [in-memory state](/durable-objects/reference/in-memory-state/
 
 <Render file="do-sqlite-storage-no-bill-note" product="durable-objects" />
 
-[Storage API methods](/durable-objects/api/storage-api/#methods) are available on `ctx.storage` parameter passed to the Durable Object constructor. Storage API has several methods, including SQL, point-in-time recovery (PITR), key-value (KV), and alarm APIs.
+[Storage API methods](/durable-objects/api/sqlite-storage-api/) are available on `ctx.storage` parameter passed to the Durable Object constructor. Storage API has several methods, including SQL, point-in-time recovery (PITR), key-value (KV), and alarm APIs.
 
 Only Durable Object classes with a SQLite storage backend can access SQL API.
 
@@ -40,13 +40,13 @@ new_sqlite_classes = ["MyDurableObject"] # Array of new classes
 
 </WranglerConfig>
 
-[SQL API](/durable-objects/api/storage-api/#exec) is available on `ctx.storage.sql` parameter passed to the Durable Object constructor.
+[SQL API](/durable-objects/api/sqlite-storage-api/#exec) is available on `ctx.storage.sql` parameter passed to the Durable Object constructor.
 
-SQLite-backed Durable Objects also offer [point-in-time recovery API](/durable-objects/api/storage-api/#pitr-point-in-time-recovery-api), which uses <GlossaryTooltip term="bookmark">bookmarks</GlossaryTooltip> to allow you to restore a Durable Object's embedded SQLite database to any point in time in the past 30 days.
+SQLite-backed Durable Objects also offer [point-in-time recovery API](/durable-objects/api/sqlite-storage-api/#pitr-point-in-time-recovery-api), which uses <GlossaryTooltip term="bookmark">bookmarks</GlossaryTooltip> to allow you to restore a Durable Object's embedded SQLite database to any point in time in the past 30 days.
 
 ### Initialize instance variables from storage
 
-A common pattern is to initialize a Durable Object from [persistent storage](/durable-objects/api/storage-api/) and set instance variables the first time it is accessed. Since future accesses are routed to the same Durable Object, it is then possible to return any initialized values without making further calls to persistent storage.
+A common pattern is to initialize a Durable Object from [persistent storage](/durable-objects/api/sqlite-storage-api/) and set instance variables the first time it is accessed. Since future accesses are routed to the same Durable Object, it is then possible to return any initialized values without making further calls to persistent storage.
 
 ```ts
 import { DurableObject } from "cloudflare:workers";
@@ -75,7 +75,7 @@ export class Counter extends DurableObject {
 
 A Durable Object fully ceases to exist if, when it shuts down, its storage is empty. If you never write to a Durable Object's storage at all (including setting <GlossaryTooltip term="alarm">alarms</GlossaryTooltip>), then storage remains empty, and so the Durable Object will no longer exist once it shuts down.
 
-However if you ever write using [Storage API](/durable-objects/api/storage-api/), including setting alarms, then you must explicitly call [`storage.deleteAll()`](/durable-objects/api/storage-api/#deleteall) to empty storage and [`storage.deleteAlarm()`](/durable-objects/api/storage-api/#deletealarm) if you've configured an alarm. It is not sufficient to simply delete the specific data that you wrote, such as deleting a key or dropping a table, as some metadata may remain. The only way to remove all storage is to call `deleteAll()`. Calling `deleteAll()` ensures that a Durable Object will not be billed for storage.
+However if you ever write using [Storage API](/durable-objects/api/sqlite-storage-api/), including setting alarms, then you must explicitly call [`storage.deleteAll()`](/durable-objects/api/sqlite-storage-api/#deleteall) to empty storage and [`storage.deleteAlarm()`](/durable-objects/api/sqlite-storage-api/#deletealarm) if you've configured an alarm. It is not sufficient to simply delete the specific data that you wrote, such as deleting a key or dropping a table, as some metadata may remain. The only way to remove all storage is to call `deleteAll()`. Calling `deleteAll()` ensures that a Durable Object will not be billed for storage.
 
 ```ts
 export class MyDurableObject extends DurableObject<Env> {

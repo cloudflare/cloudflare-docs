@@ -6,7 +6,7 @@ sidebar:
   label: Logpush
 ---
 
-import { Plan } from "~/components";
+import { Plan, DashButton } from "~/components";
 
 Send Zaraz logs to an external storage provider like R2 or S3.
 
@@ -18,9 +18,11 @@ Follow these steps to configure Logpush support for Zaraz:
 
 ### 1. Create a Logpush job
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and zone.
-2. Go to **Analytics & Logs** > **Logpush**.
-3. Select **Create a Logpush Job** and follow the steps described in the [Logpush](/logs/logpush/) documentation.<br/>
+1. In the Cloudflare dashboard, go to the **Logpush** page.
+
+   <DashButton url="/?to=/:account/:zone/analytics/logs" />
+
+2. Select **Create a Logpush Job** and follow the steps described in the [Logpush](/logs/logpush/) documentation.<br/>
    When selecting a dataset, make sure you select **Zaraz Events**.
 
 ### 2. Enable Logpush from Zaraz settings

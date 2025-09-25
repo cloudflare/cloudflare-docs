@@ -41,7 +41,7 @@ await durableObjectStub.cat(); // billed as a request
 { props.product === "durable-objects" && <><AnchorHeading title="Storage billing" depth={2}/></> }
 { props.product === "workers" && <><AnchorHeading title="Storage billing" depth={3}/></> }
 
-The [Durable Objects Storage API](/durable-objects/api/storage-api/) is only accessible from within Durable Objects. Pricing depends on the storage backend of your Durable Objects.
+The [Durable Objects Storage API](/durable-objects/api/sqlite-storage-api/) is only accessible from within Durable Objects. Pricing depends on the storage backend of your Durable Objects.
 
 - **SQLite-backed Durable Objects (recommended)**: [SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#create-sqlite-backed-durable-object-class) is recommended for all new Durable Object classes. Workers Free plan can only create and access SQLite-backed Durable Objects.
 - **Key-value backed Durable Objects**: [Key-value storage backend](/durable-objects/reference/durable-objects-migrations/#create-durable-object-class-with-key-value-storage) is only available on the Workers Paid plan.
@@ -93,6 +93,6 @@ The [Durable Objects Storage API](/durable-objects/api/storage-api/) is only acc
 
 <sup>5</sup> Durable Objects will be billed for stored data until the data is removed. Once the data is removed, the object will be cleaned up automatically by the system.
 
-Requests that hit the [Durable Objects in-memory cache](/durable-objects/reference/in-memory-state/) or that use the [multi-key versions of `get()`/`put()`/`delete()` methods](/durable-objects/api/storage-api/) are billed the same as if they were a normal, individual request for each key.
+Requests that hit the [Durable Objects in-memory cache](/durable-objects/reference/in-memory-state/) or that use the [multi-key versions of `get()`/`put()`/`delete()` methods](/durable-objects/api/sqlite-storage-api/) are billed the same as if they were a normal, individual request for each key.
 
 </Details>

@@ -34,7 +34,7 @@ entries:
 
   - term: "Storage API"
     general_definition: |-
-      The transactional and strongly consistent (serializable) [Storage API](/durable-objects/api/storage-api/) for persisting data within each Durable Object. State stored within a unique Durable Object is "private" to that Durable Object, and not accessible from other Durable Objects.
+      The transactional and strongly consistent (serializable) [Storage API](/durable-objects/api/sqlite-storage-api/) for persisting data within each Durable Object. State stored within a unique Durable Object is "private" to that Durable Object, and not accessible from other Durable Objects.
 
       Storage API includes key-value (KV) API, SQL API, and point-in-time-recovery (PITR) API.
 
