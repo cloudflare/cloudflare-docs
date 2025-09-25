@@ -100,11 +100,17 @@ binding = "LOADER"
 
 Loads a Worker with the given ID, returning a `WorkerStub` which may be used to invoke the Worker.
 
-As a convenience, the loader implements basic caching of isolates: If this loader has already been used to load a Worker with the same ID in the past, and that Worker's isolate is still resident in memory, then the existing Worker will be returned, and the callback will not be called. When an isolate has not been used in a while, the system will discard it automatically, and then the next attempt to get the same ID will have to start a new isolate. If you frequently run the same code, you should use the same ID in order to get automatic caching. On the other hand, if the code you load is different every time, you can provide a random ID. Note that if your code has many versions, each version will need a unique ID, as there is no way to explicitly evict a previous version. Note also that you should never rely on an isolate already being in memory; if two requests MUST use the same isolate, then you need to make those requests using the same `WorkerStub` (i.e. only call `loader.get()` once).
+As a convenience, the loader implements caching of isolates. When a new ID is seen the first time, a new isolate is loaded. But, the isolate may be kept warm in memory for a while. If later invocations of the loader request the same ID, the existing isolate may be returned again, rather than create a new one. But there is no guarantee: a later call with the same ID may instead start a new isolate from scratch.
 
-If the system opts not to reuse an existing isolate, then it invokes `codeCallback` to get the Worker's code. This is an async callback, so the application can load the code from remote storage if desired. The callback returns a `WorkerCode` object (described below).
+Whenever the system determines it needs to start a new isolate, and it does not already have a copy of the code cached, it will invoke `codeCallback` to get the Worker's code. This is an async callback, so the application can load the code from remote storage if desired. The callback returns a `WorkerCode` object (described below).
+
+Because of the caching, you should ensure that the callback always returns exactly the same content, when called for the same ID. If anything about the content changes, you must use a new ID. But if the content hasn't changed, it's best to reuse the same ID in order to take advantage of caching. If the `WorkerCode` is different every time, you can pass a random ID.
+
+You could, for example, use IDs of the form `<worker-name>:<version-number>`, where the version number increments every time the code changes. Or, you could compute IDs based on a hash of the code and config, so that any change results in a new ID.
 
 `get()` returns a `WorkerStub`, which can be used to send requests to the loaded Worker. Note that the stub is returned synchronously&mdash;you do not have to await it. If the Worker is not loaded yet, requests made to the stub will wait for the Worker to load before being delivered. If loading fails, the request will throw an exception.
+
+It is never guaranteed that two requests will go to the same isolate. Even if you use the same `WorkerStub` to make multiple requests, they could execute in different isolates. The callback passed to `loader.get()` could be called any number of times (although it is unusual for it to be called more than once).
 
 ### `WorkerCode`
 
