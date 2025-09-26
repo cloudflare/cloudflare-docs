@@ -6,8 +6,7 @@ sidebar:
 
 ---
 
-import { GlossaryDefinition, GlossaryTooltip, Plan, Steps, Tabs, TabItem } from "~/components"
-
+import { GlossaryDefinition, GlossaryTooltip, Plan, Steps, Tabs, TabItem, DashButton } from "~/components"
 
 <Plan type="all" />
 
@@ -48,8 +47,10 @@ To view the contents in your learned schema, refer to [Export a schema](/api-shi
    </TabItem>
    <TabItem label="New dashboard" icon="rocket">
       <Steps>
-         1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
-         2. Go to **Security** > **Web assets** > **Schema validation**.
+         1. In the Cloudflare dashboard, go to the **Web Assets** page.
+
+               <DashButton url="/?to=/:account/:zone/security/web-assets" />
+         2. Go to the **Schema validation** tab.
          3. Select **Add validation**.
          4. Upload a schema file.
          5. Select **Add schema and endpoints**.
@@ -75,8 +76,10 @@ Changes may take a few minutes to process depending on the number of added endpo
    </TabItem>
    <TabItem label="New dashboard" icon="rocket">
       <Steps>
-         1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
-         2. Go to **Security** > **Web assets** > **Schema validation**.
+         1. In the Cloudflare dashboard, go to the **Web Assets** page.
+
+               <DashButton url="/?to=/:account/:zone/security/web-assets" />
+         2. Go to the **Schema validation** tab.
          3. Select **Add validation**.
          4. Select **Apply learned schema**.
          5. Choose an action and select **Apply schema**.
@@ -102,8 +105,10 @@ At this time, learned schemas will not overwrite customer-uploaded schemas. If a
    </TabItem>
    <TabItem label="New dashboard" icon="rocket">
       <Steps>
-         1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
-         2. Go to **Security** > **Web assets** > **Schema validation**.
+         1. In the Cloudflare dashboard, go to the **Web Assets** page.
+
+               <DashButton url="/?to=/:account/:zone/security/web-assets" />
+         2. Go to the **Schema validation** tab.
          3. Select **Add validation**.
          4. Select **Apply learned schema**.
          5. Choose a hostname and review the endpoints that will be protected by the learned schema.
@@ -143,8 +148,9 @@ To set up a fallthrough action:
    </TabItem>
    <TabItem label="New dashboard" icon="rocket">
       <Steps>
-         1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
-         2. Go to **Security** > **Security rules**.
+         1. In the Cloudflare dashboard, go to the **Security rules** page.
+
+               <DashButton url="/?to=/:account/:zone/security/security-rules" />
          3. Select **Templates**.
          4. Search for the template named `Mitigate API requests to unidentified endpoints` and select **Preview template**.
          5. Give your rule a descriptive name.
@@ -177,8 +183,10 @@ You can use the `cf.api_gateway.fallthrough_triggered` syntax in your own custom
    </TabItem>
    <TabItem label="New dashboard" icon="rocket">
       <Steps>
-         1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
-         2. Go to **Security** > **Web assets** > **Schema validation**.
+         1. In the Cloudflare dashboard, go to the **Web Assets** page.
+
+               <DashButton url="/?to=/:account/:zone/security/web-assets" />
+         2. Go to the **Schema validation** tab.
          3. Check the multi-select box to select all endpoints associated with the schema.
          4. Select **Change action**.
          5. Choose an action from the dropdown menu.
@@ -211,8 +219,10 @@ To change the default action:
    </TabItem>
    <TabItem label="New dashboard" icon="rocket">
       <Steps>
-         1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
-         2. Go to **Security** > **Settings** and filter by **API abuse**.
+          1. In the Cloudflare dashboard, go to the **Security Settings** page.
+
+               <DashButton url="/?to=/:account/:zone/security/settings" />
+         2. Filter by **API abuse**.
          3. Under **Schema validation** > **Configurations**, select the edit icon next to **Default action**.
          4. Choose a new action from the dropdown menu.
          5. Select **Save**.
@@ -242,8 +252,10 @@ To change the action on an individual endpoint:
    </TabItem>
    <TabItem label="New dashboard" icon="rocket">
       <Steps>
-         1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
-         2. Go to **Security** > **Web assets** > **Schema validation** tab.
+         1. In the Cloudflare dashboard, go to the **Web Assets** page.
+
+               <DashButton url="/?to=/:account/:zone/security/web-assets" />
+         2. Go to the **Schema validation** tab.
          3. Search for the endpoint to change.
          4. Select the three dots on the endpoint's row > **Change action**.
          5. Choose a new action from the dropdown menu and select **Set action**.
@@ -268,8 +280,10 @@ To disable Schema validation without changing actions:
    </TabItem>
    <TabItem label="New dashboard" icon="rocket">
       <Steps>
-         1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
-         2. Go to **Security** > **Web assets** > **Schema validation**.
+         1. In the Cloudflare dashboard, go to the **Web Assets** page.
+
+               <DashButton url="/?to=/:account/:zone/security/web-assets" />
+         2. Go to the **Schema validation** tab.
          3. Select **Schema settings**.
          4. Filter by **API abuse**.
          5. Turn **Schema validation** off.
@@ -293,8 +307,10 @@ Your per-endpoint configurations will be saved when modifying the setting, so th
    </TabItem>
    <TabItem label="New dashboard" icon="rocket">
       <Steps>
-         1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
-         2. Go to **Security** > **Web assets** > **Schema validation** tab.
+         1. In the Cloudflare dashboard, go to the **Web Assets** page.
+
+               <DashButton url="/?to=/:account/:zone/security/web-assets" />
+         2. Go to the **Schema validation** tab.
          3. Select **Schema settings**.
          4. Filter by **API abuse**.
          5. View your schemas on **Schema validation** > **Active schemas**.
@@ -320,8 +336,10 @@ To delete currently uploaded or learned schemas:
    </TabItem>
    <TabItem label="New dashboard" icon="rocket">
       <Steps>
-         1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
-         2. Go to **Security** > **Web assets** > **Schema validation** tab.
+         1. In the Cloudflare dashboard, go to the **Web Assets** page.
+
+               <DashButton url="/?to=/:account/:zone/security/web-assets" />
+         2. Go to the **Schema validation** tab.
          3. Select **Schema settings**.
          4. Filter by **API abuse**.
          5. View your schemas on **Schema validation** > **Active schemas**.

@@ -7,7 +7,7 @@ sidebar:
 
 ---
 
-import { GlossaryTooltip, Plan, Steps, Tabs, TabItem, Render } from "~/components"
+import { GlossaryTooltip, Plan, Steps, Tabs, TabItem, Render, DashButton } from "~/components"
 
 <Plan type="all" />
 
@@ -36,8 +36,10 @@ When an endpoint is using [Cloudflare Workers](/workers/), the metrics data will
   </TabItem>
   <TabItem label="New dashboard" icon="rocket">
     <Steps>
-      1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
-      2. Go to **Security** > **Web assets** > **Endpoints**.
+      1. In the Cloudflare dashboard, go to the **Web Assets** page.
+
+          <DashButton url="/?to=/:account/:zone/security/web-assets" />
+      2. Go to the **Endpoints** tab.
       3. Select **Add endpoints**.
       4. Add your endpoints [manually](#add-endpoints-manually), from [Schema validation](#add-endpoints-from-schema-validation), or from [API Discovery](#add-endpoints-from-api-discovery).
     </Steps>
