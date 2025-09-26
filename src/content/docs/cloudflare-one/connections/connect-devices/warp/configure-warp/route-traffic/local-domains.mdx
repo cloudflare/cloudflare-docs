@@ -51,6 +51,10 @@ Local Domain Fallback configuration only impacts where DNS requests get resolved
 
 The domain will no longer be excluded from Gateway DNS policies, effective immediately.
 
+## Handling reverse DNS lookups for internal IPs.
+
+By default Warp will send reverse DNS querys (IP to hostname) to public DNS servers, in order to resolve internal reverse DNS lookups a local domain fallback entry needs to be added for in-addr.arpa that points to your internal DNS server IP. in-addr.arpa is the "domain" used for reverse DNS queries, so adding a local domain fallback entry for this will send reverse DNS queries to your local DNS server.
+
 ## Related resources
 
 - [Split Tunnels](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) - Control which traffic goes through WARP by including or excluding specific IPs or domains.
