@@ -10,7 +10,11 @@ Browser Rendering uses a managed Chromium environment that includes a standard s
 
 If your webpage specifies a font that is not supported yet, Chromium will automatically fall back to a similar supported font. If you would like to use a font that is not currently supported, you can [add a custom font](/browser-rendering/reference/supported-fonts/#use-your-own-custom-font).
 
-## Generic CSS font family support
+## Pre-installed fonts
+
+The following sections list the fonts available in the Browser Rendering environment.
+
+### Generic CSS font family support
 
 The following generic CSS font families are supported:
 
@@ -20,7 +24,7 @@ The following generic CSS font families are supported:
 - `cursive`
 - `fantasy`
 
-## Common system fonts
+### Common system fonts
 
 - Andale Mono
 - Arial
@@ -38,7 +42,7 @@ The following generic CSS font families are supported:
 - Verdana
 - Webdings
 
-## Open source and extended fonts
+### Open source and extended fonts
 
 - Bitstream Vera (Serif, Sans, Mono)
 - Cyberbit
@@ -49,7 +53,7 @@ The following generic CSS font families are supported:
 - Open Sans
 - Roboto
 
-## International fonts
+### International fonts
 
 Browser Rendering includes additional font packages for non-Latin scripts and emoji:
 
@@ -63,7 +67,7 @@ Browser Rendering includes additional font packages for non-Latin scripts and em
 
 ## Use your own custom font
 
-If your font is not supported, you can use your own custom font. If you own the font, load it on your website. If you do not own it, add the font using `addStyleTag`:
+If a required font is not pre-installed, you can inject it into the page at render time using `addStyleTag`. This allows you to load fonts from an external URL or embed them directly as a Base64 string.
 
 <Tabs> <TabItem label="JavaScript" icon="seti:javascript">
 With a CDN source:
