@@ -132,13 +132,13 @@ Deploy configuration profiles (steps 1, 2, and 3) before the WARP application (s
 
 You must deploy a [user-side certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/) so that devices managed by Intune can establish trust with Cloudflare when their traffic is inspected.
 
-1. Log into [Zero Trust](https://one.dash.cloudflare.com/).
+1. Log in to [Zero Trust](https://one.dash.cloudflare.com/).
 
 2. Go to **Settings** > **Resources** > under **Certificates**, select **Manage**.
 
-3. Find your [certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/) and select the three dot icon next to it > select **Download .crt**.
+3. Find your [certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/) and select the three dotted icon next to it > select **Download .crt**.
 
-4. In the [Microsoft Intune admin center](https://intune.microsoft.com) > go to **Devices** > select **macOS**.
+4. In the [Microsoft Intune admin center](https://intune.microsoft.com), go to **Devices** > select **macOS**.
 
 	![Intune admin console where you select macOS before creating a policy](~/assets/images/cloudflare-one/connections/intune/devices-macos.png)
 
@@ -150,7 +150,7 @@ You must deploy a [user-side certificate](/cloudflare-one/connections/connect-de
 
 7. For **Profile Type**, select _Templates_ > select **Trusted certificate** as the **Template name** > select **Create**.
 
-8. In **Basics**, input the necessary field(s) and give your policy a name like "Cloudflare certificate" > select **Next**.
+8. In **Basics**, input the necessary field(s) and give your policy a name like `Cloudflare certificate` > select **Next**.
 
 9. For **Deployment Channel**, select **Device Channel**.
 
@@ -160,13 +160,13 @@ You must deploy a [user-side certificate](/cloudflare-one/connections/connect-de
 
 12. Review your configuration in **Review + create** and select **Create**.
 
-Sharing this certificate with Intune automates the installation of this certificate on your user devices. Creating trust between browsers on a user's device and Cloudflare.
+Sharing this certificate with Intune automates the installation of this certificate on your user devices, creating trust between browsers on a user's device and Cloudflare.
 
 ### 2. Allow WARP system extensions
 
 Before deploying WARP, you need to allow its system extensions.
 
-1. In the [Microsoft Intune admin center](https://intune.microsoft.com) > go to **Devices** > **macOS**.
+1. In the [Microsoft Intune admin center](https://intune.microsoft.com), go to **Devices** > **macOS**.
 
 2. Under **Manage devices**, select **Configuration**.
 
@@ -174,7 +174,7 @@ Before deploying WARP, you need to allow its system extensions.
 
 4. For **Profile type**, select _Settings catalog_ > select **Create**.
 
-5. In **Basics**, input the necessary field(s) and give your policy a name like "WARP System Extensions" > select **Next**.
+5. In **Basics**, input the necessary field(s) and give your policy a name like `WARP System Extensions` > select **Next**.
 
 6. In **Configuration settings**, select **Add settings**.
 
@@ -203,7 +203,7 @@ This step allows WARP to install without user interaction. By completing this st
 
 1. Open a text editor and paste in the following `.mobileconfig` template:
 
-	```
+	```xml
 	<?xml version="1.0" encoding="UTF-8"?>
 	<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 	<plist version="1.0">
@@ -255,7 +255,7 @@ This step allows WARP to install without user interaction. By completing this st
 3. Update your organization's string (`YOUR_TEAM_NAME_HERE`) with your [team name](/cloudflare-one/faq/getting-started-faq/#what-is-a-team-domainteam-name).
 
 4. Modify the file with your desired [deployment parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/).
-	```
+	```xml
 	<array>
 		<dict>
 				<key>organization</key>
@@ -266,7 +266,7 @@ This step allows WARP to install without user interaction. By completing this st
 	:::tip[Best practice]
 	Start by deploying the template in its default, minimal form. This helps you verify a successful deployment before adding custom parameters.
 	:::
-5. In the [Microsoft Intune admin center](https://intune.microsoft.com) > go to **Devices** > **macOS**.
+5. In the [Microsoft Intune admin center](https://intune.microsoft.com), go to **Devices** > **macOS**.
 
 6. Under **Manage devices**, select **Configuration**.
 
@@ -280,7 +280,7 @@ This step allows WARP to install without user interaction. By completing this st
 
 11. For **Deployment Channel**, select **Device Channel**.
 
-12. Under **Configuration profile file**, upload your `.mobileconfig` file that you made in your text editor in step one > select **Next**.
+12. Under **Configuration profile file**, upload the `.mobileconfig` file that you created in your text editor in step 1 > select **Next**.
 
 13. In **Assignments**, select an option (for example, **Add all devices** or **Add all users**) that is valid for your scope. This will be the same scope for all steps.
 
@@ -294,7 +294,7 @@ By completing this step, you preconfigured WARP with your team settings so it co
 Complete Step 4 one hour after steps 1, 2, and 3 so clients have enough time to check in and update their device configurations.
 :::
 
-1. Log into [Zero Trust](https://one.dash.cloudflare.com/).
+1. Log in to [Zero Trust](https://one.dash.cloudflare.com/).
 
 2. Go to **Settings** > **Resources** > find macOS under **Download the WARP client** > select **Download release**.
 
@@ -303,13 +303,13 @@ Complete Step 4 one hour after steps 1, 2, and 3 so clients have enough time to 
 	:::note[Repeat this step to update WARP when a new release is available]
 	Every time WARP releases a new version, you must repeat this process and get a new `.pkg` file for the new WARP version.
 	:::
-3. Log into the [Microsoft Intune admin center](https://intune.microsoft.com) > **Apps** > **MacOS**.
+3. Log in to the [Microsoft Intune admin center](https://intune.microsoft.com), and go to **Apps** > **MacOS**.
 
 4. Select **Create**.
 
 5. For **App type**, select _macOS app (PKG)_.
 
-6. In **App information**, select the `.pkg` file you downloaded and input required details. Enter "Cloudflare" as the Publisher.
+6. In **App information**, select the `.pkg` file you downloaded and input required details. Enter `Cloudflare` as the Publisher.
 
 7. In **Requirements**, refer to the OS versions listed in [stable releases for macOS](/cloudflare-one/connections/connect-devices/warp/download-warp/#macos) and find what matches for you.
 
