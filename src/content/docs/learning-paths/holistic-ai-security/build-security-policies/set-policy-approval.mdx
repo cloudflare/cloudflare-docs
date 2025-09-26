@@ -81,9 +81,9 @@ You can build policies that enable Prompt Capture for AI applications in specifi
 
 If your organization uses [ChatGPT Business](https://chatgpt.com/business/), you can configure a Gateway policy to enforce the use of your organization's workspace ID, ensuring all traffic to ChatGPT is correctly associated with your account. This will implement Gateway [tenant control](/cloudflare-one/policies/gateway/http-policies/tenant-control/), which lets you manage how users interact with specific applications.
 
-To create this policy, you'll add a custom HTTP header to your Gateway policy. This header, `Chatgpt-Allowed-Workspace-Id`, ensures that only requests with your organization's unique workspace ID are permitted.
+To create this policy, you will add a custom HTTP header to your Gateway policy. This header, `Chatgpt-Allowed-Workspace-Id`, ensures that only requests with your organization's unique workspace ID are permitted.
 
-1.  In **Zero Trust**, go to **Gateway** > **Firewall policies**.
+1.  In [Zero Trust](https://one.dash.cloudflare.com), go to **Gateway** > **Firewall policies**.
 2.  In the **HTTP** tab, select **Add a policy**.
 3.  Name the policy.
 4.  Under **Traffic**, build a logical expression that defines the traffic you want to allow.
