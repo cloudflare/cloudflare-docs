@@ -145,7 +145,7 @@ client_secret = ""
 if client_id == "new":
     service_token_name = input('Please input name for service token > ')
     client_id, client_secret = request_create_service_token(service_token_name)
-    print("Created service token with a client_id and a client_secret. You may want to save these secrets.")
+    print(f"Created service token with client_id {client_id} and client_secret {client_secret}. You may want to save these secrets.")
 
 if len(client_secret) == 0:
     client_secret = read_string_option('CLIENT_SECRET', "client secret")
