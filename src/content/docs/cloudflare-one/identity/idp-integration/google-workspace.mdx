@@ -18,8 +18,6 @@ You do not need to be a Google Cloud Platform user to integrate Google Workspace
 
 ## Set up Google Workspace as an identity provider
 
-<Render file="access/google-workspace-scim" product= "cloudflare-one" />
-
 ### 1. Configure Google Workspace
 
 1.  Log in to the Google Cloud Platform [console](https://console.cloud.google.com/). This is separate from your Google Workspace console.
@@ -90,6 +88,15 @@ You do not need to be a Google Cloud Platform user to integrate Google Workspace
 5. (Optional) Under **Optional configurations**, enter [custom OIDC claims](/cloudflare-one/identity/idp-integration/generic-oidc/#custom-oidc-claims) that you wish to add to your user's identity.
 
 6. Select **Save**. To complete setup, you must visit the generated link. If you are not the Google Workspace administrator, share the link with the administrator.
+
+:::caution[SCIM Provisioning (Beta)]
+The direct SCIM provisioning integration with Google Workspace is not currently supported. Cloudflare is working with Google to complete the final approval process required to enable this feature. In the meantime, the SCIM endpoint will accept inbound SCIM events from any SCIM compliant service.
+
+To generate the SCIM endpoint, you must:
+
+1. Save your integration.
+2. Return to the
+:::
 
 7. The generated link will prompt you to log in to your Google admin account and to authorize Cloudflare Access to view group information. After allowing permissions, you will see a success page from Cloudflare Access.
 
