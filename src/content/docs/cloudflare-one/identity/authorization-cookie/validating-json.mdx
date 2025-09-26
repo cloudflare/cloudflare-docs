@@ -104,7 +104,7 @@ You can now paste the AUD tag into your token validation script. The AUD tag wil
 
 ### Cloudflare Workers example
 
-When Cloudflare Access is in front of your [Worker](/workers), your Worker still needs to validate the JWT that Cloudflare Access adds to the `Cf-Access-Jwt-Assertion` header on the incoming request, to ensure that the request came from Cloudflare Access, and not a malicious third-party.
+When Cloudflare Access is in front of your [Worker](/workers), your Worker still needs to validate the JWT that Cloudflare Access adds to the `Cf-Access-Jwt-Assertion` header on the incoming request.
 
 The following code will validate the JWT using the [jose NPM package](https://www.npmjs.com/package/jose):
 
@@ -153,14 +153,8 @@ export default {
 #### Required environment variables
 
 Add these [environment variables](/workers/configuration/environment-variables/) to your Worker:
-
-1. **`POLICY_AUD`** - Your application's Audience (AUD) tag from Zero Trust dashboard
-   - Go to **Access** > **Applications** > **Configure** > **Basic information**
-   - Copy the **Application Audience (AUD) Tag**
-
-2. **`TEAM_DOMAIN`** - Your Zero Trust team domain
-   - Format: `https://<your-team-name>.cloudflareaccess.com`
-   - Replace `<your-team-name>` with your actual team name
+	- `POLICY_AUD`: Your application's [AUD tag](#get-your-aud-tag)
+	- `TEAM_DOMAIN`: `https://<your-team-name>.cloudflareaccess.com`, where `<your-team-name>` is replaced with your actual <GlossaryTooltip term="team name">team name</GlossaryTooltip>.
 
 You can set these variables by adding them to your Worker's [Wrangler configuration file](/workers/wrangler/configuration/), or via the Cloudflare dashboard under **Workers & Pages** > **your-worker** > **Settings** > **Environment Variables**.
 
@@ -354,7 +348,3 @@ app.get("/", (req, res) => {
 
 app.listen(3333);
 ```
-
-## Related resources
-
-- [Verifying JWTs in Cloudflare Workers](https://kinde.com/blog/engineering/verifying-jwts-in-cloudflare-workers/) - Implement JWT verification in Cloudflare Workers.
