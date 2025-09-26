@@ -9,6 +9,8 @@ head:
 
 ---
 
+import { Badge } from "~/components"
+
 ## count
 
 Usage:
@@ -125,7 +127,7 @@ quantileExactWeighted(0.95)(query_time, _sample_interval)
 
 For backwards compatibility, this is also available as `quantileWeighted(q, column_name, weight_column_name)`.
 
-## argMax
+## argMax <Badge text="New" variant="tip" size="small" />
 
 Usage:
 
@@ -147,7 +149,7 @@ argMax(blob1, double1)
 argMax(blob1, _sample_interval)
 ```
 
-## argMin
+## argMin <Badge text="New" variant="tip" size="small" />
 
 Usage:
 
@@ -169,7 +171,7 @@ argMin(blob1, double1)
 argMin(blob1, _sample_interval)
 ```
 
-## first_value
+## first_value <Badge text="New" variant="tip" size="small" />
 
 Usage:
 
@@ -186,7 +188,7 @@ Example:
 SELECT first_value(blob1) FROM my_dataset ORDER BY timestamp ASC
 ```
 
-## last_value
+## last_value <Badge text="New" variant="tip" size="small" />
 
 Usage:
 
