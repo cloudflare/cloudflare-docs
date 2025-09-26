@@ -79,7 +79,7 @@ Refer to the [events and parameters](/workflows/build/events-and-parameters/) do
 - <code>step.do(name: string, callback: (): RpcSerializable): Promise&lt;T&gt;</code>
 - <code>step.do(name: string, config?: WorkflowStepConfig, callback: ():
   	RpcSerializable): Promise&lt;T&gt;</code>
-  - `name` - the name of the step.
+  - `name` - the name of the step, up to 256 characters.
   - `config` (optional) - an optional `WorkflowStepConfig` for configuring [step specific retry behaviour](/workflows/build/sleeping-and-retrying/).
   - `callback` - an asynchronous function that optionally returns serializable state for the Workflow to persist.
 
@@ -250,7 +250,7 @@ Create (trigger) a new instance of the given Workflow.
 - <code>create(options?: WorkflowInstanceCreateOptions): Promise&lt;WorkflowInstance&gt;</code>
   - `options` - optional properties to pass when creating an instance, including a user-provided ID and payload parameters.
 
-An ID is automatically generated, but a user-provided ID can be specified (up to 64 characters [^1]). This can be useful when mapping Workflows to users, merchants or other identifiers in your system. You can also provide a JSON object as the `params` property, allowing you to pass data for the Workflow instance to act on as its [`WorkflowEvent`](/workflows/build/events-and-parameters/).
+An ID is automatically generated, but a user-provided ID can be specified (up to 100 characters [^1]). This can be useful when mapping Workflows to users, merchants or other identifiers in your system. You can also provide a JSON object as the `params` property, allowing you to pass data for the Workflow instance to act on as its [`WorkflowEvent`](/workflows/build/events-and-parameters/).
 
 ```ts
 // Create a new Workflow instance with your own ID and pass params to the Workflow instance
