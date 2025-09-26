@@ -85,6 +85,18 @@ For more information, refer to the [Slack documentation](https://slack.com/help/
 
 For more information, refer to the [Dropbox documentation](https://help.dropbox.com/security/network-control).
 
+### ChatGPT
+
+| Selector    | Operator | Value     | Action | Untrusted certificate action |
+| ----------- | -------- | --------- | ------ | ---------------------------- |
+| Application | in       | _ChatGPT_ | Allow  | Block                        |
+
+| Custom header name             | Custom header value              |
+| ------------------------------ | -------------------------------- |
+| `Chatgpt-Allowed-Workspace-Id` | Your organization's workspace ID |
+
+For more information, refer to the [OpenAI documentation](https://help.openai.com/articles/8798594-what-is-a-workspace-how-do-i-access-my-chatgpt-business-workspace).
+
 ## Exempt users in Cloudflare WAF
 
 You can include custom headers in an HTTP policy to allow your users through [Cloudflare WAF](/waf/). This is useful for allowing only WARP users through your WAF.
