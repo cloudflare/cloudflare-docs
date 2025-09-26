@@ -5,7 +5,7 @@ sidebar:
   order: 4
 ---
 
-import { Details } from "~/components";
+import { Render, Details } from "~/components";
 
 Application Granular Controls allows you to create [Gateway HTTP policies](/cloudflare-one/policies/gateway/http-policies/) to control specific user actions within supported SaaS applications. This allows you to give users access to an application while restricting the actions that they can take within the application.
 
@@ -68,25 +68,10 @@ SaaS applications typically provide multiple APIs to interact with. For each app
 - Web Application API: These APIs are consumed by the web application that users interact with through their browser.
 - Platform API: These APIs are exposed to users to allow for programmatic interaction with the SaaS application. These are typically used by automations, scripts, or other applications.
 
-[Application Controls](#application-controls) use both API types. If both API types are available when creating HTTP policies using [Operations](#operations), you should select the Operations that align to the API being used, or include both for greater coverage.
+[Application Controls](#application-controls) use both API types. If both API types are available when creating HTTP policies using [Operations](#operations), you should select the Operations that align to the API being used, or include both for wider coverage.
 
 ## Compatible applications
 
 Application Granular Controls supports matching operations within a number of defined applications.
 
-### AI
-
-- ChatGPT
-- Google Gemini
-- Perplexity
-- Claude
-
-### File sharing
-
-- Box
-- Dropbox
-- Google Drive
-- ShareFile
-- Hightail
-- Smash
-- WeTransfer
+<Render file="gateway/granular-applications" product="cloudflare-one" />
