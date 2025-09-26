@@ -11,7 +11,7 @@ description: Custom Origin Trust Store allows you to upload certificate
 
 import { Render } from "~/components";
 
-By default, Cloudflare's global network maintains a list of publicly trusted certificate authorities. This means that when using [Full (strict) encryption mode](/ssl/origin-configuration/ssl-modes/full-strict/), Cloudflare will only trust origin server certificates issued by a CA in this trust store.
+By default, Cloudflare's global network maintains [a list of publicly trusted certificate authorities](https://github.com/cloudflare/cfssl_trust). This means that when using [Full (strict) encryption mode](/ssl/origin-configuration/ssl-modes/full-strict/), Cloudflare will only trust origin server certificates issued by a CA included in this trust store.
 
 <Render file="custom-origin-trust-store-definition" product="ssl" /> <br />
 
@@ -19,7 +19,7 @@ When a CA has been uploaded to Custom Origin Server Trust Store, Cloudflare will
 
 ## Availability
 
-To get access to Custom Origin Trust Store, you need to have [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) enabled on your zone.
+To get access to Custom Origin Trust Store, [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) must be enabled on the zone.
 
 ## How to
 
@@ -33,9 +33,9 @@ With [Full (strict) encryption mode](/ssl/origin-configuration/ssl-modes/full-st
 
 ## API commands
 
-| Command                          | Method   | Endpoint                                       |
-| -------------------------------- | -------- | ---------------------------------------------- |
-| Create custom origin trust store | `POST`   | `/zones/<ZONE_ID>/acm/custom_trust_store`      |
-| List custom origin trust stores  | `GET`    | `/zones/<ZONE_ID>/acm/custom_trust_store`      |
-| Get custom origin trust store    | `GET`    | `/zones/<ZONE_ID>/acm/custom_trust_store/<ID>` |
-| Delete custom origin trust store | `DELETE` | `/zones/<ZONE_ID>/acm/custom_trust_store/<ID>` |
+| Command                                                                                                    | Method + URL stub                                  | Notes                                       |
+| ---------------------------------------------------------------------------------------------------------- | -------------------------------------------------- | ------------------------------------------- |
+| [List Custom Origin Trust Store Details](/api/resources/acm/subresources/custom_trust_store/methods/list/) | `GET zones/:zone_id/acm/custom_trust_store`        |                                             |
+| [Custom Origin Trust Store Details](/api/resources/acm/subresources/custom_trust_store/methods/get/)       | `GET zones/:zone_id/acm/custom_trust_store/:id`    | The `:id` can be found via the List command |
+| [Upload Custom Origin Trust Store](/api/resources/acm/subresources/custom_trust_store/methods/create/)     | `POST zones/:zone_id/acm/custom_trust_store`       |                                             |
+| [Delete Custom Origin Trust Store](/api/resources/acm/subresources/custom_trust_store/methods/delete/)     | `DELETE zones/:zone_id/acm/custom_trust_store/:id` | The `:id` can be found via the List command |
