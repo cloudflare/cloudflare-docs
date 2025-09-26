@@ -8,7 +8,7 @@ title: Deploy WARP on headless Linux machines
 
 import { Render, GlossaryTooltip } from "~/components";
 
-This tutorial explains how to deploy the Cloudflare WARP client on Linux devices using a service token and an installation script. This deployment workflow is designed for headless servers which do not have access to a browser for identity provider logins. Because users are not required to log in to an identity provider, identity-based policies and logging will not be available on these devices.
+This tutorial explains how to deploy the Cloudflare WARP client on Linux devices using a service token and an installation script. This deployment workflow is designed for headless servers - that is, servers which do not have access to a browser for identity provider logins - and for situations where you want to fully automate the onboarding process. Because devices will not register through an identity provider, [identity-based policies](/cloudflare-one/policies/gateway/identity-selectors/) and logging will be unavailable.
 
 ## Prerequisites
 
@@ -16,25 +16,29 @@ This tutorial explains how to deploy the Cloudflare WARP client on Linux devices
 
 ## 1. Create a service token
 
-A service token consists of a Client ID and a Client Secret. We will be using a service token to enroll the WARP client in your Zero Trust organization.
+Fully automated deployments rely on a service token to enroll the WARP client in your Zero Trust organization. You can use the same token to enroll multiple devices, or generate a unique token per device if they require different [device profile settings](/cloudflare-one/connections/connect-devices/warp/configure-warp/device-profiles/).
 
-To create a new service token:
+To create a service token:
 
 <Render file="access/create-service-token" product="cloudflare-one" />
 
 ## 2. Configure device enrollment permissions
 
+Device enrollment permissions determine the users and devices that can register WARP with your Zero Trust organization.
+
+To allow devices to enroll using a service token:
+
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client**.
 2. In **Device enrollment permissions**, select **Manage**.
 3. In the **Policies** tab, select **Create new policy**. A new tab will open with the policy creation page.
 4. For **Action**, select _Service Auth_.
-5. For the **Selector** field, you have two options: you can either allow all service tokens (`Any Access Service Token`) or specific service tokens (`Service Token`). In this example, we will choose the token created earlier:
+5. For the **Selector** field, you have two options: you can either allow all service tokens (`Any Access Service Token`) or specific service tokens (`Service Token`). For example:
 
    | Rule Action | Rule type | Selector | Value |
    | --------- | ---------| ------ | -- |
    | Service Auth | Include   | Service Token    | `<TOKEN-NAME>` |
 6. Save the policy.
-7. Go back to **Device enrollment permissions** and add the newly created policy.
+7. Go back to **Device enrollment permissions** and add the newly created policy to your permissions.
 8. Select **Save**.
 
 ## 3. Create an installation script
@@ -51,6 +55,7 @@ You can use a shell script to automate WARP installation and registration. The f
 		#!/bin/bash
 		set -e
 
+		# Download and install the WARP client
 		function warp() {
 				curl -fsSL https://pkg.cloudflareclient.com/pubkey.gpg | sudo gpg --yes --dearmor --output /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg
 				echo "deb [signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/cloudflare-client.list
@@ -58,6 +63,7 @@ You can use a shell script to automate WARP installation and registration. The f
 				sudo apt-get install --assume-yes cloudflare-warp
 		}
 
+		# Create an MDM file with your WARP deployment parameters
 		function mdm() {
 			sudo touch /var/lib/cloudflare-warp/mdm.xml
 			cat > /var/lib/cloudflare-warp/mdm.xml << "EOF"
@@ -94,6 +100,8 @@ You can use a shell script to automate WARP installation and registration. The f
 
 ## 4. Install WARP
 
+To install WARP using the example script:
+
 1. Make the script executable:
 
 	```sh
@@ -105,4 +113,4 @@ You can use a shell script to automate WARP installation and registration. The f
 	sudo ./install_warp.sh
 	```
 
-The script will install WARP and apply the configuration parameters stored in `/var/lib/cloudflare-warp/mdm.xml`. Assuming [`auto_connect`](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/#auto_connect) is configured, WARP will automatically connect to your Zero Trust organization. The device will appear in [Zero Trust](https://one.dash.cloudflare.com) under **My Team** > **Devices**.
+WARP is now deployed with the configuration parameters stored in `/var/lib/cloudflare-warp/mdm.xml`. Assuming [`auto_connect`](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/#auto_connect) is configured, WARP will automatically connect to your Zero Trust organization. Once connected, the device will appear in [Zero Trust](https://one.dash.cloudflare.com) under **My Team** > **Devices**.
