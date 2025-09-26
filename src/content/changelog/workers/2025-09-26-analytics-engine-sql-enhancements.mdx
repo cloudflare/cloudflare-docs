@@ -1,0 +1,46 @@
+---
+title: Workers Analytics Engine now supports additional SQL functions
+description: Workers Analytics Engine now supports additional SQL functions including mathematical operations, advanced string manipulation, and improved documentation structure.
+date: 2025-09-26
+products:
+  - workers-analytics-engine
+---
+
+We've expanded the SQL capabilities of Workers Analytics Engine with several new functions: 
+
+**New window functions:**
+- `first_value()` - Returns the first value in an ordered set of values within a partition
+- `last_value()` - Returns the last value in an ordered set of values within a partition
+
+**New bit functions:**
+- `bitAnd()` - Returns the bitwise AND of two expressions
+- `bitCount()` - Returns the number of bits set to one in the binary representation of a number
+- `bitHammingDistance()` - Returns the number of bits that differ between two numbers
+- `bitNot()` - Returns a number with all bits flipped
+- `bitOr()` - Returns the inclusive bitwise OR of two expressions
+- `bitRotateLeft()` - Rotates all bits in a number left by specified positions
+- `bitRotateRight()` - Rotates all bits in a number right by specified positions
+- `bitShiftLeft()` - Shifts all bits in a number left by specified positions
+- `bitShiftRight()` - Shifts all bits in a number right by specified positions
+- `bitTest()` - Returns the value of a specific bit in a number
+- `bitXor()` - Returns the bitwise exclusive-or of two expressions
+
+**New mathematical functions:**
+- `abs()` - Returns the absolute value of a number
+- `log()` - Computes the natural logarithm of a number
+- `round()` - Rounds a number to a specified number of decimal places  
+- `ceil()` - Rounds a number up to the nearest integer
+- `floor()` - Rounds a number down to the nearest integer
+
+**New string functions:**
+- `lowerUTF8()` - Converts a string to lowercase using UTF-8 encoding
+- `upperUTF8()` - Converts a string to uppercase using UTF-8 encoding
+
+**New encoding functions:**
+- `hex()` - Converts a number to its hexadecimal representation
+- `bin()` - Converts a string to its binary representation 
+
+**New type conversion functions:**
+- `toUInt8()` - Converts any numeric expression, or expression resulting in a string representation of a decimal, into an unsigned 8 bit integer
+
+To get started, checkout out our docs to read more on newly added and existing [Workers Analytics Engine SQL functions](/analytics/analytics-engine/sql-reference/).
