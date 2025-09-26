@@ -420,7 +420,7 @@ The review approval status of an application from [Shadow IT Discovery](/cloudfl
 When using Terraform to create a policy with the [Do Not Inspect](#do-not-inspect) action, you must use the `app.hosts_ids` and `app.supports_ids` selectors. For example, to create a Do Not Inspect policy for Google Cloud Platform traffic, create a policy with both `any(app.hosts_ids[*] in {1245})` and `any(app.supports_ids[*] in {1245})`.
 :::
 
-#### Application Granular Controls
+#### Granular controls
 
 When using the _is_ operator with the _Application_ selector, you can use Application Granular Controls to choose specific actions and operations to match application traffic. For example, you can block file uploads to ChatGPT without blocking all ChatGPT traffic:
 
@@ -428,7 +428,9 @@ When using the _is_ operator with the _Application_ selector, you can use Applic
 | ----------- | -------- | --------- | -------- | ------ |
 | Application | is       | _ChatGPT_ | _Upload_ | Block  |
 
-You can match traffic based on **Application Controls**, which group multiple user actions together, or **Operations**, which allow for granular control of supported API-level actions for an application. For a list of supported granular controls, refer to [Application controls](/cloudflare-one/policies/gateway/application-app-types/#application-controls).
+You can match traffic based on **Application Controls**, which group multiple user actions together, or **Operations**, which allow for granular control of supported API-level actions for an application.
+
+For more information, refer to [Application Granular Controls](/cloudflare-one/policies/gateway/http-policies/granular-controls/).
 
 ### Content Categories
 
