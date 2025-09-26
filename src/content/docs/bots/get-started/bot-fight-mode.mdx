@@ -9,7 +9,7 @@ head:
 
 ---
 
-import { Tabs, TabItem, Steps, Render } from '~/components';
+import { Tabs, TabItem, Steps, Render, DashButton } from '~/components';
 
 Bot Fight Mode is a simple, free product that helps detect and mitigate bot traffic on your domain. When enabled, the product:
 
@@ -37,11 +37,12 @@ To start using Bot Fight Mode:
     </TabItem>
     <TabItem label="New dashboard" icon="rocket">
         <Steps>
-         1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
-         2. Go to **Security** > **Settings**.
-         3. Filter by **Bot traffic**.
-         4. Go to **Bot Fight Mode**. 
-         5. Turn **Bot Fight Mode** on.
+          1. In the Cloudflare dashboard, go to the **Security Settings** page.
+
+              <DashButton url="/?to=/:account/:zone/security/settings" />
+          2. Filter by **Bot traffic**.
+          3. Go to **Bot Fight Mode**. 
+          4. Turn **Bot Fight Mode** on.
         </Steps>
     </TabItem>
 </Tabs>
@@ -66,11 +67,12 @@ To disable Bot Fight Mode:
   </TabItem>
   <TabItem label="New dashboard" icon="rocket">
     <Steps>
-      1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
-      2. Go to **Security** > **Settings**.
-      3. Filter by **Bot traffic**.
-      4. Go to **Bot Fight Mode**. 
-      5. Turn **Bot Fight Mode** on.
+      1. In the Cloudflare dashboard, go to the **Security Settings** page.
+
+          <DashButton url="/?to=/:account/:zone/security/settings" />
+      2. Filter by **Bot traffic**.
+      3. Go to **Bot Fight Mode**. 
+      4. Turn **Bot Fight Mode** off.
     </Steps>
   </TabItem>
 </Tabs>
