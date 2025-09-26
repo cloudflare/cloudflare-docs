@@ -109,13 +109,13 @@ If you prefer to use Intune's Win32 App tool to run the Powershell script, refer
 
 ## macOS
 
-The following steps outline deploying WARP on MacOS using Intune.
+The following steps outline deploying WARP on macOS using Intune.
 
 ### Prerequisites
 
 - A [Microsoft Intune account](https://login.microsoftonline.com/).
 - A Cloudflare account that has a [Zero Trust organization](/cloudflare-one/setup/#create-a-zero-trust-organization).
-- MacOS devices enrolled in Intune.
+- macOS devices enrolled in Intune.
 
 ### Deployment order
 
@@ -286,12 +286,12 @@ This step allows WARP to install without user interaction. By completing this st
 
 14. Review your configuration and create your policy.
 
-By completing this step, you preconfigured WARP with your team settings so it connects automatically upon installation.
+By completing this step, you preconfigure WARP with your team settings so it connects automatically upon installation.
 
 ### 4. Upload WARP client `.pkg`
 
 :::tip[Best practice]
-Complete Step 4 one hour after steps 1, 2, and 3 so clients have enough time to check in and update their device configurations.
+Complete Step 4 at least one hour after steps 1, 2, and 3 so clients have enough time to check in and update their device configurations.
 :::
 
 1. Log in to [Zero Trust](https://one.dash.cloudflare.com/).
@@ -303,7 +303,7 @@ Complete Step 4 one hour after steps 1, 2, and 3 so clients have enough time to 
 	:::note[Repeat this step to update WARP when a new release is available]
 	Every time WARP releases a new version, you must repeat this process and get a new `.pkg` file for the new WARP version.
 	:::
-3. Log in to the [Microsoft Intune admin center](https://intune.microsoft.com), and go to **Apps** > **MacOS**.
+3. Log in to the [Microsoft Intune admin center](https://intune.microsoft.com), and go to **Apps** > **macOS**.
 
 4. Select **Create**.
 
@@ -313,7 +313,7 @@ Complete Step 4 one hour after steps 1, 2, and 3 so clients have enough time to 
 
 7. In **Requirements**, refer to the OS versions listed in [stable releases for macOS](/cloudflare-one/connections/connect-devices/warp/download-warp/#macos) and find what matches for you.
 
-8. In **Detection rules**, note that the WARP package will have filed in the App bundle ID and App version.
+8. In **Detection rules**, note that the WARP package will have filled in the App bundle ID and App version.
 
 9. In **Assignments**, select an option (for example, **Add all devices** or **Add all users**) that is valid for your scope. Select **Next**.
 
