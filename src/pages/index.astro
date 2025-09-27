@@ -1,32 +1,32 @@
 ---
 import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
 
-import HeroImageDark from "~/assets/Dev-Docs-Header-Illustration-Dark-Mode-cropped.svg";
-import HeroImageLight from "~/assets/Dev-Docs-Header-Illustration-Light-Mode-cropped.svg";
+import HeroImageDark from "~/assets/business-dark.svg";
+import HeroImageLight from "~/assets/business-light.svg";
 
 import SectionImageDeveloperPlatformDark from "~/assets/developer-platform-dark.svg";
 import SectionImageDeveloperPlatformLight from "~/assets/developer-platform-light.svg";
-import SectionImageZeroTrustDark from "~/assets/zero-trust-dark.svg";
-import SectionImageZeroTrustLight from "~/assets/zero-trust-light.svg";
+import SectionImageArchitectDark from "~/assets/architect-dark.svg";
+import SectionImageArchitectLight from "~/assets/architect-light.svg";
 
 import {
 	FourCardGrid,
 	ListCard,
 	TryItSection,
 	FeaturedContentSection,
-	RecommendedContentSection,
+	// RecommendedContentSection,
 	FooterHeroBlock,
 } from "~/components";
 
 const frontmatter = {
-	title: "Welcome to Cloudflare",
+	title: "Lee Fig",
 	description:
-		"Explore guides and tutorials to start building on Cloudflare's platform",
+		"Explore best practice software engineering, design and architecture",
 	template: "splash",
 	hero: {
-		title: "Welcome to Cloudflare",
+		title: "Lee Fig",
 		tagline:
-			"Explore guides and tutorials to start building on Cloudflare's platform",
+			"Explore best practice software engineering, design and architecture",
 		image: {
 			dark: HeroImageDark,
 			light: HeroImageLight,
@@ -55,61 +55,61 @@ const topCards = [
 			href: "/products/",
 		},
 	},
-	{
-		title: "Developer Products",
-		links: [
-			{ text: "Workers", href: "/workers/" },
-			{ text: "Pages", href: "/pages/" },
-			{ text: "R2", href: "/r2/" },
-			{ text: "Images", href: "/images/" },
-			{ text: "Stream", href: "/stream/" },
-		],
-		cta: {
-			text: "View all developer products",
-			href: "/products/?product-group=Developer+platform",
-		},
-	},
-	{
-		title: "AI Products",
-		links: [
-			{
-				text: "Build a RAG app",
-				href: "/workers-ai/tutorials/build-a-retrieval-augmented-generation-ai/",
-			},
-			{ text: "Workers AI", href: "/workers-ai/" },
-			{ text: "Vectorize", href: "/vectorize/" },
-			{ text: "AI Gateway", href: "/ai-gateway/" },
-			{
-				text: "AI Playground",
-				href: "https://playground.ai.cloudflare.com/",
-				target: "_blank",
-			},
-		],
-		cta: {
-			text: "View all AI products",
-			href: "/products/?product-group=AI",
-		},
-	},
-	{
-		title: "Zero Trust",
-		links: [
-			{ text: "Access", href: "/cloudflare-one/policies/access/" },
-			{ text: "Tunnel", href: "/cloudflare-one/connections/connect-networks/" },
-			{ text: "Gateway", href: "/cloudflare-one/policies/gateway/" },
-			{
-				text: "Browser Isolation",
-				href: "/cloudflare-one/policies/browser-isolation/",
-			},
-			{
-				text: "Replace your VPN",
-				href: "/learning-paths/replace-vpn/concepts/",
-			},
-		],
-		cta: {
-			text: "View all Cloudflare One products",
-			href: "/products/?product-group=Cloudflare+One",
-		},
-	},
+	// {
+	// 	title: "Developer Products",
+	// 	links: [
+	// 		{ text: "Workers", href: "/workers/" },
+	// 		{ text: "Pages", href: "/pages/" },
+	// 		{ text: "R2", href: "/r2/" },
+	// 		{ text: "Images", href: "/images/" },
+	// 		{ text: "Stream", href: "/stream/" },
+	// 	],
+	// 	cta: {
+	// 		text: "View all developer products",
+	// 		href: "/products/?product-group=Developer+platform",
+	// 	},
+	// },
+	// {
+	// 	title: "AI Products",
+	// 	links: [
+	// 		{
+	// 			text: "Build a RAG app",
+	// 			href: "/workers-ai/tutorials/build-a-retrieval-augmented-generation-ai/",
+	// 		},
+	// 		{ text: "Workers AI", href: "/workers-ai/" },
+	// 		{ text: "Vectorize", href: "/vectorize/" },
+	// 		{ text: "AI Gateway", href: "/ai-gateway/" },
+	// 		{
+	// 			text: "AI Playground",
+	// 			href: "https://playground.ai.cloudflare.com/",
+	// 			target: "_blank",
+	// 		},
+	// 	],
+	// 	cta: {
+	// 		text: "View all AI products",
+	// 		href: "/products/?product-group=AI",
+	// 	},
+	// },
+	// {
+	// 	title: "Zero Trust",
+	// 	links: [
+	// 		{ text: "Access", href: "/cloudflare-one/policies/access/" },
+	// 		{ text: "Tunnel", href: "/cloudflare-one/connections/connect-networks/" },
+	// 		{ text: "Gateway", href: "/cloudflare-one/policies/gateway/" },
+	// 		{
+	// 			text: "Browser Isolation",
+	// 			href: "/cloudflare-one/policies/browser-isolation/",
+	// 		},
+	// 		{
+	// 			text: "Replace your VPN",
+	// 			href: "/learning-paths/replace-vpn/concepts/",
+	// 		},
+	// 	],
+	// 	cta: {
+	// 		text: "View all Cloudflare One products",
+	// 		href: "/products/?product-group=Cloudflare+One",
+	// 	},
+	// },
 ];
 
 const featuredSections = [
@@ -145,8 +145,8 @@ const featuredSections = [
 		title: "Zero Trust",
 		text: "Cloudflare Zero Trust replaces legacy security perimeters with our global network, making the Internet faster and safer for teams around the world.",
 		image: {
-			light: SectionImageZeroTrustLight,
-			dark: SectionImageZeroTrustDark,
+			light: SectionImageArchitectLight,
+			dark: SectionImageArchitectDark,
 		},
 		imagePosition: "after",
 		cards: [
@@ -170,43 +170,43 @@ const featuredSections = [
 	},
 ];
 
-const recommendedSection = {
-	title: "Other docs you might also like",
-	cards: [
-		{
-			title: "Install an Origin CA certificate",
-			text: "Use Origin Certificate Authority (CA) certificates to encrypt traffic between Cloudflare and your origin web server and reduce origin bandwidth.",
-			cta: {
-				title: "Install Origin CA",
-				href: "/ssl/origin-configuration/origin-ca/",
-			},
-		},
-		{
-			title: "Change your nameservers",
-			text: "Make Cloudflare your primary DNS provider by updating your authoritative nameservers at your domain registrar.",
-			cta: {
-				title: "Update nameservers",
-				href: "/dns/zone-setups/full-setup/setup/",
-			},
-		},
-		{
-			title: "SSL/TLS Encryption mode",
-			text: "Your domain's encryption mode controls how Cloudflare connects to your origin server and how SSL certificates at your origin will be validated.",
-			cta: {
-				title: "Set encryption mode",
-				href: "/ssl/origin-configuration/ssl-modes/",
-			},
-		},
-		{
-			title: "Allow traffic from specific countries only",
-			text: "Block requests based on a list of allowed countries by configuring a custom rule in the Web Application Firewall (WAF).",
-			cta: {
-				title: "Allow traffic from specific countries only",
-				href: "/waf/custom-rules/use-cases/allow-traffic-from-specific-countries/",
-			},
-		},
-	],
-};
+// const recommendedSection = {
+// 	title: "Other docs you might also like",
+// 	cards: [
+// 		{
+// 			title: "Install an Origin CA certificate",
+// 			text: "Use Origin Certificate Authority (CA) certificates to encrypt traffic between Cloudflare and your origin web server and reduce origin bandwidth.",
+// 			cta: {
+// 				title: "Install Origin CA",
+// 				href: "/ssl/origin-configuration/origin-ca/",
+// 			},
+// 		},
+// 		{
+// 			title: "Change your nameservers",
+// 			text: "Make Cloudflare your primary DNS provider by updating your authoritative nameservers at your domain registrar.",
+// 			cta: {
+// 				title: "Update nameservers",
+// 				href: "/dns/zone-setups/full-setup/setup/",
+// 			},
+// 		},
+// 		{
+// 			title: "SSL/TLS Encryption mode",
+// 			text: "Your domain's encryption mode controls how Cloudflare connects to your origin server and how SSL certificates at your origin will be validated.",
+// 			cta: {
+// 				title: "Set encryption mode",
+// 				href: "/ssl/origin-configuration/ssl-modes/",
+// 			},
+// 		},
+// 		{
+// 			title: "Allow traffic from specific countries only",
+// 			text: "Block requests based on a list of allowed countries by configuring a custom rule in the Web Application Firewall (WAF).",
+// 			cta: {
+// 				title: "Allow traffic from specific countries only",
+// 				href: "/waf/custom-rules/use-cases/allow-traffic-from-specific-countries/",
+// 			},
+// 		},
+// 	],
+// };
 ---
 
 <StarlightPage frontmatter={frontmatter}>
@@ -254,10 +254,10 @@ const recommendedSection = {
 				</>
 			))
 		}
-		<RecommendedContentSection
+		<!-- <RecommendedContentSection
 			title={recommendedSection.title}
 			cards={recommendedSection.cards}
-		/>
+		/> -->
 		<hr />
 		<FooterHeroBlock />
 	</div>

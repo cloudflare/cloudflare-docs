@@ -1,0 +1,13 @@
+{
+	"cache-control" : {
+		"Expire-Before" : ""
+	},
+	"bypass_cache_forms": [
+		{
+			"DomainSign": "8722427563995895588",
+			"FormSign": [
+				"4846866767944324759"
+			]
+		}
+	]
+}

@@ -1,0 +1,345 @@
+{
+   "configs": [ {
+      "appId": "db245d3097f84da2b59c392a4824f224",
+      "appName": "base",
+      "data": {
+         "strategy": {
+            "foreground": true,
+            "launch": true,
+            "minFetchSeconds": 5,
+            "pushTrigger": false,
+            "sessionSeconds": 0
+         }
+      },
+      "effectStrategy": "realtime",
+      "instanceId": "32b6a736308e4ee8b41dd746d957b446",
+      "type": "default",
+      "version": "1004"
+   }, {
+      "appId": "c547f5fb5ce347afa1b2a65fffa0db15",
+      "appName": "app_block",
+      "data": {
+         "androidBlockList": [ "baiduboxapp", "baiduboxlite" ],
+         "chinaDefaultValue": "allow",
+         "iosBlockList": [ "baidu.com", "zhihu.com" ],
+         "schemeMapping": [ {
+            "name": "jd.com",
+            "scheme": "openapp.jdmobile"
+         }, {
+            "name": "taobao.com",
+            "scheme": "tbopen"
+         }, {
+            "name": "zhihu.com",
+            "scheme": "zhihu"
+         }, {
+            "name": "weibo.com",
+            "scheme": "sinaweibo"
+         } ],
+         "whiteList": [ "ms-outlook", "msteams", "itms-services", "meugovbr", "weixin", "alipays", "ms-powerpoint", "ms-excel", "ms-word", "ms-appmanager", "ms-phone", "taobaotravel", "kwai", "xhsdiscover", "ksnebula", "eleme", "bilibili", "hshop", "wbmain", "tuhu", "tbopen", "ctrip", "tianyancha", "imeituan", "dianping", "hap", "pddopen", "space", "openanjuke", "alipays", "farfetchcn", "iting", "openapp.jdmobile", "wireless1688", "zhihu", "youku", "iqiyi" ]
+      },
+      "effectStrategy": "launch",
+      "instanceId": "056c0e0f1c3449ddb4fca65bf50de182",
+      "type": "normal",
+      "version": "1008"
+   }, {
+      "appId": "e54758ece3475afa1b2a65wsefd0db34",
+      "appName": "external_launch",
+      "data": {
+         "enabledOutlook": {
+            "aad": true,
+            "aad_sso": true,
+            "default": true
+         }
+      },
+      "effectStrategy": "realtime",
+      "instanceId": "097d2397c3449ddb4fca654d3d0de347",
+      "type": "normal",
+      "version": "1004"
+   }, {
+      "appId": "e54758ece3475afa1b2a65wsefd0db35",
+      "appName": "detect_pdf",
+      "data": {
+         "androidBlockList": [ "accuweather", "amazon", "baidu", "baijiahao", "bbc", "bilibili", "bing", "duckduckgo", "ebay", "ebay", "facebook", "foxnews", "google", "homedepot", "hupu", "imdb", "instagram", "msn", "naver", "netflex", "paypal", "pornhub", "taobao", "twitter", "walmart", "weather", "wikipedia", "xhamster", "xiaohongshu", "xnxx", "xvideos", "yandex", "youku", "youporn", "youtube", "zhihu" ],
+         "iosBlockList": [  ],
+         "whiteList": [  ]
+      },
+      "effectStrategy": "realtime",
+      "instanceId": "097d2397c3449ddb4fca654d3d0de348",
+      "type": "normal",
+      "version": "1003"
+   }, {
+      "appName": "reading_view",
+      "data": {
+         "blockList": [ "jreast.co.jp", "marriott.com", "eki-net.com", "wanbishi.ne.jp", "instana.io", "ford.com", "login.ford", "login.lincoln", "m4-ssd.com", "x.com", "dailykos.com", "gg.deals", "chinatimes.com", "edisoncareers.com", "foliosociety.com", "blood.co.uk", "techcommunity.microsoft.com", "aatyu.livedoor.blog", "google.com", "pctuning.cz", "resetera.com", "youtube.com", "biccamera.com", "audioholics.com", "quizknock.com", "neteasegames.com", "bing.com", "pbs.org" ],
+         "textLengthThreshold": 800,
+         "whiteList": [ "mip.shengxuxu.com" ]
+      },
+      "effectStrategy": "realtime",
+      "type": "normal",
+      "version": "1010"
+   }, {
+      "appId": "idcfwggqzmnqmjrrncznqaggwhcxbjof",
+      "appName": "beta_enrollment",
+      "data": {
+         "enable": true,
+         "inhouse_entry_enabled": true,
+         "inhouse_upsell_enabled": true,
+         "testflight_entry_enabled": true
+      },
+      "effectStrategy": "launch",
+      "instanceId": "bzatjpaqglyyxiaqtufvrwcynulkjazt",
+      "type": "normal",
+      "version": "1007"
+   }, {
+      "appId": "e54758ece3475afa1b2a65wsefd0db36",
+      "appName": "ads_block",
+      "data": {
+         "videoAds": {
+            "enable": true
+         }
+      },
+      "effectStrategy": "launch",
+      "instanceId": "097d2397c3449ddb4fca654d3d0de349",
+      "type": "normal",
+      "version": "1002"
+   }, {
+      "appId": "390f8f9040d36d59849b02284a1e28cb",
+      "appName": "rewards",
+      "data": {
+         "android": {
+            "enable": true
+         },
+         "ios": {
+            "enable": true
+         }
+      },
+      "effectStrategy": "realtime",
+      "instanceId": "fa0707264986273b5e237af1466d761f",
+      "type": "normal",
+      "version": "1000"
+   }, {
+      "appId": "e54758ece3475afa1b2a65wsefd0db37",
+      "appName": "lightning",
+      "data": {
+         "upsellEnable": {
+            "existingUserUpsell": true,
+            "favoriteHubUpsell": true,
+            "formAutofillUpsell": true,
+            "newUserUpsell": true
+         }
+      },
+      "effectStrategy": "realtime",
+      "instanceId": "097d2397c3449ddb4fca654d3d0de34a",
+      "type": "normal",
+      "version": "1003"
+   }, {
+      "appId": "e54758ece3475afa1b2a65wsefd0db92",
+      "appName": "bingviz",
+      "data": {
+         "telemetry_domain": {
+            "china": "https://cn.bing.com/dict/fwproxy/receive?sethost=gateway.bingviz.microsoftapp.net&isHttps=true&app=edge",
+            "default": "https://gateway.bingviz.microsoftapp.net/receive?app=edge",
+            "market_check_url": "https://bing.com/HPImageArchive.aspx?n=1&idx=-1&format=js&mbl=1"
+         }
+      },
+      "effectStrategy": "realtime",
+      "instanceId": "097d2397c3449ddb4fca654d3d0de148",
+      "type": "normal",
+      "version": "1002"
+   }, {
+      "appId": "e54758ece3475afa1b2a65wsefd0db47",
+      "appName": "new_bing",
+      "data": {
+         "newBingUpsell": {
+            "featureEnabled": false,
+            "showClose": true,
+            "showCloseForOtherSearchEngine": true
+         }
+      },
+      "effectStrategy": "realtime",
+      "instanceId": "097d2397c3449ddb4fca654d3d0de35a",
+      "type": "normal",
+      "version": "1008"
+   }, {
+      "appId": "e54758ece3475afa1b2a65wsefd0db57",
+      "appName": "browserPermissions",
+      "data": {
+         "browserPermissionsControl": {
+            "bingMicrophonePermission": true
+         }
+      },
+      "effectStrategy": "realtime",
+      "instanceId": "097d2397c3449ddb4fca654d3d0de36a",
+      "type": "normal",
+      "version": "1001"
+   }, {
+      "appId": "e54758ece3475afa1b2a65wsefd0db67",
+      "appName": "sydchat",
+      "data": {
+         "androidEnable": true,
+         "iOSEnable": true,
+         "launchMode": "VoiceFirst",
+         "regionBlockList": [ "CN", "RU", "KP" ],
+         "requiredWaitList": {
+            "androidRequiredWaitList": true,
+            "iOSRequiredWaitList": true
+         }
+      },
+      "effectStrategy": "launch",
+      "instanceId": "097d2397c3449ddb4fca654d3d0de36a",
+      "type": "normal",
+      "version": "1004"
+   }, {
+      "appId": "e54758ece3475afa1b2a65asefd0db67",
+      "appName": "discoverchat",
+      "data": {
+         "androidEnable": true,
+         "iOSEnable": true,
+         "regionBlockList": [ "CN", "RU", "KP" ],
+         "requiredWaitList": {
+            "androidRequiredWaitList": true,
+            "iOSRequiredWaitList": true
+         }
+      },
+      "effectStrategy": "launch",
+      "instanceId": "097d2397c3449defb4fca654d3d0de36a",
+      "type": "builtin",
+      "version": "1002"
+   }, {
+      "appId": "a3f5b7c9d1e2f4a6b8c7d9e1f2a3b4c5",
+      "appName": "add_topsite",
+      "data": {
+         "newAddTopSiteEnabled": -1
+      },
+      "effectStrategy": "launch",
+      "instanceId": "3e7a9c4b1f8d6e5c2a9b7e4d1c8f3e6a",
+      "type": "builtin",
+      "version": "1004"
+   }, {
+      "appId": "a3f5b7c9d1e2f4a6b8c7d9e1f2a3b4d6",
+      "appName": "topsites",
+      "data": {
+         "latestOperationVersion": "2.12",
+         "latestOperationVersionForTesting": "2.12",
+         "topSitesV2Enabled": false
+      },
+      "effectStrategy": "launch",
+      "instanceId": "3e7a9c4b1f8d6e5c2a9b7e4d1c8f3e7b",
+      "type": "normal",
+      "version": "1020"
+   }, {
+      "appId": "71146be72c1663fbeca572989b494b56",
+      "appName": "shared_links",
+      "data": {
+         "requestParams": {
+            "order": "shared",
+            "pageSize": 500,
+            "timeSpan": 5
+         }
+      },
+      "effectStrategy": "launch",
+      "instanceId": "50635c2a4c9497e8baf25ad29c4cc82a",
+      "type": "builtin",
+      "version": "1002"
+   }, {
+      "appId": "71146be72c1663fbeca123476b494b56",
+      "appName": "app_selfupdate",
+      "data": {
+         "updateEntranceEnabled": true,
+         "updateUpsellEnabled": true,
+         "versionInterval": 3
+      },
+      "effectStrategy": "launch",
+      "instanceId": "50635c2a4c9497e9cde34ad29c4cc82a",
+      "type": "builtin",
+      "version": "1001"
+   }, {
+      "appId": "a3f5b7c9d1e2f4a6b8c7d9e1f2a3b4d7",
+      "appName": "darkmode",
+      "data": {
+         "androidBlocklist": [ "^(.*?\\:\\/{2,3})?([^/]*?\\.)?(www\\.msn\\.)(.*\\/news\\/other.*)$", "^https?:\\/\\/edge\\.microsoft\\.com\\/edgeedrop\\/continuity\\/index\\.html(?:\\?.*)?$", "^(.*?\\:\\/{2,3})?([^/]*?\\.)?(sponsor\\.microsoft\\.com)(\\/?.*?)$", "^(.*?\\:\\/{2,3})?([^/]*?\\.)?(wio\\.scania\\.com)(\\/?.*?)$", "^(.*?\\:\\/{2,3})?([^/]*?\\.)?([^/]*\\.)?(ixigua\\.com)(\\/?.*?)$" ],
+         "iOSBlocklist": [ "^(.*?\\:\\/{2,3})?([^/]*?\\.)?(www\\.msn\\.)(.*\\/news\\/other.*)$", "^https?:\\/\\/edge\\.microsoft\\.com\\/edgeedrop\\/continuity\\/index\\.html(?:\\?.*)?$", "^(.*?\\:\\/{2,3})?([^/]*?\\.)?(reddit\\.com)(\\/?.*?)$", "^(.*?\\:\\/{2,3})?([^/]*?\\.)?(amazon\\.com)(\\/?.*?)$", "^(.*?\\:\\/{2,3})?([^/]*?\\.)?(copilot\\.microsoft\\.com)(\\/?.*?)$", "msn.com", "reddit.com", "amazon.com", "m.youtube.com", "copilot.microsoft.com", "build.microsoft.com", "sponsor.microsoft.com", ".pdf", ".png", ".jpg", ".jpeg", ".gif", ".bmp", ".tiff", ".mp4", ".avi", ".mkv", ".mov", ".wmv", ".flv", ".webm" ]
+      },
+      "effectStrategy": "launch",
+      "instanceId": "3e7a9c4b1f8d6e5c2a9b7e4d1c8f3e7a",
+      "type": "builtin",
+      "version": "1006"
+   }, {
+      "appId": "12a18a00e3c9415cad6a2f88ad76d372",
+      "appName": "growthEngine",
+      "data": {
+         "campaigns": [ {
+            "campaignId": 1,
+            "description": "Growth Engine demo campaign",
+            "enabled": false,
+            "surface": {
+               "properties": {
+                  "isFullScreen": true,
+                  "pageName": "edgeConfigurableUpsellDemo"
+               },
+               "type": "configurableUpsell"
+            },
+            "target": {
+               "targetAppVersion": {
+                  "max": "140.0.0.0",
+                  "min": "128.0.0.0"
+               },
+               "targetChannel": [ "unknown" ],
+               "targetDatetime": {
+                  "max": "31 Sep 2024 13:00 GMT",
+                  "min": "1 Sep 2024 13:00 GMT"
+               },
+               "targetOS": [ "iOS", "Android" ],
+               "targetUserProfile": {
+                  "growth_engine_debug_user": true
+               }
+            },
+            "trigger": {
+               "type": "appStart"
+            }
+         }, {
+            "campaignId": 2,
+            "description": "Tampermonkey campaign",
+            "enabled": true,
+            "surface": {
+               "properties": {
+               },
+               "type": "nativeUpsell"
+            },
+            "target": {
+               "targetAppVersion": {
+                  "max": "145.0.0.0",
+                  "min": "130.0.0.0"
+               },
+               "targetChannel": [ "unknown", "canary", "stable" ],
+               "targetDatetime": {
+                  "max": "1 Sep 2025 13:00 GMT",
+                  "min": "1 Sep 2024 13:00 GMT"
+               },
+               "targetOS": [ "Android" ],
+               "targetUserProfile": {
+                  "extension_hub_shown": true,
+                  "extension_hub_shown_after_130": false
+               }
+            },
+            "trigger": {
+               "type": "appStart"
+            }
+         } ]
+      },
+      "effectStrategy": "launch",
+      "instanceId": "1bc1928c024e49f4944d0b9ad549e46a",
+      "type": "normal",
+      "version": "1002"
+   }, {
+      "appName": "UAShimmingiOS",
+      "data": {
+         "chromelist": [ "identitypass.microsoft.com", "wallet.pnb.org*" ],
+         "safarilist": [  ]
+      },
+      "effectStrategy": "realtime",
+      "type": "builtin",
+      "version": "1003"
+   } ],
+   "version": "202503180001"
+}

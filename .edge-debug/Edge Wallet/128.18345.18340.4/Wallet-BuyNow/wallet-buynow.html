@@ -1,0 +1,103 @@
+<!doctype html><html dir="$i18n{textdirection}" lang="$i18n{language}"><head><meta charset="utf-8"><title>Wallet</title><script src="chrome://resources/js/load_time_data.m.js" type="module"></script><style>/* Copyright (C) Microsoft Corporation. All rights reserved.
+ * Use of this source code is governed by a BSD-style license that can be
+ * found in the LICENSE file. */
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 14px;
+  background-color: rgb(247, 247, 247);
+  margin: 0;
+}
+
+#buynow-iframe {
+  border-color: rgb(247, 247, 247);
+  border-style: solid;
+}
+
+@media only screen and (min-height: 50px) {
+  #buynow-iframe {
+    width: 100%;
+    height: calc(348vh - 160px);
+  }
+}
+
+@media only screen and (min-height: 300px) {
+  #buynow-iframe {
+    width: 100%;
+    height: calc(348vh - 130px);
+  }
+}
+
+@media only screen and (min-height: 600px) {
+  #buynow-iframe {
+    width: 100%;
+    height: calc(348vh - 100px);
+  }
+}
+
+@media only screen and (min-height: 900px) {
+  #buynow-iframe {
+    width: 100%;
+    height: calc(348vh - 70px);
+  }
+}
+
+@media only screen and (min-height: 1200px) {
+  #buynow-iframe {
+    width: 100%;
+    height: calc(348vh - 35px);
+  }
+}
+
+@media only screen and (min-height: 1500px) {
+  #buynow-iframe {
+    width: 100%;
+    height: 348vh;
+  }
+}
+
+@media (forced-colors:none) {
+  input::selection {
+    color: #FFF;
+    background: #0078D4;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: rgb(51, 51, 51);
+  }
+  #buynow-iframe {
+    border-color: rgb(51, 51, 51);
+  }
+}
+@media (forced-colors:none) and (prefers-color-scheme: dark) {
+  input::selection {
+    color: #000;
+    /* RGBA because Blink applies an opacity otherwise */
+    background: rgba(147, 184, 231, 0.996);
+    opacity: 1;
+  }
+}</style><style>html {
+      box-sizing: border-box;
+    }
+    *, *:after, *:before {
+      box-sizing: inherit;
+    }
+    #modal-root {
+      position: fixed;
+    }
+    #dialog-root {
+      position: fixed;
+    }
+    .background {
+      background-color: #F3F3F3;
+	  @media(prefers-color-scheme: dark) {
+	    background-color: #000000;
+	  }
+	  height: 3000px;
+      width: 385px;
+    }
+    body {
+      overflow: hidden;
+    }</style></head><body style="margin: 0"><div id="root" class="background"><iframe title="Buy Now subscription" src="https://webxtsvc.microsoft.com/BuyNow/Subscription" id="buynow-iframe"></iframe></div><script defer="defer" src="/wallet-buynow.bundle.js"></script></body></html>

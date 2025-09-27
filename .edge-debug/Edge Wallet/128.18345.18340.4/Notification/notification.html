@@ -1,0 +1,183 @@
+<!doctype html><html dir="$i18n{textdirection}" lang="$i18n{language}"><head><meta charset="utf-8"><meta version="43616842/32637 - 2024-02-20T09:43:16.253Z"><title>Wallet Notification</title><script src="/base-error-reporting.js"></script><script src="/wallet-error-reporting.js"></script><script src="chrome://resources/js/load_time_data.m.js" type="module"></script><script src="/strings.m.js" type="module"></script><style>/* Copyright (C) Microsoft Corporation. All rights reserved.
+ * Use of this source code is governed by a BSD-style license that can be
+ * found in the LICENSE file. */
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 14px;
+  background-color: rgb(247, 247, 247);
+  margin: 0;
+}
+
+@media (forced-colors:none) {
+  input::selection {
+    color: #FFF;
+    background: #0078D4;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: rgb(51, 51, 51);
+  }
+}
+@media (forced-colors:none) and (prefers-color-scheme: dark) {
+  input::selection {
+    color: #000;
+    /* RGBA because Blink applies an opacity otherwise */
+    background: rgba(147, 184, 231, 0.996);
+    opacity: 1;
+  }
+}</style><style>#notification-divider {
+      min-width: 298px;
+      max-width: 298px;
+      border-top: 1px solid rgb(239, 239, 239);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      #notification-divider {
+        border-top-color: rgb(82, 82, 82);
+      }
+    }
+
+    #splash-root {
+      overflow: hidden;
+      height: 108px;
+      width: 298px;
+      pointer-events: none;
+      top: 0;
+      z-index: 15; /* see z-index.ts */
+      opacity: 1;
+    }
+
+    .skeletal-bg {
+      background-color: rgb(237, 237, 237);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .skeletal-bg {
+        background-color: rgb(92, 92, 92);
+      }
+    }
+
+    .skeletal-header {
+      height: 44px;
+      border-bottom: 1px solid transparent;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .skeletal-header-v2 {
+      height: 32px;
+      margin-block-start: 8px;
+      border-bottom: 1px solid transparent;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .skeletal-image {
+      height: 108px;
+      border-bottom: 1px solid transparent;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .skeletal-content {
+      height: 164px;
+      border-bottom: 1px solid transparent;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .skeletal-content-v2 {
+      height: 76px;
+      border-bottom: 1px solid transparent;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      /* padding-inline-start: 12px; */
+    }
+
+    .skeletal-heading {
+      width: 242px;
+      height: 16px;
+      margin-inline-end: 16px;
+      border-radius: 2px;
+      top: 10px;
+    }
+
+    .skeletal-heading-v2 {
+      width: 200px;
+      height: 16px;
+      margin-inline-end: 36px;
+      border-radius: 2px;
+    }
+
+    .skeletal-icon {
+      width: 16px;
+      height: 16px;
+      border-radius: 2px;
+      margin-inline-start: 16px;
+      top: 10px;
+    }
+
+    .skeletal-icon-v2 {
+      width: 16px;
+      height: 16px;
+      border-radius: 2px;
+      margin-inline-start: 26px;
+      top: 16px;
+      margin-inline-end: 20px;
+    }
+
+    .skeletal-image-placeholder {
+      width: 298px;
+      height: 108px;
+      border-radius: 2px;
+      margin-inline-start: 16px;
+      margin-left: 0px;
+    }
+
+    .skeletal-node {
+      width: 266px;
+      height: 12px;
+      border-radius: 2px;
+      margin-inline-start: 16px;
+      margin-top: 14px;
+    }
+
+    .skeletal-node-v2 {
+      width: 200px;
+      height: 12px;
+      border-radius: 2px;
+      margin-inline-start: 62px;
+      margin-top: 4px;
+    }
+
+    .skeletal-button {
+      width: 139px;
+      height: 36px;
+      border-radius: 2px;
+      margin-inline-start: 16px;
+      margin-top: 14px;
+    }
+
+    .skeletal-button-v2 {
+      width: 88px;
+      height: 16px;
+      border-radius: 2px;
+      margin-inline-start: 62px;
+      margin-top: 12px;
+    }
+
+    #app-root {
+      min-width: 298px;
+      max-width: 298px;
+    }</style></head><body style="margin: 0"><div id="notification-divider"></div><div id="splash-root"><div class="skeletal-header-v2" id="splash-header-v2"><div class="skeletal-bg skeletal-icon-v2"></div><div class="skeletal-bg skeletal-heading-v2"></div></div><div class="skeletal-content-v2" id="splash-content-v2"><div class="skeletal-bg skeletal-node-v2"></div><div class="skeletal-bg skeletal-node-v2"></div><div class="skeletal-bg skeletal-button-v2"></div></div></div><div id="app-root"></div><script defer="defer" src="/notification.bundle.js"></script></body></html>

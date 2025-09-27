@@ -1,0 +1,82 @@
+{
+	// Use IntelliSense to learn about possible attributes.
+	// Hover to view descriptions of existing attributes.
+	// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"command": "./node_modules/.bin/astro dev",
+			"name": "Development server",
+			"request": "launch",
+			"type": "node-terminal"
+		},
+		{
+			"type": "msedge",
+			"request": "launch",
+			"name": "Launch edge against localhost",
+			"url": "http://localhost:1111",
+			"webRoot": "${workspaceFolder}/src",
+			"sourceMapPathOverrides": {
+				"vite:///src/*": "${webRoot}/*"
+			},
+			"skipFiles": ["**/node_modules/**"]
+		},
+		{
+			"command": "npm dev",
+			"name": "Development server",
+			"request": "launch",
+			"type": "node-terminal"
+		},
+		{
+			"command": "npm build",
+			"name": "Build",
+			"request": "launch",
+			"type": "node-terminal"
+		},
+		{
+			"type": "node",
+			"request": "launch",
+			"name": "Debug Astro",
+			"program": "${workspaceFolder}/node_modules/astro/dist/cli/index.js",
+			"args": ["dev"],
+			"resolveSourceMapLocations": [
+				"${workspaceFolder}/**",
+				"!**/node_modules/**"
+			],
+			"runtimeArgs": ["--nolazy", "--inspect-brk"],
+			"console": "integratedTerminal",
+			"skipFiles": ["<node_internals>/**"],
+			"outFiles": ["${workspaceFolder}/dist/**/*.js"],
+			"restart": true
+		},
+		{
+			"type": "pwa-msedge",
+			"request": "launch",
+			"name": "Debug Astro Client (Edge)",
+			"url": "http://localhost:1111",
+			"webRoot": "${workspaceFolder}/src",
+			"sourceMaps": true,
+			"breakOnLoad": true,
+			"sourceMapPathOverrides": {
+				"../*": "${webRoot}/*"
+			},
+			"userDataDir": "${workspaceFolder}/.edge-debug",
+			"runtimeArgs": ["--remote-debugging-port=9222"]
+		},
+		{
+			"type": "node",
+			"request": "launch",
+			"name": "Debug Astro Server",
+			"runtimeExecutable": "npm",
+			"runtimeArgs": ["run", "dev"],
+			"skipFiles": ["<node_internals>/**"],
+			"port": 9229
+		}
+	],
+	"compounds": [
+		{
+			"name": "Full Stack Debug",
+			"configurations": ["Debug Astro Server", "Debug Astro Client (Edge)"]
+		}
+	]
+}

@@ -1,0 +1,48 @@
+<!doctype html><html dir="$i18n{textdirection}" lang="$i18n{language}"><head><meta charset="utf-8"><meta version="54481297/32637 - 2025-03-13T06:20:45.570Z"><meta http-equiv="Content-Security-Policy" content="trusted-types default dompurify"><title>Wallet Express Checkout</title><script src="/app-setup.js"></script><script src="/base-error-reporting.js"></script><script src="/wallet-error-reporting.js"></script><script src="chrome://resources/js/load_time_data.m.js" type="module"></script><script src="/strings.m.js" type="module"></script><script src="./load-ec-deps.bundle.js" type="module"></script><style>/* Copyright (C) Microsoft Corporation. All rights reserved.
+ * Use of this source code is governed by a BSD-style license that can be
+ * found in the LICENSE file. */
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 14px;
+  background-color: rgb(247, 247, 247);
+  margin: 0;
+}
+
+@media (forced-colors:none) {
+  input::selection {
+    color: #FFF;
+    background: #0078D4;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: rgb(51, 51, 51);
+  }
+}
+@media (forced-colors:none) and (prefers-color-scheme: dark) {
+  input::selection {
+    color: #000;
+    /* RGBA because Blink applies an opacity otherwise */
+    background: rgba(147, 184, 231, 0.996);
+    opacity: 1;
+  }
+}</style><style>html {
+      box-sizing: border-box;
+    }
+    *, *:after, *:before {
+      box-sizing: inherit;
+    }
+    #modal-root {
+      position: fixed;
+    }
+    #dialog-root {
+      position: fixed;
+    }
+    .background {
+      background-color: #F3F3F3;
+    }
+    body {
+      overflow: hidden;
+    }</style></head><body style="margin: 0"><div id="root" class="background"></div><div id="modal-root"></div><div id="dialog-root" aria-live="assertive"></div><script defer="defer" src="/wallet-drawer.bundle.js"></script></body></html>

@@ -1,0 +1,9 @@
+{
+  "MEANINGFUL_NAME": {
+    "en": [
+      {
+        "positive_pattern": "^(((field|input)(_|-)?\\d+)|.*captcha.*|(security|access).*code|one.*time.*password)$|(_|-|^)+otp+(_|-)?"
+      }
+    ]
+  }
+}

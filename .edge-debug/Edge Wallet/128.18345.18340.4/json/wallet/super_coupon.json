@@ -1,0 +1,496 @@
+{
+    "alexandani.com": {
+        "Coupons1": {
+            "couponCode": "PRS-1128-2D3P76",
+            "title": "20% off Sitewide",
+            "attribution": "coupert",
+            "offerurl": "https://www.coupert.com",
+            "description": "master coupon only for demo",
+            "isStackable": false
+        },
+        "Coupons2": {
+            "couponCode": "PRS-1103-39G7F8",
+            "title": "20% off Sitewide",
+            "attribution": "coupert",
+            "offerurl": "https://www.coupert.com",
+            "description": "master coupon only for demo",
+            "isStackable": false
+        }
+    },
+    "naturalwellbeing.com": {
+        "Coupons1": {
+            "couponCode": "TENF1A",
+            "title": "New customers take 10% off Sitewide",
+            "attribution": "Coupert",
+            "offerurl": "https://www.coupert.com",
+            "description": "valid coupon only for demo",
+            "isStackable": false
+        },
+        "Coupons2": {
+            "couponCode": "ANGIE15",
+            "title": "Take 15% off Sitewide",
+            "attribution": "slickdeals",
+            "offerurl": "https://www.slickdeals.com",
+            "description": "valid coupon only for demo",
+            "isStackable": false
+        }
+    },
+    "bandier.com": {
+        "Coupons1": {
+            "couponCode": "5E5D1610A5A22",
+            "title": "Up to 10% off Sitewide",
+            "attribution": "Coupert",
+            "offerurl": "https://www.coupert.com",
+            "description": "valid coupon only for demo",
+            "isStackable": false
+        }
+    },
+    "blingjewelry.com": {
+        "Coupons1": {
+            "couponCode": "GREEN15",
+            "title": "Save 15% off Sitewide with Promo Code",
+            "attribution": "Slickdeals",
+            "offerurl": "https://www.coupert.com",
+            "description": "valid coupon only for demo",
+            "isStackable": false
+        }
+    },
+    "ameswalker.com": {
+        "Coupons1": {
+            "couponCode": "HELLO15",
+            "title": "Up to 15% off store-wide",
+            "attribution": "RetailMeNot",
+            "offerurl": "https://www.coupert.com",
+            "description": "valid coupon only for demo",
+            "isStackable": false
+        }
+    },
+    "bodyglove.com": {
+        "Coupons1": {
+            "attribution": "Coupert",
+            "couponCode": "BGPRKSPT",
+            "description": "",
+            "offerurl": "https://www.coupert.com",
+            "title": "20% Off Sitewide",
+            "isStackable": false
+        }
+    },
+    "evelom.com": {
+        "Coupons1": {
+            "attribution": "savings.com",
+            "couponCode": "WELCOME15",
+            "description": "",
+            "offerurl": "https://www.savings.com",
+            "title": " $15.00 off Storewide when spending over $100+ ",
+            "isStackable": false
+        }
+    },
+    "manitobaharvest.com": {
+        "Coupons1": {
+            "attribution": "Coupert",
+            "couponCode": "HEMP25",
+            "description": "",
+            "offerurl": "https://www.coupert.com/cpmic?mid=24737&cid=1924814683&utm_source=bing&fid=2022-09-14-22-15&afsrc=1&cct=coupon",
+            "title": "25% off sitewide",
+            "isStackable": false
+        }
+    },
+    "everyman.co": {
+        "Coupons1": {
+            "attribution": "savings.com",
+            "couponCode": "LABORDAY",
+            "description": "",
+            "offerurl": "https://www.savings.com/m/p/32073281/13291095/c?afsrc=1&up=2022-09-01-20-03&auto_show_edge_shopping_flyout=1",
+            "title": "Extra 20% Off Sitewide",
+            "isStackable": false
+        }
+    },
+    "mission.com": {
+        "Coupons1": {
+            "attribution": "Coupert",
+            "couponCode": "SAVE5",
+            "description": "",
+            "offerurl": "https://www.coupert.com/cpmic?mid=124324&cid=3141188086&utm_source=bing&fid=2022-09-14-18-15&afsrc=1&cct=coupon",
+            "title": "Get $5 Off $30+ Sitewide",
+            "isStackable": false
+        }
+    },
+    "morelabs.com": {
+        "Coupons1": {
+            "attribution": "savings.com",
+            "couponCode": "THANKYOU30",
+            "description": "",
+            "offerurl": "https://www.savings.com/m/p/32073281/13079457/c",
+            "title": "30% Off Your Orders",
+            "isStackable": false
+        }
+    },
+    "myliftkits.com": {
+        "Coupons1": {
+            "attribution": "Slickdeals",
+            "couponCode": "THANKYOU10",
+            "description": "",
+            "offerurl": "https://slickdeals.net/?cno=6575146&sdtrk=bing+coupons&utm_campaign=bing+coupons&utm_source=edge&utm_medium=bing&utm_content=coupon&utm_term=6575146&auto_show_edge_shopping_flyout=1",
+            "title": "Get 10% Off Sitewide w/ Coupon Code",
+            "isStackable": false
+        }
+    },
+    "nectarusa.com": {
+        "Coupons1": {
+            "attribution": "nectarusa.com",
+            "couponCode": "WELCOME10",
+            "description": "",
+            "offerurl": "",
+            "title": "Save online using code WELCOME10",
+            "isStackable": false
+        }
+    },
+    "nydj.com": {
+        "Coupons1": {
+            "attribution": "BusinessInsider Coupons",
+            "couponCode": "ENJOY20",
+            "description": "",
+            "offerurl": "https://coupons.businessinsider.com/clickout/out/id/820341?clientId=53059ce884028590c4fd4a159879a4b4&clientType=wl&clientCountry=us&vtype=code&page_type=searchengine&rid=3151&ds=searchengine_bing",
+            "title": "Get 20% Off Your Order Using This NYDJ Coupon Code",
+            "isStackable": false
+        }
+    },
+    "okabashi.com": {
+        "Coupons1": {
+            "attribution": "okabashi.com",
+            "couponCode": "WELCOME15",
+            "description": "",
+            "offerurl": "",
+            "title": "Save online using code WELCOME15",
+            "isStackable": false
+        }
+    },
+    "paddywax.com": {
+        "Coupons1": {
+            "attribution": "paddywax.com",
+            "couponCode": "WELCOME10",
+            "description": "",
+            "offerurl": "",
+            "title": "Save online using code WELCOME10",
+            "isStackable": false
+        }
+    },
+    "pairofthieves.com": {
+        "Coupons1": {
+            "attribution": "Slickdeals",
+            "couponCode": "COMEBACK10",
+            "description": "",
+            "offerurl": "https://slickdeals.net/?cno=6809518&sdtrk=bing+coupons&utm_campaign=bing+coupons&utm_source=edge&utm_medium=bing&utm_content=coupon&utm_term=6809518&auto_show_edge_shopping_flyout=1",
+            "title": "Save 10% Off All Orders with Coupon Code",
+            "isStackable": false
+        }
+    },
+    "peachcouture.com": {
+        "Coupons1": {
+            "attribution": "peachcouture.com",
+            "couponCode": "WELCOME10",
+            "description": "",
+            "offerurl": "",
+            "title": "Save online using code WELCOME10",
+            "isStackable": false
+        }
+    },
+    "realketones.com": {
+        "Coupons1": {
+            "attribution": "savings.com",
+            "couponCode": "REALKETONES15",
+            "description": "",
+            "offerurl": "https://www.savings.com/m/p/32073281/11065538/c?afsrc=1&up=2022-09-14-22-17&auto_show_edge_shopping_flyout=1",
+            "title": "15% Off All Orders",
+            "isStackable": false
+        }
+    },
+    "redlinesteel.com": {
+        "Coupons1": {
+            "attribution": "savings.com",
+            "couponCode": "DONTGO15",
+            "description": "",
+            "offerurl": "https://www.savings.com/m/p/32073281/12141635/c?afsrc=1&up=2022-09-14-22-17&auto_show_edge_shopping_flyout=1",
+            "title": "15% Off All Orders",
+            "isStackable": false
+        }
+    },
+    "sagelynaturals.com": {
+        "Coupons1": {
+            "attribution": "savings.com",
+            "couponCode": "SAGE15",
+            "description": "",
+            "offerurl": "https://www.savings.com/m/p/32073281/13300551/c?afsrc=1&up=2022-09-14-22-17&auto_show_edge_shopping_flyout=1",
+            "title": "15% Off All Orders",
+            "isStackable": false
+        }
+    },
+    "32degrees.com": {
+        "Coupons1": {
+            "attribution": "Coupert",
+            "couponCode": "Y6ABAWH2437G",
+            "description": "",
+            "offerurl": "https://www.coupert.com/cpmic?mid=123797&cid=3154230892&utm_source=bing&fid=2022-10-17-19-30&afsrc=1&cct=coupon",
+            "title": "Extra 23% off store-wide",
+            "isStackable": true
+        }
+    },
+    "4moms.com": {
+        "Coupons1": {
+            "attribution": "Coupert",
+            "couponCode": "FAM20",
+            "description": "",
+            "offerurl": "https://www.coupert.com/cpmic?mid=25684&cid=3332038588&utm_source=bing&fid=2022-10-18-00-30&afsrc=1&cct=coupon",
+            "title": "Get 30% off site-wide",
+            "isStackable": false
+        }
+    },
+    "dereklam.com": {
+        "Coupons1": {
+            "attribution": "RetailMeNot",
+            "couponCode": "WELCOME15",
+            "description": "",
+            "offerurl": "https://api.retailmenot.com/security/public/out/H7E3XG44QVD6JAFKTUT6B7GKUE?marketingcampaign=H7E3XG44QVD6JAFKTUT6B7GKUE&marketingmedium=referral&marketingsource=rkb44&distribution_partner=rkb44&auto_show_edge_shopping_flyout=1",
+            "title": "15% off With Sign up for emails & SMS",
+            "isStackable": false
+        }
+    },
+    "getrael.com": {
+        "Coupons1":{
+            "attribution": "Coupert",
+            "couponCode": "BDAY10",
+            "description": "",
+            "offerurl": "https://www.coupert.com/cpmic?mid=659725&cid=2439536025&utm_source=bing&fid=2022-10-18-19-00&afsrc=1&cct=coupon",
+            "title": "Get $10 off $40+ sitewide",
+            "isStackable": false
+        }
+    },
+    "gdfstudio.com": {
+        "Coupons1":{
+            "attribution": "Coupert",
+            "couponCode": "GDFTHANKYOU20",
+            "description": "",
+            "offerurl": "https://www.coupert.com/cpmic?mid=30939&cid=3177018321&utm_source=bing&fid=2022-10-18-21-30&afsrc=1&cct=coupon",
+            "title": "Extra 20% off sitewide",
+            "isStackable": false
+        }
+    },
+    "atmcollection.com":{
+        "Coupons1":{
+            "attribution": "Coupert",
+            "couponCode": "ATMWELCOME",
+            "description": "",
+            "offerurl": "https://www.coupert.com/cpmic?mid=26999&cid=1387302611&utm_source=bing&fid=2022-10-18-21-30&afsrc=1&cct=coupon",
+            "title": "Get 20% off full price items",
+            "isStackable": false
+        }
+    },
+    "gardentowerproject.com" : {
+        "Coupons1":{
+            "attribution": "savings.com",
+            "couponCode": "TNTG60",
+            "description": "",
+            "offerurl": "https://www.savings.com/m/p/32073281/13248748/c?afsrc=1&up=2022-10-18-21-42&auto_show_edge_shopping_flyout=1",
+            "title": " $60.00 off Storewide when spending over $350+ ",
+            "isStackable": false
+        }
+    },
+    "fathead.com": {
+        "Coupons1": {
+            "attribution": "Slickdeals",
+            "couponCode": "BOO",
+            "description": "",
+            "offerurl": "https://slickdeals.net/?cno=6919792&sdtrk=bing+coupons&utm_campaign=bing+coupons&utm_source=edge&utm_medium=bing&utm_content=coupon&utm_term=6919792&auto_show_edge_shopping_flyout=1",
+            "title": "Halloween Edition: Get 20% Off Select Items w/ Promo Code",
+            "isStackable": true
+        },
+        "Coupons2": {
+            "attribution": "Slickdeals",
+            "couponCode": "SPORTSDAY",
+            "description": "",
+            "offerurl": "https://slickdeals.net/?cno=6966589&sdtrk=bing+coupons&utm_campaign=bing+coupons&utm_source=edge&utm_medium=bing&utm_content=coupon&utm_term=6966589&auto_show_edge_shopping_flyout=1",
+            "title": "Take 20% Off Everything w/ Discount Code",
+            "isStackable": true
+        }
+    },
+    "felixgray.com" : {
+        "Coupons1":{
+            "attribution": "Slickdeals",
+            "couponCode": "WELCOME652",
+            "description": "",
+            "offerurl": "https://slickdeals.net/?cno=6935344&sdtrk=bing+coupons&utm_campaign=bing+coupons&utm_source=edge&utm_medium=bing&utm_content=coupon&utm_term=6935344&auto_show_edge_shopping_flyout=1",
+            "title": "Take $20 Off Orders $100+ w/ Discount Code",
+            "isStackable": false
+        }    
+    },
+    "dailysale.com": {
+        "Coupons1":{
+            "attribution": "Coupert",
+            "couponCode": "BOGOCLEARANCE",
+            "description": "",
+            "offerurl": "https://www.coupert.com/cpmic?mid=5654&cid=3330368386&utm_source=bing&fid=2022-10-18-21-30&afsrc=1&cct=coupon",
+            "title": "Buy one clearance item, get any other clearance item free",
+            "isStackable": false
+        }
+    },
+    "bensherman.com":{
+        "Coupons1":{
+            "attribution": "Coupert",
+            "couponCode": "BUYME15",
+            "description": "",
+            "offerurl": "https://www.coupert.com/cpmic?mid=4683&cid=2418746879&utm_source=bing&fid=2022-10-18-21-30&afsrc=1&cct=coupon",
+            "title": "Additional 15% off sitewide",
+            "isStackable": false
+        }
+    },
+    "bourbonandboweties.com":{
+        "Coupons1":{
+            "attribution": "Slickdeals",
+            "couponCode": "WELCOME15",
+            "description": "",
+            "offerurl": "https://slickdeals.net/?cno=6955030&sdtrk=bing+coupons&utm_campaign=bing+coupons&utm_source=edge&utm_medium=bing&utm_content=coupon&utm_term=6955030&auto_show_edge_shopping_flyout=1",
+            "title": "Get 15% Off Sitewide with Discount Code",
+            "isStackable": false
+        }
+    },
+    "amoracoffee.com": {
+        "Coupons1": {
+            "attribution": "Slickdeals",
+            "couponCode": "COFFEE20",
+            "description": "",
+            "offerurl": "https://slickdeals.net/?cno=5411521&sdtrk=bing+coupons&utm_campaign=bing+coupons&utm_source=edge&utm_medium=bing&utm_content=coupon&utm_term=5411521&auto_show_edge_shopping_flyout=1",
+            "title": "Get 20% Off Sitewide with Promo Code",
+            "isStackable": false
+        },
+        "Coupons2": {
+            "attribution": "Slickdeals",
+            "couponCode": "TRYAMORA",
+            "description": "",
+            "offerurl": "https://slickdeals.net/?cno=5991427&sdtrk=bing+coupons&utm_campaign=bing+coupons&utm_source=edge&utm_medium=bing&utm_content=coupon&utm_term=5991427&auto_show_edge_shopping_flyout=1",
+            "title": "Get Free Bag of Amora Coffee with Coupon Code",
+            "isStackable": false
+        }
+    },
+    "pinkblushmaternity.com": {
+        "Coupons1": {
+            "attribution": "BusinessInsider Coupons",
+            "couponCode": "AACEVEDO25OFF",
+            "description": "",
+            "offerurl": "https://coupons.businessinsider.com/clickout/out/id/863269?clientId=53059ce884028590c4fd4a159879a4b4&clientType=wl&clientCountry=us&vtype=code&page_type=searchengine&rid=2597&ds=searchengine_bing",
+            "title": "Get 25% Off Your Order Using This PinkBlush Coupon Code",
+            "isStackable": false
+        },
+        "Coupons2": {
+            "attribution": "BusinessInsider Coupons",
+            "couponCode": "TXTQH766R",
+            "description": "",
+            "offerurl": "https://coupons.businessinsider.com/clickout/out/id/870847?clientId=53059ce884028590c4fd4a159879a4b4&clientType=wl&clientCountry=us&vtype=code&page_type=searchengine&rid=2597&ds=searchengine_bing",
+            "title": "Use Pink Blush Coupon and Enjoy 25% Off Your Order",
+            "isStackable": false
+        }
+    },
+    "igourmet.com": {
+        "Coupons1": {
+            "attribution": "BravoDeal",
+            "couponCode": "WELCOME15",
+            "description": "",
+            "offerurl": "https://www.bravodeal.com/deal?deal_ID=6237527&partner=10",
+            "title": "iGourmet Coupon Code for a 15% Discount on your purchase today!",
+            "isStackable": false
+        }
+    },
+    "thehappyplanner.com": {
+        "Coupons1": {
+            "attribution": "BusinessInsider Coupons",
+            "couponCode": "HPFRIENDS25",
+            "description": "",
+            "offerurl": "https://coupons.businessinsider.com/clickout/out/id/833580?clientId=53059ce884028590c4fd4a159879a4b4&clientType=wl&clientCountry=us&vtype=code&page_type=searchengine&rid=2175&ds=searchengine_bing",
+            "title": "Shop During Friends & Family Sale and Enjoy 25% Off Sitewide",
+            "isStackable": false
+        }
+    },
+    "puravidabracelets.com": {
+        "Coupons1": {
+            "attribution": "CNN Coupons",
+            "couponCode": "NINOKAKHIDZE5",
+            "description": "",
+            "offerurl": "https://coupons.cnn.com/clickout/out/id/838167?clientId=9c766146171622a44dae80b897648eac&clientType=wl&clientCountry=us&vtype=code&page_type=searchengine&rid=1519&ds=searchengine_bing",
+            "title": "Use Pura Vida Discount Code and Save 30% on Your Order",
+            "isStackable": true
+        }
+    },
+    "striderite.com": {
+        "Coupons1": {
+            "attribution": "RetailMeNot",
+            "couponCode": "EAC10RSHH6J",
+            "description": "",
+            "offerurl": "https://api.retailmenot.com/security/public/out/3RWA3MREY5DRNIWOCMG7AH4FOY?marketingcampaign=3RWA3MREY5DRNIWOCMG7AH4FOY&marketingmedium=referral&marketingsource=rkb44&distribution_partner=rkb44&auto_show_edge_shopping_flyout=1",
+            "title": "10% Off Sitewide",
+            "isStackable": true
+        }
+    },
+    "afflictionclothing.com": {
+        "Coupons1": {
+            "attribution": "savings.com",
+            "couponCode": "5OFF-1366773",
+            "description": "",
+            "offerurl": "https://www.savings.com/m/p/32073281/12104416/c?afsrc=1&up=2022-10-24-16-43&auto_show_edge_shopping_flyout=1",
+            "title": " $5.00 off Your Order when using a Promotion Code",
+            "isStackable": false
+        }
+    },
+    "campmor.com": {
+        "Coupons1": {
+            "attribution": "campmor.com",
+            "couponCode": "PINE20",
+            "description": "",
+            "offerurl": "http://www.avantlink.com/click.php?tt=cl&mi=22069&pw=220733&ctc=WF1605696&url=http%3A%2F%2Fwww.campmor.com%2F",
+            "title": "Take $20 Off Full-Priced Items Order $100+ with Promo Code",
+            "isStackable": true
+        },
+        "Coupons2": {
+            "attribution": "campmor.com",
+            "couponCode": "acorn20",
+            "description": "",
+            "offerurl": "http://www.avantlink.com/click.php?tt=cl&mi=22069&pw=220733&ctc=WF1605696&url=http%3A%2F%2Fwww.campmor.com%2F",
+            "title": "Spend $100 and get $20 off with code:ACORN20. Plus Free Shipping over $49! campmor.com.",
+            "isStackable": true
+        }
+    },
+    "mutha.com": {
+        "Coupons1": {
+            "attribution": "Slickdeals",
+            "couponCode": "MUTHAHOOD",
+            "description": "",
+            "offerurl": "https://slickdeals.net/?cno=6959959&sdtrk=bing+coupons&utm_campaign=bing+coupons&utm_source=edge&utm_medium=bing&utm_content=coupon&utm_term=6959959&auto_show_edge_shopping_flyout=1",
+            "title": "Save 15% Off Sitewide w/ Coupon Code",
+            "isStackable": false
+        },
+        "Coupons2": {
+            "attribution": "Slickdeals",
+            "couponCode": "SELFCARE",
+            "description": "",
+            "isStackable": false,
+            "offerurl": "https://slickdeals.net/?cno=6959968&sdtrk=bing+coupons&utm_campaign=bing+coupons&utm_source=edge&utm_medium=bing&utm_content=coupon&utm_term=6959968&auto_show_edge_shopping_flyout=1",
+            "title": "Take 15% Off First Order w/ Promo Code"
+        }
+    },
+    "oka-b.com": {
+        "Coupons1": {
+            "attribution": "RetailMeNot",
+            "couponCode": "YOUROKAB",
+            "description": "",
+            "offerurl": "https://api.retailmenot.com/security/public/out/5V4O3ZVBGJBZLEJTSCCWGL5B4Y?marketingcampaign=5V4O3ZVBGJBZLEJTSCCWGL5B4Y&marketingmedium=referral&marketingsource=rkb44&distribution_partner=rkb44&auto_show_edge_shopping_flyout=1",
+            "title": "$10 Off Any Shoe Purchase for New Customers",
+            "isStackable": false
+        },
+        "Coupons2": {
+            "attribution": "oka-b.com",
+            "couponCode": "WELCOME15",
+            "description": "",
+            "offerurl": "",
+            "title": "Save online using code WELCOME15",
+            "isStackable": false
+        }
+    }
+}

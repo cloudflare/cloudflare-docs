@@ -1,0 +1,37 @@
+{
+  "eligible_types": [
+    "CardExpired",
+    "CardExpiring",
+    "PasswordLeakage",
+    "PersonalizedOffersAvailable",
+    "UpcomingHotelReservations",
+    "SignupCryptoWallet",
+    "CardTokenizationEligible",
+    "FeaturePromotion",
+    "DonationSummary",
+    "RoamCard",
+    "PackageTracking",
+    "Rebates",
+    "EtreeCampaign",
+    "Etree",
+    "PWAPromotion",
+    "DonationTrendNpo"
+  ],
+  "snooze_time_in_hour": 168,
+  "refresh_time_in_hour": 12,
+  "rotate_time_in_hour": 12,
+  "notification_build_time_after_start_up_in_second": 60,
+  "card_expired_evaluation_in_months": 1,
+  "feature_promotion_notification_config": {
+  },
+  "account_config": {
+    "CardExpired": {
+      "AAD": false,
+      "Profile": false
+    },
+    "CardExpiring": {
+      "AAD": false,
+      "Profile": false
+    }
+  }
+}

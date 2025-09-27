@@ -1,0 +1,107 @@
+{
+  "default_config": {
+    "name": "Default",
+    "options": {
+      "should_apply_reloads": false,
+      "remove_after_match": false,
+      "remove_all_query_parameters": false
+    },
+    "domains": [],
+    "path_regex": []
+  },
+  "site_configs": [
+    {
+      "name": "Ado",
+      "options": {
+        "should_apply_reloads": false,
+        "remove_after_match": false,
+        "remove_all_query_parameters": true
+      },
+      "domains": [
+        "dev.azure.com",
+        ".visualstudio.com"
+      ],
+      "path_regex": [
+        "/.*?/pullrequest/[0-9]*?"
+      ]
+    },
+    {
+      "name": "Office",
+      "options": {
+        "should_apply_reloads": false,
+        "remove_after_match": false,
+        "remove_all_query_parameters": false,
+        "query_parameters_to_remove": [
+          "username",
+          "login_hint"
+        ]
+      },
+      "domains": [
+        "office.com"
+      ]
+    },
+    {
+      "name": "Sharepoint",
+      "options": {
+        "should_apply_reloads": false,
+        "remove_after_match": false,
+        "remove_all_query_parameters": false,
+        "query_parameters_to_remove": [
+          "username",
+          "login_hint"
+        ]
+      },
+      "domains": [
+        "sharepoint.com",
+        "sharepoint-df.com",
+        "loop.microsoft.com"
+      ]
+    },
+    {
+      "name": "Microsoft365",
+      "options": {
+        "should_apply_reloads": false,
+        "remove_after_match": false,
+        "remove_all_query_parameters": false,
+        "query_parameters_to_remove": [
+          "ms.url"
+        ]
+      },
+      "domains": [
+        "www.microsoft365.com"
+      ],
+      "path_regex": [
+        "/launch/.*?"
+      ]
+    }
+  ],
+  "prefer_initial_url_regex": [
+    "\\Ahttps://www\\.office\\.com/login",
+    "\\Ahttps://www\\.office\\.com/estslogout",
+    "\\Ahttps://.*?dsts\\.dsts\\.core\\.windows\\.net",
+    "\\Ahttps://.*?tafe\\..*?trs.*?\\.outlook\\.com/TorusSts"
+  ],
+  "do_not_send_navs_to_regex": [
+    "\\Ahttps://.*?prgate\\.microsoft\\.net",
+    "\\Ahttps://accounts\\.google\\.com/Logout",
+    "\\Ahttps://outlook\\.live\\.com/owa/logoff\\.owa",
+    "\\Ahttps://.*?\\.vssps\\.visualstudio\\.com/_signout",
+    "\\Ahttps://login\\.microsoftonline\\.com/common/oauth2/v2\\.0/logout",
+    "\\Ahttps://login\\.microsoftonline\\.com/common/oauth2/logout",
+    "\\Ahttps://.*?\\.sharepoint\\.com/.*?/SignOut\\.aspx"
+  ],
+  "do_not_send_navs_to_consider_in_sync_regex": [
+    "\\Ahttps://.*?prgate\\.microsoft\\.net"
+  ],
+  "do_not_send_navs_from_regex": [
+    "\\Ahttps://.*?prgate\\.microsoft\\.net",
+    "\\Ahttps://www\\.office\\.com/login",
+    "\\Ahttps://www\\.office\\.com/estslogout",
+    "\\Ahttps://.*?dsts\\.dsts\\.core\\.windows\\.net",
+    "\\Ahttps://.*?tafe\\..*?trs.*?\\.outlook\\.com/TorusSts",
+    "\\Ahttps://accounts\\.google\\.com/ServiceLogin/signinchooser"
+  ],
+  "known_safe_redirect_initiators_regex": [
+    "\\Ahttps://www\\.bing\\.com/ck/a"
+  ]
+}

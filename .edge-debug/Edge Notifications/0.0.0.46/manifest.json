@@ -1,0 +1,8 @@
+﻿{
+    "version":  "0.0.0.46",
+    "description":  "Edge Notifications component",
+    "metadata_version":  "131.0.2903.100",
+    "manifest_version":  2,
+    "name":  "Edge Notifications Component",
+    "bundle_version":  "2"
+}

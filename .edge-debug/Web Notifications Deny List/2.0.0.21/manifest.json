@@ -1,0 +1,7 @@
+{
+    "description" : "Web Notifications Deny List",
+    "web_notifications_deny_list_format" : 1,
+    "name" : "WebNotificationsDenyList",
+    "version" : "2.0.0.21"
+}
+ 

@@ -1,0 +1,39 @@
+<!doctype html><html dir="$i18n{textdirection}" lang="$i18n{language}"><head><meta charset="utf-8"><meta version="43616842/32637 - 2024-02-20T09:43:16.253Z"><title>Wallet Notification</title><script src="/base-error-reporting.js"></script><script src="/wallet-error-reporting.js"></script><script src="chrome://resources/js/load_time_data.m.js" type="module"></script><script src="/strings.m.js" type="module"></script><style>/* Copyright (C) Microsoft Corporation. All rights reserved.
+ * Use of this source code is governed by a BSD-style license that can be
+ * found in the LICENSE file. */
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 14px;
+  background-color: rgb(247, 247, 247);
+  margin: 0;
+}
+
+@media (forced-colors:none) {
+  input::selection {
+    color: #FFF;
+    background: #0078D4;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: rgb(51, 51, 51);
+  }
+}
+@media (forced-colors:none) and (prefers-color-scheme: dark) {
+  input::selection {
+    color: #000;
+    /* RGBA because Blink applies an opacity otherwise */
+    background: rgba(147, 184, 231, 0.996);
+    opacity: 1;
+  }
+}</style><style>body {
+      background-color: #F3F3F3;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      body {
+        background-color: #202020;
+      }
+    }</style></head><body style="margin: 0"><notification-fast></notification-fast><script defer="defer" src="/notification_fast.bundle.js"></script></body></html>

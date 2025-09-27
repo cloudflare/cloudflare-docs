@@ -1,0 +1,1441 @@
+[
+  {
+    "DomainName": "appliancesconnection.com",
+    "IsExpressCheckoutEnabled": true,
+    "AllCheckoutCompletionPages": [
+      {
+        "Type": "BillingAddress",
+        "PageUrl": "/tocheckout.php",
+        "checkoutElements": [
+          {
+            "Name": "firstName",
+            "Type": "input",
+            "Value": "input[name='billing_first']"
+          },
+          {
+            "Name": "lastName",
+            "Type": "input",
+            "Value": "input[name='billing_last']"
+          },
+          {
+            "Name": "address1",
+            "Type": "input",
+            "Value": "input[name='billing_addr1']"
+          },
+          {
+            "Name": "address2",
+            "Type": "input",
+            "Value": "input[name='billing_addr2']"
+          },
+          {
+            "Name": "city",
+            "Type": "input",
+            "Value": "input[name='billing_city']"
+          },
+          {
+            "Name": "state",
+            "Type": "input",
+            "Value": "select[name='billing_state']"
+          },
+          {
+            "Name": "zipCode",
+            "Type": "input",
+            "Value": "input[name='billing_zip']",
+            "Format": "1"
+          },
+          {
+            "Name": "phone",
+            "Type": "input",
+            "Value": "input[name='billing_phone1']"
+          },
+          {
+            "Name": "email",
+            "Type": "input",
+            "Value": "input[name='billing_email']"
+          },
+          {
+            "Name": "confirmEmail",
+            "Type": "input",
+            "Value": "input[name='billing_email2']"
+          }
+        ]
+      },
+      {
+        "Type": "ShippingAddress",
+        "PageUrl": "/tocheckout.php",
+        "checkoutElements": [
+          {
+            "Name": "clickBefore",
+            "Type": "button",
+            "Value": "#shipping_address_body > label > span"
+          },
+          {
+            "Name": "email",
+            "Type": "input",
+            "Value": "input[name='shipping_email']"
+          },
+          {
+            "Name": "confirmEmail",
+            "Type": "input",
+            "Value": "input[name='shipping_email2']"
+          },
+          {
+            "Name": "firstName",
+            "Type": "input",
+            "Value": "input[name='shipping_first']"
+          },
+          {
+            "Name": "lastName",
+            "Type": "input",
+            "Value": "input[name='shipping_last']"
+          },
+          {
+            "Name": "address1",
+            "Type": "input",
+            "Value": "input[name='shipping_addr1']"
+          },
+          {
+            "Name": "address2",
+            "Type": "input",
+            "Value": "input[name='shipping_addr2']"
+          },
+          {
+            "Name": "state",
+            "Type": "input",
+            "Value": "select[name='shipping_state']"
+          },
+          {
+            "Name": "city",
+            "Type": "input",
+            "Value": "input[name='shipping_city']"
+          },
+          {
+            "Name": "zipCode",
+            "Type": "input",
+            "Value": "input[name='shipping_zip']",
+            "Format": "1"
+          },
+          {
+            "Name": "phone",
+            "Type": "input",
+            "Value": "input[name='shipping_phone1']"
+          },
+          {
+            "Name": "continue",
+            "Type": "button",
+            "Value": "P#checkout-login-button ~ DIV.padding-tb-8 SPAN.padding-12",
+            "WaitAfter": 3000
+          },
+          {
+            "Name": "useBillingAddress",
+            "Type": "checkBox",
+            "Value": "INPUT#same_shipping"
+          },
+          {
+            "Name": "useBillingAddressLabel",
+            "Type": "button",
+            "Value": "#shipping_address_body > label"
+          }
+        ]
+      },
+      {
+        "Type": "Payment",
+        "PageUrl": "/tocheckout.php",
+        "checkoutElements": [
+          {
+            "Name": "WaitBeforePayment",
+            "Type": "input",
+            "Value": 4000
+          },
+          {
+            "Name": "cardNumber",
+            "Type": "input",
+            "Value": "input[name='billing_cardno']",
+            "WaitForVisible": 15000
+          },
+          {
+            "Name": "expiryMonth",
+            "Type": "input",
+            "Value": "select[name='billing_cardexp_month']",
+            "Format": "MM"
+          },
+          {
+            "Name": "expiryYear",
+            "Type": "input",
+            "Value": "select[name='billing_cardexp_year']",
+            "Format": "YYYY"
+          },
+          {
+            "Name": "securityCode",
+            "Type": "input",
+            "Value": "input[name='billing_sc']"
+          }
+        ]
+      },
+      {
+        "Type": "OrderInfo",
+        "PageUrl": "/tocheckout.php",
+        "checkoutElements": [
+          {
+            "Name": "orderTotal",
+            "Type": "text",
+            "Value": "#order_summary_total"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "DomainName": "collectionsetc.com",
+    "IsExpressCheckoutEnabled": true,
+    "AllCheckoutCompletionPages": [
+      {
+        "Type": "ShippingAddress",
+        "PageUrl": "/checkout/checkout/",
+        "checkoutElements": [
+          {
+            "Name": "email",
+            "Type": "input",
+            "Value": "input[name='email']"
+          },
+          {
+            "Name": "firstName",
+            "Type": "input",
+            "Value": "input[name='firstName']"
+          },
+          {
+            "Name": "lastName",
+            "Type": "input",
+            "Value": "input[name='lastName']"
+          },
+          {
+            "Name": "address1",
+            "Type": "input",
+            "Value": "input[name='line1']"
+          },
+          {
+            "Name": "address2",
+            "Type": "input",
+            "Value": "input[name='line2']"
+          },
+          {
+            "Name": "state",
+            "Type": "input",
+            "Value": "select[name='state']"
+          },
+          {
+            "Name": "city",
+            "Type": "input",
+            "Value": "input[name='city']"
+          },
+          {
+            "Name": "zipCode",
+            "Type": "input",
+            "Value": "input[name='postalCode']",
+            "Format": "1"
+          },
+          {
+            "Name": "phone",
+            "Type": "input",
+            "Value": "input[name='phoneNumber']"
+          },
+          {
+            "Name": "continue",
+            "Type": "button",
+            "Value": "#save-shipping-address-btn"
+          },
+          {
+            "Name": "confirm",
+            "Type": "button",
+            "Value": "#address-validation-modal DIV.modal-content DIV.modal-footer DIV.text-right BUTTON[type='button'].btn-keep-original"
+          },
+          {
+            "Name": "refreshAfterContinue",
+            "Type": "boolean",
+            "Value": true
+          }
+        ]
+      },
+      {
+        "Type": "ShippingOptions",
+        "PageUrl": "/checkout/checkout/",
+        "checkoutElements": [
+          {
+            "Name": "check",
+            "Type": "div",
+            "Value": "DIV.checkout-page > DIV > DIV:nth-child(2) > DIV:nth-child(2) DIV.checkout-page-radios > DIV:nth-child(1)"
+          },
+          {
+            "Name": "continue",
+            "Type": "button",
+            "Value": "#delivery-continue-button",
+            "WaitAfter": 2000
+          },
+          {
+            "Name": "refreshAfterContinue",
+            "Type": "boolean",
+            "Value": false
+          }
+        ]
+      },
+      {
+        "Type": "BillingAddress",
+        "PageUrl": "/checkout/checkout/",
+        "checkoutElements": [
+          {
+            "Name": "WaitBeforeBillingAddress",
+            "Type": "input",
+            "Value": 2000
+          },
+          {
+            "Name": "useShippingAddress",
+            "Type": "checkBox",
+            "Value": "#same-as-shipping"
+          },
+          {
+            "Name": "useShippingAddressLabel",
+            "Type": "button",
+            "Value": "LABEL[for='same-as-shipping']"
+          },
+          {
+            "Name": "firstName",
+            "Type": "input",
+            "Value": "input[name='firstName']"
+          },
+          {
+            "Name": "lastName",
+            "Type": "input",
+            "Value": "input[name='lastName']"
+          },
+          {
+            "Name": "address1",
+            "Type": "input",
+            "Value": "input[name='line1']"
+          },
+          {
+            "Name": "address2",
+            "Type": "input",
+            "Value": "input[name='line2']"
+          },
+          {
+            "Name": "city",
+            "Type": "input",
+            "Value": "input[name='city']"
+          },
+          {
+            "Name": "state",
+            "Type": "input",
+            "Value": "select[name='state']"
+          },
+          {
+            "Name": "zipCode",
+            "Type": "input",
+            "Value": "input[name='postalCode']",
+            "Format": "1"
+          },
+          {
+            "Name": "continue",
+            "Type": "button",
+            "Value": "#save-billing-address-btn",
+            "WaitAfter": 3000
+          },
+          {
+            "Name": "confirm",
+            "Type": "button",
+            "Value": "button[class*='btn-keep-original']",
+            "WaitAfter": 3000
+          },
+          {
+            "Name": "refreshAfterContinue",
+            "Type": "boolean",
+            "Value": false
+          }
+        ]
+      },
+      {
+        "Type": "PaymentIframe",
+        "PageUrl": "/checkout/checkout/",
+        "checkoutElements": [
+          {
+            "Name": "WaitBeforePaymentIframe",
+            "Type": "input",
+            "Value": 4000
+          },
+          {
+            "Name": "cardNumberIframe",
+            "Type": "iframe",
+            "Value": "#cpFrame"
+          },
+          {
+            "Name": "cardNumberIframeOrigin",
+            "Type": "iframeOrigin",
+            "Value": "https://www.chasepaymentechhostedpay.com"
+          },
+          {
+            "Name": "cardNumber",
+            "Type": "input",
+            "Value": "#ccNumber"
+          },
+          {
+            "Name": "nameOnCardIframe",
+            "Type": "iframe",
+            "Value": "#cpFrame"
+          },
+          {
+            "Name": "nameOnCardIframeOrigin",
+            "Type": "iframeOrigin",
+            "Value": "https://www.chasepaymentechhostedpay.com"
+          },
+          {
+            "Name": "nameOnCard",
+            "Type": "input",
+            "Value": "#name"
+          },
+          {
+            "Name": "expiryMonthIframe",
+            "Type": "iframe",
+            "Value": "#cpFrame"
+          },
+          {
+            "Name": "expiryMonthIframeOrigin",
+            "Type": "iframeOrigin",
+            "Value": "https://www.chasepaymentechhostedpay.com"
+          },
+          {
+            "Name": "expiryMonth",
+            "Type": "input",
+            "Value": "#expMonth",
+            "Format": "MM"
+          },
+          {
+            "Name": "expiryYearIframe",
+            "Type": "iframe",
+            "Value": "#cpFrame"
+          },
+          {
+            "Name": "expiryYearIframeOrigin",
+            "Type": "iframeOrigin",
+            "Value": "https://www.chasepaymentechhostedpay.com"
+          },
+          {
+            "Name": "expiryYear",
+            "Type": "input",
+            "Value": "#expYear",
+            "Format": "YYYY"
+          },
+          {
+            "Name": "securityCodeIframe",
+            "Type": "iframe",
+            "Value": "#cpFrame"
+          },
+          {
+            "Name": "securityCodeIframeOrigin",
+            "Type": "iframeOrigin",
+            "Value": "https://www.chasepaymentechhostedpay.com"
+          },
+          {
+            "Name": "securityCode",
+            "Type": "input",
+            "Value": "#CVV2"
+          }
+        ]
+      },
+      {
+        "Type": "OrderInfo",
+        "PageUrl": "/checkout/checkout/",
+        "checkoutElements": [
+          {
+            "Name": "orderTotal",
+            "Type": "text",
+            "Value": "#main > div > div > div.col-md-5.col-sm-6.col-md-offset-1.col-xs-12 > div > div.card-body > div > div:nth-child(1) > span:nth-child(5) > span:nth-child(2) > strong"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "DomainName": "crutchfield.com",
+    "IsExpressCheckoutEnabled": true,
+    "AllCheckoutCompletionPages": [
+      {
+        "Type": "BillingAddress",
+        "PageUrl": "/Secure/Checkout/Address.aspx",
+        "checkoutElements": [
+          {
+            "Name": "sameShippingAddress",
+            "Type": "checkBox",
+            "Value": "#same"
+          },
+          {
+            "Name": "sameShippingAddressLabel",
+            "Type": "button",
+            "Value": "DIV.js-giftEmailForm ~ DIV.address-checkbox DIV.checkbox-rebrand > INPUT#same ~ LABEL"
+          },
+          {
+            "Name": "name",
+            "Type": "input",
+            "Value": "#billingName"
+          },
+          {
+            "Name": "address1",
+            "Type": "input",
+            "Value": "#billingAddress1"
+          },
+          {
+            "Name": "city",
+            "Type": "input",
+            "Value": "#billingCityStateZipAB\\$cityState DIV#addressToCity INPUT.input-lg"
+          },
+          {
+            "Name": "state",
+            "Type": "input",
+            "Value": "#billingCityStateZipAB\\$cityState DIV.state-input-column SELECT.input-lg"
+          },
+          {
+            "Name": "zipCode",
+            "Type": "input",
+            "Value": "#billingCityStateZipAB\\$CityStateContainer INPUT.input-lg[autocomplete='postal-code']",
+            "Format": "1"
+          },
+          {
+            "Name": "phone",
+            "Type": "input",
+            "Value": "#billingPhone"
+          },
+          {
+            "Name": "email",
+            "Type": "input",
+            "Value": "INPUT#email"
+          }
+        ]
+      },
+      {
+        "Type": "ShippingAddress",
+        "PageUrl": "/Secure/Checkout/Address.aspx",
+        "checkoutElements": [
+          {
+            "Name": "name",
+            "Type": "input",
+            "Value": "#shippingName"
+          },
+          {
+            "Name": "address1",
+            "Type": "input",
+            "Value": "#shippingAddress1"
+          },
+          {
+            "Name": "address2",
+            "Type": "input",
+            "Value": "#shippingAddress2"
+          },
+          {
+            "Name": "state",
+            "Type": "input",
+            "Value": "#shippingCityStateZipAB\\$cityState DIV.state-input-column SELECT.input-lg"
+          },
+          {
+            "Name": "city",
+            "Type": "input",
+            "Value": "#shippingCityStateZipAB\\$cityState DIV#addressToCity INPUT.input-lg"
+          },
+          {
+            "Name": "zipCode",
+            "Type": "input",
+            "Value": "#shippingCityStateZipAB\\$CityStateContainer INPUT.input-lg[autocomplete='postal-code']",
+            "Format": "1"
+          },
+          {
+            "Name": "phone",
+            "Type": "input",
+            "Value": "#shippingPhone"
+          },
+          {
+            "Name": "continue",
+            "Type": "button",
+            "Value": "DIV#ShippingAddressPanel ~ DIV.checkout-action BUTTON[type='submit']"
+          },
+          {
+            "Name": "refreshAfterContinue",
+            "Type": "boolean",
+            "Value": true
+          }
+        ]
+      },
+      {
+        "Type": "Payment",
+        "PageUrl": "/Secure/Checkout/ShippingPayment.aspx",
+        "checkoutElements": [
+          {
+            "Name": "cardNumber",
+            "Type": "input",
+            "Value": "FIELDSET.card-details > DIV:nth-child(1) INPUT.paymentInput.input-lg"
+          },
+          {
+            "Name": "expiryDate",
+            "Type": "input",
+            "Value": "FIELDSET.card-details > DIV:nth-child(2) INPUT.paymentInput.input-lg",
+            "Format": "MM/YY"
+          },
+          {
+            "Name": "securityCode",
+            "Type": "input",
+            "Value": "LABEL[for='securityCode'] ~ INPUT.paymentInput"
+          }
+        ]
+      },
+      {
+        "Type": "OrderInfo",
+        "PageUrl": "/Secure/Checkout/ShippingPayment.aspx",
+        "checkoutElements": [
+          {
+            "Name": "orderTotal",
+            "Type": "text",
+            "Value": "TD.orderTotal"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "DomainName": "rei.com",
+    "IsExpressCheckoutEnabled": true,
+    "AllCheckoutCompletionPages": [
+      {
+        "Type": "BillingAddress",
+        "PageUrl": "/checkout",
+        "checkoutElements": [
+          {
+            "Name": "firstName",
+            "Type": "input",
+            "Value": "#first_name"
+          },
+          {
+            "Name": "lastName",
+            "Type": "input",
+            "Value": "#last_name"
+          },
+          {
+            "Name": "address1",
+            "Type": "input",
+            "Value": "#address_line_one"
+          },
+          {
+            "Name": "city",
+            "Type": "input",
+            "Value": "INPUT#city"
+          },
+          {
+            "Name": "country",
+            "Type": "input",
+            "Value": "#country_id"
+          },
+          {
+            "Name": "state",
+            "Type": "input",
+            "Value": "#state_province_id"
+          },
+          {
+            "Name": "zipCode",
+            "Type": "input",
+            "Value": "#postal_code",
+            "Format": "1"
+          },
+          {
+            "Name": "phone",
+            "Type": "input",
+            "Value": "INPUT#phone"
+          },
+          {
+            "Name": "email",
+            "Type": "input",
+            "Value": "INPUT#email"
+          },
+          {
+            "Name": "continue",
+            "Type": "button",
+            "Value": "button[data-ui='continue']",
+            "WaitAfter": 2000
+          },
+          {
+            "Name": "confirm",
+            "Type": "button",
+            "Value": "button[title='Continue with this address']",
+            "NotAlwaysShown": true
+          },
+          {
+            "Name": "otherElements",
+            "Type": "input"
+          },
+          {
+            "Name": "refreshAfterContinue",
+            "Type": "boolean",
+            "Value": true
+          }
+        ]
+      },
+      {
+        "Type": "ShippingAddress",
+        "PageUrl": "/checkout",
+        "checkoutElements": [
+          {
+            "Name": "WaitBeforeShippingAddress",
+            "Type": "input",
+            "Value": 2000
+          },
+          {
+            "Name": "firstName",
+            "Type": "input",
+            "Value": "#first_name"
+          },
+          {
+            "Name": "lastName",
+            "Type": "input",
+            "Value": "#last_name"
+          },
+          {
+            "Name": "address1",
+            "Type": "input",
+            "Value": "#address_line_one"
+          },
+          {
+            "Name": "country",
+            "Type": "input",
+            "Value": "#country_id"
+          },
+          {
+            "Name": "state",
+            "Type": "input",
+            "Value": "#state_province_id"
+          },
+          {
+            "Name": "city",
+            "Type": "input",
+            "Value": "INPUT#city"
+          },
+          {
+            "Name": "zipCode",
+            "Type": "input",
+            "Value": "#postal_code",
+            "Format": "1"
+          },
+          {
+            "Name": "continue",
+            "Type": "button",
+            "Value": "BUTTON.add-shipping-address",
+            "WaitAfter": 3000,
+            "WaitBefore": 1000
+          },
+          {
+            "Name": "continue2",
+            "Type": "input",
+            "Value": "FIELDSET.ship-methods > DIV.gift-options ~ SECTION-CONTINUE DIV.row.row-flex.row-flex-modified OP-BUTTON[type='submit'] BUTTON[type='submit']",
+            "WaitAfter": 2000
+          },
+          {
+            "Name": "confirm",
+            "Type": "button",
+            "Value": "button[title='Continue with this address']",
+            "NotAlwaysShown": true
+          },
+          {
+            "Name": "useDifferentFromBillingAddress",
+            "Type": "button",
+            "Value": "button[data-ui='editShippingAddress']"
+          },
+          {
+            "Name": "refreshAfterContinue",
+            "Type": "boolean",
+            "Value": true
+          }
+        ]
+      },
+      {
+        "Type": "Payment",
+        "PageUrl": "/checkout",
+        "checkoutElements": [
+          {
+            "Name": "WaitBeforePayment",
+            "Type": "input",
+            "Value": 4000
+          },
+          {
+            "Name": "cardNumber",
+            "Type": "input",
+            "Value": "#credit_card_id"
+          },
+          {
+            "Name": "expiryMonth",
+            "Type": "input",
+            "Value": "#expr_month",
+            "Format": "MM"
+          },
+          {
+            "Name": "expiryYear",
+            "Type": "input",
+            "Value": "#expr_year",
+            "Format": "YYYY"
+          },
+          {
+            "Name": "securityCode",
+            "Type": "input",
+            "Value": "#security_code"
+          }
+        ]
+      },
+      {
+        "Type": "OrderInfo",
+        "PageUrl": "/checkout",
+        "checkoutElements": [
+          {
+            "Name": "orderTotal",
+            "Type": "text",
+            "Value": "DD[data-ui='total']"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "DomainName": "llbean.com",
+    "IsExpressCheckoutEnabled": true,
+    "AllCheckoutCompletionPages": [
+      {
+        "Type": "ShippingAddress",
+        "PageUrl": "/checkout/shipping",
+        "checkoutElements": [
+          {
+            "Name": "clickBefore",
+            "Type": "button",
+            "Value": "DIV.AddressFields_container.AddressFields_top-padding DIV.AddressFields_text-field BUTTON[type='submit']",
+            "WaitAfter": 3000
+          },
+          {
+            "Name": "firstName",
+            "Type": "input",
+            "Value": "input[name='firstName']"
+          },
+          {
+            "Name": "lastName",
+            "Type": "input",
+            "Value": "input[name='lastName']"
+          },
+          {
+            "Name": "address1",
+            "Type": "input",
+            "Value": "input[name='addressLine1']"
+          },
+          {
+            "Name": "country",
+            "Type": "input",
+            "Value": "select[name='country']"
+          },
+          {
+            "Name": "state",
+            "Type": "input",
+            "Value": "select[name='state']"
+          },
+          {
+            "Name": "city",
+            "Type": "input",
+            "Value": "input[name='city']"
+          },
+          {
+            "Name": "zipCode",
+            "Type": "input",
+            "Value": "#zipCode",
+            "Format": "1"
+          },
+          {
+            "Name": "phone",
+            "Type": "input",
+            "Value": "input[name='phoneNumber']"
+          },
+          {
+            "Name": "continue",
+            "Type": "button",
+            "Value": "#stepShippingForm > DIV#gift-message-checkbox ~ DIV > DIV BUTTON[type='button']",
+            "WaitAfter": 2000
+          },
+          {
+            "Name": "confirm",
+            "Type": "button",
+            "Value": "button[aria-label='Continue without saving']",
+            "WaitAfter": 3000
+          },
+          {
+            "Name": "refreshAfterContinue",
+            "Type": "boolean",
+            "Value": false
+          }
+        ]
+      },
+      {
+        "Type": "ShippingOptions",
+        "PageUrl": "/checkout/shipping",
+        "checkoutElements": [
+          {
+            "Name": "check",
+            "Type": "div",
+            "Value": "#stepShippingForm > div.ShippingOptions_container > fieldset > ul"
+          },
+          {
+            "Name": "continue",
+            "Type": "button",
+            "Value": "#stepShippingForm > DIV#gift-message-checkbox ~ DIV > DIV BUTTON[type='button']",
+            "WaitAfter": 3000
+          },
+          {
+            "Name": "continue2",
+            "Type": "input",
+            "Value": "button[aria-label='Use as entered']",
+            "WaitAfter": 2000
+          },
+          {
+            "Name": "refreshAfterContinue",
+            "Type": "boolean",
+            "Value": true
+          }
+        ]
+      },
+      {
+        "Type": "BillingAddress",
+        "PageUrl": "/checkout/billing",
+        "checkoutElements": [
+          {
+            "Name": "WaitBeforeBillingAddress",
+            "Type": "input",
+            "Value": 4000
+          },
+          {
+            "Name": "clickBefore",
+            "Type": "button",
+            "Value": "DIV.AddressFields_container.AddressFields_top-padding DIV.AddressFields_text-field BUTTON[type='submit']"
+          },
+          {
+            "Name": "useShippingAddress",
+            "Type": "checkBox",
+            "Value": "label[class*='CheckBoxes_label'] > input"
+          },
+          {
+            "Name": "useShippingAddressLabel",
+            "Type": "button",
+            "Value": "label[class*='CheckBoxes_label']"
+          },
+          {
+            "Name": "firstName",
+            "Type": "input",
+            "Value": "#stepBillingForm input[name='firstName']"
+          },
+          {
+            "Name": "middleName",
+            "Type": "input",
+            "Value": ""
+          },
+          {
+            "Name": "lastName",
+            "Type": "input",
+            "Value": "#stepBillingForm input[name='lastName']"
+          },
+          {
+            "Name": "address1",
+            "Type": "input",
+            "Value": "#stepBillingForm input[name='addressLine1']"
+          },
+          {
+            "Name": "city",
+            "Type": "input",
+            "Value": "#stepBillingForm input[name='city']"
+          },
+          {
+            "Name": "country",
+            "Type": "input",
+            "Value": "#stepBillingForm select[name='country']"
+          },
+          {
+            "Name": "state",
+            "Type": "input",
+            "Value": "#stepBillingForm select[name='state']"
+          },
+          {
+            "Name": "zipCode",
+            "Type": "input",
+            "Value": "#stepBillingForm #zipCode",
+            "Format": "1"
+          },
+          {
+            "Name": "phone",
+            "Type": "input",
+            "Value": "#stepBillingForm input[name='phoneNumber']"
+          },
+          {
+            "Name": "email",
+            "Type": "input",
+            "Value": "#stepBillingForm input[name='emailPrimary']"
+          },
+          {
+            "Name": "continue",
+            "Type": "button",
+            "Value": "#stepBillingForm > DIV:last-child > DIV BUTTON[type='button'].Button_buttonComponent",
+            "WaitAfter": 3000
+          },
+          {
+            "Name": "confirm",
+            "Type": "button",
+            "Value": "button[aria-label='Use as entered']"
+          },
+          {
+            "Name": "otherElements",
+            "Type": "input"
+          },
+          {
+            "Name": "refreshAfterContinue",
+            "Type": "boolean",
+            "Value": true
+          }
+        ]
+      },
+      {
+        "Type": "Payment",
+        "PageUrl": "/checkout/payment/other",
+        "checkoutElements": [
+          {
+            "Name": "cardNumber",
+            "Type": "input",
+            "Value": "input[name='cardnumber']"
+          },
+          {
+            "Name": "expiryMonth",
+            "Type": "input",
+            "Value": "select[name='expirationmonth']",
+            "Format": "M"
+          },
+          {
+            "Name": "expiryYear",
+            "Type": "input",
+            "Value": "select[name='expirationyear']",
+            "Format": "YYYY"
+          },
+          {
+            "Name": "securityCode",
+            "Type": "input",
+            "Value": "input[name='cvv']"
+          }
+        ]
+      },
+      {
+        "Type": "OrderInfo",
+        "PageUrl": "/checkout/payment/other",
+        "checkoutElements": [
+          {
+            "Name": "orderTotal",
+            "Type": "text",
+            "Value": "DIV.OrderSummary_bold-text.OrderSummary_order-summary-line.OrderSummary_estimated-total DIV.OrderSummary_line-amount"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "DomainName": "neimanmarcus.com",
+    "IsExpressCheckoutEnabled": true,
+    "AllCheckoutCompletionPages": [
+      {
+        "Type": "BillingAddress",
+        "PageUrl": "/checkout/billing.jsp",
+        "checkoutElements": [
+          {
+            "Name": "useShippingAddress",
+            "Type": "checkBox",
+            "Value": "#i-use-ship"
+          },
+          {
+            "Name": "useShippingAddressLabel",
+            "Type": "button",
+            "Value": "LABEL[for='i-use-ship']"
+          },
+          {
+            "Name": "firstName",
+            "Type": "input",
+            "Value": "input[name='\\/nm\\/formhandler\\/checkout\\/BillingAddressFormHandler\\.firstName']"
+          },
+          {
+            "Name": "lastName",
+            "Type": "input",
+            "Value": "input[name='\\/nm\\/formhandler\\/checkout\\/BillingAddressFormHandler\\.lastName']"
+          },
+          {
+            "Name": "address1",
+            "Type": "input",
+            "Value": "#i-addr1"
+          },
+          {
+            "Name": "address2",
+            "Type": "input",
+            "Value": "input[name='\\/nm\\/formhandler\\/checkout\\/BillingAddressFormHandler\\.address2']"
+          },
+          {
+            "Name": "city",
+            "Type": "input",
+            "Value": "input[name='\\/nm\\/formhandler\\/checkout\\/BillingAddressFormHandler\\.city']"
+          },
+          {
+            "Name": "country",
+            "Type": "input",
+            "Value": "select[name='\\/nm\\/formhandler\\/checkout\\/BillingAddressFormHandler\\.country']"
+          },
+          {
+            "Name": "state",
+            "Type": "input",
+            "Value": "select[name='\\/nm\\/formhandler\\/checkout\\/BillingAddressFormHandler\\.state']"
+          },
+          {
+            "Name": "zipCode",
+            "Type": "input",
+            "Value": "input[name='\\/nm\\/formhandler\\/checkout\\/BillingAddressFormHandler\\.postalCode']",
+            "Format": "1"
+          },
+          {
+            "Name": "phone",
+            "Type": "input",
+            "Value": "input[name='\\/nm\\/formhandler\\/checkout\\/BillingAddressFormHandler\\.phoneNumber']"
+          },
+          {
+            "Name": "email",
+            "Type": "input",
+            "Value": "input[name='\\/nm\\/formhandler\\/checkout\\/BillingAddressFormHandler\\.email']"
+          },
+          {
+            "Name": "continue",
+            "Type": "button",
+            "Value": "#go"
+          },
+          {
+            "Name": "refreshAfterContinue",
+            "Type": "boolean",
+            "Value": true
+          }
+        ]
+      },
+      {
+        "Type": "ShippingAddress",
+        "PageUrl": "/checkout/shipping.jsp",
+        "checkoutElements": [
+          {
+            "Name": "clickBefore",
+            "Type": "button",
+            "Value": "P#txt_ShippingAddress ~ A.cta"
+          },
+          {
+            "Name": "firstName",
+            "Type": "input",
+            "Value": "input[name='\\/nm\\/formhandler\\/checkout\\/ShippingAddressFormHandler\\.firstName']"
+          },
+          {
+            "Name": "lastName",
+            "Type": "input",
+            "Value": "input[name='\\/nm\\/formhandler\\/checkout\\/ShippingAddressFormHandler\\.lastName']"
+          },
+          {
+            "Name": "address1",
+            "Type": "input",
+            "Value": "input[name='\\/nm\\/formhandler\\/checkout\\/ShippingAddressFormHandler\\.address1']"
+          },
+          {
+            "Name": "address2",
+            "Type": "input",
+            "Value": "input[name='\\/nm\\/formhandler\\/checkout\\/ShippingAddressFormHandler\\.address2']"
+          },
+          {
+            "Name": "country",
+            "Type": "input",
+            "Value": "select[name='\\/nm\\/formhandler\\/checkout\\/ShippingAddressFormHandler\\.country']"
+          },
+          {
+            "Name": "state",
+            "Type": "input",
+            "Value": "select[name='\\/nm\\/formhandler\\/checkout\\/ShippingAddressFormHandler\\.state']"
+          },
+          {
+            "Name": "city",
+            "Type": "input",
+            "Value": "input[name='\\/nm\\/formhandler\\/checkout\\/ShippingAddressFormHandler\\.city']"
+          },
+          {
+            "Name": "zipCode",
+            "Type": "input",
+            "Value": "input[name='\\/nm\\/formhandler\\/checkout\\/ShippingAddressFormHandler\\.postalCode']",
+            "Format": "1"
+          },
+          {
+            "Name": "phone",
+            "Type": "input",
+            "Value": "input[name='\\/nm\\/formhandler\\/checkout\\/ShippingAddressFormHandler\\.phoneNumber']"
+          },
+          {
+            "Name": "continue",
+            "Type": "button",
+            "Value": "#go"
+          },
+          {
+            "Name": "refreshAfterContinue",
+            "Type": "boolean",
+            "Value": true
+          }
+        ]
+      },
+      {
+        "Type": "PaymentIframe",
+        "PageUrl": "/checkout/orderreview.jsp",
+        "checkoutElements": [
+          {
+            "Name": "cardNumberIframe",
+            "Type": "iframe",
+            "Value": "#frame_carddetails"
+          },
+          {
+            "Name": "cardNumberIframeOrigin",
+            "Type": "iframeOrigin",
+            "Value": "https://pecst01.aurusepay.com"
+          },
+          {
+            "Name": "cardNumber",
+            "Type": "input",
+            "Value": "#cNumber"
+          },
+          {
+            "Name": "expiryMonthIframe",
+            "Type": "iframe",
+            "Value": "#frame_carddetails"
+          },
+          {
+            "Name": "expiryMonthIframeOrigin",
+            "Type": "iframeOrigin",
+            "Value": "https://pecst01.aurusepay.com"
+          },
+          {
+            "Name": "expiryMonth",
+            "Type": "input",
+            "Value": "#exp_mmm",
+            "Format": "MM"
+          },
+          {
+            "Name": "expiryYearIframe",
+            "Type": "iframe",
+            "Value": "#frame_carddetails"
+          },
+          {
+            "Name": "expiryYearIframeOrigin",
+            "Type": "iframeOrigin",
+            "Value": "https://pecst01.aurusepay.com"
+          },
+          {
+            "Name": "expiryYear",
+            "Type": "input",
+            "Value": "#exp_yyy",
+            "Format": "YY"
+          },
+          {
+            "Name": "securityCodeIframe",
+            "Type": "iframe",
+            "Value": "#frame_carddetails"
+          },
+          {
+            "Name": "securityCodeIframeOrigin",
+            "Type": "iframeOrigin",
+            "Value": "https://pecst01.aurusepay.com"
+          },
+          {
+            "Name": "securityCode",
+            "Type": "input",
+            "Value": "#secCode"
+          }
+        ]
+      },
+      {
+        "Type": "OrderInfo",
+        "PageUrl": "/checkout/orderreview.jsp",
+        "checkoutElements": [
+          {
+            "Name": "orderTotal",
+            "Type": "text",
+            "Value": "#txt_orderTotal"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "DomainName": "softsurroundings.com",
+    "IsExpressCheckoutEnabled": true,
+    "AllCheckoutCompletionPages": [
+      {
+        "Type": "ShippingAddress",
+        "PageUrl": "/shipping/",
+        "checkoutElements": [
+          {
+            "Name": "firstName",
+            "Type": "input",
+            "Value": "input[name='fname']"
+          },
+          {
+            "Name": "lastName",
+            "Type": "input",
+            "Value": "input[name='lname']"
+          },
+          {
+            "Name": "address1",
+            "Type": "input",
+            "Value": "input[name='streetAddress']"
+          },
+          {
+            "Name": "address2",
+            "Type": "input",
+            "Value": "input[name='apt']"
+          },
+          {
+            "Name": "state",
+            "Type": "input",
+            "Value": "select[name='state']"
+          },
+          {
+            "Name": "city",
+            "Type": "input",
+            "Value": "input[name='city']"
+          },
+          {
+            "Name": "zipCode",
+            "Type": "input",
+            "Value": "input[name='zip']",
+            "Format": "1"
+          },
+          {
+            "Name": "continue",
+            "Type": "button",
+            "Value": "input[alt='Save and continue to billing']"
+          },
+          {
+            "Name": "fieldError",
+            "Type": "input",
+            "Value": "#checkoutProgressBar > span:nth-child(4) > div > div.for.fwid > div:nth-child(6) > div > ul > li:nth-child(2)"
+          },
+          {
+            "Name": "refreshAfterContinue",
+            "Type": "boolean",
+            "Value": true
+          }
+        ]
+      },
+      {
+        "Type": "BillingAddress",
+        "PageUrl": "/billing/",
+        "checkoutElements": [
+          {
+            "Name": "useShippingAddress",
+            "Type": "checkBox",
+            "Value": "#sameAsShipping"
+          },
+          {
+            "Name": "useShippingAddressLabel",
+            "Type": "button",
+            "Value": "DIV.shippingAddressWrapper > P > LABEL"
+          },
+          {
+            "Name": "firstName",
+            "Type": "input",
+            "Value": "input[name='fname']"
+          },
+          {
+            "Name": "lastName",
+            "Type": "input",
+            "Value": "input[name='lname']"
+          },
+          {
+            "Name": "address1",
+            "Type": "input",
+            "Value": "input[name='streetAddress']"
+          },
+          {
+            "Name": "address2",
+            "Type": "input",
+            "Value": "input[name='apt']"
+          },
+          {
+            "Name": "city",
+            "Type": "input",
+            "Value": "input[name='city']"
+          },
+          {
+            "Name": "state",
+            "Type": "input",
+            "Value": "select[name='state']"
+          },
+          {
+            "Name": "zipCode",
+            "Type": "input",
+            "Value": "input[name='zip']",
+            "Format": "1"
+          },
+          {
+            "Name": "phone",
+            "Type": "input",
+            "Value": "input[name='phoneNumber']"
+          },
+          {
+            "Name": "email",
+            "Type": "input",
+            "Value": "input[name='emailAddress1']"
+          },
+          {
+            "Name": "continue",
+            "Type": "button",
+            "Value": "#checkout_bt_billToForm"
+          },
+          {
+            "Name": "refreshAfterContinue",
+            "Type": "boolean",
+            "Value": true
+          }
+        ]
+      },
+      {
+        "Type": "Payment",
+        "PageUrl": "/payment/",
+        "checkoutElements": [
+          {
+            "Name": "cardNumber",
+            "Type": "input",
+            "Value": "input[name='IdNumberpayment']"
+          },
+          {
+            "Name": "expiryMonth",
+            "Type": "input",
+            "Value": "select[name='monthExpDatepayment']",
+            "Format": "MM"
+          },
+          {
+            "Name": "expiryYear",
+            "Type": "input",
+            "Value": "select[name='yearExpDatepayment']",
+            "Format": "YYYY"
+          },
+          {
+            "Name": "securityCode",
+            "Type": "input",
+            "Value": "input[name='VerificationNopayment']"
+          }
+        ]
+      },
+      {
+        "Type": "OrderInfo",
+        "PageUrl": "/payment/",
+        "checkoutElements": [
+          {
+            "Name": "orderTotal",
+            "Type": "text",
+            "Value": "#totals DIV.prices > B"
+          }
+        ]
+      }
+    ]
+  }
+]

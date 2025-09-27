@@ -1,0 +1,221 @@
+{
+	"global_block_list": [
+		{
+			"value": "8153978097816738556|$|2376052379",
+			"type": 3,
+			"feature": 1,
+			"source": 1,
+			"metadata": "ms.portal.azure.com"
+		},
+		{
+			"value": "outlook.office365.com",
+			"type": 1,
+			"feature": 1,
+			"source": 1,
+			"metadata": "outlook.office365.com"
+		},
+		{
+			"value": "tasks.office.com",
+			"type": 1,
+			"feature": 1,
+			"source": 1,
+			"metadata": "tasks.office.com"
+		},
+		{
+			"value": "outlook.office.com",
+			"type": 1,
+			"feature": 1,
+			"source": 1,
+			"metadata": "outlook.office.com"
+		},
+		{
+			"value": "edge-webscratch/scratch/edge/autofill/autoformfilltests-blocked.html",
+			"type": 0,
+			"feature": 1,
+			"source": 1,
+			"metadata": "Test URL for global autofill blocklist"
+		},
+		{
+			"value": "edge-webscratch/scratch/edge/autofill/Credentials/SimpleLoginGlobalBlock.html",
+			"type": 0,
+			"feature": 2,
+			"source": 1,
+			"metadata": "Test URL for global passwords blocklist"
+		},
+		{
+			"value": "autofill.account.microsoft.com/",
+			"type": 1,
+			"feature": 2,
+			"source": 1,
+			"metadata": "AMC password management page"
+		},
+		{
+			"value": "online.canarabank.in|$|-6908686398814051166",
+			"type": 3,
+			"feature": 2,
+			"source": 1,
+			"metadata": "Canara Transaction Password"
+		},
+		{
+			"value": "online.canarabank.in|$|-5396408197698963614",
+			"type": 3,
+			"feature": 2,
+			"source": 1,
+			"metadata": "Canara Change Transaction Password"
+		},
+		{
+			"value": "online.canarabank.in|$|4190082000",
+			"type": 3,
+			"feature": 2,
+			"source": 1,
+			"metadata": "Canara Transaction Password"
+		},
+		{
+			"value": "online.canarabank.in|$|2463933404",
+			"type": 3,
+			"feature": 2,
+			"source": 1,
+			"metadata": "Canara Change Transaction Password"
+		},
+		{
+			"value": "dev.azure.com",
+			"type": 1,
+			"feature": 1,
+			"source": 1,
+			"metadata": "dev.azure.com"
+		},
+		{
+			"value": "microsoft.visualstudio.com",
+			"type": 1,
+			"feature": 1,
+			"source": 1,
+			"metadata": "microsoft.visualstudio.com"
+		},
+		{
+			"value": "bankofamerica.com",
+			"type": 1,
+			"feature": 1,
+			"source": 1,
+			"metadata": "bankofamerica.com"
+		},
+		{
+			"value": "secure.bankofamerica.com",
+			"type": 1,
+			"feature": 1,
+			"source": 1,
+			"metadata": "secure.bankofamerica.com"
+		},
+		{
+			"value": "turbotax.intuit.com",
+			"type": 1,
+			"feature": 1,
+			"source": 1,
+			"metadata": "turbotax.intuit.com"
+		},
+		{
+			"value": "account.microsoft.com/profile",
+			"type": 0,
+			"feature": 1,
+			"source": 1,
+			"metadata": "account.microsoft.com/profile"
+		},
+		{
+			"value": "netportal.hdfcbank.com",
+			"type": 1,
+			"feature": 3,
+			"source": 1,
+			"metadata": "netportal.hdfcbank.com"
+		},
+		{
+			"value": "trackpan.utiitsl.com",
+			"type": 1,
+			"feature": 3,
+			"source": 1,
+			"metadata": "trackpan.utiitsl.com"
+		},
+		{
+			"value": "interactivebrokers",
+			"type": 4,
+			"feature": 1,
+			"source": 1,
+			"metadata": "Block hosts containing interactivebrokers"
+		},
+		{
+			"value": "ibkr",
+			"type": 4,
+			"feature": 1,
+			"source": 1,
+			"metadata": "Block hosts containing ibkr"
+		},
+		{
+			"value": "fidelity",
+			"type": 4,
+			"feature": 1,
+			"source": 1,
+			"metadata": "Block hosts containing fidelity"
+		},
+		{
+			"value": "baidu.com|$|4160769877807940848",
+			"type": 2,
+			"feature": 1,
+			"source": 1,
+			"metadata": "Baidu search showing Name prediction"
+		},
+		{
+			"value": "www.letpub.com.cn/index.php?page=journalapp&view=search|$|18116861647001386491",
+			"type": 2,
+			"feature": 1,
+			"source": 1,
+			"metadata": "Dropdown having Address Prediction"
+		},
+		{
+			"value": "minkabu.jp|$|-3339644512494573250",
+			"type": 2,
+			"feature": 1,
+			"source": 1,
+			"metadata": "Search field having Server Prediction"
+		},
+		{
+			"value": "mail.google.com|$|2394580826654731715",
+			"type": 2,
+			"feature": 2,
+			"source": 1,
+			"metadata": "Compose email To and Subject field showing / filling username and password"
+		},
+		{
+			"value": "mail.google.com|$|2394580826654731715",
+			"type": 2,
+			"feature": 1,
+			"source": 1,
+			"metadata": "Compose email To field showing / filling autofill suggestion"
+		},
+		{
+			"value": "copilot.microsoft.com",
+			"type": 1,
+			"feature": 1,
+			"source": 1,
+			"metadata": "copilot.microsoft.com"
+		},
+		{
+			"value": "copilot",
+			"type": 4,
+			"feature": 1,
+			"source": 1,
+			"metadata": "Block autofill where hosts containing copilot"
+		},
+		{
+			"value": "pitneybowes",
+			"type": 4,
+			"feature": 1,
+			"source": 1,
+			"metadata": "Block autofill where hosts containing pitneybowes"
+		},
+		{
+			"value": "exp.microsoft.com",
+			"type": 1,
+			"feature": 1,
+			"source": 1,
+			"metadata": "Exp Control Tower"
+		}
+	]
+}

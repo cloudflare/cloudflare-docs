@@ -77,7 +77,7 @@ export default defineConfig({
 	},
 	integrations: [
 		starlight({
-			title: "Cloudflare Docs",
+			title: "Well Engineered Collective",
 			logo: {
 				src: "./src/assets/logo.svg",
 			},
@@ -165,6 +165,9 @@ export default defineConfig({
 		react(),
 	],
 	vite: {
+		build: {
+			sourcemap: true,
+		},
 		resolve: {
 			alias: {
 				"./Page.astro": fileURLToPath(

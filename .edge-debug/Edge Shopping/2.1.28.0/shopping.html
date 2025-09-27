@@ -1,0 +1,45 @@
+<html>
+  <head>
+    <meta charset="UTF-16" />
+    <script src="chrome://resources/mojo/mojo/public/js/mojo_bindings_lite.js"></script>
+    <script src="chrome://resources/mojo/mojo/public/mojom/base/values.mojom-lite.js"></script>
+    <script src="shopping.mojom-lite.js"></script>
+    <script src="chrome://resources/js/cr.js"></script>
+    <script src="chrome://resources/js/assert.js"></script>
+    <script src="chrome://resources/js/load_time_data.js"></script>
+    <script src="chrome://resources/js/util.js"></script>
+    <script src="strings.js"></script>
+    <script src="shopping.js" type="text/javascript"></script>
+  </head>
+  <body>
+    <fluent-design-system-provider role="dialog" aria-modal="true" use-defaults>
+      <div id="divContentWrapper"></div>
+    </fluent-design-system-provider>
+    <style>
+      html {
+        height: 50px;
+      }
+      msft-edge-shopping-section {
+          margin-top: 10px;
+      }
+      msft-shopping-coupon,
+      msft-shopping-link {
+          margin-top: 5px;
+      }
+
+      msft-shopping-link:first-of-type,
+      msft-shopping-coupon:first-of-type {
+          margin-top: 0;
+      }
+
+      fluent-anchor,
+      fluent-button {
+          font-size: 12px;
+      }
+
+      .footer-button {
+          width: 100%;
+      }
+  </style>
+  </body>
+</html>

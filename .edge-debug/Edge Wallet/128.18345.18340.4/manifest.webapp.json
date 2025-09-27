@@ -1,0 +1,15 @@
+﻿{
+  "short_name": "Wallet",
+  "name": "Microsoft Wallet",
+  "icons": [
+      {
+          "src": "edge://wallet/wallet-icon.svg",
+          "type": "image/svg+xml",
+          "sizes": "any"
+      }
+  ],
+  "start_url": "/?source=pwa",
+  "id": "edge://wallet/",
+  "display": "standalone",
+  "scope": "edge://wallet/"
+}

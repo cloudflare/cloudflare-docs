@@ -1,6 +1,8 @@
 {
 	"extends": "astro/tsconfigs/strict",
 	"compilerOptions": {
+		"sourceMap": true,
+		"inlineSources": true,
 		"baseUrl": ".",
 		"target": "ESNext",
 		"paths": {

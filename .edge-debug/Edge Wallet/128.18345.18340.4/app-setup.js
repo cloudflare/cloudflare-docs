@@ -1,0 +1,1 @@
+window.FabricConfig={fontBaseUrl:""},window.mockBrandNameMap={"Amazon.com":"Amazon.com",Walmart:"Walmart",Rei:"Amazon.com"},window.mockCardNumber={Rei:"6051500004356047328"},window.mockCardPin={Rei:"8514"};

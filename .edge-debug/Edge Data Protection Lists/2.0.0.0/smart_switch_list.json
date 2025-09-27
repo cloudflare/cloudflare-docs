@@ -1,0 +1,122 @@
+[
+  {
+    "category": "shopping",
+    "sites": [
+      // Alibaba
+      "alibaba.com",
+      "aliexpress.ar",
+      "aliexpress.de",
+      "aliexpress.com",
+      "aliexpress.es",
+      "aliexpress.fr",
+      "aliexpress.il",
+      "aliexpress.it",
+      "aliexpress.jp",
+      "aliexpress.kr",
+      "aliexpress.nl",
+      "aliexpress.pl",
+      "aliexpress.pt",
+      "aliexpress.ru",
+      "aliexpress.th",
+      "aliexpress.tr",
+      "aliexpress.vn",
+      "1688.com",
+      "tmall.com",
+      "taobao.com",
+      // Amazon
+      "amazon.com",
+      "amazon.com.au",
+      "amazon.at",
+      "amazon.be",
+      "amazon.com.br",
+      "amazon.ca",
+      "amazon.cn",
+      "amazon.eg",
+      "amazon.fr",
+      "amazon.de",
+      "amazon.in",
+      "amazon.co.id",
+      "amazon.it",
+      "amazon.co.jp",
+      "amazon.com.mx",
+      "amazon.nl",
+      "amazon.pl",
+      "amazon.sa",
+      "amazon.sg",
+      "amazon.co.kr",
+      "amazon.es",
+      "amazon.se",
+      "amazon.ch",
+      "amazon.com.tr",
+      "amazon.ae",
+      "amazon.co.uk",
+      // Apple
+      "apple.com",
+      // Best Buy
+      "bestbuy.com",
+      "bestbuy.ca",
+      "bestbuy.com.mx",
+      // Costco
+      "costco.com",
+      "costco.com.au",
+      "costco.ca",
+      "costco.co.jp",
+      "costco.com.mx",
+      "costco.co.kr",
+      "costco.com.tw",
+      "costco.co.uk",
+      // eBay
+      "ebay.com",
+      "ebay.com.au",
+      "ebay.at",
+      "ebay.be",
+      "ebay.ca",
+      "ebay.com.cn",
+      "ebay.fr",
+      "ebay.de",
+      "ebay.com.hk",
+      "ebay.in",
+      "ebay.ie",
+      "ebay.it",
+      "ebay.co.jp",
+      "auction.co.kr",
+      "ebay.com.my",
+      "ebay.nl",
+      "ebay.ph",
+      "ebay.pl",
+      "ebay.com.sg",
+      "ebay.es",
+      "ebay.se",
+      "ebay.ch",
+      "ebay.co.uk",
+      // Etsy
+      "etsy.com",
+      // Flipkart
+      "flipkart.com",
+      // Home Depot
+      "homedepot.com",
+      "homedepot.ca",
+      // Kroger
+      "kroger.com",
+      // Lowes
+      "lowes.com",
+      // Publix
+      "publix.com",
+      // Safeway
+      "safeway.com",
+      // Target
+      "target.com",
+      // Walmart
+      "walmart.com",
+      "walmart.ca",
+      "walmart.com.br",
+      "walmart.com.mx",
+      "asda.com",
+      // Williams Sonoma
+      "williams-sonoma.com",
+      "williams-sonoma.com.au",
+      "williams-sonoma.ca",
+      "williams-sonoma.co.uk"
+    ]
+  }
+]

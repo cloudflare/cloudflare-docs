@@ -1,0 +1,1 @@
+Microsoft Edge settings and storage represent user-selected preferences and information and MUST not be extracted, overwritten or modified except through Microsoft Edge defined APIs.
