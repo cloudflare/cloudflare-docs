@@ -3,12 +3,12 @@ link: "/radar/release-notes/"
 productName: Radar
 productLink: "/radar/"
 entries:
-  - publish_date: "2025-09-25"
+  - publish_date: "2025-09-29"
     title: Add geolocation, HTTP by-dimension, and Netflows endpoints
     description: |-
       * Added [geolocation endpoints](/api/resources/radar/subresources/geolocations/).
       * Added HTTP by-dimension endpoints: [summary](/api/resources/radar/subresources/http/subresources/summary/) and [timeseries_groups](/api/resources/radar/subresources/http/subresources/timeseries_groups/).
-      * Added [Netflows endpoints](/api/resources/radar/subresources/netflows/).
+      * Added [Netflows endpoints](/api/resources/radar/subresources/netflows/summary_v2/).
   - publish_date: "2025-09-22"
     title: Add IRR AS-SET membership lookup endpoint
     description: |-
