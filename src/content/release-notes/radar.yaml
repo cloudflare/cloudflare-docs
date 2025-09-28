@@ -6,9 +6,9 @@ entries:
   - publish_date: "2025-09-29"
     title: Add geolocation, HTTP by-dimension, and Netflows endpoints
     description: |-
-      * Added [geolocation endpoints](/api/resources/radar/subresources/geolocations/).
-      * Added HTTP by-dimension endpoints: [summary](/api/resources/radar/subresources/http/subresources/summary/) and [timeseries_groups](/api/resources/radar/subresources/http/subresources/timeseries_groups/).
-      * Added [Netflows endpoints](/api/resources/radar/subresources/netflows/summary_v2/).
+      * Added new [geolocation endpoints](/api/resources/radar/subresources/geolocations/).
+      * Added new [`Http`](/api/resources/radar/subresources/http/) endpoints: [summary](/api/resources/radar/subresources/http/subresources/summary/) and [timeseries_groups](/api/resources/radar/subresources/http/subresources/timeseries_groups/).
+      * Added new [`Netflows`](/api/resources/radar/subresources/netflows/) summary by dimension endpoint [summary_v2](/api/resources/radar/subresources/netflows/methods/summary_v2/).
   - publish_date: "2025-09-22"
     title: Add IRR AS-SET membership lookup endpoint
     description: |-
