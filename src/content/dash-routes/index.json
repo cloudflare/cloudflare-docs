@@ -82,11 +82,6 @@
 		"parent": ["Magic Cloud Networking"]
 	},
 	{
-		"name": "Magic Cloud Networking",
-		"deeplink": "/?to=/:account/magic-wan/cloud-onramp/list",
-		"parent": ["Magic Cloud Networking"]
-	},
-	{
 		"name": "Magic monitoring",
 		"deeplink": "/?to=/:account/network-monitoring",
 		"parent": ["Analytics & Logs"]
