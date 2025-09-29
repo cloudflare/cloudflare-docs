@@ -36,7 +36,6 @@ Disallow: /constellation
 Disallow: /cdn-cgi/
 Disallow: /email-security/
 
-Content-Usage: tdm=y
 Content-Signal: ai-train=yes, search=yes, ai-input=yes
 
 Sitemap: https://developers.cloudflare.com/sitemap-index.xml
