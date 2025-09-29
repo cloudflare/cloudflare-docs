@@ -187,6 +187,14 @@ Playwright supports [storage state](https://playwright.dev/docs/api/class-browse
 
 Here's an example that uses storage state to persist cookies and other storage data in [KV](https://developers.cloudflare.com/kv):
 
+- First, ensure you have a KV namespace. You can create a new one with:
+
+```bash
+npx wrangler kv namespace create KV
+```
+
+- Ensure you add the KV namespace to your `wrangler.toml` file:
+
 <WranglerConfig>
 
 ```jsonc
@@ -207,7 +215,7 @@ Here's an example that uses storage state to persist cookies and other storage d
 }
 ```
 
-</WranglerConfig>
+- Now, you can use the storage state to persist cookies and other storage data in KV:
 
 ```ts title="src/index.ts"
 // gets persisted storage state from KV or undefined if it doesn't exist
