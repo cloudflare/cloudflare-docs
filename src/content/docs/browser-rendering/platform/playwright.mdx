@@ -36,6 +36,10 @@ If you want to skip the steps and get started quickly, select **Deploy to Cloudf
 
 Make sure you have the [browser binding](/browser-rendering/platform/wrangler/#bindings) configured in your `wrangler.toml` file:
 
+:::note
+To use the latest version of `@cloudflare/playwright`, your Worker configuration must include the `nodejs_compat` compatibility flag and a `compatibility_date` of 2025-09-15 or later. This change is necessary because the library's functionality requires the native `node.fs` API.
+:::
+
 <WranglerConfig>
 
 ```toml
@@ -185,15 +189,15 @@ export default {
 
 Playwright supports [storage state](https://playwright.dev/docs/api/class-browsercontext#browsercontext-storage-state) to obtain and persist cookies and other storage data.
 
-Here's an example that uses storage state to persist cookies and other storage data in [KV](https://developers.cloudflare.com/kv):
+Here's an example that uses storage state to persist cookies and other storage data in [KV](/kv):
 
-- First, ensure you have a KV namespace. You can create a new one with:
+First, ensure you have a KV namespace. You can create a new one with:
 
 ```bash
 npx wrangler kv namespace create KV
 ```
 
-- Ensure you add the KV namespace to your `wrangler.toml` file:
+Ensure you add the KV namespace to your `wrangler.toml` file:
 
 <WranglerConfig>
 
@@ -217,7 +221,7 @@ npx wrangler kv namespace create KV
 
 </WranglerConfig>
 
-- Now, you can use the storage state to persist cookies and other storage data in KV:
+Now, you can use the storage state to persist cookies and other storage data in KV:
 
 ```ts title="src/index.ts"
 // gets persisted storage state from KV or undefined if it doesn't exist
