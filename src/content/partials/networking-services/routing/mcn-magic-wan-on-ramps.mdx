@@ -218,11 +218,12 @@ By default, Cloudflare installs the following summarized routes in your cloud ro
 
 To override the defaults with custom prefixes:
 
-1. Log in to the Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account.
-2. Select **Networking** > **Magic WAN** > **Configuration**.
-3. Select **Magic WAN Address Space**.
-4. Delete the prefixes, and enter your custom ones.
-5. When you are finished, select **Save changes**.
+1. In the Cloudflare dashboard, go to Address space.
+
+	<DashButton url="/?to=/:account/magic-wan/configuration/magic_wan_address_space" />
+
+2. Delete the prefixes, and enter your custom ones.
+3. When you are finished, select **Save changes**.
 
 To install a default route to send all traffic to Magic WAN, enter `0.0.0.0/0` (on Azure, enter `0.0.0.0/1` and `128.0.0.0/1`).
 
