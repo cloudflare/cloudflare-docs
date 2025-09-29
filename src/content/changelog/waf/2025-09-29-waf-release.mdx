@@ -1,0 +1,89 @@
+---
+title: "WAF Release - 2025-09-29"
+description: Cloudflare WAF managed rulesets 2025-09-29 release
+date: 2025-09-29
+---
+
+import { RuleID } from "~/components";
+
+This week emphasizes two critical vendor-specific vulnerabilities: a full elevation-of-privilege in Microsoft Azure Networking (CVE-2025-54914) and a server-side template injection (SSTI) leading to remote code execution (RCE) in Skyvern (CVE-2025-49619). These are complemented by enhancements in generic detections (SQLi, SSRF) to improve baseline coverage.
+
+**Key Findings**
+
+
+* Azure (CVE-2025-54914): Vulnerability in Azure Networking allowing elevation of privileges.
+
+* Skyvern (CVE-2025-49619): Skyvern ≤ 0.1.85 has a server-side template injection (SSTI) vulnerability in its Prompt field (workflow blocks) via Jinja2. Authenticated users with low privileges can get remote code execution (blind).
+
+* Generic SQLi / SSRF improvements: Expanded rule coverage to detect obfuscated SQL injection patterns and SSRF across host, local, and cloud contexts.
+
+**Impact**
+
+These vulnerabilities allow attackers to escalate privileges or execute code under conditions where previously they could not:
+
+* Azure CVE-2025-54914 enables an attacker from the network with no credentials to gain high-level access within Azure Networking; could lead to full compromise of networking components.
+
+* Skyvern CVE-2025-49619 allows authenticated users with minimal privilege to exploit SSTI for remote code execution, undermining isolation of workflow components.
+
+* The improvements for SQLi and SSRF reduce risk from common injection and request-based attacks.
+
+
+<table style="width: 100%">
+  <thead>
+    <tr>
+      <th>Ruleset</th>
+      <th>Rule ID</th>
+      <th>Legacy Rule ID</th>
+      <th>Description</th>
+      <th>Previous Action</th>
+      <th>New Action</th>
+      <th>Comments</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Cloudflare Managed Ruleset</td>
+      <td>
+        <RuleID id="6fe90532af50427484a5275c8c2e30fb" />
+      </td>
+      <td>100717</td>
+      <td>SimpleHelp - Auth Bypass - CVE:CVE-2024-57727</td>
+      <td>Log</td>
+      <td>Block</td>
+      <td>This rule is merged to 100717 in legacy WAF and <RuleID id="498fcd81a62a4b5ca943e2de958094d3" /> in new WAF</td>
+    </tr>
+    <tr>
+      <td>Cloudflare Managed Ruleset</td>
+      <td>
+        <RuleID id="013ef5de3f074fd5a43cdd70d58b886b" />
+      </td>
+      <td>100775</td>
+      <td>Flowise Cloud - Information Disclosure - CVE:CVE-2025-58434</td>
+      <td>Log</td>
+      <td>Block</td>
+      <td>This is a New Detection</td>
+    </tr>
+    <tr>
+      <td>Cloudflare Managed Ruleset</td>
+      <td>
+        <RuleID id="68fc5c086ccb4b40a35a63b19bce1ff4" />
+      </td>
+      <td>100881</td>
+      <td>WordPress:Plugin:Ditty - SSRF - CVE:CVE-2025-8085</td>
+      <td>Log</td>
+      <td>Block</td>
+      <td>This is a New Detection</td>
+    </tr>
+    <tr>
+      <td>Cloudflare Managed Ruleset</td>
+      <td>
+        <RuleID id="9e1a56e6b3bc49b187bf6e35ddc329dd" />
+      </td>
+      <td>100887</td>
+      <td>Vite - Directory Traversal - CVE:CVE-2025-30208</td>
+      <td>Log</td>
+      <td>Block</td>
+      <td>This is a New Detection</td>
+    </tr>
+  </tbody>
+</table>
