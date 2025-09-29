@@ -9,7 +9,7 @@ learning_center:
 
 ---
 
-import { Tabs, TabItem, Steps, Render } from '~/components';
+import { Tabs, TabItem, Steps, Render, DashButton } from '~/components';
 
 Bot Management for Enterprise is a paid add-on that provides sophisticated bot protection for your domain. Customers can identify automated traffic, take appropriate action, and view detailed analytics within the dashboard.
 
@@ -34,20 +34,21 @@ Bot Management is automatically enabled for Enterprise zones entitled with the a
       3. Select **Add Bot Management**.
     </Steps>
   </TabItem>
-<TabItem label="New dashboard" icon="rocket">
-<Steps>
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
-2. Go to **Security** > **Settings**.
-3. Filter by **Bot traffic**.
-4. Go to **Bot management**.
-5. Turn **Bot management** on.
-6. Choose how your domain should respond to various types of traffic by selecting the associated edit icon.
-      - For more details on verified bots, refer to [Verified Bots](/bots/concepts/bot/#verified-bots).
-      - For more details on supported file types, refer to [Static resource protection](/bots/additional-configurations/static-resources/).
-      - For more details on invisible code injection, refer to [JavaScript detections](/bots/additional-configurations/javascript-detections/).
-      - For more details on WordPress optimization, refer to [Super Bot Fight Mode for WordPress](/bots/troubleshooting/wordpress-loopback-issue/).
-</Steps>
-</TabItem>
+  <TabItem label="New dashboard" icon="rocket">
+    <Steps>
+      1. In the Cloudflare dashboard, go to the **Security Settings** page.
+
+          <DashButton url="/?to=/:account/:zone/security/settings" />
+      2. Filter by **Bot traffic**.
+      3. Go to **Bot management**.
+      4. Turn **Bot management** on.
+      5. Choose how your domain should respond to various types of traffic by selecting the associated edit icon.
+            - For more details on verified bots, refer to [Verified Bots](/bots/concepts/bot/#verified-bots).
+            - For more details on supported file types, refer to [Static resource protection](/bots/additional-configurations/static-resources/).
+            - For more details on invisible code injection, refer to [JavaScript detections](/bots/additional-configurations/javascript-detections/).
+            - For more details on WordPress optimization, refer to [Super Bot Fight Mode for WordPress](/bots/troubleshooting/wordpress-loopback-issue/).
+      </Steps>
+  </TabItem>
 </Tabs>
 
 :::note

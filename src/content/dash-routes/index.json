@@ -67,6 +67,21 @@
 		"parent": ["Analytics & Logs"]
 	},
 	{
+		"name": "Cloud on-ramps",
+		"deeplink": "/?to=/:account/magic-wan/cloud-onramp/list",
+		"parent": ["Magic Cloud Networking"]
+	},
+	{
+		"name": "Address Space",
+		"deeplink": "/?to=/:account/magic-wan/configuration/magic_wan_address_space",
+		"parent": ["Magic Cloud Networking"]
+	},
+	{
+		"name": "Cloud integrations",
+		"deeplink": "/?to=/:account/mcn/integrations",
+		"parent": ["Magic Cloud Networking"]
+	},
+	{
 		"name": "Magic monitoring",
 		"deeplink": "/?to=/:account/network-monitoring",
 		"parent": ["Analytics & Logs"]

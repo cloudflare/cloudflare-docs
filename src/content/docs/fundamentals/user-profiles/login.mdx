@@ -24,23 +24,22 @@ Enter your email address and password.
 
 If your admin has enabled [enabled SSO](/cloudflare-one/applications/configure-apps/dash-sso-apps/), enter your email address.
 
+### Social login
+Social login allows you to sign in with a trusted 3rd party sign in service such as Apple, Google, or GitHub. Social login is only available for accounts with a verified email address, or accounts that signed up via social login initially. If you have additionally configured two-factor authentication on your account, that will be presented in addition to any login and two-factor authentication provided by the social login provider.
+
 :::note
 
-If you log in to your Cloudflare user account with Single Sign-On (SSO), you will not be able to sign in using Apple or Google.
+If you log in to your Cloudflare user account with Single Sign-On (SSO), you will not be able to use social login.
 
 :::
 
 :::caution
 
-If you use Apple or Google to sign in, your user profile will not have a password associated with it at first. Some dashboard operations will require setting a password. To set a password, visit [Forgot Password](https://dash.cloudflare.com/forgot-password) in the Cloudflare dashboard.
+If you use social login to sign in, your user profile will not have a password associated with it at first. Some dashboard operations will require setting a password. To set a password, visit [Forgot Password](https://dash.cloudflare.com/forgot-password) in the Cloudflare dashboard.
 :::
 
-### Sign in with Apple
 
-:::note
-
-[Two-factor Authentication (2FA)](/fundamentals/user-profiles/2fa/) will always be required after signing in with Apple if it is enabled on your Cloudflare account, regardless of when you enabled it or whether you use Sign in with Apple. 
-:::
+#### Sign in with Apple
 
 * **Same Cloudflare account email as Apple ID**: You can sign in with either your email and password or sign in with Apple.
 
@@ -58,13 +57,15 @@ Changing your Cloudflare account email address will unlink the login credentials
 
 If you created your Cloudflare account using Apple Relay and decide to change your Apple ID or email address, you will be unable to retrieve the Cloudflare account and all login options will be permanently lost.
 
-### Sign in with Google
-
-:::note
-
-[Two-factor Authentication (2FA)](/fundamentals/user-profiles/2fa/) will always be required after signing in with Google if it is enabled on your Cloudflare account, regardless of when you enabled it or whether you use Sign in with Google.
-:::
+#### Sign in with Google
 
 - **A Cloudflare account has already been created with your Google account's email**: This option is unavailable at this time, but we are working on the capability to link and unlink social login providers to your Cloudflare account.
 
 - If you select **Sign in with Google** with an email that does not already have a Cloudflare account associated with it, Cloudflare will create a new account and allow you to sign in using **Sign in with Google** option moving forward.
+
+#### Sign in with GitHub
+
+- Sign in with GitHub uses the [Primary email address](https://docs.github.com/en/account-and-profile/how-tos/setting-up-and-managing-your-personal-account-on-github/managing-email-preferences/changing-your-primary-email-address) which is set on your GitHub account. If you change your primary email address in GitHub, you will not be able to log into your Cloudflare account using GitHub social login.
+
+- If you select **Sign in with GitHub** with an email that does not already have a Cloudflare account associated with it, Cloudflare will create a new account and allow you to sign in using **Sign in with GitHub** option moving forward.
+

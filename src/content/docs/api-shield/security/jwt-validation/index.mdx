@@ -6,7 +6,7 @@ sidebar:
 
 ---
 
-import { GlossaryTooltip, Steps, Tabs, TabItem, Render } from "~/components"
+import { GlossaryTooltip, Steps, Tabs, TabItem, Render, DashButton } from "~/components"
 
 
 <GlossaryTooltip term="JSON web token (JWT)">JSON web tokens (JWT)</GlossaryTooltip> are often used as part of an authentication component on many web applications today. Since JWTs are crucial to identifying users and their access, ensuring the token’s integrity is important.
@@ -34,13 +34,14 @@ A JWT validation configuration consists of creating a token validation configura
   </TabItem>
   <TabItem label="New dashboard" icon="rocket">
     <Steps>
-      1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
-      2. Go to **Security** > **Settings**.
-      3. Filter by **API abuse**.
-      4. On **Token configurations**, select **Configure tokens**. If you already have one or more tokens, select **&lt;N> out of &lt;M> configurations used** instead.
-      5. Add a name for your configuration.
-      6. Choose where Cloudflare can locate the JWT for this configuration on incoming requests, such as a header or cookie and its name.
-      7. Copy and paste your JWT issuer's public key(s) (JWKS).
+      1. In the Cloudflare dashboard, go to the **Security Settings** page.
+          
+          <DashButton url="/?to=/:account/:zone/security/settings" />
+      2. Filter by **API abuse**.
+      3. On **Token configurations**, select **Configure tokens**.
+      4. Add a name for your configuration.
+      5. Choose where Cloudflare can locate the JWT for this configuration on incoming requests, such as a header or cookie and its name.
+      6. Copy and paste your JWT issuer's public key(s) (JWKS).
     </Steps>
   </TabItem>
 </Tabs>
@@ -69,18 +70,19 @@ To automatically keep your JWKS up to date when your identity provider refreshes
   </TabItem>
   <TabItem label="New dashboard" icon="rocket">
     <Steps>
-      1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
-      2. Go to **Security** > **Security rules**.
-      3. On API JWT validation rules, select **Create rule**.
-      4. Add a name for your rule.
-      5. Select a hostname to protect requests with saved endpoints using the rule.
-      6. Deselect any endpoints that you want JWT validation to ignore (for example, an endpoint used to generate a JWT).
-      7. Select the token validation configuration that corresponds to the incoming requests.
-      8. Choose whether to strictly enforce token presence on these endpoints.
+      1. In the Cloudflare dashboard, go to the **Security rules** page.
+
+          <DashButton url="/?to=/:account/:zone/security/security-rules" />
+      2. On API JWT validation rules, select **Create rule**.
+      3. Add a name for your rule.
+      4. Select a hostname to protect requests with saved endpoints using the rule.
+      5. Deselect any endpoints that you want JWT validation to ignore (for example, an endpoint used to generate a JWT).
+      6. Select the token validation configuration that corresponds to the incoming requests.
+      7. Choose whether to strictly enforce token presence on these endpoints.
           - You may not expect 100% of clients to send in JWTs with their requests. If this is the case, choose *Ignore*. JWT validation will still validate JWTs that are present.
           - You may otherwise expect all requests to the selected hostname and endpoints to contain JWTs. If this is the case, choose *Mark as non-compliant*.
-      9. Choose an action to take for non-compliant requests. For example, JWTs that do not pass validation (expired, tampered with, or bad signature tokens) or requests with missing JWTs when *Mark as non-compliant* is selected in the previous step.
-      10. Select **Save**.
+      8. Choose an action to take for non-compliant requests. For example, JWTs that do not pass validation (expired, tampered with, or bad signature tokens) or requests with missing JWTs when *Mark as non-compliant* is selected in the previous step.
+      9. Select **Save**.
     </Steps>
   </TabItem>
 </Tabs>
