@@ -4,7 +4,7 @@ productName: Radar
 productLink: "/radar/"
 entries:
   - publish_date: "2025-09-29"
-    title: Add geolocation, ADM1 dimension to HTTP endpoints, and Netflows endpoints
+    title: Add geolocation, ADM1 dimension to HTTP endpoints, and NetFlows endpoints
     description: |-
       * Added new [geolocation endpoints](/api/resources/radar/subresources/geolocations/).
       * Added new ADM1 dimension to [`HTTP`](/api/resources/radar/subresources/http/) `summary` and `timeseries_groups` endpoints.
