@@ -3,15 +3,16 @@
 
 ---
 
-import { Steps } from "~/components";
+import { Steps, DashButton } from "~/components";
 
 To set up a notification:
 
 <Steps>
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Select **Notifications**.
-3. Under **Notifications**, select **Add**.
-4. Select one of the [available DDoS alerts](/ddos-protection/reference/alerts/#alert-types) (depending on your plan and services):
+1. In the Cloudflare dashboard, go to the **NotificationS** page.
+
+	<DashButton url="/?to=/:account/notifications" />
+2. Under **Notifications**, select **Add**.
+3. Select one of the [available DDoS alerts](/ddos-protection/reference/alerts/#alert-types) depending on your plan and services:
    
    - HTTP DDoS Attack Alert
    - Layer 3/4 DDoS Attack Alert

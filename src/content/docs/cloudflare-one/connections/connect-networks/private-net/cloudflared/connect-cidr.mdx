@@ -1,0 +1,68 @@
+---
+pcx_content_type: how-to
+title: Connect an IP/CIDR
+sidebar:
+  order: 3
+---
+
+import { Render } from "~/components";
+
+This guide covers how to enable secure remote access to private IP addresses using `cloudflared` and WARP. You can connect an entire private network, a subnet, or an application defined by a static IP.
+
+## 1. Connect the server to Cloudflare
+
+To connect your infrastructure with Cloudflare Tunnel:
+
+<Render file="tunnel/connect-private-network" product="cloudflare-one" />
+
+2. In the **CIDR** tab for the tunnel, enter the IP/CIDR range that you wish to route through the tunnel (for example `10.0.0.0/8`).
+
+## 2. Set up the client
+
+<Render file="tunnel/warp-to-tunnel-client" product="cloudflare-one" />
+
+## 3. Route private network IPs through WARP
+
+<Render file="tunnel/warp-to-tunnel-route-ips" product="cloudflare-one" params={{ one: "private network"}}/>
+
+## 4. (Recommended) Filter network traffic with Gateway
+
+<Render file="tunnel/filter-network-traffic" product="cloudflare-one" />
+
+### Enable the Gateway proxy
+
+<Render file="tunnel/enable-gateway-proxy" product="cloudflare-one" />
+
+### Zero Trust policies
+
+<Render file="tunnel/catch-all-policy" product="cloudflare-one"/>
+
+If you have applications clearly defined by IPs or hostnames, we recommend [creating an Access application](/cloudflare-one/applications/non-http/self-hosted-private-app/) and managing user access alongside your SaaS and other web apps. Alternatively, if you prefer to secure a private network using a traditional firewall model, you can build Gateway network and DNS policies for IP ranges and domains.
+
+For more information on building Gateway policies, refer to [Secure your first application](/learning-paths/replace-vpn/build-policies/create-policy/) and [Common network policies](/cloudflare-one/policies/gateway/network-policies/common-policies/#restrict-access-to-private-networks).
+
+## 5. Connect as a user
+
+End users can now reach HTTP or TCP-based services on your network by visiting any IP address in the range you have specified.
+
+To allow users to reach the service using its private hostname instead of its IP, refer to [Private DNS](/cloudflare-one/connections/connect-networks/private-net/cloudflared/private-dns/).
+
+### Troubleshooting
+
+#### Device configuration
+
+To check that their device is properly configured, the user can visit `https://help.teams.cloudflare.com/` to ensure that:
+
+- The page returns **Your network is fully protected**.
+- In **HTTP filtering**, both **WARP** and **Gateway Proxy** are enabled.
+- The **Team name** matches the Zero Trust organization from which you created the tunnel.
+
+#### Router configuration
+
+Check the local IP address of the device and ensure that it does not fall within the IP/CIDR range of your private network. For example, some home routers will make DHCP assignments in the `10.0.0.0/24` range, which overlaps with the `10.0.0.0/8` range used by most corporate private networks. When a user's home network shares the same IP addresses as the routes in your tunnel, their device will be unable to connect to your application.
+
+To resolve the IP conflict, you can either:
+
+- Reconfigure the user's router to use a non-overlapping IP range. Compatible routers typically use `192.168.1.0/24`, `192.168.0.0/24` or `172.16.0.0/24`.
+- Tighten the IP range in your Split Tunnel configuration to exclude the `10.0.0.0/24` range. This will only work if your private network does not have any hosts within `10.0.0.0/24`.
+- Change the IP/CIDR of your private network so that it does not overlap with a range commonly used by home networks.

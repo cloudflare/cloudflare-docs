@@ -3,6 +3,28 @@ link: "/browser-rendering/changelog/"
 productName: Browser Rendering
 productLink: "/browser-rendering/"
 entries:
+  - publish_date: "2025-09-25"
+    title: Updates to Playwright, new support for Stagehand, and increased limits
+    description: |-
+      * [Playwright](/browser-rendering/platform/playwright/) support in Browser Rendering is now GA. We've upgraded to [Playwright v1.55](https://playwright.dev/docs/release-notes#version-155).
+      * Added support for [Stagehand](/browser-rendering/platform/stagehand/), an open source browser automation framework, powered by [Workers AI](/workers-ai). Stagehand enables developers to build more reliably and flexibly by combining code with natural-language instructions.
+      * Increased [limits](/browser-rendering/platform/limits/#workers-paid) for paid plans on both the [REST API](https://developers.cloudflare.com/browser-rendering/rest-api/) and [Workers Bindings](https://developers.cloudflare.com/browser-rendering/workers-bindings/). 
+  - publish_date: "2025-09-22"
+    title: Added `excludeExternalLinks` parameter to `/links` REST endpoint
+    description: |-
+      * Added `excludeExternalLinks` parameter when using the [`/links` endpoint](/browser-rendering/rest-api/links-endpoint/). When set to `true`, links pointing to outside the domain of the requested URL are excluded.
+  - publish_date: "2025-09-02"
+    title: Added `X-Browser-Ms-Used` response header
+    description: |-
+      * Each REST API response now includes the `X-Browser-Ms-Used` response header, which reports the browser time (in milliseconds) used by the request. 
+  - publish_date: "2025-08-20"
+    title: Browser Rendering billing goes live
+    description: |-
+      * Billing for Browser Rendering begins today, August 20th, 2025. See [pricing page](/browser-rendering/platform/pricing/) for full details. You can monitor usage via the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers/browser-rendering).
+  - publish_date: "2025-08-18"
+    title: Wrangler updates to local dev
+    description: |-
+      * Improved the local development experience by updating the method for downloading the dev mode browser and added support for [`/v1/sessions` endpoint](/platform/puppeteer/#list-open-sessions), allowing you to list open browser rendering sessions. Upgrade to `wrangler@4.31.0` to get started.
   - publish_date: "2025-07-29"
     title: Updates to Playwright, local dev support, and REST API
     description: |-

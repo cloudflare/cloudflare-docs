@@ -6,10 +6,9 @@ sidebar:
 head:
   - tag: title
     content: Integrate Tanium with Access
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 :::note
 Not recommended for new deployments. We recommend using the [Tanium service-to-service integration](/cloudflare-one/identity/devices/service-providers/taniums2s/) to get device posture signals from Tanium.
@@ -19,24 +18,27 @@ Cloudflare Access can use endpoint data from [Tanium™](https://www.tanium.com/
 
 :::caution[Gateway device posture limitation]
 
-
 The Tanium integration cannot be used with [Gateway device posture policies](/cloudflare-one/policies/gateway/network-policies/#device-posture).
-
 
 :::
 
 ## Prerequisites
 
-* Tanium Core Platform version 7.2 or later
-* <Render file="posture/prereqs-warp-is-deployed" params={{ name: "Access integrations", link: "/cloudflare-one/identity/devices/access-integrations/" }} />
+- Tanium Core Platform version 7.2 or later
+- <Render
+  	file="posture/prereqs-warp-is-deployed"
+  	product="cloudflare-one"
+  	params={{
+  		name: "Access integrations",
+  		link: "/cloudflare-one/identity/devices/access-integrations/",
+  	}}
+  />
 
 ## Integrate Tanium with Cloudflare Access
 
 :::note
 
-
 The integration does not currently support Safari.
-
 
 :::
 

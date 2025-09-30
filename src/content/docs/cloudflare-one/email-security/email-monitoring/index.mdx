@@ -5,7 +5,7 @@ sidebar:
   order: 12
 ---
 
-import { GlossaryTooltip, Render } from "~/components"
+import { GlossaryTooltip, Render } from "~/components";
 
 Once you have chosen a domain to scan, Email Security allows you to monitor the traffic scanned from your email inboxes.
 
@@ -41,25 +41,28 @@ Email traffic that flows through Email Security is given a final disposition, wh
 
 Disposition evaluation displays the following dispositions:
 
-<Render file="email-security/dispositions-and-attributes" />
+<Render
+	file="email-security/dispositions-and-attributes"
+	product="cloudflare-one"
+/>
 
 ## Detection details
 
 Detection details displays information about:
 
 - **Malicious** disposition:
-   * **Email threat types**: Top malicious threat types, and their number relative to the total amount of malicious threats received.
-   * **Targeted users**: Top number of emails targeted, and their number relative to the total amount of malicious targets.
-   * **Malicious links**: A graph displaying the total number of malicious links and their distribution throughout the month.
-   * **Malicious attachments**: Number of malicious attachments, and the top types of malicious files received.
+  - **Email threat types**: Top malicious threat types, and their number relative to the total amount of malicious threats received.
+  - **Targeted users**: Top number of emails targeted, and their number relative to the total amount of malicious targets.
+  - **Malicious links**: A graph displaying the total number of malicious links and their distribution throughout the month.
+  - **Malicious attachments**: Number of malicious attachments, and the top types of malicious files received.
 - **Suspicious** disposition:
-   * **Suspicious threat types**: Top suspicious threat types, and their number relative to the total amount of threats received.
-   * **Suspicious targets**: Top number of emails targeted, and their number relative to the total amount of malicious targets.
-   * **Suspicious links**: A graph displaying the total number of suspicious links and their distribution throughout the month.
+  - **Suspicious threat types**: Top suspicious threat types, and their number relative to the total amount of threats received.
+  - **Suspicious targets**: Top number of emails targeted, and their number relative to the total amount of malicious targets.
+  - **Suspicious links**: A graph displaying the total number of suspicious links and their distribution throughout the month.
 - **Spoof** disposition:
-   * **Spoof users (impersonated names)**: Top number of impersonated names, and their number relative to the total number of detection received.
-   * **Spoof targets**: Top number of targeted emails.
-   * **Sender v. envelope mismatch**: This field indicates the number of mismatches between the email address the message was sent from, and the email address the message was _actually_ sent from.
+  - **Spoof users (impersonated names)**: Top number of impersonated names, and their number relative to the total number of detection received.
+  - **Spoof targets**: Top number of targeted emails.
+  - **Sender v. envelope mismatch**: This field indicates the number of mismatches between the email address the message was sent from, and the email address the message was _actually_ sent from.
 
 ## Impersonations
 
@@ -72,7 +75,6 @@ Impersonations are a form of phishing attack where the actor pretends to be some
 - To view impersonated users, select **View impersonated users**.
 
 Refer to [Trusted domains](/cloudflare-one/email-security/detection-settings/trusted-domains/) to add a trusted domain, and [Impersonation registry](/cloudflare-one/email-security/detection-settings/impersonation-registry/) to add a user to the impersonation registry.
-
 
 ## Phish submissions
 

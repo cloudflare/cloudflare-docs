@@ -6,16 +6,13 @@ sidebar:
 head:
   - tag: title
     content: Require WARP
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 :::note
 
-
 This device posture attribute will check for all versions of WARP, including the consumer version.
-
 
 :::
 
@@ -23,7 +20,14 @@ Cloudflare Zero Trust enables you to restrict access to your applications to dev
 
 ## Prerequisites
 
-* <Render file="posture/prereqs-warp-is-deployed" params={{ name: "WARP Client Checks", link: "/cloudflare-one/identity/devices/warp-client-checks/" }} />
+- <Render
+  	file="posture/prereqs-warp-is-deployed"
+  	product="cloudflare-one"
+  	params={{
+  		name: "WARP Client Checks",
+  		link: "/cloudflare-one/identity/devices/warp-client-checks/",
+  	}}
+  />
 
 ## 1. Enable the WARP check
 

@@ -16,7 +16,7 @@ import { getEntry } from "astro:content";
 const frontmatter = Astro.locals.starlightRoute.entry.data;
 
 const spotlightDetails = frontmatter.spotlight;
-const updated = frontmatter.updated;
+const reviewed = frontmatter.reviewed;
 const summary = frontmatter.summary;
 const component = frontmatter.styleGuide?.component;
 
@@ -106,7 +106,7 @@ const hideBreadcrumbs = Astro.locals.starlightRoute.hideBreadcrumbs;
 
 {!hideTitle && <Default />}
 
-{updated && <LastReviewed date={updated} />}
+{reviewed && <LastReviewed date={reviewed} />}
 
 {
 	spotlightDetails && (

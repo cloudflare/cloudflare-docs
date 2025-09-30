@@ -43,7 +43,7 @@ The table below provides a summary of the Data Localization Suite product's beha
 | Advanced Certificate Manager | ⚫️             | ⚫️               | ⚫️                        |
 | Advanced DDoS Protection     | ✅              | ✅                | 🚧 [^3]                    |
 | API Shield                   | ✅              | ✅                | 🚧 [^4]                    |
-| Bot Management               | ✅              | ✅                | 🚧 [^5]                    |
+| Bot Management               | ✅              | ✅                | ✅                    |
 | DNS Firewall                 | ⚫️             | ⚫️               | 🚧 [^22]                   |
 | Page Shield                  | ✅              | ✅                | ✅                         |
 | Rate Limiting                | ✅              | ✅                | ✅ [^37]                   |
@@ -116,11 +116,9 @@ The table below provides a summary of the Data Localization Suite product's beha
 
 [^2]: Regular and Custom Tiered Cache works; Smart Tiered Caching not available with Regional Services.
 
-[^3]: Adaptive DDoS Protection is only supported for US CMB.
+[^3]: [Adaptive DDoS Protection](/ddos-protection/managed-rulesets/adaptive-protection/) is only supported for CMB = US. All other features are available to all CMB regions. 
 
-[^4]: Features such as API Discovery and Volumetric Abuse Detection will not work with CMB set to EU only.
-
-[^5]: Some advanced Enterprise features, including the [Anomaly Detection engine](/bots/concepts/bot-score/#anomaly-detection), are not available.
+[^4]: API Discovery, Volumetric Abuse Detection and [Sequence Analytics and Mitigation](/api-shield/security/sequence-analytics/) will not work with CMB = EU. All other features are available to all CMB regions. 
 
 [^6]: Only when using a Custom Domain set to a region, either through Workers or [Transform Rules](/images/transform-images/serve-images-custom-paths/) within the same zone.
 
@@ -134,7 +132,7 @@ The table below provides a summary of the Data Localization Suite product's beha
 
 [^11]: Only when using [Custom Domain](/pages/configuration/custom-domains/) set to a region.
 
-[^12]: Logpull not available when using Customer Metadata Boundary outside US region. Logs may be stored and retrieved with [Logs Engine](https://blog.cloudflare.com/announcing-logs-engine/) which is adding region support in 2025.
+[^12]: Logpull available when using CMB = US only. Logpull is a legacy feature, consider using [Logpush](/data-localization/metadata-boundary/logpush-datasets/) or [Log Explorer](/log-explorer/) instead.
 
 [^13]: Logpush available with Customer Metadata Boundary for [these datasets](/data-localization/metadata-boundary/logpush-datasets/). Contact your account team if you need another dataset.
 
@@ -145,14 +143,12 @@ The table below provides a summary of the Data Localization Suite product's beha
 [^16]: Customer Metadata Boundary can be used to limit data transfer outside region, but Access User Logs will not be available outside US region. EU customers must use Logpush to retain logs.
 
 [^17]: Currently may only be used with US FedRAMP region.
-
-[^18]: When Cloudflare Tunnel connects to Cloudflare, the connectivity options available are the Global Region (default) and [US FedRAMP Moderate Domestic region](/cloudflare-one/connections/connect-networks/configure-tunnels/cloudflared-parameters/run-parameters/#region). For incoming requests to the Cloudflare Edge, Regional Services only applies when using [Public Hostnames](/cloudflare-one/connections/connect-networks/routing-to-tunnel/). In this case, the region associated with the DNS record will apply.
-
+[^18]: When Cloudflare Tunnel connects to Cloudflare, the connectivity options available are the Global Region (default) and [US FedRAMP Moderate Domestic region](/cloudflare-one/connections/connect-networks/configure-tunnels/cloudflared-parameters/run-parameters/#region). For incoming requests to the Cloudflare Edge, Regional Services only applies when using [published applications](/cloudflare-one/connections/connect-networks/routing-to-tunnel/). In this case, the region associated with the DNS record will apply.
 [^19]: Uses Gateway HTTP and CASB.
 
 [^20]: You can [bring your own certificate](https://blog.cloudflare.com/bring-your-certificates-cloudflare-gateway/) to Gateway but these cannot yet be restricted to a specific region.
 
-[^21]: Gateway HTTP supports Regional Services. Gateway DNS does not yet support regionalization. <br/> ICMP proxy and WARP-to-WARP proxy are not available to Regional Services users.
+[^21]: Gateway HTTP supports Regional Services. Gateway DNS does not yet support regionalization. <br/> ICMP proxy and WARP-to-WARP proxy are not available to Regional Services users. [File Sandboxing](/cloudflare-one/policies/gateway/http-policies/file-sandboxing/) (add-on) is incompatible with DLS.
 
 [^22]: Dashboard Analytics and Logs are empty when using CMB outside the US region. Use Logpush instead.
 
@@ -162,7 +158,7 @@ The table below provides a summary of the Data Localization Suite product's beha
 
 [^27]: Only when using a Custom Domain and a [Custom Certificate](/r2/reference/data-security/#encryption-in-transit) or [Keyless SSL](/ssl/keyless-ssl/).
 
-[^28]: R2 Dashboard [Metrics and Analytics](/r2/platform/metrics-analytics/) are populated. Additionally, [Jurisdictional Restrictions](/r2/reference/data-location/#jurisdictional-restrictions) guarantee objects in a bucket are stored within a specific jurisdiction.
+[^28]: R2 Dashboard [Metrics and Analytics](/r2/platform/metrics-analytics/) are populated. [Jurisdictional Restrictions](/r2/reference/data-location/#jurisdictional-restrictions) guarantee objects in a bucket are stored within a specific jurisdiction.
 
 [^29]: You cannot yet specify region location for object storage itself.
 
@@ -176,7 +172,7 @@ The table below provides a summary of the Data Localization Suite product's beha
 
 [^34]: Jurisdictional Restrictions (storage) for Workers KV pairs is not supported today.
 
-[^35]: Logs / Analytics not available outside US region when using Customer Metadata Boundary. Jurisdictional Restrictions (storage) options are not supported today.
+[^35]: Logs / Analytics not supported for CMB = EU. Jurisdictional Restrictions ([storage](/images/upload-images/)) options are not supported today. All other features are available to all CMB regions. Note that beta or future features may not be in scope and could be subject to change.
 
 [^36]: Only when using a [Custom Domain](/images/manage-images/serve-images/serve-from-custom-domains/) set to a region.
 
@@ -184,12 +180,12 @@ The table below provides a summary of the Data Localization Suite product's beha
 
 [^38]: [Turnstile Analytics](/turnstile/turnstile-analytics/) are available. However, there are no regionalization guarantees for the Siteverify API yet.
 
-[^39]: Jurisdictional Restrictions (storage) options for [Logs](/ai-gateway/observability/logging/) are not supported today.
+[^39]: Jurisdictional Restrictions (storage) options for [Logs](/ai-gateway/observability/logging/) are not supported today. All other features are available to all CMB regions.
 
-[^40]: Jurisdictional Restrictions ([data location](/d1/configuration/data-location/) / storage) options are not supported today.
+[^40]: Jurisdictional Restrictions ([data location](/d1/configuration/data-location/) / storage) options are not supported today. All other features are available to all CMB regions. Note that beta or future features may not be in scope and could be subject to change.
 
 [^41]: Logs / Analytics not available outside US region when using Customer Metadata Boundary. Use Logpush instead.
 
 [^42]: Only applies to HTTP/S Spectrum applications.
 
-[^43]: Web Analytics collects the [minimum amount of information](/web-analytics/data-metrics/data-origin-and-collection/). Alternatively, you can [exclude EU Visitors from RUM](/speed/speed-test/rum-beacon/#rum-excluding-eeaeu).
+[^43]: Web Analytics collects the [minimum amount of information](/web-analytics/data-metrics/data-origin-and-collection/). Alternatively, you can [exclude EU Visitors from RUM](/speed/observatory/rum-beacon/#rum-excluding-eeaeu).

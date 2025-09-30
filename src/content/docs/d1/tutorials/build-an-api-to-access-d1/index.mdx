@@ -1,5 +1,5 @@
 ---
-updated: 2024-09-20
+reviewed: 2024-09-20
 difficulty: Intermediate
 pcx_content_type: tutorial
 title: Build an API to access D1 using a proxy Worker
@@ -279,7 +279,9 @@ To create a table in your newly created database:
 Upon successful execution, a new table will be added to your database.
 
 :::note
-The table will be created in the local instance of the database. If you want to add this table to your production database, append the above command by adding the `--remote` flag.
+
+The table will be created in the local instance of the database. If you want to add this table to your production database set `"remote" : true` in the D1 binding configuration. Refer to the [remote bindings documentation](/workers/development-testing/#remote-bindings) for more information.
+
 :::
 
 ## 9. Query the database

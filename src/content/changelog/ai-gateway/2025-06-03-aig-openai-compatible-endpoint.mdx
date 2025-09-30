@@ -6,7 +6,7 @@ products:
 date: 2025-06-03
 ---
 
-Users can now use an [OpenAI Compatible endpoint](/ai-gateway/chat-completion/) in AI Gateway to easily switch between providers, while keeping the exact same request and response formats. We're launching now with the chat completions endpoint, with the embeddings endpoint coming up next.
+Users can now use an [OpenAI Compatible endpoint](/ai-gateway/usage/chat-completion/) in AI Gateway to easily switch between providers, while keeping the exact same request and response formats. We're launching now with the chat completions endpoint, with the embeddings endpoint coming up next.
 
 To get started, use the OpenAI compatible chat completions endpoint URL with your own account id and gateway id and switch between providers by changing the `model` and `apiKey` parameters.
 
@@ -26,6 +26,6 @@ const response = await client.chat.completions.create({
 console.log(response.choices[0].message.content);
 ```
 
-Additionally, the [OpenAI Compatible endpoint](/ai-gateway/chat-completion/) can be combined with our [Universal Endpoint](/ai-gateway/universal/) to add fallbacks across multiple providers. That means AI Gateway will return every response in the same standardized format, no extra parsing logic required!
+Additionally, the [OpenAI Compatible endpoint](/ai-gateway/usage/chat-completion/) can be combined with our [Universal Endpoint](/ai-gateway/usage/universal/) to add fallbacks across multiple providers. That means AI Gateway will return every response in the same standardized format, no extra parsing logic required!
 
-Learn more in the [OpenAI Compatibility](/ai-gateway/chat-completion/) documentation.
+Learn more in the [OpenAI Compatibility](/ai-gateway/usage/chat-completion/) documentation.

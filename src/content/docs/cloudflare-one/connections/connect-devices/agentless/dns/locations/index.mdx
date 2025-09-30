@@ -10,7 +10,7 @@ sidebar:
 
 import { GlossaryDefinition, Render } from "~/components";
 
-<Render file="gateway/add-locations" />
+<Render file="gateway/add-locations" product="cloudflare-one" />
 
 10. Change the DNS resolvers on your router, browser, or OS by following the setup instructions in the UI.
 11. Select **Go to DNS Location**. Your location will appear in your list of locations.
@@ -68,8 +68,11 @@ Roles that supersede **Cloudflare Zero Trust DNS Locations Write** include:
 
 ### Captive portals
 
-<Render file="gateway/add-locations-static-ip-warning" />
+<Render
+	file="gateway/add-locations-static-ip-warning"
+	product="cloudflare-one"
+/>
 
 ### Third-party filtering
 
-<Render file="gateway/third-party-warning" />
+<Render file="gateway/third-party-warning" product="cloudflare-one" />

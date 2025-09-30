@@ -1,0 +1,266 @@
+---
+id: 4e92423fc9126a22af2b0c37825d4195
+url: create-api-tokens
+title: Create an API token
+description: In this video, learn the difference between account and user API tokens how to create one.
+products:
+  - fundamentals
+thumbnail:
+  url: https://pub-d9bf66e086fb4b639107aa52105b49dd.r2.dev/API%20token.png
+transcript: |
+  WEBVTT
+
+  1
+  00:00:00.160 --> 00:00:04.600
+  An API token allows secure, 
+  fine grained access to specific resources
+
+  2
+  00:00:04.600 --> 00:00:07.080
+  without exposing your full account 
+  credentials.
+
+  3
+  00:00:07.080 --> 00:00:10.080
+  They have a limited lifespan and expire 
+  automatically.
+
+  4
+  00:00:10.640 --> 00:00:12.760
+  This reduces risk if they are compromised.
+
+  5
+  00:00:12.760 --> 00:00:17.280
+  For example, if you want to grant someone 
+  access to specific apps or data.
+
+  6
+  00:00:17.440 --> 00:00:19.440
+  You can create an API token for them.
+
+  7
+  00:00:19.760 --> 00:00:23.600
+  There are two types of tokens user token and 
+  account token.
+
+  8
+  00:00:23.600 --> 00:00:27.080
+  User tokens are directly tied to an 
+  individual and their account.
+
+  9
+  00:00:27.280 --> 00:00:31.240
+  While account tokens are typically tied to 
+  services which can help prevent an
+
+  10
+  00:00:31.240 --> 00:00:32.640
+  interruption in service.
+
+  11
+  00:00:32.680 --> 00:00:34.840
+  If an employee leaves their organization.
+
+  12
+  00:00:34.960 --> 00:00:39.080
+  In this video, we'll walk through how to 
+  create an API token in the Cloudflare
+
+  13
+  00:00:39.080 --> 00:00:43.080
+  dashboard. Before you begin, 
+  make sure you know your account and zone IDs.
+
+  14
+  00:00:43.080 --> 00:00:46.400
+  So let's do that. First, 
+  the account ID identifies your Cloudflare
+
+  15
+  00:00:46.400 --> 00:00:50.840
+  account, while the zone ID identifies a 
+  specific domain you've added to Cloudflare.
+
+  16
+  00:00:51.000 --> 00:00:55.080
+  From the accounts page, 
+  locate your account at the end of the account
+
+  17
+  00:00:55.080 --> 00:00:58.240
+  row, open the menu and select Copy Account 
+  ID.
+
+  18
+  00:00:58.560 --> 00:01:01.200
+  If you only have one account, 
+  it looks a little bit different.
+
+  19
+  00:01:01.400 --> 00:01:05.860
+  Login and go to the account home page next to 
+  your account name,
+
+  20
+  00:01:05.860 --> 00:01:08.220
+  select the menu button from the drop down.
+
+  21
+  00:01:08.220 --> 00:01:13.340
+  Choose Copy Account ID to find your zone ID, 
+  log in and go to the accounts page.
+
+  22
+  00:01:13.900 --> 00:01:17.180
+  Select your account, then go to the overview 
+  page for your domain.
+
+  23
+  00:01:18.060 --> 00:01:20.580
+  Scroll to the API section near the bottom.
+
+  24
+  00:01:20.980 --> 00:01:24.460
+  Here you'll see the zone ID and an option to 
+  click to copy.
+
+  25
+  00:01:25.300 --> 00:01:28.500
+  This section also lists your account ID for 
+  convenience.
+
+  26
+  00:01:28.940 --> 00:01:32.620
+  Now we can create an API token to create a 
+  token.
+
+  27
+  00:01:32.660 --> 00:01:34.420
+  Start from the Cloudflare dashboard.
+
+  28
+  00:01:34.620 --> 00:01:38.220
+  For a user token, go to profile API tokens.
+
+  29
+  00:01:39.220 --> 00:01:43.580
+  For an account token, 
+  go to Manage Account account API tokens.
+
+  30
+  00:01:43.900 --> 00:01:46.620
+  You will only see this option if you are a 
+  Superadmin.
+
+  31
+  00:01:46.620 --> 00:01:51.780
+  Select Create token. You can choose from 
+  predefined templates or build a custom token.
+
+  32
+  00:01:52.180 --> 00:01:55.660
+  For example, let's use the Edit Zone DNS 
+  template.
+
+  33
+  00:01:55.660 --> 00:02:00.260
+  Give your token a descriptive name such as 
+  DNS updates for example.com.
+
+  34
+  00:02:00.860 --> 00:02:04.500
+  The template will fulfill permissions, 
+  but you can adjust them as needed.
+
+  35
+  00:02:04.700 --> 00:02:06.620
+  Next assign permissions.
+
+  36
+  00:02:06.900 --> 00:02:12.190
+  Permissions are organized by account, 
+  user or zone and usually offer either read
+
+  37
+  00:02:12.190 --> 00:02:13.790
+  access or edit access.
+
+  38
+  00:02:13.830 --> 00:02:17.590
+  Edit allows full control, 
+  create, read, update,
+
+  39
+  00:02:17.590 --> 00:02:21.030
+  delete, and list, while read provides viewing 
+  rights only.
+
+  40
+  00:02:21.510 --> 00:02:24.510
+  Then select the resources the token applies 
+  to.
+
+  41
+  00:02:24.790 --> 00:02:30.510
+  For instance, granting zone DNS read access 
+  for example.com will let the token view DNS
+
+  42
+  00:02:30.510 --> 00:02:32.070
+  records for that zone only.
+
+  43
+  00:02:32.590 --> 00:02:36.070
+  If the token is used on a different zone, 
+  it will return an error.
+
+  44
+  00:02:36.550 --> 00:02:41.550
+  Optionally, you can add restrictions such as 
+  filtering by client IP or setting a time to
+
+  45
+  00:02:41.590 --> 00:02:43.110
+  live value for the token.
+
+  46
+  00:02:43.350 --> 00:02:46.190
+  Click continue to summary to review your 
+  selections.
+
+  47
+  00:02:46.430 --> 00:02:49.310
+  If everything looks correct, 
+  choose Create Token.
+
+  48
+  00:02:49.350 --> 00:02:52.150
+  The dashboard will now display your new token 
+  secret.
+
+  49
+  00:02:52.310 --> 00:02:54.910
+  Copy it immediately to a secure location.
+
+  50
+  00:02:54.950 --> 00:02:56.990
+  The secret is shown only once.
+
+  51
+  00:02:57.150 --> 00:03:00.230
+  Anyone with a token can perform the actions 
+  you've authorized,
+
+  52
+  00:03:00.230 --> 00:03:01.710
+  so treat it like a password.
+
+  53
+  00:03:02.030 --> 00:03:06.550
+  With that, you've successfully created an API 
+  token and can begin using it with a
+
+  54
+  00:03:06.550 --> 00:03:11.070
+  Cloudflare API. For more information, 
+  visit our developer documentation.

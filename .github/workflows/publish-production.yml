@@ -67,7 +67,7 @@ jobs:
             --config bin/rclone.conf \
             distmd \
             zt:zt-dashboard-dev-docs
-      - name: Upload vendored Markdown files to AutoRAG DevDocs bucket
+      - name: Upload vendored Markdown files to AI Search DevDocs bucket
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AUTORAG_DEVDOCS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AUTORAG_DEVDOCS_SECRET_ACCESS_KEY }}

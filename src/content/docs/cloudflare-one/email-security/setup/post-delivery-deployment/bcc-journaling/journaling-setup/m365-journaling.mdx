@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import { GlossaryTooltip, Render } from "~/components"
+import { GlossaryTooltip, Render } from "~/components";
 
 When you receive an email, the email lands on your Microsoft 365 inbox, and then Email Security receives a copy of that email. The following email flow shows how this works:
 
@@ -41,8 +41,8 @@ On the **Set up Email Security** page:
 2. (**Optional**) **Add manual domains**: Select **Add domain name** to manually enter additional domains. Then, select **Continue**.
 3. (**Optional**) **Adjust hop count**: Enter the number of <GlossaryTooltip term="Hops">hops</GlossaryTooltip>. Then, select **Continue**.
 4. (**Optional**, select **Skip for now** to skip this step) **Move messages**: Refer to [Auto-moves](/cloudflare-one/email-security/auto-moves/) to configure auto-moves. Then, select **Continue**.
-5. **Configure service address with your third party email provider**: Copy and paste the service address into your third-party email provider to allow BCC/Journaling: `<account tag>@CF-emailsecurity.com`.
-6. **Review details**: Review your connected domains. Then, select **Go to domains.**
+5. **Select your processing location**: Configure where you want Cloudflare to process your email. **Global** will be the default option.  If you choose **Global**, `<account tag>@CF-emailsecurity.com` will be your regional service address. Once you have chosen your processing location, select **Continue**.
+6. **Review details**: Review your connected domains and service addresses. Then, select **Go to domains.**
 
 Your domains are now added successfully.
 
@@ -64,11 +64,10 @@ To view your connected domains:
 5. Select **Journal rules**.
 
 6. Select **New rule** to configure a journaling rule, and configure it as follows:
-
    - **Send journal reports to**: This is the address you copied and pasted in step 5 of [Connect your domains](/cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/journaling-setup/m365-journaling/#connect-your-domains).
    - **Journal rule name**: `Journal Messages to Email Security`
-   - **Journal messages sent or received from**: *Everyone*
-   - **Type of message to journal**: *External messages only*
+   - **Journal messages sent or received from**: _Everyone_
+   - **Type of message to journal**: _External messages only_
 
 7. Select **Next**.
 
@@ -78,4 +77,4 @@ Once saved, the rule is automatically active. However, it may take a few minutes
 
 ## Next steps
 
-<Render file="email-security/enable-logs" />
+<Render file="email-security/enable-logs" product="cloudflare-one" />

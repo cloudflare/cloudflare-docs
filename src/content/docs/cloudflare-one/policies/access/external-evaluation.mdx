@@ -5,7 +5,7 @@ sidebar:
   order: 4
 ---
 
-import { GlossaryTooltip, Example, WranglerConfig } from "~/components";
+import { GlossaryTooltip, Example, WranglerConfig, DashButton } from "~/components";
 
 With Cloudflare Access, you can create Allow or Block policies which evaluate the user based on custom criteria. This is done by adding an **External Evaluation** rule to your policy. The **External Evaluation** selector requires two values:
 
@@ -102,7 +102,8 @@ To generate an RSA private/public key pair:
 1. Open a browser and go to `https://my-worker.<YOUR_SUBDOMAIN>.workers.dev/keys`.
 
 2. (Optional) Verify that the key has been stored in the `KV` namespace:
-   1. Open the [Cloudflare dashboard](https://dash.cloudflare.com/) and go to **Workers & Pages** > **KV**.
+   1. In the Cloudflare dashboard, go to the **Workers KV** page.
+			<DashButton url="/?to=/:account/workers/kv/namespaces" />
    2. Select **View** next to `my-worker-KV`.
 
 Other key formats (such as DSA) are not supported at this time.

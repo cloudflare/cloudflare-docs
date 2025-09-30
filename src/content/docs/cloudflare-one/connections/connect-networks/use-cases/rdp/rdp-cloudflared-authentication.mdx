@@ -16,15 +16,15 @@ Client-side `cloudflared` can be used in conjunction with [routing over WARP](/c
 
 1. Create a Cloudflare Tunnel by following our [dashboard setup guide](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/).
 
-2. In the **Public Hostnames** tab, choose a domain from the drop-down menu and specify any subdomain (for example, `rdp.example.com`).
+2. In the **Published application routes** tab, choose a domain from the drop-down menu and specify any subdomain (for example, `rdp.example.com`).
 
 3. For **Service**, select _RDP_ and enter the [RDP listening port](https://docs.microsoft.com/en-us/windows-server/remote/remote-desktop-services/clients/change-listening-port) of your server (for example, `localhost:3389`). It will likely be port `3389`.
 
-4. Select **Save hostname**.
+4. Select **Save**.
 
 ## 2. (Recommended) Create an Access application
 
-By default, anyone on the Internet can connect to the server using its public hostname. To allow or block specific users, create a [self-hosted application](/cloudflare-one/applications/configure-apps/self-hosted-public-app/) in Cloudflare Access.
+By default, anyone on the Internet can connect to the server using the hostname of the published application. To allow or block specific users, create a [self-hosted application](/cloudflare-one/applications/configure-apps/self-hosted-public-app/) in Cloudflare Access.
 
 ## 3. Connect as a user
 

@@ -3,7 +3,7 @@
 
 ---
 
-import { Tabs, TabItem, Details } from '~/components';
+import { Tabs, TabItem, Details, APIRequest } from '~/components';
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -18,6 +18,40 @@ import { Tabs, TabItem, Details } from '~/components';
 5. Select **Generate token**. You will see the generated Client ID and Client Secret for the service token, as well as their respective request headers.
 
 6. Copy the Client Secret.
+
+   :::caution
+   This is the only time Cloudflare Access will display the Client Secret. If you lose the Client Secret, you must generate a new service token.
+   :::
+
+</TabItem> <TabItem label="API">
+
+1. Make a `POST` request to the [Access Service Tokens](/api/resources/zero_trust/subresources/access/subresources/service_tokens/methods/create/) endpoint:
+
+	<APIRequest
+		path="/accounts/{account_id}/access/service_tokens"
+		method="POST"
+			json={{
+			name: "CI/CD token",
+			duration: "8760h"
+		}}
+	/>
+
+2. Copy the `client_id` and `client_secret` values returned in the response.
+
+
+	```json title="Response" {2-3}
+	"result": {
+		"client_id": "88bf3b6d86161464f6509f7219099e57.access",
+		"client_secret": "bdd31cbc4dec990953e39163fbbb194c93313ca9f0a6e420346af9d326b1d2a5",
+		"created_at": "2025-09-25T22:26:26Z",
+		"expires_at": "2026-09-25T22:26:26Z",
+		"id": "3537a672-e4d8-4d89-aab9-26cb622918a1",
+		"name": "CI/CD token",
+		"updated_at": "2025-09-25T22:26:26Z",
+		"duration": "8760h",
+		"client_secret_version": 1
+	}
+	```
 
    :::caution
    This is the only time Cloudflare Access will display the Client Secret. If you lose the Client Secret, you must generate a new service token.

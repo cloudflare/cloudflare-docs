@@ -74,11 +74,11 @@ export const baseSchema = ({ image }: SchemaContext) =>
 			.describe(
 				"Difficulty is displayed as a column in the [ListTutorials component](/style-guide/components/list-tutorials/).",
 			),
-		updated: z
+		reviewed: z
 			.date()
 			.optional()
 			.describe(
-				"This is used to automatically add the [LastReviewed component](/style-guide/components/last-reviewed/).",
+				"A `YYYY-MM-DD` value that signals when the page was last explicitly reviewed from beginning to end. This is used to automatically add the [LastReviewed component](/style-guide/components/last-reviewed/). Commonly related to [tutorials](/style-guide/documentation-content-strategy/content-types/tutorial/) and [reference architectures](/style-guide/documentation-content-strategy/content-types/reference-architecture/).",
 			),
 		spotlight: spotlightAuthorDetails,
 		release_notes_file_name: z
@@ -99,8 +99,6 @@ export const baseSchema = ({ image }: SchemaContext) =>
 			.string()
 			.optional()
 			.describe("Renders a summary description directly below the page title."),
-		goal: z.string().array().optional(),
-		operation: z.string().array().optional(),
 		noindex: z
 			.boolean()
 			.optional()

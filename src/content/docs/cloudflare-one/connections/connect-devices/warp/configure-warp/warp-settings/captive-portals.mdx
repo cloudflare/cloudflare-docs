@@ -73,6 +73,10 @@ To get captive portal logs:
 3. Select **Collect Captive Portal Diag**.
 4. The WARP client will ask if the device is connected (or attempting to connect) to the Wi-Fi network that is causing issues. Select **Yes** to confirm.
 
+:::note[macOS limitation]
+On macOS, [**Automatically join this network**](https://support.apple.com/guide/mac-help/wi-fi-settings-on-mac-mh11935/mac) should be enabled on the Wi-Fi network that is causing issues. This setting is enabled by default. If manually disabled, the captive portal diagnostic will fail to capture meaningful data and the device will not automatically reconnect to this network.
+:::
+
 Once the diagnostic finishes running, WARP will place a `warp-captive-portal-diag-<date>-<time>.zip` file on the user's desktop. The end user can now share this file with their IT administrator.
 
 ## Related resources

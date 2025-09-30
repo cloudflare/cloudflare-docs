@@ -1,12 +1,11 @@
 ---
 pcx_content_type: configuration
 title: util
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
-<Render file="nodejs-compat-howto" />
+<Render file="nodejs-compat-howto" product="workers" />
 
 ## promisify/callbackify
 
@@ -15,15 +14,15 @@ The `promisify` and `callbackify` APIs in Node.js provide a means of bridging be
 The `promisify` method allows taking a Node.js-style callback function and converting it into a Promise-returning async function:
 
 ```js
-import { promisify } from 'node:util';
+import { promisify } from "node:util";
 
 function foo(args, callback) {
-  try {
-    callback(null, 1);
-  } catch (err) {
-    // Errors are emitted to the callback via the first argument.
-    callback(err);
-  }
+	try {
+		callback(null, 1);
+	} catch (err) {
+		// Errors are emitted to the callback via the first argument.
+		callback(err);
+	}
 }
 
 const promisifiedFoo = promisify(foo);
@@ -55,19 +54,19 @@ Refer to the [Node.js documentation for `callbackify`](https://nodejs.org/dist/l
 The `util.types` API provides a reliable and efficient way of checking that values are instances of various built-in types.
 
 ```js
-import { types } from 'node:util';
+import { types } from "node:util";
 
-types.isAnyArrayBuffer(new ArrayBuffer());  // Returns true
-types.isAnyArrayBuffer(new SharedArrayBuffer());  // Returns true
-types.isArrayBufferView(new Int8Array());  // true
-types.isArrayBufferView(Buffer.from('hello world')); // true
-types.isArrayBufferView(new DataView(new ArrayBuffer(16)));  // true
-types.isArrayBufferView(new ArrayBuffer());  // false
+types.isAnyArrayBuffer(new ArrayBuffer()); // Returns true
+types.isAnyArrayBuffer(new SharedArrayBuffer()); // Returns true
+types.isArrayBufferView(new Int8Array()); // true
+types.isArrayBufferView(Buffer.from("hello world")); // true
+types.isArrayBufferView(new DataView(new ArrayBuffer(16))); // true
+types.isArrayBufferView(new ArrayBuffer()); // false
 function foo() {
-  types.isArgumentsObject(arguments);  // Returns true
+	types.isArgumentsObject(arguments); // Returns true
 }
-types.isAsyncFunction(function foo() {});  // Returns false
-types.isAsyncFunction(async function foo() {});  // Returns true
+types.isAsyncFunction(function foo() {}); // Returns false
+types.isAsyncFunction(async function foo() {}); // Returns true
 // .. and so on
 ```
 
@@ -83,9 +82,9 @@ For more about `util.types`, refer to the [Node.js documentation for `util.types
 `util.MIMEType` provides convenience methods that allow you to more easily work with and manipulate [MIME types](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types). For example:
 
 ```js
-import { MIMEType } from 'node:util';
+import { MIMEType } from "node:util";
 
-const myMIME = new MIMEType('text/javascript;key=value');
+const myMIME = new MIMEType("text/javascript;key=value");
 
 console.log(myMIME.type);
 // Prints: text

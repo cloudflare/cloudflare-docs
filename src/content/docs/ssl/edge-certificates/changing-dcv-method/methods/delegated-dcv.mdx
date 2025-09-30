@@ -30,13 +30,15 @@ You should use Delegated DCV when all of the following conditions are true:
 - Your zone is using a [partial DNS setup](/dns/zone-setups/partial-setup/).
 - Cloudflare is not already [performing DCV automatically](/ssl/edge-certificates/changing-dcv-method/).
 - Your zone is using an [Advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/).
-- Your zone is not using multiple CDN providers.
 - The Certificate Authority is either Google Trust Services, SSL.com, or Let's Encrypt
 
-:::note[Delegated DCV and origin certificates]
+### Aspects to keep in mind
 
-As explained in the [announcement blog post](https://blog.cloudflare.com/introducing-dcv-delegation/), currently, you can only delegate DCV to one provider at a time. If you also issue publicly trusted certificates for the same hostname for your [origin server](/ssl/concepts/#origin-certificate), this will no longer be possible. You can use [Cloudflare origin CA certificates](/ssl/origin-configuration/origin-ca/) instead.
-:::
+As explained in the [announcement blog post](https://blog.cloudflare.com/introducing-dcv-delegation/), currently, you can only delegate DCV to one provider at a time. This means:
+
+- If you also issue publicly trusted certificates for the same hostname for your [origin server](/ssl/concepts/#origin-certificate), this will no longer be possible. You can use [Cloudflare origin CA certificates](/ssl/origin-configuration/origin-ca/) instead.
+
+- If your zone is using multiple CDN providers, you might want to use an alternative [method](/ssl/edge-certificates/changing-dcv-method/methods/). This is because, once the DCV delegation is configured for Cloudflare, only Cloudflare will be able to perform DCV on your behalf, blocking your external CDN providers from doing the same.
 
 ## Setup
 
@@ -100,20 +102,9 @@ _acme-challenge.example.com. 3600    IN    CNAME    example.com.<COPIED_VALIDATI
 
 ### Renewal
 
-Currently, at certificate renewal, Cloudflare attempts to automatically perform DCV via HTTP if your certificate matches certain criteria:
-
-- Hostnames are proxied.
-- Hostnames on the certificate resolve to the IPs assigned to the zone.
-- The certificate does not contain wildcards.
-
-Note that settings that interfere with the validation URLs can cause issues in this case. Refer to [Troubleshooting](/ssl/edge-certificates/changing-dcv-method/troubleshooting/) for guidance.
-
-:::note
-
 If a hostname becomes unreachable during certificate renewal time, the certificate will not be able to be renewed automatically via Delegated DCV. Should you need to renew a certificate for a hostname that is not resolving currently, you can send a PATCH request to [the changing DCV method API endpoint](/api/resources/ssl/subresources/verification/methods/edit/) and change the method to TXT to proceed with manual renewal per [the TXT DCV method](/ssl/edge-certificates/changing-dcv-method/methods/txt/).
 
 Once the hostname becomes resolvable again, [Delegated DCV](/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/) will resume working as expected.
-:::
 
 ### Moved domains
 

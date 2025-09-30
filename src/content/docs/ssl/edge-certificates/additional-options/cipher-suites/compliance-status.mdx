@@ -6,10 +6,9 @@ sidebar:
 head:
   - tag: title
     content: Cipher suites compliance standards
-
 ---
 
-import { Render, Details } from "~/components"
+import { Render, Details } from "~/components";
 
 Consider the following recommendations on custom [cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/) for when your organization needs to comply with regulatory standards.
 
@@ -29,7 +28,7 @@ Recommended cipher suites for compliance with the [Payment Card Industry Data Se
 
 </ Details>
 
-<Render file="cipher-suites-api-linkout" />
+<Render file="cipher-suites-api-linkout" product="ssl" />
 
 ## FIPS-140-2
 
@@ -41,8 +40,10 @@ Recommended cipher suites for compliance with the [Federal Information Processin
 
 </ Details>
 
-<Render file="cipher-suites-api-linkout" />
+<Render file="cipher-suites-api-linkout" product="ssl" />
 
 [^1]: Same as `TLS_AES_128_GCM_SHA256`. Refer to [TLS 1.3 cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/#tls-13) for details.
+
 [^2]: Same as `TLS_AES_256_GCM_SHA384`. Refer to [TLS 1.3 cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/#tls-13) for details.
+
 [^3]: Same as `TLS_CHACHA20_POLY1305_SHA256`. Refer to [TLS 1.3 cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/#tls-13) for details.

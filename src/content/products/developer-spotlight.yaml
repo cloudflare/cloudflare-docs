@@ -4,6 +4,7 @@ product:
   title: Developer Spotlight
   url: /developer-spotlight/
   group: Developer platform
+  show: false
   additional_groups: [Docs collections]
 
 meta:

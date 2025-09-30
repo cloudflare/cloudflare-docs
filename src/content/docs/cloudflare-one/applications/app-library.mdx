@@ -11,6 +11,8 @@ The Application Library allows users to manage their SaaS applications in Cloudf
 
 To access the App Library in [Zero Trust](https://one.dash.cloudflare.com/), go to **My team** > **App Library**. Each application card will list the number of hostnames associated with the application, the supported Zero Trust product usage, and the [app type](/cloudflare-one/policies/gateway/application-app-types/#app-types).
 
+The App Library groups [Do Not Inspect applications](/cloudflare-one/policies/gateway/application-app-types/#do-not-inspect-applications) within the corresponding application. For example, the App Library will group _Google Drive (Do Not Inspect)_ under **Google Drive**. Traffic that does not match a known application will not be included in the App Library.
+
 ## View application details
 
 Select an application card to view details about the application.
@@ -20,7 +22,7 @@ Select an application card to view details about the application.
 The **Overview** tab shows details about an application, including:
 
 - Name
-- Shadow IT [review status](/cloudflare-one/insights/analytics/shadow-it-discovery/#approval-status)
+- Shadow IT [review status](#review-applications)
 - Number of hostnames
 - [App type](/cloudflare-one/policies/gateway/application-app-types/#app-types)
 - Supported Zero Trust applications
@@ -36,20 +38,12 @@ The **Policies** tab shows any [Gateway](/cloudflare-one/policies/gateway/) and 
 
 ### Usage
 
-The **Usage** tab shows any logs for [Gateway traffic requests](/cloudflare-one/insights/logs/gateway-logs/), [Access authentication events](/cloudflare-one/insights/logs/audit-logs/#authentication-logs), and [Shadow IT Discovery user sessions](/cloudflare-one/insights/analytics/shadow-it-discovery/) sent to the selected application. This section requires logs to be turned on for each feature.
+The **Usage** tab shows any logs for [Gateway traffic requests](/cloudflare-one/insights/logs/gateway-logs/), [Access authentication events](/cloudflare-one/insights/logs/audit-logs/#authentication-logs), [Shadow IT Discovery user sessions](/cloudflare-one/insights/analytics/shadow-it-discovery/), and [generative AI prompt logs](/cloudflare-one/policies/data-loss-prevention/dlp-policies/logging-options/#view-prompt-logs) sent to the selected application. This section requires logs to be turned on for each feature.
 
 The Shadow IT Discovery dashboard will provide more details for discovered applications. To access Shadow IT Discovery in [Zero Trust](https://one.dash.cloudflare.com/), go to **Analytics**, then select **Shadow IT Discovery**.
 
 ## Review applications
 
-To organize applications into their approval status for your organization, you can mark them as **Unreviewed** (default), **In review**, **Approved**, and **Unapproved**. The App Library synchronizes application review statuses with [approval statuses](/cloudflare-one/insights/analytics/shadow-it-discovery/#approval-status) from Shadow IT Discovery.
+The App Library synchronizes application review statuses with approval statuses from the [Shadow IT Discovery SaaS analytics](/cloudflare-one/insights/analytics/shadow-it-discovery/) dashboard.
 
-<Render file="approval-status-block" />
-
-To set the status of an application:
-
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **My team** > **App Library**.
-2. Locate the card for the application.
-3. In the three-dot menu, select the option to mark your desired status.
-
-Once you mark the status of an application, its badge will change. You can filter applications by their status to review each application in the list for your organization.
+<Render file="app-library-review-apps" product="cloudflare-one" />

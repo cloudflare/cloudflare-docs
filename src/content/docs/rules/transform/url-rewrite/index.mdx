@@ -21,7 +21,11 @@ Use a URL rewrite rule to return the content of a URL while displaying a differe
 
 You cannot rewrite the hostname using a URL rewrite rule. To rewrite the hostname, use an [origin rule](/rules/origin-rules/features/#dns-record).
 
-<Render file="snippets-alternative" params={{ suffix: "rewrite logic" }} />
+<Render
+	file="snippets-alternative"
+	product="rules"
+	params={{ suffix: "rewrite logic" }}
+/>
 
 :::
 
@@ -40,5 +44,6 @@ When using Cloudflare Images, you can use URL Rewrite Rules to serve images from
 
 <Render
 	file="troubleshoot-rules-with-trace"
+	product="rules"
 	params={{ rulesFeatureName: "URL Rewrite Rules" }}
 />

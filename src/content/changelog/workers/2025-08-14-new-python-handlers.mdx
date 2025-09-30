@@ -16,7 +16,7 @@ Here's an example of how to now define a Worker with a fetch handler:
 from workers import Response, WorkerEntrypoint
 
 class Default(WorkerEntrypoint):
-    async def fetch(self, request, env, ctx):
+    async def fetch(self, request):
         return Response("Hello World!")
 ```
 

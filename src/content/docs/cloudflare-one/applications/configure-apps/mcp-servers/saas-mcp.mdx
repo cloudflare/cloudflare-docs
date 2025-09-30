@@ -4,15 +4,15 @@ title: Secure MCP servers with Access for SaaS
 tags:
   - MCP
 sidebar:
-  order: 1
+  order: 2
   label: Secure MCP servers with Access for SaaS
 ---
 
 import { Render, GlossaryTooltip, Tabs, TabItem, APIRequest } from "~/components"
 
-You can secure <GlossaryTooltip term="MCP server">Model Context Protocol (MCP) servers</GlossaryTooltip> by using Cloudflare Access as an OAuth Single Sign-On (SSO) provider.
+You can secure [Model Context Protocol (MCP) servers](https://www.cloudflare.com/learning/ai/what-is-model-context-protocol-mcp/) by using Cloudflare Access as an OAuth Single Sign-On (SSO) provider.
 
-This guide walks through how to deploy a remote MCP server on [Cloudflare Workers](/workers/) that requires Cloudflare Access for authentication. When users connect to the MCP server using an <GlossaryTooltip term="MCP client">MCP client</GlossaryTooltip>, they will be prompted to log in to your [identity provider](/cloudflare-one/identity/idp-integration/) and are only granted access if they pass your [Access policies](/cloudflare-one/policies/access/#selectors).
+This guide walks through how to deploy a remote <GlossaryTooltip term="MCP server">MCP server</GlossaryTooltip> on [Cloudflare Workers](/workers/) that requires Cloudflare Access for authentication. When users connect to the MCP server using an <GlossaryTooltip term="MCP client">MCP client</GlossaryTooltip>, they will be prompted to log in to your [identity provider](/cloudflare-one/identity/idp-integration/) and are only granted access if they pass your [Access policies](/cloudflare-one/policies/access/#selectors).
 
 ## Prerequisites
 
@@ -181,13 +181,13 @@ To add OAuth endpoints and credentials to our [example MCP server](#1-deploy-an-
 
 ## 4. Test the connection
 
-You should now be able to connect to your MCP server running at `https://mcp-server-cf-access.<YOUR_SUBDOMAIN>.workers.dev/sse` using [Workers AI Playground](https://playground.ai.cloudflare.com/), [MCP inspector](https://github.com/modelcontextprotocol/inspector), or [other MCP clients](/agents/guides/remote-mcp-server/#connect-your-mcp-server-to-claude-and-other-mcp-clients) that support remote MCP servers.
+You should now be able to connect to your MCP server using [Workers AI Playground](https://playground.ai.cloudflare.com/), [MCP inspector](https://github.com/modelcontextprotocol/inspector), or [other MCP clients](/agents/guides/remote-mcp-server/#connect-your-mcp-server-to-claude-and-other-mcp-clients) that support remote MCP servers. The demo MCP server [supports connections](https://github.com/cloudflare/ai/blob/main/demos/remote-mcp-cf-access/src/index.ts#L63-L69) via either `https://mcp-server-cf-access.<YOUR_SUBDOMAIN>.workers.dev/mcp` or `https://mcp-server-cf-access.<YOUR_SUBDOMAIN>.workers.dev/sse`.
 
 To test in Workers AI Playground:
 
 1. Go to [Workers AI Playground](https://playground.ai.cloudflare.com/).
 
-2. Under **MCP Servers**, enter `https://mcp-server-cf-access.<YOUR_SUBDOMAIN>.workers.dev/sse`  for the MCP server URL.
+2. Under **MCP Servers**, enter `https://mcp-server-cf-access.<YOUR_SUBDOMAIN>.workers.dev/mcp`  for the MCP server URL.
 
 3. Select **Connect**.
 

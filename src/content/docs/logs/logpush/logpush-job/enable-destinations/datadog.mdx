@@ -6,50 +6,48 @@ sidebar:
 head:
   - tag: title
     content: Enable Logpush to Datadog
-
 ---
 
-import { Render, TabItem, Tabs, APIRequest } from "~/components"
+import { Render, TabItem, Tabs, APIRequest } from "~/components";
 
 Cloudflare Logpush supports pushing logs directly to Datadog via the Cloudflare dashboard or via API.
 
 ## Manage via the Cloudflare dashboard
 
-<Render file="enable-logpush-job" />
+<Render file="enable-logpush-job" product="logs" />
 
 5. In **Select a destination**, choose **Datadog**.
 
 6. Enter or select the following destination information:
+   - **Datadog URL Endpoint**, which can be either one below. You can find the difference at [Datadog API reference](https://docs.datadoghq.com/api/latest/logs/).
 
-   * **Datadog URL Endpoint**, which can be either one below. You can find the difference at [Datadog API reference](https://docs.datadoghq.com/api/latest/logs/).
+<Tabs> <TabItem label="v1">
 
-  <Tabs> <TabItem label="v1">
+- `http-intake.logs.datadoghq.com/v1/input`
 
-  * `http-intake.logs.datadoghq.com/v1/input`
+</TabItem> <TabItem label="v2">
 
-  </TabItem> <TabItem label="v2">
+- `http-intake.logs.datadoghq.com/api/v2/logs`
 
-  * `http-intake.logs.datadoghq.com/api/v2/logs`
+</TabItem> </Tabs>
 
-  </TabItem> </Tabs>
+- **Datadog API Key**, can be retrieved by following [these steps](https://docs.datadoghq.com/account_management/api-app-keys/#add-an-api-key-or-client-token).
 
-  * **Datadog API Key**, can be retrieved by following [these steps](https://docs.datadoghq.com/account_management/api-app-keys/#add-an-api-key-or-client-token).
-
-  * **Service**, **Hostname**, **Datadog ddsource field**, and **ddtags** fields can be set as URL parameters. For more information, refer to the [Logs section](https://docs.datadoghq.com/api/latest/logs/) in Datadog's documentation. While these parameters are optional, they can be useful for indexing or processing logs. Note that the values of these parameters may contain special characters, which should be URL encoded.
+- **Service**, **Hostname**, **Datadog ddsource field**, and **ddtags** fields can be set as URL parameters. For more information, refer to the [Logs section](https://docs.datadoghq.com/api/latest/logs/) in Datadog's documentation. While these parameters are optional, they can be useful for indexing or processing logs. Note that the values of these parameters may contain special characters, which should be URL encoded.
 
 When you are done entering the destination details, select **Continue**.
 
 7. Select the dataset to push to the storage service.
 
 8. In the next step, you need to configure your logpush job:
-   * Enter the **Job name**.
-   * Under **If logs match**, you can select the events to include and/or remove from your logs. Refer to [Filters](/logs/logpush/logpush-job/filters/) for more information. Not all datasets have this option available.
-   * In **Send the following fields**, you can choose to either push all logs to your storage destination or selectively choose which logs you want to push.
+   - Enter the **Job name**.
+   - Under **If logs match**, you can select the events to include and/or remove from your logs. Refer to [Filters](/logs/logpush/logpush-job/filters/) for more information. Not all datasets have this option available.
+   - In **Send the following fields**, you can choose to either push all logs to your storage destination or selectively choose which logs you want to push.
 
 9. In **Advanced Options**, you can:
-   * Choose the format of timestamp fields in your logs (`RFC3339`(default),`Unix`, or `UnixNano`).
-   * Select a [sampling rate](/logs/logpush/logpush-job/api-configuration/#sampling-rate) for your logs or push a randomly-sampled percentage of logs.
-   * Enable redaction for `CVE-2021-44228`. This option will replace every occurrence of `${` with `x{`.
+   - Choose the format of timestamp fields in your logs (`RFC3339`(default),`Unix`, or `UnixNano`).
+   - Select a [sampling rate](/logs/logpush/logpush-job/api-configuration/#sampling-rate) for your logs or push a randomly-sampled percentage of logs.
+   - Enable redaction for `CVE-2021-44228`. This option will replace every occurrence of `${` with `x{`.
 
 10. Select **Submit** once you are done configuring your logpush job.
 
@@ -66,16 +64,15 @@ Unlike configuring Logpush jobs for AWS S3, GCS, or Azure, there is no ownership
 
 :::
 
-<Render file="enable-read-permissions" />
+<Render file="enable-read-permissions" product="logs" />
 
 ### 1. Create a job
 
 To create a job, make a `POST` request to the Logpush jobs endpoint with the following fields:
 
-* **name** (optional) - Use your domain name as the job name.
-* **destination\_conf** - A log destination consisting of an endpoint URL, authorization header, and zero or more optional parameters that Datadog supports in the string format below.
-
-  * `<DATADOG_ENDPOINT_URL>`: The Datadog HTTP logs intake endpoint, which can be either one below. You can find the difference at [Datadog API reference](https://docs.datadoghq.com/api/latest/logs/).
+- **name** (optional) - Use your domain name as the job name.
+- **destination_conf** - A log destination consisting of an endpoint URL, authorization header, and zero or more optional parameters that Datadog supports in the string format below.
+  - `<DATADOG_ENDPOINT_URL>`: The Datadog HTTP logs intake endpoint, which can be either one below. You can find the difference at [Datadog API reference](https://docs.datadoghq.com/api/latest/logs/).
 
   <Tabs> <TabItem label="v1">
 
@@ -87,42 +84,42 @@ To create a job, make a `POST` request to the Logpush jobs endpoint with the fol
 
   </TabItem> </Tabs>
 
-* `<DATADOG_API_KEY>`: The Datadog API token can be retrieved by following [these steps](https://docs.datadoghq.com/account_management/api-app-keys/#add-an-api-key-or-client-token). For example, `20e6d94e8c57924ad1be3c29bcaee0197d`.
-* `ddsource`: Set to `cloudflare`.
-* `service`, `host`, `ddtags`: Optional parameters allowed by Datadog.
+- `<DATADOG_API_KEY>`: The Datadog API token can be retrieved by following [these steps](https://docs.datadoghq.com/account_management/api-app-keys/#add-an-api-key-or-client-token). For example, `20e6d94e8c57924ad1be3c29bcaee0197d`.
+- `ddsource`: Set to `cloudflare`.
+- `service`, `host`, `ddtags`: Optional parameters allowed by Datadog.
 
 ```bash
 "datadog://<DATADOG_ENDPOINT_URL>?header_DD-API-KEY=<DATADOG_API_KEY>&ddsource=cloudflare&service=<SERVICE>&host=<HOST>&ddtags=<TAGS>"
 ```
 
-* **dataset** - The category of logs you want to receive. Refer to [Datasets](/logs/logpush/logpush-job/datasets/) for the full list of supported datasets.
-* **output\_options** (optional) - To configure fields, sample rate, and timestamp format, refer to [Log Output Options](/logs/logpush/logpush-job/log-output-options/).
+- **dataset** - The category of logs you want to receive. Refer to [Datasets](/logs/logpush/logpush-job/datasets/) for the full list of supported datasets.
+- **output_options** (optional) - To configure fields, sample rate, and timestamp format, refer to [Log Output Options](/logs/logpush/logpush-job/log-output-options/).
 
 Example request using cURL:
 
 <APIRequest
-  path="/zones/{zone_id}/logpush/jobs"
-  method="POST"
-  json={{
-    name: "<DOMAIN_NAME>",
-    destination_conf:
-      "datadog://<DATADOG_ENDPOINT_URL>?header_DD-API-KEY=<DATADOG_API_KEY>&ddsource=cloudflare&service=<SERVICE>&host=<HOST>&ddtags=<TAGS>",
-    output_options: {
-      field_names: [
-        "ClientIP",
-        "ClientRequestHost",
-        "ClientRequestMethod",
-        "ClientRequestURI",
-        "EdgeEndTimestamp",
-        "EdgeResponseBytes",
-        "EdgeResponseStatus",
-        "EdgeStartTimestamp",
-        "RayID"
-      ],
-      timestamp_format: "rfc3339"
-    },
-    dataset: "http_requests"
-  }}
+	path="/zones/{zone_id}/logpush/jobs"
+	method="POST"
+	json={{
+		name: "<DOMAIN_NAME>",
+		destination_conf:
+			"datadog://<DATADOG_ENDPOINT_URL>?header_DD-API-KEY=<DATADOG_API_KEY>&ddsource=cloudflare&service=<SERVICE>&host=<HOST>&ddtags=<TAGS>",
+		output_options: {
+			field_names: [
+				"ClientIP",
+				"ClientRequestHost",
+				"ClientRequestMethod",
+				"ClientRequestURI",
+				"EdgeEndTimestamp",
+				"EdgeResponseBytes",
+				"EdgeResponseStatus",
+				"EdgeStartTimestamp",
+				"RayID",
+			],
+			timestamp_format: "rfc3339",
+		},
+		dataset: "http_requests",
+	}}
 />
 
 Response:
@@ -156,11 +153,11 @@ To enable a job, make a `PUT` request to the Logpush jobs endpoint. You will use
 Example request using cURL:
 
 <APIRequest
-  path="/zones/{zone_id}/logpush/jobs/{job_id}"
-  method="PUT"
-  json={{
-    enabled: true
-  }}
+	path="/zones/{zone_id}/logpush/jobs/{job_id}"
+	method="PUT"
+	json={{
+		enabled: true,
+	}}
 />
 
 Response:

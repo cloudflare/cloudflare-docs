@@ -37,6 +37,7 @@ The methods [`D1PreparedStatement::run`](/d1/worker-api/prepared-statements/#run
     size_after: number, // the size of the database after the query is successfully applied
     rows_read: number, // the number of rows read (scanned) by this query
     rows_written: number // the number of rows written by this query
+    total_attempts: number //the number of total attempts to successfully execute the query, including retries
   }
   results: array | null, // [] if empty, or null if it does not apply
 }

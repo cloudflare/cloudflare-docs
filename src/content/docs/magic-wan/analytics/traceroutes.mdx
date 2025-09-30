@@ -7,7 +7,11 @@ sidebar:
 
 import { Render } from "~/components";
 
-<Render file="analytics/traceroutes"
+<Render
+	file="analytics/traceroutes"
 	product="networking-services"
-	params={{ productName: "WAN" }}
+	params={{
+		productName: "WAN",
+		dashButtonPath: "/?to=/:account/magic-wan/tunnel-healthchecks",
+	}}
 />

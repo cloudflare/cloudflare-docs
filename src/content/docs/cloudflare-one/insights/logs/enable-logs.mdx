@@ -5,6 +5,8 @@ sidebar:
   order: 9
 ---
 
+import { DashButton} from "~/components"
+
 Email Security allows you to configure Logpush to send detection data to an endpoint of your choice.
 
 ## Enable detection logs
@@ -23,12 +25,14 @@ Before you can enable audit logs for Email Security, you will have to enable log
 
 Once you have configured your destination, you can set up audit logs for user action:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
-2. Select **Analytics & Logs** > **Logpush**.
-3. Select **Audit logs**.
+1. In the Cloudflare dashboard, go to the **Logpush** page.
+    
+    <DashButton url="/?to=/:account/logs" />
+2. Select your storage destination.
+3. Select the three dots > **Edit**.
 4. Under **Configure logpush job**:
-  - **Job name**: Enter the job name.
-  - **If logs match**: Select **Filtered logs**:
+  - **Job name**: Enter the job name, if it is not already prepopulated.
+  - **If logs match** > Select **Filtered logs**:
     - **Field**: Choose `ResourceType`.
     - **Operator**: Choose `starts with`.
     - **Value**: Enter `email_security`.

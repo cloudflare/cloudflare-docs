@@ -1,5 +1,4 @@
 ---
-
 summary: Build a rate limiter using Durable Objects and Workers.
 pcx_content_type: example
 title: Build a rate limiter
@@ -16,7 +15,7 @@ This example also discusses some decisions that need to be made when designing a
 
 The Worker creates a `RateLimiter` Durable Object on a per IP basis to protect upstream resources. IP based rate limiting can be effective without negatively impacting latency because any given IP will remain within a small geographic area colocated with the `RateLimiter` Durable Object. Furthermore, throughput is also improved because each IP gets its own Durable Object.
 
-It might seem simpler to implement a global rate limiter, `const id = env.RATE_LIMITER.idFromName("global");`, which can provide better guarantees on the request rate to the upstream resource. However:
+It might seem simpler to implement a global rate limiter, `const stub = env.RATE_LIMITER.getByName("global");`, which can provide better guarantees on the request rate to the upstream resource. However:
 
 - This would require all requests globally to make a sub-request to a single Durable Object.
 - Implementing a global rate limiter would add additional latency for requests not colocated with the Durable Object, and global throughput would be capped to the throughput of a single Durable Object.
@@ -52,11 +51,8 @@ export default {
 			return new Response("Could not determine client IP", { status: 400 });
 		}
 
-		// Obtain an identifier for a Durable Object based on the client's IP address
-		const id = env.RATE_LIMITER.idFromName(ip);
-
 		try {
-			const stub = env.RATE_LIMITER.get(id);
+			const stub = env.RATE_LIMITER.getByName(ip);
 			const milliseconds_to_next_request =
 				await stub.getMillisecondsToNextRequest();
 			if (milliseconds_to_next_request > 0) {
@@ -137,11 +133,8 @@ export default {
 			return new Response("Could not determine client IP", { status: 400 });
 		}
 
-		// Obtain an identifier for a Durable Object based on the client's IP address
-		const id = env.RATE_LIMITER.idFromName(ip);
-
 		try {
-			const stub = env.RATE_LIMITER.get(id);
+			const stub = env.RATE_LIMITER.getByName(ip);
 			const milliseconds_to_next_request =
 				await stub.getMillisecondsToNextRequest();
 			if (milliseconds_to_next_request > 0) {

@@ -7,7 +7,7 @@ sidebar:
 
 ---
 
-import { GlossaryTooltip, Render, Tabs, TabItem, Steps } from "~/components"
+import { GlossaryTooltip, Render, Tabs, TabItem, Steps, DashButton } from "~/components"
 
 Most development teams struggle to keep track of their APIs. Cloudflare API Discovery helps you map out and understand your attack surface area.
 
@@ -78,8 +78,10 @@ To access Machine Learning-based Discovery:
   </TabItem>
   <TabItem label="New dashboard" icon="rocket">
     <Steps>
-      1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-      2. Go to **Web assets** > **Discovery**
+      1. In the Cloudflare dashboard, go to the **Web Assets** page.
+
+          <DashButton url="/?to=/:account/:zone/security/web-assets" />
+      2. Go to the **Discovery** tab.
       3. Filter the source results by `Session Identifier` or `Machine Learning` to view results from each Discovery method.
     </Steps>
   </TabItem>

@@ -1,0 +1,22 @@
+---
+title: Run more Containers with higher resource limits
+description: Containers limits have been increased to allow for more concurrent instances
+products:
+  - containers
+date: 2025-09-24
+---
+
+You can now run more Containers concurrently with higher limits on CPU, memory, and disk.
+
+| Limit                                          | New Limit | Previous Limit |
+| ---------------------------------------------- | --------- | -------------- |
+| Memory for concurrent live Container instances | 400GiB    | 40GiB          |
+| vCPU for concurrent live Container instances   | 100       | 20             |
+| Disk for concurrent live Container instances   | 2TB       | 100GB          |
+
+You can now run 1000 instances of the `dev` instance type, 400 instances of `basic`, or 100 instances of `standard` concurrently.
+
+This opens up new possibilities for running larger-scale workloads on Containers.
+
+See the [getting started guide](/containers/get-started/) to deploy your first Container,
+and the [limits documentation](/containers/platform-details/limits/) for more details on the available instance types and limits.

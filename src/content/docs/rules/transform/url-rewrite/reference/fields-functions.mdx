@@ -14,7 +14,7 @@ import { Render } from "~/components";
 
 A URL rewrite rule [filter expression](/ruleset-engine/rules-language/expressions/) (that is, the expression that defines which incoming requests match the rule) can include the following fields:
 
-<Render file="transform/transform-phase-fields" />
+<Render file="transform/transform-phase-fields" product="rules" />
 
 For information on the available functions, refer to [Functions](/ruleset-engine/rules-language/functions/).
 
@@ -28,4 +28,4 @@ A rewrite expression (that is, the expression that defines the dynamic URL rewri
 
 Refer to the [Fields reference](/ruleset-engine/rules-language/fields/reference/) for more information on these fields.
 
-The [`concat()`](/ruleset-engine/rules-language/functions/#concat), [`regex_replace()`](/ruleset-engine/rules-language/functions/#regex_replace), and [`wildcard_replace()`](/ruleset-engine/rules-language/functions/#wildcard_replace) functions can appear only **once** in a rewrite expression.
+The [`concat()`](/ruleset-engine/rules-language/functions/#concat), [`regex_replace()`](/ruleset-engine/rules-language/functions/#regex_replace), and [`wildcard_replace()`](/ruleset-engine/rules-language/functions/#wildcard_replace) functions can appear only once in a rewrite expression. Additionally, you cannot nest the `regex_replace()` and `wildcard_replace()` functions.

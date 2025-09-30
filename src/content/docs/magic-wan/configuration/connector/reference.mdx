@@ -6,7 +6,7 @@ sidebar:
 
 ---
 
-import { GlossaryTooltip } from "~/components"
+import { GlossaryTooltip, Render } from "~/components"
 
 Magic WAN Connector software is certified for use on the [Dell Networking Virtual Edge Platform](https://www.dell.com/support/home/en-us/product-support/product/dell-emc-networking-vep1445-vep1485/docs). It can be purchased with software pre-installed through our partner network for plug-and-play connectivity to Cloudflare One.
 
@@ -79,7 +79,9 @@ When a failover occurs, traffic is moved to the new active node. It could take u
 
 ## WAN settings
 
-This is where you add and configure your WAN connections. Each configured WAN will create one IPsec tunnel.
+This is where you add and configure your WAN connections. Each configured WAN will create one IPsec tunnel, unless you have more than one anycast IP configured in your account.
+
+<Render file="mconn/wan-two-tunnels" product="networking-services" />
 
 When you have multiple WANs you can attribute different priorities to each one. Lower values mean a higher priority. This translates in Connector routing traffic through the higher priority WANs or, more precisely, over the IPsec tunnels established over that interface. On the other hand, if you configure multiple WANs of equal priority, traffic will be distributed over those links through [(Equal-Cost Multi-Path) ECMP routing](/magic-wan/reference/traffic-steering/#equal-cost-multi-path-routing).
 
@@ -91,7 +93,7 @@ For high-capacity use cases, multiple tunnels can be established with equal prio
 
 ### Configure multiple tunnels in the same WAN profile
 
-If you need to configure multiple tunnels for the same WAN profile, [set up multiple WAN connections](/magic-wan/configuration/connector/configure-hardware-connector/#create-a-wan). Each WAN is assigned one IPsec tunnel.
+If you do not have more than one anycast IP configured in your account, and you need to configure multiple tunnels for the same WAN profile, [set up multiple WAN connections](/magic-wan/configuration/connector/configure-hardware-connector/#create-a-wan). Each WAN is assigned one IPsec tunnel.
 
 ### WAN settings
 

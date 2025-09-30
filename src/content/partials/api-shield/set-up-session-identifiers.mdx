@@ -2,7 +2,7 @@
 {}
 
 ---
-import { Steps, Tabs, TabItem } from "~/components"
+import { Steps, Tabs, TabItem, DashButton } from "~/components"
 
 <Tabs syncKey="dashNewNav"> 
    <TabItem label="Old dashboard">
@@ -23,19 +23,20 @@ import { Steps, Tabs, TabItem } from "~/components"
    </TabItem>
    <TabItem label="New dashboard" icon="rocket">
       <Steps>
-         1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
-         2. Go to **Security** > **Settings**
-         3. Filter by **API abuse**.
-         4. On **Session identifiers**, select **Configure session identifiers**.
-         5. Select **Manage identifiers**.
-         6. Choose the type of session identifier (cookie, HTTP header, or JWT claim).
+         1. In the Cloudflare dashboard, go to the **Security Settings** page.
+
+            <DashButton url="/?to=/:account/:zone/security/settings" />
+         2. Filter by **API abuse**.
+         3. On **Session identifiers**, select **Configure session identifiers**.
+         4. Select **Manage identifiers**.
+         5. Choose the type of session identifier (cookie, HTTP header, or JWT claim).
             :::note
             The session identifier cookie must comply with RFC 6265. Otherwise, it will be rejected.
 
             If you are using a JWT claim, choose the [Token Configuration](/api-shield/security/jwt-validation/api/#token-configurations) that will verify the JWT. Token Configurations are required to use JWT claims as session identifiers. Refer to [JWT Validation](/api-shield/security/jwt-validation/) for more information.
             :::
-         7. Enter the name of the session identifier.
-         8. Select **Save**.
+         6. Enter the name of the session identifier.
+         7. Select **Save**.
       </Steps>
    </TabItem>
 </Tabs>
