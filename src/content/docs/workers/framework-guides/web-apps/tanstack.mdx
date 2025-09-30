@@ -8,224 +8,156 @@ tags: ["full-stack"]
 description: Create a TanStack Start application and deploy it to Cloudflare Workers with Workers Assets.
 ---
 
-import { WranglerConfig, Steps, PackageManagers, Details } from "~/components";
+import {
+	Badge,
+	Description,
+	InlineBadge,
+	Render,
+	PackageManagers,
+} from "~/components";
 
-## What is TanStack Start?
+In this guide, you will create a new [TanStack Start](https://tanstack.com/start) application and deploy it to Cloudflare Workers (with the new [Workers Assets](/workers/static-assets/)).
 
-TanStack Start is a full-stack React framework powered by TanStack Router. It provides a full-document SSR, streaming, server functions, bundling, and more using Vite and modern web standards.
+## 1. Set up a new project
 
-## Create a new TanStack Start
+### Create the project
 
-TanStack Start Beta has significantly improved Cloudflare compatibility compared to the Alpha version, making deployment and development much more straightforward.
+Start by creating a new project using the official TanStack CLI:
 
-<Steps>
+<PackageManagers
+	type="create"
+	pkg="@tanstack/start@latest"
+	args="my-tanstack-app"
+/>
 
-1.  **Create a new TanStack Start project**
+After setting up your project, change your directory by running the following command:
 
-    ```sh
-    npx gitpick TanStack/router/tree/main/examples/react/start-basic start-basic
-    cd start-basic
-    npm install
-    ```
-    
-    <Details header="How is this project set up?">
-    			This command will clone the TanStack Start basic project to your local machine, change directory to the project, and install the dependencies. TanStack [provides other examples](https://tanstack.com/start/latest/docs/framework/react/quick-start#examples) that you can use by replacing `start-basic` with the example you want to use.
-    </Details>
+```sh
+cd my-tanstack-app
+```
 
-2.  **Develop locally**
+### Install the Cloudflare dependencies
 
-    After creating your project, run the following command in your project directory to start a local development server. By default this starts a local development server on `http://localhost:3000/`
+Inside the project's directory install the Cloudflare development dependencies:
 
-    <PackageManagers type="run" args="dev" />
+<PackageManagers pkg="@cloudflare/vite-plugin wrangler" dev />
 
-</Steps>
+### Create a `wrangler.jsonc` file
 
-## Preparing for Deployment to Cloudflare Workers
+Create a `wrangler.jsonc` file with the following:
 
-Whether you created a new TanStack Start project or are using an existing project, you'll need to make some changes to prepare for deployment to Cloudflare Workers.
+```json
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "my-tanstack-app",
+	"compatibility_date": "2025-09-02",
+	"compatibility_flags": ["nodejs_compat"],
+	"main": "@tanstack/react-start/server-entry"
+}
+```
 
-<Steps>
+### Add Cloudflare scripts to the `package.json` file
 
-1. **Configure Vite for Cloudflare compatibility**
+Add the following scripts to your `package.json` file:
 
-   Update your `vite.config.ts` file to use the `cloudflare-module` target for a compatible build:
+```json
+"deploy": "wrangler deploy",
+"cf-typegen": "wrangler types"
+```
 
-   ```ts title="vite.config.ts" {14}
-   import { tanstackStart } from "@tanstack/react-start/plugin/vite";
-   import { defineConfig } from "vite";
-   import tsConfigPaths from "vite-tsconfig-paths";
+- `deploy`: this script can be to deploy your application after you've built it
 
-   export default defineConfig({
-     server: {
-       port: 3000,
-     },
-     plugins: [
-       tsConfigPaths({
-         projects: ["./tsconfig.json"],
-       }),
-       tanstackStart({
-         target: "cloudflare-module", // Key configuration for Cloudflare compatibility
-       }),
-     ],
-   });
-   ```
+- `cf-typegen`: generate Cloudflare TypeScript types for your project based on your configuration
 
-   This single configuration change is all that's needed to make your TanStack Start application compatible with Cloudflare Workers.
+Note that there are already three relevant scripts that the TanStack CLI defined for you: `dev` and `serve`. Which respectively allow you to start a local Vite dev server
+to develop locally your application, build your application (so that it can be deployed) and start a local preview server that you can use to validate your build application
+before deploying it.
 
-2. **Add a Wrangler file**
+### Update the `vite.config.ts` file
 
-   Create a `wrangler.jsonc` or `wrangler.toml` file in the root of your project, `wrangler.jsonc` is the recommended approach. This file is used to configure the Cloudflare Workers deployment.
+Next you need to update update the Vite configuration file to use the Cloudflare plugin:
 
-   <WranglerConfig>
+```diff lang="ts"
+import viteReact from '@vitejs/plugin-react'
+import viteTsConfigPaths from 'vite-tsconfig-paths'
+import tailwindcss from '@tailwindcss/vite'
++import { cloudflare } from '@cloudflare/vite-plugin';
 
-   ```json
-   {
-   	"$schema": "node_modules/wrangler/config-schema.json",
-   	"name": "my-start-app",
-   	"main": ".output/server/index.mjs",
-   	"compatibility_date": "$today",
-   	"compatibility_flags": ["nodejs_compat"],
-   	"assets": {
-   		"directory": ".output/public"
-   	},
-   	"observability": {
-   		"enabled": true
-   	},
-   	"kv_namespaces": [
-   		{
-   			"binding": "CACHE",
-   			"id": "<Your KV ID>"
-   		}
-   	]
-   }
-   ```
+const config = defineConfig({
+  plugins: [
+    tailwindcss(),
+    tanstackStart(),
+    viteReact(),
++    cloudflare({ viteEnvironment: { name: 'ssr' } }),
+  ],
++  environments: {
++    ssr: {
++      optimizeDeps: {
++        exclude: ['@tanstack/react-devtools']
++      }
++    }
++  }
+})
+```
 
-   </WranglerConfig>
+:::note
 
-   Note that the `directory` key is set to `.output/public`, which is the folder that will be filled with the build output. Additionally, the `main` key is set to `.output/server/index.mjs`, indicating to Cloudflare Workers where to locate the entry point for your application. The `kv_namespaces` section shows an example of how to configure a KV namespace binding.
+The `optimizeDeps` setting here is a temporary workaround and won't be necessary with future TanStack Start releases.
 
-3. **Add deployment scripts to package.json**
+:::
 
-   Add the following scripts to your `package.json` file to streamline deployment and type generation:
+## 2. Develop locally
 
-   ```json title="package.json
-   {
-     "scripts": {
-       ...
-       "deploy": "npm run build && wrangler deploy",
-       "cf-typegen": "wrangler types --env-interface Env"
-     }
-   }
-   ```
+After you have created your project, run the following command in the project directory to start a local server. This will allow you to preview your project locally during development.
 
-   The `deploy` script combines building and deploying in one command, while `cf-typegen` generates TypeScript types for your Cloudflare bindings.
-   
-4. **Build the application**
+<PackageManagers type="run" args="dev" />
 
-   You must build your application before deploying it to Cloudflare Workers.
+## 3. Deploy your Project
 
-   <PackageManagers type="run" args={"build"} />
+Your project can be deployed to a `*.workers.dev` subdomain or a [Custom Domain](/workers/configuration/routing/custom-domains/), from your own machine or from any CI/CD system, including [Cloudflare's own](/workers/ci-cd/builds/).
 
-5. **Deploy the application**
+The following command will build and deploy your project. If you're using CI, ensure you update your ["deploy command"](/workers/ci-cd/builds/configuration/#build-settings) configuration appropriately.
 
-   You can now use the deploy script to build and deploy your application in one command:
+<PackageManagers type="run" args="deploy" />
 
-   <PackageManagers type="run" args={"deploy"} />
+---
 
-   Alternatively, you can still deploy directly with Wrangler:
+## Bindings
 
-   ```sh
-   npx wrangler deploy
-   ```
+Your TanStack Start application can be fully integrated with the Cloudflare Developer Platform, in both local development and in production, by using product bindings.
 
-</Steps>
+You can use bindings simply by [importing the `env` object](https://developers.cloudflare.com/workers/runtime-apis/bindings/#importing-env-as-a-global) and using it from your server
+side code.
 
-## Using Cloudflare Bindings
+For example in the following way:
 
-<Steps>
+```tsx
+import { createFileRoute } from "@tanstack/react-router";
+import { createServerFn } from "@tanstack/react-start";
+import { env } from "cloudflare:workers";
 
-1. **Generate TypeScript types for your bindings**
+export const Route = createFileRoute("/")({
+	loader: () => getData(),
+	component: RouteComponent,
+});
 
-   Before using Cloudflare bindings in your code, generate the TypeScript types to ensure proper type safety:
+const getData = createServerFn().handler(() => {
+	// Use env here
+});
 
-   <PackageManagers type="run" args={"cf-typegen"} />
+function RouteComponent() {
+	// ...
+}
+```
 
-   This command reads your `wrangler.jsonc` configuration and generates an `Env` interface with all your configured bindings.
+:::note
 
-2. **Create a helper function to get access to Cloudflare bindings**
+Running the `cf-typegen` script:
 
-   Create a helper function named `bindings.ts` in the `src/utils` folder (create the folder if it doesn't exist), and paste in the below code. The example assumes you have a KV namespace with a binding name of `CACHE` already created in your account and added to the wrangler file.
-   
+<PackageManagers type="run" args="cf-typegen" />
 
-   ```ts title="src/utils/bindings.ts"
+Will populate the `env` object with the various bindings based on your configuration.
 
-   let cachedEnv: Env | null = null;
+:::
 
-   // This gets called once at startup when running locally
-   const initDevEnv = async () => {
-   	const { getPlatformProxy } = await import("wrangler");
-   	const proxy = await getPlatformProxy();
-   	cachedEnv = proxy.env as unknown as Env;
-   };
-
-   if (import.meta.env.DEV) {
-   	await initDevEnv();
-   }
-
-   /**
-    * Will only work when being accessed on the server. Obviously, CF bindings are not available in the browser.
-    * @returns
-    */
-   export function getBindings(): Env {
-   	if (import.meta.env.DEV) {
-   		if (!cachedEnv) {
-   			throw new Error(
-   				"Dev bindings not initialized yet. Call initDevEnv() first."
-   			);
-   		}
-   		return cachedEnv;
-   	}
-
-   	return process.env as unknown as Env;
-   }
-   ```
-
-   <Details header="How is this code working?">
-   	The helper function uses [getPlatformProxy](/workers/wrangler/api/#getplatformproxy) method from wrangler to provide access to your Cloudflare bindings during local development. The bindings are cached at startup for better performance. In production, bindings are accessed via `process.env`. Make sure you've run `npm run cf-typegen` to generate the `Env` types that this code references.
-   </Details>
-
-3. **Example using a Cloudflare Binding in Server Functions**
-
-   Now that you have a helper function to get access to your Cloudflare bindings, you can use them in your server functions.
-
-   Remember bindings are only available on the server.
-
-   ```ts
-   import { createServerFn } from "@tanstack/react-start";
-   import { getBindings } from "~/utils/bindings";
-
-   const personServerFn = createServerFn({ method: "GET" })
-   	.validator((d: string) => d)
-   	.handler(async ({ data: name }) => {
-   		const env = getBindings();
-   		let growingAge = Number((await env.CACHE.get("age")) || 0);
-   		growingAge++;
-   		await env.CACHE.put("age", growingAge.toString());
-   		return { name, randomNumber: growingAge };
-   	});
-   ```
-
-   A special thanks to GitHub user [backpine](https://github.com/backpine) for the code that supports Cloudflare Bindings in TanStack Start, which is demonstrated in their [TanStack Start Beta on Cloudflare example](https://github.com/backpine/tanstack-start-beta-on-cloudflare).
-
-</Steps>
-
-## Environment Handling
-
-The TanStack Start Beta version provides seamless environment handling:
-
-- **Development**: Bindings are accessed via [`getPlatformProxy()`](/workers/wrangler/api/#getplatformproxy) from Wrangler and cached at startup
-- **Production**: Bindings are accessed via [`process.env`](/workers/runtime-apis/nodejs/process/#processenv)
-
-This approach ensures your bindings are properly typed throughout your project and provides a smooth development experience.
-
-By following the steps above, you will have deployed your TanStack Start application to Cloudflare Workers.
+<Render file="frameworks-bindings" product="workers" />
