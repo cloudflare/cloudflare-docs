@@ -8,7 +8,7 @@ date: 2025-09-25
 
 You can now more precisely control your HTTP DLP policies by specifying whether to scan the request or response body, helping to reduce false positives and target specific data flows.
 
-In the Gateway HTTP policy builder, you will find a new optional selector called _Body Phase_. This allows you to define the direction of traffic the DLP engine will inspect:
+In the Gateway HTTP policy builder, you will find a new selector called _Body Phase_. This allows you to define the direction of traffic the DLP engine will inspect:
 
 - _Request Body_: Scans data sent from a user's machine to an upstream service. This is ideal for monitoring data uploads, form submissions, or other user-initiated data exfiltration attempts.
 - _Response Body_: Scans data sent to a user's machine from an upstream service. Use this to inspect file downloads and website content for sensitive data.

@@ -432,6 +432,14 @@ You can match traffic based on **Application Controls**, which group multiple us
 
 For more information, refer to [Application Granular Controls](/cloudflare-one/policies/gateway/http-policies/granular-controls/).
 
+### Body Phase
+
+The phase of an HTTP request. You can use this selector to specify whether to scan either the data sent in an HTTP request to your user's device or from your user's device to a destination. Policies without this selector will scan both the HTTP request and response bodies.
+
+| UI name    | API example                       |
+| ---------- | --------------------------------- |
+| Body Phase | `http.body_phase == \"download\"` |
+
 ### Content Categories
 
 <Render
