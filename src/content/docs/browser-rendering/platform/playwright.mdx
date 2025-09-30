@@ -223,7 +223,7 @@ Then, add the KV namespace to your `wrangler.toml` file:
 Now, you can use the storage state to persist cookies and other storage data in KV:
 
 ```ts title="src/index.ts"
-// gets persisted storage state from KV or undefined if it doesn't exist
+// gets persisted storage state from KV or undefined if it does not exist
 const storageStateJson = await env.KV.get('storageState');
 const storageState = storageStateJson ? await JSON.parse(storageStateJson) as BrowserContextOptions['storageState'] : undefined;
 
