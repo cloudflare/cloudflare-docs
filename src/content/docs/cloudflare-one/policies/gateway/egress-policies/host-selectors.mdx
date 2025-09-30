@@ -5,12 +5,7 @@ sidebar:
   order: 2
 ---
 
-import {
-	Tabs,
-	TabItem,
-	Details,
-	APIRequest,
-} from "~/components";
+import { Tabs, TabItem, Details, APIRequest } from "~/components";
 
 <Details header="Feature availability">
 
@@ -29,13 +24,13 @@ import {
 
 </Details>
 
-To support the [Application](/cloudflare-one/policies/gateway/egress-policies/#application), [Content Categories](/cloudflare-one/policies/gateway/egress-policies/#content-categories), [Domain](/cloudflare-one/policies/gateway/egress-policies/#domain), and [Host](/cloudflare-one/policies/gateway/egress-policies/#host) selectors in Egress policies, Gateway initially resolves DNS to an IP in the `100.80.0.0/16` or `2606:4700:0cf1:4000::/64` range when it receives a DNS query for a hostname covered by a policy using these selectors. This process enables Gateway to map a destination IP with a hostname at [layer 4](https://www.cloudflare.com/learning/ddos/glossary/open-systems-interconnection-model-osi/) (where Egress policies are evaluated), which is information not ordinarily known at this layer. Prior to evaluating egress policies, the IP is overwritten with the correct destination IP.
+When Gateway receives a DNS query for hostname covered by the [Application](/cloudflare-one/policies/gateway/egress-policies/#application), [Content Categories](/cloudflare-one/policies/gateway/egress-policies/#content-categories), [Domain](/cloudflare-one/policies/gateway/egress-policies/#domain), and [Host](/cloudflare-one/policies/gateway/egress-policies/#host) selectors in an Egress policy, Gateway initially resolves DNS to an IP in the `100.80.0.0/16` or `2606:4700:0cf1:4000::/64` range. This process allows Gateway to map a destination IP with a hostname at [layer 4](https://www.cloudflare.com/learning/ddos/glossary/open-systems-interconnection-model-osi/) (where Gateway evaluates Egress policies). The destination IP for a hostname is not usually known at layer 4. Prior to evaluating Egress policies, the initially resolved IP is overwritten with the correct destination IP.
 
 ![Example egress policy flow](~/assets/images/cloudflare-one/policies/host-selector-diagram.png)
 
 Additional configuration is required when using policies with these selectors.
 
-## Enable Host selectors
+## Turn on Host selectors
 
 To turn on the selectors for your account:
 
@@ -79,10 +74,10 @@ Unsupported traffic will be resolved with your default Gateway settings. If you 
 ### Configuration changes
 
 :::caution
-Gateway will overwrite the DNS response for all supported traffic, even if you use identity or device posture selectors to limit which users or devices are affected by the policy. In these cases, while the DNS response is overwritten, Gateway will still apply the correct egress policy.
-
-Therefore, the configuration changes below must be applied to all users and device profiles.
+Gateway will overwrite the DNS response for all supported traffic, even if you use identity or device posture selectors to limit which users or devices are affected by the policy. In these cases, while the DNS response is overwritten, Gateway will still apply the correct Egress policy. Therefore, the configuration changes below must be applied to all of your users and device profiles.
 :::
+
+To configure your Zero Trust organization to use Host selectors with Egress policies:
 
 1.  Ensure you have deployed [WARP version 2025.4.929.0](/cloudflare-one/connections/connect-devices/warp/download-warp/) or later on your users' desktop devices. If you need to apply your policies to mobile devices or devices running a version of WARP prior to 2025.4.929.0, add and deploy the following key-value pair to your devices' [WARP configuration file](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/) (`mdm.xml` on Windows and Linux or `com.cloudflare.warp.plist` on macOS):
 
