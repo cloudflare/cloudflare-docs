@@ -204,3 +204,47 @@ Example:
 -- find the oldest value of <blob1>
 SELECT last_value(blob1) FROM my_dataset ORDER BY timestamp DESC
 ```
+
+## topK <Badge text="New" variant="tip" size="small" />
+
+Usage:
+
+```sql
+topK(N)(column)
+```
+
+`topK` is an aggregation function which returns the most common `N` values of a column.
+
+`N` is optional and defaults to `10`.
+
+Example:
+
+```sql
+-- find the 10 most common values of <double1>
+SELECT topK(double1) FROM my_dataset
+
+-- find the 15 most common values of <blob1>
+SELECT topK(15)(blob1) FROM my_dataset
+```
+
+## topKWeighted <Badge text="New" variant="tip" size="small" />
+
+Usage:
+
+```sql
+topKWeighted(N)(column, weight_column)
+```
+
+`topKWeighted` is an aggregation function which returns the most common `N` values of a column, weighted by a second column.
+
+`N` is optional and defaults to `10`.
+
+Example:
+
+```sql
+-- find the 10 most common values of <double1>, weighted by `_sample_interval`
+SELECT topKWeighted(double1, _sample_interval) FROM my_dataset
+
+-- find the 15 most common values of <blob1>, weighted by `_sample_interval`
+SELECT topKWeighted(15)(blob1, _sample_interval) FROM my_dataset
+```
