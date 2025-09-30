@@ -3,19 +3,16 @@ releaseNotes: >-
   key for Linux packages. The public key must be updated if it was installed
   before September 12, 2025 to ensure the repository remains functional after
   December 4, 2025. Instructions to make this update are available at
-  pkg.cloudflareclient.com .
+  [pkg.cloudflareclient.com](https://pkg.cloudflareclient.com/).
 
 
   **Changes and improvements**
 
-  - The MASQUE protocol is now the default protocol for all new WARP device
-  profiles.
+  - MASQUE is now the default [tunnel protocol](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#device-tunnel-protocol) for all new WARP device profiles.
 
-  - Improvement to limit idle connections in DoH mode to avoid unnecessary
-  resource usage that can lead to DoH requests not resolving.
+  - Improvement to limit idle connections in [Gateway with DoH mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#gateway-with-doh) to avoid unnecessary resource usage that can lead to DoH requests not resolving.
 
-  - Improvements to maintain Global WARP Override settings when switching
-  between organization configurations.
+  - Improvements to maintain [Global WARP override](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#global-warp-override) settings when [switching between organizations](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/switch-organizations/#switch-organizations-in-warp).
 
   - Improvements to maintain client connectivity during network changes.
 version: 2025.7.176.0
