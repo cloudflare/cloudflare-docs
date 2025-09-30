@@ -65,12 +65,12 @@ Add the following scripts to your `package.json` file:
 "cf-typegen": "wrangler types"
 ```
 
-- `deploy`: this script can be to deploy your application after you've built it
+- `deploy`: used to deploy your application after you have built it
 
-- `cf-typegen`: generate Cloudflare TypeScript types for your project based on your configuration
+- `cf-typegen`: used to generate Cloudflare TypeScript types for your project based on your configuration
 
 Note that there are already three relevant scripts that the TanStack CLI defined for you: `dev`, `build` and `serve`, which respectively allow you to start a local Vite dev server
-to develop locally your application, build your application (so that it can be deployed) and start a local preview server that you can use to validate your build application
+to develop locally your application, build your application (so that it can be deployed) and start a local preview server that you can use to validate your built application
 before deploying it.
 
 ### Update the `vite.config.ts` file
@@ -108,7 +108,7 @@ The `optimizeDeps` setting here is a temporary workaround and won't be necessary
 
 ## 2. Develop locally
 
-After you have created your project, run the following command in the project directory to start a local server. This will allow you to preview your project locally during development.
+After you have created your project, run the following command in the project directory to start a local development server. This will allow you to preview your project locally during development.
 
 <PackageManagers type="run" args="dev" />
 
@@ -128,7 +128,7 @@ If you're using CI, ensure you update your ["deploy command"](/workers/ci-cd/bui
 
 :::note
 
-After having built the application you can run the `serve` script to preview the built output locally before deploying it.
+After having built the application you can run the `serve` script to preview the build output locally before deploying.
 This can help you making sure that your application will work as intended once it's been deployed to the Cloudflare network:
 
 <PackageManagers type="run" args="serve" />
@@ -139,9 +139,9 @@ This can help you making sure that your application will work as intended once i
 
 ## Bindings
 
-Your TanStack Start application can be fully integrated with the Cloudflare Developer Platform, in both local development and in production, by using product bindings.
+Your TanStack Start application can be fully integrated with the Cloudflare Developer Platform, in both local development and in production, by using bindings.
 
-You can use bindings simply by [importing the `env` object](https://developers.cloudflare.com/workers/runtime-apis/bindings/#importing-env-as-a-global) and using it from your server
+You can use bindings simply by [importing the `env` object](https://developers.cloudflare.com/workers/runtime-apis/bindings/#importing-env-as-a-global) and accessing it in your server
 side code.
 
 For example in the following way:
