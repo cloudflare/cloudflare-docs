@@ -440,6 +440,10 @@ The phase of an HTTP request. You can use this selector to specify whether to sc
 | ---------- | --------------------------------- |
 | Body Phase | `http.body_phase == \"download\"` |
 
+:::caution[Body phase mismatch]
+When combining this selector with the [Download and Upload File Types selectors](#download-and-upload-file-types), ensure you use the matching phase togethers. If body phase and file type selector logic do not match, the policy may not filter traffic as intended.
+:::
+
 ### Content Categories
 
 <Render
