@@ -238,7 +238,7 @@ await using page = await context.newPage();
 // gets updated storage state: cookies, localStorage, and IndexedDB
 const updatedStorageState = await context.storageState({ indexedDB: true });
 
-// persist updated storage state in KV
+// persists updated storage state in KV
 await env.KV.put('storageState', JSON.stringify(updatedStorageState));
 ```
 
