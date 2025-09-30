@@ -5,9 +5,9 @@ weight: 0
 
 ---
 
-import { APIRequest } from "~/components"
+import { APIRequest, Render } from "~/components"
 
-When you create a Spectrum application, you are assigned an IP. These IPs are normally dynamic, meaning that they will change over time. But, for instance, if you want to set up WAF custom rules for specific IPs, you may want to use static IPs. 
+When you create a Spectrum application, you are assigned an IP. These IPs are normally dynamic, meaning that they will change over time. But, for instance, if you want to set up WAF custom rules for specific IPs, you may want to use static IPs.
 
 A static IP, like a physical street address can tell other computers or servers on the Internet where a specific computer is located or connected. This makes the device easier to find on the network, since the IP will not change.
 
@@ -47,4 +47,14 @@ When creating a Spectrum application through the API, specify the static IPs tha
       ]
     }
   }}
+/>
+
+## Check your static IPs
+
+<Render
+  file="check-leased-ips"
+	product="byoip"
+	params={{
+		product: "static IPs for Spectrum"
+	}}
 />
