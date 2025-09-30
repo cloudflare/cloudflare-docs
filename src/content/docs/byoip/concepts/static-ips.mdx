@@ -6,6 +6,8 @@ sidebar:
 
 ---
 
+import { Render } from "~/components";
+
 Lease static IPs so that you can use a set of specifically assigned Cloudflare IPs. If you need to allowlist your IPs or to communicate your IPs to third parties, allocating static IPs to your account allows you to know them ahead of time.
 
 Cloudflare will not change static IP addresses without notifying you, and will typically only do so at your request.
@@ -19,3 +21,13 @@ Static IPs are allocated to the account, but can be assigned to a single zone. T
 ## Availability
 
 Static IPs are available as an add-on purchase for Enterprise plans.
+
+## Check Static IPs
+
+<Render
+  file="check-leased-ips"
+	product="byoip"
+	params={{
+		product: "Static IPs for CDN Ingress"
+	}}
+/>
