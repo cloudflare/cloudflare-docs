@@ -16,17 +16,18 @@ Cloudflare Logpush supports pushing logs directly to Datadog via the Cloudflare 
 
 Please note the following Logpush sending limitations, as described in the Datadog documentation, [here](https://docs.datadoghq.com/api/latest/logs/).
 
-> Send your logs to your Datadog platform over HTTP. Limits per HTTP request are:
+> Send your logs to your Datadog platform over HTTP. **Limits per HTTP request are:**
+>
+> - Maximum content size per payload (uncompressed): 5MB
+> - Maximum size for a single log: 1MB
+> - Maximum array size if sending multiple logs in an array: 1000 entries
 
-> * Maximum content size per payload (uncompressed): 5MB
-> * Maximum size for a single log: 1MB
-> * Maximum array size if sending multiple logs in an array: 1000 entries
+:::caution[Warning]
 
-!!! warning
-The above limits are hardcoded defaults. It is not possible to override these limitations using the Logpush configuration values, `max_upload_records` or `max_upload_bytes`. 
+The above limits are hardcoded defaults. It is not possible to override these limitations using the Logpush configuration values, `max_upload_records` or `max_upload_bytes`.
 
-Note that these limitations may result in noticeable log ingestion delay within Datadog. Logpush will not drop unsent logs, so all logs will be uploaded to Datadog in due time.
-!!!
+These limitations may result in noticeable log ingestion delay within Datadog following high traffic events. Logpush will not drop unsent logs, so all logs will be uploaded to Datadog in due time.
+:::
 
 ## Manage via the Cloudflare dashboard
 
