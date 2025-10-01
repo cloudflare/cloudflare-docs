@@ -350,14 +350,14 @@
 /realtime/sessions-tracks/ /realtime/sfu/sessions-tracks/ 302
 /realtime/get-started/ /realtime/sfu/get-started/ 302
 /realtime/calls-vs-sfus/ /realtime/sfu/calls-vs-sfus/ 302
-/realtime/https-api /realtime/sfu/https-api/ 302
+/realtime/https-api/ /realtime/sfu/https-api/ 302
 /realtime/datachannels/ /realtime/sfu/datachannels/ 302
 /realtime/simulcast/ /realtime/sfu/simulcast/ 302
 /realtime/demos/ /realtime/sfu/demos/ 302
 /realtime/example-architecture/ /realtime/sfu/example-architecture/ 302
 /realtime/pricing/ /realtime/sfu/pricing/ 302
 /realtime/changelog/ /realtime/sfu/changelog/ 302
-/realtime/realtimekit/get-started /realtime/realtimekit/getting-started/ 302
+/realtime/realtimekit/get-started/ /realtime/realtimekit/getting-started/ 302
 /realtime/introduction/ /realtime/realtimekit/introduction/ 302
 /realtime/concepts/ /realtime/realtimekit/concepts/ 302
 
