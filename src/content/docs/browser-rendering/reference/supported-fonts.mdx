@@ -70,7 +70,7 @@ Browser Rendering includes additional font packages for non-Latin scripts and em
 If a required font is not pre-installed, you can inject it into the page at render time using `addStyleTag`. This allows you to load fonts from an external URL or embed them directly as a Base64 string.
 
 <Tabs> <TabItem label="JavaScript" icon="seti:javascript">
-With a CDN source:
+Example with puppeteer and a CDN source:
 
 ```js
 const browser = await puppeteer.launch(env.MYBROWSER);
@@ -92,7 +92,7 @@ await page.addStyleTag({
 ```
 
 </TabItem> <TabItem label="TypeScript" icon="seti:typescript">
-With a CDN source:
+Example with puppeteer and a CDN source:
 
 ```ts
 const browser = await puppeteer.launch(env.MYBROWSER);
@@ -117,10 +117,10 @@ await page.addStyleTag({
 
 
 <Tabs> <TabItem label="JavaScript" icon="seti:javascript">
-With a Base64 encoded data source:
+Example with playwright and a Base64 encoded data source:
 
 ```js
-const browser = await puppeteer.launch(env.MYBROWSER);
+const browser = await playwright.launch(env.MYBROWSER);
 const page = await browser.newPage();
 await page.addStyleTag({
   content: `
@@ -139,7 +139,7 @@ await page.addStyleTag({
 ```
 
 </TabItem> <TabItem label="TypeScript" icon="seti:typescript">
-With a Base64 encoded data source:
+Example with playwright and a Base64 encoded data source:
 
 ```ts
 const browser = await puppeteer.launch(env.MYBROWSER);
