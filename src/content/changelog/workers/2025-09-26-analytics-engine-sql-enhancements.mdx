@@ -8,6 +8,12 @@ products:
 
 We've expanded the SQL capabilities of Workers Analytics Engine with several new functions: 
 
+**New aggregate functions:**
+- `argMin()` - Returns the value associated with the minimum in a group
+- `argMax()` - Returns the value associated with the maximum in a group
+- `topK()` - Returns an array of the most frequent values in a group
+- `topKWeighted()` - Returns an array of the most frequent values in a group using weights
+
 **New window functions:**
 - `first_value()` - Returns the first value in an ordered set of values within a partition
 - `last_value()` - Returns the last value in an ordered set of values within a partition
@@ -31,6 +37,7 @@ We've expanded the SQL capabilities of Workers Analytics Engine with several new
 - `round()` - Rounds a number to a specified number of decimal places  
 - `ceil()` - Rounds a number up to the nearest integer
 - `floor()` - Rounds a number down to the nearest integer
+- `pow()` - Returns a number raised to the power of another number
 
 **New string functions:**
 - `lowerUTF8()` - Converts a string to lowercase using UTF-8 encoding
