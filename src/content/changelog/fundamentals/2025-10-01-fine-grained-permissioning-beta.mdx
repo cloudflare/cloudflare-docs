@@ -1,0 +1,27 @@
+---
+title: Fine-grained Permissioning for Access for Apps, IdPs, & Targets now in Public Beta
+description: Expanded RBAC with resource-level controls in Cloudflare Zero Trust.
+products:
+  - fundamentals
+date: 2025-10-01
+---
+
+Fine-grained permissioning for **Access Applications, Identity Providers (IdPs), and Targets** is now available in Public Beta. This expands our RBAC model beyond account & zone-scoped roles, enabling administrators to grant permissions scoped to individual resources.
+
+### What's New
+- **Access Applications**: Grant admin permissions to specific Access Applications.  
+- **Identity Providers**: Grant admin permissions to individual Identity Providers.  
+- **Targets**: Grant admin rights to specific Targets  
+
+![Updated Permissions Policy UX](~/assets/images/changelog/fundamentals/2025-10-01-fine-grained-permissioning-ux.png) 
+
+
+Members granted only a resource-level fine-grained permission (App, IdP, or Target) can still access that resource through the API, but it will not appear in the Dashboard without an account-level or Zero Trust Read Only role. To view Zero-trust resource-specific resources in the Dashboard, a member's Access permissions must be combined with one of the following:  
+- **Account Read Only** plus a fine-grained permission for a specific App, IdP, or Target  
+- **Cloudflare Zero Trust Read Only** plus fine-grained permission for a specific App, IdP, or Target  
+
+
+For more info:
+
+- [Get started with Cloudflare Permissioning](/fundamentals/manage-members/roles/)
+- [Manage Member Permissioning via the UI & API](/fundamentals/manage-members/manage)
