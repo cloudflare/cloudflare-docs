@@ -60,7 +60,7 @@ Usage:
 avg([DISTINCT] column_name)
 ```
 
-Avg is an aggregation function that returns the mean of column values across all rows in each group or results set. Avg also supports `DISTINCT`, but in this case it will only average the unique values in the column.
+`avg` is an aggregation function that returns the mean of column values across all rows in each group or results set. Avg also supports `DISTINCT`, but in this case it will only average the unique values in the column.
 
 Example:
 
@@ -79,7 +79,7 @@ Usage:
 min(column_name)
 ```
 
-Min is an aggregation function that returns the minimum value of a column across all rows.
+`min` is an aggregation function that returns the minimum value of a column across all rows.
 
 Example:
 
@@ -96,7 +96,7 @@ Usage:
 max(column_name)
 ```
 
-Max is an aggregation function that returns the maximum value of a column across all rows.
+`max` is an aggregation function that returns the maximum value of a column across all rows.
 
 Example:
 
@@ -113,7 +113,7 @@ Usage:
 quantileExactWeighted(q)(column_name, weight_column_name)
 ```
 
-`quantileExactWeighted` is an aggregation function that returns the value at the q<sup>th</sup> quantile in the named column across all rows in each group or results set. Each row will be weighted by the value in `weight_column_name`. Typically this would be `_sample_interval` (refer to [how sampling works](/analytics/analytics-engine/sql-api/#sampling), for more information).
+`quantileExactWeighted` is an aggregation function that returns the value at the q<sup>th</sup> quantile in the named column across all rows in each group or results set. Each row will be weighted by the value in `weight_column_name`. Typically this would be `_sample_interval` (refer to [Sampling](/analytics/analytics-engine/sql-api/#sampling) for more information).
 
 Example:
 
