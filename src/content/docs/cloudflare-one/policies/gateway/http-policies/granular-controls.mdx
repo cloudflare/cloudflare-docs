@@ -5,7 +5,7 @@ sidebar:
   order: 4
 ---
 
-import { Render, Details } from "~/components";
+import { Render, Details, Tabs, TabItem, APIRequest } from "~/components";
 
 With Application Granular Controls, you can create [Gateway HTTP policies](/cloudflare-one/policies/gateway/http-policies/) to control specific user actions within supported SaaS applications. This allows you to give users access to an application while restricting the actions that they can take within the application.
 
@@ -15,13 +15,14 @@ To use Application Granular Controls, you must:
 
 - Install a [Cloudflare certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/) or a [custom certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/custom-certificate/) on your users' devices.
 - Turn on [TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/).
-- (Optional) If an application uses HTTP/3, turn on the [Gateway proxy for TCP and UDP traffic](/cloudflare-one/policies/gateway/http-policies/http3/#enable-http3-inspection).
+- Turn on the [Gateway proxy](/cloudflare-one/policies/gateway/proxy/#turn-on-the-gateway-proxy).
+- (Optional) If an application uses HTTP/3, turn on the [Gateway proxy for UDP traffic](/cloudflare-one/policies/gateway/http-policies/http3/#enable-http3-inspection).
 
 ## Create a policy with Application Granular Controls
 
-{/* TODO: Add API and Terraform instructions */}
-
 To create a Gateway HTTP policy with Application Granular Controls:
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Gateway** > **Firewall policies**. Select **HTTP**.
 2. Select **Add a policy**.
@@ -36,6 +37,30 @@ To create a Gateway HTTP policy with Application Granular Controls:
 
 7. Select **Create policy**.
 
+</TabItem>
+
+<TabItem label="API">
+
+Use the [Create a Zero Trust Gateway rule](/api/resources/zero_trust/subresources/gateway/subresources/rules/methods/create/) endpoint to create a policy. For example, you can create a policy to block file uploads to ChatGPT:
+
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "Block ChatGPT uploads",
+		description: "Block file uploads to ChatGPT while allowing other usage",
+		enabled: true,
+		action: "block",
+		filters: ["http"],
+		traffic:
+			"any(app.ids[*] == 1199) and any(app_control.controls[*] in {1653})",
+		identity: "",
+		device_posture: "",
+	}}
+/>
+
+</TabItem> </Tabs>
+
 For more information, refer to [HTTP policies](/cloudflare-one/policies/gateway/http-policies/).
 
 ## Control definitions
@@ -44,7 +69,7 @@ Gateway defines Application Granular Controls at different levels of granularity
 
 ### Application Controls
 
-Application Controls are pre-defined controls which represent user intent, such as uploads or downloads. Cloudflare defines and organizes sets of operations deemed related to specific intents with an application. Application Controls represent the most commonly used controls.
+Application Controls are pre-defined controls which represent user intent, such as uploads or downloads. Cloudflare defines and organizes sets of operations deemed related to specific intents in an application. Application Controls represent the most commonly used controls.
 
 ### Operations
 
