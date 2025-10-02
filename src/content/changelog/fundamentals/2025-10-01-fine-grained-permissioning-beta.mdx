@@ -15,11 +15,11 @@ Fine-grained permissions for **Access Applications, Identity Providers (IdPs), a
 
 ![Updated Permissions Policy UX](~/assets/images/changelog/fundamentals/2025-10-01-fine-grained-permissioning-ux.png) 
 
-
-Members granted only a resource-level fine-grained permission (App, IdP, or Target) can still access that resource through the API, but it will not appear in the Dashboard without an account-level or Zero Trust Read Only role. To view Zero-trust resource-specific resources in the Dashboard, a member's Access permissions must be combined with one of the following:  
+:::note
+During the public beta, members must also be assigned an account-scoped, read only role to view resources in the dashboard. This restriction will be lifted in a future release. 
 - **Account Read Only** plus a fine-grained permission for a specific App, IdP, or Target  
 - **Cloudflare Zero Trust Read Only** plus fine-grained permission for a specific App, IdP, or Target  
-
+:::
 
 For more info:
 
