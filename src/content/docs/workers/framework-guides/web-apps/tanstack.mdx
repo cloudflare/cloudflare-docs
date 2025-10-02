@@ -20,12 +20,14 @@ In this guide, you will create a new [TanStack Start](https://tanstack.com/start
 
 ## 1. Set up a new project
 
-Start by cloning the Cloudflare example from the official TanStack repository.
+Use the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) CLI (C3) to set up a new project. C3 will create a new project directory, initiate TanStack's official setup tool, and provide the option to deploy instantly.
+
+To use `create-cloudflare` to create a new TanStack Start project with Workers Assets, run the following command:
 
 <PackageManagers
-	type="dlx"
-	pkg="gitpick"
-	args="TanStack/router/tree/main/examples/react/start-basic-cloudflare my-tanstack-app"
+	type="create"
+	pkg="cloudflare@latest"
+	args="my-tanstack-app --framework=tanstack"
 />
 
 After setting up your project, change your directory by running the following command:
@@ -33,10 +35,6 @@ After setting up your project, change your directory by running the following co
 ```sh
 cd my-tanstack-app
 ```
-
-And install the project's dependencies with:
-
-<PackageManagers type="install" />
 
 ## 2. Develop locally
 
@@ -96,8 +94,6 @@ function RouteComponent() {
 	// ...
 }
 ```
-
-See `src/routes/index.tsx` for an example.
 
 :::note
 
