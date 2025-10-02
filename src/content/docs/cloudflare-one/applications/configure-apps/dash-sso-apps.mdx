@@ -70,6 +70,15 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/sso_connectors"
 
 Copy the verification code (for example `cloudflare_dashboard_sso=1111111`) and create a TXT record in your DNS configuration with that value. Cloudflare will automatically poll that DNS record until it is found or a timeout is reached within two days.
 
+To test that the verification record was correctly configured, `dig` ([online version](https://digwebinterface.com/?type=TXT&short=on&ns=resolver&useresolver=1.1.1.1)) can be used to make a DNS request:
+
+```bash title="dig command"
+dig cool.cats TXT +short
+"cloudflare_dashboard_sso=111111111"
+```
+
+Notice that the correctly placed TXT record _includes_ the `cloudflare_dashboard_sso=` prefix.
+
 If verification fails due to timeout, you may manually reinitiate the polling by running the following command:
 
 ```bash title="cURL command"
