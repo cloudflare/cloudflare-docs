@@ -1,24 +1,25 @@
 ---
 title: Workers Analytics Engine now supports additional SQL functions
-description: Workers Analytics Engine now supports additional SQL functions including mathematical operations, advanced string manipulation, and improved documentation structure.
-date: 2025-09-26
+description: Workers Analytics Engine now supports additional SQL functions including new mathematical operations, aggregate functions, and bit functions! 
+date: 2025-10-02
 products:
   - workers-analytics-engine
 ---
+You can now perform more powerful queries directly in [Workers Analytics Engine](https://developers.cloudflare.com/analytics/analytics-engine/) with a major expansion of our SQL function library.
 
-We've expanded the SQL capabilities of Workers Analytics Engine with several new functions: 
+Workers Analytics Engine allows you to ingest and store high-cardinality data at scale (such as usage-based billing data per customer) and query your data through a simple SQL API. 
 
-**New aggregate functions:**
+Today, we've expanded Workers Analytics Engine's SQL capabilities with several new functions: 
+
+[**New aggregate functions:**](https://developers.cloudflare.com/analytics/analytics-engine/sql-reference/aggregate-functions/)
 - `argMin()` - Returns the value associated with the minimum in a group
 - `argMax()` - Returns the value associated with the maximum in a group
 - `topK()` - Returns an array of the most frequent values in a group
 - `topKWeighted()` - Returns an array of the most frequent values in a group using weights
-
-**New window functions:**
 - `first_value()` - Returns the first value in an ordered set of values within a partition
 - `last_value()` - Returns the last value in an ordered set of values within a partition
 
-**New bit functions:**
+[**New bit functions:**](https://developers.cloudflare.com/analytics/analytics-engine/sql-reference/bit-functions/)
 - `bitAnd()` - Returns the bitwise AND of two expressions
 - `bitCount()` - Returns the number of bits set to one in the binary representation of a number
 - `bitHammingDistance()` - Returns the number of bits that differ between two numbers
@@ -31,7 +32,7 @@ We've expanded the SQL capabilities of Workers Analytics Engine with several new
 - `bitTest()` - Returns the value of a specific bit in a number
 - `bitXor()` - Returns the bitwise exclusive-or of two expressions
 
-**New mathematical functions:**
+[**New mathematical functions:**](https://developers.cloudflare.com/analytics/analytics-engine/sql-reference/mathematical-functions/)
 - `abs()` - Returns the absolute value of a number
 - `log()` - Computes the natural logarithm of a number
 - `round()` - Rounds a number to a specified number of decimal places  
@@ -39,15 +40,17 @@ We've expanded the SQL capabilities of Workers Analytics Engine with several new
 - `floor()` - Rounds a number down to the nearest integer
 - `pow()` - Returns a number raised to the power of another number
 
-**New string functions:**
+[**New string functions:**](https://developers.cloudflare.com/analytics/analytics-engine/sql-reference/string-functions/)
 - `lowerUTF8()` - Converts a string to lowercase using UTF-8 encoding
 - `upperUTF8()` - Converts a string to uppercase using UTF-8 encoding
 
-**New encoding functions:**
+[**New encoding functions:**](https://developers.cloudflare.com/analytics/analytics-engine/sql-reference/encoding-functions/)
 - `hex()` - Converts a number to its hexadecimal representation
 - `bin()` - Converts a string to its binary representation 
 
-**New type conversion functions:**
+[**New type conversion functions:**](https://developers.cloudflare.com/analytics/analytics-engine/sql-reference/type-conversion-functions/)
 - `toUInt8()` - Converts any numeric expression, or expression resulting in a string representation of a decimal, into an unsigned 8 bit integer
 
-To get started, checkout out our docs to read more on newly added and existing [Workers Analytics Engine SQL functions](/analytics/analytics-engine/sql-reference/).
+
+## Ready to get started? 
+Whether you're building usage-based billing systems, customer analytics dashboards, or other custom metrics, these additions provide the functions you need to get the most out of your data. [Get started ](/analytics/analytics-engine/get-started/) with Workers Analytics Engine and explore all available functions in our [SQL reference documentation](/analytics/analytics-engine/sql-reference/). 
