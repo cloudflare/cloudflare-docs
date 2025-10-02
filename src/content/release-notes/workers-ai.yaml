@@ -3,6 +3,11 @@ link: "/workers-ai/changelog/"
 productName: Workers AI
 productLink: "/workers-ai/"
 entries:
+  - publish_date: "2025-10-02"
+    title: Deepgram Flux now available on Workers AI
+    description: |-
+      - We're excited to be a launch partner with Deepgram and offer their new Speech Recognition model built specifically for enabling voice agents. Check out [Deepgram's blog](https://deepgram.com/flux) for more details on the release.
+      - Access the model through [`@cf/deepgram/flux`](/workers-ai/models/flux/) and check out the [changelog](/changelog/2025-10-02-deepgram-flux/) for in-depth examples.
   - publish_date: "2025-09-24"
     title: New local models available on Workers AI
     description: |-
