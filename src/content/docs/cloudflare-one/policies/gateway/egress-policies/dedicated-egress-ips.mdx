@@ -5,7 +5,7 @@ sidebar:
   order: 1
 ---
 
-import { Details } from "~/components";
+import { Details, Render } from "~/components";
 
 :::note
 Only available as an add-on to Zero Trust Enterprise plans.
@@ -38,13 +38,27 @@ To check if your device is using the correct dedicated egress IP:
 
 When testing against another origin, you may see either an IPv4 or IPv6 address. Gateway has no control over whether connections are made over IPv4 or IPv6. Some origins are only available over IPv4, while others are only available over IPv6. When both protocols are supported, the decision is made by the operating system and browser on the client device. For example, Windows will by default [favor IPv6](https://learn.microsoft.com/troubleshoot/windows-server/networking/configure-ipv6-in-windows) over IPv4.
 
-## Bring your own IP address (BYOIP)
+## IPs
+
+### Bring your own IP address (BYOIP)
 
 Enterprise users can use their own authority-provided IPv4 and IPv6 addresses as dedicated egress IPs. Gateway supports bringing your own IPv4 and IPv6 addresses. To obtain an IPv6 range, refer to [American Registry for Internet Numbers (ARIN)](https://www.arin.net/resources/guide/ipv6/first_request/) or [Regional Internet Registry for Europe, Middle East and Central Asia (RIPE NCC)](https://www.ripe.net/manage-ips-and-asns/ipv6/request-ipv6/).
 
 After you onboard your IP addresses, the IP addresses will appear when you create a [egress policy](/cloudflare-one/policies/gateway/egress-policies/) and choose **Use dedicated egress IPs (Cloudflare or BYOIP)** as the [egress method](/cloudflare-one/policies/gateway/egress-policies/#egress-methods). BYOIP dedicated egress IPs do not support [IP geolocation](#ip-geolocation).
 
 For more information, refer to [Cloudflare BYOIP](/byoip/) or contact your account team.
+
+### Cloudflare IPs
+
+If you do not have your own authority-provided IPv4 and IPv6 addresses, you can use dedicated egress IPs with a Cloudflare IP address.
+
+<Render
+  file="check-leased-ips"
+	product="byoip"
+	params={{
+		product: "Gateway dedicated egress IPs"
+	}}
+/>
 
 ## Limitations
 
