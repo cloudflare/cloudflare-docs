@@ -8,7 +8,7 @@ sidebar:
   label: Block AI Bots
 ---
 
-import { Render, Steps } from "~/components"
+import { Render, Steps, DashButton } from "~/components"
 
 :::note[Block AI bots availability]
 The **Block AI bots** feature is only available in the new [application security dashboard](/security/).
@@ -19,15 +19,16 @@ You can choose to block AI bots by activating **Block AI bots**. Activating this
 To block [AI bots](/bots/concepts/bot/#ai-bots):
 
 <Steps>
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-2. Go to **Security** > **Settings**.
-3. Filter by **Bot traffic**.
-4. Go to **Block AI bots**.
-5. Under **Configurations**, select the edit icon. Choose from:
-   - **Only block on hostnames with ads**: Use this option if you wish to block AI bots only on portions of your site that show ads. Cloudflare automatically detects whether ads are present on a subdomain, and only block on hostnames that contain those ad units.
-   - **Block on all pages**: Use this option if you wish to block AI bots on all your pages.
-   - **Do not block (off)**: Use this option if you wish to allow AI bots on all your pages.
-6. Select **Save** to save your configuration.
+  1. In the Cloudflare dashboard, go to the **Security Settings** page.
+
+      <DashButton url="/?to=/:account/:zone/security/settings" />
+  2. Filter by **Bot traffic**.
+  3. Go to **Block AI bots**.
+  4. Under **Configurations**, select the edit icon. Choose from:
+      - **Only block on hostnames with ads**: Use this option if you wish to block AI bots only on portions of your site that show ads. Cloudflare automatically detects whether ads are present on a subdomain, and only block on hostnames that contain those ad units.
+      - **Block on all pages**: Use this option if you wish to block AI bots on all your pages.
+      - **Do not block (off)**: Use this option if you wish to allow AI bots on all your pages.
+  5. Select **Save** to save your configuration.
 </Steps>
 
 To block individual AI crawlers (rather than blocking all crawlers), use [AI Crawl Control](/ai-crawl-control/).

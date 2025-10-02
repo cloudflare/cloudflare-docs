@@ -5,7 +5,7 @@ sidebar:
   order: 8
 ---
 
-import { WranglerConfig } from "~/components";
+import { WranglerConfig, Render } from "~/components";
 
 D1 has fully-featured support for local development, running the same version of D1 as Cloudflare runs globally. Local development uses [Wrangler](/workers/wrangler/install-and-update/), the command-line interface for Workers, to manage local development sessions and state.
 
@@ -67,7 +67,7 @@ database_id = "c020574a-5623-407b-be0c-cd192bab9545"
 
 </WranglerConfig>
 
-Note that `wrangler dev` separates local and production (remote) data. A local session does not have access to your production data by default. To access your production (remote) database, set your D1 as a [remote binding](/workers/development-testing/#remote-bindings). Any changes you make when running against a remote database cannot be undone.
+Note that `wrangler dev` separates local and production (remote) data. A local session does not have access to your production data by default. To access your production (remote) database, set `"remote" : true` in the D1 binding configuration. Refer to the [remote bindings documentation](/workers/development-testing/#remote-bindings) for more information. Any changes you make when running against a remote database cannot be undone.
 
 Refer to the [`wrangler dev` documentation](/workers/wrangler/commands/#dev) to learn more about how to configure a local development session.
 

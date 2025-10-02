@@ -3,6 +3,18 @@ link: "/radar/release-notes/"
 productName: Radar
 productLink: "/radar/"
 entries:
+  - publish_date: "2025-09-29"
+    title: Add geolocation, ADM1 dimension to HTTP endpoints, and NetFlows endpoints
+    description: |-
+      * Added new [geolocation endpoints](/api/resources/radar/subresources/geolocations/).
+      * Added new ADM1 dimension to [`HTTP`](/api/resources/radar/subresources/http/) `summary` and `timeseries_groups` endpoints.
+      * Added new [`NetFlows`](/api/resources/radar/subresources/netflows/) summary by dimension endpoint [summary_v2](/api/resources/radar/subresources/netflows/methods/summary_v2/).
+      * Added new `geoId` filter to all [`HTTP`](/api/resources/radar/subresources/http/) and [`NetFlows`](/api/resources/radar/subresources/netflows/) endpoints.
+  - publish_date: "2025-09-22"
+    title: Add IRR AS-SET membership lookup endpoint
+    description: |-
+      * Added IRR AS-SET membership lookup endpoint
+        * [ `/entities/asns/{asn}/as_set` ](/api/resources/radar/subresources/entities/subresources/asns/methods/as_set/)
   - publish_date: "2025-08-27"
     title: Add industry and vertical to AI Bots and Web Crawlers, and bot kind to Bots
     description: |-

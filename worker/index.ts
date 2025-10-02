@@ -33,7 +33,10 @@ export default class extends WorkerEntrypoint<Env> {
 			});
 		}
 
-		if (request.url.endsWith("/index.md")) {
+		if (
+			request.url.endsWith("/index.md") ||
+			request.headers.get("accept")?.includes("text/markdown")
+		) {
 			const htmlUrl = request.url.replace("index.md", "");
 			const res = await this.env.ASSETS.fetch(htmlUrl, request);
 

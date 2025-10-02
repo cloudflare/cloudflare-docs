@@ -10,7 +10,7 @@ head:
     content: Manage sequence rules
 
 ---
-import { Steps, Tabs, TabItem, Render } from "~/components"
+import { Steps, Tabs, TabItem, Render, DashButton } from "~/components"
 
 Cloudflare recommends creating sequence rules using WAF custom rules. Refer to the [sequence custom rules documentation](/api-shield/security/sequence-mitigation/custom-rules/) for more information.
 
@@ -47,26 +47,27 @@ Cloudflare recommends creating sequence rules using WAF custom rules. Refer to t
    </TabItem>
    <TabItem label="New dashboard" icon="rocket">
       <Steps>
-         1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-         2. Go to **Security** > **Security rules**.
-         3. Select **Create rule** and choose **API sequence rules**.
-         4. Name your rule.
-         5. Select a starting endpoint. This is the endpoint that you expect users to hit first in their request flow when using your API.
+         1. In the Cloudflare dashboard, go to the **Security rules** page.
+
+               <DashButton url="/?to=/:account/:zone/security/security-rules" />
+         2. Select **Create rule** and choose **API sequence rules**.
+         3. Name your rule.
+         4. Select a starting endpoint. This is the endpoint that you expect users to hit first in their request flow when using your API.
                - Choose a hostname to display the list of endpoints for that hostname.
                - Choose an endpoint.
                - Select **Set as starting endpoint**.
-         6. Select a final endpoint. This is the endpoint you are targeting for protection.
+         5. Select a final endpoint. This is the endpoint you are targeting for protection.
                - Choose a hostname to display the list of endpoints for that hostname.
                - Choose an endpoint.
                - Select **Set as ending endpoint**.
-         7. Choose an action that corresponds to the security model type:
+         6. Choose an action that corresponds to the security model type:
                - **Allow**: This will create a positive security model by defining approved sequences on your API.
                - **Log** / **Block**: This will test or enforce a negative security model defining known bad sequences on your API.
                   :::note
 
                   If you chose **Allow**, select whether to log or block the request to the final endpoint when users do not first request the starting endpoint in the sequence.
                   :::
-         8. Select **Create rule**.
+         7. Select **Create rule**.
       </Steps>
    </TabItem>
 </Tabs>

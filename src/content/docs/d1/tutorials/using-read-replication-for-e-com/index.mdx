@@ -493,7 +493,7 @@ database_id = "YOUR_DATABASE_ID"
 
 </WranglerConfig>
 
-Run the following command to update the `Env` interface in the `worker-congifuration.d.ts` file.
+Run the following command to update the `Env` interface in the `worker-configuration.d.ts` file.
 
 ```sh
 npm run cf-typegen
@@ -857,7 +857,9 @@ curl -X POST http://localhost:8787/api/product \
 
 :::note
 
-Read replication is only used when the application has been [deployed](/d1/tutorials/using-read-replication-for-e-com/#step-9-deploy-the-application). D1 does not create read replicas when you develop locally. To test it locally, you can set your database as a [remote binding](/workers/development-testing/#remote-bindings).
+Read replication is only used when the application has been [deployed](/d1/tutorials/using-read-replication-for-e-com/#step-9-deploy-the-application). D1 does not create read replicas when you develop locally.
+
+To test it locally, you can set `"remote" : true` in the D1 binding configuration. Refer to the [remote bindings documentation](/workers/development-testing/#remote-bindings) for more information.
 
 :::
 

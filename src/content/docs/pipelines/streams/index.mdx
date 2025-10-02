@@ -1,0 +1,28 @@
+---
+title: Streams
+pcx_content_type: navigation
+sidebar:
+  order: 2
+---
+
+import { LinkCard } from "~/components";
+
+Streams are durable, buffered queues that receive and store events for processing in [Cloudflare Pipelines](/pipelines/). They provide reliable data ingestion via HTTP endpoints and Worker bindings, ensuring no data loss even during downstream processing delays or failures.
+
+A single stream can be read by multiple pipelines, allowing you to route the same data to different destinations or apply different transformations. For example, you might send user events to both a real-time analytics pipeline and a data warehouse pipeline.
+
+Streams currently accept events in JSON format and support both structured events with defined schemas and unstructured JSON. When a schema is provided, streams will validate and enforce it for incoming events.
+
+## Learn more
+
+<LinkCard
+	title="Manage streams"
+	href="/pipelines/streams/manage-streams/"
+	description="Create, configure, and delete streams using Wrangler or the API."
+/>
+
+<LinkCard
+	title="Writing to streams"
+	href="/pipelines/streams/writing-to-streams/"
+	description="Send events to streams via HTTP endpoints or Worker bindings."
+/>

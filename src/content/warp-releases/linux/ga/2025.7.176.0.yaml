@@ -1,0 +1,37 @@
+releaseNotes: >-
+  This release contains minor fixes and improvements including an updated public key for Linux packages. The public key must be updated if it was installed before September 12, 2025 to ensure the repository remains functional after December 4, 2025. Instructions to make this update are available at [pkg.cloudflareclient.com](https://pkg.cloudflareclient.com/).
+
+
+  **Changes and improvements**
+
+  - MASQUE is now the default [tunnel protocol](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#device-tunnel-protocol) for all new WARP device profiles.
+
+  - Improvement to limit idle connections in [Gateway with DoH mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#gateway-with-doh) to avoid unnecessary resource usage that can lead to DoH requests not resolving.
+
+  - Improvements to maintain [Global WARP override](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#global-warp-override) settings when [switching between organizations](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/switch-organizations/#switch-organizations-in-warp).
+
+  - Improvements to maintain client connectivity during network changes.
+version: 2025.7.176.0
+releaseDate: 2025-09-30T20:20:30.460Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/fedora35-arm/version/2025.7.176.0
+packageSize: 52703644
+platformName: Linux
+linuxPlatforms:
+  fedora35-arm: 52703644
+  bookworm-arm: 50093370
+  centos8-intel: 53702711
+  trixie-arm: 50322640
+  bookworm-intel: 51273268
+  fedora35-intel: 53802540
+  jammy-intel: 51280956
+  fedora34-intel: 54145207
+  focal-intel: 51596474
+  bullseye-intel: 51498276
+  centos8-arm: 52922972
+  fedora34-arm: 53139261
+  focal-arm: 50436792
+  bullseye-arm: 50352468
+  noble-intel: 51062672
+  jammy-arm: 50104666
+  trixie-intel: 51059448
+  noble-arm: 50502306

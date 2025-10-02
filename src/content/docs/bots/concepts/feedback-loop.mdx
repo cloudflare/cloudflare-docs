@@ -5,7 +5,7 @@ sidebar:
   order: 4
 ---
 
-import { GlossaryTooltip, Steps, Tabs, TabItem } from "~/components"
+import { GlossaryTooltip, Steps, Tabs, TabItem, DashButton } from "~/components"
 
 The Bot Feedback Loop is a way for customers to send Cloudflare direct feedback in the case of Bot Management potentially <GlossaryTooltip term="bot score" link="/bots/concepts/bot-score/">scoring</GlossaryTooltip> a request incorrectly. When a customer submits a False Negative or a False Positive report, Cloudflare manually analyzes this data and uses it as a training dataset for our next Machine Learning model.
 
@@ -53,12 +53,13 @@ If Cloudflare is unable to detect a portion of automated traffic on your site, s
   </TabItem> 
   <TabItem label="New dashboard" icon="rocket">
     <Steps>
-      1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-      2. Go to **Security** > **Analytics**.
-      3. Apply one or more filters.
-      4. Under **Request activity**, filter by **Bot analysis**.
-      5. Select **Report incorrect data** and fill out the form.
-      6. Select **Submit**.
+      1. In the Cloudflare dashboard, go to the **Security Analytics** page.
+
+          <DashButton url="/?to=/:account/:zone/security/analytics" />
+      2. Apply one or more filters.
+      3. Under **Request activity**, filter by **Bot analysis**.
+      4. Select **Report incorrect data** and fill out the form.
+      5. Select **Submit**.
     </Steps>
   </TabItem> 
 </Tabs>

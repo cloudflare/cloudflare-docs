@@ -298,6 +298,7 @@ async function handleLink(link: Link): Promise<Link> {
 					}
 				: link.badge,
 			attrs: {
+				target: "_blank",
 				"data-external-link": true,
 			},
 		};

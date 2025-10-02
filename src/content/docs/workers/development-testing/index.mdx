@@ -95,15 +95,9 @@ During local development, your Worker code interacts with these bindings using t
 
 When remote bindings are configured, your Worker still **executes locally**, only the underlying resources your bindings connect to change. For all bindings marked with `remote: true`, Miniflare will route its operations (such as `env.MY_KV.put()`) to the deployed resource. All other bindings not explicitly configured with `remote: true` continue to use their default local simulations.
 
-### Targeting preview resources
+### Integration with environments
 
-To protect production data, you can create and specify preview resources in your [Wrangler configuration](/workers/wrangler/configuration/), such as:
-
-- [Preview namespaces for KV stores](/workers/wrangler/configuration/#kv-namespaces):`preview_id`.
-- [Preview buckets for R2 storage](/workers/wrangler/configuration/#r2-buckets): `preview_bucket_name`.
-- [Preview database IDs for D1](/workers/wrangler/configuration/#d1-databases): `preview_database_id`
-
-If preview configuration is present for a binding, setting `remote: true` will ensure that remote bindings connect to that designated remote preview resource.
+Remote Bindings work well together with [Workers Environments](/workers/wrangler/environments). To protect production data, you can create a development or staging environment and specify different resources in your [Wrangler configuration](/workers/wrangler/configuration/) than you would use for production.
 
 **For example:**
 
@@ -114,20 +108,31 @@ If preview configuration is present for a binding, setting `remote: true` will e
 	"name": "my-worker",
 	"compatibility_date": "$today",
 
-	"r2_buckets": [
-		{
-			"bucket_name": "screenshots-bucket",
-			"binding": "screenshots_bucket",
-			"preview_bucket_name": "preview-screenshots-bucket",
-			"remote": true,
+	"env": {
+		"production": {
+			"r2_buckets": [
+				{
+					"bucket_name": "screenshots-bucket",
+					"binding": "screenshots_bucket",
+				},
+			],
 		},
-	],
+		"staging": {
+			"r2_buckets": [
+				{
+					"bucket_name": "preview-screenshots-bucket",
+					"binding": "screenshots_bucket",
+					"remote": true,
+				},
+			],
+		},
+	},
 }
 ```
 
 </WranglerConfig>
 
-Running `wrangler dev` with the above configuration means that:
+Running `wrangler dev -e staging` (or `CLOUDFLARE_ENV=staging vite dev`) with the above configuration means that:
 
 - Your Worker code runs locally
 - All calls made to `env.screenshots_bucket` will use the `preview-screenshots-bucket` resource, rather than the production `screenshots-bucket`.

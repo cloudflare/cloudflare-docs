@@ -203,7 +203,6 @@ export default {
 				headers: { "Content-Type": "application/json" },
 			});
 
-			ctx.waitUntil(client.end());
 			return resp;
 
 			// Create a route for querying within a time-frame
@@ -221,7 +220,6 @@ export default {
 				headers: { "Content-Type": "application/json" },
 			});
 
-			ctx.waitUntil(client.end());
 			return resp;
 		}
 	},

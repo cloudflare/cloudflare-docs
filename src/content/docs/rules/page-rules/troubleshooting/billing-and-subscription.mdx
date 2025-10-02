@@ -1,13 +1,12 @@
 ---
 pcx_content_type: faq
 source: https://support.cloudflare.com/hc/en-us/articles/225894428-Purchasing-Additional-Page-Rules
-title: Billing and subscription
-head:
-  - tag: title
-    content: Billing and subscription FAQ | Page Rules
+title: Page Rules billing and subscription FAQ
+sidebar:
+  label: Billing and subscription
 ---
 
-import { Render, Steps } from "~/components";
+import { Render, Steps, DashButton } from "~/components";
 
 <Render file="page-rules-migration" product="rules" />
 
@@ -21,10 +20,14 @@ To cancel a purchase:
 
 <Steps>
 
-1. Go to [your Account Subscriptions settings](http://dash.cloudflare.com/?to=/:account/billing/subscriptions).
-2. Find the associated website (listed in alphabetical order) and select **Edit**.
-3. For **Additional page rules**, change the amount to your previous value. If you are over your current limit, you may have to delete existing page rules (paused or active).
-4. Finish the updates to your subscription.
+1. In the Cloudflare dashboard, go to the **Billing** page.
+
+   <DashButton url="/?to=/:account/billing" />
+
+2. Go to **Subscriptions**.
+3. Find the associated website (listed in alphabetical order) and select **Edit**.
+4. For **Additional page rules**, change the amount to your previous value. If you are over your current limit, you may have to delete existing page rules (paused or active).
+5. Finish the updates to your subscription.
 
 </Steps>
 
