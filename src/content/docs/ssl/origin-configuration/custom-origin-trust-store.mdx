@@ -33,9 +33,32 @@ With [Full (strict) encryption mode](/ssl/origin-configuration/ssl-modes/full-st
 
 ## API commands
 
-| Command                                                                                                    | Method + URL stub                                  | Notes                                       |
-| ---------------------------------------------------------------------------------------------------------- | -------------------------------------------------- | ------------------------------------------- |
-| [List Custom Origin Trust Store Details](/api/resources/acm/subresources/custom_trust_store/methods/list/) | `GET zones/:zone_id/acm/custom_trust_store`        |                                             |
-| [Custom Origin Trust Store Details](/api/resources/acm/subresources/custom_trust_store/methods/get/)       | `GET zones/:zone_id/acm/custom_trust_store/:id`    | The `:id` can be found via the List command |
-| [Upload Custom Origin Trust Store](/api/resources/acm/subresources/custom_trust_store/methods/create/)     | `POST zones/:zone_id/acm/custom_trust_store`       |                                             |
-| [Delete Custom Origin Trust Store](/api/resources/acm/subresources/custom_trust_store/methods/delete/)     | `DELETE zones/:zone_id/acm/custom_trust_store/:id` | The `:id` can be found via the List command |
+#### List Custom Origin Trust Store Details
+
+  - API documentation: [List Custom Origin Trust Store Details](/api/resources/acm/subresources/custom_trust_store/methods/list/)
+  - Method: `GET`
+  - Endpoint: `/zones/$ZONE_ID/acm/custom_trust_store`
+
+#### Custom Origin Trust Store Details
+
+  - API documentation: [Custom Origin Trust Store Details](/api/resources/acm/subresources/custom_trust_store/methods/get/)
+  - Method: `GET`
+  - Endpoint: `/zones/$ZONE_ID/acm/custom_trust_store/$CUSTOM_ORIGIN_TRUST_STORE_ID`
+    :::note
+    The `$CUSTOM_ORIGIN_TRUST_STORE_ID` can be found via the List command.
+    :::
+
+#### Upload Custom Origin Trust Store
+
+  - API documentation: [Upload Custom Origin Trust Store](/api/resources/acm/subresources/custom_trust_store/methods/create/)
+  - Method: `POST`
+  - Endpoint: `/zones/$ZONE_ID/acm/custom_trust_store`
+
+#### Delete Custom Origin Trust Store
+
+  - API documentation: [Delete Custom Origin Trust Store](/api/resources/acm/subresources/custom_trust_store/methods/delete/)
+  - Method: `DELETE`
+  - Endpoint: `/zones/$ZONE_ID/acm/custom_trust_store/$CUSTOM_ORIGIN_TRUST_STORE_ID`
+    :::note
+    The `$CUSTOM_ORIGIN_TRUST_STORE_ID` can be found via the List command.
+    :::
