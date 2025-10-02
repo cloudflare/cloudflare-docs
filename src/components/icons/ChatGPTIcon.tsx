@@ -1,7 +1,11 @@
-export default function ChatGPTIcon({ className = "" }: { className?: string }) {
+export default function ChatGPTIcon({
+	className = "",
+}: {
+	className?: string;
+}) {
 	return (
 		<svg
-			className={`w-4 h-4 ${className}`}
+			className={`h-4 w-4 ${className}`}
 			data-testid="geist-icon"
 			height="16"
 			strokeLinejoin="round"

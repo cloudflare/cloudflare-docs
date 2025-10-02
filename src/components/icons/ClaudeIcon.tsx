@@ -6,7 +6,7 @@ export default function ClaudeIcon({ className = "" }: { className?: string }) {
 			viewBox="0 0 12 12"
 			fill="none"
 			xmlns="http://www.w3.org/2000/svg"
-			className={`w-4 h-4 ${className}`}
+			className={`h-4 w-4 ${className}`}
 		>
 			<g clipPath="url(#clip0_2002_2)">
 				<path
