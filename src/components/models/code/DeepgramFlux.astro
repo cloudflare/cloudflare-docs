@@ -15,7 +15,7 @@ const { name } = props.parse(Astro.props);
 const worker = `
 export default {
   async fetch(request, env, ctx): Promise<Response> {
-    const resp = await env.AI.run("@cf/deepgram/flux", {
+    const resp = await env.AI.run("${name}", {
       encoding: "linear16",
       sample_rate: "16000"
     }, {
