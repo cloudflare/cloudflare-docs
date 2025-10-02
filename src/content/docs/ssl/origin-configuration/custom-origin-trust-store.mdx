@@ -15,7 +15,7 @@ By default, Cloudflare's global network maintains [a list of publicly trusted ce
 
 <Render file="custom-origin-trust-store-definition" product="ssl" /> <br />
 
-When a CA has been uploaded to Custom Origin Server Trust Store, Cloudflare will ignore all default publicly trusted CAs and exclusively use the CA or CAs that have been uploaded to authenticate the origin server.
+When a CA has been uploaded to Custom Origin Trust Store, Cloudflare will ignore all default publicly trusted CAs and exclusively use the CA or CAs that have been uploaded to authenticate the origin server.
 
 ## Availability
 
@@ -45,7 +45,7 @@ With [Full (strict) encryption mode](/ssl/origin-configuration/ssl-modes/full-st
   - Method: `GET`
   - Endpoint: `/zones/$ZONE_ID/acm/custom_trust_store/$CUSTOM_ORIGIN_TRUST_STORE_ID`
     :::note
-    The `$CUSTOM_ORIGIN_TRUST_STORE_ID` can be found via the List command.
+    The `$CUSTOM_ORIGIN_TRUST_STORE_ID` can be found via the [List command](#list-custom-origin-trust-store-details).
     :::
 
 #### Upload Custom Origin Trust Store
@@ -60,5 +60,5 @@ With [Full (strict) encryption mode](/ssl/origin-configuration/ssl-modes/full-st
   - Method: `DELETE`
   - Endpoint: `/zones/$ZONE_ID/acm/custom_trust_store/$CUSTOM_ORIGIN_TRUST_STORE_ID`
     :::note
-    The `$CUSTOM_ORIGIN_TRUST_STORE_ID` can be found via the List command.
+    The `$CUSTOM_ORIGIN_TRUST_STORE_ID` can be found via the [List command](#list-custom-origin-trust-store-details).
     :::
