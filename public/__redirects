@@ -1220,6 +1220,9 @@
 /page-shield/reference/alerts/ /page-shield/alerts/alert-types/ 301
 /page-shield/detection/configure-alerts/ /page-shield/alerts/configure/ 301
 
+# pipelines
+/pipelines/concepts/how-pipelines-work/ /pipelines/ 301
+
 # queues
 /queues/configuration/ /queues/reference/configuration/ 301
 /queues/javascript-apis/ /queues/reference/javascript-apis/ 301
