@@ -159,14 +159,14 @@ export default function CopyPageButton() {
 			<div className="flex justify-end">
 				<button
 					onClick={handleCopyMarkdown}
-					className="inline-flex min-h-8 min-w-32 cursor-pointer items-center justify-center gap-2 rounded-l-sm border border-(--sl-color-hairline) bg-transparent px-3 text-sm text-black transition-colors duration-300 hover:bg-(--sl-color-bg-nav)"
+					className="inline-flex min-h-8 min-w-32 cursor-pointer items-center justify-center gap-2 rounded-l-sm border border-(--sl-color-hairline) bg-transparent px-3 text-sm text-black transition-colors duration-300 hover:bg-[var(--color-cl1-gray-9)] dark:hover:bg-[var(--color-cl1-gray-2)]"
 				>
 					{getButtonContent()}
 				</button>
 				<button
 					ref={refs.setReference}
 					{...getReferenceProps()}
-					className="inline-flex min-h-8 w-8 cursor-pointer items-center justify-center rounded-r-sm border-t border-r border-b border-(--sl-color-hairline) bg-transparent text-sm text-black transition-colors duration-300 hover:bg-(--sl-color-bg-nav)"
+					className="inline-flex min-h-8 w-8 cursor-pointer items-center justify-center rounded-r-sm border-t border-r border-b border-(--sl-color-hairline) bg-transparent text-sm text-black transition-colors duration-300 hover:bg-[var(--color-cl1-gray-9)] dark:hover:bg-[var(--color-cl1-gray-2)]"
 				>
 					<PiTriangleFill className="rotate-180 text-xs" />
 				</button>
@@ -183,7 +183,7 @@ export default function CopyPageButton() {
 							<li key={label}>
 								<button
 									onClick={onClick}
-									className="relative block w-full cursor-pointer bg-transparent px-3 py-2 text-left text-black no-underline hover:bg-(--sl-color-bg-nav)"
+									className="relative block w-full cursor-pointer bg-transparent px-3 py-2 text-left text-black no-underline hover:bg-[var(--color-cl1-gray-9)] dark:hover:bg-[var(--color-cl1-gray-2)]"
 								>
 									<div className="flex items-center gap-2 text-sm">
 										<Icon />
