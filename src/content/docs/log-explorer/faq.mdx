@@ -54,3 +54,7 @@ Yes. Log Explorer bills are based on the total volume of logs ingested and store
 ## How does Log Explorer store data in R2, and why do I not see it in my own R2 bucket?
 
 Log Explorer uses Cloudflare Logpush and R2 behind the scenes to stream and store logs. For technical and performance reasons, the data is stored in internal, customer-specific R2 buckets managed by Cloudflare. These buckets are single-tenant to keep your data isolated, but they are not visible in your account's R2 interface. You are not billed separately for this storage — it is included in your Log Explorer usage.
+
+## Are Custom Dashboards based on R2 Log Explorer data, or on GraphQL?
+
+Custom Dashboards currently run on GraphQL. Over time, this will evolve to include deeper integration between the two features, such as building charts directly from logs.
