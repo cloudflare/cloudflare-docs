@@ -986,7 +986,7 @@ The following options are available:
 
 - `instance_type` <Type text="string" /> <MetaInfo text="optional" />
   - The instance type of the container. This determines the amount of memory, CPU, and disk given to the container
-    instance. The current options are `"dev"`, `"basic"`, and `"standard"`. The default is `"dev"`. For more information,
+    instance. The current options are `"lite"`, `"basic"`, `"standard-1"`, `"standard-2"`, `"standard-3"`, and `"standard-4"`. The default is `"lite"`. For more information,
     the see [instance types documentation](/containers/platform-details#instance-types).
 
   - To specify a custom instance type, see [here](#custom-instance-types).
@@ -996,7 +996,7 @@ The following options are available:
     request to run a container than this number, the container request will error. You may have more Durable Objects
     than this number over a longer time period, but you may not have more concurrently.
 
-	- Defaults to 1. 
+  - Defaults to 1.
 
   - This value is only enforced when running in production on Cloudflare's network. This limit does not apply during local development, so you may run more instances than specified.
 
@@ -1028,7 +1028,7 @@ The following options are available:
 class_name = "MyContainer"
 image = "./Dockerfile"
 max_instances = 10
-instance_type = "basic" # Optional, defaults to "dev"
+instance_type = "basic" # Optional, defaults to "lite"
 image_vars = { FOO = "BAR" }
 
 [[durable_objects.bindings]]
