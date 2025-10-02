@@ -49,8 +49,8 @@ Log Explorer billing is based on the volume of logs indexed and stored, measured
 
 ## Are logs from attack traffic included in my Log Explorer usage?
 
-Yes. Log Explorer bills based on the total volume of logs ingested and stored, including attack traffic. Since these logs are often critical for investigating security incidents, they are treated the same as all other log data.
+Yes. Log Explorer bills are based on the total volume of logs ingested and stored, including attack traffic. Since these logs are often critical for investigating security incidents, they are treated the same as all other log data.
 
-## How does Log Explorer store data in R2, and why do not I see it in my own R2 bucket?
+## How does Log Explorer store data in R2, and why do I not see it in my own R2 bucket?
 
 Log Explorer uses Cloudflare Logpush and R2 behind the scenes to stream and store logs. For technical and performance reasons, the data is stored in internal, customer-specific R2 buckets managed by Cloudflare. These buckets are single-tenant to keep your data isolated, but they are not visible in your account's R2 interface. You are not billed separately for this storage — it is included in your Log Explorer usage.
