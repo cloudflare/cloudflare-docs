@@ -7,8 +7,9 @@ type Props = z.input<typeof props>;
 
 type DocsData = keyof CollectionEntry<"docs">["data"];
 type VideosData = keyof CollectionEntry<"stream">["data"];
+type LearningPathsData = keyof CollectionEntry<"learning-paths">["data"];
 
-type ResourcesData = DocsData | VideosData;
+type ResourcesData = DocsData | VideosData | LearningPathsData;
 
 const props = z.object({
 	tags: z.string().array().optional(),

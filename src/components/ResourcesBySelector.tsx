@@ -11,11 +11,16 @@ import { setSearchParams } from "~/util/url";
 
 type DocsData = keyof CollectionEntry<"docs">["data"];
 type VideosData = keyof CollectionEntry<"stream">["data"];
+type LearningPathsData = keyof CollectionEntry<"learning-paths">["data"];
 
-type ResourcesData = DocsData | VideosData;
+type ResourcesData = DocsData | VideosData | LearningPathsData;
 
 interface Props {
-	resources: Array<CollectionEntry<"docs"> | CollectionEntry<"stream">>;
+	resources: Array<
+		| CollectionEntry<"docs">
+		| CollectionEntry<"stream">
+		| CollectionEntry<"learning-paths">
+	>;
 	facets: Record<string, string[]>;
 	filters?: ResourcesData[];
 	columns: number;
