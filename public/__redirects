@@ -228,7 +228,7 @@
 /argo-tunnel/getting-started/installation/ /cloudflare-one/connections/connect-networks/get-started/ 301
 /argo-tunnel/quickstart/ /cloudflare-one/connections/connect-networks/get-started/ 301
 /argo-tunnel/reference/arguments/ /cloudflare-one/connections/connect-networks/configure-tunnels/ 301
-/argo-tunnel/reference/load-balancing/ /cloudflare-one/connections/connect-networks/routing-to-tunnel/lb/ 301
+/argo-tunnel/reference/load-balancing/ /cloudflare-one/connections/connect-networks/routing-to-tunnel/public-load-balancers/ 301
 /argo-tunnel/reference/service/ /cloudflare-one/connections/connect-networks/configure-tunnels/ 301
 /argo-tunnel/trycloudflare/ /cloudflare-one/connections/connect-networks/do-more-with-tunnels/trycloudflare/ 301
 
@@ -1026,6 +1026,8 @@
 /load-balancing/local-traffic-management/ /load-balancing/private-network/ 301
 /load-balancing/local-traffic-management/ltm-tunnels-setup/ /load-balancing/private-network/tunnels-setup/ 301
 /load-balancing/local-traffic-management/ltm-magic-wan/ /load-balancing/private-network/magic-wan/ 301
+/load-balancing/private-network/tunnels-setup/ /load-balancing/private-network/warp-to-tunnel/ 301
+/load-balancing/private-network/warp/ /load-balancing/private-network/warp-to-tunnel/ 301
 
 # logs
 /logs/log-fields/ /logs/logpush/logpush-job/datasets/ 301
@@ -2183,6 +2185,7 @@
 /cloudflare-one/connections/connect-networks/private-net/private-hostnames-ips/ /cloudflare-one/connections/connect-networks/private-net/cloudflared/private-dns/ 301
 /cloudflare-one/connections/connect-networks/private-net/tunnel-virtual-networks/ /cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/ 301
 /cloudflare-one/connections/connect-networks/private-net/warp-connector/vpc-deployments/ /cloudflare-one/connections/connect-networks/private-net/warp-connector/tips/ 301
+/cloudflare-one/connections/connect-networks/routing-to-tunnel/lb/ /cloudflare-one/connections/connect-networks/routing-to-tunnel/public-load-balancers/ 301
 /argo-tunnel/faq/ /cloudflare-one/faq/cloudflare-tunnels-faq/ 301
 /cloudflare-one/policies/browser-isolation/clientless-browser-isolation/ /cloudflare-one/policies/browser-isolation/setup/clientless-browser-isolation/ 301
 /cloudflare-one/connections/connect-devices/agentless/dns-over-https/ /cloudflare-one/connections/connect-devices/agentless/dns/dns-over-https/ 301
