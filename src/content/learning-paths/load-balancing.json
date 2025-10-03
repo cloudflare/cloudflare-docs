@@ -4,6 +4,6 @@
 	"priority": 2,
 	"description": "Maximize application performance and availability.",
 	"pcx_content_type": "learning-path",
-	"products": ["Load balancing"],
+	"products": ["Load Balancing"],
 	"product_group": "Application performance"
 }
