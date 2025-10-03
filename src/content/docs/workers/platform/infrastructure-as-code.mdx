@@ -73,6 +73,71 @@ resource "cloudflare_workers_deployment" "my_worker_deployment" {
 
 Notice how you don't have to manage all of these resources in Terraform. For example, you could just the `cloudflare_worker` resource and seamlessly use Wrangler or your own deployment tools for Versions or Deployments.
 
+## Alchemy (TypeScript IaC)
+
+Define, deploy, and version Cloudflare resources in TypeScript; in the same repo as the rest of your code. This improves reviewability, repeatability, and most importantly DX while keeping guardrails close to production. See [Alchemy](https://alchemy.run/) for more.
+
+All examples on this page require an account ID and API token.
+
+- **Fast path**:
+  1. **Install**
+     ```bash
+     bun add alchemy cloudflare
+     ```
+  2. **Create** `alchemy.run.ts` (project root)
+     ```ts
+     import "alchemy/cloudflare";
+     import alchemy from "alchemy";
+
+     const app = await alchemy("my-app", {
+       stage: process.env.USER ?? "dev",
+       phase: process.argv.includes("--destroy") ? "destroy" : "up",
+       quiet: !process.argv.includes("--verbose"),
+     });
+
+     // Define resources here
+
+     await app.finalize();
+     ```
+  3. **Define resources** Fully TypeScript. Example Worker and Queue:
+     ```ts
+     import { Worker, Queue } from "alchemy/cloudflare";
+
+     const hello = await Worker("hello-worker", {
+       name: "hello-worker",
+       entrypoint: "./src/worker.ts",
+       bindings: [
+         { type: "plain_text", name: "MESSAGE", text: "Hello World!" },
+       ],
+       compatibility_date: "$today",
+     });
+
+     console.log(`Worker URL: ${hello.url}`);
+
+     const jobs = await Queue("jobs-queue", { name: "jobs-queue" });
+     console.log(`Queue: ${jobs.name}`);
+     ```
+  4. **Deploy**
+     ```bash
+     bun alchemy.run.ts
+     ```
+  5. **Destroy (optional)**
+     ```bash
+     bun alchemy.run.ts --destroy
+     ```
+
+- **Why use it**:
+  - **TypeScript-first**: autocompletion and types for Cloudflare resources.
+  - **Single source of truth**: infra and app evolve together; easier reviews and rollbacks.
+  - **Fast feedback**: local runs feel like app code, not a separate toolchain.
+
+- **Tradeoffs and ops notes**:
+  - **Credentials**: provide Cloudflare account ID and API token via environment variables or your secrets manager. Never commit secrets.
+  - **State**: Alchemy persists state as JSON files; commit to VCS for history. Avoid manual edits to prevent drift.
+  - **Durable Objects**: migrations apply with deployments. If you bind a Durable Object class, ensure migrations are applied before expecting bindings to succeed (same constraint noted below in this doc).
+  - **Monitoring**: after deploy, use Workers Analytics/Logs; for Queues, watch enqueue/dequeue/error metrics. Set alerts on failure rates and latency.
+  - **Team workflow**: run bundling (for Workers code) before `up` in CI, then run the Alchemy script. Prefer PR review for infra changes.
+
 ## Cloudflare API Libraries
 
 This example uses the [cloudflare-typescript](https://github.com/cloudflare/cloudflare-typescript) SDK which provides convenient access to the Cloudflare REST API from server-side JavaScript or TypeScript.
