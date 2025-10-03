@@ -21,6 +21,22 @@ It's recommended to run production Workers on a [Workers route or custom domain]
 
 All Workers are assigned a `workers.dev` route when they are created or renamed following the syntax `<YOUR_WORKER_NAME>.<YOUR_SUBDOMAIN>.workers.dev`. The [`name`](/workers/wrangler/configuration/#inheritable-keys) field in your Worker configuration is used as the subdomain for the deployed Worker.
 
+## Manage access to `workers.dev`
+
+When enabled, your `workers.dev` URL is available publicly. You can use [Cloudflare Access](/cloudflare-one/policies/access/) to require visitors to authenticate before accessing preview URLs. You can limit access to yourself, your teammates, your organization, or anyone else you specify in your [access policy](/cloudflare-one/policies/access).
+
+To limit your `workers.dev` URL to authorized emails only:
+
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+
+2. In **Overview**, select your Worker.
+3. Go to **Settings** > **Domains & Routes**.
+4. For `workers.dev`, click **Enable Cloudflare Access**.
+5. Optionally, to configure the Access application, click **Manage Cloudflare Access**. There, you can change the email addresses you want to authorize. View [Access policies](/cloudflare-one/policies/access/#selectors) to learn about configuring alternate rules.
+6. [Validate the Access JWT](https://developers.cloudflare.com/cloudflare-one/identity/authorization-cookie/validating-json/#cloudflare-workers-example) in your Worker script using the audience (`aud`) tag and JWKs URL provided.
+
 ## Disabling `workers.dev`
 
 ### Disabling `workers.dev` in the dashboard
@@ -38,7 +54,7 @@ To disable the `workers.dev` route for a Worker:
 
 ### Disabling `workers.dev` in the Wrangler configuration file
 
-To disable the `workers.dev` route for a Worker, include the following in your Worker's  [Wrangler configuration file](/workers/wrangler/configuration/):
+To disable the `workers.dev` route for a Worker, include the following in your Worker's [Wrangler configuration file](/workers/wrangler/configuration/):
 
 <WranglerConfig>
 
