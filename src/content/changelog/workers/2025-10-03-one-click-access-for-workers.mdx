@@ -10,6 +10,8 @@ import { DashButton } from "~/components";
 
 You can now enable [Cloudflare Access](/cloudflare-one/policies/access/) for your [`workers.dev`](/workers/configuration/routing/workers-dev/) and [Preview URLs](/workers/configuration/previews/) in a single click.
 
+![Screenshot of the Enable/Disable Cloudflare Access button on the workers.dev route settings page](~/assets/images/workers/changelog/workers-access.png)
+
 Access allows you to limit access to your Workers to specific users or groups. You can limit access to yourself, your teammates, your organization, or anyone else you specify in your [Access policy](/cloudflare-one/policies/access).
 
 To enable Cloudflare Access:
@@ -69,3 +71,14 @@ export default {
 	},
 };
 ```
+
+#### Required environment variables
+
+Add these [environment variables](/workers/configuration/environment-variables/) to your Worker:
+
+- `POLICY_AUD`: Your application's AUD tag
+- `TEAM_DOMAIN`: `https://<your-team-name>.cloudflareaccess.com`
+
+Both of these appear in the modal that appears when you enable Cloudflare Access.
+
+You can set these variables by adding them to your Worker's [Wrangler configuration file](/workers/wrangler/configuration/), or via the Cloudflare dashboard under **Workers & Pages** > **your-worker** > **Settings** > **Environment Variables**.
