@@ -73,70 +73,193 @@ resource "cloudflare_workers_deployment" "my_worker_deployment" {
 
 Notice how you don't have to manage all of these resources in Terraform. For example, you could just the `cloudflare_worker` resource and seamlessly use Wrangler or your own deployment tools for Versions or Deployments.
 
-## Alchemy (TypeScript IaC)
+## Alchemy
 
-Define, deploy, and version Cloudflare resources in TypeScript; in the same repo as the rest of your code. This improves reviewability, repeatability, and most importantly DX while keeping guardrails close to production. See [Alchemy](https://alchemy.run/) for more.
+[Alchemy](https://alchemy.run/) is a TypeScript-native Infrastructure as Code tool that lets you define, deploy, and version Cloudflare resources alongside your application code. 
+Unlike traditional IaC tools, Alchemy integrates directly with your codebase and provides full TypeScript type safety without external schemas or code generation.
 
-All examples on this page require an account ID and API token.
+### Installation
 
-- **Fast path**:
-  1. **Install**
-     ```bash
-     bun add alchemy cloudflare
-     ```
-  2. **Create** `alchemy.run.ts` (project root)
-     ```ts
-     import "alchemy/cloudflare";
-     import alchemy from "alchemy";
+```bash
+bun add alchemy
+```
 
-     const app = await alchemy("my-app", {
-       stage: process.env.USER ?? "dev",
-       phase: process.argv.includes("--destroy") ? "destroy" : "up",
-       quiet: !process.argv.includes("--verbose"),
-     });
+### Minimal setup
 
-     // Define resources here
+Create an `alchemy.run.ts` file in your project root:
 
-     await app.finalize();
-     ```
-  3. **Define resources** Fully TypeScript. Example Worker and Queue:
-     ```ts
-     import { Worker, Queue } from "alchemy/cloudflare";
+```ts
+import "alchemy/cloudflare";
+import alchemy from "alchemy";
+import { Worker, Queue, KVNamespace } from "alchemy/cloudflare";
 
-     const hello = await Worker("hello-worker", {
-       name: "hello-worker",
-       entrypoint: "./src/worker.ts",
-       bindings: [
-         { type: "plain_text", name: "MESSAGE", text: "Hello World!" },
-       ],
-       compatibility_date: "$today",
-     });
+const app = await alchemy("my-app", {
+  stage: process.env.USER ?? "dev",
+  phase: process.argv.includes("--destroy") ? "destroy" : "up",
+});
 
-     console.log(`Worker URL: ${hello.url}`);
+const cache = await KVNamespace("cache", { 
+  title: "cache-store" 
+});
 
-     const jobs = await Queue("jobs-queue", { name: "jobs-queue" });
-     console.log(`Queue: ${jobs.name}`);
-     ```
-  4. **Deploy**
-     ```bash
-     bun alchemy.run.ts
-     ```
-  5. **Destroy (optional)**
-     ```bash
-     bun alchemy.run.ts --destroy
-     ```
+const jobs = await Queue("jobs", { 
+  name: "background-jobs" 
+});
 
-- **Why use it**:
-  - **TypeScript-first**: autocompletion and types for Cloudflare resources.
-  - **Single source of truth**: infra and app evolve together; easier reviews and rollbacks.
-  - **Fast feedback**: local runs feel like app code, not a separate toolchain.
+const api = await Worker("api", {
+  name: "api-worker",
+  entrypoint: "./src/api.ts",
+  compatibilityDate: "2025-09-13",
+  bindings: {
+    CACHE: cache,
+    JOBS: jobs,
+    API_KEY: alchemy.secret("your-api-key")
+  }
+});
 
-- **Tradeoffs and ops notes**:
-  - **Credentials**: provide Cloudflare account ID and API token via environment variables or your secrets manager. Never commit secrets.
-  - **State**: Alchemy persists state as JSON files; commit to VCS for history. Avoid manual edits to prevent drift.
-  - **Durable Objects**: migrations apply with deployments. If you bind a Durable Object class, ensure migrations are applied before expecting bindings to succeed (same constraint noted below in this doc).
-  - **Monitoring**: after deploy, use Workers Analytics/Logs; for Queues, watch enqueue/dequeue/error metrics. Set alerts on failure rates and latency.
-  - **Team workflow**: run bundling (for Workers code) before `up` in CI, then run the Alchemy script. Prefer PR review for infra changes.
+console.log(`Worker URL: ${api.url}`);
+
+await app.finalize();
+```
+
+The Worker example at `./src/api.ts`:
+```ts
+import type { api } from "../alchemy.run.ts";
+
+export default {
+  async fetch(request: Request, env: typeof api.Env) {
+    // Full type safety for all bindings
+    await env.CACHE.put("key", "value");
+    await env.JOBS.send({ task: "process" });
+    
+    return new Response("OK");
+  }
+};
+```
+
+Deploy your infrastructure:
+
+```bash
+bun alchemy.run.ts
+```
+
+Destroy resources when needed:
+
+```bash
+bun alchemy.run.ts --destroy
+```
+
+### Queue consumer example
+
+Background jobs with retries and dead letter queues; the boring way that scales:
+
+```ts
+import { Worker, Queue } from "alchemy/cloudflare";
+
+const taskQueue = await Queue("tasks", { 
+  name: "task-processing" 
+});
+
+const dlq = await Queue("failed", { 
+  name: "failed-tasks" 
+});
+
+const processor = await Worker("processor", {
+  entrypoint: "./src/processor.ts",
+  bindings: { TASKS: taskQueue },
+  eventSources: [{
+    queue: taskQueue,
+    settings: {
+      batchSize: 15,
+      maxConcurrency: 3,
+      maxRetries: 5,
+      maxWaitTimeMs: 2500,
+      deadLetterQueue: dlq
+    }
+  }]
+});
+```
+
+The processor at `./src/processor.ts`:
+
+```ts
+import type { MessageBatch } from "@cloudflare/workers-types";
+
+export default {
+  async queue(batch: MessageBatch, env: Env) {
+    for (const message of batch.messages) {
+      try {
+        await processTask(message.body);
+        message.ack();
+      } catch (error) {
+        message.retry({ delaySeconds: 30 });
+      }
+    }
+  }
+};
+```
+
+### Durable Objects
+
+Define a Durable Object namespace and bind it to your Worker:
+
+```ts
+import { Worker, DurableObjectNamespace } from "alchemy/cloudflare";
+
+const counter = DurableObjectNamespace("counter", {
+  className: "Counter",
+  sqlite: true
+});
+
+const worker = await Worker("api", {
+  entrypoint: "./src/worker.ts",
+  bindings: { COUNTER: counter }
+});
+```
+
+Implement the Durable Object in `./src/worker.ts`:
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import type { worker } from "../alchemy.run.ts";
+
+export class Counter extends DurableObject {
+  async increment(): Promise<number> {
+    let count = (await this.ctx.storage.get("count")) || 0;
+    count++;
+    await this.ctx.storage.put("count", count);
+    return count;
+  }
+
+  async fetch(request: Request): Promise<Response> {
+    const count = await this.increment();
+    return Response.json({ count });
+  }
+}
+
+export default {
+  async fetch(request: Request, env: typeof worker.Env) {
+    const id = env.COUNTER.idFromName("global-counter");
+    const obj = env.COUNTER.get(id);
+    return obj.fetch(request);
+  }
+};
+```
+
+### Why use Alchemy
+
+- **Type-safe everything**: Full autocompletion for Cloudflare resources without code generation or external schemas
+- **Single source of truth**: Infrastructure and app code evolve together—atomic changes, easier rollbacks
+- **Environment inference**: Worker types are automatically inferred from your infrastructure definition
+- **Local-first**: Test infrastructure changes locally with the same fast feedback as your app code
+
+### Important considerations
+
+- **Credentials**: Set `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN` env vars. Use your secrets manager, never commit them
+- **State files**: Alchemy stores state in `.alchemy/` JSON files—commit these to VCS for team collaboration and rollbacks. Don't edit manually
+- **Bundling**: Run `wrangler deploy --dry-run --outdir build` before Alchemy in CI. Alchemy handles bundling by default but respects pre-built artifacts
+- **Durable Objects**: Migrations apply with deployments. If you bind a DO class, ensure migrations are applied first (same constraint noted below)
+- **Preview URLs**: Useful for CI/CD previews, but don't use `url: true` for production traffic. Use `routes` or `domains` instead
 
 ## Cloudflare API Libraries
 
