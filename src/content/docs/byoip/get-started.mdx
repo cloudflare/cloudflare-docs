@@ -85,7 +85,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/addressing/prefix
 
 Validate prefix ownership using one of the following methods:
 
-<Tabs> <TabItem label="Modify IRR record">
+<Tabs> <TabItem label="IRR record">
 
 1. Copy the `ownership_validation_token` returned by the API call.
 2. On the IRR record of the prefix you are onboarding, add the following string in either a `description` or `remarks` field. Replace `<OWNERSHIP_VALIDATION_TOKEN>` by the actual token you copied in the previous step.
@@ -115,7 +115,7 @@ To calculate how many smaller subnets you need, use the following formula:
 
 For `1.1.0.0/23`, you would setup two (`2^(24-23)`) reverse DNS zones, one for `1.1.0.0/24` and another for `1.1.1.0/24`.
 
-For 2001:0db8::/34, you would setup four (`2^(36-34)`) reverse DNS zones, for `2001:0db8::/36`, `2001:0db8:1:/36`, `2001:0db8:2::/36`, and `2001:0db8:3::/36`.
+For `2001:0db8::/34`, you would setup four (`2^(36-34)`) reverse DNS zones, for `2001:0db8::/36`, `2001:0db8:1:/36`, `2001:0db8:2::/36`, and `2001:0db8:3::/36`.
 
 </Details>
 
