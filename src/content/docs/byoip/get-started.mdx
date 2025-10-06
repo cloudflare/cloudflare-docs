@@ -135,15 +135,7 @@ Once the ownership validation is successful, you can remove the token.
 
 When all validations pass - RPKI, IRR, and ownership - the `approved` field in your prefix will return `"V"`. This means you can proceed to create IP address service bindings[^1].
 
-If needed, you can use the [Prefix Details endpoint](/api/resources/addressing/subresources/prefixes/methods/get/) to check if any issues were found during validation. If so, proceed with the necessary changes and make a request to restart validation.
-
-<APIRequest path= "/accounts/{account_id}/addressing/prefixes/{prefix_id}" method="GET" />
-
-(WIP - Add response example (collapsable))
-
-(WIP - Add code block example for "/accounts/account_id/addressing/prefixes/prefix_id/validate")
-
-(WIP - Clarify criteria for IRR check + further info like schedule and limits?)
+If needed, you can use the [Prefix Details endpoint](/api/resources/addressing/subresources/prefixes/methods/get/) to check if any issues were found during validation. If so, proceed with the necessary changes and make a request to restart validation. Refer to [Prefix validation checks](/byoip/troubleshooting/prefix-validation/) for details.
 
 ### (Optional) Delegate your BYOIP prefixes
 
