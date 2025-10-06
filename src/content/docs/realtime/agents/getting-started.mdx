@@ -9,7 +9,12 @@ head:
 description: Deploy your first Realtime Agent using the CLI.
 ---
 
-import { Render, PackageManagers, WranglerConfig, TypeScriptExample } from "~/components";
+import {
+	Render,
+	PackageManagers,
+	WranglerConfig,
+	TypeScriptExample,
+} from "~/components";
 
 :::caution
 This guide is experimental, Realtime agents will be consolidated into the [Agents SDK](/agents/) in a future release
@@ -80,7 +85,13 @@ Update the `index.ts` file in your `hello-agent` application directory with the 
 <TypeScriptExample filename="index.ts">
 
 ```ts
-import { DeepgramSTT, TextComponent, RealtimeKitTransport, ElevenLabsTTS, RealtimeAgent } from '@cloudflare/realtime-agents';
+import {
+	DeepgramSTT,
+	TextComponent,
+	RealtimeKitTransport,
+	ElevenLabsTTS,
+	RealtimeAgent,
+} from "@cloudflare/realtime-agents";
 
 class MyTextProcessor extends TextComponent {
 	env: Env;
@@ -90,11 +101,15 @@ class MyTextProcessor extends TextComponent {
 		this.env = env;
 	}
 
-	async onTranscript(text: string, reply: (text: string) => void) {
-		const { response } = await this.env.AI.run('@cf/meta/llama-3.1-8b-instruct', {
+	async onTranscript(
+		text: string,
+		reply: (text: string | ReadableStream<Uint8Array>) => void,
+	) {
+		const stream = await this.env.AI.run("@cf/meta/llama-3.1-8b-instruct", {
 			prompt: text,
+			stream: true,
 		});
-		reply(response!);
+		reply(stream);
 	}
 }
 
@@ -103,11 +118,17 @@ export class MyAgent extends RealtimeAgent<Env> {
 		super(ctx, env);
 	}
 
-	async init(agentId: string, meetingId: string, authToken: string, workerUrl: string, accountId: string, apiToken: string) {
+	async init(
+		agentId: string,
+		authToken: string,
+		workerUrl: string,
+		accountId: string,
+		apiToken: string,
+	) {
 		// Construct your text processor for generating responses to text
 		const textProcessor = new MyTextProcessor(this.env);
 		// Construct a Meeting object to join the RTK meeting
-		const rtkTransport = new RealtimeKitTransport(meetingId, authToken);
+		const rtkTransport = new RealtimeKitTransport(authToken);
 
 		// Construct a pipeline to take in meeting audio, transcribe it using
 		// Deepgram, and pass our generated responses through ElevenLabs to
@@ -131,10 +152,10 @@ export class MyAgent extends RealtimeAgent<Env> {
 		// The RTK meeting object is accessible to us, so we can register handlers
 		// on various events like participant joins/leaves, chat, etc.
 		// This is optional
-		meeting.participants.joined.on('participantJoined', (participant) => {
+		meeting.participants.joined.on("participantJoined", (participant) => {
 			textProcessor.speak(`Participant Joined ${participant.name}`);
 		});
-		meeting.participants.joined.on('participantLeft', (participant) => {
+		meeting.participants.joined.on("participantLeft", (participant) => {
 			textProcessor.speak(`Participant Left ${participant.name}`);
 		});
 
@@ -151,34 +172,40 @@ export class MyAgent extends RealtimeAgent<Env> {
 export default {
 	async fetch(request, env, _ctx): Promise<Response> {
 		const url = new URL(request.url);
-		const meetingId = url.searchParams.get('meetingId');
-		if (!meetingId) {
+
+		const agentId = url.searchParams.get("agentId");
+		if (!agentId) {
 			return new Response(null, { status: 400 });
 		}
 
-		const agentId = meetingId;
-		const agent = env.MY_AGENT.idFromName(meetingId);
+		const agent = env.MY_AGENT.idFromName(agentId);
 		const stub = env.MY_AGENT.get(agent);
 		// The fetch method is implemented for handling internal pipeline logic
-		if (url.pathname.startsWith('/agentsInternal')) {
+		if (url.pathname.startsWith("/agentsInternal")) {
 			return stub.fetch(request);
 		}
 
 		// Your logic continues here
 		switch (url.pathname) {
-			case '/init':
+			case "/init":
 				// This is the authToken for joining a meeting, it can be passed
 				// in query parameters as well if needed
-				const authHeader = request.headers.get('Authorization');
+				const authHeader = request.headers.get("Authorization");
 				if (!authHeader) {
 					return new Response(null, { status: 401 });
 				}
 
 				// We just need the part after `Bearer `
-				await stub.init(agentId, meetingId, authHeader.split(' ')[1], url.host, env.ACCOUNT_ID, env.API_TOKEN);
+				await stub.init(
+					agentId,
+					authHeader.split(" ")[1],
+					url.host,
+					env.ACCOUNT_ID,
+					env.API_TOKEN,
+				);
 
 				return new Response(null, { status: 200 });
-			case '/deinit':
+			case "/deinit":
 				await stub.deinit();
 				return new Response(null, { status: 200 });
 		}
@@ -186,8 +213,8 @@ export default {
 		return new Response(null, { status: 404 });
 	},
 } satisfies ExportedHandler<Env>;
-
 ```
+
 </TypeScriptExample>
 
 The Realtime Agents SDK provides several elements that work together to create an end-to-end pipeline
@@ -267,7 +294,7 @@ Finally, to invoke the worker, we need to generate a RealtimeKit token from the 
 Finally, invoke the worker to make the agent join a meeting:
 
 ```sh
-curl -X POST https://hello-agent.<YOUR_SUBDOMAIN>.workers.dev/init?meetingId=<REALTIME_KIT_MEETING_ID> -H "Authorization: Bearer <REALTIME_KIT_AUTH_TOKEN>"
+curl -X POST https://hello-agent.<YOUR_SUBDOMAIN>.workers.dev/init?agentId=<UNIQUE_AGENT_ID> -H "Authorization: Bearer <REALTIME_KIT_AUTH_TOKEN>"
 ```
 
 ## Related resources
