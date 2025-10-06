@@ -38,6 +38,7 @@ Recommendations will continue to update if your traffic pattern changes.
 Volumetric Abuse Detection generates rate limit thresholds only after collecting sufficient, statistically safe traffic data for an endpoint. If recommendations are missing for a discovered endpoint, the traffic likely failed to meet the necessary criteria.
 
 Thresholds are suggested only for endpoints that satisfy all of the following requirements within the last seven days (or since initial discovery):
+
 - The endpoint must receive sufficient valid traffic (traffic that meets the [API Discovery](/api-shield/security/api-discovery/) criteria). Intermittent or erratic traffic may prevent suggestions.
 - The endpoint must be accessed by at least 50 distinct sessions in any 24-hour period.
 - <GlossaryTooltip term="session identifier" link="/api-shield/get-started/#to-set-up-session-identifiers">Session identifiers</GlossaryTooltip>, such as an authorization token available as a request header or cookie, must be configured to allow Cloudflare to accurately detect individual sessions and perform the required per-session rate analysis.
@@ -71,7 +72,6 @@ Implementing low confidence rate limits can still be helpful to prevent API abus
 ### Create rate limits
 
 Refer to the [Rules documentation](https://developers.cloudflare.com/waf/rate-limiting-rules/create-zone-dashboard/) for more information on how to create an Advanced Rate Limiting rule.
-
 
 ## API
 
