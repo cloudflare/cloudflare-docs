@@ -243,6 +243,7 @@
 /api-shield/security/jwt-validation/configure/ /api-shield/security/jwt-validation/api/ 301
 /api-shield/security/schema-validation/configure/ /api-shield/security/schema-validation/api/ 301
 /api-shield/security/sequence-mitigation/configure/ /api-shield/security/sequence-mitigation/api/ 301
+/api-shield/frequently-asked-questions/ /api-shield/ 301
 
 #autorag
 /autorag/usage/recipes/ /ai-search/how-to/ 301
