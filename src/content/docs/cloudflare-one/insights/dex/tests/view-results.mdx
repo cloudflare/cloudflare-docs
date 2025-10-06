@@ -5,6 +5,8 @@ sidebar:
   order: 3
 ---
 
+import { Render } from "~/components";
+
 Use the results of a DEX test to monitor availability and performance for a specific application. DEX will store test results according to our [log retention policy](/cloudflare-one/insights/logs/#log-retention).
 
 ## Prerequisites
@@ -14,20 +16,17 @@ Use the results of a DEX test to monitor availability and performance for a spec
 
 ## View results for all devices
 
-To view an overview of test results for all devices:
-
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **DEX** > **Monitoring**.
-2. Select the **Tests** tab.
-3. Under **Application tests**, select a test to view detailed results.
+<Render
+	file="dex/http-test-all-devices"
+	product="cloudflare-one"
+	/>
 
 ## View results for an individual device
 
-To view analytics on a per-device level:
-
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **My Team** > **Devices**.
-2. Select the device you want to view, and then select **View details**.
-3. Select the **Tests** tab.
-4. Select a test to view detailed results.
+<Render
+	file="dex/http-test-one-device"
+	product="cloudflare-one"
+	/>
 
 ## Related resources
 

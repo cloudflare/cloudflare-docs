@@ -5,75 +5,63 @@ sidebar:
   order: 4
 ---
 
-Securing an application is only the first step; you must also verify that your policies are working correctly and that your users have a good experience. Cloudflare's **Digital Experience Monitoring (DEX)** within **Cloudflare Zero Trust** is the ideal tool for this, allowing you to monitor application performance and test your access policies from the end-user perspective.
+import { Render } from "~/components";
 
-The page below guides you through setting up a DEX test for your newly secured application.
+After you have secured your application with policies, you can verify that your policies are working correctly to avoid unexpected connection issues for end-users and subsequent IT ticket burden for administrators.
 
-# Test your first application
+## Test your application performance
 
-After securing your private application with Gateway DNS and Network policies, you should verify the policies are working as expected and monitor the application's performance. Cloudflare's **Digital Experience Monitoring (DEX)** provides the tools to do this.
+<Render file="dex/intro" product="cloudflare-one" />
 
----
+DEX tests and other measurement features are only available for devices that have WARP installed.
 
-## What is Cloudflare DEX?
+## Configure a DEX test
 
-**Digital Experience Monitoring (DEX)** gives administrators insights into the end-user connectivity and performance when connecting to resources, leveraging the same global network toolkit Cloudflare uses internally.
+You will test your first application using a DEX [HTTP test](/cloudflare-one/insights/dex/tests/http/).
 
-DEX allows you to:
-* **Measure performance** for connecting to the Internet and applications.
-* **Track metrics** like response time averages from various locations.
-* **Test connectivity** to an application from a device running the **Cloudflare WARP client**.
+<Render file="dex/http-test" product="cloudflare-one" />
 
----
+<Render
+	file="dex/http-test-setup"
+	product="cloudflare-one"
+	params={{
+		url: "https://wiki.internal.com",
+	}}
+	/>
 
-## Configure a DEX Test on a WARP Device
+You can turn off this test later to prevent it from rerunning by going to **DEX** > **Tests** in [Zero Trust](https://one.dash.cloudflare.com/) and disabling the toggle under **Status**.
 
-You can set up synthetic tests—like **HTTP tests** or **Traceroute tests**—to continuously check the performance and availability of your internal application from your WARP-enrolled devices.
+## View test results
 
-For an application like the "Company Wiki" secured in the previous step (e.g., `wiki.internal.com` pointing to `10.128.0.10`), an **HTTP test** is the best way to verify access and measure performance.
+### View test results for all devices
 
-### 1. Create a DEX HTTP Test
+<Render
+	file="dex/http-test-all-devices"
+	product="cloudflare-one"
+	/>
 
-1.  Open your Cloudflare Zero Trust dashboard.
-2.  Go to **Analytics** > **DEX** > **Tests**.
-3.  Create a new test and configure it for your application. For example:
-    * **Test Type**: HTTP test
-    * **Host**: The domain or IP of your application (e.g., `https://wiki.internal.com`).
-    * **Interval**: How often the test should run (e.g., `15m` for every 15 minutes).
-    * **Name**: `Company Wiki Health Check`.
-    * **Enabled**: Set to **True**.
+### View test results for an individual device
 
-### 2. Configure WARP Client Testing
+<Render
+	file="dex/http-test-one-device"
+	product="cloudflare-one"
+	/>
 
-The test is conducted by the **WARP client** on devices enrolled in your organization. For the test to work, ensure the WARP client is installed, running, and the device is enrolled.
+## Analyze test results
 
-The DEX test will automatically use the WARP client on enrolled devices to perform the configured checks.
+<Render
+	file="dex/http-test-results"
+	product="cloudflare-one"
+	/>
 
----
+A successful **HTTP Status Code** (for example, `200 OK`) will confirm that the end user device traffic successfully passed your entire Zero Trust security posture and reached the application's origin. If the test returns a failure code (like `403 Forbidden`), the Access policies are working to block an unauthorized request, and you will need to audit which Access policy is denying the end user access.
 
-## View Performance Metrics
+// Need steps on how to do this.
 
-Once the test is running, you can view the results to gain insights into your application's performance as experienced by your users.
+For performance, you track the time it took for the request to complete, starting with the DNS Response Time. This is critical because your Gateway DNS policy is the very first enforcement gate, so this metric tells you the overhead introduced by Cloudflare resolving the hostname and evaluating the policy's identity checks.
 
-1.  In the Cloudflare Zero Trust dashboard, go to **Analytics** > **DEX** > **Tests** > **View test results**.
-2.  Select your new test to see the results.
+Next, the Server Response Time helps isolate any latency issues to the network path or the application's back-end.
 
-You can monitor key performance metrics like:
+Finally, the Resource Fetch Time is the total time elapsed for the entire test, giving you the conclusive, single metric for the actual end-user experience, which should be low and stable to confirm a successful deployment.
 
-* **Response Time Averages**: The total time it takes to get a response from your application.
-* **DNS Resolution Time**: How long it takes the Gateway DNS policy to resolve the application's domain.
-* **HTTP Status Codes**: Track successful responses (2xx) and quickly detect an increase in client (4xx) or server (5xx) errors, which helps identify issues with your application or policies.
-
----
-
-## Testing Policy Enforcement
-
-While DEX primarily focuses on experience and performance, the results can also indicate if your Gateway policies are correctly applied.
-
-Since policy enforcement is a fundamental function of Gateway, you should monitor the **Gateway Activity Logs** to see how your policies interact with traffic destined for your application.
-
-1.  In the Cloudflare Zero Trust dashboard, go to **Analytics** > **Logs** > **Gateway activity logs**.
-2.  Filter the logs for your application's domain (e.g., `wiki.internal.com`) or IP address (e.g., `10.128.0.10`).
-3.  Check the **Action** column to verify that your explicit `Allow` DNS and Network policies are being applied, and that the catch-all `Block` policy is *not* being hit for authorized traffic.
-
-**Note**: While setting up, it is not recommended to employ a default-deny model while testing. Instead, build your explicit application policies and **monitor your logs** to determine if your policies are working as expected.
+// Need explanation for what real world consequences performance metrics have on user exp
