@@ -6,7 +6,7 @@ sidebar:
 
 ---
 
-Cloudflare has integrations with Microsoft Sentinel to make analyzing your Cloudflare data easier and in a centralized space. Cloudflare has two versions of this connector available, we recommend utilizing the latest Codeless Connector integration as it provides easier setup, cost management, and integrates with [Sentinel Data Lake](https://learn.microsoft.com/en-us/azure/sentinel/datalake/sentinel-lake-overview).
+Cloudflare has integrations with Microsoft Sentinel to make analyzing your Cloudflare data easier and in a centralized space. Cloudflare has two versions of this connector available. We recommend utilizing the latest Codeless Connector integration as it provides easier setup, cost management, and integrates with [Sentinel Data Lake](https://learn.microsoft.com/en-us/azure/sentinel/datalake/sentinel-lake-overview).
 
 **Sentinel CCF Solution** (recommended): The [Codeless Connector Framework](https://learn.microsoft.com/en-us/azure/sentinel/create-codeless-connector) (CCF) provides partners, advanced users, and developers the ability to create custom connectors for ingesting data to Microsoft Sentinel.
 
@@ -35,7 +35,7 @@ This guide provides clear, step-by-step instructions for integrating Cloudflare 
 
 For complete details, refer to the [Cloudflare Logpush to Azure documentation](/logs/logpush/logpush-job/enable-destinations/azure/).
 
-## Step 3: Configure Azure and Deploy the Data Connector in Microsoft Sentinel
+## Step 3: Configure Azure and deploy the Data Connector in Microsoft Sentinel
 
 1. Log in to the Azure Portal and go to your **Microsoft Sentinel** workspace.
 2. Select **Content Hub** in the navigation bar and search for **Cloudflare**.
@@ -51,11 +51,9 @@ For complete details, refer to the [Cloudflare Logpush to Azure documentation](/
 
 When configuring the Cloudflare data connector, you will need to provide the following information:
 
-Enter the following details:
-
 - Blob container URL
 
-To obtain the container URL within your Azure storage account, access the Azure Portal and navigate to your storage account. Under Data Storage, select Containers, then choose the relevant container receiving logs from Cloudflare. The container properties section will display the URL link.
+To obtain the container URL within your Azure storage account, access the Azure Portal and navigate to your storage account. Under **Data Storage**, select **Containers**, then choose the relevant container receiving logs from Cloudflare. The container properties section will display the URL link.
 
 - Resource group name for the storage account
 - Storage account location
