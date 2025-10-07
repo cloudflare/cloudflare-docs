@@ -68,9 +68,18 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/sso_connectors"
 
 ## 3. Verify domain ownership
 
-Copy the verification code (for example `cloudflare_dashboard_sso=1111111`) and create a TXT record in your DNS configuration with that value. Cloudflare will automatically poll that DNS record until it is found or a timeout is reached within two days.
+Copy the verification code (for example `cloudflare_dashboard_sso=1111111`) and create a `TXT` record in your DNS configuration with that value. To test that the DNS record was correctly configured, you can use the `dig` command to query your email domain:
 
-If verification fails due to timeout, you may manually reinitiate the polling by running the following command:
+```sh
+dig cool.cats TXT +short
+```
+```sh output
+"cloudflare_dashboard_sso=111111111"
+```
+
+The `TXT` record must include the `cloudflared_dashboard_sso=` prefix along with the numerical code.
+
+Cloudflare will automatically poll this DNS record until it is found or a timeout is reached within two days. If verification fails due to timeout, you may manually reinitiate the polling by running the following command:
 
 ```bash title="cURL command"
 curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/sso_connectors/{sso_connector_id}/begin_verification" \

@@ -193,3 +193,20 @@ The Datadog destination is exclusive to new jobs and might not be backward compa
 
 To analyze and visualize Cloudflare metrics using the Cloudflare Integration tile for Datadog, follow the steps in the [Datadog Analytics integration page](/analytics/analytics-integrations/datadog/).
 :::
+
+## Limitations
+
+Note the following Logpush sending limitations, as described in the [Datadog documentation](https://docs.datadoghq.com/api/latest/logs/).
+
+Send your logs to your Datadog platform over HTTP. Limits per HTTP request are the following:
+
+- Maximum content size per payload (uncompressed): 5 MB
+- Maximum size for a single log: 1 MB
+- Maximum array size if sending multiple logs in an array: 1,000 entries
+
+:::caution[Warning]
+
+The above limits are hardcoded defaults. It is not possible to override these limitations using the Logpush configuration values, `max_upload_records` or `max_upload_bytes`.
+
+These limitations may result in noticeable log ingestion delay within Datadog following high traffic events. Logpush will not drop unsent logs, so all logs will be uploaded to Datadog in due time.
+:::

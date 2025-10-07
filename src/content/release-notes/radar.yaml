@@ -3,6 +3,10 @@ link: "/radar/release-notes/"
 productName: Radar
 productLink: "/radar/"
 entries:
+  - publish_date: "2025-10-06"
+    title: Add PQ encryption browser support check
+    description: |-
+      * Added a [post-quantum encryption browser support check](https://radar.cloudflare.com/adoption-and-usage#browser-support) to the PQ encryption card in the Adoption & Usage section.
   - publish_date: "2025-09-29"
     title: Add geolocation, ADM1 dimension to HTTP endpoints, and NetFlows endpoints
     description: |-
