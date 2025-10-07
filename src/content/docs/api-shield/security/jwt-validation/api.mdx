@@ -262,11 +262,11 @@ For example, the following selector will apply a rule to all operations in `v1.e
 
 Operations can be included at a host level and ignored on a per-operation basis.
 
-You can use the `POST /zones/{zone_id}/api_gateway/token_validation/rules/preview` endpoint to see the operations covered by this rule:
+You can use the `POST /zones/{zone_id}/token_validation/rules/preview` endpoint to see the operations covered by this rule:
 
 ```bash title="Example using cURL"
 curl --request PUT \
-'https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/token_validation/rules/preview' \
+'https://api.cloudflare.com/client/v4/zones/{zone_id}/token_validation/rules/preview' \
 --header 'Content-Type: application/json' \
 --data '{
     "include": [
@@ -386,7 +386,7 @@ You can also send an empty object in the request body:
 
 ```bash title="Example using cURL"
 curl --request PUT \
-'https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/token_validation/rules/preview' \
+'https://api.cloudflare.com/client/v4/zones/{zone_id}/token_validation/rules/preview' \
 --header 'Content-Type: application/json' \
 --data '{ }'
 ```
@@ -438,7 +438,7 @@ Replace any token configurations IDs and operation IDs with the IDs that exist i
 A single request can create multiple rules. To do so, pass multiple rule objects in the JSON array of the request body.
 
 ```bash title="Example using cURL"
-curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/token_validation/rules" \
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/token_validation/rules/bulk" \
 --header 'Content-Type: application/json' \
 --data '[
     {
@@ -529,7 +529,7 @@ Use the `PUT` command to update keys.
 
 ```bash title="Example using cURL"
 curl --request PUT \
-'https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/token_validation/{config_id}/credentials' \
+'https://api.cloudflare.com/client/v4/zones/{zone_id}/token_validation/config/{config_id}/credentials' \
 --header 'Content-Type: application/json' \
 --data '{
     "keys": [
@@ -565,7 +565,7 @@ The following example updates one rule and disables another:
 
 ```bash title="Example using cURL"
 curl --request PATCH \
-"https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/token_validation/rules"  \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/token_validation/rules/bulk"  \
 --header "Content-Type: application/json" \
 --data '[
     {
@@ -586,7 +586,7 @@ This example places rule `714d3dd0-cc59-4911-862f-8a27e22353cc` after rule `7124
 
 ```bash title="Example using cURL"
 curl --request PATCH \
-"https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/token_validation/rules" \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/token_validation/rules/bulk" \
 --header 'Content-Type: application/json' \
 --data '[
     {
@@ -602,7 +602,7 @@ This example places rule `714d3dd0-cc59-4911-862f-8a27e22353cc` before rule `712
 
 ```bash title="Example using cURL"
 curl --request PATCH \
-"https://api.cloudflare.com/client/v4/zones/{zone_id}/api_gateway/token_validation/rules" \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/token_validation/rules/bulk" \
 --header 'Content-Type: application/json' \
 --data '[
     {
