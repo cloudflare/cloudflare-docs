@@ -73,6 +73,10 @@ Uploading the CA private key is only required if you wish to use [Zero Trust's b
   "action": "block"
 ```
 
+:::note
+When using CNAME, enforce mTLS on the specific hostname where it should be checked. It is not enough to have it set on the CNAME target.
+:::
+
 ### Multiple CAs for one hostname
 
 There can be multiple CAs (Cloudflare-managed or BYOCA) associated with the same hostname. For BYOCA certificates, the most recently deployed certificate will be prioritized.
