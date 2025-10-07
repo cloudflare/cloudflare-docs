@@ -35,3 +35,26 @@ Customer Metadata Boundary is currently not supported for Log Explorer.
 
 We are continually scaling the Log Explorer data platform. At present, Log Explorer supports log ingestion rates of up to 50,000 records per second. If your needs exceed this, contact your account team.
 
+## How is Log Explorer different from Logpush? Do I need both?
+
+Log Explorer allows you to search and analyze your Cloudflare logs directly in the dashboard or via API. [Logpush](/logs/logpush/), on the other hand, delivers raw logs to third-party SIEMs or storage systems. You generally do not need both, but some customers choose to use Log Explorer for quick investigation and Logpush for long-term storage or integration with other tools.
+
+## Is there a free version or trial of Log Explorer?
+
+Log Explorer is available as a paid add-on for any Application Services or Zero Trust purchase. There is no free version at this time.
+
+## How is Log Explorer billed?
+
+Log Explorer billing is based on the volume of logs indexed and stored, measured in gigabytes (GB). Your charges scale with the amount of log data you choose to retain in Log Explorer. Unlike query-based billing models (for example, BigQuery), charges are not based on how often you search or scan your data. Once logs are ingested and stored, you can query them without additional cost.
+
+## Are logs from attack traffic included in my Log Explorer usage?
+
+Yes. Log Explorer bills are based on the total volume of logs ingested and stored, including attack traffic. Since these logs are often critical for investigating security incidents, they are treated the same as all other log data.
+
+## How does Log Explorer store data in R2, and why do I not see it in my own R2 bucket?
+
+Log Explorer uses Cloudflare Logpush and R2 behind the scenes to stream and store logs. For technical and performance reasons, the data is stored in internal, customer-specific R2 buckets managed by Cloudflare. These buckets are single-tenant to keep your data isolated, but they are not visible in your account's R2 interface. You are not billed separately for this storage — it is included in your Log Explorer usage.
+
+## Are Custom Dashboards based on R2 Log Explorer data, or on GraphQL?
+
+Custom Dashboards currently run on GraphQL. Over time, this will evolve to include deeper integration between the two features, such as building charts directly from logs.

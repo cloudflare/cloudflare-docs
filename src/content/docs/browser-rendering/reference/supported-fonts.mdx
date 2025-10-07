@@ -4,12 +4,17 @@ title: Supported fonts
 sidebar:
   order: 3
 ---
+import { Tabs, TabItem } from "~/components";
 
-Browser Rendering uses a managed Chromium environment that includes a standard set of fonts. When you generate a screenshot or PDF, text is rendered using the fonts available in this environment. 
+Browser Rendering uses a managed Chromium environment that includes a standard set of fonts. When you generate a screenshot or PDF, text is rendered using the fonts available in this environment.
 
-If your webpage specifies a font that is not supported yet, Chromium will automatically fall back to a similar supported font. If you would like to use a font that is not currently supported, reach out to us on [Cloudflare Discord](https://discord.cloudflare.com/).
+If your webpage specifies a font that is not supported yet, Chromium will automatically fall back to a similar supported font. If you would like to use a font that is not currently supported, you can [add a custom font](/browser-rendering/reference/supported-fonts/#use-your-own-custom-font).
 
-## Generic CSS font family support
+## Pre-installed fonts
+
+The following sections list the fonts available in the Browser Rendering environment.
+
+### Generic CSS font family support
 
 The following generic CSS font families are supported:
 
@@ -19,43 +24,140 @@ The following generic CSS font families are supported:
 - `cursive`
 - `fantasy`
 
-## Common system fonts
+### Common system fonts
 
-- Andale Mono  
-- Arial  
-- Arial Black  
-- Comic Sans MS  
-- Courier  
-- Courier New  
-- Georgia  
-- Helvetica  
-- Impact  
-- Lucida Handwriting  
-- Times  
-- Times New Roman  
-- Trebuchet MS  
-- Verdana  
+- Andale Mono
+- Arial
+- Arial Black
+- Comic Sans MS
+- Courier
+- Courier New
+- Georgia
+- Helvetica
+- Impact
+- Lucida Handwriting
+- Times
+- Times New Roman
+- Trebuchet MS
+- Verdana
 - Webdings
 
-## Open source and extended fonts
+### Open source and extended fonts
 
-- Bitstream Vera (Serif, Sans, Mono)  
-- Cyberbit  
-- DejaVu (Serif, Sans, Mono)  
-- FreeFont (FreeSerif, FreeSans, FreeMono)  
-- GFS Neohellenic  
-- Liberation (Serif, Sans, Mono)  
-- Open Sans  
-- Roboto  
+- Bitstream Vera (Serif, Sans, Mono)
+- Cyberbit
+- DejaVu (Serif, Sans, Mono)
+- FreeFont (FreeSerif, FreeSans, FreeMono)
+- GFS Neohellenic
+- Liberation (Serif, Sans, Mono)
+- Open Sans
+- Roboto
 
-## International fonts
+### International fonts
 
 Browser Rendering includes additional font packages for non-Latin scripts and emoji:
 
-- IPAfont Gothic (Japanese)  
-- Indic fonts (Devanagari, Bengali, Tamil, and others)  
-- KACST fonts (Arabic)  
-- Noto CJK (Chinese, Japanese, Korean)  
-- Noto Color Emoji  
-- TLWG Thai fonts  
-- WenQuanYi Zen Hei (Chinese) 
+- IPAfont Gothic (Japanese)
+- Indic fonts (Devanagari, Bengali, Tamil, and others)
+- KACST fonts (Arabic)
+- Noto CJK (Chinese, Japanese, Korean)
+- Noto Color Emoji
+- TLWG Thai fonts
+- WenQuanYi Zen Hei (Chinese)
+
+## Use your own custom font
+
+If a required font is not pre-installed, you can inject it into the page at render time using `addStyleTag`. This allows you to load fonts from an external URL or embed them directly as a Base64 string.
+
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
+Example with puppeteer and a CDN source:
+
+```js
+const browser = await puppeteer.launch(env.MYBROWSER);
+const page = await browser.newPage();
+await page.addStyleTag({
+  content: `
+    @font-face {
+      font-family: 'CustomFont';
+      src: url('https://your-cdn.com/fonts/MyFont.woff2') format('woff2');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    body {
+      font-family: 'CustomFont', sans-serif;
+    }
+  `
+});
+```
+
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
+Example with puppeteer and a CDN source:
+
+```ts
+const browser = await puppeteer.launch(env.MYBROWSER);
+const page = await browser.newPage();
+await page.addStyleTag({
+  content: `
+    @font-face {
+      font-family: 'CustomFont';
+      src: url('https://your-cdn.com/fonts/MyFont.woff2') format('woff2');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    body {
+      font-family: 'CustomFont', sans-serif;
+    }
+  `
+});
+```
+
+</TabItem> </Tabs>
+
+
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
+Example with playwright and a Base64 encoded data source:
+
+```js
+const browser = await playwright.launch(env.MYBROWSER);
+const page = await browser.newPage();
+await page.addStyleTag({
+  content: `
+    @font-face {
+      font-family: 'CustomFont';
+      src: url('data:font/woff2;base64,<BASE64_STRING>') format('woff2');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    body {
+      font-family: 'CustomFont', sans-serif;
+    }
+  `
+});
+```
+
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
+Example with playwright and a Base64 encoded data source:
+
+```ts
+const browser = await puppeteer.launch(env.MYBROWSER);
+const page = await browser.newPage();
+await page.addStyleTag({
+  content: `
+    @font-face {
+      font-family: 'CustomFont';
+      src: url('data:font/woff2;base64,<BASE64_STRING>') format('woff2');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    body {
+      font-family: 'CustomFont', sans-serif;
+    }
+  `
+});
+```
+
+</TabItem> </Tabs>

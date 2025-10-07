@@ -31,6 +31,7 @@ import { authorData } from "~/components/models/data";
 import OpenAIResponsesTextGenerationCode from "~/components/models/code/OpenAIResponsesTextGenerationCode.astro";
 import DeepgramAura from "~/components/models/code/DeepgramAura.astro";
 import DeepgramNova from "~/components/models/code/DeepgramNova.astro";
+import DeepgramFlux from "~/components/models/code/DeepgramFlux.astro";
 
 export const getStaticPaths = (async () => {
 	const models = await getCollection("workers-ai-models");
@@ -126,6 +127,10 @@ if (model.name === "@cf/deepgram/nova-3") {
 	CodeExamples = DeepgramNova;
 }
 
+if (model.name === "@cf/deepgram/flux") {
+	CodeExamples = DeepgramFlux;
+}
+
 const description = model.description;
 
 const isBeta = model.properties.find(
@@ -217,6 +222,16 @@ const starlightPageProps = {
    -d '{ "prompt": "agree"}'`}
 					lang="sh"
 				/>
+			</Aside>
+		)
+	}
+
+	{
+		model.name === "@cf/deepgram/flux" && (
+			<Aside>
+				<p>
+					For the month of October 2025, Deepgram's Flux model will be free to use on Workers AI. Official pricing will be announced soon and charged after the promotional pricing period ends on October 31, 2025.
+				</p>
 			</Aside>
 		)
 	}

@@ -6,6 +6,9 @@ description: Learn how to contact Cloudflare Support via community, chat, or pho
 sidebar:
   order: 1
 ---
+
+import { LinkButton } from "~/components";
+
 ## Guidelines for contacting Cloudflare support
 
 Cloudflare Support _cannot_ perform the following actions:
@@ -45,7 +48,7 @@ Customers on Free plans are encouraged to utilize our Cloudflare Community and w
 
 :::
 
-## Verifying your identity
+## Verifying your identity on phone calls
 
 _(For Enterprise Emergency Phone Support)_
 
@@ -56,23 +59,19 @@ For account security, you must verify your identity and account ownership in the
 
 ### Authenticating your account
 
-1\. Log into your Cloudflare account.
+1. In the Cloudflare dashboard, go to the **Support** page and select the account you are calling about.
 
-2\. In the upper right corner of the Cloudflare dashboard, select **Support** > **Support** or visit [https://dash.cloudflare.com/?to=/:account/support](https://dash.cloudflare.com/?to=/:account/support).
+<LinkButton href="https://dash.cloudflare.com/?to=/:account/support" icon="external">Go to Support</LinkButton>
 
-![](~/assets/images/support/contact-cloudflare-menu.png)
+2. Click on the **Technical Support** tile and then the **Emergency Phone Line** tile.
 
-3\. On the right-hand column there is a section for _Emergency Phone Support Hotline_.
-
-![](~/assets/images/support/Screen_Shot_2022-09-28_at_11.41.37.png)
-
-4\. To authenticate using a single-use token, click **Get a single-use token**. A pop-up window will appear with your Unique Customer Id and One Time Passcode. The code automatically refreshes every 30 seconds.
+3. To authenticate using a single-use token, click on the **Get a single-use token** button. A pop-up window will appear with your Unique Customer Id and One Time Passcode. The code automatically refreshes every 30 seconds.
 
 ![](~/assets/images/support/Emergency_Phone_Support.png)
 
-5\. To authenticate using an authenticator app, click **Configure authenticator app** and follow the [configuration instructions](/fundamentals/user-profiles/2fa/#configure-totp-mobile-application-authentication) on the following screen. After configuration, the token code will appear in your mobile authentication application.
+4. To authenticate using an authenticator app, click **Configure authenticator app** and follow the [configuration instructions](/fundamentals/user-profiles/2fa/#configure-totp-mobile-application-authentication) on the following screen. After configuration, the token code will appear in your mobile authentication application.
 
-6\. When calling the emergency phone line, you can authenticate automatically by entering your ID and Code when requested.
+5. When calling the emergency phone line, you can authenticate automatically by entering your ID and Code when requested.
 
 ---
 
@@ -80,16 +79,19 @@ For account security, you must verify your identity and account ownership in the
 
 To submit a support case, follow these steps:
 
-1. Browse to [https://dash.cloudflare.com/?to=/:account/support](https://dash.cloudflare.com/?to=/:account/support).
-2. Enter the **email** and **password** for your Cloudflare account. Your email needs to be [verified](/fundamentals/user-profiles/verify-email-address/) in order to submit a Support case.
-3. Select the appropriate account requiring assistance.
-4. Verify that you are now in the Support Portal.
-5. Choose the category and subcategories that best define your issue.
-6. Choose the affected domains (if applicable).
-7. Enter a detailed summary of the issue you’re experiencing.
-8. Review the right-hand panel of the Portal for recommended resources and for troubleshooting guides resulting from diagnostics run against your domain.
-9. If the provided resources did not solve your issue, click Add more details to submit a case\*\*
-10. Complete the case submission fields as completely as possible with the following information. _(**Please note** that missing information will increase the time it takes to resolve your issue and our team may not be able to investigate without enough information. Please review [Gathering information for troubleshooting sites](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/) and make sure you include all needed information.)_
+1. In the Cloudflare dashboard, go to the **Support** page and select the account you require assistance for.
+
+<LinkButton href="https://dash.cloudflare.com/?to=/:account/support" icon="external">Go to Support</LinkButton>
+
+2. Click on the **Technical Support** tile, or for billing issues click **Billing** and then click **Create a Case** at the bottom of the following screen.
+
+3. Choose the category and subcategories that best define your issue.
+
+4. Choose the affected domains (if applicable).
+
+5. Enter a detailed summary of the issue you’re experiencing.
+
+6. Complete the case submission fields as completely as possible with the following information. _(**Please note** that missing information will increase the time it takes to resolve your issue and our team may not be able to investigate without enough information. Please review [Gathering information for troubleshooting sites](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/) and make sure you include all needed information.)_
     \- A detailed description of the issue with the following information:
     - Timestamp (UTC)
     - ZoneName/ZoneID
@@ -105,7 +107,7 @@ To submit a support case, follow these steps:
     - Output from [test tools](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/) such as MTR, traceroute, dig/nslookup, and cURL
       \- Priority level, impact to service / production
       \- Any collaborators whom you wish to be cc'd on the case
-11. Click **Submit Case**
+7. Click **Submit Case**
 
 \*\* Available to certain plan types only. Refer to chart above for details.
 
@@ -143,19 +145,27 @@ When sending Cloudflare Support packet captures, please do the following:
 
 ### View open support cases
 
-1. Log in to your Cloudflare account.
-2. In the upper right corner of the Cloudflare dashboard, select **Support** > **Support** or visit [https://dash.cloudflare.com/?to=/:account/support](https://dash.cloudflare.com/?to=/:account/support).
-3. If you have an open case associated with your dashboard account in the top of the right-hand column you will see a blue box with a link to "My Activities"
-4. You will be redirected to the portal where you can see your own cases and cases you are CC'd on.
+1. In the Cloudflare dashboard, go to the **Support** page and select the account you require assistance for.
+
+<LinkButton href="https://dash.cloudflare.com/?to=/:account/support" icon="external">Go to Support</LinkButton>
+
+2. Click on the **Technical Support** tile followed by **View My Cases**.
+
+3. You will be redirected to the portal where you can see your own cases and cases you are CC'd on.
 
 ### Add participants to open support tickets
 
-1. Log in to your Cloudflare account.
-2. In the upper right corner of the Cloudflare dashboard, select **Support** > **Support** or visit [https://dash.cloudflare.com/?to=/:account/support](https://dash.cloudflare.com/?to=/:account/support).
-3. If you have an open case associated with your dashboard account in the top of the right-hand column you will see a blue box with a link to "My Activities"
-4. You will be redirected to the portal where you can see your own cases and cases you are CC'd on.
-5. Select the case you want to add participants to.
-6. Enter their email in the `Case Participants` box in the top right and click **Add**.
+1. In the Cloudflare dashboard, go to the **Support** page and select the account you require assistance for.
+
+<LinkButton href="https://dash.cloudflare.com/?to=/:account/support" icon="external">Go to Support</LinkButton>
+
+2. Click on the **Technical Support** tile followed by **View My Cases**.
+
+3. You will be redirected to the portal where you can see your own cases and cases you are CC'd on.
+
+4. Select the case you want to add participants to.
+
+5. Enter their email in the `Case Participants` box in the top right and click **Add**.
 
 ---
 
@@ -163,12 +173,16 @@ When sending Cloudflare Support packet captures, please do the following:
 
 You can also use the **live chat** (Business and Enterprise plans, only) to ask specific questions that don’t require a lot of technical investigation:
 
-1. In the upper right corner of the Cloudflare dashboard, select **Support** > **Support** or visit [https://dash.cloudflare.com/?to=/:account/support](https://dash.cloudflare.com/?to=/:account/support).
-2. Enter the email and password for your Cloudflare account. Your email needs to be verified in order to chat live with us.
-3. Select the appropriate account requiring assistance.
-4. Click the **Help** icon in the bottom right corner of the screen
-5. The **Live Chat** screen will appear. Use the search field to check for answers to your questions:
-6. If the results didn't answer your question, press the **Live chat** button and start typing your message to chat with a Technical Support Engineer.
+1. Log in to your **Cloudflare dashboard** and select the **account** you need assistance with.
+2. Access the **Live Chat** based on your plan type:
+	* **Enterprise Customers**: Click the **Chat icon** in the bottom right corner of the screen to open the Cloudflare Chat widget immediately.
+	* **Business Plan Customers**:
+		* In the Cloudflare dashboard, go to the **Support** page and select the account you require assistance for.
+			<LinkButton href="https://dash.cloudflare.com/?to=/:account/support" icon="external">Go to Support</LinkButton>
+		* Click on the **Technical Support** tile followed by **Chat with an agent**.
+		* Fill-out the required form to start a Chat session.
+
+The Cloudflare Chat widget will open, send an initial message describing your problem to start chatting with an agent.
 
 ---
 

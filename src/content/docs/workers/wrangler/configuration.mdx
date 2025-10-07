@@ -986,14 +986,13 @@ The following options are available:
 
 - `instance_type` <Type text="string" /> <MetaInfo text="optional" />
   - The instance type of the container. This determines the amount of memory, CPU, and disk given to the container
-    instance. The current options are `"dev"`, `"basic"`, and `"standard"`. The default is `"dev"`. For more information,
+    instance. The current options are `"lite"`, `"basic"`, `"standard-1"`, `"standard-2"`, `"standard-3"`, and `"standard-4"`. The default is `"lite"`. For more information,
     the see [instance types documentation](/containers/platform-details#instance-types).
 
   - To specify a custom instance type, see [here](#custom-instance-types).
 
 - `max_instances` <Type text="string" /> <MetaInfo text="optional" />
   - The maximum number of concurrent container instances you want to run at any given moment. Stopped containers do not count towards this - you may have more container instances than this number overall, but only this many actively running containers at once. If a request to start a container will exceed this limit, that request will error. 
-
 
   - Defaults to 20.
 
@@ -1027,7 +1026,7 @@ The following options are available:
 class_name = "MyContainer"
 image = "./Dockerfile"
 max_instances = 10
-instance_type = "basic" # Optional, defaults to "dev"
+instance_type = "basic" # Optional, defaults to "lite"
 image_vars = { FOO = "BAR" }
 
 [[durable_objects.bindings]]
