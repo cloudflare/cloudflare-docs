@@ -38,7 +38,7 @@ Your new base URL will use the data above in this structure: `https://gateway.ai
 
 Then you can append the endpoint you want to hit, for example: `/publishers/google/models/{model}:{generative_ai_rest_resource}`
 
-So your final URL will come together as: `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/google-vertex-ai/v1/projects/{project_name}/locations/{region}/publishers/google/models/gemini-1.0-pro-001:generateContent`
+So your final URL will come together as: `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/google-vertex-ai/v1/projects/{project_name}/locations/{region}/publishers/google/models/gemini-2.5-flash:generateContent`
 
 ## Authenticating with Vertex AI
 
@@ -85,7 +85,7 @@ This option is only supported for the provider-specific endpoint, not for the un
 :::
 
 ```bash
-curl "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/google-vertex-ai/v1/projects/{project_name}/locations/{region}/publishers/google/models/gemini-1.0-pro-001:generateContent" \
+curl "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/google-vertex-ai/v1/projects/{project_name}/locations/{region}/publishers/google/models/gemini-2.5-flash:generateContent" \
     -H "Authorization: Bearer ya29.c.b0Aaekm1K..." \
     -H 'Content-Type: application/json' \
     -d '{
@@ -161,7 +161,7 @@ You can also use the provider-specific endpoint to access the full Vertex AI API
 ### cURL
 
 ```bash title="Example fetch request"
-curl "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/google-vertex-ai/v1/projects/{project_name}/locations/{region}/publishers/google/models/gemini-1.0-pro-001:generateContent" \
+curl "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/google-vertex-ai/v1/projects/{project_name}/locations/{region}/publishers/google/models/gemini-2.5-flash:generateContent" \
     -H "Authorization: Bearer {vertex_api_key}" \
     -H 'Content-Type: application/json' \
     -d '{
