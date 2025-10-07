@@ -6,13 +6,77 @@ sidebar:
 
 ---
 
-Microsoft has developed a Cloudflare connector that allows their customers to integrate [Cloudflare Logs](/logs/) with Microsoft Sentinel.
+Cloudflare has integrations with Microsoft Sentinel to make analyzing your Cloudflare data easier and in a centralized space. Cloudflare has two versions of this connector available, we recommend utilizing the latest Codeless Connector integration as it provides easier setup, cost management, and integrates with [Sentinel Data Lake](https://learn.microsoft.com/en-us/azure/sentinel/datalake/sentinel-lake-overview).
 
-## How it works
+**Sentinel CCF Solution** (recommended): The [Codeless Connector Framework](https://learn.microsoft.com/en-us/azure/sentinel/create-codeless-connector) (CCF) provides partners, advanced users, and developers the ability to create custom connectors for ingesting data to Microsoft Sentinel.
 
-[Logpush](/logs/logpush/logpush-job/enable-destinations/azure/) sends logs from Cloudflare to Azure Blob Storage. From there, the Cloudflare connector, a Microsoft function, ingests these logs into Azure Log Analytics Workspace, making them available for monitoring and analysis in Microsoft Sentinel.
+**Sentinel Function Based Connector**: The Cloudflare connector for Microsoft Sentinel uses an Azure Function to process security logs from Cloudflare's Logpush service and ingest them directly into the SIEM platform. 
 
-![Sentinel integrations steps](~/assets/images/analytics/sentinel-diagram.png)
+This guide provides clear, step-by-step instructions for integrating Cloudflare logs with the new CCF connector for Microsoft Sentinel using Azure Blob Storage. By following these steps, you will be able to securely collect, store, and analyse your Cloudflare logs within Microsoft Sentinel, enhancing your organisation's security monitoring and incident response capabilities.
 
-For more details, refer to the Microsoft documentation [Cloudflare connector for Microsoft Sentinel](https://azuremarketplace.microsoft.com/en-us/marketplace/apps/cloudflare.cloudflare_sentinel).
+## Step 1: Prerequisites
 
+- Azure Subscription with permission to create and manage resources (Contributor/Owner role recommended).
+- Microsoft Sentinel Workspace already set up in your Azure environment.
+- Azure Storage Account with a Blob container for storing Cloudflare logs.
+- Cloudflare Account with access to the domain whose logs you wish to export, and permission to configure Logpush jobs.
+
+## Step 2: Set up a logpush job
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+2. Go to **Analytics** > **Logs** and select **Logpush**.
+3. Select **Create Logpush Job**. Choose the log type you want to export (for example, **HTTP requests**).
+4. For the destination, select **Azure Blob Storage**.
+5. Enter your Azure Blob Storage details:
+    - SAS Token (Shared Access Signature)
+
+    To generate a SAS token from the Azure portal, first navigate to your storage account. Under the **Data Storage** section, select **Containers** and choose the relevant container. Within the settings, locate and select **Shared access signature**. Configure the required permissions, such as `write` and `create`, and specify the start and expiration dates for the token. Once configured, generate the SAS token accordingly.
+6. Save and activate the Logpush job.
+
+For complete details, refer to the [Cloudflare Logpush to Azure documentation](/logs/get-started/enable-destinations/azure/).
+
+## Step 3: Configure Azure and Deploy the Data Connector in Microsoft Sentinel
+
+1. Log in to the Azure Portal and go to your **Microsoft Sentinel** workspace.
+2. Select **Content Hub** in the navigation bar and search for **Cloudflare**.
+3. Select the **Cloudflare** solution from the results.
+4. Select **Install** in the right pane.
+5. In your **Sentinel workspace**, go to **Data connectors**.
+6. Search for the **Cloudflare connector** (may appear as **Cloudflare (using Azure Blob Storage)**).
+7. Selecte the connector to configure it.
+
+![Azure portal](~/assets/images/analytics/azure-portal.png)
+
+## Step 4: Fill out required fields
+
+When configuring the Cloudflare data connector, you will need to provide the following information:
+
+Enter the following details:
+
+- Blob container URL
+
+To obtain the container URL within your Azure storage account, access the Azure Portal and navigate to your storage account. Under Data Storage, select Containers, then choose the relevant container receiving logs from Cloudflare. The container properties section will display the URL link.
+
+- Resource group name for the storage account
+- Storage account location
+- Subscription ID
+- Event grid topic name (only if reconfiguring; not needed for initial setup)
+
+After entering all information, select **Connect**.
+
+Ensure all fields are correctly filled to enable seamless log ingestion.
+
+![Configuration fields](~/assets/images/analytics/configuration.png)
+
+## Step 5: Complete deployment
+
+1. Select **Apply changes** or **Connect** to finalise the connector setup.
+2. Monitor the Data connectors page in Sentinel to confirm that the Cloudflare connector status is **Connected**.
+3. Verify that Cloudflare logs are appearing in your Sentinel workspace under **Log Analytics** > **Logs**.
+4. If logs are not appearing, review your Blob Storage permissions, Cloudflare Logpush configuration, and Sentinel connector settings.
+
+![Data connectors](~/assets/images/analytics/data-connectors.png)
+
+This integration enables advanced security analytics and incident response capabilities for your Cloudflare-protected environments. If you encounter issues, review each configuration step, check permissions, and consult the official documentation for both Cloudflare and Microsoft Sentinel.
+
+![Cloudflare traffic overview](~/assets/images/analytics/traffic-overview.png)
