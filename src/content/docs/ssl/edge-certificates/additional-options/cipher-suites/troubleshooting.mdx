@@ -53,3 +53,10 @@ To remove these warnings, refer to [Customize cipher suites](/ssl/edge-certifica
 - `ECDHE-ECDSA-AES256-SHA384`
 - `ECDHE-ECDSA-AES128-SHA256`
 - `ECDHE-RSA-AES256-SHA384`
+
+## Testing Minimum TLS version with curl
+
+You can use the [--tls-max curl setting](https://curl.se/docs/manpage.html#--tls-max) to force a request to use `TLS 1.0`:
+`curl -svo /dev/null https://<hostname> --insecure --tlsv1.0 --tls-max 1.0`
+
+Please note that local VPN or device security client on your device may prevent unsecure connection using legacy protocol like `TLS 1.0`: you'll need to make sure to disable such network or security client before running the test on your device.
