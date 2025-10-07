@@ -24,10 +24,11 @@ products:
   - Agents
   - Vectorize
   - AI Gateway
+  - Containers
 sidebar:
   order: 1
   label: Fullstack applications
-reviewed: 2025-04-28
+reviewed: 2025-09-26
 description: A practical example of how these services come together in a real fullstack application architecture.
 ---
 
@@ -68,6 +69,8 @@ Serve static requests from [global cache (CDN)](/cache/). This reduces latency a
 ### 4. Compute
 
 Process dynamic requests using serverless compute with [Workers](/workers/). This could include authentication, routing, middleware, database interactions, and serving APIs. Moreover, [Workers Assets](/workers/static-assets/) can be used to serve client-side or server-side rendering web frameworks such as React, Next.js, or Angular. Utilize [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) to allow users to deploy custom code on your platform or enable them to deploy their own code directly. For stateful workloads, [Durable Objects](/durable-objects/) provide low-latency, stateful compute by running logic close to where the object's data is stored, enabling coordination, persistence, and real-time communication at the edge.
+
+For workloads that require the flexibility of traditional containerization, [Containers](/containers/) allows you to run existing Docker-compatible applications on Cloudflare’s global network. Containers is designed for applications needing more resources than a standard Worker.
 
 ### 5. Data & Storage
 
