@@ -361,6 +361,9 @@
 /realtime/introduction/ /realtime/realtimekit/introduction/ 302
 /realtime/concepts/ /realtime/realtimekit/concepts/ 302
 
+# Cloudflare Challenges
+/cloudflare-challenges/frequently-asked-questions/ /cloudflare-challenges/ 301
+
 # china network
 /support/about-cloudflare/enterprise-documentation/understanding-and-configuring-an-icp-number/ /china-network/concepts/icp/ 301
 /china-network/concepts/china-express/ /china-network/concepts/global-acceleration/ 301
