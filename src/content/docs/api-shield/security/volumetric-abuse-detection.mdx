@@ -11,7 +11,7 @@ import { GlossaryTooltip, Steps, Render, APIRequest } from "~/components"
 
 Cloudflare Volumetric Abuse Detection helps you set up a system of adaptive rate limiting.
 
-After [API Discovery](/api-shield/security/api-discovery/), Cloudflare looks for <GlossaryTooltip term="API endpoint">endpoint</GlossaryTooltip> abuse based on common user traffic.
+Cloudflare looks for endpoint abuse based on user traffic to individual endpoints.
 
 For example, your API might see different levels of traffic to a `/reset-password` endpoint than a `/login` endpoint. Additionally, your `/login` endpoint might see higher than average traffic after a successful marketing campaign.
 
@@ -39,18 +39,11 @@ Volumetric Abuse Detection generates rate limit thresholds only after collecting
 
 Thresholds are suggested only for endpoints that satisfy all of the following requirements within the last seven days (or since initial discovery):
 
-- The endpoint must receive sufficient valid traffic (traffic that meets the [API Discovery](/api-shield/security/api-discovery/) criteria). Intermittent or erratic traffic may prevent suggestions.
-- The endpoint must be accessed by at least 50 distinct sessions in any 24-hour period.
+- The endpoint must receive sufficient valid traffic (traffic that meets the [API Discovery](/api-shield/security/api-discovery/#requirements) criteria). Intermittent or erratic traffic may prevent suggestions.
+- The endpoint must be accessed by at least 50 distinct sessions in any 24-hour period during the last 7 days.
 - <GlossaryTooltip term="session identifier" link="/api-shield/get-started/#to-set-up-session-identifiers">Session identifiers</GlossaryTooltip>, such as an authorization token available as a request header or cookie, must be configured to allow Cloudflare to accurately detect individual sessions and perform the required per-session rate analysis.
 
 After adding a session identifier, allow 24 hours for rate limit recommendations to appear on endpoints in the Cloudflare dashboard.
-
-If recommendations fail to generate, one of the following response codes may appear in the Cloudflare dashboard:
-
-| Error code | Description |
-| --- | --- |
-| `404 response` | Cloudflare has not seen sufficient valid traffic for this zone to generate initial recommendations. |
-| `551 response` | Cloudflare previously generated recommendations, but we have not seen sufficient recent valid traffic to provide up-to-date suggestions. |
 
 ### Rate limiting recommendation calculation 
 
