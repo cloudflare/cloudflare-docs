@@ -83,7 +83,7 @@ async function updateFrontmatter(
 	const originalContent = await fs.readFile(filePath, "utf-8");
 
 	// Parse the frontmatter
-	const { data: frontmatter, content: mdxContent } = matter(originalContent);
+	const { data: frontmatter } = matter(originalContent);
 
 	// Check if the description already exists and is the same
 	if (frontmatter.description === description) {
@@ -231,6 +231,7 @@ async function main() {
 				try {
 					await fs.access(renderedPath);
 				} catch (error) {
+					console.log(error);
 					console.warn(
 						`⚠️ Rendered HTML not found for ${path.relative(process.cwd(), mdxFile)}`,
 					);
