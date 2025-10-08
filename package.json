@@ -35,7 +35,7 @@
 		"@astrojs/starlight": "0.36.0",
 		"@astrojs/starlight-docsearch": "0.6.0",
 		"@astrojs/starlight-tailwind": "4.0.1",
-		"@cloudflare/vitest-pool-workers": "0.9.6",
+		"@cloudflare/vitest-pool-workers": "0.9.11",
 		"@cloudflare/workers-types": "4.20250927.0",
 		"@codingheads/sticky-header": "1.0.2",
 		"@expressive-code/plugin-collapsible-sections": "0.41.3",

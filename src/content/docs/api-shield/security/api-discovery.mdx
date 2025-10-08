@@ -91,6 +91,18 @@ If all of your zone’s API traffic contains the <GlossaryTooltip term="session 
 
 You can direct any feedback about your API Discovery results to your account team.
 
+## Requirements
+
+To ensure your API endpoints are successfully discovered and mapped by Cloudflare, traffic to the endpoint must meet specific operational criteria.
+
+If an endpoint does not appear in the Discovery inbox, it is typically because the system has not observed enough valid requests over a continuous period. API Discovery only processes requests that satisfy all of the following requirements:
+
+- The request must return a `2xx` response code from the Cloudflare edge.
+- The request must not come directly from Cloudflare Workers.
+- The endpoint must receive at least 500 requests within a 10-day period.
+
+Endpoints discovered using session identifiers will be labeled as such in the Cloudflare dashboard. If the endpoints are not discovered through session identifiers, they will be discovered using our machine learning-based [API Discovery](/api-shield/security/api-discovery/).
+
 ## Availability
 
 API Discovery is only available for Enterprise customers. If you are an Enterprise customer and interested in this product, contact your account team.

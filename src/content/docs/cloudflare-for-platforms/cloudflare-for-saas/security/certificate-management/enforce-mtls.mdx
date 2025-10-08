@@ -28,6 +28,8 @@ Once you have [added a custom hostname](/cloudflare-for-platforms/cloudflare-for
 
 :::note
 Currently, you cannot add mTLS policies for custom hostnames using [API Shield](/api-shield/security/mtls/).
+
+Also make sure to enforce mTLS on the specific custom hostname where it should be checked. It is not enough to have it set on the CNAME target.
 :::
 
 ## Minimum TLS Version
