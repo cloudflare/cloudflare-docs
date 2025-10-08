@@ -40,7 +40,7 @@ Volumetric Abuse Detection generates rate limit thresholds only after collecting
 Thresholds are suggested only for endpoints that satisfy all of the following requirements within the last seven days (or since initial discovery):
 
 - The endpoint must receive sufficient valid traffic (traffic that meets the [API Discovery](/api-shield/security/api-discovery/#requirements) criteria). Intermittent or erratic traffic may prevent suggestions.
-- The endpoint must be accessed by at least 50 distinct sessions in any 24-hour period during the last 7 days.
+- The endpoint must be accessed by at least 50 distinct sessions in any 24-hour period during the last seven days.
 - <GlossaryTooltip term="session identifier" link="/api-shield/get-started/#to-set-up-session-identifiers">Session identifiers</GlossaryTooltip>, such as an authorization token available as a request header or cookie, must be configured to allow Cloudflare to accurately detect individual sessions and perform the required per-session rate analysis.
 
 After adding a session identifier, allow 24 hours for rate limit recommendations to appear on endpoints in the Cloudflare dashboard.
