@@ -33,16 +33,6 @@ When you create a widget for your website or application via the Cloudflare dash
 
 The sitekey is used with [client-side rendering](/turnstile/get-started/client-side-rendering/#implicitly-render-the-turnstile-widget) by adding it to the `<div>` container placeholder. You will then place that `<div>` code snippet where you want to add the widget to your site page or form.
 
-### Compatibility limitations
-
-Traditional Challenge actions, such as Managed Challenges, interrupt the request flow by returning a full HTML page for the user's browser to render and solve. This mechanism fails when the browser expects a non-HTML response, such as a JSON or XML payload from an AJAX or XHR (fetch) request.
-
-To ensure your API calls are protected without breaking single-page applications (SPAs) or API integrations, Cloudflare recommends using Turnstile Pre-clearance.
-
-By enabling Pre-clearance, the Turnstile widget issues a persistent clearance cookie (`cf_clearance`) upon successful human verification on an initial HTML page. This cookie pre-clears the visitor to interact with sensitive API endpoints secured by WAF rules, allowing you to deploy granular security without forcing a disruptive Challenge Page response.
-
-For implementation details, refer to the [guidance on Pre-clearance for Turnstile](/cloudflare-challenges/concepts/clearance/#pre-clearance-support-in-turnstile).
-
 ## Get started
 
 Refer to the [Turnstile documentation](/turnstile/get-started/) for guidance on implementing a widget to your website or application.
