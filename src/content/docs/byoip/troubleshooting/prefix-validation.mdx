@@ -6,14 +6,47 @@ sidebar:
   label: Prefix validation checks
 ---
 
-import { APIRequest } from "~/components";
+import { APIRequest, GlossaryTooltip } from "~/components";
 
-Use the [Prefix Details endpoint](/api/resources/addressing/subresources/prefixes/methods/get/) to check if any issues were found during validation.
+1. Use the [Prefix Details endpoint](/api/resources/addressing/subresources/prefixes/methods/get/) to check if any issues were found during validation.
 
 <APIRequest path= "/accounts/{account_id}/addressing/prefixes/{prefix_id}" method="GET" />
 
-(WIP - Add response example (collapsable))
+```json title="Response" {17-19}
 
-(WIP - Add code block example for "/accounts/account_id/addressing/prefixes/prefix_id/validate")
+ "result": {
+    "id": "72823e95d6c64d48a8111fec81179816",
+    "created_at": "2025-02-25T00:34:11.423722Z",
+    "modified_at": "2025-02-25T00:34:11.423722Z",
+    "cidr": "203.0.113.0/24",
+    "account_id": "654c5f71c324478cc9f68d60065d4620",
+    "description": "",
+    "approved": "P",
+    "on_demand_enabled": false,
+    "on_demand_locked": false,
+    "advertised": null,
+    "advertised_modified_at": null,
+    "loa_document_id": null,
+    "asn": 13335,
+    "ownership_validation_token": "<OWNERSHIP_VALIDATION_TOKEN>",
+    "delegate_loa_creation" : true,
+    "irr_validation_state": "valid",
+    "rpki_validation_state": "valid",
+    "ownership_validation_state": "missing",
+  }
 
-(WIP - Clarify criteria for IRR check + further info like schedule and limits?)
+```
+
+2. Consider the states returned in the API response (for example, `missing`, `invalid`, `mismatch_asn`) and review your IRR record, <GlossaryTooltip term="Route Origin Authorization (ROA)">ROA</GlossaryTooltip>, and ownership validation method accordingly.
+
+    - Information in the IRR and ROA records should meet the [onboarding prerequisites](/byoip/get-started/#before-you-begin).
+
+    - [Ownership validation](/byoip/get-started/#validate-prefix-ownership) requires a matching ROA and the correct validation token found in all DNS TXT records or in the IRR record.
+
+3. After applying the necessary changes, use the Validate Prefix endpoint to re-trigger the validation checks.
+
+```bash
+curl https://api.cloudflare.com/accounts/{account_id}/addressing/prefixes/prefix_id/validate \
+--header "X-Auth-Email: <EMAIL>" \
+--header "X-Auth-Key: <API_KEY>"
+```
