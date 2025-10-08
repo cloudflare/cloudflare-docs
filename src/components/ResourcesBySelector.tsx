@@ -8,6 +8,7 @@ import ReactSelect from "./ReactSelect";
 import type { CollectionEntry } from "astro:content";
 import { formatDistance } from "date-fns";
 import { setSearchParams } from "~/util/url";
+import { formatContentType } from "~/util/content-type";
 
 type DocsData = keyof CollectionEntry<"docs">["data"];
 type VideosData = keyof CollectionEntry<"stream">["data"];
@@ -60,7 +61,7 @@ export default function ResourcesBySelector({
 		label: key,
 		options: values.map((v) => ({
 			value: v,
-			label: v,
+			label: key === "pcx_content_type" ? formatContentType(v) : v,
 		})),
 	}));
 
@@ -236,7 +237,7 @@ export default function ResourcesBySelector({
 											}
 										}}
 									/>{" "}
-									{value}
+									{filterField === "pcx_content_type" ? formatContentType(value) : value}
 								</label>
 							))}
 						</div>
@@ -250,7 +251,10 @@ export default function ResourcesBySelector({
 						className="mt-2"
 						value={
 							selectedFilter
-								? { value: selectedFilter, label: selectedFilter }
+								? { 
+										value: selectedFilter, 
+										label: selectedFilter.includes("-") ? formatContentType(selectedFilter) : selectedFilter 
+									}
 								: null
 						}
 						options={options}
@@ -278,10 +282,21 @@ export default function ResourcesBySelector({
 					className={`grid ${columns === 1 ? "md:grid-cols-1" : columns === 2 ? "md:grid-cols-2" : "md:grid-cols-3"} grid-cols-1 gap-4`}
 				>
 					{visibleResources.map((page) => {
-						const href =
-							page.collection === "stream"
-								? `/videos/${page.data.url}/`
-								: `/${page.id}/`;
+						let href;
+						switch (page.collection) {
+							case "docs":
+								href = `/${page.id}/`;
+								break;
+							case "learning-paths":
+								href = `${page.data.path}/`;
+								break;
+							case "stream":
+								href = `/videos/${page.data.url}/`;
+								break;
+							default:
+								href = `/${(page as any).id}/`;
+								break;
+						}
 
 						// title can either be set directly in title or added as a meta.title property when we want something different for sidebar and SEO titles
 						let title;
