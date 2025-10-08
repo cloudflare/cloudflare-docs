@@ -8,7 +8,7 @@ head:
     content: Get Started — Regional Services
 ---
 
-import { Details, APIRequest } from "~/components";
+import { Details, APIRequest, DashButton } from "~/components";
 
 :::note
 
@@ -21,6 +21,10 @@ You can use Regional Services through the dashboard or via API.
 ## Configure Regional Services in the dashboard
 
 To use Regional Services, you need to first create a DNS record in the dashboard:
+
+1. In the Cloudflare dashboard, go to the **DNS** page.
+
+   <DashButton url="/?to=/:account/:zone/dns" />
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select an account and domain.
 2. Go to the **DNS** tab.

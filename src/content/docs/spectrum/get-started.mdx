@@ -5,7 +5,7 @@ sidebar:
   order: 4
 ---
 
-import { Details, Render, APIRequest } from "~/components";
+import { Details, Render, APIRequest, DashButton } from "~/components";
 
 Spectrum is available on all paid plans. Pro and Business support selected protocols only, whereas Enterprise supports all TCP and UDP based traffic. Refer to [Configuration options](/spectrum/reference/configuration-options/) for more configuration details.
 
@@ -19,15 +19,17 @@ To create a Spectrum application using an IP address, Cloudflare normally assign
 
 <Details header="Add your application via Dashboard">
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
-2. Select **Spectrum**.
-3. Select **Create an Application**. If this is your first time using Spectrum, the **Create an Application** modal appears.
-4. Select your **Application Type**.
-5. Under **Domain**, enter the domain that will use Spectrum.
-6. Under **Edge Port**, enter the port Cloudflare should use for your application.
-7. Under **Origin**, enter your application's origin IP and port.
-8. If your application requires the client IP and supports [Proxy Protocol](https://www.haproxy.com/blog/haproxy/proxy-protocol/), enable **Proxy Protocols**. Proxy Protocol is a method for a proxy like Cloudflare to send the client IP to the origin application.
-9. Select **Add**.
+1. In the Cloudflare dashboard, go to the **Spectrum** page.
+
+   <DashButton url="/?to=/:account/:zone/spectrum" />
+
+2. Select **Create an Application**. If this is your first time using Spectrum, the **Create an Application** modal appears.
+3. Select your **Application Type**.
+4. Under **Domain**, enter the domain that will use Spectrum.
+5. Under **Edge Port**, enter the port Cloudflare should use for your application.
+6. Under **Origin**, enter your application's origin IP and port.
+7. If your application requires the client IP and supports [Proxy Protocol](https://www.haproxy.com/blog/haproxy/proxy-protocol/), enable **Proxy Protocols**. Proxy Protocol is a method for a proxy like Cloudflare to send the client IP to the origin application.
+8. Select **Add**.
 
 </Details>
 
@@ -97,14 +99,16 @@ To create a Spectrum application using a CNAME record, you will need to create a
 
 <Details header="Add your application via Dashboard">
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
-2. Select **Spectrum**.
-3. Select **Create an Application**. If this is your first time using Spectrum, the **Create an Application** modal appears.
-4. Select your **Application Type**.
-5. Under **Domain**, enter the domain that will use Spectrum.
-6. Under **Edge Port**, enter the port Cloudflare should use for your application.
-7. Under **Origin**, enter your `CNAME` record name.
-8. Select **Add**.
+1. In the Cloudflare dashboard, go to the **Spectrum** page.
+
+   <DashButton url="/?to=/:account/:zone/spectrum" />
+
+2. Select **Create an Application**. If this is your first time using Spectrum, the **Create an Application** modal appears.
+3. Select your **Application Type**.
+4. Under **Domain**, enter the domain that will use Spectrum.
+5. Under **Edge Port**, enter the port Cloudflare should use for your application.
+6. Under **Origin**, enter your `CNAME` record name.
+7. Select **Add**.
 
 </Details>
 

@@ -6,6 +6,8 @@ sidebar:
 
 ---
 
+import { DashButton } from "~/components";
+
 After you [change your nameservers](/automatic-platform-optimization/get-started/change-nameservers/), activate the Cloudflare WordPress plugin.
 
 ## Prerequisites
@@ -54,13 +56,15 @@ To create the connection between WordPress and Cloudflare, you will create an AP
 
 ## Create the API token from Cloudflare
 
-1. Open your Cloudflare dashboard.
-2. Select **My Profile** from the top of the page.
-3. Select **API Tokens** > **Create Token**.
-4. Locate **WordPress** from the list and select **Use template**.
-5. Select **Continue to summary** at the bottom of the page.
-6. On the **WordPress API token summary** page, select **Create Token**. Your API token displays.
-7. Select the **Copy** button to copy your token. You will need to paste the token in the next section.
+1. In the Cloudflare dashboard, go to the **Account API tokens** page.
+
+   <DashButton url="/?to=/:account/api-tokens" />
+
+2. Select **Create Token**.
+3. Locate **WordPress** from the list and select **Use template**.
+4. Select **Continue to summary** at the bottom of the page.
+5. On the **WordPress API token summary** page, select **Create Token**. Your API token displays.
+6. Select the **Copy** button to copy your token. You will need to paste the token in the next section.
 
 :::note
 
