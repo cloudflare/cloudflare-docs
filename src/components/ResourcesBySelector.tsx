@@ -237,7 +237,9 @@ export default function ResourcesBySelector({
 											}
 										}}
 									/>{" "}
-									{filterField === "pcx_content_type" ? formatContentType(value) : value}
+									{filterField === "pcx_content_type"
+										? formatContentType(value)
+										: value}
 								</label>
 							))}
 						</div>
@@ -251,9 +253,11 @@ export default function ResourcesBySelector({
 						className="mt-2"
 						value={
 							selectedFilter
-								? { 
-										value: selectedFilter, 
-										label: selectedFilter.includes("-") ? formatContentType(selectedFilter) : selectedFilter 
+								? {
+										value: selectedFilter,
+										label: selectedFilter.includes("-")
+											? formatContentType(selectedFilter)
+											: selectedFilter,
 									}
 								: null
 						}
