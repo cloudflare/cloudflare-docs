@@ -7,6 +7,7 @@
 /tutorials/ /search/?content_type%5B0%5D=Tutorial 301
 /sitemap.xml /sitemap-index.xml
 /deprecations/ /fundamentals/api/reference/deprecations/ 301
+/learning-paths/ /resources/ 301
 
 # changelog
 /changelog/rss.xml /changelog/rss/index.xml 301
