@@ -14,7 +14,7 @@ This error is often triggered by:
 
 - Origin server crashes or misconfigurations.
 - Firewalls or security plugins blocking [Cloudflare IPs](https://www.cloudflare.com/ips) at your origin.
-- Headers exceeding 16 KB (often due to excessive cookies).
+- Headers exceeding 128 KB (often due to excessive cookies).
 - Empty or malformed responses lacking an HTTP status code or response body.
 - Missing response headers or origin web server not returning [proper HTTP error responses](https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml).
 - Incorrect HTTP/2 configuration at the origin server.
