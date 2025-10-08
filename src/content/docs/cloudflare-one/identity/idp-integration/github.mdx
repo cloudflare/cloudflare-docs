@@ -3,6 +3,8 @@ pcx_content_type: how-to
 title: GitHub
 ---
 
+import { Aside } from '@astrojs/starlight/components';
+
 Cloudflare Zero Trust allows your team to connect to your applications using their GitHub login. You do not need to have a GitHub organization to use the integration.
 
 ## Set up GitHub Access
@@ -47,6 +49,11 @@ To configure GitHub access in both GitHub and Cloudflare Zero Trust:
 
 To test that your connection is working, go to [Zero Trust](https://one.dash.cloudflare.com) > **Authentication** > **Login methods** and select **Test** next to your GitHub login method.
 If you have GitHub two-factor authentication enabled, you will need to first login to GitHub directly and return to Access.
+
+
+<Aside title="Troubleshooting Organization Policies">
+When using a GitHub organization policy, if a user joins the required organization *after* a failed login attempt, they will remain blocked. To fix this, they must **revoke the application's access in their GitHub settings** and log in again to update their permissions.
+</Aside>
 
 ## Example API Configuration
 
