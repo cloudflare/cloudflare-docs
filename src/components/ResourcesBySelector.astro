@@ -60,6 +60,24 @@ const resources: Array<
 	}
 );
 
+// Check for duplicate IDs
+const idCounts = new Map<string, number>();
+const duplicateIds: string[] = [];
+
+for (const resource of resources) {
+	const count = idCounts.get(resource.id) || 0;
+	idCounts.set(resource.id, count + 1);
+	if (count === 1) {
+		duplicateIds.push(resource.id);
+	}
+}
+
+if (duplicateIds.length > 0) {
+	throw new Error(
+		`[ResourcesBySelector] Found duplicate resource IDs: ${duplicateIds.join(", ")}`
+	);
+}
+
 if (resources.length === 0) {
 	throw new Error(
 		`[ResourcesBySelector] Couldn't resources related to your filtered options`

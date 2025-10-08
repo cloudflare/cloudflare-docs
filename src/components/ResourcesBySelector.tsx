@@ -197,9 +197,11 @@ export default function ResourcesBySelector({
 					{Object.entries(facets).map(([filterField, values]) => (
 						<div key={filterField} className="mb-8! hidden md:block">
 							<span className="text-sm font-bold text-gray-600 uppercase dark:text-gray-200">
-								{filterField
-									.replace(/_/g, " ")
-									.replace(/\b\w/g, (l) => l.toUpperCase())}
+								{filterField === "pcx_content_type"
+									? "Content Type"
+									: filterField
+											.replace(/_/g, " ")
+											.replace(/\b\w/g, (l) => l.toUpperCase())}
 							</span>
 
 							{values.map((value) => (
