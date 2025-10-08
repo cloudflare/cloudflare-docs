@@ -13,15 +13,17 @@ Unlike publicly routable IP addresses, the subdomain will only proxy traffic for
 
 The DNS record (`UUID.cfargotunnel.com`) for each Cloudflare Tunnel is the load balancer endpoint address. Host header is required for tunnel endpoints.
 
-### Option 1: One tunnel per app
+## Common architectures
+
+### One tunnel per region
 ```mermaid
 graph LR
 		subgraph LB["Public load balancer <br> app.example.com "]
 			subgraph P1[Pool 1]
-				E1(["**Endpoint:** &lt;UUID_1&gt;.cfargotunnel.com<br> **Host header**: app1.example.com"])
+				E1(["**Endpoint:** &lt;UUID_1&gt;.cfargotunnel.com<br> **Host header**: server1.example.com"])
 			end
 			subgraph P2[Pool 2]
-				E2(["**Endpoint:** &lt;UUID_2&gt;.cfargotunnel.com<br> **Host header**: app2.example.com"])
+				E2(["**Endpoint:** &lt;UUID_2&gt;.cfargotunnel.com<br> **Host header**: server2.example.com"])
 			end
 		end
 		R@{ shape: text, label: "app.example.com" }
@@ -29,32 +31,43 @@ graph LR
     P1 -- Tunnel 1 --> cf1
     P2 -- Tunnel 2 --> cf2
 		subgraph D2[Private network]
-			cf1[cloudflared <br> **Route:** app1.example.com]
-			S1(["App1<br> 10.0.0.1:80"])
+			subgraph r1[Region eu-west]
+			cf1@{ shape: processes, label: "cloudflared <br> **Route:** server1.example.com" }
+			S1(["Server 1<br> 10.0.0.1:80"])
 			cf1-->S1
-			cf2[cloudflared <br> **Route:** app2.example.com]
-			S3(["App2 <br> 10.0.0.2:80"])
+			end
+			subgraph r2[Region us-east]
+			cf2@{ shape: processes, label: "cloudflared <br> **Route:** server2.example.com" }
+			S3(["Server 2 <br> 10.0.0.2:80"])
 			cf2-->S3
+			end
 		end
+
+		style r1 stroke-dasharray: 5 5
+		style r2 stroke-dasharray: 5 5
 ```
 
 Only valid for active-standby setups, since each pool has only one endpoint.
 
-### Option 2: Two tunnels, each tunnel connects to both apps
+Note: A single origin pool in LB can't have the same Tunnel GUID referenced twice
+
+Deploy replicas for server redundancy. replicas operate in pooled mode.
+
+### Multiple apps per tunnel
 
 ```mermaid
 graph LR
-		subgraph LB["Public load balancer <br> app.example.com "]
-			subgraph P1[Pool 1]
+		subgraph LB["Public load balancer <br> lb.example.com"]
+			subgraph P1[Pool for App 1]
 				E1(["**Endpoint:** &lt;UUID_1&gt;.cfargotunnel.com<br> **Host header**: app1.example.com"])
-				E2(["**Endpoint:** &lt;UUID_2&gt;.cfargotunnel.com<br> **Host header**: app2.example.com"])
+				E2(["**Endpoint:** &lt;UUID_2&gt;.cfargotunnel.com<br> **Host header**: app1.example.com"])
 			end
-			subgraph P2[Pool 2]
-				E3(["**Endpoint:** &lt;UUID_1&gt;.cfargotunnel.com<br> **Host header**: app1.example.com"])
+			subgraph P2[Pool for App 2]
+				E3(["**Endpoint:** &lt;UUID_1&gt;.cfargotunnel.com<br> **Host header**: app2.example.com"])
 				E4(["**Endpoint:** &lt;UUID_2&gt;.cfargotunnel.com<br> **Host header**: app2.example.com"])
 			end
 		end
-		R@{ shape: text, label: "app.example.com" }
+		R@{ shape: text, label: "app1.example.com <br> app2.example.com" }
 		R--> LB
     E1 -- Tunnel 1 -->cf1
 		E3 -- Tunnel 1 --> cf1
@@ -63,11 +76,11 @@ graph LR
 
 		subgraph N[Private network]
 			cf2[cloudflared <br> **Route:** app1.example.com <br> **Route:** app2.example.com]
-			S3(["App1 <br> 10.0.0.1:80"])
+			S3(["App 1 <br> 10.0.0.1:80"])
 			cf2-->S3
 			cf2-->S1
 			cf1[cloudflared <br> **Route:** app1.example.com <br> **Route:** app2.example.com]
-			S1(["App2 <br> 10.0.0.2:80"])
+			S1(["App 2 <br> 10.0.0.2:80"])
 			cf1-->S1
 			cf1-->S3
 		end
@@ -75,40 +88,6 @@ graph LR
 
 good for an [Active-active](/load-balancing/load-balancers/common-configurations/#active---active-failover) setup which distributes traffic to endpoints in the same pool
 Active-active uses all available instances to process requests simultaneously, providing better performance and scalability by load-balancing traffic across them
-
-### Option 3: One tunnel for both apps
-
-```mermaid
-graph LR
-		subgraph LB["Public load balancer <br> app.example.com "]
-			subgraph P1[Pool 1]
-				E1(["**Endpoint:** &lt;UUID_1&gt;.cfargotunnel.com<br> **Host header**: app1.example.com"])
-			end
-			subgraph P2[Pool 2]
-				E2(["**Endpoint:** &lt;UUID_1&gt;.cfargotunnel.com<br> **Host header**: app2.example.com"])
-			end
-		end
-		R@{ shape: text, label: "app.example.com" }
-		R--> LB
-    P1 -- Tunnel 1 --> cf1
-		P2 -- Tunnel 1 --> cf1
-		subgraph D2[Private network]
-		  cf1@{ shape: processes, label: "cloudflared <br> **Route:** app1.example.com <br> **Route:** app2.example.com" }
-			S3(["App1 <br> 10.0.0.1:80"])
-			S1(["App2 <br> 10.0.0.2:80"])
-			cf1-->S1
-			cf1-->S3
-		end
-```
-
-Only valid for active-standby LB setups, since each pool has only one endpoint.
-
-Easier to manage if all apps are in the same physical location. Recommend Option 1 if apps are in different geographic locations.
-
-Note: A single origin pool in LB can't have the same Tunnel GUID referenced twice
-
-Deploy replicas for server redundancy. replicas operate in pooled mode.
-
 
 
 ## Add a tunnel to a load balancer pool
