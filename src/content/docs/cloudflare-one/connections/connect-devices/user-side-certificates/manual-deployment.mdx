@@ -484,7 +484,7 @@ git config --global http.sslcainfo [PATH_TO_CLOUDFLARE_CERT]
 
 ### cURL
 
-In most cases, cURL will use your system's native certificate store. To force cURL to use your default certificate, add the the `--ca-native` flag. For example:
+By default, cURL will use your system's native certificate store. To force cURL to use your default certificate, add the the `--ca-native` flag. For example:
 
 ```curl
 curl --ca-native https://example.com
