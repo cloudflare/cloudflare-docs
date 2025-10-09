@@ -47,13 +47,12 @@ Proxy mode is best suited for organizations that want to filter traffic directed
 | ------------- | ----------------- | -------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
 | No            | No                | Yes            | HTTP policies, Browser Isolation, identity-based policies, AV scanning, and Data Loss Prevention for traffic sent through localhost proxy |
 
-:::note
+### Limitations
 
 - Proxy mode can only be used by applications/operating systems that support SOCKS5/HTTPS proxy communication.
+- Requires the MASQUE [device tunnel protocol](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#device-tunnel-protocol). Wireguard is not supported.
 - Only available on Windows, Linux, and macOS.
 - Proxy mode has a timeout limit of 10 seconds for requests. If a request goes above the 10 second limit, Cloudflare will drop the connection.
-
-:::
 
 ## Device Information Only
 

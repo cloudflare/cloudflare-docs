@@ -11,9 +11,7 @@ import { GlossaryTooltip, Steps, Render, APIRequest } from "~/components"
 
 Cloudflare Volumetric Abuse Detection helps you set up a system of adaptive rate limiting.
 
-## About
-
-After [API Discovery](/api-shield/security/api-discovery/), Cloudflare looks for <GlossaryTooltip term="API endpoint">endpoint</GlossaryTooltip> abuse based on common user traffic.
+Cloudflare looks for endpoint abuse based on user traffic to individual endpoints.
 
 For example, your API might see different levels of traffic to a `/reset-password` endpoint than a `/login` endpoint. Additionally, your `/login` endpoint might see higher than average traffic after a successful marketing campaign.
 
@@ -25,11 +23,9 @@ Volumetric Abuse Detection rate limits are a way to prevent blatant volumetric a
 
 ## Process
 
-Volumetric Abuse Detection analyzes your API’s individual session traffic statistics to recommend per-endpoint, per-session rate limits.
+Volumetric Abuse Detection analyzes your API's individual session traffic statistics to recommend per-endpoint, per-session rate limits.
 
-Volumetric Abuse Detection currently requires a <GlossaryTooltip term="session identifier" link="/api-shield/get-started/#to-set-up-session-identifiers">session identifier</GlossaryTooltip>, like an authorization token available as a request header or cookie.
-
-After adding a session identifier, allow 24 hours for rate limit recommendations to appear on endpoints in the Cloudflare dashboard.
+To access your endpoints: 
 
 Old dashboard: **Security** > **API Shield** > **Endpoint Management**
 
@@ -37,9 +33,23 @@ New dashboard: **Security** > **Web Assets** > **Endpoints**
 
 Recommendations will continue to update if your traffic pattern changes.
 
-### Observe rate limits
+### Requirements
+
+Volumetric Abuse Detection generates rate limit thresholds only after collecting sufficient, statistically safe traffic data for an endpoint. If recommendations are missing for a discovered endpoint, the traffic likely failed to meet the necessary criteria.
+
+Thresholds are suggested only for endpoints that satisfy all of the following requirements within the last seven days (or since initial discovery):
+
+- The endpoint must receive sufficient valid traffic (traffic that meets the [API Discovery](/api-shield/security/api-discovery/#requirements) criteria). Intermittent or erratic traffic may prevent suggestions.
+- The endpoint must be accessed by at least 50 distinct sessions in any 24-hour period during the last seven days.
+- <GlossaryTooltip term="session identifier" link="/api-shield/get-started/#to-set-up-session-identifiers">Session identifiers</GlossaryTooltip>, such as an authorization token available as a request header or cookie, must be configured to allow Cloudflare to accurately detect individual sessions and perform the required per-session rate analysis.
+
+After adding a session identifier, allow 24 hours for rate limit recommendations to appear on endpoints in the Cloudflare dashboard.
+
+### Rate limiting recommendation calculation 
 
 Once rate limit recommendations appear in **Endpoints**, select the endpoint row to view more detail about the recommendation. You will see the overall recommended rate limit value, as well as p99, p90, and p50 rate limit values.
+
+We calculate the recommended rate limit value throughout the day, and the new calculation may equal the existing recommendation due to similar traffic profiles existing on your API. When we recalculate, we look at requests that happened in the last 24 hours.
 
 Cloudflare recommends choosing the overall rate limit recommendation, as our analysis includes the variance of the request rate distribution across your API sessions. Choosing a single p-value may cause false positives due to a high number of outliers.
 

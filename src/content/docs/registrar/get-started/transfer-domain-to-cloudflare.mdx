@@ -11,6 +11,8 @@ Transferring your domain to Cloudflare tells your registry that a different regi
 
 Transferring a domain to a new registrar informs the registry that they should instead trust that new registrar to modify information. The process requires some action steps at your new and previous registrar. Each registrar handles transfers a bit differently, but in general, they follow a pattern based on rules set by ICANN, the organization responsible for regulating domain registration.
 
+Most domain transfers add one additional year to your current registration term. After the transfer, your domain registration will be set to auto-renew by default.
+
 This page contains generic instructions on how to transfer your domain to Cloudflare from most registrars.
 
 ---
@@ -76,9 +78,17 @@ If you do not have a payment method on file, add one at this step before proceed
 
 You will not be billed at this step. Cloudflare will only bill your card when you input the auth code and confirm the contact information at the conclusion of your transfer request.
 
+In some cases, premium (non-standard priced) domains may not be detected immediately. Pricing will be confirmed with the registry before submission, and you will have the opportunity to review and approve any price adjustments.
+
+In most cases, transferring a domain adds one additional year to its registration term. However, the following exceptions apply:
+
+- Transferring a `.uk` domain does not extend its registration by an additional year.
+- If the transfer is completed within 45 days of the domain's expiration, the extra year may not be added. This is determined by the domain's Registry.
+- If the domain already has more than nine years remaining, a full year may not be added. This is also subject to Registry policy.
+
 :::note
 
-Sites can be unavailable for a few reasons, including:
+Sites can be unavailable to transfer for a few reasons, including:
 
 - You did not [add your domain](/fundamentals/manage-domains/add-site/) to your Cloudflare.
 - The site was registered in the last 60 days.

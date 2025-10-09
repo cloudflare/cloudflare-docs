@@ -6,6 +6,8 @@ sidebar:
 
 ---
 
+import { DashButton } from "~/components"
+
 You can instantly purge their cache by URL prefix or path separators in their URL. For an example URL like `https://www.example.com/foo/bar/baz/qux.jpg`, valid purge requests include:
 
 * `www.example.com`
@@ -20,15 +22,17 @@ Purging by prefix is useful in different scenarios, such as:
 * Increasing control over cached objects in a path.
 * Simplifying the number of purge calls sent.
 
-1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
-2. Select **Caching** > **Configuration**.
-3. Under **Purge Cache**, select **Custom Purge**. The **Custom Purge** window appears.
-4. Under **Purge by**, select **Prefix**.
-5. Follow the syntax instructions.
+1. In the Cloudflare dashboard, go to the **Configuration** page.
+
+   <DashButton url="/?to=/:account/:zone/caching/configuration" />
+
+2. Under **Purge Cache**, select **Custom Purge**. The **Custom Purge** window appears.
+3. Under **Purge by**, select **Prefix**.
+4. Follow the syntax instructions.
    * One prefix per line.
    * Maximum 30 prefixes per API call.
-6. Enter the appropriate value(s) in the text field using the format shown in the example.
-7. Select **Purge**.
+5. Enter the appropriate value(s) in the text field using the format shown in the example.
+6. Select **Purge**.
 
 For information on rate limits, refer to the [Availability and limits](/cache/how-to/purge-cache/#availability-and-limits) section.
 

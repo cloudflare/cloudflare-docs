@@ -66,7 +66,7 @@ After you add your domain, Cloudflare performs checks on a schedule to confirm y
 
 ### Expected behavior for different plans
 
-If your domain is on the Free plan, it will be deleted automatically if it is not activated within 28 days.
+If your domain is on the Free plan, it will be automatically deleted if it is not activated within 28 days.
 
 Any pending zone with a paid plan (Pro, Business, Enterprise) will remain pending until the plan is removed, or the domain is activated or [removed from Cloudflare](/fundamentals/manage-domains/remove-domain/).
 
@@ -84,12 +84,15 @@ Cloudflare has authenticated your [nameserver changes](/dns/nameservers/update-n
 
 Your domain has failed multiple DNS checks, where either the Cloudflare nameservers are no longer present on your domain's `NS` records ([Full setup](/dns/zone-setups/full-setup/)) or no `SOA` record is returned for the zone ([Partial (CNAME) setup](/dns/zone-setups/partial-setup/)).
 
-Zones that do not have any active paid subscriptions and have been moved will be deleted automatically after 7 days.
+### Expected behavior for different plans
 
-:::caution
+If your domain is on the Free plan, it will be automatically deleted after 7 days.
 
-If you have an active paid subscription and no longer wish to use Cloudflare, make sure to also [manually remove your domain](/fundamentals/manage-domains/remove-domain/).
-:::
+For moved zones with a paid plan (Pro, Business, Enterprise), deletion will occur if any of the following is observed:
+
+- The paid plan is removed.
+- The domain is activated in another Cloudflare account.
+- The domain is [manually removed](/fundamentals/manage-domains/remove-domain/) from Cloudflare.
 
 ## Deleted
 

@@ -3,7 +3,7 @@ title: Cache Reserve
 pcx_content_type: concept
 ---
 
-import { Render, TabItem, Tabs, APIRequest } from "~/components";
+import { Render, TabItem, Tabs, APIRequest, DashButton } from "~/components";
 
 <Render file="smart-shield-callout" product="smart-shield" />
 
@@ -25,9 +25,11 @@ A paid Cache Reserve Plan is required for the enablement.
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select a domain.
-2. Go to **Caching** > **Cache Reserve**.
-3. Select **Enable storage sync**.
+1. In the Cloudflare dashboard, go to the **Cache Reserve** page.
+
+   <DashButton url="/?to=/:account/:zone/caching/cache-reserve" />
+
+2. Select **Enable storage sync**.
 
 </TabItem> <TabItem label="API">
 
@@ -165,9 +167,12 @@ Be aware that the deletion may take up to 24 hours to complete.
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select a domain.
-2. Go to **Caching** > **Cache Reserve**.
-3. In **Delete Cache Reserve Data**, select **Delete Storage**.
+
+1. In the Cloudflare dashboard, go to the **Cache Reserve** page.
+
+   <DashButton url="/?to=/:account/:zone/caching/cache-reserve" />
+
+2. In **Delete Cache Reserve Data**, select **Delete Storage**.
 
 </TabItem> <TabItem label="API">
 
