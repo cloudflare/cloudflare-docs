@@ -7,6 +7,8 @@ sidebar:
   order: 152
 ---
 
+import { DashButton } from "~/components";
+
 ## Which fields (or columns) are available for querying?
 
 All fields listed in [Datasets](/logs/logpush/logpush-job/datasets/) for the [supported datasets](/log-explorer/manage-datasets/#supported-datasets) are viewable in Log Explorer. 
@@ -59,7 +61,7 @@ Log Explorer uses Cloudflare Logpush and R2 behind the scenes to stream and stor
 
 ## Are Custom Dashboards based on R2 Log Explorer data, or on GraphQL?
 
-Custom Dashboards currently run on GraphQL. Over time, this will evolve to include deeper integration between the two features, such as building charts directly from logs.
+Custom Dashboards currently run on [GraphQL](/analytics/graphql-api/sampling/). Over time, this will evolve to include deeper integration between the two features, such as building charts directly from logs.
 
 ## How can I track my Log Explorer usage? 
 
@@ -71,4 +73,8 @@ Your monthly usage is displayed at the top of the Log Search and Manage Datasets
 
 Use the Manage Datasets feature to enable or disable ingestion for individual datasets and zones.
 
-To cancel your self-serve subscription, go to **Manage Account** > **Billing** > **Subscriptions**, find the Log Explorer subscription, and select **Cancel**.
+1. In the Cloudflare dashboard, go to the **Manage Account** > **Billing** page.
+
+   <DashButton url="/?to=/:account/billing" />
+
+2. Under **Subscriptions**, find the Log Explorer subscription, and select **Cancel**.
