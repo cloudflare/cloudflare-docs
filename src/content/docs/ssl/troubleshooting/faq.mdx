@@ -162,6 +162,6 @@ We recommend one of the following options:
 
 ## What is the HTTP version used for OCSP?
 
-Our OCSP implementation uses HTTP/1.1 by default for plain HTTP connections. 
-However, for HTTPS connections, the client automatically attempts to use HTTP/2 if the server supports it through the TLS ALPN (Application-Layer Protocol Negotiation) extension. 
-If HTTP/2 is not available or supported by the server, it will fall back to HTTP/1.1. 
+Our OCSP implementation uses HTTP/1.1 by default for plain HTTP connections.
+
+For HTTPS connections, the client automatically attempts to use HTTP/2 if the server supports it through the TLS ALPN (Application-Layer Protocol Negotiation) extension. If HTTP/2 is not available or supported by the server, it will fall back to HTTP/1.1.
