@@ -3,6 +3,8 @@ reviewed: 2024-03-04
 category: 🔐 Zero Trust
 pcx_content_type: tutorial
 title: Access a web application via its private hostname without WARP
+description: >-
+  With Cloudflare Browser Isolation and resolver policies, users can connect to private web-based applications via their private hostnames.
 ---
 
 import { Render } from "~/components";
@@ -26,7 +28,6 @@ First, install `cloudflared` on a server in your private network:
 ## Add private network routes
 
 1. In the **CIDR** tab, add the following IP addresses:
-
    - Private IP/CIDR of your application server (for example, `10.128.0.175/32`)
    - Private IP/CIDR of your DNS server
 

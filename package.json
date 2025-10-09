@@ -75,6 +75,7 @@
 		"fast-xml-parser": "5.2.5",
 		"github-slugger": "2.0.0",
 		"globals": "16.4.0",
+		"gray-matter": "4.0.3",
 		"hast-util-heading-rank": "3.0.0",
 		"hast-util-select": "6.0.4",
 		"hastscript": "9.0.1",

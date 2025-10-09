@@ -7,6 +7,8 @@ sidebar:
   order: 1
   label: Magic WAN Connector deployment
 reviewed: 2024-11-14
+description: >-
+  Learn how to deploy Magic WAN Connector and evaluate your various deployment options.
 ---
 
 ## Introduction
@@ -22,13 +24,11 @@ Every organization and network is different, and as such there is no one-size-fi
 The first decision for a Magic WAN Connector deployment is its location in the network, and this relates to whether the organization wants to keep the existing Customer Premises Equipment (CPE, edge router or firewall at a site), and if so, for what reason. Experience shows that this decision usually leads to three different topologies:
 
 - **Connector replacing the CPE** (Figure 1a): When the link is an Internet connection and the organization does not have any real use of existing equipment since the Connector supports all the required networking features such as DHCP, DNS, NAT, Trunking (801.1Q), IP access lists, breakout traffic, etc. Examples could be:
-
   - The transition from MPLS to Internet-based connectivity, where the MPLS router probably does not add any value in the deployment.
   - An Internet-facing CPE reaching, or already having exceeded, its end of life.
   - An Internet-facing CPE that is redundant with Magic WAN Connector and can be removed for simplicity's sake.
 
 - **Connector north of the CPE** (Figure 1b): This option might be preferred when the existing CPE is a firewall, and the organization wants to keep it for:
-
   - Additional LAN protection as a result of a defense-in-depth approach.
   - Advanced segmentation requirements, for example allowing/blocking traffic between segments based on various Layer 3 to Layer 7 rules, since Magic WAN Connector supports segmentation only on layers 3 and 4 of the OSI model.
 

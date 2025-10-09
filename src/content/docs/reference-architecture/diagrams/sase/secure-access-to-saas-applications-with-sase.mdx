@@ -9,6 +9,8 @@ sidebar:
   order: 1
   label: Secure access to SaaS applications
 reviewed: 2024-12-17
+description: >-
+  Cloudflare's SASE platform offers the ability to bring a more Zero Trust orientated approach to securing SaaS applications. Centralized policies, based on device posture, identity attributes and granular network location can be applied across one or many Saas applications.
 ---
 
 ## Introduction
@@ -32,7 +34,7 @@ Cloudflare's SASE platform offers the ability to bring a more Zero Trust orienta
 The diagram below shows how Cloudflare sits between your users, devices and networks that require access to any SaaS application. The two main services proving security capabilities are:
 
 - [Zero Trust Network Access](/cloudflare-one/policies/access/). Allows Cloudflare to become an identity proxy, so that you can easily enable authentication with a wide variety of identity providers to a single SaaS application. This service also incorporates the ability to evaluate access based on device posture and network location.
-- [Secure Web Gateway](/cloudflare-one/policies/gateway/). Once all traffic to access the SaaS application flows through our gateway, HTTPS connections are terminated at Cloudflare and you have the ability to inspect the data flowing to and from the SaaS application.  This allows you to block sensitive data from being exported to insecure locations.
+- [Secure Web Gateway](/cloudflare-one/policies/gateway/). Once all traffic to access the SaaS application flows through our gateway, HTTPS connections are terminated at Cloudflare and you have the ability to inspect the data flowing to and from the SaaS application. This allows you to block sensitive data from being exported to insecure locations.
 
 ![Figure 1: Only traffic that has passed the Cloudflare network and relevant policies is authorized to access the SaaS application.](~/assets/images/reference-architecture/secure-access-to-saas-applications-with-sase/figure1.svg "Figure 1: Only traffic that has passed the Cloudflare network and relevant policies is authorized to access the SaaS application.")
 
@@ -58,11 +60,11 @@ The following is an example set of policies which demonstrate how you can use Cl
 
 The first step is using an [egress IP policy under Cloudflare Gateway](/cloudflare-one/policies/gateway/egress-policies/). This allows you to purchase and assign specific IPs to users that have their traffic filtered via Gateway. Then in Salesforce, you enforce that access is only permitted for traffic with a source IP that matches the one in your egress policy. This combination ensures that the only way to get access to Salesforce is via Cloudflare.
 
-| Egress Policy                       |                  |
-| :---------------------------------- | :--------------- |
-| **Identity**                        |                  |
-| User Group Names                    | All Employees    |
-| **Select Egress IP**                |                  |
+| Egress Policy                       |                |
+| :---------------------------------- | :------------- |
+| **Identity**                        |                |
+| User Group Names                    | All Employees  |
+| **Select Egress IP**                |                |
 | Use dedicated Cloudflare Egress IPs | `203.0.113.88` |
 
 This is important not only for securing access to Salesforce, but also for adequately protecting its contents while in use. Now let us examine the access policy that is limiting access to members of the Sales or Executives groups. We are also using our Crowdstrike integration to ensure that users are on company managed devices.
@@ -91,7 +93,7 @@ This second policy applies to all employees but we are going to apply a few more
 | **Additional Settings**        |                                    |
 | Purpose justification          | On                                 |
 | Temporary authentication       | On                                 |
-| Email addresses of approvers   | `salesforce-admin@company.com`       |
+| Email addresses of approvers   | `salesforce-admin@company.com`     |
 
 We are going to add in temporary authentication to this second policy. That means if Cloudflare determines that the incoming request is from someone outside of the Sales or Executives department, an administrator will need to explicitly grant them temporary access. In context, this policy could be used to secure access to Salesforce for employees outside the Sales department, as the customer information could be sensitive and confidential.
 

@@ -8,6 +8,8 @@ tags:
   - JavaScript
   - TypeScript
   - SQL
+description: >-
+  This tutorial uses the REST API to import a database into D1.
 ---
 
 import { Render, Steps, PackageManagers, DashButton } from "~/components";
@@ -41,6 +43,7 @@ To create the table, follow these steps:
 1. In the Cloudflare dashboard, go to the **D1** page.
 
    <DashButton url="/?to=/:account/workers/d1" />
+
 2. Select **Create database**.
 3. Name your database. For this tutorial, name your D1 database `d1-import-tutorial`.
 4. (Optional) Provide a location hint. Location hint is an optional parameter you can provide to indicate your desired geographical location for your database. Refer to [Provide a location hint](/d1/configuration/data-location/#provide-a-location-hint) for more information.
@@ -80,7 +83,6 @@ To create the table, follow these steps:
 2. In this repository, create a new file called `index.js`. This file will contain the code which uses REST API to import your data to your D1 database.
 
 3. In your `index.js` file, define the following variables:
-
    - `TARGET_TABLE`: The target table name
    - `ACCOUNT_ID`: The account ID. Refer to **Account Details** in **Workers & Pages**.
    - `DATABASE_ID`: The D1 database ID. Go to your data base to see your database ID.
@@ -237,7 +239,6 @@ The import process consists of four steps:
    ```
 
    In the above code:
-
    - An `md5` hash of the SQL command is generated.
    - `initResponse` initializes the upload process and receives the upload URL.
    - `r2Response` uploads the SQL command to the upload URL.
@@ -279,7 +280,6 @@ The import process consists of four steps:
    ```
 
    The code above does the following:
-
    - Sends a `poll` action to the D1 API.
    - Polls the import process until it completes.
 

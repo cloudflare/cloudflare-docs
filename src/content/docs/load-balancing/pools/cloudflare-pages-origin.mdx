@@ -7,12 +7,11 @@ products:
   - Pages
 sidebar:
   order: 3
-
+description: >-
+  This tutorial is intended as an introductory example of how you can leverage Cloudflare's global traffic management.
 ---
 
-
-
-import { GlossaryTooltip, DashButton } from "~/components"
+import { GlossaryTooltip, DashButton } from "~/components";
 
 This tutorial is intended as an introductory example of how you can leverage Cloudflare's global traffic management.
 
@@ -22,16 +21,14 @@ The following sections will guide you through setting up an [active-passive fail
 
 This setup can be useful if you are migrating your production website or application to Pages or if you just want to have a backup or a personalized web page for when your primary origin goes down.
 
-
 ## Before you begin
-
 
 Make sure you:
 
-* Are familiar with the Cloudflare [Load Balancing components](/load-balancing/understand-basics/load-balancing-components/).
-* Own a domain and use Cloudflare as a [primary DNS provider](/dns/zone-setups/full-setup/).
-* Have [deployed a website or application](/pages/get-started/git-integration/) with Cloudflare Pages.
-* Have [enabled Load Balancing](/load-balancing/get-started/enable-load-balancing/) in your account.
+- Are familiar with the Cloudflare [Load Balancing components](/load-balancing/understand-basics/load-balancing-components/).
+- Own a domain and use Cloudflare as a [primary DNS provider](/dns/zone-setups/full-setup/).
+- Have [deployed a website or application](/pages/get-started/git-integration/) with Cloudflare Pages.
+- Have [enabled Load Balancing](/load-balancing/get-started/enable-load-balancing/) in your account.
 
 ## Create health monitor
 
@@ -46,15 +43,11 @@ Monitors define the criteria based on which an endpoint will be considered healt
 2. Select the **Monitors** tab and then **Create monitor**.
 3. Give the monitor a descriptive name and confirm the other fields are filled in as the following:
 
-
-
 | Field | Value |
 | ----- | ----- |
 | Type  | HTTP  |
 | Path  | /     |
 | Port  | 80    |
-
-
 
 4. Under **Advanced health check settings**, keep the default values and enable the **Follow Redirects** option.
 
@@ -68,8 +61,6 @@ This way you can easily remember the criteria a certain monitor is using when yo
 :::
 
 5. Select **Save** to confirm.
-
-
 
 ## Create pools
 
@@ -92,22 +83,23 @@ Failing to add the host header will result in [response code mismatch error](/lo
 
 3. For the first pool, start by filling out the fields:
 
-* A name for the pool (must be unique). Suggestion: `primary`
-* A description to provide more details on the name. Suggestion: `production website`
+- A name for the pool (must be unique). Suggestion: `primary`
+- A description to provide more details on the name. Suggestion: `production website`
 
 4. Leave the choice for [**Endpoint Steering**](/load-balancing/understand-basics/traffic-steering/origin-level-steering/) as is. Since each pool will only have one endpoint, this steering method will not interfere in this case.
 
 5. Add your origin server as an endpoint with the following information:
 
-* A name for the endpoint (must be unique). Suggestion: `my-website`.
-* The endpoint IP address or hostname.
+- A name for the endpoint (must be unique). Suggestion: `my-website`.
+- The endpoint IP address or hostname.
 
   :::caution
 
   As exemplified in Step 8 below, when using Cloudflare as an endpoint, **do not** specify one of Cloudflare's anycast IP addresses. Because these IPs can change at any time, you should use a hostname instead.
   :::
-* The endpoint [weight](/load-balancing/understand-basics/traffic-steering/origin-level-steering/#weights), which can be set to `1`. Since each pool will only have one endpoint, the endpoint weight will not make a difference in this case.
-* A [hostname](/load-balancing/additional-options/override-http-host-headers/) by selecting **Add host header**.
+
+- The endpoint [weight](/load-balancing/understand-basics/traffic-steering/origin-level-steering/#weights), which can be set to `1`. Since each pool will only have one endpoint, the endpoint weight will not make a difference in this case.
+- A [hostname](/load-balancing/additional-options/override-http-host-headers/) by selecting **Add host header**.
 
   :::caution
 
@@ -116,15 +108,13 @@ Failing to add the host header will result in [response code mismatch error](/lo
 
 6. Finish configuring the first pool with the following information:
 
-* Leave the **Health Threshold** set to `1`. Since each pool will only have one endpoint, this is the only possible value for this field.
-* Select the **Monitor** configured in the previous step.
-* Select **Health Check Regions** to choose from which [locations](/load-balancing/monitors/#health-monitor-regions) Cloudflare should send monitor requests to periodically test the endpoint health.
+- Leave the **Health Threshold** set to `1`. Since each pool will only have one endpoint, this is the only possible value for this field.
+- Select the **Monitor** configured in the previous step.
+- Select **Health Check Regions** to choose from which [locations](/load-balancing/monitors/#health-monitor-regions) Cloudflare should send monitor requests to periodically test the endpoint health.
 
 7. Select **Save**
 
 8. Repeat the process for the second pool using the following values:
-
-
 
 | Field                      | Value                                     |
 | -------------------------- | ----------------------------------------- |
@@ -139,8 +129,6 @@ Failing to add the host header will result in [response code mismatch error](/lo
 | Monitor                    | `<monitor defined on previous step>`      |
 | Health check regions       | `<select region of your choice>`          |
 
-
-
 ## Check the endpoints health status
 
 Before setting up the load balancer:
@@ -150,16 +138,14 @@ Before setting up the load balancer:
    <DashButton url="/?to=/:account/load-balancing" />
 
 1. Go to the **Pools** tab.
-2. Find the pools you created in the list and check if their status is `Healthy`. You might have to refresh the page.
-3. Expand each pool entry to confirm that the health status for endpoints within them is also `Healthy`.
+1. Find the pools you created in the list and check if their status is `Healthy`. You might have to refresh the page.
+1. Expand each pool entry to confirm that the health status for endpoints within them is also `Healthy`.
 
 The basic principle is that, if both your production website and your Cloudflare Pages project are live and directly accessible via browser, the monitors should also be able to get a `200` code as HTTP response.
 
 Revise your pools and monitor configurations to confirm they followed the instructions above. If you still find issues, refer to [Troubleshooting](/load-balancing/troubleshooting/common-error-codes/) or [FAQ](/load-balancing/troubleshooting/load-balancing-faq/#why-is-my-endpoint-or-pool-considered-unhealthy).
 
-
 ## Create load balancer
-
 
 After confirming the endpoints and monitors are set up correctly and return the expected health status, create the load balancer:
 
@@ -170,14 +156,14 @@ After confirming the endpoints and monitors are set up correctly and return the 
 2. Select **Create load balancer**.
 
 3. On the **Hostname** page, configure the following and select **Next**.
-   * Enter a **Hostname**, which is the DNS name at which the load balancer is available. Suggestion: for now, you can just add a temporary hostname such as `lb` (so the complete field value would look like `lb.<your_domain>`).
-   * Toggle the orange cloud icon to update the [proxy mode](/load-balancing/understand-basics/proxy-modes/), which affects how traffic is routed and which IP addresses are advertised.
-   * Select your preferred option for [session affinity](/load-balancing/understand-basics/session-affinity/) and [adaptive routing](/load-balancing/understand-basics/adaptive-routing/).
+   - Enter a **Hostname**, which is the DNS name at which the load balancer is available. Suggestion: for now, you can just add a temporary hostname such as `lb` (so the complete field value would look like `lb.<your_domain>`).
+   - Toggle the orange cloud icon to update the [proxy mode](/load-balancing/understand-basics/proxy-modes/), which affects how traffic is routed and which IP addresses are advertised.
+   - Select your preferred option for [session affinity](/load-balancing/understand-basics/session-affinity/) and [adaptive routing](/load-balancing/understand-basics/adaptive-routing/).
 
 4. On the **Add a Pool** page, configure the following and select **Next**.
-   * Select the first pool you created previously and select **Add Pool**.
-   * Do the same for the second pool and reorder them if needed. For the purposes of this tutorial, your production website pool would be the first (`primary`) and the Cloudflare Pages pool would be the second (`secondary`).
-   * If needed, update the [**Fallback Pool**](/load-balancing/understand-basics/health-details/#fallback-pools). For the purposes of this tutorial, you can leave this pointing to your secondary pool.
+   - Select the first pool you created previously and select **Add Pool**.
+   - Do the same for the second pool and reorder them if needed. For the purposes of this tutorial, your production website pool would be the first (`primary`) and the Cloudflare Pages pool would be the second (`secondary`).
+   - If needed, update the [**Fallback Pool**](/load-balancing/understand-basics/health-details/#fallback-pools). For the purposes of this tutorial, you can leave this pointing to your secondary pool.
 
 5. On the **Monitors** page, review the monitors attached to your pools and the expected health status, and select **Next**.
 
@@ -218,5 +204,3 @@ Now that you have set up your load balancer and verified everything is working c
    If you have an Enterprise account, also evaluate your application for any excluded paths. For example, you might not want the load balancer to distribute requests directed at your `/admin` path. For any exceptions, set up an [Origin rule](/rules/origin-rules/features/#dns-record).
 
 2. Configure your load balancer to receive production traffic by editing the **Hostname** of your existing load balancer.
-
-

@@ -6,6 +6,8 @@ sidebar:
 head:
   - tag: title
     content: Track your history
+description: >-
+  Learn how to track history with Cloudfalre Terraform.
 ---
 
 import { Render } from "~/components";
@@ -60,11 +62,13 @@ resource "cloudflare_dns_record" "www" {
   comment = "Domain verification record"
 }
 ```
+
 :::note
 You must still include the empty provider definition in the file, so that Terraform knows to install the Cloudflare plugin. For more information about advanced options you can use to customize the Cloudflare provider, refer to [Provider customization](/terraform/advanced-topics/provider-customization/).
 :::
 
 Update your `terraform.tfvars` file:
+
 ```hcl
 zone_id    = "your-zone-id-here"
 account_id = "your-account-id-here"
@@ -72,6 +76,7 @@ domain     = "your-domain.com"
 ```
 
 Ensure your API token is set as an environment variable:
+
 ```sh
 export CLOUDFLARE_API_TOKEN="your-api-token-here"
 ```
@@ -81,7 +86,9 @@ Verify authentication works:
 ```sh
 terraform plan
 ```
+
 You may see changes detected as Terraform compares your new variable-based configuration with the existing resources. This is normal when migrating from hardcoded values to variables:
+
 ```sh output
 # cloudflare_dns_record.www will be updated in-place
 ~ resource "cloudflare_dns_record" "www" {
@@ -94,23 +101,30 @@ Plan: 0 to add, 1 to change, 0 to destroy.
 ```
 
 ## 2. Store configuration in GitHub
+
 Create a `.gitignore` file with these contents:
+
 ```text
 .terraform/
 *.tfstate*
 .terraform.lock.hcl
 terraform.tfvars
 ```
+
 Initialize Git and commit your configuration:
+
 ```sh
 git init
 git add main.tf .gitignore
 git commit -m "Step 2 - Initial Terraform v5 configuration"
 ```
+
 Create a GitHub repository (via web interface or GitHub CLI) and push:
+
 ```sh
 git branch -M main
 git remote add origin https://github.com/YOUR_USERNAME/cf-config.git
 git push -u origin main
 ```
+
 Your Terraform configuration is now version controlled and ready for team collaboration. The sensitive data (API tokens, zone IDs) remains secure and separate from your code.

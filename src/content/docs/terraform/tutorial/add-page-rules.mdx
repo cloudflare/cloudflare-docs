@@ -6,6 +6,8 @@ sidebar:
 head:
   - tag: title
     content: Add exceptions with Page Rules
+description: >-
+  Page Rules let you override zone settings for specific URL patterns. Redirects old URLs with a 301 permanent redirect.
 ---
 
 import { Render } from "~/components";
@@ -24,13 +26,14 @@ git checkout -b step5-pagerule
 ```
 
 Page Rules let you override zone settings for specific URL patterns. Add two Page Rules to your `main.tf`:
+
 ```hcl
 # Increase security for expensive database operations
 resource "cloudflare_page_rule" "expensive_endpoint_security" {
   zone_id  = var.zone_id
   target   = "${var.domain}/expensive-db-call"
   priority = 1
-  
+
   actions = {
     security_level = "under_attack"
   }
@@ -41,7 +44,7 @@ resource "cloudflare_page_rule" "legacy_redirect" {
   zone_id  = var.zone_id
   target   = "${var.domain}/old-location.php"
   priority = 2
-  
+
   actions = {
     forwarding_url = {
       url         = "https://www.${var.domain}/expensive-db-call"
@@ -50,34 +53,47 @@ resource "cloudflare_page_rule" "legacy_redirect" {
   }
 }
 ```
+
 The first rule increases security to "Under Attack" mode for your database endpoint. The second rule redirects old URLs with a 301 permanent redirect.
 
 ## 2. Preview and apply the changes:
+
 ```sh
 terraform plan
 terraform apply
 ```
+
 ## 3. Verify changes:
+
 Test the redirect functionality:
+
 ```bash
 curl -I https://example.com/old-location.php
 ```
+
 Expected output:
+
 ```bash output
 HTTP/1.1 301 Moved Permanently
 Location: https://example.com/expensive-db-call
 ```
+
 Test the increased security (Under Attack mode returns a challenge page):
+
 ```bash
 curl -I https://example.com/expensive-db-call
 ```
+
 Expected output:
+
 ```bash output
 HTTP/1.1 503 Service Temporarily Unavailable
 ```
+
 The 503 response indicates the Under Attack mode is active, presenting visitors with a challenge page before allowing access to protect against DDoS attacks.
 
 ## 4. Commit and merge the changes:
+
 ```bash
 git add main.tf
 git commit -m "Step 5 - Add two Page Rules"

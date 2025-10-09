@@ -9,6 +9,8 @@ products:
   - Access
 tags:
   - JavaScript
+description: >-
+  This tutorial covers how to use a Cloudflare Worker to add custom headers to traffic. The headers will be sent to origin services protected by Cloudflare Access.
 ---
 
 import { TypeScriptExample, DashButton } from "~/components";
@@ -27,7 +29,7 @@ Some applications and networking implementations require specific custom headers
 
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to the **Workers & Pages** page.
 
-	<DashButton url="/?to=/:account/workers-and-pages" />
+   <DashButton url="/?to=/:account/workers-and-pages" />
 
 2. If this is your first Worker, select **Create Worker**. Otherwise, select **Create application**, then select **Create Worker**.
 
@@ -41,15 +43,15 @@ Some applications and networking implementations require specific custom headers
 
 ```ts title="Worker with custom HTTP headers"
 export default {
-  async fetch(request, env, ctx): Promise<Response> {
-    const { headers } = request;
-    const cfaccessemail = headers.get("cf-access-authenticated-user-email");
+	async fetch(request, env, ctx): Promise<Response> {
+		const { headers } = request;
+		const cfaccessemail = headers.get("cf-access-authenticated-user-email");
 
-    const requestWithID = new Request(request);
-    requestWithID.headers.set('company-user-id', cfaccessemail);
+		const requestWithID = new Request(request);
+		requestWithID.headers.set("company-user-id", cfaccessemail);
 
-    return fetch(requestWithID);
-  },
+		return fetch(requestWithID);
+	},
 } satisfies ExportedHandler<Env>;
 ```
 
