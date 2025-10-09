@@ -1,14 +1,15 @@
 import { useEffect, useState, type ChangeEvent } from "react";
 import Markdown from "react-markdown";
-import type { CollectionEntry } from "astro:content";
+import type { CollectionEntry, getEntries, reference } from "astro:content";
 import type { IconifyIconBuildResult } from "@iconify/utils";
 import { setSearchParams } from "~/util/url";
+import { z } from "astro:schema";
 
 type LearningPaths = CollectionEntry<"learning-paths">["data"][];
 type Icons = Record<string, IconifyIconBuildResult>;
 
 type Filters = {
-	products: string[];
+	products: string[],
 	groups: string[];
 };
 
