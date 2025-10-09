@@ -1,0 +1,107 @@
+---
+pcx_content_type: configuration
+title: PlanetScale
+---
+
+import { Render, PackageManagers, Tabs, TabItem } from "~/components";
+
+[PlanetScale](https://planetscale.com/) is a database platform that provides MySQL-compatible and PostgreSQL databases, making them more scalable, easier and safer to manage.
+
+:::note
+
+You can connect to PlanetScale using [Hyperdrive](/hyperdrive) (recommended), or using the PlanetScale serverless driver, `@planetscale/database`. Both provide connection pooling and reduce the amount of round trips required to create a secure connection from Workers to your database.
+
+Hyperdrive can provide lower latencies because it performs the database connection setup and connection pooling across Cloudflare's network. Hyperdrive supports native database drivers, libraries, and ORMs, and is included in all [Workers plans](/hyperdrive/platform/pricing/). Learn more about Hyperdrive in [How Hyperdrive Works](/hyperdrive/configuration/how-hyperdrive-works/).
+
+:::
+
+<Tabs>
+	<TabItem label="Hyperdrive (recommended)">
+
+To connect to PlanetScale using [Hyperdrive](/hyperdrive), follow these steps:
+
+         <Render file="planetscale-partial" product="hyperdrive"/>
+    </TabItem>
+    <TabItem label="PlanetScale serverless driver">
+
+## Set up an integration with PlanetScale
+
+To set up an integration with PlanetScale:
+
+1. You need to have an existing PlanetScale database to connect to. [Create a PlanetScale database](https://planetscale.com/docs/tutorials/planetscale-quick-start-guide#create-a-database) or [import an existing database to PlanetScale](https://planetscale.com/docs/imports/database-imports#overview).
+
+2. From the [PlanetScale web console](https://planetscale.com/docs/concepts/web-console#get-started), create a `products` table with the following query:
+
+   ```sql
+   CREATE TABLE products (
+     id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+     name varchar(255) NOT NULL,
+     image_url varchar(255),
+     category_id INT,
+     KEY category_id_idx (category_id)
+   );
+   ```
+
+3. Insert some data in your newly created table. Run the following command to add a product and category to your table:
+
+   ```sql
+   INSERT INTO products (name, image_url, category_id)
+   VALUES ('Ballpoint pen', 'https://example.com/500x500', '1');
+   ```
+
+4. Configure the PlanetScale database credentials in your Worker:
+
+   You need to add your PlanetScale database credentials as secrets to your Worker. Get your connection details from the [PlanetScale Dashboard](https://app.planetscale.com) by creating a connection string, then add them as secrets using Wrangler:
+
+   ```sh
+   # Add the database host as a secret
+   npx wrangler secret put DATABASE_HOST
+   # When prompted, paste your PlanetScale host
+
+   # Add the database username as a secret
+   npx wrangler secret put DATABASE_USERNAME
+   # When prompted, paste your PlanetScale username
+
+   # Add the database password as a secret
+   npx wrangler secret put DATABASE_PASSWORD
+   # When prompted, paste your PlanetScale password
+   ```
+
+5. In your Worker, install the `@planetscale/database` driver to connect to your PlanetScale database and start manipulating data:
+
+   <PackageManagers pkg="@planetscale/database" />
+
+6. The following example shows how to make a query to your PlanetScale database in a Worker. The credentials needed to connect to PlanetScale have been added as secrets to your Worker.
+
+   ```js
+   import { connect } from "@planetscale/database";
+
+   export default {
+   	async fetch(request, env) {
+   		const config = {
+   			host: env.DATABASE_HOST,
+   			username: env.DATABASE_USERNAME,
+   			password: env.DATABASE_PASSWORD,
+   			// see https://github.com/cloudflare/workerd/issues/698
+   			fetch: (url, init) => {
+   				delete init["cache"];
+   				return fetch(url, init);
+   			},
+   		};
+
+   		const conn = connect(config);
+   		const data = await conn.execute("SELECT * FROM products;");
+   		return new Response(JSON.stringify(data.rows), {
+   			status: 200,
+   			headers: {
+   				"Content-Type": "application/json",
+   			},
+   		});
+   	},
+   };
+   ```
+
+To learn more about PlanetScale, refer to [PlanetScale's official documentation](https://docs.planetscale.com/).
+
+</TabItem>
+</Tabs>

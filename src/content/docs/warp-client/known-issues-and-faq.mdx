@@ -19,10 +19,11 @@ As our [Network Map](https://www.cloudflare.com/network/) shows, we have locatio
 
 ## Does WARP reveal my IP address to websites I visit?
 
-No. 1.1.1.1 + WARP replaces your original IP address with a Cloudflare IP that consistently and accurately represents your approximate location. This happens regardless of whether the site is on the Cloudflare network or not.
+No. 1.1.1.1 + WARP replaces your original IP address with a Cloudflare IP that consistently and accurately represents your approximate location. This happens regardless of whether the site is on the Cloudflare network or not. Refer to our [blog post](https://blog.cloudflare.com/geoexit-improving-warp-user-experience-larger-network/) for more information on this topic.
 
-Refer to our [blog post](https://blog.cloudflare.com/geoexit-improving-warp-user-experience-larger-network/) for more information on this topic.
-
+:::note
+If you grant a website access to your microphone or camera, traffic will [bypass WARP](#known-issues) and your original IP address will be visible.
+:::
 
 ## Why has my throughput dropped while using WARP?
 
@@ -35,17 +36,12 @@ Cloudflare WARP and the 1.1.1.1 with WARP applications go through performance te
 
 ## What is the version of .NET Framework required for the Windows client?
 
-
 The WARP client for Windows requires .NET Framework version 4.7.2 or later to be installed on your computer.
-
-
-
-
-***
 
 ## Known issues
 
-* Applications or sites that rely on location information to enforce content licensing agreements (for example, certain games, video streaming, music streaming, or radio streaming) may not function properly. We are working on a product update that will allow these clients to work, by not sending their traffic through WARP.
+- Applications or sites that rely on location information to enforce content licensing agreements (for example, certain games, video streaming, music streaming, or radio streaming) may not function properly. We are working on a product update that will allow these clients to work, by not sending their traffic through WARP.
 
-* Refer to [Known Limitations](/cloudflare-one/connections/connect-devices/warp/troubleshooting/known-limitations/)
-  for information on devices, software, and configurations that are incompatible with Cloudflare WARP.
+- Refer to [Known Limitations](/cloudflare-one/connections/connect-devices/warp/troubleshooting/known-limitations/) for information on devices, software, and configurations that are incompatible with Cloudflare WARP.
+
+- WARP does not proxy WebRTC traffic. Applications or sites that have access to your microphone or camera, such as for live video calls or online gaming, will bypass WARP. As a result, your IP address will be visible to these websites.

@@ -5,25 +5,29 @@ sidebar:
   order: 12
 ---
 
+import { Render } from "~/components";
+
 This page lists the default account limits for rules, applications, fields, and other features. These limits may be increased on Enterprise accounts. To request a limit increase, contact your account team.
 
 ## Access
 
 | Feature                     | Limit |
 | --------------------------- | ----- |
-| Applications count          | 500   |
+| Applications                | 500   |
 | Audit Logpush jobs          | 5     |
 | Email addresses per rule    | 1,000 |
-| Group count                 | 300   |
-| Group size                  | 1,000 |
+| Rule groups                 | 300   |
+| Rules per rule group        | 1,000 |
 | IP addresses per rule       | 1,000 |
 | mTLS root certificates      | 50    |
-| Service tokens count        | 50    |
-| IdP count                   | 50    |
-| Rules count per application | 1,000 |
-| Rules count per group       | 1,000 |
+| Service tokens              | 50    |
+| Identity providers          | 50    |
+| Reusable policies           | 500   |
+| Rules per application       | 1,000 |
 | Domains per application     | 5     |
 | Infrastructure targets      | 5,000 |
+| MCP portals                 | 20    |
+| MCP servers per portal      | 10    |
 
 ## Gateway
 
@@ -60,8 +64,9 @@ This page lists the default account limits for rules, applications, fields, and 
 
 | Feature                                  | Limit |
 | ---------------------------------------- | ----- |
-| Tunnels per account                      | 1,000 |
-| IP routes per account                    | 1,000 |
+| `cloudflared` tunnels per account        | 1,000 |
+| WARP Connectors per account              | 10    |
+| Routes per tunnel                       | 1,000 |
 | Active `cloudflared` replicas per tunnel | 25    |
 
 ## Digital Experience Monitoring (DEX)
@@ -95,7 +100,7 @@ This page lists the default account limits for rules, applications, fields, and 
 
 ## WARP
 
-| Feature                                                                    | Character limit |
+| Feature                                                                    | Limit           |
 | -------------------------------------------------------------------------- | --------------- |
-| Device profile expression                                                  | 10,000          |
+| Characters per device profile expression                                   | 10,000          |
 | Combined Split Tunnel and Local Domain Fallback entries per device profile | 1,000           |

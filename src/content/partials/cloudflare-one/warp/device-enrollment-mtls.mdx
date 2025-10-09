@@ -3,23 +3,27 @@
 
 ---
 
-import { GlossaryTooltip, Tabs, TabItem } from "~/components"
+import { GlossaryTooltip, Tabs, TabItem, Render, Details } from "~/components"
+
+<Details header="Certificate requirements">
+   <Render file="byo-ca-mtls-cert-requirements" product="ssl" />
+</Details>
 
 To check for an mTLS certificate:
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. [Add an mTLS certificate](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/#add-mtls-authentication-to-your-access-configuration) to your account. You can generate a sample certificate using the [Cloudflare PKI toolkit](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/#test-mtls-using-cloudflare-pki).
+<Render file="access/add-mtls-cert"  product="cloudflare-one" params={{ product: "warp"}}/>
 
-2. In **Associated hostnames**, enter your Zero Trust <GlossaryTooltip term="team domain">team domain</GlossaryTooltip>: `<team-name>.cloudflareaccess.com`
+5. In **Associated hostnames**, enter your Zero Trust <GlossaryTooltip term="team domain">team domain</GlossaryTooltip>: `<team-name>.cloudflareaccess.com`
 
-3. In your [device enrollment permissions](#set-device-enrollment-permissions), add a *Common Name* or *Valid Certificate* rule. For example, the following policy requires a client certificate with a specific common name:
+6. In your [device enrollment permissions](#set-device-enrollment-permissions), add a *Common Name* or *Valid Certificate* rule. For example, the following policy requires a client certificate with a specific common name:
 
    | Action | Rule type | Selector    | Value                |
    | ------ | --------- | ----------- | -------------------- |
    | Allow  | Require   | Common Name | `<CERT-COMMON-NAME>` |
 
-4. On your device, add the client certificate to the [system keychain](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/#test-in-the-browser).
+7. On your device, add the client certificate to the [system keychain](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/#test-in-the-browser).
 
 </TabItem> <TabItem label="Terraform (v5)">
 

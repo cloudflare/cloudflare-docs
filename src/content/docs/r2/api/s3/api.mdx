@@ -28,6 +28,18 @@ When using the S3 API, the region for an R2 bucket is `auto`. For compatibility 
 
 This also applies to the `LocationConstraint` for the `CreateBucket` API.
 
+## Checksum Types
+
+Checksums have an algorithm and a [type](https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html#ChecksumTypes). Refer to the table below.
+
+| Checksum Algorithm        | `FULL_OBJECT` | `COMPOSITE` |
+| ------------------------- | ------------- | ----------- |
+| CRC-64/NVME (`CRC64NVME`) | ✅            | ❌           |
+| CRC-32 (`CRC32`)          | ❌             | ✅          |
+| CRC-32C (`CRC32C`)        | ❌             | ✅          |
+| SHA-1 (`SHA1`)            | ❌             | ✅          |
+| SHA-256 (`SHA256`)        | ❌             | ✅          |
+
 ## Bucket-level operations
 
 The following tables are related to bucket-level operations.

@@ -1,0 +1,198 @@
+---
+title: A new, simpler REST API for Cloudflare Workers (Beta)
+description: Simpler Workers API, SDK methods, and Terraform resources for directly managing Workers, Versions, and Deployments
+date: 2025-09-04
+---
+You can now manage [**Workers**](/api/resources/workers/subresources/beta/subresources/workers/methods/create/), [**Versions**](/api/resources/workers/subresources/beta/subresources/workers/models/worker/#(schema)), and [**Deployments**](/api/resources/workers/subresources/scripts/subresources/content/methods/update/) as separate resources with a new, resource-oriented API (Beta).
+
+This new API is supported in the [Cloudflare Terraform provider](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs) and the [Cloudflare Typescript SDK](https://github.com/cloudflare/cloudflare-typescript), allowing platform teams to manage a Worker's infrastructure in Terraform, while development teams handle code deployments from a separate repository or workflow. We also designed this API with AI agents in mind, as a clear, predictable structure is essential for them to reliably build, test, and deploy applications.
+
+### Try it out
+- [**New beta API endpoints**](/api/resources/workers/subresources/beta/)
+- [**Cloudflare TypeScript SDK v5.0.0**](https://github.com/cloudflare/cloudflare-typescript)
+- [**Cloudflare Go SDK v6.0.0**](https://github.com/cloudflare/cloudflare-go)
+- [**Terraform provider v5.9.0**](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs): [`cloudflare_worker`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/worker) , [`cloudflare_worker_version`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/worker_version), and [`cloudflare_workers_deployments`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/workers_deployment) resources.
+- See full examples in our [Infrastructure as Code (IaC) guide](/workers/platform/infrastructure-as-code)
+
+
+## Before: Eight+ endpoints with mixed responsibilities
+![**Before**](~/assets/images/workers/platform/api-before.png)
+
+
+The existing API was originally designed for simple, one-shot script uploads:
+
+```sh
+curl -X PUT "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/workers/scripts/$SCRIPT_NAME" \
+    -H "X-Auth-Email: $CLOUDFLARE_EMAIL" \
+    -H "X-Auth-Key: $CLOUDFLARE_API_KEY" \
+    -H "Content-Type: multipart/form-data" \
+    -F 'metadata={
+      "main_module": "worker.js",
+      "compatibility_date": "$today$"
+    }' \
+    -F "worker.js=@worker.js;type=application/javascript+module"
+
+```
+
+This API worked for creating a basic Worker, uploading all of its code, and deploying it immediately — but came with challenges:
+
+- **A Worker couldn't exist without code**: To create a Worker, you had to upload its code in the same API request. This meant platform teams couldn't provision Workers with the proper settings, and then hand them off to development teams to deploy the actual code.
+
+- **Several endpoints implicitly created deployments**: Simple updates like adding a secret or changing a script's content would implicitly create a new version and immediately deploy it.
+
+- **Updating a setting was confusing**: Configuration was scattered across eight endpoints with overlapping responsibilities.  This ambiguity made it difficult for human developers (and even more so for AI agents) to reliably update a Worker via API.
+
+- **Scripts used names as primary identifiers**: This meant simple renames could turn into a risky migration, requiring you to create a brand new Worker and update every reference. If you were using Terraform, this could inadvertently destroy your Worker altogether.
+
+## After: Three resources with clear boundaries
+![**After**](~/assets/images/workers/platform/api-after.png)
+The new API introduces cleaner resource management with three core resources: [**Worker**](/api/resources/workers/subresources/beta/subresources/workers/methods/create/), [**Versions**](/api/resources/workers/subresources/beta/subresources/workers/models/worker/#(schema)), and [**Deployment**](/api/resources/workers/subresources/scripts/subresources/content/methods/update/).
+
+All endpoints now use simple JSON payloads, with script content embedded as `base64`-encoded strings -- a more consistent and reliable approach than the previous `multipart/form-data` format.
+- **Worker**: The parent resource representing your application. It has a stable UUID and holds persistent settings like `name`, `tags`, and `logpush`. You can now create a Worker to establish its identity and settings **before** any code is uploaded.
+
+- **Version**: An immutable snapshot of your code and its specific configuration, like bindings and `compatibility_date`. Creating a new version is a safe action that doesn't affect live traffic.
+
+- **Deployment**: An explicit action that directs traffic to a specific version.
+
+:::note
+[Workers](/api/resources/workers/subresources/beta/subresources/workers/) and [Versions](/api/resources/workers/subresources/beta/subresources/workers/subresources/versions/) use the new `/workers/` beta endpoints, while [Deployments](/api/resources/workers/subresources/scripts/subresources/deployments/) remain on the existing `/scripts/` endpoint. Pair the new endpoints with the existing Deployment API for a complete workflow.
+:::
+
+## Why this matters
+
+### You can now create Workers before uploading code
+
+Workers are now standalone resources that can be created and configured without any code. Platform teams can provision Workers with the right settings, then hand them off to development teams for implementation.
+
+#### Example: Typescript SDK
+```ts
+// Step 1: Platform team creates the Worker resource (no code needed)
+const worker = await client.workers.beta.workers.create({
+  name: "payment-service",
+  account_id: "...",
+  observability: {
+    enabled: true,
+  },
+});
+
+// Step 2: Development team adds code and creates a version later
+const version = await client.workers.beta.workers.versions.create(worker.id, {
+  account_id: "...",
+  main_module: "worker.js",
+  compatibility_date: "$today",
+  bindings: [ /*...*/ ],
+  modules: [
+    {
+      name: "worker.js",
+      content_type: "application/javascript+module",
+      content_base64: Buffer.from(scriptContent).toString("base64"),
+    },
+  ],
+});
+
+// Step 3: Deploy explicitly when ready
+const deployment = await client.workers.scripts.deployments.create(worker.name, {
+  account_id: "...",
+  strategy: "percentage",
+  versions: [
+    {
+      percentage: 100,
+      version_id: version.id,
+    },
+  ],
+});
+````
+#### Example: Terraform
+If you use Terraform, you can now declare the Worker in your Terraform configuration and manage configuration outside of Terraform in your Worker's [`wrangler.jsonc` file](/workers/wrangler/configuration/) and deploy code changes using [Wrangler](/workers/wrangler/).
+
+```tf
+resource "cloudflare_worker" "my_worker" {
+  account_id = "..."
+  name = "my-important-service"
+}
+# Manage Versions and Deployments here or outside of Terraform
+# resource "cloudflare_worker_version" "my_worker_version" {}
+# resource "cloudflare_workers_deployment" "my_worker_deployment" {}
+```
+
+### Deployments are always explicit, never implicit
+
+Creating a version and deploying it are now always explicit, separate actions - never implicit side effects. To update version-specific settings (like bindings), you create a new version with those changes. The existing deployed version remains unchanged until you explicitly deploy the new one.
+
+```sh
+# Step 1: Create a new version with updated settings (doesn't affect live traffic)
+POST /workers/workers/{id}/versions
+{
+  "compatibility_date": "$today",
+  "bindings": [
+    {
+      "name": "MY_NEW_ENV_VAR",
+      "text": "new_value",
+      "type": "plain_text"
+    }
+  ],
+  "modules": [...]
+}
+
+# Step 2: Explicitly deploy when ready (now affects live traffic)
+POST /workers/scripts/{script_name}/deployments
+{
+  "strategy": "percentage",
+  "versions": [
+    {
+      "percentage": 100,
+      "version_id": "new_version_id"
+    }
+  ]
+}
+```
+
+### Settings are clearly organized by scope
+Configuration is now logically divided: [**Worker settings**](/api/resources/workers/subresources/beta/subresources/workers/) (like `name` and `tags`) persist across all versions, while [**Version settings**](/api/resources/workers/subresources/beta/subresources/workers/subresources/versions/) (like `bindings` and `compatibility_date`) are specific to each code snapshot.
+
+```sh
+# Worker settings (the parent resource)
+PUT /workers/workers/{id}
+{
+  "name": "payment-service",
+  "tags": ["production"],
+  "logpush": true,
+}
+```
+
+```sh
+# Version settings (the "code")
+POST /workers/workers/{id}/versions
+{
+  "compatibility_date": "$today",
+  "bindings": [...],
+  "modules": [...]
+}
+```
+
+### `/workers` API endpoints now support UUIDs (in addition to names)
+
+The `/workers/workers/` path now supports addressing a Worker by both its immutable UUID and its mutable name.
+
+```sh
+# Both work for the same Worker
+GET /workers/workers/29494978e03748669e8effb243cf2515  # UUID (stable for automation)
+GET /workers/workers/payment-service                  # Name (convenient for humans)
+```
+This dual approach means:
+  - Developers can use readable names for debugging.
+  - Automation can rely on stable UUIDs to prevent errors when Workers are renamed.
+  - Terraform can rename Workers without destroying and recreating them.
+
+
+## Learn more
+- [Infrastructure as Code (IaC) guide](/workers/platform/infrastructure-as-code)
+- [API documentation](/api/resources/workers/subresources/beta/)
+- [Versions and Deployments overview](/workers/configuration/versions-and-deployments/)
+
+## Technical notes
+
+- The pre-existing Workers REST API remains fully supported. Once the new API exits beta, we'll provide a migration timeline with ample notice and comprehensive migration guides.
+- Existing Terraform resources and SDK methods will continue to be fully supported through the current major version.
+- While the Deployments API currently remains on the `/scripts/` endpoint, we plan to introduce a new Deployments endpoint under `/workers/` to match the new API structure.

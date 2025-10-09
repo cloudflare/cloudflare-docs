@@ -5,10 +5,23 @@ sidebar:
   order: 4
 ---
 
+import { Tabs, TabItem } from "~/components";
+
 To manage your [security.txt](https://en.wikipedia.org/wiki/Security.txt) file via the Cloudflare dashboard:
 
+<Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
+
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), select your account and domain.
-2. Go to **Security** > **Settings** > **Enable Security.txt**.
+2. Go to **Security** > **Settings**.
+3. Next to **Enable Security.txt**, select **Edit Security.txt**.
+
+</TabItem> <TabItem label="New dashboard" icon="rocket">
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), select your account and domain.
+2. Go to **Security** > **Settings** and filter by **Web application exploits**.
+3. Under **Security.txt** > **Configurations**, select the edit icon.
+
+</TabItem> </Tabs>
 
 From here, you can create and manage your `security.txt` file to provide the security research team with a standardized way to report vulnerabilities.
 
@@ -20,6 +33,7 @@ Fill in the following information:
   - A URL link: The URL link must start with `https://` (for example, `https://example.com`).
 
   Select **Add more** to add multiple contacts.
+
 - **(Required) Expires at**: Enter the expiration date and time of the `security.txt` file.
 - **Encryption**: A link to a key which security researchers can use to communicate with you.
 - **Acknowledgements**: A link to your acknowledgements page.
@@ -30,8 +44,25 @@ Fill in the following information:
 
 Once you have entered the necessary information, select **Save**.
 
-To edit your security.txt file, select **Security** > **Settings** > **Edit Security.txt**.
+To edit your security.txt file:
 
-To download your security.txt file, select **Security** > **Settings** > **Download Security.txt**.
+- Old dashboard: Select **Security** > **Settings** > **Edit Security.txt**.
+- New security dashboard:
+  1. Go to **Security** > **Settings** and filter by **Web application exploits**.
+  2. Under **Security.txt** > **Configurations**, select the edit icon.
 
-To delete your security.txt file, select **Security** > **Settings** > **Delete Security.txt**.
+To download your security.txt file:
+
+- Old dashboard: Select **Security** > **Settings** > **Download Security.txt**.
+- New security dashboard:
+  1. Go to **Security** > **Settings** and filter by **Web application exploits**.
+  2. Under **Security.txt** > **Configurations**, select the download icon.
+
+To delete your security.txt file:
+
+- Old dashboard:
+  - Select **Security** > **Settings** > **Delete Security.txt**.
+- New security dashboard:
+  1. Select **Security** > **Settings** and filter by **Web application exploits**.
+  2. Under **Security.txt** > **Configurations**, select the edit icon.
+  3. Select **Delete**.

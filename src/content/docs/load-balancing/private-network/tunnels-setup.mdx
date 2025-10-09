@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import { Render, TabItem, Tabs } from "~/components";
+import { Render, TabItem, Tabs, APIRequest } from "~/components";
 
 Consider the following steps to learn how to configure Private Network Load Balancing solution, using [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) as the off-ramp to securely connect to your private or internal services.
 
@@ -28,9 +28,9 @@ To assign the virtual network to the tunnel:
 
 1. Go to **Networks** > **Tunnels**.
 2. Select the tunnel you created in the previous steps and select **Configure**.
-3. Under **Private Network**, select **Add a private network**.
-4. Specify an IP range under **CIDR** and select the virtual network under **Additional settings**.
-5. Select **Save private network**.
+3. Go to the **CIDR** tab and select **Add a CIDR route**.
+4. Enter an IP range and select the virtual network under **Additional settings**.
+5. Select **Save**.
 
 </TabItem> <TabItem label="cli">
 
@@ -68,7 +68,7 @@ The specific configuration will vary depending on your use case. Refer to the fo
 
 <TabItem label="Dashboard">
 
-<Render file="pool-create" />
+<Render file="pool-create" product="load-balancing" />
 
 </TabItem>
 
@@ -86,23 +86,21 @@ All origins with private IPs must have `virtual_network_id` specified.
 
 :::
 
-```bash
-curl --request PATCH \
-https://api.cloudflare.com/client/v4/accounts/{account_id}/load_balancers/pools/{pool_id} \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-	"origins": [
-		{
-			"name": "origin-1",
-			"address": "10.0.0.1",
-			"enabled": true,
-			"weight": 1,
-			"virtual_network_id": "a5624d4e-044a-4ff0-b3e1-e2465353d4b4"
-		}
-	]
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/load_balancers/pools/{pool_id}"
+	method="PATCH"
+	json={{
+		origins: [
+			{
+				name: "origin-1",
+				address: "10.0.0.1",
+				enabled: true,
+				weight: 1,
+				virtual_network_id: "a5624d4e-044a-4ff0-b3e1-e2465353d4b4",
+			},
+		],
+	}}
+/>
 
 </TabItem>
 </Tabs>

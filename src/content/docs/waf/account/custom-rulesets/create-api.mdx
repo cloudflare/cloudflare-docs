@@ -48,6 +48,7 @@ The following example creates a custom ruleset with a single rule in the `rules`
 		],
 		phase: "http_request_firewall_custom",
 	}}
+	roles="account"
 />
 
 Save the ruleset ID in the response for the next step.
@@ -58,6 +59,7 @@ To deploy the custom ruleset, add a rule with `"action": "execute"` to the `http
 
 1.  <Render
     	file="rulesets/api-account/step1-get-entrypoint"
+    	product="waf"
     	params={{ phaseName: "http_request_firewall_custom" }}
     />
 
@@ -67,6 +69,7 @@ To deploy the custom ruleset, add a rule with `"action": "execute"` to the `http
     	parameters={{
     		ruleset_phase: "http_request_firewall_custom",
     	}}
+    	roles="account"
     />
 
     ```json output {4}
@@ -91,6 +94,7 @@ To deploy the custom ruleset, add a rule with `"action": "execute"` to the `http
 
 2.  <Render
     	file="rulesets/api-account/step2-create-rule"
+    	product="waf"
     	params={{
     		deploymentItem: "custom ruleset",
     	}}
@@ -110,6 +114,7 @@ To deploy the custom ruleset, add a rule with `"action": "execute"` to the `http
     		},
     		enabled: true,
     	}}
+    	roles="account"
     />
 
     :::caution
@@ -118,6 +123,7 @@ To deploy the custom ruleset, add a rule with `"action": "execute"` to the `http
 
 3.  <Render
     	file="rulesets/api-account/step3-create-ruleset"
+    	product="waf"
     	params={{
     		deploymentItem: "custom ruleset",
     		scope: "all incoming requests of Enterprise zones in your account",
@@ -142,6 +148,7 @@ To deploy the custom ruleset, add a rule with `"action": "execute"` to the `http
     		],
     		phase: "http_request_firewall_custom",
     	}}
+    	roles="account"
     />
 
 ## Next steps

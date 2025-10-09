@@ -2,7 +2,7 @@
 {}
 ---
 
-import { TabItem, Tabs } from "~/components";
+import { TabItem, Tabs, APIRequest } from "~/components";
 
 To create an Access rule group:
 
@@ -26,30 +26,29 @@ To create an Access rule group:
 
 Send a `POST` request to the [`/access/groups`](/api/resources/zero_trust/subresources/access/subresources/groups/methods/create/) endpoint:
 
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/groups \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---header "Content-Type: application/json" \
---data '{
-  "name": "Lisbon-team",
-  "include": [
-    {
-      "geo": {
-        "country_code": "PT"
+<APIRequest
+  path="/accounts/{account_id}/access/groups"
+  method="POST"
+  json={{
+    name: "Lisbon-team",
+    include: [
+      {
+        geo: {
+          country_code: "PT"
+        }
       }
-    }
-  ],
-  "exclude": [],
-  "require": [
-    {
-      "email_domain": {
-        "domain": "team.com"
+    ],
+    exclude: [],
+    require: [
+      {
+        email_domain: {
+          domain: "team.com"
+        }
       }
-    }
-  ],
-  "is_default": false
-}'
-```
+    ],
+    is_default: false,
+  }}
+/>
 
 </TabItem> </Tabs>
 

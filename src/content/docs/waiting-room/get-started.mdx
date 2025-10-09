@@ -3,21 +3,20 @@ pcx_content_type: get-started
 title: Get started
 sidebar:
   order: 2
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
-***
+---
 
 ## Before you begin
 
 Before you start this tutorial, make sure you have:
 
-* Reviewed the [About](/waiting-room/about/) Waiting Room page.).
-* Reviewed your [rate limiting rules](/waf/rate-limiting-rules/) to make sure they allow at least one request every 20 seconds (required for automatic page refreshes).
+- Reviewed the [About](/waiting-room/about/) Waiting Room page.).
+- Reviewed your [rate limiting rules](/waf/rate-limiting-rules/) to make sure they allow at least one request every 20 seconds (required for automatic page refreshes).
 
-***
+---
 
 ## Step 1 — Plan out your waiting room
 
@@ -35,22 +34,22 @@ Advanced Waiting Room customers can also [specify multiple hostname and path com
 
 You can direct visitors to your high-traffic page:
 
-* Directly (via URL)
-* Indirectly (via [a redirect](/rules/url-forwarding/bulk-redirects/))
+- Directly (via URL)
+- Indirectly (via [a redirect](/rules/url-forwarding/bulk-redirects/))
 
 ### Queue activation
 
 When you [activate your waiting room](#step-3--activate-your-waiting-room), choose whether:
 
-* [**All visitors**](#queue-all-visitors) to be queued, in preparation for a product release or other time-based event.
-* Only [**some visitors**](#queue-some-visitors) to be queued, as traffic reaches the thresholds defined in `Total active users` and `New users per minute`.
+- [**All visitors**](#queue-all-visitors) to be queued, in preparation for a product release or other time-based event.
+- Only [**some visitors**](#queue-some-visitors) to be queued, as traffic reaches the thresholds defined in `Total active users` and `New users per minute`.
 
 ## Step 2 — Create your waiting room
 
 Create your waiting room by:
 
-* Using the [dashboard](/waiting-room/how-to/create-waiting-room/).
-* Using the [API](/waiting-room/how-to/create-waiting-room/).
+- Using the [dashboard](/waiting-room/how-to/create-waiting-room/).
+- Using the [API](/waiting-room/how-to/create-waiting-room/).
 
 ### Appearance (optional)
 
@@ -68,16 +67,16 @@ Depending on your [queue activation](#queue-activation), you may deploy your wai
 
 ### Queue some visitors
 
-<Render file="queue-some" />
+<Render file="queue-some" product="waiting-room" />
 
 ### Queue all visitors
 
-<Render file="queue-all" />
+<Render file="queue-all" product="waiting-room" />
 
 ## Step 4 — Next steps
 
 After you have created and deployed your first waiting room, you might also want to:
 
-* [Test your waiting room](/waiting-room/additional-options/test-waiting-room/) before it goes live.
-* [Monitor your traffic](/waiting-room/how-to/monitor-waiting-room/) in real time.
-* [Troubleshoot](/waiting-room/troubleshooting/) potential issues.
+- [Test your waiting room](/waiting-room/additional-options/test-waiting-room/) before it goes live.
+- [Monitor your traffic](/waiting-room/how-to/monitor-waiting-room/) in real time.
+- [Troubleshoot](/waiting-room/troubleshooting/) potential issues.

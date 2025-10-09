@@ -1,0 +1,53 @@
+---
+pcx_content_type: how-to
+title: Our site
+meta:
+  title: Our site | How we docs
+---
+
+We use a variety of tools to make our docs site work. You could use these tools to build up your own docs site and - in most cases - do so for free or starting on a free tier.
+
+## Content management system
+
+Our content lives in a public GitHub repository, [`cloudflare-docs`](https://github.com/cloudflare/cloudflare-docs).
+
+GitHub offers a generous [free tier](https://github.com/pricing).
+
+## Search
+
+We use [Algolia](https://www.algolia.com/) as our search provider.
+
+If you have open-source docs, you can be part of the free [DocSearch program](https://docsearch.algolia.com/).
+
+## Site framework
+
+We use [Starlight](https://starlight.astro.build/) for our docs, which is a free, custom documentation theme supported by [Astro](https://astro.build/).
+
+Astro's [component overrides](https://starlight.astro.build/guides/overriding-components/) and [plugins](https://starlight.astro.build/resources/plugins/) system were a big part of us [choosing this framework](https://blog.cloudflare.com/open-source-all-the-way-down-upgrading-our-developer-documentation/) and have exponentially increased our [site's capabilities](/style-guide/components/) (without much extra work).
+
+
+## Builds
+
+We use [GitHub Actions](https://github.com/features/actions) to build our site, which is then [hosted](#hosting) on Cloudflare.
+
+We are moving to [Workers CI/CD](/workers/ci-cd/), which currently runs in the background.
+
+Both of these options include a free tier.
+
+## Hosting
+
+We host our content using [Cloudflare Workers](/workers/static-assets/), specifically using their built in values for [Astro sites](/workers/framework-guides/web-apps/astro/)
+
+Workers offers a generous [free tier](/workers/platform/pricing/).
+
+## Analytics
+
+We send analytics to multiple destinations using [Cloudflare Zaraz](/zaraz/), which has a generous [free tier](/zaraz/pricing-info/).
+
+:::note
+
+If you want to opt out of analytics tracking, use the icon at the bottom of your screen.
+
+![Opt out of analytics with the icon at the bottom of your screen](~/assets/images/style-guide/how-we-docs/privacy-opt-out.png)
+
+:::

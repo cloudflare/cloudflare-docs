@@ -1,36 +1,33 @@
 ---
 pcx_content_type: reference
-title: Access analytics
+title: Access event analytics
 sidebar:
   order: 3
 ---
 
-Access analytics provide Cloudflare One users with data on how Access is protecting their network.
+Access event analytics allows you to review login attempts to the applications you protect behind [Access](/cloudflare-one/policies/access/). Access event analytics are powered by [Access audit logs](/cloudflare-one/insights/logs/audit-logs/).
 
-To view Access analytics in [Zero Trust](https://one.dash.cloudflare.com), go to **Analytics**, then select **Access**.
+To view Access event analytics:
 
-You can view the following data and filters in Access analytics:
+1. Log into [Zero Trust](https://one.dash.cloudflare.com).
+2. Go to **Analytics** > **Dashboards**.
+3. Select **Access event analytics**.
 
-**Zero Trust data:**
+Access Event Analytics aggregates authentication activity based on your [Access policies](/cloudflare-one/policies/access/policy-management/).
 
-- Applications accessed
-- Failed logins
-- Connected users
+## Available insights
 
-**Logins over time:**
+The Access event analytics dashboard includes a chart of Access activity over time. You can view a chronological chart of access events. The Access event analytics dashboard shows when access requests occurred, helping you spot spikes in login attempts.
+- Events are displayed on the vertical axis.
+- Time (in your local timezone) is shown along the horizontal axis.
 
-- Total count of all logins per day
-- Filter to see logins for a specific application
+The Access event analytics dashboard also shows data on your usage patterns with metrics including:
 
-**Applications and users:**
+- Top used applications
+- Top users
+- Top IP addresses
+- Top identities
+- Top countries
+- Top application types
 
-- Top applications accessed
-- Top connected users
-
-**Time filters:**
-
-- Last hour
-- Last 24 hours
-- Last 7 days
-- Last 30 days
-- Current calendar month
+These insights help you detect anomalies, and optimize policy rules.

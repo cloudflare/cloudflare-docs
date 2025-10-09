@@ -1,0 +1,49 @@
+---
+pcx_content_type: how-to
+title: Application Library
+sidebar:
+  order: 4
+---
+
+import { Render, GlossaryTooltip } from "~/components";
+
+The Application Library allows users to manage their SaaS applications in Cloudflare Zero Trust by consolidating views across all relevant products: [Gateway](/cloudflare-one/policies/gateway/), [Access](/cloudflare-one/policies/access/), and [Cloud Access Security Broker (CASB)](/cloudflare-one/applications/casb/). The App Library provides visibility and control for available applications, as well as the ability to view categorized hostnames and manage configuration for Access for SaaS and Gateway policies. For example, you can use the App Library to review how Gateway uses specific hostnames to match against application traffic.
+
+To access the App Library in [Zero Trust](https://one.dash.cloudflare.com/), go to **My team** > **App Library**. Each application card will list the number of hostnames associated with the application, the supported Zero Trust product usage, and the [app type](/cloudflare-one/policies/gateway/application-app-types/#app-types).
+
+The App Library groups [Do Not Inspect applications](/cloudflare-one/policies/gateway/application-app-types/#do-not-inspect-applications) within the corresponding application. For example, the App Library will group _Google Drive (Do Not Inspect)_ under **Google Drive**. Traffic that does not match a known application will not be included in the App Library.
+
+## View application details
+
+Select an application card to view details about the application.
+
+### Overview
+
+The **Overview** tab shows details about an application, including:
+
+- Name
+- Shadow IT [review status](#review-applications)
+- Number of hostnames
+- [App type](/cloudflare-one/policies/gateway/application-app-types/#app-types)
+- Supported Zero Trust applications
+- Application ID for use with the API and Terraform
+
+### Findings
+
+The **Findings** tab shows any connected [CASB integrations](/cloudflare-one/applications/casb/#manage-casb-integrations) for the selected application, as well as instances of any detected [posture findings](/cloudflare-one/applications/casb/manage-findings/#posture-findings) and [content findings](/cloudflare-one/applications/casb/manage-findings/#content-findings) for each integration.
+
+### Policies
+
+The **Policies** tab shows any [Gateway](/cloudflare-one/policies/gateway/) and [Access for SaaS](/cloudflare-one/applications/configure-apps/saas-apps/) policies related to the selected application.
+
+### Usage
+
+The **Usage** tab shows any logs for [Gateway traffic requests](/cloudflare-one/insights/logs/gateway-logs/), [Access authentication events](/cloudflare-one/insights/logs/audit-logs/#authentication-logs), [Shadow IT Discovery user sessions](/cloudflare-one/insights/analytics/shadow-it-discovery/), and [generative AI prompt logs](/cloudflare-one/policies/data-loss-prevention/dlp-policies/logging-options/#view-prompt-logs) sent to the selected application. This section requires logs to be turned on for each feature.
+
+The Shadow IT Discovery dashboard will provide more details for discovered applications. To access Shadow IT Discovery in [Zero Trust](https://one.dash.cloudflare.com/), go to **Analytics**, then select **Shadow IT Discovery**.
+
+## Review applications
+
+The App Library synchronizes application review statuses with approval statuses from the [Shadow IT Discovery SaaS analytics](/cloudflare-one/insights/analytics/shadow-it-discovery/) dashboard.
+
+<Render file="app-library-review-apps" product="cloudflare-one" />

@@ -7,8 +7,12 @@ rss: file
 import { Render } from "~/components";
 
 <Render
-  file="casb/integration-description"
-  params={{ integrationName: "Slack", integrationAccountType: "Slack Workspace" }}
+	file="casb/integration-description"
+	product="cloudflare-one"
+	params={{
+		integrationName: "Slack",
+		integrationAccountType: "Slack Workspace",
+	}}
 />
 
 ## Integration prerequisites
@@ -30,7 +34,11 @@ These permissions follow the principle of least privilege to ensure that only th
 
 ## Security findings
 
-<Render file="casb/security-findings" params={{ integrationName: "Slack", slugRelativePath: "slack" }} />
+<Render
+	file="casb/security-findings"
+	product="cloudflare-one"
+	params={{ integrationName: "Slack", slugRelativePath: "slack" }}
+/>
 
 ### User account settings
 

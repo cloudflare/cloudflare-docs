@@ -298,8 +298,9 @@ async function handleLink(link: Link): Promise<Link> {
 			icon: frontmatter.icon,
 			label: link.label.concat(externalLinkArrow),
 			href: frontmatter.external_link,
-			badge: getBadge(frontmatter.external_link),
+			badge: getBadge(frontmatter.external_link) ?? link.badge,
 			attrs: {
+				target: "_blank",
 				"data-external-link": true,
 			},
 		};

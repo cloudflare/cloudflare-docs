@@ -1,0 +1,20 @@
+---
+{}
+---
+
+### How much work can a D1 database do?
+
+D1 is designed for horizontal scale out across multiple, smaller (10 GB) databases, such as per-user, per-tenant or per-entity databases. D1 allows you to build applications with thousands of databases at no extra cost for isolating with multiple databases, as the pricing is based only on query and storage costs.
+
+- Each D1 database can store up to 10 GB of data, and you can create up to thousands of separate D1 databases. This allows you to split a single monolithic database into multiple, smaller databases, thereby isolating application data by user, customer, or tenant.
+- SQL queries over a smaller working data set can be more efficient and performant while improving data isolation.
+
+:::caution
+Note that the 10 GB limit of a D1 database cannot be further increased.
+:::
+
+### How many simultaneous connections can a Worker open to D1?
+
+You can open up to six connections (to D1) simultaneously for each invocation of your Worker.
+
+For more information on a Worker's simultaneous connections, refer to [Simultaneous open connections](/workers/platform/limits/#simultaneous-open-connections).

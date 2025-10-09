@@ -10,7 +10,7 @@ import { Render } from "~/components";
 
 If you initially set up a partial domain on Cloudflare, you can later migrate it to a [full setup](/dns/zone-setups/full-setup/).
 
-<Render file="conversion-subdomain-setup-callout" />
+<Render file="conversion-subdomain-setup-callout" product="dns" />
 
 ## 1. Prepare Cloudflare SSL/TLS
 
@@ -20,14 +20,12 @@ You should also verify that the [status](/ssl/reference/certificate-statuses/) o
 
 :::note
 
-
 It is possible to use [Universal SSL](/ssl/edge-certificates/universal-ssl/) instead, but you should consider the following:
 
-* Universal certificates can take at least [15 minutes](/ssl/edge-certificates/universal-ssl/enable-universal-ssl/#full-dns-setup) to be issued.
-* You should make sure to add Cloudflare nameservers to your registrar within 72 hours of the conversion process.
-* Universal SSL only supports first-level subdomains. You can use [Advanced certificates](/ssl/edge-certificates/advanced-certificate-manager/) with the [Total TLS](/ssl/edge-certificates/additional-options/total-tls/) option to automatically issue certificates for any proxied hostname.
-* To minimize downtime, it is recommended having a certificate in place beforehand.
-
+- Universal certificates can take at least [15 minutes](/ssl/edge-certificates/universal-ssl/enable-universal-ssl/#full-dns-setup) to be issued.
+- You should make sure to add Cloudflare nameservers to your registrar within 72 hours of the conversion process.
+- Universal SSL only supports first-level subdomains. You can use [Advanced certificates](/ssl/edge-certificates/advanced-certificate-manager/) with the [Total TLS](/ssl/edge-certificates/additional-options/total-tls/) option to automatically issue certificates for any proxied hostname.
+- To minimize downtime, it is recommended having a certificate in place beforehand.
 
 :::
 
@@ -37,9 +35,7 @@ At least 24 hours prior to converting your zone, disable DNSSEC at your authorit
 
 :::note
 
-
 As a best practice, you should also delete the previous [zone activation TXT record](/dns/zone-setups/partial-setup/setup/#1-convert-your-zone-and-review-dns-records) at your authoritative DNS provider. To locate this value in the Cloudflare dashboard, go to **DNS** > **Records** and find the **Verification TXT Record**.
-
 
 :::
 
@@ -57,9 +53,7 @@ Get your assigned Cloudflare nameservers from **DNS** > **Records** and [update 
 
 :::caution
 
-
 If you are counting on Universal SSL certificates to cover your website or application, make sure to add Cloudflare nameservers to your registrar within 72 hours of the conversion process.
-
 
 :::
 

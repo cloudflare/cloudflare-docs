@@ -6,10 +6,9 @@ sidebar:
 head:
   - tag: title
     content: Generic single sign-on integration guide
-
 ---
 
-import { GlossaryTooltip, Render } from "~/components"
+import { GlossaryTooltip, Render } from "~/components";
 
 Below is a generic guide to successfully set up an identity provider based <GlossaryTooltip term="SAML">SAML</GlossaryTooltip>. These options might change depending on your identity provider (IDP). However, make sure you set up the options below or their equivalent.
 
@@ -18,16 +17,16 @@ Below is a generic guide to successfully set up an identity provider based <Glos
 1. Log in to your SAML provider and access its setup section.
 
 2. Enter the following values to configure your IDP provider:
-   |                                 |                                                    |
+   | | |
    | ------------------------------- | -------------------------------------------------- |
-   | **Single sign on URL**          | `https://horizon.area1security.com/api/users/saml` |
-   | **Audience URI (SP Entity ID)** | `https://horizon.area1security.com`                |
-   | **Name ID format**              | *Email Address*                                    |
-   | **Application username**        | *Email*                                            |
-   | **Response**                    | *Signed*                                           |
-   | **Assertion signature**         | *Unsigned*                                         |
-   | **Signature Algorithm**         | *RSA*-SHA1                                         |
-   | **Digest Algorithm**            | *SHA1*                                             |
+   | **Single sign on URL** | `https://horizon.area1security.com/api/users/saml` |
+   | **Audience URI (SP Entity ID)** | `https://horizon.area1security.com` |
+   | **Name ID format** | _Email Address_ |
+   | **Application username** | _Email_ |
+   | **Response** | _Signed_ |
+   | **Assertion signature** | _Unsigned_ |
+   | **Signature Algorithm** | _RSA_-SHA1 |
+   | **Digest Algorithm** | _SHA1_ |
 
 3. In the **Attribute Statements**, add your application users. Emails you add here should match emails users already have in the Email Security dashboard.
 
@@ -49,7 +48,7 @@ After configuring settings in your SSO provider, log in to the Email Security da
 
    ![Enable SSO](~/assets/images/email-security/sso/generic/step4-sso.png)
 
-5. In **SSO Enforcement**, choose one of the settings, according to your specific needs: <Render file="sso-enforcement" />
+5. In **SSO Enforcement**, choose one of the settings, according to your specific needs: <Render file="sso-enforcement" product="email-security" />
 
 6. In **SAML SSO Domain** enter the domain that points to your SSO provider.
 
@@ -61,9 +60,9 @@ After configuring settings in your SSO provider, log in to the Email Security da
 
 If you have trouble connecting your SAML provider to Email Security, make sure that:
 
-* The users you have configured in your SAML provider exist in the Email Security dashboard.
-* You are using email address as an attribute (in step 2, refer to **Name ID format** and **Application username**).
-* You are using the SHA-1 algorithm.
-* Your encryption is set to 2048 bits.
+- The users you have configured in your SAML provider exist in the Email Security dashboard.
+- You are using email address as an attribute (in step 2, refer to **Name ID format** and **Application username**).
+- You are using the SHA-1 algorithm.
+- Your encryption is set to 2048 bits.
 
 If all else fails, enable Chrome browser debug logs. Then, log your activity when SSO is initiated, and contact [Cloudflare support](/support/contacting-cloudflare-support/).

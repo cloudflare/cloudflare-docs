@@ -1,0 +1,84 @@
+---
+summary: Running a container on a schedule using Cron Triggers
+pcx_content_type: example
+title: Cron Container
+sidebar:
+  order: 4
+description: Running a container on a schedule using Cron Triggers
+---
+
+import { WranglerConfig } from "~/components";
+
+To launch a container on a schedule, you can use a Workers [Cron Trigger](/workers/configuration/cron-triggers/).
+
+For a full example, see the [Cron Container Template](https://github.com/mikenomitch/cron-container/tree/main).
+
+Use a cron expression in your Wrangler config to specify the schedule:
+
+<WranglerConfig>
+
+```json
+{
+	"name": "cron-container",
+	"main": "src/index.ts",
+	"triggers": {
+		"crons": [
+			"*/2 * * * *" // Run every 2 minutes
+		]
+	},
+	"containers": [
+		{
+			"class_name": "CronContainer",
+			"image": "./Dockerfile"
+		}
+	],
+	"durable_objects": {
+		"bindings": [
+			{
+				"class_name": "CronContainer",
+				"name": "CRON_CONTAINER"
+			}
+		]
+	},
+	"migrations": [
+		{
+			"new_sqlite_classes": ["CronContainer"],
+			"tag": "v1"
+		}
+	]
+}
+```
+
+</WranglerConfig>
+
+Then in your Worker, call your Container from the "scheduled" handler:
+
+```ts
+import { Container, getContainer } from "@cloudflare/containers";
+
+export class CronContainer extends Container {
+	sleepAfter = "5m";
+}
+
+export default {
+	async fetch(): Promise<Response> {
+		return new Response(
+			"This Worker runs a cron job to execute a container on a schedule.",
+		);
+	},
+
+	// scheduled is called when a cron trigger fires
+	async scheduled(
+		_controller: any,
+		env: { CRON_CONTAINER: DurableObjectNamespace<CronContainer> },
+	) {
+		await getContainer(env.CRON_CONTAINER).startAndWaitForPorts({
+			startOptions: {
+				envVars: {
+					MESSAGE: "Start Time: " + new Date().toISOString(),
+				},
+			},
+		});
+	},
+};
+```

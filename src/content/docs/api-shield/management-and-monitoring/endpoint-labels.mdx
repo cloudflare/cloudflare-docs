@@ -1,13 +1,13 @@
 ---
 pcx_content_type: how-to
-type: overview
+
 title: Endpoint labeling service
 sidebar:
   order: 2
   label: Labeling service
 ---
 
-import { Render } from "~/components";
+import { Render, Steps, Tabs, TabItem, DashButton } from "~/components";
 
 API Shield's labeling service will help you organize your endpoints and address vulnerabilities in your API. The labeling service comes with managed and user-defined labels.
 
@@ -47,8 +47,12 @@ Use managed labels to identify endpoints by use case. Cloudflare may automatical
 
 `cf-rss-feed`: Add this label to endpoints that expect traffic from RSS clients.
 
+`cf-web-page`: Add this label to endpoints that serve HTML pages.
+
 :::note
-<Render file="rss-labels" product="bots" />
+[Bot Fight Mode](/bots/get-started/bot-fight-mode/) will not block requests to endpoints labeled as `cf-rss-feed`.
+
+[Super Bot Fight Mode rules](/bots/get-started/super-bot-fight-mode/#ruleset-engine) will not match or challenge requests labeled as `cf-rss-feed`.
 :::
 
 ### Risk labels
@@ -77,44 +81,112 @@ Cloudflare automatically runs risk scans every 24 hours on your saved endpoints.
 Cloudflare will only add authentication labels to endpoints with successful response codes. Refer to the below table for more details.
 :::
 
-<Render file="label-methodology" />
+<Render file="label-methodology" product="api-shield" />
 
 ## Create a label
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
-2. Go to **Security** > **Settings** > **Labels**.
-3. Under **Security labels**, select **Create label**.
-4. Name the label and add an optional label description.
-5. Apply the label to your selected endpoints.
-6. Select **Create label**.
+<Tabs syncKey="dashNewNav">
+  <TabItem label="Old dashboard">
+    <Steps>
+      1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+      2. Go to **Security** > **Settings** > **Labels**.
+      3. Under **Security labels**, select **Create label**.
+      4. Name the label and add an optional label description.
+      5. Apply the label to your selected endpoints.
+      6. Select **Create label**.
+    </Steps>
 
-Alternatively, you can create a user-defined label via Endpoint Management in API Shield.
+      Alternatively, you can create a user-defined label via Endpoint Management in API Shield:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
-2. Go to **Security** > **Settings** > **Labels**.
-3. Choose the endpoint that you want to label.
-4. Select **Edit labels**.
-5. Under **User**, select **Create user label**.
-6. Enter the label name.
-7. Select **Create**.
+    <Steps>
+      1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+      2. Go to **Security** > **Settings** > **Labels**.
+      3. Choose the endpoint that you want to label.
+      4. Select **Edit labels**.
+      5. Under **User**, select **Create user label**.
+      6. Enter the label name.
+      7. Select **Create**.
+    </Steps>
+  </TabItem>
+  <TabItem label="New dashboard" icon="rocket">
+    <Steps>
+      1. In the Cloudflare dashboard, go to the **Security Settings** page.
+
+          <DashButton url="/?to=/:account/:zone/security/settings" />
+      2. Filter by **API abuse**.
+      3. Under **Endpoint labels**, select **Manage labels**.
+      4. Name the label and add an optional label description.
+      5. Apply the label to your selected endpoints.
+      6. Select **Create label**.
+    </Steps>
+        Alternatively, you can create a user-defined label via **Security** > **Web Assets**.
+    <Steps>
+      1. In the Cloudflare dashboard, go to the **Web Assets** page.
+
+          <DashButton url="/?to=/:account/:zone/security/web-assets" />
+      2. Go to the **Endpoints** tab.
+      3. Choose the endpoint that you want to label.
+      4. Select **Edit endpoint labels**.
+      5. Under **User**, select **Create user label**.
+      6. Enter the label name.
+      7. Select **Create**.
+    </Steps>
+  </TabItem>
+</Tabs>
 
 ## Apply a label to an individual endpoint
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
-2. Go to **Security** > **API Shield** > **Endpoint Management**.
-3. Choose the endpoint that you want to label.
-4. Select **Edit labels**.
-5. Add the label(s) that you want to use for the endpoint from the list of managed and user-defined labels.
-6. Select **Save labels**.
+<Tabs syncKey="dashNewNav">
+  <TabItem label="Old dashboard">
+    <Steps>
+      1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+      2. Go to **Security** > **API Shield** > **Endpoint Management**.
+      3. Choose the endpoint that you want to label.
+      4. Select **Edit labels**.
+      5. Add the label(s) that you want to use for the endpoint from the list of managed and user-defined labels.
+      6. Select **Save labels**.
+   </Steps>
+  </TabItem>
+  <TabItem label="New dashboard" icon="rocket">
+    <Steps>
+      1. In the Cloudflare dashboard, go to the **Web Assets** page.
+
+          <DashButton url="/?to=/:account/:zone/security/web-assets" />
+      2. Go to the **Endpoints** tab.
+      3. Choose the endpoint that you want to label.
+      4. Select **Edit endpoint labels**.
+      5. Add the label(s) that you want to use for the endpoint from the list of managed and user-defined labels.
+      6. Select **Save labels**.
+    </Steps>
+  </TabItem>
+</Tabs>
 
 ## Bulk apply labels to multiple endpoints
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
-2. Go to **Security** > **Settings** > **Labels**.
-3. On the existing label that you want to apply to multiple endpoints, select **Bulk apply**.
-4. Choose the endpoints that you want to label by selecting its checkbox.
-5. Select **Save label**.
+<Tabs syncKey="dashNewNav">
+  <TabItem label="Old dashboard">
+    <Steps>
+      1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+      2. Go to **Security** > **Settings** > **Labels**.
+      3. On the existing label that you want to apply to multiple endpoints, select **Bulk apply**.
+      4. Choose the endpoints that you want to label by selecting its checkbox.
+      5. Select **Save label**.
+    </Steps>
+  </TabItem>
+  <TabItem label="New dashboard" icon="rocket">
+    <Steps>
+      1. In the Cloudflare dashboard, go to the **Security Settings** page.
+
+          <DashButton url="/?to=/:account/:zone/security/settings" />
+      2. Filter by **API abuse**.
+      3. On **Endpoint labels**, select **Manage labels**.
+      4. On the existing label that you want to apply to multiple endpoints, select **Bulk apply**.
+      5. Choose the endpoints that you want to label by selecting its checkbox.
+      6. Select **Apply label**.
+    </Steps>
+  </TabItem>
+</Tabs>
 
 ## Availability
 
-Endpoint Management's labeling service is available to all customers.
+Endpoint labeling is available to all customers.

@@ -1,14 +1,12 @@
 ---
-title: Parameters
+title: IP Access rules parameters
 pcx_content_type: reference
 sidebar:
   order: 3
-head:
-  - tag: title
-    content: IP Access rule parameters
+  label: Parameters
 ---
 
-An IP Access rule will apply a certain action to incoming traffic based on the visitor's IP address, IP range, country, or Autonomous System Number (ASN).
+An IP Access rule will apply a certain action to incoming traffic based on the visitor's IP address, IP range, Autonomous System Number (ASN), or country.
 
 ## IP address
 
@@ -19,13 +17,20 @@ An IP Access rule will apply a certain action to incoming traffic based on the v
 
 ## IP range
 
-| Type             | Example value    | Start of range | End of range                             |                    Number of addresses |
-| ---------------- | ---------------- | -------------- | ---------------------------------------- | -------------------------------------: |
-| IPv4 `/24` range | `192.0.2.0/24`   | `192.0.2.0`    | `192.0.2.255`                            |                                    256 |
-| IPv4 `/16` range | `192.168.0.0/16` | `192.168.0.0`  | `192.168.255.255`                        |                                 65,536 |
-| IPv6 `/64` range | `2001:db8::/64`  | `2001:db8::`   | `2001:db8:0000:0000:ffff:ffff:ffff:ffff` |             18,446,744,073,709,551,616 |
-| IPv6 `/48` range | `2001:db8::/48`  | `2001:db8::`   | `2001:db8:0000:ffff:ffff:ffff:ffff:ffff` |      1,208,925,819,614,629,174,706,176 |
-| IPv6 `/32` range | `2001:db8::/32`  | `2001:db8::`   | `2001:db8:ffff:ffff:ffff:ffff:ffff:ffff` | 79,228,162,514,264,337,593,543,950,336 |
+| Type              | Example value    | Start of range | End of range                             |                    Number of addresses |
+| ----------------- | ---------------- | -------------- | ---------------------------------------- | -------------------------------------: |
+| IPv4 `/24` range  | `192.0.2.0/24`   | `192.0.2.0`    | `192.0.2.255`                            |                                    256 |
+| IPv4 `/16` range  | `192.168.0.0/16` | `192.168.0.0`  | `192.168.255.255`                        |                                 65,536 |
+| IPv6 `/128` range | `2001:db8::/128` | `2001:db8::`   | `2001:db8::`                             |                                      1 |
+| IPv6 `/64` range  | `2001:db8::/64`  | `2001:db8::`   | `2001:db8:0000:0000:ffff:ffff:ffff:ffff` |             18,446,744,073,709,551,616 |
+| IPv6 `/48` range  | `2001:db8::/48`  | `2001:db8::`   | `2001:db8:0000:ffff:ffff:ffff:ffff:ffff` |      1,208,925,819,614,629,174,706,176 |
+| IPv6 `/32` range  | `2001:db8::/32`  | `2001:db8::`   | `2001:db8:ffff:ffff:ffff:ffff:ffff:ffff` | 79,228,162,514,264,337,593,543,950,336 |
+
+## Autonomous System Number (ASN)
+
+| Type | Example value |
+| ---- | ------------- |
+| ASN  | `AS13335`     |
 
 ## Country
 
@@ -40,15 +45,10 @@ Cloudflare uses the following special country alpha-2 codes that are not part of
 - `T1`: [Tor exit nodes](/network/onion-routing/) (country name: `Tor`)
 - `XX`: Unknown/reserved
 
-:::note[Notes about country blocking]
+:::note[Notes]
 
-- Block by country is only available on Enterprise plans.
-- IP addresses globally allowed by Cloudflare will override an IP Access rule country block, but they will not override a country block via [WAF custom rules](/waf/custom-rules/).
+Country block is only available on Enterprise plans.
+
+IP addresses globally allowed by Cloudflare will override a country block via IP Access rules, but they will not override a country block via [custom rules](/waf/custom-rules/).
 
 :::
-
-## Autonomous System Number (ASN)
-
-| Type | Example value |
-| ---- | ------------- |
-| ASN  | `AS13335`     |

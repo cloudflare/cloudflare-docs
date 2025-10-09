@@ -8,6 +8,8 @@ head:
     content: Common API calls | Custom Error Assets
 ---
 
+import { APIRequest } from "~/components";
+
 The following sections provide examples of common API calls for managing custom error assets at the zone level.
 
 To perform the same operations at the account level, use the corresponding account-level API endpoints.
@@ -167,3 +169,75 @@ To delete an asset at the account level, use the account-level endpoint:
 ```txt
 https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/custom_pages/assets/$ASSET_NAME
 ```
+
+### Get error page
+
+This example obtains the current configuration for the `Rate limiting block` error page (with ID `ratelimit_block`).
+
+<APIRequest
+	path="/zones/{zone_identifier}/custom_pages/{identifier}"
+	method="GET"
+	parameters={{
+		identifier: "ratelimit_block",
+	}}
+/>
+
+```json output
+{
+	"result": {
+		"id": "ratelimit_block",
+		"description": "Rate limit Block",
+		"required_tokens": [],
+		"preview_target": "block:rate-limit",
+		"created_on": "2025-06-03T08:33:17.091587Z",
+		"modified_on": "2025-06-03T08:33:17.091587Z",
+		"url": null,
+		"state": "default"
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
+}
+```
+
+The response indicates that the page is currently set to the Cloudflare default page (`"state": "default"`).
+
+For a list of error page identifiers, refer to [Error page types](/rules/custom-errors/reference/error-page-types/).
+
+### Update error page
+
+This example defines a custom error page for `Rate limiting block` errors (with ID `ratelimit_block`) based on the provided URL.
+
+<APIRequest
+	path="/zones/{zone_identifier}/custom_pages/{identifier}"
+	method="PUT"
+	parameters={{
+		identifier: "ratelimit_block",
+	}}
+	json={{
+		state: "customized",
+		url: "https://example.com/rate_limiting_block_error_page.html",
+	}}
+/>
+
+```json output
+{
+	"result": {
+		"id": "ratelimit_block",
+		"description": "Rate limit Block",
+		"required_tokens": [],
+		"preview_target": "block:rate-limit",
+		"created_on": "2025-06-03T08:33:17.091587Z",
+		"modified_on": "2025-06-03T08:35:32.639114Z",
+		"url": "https://example.com/rate_limiting_block_error_page.html",
+		"state": "customized"
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
+}
+```
+
+To set the error page back to the default page, use `"state": "default"` in the request body.
+
+For a list of error page identifiers, refer to [Error page types](/rules/custom-errors/reference/error-page-types/).

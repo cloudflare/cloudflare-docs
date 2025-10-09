@@ -6,7 +6,7 @@ sidebar:
 
 ---
 
-import { GlossaryTooltip } from "~/components"
+import { GlossaryTooltip, Render } from "~/components"
 
 Magic WAN Connector software is certified for use on the [Dell Networking Virtual Edge Platform](https://www.dell.com/support/home/en-us/product-support/product/dell-emc-networking-vep1445-vep1485/docs). It can be purchased with software pre-installed through our partner network for plug-and-play connectivity to Cloudflare One.
 
@@ -79,7 +79,9 @@ When a failover occurs, traffic is moved to the new active node. It could take u
 
 ## WAN settings
 
-This is where you add and configure your WAN connections. Each configured WAN will create one IPsec tunnel.
+This is where you add and configure your WAN connections. Each configured WAN will create one IPsec tunnel, unless you have more than one anycast IP configured in your account.
+
+<Render file="mconn/wan-two-tunnels" product="networking-services" />
 
 When you have multiple WANs you can attribute different priorities to each one. Lower values mean a higher priority. This translates in Connector routing traffic through the higher priority WANs or, more precisely, over the IPsec tunnels established over that interface. On the other hand, if you configure multiple WANs of equal priority, traffic will be distributed over those links through [(Equal-Cost Multi-Path) ECMP routing](/magic-wan/reference/traffic-steering/#equal-cost-multi-path-routing).
 
@@ -91,14 +93,14 @@ For high-capacity use cases, multiple tunnels can be established with equal prio
 
 ### Configure multiple tunnels in the same WAN profile
 
-If you need to configure multiple tunnels for the same WAN profile, [set up multiple WAN connections](/magic-wan/configuration/connector/configure-hardware-connector/#2-create-a-wan). Each WAN is assigned one IPsec tunnel.
+If you do not have more than one anycast IP configured in your account, and you need to configure multiple tunnels for the same WAN profile, [set up multiple WAN connections](/magic-wan/configuration/connector/configure-hardware-connector/#create-a-wan). Each WAN is assigned one IPsec tunnel.
 
 ### WAN settings
 
 - **Interface number:** When using the hardware version of Connector, this refers to the Ethernet port that you are using for your WAN. If you need a throughput higher than 1 Gbps, you can use one of the SFP+ ports. Refer to [SFP+ port information](/magic-wan/configuration/connector/configure-hardware-connector/sfp-port-information/) for more information on the hardware supported. <br />  If you are using Virtual Connector, this needs to correspond to the virtual network interface on the Virtual Connector instance you have set up in VMware.
 - **VLAN ID**: Allows you to have multiple virtual WANs configured over the same port on your Magic WAN Connector. Refer to [VLAN ID](https://developers.cloudflare.com/magic-wan/configuration/connector/reference/#vlan-id) for more information.
 - **Priority**: Assigns a priority to the WAN interface. Lower numbers have higher priority. Refer to [Traffic steering](https://developers.cloudflare.com/magic-wan/reference/traffic-steering/) to learn more about how Cloudflare calculates priorities.
-- **Health check rate:** Configures the health check frequency for your WAN. Options are low, mid, and high. Refer to [Update tunnel health checks frequency](https://developers.cloudflare.com/magic-wan/configuration/common-settings/tunnel-health-checks/) for more information.
+- **Health check rate:** Configures the health check frequency for your WAN. Options are low, mid, and high. Refer to [Update tunnel health checks frequency](https://developers.cloudflare.com/magic-wan/configuration/common-settings/tunnel-health-checks-frequency/) for more information.
 - **Addressing:** Configures the Connector to work in a DHCP or static IP environment.
 
 ## LAN settings

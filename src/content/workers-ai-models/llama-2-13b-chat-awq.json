@@ -22,6 +22,10 @@
         {
             "property_id": "info",
             "value": "https://huggingface.co/TheBloke/Llama-2-13B-chat-AWQ"
+        },
+        {
+            "property_id": "planned_deprecation_date",
+            "value": "2025-10-01"
         }
     ],
     "schema": {
@@ -78,8 +82,8 @@
                         },
                         "top_p": {
                             "type": "number",
-                            "minimum": 0,
-                            "maximum": 2,
+                            "minimum": 0.001,
+                            "maximum": 1,
                             "description": "Adjusts the creativity of the AI's responses by controlling how many possible words it considers. Lower values make outputs more predictable; higher values allow for more varied and creative responses."
                         },
                         "top_k": {
@@ -102,13 +106,13 @@
                         },
                         "frequency_penalty": {
                             "type": "number",
-                            "minimum": 0,
+                            "minimum": -2,
                             "maximum": 2,
                             "description": "Decreases the likelihood of the model repeating the same lines verbatim."
                         },
                         "presence_penalty": {
                             "type": "number",
-                            "minimum": 0,
+                            "minimum": -2,
                             "maximum": 2,
                             "description": "Increases the likelihood of the model introducing new topics."
                         }
@@ -338,8 +342,8 @@
                         },
                         "top_p": {
                             "type": "number",
-                            "minimum": 0,
-                            "maximum": 2,
+                            "minimum": 0.001,
+                            "maximum": 1,
                             "description": "Adjusts the creativity of the AI's responses by controlling how many possible words it considers. Lower values make outputs more predictable; higher values allow for more varied and creative responses."
                         },
                         "top_k": {
@@ -362,13 +366,13 @@
                         },
                         "frequency_penalty": {
                             "type": "number",
-                            "minimum": 0,
+                            "minimum": -2,
                             "maximum": 2,
                             "description": "Decreases the likelihood of the model repeating the same lines verbatim."
                         },
                         "presence_penalty": {
                             "type": "number",
-                            "minimum": 0,
+                            "minimum": -2,
                             "maximum": 2,
                             "description": "Increases the likelihood of the model introducing new topics."
                         }

@@ -36,7 +36,7 @@ The most common approach to forwarding a certificate is to use the Cloudflare AP
 	}}
 />
 
-Once `client_certificate_forwarding` is set to `true`, the first request of an mTLS connection will now include the following headers:
+Once `client_certificate_forwarding` is set to `true`, every request within an mTLS connection will now include the following headers:
 
 * `Cf-Client-Cert-Der-Base64`
 * `Cf-Client-Cert-Sha256`

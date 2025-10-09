@@ -27,6 +27,23 @@
                 {
                     "type": "object",
                     "properties": {
+                        "image": {
+                            "oneOf": [
+                                {
+                                    "type": "array",
+                                    "description": "An array of integers that represent the image data constrained to 8-bit unsigned integer values",
+                                    "items": {
+                                        "type": "number",
+                                        "description": "A value between 0 and 255"
+                                    }
+                                },
+                                {
+                                    "type": "string",
+                                    "format": "binary",
+                                    "description": "Binary string representing the image contents."
+                                }
+                            ]
+                        },
                         "temperature": {
                             "type": "number",
                             "description": "Controls the randomness of the output; higher values produce more random results."
@@ -63,23 +80,6 @@
                         "presence_penalty": {
                             "type": "number",
                             "description": "Increases the likelihood of the model introducing new topics."
-                        },
-                        "image": {
-                            "oneOf": [
-                                {
-                                    "type": "array",
-                                    "description": "An array of integers that represent the image data constrained to 8-bit unsigned integer values",
-                                    "items": {
-                                        "type": "number",
-                                        "description": "A value between 0 and 255"
-                                    }
-                                },
-                                {
-                                    "type": "string",
-                                    "format": "binary",
-                                    "description": "Binary string representing the image contents."
-                                }
-                            ]
                         },
                         "max_tokens": {
                             "type": "integer",

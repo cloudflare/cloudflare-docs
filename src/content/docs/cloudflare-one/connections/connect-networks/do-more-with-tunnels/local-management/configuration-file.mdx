@@ -28,7 +28,7 @@ warp-routing:
   enabled: true
 ```
 
-## File structure for public hostnames
+## File structure for published applications
 
 If you are exposing local services to the Internet, you can assign a public hostname to each service:
 
@@ -79,9 +79,9 @@ You can use wildcards to match traffic to multiple subdomains. For example, if y
 
 You can also enter regular expressions for the `path` key. For example, if `hostname` is `static.example.com` and `path` is `\.(jpg|png|css|js)$`, matching URLs could include `https://static.example.com/data.js`, `http://static.example.com/images/photo.jpg`, and so on. Cloudflare parses the path regex using the [Go `syntax` package](https://pkg.go.dev/regexp/syntax).
 
-### Supported protocols
+### Services
 
-In addition to HTTP, `cloudflared` supports protocols like SSH, RDP, arbitrary TCP services, and Unix sockets. You can also route traffic to the built-in `Hello World` test server or respond to traffic with an HTTP status.
+In addition to HTTP, `cloudflared` supports protocols like SSH, RDP, arbitrary TCP services, and Unix sockets. You can also route traffic to the built-in `hello_world` test server or respond to traffic with an HTTP status. For a full list of supported service types, refer to [Protocols for published applications](/cloudflare-one/connections/connect-networks/routing-to-tunnel/protocols/).
 
 ```yml
 tunnel: 6ff42ae2-765d-4adf-8112-31c55c1551ef
@@ -100,18 +100,6 @@ ingress:
   # Example of a rule responding to traffic with an HTTP status:
   - service: http_status:404
 ```
-
-| Service                | Description                                                                                                                   | Example `service` value               |
-| ---------------------- | ----------------------------------------------------------------------------------------------------------------------------- | ------------------------------------- |
-| HTTP/S                 | Incoming HTTP requests are proxied directly to your local service.                                                            | `https://localhost:8000`              |
-| HTTP over Unix socket  | Just like HTTP, but using a Unix socket instead.                                                                              | `unix:/home/production/echo.sock`     |
-| HTTPS over Unix socket | Just like HTTPS, but using a Unix socket instead.                                                                             | `unix+tls:/home/production/echo.sock` |
-| TCP                    | TCP connections are proxied to your local service.                                                                            | `tcp://localhost:2222`                |
-| SSH                    | SSH connections are proxied to your local service. [Learn more](/cloudflare-one/connections/connect-networks/use-cases/ssh/). | `ssh://localhost:22`                  |
-| RDP                    | RDP connections are proxied to your local service. [Learn more](/cloudflare-one/connections/connect-networks/use-cases/rdp/). | `rdp://localhost:3389`                |
-| kubectl bastion mode   | `cloudflared` will act like a jumphost, allowing access to any local address.                                                 | `bastion`                             |
-| Hello World            | Test server for validating your Cloudflare Tunnel setup.                                                                      | `hello_world`                         |
-| HTTP status            | Responds to all requests with the given HTTP status.                                                                          | `http_status:404`                     |
 
 ### Origin configuration
 

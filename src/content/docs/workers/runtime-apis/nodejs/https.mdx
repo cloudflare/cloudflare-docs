@@ -1,0 +1,203 @@
+---
+pcx_content_type: configuration
+title: https
+---
+
+import { Render } from "~/components";
+
+<Render file="nodejs-compat-howto" product="workers" />
+
+## Compatibility flags
+
+### Client-side methods
+
+To use the HTTPS client-side methods (`https.get`, `https.request`, etc.), you must enable the [`enable_nodejs_http_modules`](/workers/configuration/compatibility-flags/) compatibility flag in addition to the [`nodejs_compat`](/workers/runtime-apis/nodejs/) flag.
+
+This flag is automatically enabled for Workers using a [compatibility date](/workers/configuration/compatibility-dates/) of `2025-08-15` or later when `nodejs_compat` is enabled. For Workers using an earlier compatibility date, you can manually enable it by adding the flag to your `wrangler.toml`:
+
+```toml
+compatibility_flags = ["nodejs_compat", "enable_nodejs_http_modules"]
+```
+
+### Server-side methods
+
+To use the HTTPS server-side methods (`https.createServer`, `https.Server`, `https.ServerResponse`), you must enable the `enable_nodejs_http_server_modules` compatibility flag in addition to the [`nodejs_compat`](/workers/runtime-apis/nodejs/) flag.
+
+This flag is automatically enabled for Workers using a [compatibility date](/workers/configuration/compatibility-dates/) of `2025-09-01` or later when `nodejs_compat` is enabled. For Workers using an earlier compatibility date, you can manually enable it by adding the flag to your `wrangler.toml`:
+
+```toml
+compatibility_flags = ["nodejs_compat", "enable_nodejs_http_server_modules"]
+```
+
+To use both client-side and server-side methods, enable both flags:
+
+```toml
+compatibility_flags = ["nodejs_compat", "enable_nodejs_http_modules", "enable_nodejs_http_server_modules"]
+```
+
+## get
+
+An implementation of the Node.js [`https.get'](https://nodejs.org/docs/latest/api/https.html#httpsgetoptions-callback) method.
+
+The `get` method performs a GET request to the specified URL and invokes the callback with the response. This is a convenience method that simplifies making HTTPS GET requests without manually configuring request options.
+
+Because `get` is a wrapper around `fetch(...)`, it may be used only within an exported fetch or similar handler. Outside of such a handler, attempts to use `get` will throw an error.
+
+```js
+import { get } from "node:https";
+
+export default {
+	async fetch() {
+		const { promise, resolve, reject } = Promise.withResolvers();
+		get("https://example.com", (res) => {
+			let data = "";
+			res.setEncoding("utf8");
+			res.on("data", (chunk) => {
+				data += chunk;
+			});
+			res.on("end", () => {
+				resolve(new Response(data));
+			});
+			res.on("error", reject);
+		}).on("error", reject);
+		return promise;
+	},
+};
+```
+
+The implementation of `get` in Workers is a wrapper around the global
+[`fetch` API](https://developers.cloudflare.com/workers/runtime-apis/fetch/)
+and is therefore subject to the same [limits](https://developers.cloudflare.com/workers/platform/limits/).
+
+As shown in the example above, it is necessary to arrange for requests to be correctly
+awaited in the `fetch` handler using a promise or the fetch may be canceled prematurely
+when the handler returns.
+
+## request
+
+An implementation of the Node.js [`https.request'](https://nodejs.org/docs/latest/api/https.html#httpsrequestoptions-callback) method.
+
+The `request` method creates an HTTPS request with customizable options like method, headers, and body. It provides full control over the request configuration and returns a Node.js [stream.Writable](https://developers.cloudflare.com/workers/runtime-apis/nodejs/streams/) for sending request data.
+
+Because `get` is a wrapper around `fetch(...)`, it may be used only within an exported fetch or similar handler. Outside of such a handler, attempts to use `get` will throw an error.
+
+The request method accepts all options from [`http.request`](/workers/runtime-apis/nodejs/http#request) with some differences in default values:
+
+- `protocol`: default `https:`
+- `port`: default `443`
+- `agent`: default `https.globalAgent`
+
+```js
+import { request } from "node:https";
+import { strictEqual, ok } from "node:assert";
+
+export default {
+	async fetch() {
+		const { promise, resolve, reject } = Promise.withResolvers();
+		const req = request(
+			"https://developers.cloudflare.com/robots.txt",
+			{
+				method: "GET",
+			},
+			(res) => {
+				strictEqual(res.statusCode, 200);
+				let data = "";
+				res.setEncoding("utf8");
+				res.on("data", (chunk) => {
+					data += chunk;
+				});
+				res.once("error", reject);
+				res.on("end", () => {
+					ok(data.includes("User-agent"));
+					resolve(new Response(data));
+				});
+			},
+		);
+		req.end();
+		return promise;
+	},
+};
+```
+
+The following additional options are not supported: `ca`, `cert`, `ciphers`, `clientCertEngine` (deprecated), `crl`, `dhparam`, `ecdhCurve`, `honorCipherOrder`, `key`, `passphrase`, `pfx`, `rejectUnauthorized`, `secureOptions`, `secureProtocol`, `servername`, `sessionIdContext`, `highWaterMark`.
+
+## createServer
+
+An implementation of the Node.js [`https.createServer`](https://nodejs.org/docs/latest/api/https.html#httpscreateserveroptions-requestlistener) method.
+
+The `createServer` method creates an HTTPS server instance that can handle incoming secure requests. It's a convenience function that creates a new `Server` instance and optionally sets up a request listener callback.
+
+```js
+import { createServer } from "node:https";
+import { httpServerHandler } from "cloudflare:node";
+
+const server = createServer((req, res) => {
+	res.writeHead(200, { "Content-Type": "text/plain" });
+	res.end("Hello from Node.js HTTPS server!");
+});
+
+server.listen(8080);
+export default httpServerHandler({ port: 8080 });
+```
+
+The `httpServerHandler` function integrates Node.js HTTPS servers with the Cloudflare Workers request model. When a request arrives at your Worker, the handler automatically routes it to your Node.js server running on the specified port. This bridge allows you to use familiar Node.js server patterns while benefiting from the Workers runtime environment, including automatic scaling, edge deployment, and integration with other Cloudflare services.
+
+:::note
+Failing to call `close()` on an HTTPS server may result in the server being leaked. To prevent this, call `close()` when you're done with the server, or use explicit resource management:
+
+```js
+import { createServer } from "node:https";
+
+await using server = createServer((req, res) => {
+	res.end("Hello World");
+});
+// Server will be automatically closed when it goes out of scope
+```
+
+:::
+
+## Agent
+
+An implementation of the Node.js [`https.Agent`](https://nodejs.org/docs/latest/api/https.html#class-httpsagent) class.
+
+An [Agent](https://nodejs.org/docs/latest/api/https.html#class-httpsagent) manages HTTPS connection reuse by maintaining request queues per host/port. In the Workers environment, however, such low-level management of the network connection, ports, etc, is not relevant because it is handled by the Cloudflare infrastructure instead. Accordingly, the implementation of `Agent` in Workers is a stub implementation that does not support connection pooling or keep-alive.
+
+## Server
+
+An implementation of the Node.js [`https.Server`](https://nodejs.org/docs/latest/api/https.html#class-httpsserver) class.
+
+In Node.js, the `https.Server` class represents an HTTPS server and provides methods for handling incoming secure requests. In Workers, handling of secure requests is provided by the Cloudflare infrastructure so there really is not much difference between using `https.Server` or `http.Server`. The workers runtime provides an implementation for completeness but most workers should probably just use [`http.Server`](/workers/runtime-apis/nodejs/http#server).
+
+```js
+import { Server } from "node:https";
+import { httpServerHandler } from "cloudflare:node";
+
+const server = new Server((req, res) => {
+	res.writeHead(200, { "Content-Type": "application/json" });
+	res.end(JSON.stringify({ message: "Hello from HTTPS Server!" }));
+});
+server.listen(8080);
+export default httpServerHandler({ port: 8080 });
+```
+
+The following differences exist between the Workers implementation and Node.js:
+
+- Connection management methods such as `closeAllConnections()` and `closeIdleConnections()` are not implemented due to the nature of the Workers environment.
+- Only `listen()` variants with a port number or no parameters are supported: `listen()`, `listen(0, callback)`, `listen(callback)`, etc.
+- The following server options are not supported: `maxHeaderSize`, `insecureHTTPParser`, `keepAliveTimeout`, `connectionsCheckingInterval`
+- TLS/SSL-specific options such as `ca`, `cert`, `key`, `pfx`, `rejectUnauthorized`, `secureProtocol` are not supported in the Workers environment. If you need to use mTLS, use the [mTLS binding](/workers/runtime-apis/bindings/mtls/).
+
+## Other differences between Node.js and Workers implementation of `node:https`
+
+Because the Workers implementation of `node:https` is a wrapper around the global `fetch` API, there are some differences in behavior compared to Node.js:
+
+- `Connection` headers are not used. Workers will manage connections automatically.
+- `Content-Length` headers will be handled the same way as in the `fetch` API. If a body is provided, the header will be set automatically and manually set values will be ignored.
+- `Expect: 100-continue` headers are not supported.
+- Trailing headers are not supported.
+- The `'continue'` event is not supported.
+- The `'information'` event is not supported.
+- The `'socket'` event is not supported.
+- The `'upgrade'` event is not supported.
+- Gaining direct access to the underlying `socket` is not supported.
+- Configuring TLS-specific options like `ca`, `cert`, `key`, `rejectUnauthorized`, etc, is not supported.

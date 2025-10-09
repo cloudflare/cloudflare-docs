@@ -3,34 +3,35 @@
 
 ---
 
+import { APIRequest } from "~/components";
+
 For a full list of monitor properties, refer to [Create Monitor](/api/resources/load_balancers/subresources/monitors/methods/create/). If you need help with API authentication, refer to [Cloudflare API documentation](/fundamentals/api/).
 
-```bash title="Request"
-curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/load_balancers/monitors" \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-  "type": "https",
-  "description": "Login page monitor",
-  "method": "GET",
-  "path": "/health",
-  "header":  {
-    "Host": ["example.com"],
-    "X-App-ID": ["abc123"]
-  },
-  "port": 8080,
-  "timeout": 3,
-  "retries": 0,
-  "interval": 90,
-  "expected_body": "alive",
-  "expected_codes": "2xx",
-  "follow_redirects": true,
-  "allow_insecure": true,
-  "consecutive_up": 3,
-  "consecutive_down": 2,
-  "probe_zone": "example.com"
-}'
-```
+<APIRequest
+  path="/accounts/{account_id}/load_balancers/monitors"
+  method="POST"
+  json={{
+    type: "https",
+    description: "Login page monitor",
+    method: "GET",
+    path: "/health",
+    header: {
+      Host: ["example.com"],
+      "X-App-ID": ["abc123"]
+    },
+    port: 8080,
+    timeout: 3,
+    retries: 0,
+    interval: 90,
+    expected_body: "alive",
+    expected_codes: "2xx",
+    follow_redirects: true,
+    allow_insecure: true,
+    consecutive_up: 3,
+    consecutive_down: 2,
+    probe_zone: "example.com"
+  }}
+/>
 
 The response contains the complete definition of the new monitor.
 

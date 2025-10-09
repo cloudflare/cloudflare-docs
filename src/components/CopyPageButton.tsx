@@ -10,12 +10,15 @@ import {
 } from "@floating-ui/react";
 import { useState } from "react";
 import {
-	PiMarkdownLogo,
-	PiClipboardTextLight,
+	PiTriangleFill,
+	PiCopyDuotone,
 	PiArrowSquareOutLight,
 	PiCheckCircleLight,
 	PiXCircleLight,
+	PiChatCircleLight,
 } from "react-icons/pi";
+import ClaudeIcon from "./icons/ClaudeIcon";
+import ChatGPTIcon from "./icons/ChatGPTIcon";
 import { track } from "~/util/zaraz";
 
 type CopyState = "idle" | "success" | "error";
@@ -45,6 +48,25 @@ export default function CopyPageButton() {
 			value: "view markdown",
 		});
 		window.open(markdownUrl, "_blank");
+	};
+
+	const handleDocsAI = () => {
+		const docsAIUrl = "https://developers.cloudflare.com/support/ai/";
+		track("clicked copy page button", {
+			value: "docs ai",
+		});
+		window.open(docsAIUrl, "_blank");
+	};
+
+	const handleExternalAI = (url: string, vendor: string) => {
+		const externalAIURL = url;
+		const indexMdUrl = new URL("index.md", window.location.href).toString();
+		const prompt = `Read this page from the Cloudflare docs: ${encodeURIComponent(indexMdUrl)} and answer questions about the content.`;
+		track("clicked copy page button", {
+			value: "docs ai",
+			label: vendor,
+		});
+		window.open(`${externalAIURL}${prompt}`, "_blank");
 	};
 
 	const handleCopyMarkdown = async () => {
@@ -80,16 +102,29 @@ export default function CopyPageButton() {
 
 	const options = [
 		{
-			label: "Copy Page as Markdown",
-			description: "Copy the raw Markdown content to clipboard",
-			icon: PiClipboardTextLight,
-			onClick: handleCopyMarkdown,
-		},
-		{
 			label: "View Page as Markdown",
 			description: "Open the Markdown file in a new tab",
 			icon: PiArrowSquareOutLight,
 			onClick: handleViewMarkdown,
+		},
+		{
+			label: "Open in Claude",
+			description: "Ask Claude about this page",
+			icon: ClaudeIcon,
+			onClick: () => handleExternalAI("https://claude.ai/new?q=", "claude"),
+		},
+		{
+			label: "Open in ChatGPT",
+			description: "Ask ChatGPT about this page",
+			icon: ChatGPTIcon,
+			onClick: () =>
+				handleExternalAI("https://chat.openai.com/?prompt=", "chatgpt"),
+		},
+		{
+			label: "Ask Docs AI",
+			description: "Open our Docs AI assistant in a new tab",
+			icon: PiChatCircleLight,
+			onClick: handleDocsAI,
 		},
 	];
 
@@ -114,21 +149,29 @@ export default function CopyPageButton() {
 
 		return (
 			<>
-				<span>Copy Page</span>
-				<PiMarkdownLogo />
+				<PiCopyDuotone />
+				<span>Copy page</span>
 			</>
 		);
 	};
 
 	return (
 		<>
-			<button
-				ref={refs.setReference}
-				{...getReferenceProps()}
-				className="inline-flex h-8 min-w-32 cursor-pointer items-center justify-center gap-2 rounded-sm border border-(--sl-color-hairline) bg-transparent px-3 text-sm text-black hover:bg-(--sl-color-bg-nav)"
-			>
-				{getButtonContent()}
-			</button>
+			<div className="flex justify-end">
+				<button
+					onClick={handleCopyMarkdown}
+					className="inline-flex min-h-8 min-w-32 cursor-pointer items-center justify-center gap-2 rounded-l-sm border border-(--sl-color-hairline) bg-transparent px-3 text-sm text-black transition-colors duration-300 hover:bg-[var(--color-cl1-gray-9)] dark:hover:bg-[var(--color-cl1-gray-2)]"
+				>
+					{getButtonContent()}
+				</button>
+				<button
+					ref={refs.setReference}
+					{...getReferenceProps()}
+					className="inline-flex min-h-8 w-8 cursor-pointer items-center justify-center rounded-r-sm border-t border-r border-b border-(--sl-color-hairline) bg-transparent text-sm text-black transition-colors duration-300 hover:bg-[var(--color-cl1-gray-9)] dark:hover:bg-[var(--color-cl1-gray-2)]"
+				>
+					<PiTriangleFill className="rotate-180 text-xs" />
+				</button>
+			</div>
 			{isOpen && (
 				<FloatingPortal>
 					<ul
@@ -141,7 +184,7 @@ export default function CopyPageButton() {
 							<li key={label}>
 								<button
 									onClick={onClick}
-									className="relative block w-full cursor-pointer bg-transparent px-3 py-2 text-left text-black no-underline hover:bg-(--sl-color-bg-nav)"
+									className="relative block w-full cursor-pointer bg-transparent px-3 py-2 text-left text-black no-underline hover:bg-[var(--color-cl1-gray-9)] dark:hover:bg-[var(--color-cl1-gray-2)]"
 								>
 									<div className="flex items-center gap-2 text-sm">
 										<Icon />

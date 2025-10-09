@@ -9,7 +9,7 @@ import { Render, Badge } from "~/components";
 
 Cloudflare Zero Trust enforces WARP client reauthentication on a per-application basis, unlike legacy VPNs which treat it as a global setting. You can configure WARP session timeouts for your [Access applications](#configure-warp-sessions-in-access) or as part of your [Gateway policies](#configure-warp-sessions-in-gateway).
 
-<Render file="warp/warp-sessions-intro" />
+<Render file="warp/warp-sessions-intro" product="cloudflare-one" />
 
 ## Prerequisites
 
@@ -17,7 +17,7 @@ Ensure that traffic can reach your IdP and `<your-team-name>.cloudflareaccess.co
 
 ## Configure WARP sessions in Gateway
 
-<Render file="warp/warp-sessions-gateway" />
+<Render file="warp/warp-sessions-gateway" product="cloudflare-one" />
 
 :::note[Enforce a global timeout]
 
@@ -53,8 +53,16 @@ If the user has an active browser session with the IdP, WARP will use the existi
 
 - [Microsoft Entra ID](/cloudflare-one/identity/idp-integration/entra-id/#force-user-interaction-during-warp-reauthentication)
 
+## Manually reauthenticate
+
+<Render file="warp/manually-reauth" product="cloudflare-one" />
+
 ## Limitations
 
 - **Only one user per device** — If a device is already registered with User A, User B will not be able to log in on that device through the re-authentication flow. To switch the device registration to a different user, User A must first log out from Zero Trust (if [Allow device to leave organization](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#allow-device-to-leave-organization) is enabled), or an admin can revoke the registration from **My Team** > **Devices**. User B can then properly [enroll](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/).
 - **Active connections are not terminated** — Active sessions such as SSH and RDP will remain connected beyond the timeout limit.
 - **Binding Cookie is not supported** - WARP authentication will not work for Access applications that have the [Binding Cookie](/cloudflare-one/identity/authorization-cookie/#binding-cookie) enabled.
+
+## Related resources
+
+- [Connectivity status](/cloudflare-one/connections/connect-devices/warp/troubleshooting/connectivity-status/) - Learn about the status messages displayed by the WARP client during its connection process, and understand each stage as WARP establishes a secure tunnel to Cloudflare.

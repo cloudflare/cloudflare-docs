@@ -6,7 +6,7 @@ sidebar:
 
 ---
 
-import { Details } from "~/components"
+import { Details, APIRequest } from "~/components"
 
 Because of how a waiting room [tracks visitor progress](#background), you need to [specify certain cookie attributes](#allow-cookies-to-pass-through-iframes) to properly embed a waiting room in an iFrame.
 
@@ -47,28 +47,27 @@ If you are embedding a waiting room in an iFrame, specify the following values o
 
 <Details header="Request">
 
-```bash
-curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/waiting_rooms" \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-  "name": "shop_waiting_room",
-  "description": "Waiting room for webshop",
-  "host": "shop.example.com",
-  "path": "/shop",
-  "queue_all": true,
-  "new_users_per_minute": 200,
-  "total_active_users": 300,
-  "session_duration": 1,
-  "disable_session_renewal": false,
-  "json_response_enabled": false,
-  "queueing_method": "FIFO",
-  "cookie_attributes": {
-    "samesite": "none",
-    "secure": "auto"
-  }
-}'
-```
+<APIRequest
+  path="/zones/{zone_id}/waiting_rooms"
+  method="POST"
+  json={{
+    name: "shop_waiting_room",
+    description: "Waiting room for webshop",
+    host: "shop.example.com",
+    path: "/shop",
+    queue_all: true,
+    new_users_per_minute: 200,
+    total_active_users: 300,
+    session_duration: 1,
+    disable_session_renewal: false,
+    json_response_enabled: false,
+    queueing_method: "FIFO",
+    cookie_attributes: {
+      samesite: "none",
+      secure: "auto"
+    }
+  }}
+/>
 
 
 </Details>

@@ -21,11 +21,14 @@ Before you can protect your API or web application with mTLS rules, you need to:
 - [Configure your mobile app or IoT device](/ssl/client-certificates/configure-your-mobile-app-or-iot-device/) to use your Cloudflare-issued client certificate.
 - [Enable mutual Transport Layer Security (mTLS) for a host](/ssl/client-certificates/enable-mtls/) in your zone.
 
-<Render file="mtls-api-shield-support" />
+<Render file="mtls-api-shield-support" product="api-shield" />
 
-<Render file="cloudflare-managed-client-cert" product="ssl" />
+:::caution
 
-## Create an mTLS rule
+By default, API Shield mTLS uses client certificates issued by a Cloudflare-managed CA. If you need to use certificates issued by another CA, you can use the API to [bring your own CA for mTLS](/ssl/client-certificates/byo-ca/).
+:::
+
+## Create an mTLS rule via the Cloudflare dashboard
 
 <Render file="mtls-create-rule" product="api-shield" />
 

@@ -10,7 +10,7 @@ import { GlossaryTooltip } from "~/components";
 
 Cloudflare does not block or challenge requests from Facebook by default. However, a post of a website to Facebook returns an _Attention Required_ error in the following situations:
 
-- You have globally set the [security level](/waf/tools/security-level/) to _I'm Under Attack_.
+- You have globally [enabled Under Attack mode](/fundamentals/reference/under-attack-mode/).
 - There is a [configuration rule](/rules/configuration-rules/) or [page rule](/rules/page-rules/) setting turning on Under Attack mode.
 - There is a [custom rule](/waf/custom-rules/) with a challenge or block action that includes a Facebook IP address.
 

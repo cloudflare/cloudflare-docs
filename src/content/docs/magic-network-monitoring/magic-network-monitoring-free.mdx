@@ -8,6 +8,8 @@ head:
     content: Magic Network Monitoring free version
 ---
 
+import { DashButton } from "~/components";
+
 The free version of Magic Network Monitoring (MNM) is generally available to everyone with a Cloudflare account by default.
 
 All free customers are encouraged to join [Cloudflare's Discord server](https://discord.com/invite/cloudflaredev) to discuss the use cases, configuration, and troubleshooting of Magic Network Monitoring. Free customers are always welcome to provide product feedback and discuss feature requests. The product and engineering team that works on Magic Network Monitoring regularly engages with the Discord community.
@@ -18,9 +20,11 @@ You can find the channel by joining the Cloudflare Developers Discord server. Th
 
 The free version includes all the features of the enterprise version, but has network flow volume and configuration limitations. These limits are detailed below.
 
-1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
-2. Go to **Analytics & Logs** > **Magic Monitoring**.
-3. Complete the onboarding wizard to configure Magic Network Monitoring. Refer to [Get started](/magic-network-monitoring/get-started/) for more information.
+1. In the Cloudflare dashboard, go to the **Magic Monitoring** page.
+
+<DashButton url="/?to=/:account/network-monitoring" />
+
+2. Complete the onboarding wizard to configure Magic Network Monitoring. Refer to [Get started](/magic-network-monitoring/get-started/) for more information.
 
 ## Limitations
 

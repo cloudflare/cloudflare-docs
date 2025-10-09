@@ -7,10 +7,5 @@ product:
 
 meta:
   title: Cloudflare Speed docs
-  description: Speed up your website or application using built-in Cloudflare settings.
+  description: Improve the performance of your website or web application
   author: "@cloudflare"
-
-resources:
-  community: https://community.cloudflare.com/c/website-application-performance/88
-  dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/speed
-  learning_center: https://www.cloudflare.com/learning/performance/why-site-speed-matters/

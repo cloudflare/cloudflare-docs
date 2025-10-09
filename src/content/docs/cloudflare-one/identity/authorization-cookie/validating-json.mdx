@@ -7,9 +7,9 @@ sidebar:
 
 import { GlossaryTooltip } from "~/components";
 
-When Cloudflare sends a request to your origin, the request will include an [application token](/cloudflare-one/identity/authorization-cookie/application-token/) as a `Cf-Access-Jwt-Assertion` request header and as a `CF_Authorization` cookie.
+When Cloudflare sends a request to your origin, the request will include an [application token](/cloudflare-one/identity/authorization-cookie/application-token/) as a `Cf-Access-Jwt-Assertion` request header. Requests made through a browser will also pass the token as a `CF_Authorization` cookie.
 
-Cloudflare signs the token with a key pair unique to your account. You should validate the token with your public key to ensure that the request came from Access and not a malicious third party.
+Cloudflare signs the token with a key pair unique to your account. You should validate the token with your public key to ensure that the request came from Access and not a malicious third party. We recommend validating the `Cf-Access-Jwt-Assertion` header instead of the `CF_Authorization` cookie, since the cookie is not guaranteed to be passed.
 
 ## Access signing keys
 
@@ -72,7 +72,7 @@ As shown in the example below, `https://<your-team-name>.cloudflareaccess.com/cd
 
 To verify the token manually:
 
-1. Copy the JWT from the `CF_Authorization` cookie or from the `Cf-Access-Jwt-Assertion` request header.
+1. Copy the JWT from the `Cf-Access-Jwt-Assertion` request header.
 
 2. Go to [jwt.io](https://jwt.io/).
 
@@ -101,6 +101,62 @@ To get the AUD tag:
 3. From the **Basic information** tab, copy the **Application Audience (AUD) Tag**.
 
 You can now paste the AUD tag into your token validation script. The AUD tag will never change unless you delete or recreate the Access application.
+
+### Cloudflare Workers example
+
+When Cloudflare Access is in front of your [Worker](/workers), your Worker still needs to validate the JWT that Cloudflare Access adds to the `Cf-Access-Jwt-Assertion` header on the incoming request.
+
+The following code will validate the JWT using the [jose NPM package](https://www.npmjs.com/package/jose):
+
+```javascript
+import { jwtVerify, createRemoteJWKSet } from 'jose';
+
+export default {
+	async fetch(request, env, ctx) {
+		// Get the JWT from the request headers
+		const token = request.headers.get('cf-access-jwt-assertion');
+
+		// Check if token exists
+		if (!token) {
+			return new Response('Missing required CF Access JWT', {
+				status: 403,
+				headers: { 'Content-Type': 'text/plain' }
+			});
+		}
+
+		try {
+			// Create JWKS from your team domain
+			const JWKS = createRemoteJWKSet(new URL(`${env.TEAM_DOMAIN}/cdn-cgi/access/certs`));
+
+			// Verify the JWT
+			const { payload } = await jwtVerify(token, JWKS, {
+				issuer: env.TEAM_DOMAIN,
+				audience: env.POLICY_AUD,
+			});
+
+			// Token is valid, proceed with your application logic
+			return new Response(`Hello ${payload.email || 'authenticated user'}!`, {
+				headers: { 'Content-Type': 'text/plain' }
+			});
+
+		} catch (error) {
+			// Token verification failed
+			return new Response(`Invalid token: ${error.message}`, {
+				status: 403,
+				headers: { 'Content-Type': 'text/plain' }
+			});
+		}
+	},
+};
+```
+
+#### Required environment variables
+
+Add these [environment variables](/workers/configuration/environment-variables/) to your Worker:
+	- `POLICY_AUD`: Your application's [AUD tag](#get-your-aud-tag)
+	- `TEAM_DOMAIN`: `https://<your-team-name>.cloudflareaccess.com`, where `<your-team-name>` is replaced with your actual <GlossaryTooltip term="team name">team name</GlossaryTooltip>.
+
+You can set these variables by adding them to your Worker's [Wrangler configuration file](/workers/wrangler/configuration/), or via the Cloudflare dashboard under **Workers & Pages** > **your-worker** > **Settings** > **Environment Variables**.
 
 ### Golang example
 
@@ -246,7 +302,7 @@ if __name__ == '__main__':
     app.run()
 ```
 
-### JavaScript example
+### JavaScript (Node.js) example
 
 ```javascript
 const express = require("express");
@@ -292,7 +348,3 @@ app.get("/", (req, res) => {
 
 app.listen(3333);
 ```
-
-## Related resources
-
-- [Verifying JWTs in Cloudflare Workers](https://kinde.com/blog/engineering/verifying-jwts-in-cloudflare-workers/) - Implement JWT verification in Cloudflare Workers.

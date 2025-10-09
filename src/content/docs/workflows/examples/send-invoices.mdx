@@ -1,5 +1,5 @@
 ---
-type: example
+
 summary: Send invoice when shopping cart is checked out and paid for
 products:
   - Workflows
@@ -82,7 +82,7 @@ export class cartInvoicesWorkflow extends WorkflowEntrypoint<Env, Params> {
 					`SELECT * FROM cart WHERE id = ?`,
 				)
 					.bind(event.payload.cartId)
-					.all();
+					.run();
 				// should return { checkedOut: true, amount: 250 , account: { email: "celsomartinho@gmail.com" }};
 				if (results[0].checkedOut === false) {
 					throw new Error("cart hasn't been checked out yet");

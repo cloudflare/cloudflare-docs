@@ -6,51 +6,48 @@ sidebar:
   label: Diagnostic logs
 ---
 
-import { TabItem, Tabs } from "~/components";
+import { Render, Stream, TabItem, Tabs } from "~/components";
 
 The WARP client provides diagnostic logs that you can use to troubleshoot connectivity issues on a device.
 
+<Stream
+	id="c29964ab3dcf7c3432ebb2b4e93c3aca"
+	title="Understand Cloudflare WARP diagnostic logs"
+	thumbnail="https://pub-d9bf66e086fb4b639107aa52105b49dd.r2.dev/Warp-diagnostics%20thumbnail.png"
+	showMoreVideos={false}
+	chapters={{
+		Introduction: "0s",
+		"What are warp-diag files?": "44s",
+		"How to download and navigate warp-diag files": "1m16s",
+		"warp-status.txt": "2m06s",
+		"warp-settings.txt": "2m29s",
+		"daemon.log": "3m37s",
+		"Addition tips": "8m07s",
+		Conclusion: "8m43s",
+	}}
+/>
+
 ## macOS/Windows/Linux
 
-### Retrieve logs
+### Collect logs via the CLI
 
-To view WARP logs on desktop devices:
+<Render file="warp/warpdiag-run" product="cloudflare-one" />
 
-<Tabs> <TabItem label="macOS">
+### Collect logs via the dashboard
 
-1. Open a Terminal window.
-2. Run the `warp-diag` tool:
-   ```sh
-   warp-diag
-   ```
+<Render file="dex/pcaps-run-availability" product="cloudflare-one" />
 
-This will place a `warp-debugging-info-<date>-<time>.zip` on your desktop.
+You can collect WARP diagnostic logs remotely from the Zero Trust dashboard by using Digital Experience Monitoring (DEX) [remote captures](/cloudflare-one/insights/dex/remote-captures/).
 
-</TabItem> <TabItem label="Windows">
+<Render file="dex/pcaps-run" product="cloudflare-one" />
 
-1. Open a Command Prompt or PowerShell window.
-2. Run the `warp-diag` tool:
-   ```bash
-   C:\Users\JohnDoe>warp-diag
-   ```
+#### Download remote captures
 
-This will place a `warp-debugging-info-<date>-<time>.zip` on your desktop.
+<Render file="dex/pcaps-download" product="cloudflare-one" />
 
-</TabItem> <TabItem label="Linux">
+#### WARP diagnostics analyzer (beta)
 
-1. Open a Terminal window.
-2. Run the `warp-diag` tool:
-   ```sh
-   warp-diag
-   ```
-
-This will place a `warp-debugging-info-<date>-<time>.zip` in the same folder you ran the command from.
-
-</TabItem> </Tabs>
-
-:::note
-You can also use Digital Experience Monitoring to run `warp-diag` commands on remote devices. For more information, refer to [Remote captures](/cloudflare-one/insights/dex/remote-captures/).
-:::
+<Render file="dex/pcaps-view-warp-diag" product="cloudflare-one" />
 
 ### `warp-diag` logs
 
@@ -64,7 +61,7 @@ The `warp-debugging-info-<date>-<time>.zip` archive contains the following files
 | `boringtun.log`                                                                                     | Log for the WARP tunnel that serves traffic from the device to Cloudflare's global network.                                                                                                                                                                                                                                                 |
 | `bound-dns-ports.txt`                                                                               | Active processes on port `53`.                                                                                                                                                                                                                                                                                                              |
 | `captive-portal-hotspot-detect.txt`                                                                 | HTTP response of `captive.apple.com`                                                                                                                                                                                                                                                                                                        |
-| `connectivity.txt`                                                                                  | DNS resolution and HTTP trace requests to [validate a successful connection](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#connectivity-checks). Can be used to determine whether traffic is routing through the WARP tunnel.                                                                                        |
+| `connectivity.txt`                                                                                  | DNS resolution and HTTP trace requests to [validate a successful connection](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#connectivity-checks). Can be used to determine whether traffic is routing through the WARP tunnel.                                                                                       |
 | `daemon_dns.log`                                                                                    | Contains detailed DNS logs if **Log DNS queries** is enabled in the WARP client.                                                                                                                                                                                                                                                            |
 | `daemon.log`                                                                                        | Detailed log of all actions performed by the WARP client, including all communication between the device and Cloudflare's global network. **Note:** This is the most useful debug log.                                                                                                                                                      |
 | `date.txt`                                                                                          | Date and time (UTC) when you ran the `warp-diag` command.                                                                                                                                                                                                                                                                                   |
@@ -141,9 +138,31 @@ The `warp-debugging-info` folder may contain multiple versions of the same log, 
 In timestamped logs such as `daemon.log`, the most recent events will appear at the end of the file.
 :::
 
+### Log retention window
+
+Each WARP log file (such as `connection_stats.log`, `dns_stats.log`, `daemon.log`, `boringtun.log`, `daemon_dns.log`, `dex.log` and `captive-portal.log`) is limited by size and age:
+
+- **Maximum file size:** 10 MB
+- **Maximum file age:** 24 hours
+- **Maximum number of retained versions per log:** 4 (for example, `daemon.log`, `daemon.1.log`, `daemon.2.log`, and `daemon.3.log`)
+
+Log files may include data from up to 96 hours (four days) prior to when `warp-diag` was run, but only if log activity is minimal. In environments with high logging volume (for example, repeated errors), logs may rotate more frequently, and the captured window could be much shorter (only a few hours).
+
+Always check the timestamps at the end of each log file to verify the time range covered by the diagnostic archive.
+
+:::note[Linux log behavior]
+
+On Linux, the WARP daemon logs are written to the system logs by the `warp-svc` service.
+
+If you need to adjust the maximum log level or filter what gets logged, you can configure the WARP `systemd` unit file using the [`LogLevelMax=` option](https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#LogLevelMax=).
+
+Cloudflare WARP does not provide an official method to configure logging levels during the installation process.
+
+:::
+
 ## iOS/Android/ChromeOS
 
-### Retrieve logs
+### Collect logs
 
 To view WARP logs on mobile devices:
 

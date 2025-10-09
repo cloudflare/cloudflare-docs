@@ -13,7 +13,7 @@ const groups = Object.entries({
 			text: "New to Cloudflare?",
 			href: "/fundamentals/",
 		},
-		{ text: "Products", href: "/products/" },
+		{ text: "Directory", href: "/directory/" },
 		{
 			text: "Sponsorships",
 			href: "/sponsorships/",
@@ -70,6 +70,7 @@ const links = Object.entries({
 
 const homepage = Astro.locals.starlightRoute.entry.id === "";
 const splash = Astro.locals.starlightRoute.entry.data.template === "splash";
+const showFeedback = Astro.locals.starlightRoute.entry.data.feedback;
 
 let isProduction = false;
 
@@ -82,7 +83,7 @@ if (
 ---
 
 {
-	!homepage && (
+	!homepage && showFeedback && (
 		<div class="feedback-prompt">
 			<FeedbackPrompt client:idle />
 		</div>
@@ -116,7 +117,7 @@ if (
 		<ul
 			class="text-cl1-gray-4! dark:text-cl1-gray-7! flex list-inside flex-wrap items-center justify-center gap-3 gap-y-4 pl-0 text-xs"
 		>
-			<li class="list-none">2025 Cloudflare, Inc.</li>
+			<li class="list-none">© 2025 Cloudflare, Inc.</li>
 			{
 				links.map(([text, href]) => (
 					<li>

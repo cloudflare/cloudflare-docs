@@ -1,15 +1,11 @@
 ---
-updated: 2025-04-10
+reviewed: 2025-04-10
 difficulty: Beginner
 pcx_content_type: tutorial
 title: Migrating from Vercel to Pages
 sidebar:
   hidden: true
-banner:
-  content: We recommend using <strong>Cloudflare Workers</strong> for new projects. For existing Pages projects, see our <a href="/workers/static-assets/migrate-from-pages/">migration guide</a> and <a href="/workers/static-assets/migrate-from-pages/#compatibility-matrix">compatibility matrix</a>.
-  type: note
-  dismissible:
-    id: pages-migrate-to-workers
+
 ---
 
 import { Render } from "~/components";
@@ -54,7 +50,7 @@ If you want to take a different approach, read more about [custom domains](/page
 
 ### Set up custom domain
 
-<Render file="custom-domain-steps" />
+<Render file="custom-domain-steps" product="pages" />
 
 The next steps vary based on if you [added your domain to Cloudflare](#change-domain-nameservers):
 

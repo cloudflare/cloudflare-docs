@@ -7,7 +7,7 @@ sidebar:
 
 ---
 
-import { GlossaryTooltip} from "~/components"
+import { GlossaryTooltip, Details, InlineBadge} from "~/components"
 
 Each client supports the following set of parameters as part of their deployment, regardless of the deployment mechanism.
 
@@ -47,7 +47,7 @@ You can use the following parameters to configure a specific Zero Trust organiza
 
 ### `auth_client_id`
 
-Enrolls the device in your Zero Trust organization using a [service token](/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/#check-for-service-token).
+Enrolls the device in your Zero Trust organization using a [service token](/cloudflare-one/identity/service-tokens/#create-a-service-token).
 Requires the `auth_client_secret` parameter.
 
 **Value Type:** `string`
@@ -63,9 +63,13 @@ Example configuration:
 <string>bdd31cbc4dec990953e39163fbbb194c93313ca9f0a6e420346af9d326b1d2a5</string>
 ```
 
+:::note
+The service token must have _Service Auth_ [device enrollment permissions](/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/#check-for-service-token). Allow permissions will not work for service tokens.
+:::
+
 ### `auth_client_secret`
 
-Enrolls the device in your Zero Trust organization using a [service token](/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/#check-for-service-token).
+Enrolls the device in your Zero Trust organization using a [service token](/cloudflare-one/identity/service-tokens/#create-a-service-token).
 Requires the `auth_client_id` parameter.
 
 **Value Type:** `string`
@@ -96,6 +100,34 @@ Identifies a Zero Trust organization in the WARP GUI when WARP is deployed with 
 **Value Type:** `string`
 
 **Value:** Organization nickname shown to users in the WARP GUI (for example, `Test environment`).
+
+### `enable_post_quantum`
+
+<Details header="Feature availability">
+
+| [WARP modes](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| <ul><li> Gateway with WARP</li><li> Secure Web Gateway without DNS filtering </li></ul>   | All plans                                                     |
+
+| System   | Availability | Minimum WARP version |
+| -------- | ------------ | -------------------- |
+| Windows  | ✅           | 2025.5.735.1        |
+| macOS    | ✅           | 2025.5.735.1       |
+| Linux    | ✅           | 2025.5.735.1        |
+| iOS      | ✅           | 1.10                 |
+| Android  | ✅           | 2.4                  |
+| ChromeOS | ✅           | 2.4                  |
+
+</Details>
+
+Use [post-quantum cryptography](/ssl/post-quantum-cryptography/) to secure connections from the device to Cloudflare's network.
+
+**Value Type:** `boolean`
+
+**Value:**
+
+* `false` — (default) Disables post-quantum key agreement.
+* `true` — Enables post-quantum key agreement for all traffic through the WARP tunnel.
 
 ### `onboarding`
 
@@ -203,6 +235,10 @@ This parameter replaces the old `enabled` property, which can no longer be used 
 
 ### `unique_client_id`
 
+:::note
+Only valid for iOS and Android/ChromeOS.
+:::
+
 Assigns a unique identifier to the device for the [device UUID posture check](/cloudflare-one/identity/devices/warp-client-checks/device-uuid).
 
 **Value Type:** `string`
@@ -236,9 +272,9 @@ Enables multiple user registrations on a Windows device.
 
 Allows WARP to connect with a service token before a user completes the initial Windows login. For more information, refer to [Connect WARP before Windows login](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/windows-prelogin/).
 
-## Per-App VPN parameters (Android)
+## Per-app VPN parameters (Android)
 
-To support the per-app VPN for Android devices, Cloudflare has introduced new MDM parameters. The admin can configure these new MDM parameters via any MDM tool that supports deploying an Android app to managed devices or work profiles.
+[Per-app VPN](https://support.google.com/work/android/answer/9213914?hl=en) parameters allow you to choose the Android apps that can send traffic through the WARP tunnel. Admins can configure these parameters via any MDM tool that supports deploying an Android app to managed devices or work profiles.
 
 ### `app_identifier`
 

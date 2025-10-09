@@ -3,10 +3,9 @@ title: Google Workspaces directory integration
 pcx_content_type: how-to
 sidebar:
   order: 2
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 Email Security can integrate with Google to retrieve user and group information. This can be used to enforce the Business Email Compromise configuration to prevent user impersonation.
 
@@ -14,10 +13,10 @@ Email Security can integrate with Google to retrieve user and group information.
 
 You need to authorize Email Security to make connections into your Google tenant to retrieve your directory details. Cloudflare recommends that you create a service account for this purpose. This account will require the following following privileges:
 
-* View group subscriptions on your domain.
-* View organization units on your domain.
-* View groups on your domain.
-* See info about users on your domain.
+- View group subscriptions on your domain.
+- View organization units on your domain.
+- View groups on your domain.
+- See info about users on your domain.
 
 Start by creating a service account. If you already have one, you can skip this step.
 
@@ -28,19 +27,17 @@ Start by creating a service account. If you already have one, you can skip this 
 2. Select **Create new role**, and give it a descriptive name and description. When you are finished, select **Continue**.
 
 3. In **Admin console privileges**, select the following privileges:
-
-   * *Organizational Units > Read*
-   * *Users > Read*
-   * *Directory Settings > Settings >Google Support Settings*
-   * *Directory Sync > Manage Directory Sync Settings > Read Directory Sync Settings*
+   - _Organizational Units > Read_
+   - _Users > Read_
+   - _Directory Settings > Settings >Google Support Settings_
+   - _Directory Sync > Manage Directory Sync Settings > Read Directory Sync Settings_
 
    ![Select only the privileges mentioned here](~/assets/images/email-security/bec/gmail/step3-console-privileges.png)
 
 4. When you specify Admin console privileges, you also grant the corresponding Admin API privileges. In any case, make sure the following privileges are selected for **Admin API privileges**:
-
-   * *Organizational Units > Read*
-   * *Users > Read*
-   * *Groups > Read*
+   - _Organizational Units > Read_
+   - _Users > Read_
+   - _Groups > Read_
 
    ![Select only the privileges mentioned here](~/assets/images/email-security/bec/gmail/step4-api-privileges.png)
 
@@ -57,10 +54,9 @@ Start by creating a service account. If you already have one, you can skip this 
    ![Go to Directories in the dashboard of Email Security, and then select Add Directory to start the authorization process](~/assets/images/email-security/bec/gmail/step2-directories.png)
 
 3. In the Add Directory configuration panel, enter the following details:
-
-   * **Directory Type**: Open the drop-down menu and select **Google**.
-   * **Directory Name**: Enter a string that represents the directory. This value will be referenced in the Business Email Compromise List configuration section. For example, `Gmail`.
-   * **Sync Frequency**: Update the value to your preference.
+   - **Directory Type**: Open the drop-down menu and select **Google**.
+   - **Directory Name**: Enter a string that represents the directory. This value will be referenced in the Business Email Compromise List configuration section. For example, `Gmail`.
+   - **Sync Frequency**: Update the value to your preference.
 
    Select **Authorize** when you are done.
 
@@ -80,8 +76,8 @@ Start by creating a service account. If you already have one, you can skip this 
 
 ## 3. Configure the Business Email Compromise list
 
-<Render file="bec-directory-guide-compromise-list" />
+<Render file="bec-directory-guide-compromise-list" product="email-security" />
 
 ## 4. Configure secondary email address (if required)
 
-<Render file="bec-directory-guide-secondary-email" />
+<Render file="bec-directory-guide-secondary-email" product="email-security" />

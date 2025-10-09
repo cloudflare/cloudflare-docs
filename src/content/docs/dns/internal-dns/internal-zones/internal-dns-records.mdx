@@ -1,6 +1,7 @@
 ---
 pcx_content_type: concept
 title: Manage internal DNS records
+description: Manage internal DNS records in Cloudflare. Learn about supported DNS record types and CNAME flattening.
 sidebar:
   order: 4
   label: Internal DNS records
@@ -16,7 +17,7 @@ Refer to [Manage DNS records](/dns/manage-dns-records/how-to/create-dns-records/
 
 ## CNAME flattening in Internal DNS
 
-With CNAME flattening, Cloudflare finds the final target content that a CNAME points to and then returns this content instead of a CNAME record. With Internal DNS, CNAME flattening is applied by default and cannot be turned off.
+With [CNAME flattening](/dns/cname-flattening/), Cloudflare finds the final target content that a CNAME points to and then returns this content instead of a CNAME record. With Internal DNS, CNAME flattening is applied by default and cannot be turned off.
 
 Cloudflare will try to flatten the CNAME record considering both the specified [DNS view](/dns/internal-dns/dns-views/) and any existing [reference zones](/dns/internal-dns/internal-zones/reference-zones/). If the reference zone then has another CNAME, the record will again be considered from the perspective of the original view.
 

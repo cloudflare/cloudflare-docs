@@ -3,8 +3,9 @@ pcx_content_type: reference
 title: URL Scanner
 sidebar:
   order: 7
-
 ---
+
+import { DashButton } from "~/components";
 
 To better understand Internet usage around the world, use Cloudflare's URL Scanner. With Cloudflare's URL Scanner, you have the ability to investigate the details of a domain, IP, URL, or ASN. Cloudflare's URL Scanner is available in the Security Center of the Cloudflare dashboard, [Cloudflare Radar](https://radar.cloudflare.com/scan), and the Cloudflare [API](/api/resources/url_scanner/).
 
@@ -119,7 +120,7 @@ To fetch the scan's [screenshots](/api/resources/url_scanner/subresources/scans/
 
 ### Search scans
 
-Use a subset of ElasticSearch Query syntax to filter scans.  Search results will include `Public` scans and your own `Unlisted` scans.
+Use a subset of ElasticSearch Query syntax to filter scans. Search results will include `Public` scans and your own `Unlisted` scans.
 
 To search for scans to the hostname `google.com`, use the query parameter `q=page.domain:"google.com"`:
 
@@ -154,9 +155,11 @@ Go to [Search URL scans](/api/resources/url_scanner/subresources/scans/methods/l
 
 Alternatively, you can search in the Security Center:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to **Security Center** > **Investigate**.
-3. Enter your query and select **Search**.
+1. In the Cloudflare dashboard, go to the **Investigate** page.
+
+	 <DashButton url="/?to=/:account/security-center/investigate" />
+
+2. Enter your query and select **Search**.
 
 You can scan a URL by location. Scanning a URL by location allows you to analyze how a website may present different content depending on your location. This helps to expose and examine region-specific malicious activities.
 

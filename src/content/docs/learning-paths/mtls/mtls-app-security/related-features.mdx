@@ -33,7 +33,7 @@ Generally, ensure client certificates are rotated regularly and safely to reduce
 
 ## Forward a client certificate
 
-There are multiple ways to [forward a client certificate](/ssl/client-certificates/enable-mtls/#forward-a-client-certificate) to your origin server.
+There are multiple ways to [forward a client certificate](/ssl/client-certificates/forward-a-client-certificate/) to your origin server.
 
 ## Bring your own CA for mTLS
 
@@ -132,7 +132,7 @@ This expression will check for a specific [Client Certificate serial number](/ru
 
 ## Rate Limiting by Client Certificates
 
-By enabling [forwarding a certificate](/ssl/client-certificates/enable-mtls/#cloudflare-api) via the Cloudflare API, the first request of an mTLS connection will include the following headers:
+By enabling [forwarding a certificate](/ssl/client-certificates/forward-a-client-certificate/#cloudflare-api) via the Cloudflare API, every request of an mTLS connection will include the following headers:
 
 - `Cf-Client-Cert-Der-Base64` (raw certificate in DER format, encoded as base64)
 - `Cf-Client-Cert-Sha256` (SHA256 fingerprint of the certificate)

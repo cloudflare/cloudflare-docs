@@ -6,20 +6,24 @@ sidebar:
   label: SSH with Access for Infrastructure
 ---
 
-import { Tabs, TabItem, Badge, Render } from "~/components";
+import { Tabs, TabItem, Badge, Render, APIRequest } from "~/components";
 
 [Access for Infrastructure](/cloudflare-one/applications/non-http/infrastructure-apps/) provides granular control over how users can connect to your SSH servers. This feature uses the same deployment model as [WARP-to-Tunnel](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-warp-to-tunnel/) but unlocks more policy options and command logging functionality.
 
 <Render
 	file="access/short-lived-certs-intro"
+	product="cloudflare-one"
 	params={{ intro: "Furthermore, Access for Infrastructure replaces" }}
 />
 
 ## 1. Connect the server to Cloudflare
 
-<Render file="tunnel/connect-private-network" />
+<Render file="tunnel/connect-private-network" product="cloudflare-one" />
 
-<Render file="tunnel/connect-private-network-infra-access" />
+<Render
+	file="tunnel/connect-private-network-infra-access"
+	product="cloudflare-one"
+/>
 
 ## 2. Set up the client
 
@@ -31,18 +35,31 @@ To connect your devices to Cloudflare:
 
 ## 3. Route server IPs through WARP
 
-<Render file="tunnel/warp-to-tunnel-route-ips" params={{ one: "SSH server" }} />
+<Render
+	file="tunnel/warp-to-tunnel-route-ips"
+	params={{ one: "SSH server" }}
+	product="cloudflare-one"
+/>
 
 ## 4. Add a target
 
-<Render file="access/add-target" params={{ protocol: "generic" }} />
+<Render
+	file="access/add-target"
+	params={{ protocol: "generic" }}
+	product="cloudflare-one"
+/>
 
 ## 5. Add an infrastructure application
 
-<Render file="access/add-infrastructure-app" />
+<Render file="access/add-infrastructure-app" product="cloudflare-one" />
 
 ## 6. (Recommended) Modify order of precedence in Gateway
-<Render file="access/modify-gateway-policy-precedence" product="cloudflare-one" params={{ selector: "Access Infrastructure Target" }} />
+
+<Render
+	file="access/modify-gateway-policy-precedence"
+	product="cloudflare-one"
+	params={{ selector: "Access Infrastructure Target", protocol: "ssh" }}
+/>
 
 ## 7. Configure SSH server
 
@@ -50,19 +67,19 @@ Next, configure your SSH server to trust the Cloudflare SSH CA. This allows Acce
 
 ### Generate a Cloudflare SSH CA
 
-<Render file="ssh/ssh-proxy-ca-note" />
+<Render file="ssh/ssh-proxy-ca-note" product="cloudflare-one" />
 
 To generate a Cloudflare SSH CA and get its public key:
 
-<Render file="ssh/ssh-proxy-ca" />
+<Render file="ssh/ssh-proxy-ca" product="cloudflare-one" />
 
 ### Save the public key
 
-<Render file="ssh/public-key" />
+<Render file="ssh/public-key" product="cloudflare-one" />
 
-### Modify your SSHD config
+### Modify your `sshd_config` file
 
-<Render file="ssh/modify-sshd" />
+<Render file="ssh/modify-sshd" product="cloudflare-one" />
 
 :::note
 For certain distributions, such as Amazon Linux 1 (based on RHEL), the certificate file permissions must be set to `600`. You can set file permissions with the following command:
@@ -73,9 +90,9 @@ chmod 600 /etc/ssh/ca.pub
 
 :::
 
-### Restart your SSH server
+### Reload your SSH server
 
-<Render file="ssh/restart-server" />
+<Render file="ssh/restart-server" product="cloudflare-one" />
 
 ## 8. Connect as a user
 
@@ -85,13 +102,13 @@ Users can use any SSH client to connect to the target, as long as they are logge
 ssh <username>@<target IP>
 ```
 
-Access for Infrastructure also supports `scp` and `rsync` commands. Refer to [Known limitations](#known-limitations) for a list of unsupported SSH commands and features.
+Access for Infrastructure also supports `scp`, `sftp`, and `rsync` commands. Refer to [Known limitations](#known-limitations) for a list of unsupported SSH commands and features.
 
 To learn more about user connections, refer to the [Access for Infrastructure documentation](/cloudflare-one/applications/non-http/infrastructure-apps/#4-connect-as-a-user).
 
 ## SSH command logs
 
-SSH command logs contain the actual SSH commands that a user ran on the target. Customers on all plans can store SSH logs on Cloudflare. These logs are encrypted using a public key provided by the customer and are not visible to Cloudflare. Additionally, Enterprise customers can configure a Logpush job to send SSH logs to storage destinations. Logpush payloads are not encrypted and do not require uploading a public key.
+SSH command logs contain the actual SSH commands that a user ran on the target. Customers on all plans can store SSH logs on Cloudflare and download the logs from the dashboard. [Downloadable logs](#download-encrypted-ssh-logs) are encrypted using a public key provided by the customer and are not visible to Cloudflare. Delivery of downloadable SSH logs is best effort; for guaranteed delivery, Enterprise customers can [configure a Logpush job](#export-ssh-logs-with-logpush) to send SSH logs to storage destinations. Logpush payloads are not encrypted with a customer-provided public key.
 
 ### Download encrypted SSH logs
 
@@ -99,7 +116,11 @@ Follow these instructions to encrypt and download SSH command logs from Zero Tru
 
 #### Enable SSH command logging
 
-<Render file="ssh/upload-ssh-key" params={{ note: "" }} />
+<Render
+	file="ssh/upload-ssh-key"
+	params={{ note: "" }}
+	product="cloudflare-one"
+/>
 
 #### Disable SSH command logging
 
@@ -121,13 +142,13 @@ Cloudflare will stop logging SSH commands to your targets, as well as any comman
 
 To delete the SSH encryption public key using the [API](/api/resources/zero_trust/subresources/gateway/subresources/audit_ssh_settings/methods/update/):
 
-```sh
-curl --request PUT https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/gateway/audit_ssh_settings \
---header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
---data '{
-  "public_key": ""
-}'
-```
+<APIRequest
+	path="/accounts/{account_id}/gateway/audit_ssh_settings"
+	method="PUT"
+	json={{
+		public_key: "",
+	}}
+/>
 
 </TabItem>
 </Tabs>
@@ -139,9 +160,10 @@ SSH command logs are not visible from the dashboard itself and must be exported 
 To manually retrieve logs:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Logs** > **Access**.
-2. Select a user who was allowed to access the target.
-3. Select **Download** to download the session's command log.
-4. <Render file="ssh/decrypt-ssh-log" />
+2. Filter the logs using the name of your [SSH application](#5-add-an-infrastructure-application).
+3. Select the SSH session for which you want to export command logs.
+4. In the side panel, scroll down to **SSH logs** and select **Download**.
+5. <Render file="ssh/decrypt-ssh-log" product="cloudflare-one" />
 
 ### Export SSH logs with Logpush
 
@@ -149,16 +171,20 @@ To manually retrieve logs:
 Only available on Enterprise plans.
 :::
 
-Cloudflare allows you to send SSH command logs to storage destinations configured in [Logpush](/logs/about/), including third-party destinations. For a list of available data fields, refer to the [SSH logs dataset](/logs/reference/log-fields/account/ssh_logs/).
+Cloudflare allows you to send SSH command logs to storage destinations configured in [Logpush](/logs/logpush/), including third-party destinations. For a list of available data fields, refer to the [SSH logs dataset](/logs/logpush/logpush-job/datasets/account/ssh_logs/).
 
 To set up the Logpush job, refer to [Logpush integration](/cloudflare-one/insights/logs/logpush/).
 
 ## Known limitations
 
+### SSH features
+
 The following SSH features are not supported:
 
-- `sftp` commands
-- `scp` commands that utilize OpenSSH versions > 9.0, because OpenSSH 9.0+ leverages `sftp` to execute the command
 - Local and remote port forwarding
 - SSH agent forwarding
 - X11 forwarding
+
+### Session duration
+
+SSH sessions have a maximum expected duration of 10 hours. For more information, refer to the [Troubleshooting FAQ](/cloudflare-one/faq/troubleshooting/#long-lived-ssh-sessions-frequently-disconnect).

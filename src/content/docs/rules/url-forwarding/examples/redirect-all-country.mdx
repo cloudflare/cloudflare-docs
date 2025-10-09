@@ -11,7 +11,11 @@ description: Create a redirect rule to redirect all website visitors from the
   the same paths.
 ---
 
+import { Steps } from "~/components";
+
 In this example, all website visitors from the United Kingdom will be redirected to a different domain, but maintaining current functionality in the same paths.
+
+<Steps>
 
 1. Create a Bulk Redirect List named `uk_redirect_list` with the following URL redirect:
 
@@ -25,6 +29,8 @@ In this example, all website visitors from the United Kingdom will be redirected
    ```txt
    ip.src.country == "GB" and http.request.full_uri in $uk_redirect_list
    ```
+
+</Steps>
 
 This configuration will perform the following redirects for UK visitors:
 

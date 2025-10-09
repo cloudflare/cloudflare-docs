@@ -78,6 +78,7 @@ return response;
 ### `.output()`
 
 - Defines the [output format](/images/transform-images/) for the transformed image such as AVIF, WebP, and JPEG.
+- Image [quality](/images/transform-images/transform-via-url/#quality) can be altered by specifying `quality` on a 1-100 scale.
 
 For example, to rotate, resize, and blur an image, then output the image as AVIF:
 
@@ -122,7 +123,7 @@ This creates a local-only environment that mirrors the production environment wh
 To test the low-fidelity offline version of Images, add the `--experimental-images-local-mode` flag:
 
 ```txt
-npm wrangler dev --experimental-images-local-mode
+npx wrangler dev --experimental-images-local-mode
 ```
 
 Currently, this version supports only `width`, `height`, `rotate`, and `format`.

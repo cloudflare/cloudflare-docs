@@ -6,6 +6,8 @@ sidebar:
 
 ---
 
+import { APIRequest } from "~/components";
+
 You can customize your waiting room from the dashboard or via API.
 
 ## Customize a waiting room from the dashboard
@@ -167,13 +169,19 @@ You can use the Waiting Room API to customize the web page served to visitors wh
 
 In the following `PATCH` request, the `custom_page_html` field contains the HTML code for the [customized waiting room](/waiting-room/how-to/customize-waiting-room/):
 
-```bash
-curl --request PATCH \
-"https://api.cloudflare.com/client/v4/zones/{zone_id}/waiting_rooms/{waiting_room_id}" \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{"custom_page_html": "<p>Include custom HTML here</p>"}'
-```
+<APIRequest
+  path="/zones/{zone_id}/waiting_rooms/{waiting_room_id}"
+  method="PATCH"
+  json={{
+    name: "webshop-waiting-room",
+    host: "example.com",
+    new_users_per_minute: 200,
+    total_active_users: 300,
+    custom_page_html: "<p>Include custom HTML here</p>"
+  }}
+/>
+
+Response:
 
 ```json
 {
@@ -227,12 +235,13 @@ Note that you pass HTML content to the preview endpoint in the `custom_html` fie
 
 Example request:
 
-```bash
-curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/waiting_rooms/preview" \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{"custom_html": "<p>Include custom HTML here</p>"}'
-```
+<APIRequest
+  path="/zones/{zone_id}/waiting_rooms/preview"
+  method="POST"
+  json={{
+    custom_html: "<p>Include custom HTML here</p>"
+  }}
+/>
 
 The preview endpoint returns a temporary URL in the response body where you can preview your custom page:
 

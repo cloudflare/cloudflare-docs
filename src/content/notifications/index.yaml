@@ -139,7 +139,7 @@ entries:
 
   - name: Advanced HTTP DDoS Attack Alert
     audience: "[WAF](/waf/) or [CDN](/cache/) customers with the [Advanced DDoS Protection](/ddos-protection/) subscription who want to receive a notification when Cloudflare has mitigated attacks that generate more than the configured number of requests per second (100 rps by default)."
-    availability: Enterprise plans.
+    availability: Enterprise plans with the Advanced DDoS Protection add-on.
     associatedProducts: DDoS Protection
     nextSteps: No action needed. Refer to [DDoS alerts](/ddos-protection/reference/alerts/) for more information.
     otherFilters: |-
@@ -394,7 +394,7 @@ entries:
     availability: |-
       [Bring your own CA](/ssl/client-certificates/byo-ca/).
 
-      The mTLS Certificate Store refers to customer uploaded certificates and does not include client certificates generated with the [Cloudflare CA](/ssl/client-certificates/create-a-client-certificate/).
+      The mTLS Certificate Store refers to customer uploaded certificates and does not include client certificates generated with the [Cloudflare CA](/ssl/client-certificates/#how-it-works).
     associatedProducts: SSL/TLS
     nextSteps: Upload a renewed certificate.
     otherFilters: None.
@@ -617,5 +617,12 @@ entries:
     audience: Customers who are using free image transformations and want to be notified if they exceed their free quota.
     availability: All Cloudflare plans.
     associatedProducts: Cloudflare Images
+    nextSteps: No action is needed.
+    otherFilters: None.
+
+  - name: Connection Maintenance Alert
+    audience: "[Classic CNI](/network-interconnect/classic-cni/) customers who want to be alerted to maintenance events that might affect Classic CNI."
+    availability: Purchase of Cloudflare Network Interconnect (CNI).
+    associatedProducts: Network Interconnect
     nextSteps: No action is needed.
     otherFilters: None.

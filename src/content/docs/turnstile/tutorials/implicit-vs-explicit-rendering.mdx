@@ -1,11 +1,10 @@
 ---
 title: Implement Turnstile using implicit and explicit rendering
 pcx_content_type: tutorial
-updated: 2024-09-16
+reviewed: 2024-09-16
 difficulty: Beginner
-languages:
-  - JavaScript
 tags:
+  - JavaScript
   - Node.js
 sidebar:
   order: 4
@@ -39,7 +38,7 @@ To set up implicit rendering:
 ```html
 <div class="cf-turnstile" data-sitekey="yourSitekey" data-callback="javascriptCallback"></div>
 ```
-Once a challenge has been solved, a token is passed to the success callback. This token must be validated against our [siteverify endpoint](/turnstile/get-started/server-side-validation/).
+Once a challenge has been solved, a token is passed to the success callback. This token must be validated against our [Siteverify endpoint](/turnstile/get-started/server-side-validation/).
 
 3. **Create Your Form**: Turnstile is often used to protect forms on websites such as login forms or contact forms. You can embed the widget within your `<form>` tag.
 
@@ -50,7 +49,7 @@ Once a challenge has been solved, a token is passed to the success callback. Thi
     <label for="email">Email:</label><br>
     <input type="email" id="email" name="email" required><br>
     <!-- Turnstile Widget -->
-    <div class="cf-turnstile" data-sitekey="your-site-key"></div>
+    <div class="cf-turnstile" data-sitekey="<YOUR-SITE-KEY>"></div>
     <br>
     <button type="submit">Submit</button>
   </form>
@@ -74,7 +73,7 @@ An invisible input with the name `cf-turnstile-response` is added and will be se
     <label for="email">Email:</label><br>
     <input type="email" id="email" name="email" required><br>
     <!-- Turnstile Widget -->
-    <div class="cf-turnstile" data-sitekey="your-site-key"></div>
+    <div class="cf-turnstile" data-sitekey="<YOUR-SITE-KEY>"></div>
     <br>
     <button type="submit">Submit</button>
   </form>
@@ -105,7 +104,7 @@ To set up explicit rendering:
 ```html
 function onloadTurnstileCallback() {
     turnstile.render('#my-turnstile', {
-        sitekey: '<YOUR_SITE_KEY>',
+        sitekey: '<<YOUR-SITE-KEY>>',
         callback: function(token) {
             console.log(`Challenge Success ${token}`);
         },
@@ -136,7 +135,7 @@ function onloadTurnstileCallback() {
   <script>
     function onloadTurnstileCallback() {
     turnstile.render('#my-turnstile', {
-        sitekey: '<YOUR_SITE_KEY>',
+        sitekey: '<<YOUR-SITE-KEY>>',
         callback: function(token) {
             console.log(`Challenge Success ${token}`);
         },
@@ -180,9 +179,9 @@ This will not call any callback and will remove all related DOM elements.
 
 ## Server-side validation
 
-Regardless of the rendering method, Turnstile tokens need to be verified using `siteverify` because the front-end widget creates a cryptographically secured token. To ensure that a token is not forged by an attacker or has not been consumed yet, it is necessary to check the validity of the token using Cloudflare's siteverify API.
+Regardless of the rendering method, Turnstile tokens need to be verified using Siteverify because the front-end widget creates a cryptographically secured token. To ensure that a token is not forged by an attacker or has not been consumed yet, it is necessary to check the validity of the token using Cloudflare's siteverify API.
 
-The `siteverify` API will only validate a token once. If a token has already been checked, the siteverify API will yield an error on subsequent verification attempts indicating that a token has already been consumed.
+The Siteverify API will only validate a token once. If a token has already been checked, the Siteverify API will yield an error on subsequent verification attempts indicating that a token has already been consumed.
 
 ```js
 // This is the demo secret key. In prod, we recommend you store

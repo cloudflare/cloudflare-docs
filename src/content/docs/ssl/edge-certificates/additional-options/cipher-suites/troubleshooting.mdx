@@ -6,10 +6,9 @@ sidebar:
 head:
   - tag: title
     content: Troubleshooting - Cipher suites — Edge certificates
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 If you encounter issues with edge certificate cipher suites, refer to the following scenarios.
 
@@ -37,7 +36,7 @@ Including the `settings` only will result in the error message `The SSL attribut
 
 ## TLS 1.3 settings
 
-<Render file="tls-13-cipher-limitations" />
+<Render file="tls-13-cipher-limitations" product="ssl" />
 
 ## SSL Labs weak ciphers report
 
@@ -51,6 +50,6 @@ Even though applications on Cloudflare are not vulnerable to [CVE-2019-1559](/ss
 
 To remove these warnings, refer to [Customize cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/customize-cipher-suites/) and exclude the following ciphers:
 
-* `ECDHE-ECDSA-AES256-SHA384`
-* `ECDHE-ECDSA-AES128-SHA256`
-* `ECDHE-RSA-AES256-SHA384`
+- `ECDHE-ECDSA-AES256-SHA384`
+- `ECDHE-ECDSA-AES128-SHA256`
+- `ECDHE-RSA-AES256-SHA384`

@@ -10,8 +10,12 @@ head:
 import { Render } from "~/components";
 
 <Render
-  file="casb/integration-description"
-  params={{ integrationName: "GitHub", integrationAccountType: "GitHub Organization" }}
+	file="casb/integration-description"
+	product="cloudflare-one"
+	params={{
+		integrationName: "GitHub",
+		integrationAccountType: "GitHub Organization",
+	}}
 />
 
 ## Integration prerequisites
@@ -35,8 +39,9 @@ These permissions follow the principle of least privilege to ensure that only th
 ## Security findings
 
 <Render
-  file="casb/security-findings"
-  params={{ integrationName: "GitHub", slugRelativePath: "github" }}
+	file="casb/security-findings"
+	product="cloudflare-one"
+	params={{ integrationName: "GitHub", slugRelativePath: "github" }}
 />
 
 ### Branches and merges

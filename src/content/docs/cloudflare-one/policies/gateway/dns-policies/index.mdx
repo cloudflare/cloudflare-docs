@@ -21,6 +21,7 @@ When creating a DNS policy, you can select as many security risk categories and 
 
 <Render
 	file="gateway/response"
+	product="cloudflare-one"
 	params={{ type: "query", example: "Source IP", example2: "Resolved IP" }}
 />
 
@@ -286,7 +287,11 @@ Gateway matches DNS queries against the following selectors, or criteria:
 
 ### Application
 
-<Render file="gateway/selectors/application" params={{ policyType: "DNS" }} />
+<Render
+	file="gateway/selectors/application"
+	product="cloudflare-one"
+	params={{ policyType: "DNS" }}
+/>
 
 ### Authoritative Nameserver IP
 
@@ -298,9 +303,12 @@ Use this selector to match against the IP address of the authoritative nameserve
 
 ### Content Categories
 
-<Render file="gateway/selectors/dns-content-categories" />
+<Render
+	file="gateway/selectors/dns-content-categories"
+	product="cloudflare-one"
+/>
 
-<Render file="gateway/selectors/category-options" />
+<Render file="gateway/selectors/category-options" product="cloudflare-one" />
 
 ### DNS CNAME Record
 
@@ -333,7 +341,7 @@ Use this selector to filter DNS responses by their `PTR` records.
 
 ### DNS Resolver IP
 
-<Render file="gateway/selectors/dns-resolver-ip" />
+<Render file="gateway/selectors/dns-resolver-ip" product="cloudflare-one" />
 
 ### DNS TXT Record
 
@@ -345,32 +353,43 @@ Use this selector to filter DNS responses by their `TXT` records.
 
 ### DoH Subdomain
 
-<Render file="gateway/selectors/doh-subdomain" />
+<Render file="gateway/selectors/doh-subdomain" product="cloudflare-one" />
 
 ### Domain
 
 <Render
 	file="gateway/selectors/domain"
+	product="cloudflare-one"
 	params={{ APIendpoint: "dns.domains" }}
 />
 
 ### Host
 
-<Render file="gateway/selectors/host" params={{ APIendpoint: "dns.fqdn" }} />
+<Render
+	file="gateway/selectors/host"
+	product="cloudflare-one"
+	params={{ APIendpoint: "dns.fqdn" }}
+/>
 
 ### Indicator Feeds
 
-<Render file="gateway/selectors/indicator-feeds" params={{ one: "dns" }} />
+Use this selector to match against custom indicator feeds.
 
-<Render file="gateway/selectors/category-options" />
+You can use a [publicly available indicator feed](/security-center/indicator-feeds/#publicly-available-feeds) or a custom indicator feed assigned to your account by a designated third-party vendor. For more information on indicator feeds, refer to [Custom Indicator Feeds](/security-center/indicator-feeds/).
+
+| UI name         | API example          | Evaluation phase      |
+| --------------- | -------------------- | --------------------- |
+| Indicator Feeds | `dns.indicator_feed` | Before DNS resolution |
+
+<Render file="gateway/selectors/category-options" product="cloudflare-one" />
 
 ### Location
 
-<Render file="gateway/selectors/location" />
+<Render file="gateway/selectors/location" product="cloudflare-one" />
 
 ### Query Record Type
 
-<Render file="gateway/selectors/query-record-type" />
+<Render file="gateway/selectors/query-record-type" product="cloudflare-one" />
 
 ### Resolved Continent
 
@@ -415,43 +434,51 @@ Use this selector to match a dynamic list of [category IDs](/cloudflare-one/poli
 
 ### Security Categories
 
-<Render file="gateway/selectors/security-categories" />
+<Render file="gateway/selectors/security-categories" product="cloudflare-one" />
 
-<Render file="gateway/selectors/category-options" />
+<Render file="gateway/selectors/category-options" product="cloudflare-one" />
 
 ### Source Continent
 
-Use this selector to filter based on the continent where the query arrived to Gateway from. <Render file="gateway/selectors/source-continent" params={{ one: "dns.src" }} />
+Use this selector to filter based on the continent where the query arrived to Gateway from. <Render file="gateway/selectors/source-continent" product="cloudflare-one" params={{ one: "dns.src" }} />
 
 ### Source Country
 
-Use this selector to filter based on the country where the query arrived to Gateway from. <Render file="gateway/selectors/source-country" params={{ one: "dns.src" }} />
+Use this selector to filter based on the country where the query arrived to Gateway from. <Render file="gateway/selectors/source-country" product="cloudflare-one" params={{ one: "dns.src" }} />
 
 ### Source IP
 
-<Render file="gateway/selectors/source-ip-dns" />
+<Render file="gateway/selectors/source-ip-dns" product="cloudflare-one" />
 
 ### Users
 
-<Render file="gateway/selectors/users" />
+<Render file="gateway/selectors/users" product="cloudflare-one" />
 
 ## Comparison operators
 
-<Render file="gateway/comparison-operators" />
+<Render file="gateway/comparison-operators" product="cloudflare-one" />
 
 ## Value
 
-<Render file="gateway/value" params={{ one: "hostnames", two: "Host" }} />
+<Render
+	file="gateway/value"
+	product="cloudflare-one"
+	params={{ one: "hostnames", two: "Host" }}
+/>
 
 ## Logical operators
 
-<Render file="gateway/logical-operators" params={{ one: "Identity" }} />
+<Render
+	file="gateway/logical-operators"
+	product="cloudflare-one"
+	params={{ one: "Identity" }}
+/>
 
 ## Limitations
 
 ### Third-party filtering conflict
 
-<Render file="gateway/third-party-warning" />
+<Render file="gateway/third-party-warning" product="cloudflare-one" />
 
 ### Magic WAN forwarding
 

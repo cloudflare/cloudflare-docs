@@ -22,11 +22,11 @@ When you create an application for a specific subdomain or path, you can use ast
 
 #### Match all subdomains of an apex domain
 
-Using a wildcard in the **Subdomain** field does not cover the apex domain.
+A wildcard in the **Subdomain** field only matches that specific subdomain level. It does not cover the apex domain or multiple levels of the subdomain. If you want to cover multiple subdomain levels, you can use multiple wildcards.
 
 | Application     | Covers                                       | Does not cover |
 | --------------- | -------------------------------------------- | -------------- |
-| `*.example.com` | `alpha.example.com` <br/> `beta.example.com` | `example.com`  |
+| `*.example.com` | `alpha.example.com` <br/> `beta.example.com` | `example.com` <br/> `foo.bar.example.com`  |
 
 #### Match all paths of an apex domain
 

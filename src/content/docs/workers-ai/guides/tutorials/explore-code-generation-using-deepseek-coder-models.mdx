@@ -1,11 +1,10 @@
 ---
-updated: 2024-02-08
+reviewed: 2024-02-08
 difficulty: Beginner
 pcx_content_type: tutorial
 title: Explore Code Generation Using DeepSeek Coder Models
 tags:
   - AI
-languages:
   - Python
 sidebar:
   order: 4
@@ -16,13 +15,13 @@ description: Explore how you can use AI models to generate code and work more ef
 
 
 
-import { Stream } from "~/components"
+import { YouTube } from "~/components"
 
 A handy way to explore all of the models available on [Workers AI](/workers-ai) is to use a [Jupyter Notebook](https://jupyter.org/).
 
 You can [download the DeepSeek Coder notebook](/workers-ai/static/documentation/notebooks/deepseek-coder-exploration.ipynb) or view the embedded notebook below.
 
-<Stream id="97b46763341a395a4ce1c0a6f913662b" title="Explore Code Generation Using DeepSeek Coder Models" />
+<YouTube id="SHIiB0CIADE" />
 
 [comment]: <> "The markdown below is auto-generated from https://github.com/craigsdennis/notebooks-cloudflare-workers-ai"
 
@@ -91,7 +90,7 @@ else:
 
 A common use case is to complete the code for the user after they provide a descriptive comment.
 
-````python
+```python
 model = "@hf/thebloke/deepseek-coder-6.7b-base-awq"
 
 prompt = "# A function that checks if a given word is a palindrome"
@@ -112,7 +111,7 @@ display(Markdown(f"""
     {code.strip()}
     ```
 """))
-````
+```
 
 ```python
 # A function that checks if a given word is a palindrome
@@ -240,7 +239,7 @@ A common use case in Developer Tools is to autocomplete based on context. DeepSe
 
 Warning: The tokens are prefixed with `<｜` and suffixed with `｜>` make sure to copy and paste them.
 
-````python
+```python
 model = "@hf/thebloke/deepseek-coder-6.7b-base-awq"
 
 code = """
@@ -270,7 +269,7 @@ display(Markdown(f"""
     ```
 """))
 
-````
+```
 
 ```python
 is_valid_email = re.match(r"[^@]+@[^@]+\.[^@]+", email_address)
@@ -280,7 +279,7 @@ is_valid_email = re.match(r"[^@]+@[^@]+\.[^@]+", email_address)
 
 No need to threaten the model or bring grandma into the prompt. Get back JSON in the format you want.
 
-````python
+```python
 model = "@hf/thebloke/deepseek-coder-6.7b-instruct-awq"
 
 # Learn more at https://json-schema.org/
@@ -342,7 +341,7 @@ display(Markdown(f"""
     {response.strip()}
     ```
 """))
-````
+```
 
 ```json
 {

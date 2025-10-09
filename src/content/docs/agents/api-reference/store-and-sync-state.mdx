@@ -197,7 +197,7 @@ export class MyAgent extends Agent<Env> {
 
 </TypeScriptExample>
 
-You can also supply a [TypeScript type argument](https://www.typescriptlang.org/docs/handbook/2/generics.html#using-type-parameters-in-generic-constraints) the query, which will be used to infer the type of the result:
+You can also supply a [TypeScript type argument](https://www.typescriptlang.org/docs/handbook/2/generics.html#using-type-parameters-in-generic-constraints) to the query, which will be used to infer the type of the result:
 
 ```ts
 type User = {
@@ -209,7 +209,7 @@ type User = {
 export class MyAgent extends Agent<Env> {
 	async onRequest(request: Request) {
 		let userId = new URL(request.url).searchParams.get('userId');
-		// Supply the type paramter to the query when calling this.sql
+		// Supply the type parameter to the query when calling this.sql
 		// This assumes the results returns one or more User rows with "id", "name", and "email" columns
 		const user = await this.sql<User>`SELECT * FROM users WHERE id = ${userId}`;
 		return Response.json(user)
@@ -227,7 +227,7 @@ Learn more about the zero-latency SQL storage that powers both Agents and Durabl
 
 :::
 
-The SQL API exposed to an Agent is similar to the one [within Durable Objects](/durable-objects/api/storage-api/#sql-api): Durable Object SQL methods available on `this.ctx.storage.sql`. You can use the same SQL queries with the Agent's database, create tables, and query data, just as you would with Durable Objects or [D1](/d1/).
+The SQL API exposed to an Agent is similar to the one [within Durable Objects](/durable-objects/api/sqlite-storage-api/#sql-api): Durable Object SQL methods available on `this.ctx.storage.sql`. You can use the same SQL queries with the Agent's database, create tables, and query data, just as you would with Durable Objects or [D1](/d1/).
 
 ### Use Agent state as model context
 

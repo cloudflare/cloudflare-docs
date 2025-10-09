@@ -1,37 +1,56 @@
 ---
 pcx_content_type: concept
-title: Client certificates
+title: Client certificates (mTLS)
 sidebar:
   order: 6
 head: []
-description: Use Cloudflare public key infrastructure (PKI) to create client
-  certificates and enforce mutual Transport Layer Security (mTLS) encryption.
+description: Use Cloudflare public key infrastructure (PKI) to create client certificates and enforce mutual Transport Layer Security (mTLS) encryption.
 
 ---
 
-import { Render } from "~/components"
+import { GlossaryDefinition, Render, DirectoryListing } from "~/components";
 
-Use Cloudflare public key infrastructure (PKI) to create client certificates. Use these certificates with Cloudflare [API Shield](/api-shield/) or [Cloudflare Workers](/workers/runtime-apis/bindings/mtls/) to enforce mutual Transport Layer Security (mTLS) encryption.
+Use Cloudflare's public key infrastructure (PKI) to create client certificates, or [bring your own CA for mTLS](/ssl/client-certificates/byo-ca/).
 
-<Render file="client-cert-shared" />
+<GlossaryDefinition term="mTLS (mutual TLS)" />
 
-## API Shield
+:::note[mTLS at Cloudflare]
+For a broader overview, refer to the [mTLS at Cloudflare learning path](/learning-paths/mtls/concepts/).
+:::
 
-To use API Shield to protect your API or web application, you must do the following:
+---
 
-1. Use Cloudflare’s fully hosted public key infrastructure (PKI) to [create a client certificate](/ssl/client-certificates/create-a-client-certificate/).
+## How it works
 
-2. [Configure your mobile app or IoT device](/ssl/client-certificates/configure-your-mobile-app-or-iot-device/) to use your Cloudflare-issued client certificate.
+Client certificates issued from a given CA are installed on client devices that should be granted access. Then, for any host that has [mTLS enabled](/ssl/client-certificates/enable-mtls/), Cloudflare - acting as the server in this case - requires a certificate from the client trying to access the hostname.
 
-3. [Enable mTLS](/ssl/client-certificates/enable-mtls/) for the hosts you wish to protect with API Shield.
+Cloudflare then validates the client certificate against CAs set at account level. This means that these certificates can be used for validation across multiple zones/domains (`example.com`), as long as the zones are under the same Cloudflare account and mTLS has been enabled for the requested hosts (`host.example.com`).
 
-4. Create WAF custom rules that [require API requests to present a valid client certificate](/api-shield/security/mtls/configure/).
+The account-level CAs can be:
 
-<Render file="cloudflare-managed-client-cert" />
+- The Cloudflare-managed CA: This is the default option. Certificates and hostname associations are listed on your [dashboard](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/client-certificates/).
+- [BYOCA](/ssl/client-certificates/byo-ca/) certificates: This is an API-only option, available on Enterprise accounts. Certificates and hostname associations are **not** listed on your [dashboard](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/client-certificates/).
 
-## Workers
+---
 
-To authenticate Workers requests using mTLS:
+## Use cases
 
-1. Use Cloudflare’s fully hosted public key infrastructure (PKI) to [create a client certificate](/ssl/client-certificates/create-a-client-certificate/).
-2. Create and use an [mTLS binding](/workers/runtime-apis/bindings/mtls/) to authenticate Workers connections.
+As explained in the [mTLS learning path](/learning-paths/mtls/concepts/), there are different use cases and implementation options for mTLS. Consider the following links for specific guidance.
+
+- [Application security](/learning-paths/mtls/mtls-app-security/)
+- [mTLS for Zero Trust](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/) (Cloudflare Access integration)
+- [mTLS with API Shield](/api-shield/security/mtls/configure/)
+- [mTLS Workers binding](/workers/runtime-apis/bindings/mtls/)
+
+Apart from the mTLS Workers binding, any of the above implementations can use your own CA instead of the Cloudflare-managed one. Refer to [Bring your own CA](/ssl/client-certificates/byo-ca/).
+
+### mTLS and Workers
+
+Use the [mTLS Workers binding](/workers/runtime-apis/bindings/mtls/) when you need your worker to present a client certificate to an external service. To authenticate requests from a client to your worker instead, refer to [SSL/TLS > Client certificates](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/client-certificates/) and the regular [mTLS for application security](/learning-paths/mtls/mtls-app-security/) implementation.
+
+```mermaid
+flowchart LR
+        accTitle: mTLS from client to worker versus mTLS from worker to external service
+        accDescr: Diagram showing two different implementations that can be considered for mTLS with Cloudflare Workers.
+        A[Client] <--App security mTLS--> B((Cloudflare))<--mTLS worker binding--> C[(External service)]
+```

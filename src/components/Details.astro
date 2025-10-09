@@ -7,12 +7,13 @@ type Props = z.infer<typeof props>;
 const props = z.object({
 	header: z.string(),
 	open: z.boolean().optional(),
+	id: z.string().optional(),
 });
 
-const { header, open } = props.parse(Astro.props);
+const { header, open, id } = props.parse(Astro.props);
 ---
 
-<details open={open}>
+<details open={open} id={id}>
 	<summary set:html={marked.parse(header)} />
 	<slot />
 </details>

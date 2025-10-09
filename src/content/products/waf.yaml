@@ -7,11 +7,5 @@ product:
 
 meta:
   title: Cloudflare Web Application Firewall (WAF) docs
-  description: Protect against web application vulnerabilities with Cloudflare’s
-    Web Application Firewall (WAF).
+  description: Filter incoming traffic and protect against web app vulnerabilities
   author: "@cloudflare"
-
-resources:
-  community: https://community.cloudflare.com/c/security/6
-  dashboard_link: https://dash.cloudflare.com/?to=/:account/:zone/security/waf
-  learning_center: https://www.cloudflare.com/learning/ddos/glossary/web-application-firewall-waf/

@@ -7,9 +7,13 @@ head:
 description: Learn how to configure your zone with Shopify.
 ---
 
-import { Render } from "~/components";
+import { Render, GlossaryTooltip } from "~/components";
 
-<Render file="provider-guide-intro" params={{ one: "Shopify" }} />
+<Render
+	file="provider-guide-intro"
+	params={{ providerName: "Shopify" }}
+	product="cloudflare-for-platforms"
+/>
 
 ## Benefits
 
@@ -47,14 +51,19 @@ If you cannot activate your domain using [proxied DNS records](/dns/proxy-status
 
 ## Product compatibility
 
-<Render file="provider-guide-compatibility" />
+<Render
+	file="provider-guide-compatibility"
+	product="cloudflare-for-platforms"
+/>
 
 ## Additional support
 
-<Render file="provider-guide-help" params={{ one: "Shopify" }} />
+<Render
+	file="provider-guide-help"
+	params={{ providerName: "Shopify" }}
+	product="cloudflare-for-platforms"
+/>
 
 ### DNS CAA records
 
-Shopify issues SSL/TLS certificates for merchant domains using Let’s Encrypt. If you add any DNS CAA records, you must select Let’s Encrypt as the Certificate Authority (CA) or HTTPS connections may fail.
-
-For more details, refer to [CAA records](/ssl/edge-certificates/caa-records/#caa-records-added-by-cloudflare).
+For details about <GlossaryTooltip term="Certification Authority Authorization (CAA) record">CAA records</ GlossaryTooltip> refer to the [Shopify documentation](https://help.shopify.com/manual/domains/add-a-domain/connecting-domains/considerations).

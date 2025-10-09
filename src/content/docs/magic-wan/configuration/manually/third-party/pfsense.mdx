@@ -1,8 +1,7 @@
 ---
 pcx_content_type: integration-guide
 title: pfSense
-updated: 2024-06-20
-
+reviewed: 2024-06-20
 ---
 
 This tutorial includes the steps required to configure IPsec tunnels to connect a pfSense firewall to Cloudflare Magic WAN.
@@ -38,11 +37,11 @@ The following IP addresses are used throughout this tutorial. Any legally routab
 
 ## 1. Configure Magic WAN IPsec tunnels
 
-Use the Cloudflare dashboard or API to [configure two IPsec tunnels](/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels). The settings mentioned below are used for the IPsec tunnels referenced throughout the remainder of this guide.
+Use the Cloudflare dashboard or API to [configure two IPsec tunnels](/magic-wan/configuration/manually/how-to/configure-tunnel-endpoints/#add-tunnels). The settings mentioned below are used for the IPsec tunnels referenced throughout the remainder of this guide.
 
 ### Add IPsec tunnels
 
-1. Follow the [Add tunnels](/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels) instructions to create the required IPsec tunnels with the following options:
+1. Follow the [Add tunnels](/magic-wan/configuration/manually/how-to/configure-tunnel-endpoints/#add-tunnels) instructions to create the required IPsec tunnels with the following options:
    - **Tunnel name**: `PF_TUNNEL_01`
    - **Interface address**: `10.252.2.26/31`
    - **Customer endpoint**: `203.0.113.254`
@@ -50,6 +49,7 @@ Use the Cloudflare dashboard or API to [configure two IPsec tunnels](/magic-wan/
    - **Health check rate**: _Medium_
    - **Health check type**: _Request_
    - **Health check direction**: _Bidirectional_
+	- **Turn on replay protection**: Enable
 2. Select **Add pre-shared key later** > **Add tunnels**.
 3. Repeat the process to create a second IPsec tunnel with the following options:
    - **Tunnel name**: `PF_TUNNEL_02`
@@ -59,7 +59,12 @@ Use the Cloudflare dashboard or API to [configure two IPsec tunnels](/magic-wan/
    - **Health check rate**: _Medium_
    - **Health check type**: _Request_
    - **Health check direction**: _Bidirectional_
+   - **Turn on replay protection**: Enable
 4. Select **Add pre-shared key later** > **Add tunnels**.
+
+:::note
+If site-to-site traffic is a requirement for your use case, you need to enable replay protection. Refer to [Add tunnels](/magic-wan/configuration/manually/how-to/configure-tunnel-endpoints/#add-tunnels) > IPsec tunnel to learn how to enable this feature.
+:::
 
 ### Generate pre-shared keys
 

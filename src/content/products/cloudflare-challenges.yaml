@@ -10,4 +10,5 @@ product:
 
 meta:
   title: Cloudflare challenges docs
-  description: Verify whether a visitor is a real human using a challenge
+  description: Verify visitors are not bots with lightweight challenges
+  author: "@cloudflare"

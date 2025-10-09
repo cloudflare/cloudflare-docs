@@ -21,6 +21,7 @@ import {
 	releaseNotesSchema,
 	fieldsSchema,
 	partialsSchema,
+	streamSchema,
 } from "~/schemas";
 
 function contentLoader(name: string) {
@@ -110,5 +111,9 @@ export const collections = {
 	fields: defineCollection({
 		loader: dataLoader("fields"),
 		schema: fieldsSchema,
+	}),
+	stream: defineCollection({
+		loader: dataLoader("stream"),
+		schema: streamSchema,
 	}),
 };

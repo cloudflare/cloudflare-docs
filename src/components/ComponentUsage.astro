@@ -1,0 +1,27 @@
+---
+import { z } from "astro:schema";
+import { getComponentsUsage } from "~/util/components";
+
+import UsageList from "./UsageList.astro";
+import Details from "./Details.astro";
+
+type Props = z.infer<typeof props>;
+
+const props = z.object({
+	component: z.string(),
+});
+
+const { component } = props.parse(Astro.props);
+
+const usage = await getComponentsUsage(component);
+---
+
+<>
+	<p>
+		The <code>{component}</code> component is used <code>{usage.count}</code> times on{" "}
+		<code>{usage.pages.size}</code> pages.
+	</p>
+	<Details header={`See all examples of pages that use ${component}`}>
+		<UsageList usage={usage} />
+	</Details>
+</>

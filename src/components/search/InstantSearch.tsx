@@ -21,6 +21,9 @@ import {
 	FloatingPortal,
 } from "@floating-ui/react";
 import { PiCaretDownBold } from "react-icons/pi";
+import { subDays } from "date-fns";
+import { setSearchParams } from "~/util/url";
+import he from "he";
 
 function SearchBox(props: UseSearchBoxProps) {
 	const { query, refine } = useSearchBox(props);
@@ -43,11 +46,7 @@ function SearchBox(props: UseSearchBoxProps) {
 			params.delete("q");
 		}
 
-		history.pushState(
-			null,
-			"",
-			`${window.location.pathname}?${params.toString()}`,
-		);
+		setSearchParams(params);
 	}, [query]);
 
 	return (
@@ -75,6 +74,13 @@ function InfiniteHits(props: UseInfiniteHitsProps) {
 					.map(([, value]) => value);
 
 				const title = hierarchy ? hierarchy.join(" > ") : "Documentation";
+				const today = new Date();
+				const futureDate = subDays(today, item.lastModified);
+				const options: Intl.DateTimeFormatOptions = {
+					year: "numeric",
+					month: "long",
+					day: "numeric",
+				};
 
 				return (
 					<a
@@ -82,10 +88,15 @@ function InfiniteHits(props: UseInfiniteHitsProps) {
 						href={item.url}
 						className="border-cl1-gray-8 hover:bg-cl1-gray-9 dark:border-cl1-gray-2 dark:bg-cl1-gray-0 dark:hover:bg-cl1-gray-1 flex flex-col rounded-sm border p-6 text-black! no-underline"
 					>
-						<strong>{title}</strong>
+						<strong>{he.decode(title)}</strong>
 						<p className="line-clamp-2">
 							<Highlight attribute="content" hit={item} />
 						</p>
+						{item.lastModified && (
+							<span className="text-cl1-gray-4! dark:text-cl1-gray-7! mt-2 text-sm">
+								{futureDate.toLocaleDateString("en-US", options)}
+							</span>
+						)}
 					</a>
 				);
 			})}
@@ -143,11 +154,7 @@ function FilterDropdown({
 			params.set(attribute, refined.join(","));
 		}
 
-		history.pushState(
-			null,
-			"",
-			`${window.location.pathname}?${params.toString()}`,
-		);
+		setSearchParams(params);
 	}, [items]);
 
 	const { refs, floatingStyles, context } = useFloating({
@@ -231,12 +238,13 @@ export default function InstantSearchComponent() {
 				preserveSharedStateOnUnmount: true,
 			}}
 		>
-			<Configure filters="type:content" />
+			<Configure filters="type:content" facetingAfterDistinct={true} />
 			<div className="space-y-4">
 				<SearchBox />
 				<div className="not-content flex gap-2">
 					<FilterDropdown attribute="product" label="Products" />
 					<FilterDropdown attribute="tags" label="Tags" />
+					<FilterDropdown attribute="contentType" label="Page type" />
 				</div>
 				<InfiniteHits />
 			</div>

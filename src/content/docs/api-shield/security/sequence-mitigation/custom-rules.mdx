@@ -1,8 +1,9 @@
 ---
 pcx_content_type: reference
-title: Sequence Mitigation custom rules
+title: Sequence mitigation custom rules
 sidebar:
-  order: 2
+  order: 4
+  label: Custom rules
 
 ---
 
@@ -21,9 +22,17 @@ Rules built using these custom rules are different from sequence mitigation rule
 
 ## Availability
 
+:::note
+<Render file="sequence-mitigation-availability" product="api-shield" />
+:::
+
 <Render file="sequence-rules-availability" product="bots" />
 
-## Example rules
+## Build a sequence custom rule
+
+<Render file="sequence-custom-rules" product="api-shield" />
+
+### Example rules
 
 Each saved endpoint will have an endpoint ID visible in its details page in Endpoint Management in the form of a UUID. The references below (`aaaaaaaa`, `bbbbbbbb`, and `cccccccc`) are the first eight characters of the endpoint ID.
 

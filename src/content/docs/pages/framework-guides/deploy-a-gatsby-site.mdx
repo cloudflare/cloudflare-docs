@@ -1,11 +1,6 @@
 ---
 pcx_content_type: how-to
 title: Gatsby
-banner:
-  content: We recommend using <strong>Cloudflare Workers</strong> for new projects. For existing Pages projects, see our <a href="/workers/static-assets/migrate-from-pages/">migration guide</a> and <a href="/workers/static-assets/migrate-from-pages/#compatibility-matrix">compatibility matrix</a>.
-  type: note
-  dismissible:
-    id: pages-migrate-to-workers
 ---
 
 import { PagesBuildPreset, Render } from "~/components";
@@ -28,13 +23,21 @@ With Gatsby installed, you can create a new project using `gatsby new`. The `new
 npx gatsby new my-gatsby-site https://github.com/alxshelepenok/gatsby-starter-lumen
 ```
 
-<Render file="tutorials-before-you-start" />
+<Render file="tutorials-before-you-start" product="pages" />
 
-<Render file="framework-guides/create-github-repository_no_init" />
+<Render
+	file="framework-guides/create-github-repository_no_init"
+	product="pages"
+/>
 
 ## Deploy with Cloudflare Pages
 
-<Render file="deploy-to-pages-steps-with-preset" params={{ name: "Gatsby" }} />
+<Render
+	file="deploy-to-pages-steps-with-preset"
+	product="pages"
+	params={{ name: "Gatsby" }}
+	product="pages"
+/>
 
 <PagesBuildPreset framework="gatsby" />
 
@@ -59,4 +62,8 @@ If you have a dynamic route, such as `/users/[id]`, create your proxy redirect b
 /users/* /users/:id 200
 ```
 
-<Render file="framework-guides/learn-more" params={{ one: "Gatsby" }} />
+<Render
+	file="framework-guides/learn-more"
+	product="pages"
+	params={{ one: "Gatsby" }}
+/>

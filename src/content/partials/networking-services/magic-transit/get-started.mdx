@@ -24,7 +24,7 @@ Magic Transit is not a self-serve product, and as such you need to start by [eng
 	file="magic-transit/cloudflare-ips"
 	product="networking-services"
 	params={{
-		mtLpCreateTunnel: "/magic-transit/how-to/configure-tunnels/",
+		mtLpCreateTunnel: "/magic-transit/how-to/configure-tunnel-endpoints/",
 		mtLpStaticRoute: "/magic-transit/how-to/configure-routes/#configure-static-routes",
 		mtLpBgpPeering: "/magic-transit/how-to/configure-routes/#configure-bgp-routes"
 		}} />
@@ -127,7 +127,7 @@ Refer to [Maximum transmission unit and maximum segment size](/magic-transit/ref
 { props.magicWord === "Magic Transit" && (
   <>
 	<AnchorHeading title="Configure tunnels" depth={2} />
-	<a href="/magic-transit/how-to/configure-tunnels/">Configure the tunnels</a> on both the Cloudflare side and your router side to connect to your origin infrastructure.
+	<a href="/magic-transit/how-to/configure-tunnel-endpoints/">Configure the tunnels</a> on both the Cloudflare side and your router side to connect to your origin infrastructure.
 
 	<AnchorHeading title="Configure static routes or BGP peering" depth={2} />
 	<p>Configure <a href="/magic-transit/how-to/configure-routes/#configure-static-routes">static routes</a> or <a href="/magic-transit/how-to/configure-routes/#configure-bgp-routes">BGP peering</a> to route traffic from Cloudflare's global network to your locations.</p>

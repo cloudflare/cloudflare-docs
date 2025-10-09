@@ -6,11 +6,11 @@ import { Render, PackageManagers } from "~/components";
 
 Install the `node-postgres` driver:
 
-<PackageManagers pkg="pg@>8.13.0" />
+<PackageManagers pkg="pg@>8.16.3" />
 
 :::note
 
-The minimum version of `node-postgres` required for Hyperdrive is `8.13.0`.
+The minimum version of `node-postgres` required for Hyperdrive is `8.16.3`.
 
 :::
 
@@ -47,9 +47,6 @@ export default {
 			// Perform a simple query
 			const result = await client.query("SELECT * FROM pg_tables");
 
-			// Clean up the client after the response is returned, before the Worker is killed
-			env.waitUntil(client.end());
-
 			return Response.json({
 				success: true,
 				result: result.rows,
@@ -57,8 +54,14 @@ export default {
 		} catch (error: any) {
 			console.error("Database error:", error.message);
 
-			return Response.error();
+			new Response("Internal error occurred", { status: 500 });
 		}
 	},
 };
 ```
+
+:::note
+
+If you expect to be making multiple parallel database queries within a single Worker invocation, consider using a [connection pool (`pg.Pool`)](https://node-postgres.com/apis/pool) to allow for parallel queries. If doing so, set the max connections of the connection pool to 5 connections. This ensures that the connection pool fits within [Workers' concurrent open connections limit of 6](/workers/platform/limits), which affect TCP connections that database drivers use.
+
+:::

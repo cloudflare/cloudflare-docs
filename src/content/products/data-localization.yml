@@ -4,19 +4,18 @@ logo: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M5.87
 product:
   title: Data Localization Suite
   url: /data-localization/
-  group: Core platform
+  group: Cloudflare One
   additional_groups:
     [
       Analytics,
       Application performance,
       Application security,
-      Cloudflare One,
       Developer platform,
       Network security,
       Storage,
     ]
 
 meta:
-  title: Data Localization Suite docs
-  description: The Data Localization Suite is a set of products that helps customers who want to maintain local control over their traffic while retaining the security benefits of a global network.
+  title: Cloudflare Data Localization Suite docs
+  description: Control where Cloudflare stores and inspects data
   author: "@cloudflare"

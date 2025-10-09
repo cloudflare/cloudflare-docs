@@ -1,0 +1,93 @@
+---
+pcx_content_type: configuration
+title: Neon
+description: Connect Workers to a Neon Postgres database.
+---
+
+import { Render, PackageManagers, Tabs, TabItem } from "~/components";
+
+[Neon](https://neon.tech/) is a fully managed serverless PostgreSQL. It separates storage and compute to offer modern developer features, such as serverless, branching, and bottomless storage.
+
+:::note
+
+You can connect to Neon using [Hyperdrive](/hyperdrive) (recommended), or using the Neon serverless driver, `@neondatabase/serverless`. Both provide connection pooling and reduce the amount of round trips required to create a secure connection from Workers to your database.
+
+Hyperdrive can provide the lowest possible latencies because it performs the database connection setup and connection pooling across Cloudflare's network. Hyperdrive supports native database drivers, libraries, and ORMs, and is included in all [Workers plans](/hyperdrive/platform/pricing/). Learn more about Hyperdrive in [How Hyperdrive Works](/hyperdrive/configuration/how-hyperdrive-works/).
+
+:::
+
+<Tabs>
+	<TabItem label="Hyperdrive (recommended)">
+
+To connect to Neon using [Hyperdrive](/hyperdrive), follow these steps:
+
+         <Render file="neon-partial" product="hyperdrive"/>
+    </TabItem>
+    <TabItem label="Neon serverless driver">
+
+To connect to Neon using `@neondatabase/serverless`, follow these steps:
+
+1. You need to have an existing Neon database to connect to. [Create a Neon database](https://neon.tech/docs/postgres/tutorial-createdb#create-a-table) or [load data from an existing database to Neon](https://neon.tech/docs/import/import-from-postgres).
+
+2. Create an `elements` table using the Neon SQL editor. The SQL Editor allows you to query your databases directly from the Neon Console.
+
+   ```sql
+   CREATE TABLE elements (
+     id INTEGER NOT NULL,
+     elementName TEXT NOT NULL,
+     atomicNumber INTEGER NOT NULL,
+     symbol TEXT NOT NULL
+   );
+   ```
+
+3. Insert some data into your newly created table.
+
+   ```sql
+   INSERT INTO elements (id, elementName, atomicNumber, symbol)
+   VALUES
+     (1, 'Hydrogen', 1, 'H'),
+     (2, 'Helium', 2, 'He'),
+     (3, 'Lithium', 3, 'Li'),
+     (4, 'Beryllium', 4, 'Be'),
+     (5, 'Boron', 5, 'B'),
+     (6, 'Carbon', 6, 'C'),
+     (7, 'Nitrogen', 7, 'N'),
+     (8, 'Oxygen', 8, 'O'),
+     (9, 'Fluorine', 9, 'F'),
+     (10, 'Neon', 10, 'Ne');
+   ```
+
+4. Configure the Neon database credentials in your Worker:
+
+   You need to add your Neon database connection string as a secret to your Worker. Get your connection string from the [Neon Console](https://console.neon.tech) under **Connection Details**, then add it as a secret using Wrangler:
+
+   ```sh
+   # Add the database connection string as a secret
+   npx wrangler secret put DATABASE_URL
+   # When prompted, paste your Neon database connection string
+   ```
+
+5. In your Worker, install the `@neondatabase/serverless` driver to connect to your database and start manipulating data:
+
+   <PackageManagers pkg="@neondatabase/serverless" />
+
+6. The following example shows how to make a query to your Neon database in a Worker. The credentials needed to connect to Neon have been added as secrets to your Worker.
+
+   ```js
+   import { Client } from "@neondatabase/serverless";
+
+   export default {
+   	async fetch(request, env, ctx) {
+   		const client = new Client(env.DATABASE_URL);
+   		await client.connect();
+   		const { rows } = await client.query("SELECT * FROM elements");
+
+   		return new Response(JSON.stringify(rows));
+   	},
+   };
+   ```
+
+To learn more about Neon, refer to [Neon's official documentation](https://neon.tech/docs/introduction).
+
+   </TabItem>
+</Tabs>

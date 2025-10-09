@@ -5,11 +5,25 @@ sidebar:
   order: 2
 ---
 
-import { Render } from "~/components"
+import { Tabs, TabItem } from "~/components";
 
-<Render file="challenge-solve-rate" product="fundamentals"/>
+The challenge solve rate (CSR) is the percentage of issued challenges — Interactive Challenge, JS Challenge, or Managed Challenge actions — that were solved.
+
+```txt
+CSR = number of challenges solved / number of challenges issued
+```
+
+This metric helps you evaluate your rule's effectiveness, as well as whether you need to make any adjustments to the rule's criteria or action. Rules in Challenge mode will start generating Challenge Solve Rate data (CSR) which indicates the false positive percentage.
 
 You can find the CSR of a rule by going to its corresponding dashboard page:
 
-- For [custom rules](/waf/custom-rules/), go to **Security** > **WAF** > **Custom rules**.
-- For [rate limiting rules](/waf/rate-limiting-rules/), go to **Security** > **WAF** > **Rate limiting rules**.
+<Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
+
+- For [custom rules](/waf/custom-rules/), go to your zone > **Security** > **WAF** > **Custom rules**.
+- For [rate limiting rules](/waf/rate-limiting-rules/), go to your zone > **Security** > **WAF** > **Rate limiting rules**.
+
+</TabItem> <TabItem label="New dashboard" icon="rocket">
+
+For [custom rules](/waf/custom-rules/) or [rate limiting rules](/waf/rate-limiting-rules/), go to your zone > **Security** > **Security rules**.
+
+</TabItem> </Tabs>

@@ -13,7 +13,7 @@ Cloudflare can render SSH, VNC, and RDP applications in a browser without the ne
 
 - Browser rendering is only supported for [self-hosted public applications](/cloudflare-one/applications/configure-apps/self-hosted-public-app/), not private IPs or hostnames.
 - You can only render a browser-rendered terminal on domains and subdomains, not on specific paths.
-- <Render file="access/self-hosted-app/ssh-sessions" />
+- <Render file="access/self-hosted-app/ssh-sessions" product="cloudflare-one" />
 - Cloudflare uses TLS to secure the egress RDP connection to your Windows server. We do not currently validate the chain of trust.
 
 ## Turn on browser rendering
@@ -27,7 +27,7 @@ To turn on browser rendering for an SSH or VNC application:
 3. In the **Policies** tab, ensure that only **Allow** or **Block** policies are present. **Bypass** and **Service Auth** are not supported for browser-rendered applications.
 4. Go to **Advanced settings** > **Browser rendering settings**.
 5. For **Browser rendering**, choose _SSH_ or _VNC_.
-6.  Select **Save application**.
+6. Select **Save application**.
 
 When users authenticate and visit the URL of the application, Cloudflare will render a terminal in their browser.
 
@@ -39,10 +39,10 @@ To set up browser-rendering for RDP, refer to our [browser-based RDP guide](/clo
 
 Cloudflare's browser-rendered SSH terminal supports the following Key Exchange (KEX) algorithms:
 
-	- `curve25519-sha256@libssh.org`
-	- `curve25519-sha256`
-	- `ecdh-sha2-nistp256`
-	- `ecdh-sha2-nistp384`
-	- `ecdh-sha2-nistp521`
+    - `curve25519-sha256@libssh.org`
+    - `curve25519-sha256`
+    - `ecdh-sha2-nistp256`
+    - `ecdh-sha2-nistp384`
+    - `ecdh-sha2-nistp521`
 
 For browser-rendered SSH connections to work, you may need to update the `sshd_config` file on your server to accept these algorithms.

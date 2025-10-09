@@ -1,0 +1,198 @@
+---
+id: 492e46e01d4db17c302f8d10278ab3d8
+url: manage-account-members
+title: Manage account members
+description: In this video, learn how to define the roles and permission scope for members associated with an account.
+products:
+  - fundamentals
+thumbnail:
+  url: https://pub-d9bf66e086fb4b639107aa52105b49dd.r2.dev/manage%20account%20members.png 
+transcript: |
+  
+  WEBVTT
+
+  1
+  00:00:00.120 --> 00:00:03.560
+  Account members are users who have access to 
+  your Cloudflare account.
+
+  2
+  00:00:03.840 --> 00:00:07.800
+  Each member's access is controlled by 
+  policies which define their roles and the
+
+  3
+  00:00:07.800 --> 00:00:09.200
+  scope of their permissions.
+
+  4
+  00:00:09.200 --> 00:00:11.480
+  In order to grant access to account members.
+
+  5
+  00:00:11.560 --> 00:00:14.880
+  You must be a super administrator with a 
+  verified email address.
+
+  6
+  00:00:15.200 --> 00:00:18.320
+  In this video, we'll walk through how to view 
+  members,
+
+  7
+  00:00:18.800 --> 00:00:23.560
+  add new members, edit their permissions, 
+  resend invitations,
+
+  8
+  00:00:23.560 --> 00:00:25.960
+  and revoke access in Cloudflare dashboard.
+
+  9
+  00:00:26.080 --> 00:00:28.240
+  Let's first take a look at how to view 
+  members.
+
+  10
+  00:00:28.520 --> 00:00:32.040
+  Start by logging in to the Cloudflare 
+  dashboard and selecting your account.
+
+  11
+  00:00:32.720 --> 00:00:35.560
+  Go to Manage Account Members.
+
+  12
+  00:00:36.320 --> 00:00:38.880
+  Here you can see the list of current account 
+  members.
+
+  13
+  00:00:40.040 --> 00:00:42.120
+  Now let's move on to adding account members.
+
+  14
+  00:00:42.680 --> 00:00:46.440
+  On the members page to invite someone new, 
+  select invite.
+
+  15
+  00:00:47.320 --> 00:00:49.560
+  Enter one or more email addresses.
+
+  16
+  00:00:50.520 --> 00:00:52.480
+  Define the scope of their access.
+
+  17
+  00:00:53.880 --> 00:00:57.560
+  Choose one or more roles such as 
+  administrator or billing.
+
+  18
+  00:00:59.040 --> 00:01:00.680
+  Click continue to summary.
+
+  19
+  00:01:00.680 --> 00:01:03.240
+  Review the details, then select invite.
+
+  20
+  00:01:03.680 --> 00:01:07.680
+  If the person already has a Cloudflare 
+  account and you're on an enterprise plan,
+
+  21
+  00:01:07.680 --> 00:01:11.120
+  you can use Direct Add instead of sending an 
+  email invitation.
+
+  22
+  00:01:11.570 --> 00:01:14.250
+  If you want to change a member's access and 
+  permissions.
+
+  23
+  00:01:14.490 --> 00:01:19.690
+  First open the record and select edit, 
+  adjust their roles or scope,
+
+  24
+  00:01:20.090 --> 00:01:21.850
+  then select continue to summary.
+
+  25
+  00:01:22.930 --> 00:01:25.170
+  Review the changes and select update.
+
+  26
+  00:01:25.690 --> 00:01:28.890
+  If an invite is pending and the user hasn't 
+  accepted,
+
+  27
+  00:01:28.890 --> 00:01:32.330
+  this is how you can resend it from the 
+  member's page.
+
+  28
+  00:01:32.530 --> 00:01:38.970
+  Find a pending user, open the record and 
+  choose Resend Invite to revoke someone's
+
+  29
+  00:01:39.010 --> 00:01:41.170
+  access. Expand their record.
+
+  30
+  00:01:41.650 --> 00:01:44.050
+  Select, revoke and confirm.
+
+  31
+  00:01:44.730 --> 00:01:47.770
+  If you were added as a member and you want to 
+  remove yourself.
+
+  32
+  00:01:48.010 --> 00:01:52.490
+  Go to the member's page, 
+  locate your record and select leave.
+
+  33
+  00:01:52.850 --> 00:01:55.850
+  If you're a super administrator and you need 
+  to leave the account,
+
+  34
+  00:01:55.850 --> 00:01:59.370
+  you can invite another super administrator 
+  before you remove yourself.
+
+  35
+  00:01:59.410 --> 00:02:03.450
+  You cannot delete the account itself, 
+  but other super administrators will retain
+
+  36
+  00:02:03.450 --> 00:02:07.290
+  full privileges. Cloudflare also supports 
+  user groups,
+
+  37
+  00:02:07.290 --> 00:02:10.650
+  which let you manage permissions for a set of 
+  members collectively.
+
+  38
+  00:02:10.810 --> 00:02:15.130
+  Members inherit all roles assigned to the 
+  group in addition to any directly assigned
+
+  39
+  00:02:15.130 --> 00:02:19.130
+  permissions. For more information on account 
+  members and user groups,
+
+  40
+  00:02:19.250 --> 00:02:21.170
+  visit our developer documentation.

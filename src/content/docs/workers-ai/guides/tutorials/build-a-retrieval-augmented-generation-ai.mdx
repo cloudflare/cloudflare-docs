@@ -1,5 +1,5 @@
 ---
-updated: 2024-11-21
+reviewed: 2024-11-21
 difficulty: Beginner
 pcx_content_type: tutorial
 title: Build a Retrieval Augmented Generation (RAG) AI
@@ -10,10 +10,10 @@ products:
 tags:
   - AI
   - Hono
-languages:
   - JavaScript
 sidebar:
   order: 2
+description: Build your first AI app with Cloudflare AI. This guide uses Workers AI, Vectorize, D1, and Cloudflare Workers.
 ---
 
 import { Details, Render, PackageManagers, WranglerConfig } from "~/components";
@@ -21,7 +21,7 @@ import { Details, Render, PackageManagers, WranglerConfig } from "~/components";
 This guide will instruct you through setting up and deploying your first application with Cloudflare AI. You will build a fully-featured AI-powered application, using tools like Workers AI, Vectorize, D1, and Cloudflare Workers.
 
 :::note[Looking for a managed option?]
-[AutoRAG](/autorag) offers a fully managed way to build RAG pipelines on Cloudflare, handling ingestion, indexing, and querying out of the box. [Get started](/autorag/get-started/).
+[AI Search](/ai-search/) offers a fully managed way to build RAG pipelines on Cloudflare, handling ingestion, indexing, and querying out of the box. [Get started](/ai-search/get-started/).
 :::
 
 At the end of this tutorial, you will have built an AI tool that allows you to store information and query it using a Large Language Model. This pattern, known as Retrieval Augmented Generation, or RAG, is a useful project you can build by combining multiple aspects of Cloudflare's AI toolkit. You do not need to have experience working with AI tools to build this application.
@@ -77,8 +77,14 @@ The Workers command-line interface, [Wrangler](/workers/wrangler/install-and-upd
 After you have created your first Worker, run the [`wrangler dev`](/workers/wrangler/commands/#dev) command in the project directory to start a local server for developing your Worker. This will allow you to test your Worker locally during development.
 
 ```sh
-npx wrangler dev --remote
+npx wrangler dev
 ```
+
+You will now be able to go to [http://localhost:8787](http://localhost:8787) to see your Worker running. Any changes you make to your code will trigger a rebuild, and reloading the page will show you the up-to-date output of your Worker.
+
+## 3. Adding the AI binding
+
+To begin using Cloudflare's AI products, you can add the `ai` block to the [Wrangler configuration file](/workers/wrangler/configuration/) as a [remote binding](/workers/development-testing/#remote-bindings). This will set up a binding to Cloudflare's AI models in your code that you can use to interact with the available AI models on the platform.
 
 :::note
 
@@ -88,12 +94,6 @@ If you have issues with this step or you do not have access to a browser interfa
 
 :::
 
-You will now be able to go to [http://localhost:8787](http://localhost:8787) to see your Worker running. Any changes you make to your code will trigger a rebuild, and reloading the page will show you the up-to-date output of your Worker.
-
-## 3. Adding the AI binding
-
-To begin using Cloudflare's AI products, you can add the `ai` block to the [Wrangler configuration file](/workers/wrangler/configuration/). This will set up a binding to Cloudflare's AI models in your code that you can use to interact with the available AI models on the platform.
-
 This example features the [`@cf/meta/llama-3-8b-instruct` model](/workers-ai/models/llama-3-8b-instruct/), which generates text.
 
 <WranglerConfig>
@@ -101,6 +101,7 @@ This example features the [`@cf/meta/llama-3-8b-instruct` model](/workers-ai/mod
 ```toml
 [ai]
 binding = "AI"
+remote = true
 ```
 
 </WranglerConfig>
@@ -369,7 +370,7 @@ app.get("/", async (c) => {
 	let notes = [];
 	if (vecId) {
 		const query = `SELECT * FROM notes WHERE id = ?`;
-		const { results } = await c.env.DB.prepare(query).bind(vecId).all();
+		const { results } = await c.env.DB.prepare(query).bind(vecId).run();
 		if (results) notes = results.map((vec) => vec.text);
 	}
 

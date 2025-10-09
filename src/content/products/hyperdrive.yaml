@@ -7,10 +7,6 @@ product:
   additional_groups: [Storage]
 
 meta:
-  title: Hyperdrive docs
-  description: Service which accelerates queries you make to existing databases.
+  title: Cloudflare Hyperdrive docs
+  description: Accelerate database queries to make databases fast globally
   author: "@cloudflare"
-
-resources:
-  dashboard_link: https://dash.cloudflare.com/?to=/:account/workers
-  discord: https://discord.com/invite/cloudflaredev

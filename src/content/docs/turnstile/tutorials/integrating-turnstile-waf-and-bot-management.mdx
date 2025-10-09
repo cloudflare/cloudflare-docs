@@ -1,16 +1,18 @@
 ---
 title: Integrate Turnstile, WAF, & Bot Management
 pcx_content_type: tutorial
-updated: 2024-09-17
+reviewed: 2024-09-17
 difficulty: Beginner
 products:
   - Web Application Firewall
   - Bot Management
-languages:
+tags:
   - JavaScript
 sidebar:
   order: 3
 ---
+
+import { Steps, DashButton } from "~/components";
 
 This tutorial will guide you on how to integrate Cloudflare Turnstile, [Web Application Firewall (WAF)](/waf/), and [Bot Management](/bots/get-started/bot-management/) into an existing authentication system. This combination creates a robust defense against various threats, including automated attacks and malicious login attempts.
 
@@ -39,13 +41,16 @@ If your site is on Cloudflare's network and subscribed to an Enterprise plan, yo
 
 ### Issue challenges for potential bot traffic
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to **Security** > **WAF**.
-3. Create a new custom WAF rule by selecting "Edit expression":
-   - Field: "Bot Score"
-   - Operator: "less than or equal to"
-   - Value: "30"
-   - Action: "Managed Challenge"
+<Steps>
+	1. In the Cloudflare dashboard, go to the **WAF** page.
+	
+		<DashButton url="/?to=/:account/application-security/waf" />
+	2. Create a new custom WAF rule by selecting **Edit expression**:
+		- Field: "Bot Score"
+		- Operator: "less than or equal to"
+		- Value: "30"
+		- Action: "Managed Challenge"
+</Steps>
 
 This configuration challenges requests with a low bot score, leveraging network signals to identify potential threats before they reach your application. You may customize the score threshold based on your specific use case.
 
@@ -53,17 +58,20 @@ This configuration challenges requests with a low bot score, leveraging network 
 
 Turnstile can be used on any site, regardless of whether it is on Cloudflare's network:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to **Security** > **Turnstile**.
-3. Select **Add widget** and fill out the necessary information.
-4. Add your domain to the Turnstile configuration.
-5. Select **Create**.
+<Steps>
+    1. In the Cloudflare dashboard, go to the **Turnstile** page.
+    
+        <DashButton url="/?to=/:account/turnstile" />
+    2. Select **Add widget** and fill out the necessary information.
+	3. Add your domain to the Turnstile configuration.
+	4. Select **Create**.
+</Steps>
 
 Turnstile adds an extra layer of security by analyzing browser and client-side signals, complementing the server-side checks performed by WAF and Bot Management.
 
 ### Enable the option to use the existing clearance cookie
 
-If your site is on Cloudflare, you can enable the option to use the existing [clearance cookie](/turnstile/concepts/pre-clearance-support/) in Turnstile's settings. This integration allows Turnstile to use the clearance cookie as part of its determination of whether a user should receive a challenge. This integration is optional, but recommended if you already are using WAF and Bot Management.
+If your site is on Cloudflare, you can enable the option to use the existing [clearance cookie](/cloudflare-challenges/concepts/clearance/#pre-clearance-support-in-turnstile) in Turnstile's settings. This integration allows Turnstile to use the clearance cookie as part of its determination of whether a user should receive a challenge. This integration is optional, but recommended if you already are using WAF and Bot Management.
 
 ## Integrate Turnstile into your application
 
@@ -77,7 +85,7 @@ Add the Turnstile widget to your existing login form:
 <form id="login-form">
 	<input type="text" id="username" placeholder="Username" required />
 	<input type="password" id="password" placeholder="Password" required />
-	<div class="cf-turnstile" data-sitekey="YOUR_SITE_KEY"></div>
+	<div class="cf-turnstile" data-sitekey="<YOUR-SITE-KEY>"></div>
 	<button type="submit">Log in</button>
 </form>
 
@@ -88,7 +96,7 @@ Add the Turnstile widget to your existing login form:
 ></script>
 ```
 
-Replace `YOUR_SITE_KEY` with your actual Turnstile site key.
+Replace `<YOUR-SITE-KEY>` with your actual Turnstile site key.
 
 ## Handle the login request
 

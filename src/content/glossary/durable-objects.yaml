@@ -7,7 +7,10 @@ entries:
 
   - term: "namespace"
     general_definition: |-
-      A container for a collection of Durable Objects that all share the same Durable Object (class) definition. A single namespace can have (tens of) millions of Durable Objects. Metrics are scoped per namespace.
+      A logical collection of Durable Objects that all share the same Durable Object (class) definition. A single namespace can have (tens of) millions of Durable Objects. Metrics are scoped per namespace.
+
+      - The binding name of the namespace (as it will be exposed inside Worker code) is defined in the Wrangler file under the `durable_objects.bindings.name` key. Note that the binding name may not uniquely identify a namespace within an account. Instead, each namespace has a unique namespace ID, which you can view from the Cloudflare dashboard.
+      - You can instantiate a unique Durable Object within a namespace using [Durable Object namespace methods](/durable-objects/api/namespace/#methods).
 
   - term: "Durable Object"
     general_definition: |-
@@ -31,7 +34,7 @@ entries:
 
   - term: "Storage API"
     general_definition: |-
-      The transactional and strongly consistent (serializable) [Storage API](/durable-objects/api/storage-api/) for persisting data within each Durable Object. State stored within a unique Durable Object is "private" to that Durable Object, and not accessible from other Durable Objects.
+      The transactional and strongly consistent (serializable) [Storage API](/durable-objects/api/sqlite-storage-api/) for persisting data within each Durable Object. State stored within a unique Durable Object is "private" to that Durable Object, and not accessible from other Durable Objects.
 
       Storage API includes key-value (KV) API, SQL API, and point-in-time-recovery (PITR) API.
 
@@ -60,10 +63,6 @@ entries:
     general_definition: |-
       A Durable Object alarm is a mechanism that allows you to schedule the Durable Object to be woken up at a time in the future.
 
-  - term: "request context"
-    general_definition: |-
-      The duration of time that a Durable Object is processing a request, such as a remote procedure call. [Compute duration charges](/durable-objects/platform/pricing) are incurred for the duration of the request context. Note that the request context for a Durable Object extends at least 60 seconds after the last client disconnects.
-
   - term: "input gate"
     general_definition: |-
       While a storage operation is executing, no events shall be delivered to a Durable Object except for storage completion events. Any other events will be deferred until such a time as the object is no longer executing JavaScript code and is no longer waiting for any storage operations. We say that these events are waiting for the "input gate" to open.
@@ -76,3 +75,6 @@ entries:
     general_definition: |-
       A bookmark is a mostly alphanumeric string like `0000007b-0000b26e-00001538-0c3e87bb37b3db5cc52eedb93cd3b96b` which represents a specific state of a SQLite database at a certain point in time. Bookmarks are designed to be lexically comparable: a bookmark representing an earlier point in time compares less than one representing a later point, using regular string comparison.
 
+  # - term: "request context"
+  #   general_definition: |-
+  #     The duration of time that a Durable Object is processing a request, such as a remote procedure call. [Compute duration charges](/durable-objects/platform/pricing) are incurred for the duration of the request context. Note that the request context for a Durable Object extends at least 60 seconds after the last client disconnects.

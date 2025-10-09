@@ -6,32 +6,37 @@ sidebar:
 
 ---
 
-To create a client certificate in the Cloudflare dashboard:
+import { Details } from "~/components";
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and application.
-2. Go to **SSL** > **Client Certificates**.
-3. Select **Create Certificate**.
+To create a client certificate on the Cloudflare dashboard:
 
-    :::caution
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and zone/domain.
+2. Go to **SSL/TLS** > **Client Certificates**.
+3. Select **Create Certificate** and fill in the required fields. You can choose one of the following options:
 
-    By default, client certificates are issued by a Cloudflare Managed CA. Cloudflare generates a unique CA for each account.
+  - Generate a private key and Certificate Signing Request (CSR) with Cloudflare.
+  - Use your own private key and CSR. This option allows you to also [label client certificates](/ssl/client-certificates/label-client-certificate/).
 
-    If you need to use certificates issued by another CA, use the API to [bring your own CA for mTLS](/ssl/client-certificates/byo-ca/).
-    :::
+    <Details header="Example OpenSSL command">
 
-4. For **Private key type**, select a value.
+    To generate and use your own CSR, you can run a command like the following:
 
-5. For **Certificate Validity**, select a value. The default value is 10 years.
+    ```sh
+    openssl req -new -newkey rsa:2048 -nodes -keyout client1.key -out client1.csr -subj '/C=GB/ST=London/L=London/O=Organization/CN=CommonName'
+    ```
 
-6. Select **Create**.
+    </Details>
 
-7. To copy the certificate or private key to your clipboard, use the **click to copy** link.
+:::note
+Client certificates created on the dashboard are issued by a [Cloudflare-managed CA](/ssl/client-certificates/#how-it-works). If you need to use certificates issued by another CA, use the API to [bring your own CA](/ssl/client-certificates/byo-ca/) instead.
+:::
 
-8. To close the dialog, select **OK**.
+4. Select a value for **Certificate Validity**, and choose **Create**.
+5. Make sure to copy the certificate and private key as they will no longer be displayed after creation.
+6. Select **OK** to confirm.
 
 ## Next steps
 
-You can now use the client certificate for multiple things, including:
+After creating the client certificate, make sure it is installed on the client devices and [enable mTLS](/ssl/client-certificates/enable-mtls/) for each hostname that should require a certificate from clients.
 
-* Adding an mTLS certificate binding to your [Worker](/workers/runtime-apis/bindings/mtls/).
-* Embedding a certificate in your [mobile app or IoT device](/ssl/client-certificates/configure-your-mobile-app-or-iot-device/).
+Refer to our [mTLS at Cloudflare learning path](/learning-paths/mtls/concepts/) for further context.

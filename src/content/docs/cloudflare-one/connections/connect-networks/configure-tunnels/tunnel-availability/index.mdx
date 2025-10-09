@@ -69,10 +69,8 @@ This will output your tunnel UUID as well as two Connector IDs, one for each `cl
 
 You can run the same tunnel across various `cloudflared` processes for up to 100 connections (25 replicas) per tunnel. Cloudflare Load Balancers and DNS records can still point to the tunnel and its UUID. Traffic will be sent to all `cloudflared` processes associated with the tunnel.
 
-:::note[Deploy replicas with Kubernetes]
-
-For information about running `cloudflared` instances in a Kubernetes deployment, refer to our guides for tunnels managed [remotely via the dashboard](/cloudflare-one/connections/connect-networks/deployment-guides/kubernetes/) or [locally via the CLI](/cloudflare-one/tutorials/many-cfd-one-tunnel/).
-
+:::note[Deploy replicas in Kubernetes]
+For information about running `cloudflared` in a Kubernetes deployment, refer to the [Kubernetes guide](/cloudflare-one/connections/connect-networks/deployment-guides/kubernetes/).
 :::
 
 ## Cloudflare Load Balancers

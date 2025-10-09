@@ -53,9 +53,9 @@ The time it takes for Azure to fully provision the Virtual Network Gateway depen
 
 ## Configure Magic WAN
 
-1. Create an [IPsec tunnel](/magic-wan/configuration/manually/how-to/configure-tunnels/#add-tunnels) in the Cloudflare dashboard.
+1. Create an [IPsec tunnel](/magic-wan/configuration/manually/how-to/configure-tunnel-endpoints/#add-tunnels) in the Cloudflare dashboard.
 2. Make sure you have the following settings:
-   1. **Interface address**: As the Azure Local Network Gateway will only permit specifying the lower IP address in a `/31` subnet, add the upper IP address within the `/31` subnet selected in [step 2 of the Configure Azure section](#2-configure-local-network-gateway-for-magic-ipsec-tunnel-health-checks). Refer to [Tunnel endpoints](/magic-wan/configuration/manually/how-to/configure-tunnels/) for more details.
+   1. **Interface address**: As the Azure Local Network Gateway will only permit specifying the lower IP address in a `/31` subnet, add the upper IP address within the `/31` subnet selected in [step 2 of the Configure Azure section](#2-configure-local-network-gateway-for-magic-ipsec-tunnel-health-checks). Refer to [Tunnel endpoints](/magic-wan/configuration/manually/how-to/configure-tunnel-endpoints/) for more details.
    2. **Customer endpoint**: The Public IP associated with your Azure Virtual Network Gateway. For example, `40.xxx.xxx.xxx`.
    3. **Cloudflare endpoint**: Use the Cloudflare anycast address you have received from your account team. This will also be the IP address corresponding to the Local Network Gateway in Azure. For example, `162.xxx.xxx.xxx`.
    4. **Health check rate**: Leave the default option (Medium) selected.

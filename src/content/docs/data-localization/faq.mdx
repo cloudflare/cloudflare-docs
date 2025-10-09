@@ -38,4 +38,8 @@ Yes, you have these options available:
 
 These options only offer L3/L4 DDoS protection and using them imply that no application / L7 security or performance services can be applied.
 
+## I have configured [Customer Metadata Boundary](/data-localization/metadata-boundary/) for EU region, I'm accessing the Cloudflare Dashboard from Europe, why am I getting an error `Data not available due to your account's Customer Metadata Boundary configuration`?
+
+Based on Internet conditions that vary over time, users may be dynamically steered to a data center that is physically further away. This can be based on a variety of factors, including latency and network congestion. [Out of region access](/data-localization/metadata-boundary/out-of-region-access/) allows requests arriving in the United States to pull Customer Logs from the European Union and vice-versa. The analytics are still exclusively stored in the CMB configured region.
+
 

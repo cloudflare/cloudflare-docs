@@ -8,7 +8,7 @@ sidebar:
 description: Learn how Speed Brain enhances web performance by prefetching likely next pages, improving metrics like LCP and TTFB.
 ---
 
-import { FeatureTable, TabItem, Tabs } from "~/components";
+import { FeatureTable, TabItem, Tabs, APIRequest } from "~/components";
 
 Speed Brain is a tool for improving web page performance by prefetching the most likely next navigation.
 
@@ -87,15 +87,13 @@ To enable or disable **Speed Brain** in the dashboard:
 
 Use the following `PATCH` request to enable Speed Brain:
 
-```bash
-curl --request PATCH \
-"https://api.cloudflare.com/client/v4/zones/{zone_id}/settings/speed_brain" \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-  "value":"on"
-  }'
-```
+<APIRequest
+  path="/zones/{zone_id}/settings/speed_brain"
+  method="PATCH"
+  json={{
+    value: "on"
+  }}
+/>
 
 To disable Speed Brain, set `value:` to `"off"`.
 

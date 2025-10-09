@@ -1,0 +1,71 @@
+---
+pcx_content_type: how-to
+title: Links
+meta:
+  title: Links | How we docs
+---
+
+import { GitHubCode, Render } from "~/components";
+
+Though [links](/style-guide/documentation-content-strategy/component-attributes/links/) are an important part of documentation, they also have their own maintenance cost.
+
+We have a few strategies we use to make link maintenance easier.
+
+## Link types
+
+<Render file="link-types" product="style-guide" />
+
+For each type of link, we think through a few different aspects of the experience.
+
+- **External**:
+  - _Source of truth_: Another site.
+  - _Why does it break_: Another site changed its content.
+  - _Customer experience of a break_: `404` page on another site.
+- **Internal**:
+  - _Source of truth_: Your site.
+  - _Why does it break_: Your site changed its content.
+  - _Customer experience of a break_: `404` page on your site.
+- **Anchor**:
+  - _Source of truth_: Your site.
+  - _Why does it break_: Your site changed its content.
+  - _Customer experience of a break_: Page load on your site. Content might be further down the page or have been moved to another page.
+
+## Checks
+
+### Internal links
+
+Of these three [link types](#link-types), only **Internal** links:
+
+- Happen _within_ the context of a change to your site's content.
+- Universally lead to a bad customer experience (a `404` page).
+- Are easily auditable within the current context.
+
+For these reasons, we choose to make a build **fail** based on broken internal links. For our implementation, we rely on the [Starlight link validator plugin](https://github.com/HiDeoo/starlight-links-validator).
+
+<GitHubCode
+	repo="cloudflare/cloudflare-docs"
+	file="astro.config.ts"
+	commit="aaacc3c3c2a7517ee307ddfc56962cbea9847202"
+	lang="ts"
+	lines="129-153"
+	code={{ title: "astro.config.ts" }}
+/>
+
+Whether or not we run the link validation depends an environmental variable that we set in our [CI build process](https://github.com/cloudflare/cloudflare-docs/blob/production/.github/workflows/ci.yml#L52).
+
+We also make two intentional decisions about this link auditing:
+
+- **Absolute links, not relative**: We enforce absolute links (`/style-guide/how-we-docs/metadata/`) and fail on relative links (`../metadata/`) to avoid time-consuming maintenance in the future. This decision also helps with find/replace work and any future platform migrations.
+- **No redirects**: We do not consider redirects when evaluating links. We have the current source of truth, so we should utilize that truth to its fullest (as well as helping us avoid redirect chains and future maintenance).
+
+### External links
+
+Though external links are not good for the customer experience, they also don't change within the context of a change to your site's content. Additionally, external link checking can be time consuming and error prone, which can slow down contributions.
+
+We use an external SEO tool to help flag these broken external links for us, addressing them as needed (instead of making a build fail because of them).
+
+### Anchor links
+
+Anchor links do not have as dramatic as consequences of being wrong as internal links. If you have a broken anchor link, a customer will either need to manually scroll to the header or - in some cases - go to another page.
+
+Because of these characteristics, we run [periodic, background checks](https://github.com/cloudflare/cloudflare-docs/blob/production/.github/workflows/anchor-link-audit.yml) to flag broken anchor links, using the `htmltest` library.

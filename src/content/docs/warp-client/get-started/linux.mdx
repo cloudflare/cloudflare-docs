@@ -9,7 +9,7 @@ head:
 
 import { Render } from "~/components";
 
-<Render file="consumer-warp-download" />
+<Render file="consumer-warp-download" product="warp-client" />
 
 You have two ways of installing WARP on Linux, depending on the distro you are using:
 
@@ -28,7 +28,7 @@ If you get an error message when trying to install via the terminal, download th
 
 The command line interface is the primary way to use WARP.
 
-### Initial Connection
+### Initial connection
 
 To connect for the very first time:
 
@@ -36,12 +36,25 @@ To connect for the very first time:
 2. Connect `warp-cli connect`.
 3. Run `curl https://www.cloudflare.com/cdn-cgi/trace/` and verify that `warp=on`.
 
-### Switching modes
+### Switch modes
 
-You can use `warp-cli mode --help` to get a list of the modes to switch between. For example:
+You can use `warp-cli mode --help` to get a list of modes to switch between. For example:
 
-- **DNS only mode via DoH:** `warp-cli mode doh`.
-- **WARP with DoH:** `warp-cli mode warp+doh`.
+- **DNS only mode via DoH:** `warp-cli mode doh`
+- **WARP with DoH:** `warp-cli mode warp+doh`
+
+### Switch tunnel protocol
+
+You can switch the protocol that WARP uses to route traffic from the device to Cloudflare.
+
+- **WireGuard:** `warp-cli tunnel protocol set WireGuard`
+- **MASQUE:** (default) `warp-cli tunnel protocol set MASQUE`
+
+:::note
+The protocol values are case-sensitive.
+:::
+
+For information on WireGuard versus MASQUE, refer to our [blog post](https://blog.cloudflare.com/zero-trust-warp-with-a-masque).
 
 ### Using 1.1.1.1 for Families
 
@@ -50,6 +63,30 @@ The Linux client supports all 1.1.1.1 for Families modes, in either WARP on DNS-
 - **Families mode off:** `warp-cli dns families off`
 - **Malware protection:** `warp-cli dns families malware`
 - **Malware and adult content:** `warp-cli dns families full`
+
+### Enable WARP+ Unlimited
+
+To enable [WARP+ Unlimited](/warp-client/warp-modes/#warp-unlimited) on Linux, you will need an iOS or Android device that has an existing WARP+ Unlimited subscription.
+
+1. On your iOS or Android device, launch the **1.1.1.1 Faster Internet** app.
+2. Go to **Settings** > **Account** and copy the **Key** value.
+3. On your Linux device, run the following command:
+
+	```sh
+	warp-cli registration license <KEY>
+	```
+4. Verify the new registration:
+
+	```sh
+	warp-cli registration show
+	```
+
+	```sh output
+	Account type: Unlimited
+	...
+	```
+
+Your WARP+ Unlimited subscription is now active on this device.
 
 ### Additional commands
 

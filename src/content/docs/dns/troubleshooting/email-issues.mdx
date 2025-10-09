@@ -20,6 +20,10 @@ Consult with your mail administrator or mail provider to ensure you have valid D
 
 Contact your mail administrator to confirm the DNS records for your domain are correct. Refer to our guide on [managing DNS records in Cloudflare](/dns/manage-dns-records/how-to/create-dns-records) if you need assistance to add or edit DNS records.
 
+## Do you have NS records configured?
+
+NS records are used to delegate the management of a hostname to another DNS provider (refer to [Delegate a subdomain (outgoing)](/dns/manage-dns-records/how-to/subdomains-outside-cloudflare/#delegate-a-subdomain-outgoing) for further context). If you have NS records configured in the DNS tab of your Cloudflare dashboard, confirm that these are expected and not generating conflicts.
+
 ## Do you have CNAME Flattening enabled?
 
 When set to [Flatten all CNAMEs](/dns/cname-flattening/set-up-cname-flattening/) in your Cloudflare DNS settings, queries to all `CNAME` records will flatten to an `A` record; no `CNAME` records will be returned.

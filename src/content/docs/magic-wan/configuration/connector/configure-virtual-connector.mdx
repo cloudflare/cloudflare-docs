@@ -1,6 +1,7 @@
 ---
 pcx_content_type: how-to
-title: Configure virtual Connector
+title: Configure Virtual Connector
+description: Learn how to configure Magic WAN Virtual Connector on VMWare ESXi or Proxmox Virtual Environment
 sidebar:
   order: 4
 ---
@@ -14,7 +15,7 @@ import { Render } from "~/components";
 	productName: "Virtual Connector",
 	wan: "needs to correspond to the virtual network interface on the Virtual Connector instance you have set up in VMware. Following our example from the previous steps, you need to choose port `1` since that is what corresponds to the `eno1` port we set up in VMware.",
 	lan: "needs to correspond to the virtual LAN interface on the Virtual Connector instance you have set up in VMware. Following our example from the previous steps, you need to choose port `2` since that is what corresponds to the `eno2` port we set up in VMware.",
-	noConnectorShows: "For a Virtual Connector to show up you need to have already obtained your [OVA package and licence keys](#obtain-the-virtual-connector-image).",
+	noConnectorShows: "For a Virtual Connector to show up you need to: <br /><ul><li><strong>VMWare:</strong> Have already obtained your OVA package and license keys if you are installing on VMWare.</li><li><strong>Proxmox:</strong> Have already obtained your Virtual Connector Script and license keys if you are installing on Proxmox.</li></ul>\nFor more information, refer to [Configure a virtual machine](#configure-a-virtual-machine) and select the appropriate tab.\n",
 	shippedLanguage: "Virtual Magic WAN Connector is deactivated after you install it",
 	hardSoftConn: "You need to install two Virtual Connectors before you can set up a site in high availability.",
 	finalInstructions:  "Follow the instructions in [Activate Connector](#activate-connector) to finish setting up your Connectors."

@@ -7,12 +7,5 @@ product:
 
 meta:
   title: Cloudflare Pages docs
-  description: Documentation for Cloudflare Pages, the best way to deploy your
-    static and JAMstack sites
+  description: Build full-stack, serverless applications globally with minimal configuration
   author: "@cloudflare"
-
-resources:
-  community: https://community.cloudflare.com/c/developers/cloudflare-pages/69
-  dashboard_link: https://dash.cloudflare.com/?to=/:account/pages
-  learning_center: https://www.cloudflare.com/learning/performance/what-is-jamstack/
-  discord: https://discord.com/channels/595317990191398933/789155108529111069

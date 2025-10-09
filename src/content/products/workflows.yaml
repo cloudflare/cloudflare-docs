@@ -10,9 +10,3 @@ meta:
   title: Cloudflare Workflows docs
   description: Build durable, multi-step applications using the Workers platform
   author: "@cloudflare"
-
-resources:
-  community: https://community.cloudflare.com/c/developers/workers/40
-  dashboard_link: https://dash.cloudflare.com/?to=/:account/workers
-  learning_center: https://www.cloudflare.com/learning/serverless/what-is-serverless/
-  discord: https://discord.com/invite/cloudflaredev

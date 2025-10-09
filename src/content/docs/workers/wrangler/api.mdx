@@ -300,6 +300,12 @@ const platform = await getPlatformProxy(options);
 
       **Note:** If you use `wrangler`'s `--persist-to` option, note that this option adds a subdirectory called `v3` under the hood while `getPlatformProxy`'s `persist` does not. For example, if you run `wrangler dev --persist-to ./my-directory`, to reuse the same location using `getPlatformProxy`, you will have to specify: `persist: { path: "./my-directory/v3" }`.
 
+    - `experimental` `{ remoteBindings: boolean }`
+
+      Object used to enable experimental features, no guarantees are made to the stability of this API, use at your own risk.
+
+      - `remoteBindings` Enables `getPlatformProxy` to connect to [remote bindings](/workers/development-testing/#remote-bindings).
+
 ### Return Type
 
 `getPlatformProxy()` returns a `Promise` resolving to an object containing the following fields.

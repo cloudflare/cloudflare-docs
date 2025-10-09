@@ -11,7 +11,7 @@ Magic Transit works at Layer 3 of the [OSI model](https://www.cloudflare.com/en-
 
 Magic Transit delivers its connectivity, security, and performance benefits by serving as the front door to your IP network. This means it accepts IP packets destined for your network, processes them, and then forwards them to your origin infrastructure.
 
-The Cloudflare network uses Border Gateway Protocol (BGP) to announce your company's IP address space, extending your network presence globally, and [anycast](/magic-transit/reference/tunnels/#anycast) to absorb and distribute attack traffic.
+The Cloudflare network uses Border Gateway Protocol (BGP) to announce your company's IP address space, extending your network presence globally, and [anycast](/magic-transit/reference/gre-ipsec-tunnels/#anycast) to absorb and distribute attack traffic.
 
 Once packets hit Cloudflare's network, traffic is inspected for attacks, filtered, steered, accelerated, and sent onward to your origin. Magic Transit users have two options for their implementation: ingress traffic or ingress and egress traffic. Users with an egress implementation will need to set up policy-based routing (PBR) or ensure default routing on their end forwards traffic to Cloudflare via tunnels.
 
