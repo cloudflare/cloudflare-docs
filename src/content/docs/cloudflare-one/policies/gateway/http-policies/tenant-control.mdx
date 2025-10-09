@@ -9,6 +9,10 @@ With Gateway tenant control, you can allow your users access to corporate SaaS a
 
 When creating an HTTP policy with an Allow action, you will have the option to configure custom headers. Gateway can use custom headers to control SaaS application access. If a user's HTTP request is headed to your organization's account for the SaaS application, Gateway will approve the request. If the request does not match the information in the header, Gateway will block the request.
 
+## Note
+
+Customer headers will not appear in a HAR file taken from your browser. This is due to the header being injected by Gateway after the request leaves your browser. To verify if a custom header is being applied, temporarily add a selector for *Domain > In > httpbin.org* to your Gateway rule, once saved go to [`httpbin.org/anything`](https://httpbin.org/anything) and verify the custom header is shown.
+
 ## Add custom headers for a SaaS application
 
 To create an HTTP policy with custom headers:
@@ -136,3 +140,4 @@ To use custom headers with Browser Isolation, create two HTTP policies targeting
    | `Example-Header`   | `example-value`     |
 
 3. Go to [`httpbin.org/anything`](https://httpbin.org/anything). Cloudflare will render the site in an isolated browser. Your custom header will appear in the list of headers.
+
