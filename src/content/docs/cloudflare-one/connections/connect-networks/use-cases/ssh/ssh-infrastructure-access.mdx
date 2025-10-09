@@ -200,10 +200,7 @@ Failure to connect to your SSH endpoint could be the result of multiple variable
 
 ### 1. Review Access policies
 
-A user may be blocked by an Access policy from reaching an SSH target because:
-
-- An Access policy exists that denies that user access, or
-- No explicit allow Access policy exists and Access is set to deny the user by default.
+A user may be blocked by an Access policy from reaching an SSH target because no explicit allow Access policy exists and Access is set to deny the user by default.
 
 :::note[Access policies and infrastructure applications]
 
@@ -241,7 +238,7 @@ You will need Cloudflare dashboard access and log view [permissions](/cloudflare
 
 3. Review the **Decision**. If the **Decision** is `Access denied`, select the application and copy the name under App.
 
-	If the decision is `Access granted`, Access policies are not interfering with your connection attempts and your connection issue is due to the Cloudflare Tunnel, the SSH server, or the `sshd_config` file.
+	If the decision is `Access granted`, Access policies are not interfering with your connection attempts and your connection issue is due to the Cloudflare Tunnel, the target SSH machine, or the `sshd_config` file.
 
 4. Go to **Access** > **Applications**.
 
@@ -251,7 +248,7 @@ You will need Cloudflare dashboard access and log view [permissions](/cloudflare
 
 7. Go to [**Policies**](/cloudflare-one/policies/access/policy-management/#test-your-policies) to review what criteria may be blocking the user.
 
-By editing a [policy](/cloudflare-one/policies/access/) that is explicitly blocking the user or adding a new policy to explicitly allow the user, the connection issue should be resolved. After saving your policy changes, attempt to connect to the target machine as the end user.
+By adding an Access [policy](/cloudflare-one/policies/access/) to allow the user, the connection issue should be resolved. After saving your policy changes, attempt to connect to the target machine as the end user.
 
 If you are still having connection issues after auditing your Access policies, review tunnel health in the following step.
 
@@ -446,7 +443,7 @@ The next steps will walk you through a troubleshooting regimen. You will tempora
 
 :::caution[You may lose access to your SSH server]
 
-These troubleshooting steps could result in you being locked out of your SSH server because your existing auth may rely on existing configuration that is not in the [example file](#review-your-sshd_config-file-for-misconfigurations). Proceed with utmost caution.
+These troubleshooting steps could result in you being locked out of your SSH server because your current SSH session may rely on existing configuration that is not in the [example file](#review-your-sshd_config-file-for-misconfigurations). Proceed with utmost caution.
 
 :::
 
