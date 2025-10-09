@@ -4,7 +4,7 @@
 	"priority": 5,
 	"description": "Safeguard APIs and Devices on Cloudflare's network.",
 	"pcx_content_type": "learning-path",
-	"products": ["API Shield", "Access", "SSL/TLS"],
+	"products": ["api-shield", "access", "ssl"],
 	"product_group": "Cloudflare One",
 	"additional_groups": ["Application security"]
 }

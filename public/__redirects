@@ -1,5 +1,4 @@
 # homepage
-/api /api/ 301
 /docs/ /directory/ 301
 /products/ /directory/ 301
 /zero-trust/ /products/?product-group=Cloudflare+One 301
@@ -244,6 +243,7 @@
 /api-shield/security/jwt-validation/configure/ /api-shield/security/jwt-validation/api/ 301
 /api-shield/security/schema-validation/configure/ /api-shield/security/schema-validation/api/ 301
 /api-shield/security/sequence-mitigation/configure/ /api-shield/security/sequence-mitigation/api/ 301
+/api-shield/frequently-asked-questions/ /api-shield/ 301
 
 #autorag
 /autorag/usage/recipes/ /ai-search/how-to/ 301
@@ -401,6 +401,13 @@
 
 # Constellation
 /constellation/ /workers-ai/ 301
+
+# Containers
+/containers/image-management/ /containers/platform-details/image-management/ 301
+/containers/scaling-and-routing/ /containers/platform-details/scaling-and-routing/ 301
+/containers/architecture/ /containers/platform-details/architecture/ 301
+/containers/durable-object-methods/ /containers/platform-details/durable-object-methods/ 301
+/containers/platform-details/ /containers/platform-details/architecture/ 301
 
 # D1
 /d1/client-api/ /d1/worker-api/ 301
@@ -1633,6 +1640,7 @@
 /turnstile/get-started/supported-browsers/ /cloudflare-challenges/reference/supported-browsers/ 301
 /turnstile/troubleshooting/troubleshooting-faqs/ /turnstile/frequently-asked-questions/#troubleshooting 301
 /turnstile/tutorials/protecting-your-payment-form-from-attackers-bots-using-turnstile/ /developer-spotlight/ 301
+/turnstile/frequently-asked-questions/ /turnstile/ 301
 
 # waf
 /waf/about/ /waf/concepts/ 301
@@ -2436,10 +2444,3 @@
 /ai-gateway/providers/* /ai-gateway/usage/providers/:splat 301
 /ai-gateway/guardrails/* /ai-gateway/features/guardrails/:splat 301
 /ai-gateway/websockets-api/* /ai-gateway/usage/websockets-api/:splat 301
-
-# Containers
-/containers/image-management /containers/platform-details/image-management 301
-/containers/scaling-and-routing /containers/platform-details/scaling-and-routing 301
-/containers/architecture /containers/platform-details/architecture 301
-/containers/durable-object-methods /containers/platform-details/durable-object-methods 301
-/containers/platform-details /containers/platform-details/architecture 301

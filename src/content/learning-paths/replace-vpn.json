@@ -4,7 +4,7 @@
 	"priority": 1,
 	"description": "Learn how to replace your VPN with Cloudflare Zero Trust.",
 	"pcx_content_type": "learning-path",
-	"products": ["Access", "Gateway", "WARP"],
+	"products": ["gateway", "cloudflare-tunnel", "zero-trust-warp"],
 	"product_group": "Cloudflare One",
 	"additional_groups": ["Application security", "Application performance"]
 }

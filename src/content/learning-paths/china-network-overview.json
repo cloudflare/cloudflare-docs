@@ -4,7 +4,7 @@
 	"priority": 1,
 	"description": "Watch to learn how Cloudflare's China Network can help you improve performance, compliance, and connectivity for your users in mainland China.",
 	"pcx_content_type": "learning-path",
-	"products": ["China Network"],
+	"products": ["china-network"],
 	"product_group": "Application performance",
 	"additional_groups": ["Application security"],
 	"video": true

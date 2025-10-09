@@ -4,6 +4,6 @@
 	"priority": 2,
 	"description": "Learn how to use Magic Transit to protect your data centers from distributed denial-of-service (DDoS) attacks.",
 	"pcx_content_type": "learning-path",
-	"products": ["Magic Transit"],
+	"products": ["magic-transit"],
 	"product_group": "Network security"
 }

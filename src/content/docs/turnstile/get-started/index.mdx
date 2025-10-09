@@ -39,6 +39,8 @@ Implementing Turnstile involves two essential components that work together:
 
    Verify the tokens on your server using the Siteverify API to ensure they are authentic and have not been tampered with.
 
+Turnstile is designed to be an independent service. You can use Turnstile on any website, regardless of whether it is proxied through the Cloudflare network. This allows for flexible deployment across multi-cloud environments, on-premises infrastructure, or sites using other CDNs. The client-side widget and server-side validation steps are completely self-contained.
+
 Refer to [Implementation](#implementation) below for guidance on how to implement Turnstile on your website.
 
 ---

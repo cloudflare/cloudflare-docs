@@ -5,6 +5,8 @@ sidebar:
   order: 21
 ---
 
+import { DashButton } from "~/components";
+
 Cloudflare recommends API tokens as the preferred authentication method with Cloudflare APIs. This article walks through creating API tokens for authentication to the GraphQL Analytics API.
 
 For more details on API tokens and the full range of supported options, refer to [Creating API tokens](/fundamentals/api/get-started/create-token/).
@@ -18,15 +20,11 @@ To create an API token for authentication to the GraphQL Analytics API, use this
 
 ## Access the Create API Token page
 
-To access the **Create Custom Token** page, follow these steps:
+1. In the Cloudflare dashboard, go to the **Account API tokens** page.
 
-1. Log in to your Cloudflare account and select _My Profile_ from the user account drop-down list.
+   <DashButton url="/?to=/:account/api-tokens" />
 
-![User account drop-down menu](~/assets/images/analytics/account-profile.png)
-
-2. In your user profile page, select the **API Tokens** tab.
-
-3. In the **API Tokens** page, select **Create Token**.
+2. Select **Create Token**.
 
 ![API Tokens tab](~/assets/images/analytics/user-profile-api-tokens-tab.png)
 

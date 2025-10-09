@@ -6,7 +6,11 @@
 Cloudflare adds CAA records automatically in two situations:
 
 * When you have [Universal SSL](/ssl/edge-certificates/universal-ssl/) or [advanced certificates](/ssl/edge-certificates/advanced-certificate-manager/) and add any CAA records to your zone.
-* When you have [Universal SSL](/ssl/edge-certificates/universal-ssl/) enabled and enable [AMP Real URL](/speed/optimization/other/amp-real-url/) or [SXG Signed Exchanges](/speed/optimization/other/signed-exchanges/).
+* When you have [Universal SSL](/ssl/edge-certificates/universal-ssl/) enabled and enable [AMP Real URL](/speed/optimization/other/amp-real-url/) or [Signed exchanges (SXG)](/speed/optimization/other/signed-exchanges/).
+
+:::caution[Deprecation notice]
+AMP Real URL and Signed exchanges (SXG) are being deprecated and will be removed on October 20, 2025.
+:::
 
 These records make sure Cloudflare can still issue Universal certificates on your behalf.
 

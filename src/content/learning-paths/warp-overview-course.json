@@ -2,9 +2,9 @@
 	"title": "Understand and troubleshoot Cloudflare WARP",
 	"path": "/learning-paths/warp-overview-course/series/warp-basics-1/",
 	"priority": 1,
-	"description": "Learn more about Cloudflare WARP and how to troubleshoot common issues.",
 	"pcx_content_type": "learning-path",
-	"products": ["WARP"],
+	"description": "In this series, we cover the basics of Cloudflare WARP, share useful troubleshooting tips, and explain the warp-diag logs in detail.",
+	"products": ["cloudflare-one"],
 	"product_group": "Cloudflare One",
 	"additional_groups": ["Cloudflare One", "Core platform"],
 	"video": true

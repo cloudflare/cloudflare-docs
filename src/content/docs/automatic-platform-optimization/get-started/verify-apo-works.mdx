@@ -1,9 +1,10 @@
 ---
 title: Verify APO works
-pcx_content_type: tutorial
+pcx_content_type: how-to
 sidebar:
   order: 9
-
+description: >-
+  When APO is working, three headers are present:  CF-Cache-Status, cf-apo-via,cf-edge-cache. APO works correctly when the headers exactly match the headers below.
 ---
 
 You can check whether or not APO is working by verifying APO headers are present. When APO is working, three headers are present: `CF-Cache-Status`, `cf-apo-via`, `cf-edge-cache`.
@@ -13,12 +14,12 @@ You can check whether or not APO is working by verifying APO headers are present
 3. Select **Start test**. The **Response Headers** table displays.
 4. Locate the three header responses and their description. APO is working correctly when the headers exactly match the headers below.
 
-* `CF-Cache-Status` | `HIT`
-  * The `cf-cache-status` header displays if the asset is served from the cache or was considered dynamic and served from the origin.
-* `cf-apo-via` | `tcache`
-  * The `cf-apo-via` header returns the APO status for the given request.
-* `cf-edge-cache` | `cache, platform=wordpress`
-  * The `cf-edge-cache` headers confirms the WordPress plugin is installed and enabled.
+- `CF-Cache-Status` | `HIT`
+  - The `cf-cache-status` header displays if the asset is served from the cache or was considered dynamic and served from the origin.
+- `cf-apo-via` | `tcache`
+  - The `cf-apo-via` header returns the APO status for the given request.
+- `cf-edge-cache` | `cache, platform=wordpress`
+  - The `cf-edge-cache` headers confirms the WordPress plugin is installed and enabled.
 
 In a terminal, use the following cURL. The header `'accept: text/html'` is important
 
@@ -34,8 +35,10 @@ curl -svo /dev/null -A "CF" 'https://example.com/' -H 'accept: text/html' 2>&1 |
 
 As always, `cf-cache-status` displays if the asset hit the cache or was considered dynamic and served from the origin.
 
-- The `cf-apo-via` header returns the APO status for the given request.
-- The `cf-edge-cache` header means the WordPress plugin is installed and enabled.
+- `cf-apo-via` | `tcache`
+  - The `cf-apo-via` header returns the APO status for the given request.
+- `cf-edge-cache` | `cache, platform=wordpress`
+  - The `cf-edge-cache` headers confirms the WordPress plugin is installed and enabled.
 
 ## Verify the APO integration and WordPress integration work
 

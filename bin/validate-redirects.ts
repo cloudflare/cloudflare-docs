@@ -6,6 +6,9 @@ async function main() {
 	let numInfiniteRedirects = 0;
 	let numUrlsWithFragment = 0;
 	let numDuplicateRedirects = 0;
+	let numNonSlashedRedirects = 0;
+
+	const validEndings = ["/", "*", ".xml", ".md", ".json", ".html"];
 
 	const redirectSourceUrls: string[] = [];
 
@@ -24,6 +27,11 @@ async function main() {
 			numUrlsWithFragment++;
 		}
 
+		if (!validEndings.some((ending) => from.endsWith(ending))) {
+			console.log(`✘ Found unslashed source URLs:\n    ${from}`);
+			numNonSlashedRedirects++;
+		}
+
 		if (redirectSourceUrls.includes(from)) {
 			console.log(`✘ Found repeated source URL:\n    ${from}`);
 			numDuplicateRedirects++;
@@ -32,7 +40,12 @@ async function main() {
 		}
 	}
 
-	if (numInfiniteRedirects || numUrlsWithFragment || numDuplicateRedirects) {
+	if (
+		numInfiniteRedirects ||
+		numUrlsWithFragment ||
+		numDuplicateRedirects ||
+		numNonSlashedRedirects
+	) {
 		console.log("\nDetected errors:");
 
 		if (numInfiniteRedirects > 0) {
@@ -45,6 +58,12 @@ async function main() {
 
 		if (numDuplicateRedirects > 0) {
 			console.log(`- ${numDuplicateRedirects} repeated source URL(s)`);
+		}
+
+		if (numNonSlashedRedirects > 0) {
+			console.log(
+				`- ${numNonSlashedRedirects} need slashes at the end of the source URL`,
+			);
 		}
 
 		console.log("\nPlease fix the errors above before merging :)");

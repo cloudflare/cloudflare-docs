@@ -3,8 +3,8 @@
 	"uid": "workers-intro",
 	"path": "/learning-paths/workers/concepts/",
 	"priority": 4,
-	"description": "Learn how to build applications with Cloudflare Workers.",
 	"pcx_content_type": "learning-path",
-	"products": ["Workers"],
+	"description": "Deploy serverless code, globally with exceptional performance, reliability, and scale.",
+	"products": ["workers"],
 	"product_group": "Developer platform"
 }

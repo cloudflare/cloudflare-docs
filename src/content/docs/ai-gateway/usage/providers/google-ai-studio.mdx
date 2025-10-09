@@ -35,7 +35,7 @@ So your final URL will come together as: `https://gateway.ai.cloudflare.com/v1/{
 ### cURL
 
 ```bash title="Example fetch request"
-curl "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_name}/google-ai-studio/v1/models/gemini-1.0-pro:generateContent" \
+curl "https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_name}/google-ai-studio/v1/models/gemini-2.5-flash:generateContent" \
  --header 'content-type: application/json' \
  --header 'x-goog-api-key: {google_studio_api_key}' \
  --data '{
@@ -63,7 +63,7 @@ const gateway_name = "";
 
 const genAI = new GoogleGenerativeAI(api_token);
 const model = genAI.getGenerativeModel(
-	{ model: "gemini-1.5-flash" },
+	{ model: "gemini-2.5-flash" },
 	{
 		baseUrl: `https://gateway.ai.cloudflare.com/v1/${account_id}/${gateway_name}/google-ai-studio`,
 	},

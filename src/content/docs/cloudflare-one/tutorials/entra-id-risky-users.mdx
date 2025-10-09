@@ -4,10 +4,11 @@ category: 🔐 Zero Trust
 difficulty: Advanced
 pcx_content_type: tutorial
 title: Isolate risky Entra ID users
+description: >-
+  Microsoft Entra ID (formerly Azure Active Directory) calculates a user's risk level based on the probability that their account has been compromised. With Cloudflare Zero Trust, you can synchronize the Entra ID risky users list with Cloudflare Access and apply more stringent Zero Trust policies to users at higher risk.
 ---
 
 import { WranglerConfig } from "~/components";
-
 
 Microsoft Entra ID (formerly Azure Active Directory) calculates a user's [risk level](https://learn.microsoft.com/entra/id-protection/howto-identity-protection-investigate-risk) based on the probability that their account has been compromised. With Cloudflare Zero Trust, you can synchronize the Entra ID risky users list with Cloudflare Access and apply more stringent Zero Trust policies to users at higher risk.
 
@@ -48,7 +49,6 @@ Once the base IdP integration is tested and working, enable additional permissio
 4. Select **Microsoft Graph**.
 
 5. Select **Application permissions** and add the following [permissions](https://learn.microsoft.com/en-us/graph/permissions-reference):
-
    - `IdentityRiskyUser.ReadAll`
    - `Directory.ReadWriteAll`
    - `Group.Create`
@@ -81,11 +81,9 @@ To get started quickly, deploy our example Cloudflare Workers script by followin
    ```
 
 3. Modify the [Wrangler configuration file](/workers/wrangler/configuration/) to include the following values:
-
    - `<ACCOUNT_ID>`: your Cloudflare [account ID](/fundamentals/account/find-account-and-zone-ids/).
    - `<TENANT_ID>`: your Entra ID **Directory (tenant) ID**, obtained when [setting up Entra ID as an identity provider](#1-set-up-entra-id-as-an-identity-provider).
    - `<CLIENT_ID>`: your Entra ID **Application (client) ID**, obtained when [setting up Entra ID as an identity provider](#1-set-up-entra-id-as-an-identity-provider).
-
 
    <WranglerConfig>
 

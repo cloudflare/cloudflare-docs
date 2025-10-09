@@ -49,7 +49,7 @@ curl -X POST https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/comp
   --header 'cf-aig-authorization: Bearer {CF_AIG_TOKEN}' \
   --header 'Content-Type: application/json' \
   --data '{
-    "model": "dynamic/gemini-2.0-flash",
+    "model": "dynamic/<your-dynamic-route-name>",
     "messages": [
       {
         "role": "user",
@@ -68,12 +68,12 @@ export interface Env {
 
 export default {
 	async fetch(request: Request, env: Env) {
-		const response = await env.AI.gateway("dfD").run({
+		const response = await env.AI.gateway("default").run({
 			provider: "compat",
 			endpoint: "chat/completion",
 			headers: {},
 			query: {
-				model: "dynamic/support",
+				model: "dynamic/<your-dynamic-route-name>",
 				messages: [
 					{
 						role: "user",

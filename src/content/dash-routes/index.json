@@ -664,12 +664,12 @@
 		"deeplink": "/?to=/:account/:zone/speed"
 	},
 	{
-		"name": "Observatory",
+		"name": "Synthetic monitoring",
 		"deeplink": "/?to=/:account/:zone/speed/test",
 		"parent": ["Speed"]
 	},
 	{
-		"name": "Optimization",
+		"name": "Settings",
 		"deeplink": "/?to=/:account/:zone/speed/optimization",
 		"parent": ["Speed"]
 	},

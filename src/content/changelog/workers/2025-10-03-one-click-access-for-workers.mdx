@@ -1,0 +1,84 @@
+---
+title: One-click Cloudflare Access for Workers
+description: You can now enable Cloudflare Access for your workers.dev and preview URLs in a single click.
+products:
+  - workers
+date: 2025-10-03
+---
+
+import { DashButton } from "~/components";
+
+You can now enable [Cloudflare Access](/cloudflare-one/policies/access/) for your [`workers.dev`](/workers/configuration/routing/workers-dev/) and [Preview URLs](/workers/configuration/previews/) in a single click.
+
+![Screenshot of the Enable/Disable Cloudflare Access button on the workers.dev route settings page](~/assets/images/workers/changelog/workers-access.png)
+
+Access allows you to limit access to your Workers to specific users or groups. You can limit access to yourself, your teammates, your organization, or anyone else you specify in your [Access policy](/cloudflare-one/policies/access).
+
+To enable Cloudflare Access:
+
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+
+2. In **Overview**, select your Worker.
+3. Go to **Settings** > **Domains & Routes**.
+4. For `workers.dev` or Preview URLs, click **Enable Cloudflare Access**.
+5. Optionally, to configure the Access application, click **Manage Cloudflare Access**. There, you can change the email addresses you want to authorize. View [Access policies](/cloudflare-one/policies/access/#selectors) to learn about configuring alternate rules.
+
+To fully secure your application, it is important that you validate the JWT that Cloudflare Access adds to the `Cf-Access-Jwt-Assertion` header on the incoming request.
+
+The following code will validate the JWT using the [jose NPM package](https://www.npmjs.com/package/jose):
+
+```javascript
+import { jwtVerify, createRemoteJWKSet } from "jose";
+
+export default {
+	async fetch(request, env, ctx) {
+		// Get the JWT from the request headers
+		const token = request.headers.get("cf-access-jwt-assertion");
+
+		// Check if token exists
+		if (!token) {
+			return new Response("Missing required CF Access JWT", {
+				status: 403,
+				headers: { "Content-Type": "text/plain" },
+			});
+		}
+
+		try {
+			// Create JWKS from your team domain
+			const JWKS = createRemoteJWKSet(
+				new URL(`${env.TEAM_DOMAIN}/cdn-cgi/access/certs`),
+			);
+
+			// Verify the JWT
+			const { payload } = await jwtVerify(token, JWKS, {
+				issuer: env.TEAM_DOMAIN,
+				audience: env.POLICY_AUD,
+			});
+
+			// Token is valid, proceed with your application logic
+			return new Response(`Hello ${payload.email || "authenticated user"}!`, {
+				headers: { "Content-Type": "text/plain" },
+			});
+		} catch (error) {
+			// Token verification failed
+			return new Response(`Invalid token: ${error.message}`, {
+				status: 403,
+				headers: { "Content-Type": "text/plain" },
+			});
+		}
+	},
+};
+```
+
+#### Required environment variables
+
+Add these [environment variables](/workers/configuration/environment-variables/) to your Worker:
+
+- `POLICY_AUD`: Your application's AUD tag
+- `TEAM_DOMAIN`: `https://<your-team-name>.cloudflareaccess.com`
+
+Both of these appear in the modal that appears when you enable Cloudflare Access.
+
+You can set these variables by adding them to your Worker's [Wrangler configuration file](/workers/wrangler/configuration/), or via the Cloudflare dashboard under **Workers & Pages** > **your-worker** > **Settings** > **Environment Variables**.

@@ -57,6 +57,10 @@ To view the fallback domains applied to a device, you can:
 
 The domain will no longer be excluded from Gateway DNS policies, effective immediately.
 
+## Reverse DNS lookups for internal IPs
+
+By default, Warp sends [reverse DNS queries](https://www.cloudflare.com/learning/dns/glossary/reverse-dns/) to public DNS servers. To lookup the domain name associated with an internal IP address, [add a local domain fallback entry](#add-a-domain) for `in-addr.arpa` (IPv4) and/or `ip6.arpa` (IPv6) that points to your internal DNS server IP. `in-addr.arpa` and `ip6.arpa` are top-level domains [reserved](https://www.iana.org/domains/arpa) for reverse DNS queries. By adding a local domain fallback entry for these domains, all reverse DNS queries (such as `dig -x 1.1.1.1`) will now resolve through your local DNS server.
+
 ## Related resources
 
 - [Split Tunnels](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) - Control which traffic goes through WARP by including or excluding specific IPs or domains.

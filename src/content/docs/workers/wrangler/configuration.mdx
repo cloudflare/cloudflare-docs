@@ -992,11 +992,9 @@ The following options are available:
   - To specify a custom instance type, see [here](#custom-instance-types).
 
 - `max_instances` <Type text="string" /> <MetaInfo text="optional" />
-  - The maximum number of concurrent container instances you want to run. If you have more Durable Objects that
-    request to run a container than this number, the container request will error. You may have more Durable Objects
-    than this number over a longer time period, but you may not have more concurrently.
+  - The maximum number of concurrent container instances you want to run at any given moment. Stopped containers do not count towards this - you may have more container instances than this number overall, but only this many actively running containers at once. If a request to start a container will exceed this limit, that request will error. 
 
-  - Defaults to 1.
+  - Defaults to 20.
 
   - This value is only enforced when running in production on Cloudflare's network. This limit does not apply during local development, so you may run more instances than specified.
 

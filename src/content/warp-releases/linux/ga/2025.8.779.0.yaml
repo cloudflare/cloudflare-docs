@@ -1,0 +1,31 @@
+releaseNotes: >-
+  This release contains minor fixes and improvements including an updated public key for Linux packages. The public key must be updated if it was installed before September 12, 2025 to ensure the repository remains functional after December 4, 2025. Instructions to make this update are available at [pkg.cloudflareclient.com](https://pkg.cloudflareclient.com/).
+
+
+  **Changes and improvements**
+
+  - The MASQUE protocol is now the only protocol that can use [Proxy mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#proxy-mode). If you previously configured a device profile to use Proxy mode with Wireguard, you will need to select a new WARP mode or switch to the MASQUE protocol. Otherwise, all devices matching the profile will lose connectivity.
+version: 2025.8.779.0
+releaseDate: 2025-10-07T19:20:00.003Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/bullseye-intel/version/2025.8.779.0
+packageSize: 51401010
+platformName: Linux
+linuxPlatforms:
+  bullseye-intel: 51401010
+  noble-intel: 50961826
+  trixie-intel: 50967036
+  centos8-arm: 52792986
+  bookworm-intel: 51168740
+  centos8-intel: 53609290
+  focal-intel: 51489330
+  trixie-arm: 50195820
+  focal-arm: 50292154
+  bullseye-arm: 50218468
+  jammy-arm: 49971584
+  jammy-intel: 51178586
+  fedora35-intel: 53710739
+  fedora34-arm: 53006121
+  bookworm-arm: 49961654
+  noble-arm: 50375650
+  fedora34-intel: 54056422
+  fedora35-arm: 52572369

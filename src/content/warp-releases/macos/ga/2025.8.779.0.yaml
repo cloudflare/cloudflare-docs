@@ -1,0 +1,15 @@
+releaseNotes: |-
+  This release contains minor fixes and improvements including enhancements to Proxy mode for even faster resolution.
+
+  **Changes and improvements**
+  - The MASQUE protocol is now the only protocol that can use [Proxy mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#proxy-mode). If you previously configured a device profile to use Proxy mode with Wireguard, you will need to select a new WARP mode or switch to the MASQUE protocol. Otherwise, all devices matching the profile will lose connectivity.
+
+  **Known issues**
+  - macOS Sequoia: Due to changes Apple introduced in macOS 15.0.x, the WARP client may not behave as expected. Cloudflare recommends the use of macOS 15.4 or later.
+
+  - Devices using WARP client 2025.4.929.0 and up may experience Local Domain Fallback failures if a fallback server has not been configured. To configure a fallback server, refer to [Route traffic to fallback server](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/#route-traffic-to-fallback-server).
+version: 2025.8.779.0
+releaseDate: 2025-10-07T17:02:40.774Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2025.8.779.0
+packageSize: 108348660
+platformName: macOS
