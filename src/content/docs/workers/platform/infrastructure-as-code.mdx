@@ -131,7 +131,7 @@ export default {
     // Full type safety for all bindings
     await env.CACHE.put("key", "value");
     await env.JOBS.send({ task: "process" });
-    
+
     return new Response("OK");
   }
 };
@@ -149,59 +149,9 @@ Destroy resources when needed:
 bun alchemy.run.ts --destroy
 ```
 
-### Queue consumer example
-
-Background jobs with retries and dead letter queues; the boring way that scales:
-
-```ts
-import { Worker, Queue } from "alchemy/cloudflare";
-
-const taskQueue = await Queue("tasks", { 
-  name: "task-processing" 
-});
-
-const dlq = await Queue("failed", { 
-  name: "failed-tasks" 
-});
-
-const processor = await Worker("processor", {
-  entrypoint: "./src/processor.ts",
-  bindings: { TASKS: taskQueue },
-  eventSources: [{
-    queue: taskQueue,
-    settings: {
-      batchSize: 15,
-      maxConcurrency: 3,
-      maxRetries: 5,
-      maxWaitTimeMs: 2500,
-      deadLetterQueue: dlq
-    }
-  }]
-});
-```
-
-The processor at `./src/processor.ts`:
-
-```ts
-import type { MessageBatch } from "@cloudflare/workers-types";
-
-export default {
-  async queue(batch: MessageBatch, env: Env) {
-    for (const message of batch.messages) {
-      try {
-        await processTask(message.body);
-        message.ack();
-      } catch (error) {
-        message.retry({ delaySeconds: 30 });
-      }
-    }
-  }
-};
-```
-
 ### Durable Objects
 
-Define a Durable Object namespace and bind it to your Worker:
+Define a Durable Object namespace and bind it to your Worker. Alchemy automatically generates migrations when you specify a `className`, eliminating the need to manually manage Durable Object migrations:
 
 ```ts
 import { Worker, DurableObjectNamespace } from "alchemy/cloudflare";
@@ -246,6 +196,56 @@ export default {
 };
 ```
 
+### Queue consumer example
+
+Background jobs with retries and dead letter queues; the boring way that scales:
+
+```ts
+import { Worker, Queue } from "alchemy/cloudflare";
+
+const taskQueue = await Queue("tasks", {
+  name: "task-processing"
+});
+
+const dlq = await Queue("failed", {
+  name: "failed-tasks"
+});
+
+const processor = await Worker("processor", {
+  entrypoint: "./src/processor.ts",
+  bindings: { TASKS: taskQueue },
+  eventSources: [{
+    queue: taskQueue,
+    settings: {
+      batchSize: 15,
+      maxConcurrency: 3,
+      maxRetries: 5,
+      maxWaitTimeMs: 2500,
+      deadLetterQueue: dlq
+    }
+  }]
+});
+```
+
+The processor at `./src/processor.ts`:
+
+```ts
+import type { MessageBatch } from "@cloudflare/workers-types";
+
+export default {
+  async queue(batch: MessageBatch, env: Env) {
+    for (const message of batch.messages) {
+      try {
+        await processTask(message.body);
+        message.ack();
+      } catch (error) {
+        message.retry({ delaySeconds: 30 });
+      }
+    }
+  }
+};
+```
+
 ### Why use Alchemy
 
 - **Type-safe everything**: Full autocompletion for Cloudflare resources without code generation or external schemas
@@ -255,11 +255,7 @@ export default {
 
 ### Important considerations
 
-- **Credentials**: Set `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN` env vars. Use your secrets manager, never commit them
-- **State files**: Alchemy stores state in `.alchemy/` JSON files—commit these to VCS for team collaboration and rollbacks. Don't edit manually
-- **Bundling**: Run `wrangler deploy --dry-run --outdir build` before Alchemy in CI. Alchemy handles bundling by default but respects pre-built artifacts
-- **Durable Objects**: Migrations apply with deployments. If you bind a DO class, ensure migrations are applied first (same constraint noted below)
-- **Preview URLs**: Useful for CI/CD previews, but don't use `url: true` for production traffic. Use `routes` or `domains` instead
+Refer to the [Alchemy documentation](https://alchemy.run/) for best practices on credentials, state management, bundling, and deployment workflows
 
 ## Cloudflare API Libraries
 
