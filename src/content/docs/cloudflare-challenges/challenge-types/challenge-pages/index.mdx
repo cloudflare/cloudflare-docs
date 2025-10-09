@@ -47,7 +47,7 @@ If the visitor passes the Challenge, the original request continues to the desti
 
 ## Compatibility limitations
 
-Traditional Challenge actions, such as Managed Challenges, interrupt the request flow by returning a full HTML page for the user's browser to render and solve. This mechanism fails when the browser expects a non-HTML response, such as a JSON or XML payload from an AJAX or XHR (fetch) request.
+Challenge Pages interrupt the request flow by returning a full HTML page for the user's browser to render and solve. This mechanism fails when the browser expects a non-HTML response, such as an AJAX or XHR (fetch) request.
 
 To ensure your API calls are protected without breaking single-page applications (SPAs) or API integrations, Cloudflare recommends using Turnstile Pre-clearance.
 
