@@ -22,7 +22,7 @@
  * 			async fetch(request, env): Promise<Response> {
  * 				const response = await env.AI.run("@cf/facebook/bart-large-cnn", {
  * 					input_text: await request.text(),
- * 					max_length: 160
+ * 					max_length: 120
  * 				});
  * 				return Response.json(response.summary);
  * 			},
@@ -63,15 +63,21 @@ async function generateDescriptionFromAPI(
 		}
 
 		const description = await response.text();
-		// Remove surrounding quotes if they exist
-		const trimmed = description.trim();
+		// Remove surrounding quotes and all square brackets
+		let trimmed = description.trim();
+		
+		// Remove surrounding quotes
 		if (
 			(trimmed.startsWith('"') && trimmed.endsWith('"')) ||
 			(trimmed.startsWith("'") && trimmed.endsWith("'"))
 		) {
-			return trimmed.slice(1, -1);
+			trimmed = trimmed.slice(1, -1);
 		}
-		return trimmed;
+		
+		// Remove all square brackets from the text
+		trimmed = trimmed.replace(/\[|\]/g, '');
+		
+		return trimmed.trim();
 	} catch (error) {
 		console.error("Error calling localhost API:", error);
 		return undefined;
