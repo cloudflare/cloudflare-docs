@@ -8,9 +8,16 @@ products: [workers]
 tags:
   - TypeScript
   - SQL
+description: >-
+  This tutorial shows you how to set up and deploy a Cloudflare Worker that is accessing a D1 database from scratch.
 ---
 
-import { WranglerConfig, FileTree, PackageManagers, GitHubCode } from "~/components";
+import {
+	WranglerConfig,
+	FileTree,
+	PackageManagers,
+	GitHubCode,
+} from "~/components";
 
 ## What is Prisma ORM?
 
@@ -185,14 +192,14 @@ Next, you need to add the SQL statement that will create a `User` table to that 
 Open the `schema.prisma` file and add the following `User` model to your schema:
 
 <GitHubCode
-    repo="cloudflare/docs-examples"
-    file="d1/query-d1-using-prisma/prisma/schema.prisma"
-    commit="c49d24f86dc2eb06a07b1c0b3ede871a1d8e7e92"
-    lines="15-19"
-		lang="prisma"
-    code={{
-     title: "schema.prisma"
-   }}
+	repo="cloudflare/docs-examples"
+	file="d1/query-d1-using-prisma/prisma/schema.prisma"
+	commit="c49d24f86dc2eb06a07b1c0b3ede871a1d8e7e92"
+	lines="15-19"
+	lang="prisma"
+	code={{
+		title: "schema.prisma",
+	}}
 />
 
 Now, run the following command in your terminal to generate the SQL statement that creates a `User` table equivalent to the `User` model above:
@@ -204,14 +211,14 @@ npx prisma migrate diff --from-empty --to-schema-datamodel ./prisma/schema.prism
 This stores a SQL statement to create a new `User` table in your migration file from before, here is what it looks like:
 
 <GitHubCode
-    repo="cloudflare/docs-examples"
-    file="d1/query-d1-using-prisma/migrations/0001_create_user_table.sql"
-    commit="c49d24f86dc2eb06a07b1c0b3ede871a1d8e7e92"
-    lang="sql"
-    lines="1-9"
-    code={{
-     title: "0001_create_user_table.sql"
-   }}
+	repo="cloudflare/docs-examples"
+	file="d1/query-d1-using-prisma/migrations/0001_create_user_table.sql"
+	commit="c49d24f86dc2eb06a07b1c0b3ede871a1d8e7e92"
+	lang="sql"
+	lines="1-9"
+	code={{
+		title: "0001_create_user_table.sql",
+	}}
 />
 
 `UNIQUE INDEX` on `email` was created because the `User` model in your Prisma schema is using the [`@unique`](https://www.prisma.io/docs/orm/reference/prisma-schema-reference#unique) attribute on its `email` field.
@@ -275,14 +282,14 @@ To query your database from the Worker using Prisma ORM, you need to:
 Open `src/index.ts` and replace the entire content with the following:
 
 <GitHubCode
-    repo="cloudflare/docs-examples"
-    file="d1/query-d1-using-prisma/src/index.ts"
-    commit="c49d24f86dc2eb06a07b1c0b3ede871a1d8e7e92"
-    lang="ts"
-    code={{
-     title: "index.ts"
-   }}
-    useTypeScriptExample={true}
+	repo="cloudflare/docs-examples"
+	file="d1/query-d1-using-prisma/src/index.ts"
+	commit="c49d24f86dc2eb06a07b1c0b3ede871a1d8e7e92"
+	lang="ts"
+	code={{
+		title: "index.ts",
+	}}
+	useTypeScriptExample={true}
 />
 
 Before running the Worker, generate Prisma Client with the following command:

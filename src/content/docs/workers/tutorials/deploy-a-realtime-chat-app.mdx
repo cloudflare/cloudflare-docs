@@ -7,6 +7,8 @@ products:
   - Durable Objects
 tags:
   - JavaScript
+description: >-
+  This tutorial shows how to deploy a serverless, real-time chat application. The chat application uses a Durable Object to control each chat room.
 ---
 
 import { Render, WranglerConfig, DashButton } from "~/components";
@@ -88,8 +90,6 @@ To test your live application:
 
 To uninstall your chat application, modify your Wrangler file to remove the `durable_objects` bindings and add a `deleted_classes` migration:
 
-
-
 <WranglerConfig>
 
 ```toml
@@ -112,6 +112,7 @@ deleted_classes = ["ChatRoom", "RateLimiter"]
 Then run `npx wrangler deploy`.
 
 To delete your Worker:
+
 1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
 
    <DashButton url="/?to=/:account/workers-and-pages" />

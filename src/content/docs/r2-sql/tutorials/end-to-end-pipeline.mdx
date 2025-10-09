@@ -7,27 +7,30 @@ products:
   - R2 Data Catalog
   - R2 SQL
   - Pipelines
+description: >-
+  This tutorial demonstrates how to build a complete data pipeline using Cloudflare Pipelines, R2 Data Catalog, and R2 SQL.
 ---
 
 import {
-  Render,
-  Steps,
-  Tabs,
-  TabItem,
-  DashButton,
-  LinkCard,
+	Render,
+	Steps,
+	Tabs,
+	TabItem,
+	DashButton,
+	LinkCard,
 } from "~/components";
 
 In this tutorial, you will learn how to build a complete data pipeline using Cloudflare Pipelines, R2 Data Catalog, and R2 SQL. This also includes a sample Python script that creates and sends financial transaction data to your Pipeline that can be queried by R2 SQL or any Apache Iceberg-compatible query engine.
 
 This tutorial demonstrates how to:
+
 - Set up R2 Data Catalog to store our transaction events in an Apache Iceberg table
 - Set up a Cloudflare Pipeline
 - Create transaction data with fraud patterns to send to your Pipeline
 - Query your data using R2 SQL for fraud analysis
 
-
 ## Prerequisites
+
 1. Sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up).
 2. Install [Node.js](https://nodejs.org/en/).
 3. Install [Python 3.8+](https://python.org) for the data generation script.
@@ -42,11 +45,10 @@ Wrangler requires a Node version of 16.17.0 or later.
 
 You will need API tokens to interact with Cloudflare services.
 
-
 <Steps>
 1. In the Cloudflare dashboard, go to the **API tokens** page.
 
-   <DashButton url="/?to=/:account/api-tokens" />
+    <DashButton url="/?to=/:account/api-tokens" />
 
 2. Select **Create Token**.
 
@@ -55,10 +57,10 @@ You will need API tokens to interact with Cloudflare services.
 4. Enter a name for your API token.
 
 5. Under **Permissions**, choose:
-    - **Workers Pipelines** with Read, Send, and Edit permissions
-    - **Workers R2 Data Catalog** with Read and Edit permissions
-    - **Workers R2 SQL** with Read permissions
-    - **Workers R2 Storage** with Read and Edit permissions
+   - **Workers Pipelines** with Read, Send, and Edit permissions
+   - **Workers R2 Data Catalog** with Read and Edit permissions
+   - **Workers R2 SQL** with Read permissions
+   - **Workers R2 Storage** with Read and Edit permissions
 
 6. Optionally, add a TTL to this token.
 
@@ -89,9 +91,9 @@ npx wrangler login
 
 Create an R2 bucket:
 
-  ```bash
-  npx wrangler r2 bucket create fraud-pipeline
-  ```
+```bash
+npx wrangler r2 bucket create fraud-pipeline
+```
 
 </TabItem>
 <TabItem label='Dashboard'>
@@ -99,13 +101,14 @@ Create an R2 bucket:
 <Steps>
 1. In the Cloudflare dashboard, go to the **R2 object storage** page.
 
-   <DashButton url="/?to=/:account/r2/overview" />
+    <DashButton url="/?to=/:account/r2/overview" />
 
 2. Select **Create bucket**.
 
 3. Enter the bucket name: `fraud-pipeline`
 
 4. Select **Create bucket**.
+
 </Steps>
 </TabItem>
 </Tabs>
@@ -127,17 +130,17 @@ When you run this command, take note of the "Warehouse" and "Catalog URI". You w
 <Steps>
 1. In the Cloudflare dashboard, go to the **R2 object storage** page.
 
-   <DashButton url="/?to=/:account/r2/overview" />
+    <DashButton url="/?to=/:account/r2/overview" />
 
 2. Select the bucket: `fraud-pipeline`.
 
 3. Switch to the **Settings** tab, scroll down to **R2 Data Catalog**, and select **Enable**.
 
 4. Once enabled, note the **Catalog URI** and **Warehouse name**.
+
 </Steps>
 </TabItem>
 </Tabs>
-
 
 :::note
 Copy the `warehouse` (ACCOUNTID_BUCKETNAME) and paste it in the `export` below. We will use it later in the tutorial.
@@ -164,13 +167,14 @@ npx wrangler r2 bucket catalog compaction enable fraud-pipeline --token $WRANGLE
 <Steps>
 1. In the Cloudflare dashboard, go to the **R2 object storage** page.
 
-   <DashButton url="/?to=/:account/r2/overview" />
+    <DashButton url="/?to=/:account/r2/overview" />
 
 2. Select the bucket: `fraud-pipeline`.
 
 3. Switch to the **Settings** tab, scroll down to **R2 Data Catalog**, click on edit icon, and select **Enable**.
 
 4. You can choose a target file size or leave the default. Click save.
+
 </Steps>
 </TabItem>
 </Tabs>
@@ -186,15 +190,15 @@ First, create a schema file called `raw_transactions_schema.json` with the follo
 
 ```json
 {
-    "fields": [
-      {"name": "transaction_id", "type": "string", "required": true},
-      {"name": "user_id", "type": "int64", "required": true},
-      {"name": "amount", "type": "float64", "required": false},
-      {"name": "transaction_timestamp", "type": "string", "required": false},
-      {"name": "location", "type": "string", "required": false},
-      {"name": "merchant_category", "type": "string", "required": false},
-      {"name": "is_fraud", "type": "bool", "required": false}
-    ]
+	"fields": [
+		{ "name": "transaction_id", "type": "string", "required": true },
+		{ "name": "user_id", "type": "int64", "required": true },
+		{ "name": "amount", "type": "float64", "required": false },
+		{ "name": "transaction_timestamp", "type": "string", "required": false },
+		{ "name": "location", "type": "string", "required": false },
+		{ "name": "merchant_category", "type": "string", "required": false },
+		{ "name": "is_fraud", "type": "bool", "required": false }
+	]
 }
 ```
 
@@ -282,6 +286,7 @@ npx wrangler pipelines create raw_events_pipeline \
 </TabItem>
 <TabItem label='Dashboard'>
 <Steps>
+
 1. In the Cloudflare dashboard, go to **Pipelines** > **Pipelines**.
 
    <DashButton url="/?to=/:account/pipelines" />
@@ -297,19 +302,24 @@ npx wrangler pipelines create raw_events_pipeline \
 4. **Define Input Schema**:
    - Select **JSON editor**
    - Copy in the schema:
-      ```json
-      {
-        "fields": [
-            {"name": "transaction_id", "type": "string", "required": true},
-            {"name": "user_id", "type": "int64", "required": true},
-            {"name": "amount", "type": "float64", "required": false},
-            {"name": "transaction_timestamp", "type": "string", "required": false},
-            {"name": "location", "type": "string", "required": false},
-            {"name": "merchant_category", "type": "string", "required": false},
-            {"name": "is_fraud", "type": "bool", "required": false}
-        ]
+
+     ```json
+     {
+     	"fields": [
+     		{ "name": "transaction_id", "type": "string", "required": true },
+     		{ "name": "user_id", "type": "int64", "required": true },
+     		{ "name": "amount", "type": "float64", "required": false },
+     		{
+     			"name": "transaction_timestamp",
+     			"type": "string",
+     			"required": false
+     		},
+     		{ "name": "location", "type": "string", "required": false },
+     		{ "name": "merchant_category", "type": "string", "required": false },
+     		{ "name": "is_fraud", "type": "bool", "required": false }
+     	]
      }
-      ```
+     ```
 
    - Select **Next**
 
@@ -334,6 +344,7 @@ npx wrangler pipelines create raw_events_pipeline \
    - Select **Create Pipeline**
 
 8. After pipeline creation, note the **Stream ID** for the next step.
+
 </Steps>
 
 </TabItem>
@@ -568,6 +579,7 @@ FROM fraud_detection.fraud_transactions
 WHERE is_fraud = false
 LIMIT 10"
 ```
+
 You should see the following output:
 
 ```text

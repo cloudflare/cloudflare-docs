@@ -4,7 +4,10 @@ pcx_content_type: tutorial
 head:
   - tag: title
     content: Use WARP as an on-ramp
+description: >-
+  Use WARP as an on-ramp to Magic WAN and route traffic from user devices with WARP installed to any network connected with Cloudflare Tunnel or Magic IP-layer tunnels (anycast GRE, IPsec, or CNI).
 ---
+
 :::note
 By default, direct WARP-to-WARP connections are not supported for devices located behind Magic WAN with WARP enabled. This is due to issues caused by double encapsulation and asymmetric routing.
 
@@ -72,7 +75,10 @@ To learn which IP addresses and UDP ports you should exclude to accomplish this,
 
 ### WARP and Magic WAN Connector
 
-<Render file="mconn/app-aware-policies/warp-traffic" product="networking-services" />
+<Render
+	file="mconn/app-aware-policies/warp-traffic"
+	product="networking-services"
+/>
 
 ## Test WARP integration
 

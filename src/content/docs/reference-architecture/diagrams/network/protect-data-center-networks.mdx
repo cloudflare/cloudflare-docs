@@ -12,6 +12,8 @@ sidebar:
   order: 1
   label: Protect data center networks
 reviewed: 2024-12-19
+description: >-
+  This document focuses on the reference architecture of using Cloudflare's Magic WAN, Magic Firewall, and Cloudflare Gateway services.
 ---
 
 ## Introduction
@@ -31,8 +33,8 @@ This document focuses specifically on the reference architectures of using Cloud
 
 To illustrate the architecture and how it works, the following diagrams visualize an example corporation with a set of data center networks that are either public-facing, connecting to users on the Internet or private, internal facing, used for communication within the enterprise. These networks are deployed at two on-premises locations. The prefixes of the public-facing networks are to be protected by Cloudflare Magic Transit.
 
-| Data center 1                       | Data center 2                         |
-| :---------------------------------- | :------------------------------------ |
+| Data center 1                         | Data center 2                           |
+| :------------------------------------ | :-------------------------------------- |
 | Public-facing network: `192.0.2.0/24` | Public-facing network: `203.0.113.0/24` |
 | Private network: `192.168.1.0/24`     | Private network: `172.16.2.0/24`        |
 

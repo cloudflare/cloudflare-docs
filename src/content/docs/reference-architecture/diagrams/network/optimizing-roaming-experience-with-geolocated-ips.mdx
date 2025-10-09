@@ -8,6 +8,8 @@ sidebar:
   order: 1
   label: Device roaming with geolocated IPs
 reviewed: 2024-12-13
+description: >-
+  Cloudflare can use private mobile networks (APNs) to connect devices roaming across multiple countries through regional Internet breakouts.
 ---
 
 ## Introduction
@@ -44,7 +46,6 @@ This diagram is intended for network engineers, IT architects, and decision-make
 3. **Connectivity options**.
 
    Cloudflare supports multiple connection methods to integrate with the regional breakout architecture:
-
    - [**GRE tunnels**](/magic-wan/reference/gre-ipsec-tunnels/) for ease of use.
    - [**IPsec tunnels**](/magic-wan/reference/gre-ipsec-tunnels/) for encrypted communication.
    - [**Cloudflare Network Interconnect (CNI)**](/magic-wan/network-interconnect/) for direct, high-performance connections.
@@ -56,7 +57,6 @@ This diagram is intended for network engineers, IT architects, and decision-make
 5. **Advanced security and filtering options**.
 
    Cloudflare enhances the security of Internet breakouts with advanced features, including:
-
    - [**DNS filtering**](/cloudflare-one/policies/gateway/initial-setup/dns/) to manage and block access to unwanted, high risk domains.
    - [**Network firewalling**](/cloudflare-one/policies/gateway/network-policies/) for enforcing detailed security policies. For example, you can restrict vehicles to only send data over the Internet to a designated set of cloud telemetry systems while blocking all other traffic.
    - [**Full SSL inspection**](/cloudflare-one/policies/gateway/http-policies/tls-decryption/) to protect against sophisticated threats and provide traffic visibility on encrypted traffic. It enables additional protections such as antivirus scanning, malware prevention, and file sandboxing.

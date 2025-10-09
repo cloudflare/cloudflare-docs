@@ -7,9 +7,11 @@ sidebar:
 head:
   - tag: title
     content: Magic Network Monitoring encrypt network flow data
+description: >-
+  Encrypt the network flowData sent from your router to Cloudflare by routing your network traffic through a device running the WARP client.
 ---
 
-import { APIRequest } from "~/components"
+import { APIRequest } from "~/components";
 
 Customers can encrypt the network flow data sent from their router to Cloudflare by [routing](https://www.cloudflare.com/learning/network-layer/what-is-routing/) their network flow traffic through a device running the WARP client. Then, encrypted network flow traffic can be forwarded from the WARP enabled device to Cloudflare's network flow endpoints.
 
@@ -34,13 +36,13 @@ For example:
 	path="/accounts/{account_id}/mnm/config"
 	method="PATCH"
 	json={{
-		"warp_devices": [
-		{
-			"id": "<YOUR_WARP_DEVICE_UNIQUE_IDENTIFIER>",
-			"name": "<NAME_OF_WARP_DEVICE>",
-			"router_ip": "YOUR_ROUTER_IP"
-		}
-	]
+		warp_devices: [
+			{
+				id: "<YOUR_WARP_DEVICE_UNIQUE_IDENTIFIER>",
+				name: "<NAME_OF_WARP_DEVICE>",
+				router_ip: "YOUR_ROUTER_IP",
+			},
+		],
 	}}
 />
 
