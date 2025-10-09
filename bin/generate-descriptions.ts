@@ -5,13 +5,31 @@
  * that don't have a description field in their frontmatter.
  *
  * It uses the rendered markdown from the distmd directory to generate descriptions
- * by sending the content to a localhost:8788 application.
+ * by sending the content to a localhost:8787 application.
  *
- * Usage:
- * npm run generate-descriptions [-- --pcx-content-type <type>]
+ * To run, you'll need to do the following:
+ * 1. Get your local build setup:
+ * 		1. Run `npm run build` to build the local docs.
+ * 		2. Run `npx tsx bin/generate-index-md.ts` to generate the index.md files (saves on tokens) + avoids extra HTML.
+ * 2. Have a local Worker running on `localhost:8787` with the following code (also requires adding a binding in the Wrangler config file):
  *
- * Options:
- * --pcx-content-type <type>  Filter MDX files by pcx_content_type (e.g., overview, tutorial, navigation)
+ * 		```
+ * 		export interface Env {
+ * 			AI: Ai;
+ * 		}
+
+ * 		export default {
+ * 			async fetch(request, env): Promise<Response> {
+ * 				const response = await env.AI.run("@cf/facebook/bart-large-cnn", {
+ * 					input_text: await request.text(),
+ * 					max_length: 160
+ * 				});
+ * 				return Response.json(response.summary);
+ * 			},
+ * 		} satisfies ExportedHandler<Env>;
+ * 		```
+ * 3. Run `npx tsx bin/generate-descriptions.ts --pcx-content-type $TYPE` to generate the descriptions.
+ *
  */
 
 import fs from "fs/promises";
@@ -47,8 +65,10 @@ async function generateDescriptionFromAPI(
 		const description = await response.text();
 		// Remove surrounding quotes if they exist
 		const trimmed = description.trim();
-		if ((trimmed.startsWith('"') && trimmed.endsWith('"')) || 
-		    (trimmed.startsWith("'") && trimmed.endsWith("'"))) {
+		if (
+			(trimmed.startsWith('"') && trimmed.endsWith('"')) ||
+			(trimmed.startsWith("'") && trimmed.endsWith("'"))
+		) {
 			return trimmed.slice(1, -1);
 		}
 		return trimmed;
