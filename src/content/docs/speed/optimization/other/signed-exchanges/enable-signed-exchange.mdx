@@ -10,7 +10,7 @@ description: Learn how to enable Cloudflare Automatic Signed Exchange (SXG) for 
 
 ---
 
-import { Render } from "~/components"
+import { Render, DashButton } from "~/components"
 
 ## Requirements
 
@@ -32,8 +32,11 @@ For SXGs to be enabled, a CAA record (Certification Authority Authorization) is 
 
 If your account satisfies all the requirements, follow the steps below to enable SXGs. Be aware that, currently, signed exchanges are only used on Chromium browsers on Android and desktop.
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
-2. Go to **Speed** > **Optimization** > **Other**.
+1. In the Cloudflare dashboard, go to the **Settings** page.
+
+   <DashButton url="/?to=/:account/:zone/speed/optimization" />
+
+2. Go to **Other**.
 3. Scroll to **Automatic Signed Exchanges (SXGs)** and enable it.
 
 <Render file="configuration-rule-promotion" product="rules" />

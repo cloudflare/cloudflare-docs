@@ -4,7 +4,7 @@ title: HTTP/2 to Origin
 
 ---
 
-import { FeatureTable, Details, Render, APIRequest } from "~/components"
+import { FeatureTable, Details, Render, APIRequest, Dashboard, DashButton } from "~/components"
 
 A protocol is a set of rules governing the exchange or transmission of data between devices. One of the most important protocols that run on the human-computer interaction layer, where applications can access the network services, is HTTP (Hypertext Transfer Protocol).
 
@@ -20,10 +20,11 @@ At Cloudflare, HTTP/2 connection to the origin is enabled by default.
 
 If you wish to disable HTTP/2 to Origin, you can follow these steps:
 
-1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
-2. Choose the domain that will use HTTP/2 to Origin.
-3. Select **Speed > Optimization**.
-4. Navigate to the **Protocol Optimization** tab and under **HTTP/2 to Origin** set the toggle to **Off**.
+1. In the Cloudflare dashboard, go to the **Settings** page.
+
+   <DashButton url="/?to=/:account/:zone/speed/optimization" />
+
+4. Go to the **Protocol Optimization** tab and under **HTTP/2 to Origin** set the toggle to **Off**.
 
 ## Connection multiplexing
 

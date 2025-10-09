@@ -8,7 +8,7 @@ sidebar:
 
 ---
 
-import { GlossaryTooltip, Render } from "~/components"
+import { GlossaryTooltip, Render, DashButton } from "~/components"
 
 Cloudflare Fonts is a feature designed for websites that use Google Fonts. It rewrites Google Fonts to be delivered from a website’s own origin, eliminating the need to rely on third-party font providers. Cloudflare Fonts is tailored to improve website performance and user privacy without the need for any code changes or self-hosting of fonts.
 
@@ -36,8 +36,11 @@ Samsung Internet 5+
 
 To enable Cloudflare Fonts for your entire domain:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
-2. Go to **Speed** > **Optimization** > **Content Optimization**.
+1. In the Cloudflare dashboard, go to the **Settings** page.
+
+   <DashButton url="/?to=/:account/:zone/speed/optimization" />
+
+2. Go to **Content Optimization**.
 3. For **Cloudflare Fonts**, switch the toggle to **On**.
 
 <Render file="configuration-rule-promotion" product="rules" />

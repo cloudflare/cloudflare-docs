@@ -5,7 +5,7 @@ sidebar:
   order: 6
 ---
 
-import { Example, FeatureTable, TabItem, Tabs } from "~/components";
+import { Example, FeatureTable, TabItem, Tabs, DashButton } from "~/components";
 
 URL prefetching means that Cloudflare pre-populates the cache with content a visitor is likely to request next. This setting — when combined with [additional setup](#setup) — leads to a higher cache hit rate and thus a faster experience for the user.
 
@@ -27,8 +27,11 @@ For Cloudflare to start prefetching URLs, you will need to [enable the feature](
 
 To enable **Prefetch URLs** in the dashboard:
 
-1. Log in to your [Cloudflare account](https://dash.cloudflare.com) and go to a specific domain.
-2. Go to **Speed** > **Optimization** > **Content Optimization**.
+1. In the Cloudflare dashboard, go to the **Settings** page.
+
+   <DashButton url="/?to=/:account/:zone/speed/optimization" />
+
+2. Go to **Content Optimization**.
 3. For **Prefetch URLs**, switch the toggle to **On**.
 
 </TabItem> <TabItem label="API">

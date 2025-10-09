@@ -7,6 +7,8 @@ sidebar:
 
 ---
 
+import { DashButton } from "~/components"
+
 ## Requirements
 
 AMP Real URL is available for all plans. However, refer to the following requirements before enabling this feature:
@@ -18,8 +20,11 @@ AMP Real URL is available for all plans. However, refer to the following require
 
 If your account satisfies the requirements to enable AMP Real URL:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and domain.
-2. Go to **Speed** > **Optimization** > **Other**.
+1. In the Cloudflare dashboard, go to the **Settings** page.
+
+   <DashButton url="/?to=/:account/:zone/speed/optimization" />
+
+2. Go to **Other**.
 3. Scroll to **AMP Real URL** and toggle the button to enable it.
 
 ## Limitations

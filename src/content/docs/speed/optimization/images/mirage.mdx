@@ -13,7 +13,7 @@ sidebar:
 
 ---
 
-import { FeatureTable, GlossaryTooltip, Render } from "~/components"
+import { FeatureTable, GlossaryTooltip, Render, DashButton} from "~/components"
 
 :::caution[Deprecation notice]
 Mirage was deprecated on September 15, 2025.
@@ -64,9 +64,11 @@ If you send a <GlossaryTooltip term="content security policy (CSP)">Content Secu
 
 To enable Mirage image optimization for your entire domain:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
-2. Select your account and zone.
-3. Go to **Speed** > **Optimization** > **Image Optimization**.
+1. In the Cloudflare dashboard, go to the **Settings** page.
+
+   <DashButton url="/?to=/:account/:zone/speed/optimization" />
+
+3. Go to **Image Optimization**.
 4. For **Mirage**, switch the toggle to **On**.
 
 <Render file="configuration-rule-promotion" product="rules" />

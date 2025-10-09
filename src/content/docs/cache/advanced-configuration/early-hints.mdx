@@ -4,7 +4,7 @@ pcx_content_type: concept
 
 ---
 
-import { FeatureTable } from "~/components"
+import { FeatureTable, DashButton } from "~/components"
 
 Early Hints takes advantage of “server think time” to asynchronously send instructions to the browser to begin loading resources while the origin server is compiling the full response. By sending these hints to a browser before the full response is prepared, the browser can figure out how to load the webpage faster for the end user.
 
@@ -26,10 +26,12 @@ For more information about Early Hints, refer to the [Cloudflare](https://blog.c
 
 ## Enable Early Hints
 
-1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com) and select your domain.
-2. From the dashboard, select **Speed** > **Optimization**.
-3. Go to the **Content Optimization** tab.
-4. For **Early Hints**, toggle the switch to **On**.
+1. In the Cloudflare dashboard, go to the **Settings** page.
+
+   <DashButton url="/?to=/:account/:zone/speed/optimization" />
+
+2. Go to the **Content Optimization** tab.
+3. For **Early Hints**, toggle the switch to **On**.
 
 ## Generate Early Hints
 

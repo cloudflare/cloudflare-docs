@@ -8,7 +8,7 @@ head:
     content: Enable Rocket Loader
 ---
 
-import { Render, TabItem, Tabs } from "~/components";
+import { Render, TabItem, Tabs, DashButton } from "~/components";
 
 To enable or disable Rocket Loader, use the following instructions.
 
@@ -16,10 +16,12 @@ To enable or disable Rocket Loader, use the following instructions.
 
 To enable or disable **Rocket Loader** in the dashboard:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
-2. Select your account and domain.
-3. Go to **Speed** > **Settings** > **Content Optimization**.
-4. For **Rocket Loader**, switch the toggle to **On**.
+1. In the Cloudflare dashboard, go to the **Settings** page.
+
+   <DashButton url="/?to=/:account/:zone/speed/optimization" />
+
+2. Go to **Content Optimization**.
+3. For **Rocket Loader**, switch the toggle to **On**.
 
 <Render file="rocket-loader-csp" product="speed" />
 
