@@ -484,7 +484,7 @@ git config --global http.sslcainfo [PATH_TO_CLOUDFLARE_CERT]
 
 ### cURL
 
-By default, cURL will use your system's native certificate store. To force cURL to use your default certificate, add the the `--ca-native` flag. For example:
+By default, cURL will use your operating system's native certificate store. To force cURL to use your default certificate, add the `--ca-native` flag to the command. For example:
 
 ```curl
 curl --ca-native https://example.com
@@ -492,7 +492,7 @@ curl --ca-native https://example.com
 
 #### cURL on macOS
 
-To use a Cloudflare root certificate with cURL on macOS, [install the certificate to the operating system keychain](#macos).
+To use a Cloudflare root certificate with cURL on macOS, [install the certificate to the operating system keychain](#macos). cURL will use the macOS root certificate by default.
 
 #### cURL on Windows
 
@@ -500,7 +500,7 @@ To use a Cloudflare certificate with the version of cURL preinstalled on Windows
 
 #### cURL on Linux
 
-To use a Cloudflare root certificate with cURL on Linux, [install the certificate to your distribution's certificate store](#linux).
+To use a Cloudflare root certificate with cURL on Linux, [install the certificate to your distribution's certificate store](#linux). cURL will use the Linux root certificate by default.
 
 ### npm
 
