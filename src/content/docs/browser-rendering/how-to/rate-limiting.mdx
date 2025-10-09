@@ -1,0 +1,28 @@
+---
+pcx_content_type: how-to
+title: Rate limiting REST API requests
+sidebar:
+  order: 5
+---
+
+## Example: Handling 429 Rate Limits with Retry-After Header
+
+```js
+const response = await fetch('https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/content', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer <your-token>',
+    },
+    body: JSON.stringify({ url: 'https://example.com' })
+});
+
+if (response.status === 429) {
+    const retryAfter = response.headers.get('Retry-After');
+    console.log(`Rate limited. Waiting ${retryAfter} seconds...`);
+    await new Promise(resolve => setTimeout(resolve, retryAfter * 1000));
+
+    // Retry the request
+    const retryResponse = await fetch(/* same request as above */);
+}
+```
