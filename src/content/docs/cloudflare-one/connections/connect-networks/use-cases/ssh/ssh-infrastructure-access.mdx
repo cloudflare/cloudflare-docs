@@ -253,13 +253,13 @@ You will need Cloudflare dashboard access and log view [permissions](/cloudflare
 
 By editing a [policy](/cloudflare-one/policies/access/) that is explicitly blocking the user or adding a new policy to explicitly allow the user, the connection issue should be resolved. After saving your policy changes, attempt to connect to the target machine as the end user.
 
-If you are still having connection issues after auditing your Access policies, review Tunnel health in the following step.
+If you are still having connection issues after auditing your Access policies, review tunnel health in the following step.
 
 ### 2. Check target machine connection
 
 If the end user cannot connect to the target SSH machine, the tunnel you set up in [step 1: Connect the server to Cloudflare](#1-connect-the-server-to-cloudflare) may be down or inactive.
 
-To check the status of your Tunnel:
+To check the status of your tunnel:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Networks** > **Routes**.
 2. Search your IP to find the tunnel associated with the IP.
@@ -272,14 +272,14 @@ To check the status of your Tunnel:
 
 | Status    | Meaning                                                                                                                                                           | Recommended Action                                                                                                                                                                                                                                                                                            |
 |-----------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Healthy**   | The tunnel is active and serving traffic through four connections to the Cloudflare global network.                                    | No action is required. Your Tunnel is running correctly.                                                                                                                                                                                                                                                       |
-| **Inactive**  | The Tunnel has been created (via the API or dashboard) but the `cloudflared` connector has never been run to establish a connection.                          | Run the tunnel as a service (recommended) or use the `cloudflared tunnel run` command on your origin server to connect the tunnel to Cloudflare. Refer to [substep 6 of step 1 in the Create a Tunnel dashboard guide](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/#1-create-a-tunnel) or step 4 in the [Create a Tunnel API guide](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/#1-create-a-tunnel).                           |
-| **Down**      | The Tunnel was previously connected but is currently disconnected because the `cloudflared` process has stopped.                                            | 1. Ensure the `cloudflared` service or process is actively running on your server. <br /> 2. Check for server-side issues, such as the machine being powered off, an application crash, or recent network changes.                                                                                                |
+| **Healthy**   | The tunnel is active and serving traffic through four connections to the Cloudflare global network.                                    | No action is required. Your tunnel is running correctly.                                                                                                                                                                                                                                                       |
+| **Inactive**  | The tunnel has been created (via the API or dashboard) but the `cloudflared` connector has never been run to establish a connection.                          | Run the tunnel as a service (recommended) or use the `cloudflared tunnel run` command on your origin server to connect the tunnel to Cloudflare. Refer to [substep 6 of step 1 in the Create a Tunnel dashboard guide](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/#1-create-a-tunnel) or step 4 in the [Create a Tunnel API guide](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/#1-create-a-tunnel).                           |
+| **Down**      | The tunnel was previously connected but is currently disconnected because the `cloudflared` process has stopped.                                            | 1. Ensure the `cloudflared` service or process is actively running on your server. <br /> 2. Check for server-side issues, such as the machine being powered off, an application crash, or recent network changes.                                                                                                |
 | **Degraded**  | The `cloudflared` connector is running and the tunnel is serving traffic, but at least one individual connection has failed. Further degradation in [tunnel availability](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-availability/) could risk the tunnel going down and failing to serve traffic.               | 1. Review your `cloudflared` logs for connection failures or error messages. <br /> 2. Investigate local network and firewall rules to ensure they are not blocking connections to the [Cloudflare Tunnel IPs and ports](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-with-firewall/). <br />                                                                        |
 
 For detailed steps on troubleshooting, refer to the [Troubleshooting Tunnel documentation](/cloudflare-one/connections/connect-networks/troubleshoot-tunnels/). Review the [Tunnel with Firewall documentation](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-with-firewall/#test-connectivity) to ensure your network is correctly configured to allow `cloudflared` connections.
 
-After you have verified that there are no issues with your Tunnel's health, confirm the user's existence on the target SSH server in the following step.
+After you have verified that there are no issues with your tunnel's health, confirm the user's existence on the target SSH server in the following step.
 
 ### 3. Confirm user existence on the target server
 
