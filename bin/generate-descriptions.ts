@@ -251,6 +251,7 @@ async function main() {
 				try {
 					await fs.access(renderedPath);
 				} catch (error) {
+					console.log(error);
 					console.warn(
 						`⚠️ Rendered markdown not found for ${path.relative(process.cwd(), mdxFile)}`,
 					);
