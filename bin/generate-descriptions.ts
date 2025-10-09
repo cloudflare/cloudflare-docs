@@ -22,7 +22,7 @@
  * 			async fetch(request, env): Promise<Response> {
  * 				const response = await env.AI.run("@cf/facebook/bart-large-cnn", {
  * 					input_text: await request.text(),
- * 					max_length: 80
+ * 					max_length: 60
  * 				});
  * 				return Response.json(response.summary);
  * 			},
