@@ -10,7 +10,7 @@ Okta provides cloud software that helps companies manage and secure user authent
 
 Additionally, you can configure Okta to use risk information from Zero Trust [user risk scores](/cloudflare-one/insights/risk-score/) to create SSO-level policies. For more information, refer to [Send risk score to Okta](/cloudflare-one/insights/risk-score/#send-risk-score-to-okta).
 
-## Set up Okta as an OIDC provider (Okta App Catalog)
+## Set up Okta as an OIDC provider (Okta Application Catalog)
 
 1. Log in to your Okta admin dashboard.
 
@@ -32,26 +32,32 @@ Additionally, you can configure Okta to use risk information from Zero Trust [us
 
 7. In the **Sign On** tab, copy the **Client ID** and **Client secret**.
 
-8. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Authentication**.
+8. Scroll down to the **OpenID ConnectID Token** and select **Edit**.
 
-9. Under **Login methods**, select **Add new**. Select **Okta** as your identity provider.
+   ![Configuring the Groups claim filter in Okta](~/assets/images/cloudflare-one/identity/okta/okta-2.png)
 
-10. Fill in the following information:
+9. Set the **Groups claim filter** to _Matches regex_ and its value to `.*`.
+
+10. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Authentication**.
+
+11. Under **Login methods**, select **Add new**. Select **Okta** as your identity provider.
+
+12. Fill in the following information:
     - **Name**: Name your identity provider.
     - **App ID**: Enter your Okta client ID.
     - **Client secret**: Enter your Okta client secret.
     - **Okta account URL**: Enter your [Okta domain](https://developer.okta.com/docs/guides/find-your-domain/main/), for example `https://my-company.okta.com`.
 
-11. (Optional) Create an Okta API token and enter it in Zero Trust (the token can be read-only). This will prevent your Okta groups from failing if you have more than 100 groups.
+13. (Optional) Create an Okta API token and enter it in Zero Trust (the token can be read-only). This will prevent your Okta groups from failing if you have more than 100 groups.
 
-12. (Optional) To configure [custom OIDC claims](/cloudflare-one/identity/idp-integration/generic-oidc/#custom-oidc-claims):
+14. (Optional) To configure [custom OIDC claims](/cloudflare-one/identity/idp-integration/generic-oidc/#custom-oidc-claims):
     1. In Okta, create a [custom authorization server](https://developer.okta.com/docs/guides/customize-authz-server/main/) and ensure that the `groups` scope is enabled.
     2. In Zero Trust, enter the **Authorization Server ID** obtained from Okta.
     3. Under **Optional configurations**, enter the claims that you wish to add to your users' identity.
 
-13. (Optional) Enable [Proof of Key Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/). PKCE will be performed on all login attempts.
+15. (Optional) Enable [Proof of Key Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/). PKCE will be performed on all login attempts.
 
-14. Select **Save**.
+16. Select **Save**.
 
 ## Set up Okta as an OIDC provider (Custom OIDC Application)
 
