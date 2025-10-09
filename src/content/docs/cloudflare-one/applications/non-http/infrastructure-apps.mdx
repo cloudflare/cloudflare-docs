@@ -90,21 +90,7 @@ If a user is connected to a target in VNET-A and needs to connect to a target in
 
 Users can use `warp-cli` to display a list of targets they can access. On the WARP device, open a terminal and run the following command:
 
-```sh
-warp-cli target list
-```
-
-```sh output
-╭──────────────────────────────────────┬──────────┬───────┬───────────────────────┬──────────────────────┬────────────╮
-│ Target ID                            │ Protocol │ Port  │ Attributes            │ IP (Virtual Network) │ Usernames  │
-├──────────────────────────────────────┼──────────┼───────┼───────────────────────┼──────────────────────┼────────────┤
-│ 0193f22a-9df3-78e3-b5bb-7ab631903306 │ SSH      │ 22    │ hostname: do-target   │ 10.116.0.3 (a1net)   │ alice      │
-├──────────────────────────────────────┼──────────┼───────┼───────────────────────┼──────────────────────┼────────────┤
-│ 0193f22a-9df3-78e3-b5bb-7ab631903306 │ SSH      │ 23    │ hostname: do-target   │ 10.116.0.3 (a1net)   │ root       │
-├──────────────────────────────────────┼──────────┼───────┼───────────────────────┼──────────────────────┼────────────┤
-│ 01943cff-6130-7989-8bff-cbc02b59a2b1 │ SSH      │ 80    │ hostname: az-target   │ 172.16.0.0 (b1net)   │ alice, bob │
-╰──────────────────────────────────────┴──────────┴───────┴───────────────────────┴──────────────────────┴────────────╯
-```
+<Render file="tunnel/warp-cli-target-list" product="cloudflare-one" />
 
 You can optionally add flags to filter the output. For example:
 
