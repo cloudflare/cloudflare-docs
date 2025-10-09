@@ -3,6 +3,6 @@
 	"path": "/learning-paths/load-balancing/concepts/",
 	"priority": 2,
 	"description": "Maximize application performance and availability.",
-	"products": ["Load balancing"],
+	"products": ["load-balancing"],
 	"product_group": "Application performance"
 }

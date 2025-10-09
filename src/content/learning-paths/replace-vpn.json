@@ -3,7 +3,7 @@
 	"path": "/learning-paths/replace-vpn/concepts/",
 	"priority": 1,
 	"description": "Give users secure, auditable network and application access.",
-	"products": ["Cloudflare Gateway", "Cloudflare Tunnel", "WARP"],
+	"products": ["gateway", "cloudflare-tunnel", "zero-trust-warp"],
 	"product_group": "Cloudflare One",
 	"additional_groups": ["Application security", "Application performance"]
 }

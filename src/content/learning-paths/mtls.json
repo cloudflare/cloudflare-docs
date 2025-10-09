@@ -3,7 +3,7 @@
 	"path": "/learning-paths/mtls/concepts/",
 	"priority": 5,
 	"description": "Safeguard APIs and Devices on Cloudflare's network.",
-	"products": ["API Shield", "Access", "SSL/TLS"],
+	"products": ["api-shield", "access", "ssl"],
 	"product_group": "Cloudflare One",
 	"additional_groups": ["Application security"]
 }

@@ -3,11 +3,7 @@
 	"path": "/learning-paths/clientless-access/concepts/",
 	"priority": 2,
 	"description": "Secure access to internal web applications without a device client.",
-	"products": [
-		"Cloudflare Access",
-		"Cloudflare Tunnel",
-		"Remote Browser Isolation"
-	],
+	"products": ["access", "cloudflare-tunnel", "browser-isolation"],
 	"product_group": "Cloudflare One",
 	"additional_groups": ["Application security", "Application performance"]
 }

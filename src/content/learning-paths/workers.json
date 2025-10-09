@@ -4,6 +4,6 @@
 	"path": "/learning-paths/workers/concepts/",
 	"priority": 4,
 	"description": "Deploy serverless code, globally with exceptional performance, reliability, and scale.",
-	"products": ["Workers"],
+	"products": ["workers"],
 	"product_group": "Developer platform"
 }
