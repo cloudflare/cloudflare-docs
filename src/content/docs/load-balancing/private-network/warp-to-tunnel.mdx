@@ -43,10 +43,10 @@ graph LR
 
 The components in the diagram include:
 - **cloudflared**: Each data center is connected to Cloudflare with its own Cloudflare Tunnel. `cloudflared` installs on one or [more](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-availability/#cloudflared-replicas) host machines in the network.
-- **Virtual network (VNET)**: If the networks behind each tunnel have the same internal IP range, we assign a distinct [virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/) per tunnel so that Load Balancer can deterministically route requests to the correct endpoint.
+- **Virtual network (VNET)**: If the networks behind each tunnel have the same internal IP range, you can assign a distinct [virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/) per tunnel so that Load Balancer can deterministically route requests to the correct endpoint.
 - **Private load balancer IP**: End users connect to the application using the load balancer's IP address. This can either be a Cloudflare-assigned CGNAT IP (`100.64.0.0/10`) or a custom [RFC 1918](https://datatracker.ietf.org/doc/html/rfc1918) IP.
-- **Load balancer pool**: The load balancer is configured with one [pool](/load-balancing/understand-basics/load-balancing-components/#pools) per tunnel. [Global traffic steering policies](/load-balancing/understand-basics/traffic-steering/steering-policies/) control how traffic routes to your pools / tunnels.
-- **Load balancer endpoint**: A pool contains one or more endpoints, where each endpoint is a server behind `cloudflared` that is running the application. The load balancing endpoint is defined by the server's private IP address and virtual network (for example, `10.0.0.1 (VNET-1)`). [Local steering policies](/load-balancing/understand-basics/traffic-steering/origin-level-steering/) control how traffic routes to endpoints within a pool.
+- **Load balancer pool**: The load balancer is configured with one [pool](/load-balancing/understand-basics/load-balancing-components/#pools) per tunnel.
+- **Load balancer endpoint**: A pool contains one or more endpoints, where each endpoint is a server behind `cloudflared` that is running the application. The load balancing endpoint is defined by the server's private IP address and virtual network (for example, `10.0.0.1 (VNET-1)`).
 
 ## 1. Create a Cloudflare Tunnel
 
