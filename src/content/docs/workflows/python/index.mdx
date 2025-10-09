@@ -13,11 +13,8 @@ Refer to [Python Workers](/workers/languages/python) for more information about 
 
 :::caution[Python Workflows are in beta, as well as the underlying platform.]
 
-You must add both `python_workflows` and `python_workers` compatibility flags to your `wrangler.toml` file.
+Python Workflows requires `compatibility_date = "2025-08-01"`, or lower, to be set in your `wrangler.toml` file.
 
-Also, Python Workflows requires `compatibility_date = "2025-08-01"`, or lower, to be set in your `wrangler.toml` file.
-
-Join the #python-workers channel in the [Cloudflare Developers Discord](https://discord.cloudflare.com/) and let us know what you'd like to see next.
 :::
 
 ## Get Started
@@ -32,6 +29,51 @@ class MyWorkflow(WorkflowEntrypoint):
         # steps here
 ```
 
+For example, a Workflow may be defined as:
+
+```python
+from workers import WorkerEntrypoint, WorkflowEntrypoint, Response
+
+# Workflow definition - this defines what the workflow does
+class MyWorkflow(WorkflowEntrypoint):
+    async def run(self, event, step):
+        @step.do("first")
+        async def first():
+            print("first step completed")
+            return "first_done"
+                
+        @step.do("second")
+        async def second():
+            print("second step completed")
+            return "second_done"
+
+        @step.do("final_step", depends=[first, second], concurrent=True)
+        async def final_step(first, second):
+            print("final step completed")
+            return "final_done"
+        
+        first_result = await first()
+        second_result = await second()
+        final_result = await final_step()     
+
+async def on_fetch(request, env):
+    await env.MY_WORKFLOW.create()
+    return Response("Workflow successful")
+```
+
+You must also add both `python_workflows` and `python_workers` compatibility flags to your `wrangler.toml` file.
+
+```toml
+name = "hello-python"
+main = "src/entry.py"
+compatibility_flags = ["python_workers","python_workflows"]
+compatibility_date = "2025-08-25"
+[[workflows]]
+name = "MyWorkflow"
+binding = "MY_WORKFLOW"
+class_name = "MyWorkflow"
+```
+
 To run a Python Workflow locally, you use [Wrangler](/workers/wrangler/), the CLI for Cloudflare Workers:
 
 ```bash
@@ -43,3 +85,5 @@ To deploy a Python Workflow to Cloudflare, run [`wrangler deploy`](/workers/wran
 ```bash
 npx wrangler@latest deploy
 ```
+
+Join the #python-workers channel in the [Cloudflare Developers Discord](https://discord.cloudflare.com/) and let us know what you'd like to see next.
