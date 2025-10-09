@@ -36,8 +36,8 @@ To access scraping detections:
 
                 <DashButton url="/?to=/:account/:zone/security/security-rules" />
             2. Select **Create rule** and choose **Custom rule**.
-            4. Fill out the form using **Bot Detection IDs** along with other necessary information.
-            5. Select **Save as draft** to return to it later, or **Deploy** to deploy the rule.
+            3. Fill out the form using **Bot Detection IDs** along with other necessary information.
+            4. Select **Save as draft** to return to it later, or **Deploy** to deploy the rule.
         </Steps>
 	</TabItem> 
 </Tabs>
@@ -73,7 +73,7 @@ To use rate limiting rules with scraping detections:
 
                 <DashButton url="/?to=/:account/:zone/security/security-rules" />
             2. Select **Create rule** and choose **Rate limiting rule**.
-            3.Fill out the form using the **Custom expression builder** and `cf.bot_management_detection_ids` along with other necessary information.
+            3. Fill out the form using the **Custom expression builder** and `cf.bot_management_detection_ids` along with other necessary information.
             4. Select **Save as draft** to return to it later, or **Deploy** to deploy the rule.
         </Steps>
     </TabItem>
@@ -81,4 +81,5 @@ To use rate limiting rules with scraping detections:
 
 :::note
 Detection IDs `50331648` and `50331649` are dynamically re-calculated, meaning a single fingerprint would not be permanently rate limited unless it continues to remain suspicious at all times. Rate limiting on these detection IDs allows for more lenient controls, as opposed to immediately challenging or blocking.
+
 :::

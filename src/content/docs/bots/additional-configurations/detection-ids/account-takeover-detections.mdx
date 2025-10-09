@@ -15,7 +15,7 @@ Using the detection IDs below, you can detect and mitigate account takeover atta
 | `201326593`  | Observes all login traffic to the zone.  |
 | `201326598`  | Sets a dynamic threshold based on the normal traffic that is unique to the zone.<br /><br /> When the ID matches a login failure, Bot Management sets the [bot score](/bots/concepts/bot-score/) to 29 and uses [anomaly detection](/bots/concepts/bot-detection-engines/#anomaly-detection-enterprise) as its score source. |
 
-### Challenges for account takeover detections
+## Challenges for account takeover detections
 
 Cloudflare's [Managed Challenge](/cloudflare-challenges/challenge-types/challenge-pages/#managed-challenge-recommended) can limit brute-force attacks on your login endpoints.
 
@@ -48,7 +48,7 @@ To access account takeover detections:
 (any(cf.bot_management.detection_ids[*] eq 201326593))
 ```
 
-### Limit logins with account takeover detections
+## Limit logins with account takeover detections
 
 Rate limiting rules can limit the number of logins from a particular IP, JA4 fingerprint, or country.
 
