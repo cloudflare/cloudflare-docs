@@ -4,8 +4,8 @@
  * This script generates descriptions for MDX files in the docs directory
  * that don't have a description field in their frontmatter.
  *
- * It uses the rendered HTML from the dist directory to generate descriptions
- * using the generateDescription function from src/util/props.ts.
+ * It uses the rendered markdown from the distmd directory to generate descriptions
+ * by sending the content to a localhost:8788 application.
  *
  * Usage:
  * npm run generate-descriptions [-- --pcx-content-type <type>]
@@ -17,57 +17,57 @@
 import fs from "fs/promises";
 import path from "path";
 import globby from "fast-glob";
-import { parse as parseHTML } from "node-html-parser";
-import { generateDescription } from "../src/util/props";
 import matter from "gray-matter";
 
 const DOCS_DIR = path.join(process.cwd(), "src/content/docs");
-const DIST_DIR = path.join(process.cwd(), "dist");
+const DISTMD_DIR = path.join(process.cwd(), "distmd");
 
-// Maximum length for descriptions
-const MAX_DESCRIPTION_LENGTH = 160;
+// Localhost application URL
+const LOCALHOST_URL = "http://localhost:8787";
 
 /**
- * Extracts the first paragraph from HTML content
+ * Sends text content to localhost application and receives description back
  */
-function extractFirstParagraph(html: string): string | undefined {
-	const dom = parseHTML(html);
-	const paragraph = dom.querySelector("p");
+async function generateDescriptionFromAPI(
+	content: string,
+): Promise<string | undefined> {
+	try {
+		const response = await fetch(LOCALHOST_URL, {
+			method: "POST",
+			headers: {
+				"Content-Type": "text/plain",
+			},
+			body: content,
+		});
 
-	if (paragraph) {
-		return paragraph.textContent.trim();
+		if (!response.ok) {
+			throw new Error(`HTTP error! status: ${response.status}`);
+		}
+
+		const description = await response.text();
+		// Remove surrounding quotes if they exist
+		const trimmed = description.trim();
+		if ((trimmed.startsWith('"') && trimmed.endsWith('"')) || 
+		    (trimmed.startsWith("'") && trimmed.endsWith("'"))) {
+			return trimmed.slice(1, -1);
+		}
+		return trimmed;
+	} catch (error) {
+		console.error("Error calling localhost API:", error);
+		return undefined;
 	}
-
-	return undefined;
 }
 
 /**
- * Truncates a description to a reasonable length
- */
-function truncateDescription(description: string): string {
-	if (description.length <= MAX_DESCRIPTION_LENGTH) {
-		return description;
-	}
-
-	// Truncate at the last space before MAX_DESCRIPTION_LENGTH
-	const truncated = description.substring(0, MAX_DESCRIPTION_LENGTH);
-	const lastSpace = truncated.lastIndexOf(" ");
-
-	if (lastSpace > 0) {
-		return truncated.substring(0, lastSpace) + "...";
-	}
-
-	return truncated + "...";
-}
-
-/**
- * Gets the rendered HTML path for a docs file
+ * Gets the rendered markdown path for a docs file
  */
 function getRenderedPath(docPath: string): string {
-	// Convert /src/content/docs/product/path/file.mdx to /dist/product/path/file/index.html
+	// Convert /src/content/docs/product/path/file.mdx to /distmd/product/path/file/index.md
 	const relativePath = path.relative(DOCS_DIR, docPath);
 	const pathWithoutExt = relativePath.replace(/\.mdx$/, "");
-	return path.join(DIST_DIR, pathWithoutExt, "index.html");
+	const filename = path.basename(pathWithoutExt);
+	const dirPath = path.dirname(pathWithoutExt);
+	return path.join(DISTMD_DIR, dirPath, filename, "index.md");
 }
 
 /**
@@ -224,43 +224,33 @@ async function main() {
 					continue;
 				}
 
-				// Get the rendered HTML path
+				// Get the rendered markdown path
 				const renderedPath = getRenderedPath(mdxFile);
 
-				// Check if rendered HTML exists
+				// Check if rendered markdown exists
 				try {
 					await fs.access(renderedPath);
 				} catch (error) {
-					console.log(error);
 					console.warn(
-						`⚠️ Rendered HTML not found for ${path.relative(process.cwd(), mdxFile)}`,
+						`⚠️ Rendered markdown not found for ${path.relative(process.cwd(), mdxFile)}`,
 					);
 					errorCount++;
 					continue;
 				}
 
-				// Read rendered HTML
-				const html = await fs.readFile(renderedPath, "utf-8");
+				// Read rendered markdown content
+				const markdownContent = await fs.readFile(renderedPath, "utf-8");
 
-				// Extract main content from HTML
-				const dom = parseHTML(html);
-				const mainContent = dom.querySelector("main")?.innerHTML || "";
-
-				if (!mainContent) {
+				if (!markdownContent.trim()) {
 					console.warn(
-						`⚠️ No main content found in rendered HTML for ${path.relative(process.cwd(), mdxFile)}`,
+						`⚠️ Empty markdown content found for ${path.relative(process.cwd(), mdxFile)}`,
 					);
 					errorCount++;
 					continue;
 				}
 
-				// Generate description
-				let description = await generateDescription({ html: mainContent });
-
-				// If no description was generated, try extracting the first paragraph
-				if (!description) {
-					description = extractFirstParagraph(mainContent);
-				}
+				// Generate description using localhost API
+				const description = await generateDescriptionFromAPI(markdownContent);
 
 				// Skip if no description could be generated
 				if (!description) {
@@ -270,9 +260,6 @@ async function main() {
 					errorCount++;
 					continue;
 				}
-
-				// Truncate description if needed
-				description = truncateDescription(description);
 
 				// Update frontmatter
 				const wasUpdated = await updateFrontmatter(mdxFile, description);
