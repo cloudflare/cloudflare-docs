@@ -33,12 +33,14 @@ const shouldChatbotDeprioritize =
 // if not a top-level page, add metadata values from src/content/products/ entries
 if (currentSection) {
 	// if entry for product, grab and proceed
+	console.log(currentSection);
 	let product = await getEntry("products", currentSection);
 	// if entry for changelog, grab the first product value (which corresponds to the folder the entry is in) and use as the primary "product"
 	if (currentSection === "changelog") {
 		const products = frontmatter.products;
-		if (products) {
-			product = await getEntry("products", products[0]);
+		if (products && products.length > 0) {
+			const primaryProduct = products[0];
+			product = await getEntry("products", primaryProduct.id);
 		}
 	}
 
@@ -112,11 +114,11 @@ if (shouldChatbotDeprioritize) {
 if (
 	frontmatter.description &&
 	head.findIndex(
-		({ tag, attrs }) => tag === "meta" && attrs?.name === "description"
+		({ tag, attrs }) => tag === "meta" && attrs?.name === "description",
 	) === -1
 ) {
 	const existingOpenGraphTag = head.findIndex(
-		({ tag, attrs }) => tag === "meta" && attrs?.property === "og:description"
+		({ tag, attrs }) => tag === "meta" && attrs?.property === "og:description",
 	);
 
 	if (existingOpenGraphTag !== -1) {
@@ -166,7 +168,7 @@ if (lastUpdated) {
 if (frontmatter.reviewed) {
 	const daysBetween = differenceInCalendarDays(
 		new Date(),
-		frontmatter.reviewed
+		frontmatter.reviewed,
 	);
 
 	metaTags.push({
@@ -197,7 +199,7 @@ if (frontmatter.pcx_content_type === "changelog") {
 
 const ogImagePath = await getOgImage(
 	(Astro.locals.starlightRoute.originalEntry as CollectionEntry<"changelog">) ??
-		Astro.locals.starlightRoute.entry
+		Astro.locals.starlightRoute.entry,
 );
 const ogImageUrl = new URL(ogImagePath, Astro.url.origin).toString();
 
