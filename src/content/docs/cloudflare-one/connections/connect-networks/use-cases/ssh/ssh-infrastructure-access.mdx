@@ -223,11 +223,11 @@ As an end user, run [`warp-cli target list`](/cloudflare-one/applications/non-ht
 
 - If the target appears in the list, confirm that the username you are attempting to connect with is shown in the output. If the username is not shown, an administrator must find the Access policy associated with the target machine and add that username to the Access policy. An administrator should have created an Access policy in [substep 9 of step 5: Add an infrastructure application](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/#5-add-an-infrastructure-application). If the username is shown, that means the Access policy should be granting access and you should ensure that the tunnel is healthy in [step 2](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/#2-check-target-machine-connection).
 
-- If the target does not appear in the list, an administrator must audit your organization's policies for the target machine in the Zero Trust dashboard for potential misconfigurations that may be blocking access.
+- If the target does not appear in the list, an administrator must audit the Access policies for the target machine in the Zero Trust dashboard for potential misconfiguration that may be blocking connection.
 
 #### Administrators
 
-As an admin, instead of running `warp-cli target list`, you can use the Access logs to review if an Access policy is causing connection issues. Reviewing logs is useful when troubleshooting connection issues on behalf of the end user.
+As an admin, instead of running `warp-cli target list` on the end user device, you can use the Access logs to review if an Access policy is causing connection issues. Reviewing logs is useful when troubleshooting connection issues on behalf of the end user.
 
 :::note
 
@@ -241,7 +241,7 @@ You will need Cloudflare dashboard access and log view [permissions](/cloudflare
 
 3. Review the **Decision**. If the **Decision** is `Access denied`, select the application and copy the name under App.
 
-	If the decision is `Access granted`, Access policies are not interfering with your connection attempts and your connection issue is due to the Cloudflare Tunnel, SSH server, or the `sshd_config` file.
+	If the decision is `Access granted`, Access policies are not interfering with your connection attempts and your connection issue is due to the Cloudflare Tunnel, the SSH server, or the `sshd_config` file.
 
 4. Go to **Access** > **Applications**.
 
@@ -262,12 +262,12 @@ If the end user cannot connect to the target SSH machine, the tunnel you set up 
 To check the status of your Tunnel:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Networks** > **Routes**.
-2. Search your IP to find the Tunnel associated with the IP.
+2. Search your IP to find the tunnel associated with the IP.
 
 	This IP will be visible in the `warp-cli target list` output in [the previous step](#1-review-access-policies). If you are an admin, you can also go to **Networks** > **Targets** and find the IP next to your Hostname.
 
-3. Copy the Tunnel name.
-4. Go to **Networks** > **Tunnels** and search by your Tunnel name.
+3. Copy the tunnel name.
+4. Go to **Networks** > **Tunnels** and search by your tunnel name.
 5. Review that the [Tunnel status](/cloudflare-one/connections/connect-networks/monitor-tunnels/notifications/#available-notifications) says `Active`, and not `Down`, `Degraded`, or `Inactive`.
 
 | Status    | Meaning                                                                                                                                                           | Recommended Action                                                                                                                                                                                                                                                                                            |
@@ -462,7 +462,7 @@ These troubleshooting steps could result in you being locked out of your SSH ser
 	vi /etc/ssh/sshd_config
 	```
 
-3. Enter insert mode by pressing the 'i' key on your keyboard.
+3. Enter insert mode by pressing the `i` key on your keyboard.
 
 4. Paste in the [example file](#review-your-sshd_config-file-for-misconfigurations).
 
