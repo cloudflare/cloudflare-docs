@@ -1,6 +1,11 @@
 ---
 import { z } from "astro:schema";
-import { getCollection, type CollectionEntry } from "astro:content";
+import {
+	getCollection,
+	type CollectionEntry,
+	getEntries,
+	reference,
+} from "astro:content";
 import ResourcesBySelectorReact from "./ResourcesBySelector";
 
 type Props = z.input<typeof props>;
@@ -14,7 +19,7 @@ type ResourcesData = DocsData | VideosData | LearningPathsData;
 const props = z.object({
 	tags: z.string().array().optional(),
 	types: z.string().array(),
-	products: z.string().array().optional(),
+	products: reference("products").array().optional(),
 	directory: z.string().optional(),
 	filterables: z.custom<ResourcesData>().array().optional(),
 	columns: z.union([z.literal(1), z.literal(2), z.literal(3)]).default(2),
@@ -53,11 +58,11 @@ const resources: Array<
 			(tags ? data.tags?.some((v: string) => tags.includes(v)) : true) &&
 			(products
 				? data.products?.some((v) =>
-						products.includes(typeof v === "object" ? v.id : v)
+						products.some((p) => p.id === (typeof v === "object" ? v.id : v)),
 					)
 				: true)
 		);
-	}
+	},
 );
 
 // Check for duplicate IDs
@@ -74,13 +79,13 @@ for (const resource of resources) {
 
 if (duplicateIds.length > 0) {
 	throw new Error(
-		`[ResourcesBySelector] Found duplicate resource IDs: ${duplicateIds.join(", ")}`
+		`[ResourcesBySelector] Found duplicate resource IDs: ${duplicateIds.join(", ")}`,
 	);
 }
 
 if (resources.length === 0) {
 	throw new Error(
-		`[ResourcesBySelector] Couldn't resources related to your filtered options`
+		`[ResourcesBySelector] Couldn't resources related to your filtered options`,
 	);
 }
 
@@ -93,6 +98,14 @@ const facets = resources.reduce(
 			if (val) {
 				if (Array.isArray(val) && val.every((v) => typeof v === "string")) {
 					acc[filter] = [...new Set([...(acc[filter] || []), ...val])];
+				} else if (
+					// Handle specific logic for products which need to getEntry("products") to grab the pretty name
+					Array.isArray(val) &&
+					val.every((v) => typeof v === "object" && filter === "products")
+				) {
+					acc[filter] = [
+						...new Set([...(acc[filter] || []), ...val.map((v) => v.id)]),
+					];
 				} else if (typeof val === "string") {
 					acc[filter] = [...new Set([...(acc[filter] || []), val])];
 				}
@@ -101,7 +114,7 @@ const facets = resources.reduce(
 
 		return acc;
 	},
-	{} as Record<string, string[]>
+	{} as Record<string, string[]>,
 );
 ---
 

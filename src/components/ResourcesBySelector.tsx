@@ -59,15 +59,18 @@ export default function ResourcesBySelector({
 
 	const options = Object.entries(facets).map(([key, values]) => ({
 		label: key,
-		options: values.map((v) => ({
-			value: v,
-			label: key === "pcx_content_type" ? formatContentType(v) : v,
-		})),
+		options: values
+			.sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }))
+			.map((v) => ({
+				value: v.toLowerCase(),
+				label: key === "pcx_content_type" ? formatContentType(v) : v,
+			})),
 	}));
 
 	// Keep facets organized by filterable field for left sidebar
 
 	const visibleResources = resources.filter((resource) => {
+
 		// Handle top filter (ReactSelect)
 		if (filterPlacement === "top" && selectedFilter && filters) {
 			const filterableValues: string[] = [];
@@ -76,7 +79,10 @@ export default function ResourcesBySelector({
 				if (val) {
 					if (Array.isArray(val) && val.every((v) => typeof v === "string")) {
 						filterableValues.push(...val);
-					} else if (typeof val === "string") {
+					} else if (Array.isArray(val) && val.every((v) => typeof v === "object")) {
+						filterableValues.push(...val.map((v) => v.id));
+					}
+					else if (typeof val === "string") {
 						filterableValues.push(val);
 					}
 				}
@@ -96,6 +102,8 @@ export default function ResourcesBySelector({
 					if (val) {
 						if (Array.isArray(val) && val.every((v) => typeof v === "string")) {
 							resourceValues.push(...val);
+						} else if (Array.isArray(val) && val.every((v) => typeof v === "object")) {
+							resourceValues.push(...val.map((v) => v.id));
 						} else if (typeof val === "string") {
 							resourceValues.push(val);
 						}
