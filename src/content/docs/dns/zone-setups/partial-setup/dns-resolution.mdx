@@ -85,3 +85,7 @@ In this case, Cloudflare will always resolve the CNAME target based on the value
       C
       end
 ```
+
+:::caution
+Having the record in your authoritative DNS provider point to `cdn.cloudflare.net` while the A record in the target partial zone is also proxied (`www.partialzone.com A 203.0.113.1` in this example) will cause the subdomain to resolve to a Cloudflare proxy IP, resulting in an error. Consider [custom hostnames](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/) and [Orange-to-Orange](/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/how-it-works/) setup instead.
+:::
