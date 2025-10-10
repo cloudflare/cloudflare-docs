@@ -19,10 +19,10 @@ type ResourcesData = DocsData | VideosData | LearningPathsData;
 interface Props {
 	resources: Array<
 		(| CollectionEntry<"docs">
-		| CollectionEntry<"stream">
-		| CollectionEntry<"learning-paths">) & {
-			data: any & { productTitles?: string[] };
-		}
+			| CollectionEntry<"stream">
+			| CollectionEntry<"learning-paths">) & {
+				data: any & { productTitles?: string[] };
+			}
 	>;
 	facets: Record<string, string[]>;
 	filters?: ResourcesData[];
@@ -223,8 +223,8 @@ export default function ResourcesBySelector({
 								{filterField === "pcx_content_type"
 									? "Content Type"
 									: filterField
-											.replace(/_/g, " ")
-											.replace(/\b\w/g, (l) => l.toUpperCase())}
+										.replace(/_/g, " ")
+										.replace(/\b\w/g, (l) => l.toUpperCase())}
 							</span>
 
 							{values.map((value) => (
@@ -279,11 +279,11 @@ export default function ResourcesBySelector({
 						value={
 							selectedFilter
 								? {
-										value: selectedFilter,
-										label: selectedFilter.includes("-")
-											? formatContentType(selectedFilter)
-											: selectedFilter,
-									}
+									value: selectedFilter,
+									label: selectedFilter.includes("-")
+										? formatContentType(selectedFilter)
+										: selectedFilter,
+								}
 								: null
 						}
 						options={options}
@@ -354,7 +354,7 @@ export default function ResourcesBySelector({
 									</span>
 								)}
 								{showLastUpdated && "reviewed" in page.data && (
-									<span className="line-clamp-3" title={page.data.description}>
+									<span className="line-clamp-3" title={`Updated ${timeAgo(page.data.reviewed)}`}>
 										Updated {timeAgo(page.data.reviewed)}
 									</span>
 								)}
