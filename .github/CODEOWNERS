@@ -6,14 +6,14 @@
 
 /.github/ @cloudflare/pcx-content-engineering
 /.github/CODEOWNERS @cloudflare/pcx-technical-writing
-/.github/actions/assign-pr/index.js @cloudflare/pcx-technical-writing
-/src/components/ @cloudflare/pcx-content-engineering
-*.js @cloudflare/pcx-content-engineering
-*.ts @cloudflare/pcx-content-engineering
-*.astro @cloudflare/pcx-content-engineering
-/src/schemas/tags.ts @cloudflare/pcx-content-engineering @joslyn-cf
-/src/content/workers-ai-models/ @craigsdennis @cloudflare/pcx-content-engineering @cloudflare/pcx-technical-writing
-/public/__redirects @cloudflare/pcx-content-engineering @cloudflare/pcx-technical-writing
+/.github/actions/assign-pr/index.js @cloudflare/pcx-technical-writing @kodster28
+/src/components/ @cloudflare/pcx-content-engineering @kodster28
+*.js @cloudflare/pcx-content-engineering @kodster28
+*.ts @cloudflare/pcx-content-engineering @kodster28
+*.astro @cloudflare/pcx-content-engineering @kodster28
+/src/schemas/tags.ts @cloudflare/pcx-content-engineering @joslyn-cf @kodster28
+/src/content/workers-ai-models/ @craigsdennis @cloudflare/pcx-content-engineering @cloudflare/pcx-technical-writing @kodster28
+/public/__redirects @cloudflare/pcx-content-engineering @cloudflare/pcx-technical-writing @kodster28
 
 
 # AI
