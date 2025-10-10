@@ -9,7 +9,7 @@ import { Render, DashButton, Details } from "~/components";
 
 A [public load balancer](/load-balancing/load-balancers/) allows you to distribute traffic across the servers that are running your [published applications](/cloudflare-one/connections/connect-networks/routing-to-tunnel/).
 
-When you add a [published application route](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/#2a-publish-an-application) to your Cloudflare Tunnel, Cloudflare generates a subdomain of `cfargotunnel.com` with the UUID of the created tunnel. You can add the application to a load balancer pool by using `<UUID>.cfargotunnel.com` as the [endpoint address](/load-balancing/understand-basics/load-balancing-components/#endpoints) and specifying the application hostname (`app.example.com`) in the [host header](/load-balancing/additional-options/override-http-host-headers/). Load Balancer does not support directly adding `app.example.com` as an endpoint if the service is behind Cloudflare Tunnel.
+When you add a [published application route](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/#2a-publish-an-application) to your Cloudflare Tunnel, Cloudflare generates a subdomain of `cfargotunnel.com` with the UUID of the created tunnel. You can add the application to a load balancer pool by using `<UUID>.cfargotunnel.com` as the [endpoint address](/load-balancing/understand-basics/load-balancing-components/#endpoints) and specifying the application hostname (`app.example.com`) in the [endpoint host header](/load-balancing/additional-options/override-http-host-headers/). Load Balancer does not support directly adding `app.example.com` as an endpoint if the service is behind Cloudflare Tunnel.
 
 ## Create a public load balancer
 
@@ -33,7 +33,7 @@ To create a load balancer for Cloudflare Tunnel published applications:
 8. To add a tunnel endpoint to the pool, configure the following fields:
 			- **Endpoint Name**: Name of the server that is running the application
 			- **Endpoint Address**: `<UUID>.cfargotunnel.com`, where `<UUID>` is replaced by your Tunnel ID. You can find the **Tunnel ID** in [Zero Trust](https://one.dash.cloudflare.com) under **Networks** > **Tunnels**.
-			- **Header value**: Hostname of your published application route (such as `app.example.com`). To find the hostname value, open your tunnel configuration and go to the **Published application routes** tab.
+			- **Header value**: Hostname of your published application route (such as `app.example.com`). To find the hostname value, open your Cloudflare Tunnel configuration and go to the **Published application routes** tab.
 			- **Weight**: Assign a [weight](/load-balancing/understand-basics/traffic-steering/origin-level-steering/#weights) to the endpoint. If you only have one endpoint, enter `1`.
 	:::note
 	A single origin pool cannot have the same Tunnel UUID referenced twice.
@@ -61,7 +61,7 @@ The application will default to the Cloudflare settings for the load balancer ho
 
 ## Common architectures
 
-Review common load balancing configurations for Cloudflare Tunnel published applications.
+Review common load balancing configurations for published applications behind Cloudflare Tunnel.
 
 ### One tunnel per region
 
@@ -102,9 +102,9 @@ As shown in the diagram, a typical setup includes:
 - A dedicated Cloudflare Tunnel per data center.
 - One load balancer pool per tunnel.
 - One load balancer endpoint per pool, where the host header is set to the `cloudflared` published application hostname.
-- At least two `cloudflared` [replicas](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-availability/#cloudflared-replicas) per tunnel in their respective data centers, in case a `cloudflared` host machine goes down.
+- At least two `cloudflared` [replicas](#session-affinity-and-replicas) per tunnel in their respective data centers, in case a `cloudflared` host machine goes down.
 
-Users will access the application using the load balancer hostname (`app.example.com`). Note that this setup is only valid for [Active-Passive failover](/load-balancing/load-balancers/common-configurations/#active---passive-failover), since each pool only supports one endpoint per tunnel.
+Users can now connect to the application using the load balancer hostname (`app.example.com`). Note that this configuration is only valid for [Active-Passive failover](/load-balancing/load-balancers/common-configurations/#active---passive-failover), since each pool only supports one endpoint per tunnel.
 
 ### Multiple apps per tunnel
 
@@ -141,43 +141,39 @@ graph LR
 		end
 ```
 
-This setup includes:
+This load balancing setup includes:
 
 - Two Cloudflare Tunnels with identical routes to both applications.
 - One load balancer pool per application.
 - Each load balancer pool has an endpoint per tunnel.
 - A [DNS record](#dns-records) for each application that points to the load balancer hostname.
 
-Users can now access all applications through the load balancer. Since there are multiple tunnel endpoints per pool, this configuration supports [Active-Active Failover](/load-balancing/load-balancers/common-configurations/#active---active-failover). Active-Active uses all available endpoints in the pool to process requests simultaneously, providing better performance and scalability by load-balancing traffic across them.
+Users can now access all applications through the load balancer. Since there are multiple tunnel endpoints per pool, this configuration supports [Active-Active Failover](/load-balancing/load-balancers/common-configurations/#active---active-failover). Active-Active uses all available endpoints in the pool to process requests simultaneously, providing better performance and scalability by load balancing traffic across them.
 
 #### DNS records
 
-When you configure a published application route via the dashboard, Cloudflare will automatically generate a `CNAME` DNS record that points the application hostname (`app1.example.com`) to `<UUID>.cfargotunnel.com`. You can [edit these DNS records](/dns/manage-dns-records/how-to/create-dns-records/#edit-dns-records) so that they point to the load balancer hostname instead.
+When you configure a published application route via the dashboard, Cloudflare will automatically generate a `CNAME` DNS record that points the application hostname (`app1.example.com`) to the tunnel subdomain (`<UUID>.cfargotunnel.com`). You can [edit these DNS records](/dns/manage-dns-records/how-to/create-dns-records/#edit-dns-records) so that they point to the load balancer hostname instead.
 
-<Details header="Example" open={true}>
-Auto-generated DNS records after setting up [Multiple apps per tunnel](#multiple-apps-per-tunnel):
+:::note
+Tunnel routes configured via the API or CLI require [manually creating DNS records](/cloudflare-one/connections/connect-networks/routing-to-tunnel/dns/).
+:::
 
+Here is an example of what your DNS records will look like before and after setting up [Multiple apps per tunnel](#multiple-apps-per-tunnel):
+
+**Before**:
 | Type | Name | Content |
 | ---- | ---- | ------- |
-| LB   | `lb.example.com` | n/a|
 | CNAME | app1 | `<UUID_1>.cfargotunnel.com` |
 | CNAME | app2 | `<UUID_1>.cfargotunnel.com` |
 | CNAME | app1 | `<UUID_2>.cfargotunnel.com` |
 | CNAME | app2 | `<UUID_2>.cfargotunnel.com`  |
 
-Updated DNS records:
-
+**After**:
 | Type | Name | Content |
 | ---- | ---- | ------- |
 | LB   | `lb.example.com` | n/a |
 | CNAME | app1 | `lb.example.com` |
 | CNAME | app2 | `lb.example.com` |
-
-</Details>
-
-:::note
-Tunnel routes configured via the API or CLI require [manually creating the DNS record](/cloudflare-one/connections/connect-networks/routing-to-tunnel/dns/).
-:::
 
 ## Known limitations
 
