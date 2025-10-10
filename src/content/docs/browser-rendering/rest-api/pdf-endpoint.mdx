@@ -138,14 +138,9 @@ curl -X POST https://api.cloudflare.com/client/v4/accounts/<acccountID>/browser-
   --output "cloudflare.pdf"
 ```
 
-<Render
-  file="setting-custom-user-agent"
-  product="browser-rendering"
-/>
+### Customize page headers and footers
 
-### Generate a PDF with custom header and footer
-
-You can customize page headers and footers with HTML templates using the headerTemplate and footerTemplate options. Enable displayHeaderFooter to include them in your output. This example generates an A5 PDF with a branded header, a footer message, and page numbering.
+You can customize page headers and footers with HTML templates using the `headerTemplate` and `footerTemplate` options. Enable `displayHeaderFooter` to include them in your output. This example generates an A5 PDF with a branded header, a footer message, and page numbering.
 
 ```bash
 curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/pdf' \
@@ -167,7 +162,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
   --output "header-footer.pdf"
 ```
 
-### Generate a PDF with page numbers and metadata
+### Include dynamic placeholders from page metadata
 
 You can include dynamic placeholders such as title, date, pageNumber, and totalPages in the header or footer to display metadata on each page. This example produces an A4 PDF with a company-branded header, current date and title, and page numbering in the footer.
 
@@ -194,6 +189,11 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
       },
       "timeout": 30000
     }
+
+<Render
+  file="setting-custom-user-agent"
+  product="browser-rendering"
+/>
   }' \
   --output "paginated.pdf"
 ```
