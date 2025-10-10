@@ -9,11 +9,6 @@ import {
 } from "astro:content";
 import ResourcesBySelectorReact from "./ResourcesBySelector";
 
-type BaseResource =
-	| CollectionEntry<"docs">
-	| CollectionEntry<"stream">
-	| CollectionEntry<"learning-paths">;
-
 type Props = z.input<typeof props>;
 
 type DocsData = keyof CollectionEntry<"docs">["data"];
