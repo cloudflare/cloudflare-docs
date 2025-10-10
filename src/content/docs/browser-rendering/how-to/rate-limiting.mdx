@@ -7,6 +7,11 @@ sidebar:
 
 ## Example: Handling 429 Rate Limits with Retry-After Header
 
+When you make too many requests in a short period of time, Browser Rendering will respond with HTTP status code `429 Too Many Requests`.
+The response includes a `Retry-After` header, which specifies how many seconds to wait before retrying. You can view your account's rate limits on the Limits(/browser-rendering/platform/limits/) page. 
+
+The example below demonstrates how to handle rate limiting gracefully by reading the `Retry-After` value and retrying the request after that delay.
+
 ```js
 const response = await fetch('https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/content', {
     method: 'POST',
