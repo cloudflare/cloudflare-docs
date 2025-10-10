@@ -4,9 +4,15 @@ import {
 	getCollection,
 	type CollectionEntry,
 	getEntries,
+	getEntry,
 	reference,
 } from "astro:content";
 import ResourcesBySelectorReact from "./ResourcesBySelector";
+
+type BaseResource =
+	| CollectionEntry<"docs">
+	| CollectionEntry<"stream">
+	| CollectionEntry<"learning-paths">;
 
 type Props = z.input<typeof props>;
 
@@ -44,11 +50,7 @@ const docs = await getCollection("docs");
 const videos = await getCollection("stream");
 const learningPaths = await getCollection("learning-paths");
 
-const resources: Array<
-	| CollectionEntry<"docs">
-	| CollectionEntry<"stream">
-	| CollectionEntry<"learning-paths">
-> = [...docs, ...videos, ...learningPaths].filter(
+const filteredResources = [...docs, ...videos, ...learningPaths].filter(
 	({ id, collection, data }) => {
 		const type =
 			"pcx_content_type" in data ? data.pcx_content_type : collection;
@@ -63,6 +65,37 @@ const resources: Array<
 				: true)
 		);
 	},
+);
+
+// Enhance resources with resolved product titles
+const resources = await Promise.all(
+	filteredResources.map(async (resource) => {
+		if (resource.collection === "docs") {
+			const currentSection = resource.id.split("/")[0].replaceAll(".", "");
+			const currentProduct = await getEntry("products", currentSection);
+			if (currentProduct) {
+				resource.data.products.push(currentProduct);
+			}
+		}
+
+		const productEntries = await getEntries(resource.data.products);
+		const productTitles = productEntries.map((p) => {
+			if (p === undefined) {
+				throw new Error(
+					`Product value was not found. Check the filenames defined at https://github.com/cloudflare/cloudflare-docs/tree/production/src/content/products to make sure they match what's defined in your frontmatter.products field.`,
+				);
+			}
+			return p.data.name as string;
+		});
+
+		return {
+			...resource,
+			data: {
+				...resource.data,
+				productTitles,
+			},
+		};
+	}),
 );
 
 // Check for duplicate IDs
@@ -98,13 +131,10 @@ const facets = resources.reduce(
 			if (val) {
 				if (Array.isArray(val) && val.every((v) => typeof v === "string")) {
 					acc[filter] = [...new Set([...(acc[filter] || []), ...val])];
-				} else if (
-					// Handle specific logic for products which need to getEntry("products") to grab the pretty name
-					Array.isArray(val) &&
-					val.every((v) => typeof v === "object" && filter === "products")
-				) {
+				} else if (filter === "products" && page.data.productTitles) {
+					// Use resolved product titles instead of IDs for products filter
 					acc[filter] = [
-						...new Set([...(acc[filter] || []), ...val.map((v) => v.id)]),
+						...new Set([...(acc[filter] || []), ...page.data.productTitles]),
 					];
 				} else if (typeof val === "string") {
 					acc[filter] = [...new Set([...(acc[filter] || []), val])];

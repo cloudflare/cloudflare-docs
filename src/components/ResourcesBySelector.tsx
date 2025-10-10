@@ -18,9 +18,11 @@ type ResourcesData = DocsData | VideosData | LearningPathsData;
 
 interface Props {
 	resources: Array<
-		| CollectionEntry<"docs">
+		(| CollectionEntry<"docs">
 		| CollectionEntry<"stream">
-		| CollectionEntry<"learning-paths">
+		| CollectionEntry<"learning-paths">) & {
+			data: any & { productTitles?: string[] };
+		}
 	>;
 	facets: Record<string, string[]>;
 	filters?: ResourcesData[];
@@ -62,8 +64,11 @@ export default function ResourcesBySelector({
 		options: values
 			.sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }))
 			.map((v) => ({
-				value: v.toLowerCase(),
-				label: key === "pcx_content_type" ? formatContentType(v) : v,
+				value: v,
+				label: (() => {
+					if (key === "pcx_content_type") return formatContentType(v);
+					return v;
+				})(),
 			})),
 	}));
 
@@ -75,15 +80,20 @@ export default function ResourcesBySelector({
 		if (filterPlacement === "top" && selectedFilter && filters) {
 			const filterableValues: string[] = [];
 			for (const filter of filters) {
-				const val = resource.data[filter as keyof typeof resource.data];
-				if (val) {
-					if (Array.isArray(val) && val.every((v) => typeof v === "string")) {
-						filterableValues.push(...val);
-					} else if (Array.isArray(val) && val.every((v) => typeof v === "object")) {
-						filterableValues.push(...val.map((v) => v.id));
-					}
-					else if (typeof val === "string") {
-						filterableValues.push(val);
+				if (filter === "products" && resource.data.productTitles) {
+					// Use resolved product titles for products filter
+					filterableValues.push(...resource.data.productTitles);
+				} else {
+					const val = resource.data[filter as keyof typeof resource.data];
+					if (val) {
+						if (Array.isArray(val) && val.every((v) => typeof v === "string")) {
+							filterableValues.push(...val);
+						} else if (Array.isArray(val) && val.every((v) => typeof v === "object")) {
+							filterableValues.push(...val.map((v) => v.id));
+						}
+						else if (typeof val === "string") {
+							filterableValues.push(val);
+						}
 					}
 				}
 			}
@@ -98,14 +108,19 @@ export default function ResourcesBySelector({
 			)) {
 				if (selectedValues.length > 0) {
 					const resourceValues: string[] = [];
-					const val = resource.data[filterField as keyof typeof resource.data];
-					if (val) {
-						if (Array.isArray(val) && val.every((v) => typeof v === "string")) {
-							resourceValues.push(...val);
-						} else if (Array.isArray(val) && val.every((v) => typeof v === "object")) {
-							resourceValues.push(...val.map((v) => v.id));
-						} else if (typeof val === "string") {
-							resourceValues.push(val);
+					if (filterField === "products" && resource.data.productTitles) {
+						// Use resolved product titles for products filter
+						resourceValues.push(...resource.data.productTitles);
+					} else {
+						const val = resource.data[filterField as keyof typeof resource.data];
+						if (val) {
+							if (Array.isArray(val) && val.every((v) => typeof v === "string")) {
+								resourceValues.push(...val);
+							} else if (Array.isArray(val) && val.every((v) => typeof v === "object")) {
+								resourceValues.push(...val.map((v) => v.id));
+							} else if (typeof val === "string") {
+								resourceValues.push(val);
+							}
 						}
 					}
 					if (!resourceValues.some((v) => selectedValues.includes(v))) {
@@ -317,7 +332,7 @@ export default function ResourcesBySelector({
 
 						if (page.collection === "docs") {
 							const titleItem = page.data.head.find(
-								(item) => item.tag === "title",
+								(item: any) => item.tag === "title",
 							);
 							title = titleItem ? titleItem.content : page.data.title;
 						} else {

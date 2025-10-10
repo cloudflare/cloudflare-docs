@@ -9,15 +9,14 @@ const props = {
 	frontmatter: {
 		title: "Resources",
 		template: "splash",
+		description:
+			"Explore our resources to learn more about Cloudflare products and services",
 	},
 	hideBreadcrumbs: true,
 } as StarlightPageProps;
 ---
 
 <StarlightPage {...props}>
-	<p>
-		Explore our resources to learn more about Cloudflare products and services.
-	</p>
 	<ResourcesBySelector
 		directory=""
 		types={[
