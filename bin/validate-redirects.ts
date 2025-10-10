@@ -29,6 +29,7 @@ async function main() {
 
 		if (
 			!validEndings.some((ending) => from.endsWith(ending)) &&
+			// CED-99 - known exception for /api where this isn't natively handled by our app
 			from != "/api"
 		) {
 			console.log(`✘ Found unslashed source URLs:\n    ${from}`);
