@@ -89,6 +89,10 @@ curl -X POST https://api.cloudflare.com/client/v4/accounts/<acccountID>/browser-
   --output "invoice.pdf"
 ```
 
+:::note[Request size limits]
+The PDF endpoint accepts request bodies up to 50 MB. Requests larger than this will fail with `???`.
+:::
+
 ## Advanced usage
 
 :::note[Looking for more parameters?]
