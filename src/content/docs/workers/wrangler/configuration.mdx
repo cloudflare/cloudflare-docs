@@ -118,7 +118,7 @@ The `main` key is optional for assets-only Workers.
   - Enables use of `*.workers.dev` subdomain to deploy your Worker. If you have a Worker that is only for `scheduled` events, you can set this to `false`. Defaults to `true`. Refer to [types of routes](#types-of-routes).
 
 - `preview_urls` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Enables use of Preview URLs to test your Worker. Defaults to `false`. Refer to [Preview URLs](/workers/configuration/previews).
+  - Enables use of Preview URLs to test your Worker. Defaults to value of `workers_dev`. Refer to [Preview URLs](/workers/configuration/previews).
 
 - `route` <Type text="Route" /> <MetaInfo text="optional" />
   - A route that your Worker should be deployed to. Only one of `routes` or `route` is required. Refer to [types of routes](#types-of-routes).
@@ -992,7 +992,7 @@ The following options are available:
   - To specify a custom instance type, see [here](#custom-instance-types).
 
 - `max_instances` <Type text="string" /> <MetaInfo text="optional" />
-  - The maximum number of concurrent container instances you want to run at any given moment. Stopped containers do not count towards this - you may have more container instances than this number overall, but only this many actively running containers at once. If a request to start a container will exceed this limit, that request will error. 
+  - The maximum number of concurrent container instances you want to run at any given moment. Stopped containers do not count towards this - you may have more container instances than this number overall, but only this many actively running containers at once. If a request to start a container will exceed this limit, that request will error.
 
   - Defaults to 20.
 
