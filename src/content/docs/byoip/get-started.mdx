@@ -5,11 +5,11 @@ sidebar:
   order: 2
 ---
 
-import { APIRequest, Tabs, TabItem, GlossaryDefinition, Details } from "~/components";
+import { APIRequest, Tabs, TabItem, GlossaryDefinition, GlossaryTooltip, Details } from "~/components";
 
 Work with your account team to make sure your contract covers everything you need to onboard your prefix. Cloudflare requires service-specific configurations, as well as some requirements common to all BYOIP customers.
 
-Once your account configurations are in place, consider the sections below to learn how to set up your BYOIP prefixes.
+Once your account configurations are in place, consider the sections below to learn how to set up your BYOIP prefixes. Also make sure to review the [BYOIP Service-Specific Terms](https://www.cloudflare.com/service-specific-terms-network-services/#bring-your-own-ip-terms).
 
 ## Before you begin
 
@@ -57,7 +57,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/addressing/prefix
 ```json title="Response" {15-19} ""id": "72823e95d6c64d48a8111fec81179816""
 
  "result": {
-    "id": "72823e95d6c64d48a8111fec81179816",
+	 "id": "72823e95d6c64d48a8111fec81179816",
     "created_at": "2025-02-25T00:34:11.423722Z",
     "modified_at": "2025-02-25T00:34:11.423722Z",
     "cidr": "203.0.113.0/24",
@@ -80,6 +80,10 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/addressing/prefix
 ```
 
 2. Take note of the `id` assigned to the prefix you added. It will be used in future steps.
+
+:::note[Letter of Agency (LOA)]
+The process described on this page leverages automated <GlossaryTooltip term="letter of agency" link="/byoip/concepts/loa/">LOA</GlossaryTooltip> generation. If you set `delegate_loa_creation` to `false`, you have to manually [upload your LOA](/api/resources/addressing/subresources/loa_documents/methods/create/), make a [PATCH request](/api/resources/addressing/subresources/prefixes/methods/edit/) once the prefix is approved, and contact your account team - which is more prone to error and increases the onboarding time.
+:::
 
 ### Validate prefix ownership
 
