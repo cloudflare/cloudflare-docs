@@ -1,0 +1,13 @@
+---
+title: Worker startup time increased to 1 second.
+description: Worker startup time has been increased from 400 ms to 1s.
+products:
+  - workers
+date: 2025-10-09
+---
+
+import { Render, TypeScriptExample, WranglerConfig } from "~/components";
+
+You can now upload a Worker that takes up 1 second to parse and execute its global scope. Previously, startup time was limited to 400 ms.
+
+For more information, see the documentation on [Workers startup limits](/workers/platform/limits/#worker-startup-time).

@@ -18,7 +18,7 @@ import { Render, WranglerConfig, DashButton } from "~/components";
 | [Environment variables](#environment-variables)                                  | 64/Worker    | 128/Worker   |
 | [Environment variable<br/>size](#environment-variables)                          | 5 KB         | 5 KB         |
 | [Worker size](#worker-size)                                                      | 3 MB         | 10 MB        |
-| [Worker startup time](#worker-startup-time)                                      | 400 ms       | 400 ms       |
+| [Worker startup time](#worker-startup-time)                                      | 1 second     | 1 second     |
 | [Number of Workers](#number-of-workers)<sup>1</sup>                              | 100          | 500          |
 | Number of [Cron Triggers](/workers/configuration/cron-triggers/)<br/>per account | 5            | 250          |
 | Number of [Static Asset](#static-assets) files per Worker version                | 20,000       | 100,000      |
@@ -335,7 +335,7 @@ To reduce the upload size of a Worker, consider some of the following strategies
 
 ## Worker startup time
 
-A Worker must be able to be parsed and execute its global scope (top-level code outside of any handlers) within 400 ms. Worker size can impact startup because there is more code to parse and evaluate. Avoiding expensive code in the global scope can keep startup efficient as well.
+A Worker must be able to be parsed and execute its global scope (top-level code outside of any handlers) within 1 second. Worker size can impact startup because there is more code to parse and evaluate. Avoiding expensive code in the global scope can keep startup efficient as well.
 
 You can measure your Worker's startup time by deploying it to Cloudflare using [Wrangler](/workers/wrangler/). When you run `npx wrangler@latest deploy` or `npx wrangler@latest versions upload`, Wrangler will output the startup time of your Worker in the command-line output, using the `startup_time_ms` field in the [Workers Script API](/api/resources/workers/subresources/scripts/methods/update/) or [Workers Versions API](/api/resources/workers/subresources/scripts/subresources/versions/methods/create/).
 
