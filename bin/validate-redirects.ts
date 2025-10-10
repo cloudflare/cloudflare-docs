@@ -27,7 +27,10 @@ async function main() {
 			numUrlsWithFragment++;
 		}
 
-		if (!validEndings.some((ending) => from.endsWith(ending)) && from != "/api") {
+		if (
+			!validEndings.some((ending) => from.endsWith(ending)) &&
+			from != "/api"
+		) {
 			console.log(`✘ Found unslashed source URLs:\n    ${from}`);
 			numNonSlashedRedirects++;
 		}
