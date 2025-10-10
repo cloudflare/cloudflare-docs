@@ -4,6 +4,9 @@ params:
   - productNameConnector
   - configureConnectorUrl
   - configureMwanManually
+  - greReferenceURL
+  - ipsecReferenceUrl
+  - ipsecReferenceConfigParams
 ---
 
 import { GlossaryTooltip, Render } from "~/components";
@@ -39,11 +42,11 @@ The list of prerequisites below is only for customers planning to connect manual
 
 ### Use compatible tunnel endpoint routers
 
-Magic WAN relies on <GlossaryTooltip term="GRE tunnel" link="/magic-wan/reference/gre-ipsec-tunnels/">GRE</GlossaryTooltip> and <GlossaryTooltip term="IPsec tunnel" link="/magic-wan/reference/gre-ipsec-tunnels/#ipsec-tunnels">IPsec tunnels</GlossaryTooltip> to transmit [packets](https://www.cloudflare.com/learning/network-layer/what-is-a-packet/) from Cloudflare's global network to your origin network. To ensure compatibility with Magic WAN, the routers at your tunnel endpoints must:
+Magic WAN relies on <a href={props.greReferenceURL}>GRE</a> and <a href={props.ipsecReferenceUrl}>IPsec tunnels</a> to transmit [packets](https://www.cloudflare.com/learning/network-layer/what-is-a-packet/) from Cloudflare's global network to your origin network. To ensure compatibility with Magic WAN, the routers at your tunnel endpoints must:
 
 - Allow configuration of at least one tunnel per Internet service provider (ISP).
 - Support <GlossaryTooltip term="maximum segment size (MSS)">maximum segment size (MSS)</GlossaryTooltip> clamping.
-- Support the configuration parameters for IPsec mentioned in [IPsec tunnels](/magic-wan/reference/gre-ipsec-tunnels/#supported-configuration-parameters).
+- Support the configuration parameters for IPsec mentioned in <a href={props.ipsecReferenceConfigParams}>IPsec tunnels</a> []().
 
 ### Set maximum segment size
 
