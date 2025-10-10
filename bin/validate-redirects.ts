@@ -28,6 +28,7 @@ async function main() {
 		}
 
 		if (
+			// CED-76 - flag unslashed redirects b/c these don't behave as expected due to our routing / preference for slashed endpoints
 			!validEndings.some((ending) => from.endsWith(ending)) &&
 			// CED-99 - known exception for /api where this isn't natively handled by our app
 			from != "/api"
