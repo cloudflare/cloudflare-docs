@@ -48,7 +48,7 @@ To migrate your legacy tunnels to the named tunnels architecture:
      cloudflared tunnel route dns <TUNNEL-NAME> tunnel.example.com
      ```
 
-   - If you used to run your legacy tunnel with the `--lb-pool` flag, run this command to set up your named tunnel as a load balancer origin. For more information, refer to the [Load Balancers routing](/cloudflare-one/connections/connect-networks/routing-to-tunnel/lb/) section.
+   - If you used to run your legacy tunnel with the `--lb-pool` flag, run this command to set up your named tunnel as a load balancer origin. For more information, refer to the [Load Balancers routing](/cloudflare-one/connections/connect-networks/routing-to-tunnel/public-load-balancers/) section.
 
      ```sh
      cloudflared tunnel route lb <TUNNEL-NAME> <LOAD-BALANCER-NAME> <LOAD-BALANCER-POOL>
