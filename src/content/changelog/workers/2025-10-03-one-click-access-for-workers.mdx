@@ -34,6 +34,14 @@ import { jwtVerify, createRemoteJWKSet } from "jose";
 
 export default {
 	async fetch(request, env, ctx) {
+		// Verify the POLICY_AUD environment variable is set
+		if (!env.POLICY_AUD) {
+			return new Response('Missing required audience', {
+				status: 403,
+				headers: { 'Content-Type': 'text/plain' }
+			});
+		}
+
 		// Get the JWT from the request headers
 		const token = request.headers.get("cf-access-jwt-assertion");
 
