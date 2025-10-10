@@ -4,16 +4,16 @@
 
 # More dev-specific files
 
-/.github/ @kodster28 @pedrosousa @haleycode @kristianfreeman @GregBrimble @KianNH @maxvp @marciocloudflare @WalshyDev
+/.github/ @cloudflare/pcx-content-engineering
 /.github/CODEOWNERS @cloudflare/pcx-technical-writing
-/.github/actions/assign-pr/index.js @cloudflare/pcx-technical-writing
-/src/components/ @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @marciocloudflare @haleycode @maxvp @GregBrimble @KianNH @WalshyDev
-*.js @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode @GregBrimble @KianNH @WalshyDev
-*.ts @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode @GregBrimble @KianNH @WalshyDev
-*.astro @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode @GregBrimble @KianNH @WalshyDev
-/src/schemas/tags.ts @kodster28 @KianNH @joslyn-cf
-/src/content/workers-ai-models/ @craigsdennis @pedrosousa @cloudflare/pcx-technical-writing
-/public/__redirects @GregBrimble @KianNH @pedrosousa @WalshyDev @cloudflare/pcx-technical-writing
+/.github/actions/assign-pr/index.js @cloudflare/pcx-technical-writing @kodster28
+/src/components/ @cloudflare/pcx-content-engineering @kodster28
+*.js @cloudflare/pcx-content-engineering @kodster28
+*.ts @cloudflare/pcx-content-engineering @kodster28
+*.astro @cloudflare/pcx-content-engineering @kodster28
+/src/schemas/tags.ts @cloudflare/pcx-content-engineering @joslyn-cf @kodster28
+/src/content/workers-ai-models/ @craigsdennis @cloudflare/pcx-content-engineering @cloudflare/pcx-technical-writing @kodster28
+/public/__redirects @cloudflare/pcx-content-engineering @cloudflare/pcx-technical-writing @kodster28
 
 
 # AI
