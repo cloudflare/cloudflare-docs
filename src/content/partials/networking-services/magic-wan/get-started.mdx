@@ -7,6 +7,7 @@ params:
   - greReferenceURL
   - ipsecReferenceUrl
   - ipsecReferenceConfigParams
+  - mtuReferenceURL
 ---
 
 import { GlossaryTooltip, Render } from "~/components";
@@ -46,7 +47,7 @@ Magic WAN relies on <a href={props.greReferenceURL}>GRE</a> and <a href={props.i
 
 - Allow configuration of at least one tunnel per Internet service provider (ISP).
 - Support <GlossaryTooltip term="maximum segment size (MSS)">maximum segment size (MSS)</GlossaryTooltip> clamping.
-- Support the configuration parameters for IPsec mentioned in <a href={props.ipsecReferenceConfigParams}>IPsec tunnels</a> []().
+- Support the configuration parameters for IPsec mentioned in <a href={props.ipsecReferenceConfigParams}>IPsec tunnels</a>.
 
 ### Set maximum segment size
 
@@ -55,6 +56,7 @@ Magic WAN relies on <a href={props.greReferenceURL}>GRE</a> and <a href={props.i
 	product="networking-services"
 	params={{ productName: "Magic WAN" }}
 />
+
 #### MSS clamping recommendations
 
 ##### GRE tunnels as off-ramp
@@ -69,7 +71,7 @@ Magic WAN relies on <a href={props.greReferenceURL}>GRE</a> and <a href={props.i
 Refer to your device documentation to check if it sets IPsec MSS clamping automatically. If that is not the case and you are using IPsec inside GRE, you have to set MSS clamp manually.
 :::
 
-Refer to [Maximum transmission unit and maximum segment size](/magic-wan/reference/mtu-mss/) for more details.
+Refer to <a href={props.mtuReferenceURL}>Maximum transmission unit and maximum segment size</a> for more details.
 
 ### Follow router vendor guidelines
 
