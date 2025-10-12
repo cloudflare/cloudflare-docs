@@ -205,6 +205,80 @@ export class MyWorkflow extends WorkflowEntrypoint {
 ```
 </TypeScriptExample>
 
+### Workflow code re-executes after hibernation
+
+When a Workflow hibernates and resumes, it's important to understand that **the entire workflow function runs again from the beginning**. However, completed steps return their cached results immediately without re-executing their logic.
+
+This means:
+- All code outside of steps is re-executed
+- Variables defined outside steps are re-initialized  
+- Non-deterministic values (like `Math.random()` or `Date.now()`) outside steps will produce different results
+- Only values returned from `step.do()` calls are preserved across hibernations
+
+<TypeScriptExample filename="index.ts">
+```ts
+export class MyWorkflow extends WorkflowEntrypoint {
+	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
+		// 🔴 This random value will be different after hibernation
+		const randomOutside = Math.random() * 100;
+		
+		const capturedValue = await step.do("capture-value", async () => {
+			// ✅ This random value is preserved across hibernations
+			const randomInside = Math.random() * 100;
+			return randomInside;
+		});
+		
+		// Long sleep that causes hibernation
+		await step.sleep("long-sleep", "3 hours");
+		
+		await step.do("compare-values", async () => {
+			console.log("Random outside:", randomOutside); // New value after hibernation!
+			console.log("Captured value:", capturedValue); // Same value as before
+		});
+	}
+}
+```
+</TypeScriptExample>
+
+This behavior is especially important for loops where iteration counters must be part of step returns:
+
+<TypeScriptExample filename="index.ts">
+```ts
+export class MyWorkflow extends WorkflowEntrypoint {
+	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
+		// 🔴 Bad: Loop counter will reset after hibernation
+		let iteration = 0;
+		while (iteration < 5) {
+			await step.do(`process-${iteration}`, async () => {
+				// After hibernation, iteration resets to 0 causing duplicate step names!
+				return { processed: iteration };
+			});
+			iteration++;
+		}
+	}
+}
+```
+</TypeScriptExample>
+
+<TypeScriptExample filename="index.ts">
+```ts
+export class MyWorkflow extends WorkflowEntrypoint {
+	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
+		// ✅ Good: Loop counter preserved in step returns
+		const initial = await step.do("init", async () => ({ iteration: 0 }));
+		let state = initial;
+		
+		while (state.iteration < 5) {
+			state = await step.do(`process-${state.iteration}`, async () => {
+				// state.iteration comes from previous step, survives hibernation
+				return { iteration: state.iteration + 1 };
+			});
+		}
+	}
+}
+```
+</TypeScriptExample>
+
 ### Do not mutate your incoming events
 
 The `event` passed to your Workflow's `run` method is immutable: changes you make to the event are not persisted across steps and/or Workflow restarts.
