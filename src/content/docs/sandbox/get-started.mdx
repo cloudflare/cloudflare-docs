@@ -1,0 +1,226 @@
+---
+title: Getting started
+pcx_content_type: get-started
+sidebar:
+  order: 2
+---
+
+import { Render, PackageManagers, Steps, WranglerConfig } from "~/components";
+
+This guide will walk you through creating your first secure code execution environment using Sandbox SDK. You'll learn how to:
+
+- Create a Worker that can execute code in isolated sandboxes
+- Run commands and capture output
+- Work with files in the sandbox
+- Deploy your application globally
+
+By the end of this guide, you'll have a working sandbox that can safely execute Python code.
+
+## Prerequisites
+
+<Render file="prereqs" product="workers" />
+
+### Ensure Docker is running locally
+
+Sandbox SDK uses [Docker](https://www.docker.com/) to build and push container images alongside your Worker. Docker must be running locally when you run `wrangler deploy`. The easiest way to install Docker is to follow the [Docker Desktop installation guide](https://docs.docker.com/desktop/).
+
+You can verify Docker is running by executing:
+
+```sh
+docker info
+```
+
+If Docker is running, the command will succeed. If not, it will hang or return "Cannot connect to the Docker daemon".
+
+## 1. Create your first sandbox project
+
+Create a new project using the Sandbox SDK template:
+
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args={"my-sandbox --template=cloudflare/sandbox-sdk/examples/basic"}
+/>
+
+This creates a new `my-sandbox` directory with:
+
+- A Worker at `src/index.ts` configured to handle sandbox requests
+- A `wrangler.jsonc` configuration file with container and Durable Objects setup
+- A `Dockerfile` that defines the sandbox container environment
+
+Change into your new project directory:
+
+```sh
+cd my-sandbox
+```
+
+## 2. Understanding the configuration
+
+Your `wrangler.jsonc` file contains the configuration for both your Worker and the sandbox container:
+
+<WranglerConfig>
+
+```jsonc
+{
+  "containers": [
+    {
+      "class_name": "Sandbox",
+      "image": "./Dockerfile",
+      "name": "sandbox",
+      "max_instances": 1
+    }
+  ],
+  "durable_objects": {
+    "bindings": [
+      {
+        "class_name": "Sandbox",
+        "name": "Sandbox"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "new_sqlite_classes": ["Sandbox"],
+      "tag": "v1"
+    }
+  ]
+}
+```
+
+</WranglerConfig>
+
+Key points:
+
+- `containers` - Defines the container image and configuration
+- `durable_objects` - Each sandbox runs in its own Durable Object for isolation
+- `migrations` - Required for Durable Objects using SQLite storage
+
+## 3. Create your first sandbox Worker
+
+Replace the contents of `src/index.ts` with this simple example:
+
+```typescript
+import { getSandbox, type Sandbox } from '@cloudflare/sandbox';
+
+export { Sandbox } from '@cloudflare/sandbox';
+
+type Env = {
+	Sandbox: DurableObjectNamespace<Sandbox>;
+};
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const url = new URL(request.url);
+
+		// Get a sandbox instance with a unique ID
+		const sandbox = getSandbox(env.Sandbox, 'my-first-sandbox');
+
+		// Execute Python code in the sandbox
+		if (url.pathname === '/run') {
+			const result = await sandbox.exec('python', [
+				'-c',
+				'print("Hello from Sandbox SDK!")'
+			]);
+
+			return Response.json({
+				stdout: result.stdout,
+				stderr: result.stderr,
+				exitCode: result.exitCode,
+				success: result.success
+			});
+		}
+
+		// Write and read a file
+		if (url.pathname === '/file') {
+			await sandbox.writeFile('/tmp/message.txt', 'Hello, World!');
+			const content = await sandbox.readFile('/tmp/message.txt');
+
+			return Response.json({
+				content: content,
+				message: 'File written and read successfully'
+			});
+		}
+
+		return new Response('Try /run or /file endpoints', { status: 200 });
+	},
+};
+```
+
+This Worker demonstrates two key Sandbox SDK features:
+
+1. **Command Execution** - Run Python code and capture output
+2. **File Operations** - Write and read files in the sandbox
+
+## 4. Test locally
+
+Before deploying, test your sandbox locally:
+
+```sh
+npm run dev
+```
+
+:::note
+The first time you run `wrangler dev`, it will build the Docker container image. This may take a few minutes. Subsequent runs will be much faster due to Docker's layer caching.
+:::
+
+Once the dev server is running, open your browser and visit:
+
+- `http://localhost:8787/run` - Execute Python code
+- `http://localhost:8787/file` - Test file operations
+
+You should see JSON responses with the output from each operation.
+
+## 5. Deploy your sandbox
+
+Deploy your Worker and sandbox container to Cloudflare's global network:
+
+```sh
+npx wrangler deploy
+```
+
+When you run `wrangler deploy`:
+
+1. Wrangler builds your container image using Docker
+2. The image is pushed to Cloudflare's Container Registry
+3. Your Worker is deployed with the sandbox configuration
+
+:::note
+After your first deployment, wait 2-3 minutes for the container to be fully provisioned before making requests. During this time, the Worker is deployed but sandbox operations may error.
+:::
+
+### Check deployment status
+
+Verify your sandbox is ready:
+
+```sh
+npx wrangler containers list
+```
+
+This shows all containers in your account and their deployment status.
+
+## 6. Test your deployed sandbox
+
+Visit your deployed Worker URL (shown in the deploy output):
+
+```
+https://my-sandbox.<YOUR_SUBDOMAIN>.workers.dev/run
+```
+
+You should see the same JSON response as when testing locally, but now running on Cloudflare's global network.
+
+## Summary
+
+In this guide, you:
+
+- Created a Worker with Sandbox SDK integration
+- Executed Python code in an isolated sandbox
+- Worked with files in the sandbox environment
+- Deployed your sandbox globally
+
+## Next steps
+
+- Learn about [command execution](/sandbox/guides/execute-commands/) with streaming output
+- Explore [file operations](/sandbox/guides/manage-files/) and working with projects
+- Set up [preview URLs](/sandbox/guides/expose-services/) to expose services running in your sandbox
+- Review the [API reference](/sandbox/api/) for all available methods
+- Check out [examples](/sandbox/examples/) including AI code execution and data analysis
