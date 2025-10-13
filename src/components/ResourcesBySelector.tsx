@@ -72,83 +72,91 @@ export default function ResourcesBySelector({
 
 	// Keep facets organized by filterable field for left sidebar
 
-	const visibleResources = resources.filter((resource) => {
-		// Handle top filter (ReactSelect)
-		if (filterPlacement === "top" && selectedFilter && filters) {
-			const filterableValues: string[] = [];
-			for (const filter of filters) {
-				if (filter === "products" && resource.data.productTitles) {
-					// Use resolved product titles for products filter
-					filterableValues.push(...resource.data.productTitles);
-				} else {
-					const val = resource.data[filter as keyof typeof resource.data];
-					if (val) {
-						if (Array.isArray(val) && val.every((v) => typeof v === "string")) {
-							filterableValues.push(...val);
-						} else if (
-							Array.isArray(val) &&
-							val.every((v) => typeof v === "object")
-						) {
-							filterableValues.push(...val.map((v) => v.id));
-						} else if (typeof val === "string") {
-							filterableValues.push(val);
-						}
-					}
-				}
-			}
-			if (!filterableValues.includes(selectedFilter)) return false;
-		}
-
-		// Handle left sidebar filters
-		if (filterPlacement === "left" && filters) {
-			// Check each filterable field separately
-			for (const [filterField, selectedValues] of Object.entries(
-				leftFilters.selectedValues,
-			)) {
-				if (selectedValues.length > 0) {
-					const resourceValues: string[] = [];
-					if (filterField === "products" && resource.data.productTitles) {
+	const visibleResources = resources
+		.filter((resource) => {
+			// Handle top filter (ReactSelect)
+			if (filterPlacement === "top" && selectedFilter && filters) {
+				const filterableValues: string[] = [];
+				for (const filter of filters) {
+					if (filter === "products" && resource.data.productTitles) {
 						// Use resolved product titles for products filter
-						resourceValues.push(...resource.data.productTitles);
+						filterableValues.push(...resource.data.productTitles);
 					} else {
-						const val =
-							resource.data[filterField as keyof typeof resource.data];
+						const val = resource.data[filter as keyof typeof resource.data];
 						if (val) {
 							if (
 								Array.isArray(val) &&
 								val.every((v) => typeof v === "string")
 							) {
-								resourceValues.push(...val);
+								filterableValues.push(...val);
 							} else if (
 								Array.isArray(val) &&
 								val.every((v) => typeof v === "object")
 							) {
-								resourceValues.push(...val.map((v) => v.id));
+								filterableValues.push(...val.map((v) => v.id));
 							} else if (typeof val === "string") {
-								resourceValues.push(val);
+								filterableValues.push(val);
 							}
 						}
 					}
-					if (!resourceValues.some((v) => selectedValues.includes(v))) {
+				}
+				if (!filterableValues.includes(selectedFilter)) return false;
+			}
+
+			// Handle left sidebar filters
+			if (filterPlacement === "left" && filters) {
+				// Check each filterable field separately
+				for (const [filterField, selectedValues] of Object.entries(
+					leftFilters.selectedValues,
+				)) {
+					if (selectedValues.length > 0) {
+						const resourceValues: string[] = [];
+						if (filterField === "products" && resource.data.productTitles) {
+							// Use resolved product titles for products filter
+							resourceValues.push(...resource.data.productTitles);
+						} else {
+							const val =
+								resource.data[filterField as keyof typeof resource.data];
+							if (val) {
+								if (
+									Array.isArray(val) &&
+									val.every((v) => typeof v === "string")
+								) {
+									resourceValues.push(...val);
+								} else if (
+									Array.isArray(val) &&
+									val.every((v) => typeof v === "object")
+								) {
+									resourceValues.push(...val.map((v) => v.id));
+								} else if (typeof val === "string") {
+									resourceValues.push(val);
+								}
+							}
+						}
+						if (!resourceValues.some((v) => selectedValues.includes(v))) {
+							return false;
+						}
+					}
+				}
+
+				// Search filter
+				if (leftFilters.search) {
+					const searchTerm = leftFilters.search.toLowerCase();
+					const title = resource.data.title?.toLowerCase() || "";
+					const description = resource.data.description?.toLowerCase() || "";
+
+					if (
+						!title.includes(searchTerm) &&
+						!description.includes(searchTerm)
+					) {
 						return false;
 					}
 				}
 			}
 
-			// Search filter
-			if (leftFilters.search) {
-				const searchTerm = leftFilters.search.toLowerCase();
-				const title = resource.data.title?.toLowerCase() || "";
-				const description = resource.data.description?.toLowerCase() || "";
-
-				if (!title.includes(searchTerm) && !description.includes(searchTerm)) {
-					return false;
-				}
-			}
-		}
-
-		return true;
-	});
+			return true;
+		})
+		.sort((a, b) => (b?.data?.reviewed || 100) - (a?.data?.reviewed || 100));
 
 	useEffect(() => {
 		const params = new URLSearchParams(window.location.search);
