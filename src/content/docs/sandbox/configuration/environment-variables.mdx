@@ -1,0 +1,636 @@
+---
+title: Environment variables
+pcx_content_type: configuration
+sidebar:
+  order: 3
+---
+
+Pass configuration, secrets, and runtime settings to your sandboxes using environment variables.
+
+## How environment variables work
+
+Environment variables can be set at three levels:
+
+```
+Worker Environment (wrangler.jsonc)
+        ↓
+Command/Process Execution
+        ↓
+Sandbox Operating System
+```
+
+### Worker-level variables
+
+Defined in `wrangler.jsonc`, available in your Worker code:
+
+```jsonc title="wrangler.jsonc"
+{
+  "vars": {
+    "ENVIRONMENT": "production",
+    "LOG_LEVEL": "info"
+  }
+}
+```
+
+Access in Worker:
+
+```typescript
+export default {
+  async fetch(request: Request, env: Env): Promise<Response> {
+    console.log(`Environment: ${env.ENVIRONMENT}`);
+    // These are NOT automatically passed to sandboxes
+  }
+};
+```
+
+### Command-level variables
+
+Passed when executing commands:
+
+```typescript
+const sandbox = getSandbox(env.Sandbox, 'my-sandbox');
+
+await sandbox.exec('node app.js', {
+  env: {
+    NODE_ENV: 'production',
+    API_KEY: env.API_KEY,  // Pass from Worker env
+    PORT: '3000'
+  }
+});
+```
+
+### Process-level variables
+
+Passed to background processes:
+
+```typescript
+await sandbox.startProcess('python server.py', {
+  env: {
+    FLASK_ENV: 'production',
+    DATABASE_URL: env.DATABASE_URL,
+    SECRET_KEY: env.SECRET_KEY
+  }
+});
+```
+
+## Common patterns
+
+### Pass Worker secrets to sandbox
+
+Securely pass secrets from Worker environment:
+
+```typescript
+interface Env {
+  Sandbox: DurableObjectNamespace;
+  // Secrets (set with `wrangler secret put`)
+  OPENAI_API_KEY: string;
+  ANTHROPIC_API_KEY: string;
+  DATABASE_URL: string;
+}
+
+export default {
+  async fetch(request: Request, env: Env): Promise<Response> {
+    const sandbox = getSandbox(env.Sandbox, 'user-sandbox');
+
+    // Pass secrets to sandbox command
+    const result = await sandbox.exec('python analyze.py', {
+      env: {
+        OPENAI_API_KEY: env.OPENAI_API_KEY,
+        ANTHROPIC_API_KEY: env.ANTHROPIC_API_KEY
+      }
+    });
+
+    return Response.json({ result });
+  }
+};
+```
+
+Python script can access them:
+
+```python
+import os
+import openai
+
+# Environment variables are available in the sandbox
+openai.api_key = os.environ['OPENAI_API_KEY']
+
+# Use the API
+response = openai.chat.completions.create(...)
+```
+
+### Default environment variables
+
+Create a helper to set default env vars:
+
+```typescript
+function getDefaultEnv(env: Env): Record<string, string> {
+  return {
+    // Always include these
+    NODE_ENV: env.ENVIRONMENT || 'production',
+    LOG_LEVEL: env.LOG_LEVEL || 'info',
+    TZ: 'UTC',
+
+    // API keys from Worker secrets
+    OPENAI_API_KEY: env.OPENAI_API_KEY,
+    ANTHROPIC_API_KEY: env.ANTHROPIC_API_KEY,
+
+    // Feature flags
+    ENABLE_CACHING: 'true',
+    MAX_RETRIES: '3'
+  };
+}
+
+// Use in commands
+await sandbox.exec('npm start', {
+  env: {
+    ...getDefaultEnv(env),
+    PORT: '3000'  // Command-specific overrides
+  }
+});
+```
+
+### Per-user configuration
+
+Pass user-specific configuration:
+
+```typescript
+async function createUserSandbox(
+  env: Env,
+  userId: string,
+  userConfig: UserConfig
+) {
+  const sandbox = getSandbox(env.Sandbox, `user-${userId}`);
+
+  // Set user-specific environment
+  const userEnv = {
+    USER_ID: userId,
+    USER_TIER: userConfig.tier,
+    MAX_EXECUTION_TIME: userConfig.maxExecutionTime.toString(),
+    ALLOWED_PACKAGES: userConfig.allowedPackages.join(','),
+
+    // Global secrets
+    API_KEY: env.API_KEY
+  };
+
+  return { sandbox, env: userEnv };
+}
+
+// Use it
+const { sandbox, env: userEnv } = await createUserSandbox(env, userId, config);
+await sandbox.exec('python script.py', { env: userEnv });
+```
+
+### Dynamic configuration
+
+Build environment from request data:
+
+```typescript
+export default {
+  async fetch(request: Request, env: Env): Promise<Response> {
+    const { language, memory, timeout } = await request.json();
+
+    const sandbox = getSandbox(env.Sandbox, 'dynamic-sandbox');
+
+    // Build dynamic environment
+    const dynamicEnv: Record<string, string> = {
+      LANGUAGE: language,
+      MEMORY_LIMIT: memory,
+      TIMEOUT: timeout.toString(),
+    };
+
+    // Add language-specific vars
+    if (language === 'python') {
+      dynamicEnv.PYTHONUNBUFFERED = '1';
+      dynamicEnv.PYTHON_VERSION = '3.11';
+    } else if (language === 'node') {
+      dynamicEnv.NODE_ENV = 'production';
+      dynamicEnv.NODE_OPTIONS = '--max-old-space-size=512';
+    }
+
+    await sandbox.exec('run-code', { env: dynamicEnv });
+
+    return Response.json({ success: true });
+  }
+};
+```
+
+## Environment variable precedence
+
+When the same variable is set at multiple levels:
+
+1. **Command-level** (highest priority) - Passed to `exec()` or `startProcess()`
+2. **Session-level** - Set with `setEnvVars()`
+3. **Container default** - Built into the Docker image
+4. **System default** (lowest priority) - Operating system defaults
+
+Example:
+
+```typescript
+// In Dockerfile: ENV NODE_ENV=development
+
+// In session:
+await sandbox.setEnvVars({ NODE_ENV: 'staging' });
+
+// In command (overrides all):
+await sandbox.exec('node app.js', {
+  env: { NODE_ENV: 'production' }  // This wins
+});
+```
+
+Result: `NODE_ENV=production` in the command.
+
+## Session-level environment variables
+
+Set environment variables for all commands in a session:
+
+```typescript
+// Create a session
+const session = await sandbox.createSession();
+
+// Set environment for the entire session
+await session.setEnvVars({
+  DATABASE_URL: env.DATABASE_URL,
+  REDIS_URL: env.REDIS_URL,
+  SECRET_KEY: env.SECRET_KEY
+});
+
+// All commands in this session have these vars
+await session.exec('python migrate.py');  // Has DATABASE_URL
+await session.exec('python seed.py');     // Has DATABASE_URL
+await session.exec('python test.py');     // Has DATABASE_URL
+```
+
+## Common environment variables
+
+### Node.js
+
+```typescript
+await sandbox.exec('node app.js', {
+  env: {
+    NODE_ENV: 'production',
+    NODE_OPTIONS: '--max-old-space-size=512',
+    NPM_CONFIG_LOGLEVEL: 'error',
+    PORT: '3000'
+  }
+});
+```
+
+### Python
+
+```typescript
+await sandbox.exec('python app.py', {
+  env: {
+    PYTHONUNBUFFERED: '1',           // Disable output buffering
+    PYTHONDONTWRITEBYTECODE: '1',    // Don't create .pyc files
+    PYTHONPATH: '/workspace/src',    // Add to Python path
+    FLASK_ENV: 'production',
+    DJANGO_SETTINGS_MODULE: 'settings.production'
+  }
+});
+```
+
+### Git
+
+```typescript
+await sandbox.exec('git clone ...', {
+  env: {
+    GIT_TERMINAL_PROMPT: '0',       // Disable prompts
+    GIT_ASKPASS: 'echo',            // Non-interactive
+    GIT_USERNAME: 'bot',
+    GIT_COMMITTER_NAME: 'Bot',
+    GIT_COMMITTER_EMAIL: 'bot@example.com'
+  }
+});
+```
+
+### Database connections
+
+```typescript
+await sandbox.exec('npm run migrate', {
+  env: {
+    DATABASE_URL: env.DATABASE_URL,
+    POSTGRES_HOST: 'localhost',
+    POSTGRES_PORT: '5432',
+    POSTGRES_USER: 'admin',
+    POSTGRES_PASSWORD: env.DB_PASSWORD,
+    POSTGRES_DB: 'production'
+  }
+});
+```
+
+## Security best practices
+
+### Never hardcode secrets
+
+❌ **Bad** - Secrets in code:
+
+```typescript
+await sandbox.exec('python app.py', {
+  env: {
+    API_KEY: 'sk-1234567890abcdef'  // NEVER DO THIS
+  }
+});
+```
+
+✅ **Good** - Secrets from Worker environment:
+
+```typescript
+await sandbox.exec('python app.py', {
+  env: {
+    API_KEY: env.API_KEY  // From Wrangler secret
+  }
+});
+```
+
+Set secrets with Wrangler:
+
+```bash
+wrangler secret put API_KEY
+# Enter your secret value when prompted
+```
+
+### Validate before passing
+
+Validate user-provided environment variables:
+
+```typescript
+function validateEnv(userEnv: Record<string, string>): Record<string, string> {
+  const safe: Record<string, string> = {};
+
+  for (const [key, value] of Object.entries(userEnv)) {
+    // Only allow specific keys
+    if (!['PORT', 'TIMEOUT', 'MEMORY'].includes(key)) {
+      throw new Error(`Invalid environment variable: ${key}`);
+    }
+
+    // Validate values
+    if (key === 'PORT') {
+      const port = parseInt(value);
+      if (isNaN(port) || port < 1024 || port > 65535) {
+        throw new Error('Invalid port number');
+      }
+    }
+
+    safe[key] = value;
+  }
+
+  return safe;
+}
+
+// Use it
+const userEnv = await request.json();
+const safeEnv = validateEnv(userEnv);
+await sandbox.exec('node app.js', { env: safeEnv });
+```
+
+### Sanitize sensitive data in logs
+
+Don't log sensitive environment variables:
+
+```typescript
+function sanitizeEnv(env: Record<string, string>): Record<string, string> {
+  const sanitized = { ...env };
+  const sensitiveKeys = ['API_KEY', 'SECRET', 'PASSWORD', 'TOKEN'];
+
+  for (const key of Object.keys(sanitized)) {
+    if (sensitiveKeys.some(k => key.includes(k))) {
+      sanitized[key] = '***REDACTED***';
+    }
+  }
+
+  return sanitized;
+}
+
+const env = { API_KEY: 'secret', PORT: '3000' };
+console.log('Environment:', sanitizeEnv(env));
+// Logs: Environment: { API_KEY: '***REDACTED***', PORT: '3000' }
+```
+
+### Use short-lived credentials
+
+Rotate credentials regularly:
+
+```typescript
+async function getTemporaryCredentials(env: Env): Promise<string> {
+  // Generate a temporary token valid for 1 hour
+  const token = await generateToken(env.SECRET_KEY, '1h');
+  return token;
+}
+
+// Use temporary credentials
+const tempToken = await getTemporaryCredentials(env);
+await sandbox.exec('python script.py', {
+  env: {
+    TEMP_TOKEN: tempToken  // Expires after 1 hour
+  }
+});
+```
+
+## Debugging environment variables
+
+### List all environment variables
+
+```typescript
+const result = await sandbox.exec('env');
+console.log('Environment variables:', result.stdout);
+```
+
+### Check specific variable
+
+```typescript
+const result = await sandbox.exec('echo $NODE_ENV');
+console.log('NODE_ENV:', result.stdout.trim());
+```
+
+### Debug with a script
+
+```typescript
+await sandbox.writeFile('/workspace/debug-env.sh', `
+#!/bin/bash
+echo "=== Environment Variables ==="
+echo "NODE_ENV: $NODE_ENV"
+echo "PORT: $PORT"
+echo "API_KEY: ${API_KEY:0:10}..."  # Show first 10 chars only
+echo "PATH: $PATH"
+`);
+
+const result = await sandbox.exec('bash /workspace/debug-env.sh', {
+  env: {
+    NODE_ENV: 'production',
+    PORT: '3000',
+    API_KEY: env.API_KEY
+  }
+});
+
+console.log(result.stdout);
+```
+
+## Advanced patterns
+
+### Environment variable templates
+
+Create templates for different scenarios:
+
+```typescript
+const ENV_TEMPLATES = {
+  development: {
+    NODE_ENV: 'development',
+    LOG_LEVEL: 'debug',
+    CACHE_ENABLED: 'false'
+  },
+  staging: {
+    NODE_ENV: 'staging',
+    LOG_LEVEL: 'info',
+    CACHE_ENABLED: 'true'
+  },
+  production: {
+    NODE_ENV: 'production',
+    LOG_LEVEL: 'error',
+    CACHE_ENABLED: 'true',
+    STRICT_MODE: 'true'
+  }
+};
+
+// Use template
+const envTemplate = ENV_TEMPLATES[env.ENVIRONMENT] || ENV_TEMPLATES.production;
+await sandbox.exec('node app.js', {
+  env: {
+    ...envTemplate,
+    API_KEY: env.API_KEY  // Add secrets on top
+  }
+});
+```
+
+### Conditional environment variables
+
+Set variables based on conditions:
+
+```typescript
+const sandboxEnv: Record<string, string> = {
+  BASE_URL: 'https://api.example.com'
+};
+
+// Add debug vars in development
+if (env.ENVIRONMENT === 'development') {
+  sandboxEnv.DEBUG = '*';
+  sandboxEnv.VERBOSE = 'true';
+}
+
+// Add monitoring in production
+if (env.ENVIRONMENT === 'production') {
+  sandboxEnv.SENTRY_DSN = env.SENTRY_DSN;
+  sandboxEnv.DD_API_KEY = env.DD_API_KEY;
+}
+
+// Add feature flags
+if (env.FEATURE_NEW_PARSER === 'true') {
+  sandboxEnv.USE_NEW_PARSER = 'true';
+}
+
+await sandbox.exec('node app.js', { env: sandboxEnv });
+```
+
+### Encrypted environment variables
+
+Encrypt sensitive values before passing:
+
+```typescript
+async function encryptValue(value: string, key: string): Promise<string> {
+  // Implement encryption (example using Web Crypto API)
+  const encoder = new TextEncoder();
+  const data = encoder.encode(value);
+
+  const cryptoKey = await crypto.subtle.importKey(
+    'raw',
+    encoder.encode(key),
+    { name: 'AES-GCM' },
+    false,
+    ['encrypt']
+  );
+
+  const iv = crypto.getRandomValues(new Uint8Array(12));
+  const encrypted = await crypto.subtle.encrypt(
+    { name: 'AES-GCM', iv },
+    cryptoKey,
+    data
+  );
+
+  return btoa(String.fromCharCode(...iv, ...new Uint8Array(encrypted)));
+}
+
+// Encrypt before passing
+const encryptedKey = await encryptValue(env.API_KEY, env.ENCRYPTION_KEY);
+
+await sandbox.exec('python app.py', {
+  env: {
+    ENCRYPTED_API_KEY: encryptedKey,
+    ENCRYPTION_KEY: env.ENCRYPTION_KEY
+  }
+});
+```
+
+## Troubleshooting
+
+### Variable not accessible
+
+**Problem**: Command can't access environment variable
+
+**Check**:
+
+```typescript
+// 1. Verify it's being passed
+console.log('Passing env:', { NODE_ENV: env.NODE_ENV });
+
+await sandbox.exec('echo $NODE_ENV', {
+  env: { NODE_ENV: env.NODE_ENV }
+});
+
+// 2. Check if shell expansion is needed
+await sandbox.exec('node -e "console.log(process.env.NODE_ENV)"', {
+  env: { NODE_ENV: 'production' }
+});
+```
+
+### Variable value is empty
+
+**Problem**: Environment variable is empty or undefined
+
+**Debug**:
+
+```typescript
+// Check Worker environment
+console.log('Worker env:', env.API_KEY ? 'Set' : 'Missing');
+
+// Check sandbox environment
+const result = await sandbox.exec('env | grep API_KEY', {
+  env: { API_KEY: env.API_KEY }
+});
+console.log('Sandbox env:', result.stdout);
+```
+
+### Special characters in values
+
+**Problem**: Values with special characters break
+
+**Solution**:
+
+```typescript
+// Escape special characters
+const value = "value with 'quotes' and $dollar";
+
+// Option 1: Use proper escaping
+await sandbox.exec(`echo "${value.replace(/"/g, '\\"')}"`, {
+  env: { VALUE: value }
+});
+
+// Option 2: Write to file instead
+await sandbox.writeFile('/tmp/config', value);
+await sandbox.exec('cat /tmp/config');
+```
+
+## Related resources
+
+- [Wrangler configuration](/sandbox/configuration/wrangler/) - Setting Worker-level environment
+- [Secrets](/workers/configuration/secrets/) - Managing sensitive data
+- [Sessions API](/sandbox/api/sessions/) - Session-level environment variables
+- [Security model](/sandbox/concepts/security/) - Understanding data isolation

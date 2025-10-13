@@ -1,0 +1,683 @@
+---
+title: Build a code review bot
+pcx_content_type: tutorial
+sidebar:
+  order: 3
+---
+
+import { Render, PackageManagers, TabItem, Tabs } from "~/components";
+
+Build an automated code review system that responds to GitHub pull requests, clones the repository, analyzes code changes with Claude, and posts detailed feedback as PR comments.
+
+## What you'll build
+
+A production-ready GitHub bot that:
+
+- Receives GitHub webhook events for new pull requests
+- Clones repositories securely into sandboxes
+- Analyzes code changes with Claude's code review capabilities
+- Posts structured feedback as PR comments
+- Handles multiple programming languages
+- Manages sandbox lifecycle automatically
+
+**Time to complete**: 30 minutes
+
+**What you'll learn**:
+- Handle GitHub webhook events in Workers
+- Clone Git repositories with authentication
+- Analyze file diffs and generate reviews
+- Post comments to GitHub Pull Requests
+- Manage long-running sandbox operations
+- Production security patterns
+
+## Prerequisites
+
+<Render file="prereqs" product="workers" />
+
+You'll also need:
+- A [GitHub account](https://github.com/) and personal access token
+- An [Anthropic API key](https://console.anthropic.com/settings/keys) (Claude)
+- A GitHub repository for testing (can be private)
+- Basic understanding of Git workflows
+
+## 1. Create your Worker project
+
+Create a new Worker project:
+
+<PackageManagers pkg="create-cloudflare@latest" args={"code-review-bot"} />
+
+<Render file="c3-post-run-steps" product="workers" params={{ category: "hello-world", type: "Hello World Worker", lang: "TypeScript" }} />
+
+## 2. Install dependencies
+
+Install the required packages:
+
+<PackageManagers type="npm" pkg="@cloudflare/sandbox @anthropic-ai/sdk @octokit/rest" />
+
+The packages:
+- `@cloudflare/sandbox` - Sandbox SDK for isolated code execution
+- `@anthropic-ai/sdk` - Claude API client
+- `@octokit/rest` - GitHub API client
+
+## 3. Configure your Worker
+
+Update `wrangler.jsonc` to include bindings and secrets:
+
+```jsonc title="wrangler.jsonc"
+{
+  "name": "code-review-bot",
+  "main": "src/index.ts",
+  "compatibility_date": "2024-09-02",
+  "compatibility_flags": ["nodejs_compat"],
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "Sandbox",
+        "class_name": "Sandbox",
+        "script_name": "@cloudflare/sandbox"
+      }
+    ]
+  },
+  "containers": [
+    {
+      "binding": "CONTAINER",
+      "image": "ghcr.io/cloudflare/sandbox-runtime:latest"
+    }
+  ]
+}
+```
+
+Set your secrets (never commit these to Git):
+
+```bash
+# GitHub personal access token (needs repo permissions)
+wrangler secret put GITHUB_TOKEN
+
+# Anthropic API key
+wrangler secret put ANTHROPIC_API_KEY
+
+# Webhook secret (generate a random string)
+wrangler secret put WEBHOOK_SECRET
+```
+
+Update your TypeScript types:
+
+```typescript title="src/index.ts"
+interface Env {
+  Sandbox: DurableObjectNamespace;
+  GITHUB_TOKEN: string;
+  ANTHROPIC_API_KEY: string;
+  WEBHOOK_SECRET: string;
+}
+```
+
+## 4. Create the webhook handler
+
+Build the main handler that processes GitHub webhook events:
+
+```typescript title="src/index.ts"
+import { getSandbox } from '@cloudflare/sandbox';
+import { Octokit } from '@octokit/rest';
+import Anthropic from '@anthropic-ai/sdk';
+
+export default {
+  async fetch(request: Request, env: Env): Promise<Response> {
+    const url = new URL(request.url);
+
+    // Health check endpoint
+    if (url.pathname === '/health') {
+      return Response.json({ status: 'ok', service: 'code-review-bot' });
+    }
+
+    // Webhook endpoint
+    if (url.pathname === '/webhook' && request.method === 'POST') {
+      return handleWebhook(request, env);
+    }
+
+    return Response.json(
+      { error: 'Not found. Use POST /webhook for GitHub events.' },
+      { status: 404 }
+    );
+  }
+};
+
+async function handleWebhook(request: Request, env: Env): Promise<Response> {
+  try {
+    // Verify webhook signature
+    const signature = request.headers.get('x-hub-signature-256');
+    const body = await request.text();
+
+    if (!signature || !(await verifySignature(body, signature, env.WEBHOOK_SECRET))) {
+      return Response.json({ error: 'Invalid signature' }, { status: 401 });
+    }
+
+    // Parse the event
+    const event = request.headers.get('x-github-event');
+    const payload = JSON.parse(body);
+
+    console.log(`Received ${event} event from GitHub`);
+
+    // Only handle pull request events
+    if (event !== 'pull_request') {
+      return Response.json({ message: 'Event ignored (not a PR)' });
+    }
+
+    // Only handle opened or synchronize (new commits) actions
+    if (payload.action !== 'opened' && payload.action !== 'synchronize') {
+      return Response.json({ message: `PR action '${payload.action}' ignored` });
+    }
+
+    // Start the review process (don't wait for completion)
+    // In production, you'd use a Queue or Durable Object for this
+    handlePullRequestReview(payload, env).catch(error => {
+      console.error('Error in review process:', error);
+    });
+
+    return Response.json({
+      message: 'Review started',
+      pr: payload.pull_request.number
+    });
+
+  } catch (error) {
+    console.error('Webhook error:', error);
+    return Response.json(
+      { error: 'Webhook processing failed' },
+      { status: 500 }
+    );
+  }
+}
+
+// Verify GitHub webhook signature
+async function verifySignature(
+  payload: string,
+  signature: string,
+  secret: string
+): Promise<boolean> {
+  const encoder = new TextEncoder();
+  const key = await crypto.subtle.importKey(
+    'raw',
+    encoder.encode(secret),
+    { name: 'HMAC', hash: 'SHA-256' },
+    false,
+    ['sign']
+  );
+
+  const signatureBytes = await crypto.subtle.sign(
+    'HMAC',
+    key,
+    encoder.encode(payload)
+  );
+
+  const expectedSignature = 'sha256=' + Array.from(new Uint8Array(signatureBytes))
+    .map(b => b.toString(16).padStart(2, '0'))
+    .join('');
+
+  return signature === expectedSignature;
+}
+```
+
+## 5. Implement the review process
+
+Add the main review logic that clones, analyzes, and comments:
+
+```typescript title="src/index.ts"
+async function handlePullRequestReview(payload: any, env: Env): Promise<void> {
+  const pr = payload.pull_request;
+  const repo = payload.repository;
+  const owner = repo.owner.login;
+  const repoName = repo.name;
+  const prNumber = pr.number;
+
+  console.log(`Reviewing PR #${prNumber} in ${owner}/${repoName}`);
+
+  // Create GitHub client
+  const octokit = new Octokit({ auth: env.GITHUB_TOKEN });
+
+  // Post initial comment
+  await octokit.issues.createComment({
+    owner,
+    repo: repoName,
+    issue_number: prNumber,
+    body: '🤖 Code review in progress... This may take 1-2 minutes.'
+  });
+
+  // Create a unique sandbox for this review
+  const sandboxId = `review-${owner}-${repoName}-${prNumber}`;
+  const sandbox = getSandbox(env.Sandbox, sandboxId);
+
+  try {
+    // Step 1: Clone the repository
+    console.log('Cloning repository...');
+    const cloneUrl = `https://${env.GITHUB_TOKEN}@github.com/${owner}/${repoName}.git`;
+    const cloneResult = await sandbox.exec(
+      `git clone --depth=1 --branch=${pr.head.ref} ${cloneUrl} /workspace/repo`,
+      { timeout: 60000 }
+    );
+
+    if (!cloneResult.success) {
+      throw new Error(`Failed to clone: ${cloneResult.stderr}`);
+    }
+
+    // Step 2: Get the diff for this PR
+    console.log('Fetching PR diff...');
+    const comparison = await octokit.repos.compareCommits({
+      owner,
+      repo: repoName,
+      base: pr.base.sha,
+      head: pr.head.sha
+    });
+
+    const changedFiles = comparison.data.files || [];
+    console.log(`Found ${changedFiles.length} changed files`);
+
+    if (changedFiles.length === 0) {
+      await octokit.issues.createComment({
+        owner,
+        repo: repoName,
+        issue_number: prNumber,
+        body: '✅ No files to review.'
+      });
+      return;
+    }
+
+    // Step 3: Read the changed files from the sandbox
+    const filesContent: Array<{ path: string; content: string; patch: string }> = [];
+
+    for (const file of changedFiles.slice(0, 10)) { // Limit to 10 files
+      if (file.status === 'removed') continue;
+
+      try {
+        const content = await sandbox.readFile(`/workspace/repo/${file.filename}`);
+        const contentStr = new TextDecoder().decode(content);
+        filesContent.push({
+          path: file.filename,
+          content: contentStr,
+          patch: file.patch || ''
+        });
+      } catch (error) {
+        console.log(`Could not read ${file.filename}:`, error);
+      }
+    }
+
+    // Step 4: Generate review with Claude
+    console.log('Generating review with Claude...');
+    const review = await generateCodeReview(
+      env.ANTHROPIC_API_KEY,
+      pr.title,
+      pr.body || '',
+      filesContent
+    );
+
+    // Step 5: Post the review as a comment
+    await octokit.issues.createComment({
+      owner,
+      repo: repoName,
+      issue_number: prNumber,
+      body: formatReviewComment(review, filesContent.length, changedFiles.length)
+    });
+
+    console.log(`Review posted for PR #${prNumber}`);
+
+  } catch (error) {
+    console.error('Review error:', error);
+
+    // Post error comment
+    await octokit.issues.createComment({
+      owner,
+      repo: repoName,
+      issue_number: prNumber,
+      body: `❌ Code review failed: ${error instanceof Error ? error.message : 'Unknown error'}`
+    });
+
+  } finally {
+    // Always clean up the sandbox
+    await sandbox.destroy();
+  }
+}
+```
+
+## 6. Implement Claude code review
+
+Add the function that uses Claude to review code:
+
+```typescript title="src/index.ts"
+interface CodeReview {
+  summary: string;
+  issues: Array<{
+    file: string;
+    line?: number;
+    severity: 'critical' | 'warning' | 'suggestion';
+    message: string;
+  }>;
+  positives: string[];
+  suggestions: string[];
+}
+
+async function generateCodeReview(
+  apiKey: string,
+  prTitle: string,
+  prDescription: string,
+  files: Array<{ path: string; content: string; patch: string }>
+): Promise<CodeReview> {
+  const client = new Anthropic({ apiKey });
+
+  const filesContext = files.map(f => `
+File: ${f.path}
+Diff:
+${f.patch}
+
+Full content:
+\`\`\`
+${f.content.slice(0, 5000)} ${f.content.length > 5000 ? '... (truncated)' : ''}
+\`\`\`
+`).join('\n---\n');
+
+  const prompt = `You are an expert code reviewer. Review this pull request:
+
+Title: ${prTitle}
+Description: ${prDescription}
+
+Changed files:
+${filesContext}
+
+Provide a thorough code review focusing on:
+1. Potential bugs or logic errors
+2. Security vulnerabilities
+3. Performance issues
+4. Code style and best practices
+5. Missing error handling
+6. Positive aspects worth highlighting
+
+Format your response as structured feedback with:
+- Overall summary
+- Specific issues (file, line, severity, message)
+- Positive observations
+- General suggestions for improvement
+`;
+
+  const response = await client.messages.create({
+    model: 'claude-3-5-sonnet-20241022',
+    max_tokens: 4096,
+    messages: [
+      {
+        role: 'user',
+        content: prompt
+      }
+    ],
+    tools: [
+      {
+        name: 'provide_code_review',
+        description: 'Provide structured code review feedback',
+        input_schema: {
+          type: 'object',
+          properties: {
+            summary: {
+              type: 'string',
+              description: 'Overall summary of the changes and review'
+            },
+            issues: {
+              type: 'array',
+              description: 'Specific issues found in the code',
+              items: {
+                type: 'object',
+                properties: {
+                  file: { type: 'string' },
+                  line: { type: 'number' },
+                  severity: { type: 'string', enum: ['critical', 'warning', 'suggestion'] },
+                  message: { type: 'string' }
+                },
+                required: ['file', 'severity', 'message']
+              }
+            },
+            positives: {
+              type: 'array',
+              description: 'Positive aspects of the code',
+              items: { type: 'string' }
+            },
+            suggestions: {
+              type: 'array',
+              description: 'General suggestions for improvement',
+              items: { type: 'string' }
+            }
+          },
+          required: ['summary', 'issues', 'positives', 'suggestions']
+        }
+      }
+    ]
+  });
+
+  // Extract review from tool use
+  for (const block of response.content) {
+    if (block.type === 'tool_use' && block.name === 'provide_code_review') {
+      return block.input as CodeReview;
+    }
+  }
+
+  throw new Error('Claude did not provide structured review');
+}
+
+function formatReviewComment(
+  review: CodeReview,
+  reviewedFiles: number,
+  totalFiles: number
+): string {
+  let comment = '## 🤖 AI Code Review\n\n';
+
+  comment += `**Files reviewed:** ${reviewedFiles}/${totalFiles}\n\n`;
+
+  // Summary
+  comment += `### Summary\n${review.summary}\n\n`;
+
+  // Issues
+  if (review.issues.length > 0) {
+    comment += '### Issues Found\n\n';
+
+    const criticalIssues = review.issues.filter(i => i.severity === 'critical');
+    const warnings = review.issues.filter(i => i.severity === 'warning');
+    const suggestions = review.issues.filter(i => i.severity === 'suggestion');
+
+    if (criticalIssues.length > 0) {
+      comment += '#### 🔴 Critical\n';
+      for (const issue of criticalIssues) {
+        comment += `- **${issue.file}${issue.line ? `:${issue.line}` : ''}** - ${issue.message}\n`;
+      }
+      comment += '\n';
+    }
+
+    if (warnings.length > 0) {
+      comment += '#### ⚠️ Warnings\n';
+      for (const issue of warnings) {
+        comment += `- **${issue.file}${issue.line ? `:${issue.line}` : ''}** - ${issue.message}\n`;
+      }
+      comment += '\n';
+    }
+
+    if (suggestions.length > 0) {
+      comment += '#### 💡 Suggestions\n';
+      for (const issue of suggestions) {
+        comment += `- **${issue.file}${issue.line ? `:${issue.line}` : ''}** - ${issue.message}\n`;
+      }
+      comment += '\n';
+    }
+  } else {
+    comment += '### ✅ No issues found\n\n';
+  }
+
+  // Positives
+  if (review.positives.length > 0) {
+    comment += '### 👍 Positive Aspects\n';
+    for (const positive of review.positives) {
+      comment += `- ${positive}\n`;
+    }
+    comment += '\n';
+  }
+
+  // General suggestions
+  if (review.suggestions.length > 0) {
+    comment += '### 💭 General Suggestions\n';
+    for (const suggestion of review.suggestions) {
+      comment += `- ${suggestion}\n`;
+    }
+    comment += '\n';
+  }
+
+  comment += '\n---\n';
+  comment += '*This review was generated automatically using Claude and Cloudflare Sandbox SDK.*';
+
+  return comment;
+}
+```
+
+## 7. Set up GitHub webhook
+
+Configure your repository to send webhook events to your Worker:
+
+1. Go to your GitHub repository settings
+2. Navigate to **Settings** > **Webhooks** > **Add webhook**
+3. Configure:
+   - **Payload URL**: `https://code-review-bot.YOUR_SUBDOMAIN.workers.dev/webhook`
+   - **Content type**: `application/json`
+   - **Secret**: The same value you set for `WEBHOOK_SECRET`
+   - **Events**: Select "Let me select individual events" → check **Pull requests**
+   - Click **Add webhook**
+
+## 8. Test locally
+
+Start your development server:
+
+```bash
+wrangler dev --remote
+```
+
+:::note
+We use `--remote` because webhooks need a public URL. Alternatively, use a tunnel service like [ngrok](https://ngrok.com/) or [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/).
+:::
+
+Test the webhook endpoint:
+
+```bash
+curl -X POST http://localhost:8787/webhook \
+  -H "Content-Type: application/json" \
+  -H "x-github-event: pull_request" \
+  -H "x-hub-signature-256: sha256=$(echo -n '{}' | openssl dgst -sha256 -hmac 'your-webhook-secret' | cut -d' ' -f2)" \
+  -d '{
+    "action": "opened",
+    "pull_request": {
+      "number": 1,
+      "title": "Test PR",
+      "body": "Test description",
+      "head": { "ref": "feature-branch", "sha": "abc123" },
+      "base": { "sha": "def456" }
+    },
+    "repository": {
+      "name": "test-repo",
+      "owner": { "login": "your-username" }
+    }
+  }'
+```
+
+## 9. Deploy and test with a real PR
+
+Deploy your bot:
+
+```bash
+wrangler deploy
+```
+
+Create a test pull request in your repository:
+
+1. Create a new branch:
+   ```bash
+   git checkout -b test-code-review
+   ```
+
+2. Make some changes and commit:
+   ```bash
+   echo "console.log('test');" > test.js
+   git add test.js
+   git commit -m "Add test file"
+   git push origin test-code-review
+   ```
+
+3. Open a pull request on GitHub
+
+4. Watch for the bot's comment within 1-2 minutes!
+
+## Complete code
+
+<details>
+<summary>View the complete Worker code</summary>
+
+```typescript title="src/index.ts"
+import { getSandbox } from '@cloudflare/sandbox';
+import { Octokit } from '@octokit/rest';
+import Anthropic from '@anthropic-ai/sdk';
+
+interface Env {
+  Sandbox: DurableObjectNamespace;
+  GITHUB_TOKEN: string;
+  ANTHROPIC_API_KEY: string;
+  WEBHOOK_SECRET: string;
+}
+
+interface CodeReview {
+  summary: string;
+  issues: Array<{
+    file: string;
+    line?: number;
+    severity: 'critical' | 'warning' | 'suggestion';
+    message: string;
+  }>;
+  positives: string[];
+  suggestions: string[];
+}
+
+export default {
+  async fetch(request: Request, env: Env): Promise<Response> {
+    const url = new URL(request.url);
+
+    if (url.pathname === '/health') {
+      return Response.json({ status: 'ok' });
+    }
+
+    if (url.pathname === '/webhook' && request.method === 'POST') {
+      return handleWebhook(request, env);
+    }
+
+    return Response.json({ error: 'Not found' }, { status: 404 });
+  }
+};
+
+// ... (include all functions from steps 4-6)
+```
+</details>
+
+## What you learned
+
+You built a complete automated code review system that:
+
+- ✅ Receives GitHub webhook events securely
+- ✅ Clones repositories into isolated sandboxes
+- ✅ Analyzes code changes with Claude
+- ✅ Posts structured feedback to pull requests
+- ✅ Handles errors and cleanup automatically
+- ✅ Works with any programming language
+
+## Next steps
+
+Enhance your code review bot:
+
+- **Add inline comments** - Use GitHub's review API to comment on specific lines
+- **Multiple reviewers** - Get reviews from different AI models and combine them
+- **Custom rules** - Add project-specific checks and linting
+- **Review history** - Store reviews in [D1](/d1/) for analysis
+- **Queue system** - Use [Queues](/queues/) for reliable processing
+- **Metrics tracking** - Monitor review quality and performance
+
+## Related resources
+
+- [Git workflows guide](/sandbox/guides/git-workflows/) - Advanced Git operations
+- [Background processes guide](/sandbox/guides/background-processes/) - Long-running operations
+- [Security model](/sandbox/concepts/security/) - Understanding sandbox isolation
+- [Sessions API](/sandbox/api/sessions/) - Managing sandbox lifecycle
+- [GitHub Apps documentation](https://docs.github.com/en/apps) - Building GitHub integrations

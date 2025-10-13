@@ -1,0 +1,560 @@
+---
+title: Dockerfile reference
+pcx_content_type: configuration
+sidebar:
+  order: 2
+---
+
+Customize the sandbox container image with your own packages, tools, and configurations by extending the base runtime image.
+
+## Base image
+
+The Sandbox SDK uses a Ubuntu-based Linux container with Python, Node.js (via Bun), and common development tools pre-installed:
+
+```dockerfile
+FROM ghcr.io/cloudflare/sandbox-runtime:latest
+```
+
+**What's included:**
+- Ubuntu 22.04 LTS base
+- Python 3.11+ with pip
+- Bun (JavaScript/TypeScript runtime)
+- Git, curl, wget, and common CLI tools
+- Pre-installed Python packages: pandas, numpy, matplotlib
+- System libraries for most common use cases
+
+## Creating a custom image
+
+### Basic customization
+
+Create a `Dockerfile` in your project root:
+
+```dockerfile title="Dockerfile"
+FROM ghcr.io/cloudflare/sandbox-runtime:latest
+
+# Install additional Python packages
+RUN pip install --no-cache-dir \
+    scikit-learn==1.3.0 \
+    tensorflow==2.13.0 \
+    transformers==4.30.0
+
+# Install Node.js packages globally
+RUN npm install -g typescript ts-node prettier
+
+# Install system packages
+RUN apt-get update && apt-get install -y \
+    postgresql-client \
+    redis-tools \
+    && rm -rf /var/lib/apt/lists/*
+```
+
+### Build and publish
+
+Build your custom image:
+
+```bash
+# Build for your platform
+docker build -t your-registry/custom-sandbox:latest .
+
+# Build for multiple platforms (required for Cloudflare)
+docker buildx build --platform linux/amd64,linux/arm64 \
+  -t your-registry/custom-sandbox:latest \
+  --push .
+```
+
+Update `wrangler.jsonc` to use your custom image:
+
+```jsonc title="wrangler.jsonc"
+{
+  "containers": [
+    {
+      "binding": "CONTAINER",
+      "image": "your-registry/custom-sandbox:latest"
+    }
+  ]
+}
+```
+
+## Common customizations
+
+### Python packages
+
+Install additional Python libraries:
+
+```dockerfile
+FROM ghcr.io/cloudflare/sandbox-runtime:latest
+
+# Data science stack
+RUN pip install --no-cache-dir \
+    scipy \
+    seaborn \
+    plotly \
+    jupyter
+
+# Machine learning
+RUN pip install --no-cache-dir \
+    torch \
+    torchvision \
+    scikit-learn
+
+# Web scraping
+RUN pip install --no-cache-dir \
+    beautifulsoup4 \
+    selenium \
+    requests-html
+
+# Always pin versions in production
+RUN pip install --no-cache-dir \
+    fastapi==0.104.0 \
+    pydantic==2.4.0
+```
+
+### Node.js packages
+
+Install npm packages globally:
+
+```dockerfile
+FROM ghcr.io/cloudflare/sandbox-runtime:latest
+
+# TypeScript tooling
+RUN npm install -g \
+    typescript@5.2.2 \
+    ts-node@10.9.1 \
+    @types/node@20.8.0
+
+# Build tools
+RUN npm install -g \
+    webpack@5.89.0 \
+    vite@4.5.0 \
+    esbuild@0.19.5
+
+# Testing frameworks
+RUN npm install -g \
+    jest@29.7.0 \
+    vitest@0.34.0 \
+    playwright@1.39.0
+```
+
+### System tools
+
+Install system-level packages:
+
+```dockerfile
+FROM ghcr.io/cloudflare/sandbox-runtime:latest
+
+# Database clients
+RUN apt-get update && apt-get install -y \
+    postgresql-client \
+    mysql-client \
+    redis-tools \
+    mongodb-clients
+
+# Development tools
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    cmake \
+    pkg-config
+
+# Image processing
+RUN apt-get update && apt-get install -y \
+    imagemagick \
+    ffmpeg \
+    libvips-tools
+
+# Clean up to reduce image size
+RUN rm -rf /var/lib/apt/lists/*
+```
+
+### Programming languages
+
+Add additional language runtimes:
+
+```dockerfile
+FROM ghcr.io/cloudflare/sandbox-runtime:latest
+
+# Go
+RUN wget https://go.dev/dl/go1.21.3.linux-amd64.tar.gz && \
+    tar -C /usr/local -xzf go1.21.3.linux-amd64.tar.gz && \
+    rm go1.21.3.linux-amd64.tar.gz
+ENV PATH="/usr/local/go/bin:${PATH}"
+
+# Rust
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+ENV PATH="/root/.cargo/bin:${PATH}"
+
+# Ruby
+RUN apt-get update && apt-get install -y ruby-full && \
+    gem install bundler
+```
+
+### Custom scripts
+
+Add utility scripts to the image:
+
+```dockerfile
+FROM ghcr.io/cloudflare/sandbox-runtime:latest
+
+# Copy custom scripts
+COPY scripts/cleanup.sh /usr/local/bin/cleanup
+COPY scripts/setup-project.sh /usr/local/bin/setup-project
+COPY scripts/run-tests.sh /usr/local/bin/run-tests
+
+# Make executable
+RUN chmod +x /usr/local/bin/cleanup \
+    /usr/local/bin/setup-project \
+    /usr/local/bin/run-tests
+```
+
+Then use in your sandboxes:
+
+```typescript
+await sandbox.exec('cleanup');
+await sandbox.exec('setup-project /workspace/repo');
+await sandbox.exec('run-tests');
+```
+
+### Configuration files
+
+Include default configuration:
+
+```dockerfile
+FROM ghcr.io/cloudflare/sandbox-runtime:latest
+
+# Git config
+COPY config/.gitconfig /root/.gitconfig
+
+# Python config
+COPY config/pip.conf /root/.config/pip/pip.conf
+
+# NPM config
+COPY config/.npmrc /root/.npmrc
+
+# Custom environment
+COPY config/.bashrc /root/.bashrc
+```
+
+## Production best practices
+
+### Pin versions
+
+Always specify exact versions in production:
+
+```dockerfile
+FROM ghcr.io/cloudflare/sandbox-runtime:1.2.3  # Not :latest
+
+RUN pip install \
+    pandas==2.0.3 \  # Not pandas>=2.0
+    numpy==1.25.2 \
+    scikit-learn==1.3.0
+
+RUN npm install -g \
+    typescript@5.2.2 \  # Not typescript@^5.0
+    prettier@3.0.3
+```
+
+### Multi-stage builds
+
+Reduce image size with multi-stage builds:
+
+```dockerfile
+# Build stage
+FROM ghcr.io/cloudflare/sandbox-runtime:latest AS builder
+
+# Install build dependencies
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    cmake
+
+# Build custom tools
+COPY src/ /build/
+WORKDIR /build
+RUN make build
+
+# Runtime stage
+FROM ghcr.io/cloudflare/sandbox-runtime:latest
+
+# Copy only built artifacts
+COPY --from=builder /build/bin/* /usr/local/bin/
+
+# Runtime dependencies only
+RUN apt-get update && apt-get install -y \
+    libssl3 \
+    && rm -rf /var/lib/apt/lists/*
+```
+
+### Layer optimization
+
+Order instructions to maximize cache efficiency:
+
+```dockerfile
+FROM ghcr.io/cloudflare/sandbox-runtime:latest
+
+# 1. Install system packages (changes rarely)
+RUN apt-get update && apt-get install -y \
+    postgresql-client \
+    && rm -rf /var/lib/apt/lists/*
+
+# 2. Install Python packages (changes occasionally)
+COPY requirements.txt /tmp/
+RUN pip install --no-cache-dir -r /tmp/requirements.txt
+
+# 3. Install Node packages (changes occasionally)
+COPY package.json package-lock.json /tmp/
+WORKDIR /tmp
+RUN npm ci --global
+WORKDIR /
+
+# 4. Copy custom files (changes frequently)
+COPY scripts/ /usr/local/bin/
+COPY config/ /root/.config/
+```
+
+### Security hardening
+
+Remove unnecessary tools and set proper permissions:
+
+```dockerfile
+FROM ghcr.io/cloudflare/sandbox-runtime:latest
+
+# Install only what you need
+RUN apt-get update && apt-get install -y \
+    postgresql-client \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+# Remove potentially dangerous tools if not needed
+RUN apt-get remove -y \
+    gcc \
+    make \
+    && apt-get autoremove -y
+
+# Set secure defaults
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1
+
+# Restrict file permissions
+RUN chmod 755 /usr/local/bin/*
+```
+
+### Health checks
+
+Add health check support:
+
+```dockerfile
+FROM ghcr.io/cloudflare/sandbox-runtime:latest
+
+COPY scripts/healthcheck.sh /usr/local/bin/healthcheck
+RUN chmod +x /usr/local/bin/healthcheck
+
+HEALTHCHECK --interval=30s --timeout=3s \
+  CMD /usr/local/bin/healthcheck || exit 1
+```
+
+## Platform-specific images
+
+### Machine learning image
+
+Optimized for ML/AI workloads:
+
+```dockerfile
+FROM ghcr.io/cloudflare/sandbox-runtime:latest
+
+# CUDA support (if available)
+RUN pip install --no-cache-dir \
+    torch==2.1.0 \
+    torchvision==0.16.0 \
+    tensorflow==2.14.0
+
+# ML libraries
+RUN pip install --no-cache-dir \
+    transformers==4.35.0 \
+    langchain==0.0.335 \
+    scikit-learn==1.3.2 \
+    xgboost==2.0.0
+
+# Data processing
+RUN pip install --no-cache-dir \
+    pandas==2.1.3 \
+    polars==0.19.12 \
+    duckdb==0.9.2
+```
+
+### Web development image
+
+Optimized for full-stack development:
+
+```dockerfile
+FROM ghcr.io/cloudflare/sandbox-runtime:latest
+
+# Node.js LTS (additional version)
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
+    apt-get install -y nodejs
+
+# Frontend build tools
+RUN npm install -g \
+    vite@5.0.0 \
+    webpack@5.89.0 \
+    turbopack@1.10.0
+
+# Testing frameworks
+RUN npm install -g \
+    jest@29.7.0 \
+    playwright@1.40.0 \
+    cypress@13.6.0
+
+# Python web frameworks
+RUN pip install --no-cache-dir \
+    fastapi==0.104.0 \
+    django==4.2.7 \
+    flask==3.0.0
+```
+
+### Data science image
+
+Optimized for data analysis:
+
+```dockerfile
+FROM ghcr.io/cloudflare/sandbox-runtime:latest
+
+# Core data science stack
+RUN pip install --no-cache-dir \
+    jupyter==1.0.0 \
+    ipython==8.17.2 \
+    pandas==2.1.3 \
+    numpy==1.26.2 \
+    scipy==1.11.4
+
+# Visualization
+RUN pip install --no-cache-dir \
+    matplotlib==3.8.2 \
+    seaborn==0.13.0 \
+    plotly==5.18.0 \
+    bokeh==3.3.1
+
+# Statistics
+RUN pip install --no-cache-dir \
+    statsmodels==0.14.0 \
+    scikit-learn==1.3.2 \
+    scipy==1.11.4
+```
+
+## Testing your image
+
+### Local testing
+
+Test your custom image locally before deploying:
+
+```bash
+# Build the image
+docker build -t test-sandbox:local .
+
+# Run interactively
+docker run -it --rm test-sandbox:local bash
+
+# Test Python packages
+docker run --rm test-sandbox:local python3 -c "import pandas; print(pandas.__version__)"
+
+# Test Node packages
+docker run --rm test-sandbox:local npm list -g --depth=0
+
+# Test custom scripts
+docker run --rm test-sandbox:local which cleanup
+```
+
+### Automated testing
+
+Create a test script:
+
+```dockerfile title="Dockerfile.test"
+FROM your-registry/custom-sandbox:latest
+
+# Run tests
+RUN python3 -c "import pandas, numpy, sklearn" && \
+    python3 --version && \
+    node --version && \
+    npm --version && \
+    git --version
+
+# Verify custom scripts
+RUN test -x /usr/local/bin/cleanup && \
+    test -x /usr/local/bin/setup-project
+
+CMD ["echo", "All tests passed"]
+```
+
+Run tests:
+
+```bash
+docker build -f Dockerfile.test -t test-image .
+docker run --rm test-image
+```
+
+## Troubleshooting
+
+### Image too large
+
+**Problem**: Container image exceeds size limits
+
+**Solutions**:
+
+```dockerfile
+# 1. Use multi-stage builds
+FROM ghcr.io/cloudflare/sandbox-runtime:latest AS builder
+# ... build steps
+FROM ghcr.io/cloudflare/sandbox-runtime:latest
+COPY --from=builder /build/output /usr/local/bin/
+
+# 2. Clean up in the same layer
+RUN apt-get update && apt-get install -y package \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# 3. Use --no-cache-dir for pip
+RUN pip install --no-cache-dir package
+
+# 4. Remove unnecessary files
+RUN rm -rf /tmp/* /var/tmp/* ~/.cache
+```
+
+### Package conflicts
+
+**Problem**: Conflicting package versions
+
+**Solutions**:
+
+```dockerfile
+# Use virtual environments
+RUN python3 -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+RUN pip install package==1.0.0
+
+# Or use specific Python versions
+RUN apt-get install -y python3.11
+RUN python3.11 -m pip install package
+```
+
+### Build failures
+
+**Problem**: Docker build fails
+
+**Debug**:
+
+```bash
+# Build with more output
+docker build --progress=plain -t custom-sandbox .
+
+# Test specific layers
+docker build --target builder -t test-layer .
+docker run -it test-layer bash
+
+# Check disk space
+docker system df
+docker system prune
+```
+
+## Related resources
+
+- [Wrangler configuration](/sandbox/configuration/wrangler/) - Using custom images in wrangler.jsonc
+- [Docker documentation](https://docs.docker.com/engine/reference/builder/) - Complete Dockerfile syntax
+- [Container concepts](/sandbox/concepts/containers/) - Understanding the runtime environment
+- [Security model](/sandbox/concepts/security/) - Container isolation details
