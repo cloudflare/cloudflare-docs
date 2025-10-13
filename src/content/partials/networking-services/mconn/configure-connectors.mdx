@@ -513,25 +513,25 @@ After finishing your { props.magicWord === "virtual" ? props.productNameVirtual 
 
 { props.magicWord === "hardware" && (
   <>
-		<p>When the Connector is first activated, you need to have Internet connection. If you chose to set up your Connector with DHCP you will need to have one of the Connector ports connected to the Internet through a device that supports DHCP. This is required so that the Connector can reach the Cloudflare global network and download the required configurations that you <a href="#set-up-cloudflare-dashboard">set up</a>.</p>
-		<p> If you set up your Connector with a static IP through the bootstrap method, you do not need a DHCP port. Refer to <a href="#decide-on-dhcp-vs-static-ip-connections"> DHCP vs static IP connections</a> for more information.</p>
+		<p>When {props.productName} is first activated, you need to have Internet connection. If you chose to set up your {props.productName} with DHCP you will need to have one of the {props.productName} ports connected to the Internet through a device that supports DHCP. This is required so that the {props.productName} can reach the Cloudflare global network and download the required configurations that you <a href="#set-up-cloudflare-dashboard">set up</a>.</p>
+		<p> If you set up your {props.productName} with a static IP through the bootstrap method, you do not need a DHCP port. Refer to <a href="#decide-on-dhcp-vs-static-ip-connections"> DHCP vs static IP connections</a> for more information.</p>
 
-		<Aside type="caution">Remember that if you chose the DHCP method you have to connect Magic WAN Connector through a route that supports DHCP for its first connection to the Internet. Otherwise, the Connector will not work.</Aside>
+		<Aside type="caution">Remember that if you chose the DHCP method you have to connect {props.productName} through a route that supports DHCP for its first connection to the Internet. Otherwise, the {props.productName} will not work.</Aside>
   </>
   )
 }
 
 { props.magicWord === "virtual" && (
   <>
-		<p>When the Connector is first activated, one of the ports must be connected to the Internet through a device that supports DHCP. This is required so that the Connector can reach the Cloudflare global network and download the required configurations that you <a href="#set-up-cloudflare-dashboard">set up</a>.</p>
+		<p>When the {props.productNameVirtual} is first activated, one of the ports must be connected to the Internet through a device that supports DHCP. This is required so that the {props.productNameVirtual} can reach the Cloudflare global network and download the required configurations that you <a href="#set-up-cloudflare-dashboard">set up</a>.</p>
 
-		<Aside type="caution">Remember to connect Magic WAN Connector through a route that supports DHCP for its first connection to the Internet. Otherwise, the Connector will not work.</Aside>
+		<Aside type="caution">Remember to connect {props.productNameVirtual} through a route that supports DHCP for its first connection to the Internet. Otherwise, the Connector will not work.</Aside>
 
   </>
   )
 }
 
-When you are ready to connect your Magic WAN Connector to the Cloudflare network:
+When you are ready to connect your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } to the Cloudflare network:
 
 1. In the Cloudflare dashboard, go to Magic WAN's **Configuration** page.
 
@@ -578,22 +578,22 @@ When you are ready to connect your Magic WAN Connector to the Cloudflare network
 
 { props.magicWord === "hardware" && (
   <>
-    <p>After activating your Connector, you can use it in a network configuration with the WAN interface set to a static IP address — that is, an Internet configuration that is not automatically set by DHCP. To use your Connector on a network configuration with a static IP, follow the steps below.</p>
+    <p>After activating your {props.productName}, you can use it in a network configuration with the WAN interface set to a static IP address — that is, an Internet configuration that is not automatically set by DHCP. To use your Connector on a network configuration with a static IP, follow the steps below.</p>
 
-		<Aside type="caution">Make sure you complete the setup workflow and activate your Magic WAN Connector before changing the WAN settings to a static IP.</Aside>
+		<Aside type="caution">Make sure you complete the setup workflow and activate your {props.productName} before changing the WAN settings to a static IP.</Aside>
 
 		<Markdown
 		text={`
-		1. Connect Magic WAN Connector to a DHCP port with access to the Internet.
+		1. Connect ${props.productName} to a DHCP port with access to the Internet.
 		2. [Add a Connector on-ramp](#add-a-connector-on-ramp) in the Cloudflare dashboard.
 		3. Create a [DHCP WAN](#create-a-wan).
-		4. [Activate](#activate-connector) and power on your Connector.
+		4. [Activate](#activate-connector) and power on your ${props.productName}.
 		5. Wait 60 seconds.
 		6. Make changes to the [WAN settings](#create-a-wan) in the Cloudflare dashboard to a static IP set up.
 		7. Wait 60 seconds again.
-		8. Magic WAN Connector will go offline. This is normal and expected behavior.
+		8. ${props.productName} will go offline. This is normal and expected behavior.
 		9. Adjust your physical connections as required to match the static configuration.
-		10. Magic WAN Connector comes back online.
+		10. ${props.productName} comes back online.
 		`}
 		inline={false}
 		/>
@@ -603,16 +603,16 @@ When you are ready to connect your Magic WAN Connector to the Cloudflare network
 
 { props.magicWord === "virtual" && (
   <>
-		<p>After activating your Virtual Connector, you can use it in a network configuration with the WAN interface set to a static IP address - that is, an Internet configuration that is not automatically set by DHCP. To use your Virtual Connector on a network configuration with a static IP, follow the steps below.</p>
+		<p>After activating your {props.productNameVirtual}, you can use it in a network configuration with the WAN interface set to a static IP address - that is, an Internet configuration that is not automatically set by DHCP. To use your {props.productNameVirtual} on a network configuration with a static IP, follow the steps below.</p>
 
-		<Aside type="caution">Make sure you complete the setup workflow and activate your Virtual Connector before changing the WAN settings to a static IP.</Aside>
+		<Aside type="caution">Make sure you complete the setup workflow and activate your {props.productNameVirtual} before changing the WAN settings to a static IP.</Aside>
 
 		<Markdown
 		text={`
-		1. Connect the machine where you installed the VM with Virtual Connector to a DHCP port with access to the Internet.
+		1. Connect the machine where you installed the VM with ${props.productNameVirtual} to a DHCP port with access to the Internet.
 		2. [Add a Connector on-ramp](#add-a-connector-on-ramp) in the Cloudflare dashboard.
 		3. Create a [DHCP WAN](#create-a-wan).
-		4. [Activate](#activate-connector) and boot your Virtual Connector.
+		4. [Activate](#activate-connector) and boot your ${props.productNameVirtual}.
 		5. Wait 60 seconds.
 		6. Make changes to the [WAN settings](#create-a-wan) in the Cloudflare dashboard to a static IP set up.
 		7. Wait 60 seconds again.
