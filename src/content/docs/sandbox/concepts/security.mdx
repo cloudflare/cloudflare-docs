@@ -5,200 +5,68 @@ sidebar:
   order: 6
 ---
 
-This page explains the security mechanisms in the Sandbox SDK, how isolation works, and what protections are in place.
-
-## Security layers
-
-The SDK implements multiple layers of security:
-
-```
-┌─────────────────────────────────────────────────┐
-│          Application Layer                       │
-│   (Your validation and authentication)          │
-└────────────────────┬────────────────────────────┘
-                     │
-┌────────────────────▼────────────────────────────┐
-│          SDK Client Layer                        │
-│   (Input validation, error mapping)             │
-└────────────────────┬────────────────────────────┘
-                     │
-┌────────────────────▼────────────────────────────┐
-│          Durable Object Layer                    │
-│   (Authentication, rate limiting)               │
-└────────────────────┬────────────────────────────┘
-                     │
-┌────────────────────▼────────────────────────────┐
-│          Container Runtime Layer                 │
-│   (Path validation, command sanitization)       │
-└────────────────────┬────────────────────────────┘
-                     │
-┌────────────────────▼────────────────────────────┐
-│          Container Isolation                     │
-│   (Linux namespaces, resource limits)           │
-└──────────────────────────────────────────────────┘
-```
-
-Each layer provides independent security controls.
+The Sandbox SDK is built on [Containers](/containers/), which run each sandbox in its own VM for strong isolation.
 
 ## Container isolation
 
-### Process isolation
+Each sandbox runs in a separate VM, providing complete isolation:
 
-Containers use Linux namespaces for isolation:
+- **Filesystem isolation** - Sandboxes cannot access other sandboxes' files
+- **Process isolation** - Processes in one sandbox cannot see or affect others
+- **Network isolation** - Sandboxes have separate network stacks
+- **Resource limits** - CPU, memory, and disk quotas are enforced per sandbox
 
-**PID namespace**:
-- Each sandbox has its own process tree
-- Processes cannot see processes in other sandboxes
-- Cannot send signals to processes in other sandboxes
+For complete security details about the underlying container platform, see [Containers architecture](/containers/platform-details/architecture/).
 
-```bash
-# Inside sandbox
-ps aux
-# Only shows processes in this sandbox
+## Within a sandbox
+
+All code within a single sandbox shares resources:
+
+- **Filesystem** - All processes see the same files
+- **Processes** - All sessions can see all processes
+- **Network** - Processes can communicate via localhost
+
+For complete isolation, use separate sandboxes per user:
+
+```typescript
+// Good - Each user in separate sandbox
+const userSandbox = getSandbox(env.Sandbox, `user-${userId}`);
+
+// Bad - Users sharing one sandbox
+const shared = getSandbox(env.Sandbox, 'shared');
+// Users can read each other's files!
 ```
-
-**Network namespace**:
-- Isolated network stack
-- Cannot sniff traffic from other sandboxes
-- Cannot interfere with other sandbox's network
-
-**Mount namespace**:
-- Isolated filesystem view
-- Cannot access files in other sandboxes
-- Cannot see host filesystem
-
-**User namespace**:
-- User ID remapping
-- Root in container ≠ root on host
-- Limits privilege escalation
-
-### Resource limits
-
-Containers enforce resource quotas:
-
-**CPU limits**:
-- Time-based CPU allocation
-- Prevents CPU monopolization
-- Fair scheduling between sandboxes
-
-**Memory limits**:
-- Maximum RAM per sandbox
-- Prevents memory exhaustion
-- OOM killer activates if exceeded
-
-**Disk limits**:
-- Maximum disk space per sandbox
-- Prevents disk filling
-- Quota enforcement
-
-**Process limits**:
-- Maximum number of processes
-- Prevents fork bombs
-- Process count restrictions
-
-### Network isolation
-
-**Outbound connections**:
-- Allowed (can call external APIs)
-- Rate limited (prevents abuse)
-- Monitored (unusual patterns detected)
-
-**Inbound connections**:
-- Blocked by default
-- Only through preview URLs (controlled exposure)
-- No direct container access
-
-**Inter-sandbox communication**:
-- Prohibited (sandboxes cannot talk directly)
-- Must use external services
-- No shared network
 
 ## Input validation
 
-### Path validation
+### Command injection
 
-File operations validate paths:
-
-**Allowed paths**:
-- `/workspace` - Application files
-- `/tmp` - Temporary files
-- `/home` - User files
-
-**Blocked paths**:
-- `/etc` - System configuration
-- `/sys` - System interfaces
-- `/proc` - Process information
-- `..` - Parent directory traversal
+Always validate user input before using it in commands:
 
 ```typescript
-// Validation example
-await sandbox.writeFile('/workspace/safe.txt', 'data');  // ✅ Allowed
+// Dangerous - user input directly in command
+const filename = userInput;
+await sandbox.exec(`cat ${filename}`);
+// User could input: "file.txt; rm -rf /"
 
-await sandbox.writeFile('/etc/passwd', 'data');  // ❌ Blocked
-// Error: Access denied - path outside allowed directories
+// Safe - validate input
+const filename = userInput.replace(/[^a-zA-Z0-9._-]/g, '');
+await sandbox.exec(`cat ${filename}`);
 
-await sandbox.writeFile('../../../etc/passwd', 'data');  // ❌ Blocked
-// Error: Path traversal detected
+// Better - use file API
+await sandbox.writeFile('/tmp/input', userInput);
+await sandbox.exec('cat /tmp/input');
 ```
 
-### Command validation
+## Authentication
 
-Commands are validated for dangerous patterns:
+### Sandbox access
 
-**Dangerous patterns blocked**:
-- Privilege escalation attempts (`sudo`, `su`)
-- Kernel module loading (`insmod`, `modprobe`)
-- Host filesystem access attempts
-- Network scanning tools (in some configurations)
-
-```bash
-# These may be blocked or restricted
-sudo apt install package  # Blocked - no sudo
-insmod kernel_module.ko   # Blocked - no kernel access
-```
-
-**Safe patterns allowed**:
-- Package installation (`apt`, `pip`, `npm`)
-- File operations (`cp`, `mv`, `rm`)
-- Process management (`ps`, `kill`)
-- Standard utilities
-
-### Port validation
-
-Port exposure validates port numbers:
-
-**Allowed ports**:
-- User ports: 1024-65535
-- Standard web: 3000, 8000, 8080, 5173
-
-**Blocked ports**:
-- System ports: 0-1023 (require privileges)
-- Reserved ranges (platform-specific)
-
-```typescript
-await sandbox.exposePort(3000);  // ✅ Allowed
-
-await sandbox.exposePort(80);    // ❌ May be blocked
-// Error: Port 80 is reserved
-```
-
-## Authentication and authorization
-
-### Sandbox access control
-
-Access to sandboxes is controlled:
-
-**Sandbox ID as access token**:
-- Knowing the sandbox ID grants access
-- IDs are unpredictable (hard to guess)
-- But not cryptographically secure
-
-**Best practice**: Add application-level auth:
+Sandbox IDs provide basic access control but aren't cryptographically secure. Add application-level authentication:
 
 ```typescript
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
-    // Verify user authentication
     const userId = await authenticate(request);
     if (!userId) {
       return new Response('Unauthorized', { status: 401 });
@@ -206,24 +74,18 @@ export default {
 
     // User can only access their sandbox
     const sandbox = getSandbox(env.Sandbox, userId);
-    return Response.json({ sandbox: 'authorized' });
+    return Response.json({ authorized: true });
   }
 };
 ```
 
-### Preview URL access
+### Preview URLs
 
-Preview URLs are public:
-
-**No built-in authentication**:
-- URLs are publicly accessible
-- Anyone with URL can access
-- No password required
-
-**Add authentication in your service**:
+Preview URLs are public. Add authentication in your service:
 
 ```python
 from flask import Flask, request, abort
+import os
 
 app = Flask(__name__)
 
@@ -238,111 +100,27 @@ def get_data():
     return {'data': 'protected'}
 ```
 
-## Code execution safety
+## Secrets management
 
-### Untrusted code
+Use environment variables, not hardcoded secrets:
 
-When executing untrusted code:
-
-**Use separate sandboxes**:
 ```typescript
-// Each user gets their own sandbox
-const userSandbox = getSandbox(env.Sandbox, `user-${userId}`);
+// Bad - hardcoded in file
+await sandbox.writeFile('/workspace/config.js', `
+  const API_KEY = 'sk_live_abc123';
+`);
 
-// Execute user's code in their sandbox
-await userSandbox.exec('python user_script.py');
-```
-
-**Don't share sandboxes**:
-```typescript
-// ❌ Bad - all users share one sandbox
-const sharedSandbox = getSandbox(env.Sandbox, 'shared');
-await sharedSandbox.exec(untrustedCode);  // Users can affect each other
-
-// ✅ Good - separate sandboxes
-const sandbox = getSandbox(env.Sandbox, `user-${userId}`);
-await sandbox.exec(untrustedCode);  // Isolated
-```
-
-### Command injection
-
-Prevent command injection:
-
-**Dangerous**:
-```typescript
-// ❌ User input directly in command
-const filename = userInput;
-await sandbox.exec(`cat ${filename}`);  // Vulnerable!
-
-// User could input: "file.txt; rm -rf /"
-```
-
-**Safe**:
-```typescript
-// ✅ Option 1: Validate input
-const filename = userInput.replace(/[^a-zA-Z0-9._-]/g, '');
-await sandbox.exec(`cat ${filename}`);
-
-// ✅ Option 2: Use file API
-await sandbox.writeFile('/tmp/input', userInput);
-await sandbox.exec('cat /tmp/input');
-```
-
-### Resource exhaustion
-
-Prevent resource abuse:
-
-**CPU exhaustion**:
-```typescript
-// ❌ Unbounded execution
-await sandbox.exec('python infinite_loop.py');  // Runs forever
-
-// ✅ With timeout
-try {
-  await sandbox.exec('python script.py', { timeout: 30000 });
-} catch (error) {
-  if (error.message.includes('timeout')) {
-    console.log('Script timed out');
-    await sandbox.killAllProcesses();
-  }
-}
-```
-
-**Memory exhaustion**:
-```typescript
-// Monitor and limit
-const processes = await sandbox.listProcesses();
-if (processes.length > 10) {
-  console.log('Too many processes, cleaning up');
-  await sandbox.killAllProcesses();
-}
-```
-
-## Data security
-
-### Sensitive data
-
-Handle sensitive data carefully:
-
-**Environment variables**:
-```typescript
-// ✅ Good - use environment variables
+// Good - use environment variables
 await sandbox.startProcess('node app.js', {
   env: {
-    API_KEY: env.API_KEY,  // From Worker env binding
-    DB_PASSWORD: env.DB_PASSWORD
+    API_KEY: env.API_KEY,  // From Worker environment binding
   }
 });
-
-// ❌ Bad - hardcoded secrets
-await sandbox.writeFile('/workspace/config.js', `
-  const API_KEY = 'sk_live_abc123';  // Exposed in filesystem
-`);
 ```
 
-**Temporary data**:
+Clean up temporary sensitive data:
+
 ```typescript
-// Clean up after use
 try {
   await sandbox.writeFile('/tmp/sensitive.txt', secretData);
   await sandbox.exec('python process.py /tmp/sensitive.txt');
@@ -351,281 +129,50 @@ try {
 }
 ```
 
-**Persistent data**:
-```typescript
-// Don't store secrets in sandbox
-// Use external secret management (Cloudflare secrets)
-const apiKey = env.API_KEY;  // From environment, not filesystem
-```
+## What the SDK protects against
 
-### Data isolation
+- Sandbox-to-sandbox access (VM isolation)
+- Resource exhaustion (enforced quotas)
+- Container escapes (VM-based isolation)
 
-Data is isolated per sandbox:
+## What you must implement
 
-**Between sandboxes**:
-- No shared filesystem
-- No shared memory
-- No shared processes
-
-**Within sandbox**:
-- All processes share filesystem
-- All sessions share filesystem
-- No isolation within sandbox
-
-For complete isolation:
-```typescript
-// ✅ Each user in separate sandbox
-const sandbox1 = getSandbox(env.Sandbox, 'user-1');
-const sandbox2 = getSandbox(env.Sandbox, 'user-2');
-
-// ❌ Users sharing one sandbox
-const shared = getSandbox(env.Sandbox, 'shared');
-// user-1 can read user-2's files
-```
-
-## Network security
-
-### Outbound requests
-
-Sandboxes can make outbound requests:
-
-**Consider**:
-- Rate limiting (prevent abuse)
-- Allowlisting (only allow specific domains)
-- Monitoring (detect unusual patterns)
-
-**Example allowlist**:
-```typescript
-const ALLOWED_HOSTS = [
-  'api.openai.com',
-  'api.anthropic.com',
-  'api.github.com'
-];
-
-// Validate before execution
-const url = new URL(userProvidedUrl);
-if (!ALLOWED_HOSTS.includes(url.hostname)) {
-  throw new Error('Domain not allowed');
-}
-```
-
-### Inbound access
-
-Preview URLs expose services:
-
-**Public by default**:
-- Anyone with URL can access
-- No IP restrictions
-- No geographic restrictions
-
-**Add protection**:
-```typescript
-// Rate limiting
-const rateLimit = new Map();
-
-app.use((req, res, next) => {
-  const ip = req.headers['cf-connecting-ip'];
-  const count = rateLimit.get(ip) || 0;
-
-  if (count > 100) {
-    return res.status(429).send('Rate limit exceeded');
-  }
-
-  rateLimit.set(ip, count + 1);
-  next();
-});
-
-// Authentication
-app.use((req, res, next) => {
-  const token = req.headers.authorization;
-  if (!isValidToken(token)) {
-    return res.status(401).send('Unauthorized');
-  }
-  next();
-});
-```
+- Authentication and authorization
+- Input validation and sanitization
+- Rate limiting
+- Application-level security (SQL injection, XSS, etc.)
 
 ## Best practices
 
-### Defense in depth
-
-Layer multiple security controls:
-
+**Use separate sandboxes for isolation**:
 ```typescript
-export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
-    // Layer 1: Authentication
-    const userId = await authenticateUser(request);
-    if (!userId) {
-      return new Response('Unauthorized', { status: 401 });
-    }
-
-    // Layer 2: Authorization
-    if (!await canAccessResource(userId, resourceId)) {
-      return new Response('Forbidden', { status: 403 });
-    }
-
-    // Layer 3: Input validation
-    const input = await request.json();
-    if (!validateInput(input)) {
-      return new Response('Invalid input', { status: 400 });
-    }
-
-    // Layer 4: Rate limiting
-    if (await isRateLimited(userId)) {
-      return new Response('Rate limited', { status: 429 });
-    }
-
-    // Layer 5: Sandbox isolation
-    const sandbox = getSandbox(env.Sandbox, userId);
-
-    // Layer 6: Command sanitization
-    const safeInput = sanitizeInput(input);
-    await sandbox.exec(`python script.py "${safeInput}"`);
-
-    return new Response('Success');
-  }
-};
+const sandbox = getSandbox(env.Sandbox, `user-${userId}`);
 ```
 
-### Least privilege
-
-Grant minimal necessary access:
-
+**Validate all inputs**:
 ```typescript
-// ✅ Good - user can only access their sandbox
-const userSandbox = getSandbox(env.Sandbox, userId);
-
-// ❌ Bad - user can access any sandbox
-const anySandbox = getSandbox(env.Sandbox, request.params.sandboxId);
+const safe = input.replace(/[^a-zA-Z0-9._-]/g, '');
+await sandbox.exec(`command ${safe}`);
 ```
 
-### Secure by default
-
-Design for security from the start:
-
+**Use environment variables for secrets**:
 ```typescript
-// ✅ Default deny
-const ALLOWED_COMMANDS = ['python', 'node', 'npm', 'pip'];
-
-function isAllowed(command: string): boolean {
-  const cmd = command.split(' ')[0];
-  return ALLOWED_COMMANDS.includes(cmd);
-}
-
-// ❌ Default allow
-await sandbox.exec(anyCommand);  // No validation
+await sandbox.startProcess('node app.js', {
+  env: { API_KEY: env.API_KEY }
+});
 ```
 
-### Regular cleanup
-
-Clean up resources to prevent leaks:
-
+**Clean up temporary resources**:
 ```typescript
 try {
   const sandbox = getSandbox(env.Sandbox, sessionId);
   await sandbox.exec('npm test');
 } finally {
-  // Always clean up temporary sandboxes
   await sandbox.destroy();
 }
 ```
 
-### Monitoring
-
-Monitor for security issues:
-
-```typescript
-// Log security events
-console.log('Security event:', {
-  userId,
-  action: 'sandbox_access',
-  sandboxId,
-  timestamp: new Date().toISOString()
-});
-
-// Alert on suspicious patterns
-if (requestCount > threshold) {
-  await sendAlert('High request rate detected', { userId });
-}
-```
-
-## Threat model
-
-### What the SDK protects against
-
-**Container escapes**:
-- ✅ Prevented by Linux namespaces
-- ✅ Container runtime isolation
-- ✅ Cloudflare infrastructure security
-
-**Resource exhaustion**:
-- ✅ CPU limits enforced
-- ✅ Memory limits enforced
-- ✅ Disk quotas enforced
-
-**Path traversal**:
-- ✅ Validated at runtime
-- ✅ Restricted to safe directories
-- ✅ Parent traversal blocked
-
-**Command injection**:
-- ✅ Command sanitization
-- ⚠️ Application must validate inputs
-
-**Data leaks between sandboxes**:
-- ✅ Filesystem isolation
-- ✅ Process isolation
-- ✅ Network isolation
-
-### What the SDK doesn't protect against
-
-**Application-level vulnerabilities**:
-- ❌ SQL injection in your code
-- ❌ XSS in your web service
-- ❌ Authentication bypass in your app
-
-**Social engineering**:
-- ❌ Users sharing sandbox IDs
-- ❌ Phishing for preview URLs
-
-**Denial of service (application-level)**:
-- ❌ Expensive computations
-- ❌ Large file uploads
-- ❌ Slow database queries
-
-**Data exfiltration**:
-- ❌ Sending data to external services
-- ❌ DNS tunneling
-- ❌ Steganography
-
-**You must implement**:
-- Authentication and authorization
-- Input validation
-- Rate limiting
-- Monitoring and alerting
-- Audit logging
-
-## Security checklist
-
-Before deploying to production:
-
-- [ ] **Authentication** - Users must authenticate
-- [ ] **Authorization** - Users can only access their sandboxes
-- [ ] **Input validation** - All user inputs validated
-- [ ] **Output encoding** - Prevent XSS in preview URLs
-- [ ] **Rate limiting** - Prevent abuse
-- [ ] **Monitoring** - Track usage and anomalies
-- [ ] **Secrets management** - No hardcoded secrets
-- [ ] **HTTPS only** - Enforce secure connections
-- [ ] **Regular cleanup** - Destroy temporary sandboxes
-- [ ] **Error handling** - Don't leak sensitive info in errors
-- [ ] **Audit logging** - Log security-relevant events
-- [ ] **Incident response** - Plan for security incidents
-
 ## Related resources
 
-- [Architecture](/sandbox/concepts/architecture/) - How security is layered
-- [Container runtime](/sandbox/concepts/containers/) - Isolation mechanisms
+- [Containers architecture](/containers/platform-details/architecture/) - Underlying platform security
 - [Sandbox lifecycle](/sandbox/concepts/sandboxes/) - Resource management
-- [Best practices](/sandbox/best-practices/) - Security recommendations

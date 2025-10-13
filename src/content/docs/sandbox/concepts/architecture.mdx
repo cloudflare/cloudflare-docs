@@ -5,39 +5,27 @@ sidebar:
   order: 1
 ---
 
-import { Render } from "~/components";
-
-This page explains how the Sandbox SDK is structured, why it's designed this way, and how the pieces fit together.
-
-## Overview
-
 The Sandbox SDK provides isolated code execution environments on Cloudflare's edge network. It combines three Cloudflare technologies:
 
 - **Workers** - JavaScript runtime at the edge
 - **Durable Objects** - Stateful compute with persistent storage
 - **Containers** - Isolated execution environments with full Linux capabilities
 
-This architecture enables running untrusted code safely while maintaining the benefits of edge computing: global distribution, low latency, and automatic scaling.
-
 ## Three-layer architecture
-
-The SDK uses a layered design where each layer has a distinct purpose and pattern:
 
 ```
 ┌─────────────────────────────────────────────────────────┐
-│                     Your Application                      │
-│                    (Cloudflare Worker)                    │
-└───────────────────────────┬───────────────────────────────┘
-                            │
+│                     Your Application                    │
+│                    (Cloudflare Worker)                  │
+└───────────────────────────┬─────────────────────────────┘
                             ├─ getSandbox()
                             ├─ exec()
                             ├─ writeFile()
-                            ├─ exposePort()
                             │
-                    ┌───────▼───────┐
-                    │  Client SDK   │ Layer 1: Developer Interface
-                    │   (TypeScript) │
-                    └───────┬───────┘
+           ┌────────────────▼──────────────────┐
+           │ Container-enabled Durable Object  │
+           │ (SDK methods via RPC from Worker) │
+           └───────────────────────────────────┘
                             │ HTTP/JSON
                             │
                     ┌───────▼───────┐
@@ -54,370 +42,94 @@ The SDK uses a layered design where each layer has a distinct purpose and patter
 
 ### Layer 1: Client SDK
 
-The Client SDK provides the developer-facing API. It's what you import and use in your Workers:
+The developer-facing API you use in your Workers:
 
 ```typescript
-import { getSandbox } from '@cloudflare/sandbox';
+import { getSandbox } from "@cloudflare/sandbox";
 
-const sandbox = getSandbox(env.Sandbox, 'my-sandbox');
-const result = await sandbox.exec('python script.py');
+const sandbox = getSandbox(env.Sandbox, "my-sandbox");
+const result = await sandbox.exec("python script.py");
 ```
 
 **Purpose**: Provide a clean, type-safe TypeScript interface for all sandbox operations.
 
-**Key characteristics**:
-- Domain-organized clients (CommandClient, FileClient, ProcessClient, etc.)
-- Direct response interfaces (not wrapped in service results)
-- Throws typed errors on failures
-- Handles HTTP communication with Durable Object
-- Maps container errors to user-friendly exceptions
-
-**Why this design**: Developers expect simple, direct APIs. The SDK hides complexity and provides clear error messages.
-
 ### Layer 2: Durable Object
 
-The Durable Object manages sandbox lifecycle and routing:
+Manages sandbox lifecycle and routing:
 
 ```typescript
 export class Sandbox extends DurableObject<Env> {
-  // Extends Cloudflare Container for isolation
-  // Routes requests between client and container
-  // Manages preview URLs and state
+	// Extends Cloudflare Container for isolation
+	// Routes requests between client and container
+	// Manages preview URLs and state
 }
 ```
 
 **Purpose**: Provide persistent, stateful sandbox instances with unique identities.
 
-**Key characteristics**:
-- Each sandbox is a unique Durable Object instance
-- Survives across requests (persistent state)
-- Manages container lifecycle (create, pause, resume)
-- Routes commands to container runtime
-- Generates and manages preview URLs
-- Handles security and access control
+**Why Durable Objects**:
 
-**Why Durable Objects**: They provide:
 - **Persistent identity** - Same sandbox ID always routes to same instance
-- **State management** - File system and processes persist between requests
+- **State management** - Filesystem and processes persist between requests
 - **Geographic distribution** - Sandboxes run close to users
 - **Automatic scaling** - Cloudflare manages provisioning
 
 ### Layer 3: Container Runtime
 
-The Container Runtime executes code in isolation:
+Executes code in isolation with full Linux capabilities.
 
-**Purpose**: Safely execute untrusted code with full Linux capabilities.
+**Purpose**: Safely execute untrusted code.
 
-**Key characteristics**:
-- Linux environment with Bun runtime
-- Service-oriented architecture (ProcessService, FileService, etc.)
-- ServiceResult pattern for all operations (success/error)
-- Security validation on all inputs
-- Streaming support for real-time output
-- HTTP API for command execution
+**Why containers**:
 
-**Why containers**: They provide:
 - **True isolation** - Process-level isolation with namespaces
 - **Full environment** - Real Linux with Python, Node.js, Git, etc.
 - **Resource limits** - CPU, memory, disk constraints
-- **No escape** - Sandboxed execution prevents host access
 
 ## Request flow
 
-Here's what happens when you execute a command:
+When you execute a command:
 
 ```typescript
-await sandbox.exec('python script.py')
+await sandbox.exec("python script.py");
 ```
 
-1. **Client SDK** (Your Worker)
-   - Validates parameters
-   - Builds HTTP request
-   - Sends to Durable Object
+1. **Client SDK** validates parameters and sends HTTP request to Durable Object
+2. **Durable Object** authenticates and routes to container runtime
+3. **Container Runtime** validates inputs, executes command, captures output
+4. **Response flows back** through all layers with proper error transformation
 
-2. **Durable Object**
-   - Receives request from client
-   - Checks authentication
-   - Routes to container runtime
-   - Returns response to client
-
-3. **Container Runtime**
-   - Receives command via HTTP
-   - Validates inputs for security
-   - Executes command with Bun.spawn()
-   - Captures stdout/stderr
-   - Returns structured result
-
-4. **Response flows back**
-   - Container → Durable Object → Client SDK → Your code
-   - Errors are transformed at each layer
-   - Streaming data flows through all layers
-
-## Why this architecture?
-
-### Separation of concerns
-
-Each layer has a single, clear responsibility:
-
-- **Client SDK**: Developer experience
-- **Durable Object**: State and routing
-- **Container**: Execution and isolation
-
-This separation makes the system:
-- Easier to understand and debug
-- Simpler to test (mock each layer independently)
-- More maintainable (changes are localized)
-- More reliable (failures are contained)
-
-### Edge-first design
-
-The SDK is built for Cloudflare's edge network:
-
-- **Global distribution** - Sandboxes run in 300+ cities worldwide
-- **Low latency** - Code executes close to users
-- **Automatic scaling** - No capacity planning needed
-- **Integrated platform** - Works seamlessly with other Cloudflare products
-
-### Security by design
-
-Multiple layers of security:
-
-1. **Container isolation** - Linux namespaces prevent host access
-2. **Input validation** - All inputs validated before execution
-3. **Resource limits** - CPU, memory, disk quotas enforced
-4. **Path security** - File operations restricted to safe directories
-5. **Command sanitization** - Dangerous commands blocked
-
-### Developer experience
-
-The architecture prioritizes ease of use:
-
-- **Simple API** - Clean, TypeScript-first interface
-- **Error handling** - Clear, actionable error messages
-- **Type safety** - Full TypeScript support
-- **Familiar patterns** - Standard async/await, no callbacks
-- **Rich features** - Streaming, sessions, preview URLs built-in
-
-## Execution models
-
-The SDK supports two execution patterns:
-
-### Direct execution
-
-One-time commands that complete and exit:
-
-```typescript
-const result = await sandbox.exec('npm test');
-// Command runs, completes, returns result
-```
-
-**Use for**:
-- Scripts and utilities
-- Build commands
-- One-time data processing
-- Testing
-
-**Characteristics**:
-- Waits for completion
-- Returns full output
-- No persistent state needed
-- Simple error handling
-
-### Background processes
-
-Long-running services that continue after starting:
-
-```typescript
-const process = await sandbox.startProcess('node server.js');
-await sandbox.exposePort(3000);
-// Server runs continuously in background
-```
-
-**Use for**:
-- Web servers and APIs
-- Development environments
-- Long-running services
-- Multi-process applications
-
-**Characteristics**:
-- Returns immediately (doesn't wait)
-- Process ID for later management
-- Can expose ports for network access
-- Requires explicit cleanup
-
-## State management
+## State persistence
 
 Sandboxes maintain state across requests:
 
-### Filesystem state
-
-Files persist between commands:
+**Filesystem**:
 
 ```typescript
 // Request 1
-await sandbox.writeFile('/workspace/data.txt', 'hello');
+await sandbox.writeFile("/workspace/data.txt", "hello");
 
 // Request 2 (minutes later)
-const file = await sandbox.readFile('/workspace/data.txt');
+const file = await sandbox.readFile("/workspace/data.txt");
 // Returns 'hello' - file persisted
 ```
 
-### Process state
-
-Background processes continue running:
+**Processes**:
 
 ```typescript
 // Request 1
-await sandbox.startProcess('node server.js');
-await sandbox.exposePort(3000);
+await sandbox.startProcess("node server.js");
 
 // Request 2 (minutes later)
 const processes = await sandbox.listProcesses();
 // Server still running
 ```
 
-### Code context state
+## Performance
 
-Code interpreter contexts remember variables:
-
-```typescript
-// Execution 1
-await sandbox.runCode(contextId, 'x = 42');
-
-// Execution 2
-await sandbox.runCode(contextId, 'print(x)');
-// Outputs '42' - variable persisted
-```
-
-## Design trade-offs
-
-Every architecture involves trade-offs. Here's what we chose and why:
-
-### Three layers vs. two
-
-**Choice**: Client SDK + Durable Object + Container (not just Client + Container)
-
-**Why**: Durable Objects provide:
-- Persistent sandbox identity
-- State management
-- Global distribution
-- Access control
-
-**Trade-off**: Extra network hop, but worth it for statefulness and routing.
-
-### HTTP vs. custom protocol
-
-**Choice**: HTTP/JSON between layers
-
-**Why**:
-- Simple to implement and debug
-- Works with existing tools (curl, fetch)
-- Easy to add middleware (CORS, logging)
-- Standard error handling
-
-**Trade-off**: Slight overhead vs. binary protocol, but negligible for I/O-bound operations.
-
-### ServiceResult pattern
-
-**Choice**: Container services return `ServiceResult<T>` (success/error union type)
-
-**Why**:
-- Explicit error handling (can't forget)
-- Type-safe errors
-- No exceptions in service layer
-- Easy to compose operations
-
-**Trade-off**: More verbose than throwing errors, but much safer.
-
-### Bun runtime
-
-**Choice**: Bun instead of Node.js in containers
-
-**Why**:
-- Faster startup (critical for cold starts)
-- Built-in TypeScript support
-- Better subprocess management
-- Modern APIs
-
-**Trade-off**: Newer runtime, but stable for our use case.
-
-## Scalability and performance
-
-### How sandboxes scale
-
-1. **Per-sandbox isolation**
-   - Each sandbox is a separate Durable Object
-   - No shared state between sandboxes
-   - Sandboxes scale independently
-
-2. **Geographic distribution**
-   - Durable Objects run close to users
-   - Containers are colocated with Durable Objects
-   - First request determines location
-
-3. **Automatic provisioning**
-   - Cloudflare handles scaling
-   - No capacity planning needed
-   - Scales from 1 to millions of sandboxes
-
-### Performance characteristics
-
-**Cold start**: 100-300ms (container initialization)
-**Warm start**: \<10ms (reuse existing container)
-**Command execution**: Depends on command (I/O-bound)
+**Cold start**: 100-300ms (container initialization)  
+**Warm start**: \<10ms (reuse existing container)  
 **Network latency**: 10-50ms (edge-to-edge)
-
-**Optimization strategies**:
-- Keep sandboxes warm with periodic requests
-- Batch operations when possible
-- Use streaming for long operations
-- Cache computation results
-
-## Comparison to alternatives
-
-### vs. Traditional VMs
-
-**Sandbox SDK**:
-- ✅ Instant provisioning (\<1s)
-- ✅ Global distribution
-- ✅ Pay-per-use pricing
-- ❌ Linux-only (no Windows)
-
-**VMs**:
-- ❌ Slow provisioning (minutes)
-- ❌ Regional deployment
-- ❌ Always-on costs
-- ✅ Any OS
-
-### vs. Serverless Functions
-
-**Sandbox SDK**:
-- ✅ Stateful (filesystem, processes)
-- ✅ Long-running operations
-- ✅ Full Linux environment
-- ❌ Slightly slower cold starts
-
-**Functions**:
-- ❌ Stateless
-- ❌ Strict timeouts
-- ❌ Limited environment
-- ✅ Very fast cold starts
-
-### vs. Remote Code Execution APIs
-
-**Sandbox SDK**:
-- ✅ Persistent state
-- ✅ Multi-language support
-- ✅ Full control
-- ✅ Preview URLs
-- ❌ Manage sandboxes yourself
-
-**Remote APIs**:
-- ❌ No state
-- ❌ Limited languages
-- ❌ Restricted capabilities
-- ❌ No custom URLs
-- ✅ Fully managed
 
 ## Related resources
 

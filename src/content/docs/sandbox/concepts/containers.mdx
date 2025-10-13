@@ -5,497 +5,127 @@ sidebar:
   order: 3
 ---
 
-This page explains what's inside a sandbox container, how code executes, and what capabilities are available.
+Each sandbox runs in an isolated Linux container based on Ubuntu 22.04.
 
-## Container environment
+## Pre-installed software
 
-Each sandbox runs in an isolated Linux container with:
+The base container comes pre-packaged with a full development environment:
 
-- **Operating System**: Linux (Ubuntu-based)
-- **Runtime**: Bun (JavaScript/TypeScript)
-- **Shell**: Bash
-- **Python**: Python 3.11+
-- **Node.js**: Available via Bun compatibility
-- **Package managers**: npm, pip, apt
-- **Git**: Full Git client
-- **Common tools**: curl, wget, sed, awk, grep, etc.
+**Languages and runtimes**:
+- Python 3.11 (with pip)
+- Node.js 20 LTS (with npm)
+- Bun (JavaScript/TypeScript runtime)
 
-## Why Linux containers?
-
-Containers provide the right balance of isolation, performance, and capabilities:
-
-### True isolation
-
-Unlike shared runtimes, containers provide:
-
-- **Process isolation** - Each sandbox has its own process namespace
-- **Filesystem isolation** - Separate root filesystem per sandbox
-- **Network isolation** - Isolated network stack
-- **Resource isolation** - CPU and memory limits per sandbox
-
-This means code in one sandbox cannot see or affect code in another sandbox, even if they run on the same physical machine.
-
-### Full environment
-
-Containers offer a complete Linux environment:
-
-- **Real filesystem** - Not a virtual filesystem, actual disk access
-- **Process management** - Fork, exec, signals all work normally
-- **Network stack** - Full TCP/IP, can run servers
-- **System tools** - Access to standard Linux utilities
-
-This enables running complex applications that expect a real operating system.
-
-### Compatibility
-
-Standard Linux environment means:
-
-- **Existing code runs** - Most Linux software works without modification
-- **Package managers work** - Install dependencies with apt, pip, npm
-- **Scripts are portable** - Bash scripts run as expected
-- **Tools are familiar** - Standard Linux commands available
-
-## Why Bun?
-
-The container uses Bun as its primary runtime:
-
-### Fast startup
-
-Bun starts almost instantly:
-
-- **Cold start**: 100-300ms total (vs. 500ms+ with Node.js)
-- **Warm start**: \<10ms
-- **Process spawning**: Very fast subprocess creation
-
-Fast startup is critical for edge computing where containers may start and stop frequently.
-
-### Built-in TypeScript
-
-No transpilation step needed:
-
-```typescript
-// This works directly in the container
-import type { Config } from './types';
-
-const config: Config = {
-  port: 3000,
-  environment: 'production'
-};
-```
-
-Developers can write TypeScript without build steps.
-
-### Better subprocess management
-
-Bun.spawn() provides:
-
-- **Streaming output** - Read stdout/stderr in real-time
-- **Process control** - Signals, timeouts, environment variables
-- **Performance** - Faster than Node.js child_process
-- **Type safety** - Full TypeScript support
-
-This is core to the SDK's command execution capabilities.
-
-### Node.js compatibility
-
-Bun is compatible with Node.js:
-
-- **npm packages work** - Install and use npm packages normally
-- **Node.js APIs available** - fs, path, http, etc.
-- **Existing code runs** - Most Node.js code works without changes
-
-## Available runtimes
-
-### Python
-
-Python 3.11+ is pre-installed:
-
-```python
-# Python works out of the box
-import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
-
-data = np.array([1, 2, 3, 4, 5])
-print(f"Mean: {np.mean(data)}")
-```
-
-**Pre-installed packages**:
+**Python packages**:
 - NumPy - Numerical computing
 - pandas - Data analysis
 - Matplotlib - Plotting and visualization
-- Requests - HTTP library
+- IPython - Interactive Python
 
-**Install additional packages**:
+**Development tools**:
+- Git - Version control
+- Build tools (gcc, make, pkg-config)
+- Text editors (vim, nano)
+- Process monitoring (htop, procps)
+
+**Utilities**:
+- curl, wget - HTTP clients
+- jq - JSON processor
+- Network tools (ping, dig, netstat)
+- Compression (zip, unzip)
+
+Install additional software at runtime or [customize the base image](/sandbox/configuration/dockerfile/):
+
 ```bash
+# Python packages
 pip install scikit-learn tensorflow
-```
 
-### JavaScript/TypeScript
-
-Via Bun runtime:
-
-```javascript
-// Run with Bun
-const response = await fetch('https://api.example.com/data');
-const data = await response.json();
-
-console.log(data);
-```
-
-**Built-in capabilities**:
-- Fetch API
-- WebSocket
-- Streams
-- File system operations
-- Subprocess management
-
-**Install packages**:
-```bash
+# Node.js packages
 npm install express
+
+# System packages
+apt-get install redis-server
 ```
 
-### Shell scripts
+## Filesystem
 
-Full Bash shell available:
+The container provides a standard Linux filesystem. You can read and write anywhere you have permissions.
 
-```bash
-#!/bin/bash
-
-# Standard bash scripting
-for file in *.txt; do
-  echo "Processing $file"
-  sed 's/old/new/g' "$file" > "${file}.new"
-done
-```
-
-**Available commands**:
-- Text processing: sed, awk, grep, cut, tr
-- File operations: cp, mv, rm, mkdir, chmod
-- Networking: curl, wget, nc
-- Compression: tar, gzip, zip
-- Version control: git
-
-## Filesystem structure
-
-### Standard directories
-
-- **/workspace** - Default working directory, use for application files
-- **/tmp** - Temporary files (may be cleared periodically)
-- **/home** - User home directory
-- **/usr/bin** - System binaries
-- **/usr/local** - Locally installed software
-
-### Writeable locations
-
-Code can write to:
-
-- `/workspace` - Recommended for all application data
+**Standard directories**:
+- `/workspace` - Default working directory for user code
 - `/tmp` - Temporary files
-- `/home` - User configuration
+- `/home` - User home directory
+- `/usr/bin`, `/usr/local/bin` - Executable binaries
 
-Cannot write to:
-
-- `/usr`, `/bin`, `/lib` - System directories (read-only)
-- `/proc`, `/sys` - Virtual filesystems
-
-### Disk space
-
-Sandboxes have limited disk space:
-
-- **Default**: Implementation-dependent (Cloudflare manages)
-- **Best practice**: Clean up temporary files regularly
-- **Monitoring**: Check with `df -h`
-
-If you hit disk limits, clean up:
-
-```bash
-# Remove temporary files
-rm -rf /tmp/*
-
-# Remove package caches
-rm -rf ~/.cache/pip
-rm -rf node_modules
+**Example**:
+```typescript
+await sandbox.writeFile('/workspace/app.py', 'print("Hello")');
+await sandbox.writeFile('/tmp/cache.json', '{}');
+await sandbox.exec('ls -la /workspace');
 ```
 
 ## Process management
 
-### Process isolation
+Processes run as you'd expect in a regular Linux environment.
 
-Each sandbox has its own process namespace:
-
-```bash
-# ps shows only processes in this sandbox
-ps aux
-# Won't see processes from other sandboxes or host
+**Foreground processes** (`exec()`):
+```typescript
+const result = await sandbox.exec('npm test');
+// Waits for completion, returns output
 ```
 
-### Resource limits
-
-Processes are constrained by:
-
-- **CPU**: Limited CPU time (enforced by container runtime)
-- **Memory**: Limited RAM per sandbox
-- **Processes**: Limited number of concurrent processes
-- **Files**: Limited number of open file descriptors
-
-These limits prevent one sandbox from affecting others.
-
-### Process lifecycle
-
-**Foreground processes** (via `exec()`):
-- Run until completion
-- Block the calling code
-- Return complete output
-
-**Background processes** (via `startProcess()`):
-- Run indefinitely
-- Don't block
-- Require explicit cleanup
+**Background processes** (`startProcess()`):
+```typescript
+const process = await sandbox.startProcess('node server.js');
+// Returns immediately, process runs in background
+```
 
 ## Network capabilities
 
-### Outbound connections
-
-Sandboxes can make outbound connections:
-
+**Outbound connections** work:
 ```bash
-# HTTP requests work
 curl https://api.example.com/data
-
-# WebSocket connections work
-wscat -c wss://echo.websocket.org
-
-# Raw TCP works
-nc example.com 80
+pip install requests
+npm install express
 ```
 
-Use cases:
-- API calls
-- Database connections
-- External service integration
-
-### Inbound connections
-
-Containers cannot receive inbound connections directly. Instead, use port exposure:
-
+**Inbound connections** require port exposure:
 ```typescript
-// Start a web server
 await sandbox.startProcess('python -m http.server 8000');
-
-// Expose port to get public URL
 const exposed = await sandbox.exposePort(8000);
 console.log(exposed.exposedAt); // Public URL
 ```
 
-The preview URL proxies requests to the container.
-
-### Localhost
-
-Services can bind to localhost and communicate within the sandbox:
-
+**Localhost** works within sandbox:
 ```bash
-# Start a database
-redis-server &
-
-# Connect to it locally
-redis-cli ping
+redis-server &      # Start server
+redis-cli ping      # Connect locally
 ```
 
-This enables multi-process applications within one sandbox.
+## Security
 
-## Security boundaries
+**Between sandboxes** (isolated):
+- Each sandbox is a separate container
+- Filesystem, memory and network are all isolated
 
-### What's isolated
+**Within sandbox** (shared):
+- All processes see the same files
+- Processes can communicate with each other
+- Environment variables are session-scoped
 
-Between sandboxes:
-
-- **Filesystem** - Each sandbox has its own root filesystem
-- **Processes** - Cannot see processes in other sandboxes
-- **Network** - Separate network namespace
-- **Memory** - Cannot access memory of other sandboxes
-
-### What's shared
-
-Within the sandbox, processes share:
-
-- **Filesystem** - All processes see the same files
-- **Environment** - Same environment variables
-- **Network** - Can communicate via localhost
-
-This means code within one sandbox is NOT isolated from other code in the same sandbox.
-
-### Untrusted code
-
-To run untrusted code:
-
-**Option 1: Separate sandboxes**
+To run untrusted code, use separate sandboxes per user:
 ```typescript
-// Each user gets their own sandbox
 const sandbox = getSandbox(env.Sandbox, `user-${userId}`);
 ```
 
-**Option 2: Sessions** (advanced)
-```typescript
-// Isolated execution contexts within one sandbox
-const session = await sandbox.createSession();
-```
-
-## Performance characteristics
-
-### Startup time
-
-- **Cold start**: 100-300ms (first request to new sandbox)
-- **Warm start**: \<10ms (subsequent requests)
-
-Cold starts include:
-- Container provisioning
-- Image pulling (if needed)
-- Runtime initialization
-
-### Execution speed
-
-Command execution speed depends on:
-
-- **I/O-bound operations**: Limited by disk/network (most operations)
-- **CPU-bound operations**: Limited by CPU allocation
-- **Memory access**: Fast, in-memory operations are quick
-
-Typical performance:
-
-```bash
-# File operations: Very fast
-time dd if=/dev/zero of=/tmp/test bs=1M count=100
-# <100ms for 100MB
-
-# Command execution: Fast
-time echo "Hello"
-# <1ms
-
-# Python startup: Moderate
-time python -c "print('hello')"
-# ~50-100ms
-
-# Package installation: Slow (network-bound)
-time pip install requests
-# ~2-5 seconds
-```
-
-### Optimization strategies
-
-**1. Cache installations**:
-```bash
-# Don't reinstall every time
-if [ ! -d "node_modules" ]; then
-  npm install
-fi
-```
-
-**2. Use warm sandboxes**:
-```typescript
-// Reuse sandboxes instead of creating new ones
-const sandbox = getSandbox(env.Sandbox, userId);
-```
-
-**3. Batch operations**:
-```bash
-# One command instead of multiple
-npm install && npm test && npm run build
-```
-
-**4. Stream large outputs**:
-```typescript
-// Don't wait for complete output
-const stream = await sandbox.execStream('npm test');
-```
-
-## Comparison to other runtimes
-
-### vs. Node.js containers
-
-**Sandbox SDK (Bun)**:
-- ✅ Faster startup (2-3x)
-- ✅ Built-in TypeScript
-- ✅ Better subprocess management
-- ⚠️ Newer runtime (less mature)
-
-**Node.js**:
-- ✅ More mature ecosystem
-- ✅ Wider compatibility
-- ❌ Slower startup
-- ❌ No built-in TypeScript
-
-### vs. Python-only environments
-
-**Sandbox SDK**:
-- ✅ Multiple languages (Python + JS + Shell)
-- ✅ Full Linux environment
-- ✅ Can install system packages
-- ⚠️ More complex
-
-**Python-only**:
-- ✅ Simpler
-- ✅ Faster for pure Python
-- ❌ Limited to Python
-- ❌ No system-level operations
-
-### vs. WebAssembly
-
-**Sandbox SDK**:
-- ✅ Full Linux environment
-- ✅ Any language/tool
-- ✅ System operations
-- ❌ Slower startup than Wasm
-
-**WebAssembly**:
-- ✅ Very fast startup
-- ✅ Strong isolation
-- ❌ Limited language support
-- ❌ No system operations
-
 ## Limitations
 
-### What you can't do
-
-Containers have some restrictions:
-
-**No privileged operations**:
-- Can't load kernel modules
-- Can't access host hardware directly
-- Can't modify firewall rules
-- Can't run Docker inside (no nested containers)
-
-**No GUI**:
-- No X11 or display server
-- Can't run GUI applications
-- Terminal/headless only
-
-**No persistent hardware identity**:
-- MAC addresses may change
-- Hardware IDs are virtualized
-
-**Resource limits**:
-- CPU and memory are capped
-- Disk space is limited
-- Network bandwidth is limited
-
-### Workarounds
-
-For GUI apps:
-- Use headless rendering (e.g., Matplotlib's Agg backend)
-- Generate images/PDFs instead of interactive displays
-
-For privileged operations:
-- Design applications to avoid them
-- Use Cloudflare services instead (e.g., R2 instead of local disk)
-
-For persistent identity:
-- Use sandbox ID for identity
-- Store state in filesystem or external services
+**Cannot**:
+- Load kernel modules or access host hardware
+- Run nested containers (no Docker-in-Docker)
 
 ## Related resources
 
 - [Architecture](/sandbox/concepts/architecture/) - How containers fit in the system
 - [Security model](/sandbox/concepts/security/) - Container isolation details
-- [Execute commands guide](/sandbox/guides/execute-commands/) - Running code in containers
 - [Sandbox lifecycle](/sandbox/concepts/sandboxes/) - Container lifecycle management

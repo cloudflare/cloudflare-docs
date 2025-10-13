@@ -5,10 +5,6 @@ sidebar:
   order: 5
 ---
 
-This page explains how preview URLs work, how traffic is routed, and the design decisions behind them.
-
-## What are preview URLs?
-
 Preview URLs provide public access to services running inside sandboxes. When you expose a port, you get a unique HTTPS URL that proxies requests to your service.
 
 ```typescript
@@ -19,141 +15,89 @@ console.log(exposed.exposedAt);
 // https://abc123-8000.sandbox.workers.dev
 ```
 
-Anyone with this URL can access your service running on port 8000 inside the sandbox.
+## URL format
 
-## How preview URLs work
-
-### URL format
-
-Preview URLs follow a predictable pattern:
+Preview URLs follow this pattern:
 
 ```
 https://{sandbox-id}-{port}.sandbox.workers.dev
 ```
 
-Components:
-
-- **sandbox-id**: Unique identifier for the sandbox
-- **port**: The exposed port number
-- **sandbox.workers.dev**: Cloudflare-managed domain
-
-Examples:
-
+**Examples**:
 - Port 3000: `https://abc123-3000.sandbox.workers.dev`
 - Port 8080: `https://abc123-8080.sandbox.workers.dev`
-- Port 5173: `https://abc123-5173.sandbox.workers.dev`
 
-### URL stability
-
-URLs remain stable:
-
-- **Same port** - Always gets the same URL
-- **Across requests** - URL doesn't change
-- **After restart** - Same sandbox ID = same URL
-
-This means you can:
-- Share URLs with others
-- Bookmark preview URLs
-- Use URLs in webhooks
-- Embed URLs in documentation
+**URL stability**: URLs remain the same for a given sandbox ID and port. You can share, bookmark, or use them in webhooks.
 
 ## Request routing
-
-Understanding how requests flow helps with debugging and optimization.
-
-### The complete path
 
 ```
 User's Browser
      ↓ HTTPS
-Cloudflare Edge (nearest location)
-     ↓ Internal routing
-Durable Object (sandbox location)
-     ↓ Container protocol
-Container (sandbox)
-     ↓ HTTP (localhost)
+Your Worker
+     ↓
+Durable Object (sandbox)
+     ↓ HTTP
 Your Service (on exposed port)
 ```
 
-### Step by step
+**Important**: You must handle preview URL routing in your Worker using `proxyToSandbox()`:
 
-1. **User makes request**
-   ```
-   GET https://abc123-3000.sandbox.workers.dev/api/data
-   ```
-
-2. **Cloudflare Edge receives it**
-   - Request hits nearest Cloudflare data center
-   - TLS termination happens here
-   - Request is authenticated and validated
-
-3. **Routed to Durable Object**
-   - Sandbox ID extracted from hostname
-   - Request routed to the Durable Object managing that sandbox
-   - May cross regions if sandbox is in different location
-
-4. **Durable Object forwards to container**
-   - Port number extracted from hostname (3000)
-   - Request forwarded to container
-   - Container receives HTTP request
-
-5. **Container proxies to service**
-   - Container makes localhost request to port 3000
-   - Your service running on port 3000 handles it
-   - Response flows back through the chain
-
-### Latency components
-
-Total latency = Edge latency + Routing latency + Container latency + Service latency
-
-**Edge latency**: 1-5ms
-- User to nearest Cloudflare data center
-
-**Routing latency**: 10-100ms
-- Edge to Durable Object (may cross regions)
-
-**Container latency**: 1-10ms
-- Durable Object to container (local)
-
-**Service latency**: Varies
-- Your application's response time
-
-**Typical total**: 20-150ms for simple requests
-
-## Why this design?
-
-### Global accessibility
-
-Preview URLs are globally accessible:
-
-- **No VPN needed** - Access from anywhere
-- **HTTPS by default** - Secure by default
-- **Cloudflare CDN** - Fast from anywhere in the world
-
-This enables:
-- Sharing demos with clients
-- Testing from mobile devices
-- Accessing dev environments remotely
-- Webhook integration
-
-### Security
-
-The URL provides access control:
-
-- **Unpredictable URLs** - Sandbox IDs are random (hard to guess)
-- **HTTPS enforced** - All traffic encrypted
-- **No default auth** - Your service controls authentication
-
-This means:
-
-**URLs are not secret**:
 ```typescript
-// Anyone with the URL can access
-const url = 'https://abc123-3000.sandbox.workers.dev';
-// No password needed - URL grants access
+import { proxyToSandbox, getSandbox } from "@cloudflare/sandbox";
+
+export default {
+  async fetch(request, env) {
+    // Route preview URL requests to sandboxes
+    const proxyResponse = await proxyToSandbox(request, env);
+    if (proxyResponse) return proxyResponse;
+
+    // Your custom routes here
+    // ...
+  }
+};
 ```
 
+Without this, preview URLs won't work.
+
+## Multiple ports
+
+Expose multiple services simultaneously:
+
+```typescript
+await sandbox.startProcess('node api.js');      // Port 3000
+await sandbox.startProcess('node admin.js');    // Port 3001
+
+const api = await sandbox.exposePort(3000, { name: 'api' });
+const admin = await sandbox.exposePort(3001, { name: 'admin' });
+
+// Each gets its own URL:
+// https://abc123-3000.sandbox.workers.dev
+// https://abc123-3001.sandbox.workers.dev
+```
+
+## What works
+
+- HTTP/HTTPS requests
+- WebSocket (WSS) via HTTP upgrade
+- Server-Sent Events
+- All HTTP methods (GET, POST, PUT, DELETE, etc.)
+- Request and response headers
+
+## What doesn't work
+
+- Raw TCP/UDP connections
+- Custom protocols (must wrap in HTTP)
+- Ports 80/443 (use 1024+)
+
+## Security
+
+:::caution
+Preview URLs are publicly accessible. Anyone with the URL can access your service.
+:::
+
 **Add authentication in your service**:
+
 ```python
 from flask import Flask, request, abort
 
@@ -164,356 +108,66 @@ def get_data():
     token = request.headers.get('Authorization')
     if token != 'Bearer secret-token':
         abort(401)
-
     return {'data': 'protected'}
 ```
 
-### Simplicity
-
-One exposure model for all protocols:
-
-**HTTP/HTTPS**: Works directly
-```typescript
-await sandbox.exposePort(3000);
-// Access via https://abc123-3000.sandbox.workers.dev
-```
-
-**WebSocket**: Works through HTTP upgrade
-```typescript
-await sandbox.exposePort(8080);
-// Connect via wss://abc123-8080.sandbox.workers.dev
-```
-
-**Server-Sent Events**: Works through HTTP
-```typescript
-await sandbox.exposePort(5000);
-// Stream from https://abc123-5000.sandbox.workers.dev/events
-```
-
-**Custom protocols**: Require HTTP wrapping
-```bash
-# Can't expose raw TCP/UDP directly
-# Must wrap in HTTP service first
-```
-
-## Port exposure lifecycle
-
-### Exposure
-
-```typescript
-const exposed = await sandbox.exposePort(8000, {
-  name: 'my-service'  // Optional: For organization
-});
-
-console.log('Port:', exposed.port);              // 8000
-console.log('URL:', exposed.exposedAt);          // https://...
-console.log('Name:', exposed.name);              // 'my-service'
-console.log('Time:', exposed.timestamp);         // ISO timestamp
-```
-
-**What happens**:
-1. SDK validates port number (1-65535)
-2. Checks if port is already exposed
-3. Verifies service is listening on port
-4. Creates routing entry
-5. Returns preview URL
-
-**Cost**: Minimal - just metadata
-
-### Active
-
-While exposed:
-- Traffic flows to your service
-- URL remains accessible
-- No time limit (stays open)
-- No request limit
-
-**Charges** (if any):
-- Based on data transfer
-- Based on request count
-- No idle charges
-
-### Closure
-
-```typescript
-await sandbox.unexposePort(8000);
-```
-
-**What happens**:
-1. Routing entry removed
-2. URL becomes inaccessible
-3. Any in-flight requests complete
-4. New requests get 404
-
-**Effect**:
-- Service still runs (process not killed)
-- Just not accessible externally
-- Can re-expose same port later
-
-## Multiple ports
-
-You can expose multiple ports simultaneously:
-
-```typescript
-// Start multiple services
-await sandbox.startProcess('node api.js');        // Port 3000
-await sandbox.startProcess('node admin.js');      // Port 3001
-await sandbox.startProcess('python metrics.py');  // Port 8080
-
-// Expose all ports
-const api = await sandbox.exposePort(3000, { name: 'api' });
-const admin = await sandbox.exposePort(3001, { name: 'admin' });
-const metrics = await sandbox.exposePort(8080, { name: 'metrics' });
-
-return {
-  api: api.exposedAt,
-  admin: admin.exposedAt,
-  metrics: metrics.exposedAt
-};
-```
-
-Each gets its own unique URL:
-- API: `https://abc123-3000.sandbox.workers.dev`
-- Admin: `https://abc123-3001.sandbox.workers.dev`
-- Metrics: `https://abc123-8080.sandbox.workers.dev`
-
-## Limitations and constraints
-
-### What works
-
-- **HTTP/HTTPS** - Full support
-- **WebSocket (WSS)** - Works via HTTP upgrade
-- **Server-Sent Events** - Works via HTTP
-- **Any HTTP method** - GET, POST, PUT, DELETE, etc.
-- **Request headers** - Forwarded to service
-- **Response headers** - Forwarded to client
-- **Large payloads** - No size limits (within reason)
-
-### What doesn't work
-
-- **Raw TCP** - Must use HTTP
-- **UDP** - Not supported
-- **Custom protocols** - Must wrap in HTTP
-- **Port 80/443** - Use higher ports (1024+)
-
-### Rate limits
-
-Preview URLs may have limits:
-
-- **Requests per second** - Implementation-dependent
-- **Concurrent connections** - Implementation-dependent
-- **Bandwidth** - Implementation-dependent
-
-For production use, consider:
-- Adding caching (Cloudflare Cache API)
-- Rate limiting in your service
-- Monitoring usage
-
-## Design trade-offs
-
-### Why subdomains?
-
-**Choice**: Use subdomains for routing (`abc123-3000.sandbox.workers.dev`)
-
-**Alternative**: Use paths (`sandbox.workers.dev/abc123/3000/`)
-
-**Why subdomains**:
-- ✅ Proper CORS behavior
-- ✅ Cleaner URLs
-- ✅ Standard HTTP semantics
-- ✅ Works with all frameworks
-
-**Trade-off**: Slightly longer URLs, but much better compatibility
-
-### Why include port in URL?
-
-**Choice**: Port number in hostname (`-3000.`)
-
-**Alternative**: Use default ports, document which service
-
-**Why in URL**:
-- ✅ Multiple services per sandbox
-- ✅ Clear which port you're accessing
-- ✅ No ambiguity
-- ✅ Easy to expose/unexpose individually
-
-**Trade-off**: Longer URLs, but explicit and clear
-
-### Why not custom domains?
-
-**Current**: Fixed `.sandbox.workers.dev` domain
-
-**Alternative**: Allow custom domains
-
-**Why fixed domain**:
-- ✅ Simpler implementation
-- ✅ No DNS configuration needed
-- ✅ Immediate availability
-- ✅ Cloudflare-managed SSL
-
-**Future**: Custom domains may be possible (not currently available)
-
-## Security considerations
-
-### Public accessibility
-
-:::caution
-Preview URLs are publicly accessible. Anyone with the URL can access your service.
-:::
-
-**Implications**:
-- Don't put sensitive data in URLs
-- Don't rely on URL secrecy for security
-- Add authentication in your service
-- Monitor access logs
-
-**Authentication patterns**:
-
-```typescript
-// Token-based auth
-app.use((req, res, next) => {
-  const token = req.headers.authorization;
-  if (token !== `Bearer ${process.env.AUTH_TOKEN}`) {
-    return res.status(401).json({ error: 'Unauthorized' });
-  }
-  next();
-});
-```
-
-```python
-# Basic auth
-from functools import wraps
-from flask import request, abort
-
-def require_auth(f):
-    @wraps(f)
-    def decorated(*args, **kwargs):
-        auth = request.authorization
-        if not auth or auth.password != 'secret':
-            abort(401)
-        return f(*args, **kwargs)
-    return decorated
-
-@app.route('/data')
-@require_auth
-def get_data():
-    return {'data': 'protected'}
-```
-
-### HTTPS enforcement
-
-All traffic is HTTPS:
-
-- **HTTP redirects to HTTPS** - Automatically
-- **TLS 1.2+** - Modern encryption
-- **Cloudflare certificates** - Managed automatically
-
-No need to handle SSL in your service.
-
-### Rate limiting
-
-Consider adding rate limiting:
-
-```typescript
-import { RateLimiter } from 'rate-limiter-flexible';
-
-const limiter = new RateLimiter({
-  points: 100,  // Requests
-  duration: 60  // Per 60 seconds
-});
-
-app.use(async (req, res, next) => {
-  try {
-    await limiter.consume(req.ip);
-    next();
-  } catch {
-    res.status(429).json({ error: 'Too many requests' });
-  }
-});
-```
-
-## Debugging
+**Security features**:
+- All traffic is HTTPS (automatic TLS)
+- URLs use random sandbox IDs (hard to guess)
+- You control authentication in your service
+
+## Troubleshooting
 
 ### URL not accessible
 
-**Problem**: Preview URL returns errors.
+Check if service is running and listening:
 
-**Checks**:
+```typescript
+// 1. Is service running?
+const processes = await sandbox.listProcesses();
 
-1. **Is service running?**
-   ```typescript
-   const processes = await sandbox.listProcesses();
-   console.log(processes); // Check if service is running
-   ```
+// 2. Is port exposed?
+const ports = await sandbox.getExposedPorts();
 
-2. **Is port exposed?**
-   ```typescript
-   const { ports } = await sandbox.getExposedPorts();
-   console.log(ports); // Check if port is listed
-   ```
+// 3. Is service binding to 0.0.0.0 (not 127.0.0.1)?
+// Good:
+app.run(host='0.0.0.0', port=3000)
 
-3. **Is service listening on correct port?**
-   ```bash
-   # In sandbox
-   netstat -tuln | grep 3000  # Check if port is bound
-   ```
-
-4. **Is service binding to 0.0.0.0 (not 127.0.0.1)?**
-   ```python
-   # Good - accessible
-   app.run(host='0.0.0.0', port=3000)
-
-   # Bad - localhost only
-   app.run(host='127.0.0.1', port=3000)
-   ```
-
-### Slow responses
-
-**Problem**: Preview URLs are slow.
-
-**Analysis**:
-
-```bash
-# Measure latency
-curl -w "@curl-format.txt" -s https://abc123-3000.sandbox.workers.dev
-
-# Check service health
-time curl http://localhost:3000/health  # Inside sandbox
+// Bad (localhost only):
+app.run(host='127.0.0.1', port=3000)
 ```
-
-**Optimize**:
-- Cache responses (HTTP headers)
-- Reduce response sizes (compression)
-- Optimize service code
-- Use CDN features (Cloudflare Cache API)
 
 ## Best practices
 
-### URL sharing
+**Service design**:
+- Bind to `0.0.0.0` to make accessible
+- Add authentication (don't rely on URL secrecy)
+- Include health check endpoints
+- Handle CORS if accessed from browsers
 
-- **Share responsibly** - URLs are public
-- **Document authentication** - If required
-- **Set expectations** - Temporary vs permanent
-- **Monitor usage** - Track who's accessing
+**Cleanup**:
+- Unexpose ports when done: `await sandbox.unexposePort(port)`
+- Stop processes: `await sandbox.killAllProcesses()`
 
-### Service design
+## Local development
 
-- **Bind to 0.0.0.0** - Make accessible
-- **Add health checks** - `/health` endpoint
-- **Implement auth** - Don't rely on URL secrecy
-- **Handle CORS** - If accessed from browsers
-- **Log requests** - For debugging and monitoring
+:::caution[Local development only]
+When using `wrangler dev`, you must expose ports in your Dockerfile:
 
-### Cleanup
+```dockerfile
+FROM docker.io/cloudflare/sandbox:0.3.3
 
-- **Unexpose when done** - Free resources
-- **Stop processes** - Don't leave servers running
-- **Document URLs** - If sharing with others
-- **Rotate periodically** - Create new sandboxes for fresh URLs
+# Required for local development
+EXPOSE 3000
+EXPOSE 8080
+```
+
+Without `EXPOSE`, you'll see: `connect(): Connection refused: container port not found`
+
+This is **only required for local development**. In production, all container ports are automatically accessible.
+:::
 
 ## Related resources
 
 - [Ports API reference](/sandbox/api/ports/) - Complete port exposure API
 - [Expose services guide](/sandbox/guides/expose-services/) - Practical patterns
-- [Architecture](/sandbox/concepts/architecture/) - How routing works
-- [Security model](/sandbox/concepts/security/) - Security implications
