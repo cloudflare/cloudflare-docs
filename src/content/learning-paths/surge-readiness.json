@@ -2,7 +2,8 @@
 	"title": "Prepare for surges or spikes in web traffic",
 	"path": "/learning-paths/surge-readiness/concepts/",
 	"priority": 5,
+	"pcx_content_type": "learning-path",
 	"description": "Learn how to protect your website for potential surges or spikes in web traffic.",
-	"products": ["Cache", "WAF"],
+	"products": ["cache", "waf"],
 	"product_group": "Application security"
 }

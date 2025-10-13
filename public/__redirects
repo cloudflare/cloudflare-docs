@@ -1,12 +1,13 @@
 # homepage
-/api /api/ 301
 /docs/ /directory/ 301
+/api /api/ 301
 /products/ /directory/ 301
 /zero-trust/ /products/?product-group=Cloudflare+One 301
 /dashboard-landing/ / 301
 /tutorials/ /search/?content_type%5B0%5D=Tutorial 301
 /sitemap.xml /sitemap-index.xml
 /deprecations/ /fundamentals/api/reference/deprecations/ 301
+/learning-paths/ /resources/ 301
 
 # changelog
 /changelog/rss.xml /changelog/rss/index.xml 301
@@ -243,6 +244,7 @@
 /api-shield/security/jwt-validation/configure/ /api-shield/security/jwt-validation/api/ 301
 /api-shield/security/schema-validation/configure/ /api-shield/security/schema-validation/api/ 301
 /api-shield/security/sequence-mitigation/configure/ /api-shield/security/sequence-mitigation/api/ 301
+/api-shield/frequently-asked-questions/ /api-shield/ 301
 
 #autorag
 /autorag/usage/recipes/ /ai-search/how-to/ 301
@@ -400,6 +402,13 @@
 
 # Constellation
 /constellation/ /workers-ai/ 301
+
+# Containers
+/containers/image-management/ /containers/platform-details/image-management/ 301
+/containers/scaling-and-routing/ /containers/platform-details/scaling-and-routing/ 301
+/containers/architecture/ /containers/platform-details/architecture/ 301
+/containers/durable-object-methods/ /containers/platform-details/durable-object-methods/ 301
+/containers/platform-details/ /containers/platform-details/architecture/ 301
 
 # D1
 /d1/client-api/ /d1/worker-api/ 301
@@ -592,6 +601,7 @@
 /cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/journaling-setup/office365-journaling/ /cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/journaling-setup/m365-journaling/ 301
 /cloudflare-one/email-security/setup/pre-delivery-deployment/prerequisites/microsoft365-email-security-mx/ /cloudflare-one/email-security/setup/pre-delivery-deployment/prerequisites/m365-email-security-mx/ 301
 /cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/journaling-setup/manage-domains/ /cloudflare-one/email-security/setup/manage-domains/ 301
+/cloudflare-one/email-security/email-monitoring/download-disposition-report/ /cloudflare-one/email-security/email-monitoring/download-report/ 301
 
 # firewall
 /firewall/api/cf-lists/ /waf/tools/lists/lists-api/ 301
@@ -2436,10 +2446,3 @@
 /ai-gateway/providers/* /ai-gateway/usage/providers/:splat 301
 /ai-gateway/guardrails/* /ai-gateway/features/guardrails/:splat 301
 /ai-gateway/websockets-api/* /ai-gateway/usage/websockets-api/:splat 301
-
-# Containers
-/containers/image-management /containers/platform-details/image-management 301
-/containers/scaling-and-routing /containers/platform-details/scaling-and-routing 301
-/containers/architecture /containers/platform-details/architecture 301
-/containers/durable-object-methods /containers/platform-details/durable-object-methods 301
-/containers/platform-details /containers/platform-details/architecture 301

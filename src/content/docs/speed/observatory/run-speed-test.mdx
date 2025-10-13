@@ -6,17 +6,19 @@ sidebar:
 description: Learn how to use Cloudflare's Observatory to assess the performance of your website.
 ---
 
-import { Render } from "~/components";
+import { Render, DashButton } from "~/components";
 
 ## Run Synthetic test
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
-2. Go to **Speed** > **Synthetic Monitoring**.
-3. Enter the URL you want to test. The URL must belong to the zone you are testing from.
-4. Select the test type you want to use: **Browser** or **Network tests**.
-5. Select the **Region** the automated browser will use.
-6. Depending on your plan you can select to run the test **once**, **daily** or **weekly**. Refer to the [Quotas](/speed/observatory/run-speed-test/#quotas) section for information on the test frequency available for your plan. Note that these limits may change over time.
-7. After the test finishes running, you will get a Lighthouse score and you will have access to the list of the tests run. The test result page will give you details regarding the performance of your website, both for the desktop and mobile versions. Refer to [Understand test results](/speed/observatory/test-results/) for more information.
+1. In the Cloudflare dashboard, go to the **Synthetic Monitoring** page.
+
+   <DashButton url="/?to=/:account/:zone/speed/test" />
+
+2. Enter the URL you want to test. The URL must belong to the zone you are testing from.
+3. Select the test type you want to use: **Browser** or **Network tests**.
+4. Select the **Region** the automated browser will use.
+5. Depending on your plan you can select to run the test **once**, **daily** or **weekly**. Refer to the [Quotas](/speed/observatory/run-speed-test/#quotas) section for information on the test frequency available for your plan. Note that these limits may change over time.
+6. After the test finishes running, you will get a Lighthouse score and you will have access to the list of the tests run. The test result page will give you details regarding the performance of your website, both for the desktop and mobile versions. Refer to [Understand test results](/speed/observatory/test-results/) for more information.
 
 <Render file="user-agents" product="speed" />
 

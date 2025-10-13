@@ -3,7 +3,8 @@
 	"uid": "workers-intro",
 	"path": "/learning-paths/workers/concepts/",
 	"priority": 4,
+	"pcx_content_type": "learning-path",
 	"description": "Deploy serverless code, globally with exceptional performance, reliability, and scale.",
-	"products": ["Workers"],
+	"products": ["workers"],
 	"product_group": "Developer platform"
 }

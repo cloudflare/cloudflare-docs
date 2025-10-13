@@ -2,8 +2,9 @@
 	"title": "Replace your VPN",
 	"path": "/learning-paths/replace-vpn/concepts/",
 	"priority": 1,
-	"description": "Give users secure, auditable network and application access.",
-	"products": ["Cloudflare Gateway", "Cloudflare Tunnel", "WARP"],
+	"description": "Learn how to replace your VPN with Cloudflare Zero Trust.",
+	"pcx_content_type": "learning-path",
+	"products": ["gateway", "cloudflare-tunnel", "zero-trust-warp"],
 	"product_group": "Cloudflare One",
 	"additional_groups": ["Application security", "Application performance"]
 }

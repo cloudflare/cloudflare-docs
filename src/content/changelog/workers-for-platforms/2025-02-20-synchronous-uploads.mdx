@@ -1,0 +1,15 @@
+---
+title: Workers for Platforms - Instant dispatch for newly created User Workers
+description: Newly uploaded user Worker scripts are now immediately available for dispatch upon a successful API response.
+products:
+  - workers-for-platforms
+date: 2025-02-20T17:00:00Z
+---
+
+[Workers for Platforms](https://developers.cloudflare.com/cloudflare-for-platforms/) is an architecture wherein a centralized [dispatch Worker](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#dynamic-dispatch-worker) processes incoming requests and routes them to isolated sub-Workers, called [User Workers](/cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/#user-workers).
+
+![Workers for Platforms Requests](~/assets/images/changelog/workers-for-platforms/wfp-request.png)
+
+Previously, when a new User Worker was uploaded, there was a short delay before it became available for dispatch. This meant that even though an API request could return a 200 OK response, the script might not yet be ready to handle requests, causing unexpected failures for platforms that immediately dispatch to new Workers.
+
+**With this update, first-time uploads of User Workers are now deployed synchronously**. A 200 OK response guarantees the script is fully provisioned and ready to handle traffic immediately, ensuring more predictable deployments and reducing errors.

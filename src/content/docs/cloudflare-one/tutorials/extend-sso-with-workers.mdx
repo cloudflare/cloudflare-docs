@@ -6,9 +6,16 @@ pcx_content_type: tutorial
 title: Send SSO attributes to Access-protected origins with Workers
 tags:
   - SSO
+description: >-
+  This tutorial will walk you through extending the single-sign-on (SSO) capabilities of Cloudflare Access with our serverless computing platform, Cloudflare Workers.
 ---
 
-import { Render, GlossaryTooltip, PackageManagers, WranglerConfig } from "~/components"
+import {
+	Render,
+	GlossaryTooltip,
+	PackageManagers,
+	WranglerConfig,
+} from "~/components";
 
 This tutorial will walk you through extending the single-sign-on (SSO) capabilities of [Cloudflare Access](/cloudflare-one/policies/access/) with our serverless computing platform, [Cloudflare Workers](/workers/). Specifically, this guide will demonstrate how to modify requests sent to your secured origin to include additional information from the Cloudflare Access authentication event.
 
@@ -28,10 +35,9 @@ You can extend this functionality by using a Cloudflare Worker to insert additio
 
 This approach allows you to:
 
-* **Enhance security:** By incorporating additional information from the authentication event, you can implement more robust security measures. For example, you can use device posture data to enforce access based on device compliance.
-* **Improve user experience:** You can personalize the user experience by tailoring content or functionality based on user attributes. For example, you can display different content based on the user's role or location.
-* **Simplify development:** By using Cloudflare Workers, you can easily extend your Cloudflare Access configuration without modifying your origin application code.
-
+- **Enhance security:** By incorporating additional information from the authentication event, you can implement more robust security measures. For example, you can use device posture data to enforce access based on device compliance.
+- **Improve user experience:** You can personalize the user experience by tailoring content or functionality based on user attributes. For example, you can display different content based on the user's role or location.
+- **Simplify development:** By using Cloudflare Workers, you can easily extend your Cloudflare Access configuration without modifying your origin application code.
 
 ## Before you begin
 
@@ -41,76 +47,77 @@ This approach allows you to:
 
 ## 1. Create the Worker
 
-1. Create a new Workers project:
+1.  Create a new Workers project:
 
-		<PackageManagers
-			type="create"
-			pkg="cloudflare@latest"
-			args={"device-posture-worker"}
-		/>
+        <PackageManagers
+        	type="create"
+        	pkg="cloudflare@latest"
+        	args={"device-posture-worker"}
+        />
 
-		<Render
-			file="c3-post-run-steps"
-			product="workers"
-			params={{
-				category: "hello-world",
-				type: "Worker only",
-				lang: "JavaScript",
-			}}
-		/>
+        <Render
+        	file="c3-post-run-steps"
+        	product="workers"
+        	params={{
+        		category: "hello-world",
+        		type: "Worker only",
+        		lang: "JavaScript",
+        	}}
+        />
 
-2. Change to the project directory:
+2.  Change to the project directory:
 
     ```sh
     $ cd device-posture-worker
     ```
 
-3. Copy-paste the following code into `src/index.js`. Be sure to replace `<your-team-name>` with your Zero Trust <GlossaryTooltip term="team name">team name</GlossaryTooltip>.
+3.  Copy-paste the following code into `src/index.js`. Be sure to replace `<your-team-name>` with your Zero Trust <GlossaryTooltip term="team name">team name</GlossaryTooltip>.
 
     ```js title="index.js"
-
     import { parse } from "cookie";
     export default {
-      async fetch(request, env, ctx) {
-        // The name of the cookie
-        const COOKIE_NAME = "CF_Authorization";
-      const CF_GET_IDENTITY = "https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/get-identity";
-        const cookie = parse(request.headers.get("Cookie") || "");
-        if (cookie[COOKIE_NAME] != null) {
-        try {
-        let id = await (await fetch(CF_GET_IDENTITY, request)).json()
-        let diskEncryptionStatus = false;
-        let firewallStatus = false;
+    	async fetch(request, env, ctx) {
+    		// The name of the cookie
+    		const COOKIE_NAME = "CF_Authorization";
+    		const CF_GET_IDENTITY =
+    			"https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/get-identity";
+    		const cookie = parse(request.headers.get("Cookie") || "");
+    		if (cookie[COOKIE_NAME] != null) {
+    			try {
+    				let id = await (await fetch(CF_GET_IDENTITY, request)).json();
+    				let diskEncryptionStatus = false;
+    				let firewallStatus = false;
 
-        for (const checkId in id.devicePosture) {
-          const check = id.devicePosture[checkId];
-          if (check.type === "disk_encryption") {
-            console.log(check.type)
-            diskEncryptionStatus = check.success;
-          }
-          if (check.type === "firewall") {
-            console.log(check.type)
-            firewallStatus = check.success;
-            break;
-          }
-        }
-        //clone request (immutable otherwise) and insert posture values in new header set
-        let newRequest = await new Request(request)
-        newRequest.headers.set("Cf-Access-Firewall-Activated", firewallStatus)
-        newRequest.headers.set("Cf-Access-Disk-Encrypted", firewallStatus)
+    				for (const checkId in id.devicePosture) {
+    					const check = id.devicePosture[checkId];
+    					if (check.type === "disk_encryption") {
+    						console.log(check.type);
+    						diskEncryptionStatus = check.success;
+    					}
+    					if (check.type === "firewall") {
+    						console.log(check.type);
+    						firewallStatus = check.success;
+    						break;
+    					}
+    				}
+    				//clone request (immutable otherwise) and insert posture values in new header set
+    				let newRequest = await new Request(request);
+    				newRequest.headers.set(
+    					"Cf-Access-Firewall-Activated",
+    					firewallStatus,
+    				);
+    				newRequest.headers.set("Cf-Access-Disk-Encrypted", firewallStatus);
 
-        //sent modified request to origin
-        return await fetch(newRequest)
-
-        } catch (e) {
-        console.log(e)
-        return await fetch(request)
-        }
-        }
-        return await fetch(request)
-      },
+    				//sent modified request to origin
+    				return await fetch(newRequest);
+    			} catch (e) {
+    				console.log(e);
+    				return await fetch(request);
+    			}
+    		}
+    		return await fetch(request);
+    	},
     };
-
     ```
 
 ## 2. View the user's identity
@@ -207,15 +214,15 @@ The Worker will now insert the **Cf-Access-Firewall-Activated** and **Cf-Access-
 
 ```json title="Example request headers" {7,8}
 {
-  "headers": {
-    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
-    "Accept-Encoding": "gzip",
-    "Accept-Language": "en-US,en;q=0.9,fr-FR;q=0.8,fr;q=0.7,en-GB;q=0.6",
-    "Cf-Access-Authenticated-User-Email": "John.Doe@cloudflare.com",
-    "Cf-Access-Disk-Encrypted": "false",
-    "Cf-Access-Firewall-Activated": "false",
-    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"
-  }
+	"headers": {
+		"Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+		"Accept-Encoding": "gzip",
+		"Accept-Language": "en-US,en;q=0.9,fr-FR;q=0.8,fr;q=0.7,en-GB;q=0.6",
+		"Cf-Access-Authenticated-User-Email": "John.Doe@cloudflare.com",
+		"Cf-Access-Disk-Encrypted": "false",
+		"Cf-Access-Firewall-Activated": "false",
+		"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"
+	}
 }
 ```
 

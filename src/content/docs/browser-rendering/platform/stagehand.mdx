@@ -150,6 +150,21 @@ Then, in your Worker code, import the `workersAIClient.ts` file and use it to co
 
 :::note
 The snippet above requires [Zod v3](https://v3.zod.dev/) and is currently not compatible with Zod v4.
+
+Ensure your `package.json` has the following dependencies:
+
+	```json
+	{
+		// ...
+		"dependencies": {
+			"@browserbasehq/stagehand": "^2.5.0",
+			"@cloudflare/playwright": "^1.0.0",
+			"zod": "^3.25.76",
+			"zod-to-json-schema": "^3.24.6"
+			// ...
+		}
+	}
+	```
 :::
 
 ### 4. Build the project
