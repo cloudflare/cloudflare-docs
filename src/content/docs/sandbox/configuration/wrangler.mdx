@@ -5,103 +5,118 @@ sidebar:
   order: 1
 ---
 
-Configure your Sandbox SDK deployment in `wrangler.jsonc` with Durable Objects bindings, container images, and Worker settings.
-
 ## Minimal configuration
 
 The minimum required configuration for using Sandbox SDK:
 
 ```jsonc title="wrangler.jsonc"
 {
-  "name": "my-sandbox-worker",
-  "main": "src/index.ts",
-  "compatibility_date": "2024-09-02",
-  "compatibility_flags": ["nodejs_compat"],
-  "durable_objects": {
-    "bindings": [
-      {
-        "name": "Sandbox",
-        "class_name": "Sandbox",
-        "script_name": "@cloudflare/sandbox"
-      }
-    ]
-  },
-  "containers": [
-    {
-      "binding": "CONTAINER",
-      "image": "ghcr.io/cloudflare/sandbox-runtime:latest"
-    }
-  ]
+	"name": "my-sandbox-worker",
+	"main": "src/index.ts",
+	"compatibility_date": "2025-10-13",
+	"compatibility_flags": ["nodejs_compat"],
+	"containers": [
+		{
+			"class_name": "Sandbox",
+			"image": "docker.io/cloudflare/sandbox:0.3.3",
+		},
+	],
+	"durable_objects": {
+		"bindings": [
+			{
+				"class_name": "Sandbox",
+				"name": "Sandbox",
+			},
+		],
+	},
+	"migrations": [
+		{
+			"new_sqlite_classes": ["Sandbox"],
+			"tag": "v1",
+		},
+	],
 }
 ```
 
 ## Required settings
 
-### compatibility_flags
+### containers
 
-**Required**: `nodejs_compat`
-
-The Sandbox SDK requires Node.js compatibility mode:
+Each container is backed by its own Durable Object. The container image contains your runtime environment.
 
 ```jsonc
 {
-  "compatibility_flags": ["nodejs_compat"]
+	"containers": [
+		{
+			"class_name": "Sandbox",
+			"image": "docker.io/cloudflare/sandbox:0.3.3",
+		},
+	],
 }
 ```
 
-This enables:
-- Node.js built-in modules (`fs`, `path`, `crypto`, etc.)
-- `process.env` access
-- Buffer and other Node.js globals
+**Parameters**:
+
+- **class_name** (string, required) - Must match the `class_name` of the Durable Object.
+- **image** (string, required) - The Docker image to use. Must match your npm package version.
+
+For custom images, use a Dockerfile:
+
+```jsonc
+{
+	"containers": [
+		{
+			"class_name": "Sandbox",
+			"image": "./Dockerfile",
+		},
+	],
+}
+```
+
+See [Dockerfile reference](/sandbox/configuration/dockerfile/) for customization.
 
 ### durable_objects.bindings
 
-**Required**: Sandbox Durable Object binding
+Bind the Sandbox Durable Object to your Worker:
 
 ```jsonc
 {
-  "durable_objects": {
-    "bindings": [
-      {
-        "name": "Sandbox",              // Binding name (used in your code)
-        "class_name": "Sandbox",         // Durable Object class name
-        "script_name": "@cloudflare/sandbox"  // Package providing the DO
-      }
-    ]
-  }
+	"durable_objects": {
+		"bindings": [
+			{
+				"class_name": "Sandbox",
+				"name": "Sandbox",
+			},
+		],
+	},
 }
 ```
 
 **Parameters**:
 
-- **name** (string, required) - The binding name you'll use in your Worker code. Conventionally `"Sandbox"`.
-- **class_name** (string, required) - Must be `"Sandbox"` - the exported Durable Object class.
-- **script_name** (string, required) - Must be `"@cloudflare/sandbox"` - the npm package name.
+- **class_name** (string, required) - Must match the `class_name` of the container configuration.
+- **name** (string, required) - The binding name you'll use in your code. Conventionally `"Sandbox"`.
 
-### containers
+### migrations
 
-**Required**: Container runtime binding
+Required for Durable Object initialization:
 
 ```jsonc
 {
-  "containers": [
-    {
-      "binding": "CONTAINER",
-      "image": "ghcr.io/cloudflare/sandbox-runtime:latest"
-    }
-  ]
+	"migrations": [
+		{
+			"new_sqlite_classes": ["Sandbox"],
+			"tag": "v1",
+		},
+	],
 }
 ```
 
-**Parameters**:
-
-- **binding** (string, required) - The binding name. Conventionally `"CONTAINER"`.
-- **image** (string, required) - The Docker image to use. Options:
-  - `"ghcr.io/cloudflare/sandbox-runtime:latest"` - Latest stable runtime
-  - `"ghcr.io/cloudflare/sandbox-runtime:1.2.3"` - Specific version
-  - `"your-registry/custom-image:tag"` - Your custom image
+This tells Cloudflare to initialize the Sandbox Durable Object with SQLite storage.
 
 ## Optional settings
+
+These settings are illustrative and not required for basic usage.
 
 ### Environment variables
 
@@ -109,10 +124,10 @@ Pass configuration to your Worker:
 
 ```jsonc
 {
-  "vars": {
-    "ENVIRONMENT": "production",
-    "LOG_LEVEL": "info"
-  }
+	"vars": {
+		"ENVIRONMENT": "production",
+		"LOG_LEVEL": "info",
+	},
 }
 ```
 
@@ -120,10 +135,10 @@ Access in your Worker:
 
 ```typescript
 export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
-    console.log(`Running in ${env.ENVIRONMENT} mode`);
-    // ...
-  }
+	async fetch(request: Request, env: Env): Promise<Response> {
+		console.log(`Running in ${env.ENVIRONMENT} mode`);
+		// ...
+	},
 };
 ```
 
@@ -142,430 +157,32 @@ Access like environment variables:
 
 ```typescript
 interface Env {
-  Sandbox: DurableObjectNamespace;
-  ANTHROPIC_API_KEY: string;
-  GITHUB_TOKEN: string;
+	Sandbox: DurableObjectNamespace;
+	ANTHROPIC_API_KEY: string;
+	GITHUB_TOKEN: string;
 }
 ```
 
-### KV bindings
-
-Add KV for caching or state storage:
-
-```jsonc
-{
-  "kv_namespaces": [
-    {
-      "binding": "CACHE",
-      "id": "your-kv-namespace-id"
-    }
-  ]
-}
-```
-
-Use with sandboxes:
-
-```typescript
-// Cache sandbox configurations
-await env.CACHE.put(`sandbox:${sandboxId}`, JSON.stringify(config));
-
-// Retrieve cached data
-const cached = await env.CACHE.get(`sandbox:${sandboxId}`, 'json');
-```
-
-### R2 bindings
-
-Add R2 for file storage:
-
-```jsonc
-{
-  "r2_buckets": [
-    {
-      "binding": "STORAGE",
-      "bucket_name": "sandbox-artifacts"
-    }
-  ]
-}
-```
-
-Use for storing sandbox outputs:
-
-```typescript
-// Store generated files
-const file = await sandbox.readFile('/workspace/output.pdf');
-await env.STORAGE.put(`results/${sandboxId}/output.pdf`, file);
-
-// Retrieve later
-const stored = await env.STORAGE.get(`results/${sandboxId}/output.pdf`);
-```
-
-### D1 bindings
-
-Add D1 for persistent database storage:
-
-```jsonc
-{
-  "d1_databases": [
-    {
-      "binding": "DB",
-      "database_name": "sandbox-db",
-      "database_id": "your-database-id"
-    }
-  ]
-}
-```
-
-Use for tracking sandbox usage:
-
-```typescript
-// Log sandbox creation
-await env.DB.prepare(
-  'INSERT INTO sandbox_logs (id, created_at, user_id) VALUES (?, ?, ?)'
-).bind(sandboxId, Date.now(), userId).run();
-
-// Query usage
-const usage = await env.DB.prepare(
-  'SELECT COUNT(*) as total FROM sandbox_logs WHERE user_id = ?'
-).bind(userId).first();
-```
-
-### Queues
-
-Add Queues for background processing:
-
-```jsonc
-{
-  "queues": {
-    "producers": [
-      {
-        "binding": "SANDBOX_QUEUE",
-        "queue": "sandbox-tasks"
-      }
-    ],
-    "consumers": [
-      {
-        "queue": "sandbox-tasks",
-        "max_batch_size": 10,
-        "max_batch_timeout": 30
-      }
-    ]
-  }
-}
-```
-
-Use for async sandbox operations:
-
-```typescript
-// Queue a long-running task
-await env.SANDBOX_QUEUE.send({
-  type: 'run_tests',
-  repoUrl: 'https://github.com/owner/repo',
-  branch: 'main'
-});
-
-// Consumer handler
-export default {
-  async queue(batch: MessageBatch, env: Env): Promise<void> {
-    for (const message of batch.messages) {
-      const { type, repoUrl, branch } = message.body;
-
-      if (type === 'run_tests') {
-        const sandbox = getSandbox(env.Sandbox, `test-${message.id}`);
-        // Run tests...
-        await sandbox.destroy();
-      }
-    }
-  }
-};
-```
-
-### Workers AI
-
-Add Workers AI for LLM integration:
-
-```jsonc
-{
-  "ai": {
-    "binding": "AI"
-  }
-}
-```
-
-Use with sandboxes:
-
-```typescript
-// Generate code with Workers AI
-const response = await env.AI.run('@cf/meta/llama-2-7b-chat-int8', {
-  messages: [
-    { role: 'user', content: 'Write a Python function that sorts a list' }
-  ]
-});
-
-// Execute in sandbox
-const sandbox = getSandbox(env.Sandbox, 'ai-sandbox');
-await sandbox.exec(`python3 -c "${response.response}"`);
-```
-
-### Limits and resources
-
-Configure resource limits:
-
-```jsonc
-{
-  "limits": {
-    "cpu_ms": 50  // Maximum CPU time per request (milliseconds)
-  }
-}
-```
-
-:::note
-Worker CPU limits don't apply to sandbox execution time. Sandboxes have their own resource limits managed by Cloudflare Containers.
-:::
-
-### Triggers
-
-#### Cron triggers
+### Cron triggers
 
 Run sandboxes on a schedule:
 
 ```jsonc
 {
-  "triggers": {
-    "crons": [
-      "0 0 * * *"  // Run daily at midnight
-    ]
-  }
-}
-```
-
-Handler:
-
-```typescript
-export default {
-  async scheduled(event: ScheduledEvent, env: Env): Promise<void> {
-    const sandbox = getSandbox(env.Sandbox, 'scheduled-task');
-
-    try {
-      // Run daily data processing
-      await sandbox.exec('python3 /workspace/daily-report.py');
-    } finally {
-      await sandbox.destroy();
-    }
-  }
-};
-```
-
-## Complete example
-
-A production-ready configuration with all common settings:
-
-```jsonc title="wrangler.jsonc"
-{
-  "name": "production-sandbox-worker",
-  "main": "src/index.ts",
-  "compatibility_date": "2024-09-02",
-  "compatibility_flags": ["nodejs_compat"],
-
-  // Sandbox SDK bindings
-  "durable_objects": {
-    "bindings": [
-      {
-        "name": "Sandbox",
-        "class_name": "Sandbox",
-        "script_name": "@cloudflare/sandbox"
-      }
-    ]
-  },
-
-  // Container runtime
-  "containers": [
-    {
-      "binding": "CONTAINER",
-      "image": "ghcr.io/cloudflare/sandbox-runtime:latest"
-    }
-  ],
-
-  // Environment variables (non-sensitive)
-  "vars": {
-    "ENVIRONMENT": "production",
-    "MAX_SANDBOX_LIFETIME": "3600000",
-    "DEFAULT_TIMEOUT": "30000"
-  },
-
-  // KV for caching
-  "kv_namespaces": [
-    {
-      "binding": "CACHE",
-      "id": "your-kv-namespace-id"
-    }
-  ],
-
-  // R2 for file storage
-  "r2_buckets": [
-    {
-      "binding": "STORAGE",
-      "bucket_name": "sandbox-outputs"
-    }
-  ],
-
-  // D1 for analytics
-  "d1_databases": [
-    {
-      "binding": "DB",
-      "database_name": "sandbox-analytics",
-      "database_id": "your-database-id"
-    }
-  ],
-
-  // Queue for background tasks
-  "queues": {
-    "producers": [
-      {
-        "binding": "TASKS",
-        "queue": "sandbox-tasks"
-      }
-    ]
-  },
-
-  // Observability
-  "observability": {
-    "enabled": true,
-    "head_sampling_rate": 0.1
-  },
-
-  // Scheduled tasks
-  "triggers": {
-    "crons": [
-      "*/15 * * * *"  // Every 15 minutes
-    ]
-  }
-}
-```
-
-## Environment-specific configurations
-
-Use different configs for development and production:
-
-### wrangler.jsonc (development)
-
-```jsonc title="wrangler.jsonc"
-{
-  "name": "sandbox-worker-dev",
-  "vars": {
-    "ENVIRONMENT": "development"
-  },
-  "containers": [
-    {
-      "binding": "CONTAINER",
-      "image": "ghcr.io/cloudflare/sandbox-runtime:latest"
-    }
-  ]
-}
-```
-
-### wrangler.prod.jsonc (production)
-
-```jsonc title="wrangler.prod.jsonc"
-{
-  "name": "sandbox-worker-prod",
-  "vars": {
-    "ENVIRONMENT": "production"
-  },
-  "containers": [
-    {
-      "binding": "CONTAINER",
-      "image": "ghcr.io/cloudflare/sandbox-runtime:1.2.3"  // Pinned version
-    }
-  ],
-  "limits": {
-    "cpu_ms": 50
-  }
-}
-```
-
-Deploy with:
-
-```bash
-# Development
-wrangler deploy
-
-# Production
-wrangler deploy --config wrangler.prod.jsonc
-```
-
-## TypeScript types
-
-Define your environment interface:
-
-```typescript title="src/index.ts"
-interface Env {
-  // Required
-  Sandbox: DurableObjectNamespace;
-
-  // Secrets
-  ANTHROPIC_API_KEY: string;
-  GITHUB_TOKEN: string;
-
-  // Variables
-  ENVIRONMENT: string;
-  MAX_SANDBOX_LIFETIME: string;
-
-  // Optional bindings
-  CACHE?: KVNamespace;
-  STORAGE?: R2Bucket;
-  DB?: D1Database;
-  TASKS?: Queue;
-  AI?: Ai;
-}
-
-export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
-    // All bindings are type-safe
-    const sandbox = getSandbox(env.Sandbox, 'my-sandbox');
-    // ...
-  }
-};
-```
-
-## Common patterns
-
-### Multiple container images
-
-Use different images for different purposes:
-
-```jsonc
-{
-  "containers": [
-    {
-      "binding": "PYTHON_CONTAINER",
-      "image": "ghcr.io/your-org/python-sandbox:latest"
-    },
-    {
-      "binding": "NODE_CONTAINER",
-      "image": "ghcr.io/your-org/node-sandbox:latest"
-    }
-  ]
-}
-```
-
-### Feature flags
-
-Control features with environment variables:
-
-```jsonc
-{
-  "vars": {
-    "FEATURE_STREAMING": "true",
-    "FEATURE_GPU_SUPPORT": "false",
-    "MAX_CONCURRENT_SANDBOXES": "10"
-  }
+	"triggers": {
+		"crons": ["0 0 * * *"], // Daily at midnight
+	},
 }
 ```
 
 ```typescript
-if (env.FEATURE_STREAMING === 'true') {
-  return handleStreamingRequest(request, env);
-}
+export default {
+	async scheduled(event: ScheduledEvent, env: Env): Promise<void> {
+		const sandbox = getSandbox(env.Sandbox, "scheduled-task");
+		await sandbox.exec("python3 /workspace/daily-report.py");
+		await sandbox.destroy();
+	},
+};
 ```
 
 ## Troubleshooting
@@ -578,15 +195,14 @@ if (env.FEATURE_STREAMING === 'true') {
 
 ```jsonc
 {
-  "durable_objects": {
-    "bindings": [
-      {
-        "name": "Sandbox",  // Must match your code
-        "class_name": "Sandbox",
-        "script_name": "@cloudflare/sandbox"
-      }
-    ]
-  }
+	"durable_objects": {
+		"bindings": [
+			{
+				"class_name": "Sandbox",
+				"name": "Sandbox",
+			},
+		],
+	},
 }
 ```
 
@@ -594,25 +210,33 @@ if (env.FEATURE_STREAMING === 'true') {
 
 **Error**: `Failed to pull container image`
 
-**Solution**: Verify the image exists and is accessible:
-
-```bash
-# Test locally
-docker pull ghcr.io/cloudflare/sandbox-runtime:latest
-
-# Use a specific version
-"image": "ghcr.io/cloudflare/sandbox-runtime:1.2.3"
-```
-
-### nodejs_compat missing
-
-**Error**: Module "crypto" is not available
-
-**Solution**: Add the compatibility flag:
+**Solution**: Ensure you're using the correct image version (must match npm package):
 
 ```jsonc
 {
-  "compatibility_flags": ["nodejs_compat"]
+	"containers": [
+		{
+			"class_name": "Sandbox",
+			"image": "docker.io/cloudflare/sandbox:0.3.3",
+		},
+	],
+}
+```
+
+### Missing migrations
+
+**Error**: Durable Object not initialized
+
+**Solution**: Add migrations for the Sandbox class:
+
+```jsonc
+{
+	"migrations": [
+		{
+			"new_sqlite_classes": ["Sandbox"],
+			"tag": "v1",
+		},
+	],
 }
 ```
 
