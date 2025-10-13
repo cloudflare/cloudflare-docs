@@ -2,6 +2,7 @@
 params:
   - productDashName
   - dashPath
+  - productName
 ---
 
 import { DashButton, Markdown } from "~/components";
@@ -11,8 +12,8 @@ import { DashButton, Markdown } from "~/components";
    <DashButton url="/?to=/:account/magic-wan/configuration" />
 
 2. <Markdown text={props.dashPath} />
-3. In **Appliance details** > **Serial number**, insert the serial number for your device. You can optionally add notes about the Magic WAN Connector you are adding to the dashboard.
-4. (Optional) Select **Add** below **Serial number** to add multiple Magic WAN Connectors at once to your account.
+3. In **Appliance details** > **Serial number**, insert the serial number for your device. You can optionally add notes about the {props.productName} you are adding to the dashboard.
+4. (Optional) Select **Add** below **Serial number** to add multiple {props.productName}s  at once to your account.
 5. Select **Register appliance**.
 
 Your device is now registered with your account. Select **Add on-ramps** to continue with the setup process, or **Return to connections** to check your newly added Connector.
