@@ -75,6 +75,12 @@ The WARP client manages sessions for all non-HTTPS applications. Users will rece
 
 <Render file="gateway/client-notifications-os" product="cloudflare-one" />
 
-## Modify order of precedence in Gateway
+## Order of precedence
+
+### Access vs Gateway policies
 
 <Render file="access/modify-gateway-policy-precedence" product="cloudflare-one" params={{ selector: "Access Private App", protocol: "private" }} />
+
+### Private hostname vs private IP
+
+An Access application defined by a private hostname takes precedence over an Access application defined by a private IP. For example, assume App-1 points to `wiki.internal.local` and App-2 points to `10.0.0.1`, but `wiki.internal.local` resolves to 	`10.0.0.1`. Users who go to `wiki.internal.local` will never match App-2; they will be allowed or blocked strictly based on App-1 Access policies (and [Gateway policies](#access-vs-gateway-policies)).
