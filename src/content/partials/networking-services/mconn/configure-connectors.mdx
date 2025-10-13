@@ -5,6 +5,7 @@ params:
   - productNameVirtual?
   - maintenanceURL
   - productOriginalName
+  - sfpURL?
   - wan
   - lan
   - noConnectorShows
@@ -104,7 +105,7 @@ You cannot enable high availability for an existing { props.magicWord === "virtu
 
 { props.magicWord === "hardware" && (
   <>
-    <p>You can use Magic WAN Connector in both DHCP networks and networks that require a static IP configuration. At first boot, however, Magic WAN Connector needs to reach out to Cloudflare to download your settings and go through the activation process. If any of the networks plugged into your Connector are DHCP enabled, does not use a VLAN, and have an Internet connection, that process is handled automatically. However, if all of the networks require more information to utilize, (such as a network with static IPs, or tagged VLAN networks) your Magic WAN Connector might need some more information to proceed.</p>
+    <p>You can use {props.productName} in both DHCP networks and networks that require a static IP configuration. At first boot, however, {props.productName} needs to reach out to Cloudflare to download your settings and go through the activation process. If any of the networks plugged into your Connector are DHCP enabled, does not use a VLAN, and have an Internet connection, that process is handled automatically. However, if all of the networks require more information to utilize, (such as a network with static IPs, or tagged VLAN networks) your {props.productName} might need some more information to proceed.</p>
 
 		<p>There are couple of ways to provide this information. Choose the one that fits your workflow: </p>
 
@@ -112,7 +113,7 @@ You cannot enable high availability for an existing { props.magicWord === "virtu
 
 		<Markdown
 		text={`
-		1. Connect Magic WAN Connector to a DHCP port with access to the Internet.
+		1. Connect ${props.productName} to a DHCP port with access to the Internet.
 		2. Go through the [setup flow](#set-up-cloudflare-dashboard) below and activate your Connector.
 		3. Refer to [WAN with a static IP address](#wan-with-a-static-ip-address).
 		`}
@@ -128,11 +129,11 @@ You cannot enable high availability for an existing { props.magicWord === "virtu
 
 { props.magicWord === "virtual" && (
   <>
-    <p>Virtual Connector uses a DHCP connection at first boot to download your settings and go through the activation process. However, if you need to use a static IP in your Virtual Connector, and this is a fresh install:</p>
+    <p>{props.productNameVirtual} uses a DHCP connection at first boot to download your settings and go through the activation process. However, if you need to use a static IP in your {props.productNameVirtual}, and this is a fresh install:</p>
 
 		<Markdown
 		text={`
-    1. Connect the machine with your Virtual Connector VM to a DHCP port with access to the Internet.
+    1. Connect the machine with your ${props.productNameVirtual} VM to a DHCP port with access to the Internet.
 		2. Go through the [setup flow](#set-up-cloudflare-dashboard) below and activate your Connector.
 		3. Refer to [WAN with a static IP address](#wan-with-a-static-ip-address).
 		`}
@@ -149,9 +150,9 @@ You cannot enable high availability for an existing { props.magicWord === "virtu
 		<AnchorHeading title="Port speeds" depth={2} />
 		<Markdown
 		text={`
-		The hardware version of the Magic WAN connector includes two [SFP+ ports](https://en.wikipedia.org/wiki/Small_Form-factor_Pluggable) that support 10G throughput, as well as six RJ45 ports that support 1G throughput.
+		The hardware version of the ${props.productName} includes two [SFP+ ports](https://en.wikipedia.org/wiki/Small_Form-factor_Pluggable) that support 10G throughput, as well as six RJ45 ports that support 1G throughput.
 
-		Refer to [SFP+ port information](/magic-wan/configuration/connector/configure-hardware-connector/sfp-port-information/) for details on this topic.
+		Refer to <a href=${props.sfpURL}>SFP+ port information</a> for details on this topic.
 		`}
 		inline={false}
 		/>
