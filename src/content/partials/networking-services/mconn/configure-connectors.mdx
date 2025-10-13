@@ -17,6 +17,12 @@ params:
   - hardSoftConn
   - hcConfigsURL
   - finalInstructions
+  - ipsecTunnelsRefURL
+  - staticRoutesRefURL
+  - networkOptionsURL
+  - maintenanceURL
+  - referenceInformationURL
+  - troubleshootingURL
 ---
 
 import {
@@ -789,7 +795,7 @@ To set up a high availability configuration:
 
 ## IPsec tunnels and static routes
 
-Magic WAN Connector automatically creates [IPsec tunnels](/magic-wan/reference/gre-ipsec-tunnels/#ipsec-tunnels) and [static routes](/magic-wan/reference/traffic-steering/) for you. You cannot configure these manually.
+Magic WAN Connector automatically creates <a href={props.ipsecTunnelsRefURL}>IPsec tunnels</a> and <a href={props.staticRoutesRefURL}>static routes</a> for you. You cannot configure these manually.
 
 To check the IPsec tunnels and static routes created by your Magic WAN Connector:
 
@@ -805,7 +811,7 @@ To check the IPsec tunnels and static routes created by your Magic WAN Connector
 
 ## Next steps
 
-- [Network options](/magic-wan/configuration/connector/network-options/)
-- [Maintenance](/magic-wan/configuration/connector/maintenance/)
-- [Reference information](/magic-wan/configuration/connector/reference/)
-- [Troubleshooting](/magic-wan/configuration/connector/troubleshooting/)
+- <a href={props.networkOptionsURL}>Network options</a>
+- <a href={props.maintenanceURL}>Maintenance</a>
+- <a href={props.referenceInformationURL}>Reference information</a>
+- <a href={props.troubleshootingURL}>Troubleshooting</a>
