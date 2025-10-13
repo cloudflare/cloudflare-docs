@@ -8,7 +8,7 @@ sidebar:
 ## Example: Handling 429 Rate Limits with Retry-After Header
 
 When you make too many requests in a short period of time, Browser Rendering will respond with HTTP status code `429 Too Many Requests`.
-The response includes a `Retry-After` header, which specifies how many seconds to wait before retrying. You can view your account's rate limits on the [Limits](/browser-rendering/platform/limits/) page. 
+The response includes a `Retry-After` header, which specifies how many seconds to wait before retrying. You can view your account's rate limits on the [Limits](/browser-rendering/platform/limits/) page.
 
 The example below demonstrates how to handle rate limiting gracefully by reading the `Retry-After` value and retrying the request after that delay.
 
@@ -29,5 +29,32 @@ if (response.status === 429) {
 
     // Retry the request
     const retryResponse = await fetch(/* same request as above */);
+}
+```
+
+## Workers Binding Example: Handling 429 Rate Limits with Retry-After Header
+
+```js
+import puppeteer from "@cloudflare/puppeteer";
+
+try {
+	const browser = await puppeteer.launch(env.MYBROWSER);
+
+	const page = await browser.newPage();
+	await page.goto("https://example.com");
+	const content = await page.content();
+
+	await browser.close();
+} catch (error) {
+	if (error.status === 429) {
+		const retryAfter = error.headers.get("Retry-After");
+		console.log(
+			`Browser instance limit reached. Waiting ${retryAfter} seconds...`,
+		);
+		await new Promise((resolve) => setTimeout(resolve, retryAfter * 1000));
+
+		// Retry launching browser
+		const browser = await puppeteer.launch(env.MYBROWSER);
+	}
 }
 ```
