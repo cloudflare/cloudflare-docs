@@ -24,5 +24,5 @@ Each timer controls a specific part of the rendering lifecycle — from page loa
 You can set multiple timers — as long as one is complete, the request will fire.
 
 If you are not getting the expected output:
-— Try increasing `goToOptions.timeout` (up to 60 s).
+- Try increasing `goToOptions.timeout` (up to 60 s).
 — If waiting for a specific element, use `waitForSelector`. Otherwise, use `goToOptions.waitUntil` set to `networkidle2` to ensure the page has finished loading dynamic content.
