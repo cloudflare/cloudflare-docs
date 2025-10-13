@@ -1,0 +1,212 @@
+---
+title: API Reference
+pcx_content_type: navigation
+sidebar:
+  order: 4
+---
+
+import { LinkTitleCard, CardGrid } from "~/components";
+
+The Sandbox SDK provides a comprehensive API for executing code, managing files, running processes, and exposing services in isolated sandboxes. All operations are performed through the `Sandbox` instance you obtain via `getSandbox()`.
+
+## Getting a sandbox instance
+
+```typescript
+import { getSandbox } from '@cloudflare/sandbox';
+
+const sandbox = getSandbox(env.Sandbox, 'user-123');
+```
+
+The sandbox ID should be unique per user or session. The same ID will always return the same sandbox instance with persistent state.
+
+## API organization
+
+The Sandbox SDK is organized into focused APIs:
+
+<CardGrid>
+
+<LinkTitleCard
+	title="Commands"
+	href="/sandbox/api/commands/"
+	icon="pen"
+>
+	Execute commands and stream output. Includes `exec()`, `execStream()`, and background process management.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Files"
+	href="/sandbox/api/files/"
+	icon="document"
+>
+	Read, write, and manage files in the sandbox filesystem. Includes directory operations and file metadata.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Code Interpreter"
+	href="/sandbox/api/interpreter/"
+	icon="laptop"
+>
+	Execute Python and JavaScript code with rich outputs including charts, tables, and formatted data.
+</LinkTitleCard>
+
+</CardGrid>
+
+## Quick reference
+
+### Command execution
+
+| Method | Description |
+|--------|-------------|
+| `exec()` | Execute a command and return results |
+| `execStream()` | Execute with streaming Server-Sent Events |
+| `startProcess()` | Start a background process |
+| `listProcesses()` | List all running processes |
+| `killProcess()` | Terminate a specific process |
+
+### File operations
+
+| Method | Description |
+|--------|-------------|
+| `writeFile()` | Write content to a file |
+| `readFile()` | Read a file's contents |
+| `mkdir()` | Create a directory |
+| `deleteFile()` | Delete a file |
+| `renameFile()` | Rename a file |
+| `moveFile()` | Move a file to a new location |
+
+### Code interpreter
+
+| Method | Description |
+|--------|-------------|
+| `createCodeContext()` | Create a persistent execution context |
+| `runCode()` | Execute code with optional streaming |
+| `runCodeStream()` | Execute code with SSE streaming |
+| `listCodeContexts()` | List all active contexts |
+| `deleteCodeContext()` | Delete a specific context |
+
+### Port management
+
+| Method | Description |
+|--------|-------------|
+| `exposePort()` | Expose a port and get a preview URL |
+| `unexposePort()` | Remove port exposure |
+| `getExposedPorts()` | List all exposed ports with URLs |
+
+### Git operations
+
+| Method | Description |
+|--------|-------------|
+| `gitCheckout()` | Clone a repository into the sandbox |
+
+### Environment and sessions
+
+| Method | Description |
+|--------|-------------|
+| `setEnvVars()` | Set environment variables (must be called first) |
+| `createSession()` | Create an isolated execution session |
+
+## Common patterns
+
+### Error handling
+
+All methods return results or throw errors. Use try-catch for error handling:
+
+```typescript
+try {
+  const result = await sandbox.exec('python script.py');
+  if (!result.success) {
+    console.error('Command failed:', result.stderr);
+  }
+} catch (error) {
+  console.error('Sandbox error:', error.message);
+}
+```
+
+### Streaming operations
+
+Many methods support streaming for real-time output:
+
+```typescript
+import { parseSSEStream, type ExecEvent } from '@cloudflare/sandbox';
+
+const stream = await sandbox.execStream('npm install');
+for await (const event of parseSSEStream<ExecEvent>(stream)) {
+  if (event.type === 'stdout') {
+    console.log(event.data);
+  }
+}
+```
+
+### Working with files
+
+File operations use absolute paths within the sandbox:
+
+```typescript
+// Write a file
+await sandbox.writeFile('/workspace/app.js', code);
+
+// Read it back
+const file = await sandbox.readFile('/workspace/app.js');
+console.log(file.content);
+
+// Create directories
+await sandbox.mkdir('/workspace/src', { recursive: true });
+```
+
+## Response types
+
+### ExecuteResponse
+
+Returned by `exec()` and similar methods:
+
+```typescript
+interface ExecuteResponse {
+  success: boolean;   // true if exitCode === 0
+  stdout: string;     // Standard output
+  stderr: string;     // Standard error
+  exitCode: number;   // Process exit code
+}
+```
+
+### ProcessInfo
+
+Returned by `startProcess()` and `listProcesses()`:
+
+```typescript
+interface ProcessInfo {
+  id: string;         // Unique process identifier
+  pid: number;        // Process ID
+  command: string;    // Command that was executed
+  status: string;     // Process status (running, exited, etc.)
+  exitCode?: number;  // Exit code if process has terminated
+}
+```
+
+### FileInfo
+
+Returned by `readFile()`:
+
+```typescript
+interface FileInfo {
+  content: string;    // File contents
+  encoding: string;   // File encoding (utf-8, base64, etc.)
+}
+```
+
+## TypeScript support
+
+The SDK is fully typed. Install the package to get automatic type checking and IntelliSense in your editor:
+
+```typescript
+import type { Sandbox, ExecuteResponse, ProcessInfo } from '@cloudflare/sandbox';
+
+const sandbox: Sandbox = getSandbox(env.Sandbox, 'user-123');
+const result: ExecuteResponse = await sandbox.exec('echo test');
+```
+
+## Related resources
+
+- [Get Started](/sandbox/get-started/) - Quick introduction to Sandbox SDK
+- [Execute Commands](/sandbox/guides/execute-commands/) - Guide to command execution
+- [Manage Files](/sandbox/guides/manage-files/) - Guide to file operations
+- [Examples](/sandbox/examples/) - Complete code examples

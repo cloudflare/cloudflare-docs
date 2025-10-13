@@ -1,0 +1,499 @@
+---
+title: Files API
+pcx_content_type: concept
+sidebar:
+  order: 2
+---
+
+The Files API provides methods for reading, writing, and managing files in the sandbox filesystem. All file operations use absolute paths within the container.
+
+## Methods
+
+### `writeFile()`
+
+Write content to a file in the sandbox.
+
+```typescript
+await sandbox.writeFile(path: string, content: string, options?: WriteFileOptions): Promise<void>
+```
+
+#### Parameters
+
+- **path** (`string`, required) - Absolute path to the file
+- **content** (`string`, required) - Content to write to the file
+- **options** (`WriteFileOptions`, optional):
+  - `encoding` (`string`) - File encoding (default: 'utf-8')
+  - `mode` (`number`) - File permissions (default: 0o644)
+
+#### Examples
+
+**Write a text file:**
+
+```typescript
+await sandbox.writeFile('/workspace/app.js', `
+console.log('Hello from sandbox!');
+`);
+```
+
+**Write with specific encoding:**
+
+```typescript
+// Write binary data as base64
+await sandbox.writeFile('/tmp/image.png', base64ImageData, {
+  encoding: 'base64'
+});
+```
+
+**Write configuration file:**
+
+```typescript
+const config = {
+  port: 3000,
+  environment: 'production',
+  apiKey: process.env.API_KEY
+};
+
+await sandbox.writeFile(
+  '/workspace/config.json',
+  JSON.stringify(config, null, 2)
+);
+```
+
+**Create and write multiple files:**
+
+```typescript
+// Package.json
+await sandbox.writeFile('/workspace/package.json', JSON.stringify({
+  name: 'my-app',
+  version: '1.0.0',
+  dependencies: {
+    express: '^4.18.0'
+  }
+}));
+
+// Application code
+await sandbox.writeFile('/workspace/server.js', `
+const express = require('express');
+const app = express();
+
+app.get('/', (req, res) => {
+  res.json({ status: 'running' });
+});
+
+app.listen(3000);
+`);
+
+// Install and run
+await sandbox.exec('npm install');
+await sandbox.startProcess('node server.js');
+```
+
+---
+
+### `readFile()`
+
+Read a file from the sandbox.
+
+```typescript
+const file = await sandbox.readFile(path: string, options?: ReadFileOptions): Promise<FileInfo>
+```
+
+#### Parameters
+
+- **path** (`string`, required) - Absolute path to the file
+- **options** (`ReadFileOptions`, optional):
+  - `encoding` (`string`) - File encoding (default: 'utf-8')
+
+#### Return value
+
+Returns a `Promise<FileInfo>` with:
+
+- `content` (`string`) - File contents
+- `encoding` (`string`) - Encoding used
+
+#### Examples
+
+**Read a text file:**
+
+```typescript
+const file = await sandbox.readFile('/workspace/app.js');
+console.log(file.content);
+```
+
+**Read and parse JSON:**
+
+```typescript
+const file = await sandbox.readFile('/workspace/package.json');
+const packageJson = JSON.parse(file.content);
+
+console.log('Project name:', packageJson.name);
+console.log('Version:', packageJson.version);
+```
+
+**Read binary file:**
+
+```typescript
+const file = await sandbox.readFile('/tmp/image.png', {
+  encoding: 'base64'
+});
+
+// file.content is base64-encoded
+const imageData = file.content;
+```
+
+**Check file contents:**
+
+```typescript
+const file = await sandbox.readFile('/workspace/.env');
+
+if (file.content.includes('API_KEY=')) {
+  console.log('API key is configured');
+}
+```
+
+---
+
+### `mkdir()`
+
+Create a directory in the sandbox.
+
+```typescript
+await sandbox.mkdir(path: string, options?: MkdirOptions): Promise<void>
+```
+
+#### Parameters
+
+- **path** (`string`, required) - Absolute path to the directory
+- **options** (`MkdirOptions`, optional):
+  - `recursive` (`boolean`) - Create parent directories if needed (default: false)
+  - `mode` (`number`) - Directory permissions (default: 0o755)
+
+#### Examples
+
+**Create a single directory:**
+
+```typescript
+await sandbox.mkdir('/workspace/src');
+```
+
+**Create nested directories:**
+
+```typescript
+// Create entire path
+await sandbox.mkdir('/workspace/src/components/ui', {
+  recursive: true
+});
+```
+
+**Create project structure:**
+
+```typescript
+// Create multiple directories
+await sandbox.mkdir('/workspace/src', { recursive: true });
+await sandbox.mkdir('/workspace/tests', { recursive: true });
+await sandbox.mkdir('/workspace/public', { recursive: true });
+
+// Then create files
+await sandbox.writeFile('/workspace/src/index.js', '// Main app');
+await sandbox.writeFile('/workspace/tests/app.test.js', '// Tests');
+```
+
+---
+
+### `deleteFile()`
+
+Delete a file from the sandbox.
+
+```typescript
+await sandbox.deleteFile(path: string): Promise<void>
+```
+
+#### Parameters
+
+- **path** (`string`, required) - Absolute path to the file
+
+#### Examples
+
+**Delete a file:**
+
+```typescript
+await sandbox.deleteFile('/workspace/temp.txt');
+```
+
+**Clean up temporary files:**
+
+```typescript
+const tempFiles = [
+  '/tmp/build-output.log',
+  '/tmp/cache.json',
+  '/workspace/.env.local'
+];
+
+for (const file of tempFiles) {
+  try {
+    await sandbox.deleteFile(file);
+  } catch (error) {
+    console.log(`Could not delete ${file}`);
+  }
+}
+```
+
+---
+
+### `renameFile()`
+
+Rename a file in the sandbox.
+
+```typescript
+await sandbox.renameFile(oldPath: string, newPath: string): Promise<void>
+```
+
+#### Parameters
+
+- **oldPath** (`string`, required) - Current file path
+- **newPath** (`string`, required) - New file path
+
+#### Examples
+
+**Rename a file:**
+
+```typescript
+await sandbox.renameFile(
+  '/workspace/draft.txt',
+  '/workspace/final.txt'
+);
+```
+
+**Rename with backup:**
+
+```typescript
+// Create backup before overwriting
+await sandbox.renameFile(
+  '/workspace/config.json',
+  '/workspace/config.json.backup'
+);
+
+// Write new config
+await sandbox.writeFile('/workspace/config.json', newConfig);
+```
+
+---
+
+### `moveFile()`
+
+Move a file to a different directory.
+
+```typescript
+await sandbox.moveFile(sourcePath: string, destinationPath: string): Promise<void>
+```
+
+#### Parameters
+
+- **sourcePath** (`string`, required) - Current file path
+- **destinationPath** (`string`, required) - Destination path
+
+#### Examples
+
+**Move a file:**
+
+```typescript
+await sandbox.moveFile(
+  '/tmp/download.txt',
+  '/workspace/data.txt'
+);
+```
+
+**Organize files:**
+
+```typescript
+// Move source files to src directory
+await sandbox.mkdir('/workspace/src', { recursive: true });
+
+const files = ['app.js', 'server.js', 'utils.js'];
+for (const file of files) {
+  await sandbox.moveFile(
+    `/workspace/${file}`,
+    `/workspace/src/${file}`
+  );
+}
+```
+
+---
+
+### `gitCheckout()`
+
+Clone a git repository into the sandbox.
+
+```typescript
+await sandbox.gitCheckout(repoUrl: string, options?: GitCheckoutOptions): Promise<void>
+```
+
+#### Parameters
+
+- **repoUrl** (`string`, required) - Git repository URL
+- **options** (`GitCheckoutOptions`, optional):
+  - `branch` (`string`) - Branch to checkout (default: main branch)
+  - `targetDir` (`string`) - Directory to clone into (default: repo name)
+  - `depth` (`number`) - Clone depth for shallow clone
+
+#### Examples
+
+**Clone a repository:**
+
+```typescript
+await sandbox.gitCheckout('https://github.com/user/repo');
+```
+
+**Clone specific branch:**
+
+```typescript
+await sandbox.gitCheckout('https://github.com/user/repo', {
+  branch: 'develop',
+  targetDir: 'my-project'
+});
+```
+
+**Clone and build:**
+
+```typescript
+// Clone the repository
+await sandbox.gitCheckout('https://github.com/user/app');
+
+// Navigate and build
+await sandbox.exec('cd app && npm install');
+await sandbox.exec('cd app && npm run build');
+
+// Read build output
+const buildOutput = await sandbox.readFile('/workspace/app/dist/index.html');
+```
+
+**Shallow clone for faster cloning:**
+
+```typescript
+await sandbox.gitCheckout('https://github.com/user/large-repo', {
+  depth: 1  // Only fetch latest commit
+});
+```
+
+## Common patterns
+
+### Create a project structure
+
+```typescript
+// Create directories
+await sandbox.mkdir('/workspace/my-app/src', { recursive: true });
+await sandbox.mkdir('/workspace/my-app/tests', { recursive: true });
+
+// Create package.json
+await sandbox.writeFile('/workspace/my-app/package.json', JSON.stringify({
+  name: 'my-app',
+  version: '1.0.0',
+  scripts: {
+    start: 'node src/index.js',
+    test: 'jest'
+  }
+}));
+
+// Create main file
+await sandbox.writeFile('/workspace/my-app/src/index.js', `
+console.log('App started!');
+`);
+```
+
+### Read and modify files
+
+```typescript
+// Read existing file
+const file = await sandbox.readFile('/workspace/config.json');
+const config = JSON.parse(file.content);
+
+// Modify
+config.lastUpdated = new Date().toISOString();
+config.version = '2.0.0';
+
+// Write back
+await sandbox.writeFile(
+  '/workspace/config.json',
+  JSON.stringify(config, null, 2)
+);
+```
+
+### Copy files
+
+```typescript
+// Read source file
+const source = await sandbox.readFile('/workspace/template.html');
+
+// Write to new location
+await sandbox.writeFile('/workspace/index.html', source.content);
+```
+
+### Batch operations
+
+```typescript
+const files = {
+  '/workspace/src/app.js': 'console.log("app");',
+  '/workspace/src/utils.js': 'console.log("utils");',
+  '/workspace/README.md': '# My Project'
+};
+
+// Write all files
+await Promise.all(
+  Object.entries(files).map(([path, content]) =>
+    sandbox.writeFile(path, content)
+  )
+);
+```
+
+### Work with binary files
+
+```typescript
+// Read binary file (e.g., from an upload)
+const imageBase64 = request.headers.get('X-Image-Data');
+
+// Write to sandbox
+await sandbox.writeFile('/workspace/upload.png', imageBase64, {
+  encoding: 'base64'
+});
+
+// Process with Python
+await sandbox.exec('python process-image.py /workspace/upload.png');
+
+// Read processed result
+const result = await sandbox.readFile('/workspace/output.png', {
+  encoding: 'base64'
+});
+```
+
+## Error handling
+
+File operations may fail if files don't exist or permissions are insufficient:
+
+```typescript
+try {
+  const file = await sandbox.readFile('/workspace/missing.txt');
+} catch (error) {
+  if (error.code === 'FILE_NOT_FOUND') {
+    console.log('File does not exist');
+    // Create it
+    await sandbox.writeFile('/workspace/missing.txt', 'default content');
+  } else {
+    throw error;
+  }
+}
+```
+
+## Path conventions
+
+All paths in the sandbox are absolute. Common directories:
+
+- `/workspace` - Default working directory, recommended for application files
+- `/tmp` - Temporary files (may be cleared)
+- `/home` - User home directory
+
+## Related resources
+
+- [Manage files guide](/sandbox/guides/manage-files/) - Detailed guide with best practices
+- [Commands API](/sandbox/api/commands/) - Execute commands
+- [Code Interpreter API](/sandbox/api/interpreter/) - Execute code with rich outputs
+- [Examples](/sandbox/examples/) - Complete code examples

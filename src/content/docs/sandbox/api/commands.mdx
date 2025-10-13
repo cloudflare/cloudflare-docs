@@ -1,0 +1,471 @@
+---
+title: Commands API
+pcx_content_type: concept
+sidebar:
+  order: 1
+---
+
+import { Details } from "~/components";
+
+The Commands API lets you execute commands in the sandbox and manage background processes. All command execution happens in the sandbox's isolated container environment.
+
+## Methods
+
+### `exec()`
+
+Execute a command and return the complete result.
+
+```typescript
+const result = await sandbox.exec(command: string, options?: ExecOptions): Promise<ExecuteResponse>
+```
+
+#### Parameters
+
+- **command** (`string`, required) - The command to execute. Can include arguments.
+- **options** (`ExecOptions`, optional) - Execution options:
+  - `stream` (`boolean`) - Enable streaming callbacks (default: false)
+  - `onOutput` (`(stream: 'stdout' | 'stderr', data: string) => void`) - Callback for real-time output
+  - `timeout` (`number`) - Maximum execution time in milliseconds
+
+#### Return value
+
+Returns a `Promise<ExecuteResponse>` with:
+
+- `success` (`boolean`) - Whether the command succeeded (exitCode === 0)
+- `stdout` (`string`) - Standard output from the command
+- `stderr` (`string`) - Standard error from the command
+- `exitCode` (`number`) - Process exit code
+
+#### Examples
+
+**Basic command execution:**
+
+```typescript
+const result = await sandbox.exec('python --version');
+
+console.log(result.stdout);  // "Python 3.11.0"
+console.log(result.success); // true
+console.log(result.exitCode); // 0
+```
+
+**Command with arguments:**
+
+```typescript
+const result = await sandbox.exec('python -c "print(2 + 2)"');
+
+if (result.success) {
+  console.log('Result:', result.stdout); // "4"
+} else {
+  console.error('Error:', result.stderr);
+}
+```
+
+**Streaming output:**
+
+```typescript
+const result = await sandbox.exec('npm install express', {
+  stream: true,
+  onOutput: (stream, data) => {
+    console.log(`[${stream}] ${data}`);
+  }
+});
+
+// Logs installation progress in real-time
+// Still returns complete result when done
+console.log('Final exit code:', result.exitCode);
+```
+
+**Error handling:**
+
+```typescript
+try {
+  const result = await sandbox.exec('nonexistent-command');
+
+  if (!result.success) {
+    console.log('Command failed with exit code:', result.exitCode);
+    console.log('Error output:', result.stderr);
+  }
+} catch (error) {
+  console.error('Execution error:', error.message);
+}
+```
+
+**Complex shell command:**
+
+```typescript
+// Use shell features like pipes and redirects
+const result = await sandbox.exec('ls -la | grep ".py" | wc -l');
+console.log('Number of Python files:', result.stdout.trim());
+```
+
+---
+
+### `execStream()`
+
+Execute a command and return a Server-Sent Events stream for real-time processing.
+
+```typescript
+const stream = await sandbox.execStream(command: string, options?: ExecOptions): Promise<ReadableStream>
+```
+
+#### Parameters
+
+- **command** (`string`, required) - The command to execute
+- **options** (`ExecOptions`, optional) - Same as `exec()`
+
+#### Return value
+
+Returns a `Promise<ReadableStream>` that emits `ExecEvent` objects via Server-Sent Events.
+
+Event types:
+- `start` - Command execution started
+- `stdout` - Standard output data
+- `stderr` - Standard error data
+- `complete` - Command finished
+- `error` - Execution error occurred
+
+#### Examples
+
+**Basic streaming:**
+
+```typescript
+import { parseSSEStream, type ExecEvent } from '@cloudflare/sandbox';
+
+const stream = await sandbox.execStream('npm run build');
+
+for await (const event of parseSSEStream<ExecEvent>(stream)) {
+  switch (event.type) {
+    case 'start':
+      console.log('Build started:', event.command);
+      break;
+    case 'stdout':
+      console.log('Output:', event.data);
+      break;
+    case 'stderr':
+      console.error('Error:', event.data);
+      break;
+    case 'complete':
+      console.log('Build finished with exit code:', event.exitCode);
+      break;
+    case 'error':
+      console.error('Execution failed:', event.error);
+      break;
+  }
+}
+```
+
+**Streaming to client:**
+
+```typescript
+export default {
+  async fetch(request: Request, env: Env): Promise<Response> {
+    const sandbox = getSandbox(env.Sandbox, 'user-123');
+    const stream = await sandbox.execStream('python long-running-script.py');
+
+    // Return stream directly to client
+    return new Response(stream, {
+      headers: {
+        'Content-Type': 'text/event-stream',
+        'Cache-Control': 'no-cache',
+      }
+    });
+  }
+};
+```
+
+**Progress tracking:**
+
+```typescript
+let progress = 0;
+
+const stream = await sandbox.execStream('npm test');
+
+for await (const event of parseSSEStream<ExecEvent>(stream)) {
+  if (event.type === 'stdout') {
+    if (event.data.includes('PASS')) {
+      progress++;
+      console.log(`Tests passed: ${progress}`);
+    }
+  }
+
+  if (event.type === 'complete') {
+    console.log(`All tests complete. ${progress} passed.`);
+  }
+}
+```
+
+---
+
+### `startProcess()`
+
+Start a long-running background process.
+
+```typescript
+const process = await sandbox.startProcess(command: string, options?: ProcessOptions): Promise<ProcessInfo>
+```
+
+#### Parameters
+
+- **command** (`string`, required) - The command to start as a background process
+- **options** (`ProcessOptions`, optional):
+  - `cwd` (`string`) - Working directory
+  - `env` (`Record<string, string>`) - Environment variables
+
+#### Return value
+
+Returns a `Promise<ProcessInfo>` with:
+
+- `id` (`string`) - Unique process identifier
+- `pid` (`number`) - Process ID
+- `command` (`string`) - Command that was executed
+- `status` (`string`) - Process status (running, exited, etc.)
+
+#### Examples
+
+**Start a web server:**
+
+```typescript
+const server = await sandbox.startProcess('python -m http.server 8000');
+
+console.log('Server started with PID:', server.pid);
+console.log('Process ID:', server.id);
+
+// Process runs in the background
+// You can expose the port
+await sandbox.exposePort(8000);
+```
+
+**Start multiple processes:**
+
+```typescript
+// Start a backend server
+const api = await sandbox.startProcess('node api-server.js');
+
+// Start a frontend dev server
+const frontend = await sandbox.startProcess('npm run dev');
+
+console.log('Started API server:', api.pid);
+console.log('Started frontend:', frontend.pid);
+```
+
+**Process with custom environment:**
+
+```typescript
+const process = await sandbox.startProcess('node app.js', {
+  cwd: '/workspace/my-app',
+  env: {
+    NODE_ENV: 'production',
+    PORT: '3000',
+    API_KEY: 'secret-key'
+  }
+});
+```
+
+---
+
+### `listProcesses()`
+
+List all running processes in the sandbox.
+
+```typescript
+const processes = await sandbox.listProcesses(): Promise<ProcessInfo[]>
+```
+
+#### Return value
+
+Returns a `Promise<ProcessInfo[]>` with information about each running process.
+
+#### Example
+
+```typescript
+const processes = await sandbox.listProcesses();
+
+for (const proc of processes) {
+  console.log(`Process ${proc.id}:`);
+  console.log(`  PID: ${proc.pid}`);
+  console.log(`  Command: ${proc.command}`);
+  console.log(`  Status: ${proc.status}`);
+}
+```
+
+---
+
+### `killProcess()`
+
+Terminate a specific process.
+
+```typescript
+await sandbox.killProcess(processId: string, signal?: string): Promise<void>
+```
+
+#### Parameters
+
+- **processId** (`string`, required) - The process ID (from `startProcess()` or `listProcesses()`)
+- **signal** (`string`, optional) - Signal to send (default: 'SIGTERM')
+
+#### Example
+
+```typescript
+const server = await sandbox.startProcess('python -m http.server 8000');
+
+// Stop the server after some time
+setTimeout(async () => {
+  await sandbox.killProcess(server.id);
+  console.log('Server stopped');
+}, 60000);
+```
+
+---
+
+### `killAllProcesses()`
+
+Terminate all running processes in the sandbox.
+
+```typescript
+await sandbox.killAllProcesses(): Promise<void>
+```
+
+#### Example
+
+```typescript
+// Clean up all processes
+await sandbox.killAllProcesses();
+console.log('All processes terminated');
+```
+
+---
+
+### `streamProcessLogs()`
+
+Stream logs from a running process in real-time.
+
+```typescript
+const stream = await sandbox.streamProcessLogs(processId: string): Promise<ReadableStream>
+```
+
+#### Parameters
+
+- **processId** (`string`, required) - The process ID
+
+#### Return value
+
+Returns a `Promise<ReadableStream>` that emits `LogEvent` objects.
+
+#### Example
+
+```typescript
+import { parseSSEStream, type LogEvent } from '@cloudflare/sandbox';
+
+const server = await sandbox.startProcess('node server.js');
+const logStream = await sandbox.streamProcessLogs(server.id);
+
+for await (const log of parseSSEStream<LogEvent>(logStream)) {
+  console.log(`[${log.timestamp}] ${log.data}`);
+
+  if (log.data.includes('Server started')) {
+    console.log('Server is ready!');
+    break; // Stop watching logs
+  }
+}
+```
+
+---
+
+### `getProcessLogs()`
+
+Get accumulated logs from a process.
+
+```typescript
+const logs = await sandbox.getProcessLogs(processId: string): Promise<string>
+```
+
+#### Parameters
+
+- **processId** (`string`, required) - The process ID
+
+#### Return value
+
+Returns a `Promise<string>` with all accumulated output from the process.
+
+#### Example
+
+```typescript
+const server = await sandbox.startProcess('node server.js');
+
+// Wait a bit
+await new Promise(resolve => setTimeout(resolve, 5000));
+
+// Get all logs so far
+const logs = await sandbox.getProcessLogs(server.id);
+console.log('Server logs:', logs);
+```
+
+## Common patterns
+
+### Run and wait
+
+Execute a command and wait for it to complete:
+
+```typescript
+const result = await sandbox.exec('npm run build');
+
+if (result.success) {
+  console.log('Build succeeded');
+} else {
+  throw new Error(`Build failed: ${result.stderr}`);
+}
+```
+
+### Run in background
+
+Start a process and let it run:
+
+```typescript
+const process = await sandbox.startProcess('node server.js');
+await sandbox.exposePort(3000);
+
+// Process continues running
+// Client can access it via the exposed URL
+```
+
+### Monitor progress
+
+Stream output and track progress:
+
+```typescript
+const stream = await sandbox.execStream('npm test');
+let passed = 0;
+let failed = 0;
+
+for await (const event of parseSSEStream<ExecEvent>(stream)) {
+  if (event.type === 'stdout') {
+    if (event.data.includes('✓')) passed++;
+    if (event.data.includes('✗')) failed++;
+  }
+
+  if (event.type === 'complete') {
+    console.log(`Tests: ${passed} passed, ${failed} failed`);
+  }
+}
+```
+
+### Cleanup processes
+
+Stop all processes when done:
+
+```typescript
+try {
+  // Run your code
+  await sandbox.exec('npm run build');
+} finally {
+  // Always clean up
+  await sandbox.killAllProcesses();
+}
+```
+
+## Related resources
+
+- [Execute commands guide](/sandbox/guides/execute-commands/) - Detailed guide with best practices
+- [Background processes guide](/sandbox/guides/background-processes/) - Managing long-running processes
+- [Streaming output guide](/sandbox/guides/streaming-output/) - Working with real-time output
+- [Files API](/sandbox/api/files/) - File operations
