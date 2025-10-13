@@ -18,12 +18,11 @@ export const streamSchema = z.object({
 	updated: z.date().optional(),
 	pcx_content_type: z.string().default("video"),
 	reviewed: z
-			.date()
-			.optional()
-			.describe(
-				"A `YYYY-MM-DD` value that signals when the page was last explicitly reviewed from beginning to end. This is used to sort learning paths presented in the [ResourcesBySelector component](/style-guide/components/resources-by-selector/).",
-			),
-	})
+		.date()
+		.optional()
+		.describe(
+			"A `YYYY-MM-DD` value that signals when the page was last explicitly reviewed from beginning to end. This is used to sort learning paths presented in the [ResourcesBySelector component](/style-guide/components/resources-by-selector/).",
+		),
 	thumbnail: z
 		.object({
 			url: z.string(),
