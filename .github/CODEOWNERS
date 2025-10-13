@@ -12,6 +12,7 @@
 *.ts @cloudflare/pcx-content-engineering @kodster28
 *.astro @cloudflare/pcx-content-engineering @kodster28
 /src/schemas/tags.ts @cloudflare/pcx-content-engineering @joslyn-cf @kodster28
+/src/util/api.ts @cloudflare/pcx-content-engineering @pedrosousa @kodster28
 /src/content/workers-ai-models/ @craigsdennis @cloudflare/pcx-content-engineering @cloudflare/pcx-technical-writing @kodster28
 /public/__redirects @cloudflare/pcx-content-engineering @cloudflare/pcx-technical-writing @kodster28
 
