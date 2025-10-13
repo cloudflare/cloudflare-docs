@@ -51,21 +51,7 @@ console.log('Status:', server.status); // 'running'
 
 ## Configure process environment
 
-### Set working directory
-
-<TypeScriptExample>
-```
-// Start process in specific directory
-const process = await sandbox.startProcess('npm run dev', {
-  cwd: '/workspace/my-app'
-});
-
-// Equivalent to:
-// cd /workspace/my-app && npm run dev
-```
-</TypeScriptExample>
-
-### Set environment variables
+Set working directory and environment variables:
 
 <TypeScriptExample>
 ```
@@ -73,20 +59,19 @@ const process = await sandbox.startProcess('node server.js', {
   cwd: '/workspace/api',
   env: {
     NODE_ENV: 'production',
-    PORT: '3000',
+    PORT: '8080',
     API_KEY: env.API_KEY,
-    DATABASE_URL: env.DATABASE_URL,
-    LOG_LEVEL: 'debug'
+    DATABASE_URL: env.DATABASE_URL
   }
 });
 
-console.log('API server started on port 3000');
+console.log('API server started');
 ```
 </TypeScriptExample>
 
 ## Monitor process status
 
-### List all processes
+List and check running processes:
 
 <TypeScriptExample>
 ```
@@ -95,157 +80,65 @@ const processes = await sandbox.listProcesses();
 console.log(`Running ${processes.length} processes:`);
 
 for (const proc of processes) {
-  console.log(`
-    ID: ${proc.id}
-    PID: ${proc.pid}
-    Command: ${proc.command}
-    Status: ${proc.status}
-  `);
-}
-```
-</TypeScriptExample>
-
-### Check if process is running
-
-<TypeScriptExample>
-```
-async function isProcessRunning(processId: string): Promise<boolean> {
-  const processes = await sandbox.listProcesses();
-  return processes.some(p => p.id === processId && p.status === 'running');
+  console.log(`${proc.id}: ${proc.command} (${proc.status})`);
 }
 
-// Usage
-const server = await sandbox.startProcess('node server.js');
-
-if (await isProcessRunning(server.id)) {
-  console.log('Server is running');
-} else {
-  console.log('Server stopped or crashed');
-}
+// Check if specific process is running
+const isRunning = processes.some(p => p.id === processId && p.status === 'running');
 ```
 </TypeScriptExample>
 
 ## Monitor process logs
 
-### Stream logs in real-time
+Stream logs in real-time to detect when a service is ready:
 
 <TypeScriptExample>
 ```
 import { parseSSEStream, type LogEvent } from '@cloudflare/sandbox';
 
-// Start a web server
 const server = await sandbox.startProcess('node server.js');
 
 // Stream logs
 const logStream = await sandbox.streamProcessLogs(server.id);
 
 for await (const log of parseSSEStream<LogEvent>(logStream)) {
-  console.log(`[${log.timestamp}] ${log.data}`);
+  console.log(log.data);
 
-  // Wait for server to be ready
-  if (log.data.includes('Server listening on port')) {
+  if (log.data.includes('Server listening')) {
     console.log('Server is ready!');
-    break; // Stop watching logs
+    break;
   }
 }
 ```
 </TypeScriptExample>
 
-### Get accumulated logs
+Or get accumulated logs:
 
 <TypeScriptExample>
 ```
-const server = await sandbox.startProcess('npm run build');
-
-// Wait for build to complete
-await new Promise(resolve => setTimeout(resolve, 10000));
-
-// Get all logs
 const logs = await sandbox.getProcessLogs(server.id);
-
-console.log('Build output:', logs);
-
-// Parse logs for specific information
-if (logs.includes('Build successful')) {
-  console.log('✓ Build completed');
-} else if (logs.includes('Error:')) {
-  console.error('✗ Build failed');
-}
+console.log('Logs:', logs);
 ```
 </TypeScriptExample>
 
 ## Stop processes
 
-### Stop specific process
-
 <TypeScriptExample>
 ```
-const server = await sandbox.startProcess('python -m http.server 8000');
-
-// Stop gracefully (SIGTERM)
+// Stop specific process
 await sandbox.killProcess(server.id);
-console.log('Server stopped');
 
-// Force kill (SIGKILL)
+// Force kill if needed
 await sandbox.killProcess(server.id, 'SIGKILL');
-```
-</TypeScriptExample>
 
-### Stop all processes
-
-<TypeScriptExample>
-```
-// Clean up everything
+// Stop all processes
 await sandbox.killAllProcesses();
-console.log('All processes stopped');
-```
-</TypeScriptExample>
-
-### Stop after timeout
-
-<TypeScriptExample>
-```
-const process = await sandbox.startProcess('node app.js');
-
-// Auto-stop after 1 hour
-setTimeout(async () => {
-  await sandbox.killProcess(process.id);
-  console.log('Process stopped after timeout');
-}, 60 * 60 * 1000);
 ```
 </TypeScriptExample>
 
 ## Run multiple processes
 
-### Start multiple services
-
-<TypeScriptExample>
-```
-// Start backend API
-const api = await sandbox.startProcess('node api-server.js', {
-  cwd: '/workspace/backend',
-  env: { PORT: '3000' }
-});
-
-// Start frontend dev server
-const frontend = await sandbox.startProcess('npm run dev', {
-  cwd: '/workspace/frontend',
-  env: { PORT: '5173' }
-});
-
-// Start database
-const db = await sandbox.startProcess('redis-server', {
-  env: { PORT: '6379' }
-});
-
-console.log('All services started:');
-console.log('- API:', api.pid);
-console.log('- Frontend:', frontend.pid);
-console.log('- Database:', db.pid);
-```
-</TypeScriptExample>
-
-### Coordinate multiple processes
+Start services in sequence, waiting for dependencies:
 
 <TypeScriptExample>
 ```
@@ -258,7 +151,6 @@ const db = await sandbox.startProcess('redis-server');
 const dbLogs = await sandbox.streamProcessLogs(db.id);
 for await (const log of parseSSEStream<LogEvent>(dbLogs)) {
   if (log.data.includes('Ready to accept connections')) {
-    console.log('Database ready');
     break;
   }
 }
@@ -268,309 +160,44 @@ const api = await sandbox.startProcess('node api-server.js', {
   env: { DATABASE_URL: 'redis://localhost:6379' }
 });
 
-// Wait for API to be ready
-const apiLogs = await sandbox.streamProcessLogs(api.id);
-for await (const log of parseSSEStream<LogEvent>(apiLogs)) {
-  if (log.data.includes('API listening')) {
-    console.log('API ready');
-    break;
-  }
-}
-
-console.log('All services ready');
-```
-</TypeScriptExample>
-
-## Expose services via ports
-
-### Start and expose web server
-
-<TypeScriptExample>
-```
-// Start web server
-const server = await sandbox.startProcess('python -m http.server 8000');
-
-// Expose port to get public URL
-const port = await sandbox.exposePort(8000);
-
-console.log('Server accessible at:', port.previewUrl);
-// Returns: https://{random-subdomain}.cloudflare-sandbox.com
-
-// Send URL to user
-return new Response(JSON.stringify({
-  status: 'Server started',
-  url: port.previewUrl
-}));
-```
-</TypeScriptExample>
-
-### Wait for service before exposing
-
-<TypeScriptExample>
-```
-import { parseSSEStream, type LogEvent } from '@cloudflare/sandbox';
-
-// Start Node.js application
-const app = await sandbox.startProcess('node server.js', {
-  env: { PORT: '3000' }
-});
-
-// Wait for server to be ready
-const logs = await sandbox.streamProcessLogs(app.id);
-let serverReady = false;
-
-for await (const log of parseSSEStream<LogEvent>(logs)) {
-  if (log.data.includes('Server listening')) {
-    serverReady = true;
-    break;
-  }
-}
-
-if (serverReady) {
-  // Now expose port
-  const port = await sandbox.exposePort(3000);
-  console.log('Application ready:', port.previewUrl);
-}
+console.log('All services running');
 ```
 </TypeScriptExample>
 
 ## Best practices
 
-### Process lifecycle
-
-- **Check readiness** - Wait for processes to be ready before using them
-- **Monitor health** - Watch logs for errors or crashes
+- **Wait for readiness** - Stream logs to detect when services are ready
 - **Clean up** - Always stop processes when done
-- **Handle failures** - Restart crashed processes automatically
+- **Handle failures** - Monitor logs for errors and restart if needed
+- **Use try/finally** - Ensure cleanup happens even on errors
 
-### Resource management
-
-- **Limit concurrent processes** - Don't start too many processes
-- **Set timeouts** - Stop processes that run too long
-- **Monitor memory** - Track resource usage
-- **Clean up on errors** - Use try/finally to ensure cleanup
-
-### Error handling
-
-- **Check process status** - Verify process started successfully
-- **Parse logs for errors** - Watch for error messages
-- **Retry failed starts** - Handle transient failures
-- **Alert on crashes** - Notify when processes die unexpectedly
-
-### Security
-
-- **Validate commands** - Don't execute arbitrary user input
-- **Limit environment access** - Only pass necessary env vars
-- **Isolate processes** - Use separate sandboxes for untrusted code
-- **Set resource limits** - Prevent resource exhaustion
-
-## Common patterns
-
-### Supervised process
-
-Automatically restart processes that crash:
-
-<TypeScriptExample>
-```
-async function supervisedProcess(
-  command: string,
-  maxRestarts: number = 3
-): Promise<void> {
-  let restarts = 0;
-
-  while (restarts < maxRestarts) {
-    const process = await sandbox.startProcess(command);
-    console.log(`Started process (attempt ${restarts + 1})`);
-
-    // Monitor process
-    const logs = await sandbox.streamProcessLogs(process.id);
-
-    for await (const log of parseSSEStream<LogEvent>(logs)) {
-      console.log(log.data);
-
-      // Check for errors
-      if (log.data.includes('FATAL') || log.data.includes('crashed')) {
-        console.error('Process crashed, restarting...');
-        await sandbox.killProcess(process.id);
-        restarts++;
-        break;
-      }
-    }
-  }
-
-  throw new Error(`Process failed after ${maxRestarts} restarts`);
-}
-
-// Use it
-await supervisedProcess('node unstable-server.js', 5);
-```
-</TypeScriptExample>
-
-### Health check endpoint
-
-<TypeScriptExample>
-```
-export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
-    const url = new URL(request.url);
-
-    if (url.pathname === '/health') {
-      const sandbox = getSandbox(env.Sandbox, 'my-sandbox');
-      const processes = await sandbox.listProcesses();
-
-      // Check if required services are running
-      const required = ['api-server', 'database', 'cache'];
-      const running = processes.filter(p =>
-        required.some(r => p.command.includes(r))
-      );
-
-      const healthy = running.length === required.length;
-
-      return new Response(JSON.stringify({
-        healthy,
-        processes: running.length,
-        required: required.length
-      }), {
-        status: healthy ? 200 : 503,
-        headers: { 'Content-Type': 'application/json' }
-      });
-    }
-
-    return new Response('Not found', { status: 404 });
-  }
-};
-```
-</TypeScriptExample>
-
-### Graceful shutdown
-
-<TypeScriptExample>
-```
-async function gracefulShutdown(): Promise<void> {
-  console.log('Shutting down...');
-
-  // Get all processes
-  const processes = await sandbox.listProcesses();
-
-  // Stop each process gracefully
-  for (const proc of processes) {
-    try {
-      console.log(`Stopping ${proc.command}...`);
-
-      // Try graceful stop (SIGTERM)
-      await sandbox.killProcess(proc.id, 'SIGTERM');
-
-      // Wait for process to stop
-      await new Promise(resolve => setTimeout(resolve, 5000));
-
-      // Check if still running
-      if (await isProcessRunning(proc.id)) {
-        // Force kill if needed
-        console.log(`Force killing ${proc.command}...`);
-        await sandbox.killProcess(proc.id, 'SIGKILL');
-      }
-    } catch (error) {
-      console.error(`Error stopping ${proc.command}:`, error);
-    }
-  }
-
-  console.log('All processes stopped');
-}
-
-// Call on shutdown
-await gracefulShutdown();
-```
-</TypeScriptExample>
-
-## Common issues
+## Troubleshooting
 
 ### Process exits immediately
 
-**Problem**: Process starts but exits right away.
-
-**Solution**: Check logs to see why it exited:
+Check logs to see why:
 
 <TypeScriptExample>
 ```
 const process = await sandbox.startProcess('node server.js');
-
-// Wait a moment
 await new Promise(resolve => setTimeout(resolve, 1000));
 
-// Check if still running
 const processes = await sandbox.listProcesses();
-const running = processes.find(p => p.id === process.id);
-
-if (!running) {
-  // Process exited - check logs
+if (!processes.find(p => p.id === process.id)) {
   const logs = await sandbox.getProcessLogs(process.id);
   console.error('Process exited:', logs);
-
-  // Common causes:
-  // - Missing dependencies: "Cannot find module 'express'"
-  // - Port already in use: "EADDRINUSE"
-  // - Configuration error: "Invalid config"
 }
 ```
 </TypeScriptExample>
 
 ### Port already in use
 
-**Problem**: "Address already in use" error when starting process.
-
-**Solution**: Kill existing process on that port or use different port:
+Kill existing processes before starting:
 
 <TypeScriptExample>
 ```
-// Option 1: Kill processes first
 await sandbox.killAllProcesses();
 const server = await sandbox.startProcess('node server.js');
-
-// Option 2: Use dynamic port
-const port = 3000 + Math.floor(Math.random() * 1000);
-const server = await sandbox.startProcess(`node server.js`, {
-  env: { PORT: port.toString() }
-});
-
-// Option 3: Find and kill specific process
-const processes = await sandbox.listProcesses();
-const existing = processes.find(p => p.command.includes('server.js'));
-if (existing) {
-  await sandbox.killProcess(existing.id);
-}
-
-const server = await sandbox.startProcess('node server.js');
-```
-</TypeScriptExample>
-
-### Process hangs or doesn't respond
-
-**Problem**: Process is running but not responding to requests.
-
-**Solution**: Check logs and add timeout:
-
-<TypeScriptExample>
-```
-const process = await sandbox.startProcess('node app.js');
-
-// Add timeout
-const timeout = setTimeout(async () => {
-  console.error('Process not responding, restarting...');
-  await sandbox.killProcess(process.id);
-
-  // Start new instance
-  await sandbox.startProcess('node app.js');
-}, 30000); // 30 second timeout
-
-// Monitor logs for ready signal
-const logs = await sandbox.streamProcessLogs(process.id);
-for await (const log of parseSSEStream<LogEvent>(logs)) {
-  if (log.data.includes('Ready')) {
-    clearTimeout(timeout);
-    console.log('Process ready');
-    break;
-  }
-}
 ```
 </TypeScriptExample>
 

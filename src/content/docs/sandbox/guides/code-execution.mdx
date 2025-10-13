@@ -16,19 +16,19 @@ This guide shows you how to execute Python and JavaScript code with rich outputs
 
 ## When to use code interpreter
 
-Use the Code Interpreter API when you need:
+Use the Code Interpreter API for **simple, direct code execution** with minimal setup:
 
-- **Rich outputs** - Charts, tables, images, HTML, LaTeX from code execution
-- **Persistent state** - Variables and imports preserved between executions
-- **Multiple languages** - Python, JavaScript, and TypeScript support
-- **Interactive workflows** - Iterative data analysis and exploration
-- **AI integration** - Execute LLM-generated code safely
+- **Quick code execution** - Run Python/JS code without environment setup
+- **Rich outputs** - Get charts, tables, images, HTML automatically
+- **AI-generated code** - Execute LLM-generated code with structured results
+- **Persistent state** - Variables preserved between executions in the same context
 
-Use `exec()` for:
+Use `exec()` for **advanced or custom workflows**:
 
-- **Simple scripts** - One-time commands without state
-- **System operations** - File operations, installs, builds
-- **Text-only output** - When you only need stdout/stderr
+- **System operations** - Install packages, manage files, run builds
+- **Custom environments** - Configure specific versions, dependencies
+- **Shell commands** - Git operations, system utilities, complex pipelines
+- **Long-running processes** - Background services, servers
 
 ## Create an execution context
 
@@ -109,45 +109,7 @@ console.log(result.output); // "Mean: 3.0"
 
 ## Handle rich outputs
 
-### Get all available outputs
-
-<TypeScriptExample>
-```
-const result = await sandbox.runCode(context.id, `
-import matplotlib.pyplot as plt
-import numpy as np
-
-# Generate data
-x = np.linspace(0, 10, 100)
-y = np.sin(x)
-
-# Create plot
-plt.figure(figsize=(10, 6))
-plt.plot(x, y)
-plt.title('Sine Wave')
-plt.xlabel('X')
-plt.ylabel('sin(X)')
-plt.grid(True)
-plt.show()
-`);
-
-// Check available formats
-console.log('Formats:', result.formats);
-// ['text', 'png']
-
-// Access specific outputs
-if (result.outputs.png) {
-  console.log('Chart available as PNG');
-  // result.outputs.png contains base64-encoded image
-}
-
-if (result.outputs.text) {
-  console.log('Text output:', result.outputs.text);
-}
-```
-</TypeScriptExample>
-
-### Return images
+The code interpreter returns multiple output formats:
 
 <TypeScriptExample>
 ```
@@ -159,61 +121,26 @@ plt.title('Simple Chart')
 plt.show()
 `);
 
-// Return image to client
+// Check available formats
+console.log('Formats:', result.formats);  // ['text', 'png']
+
+// Access outputs
 if (result.outputs.png) {
-  const imageData = atob(result.outputs.png);
-  return new Response(imageData, {
+  // Return as image
+  return new Response(atob(result.outputs.png), {
     headers: { 'Content-Type': 'image/png' }
   });
 }
-```
-</TypeScriptExample>
 
-### Return data tables
-
-<TypeScriptExample>
-```
-const result = await sandbox.runCode(context.id, `
-import pandas as pd
-
-# Create DataFrame
-df = pd.DataFrame({
-  'name': ['Alice', 'Bob', 'Charlie'],
-  'age': [25, 30, 35],
-  'city': ['NYC', 'SF', 'LA']
-})
-
-# Display as HTML table
-df
-`);
-
-// Get HTML table
 if (result.outputs.html) {
+  // Return as HTML (pandas DataFrames)
   return new Response(result.outputs.html, {
     headers: { 'Content-Type': 'text/html' }
   });
 }
-```
-</TypeScriptExample>
-
-### Return JSON data
-
-<TypeScriptExample>
-```
-const result = await sandbox.runCode(context.id, `
-data = {
-  "users": [
-    {"name": "Alice", "score": 95},
-    {"name": "Bob", "score": 87}
-  ],
-  "total": 2
-}
-
-# Display as JSON
-data
-`);
 
 if (result.outputs.json) {
+  // Return as JSON
   return Response.json(result.outputs.json);
 }
 ```
@@ -256,191 +183,40 @@ print("Done!")
 ```
 </TypeScriptExample>
 
-## Data analysis workflows
+## Execute AI-generated code
 
-### Load and analyze data
+Run LLM-generated code safely in a sandbox:
 
 <TypeScriptExample>
 ```
-const context = await sandbox.createCodeContext({
-  language: 'python'
+// 1. Generate code with Claude
+const response = await fetch('https://api.anthropic.com/v1/messages', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'x-api-key': env.ANTHROPIC_API_KEY,
+    'anthropic-version': '2023-06-01'
+  },
+  body: JSON.stringify({
+    model: 'claude-3-5-sonnet-20241022',
+    max_tokens: 1024,
+    messages: [{
+      role: 'user',
+      content: 'Write Python code to calculate fibonacci sequence up to 100'
+    }]
+  })
 });
 
-// Load CSV data
-await sandbox.writeFile('/workspace/data.csv', csvData);
+const { content } = await response.json();
+const code = content[0].text;
 
-const result = await sandbox.runCode(context.id, `
-import pandas as pd
-import matplotlib.pyplot as plt
+// 2. Execute in sandbox
+const context = await sandbox.createCodeContext({ language: 'python' });
+const result = await sandbox.runCode(context.id, code);
 
-# Load data
-df = pd.read_csv('/workspace/data.csv')
-
-# Basic statistics
-print("Dataset shape:", df.shape)
-print("\\nSummary statistics:")
-print(df.describe())
-
-# Create visualization
-plt.figure(figsize=(10, 6))
-df.plot(kind='bar')
-plt.title('Data Visualization')
-plt.show()
-
-# Return summary
-{
-  "rows": len(df),
-  "columns": list(df.columns),
-  "mean_value": float(df['value'].mean())
-}
-`);
-
-// Access results
-console.log('Text output:', result.outputs.text);
-console.log('Chart:', result.outputs.png ? 'Available' : 'Not available');
-console.log('Data:', result.outputs.json);
-```
-</TypeScriptExample>
-
-### Multi-step analysis
-
-<TypeScriptExample>
-```
-const context = await sandbox.createCodeContext({
-  language: 'python'
-});
-
-// Step 1: Load and clean data
-await sandbox.runCode(context.id, `
-import pandas as pd
-
-df = pd.read_csv('/workspace/sales.csv')
-df = df.dropna()  # Remove missing values
-df['date'] = pd.to_datetime(df['date'])
-print(f"Loaded {len(df)} records")
-`);
-
-// Step 2: Aggregate data
-await sandbox.runCode(context.id, `
-monthly_sales = df.groupby(df['date'].dt.to_period('M'))['amount'].sum()
-print("Monthly totals calculated")
-`);
-
-// Step 3: Create visualizations
-const result = await sandbox.runCode(context.id, `
-import matplotlib.pyplot as plt
-
-plt.figure(figsize=(12, 6))
-monthly_sales.plot(kind='bar')
-plt.title('Monthly Sales')
-plt.xlabel('Month')
-plt.ylabel('Sales ($)')
-plt.xticks(rotation=45)
-plt.tight_layout()
-plt.show()
-
-# Return summary
-{
-  "total_sales": float(monthly_sales.sum()),
-  "average_monthly": float(monthly_sales.mean()),
-  "best_month": str(monthly_sales.idxmax())
-}
-`);
-
-console.log('Summary:', result.outputs.json);
-```
-</TypeScriptExample>
-
-## AI code execution
-
-Execute LLM-generated code safely:
-
-<TypeScriptExample>
-```
-async function executeAIGeneratedCode(
-  userPrompt: string,
-  env: Env
-): Promise<any> {
-  const sandbox = getSandbox(env.Sandbox, 'ai-executor');
-
-  // 1. Generate code with Claude
-  const response = await fetch('https://api.anthropic.com/v1/messages', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'x-api-key': env.ANTHROPIC_API_KEY,
-      'anthropic-version': '2023-06-01'
-    },
-    body: JSON.stringify({
-      model: 'claude-3-5-sonnet-20241022',
-      max_tokens: 1024,
-      messages: [{
-        role: 'user',
-        content: `Write Python code to ${userPrompt}. Return only the code, no explanations.`
-      }]
-    })
-  });
-
-  const data = await response.json();
-  const code = data.content[0].text;
-
-  // 2. Create execution context
-  const context = await sandbox.createCodeContext({
-    language: 'python'
-  });
-
-  // 3. Execute generated code
-  const result = await sandbox.runCode(context.id, code, {
-    stream: true,
-    onOutput: (output) => console.log(output),
-    onError: (error) => console.error('Execution error:', error)
-  });
-
-  // 4. Return results
-  return {
-    prompt: userPrompt,
-    code,
-    output: result.output,
-    success: result.success,
-    formats: result.formats,
-    outputs: result.outputs
-  };
-}
-
-// Usage
-const result = await executeAIGeneratedCode(
-  'analyze the fibonacci sequence up to 100',
-  env
-);
-
-console.log('Generated code:', result.code);
+console.log('Generated code:', code);
 console.log('Output:', result.output);
-```
-</TypeScriptExample>
-
-## Handle errors
-
-<TypeScriptExample>
-```
-const context = await sandbox.createCodeContext({
-  language: 'python'
-});
-
-const result = await sandbox.runCode(context.id, `
-# This code has an error
-undefined_variable = some_variable + 1
-`);
-
-if (!result.success) {
-  console.error('Execution failed');
-  console.error('Error:', result.error.name);      // "NameError"
-  console.error('Message:', result.error.value);   // "name 'some_variable' is not defined"
-  console.error('Line:', result.error.lineNumber); // Line where error occurred
-
-  if (result.error.traceback) {
-    console.error('Traceback:', result.error.traceback.join('\\n'));
-  }
-}
+console.log('Success:', result.success);
 ```
 </TypeScriptExample>
 
@@ -479,141 +255,10 @@ console.log('All contexts deleted');
 
 ## Best practices
 
-### Context management
-
-- **One context per task** - Keep contexts focused on specific tasks
-- **Clean up** - Delete contexts when done to free resources
-- **Name contexts** - Use meaningful IDs to track purposes
-- **Reuse contexts** - Share contexts for related operations
-
-### Code execution
-
-- **Validate AI code** - Check generated code before execution
-- **Use timeouts** - Set execution timeouts for safety
-- **Stream long operations** - Provide feedback for slow code
-- **Handle errors gracefully** - Always check success and error fields
-
-### Performance
-
-- **Limit context count** - Don't create too many concurrent contexts
-- **Batch operations** - Execute multiple statements in one call
-- **Cache results** - Store expensive computation results
-- **Clean up resources** - Delete unused contexts promptly
-
-### Security
-
-- **Validate inputs** - Sanitize user inputs before including in code
-- **Limit capabilities** - Use sessions to isolate untrusted code
-- **Set resource limits** - Prevent resource exhaustion
-- **Review generated code** - Inspect AI-generated code for safety
-
-## Common patterns
-
-### Interactive data exploration
-
-<TypeScriptExample>
-```
-export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
-    const url = new URL(request.url);
-    const sandbox = getSandbox(env.Sandbox, 'data-explorer');
-
-    if (url.pathname === '/analyze') {
-      const { code } = await request.json();
-
-      // Create or reuse context
-      let contexts = await sandbox.listCodeContexts();
-      let context = contexts.find(c => c.language === 'python');
-
-      if (!context) {
-        context = await sandbox.createCodeContext({
-          language: 'python'
-        });
-
-        // Initialize with data
-        await sandbox.runCode(context.id, `
-          import pandas as pd
-          import numpy as np
-          import matplotlib.pyplot as plt
-
-          df = pd.read_csv('/workspace/dataset.csv')
-          print(f"Dataset loaded: {len(df)} rows")
-        `);
-      }
-
-      // Execute user code
-      const result = await sandbox.runCode(context.id, code);
-
-      return Response.json({
-        output: result.output,
-        formats: result.formats,
-        outputs: result.outputs,
-        success: result.success
-      });
-    }
-
-    return new Response('Not found', { status: 404 });
-  }
-};
-```
-</TypeScriptExample>
-
-### Chart generation service
-
-<TypeScriptExample>
-```
-async function generateChart(
-  chartType: string,
-  data: number[],
-  options: any
-): Promise<string> {
-  const context = await sandbox.createCodeContext({
-    language: 'python'
-  });
-
-  const result = await sandbox.runCode(context.id, `
-import matplotlib.pyplot as plt
-import numpy as np
-
-data = ${JSON.stringify(data)}
-
-plt.figure(figsize=(10, 6))
-
-if "${chartType}" == "line":
-    plt.plot(data)
-elif "${chartType}" == "bar":
-    plt.bar(range(len(data)), data)
-elif "${chartType}" == "scatter":
-    plt.scatter(range(len(data)), data)
-
-plt.title("${options.title || 'Chart'}")
-plt.xlabel("${options.xlabel || 'X'}")
-plt.ylabel("${options.ylabel || 'Y'}")
-plt.grid(True)
-plt.show()
-  `);
-
-  // Clean up
-  await sandbox.deleteCodeContext(context.id);
-
-  // Return base64 PNG
-  return result.outputs.png || '';
-}
-
-// Usage
-const chartData = [1, 4, 2, 8, 5, 7];
-const chart = await generateChart('line', chartData, {
-  title: 'Sample Data',
-  xlabel: 'Index',
-  ylabel: 'Value'
-});
-
-// Return as image
-return new Response(atob(chart), {
-  headers: { 'Content-Type': 'image/png' }
-});
-```
-</TypeScriptExample>
+- **Clean up contexts** - Delete contexts when done to free resources
+- **Handle errors** - Always check `result.success` and `result.error`
+- **Stream long operations** - Use streaming for code that takes >2 seconds
+- **Validate AI code** - Review generated code before execution
 
 ## Related resources
 
