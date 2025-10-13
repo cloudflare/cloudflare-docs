@@ -156,7 +156,10 @@ export default function ResourcesBySelector({
 
 			return true;
 		})
-		.sort((a, b) => Number(b?.data?.reviewed ?? 100) - Number(a?.data?.reviewed ?? 100));
+		.sort(
+			(a, b) =>
+				Number(b?.data?.reviewed ?? 600) - Number(a?.data?.reviewed ?? 600),
+		);
 
 	useEffect(() => {
 		const params = new URLSearchParams(window.location.search);
