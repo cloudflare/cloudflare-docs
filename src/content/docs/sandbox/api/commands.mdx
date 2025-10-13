@@ -5,7 +5,7 @@ sidebar:
   order: 1
 ---
 
-import { Details } from "~/components";
+import { Details, TypeScriptExample } from "~/components";
 
 The Commands API lets you execute commands in the sandbox and manage background processes. All command execution happens in the sandbox's isolated container environment.
 
@@ -15,9 +15,10 @@ The Commands API lets you execute commands in the sandbox and manage background 
 
 Execute a command and return the complete result.
 
-```typescript
+```ts
 const result = await sandbox.exec(command: string, options?: ExecOptions): Promise<ExecuteResponse>
 ```
+
 
 #### Parameters
 
@@ -40,17 +41,20 @@ Returns a `Promise<ExecuteResponse>` with:
 
 **Basic command execution:**
 
-```typescript
+<TypeScriptExample>
+```
 const result = await sandbox.exec('python --version');
 
 console.log(result.stdout);  // "Python 3.11.0"
 console.log(result.success); // true
 console.log(result.exitCode); // 0
 ```
+</TypeScriptExample>
 
 **Command with arguments:**
 
-```typescript
+<TypeScriptExample>
+```
 const result = await sandbox.exec('python -c "print(2 + 2)"');
 
 if (result.success) {
@@ -59,10 +63,13 @@ if (result.success) {
   console.error('Error:', result.stderr);
 }
 ```
+</TypeScriptExample>
+
 
 **Streaming output:**
 
-```typescript
+<TypeScriptExample>
+```
 const result = await sandbox.exec('npm install express', {
   stream: true,
   onOutput: (stream, data) => {
@@ -74,10 +81,13 @@ const result = await sandbox.exec('npm install express', {
 // Still returns complete result when done
 console.log('Final exit code:', result.exitCode);
 ```
+</TypeScriptExample>
+
 
 **Error handling:**
 
-```typescript
+<TypeScriptExample>
+```
 try {
   const result = await sandbox.exec('nonexistent-command');
 
@@ -89,14 +99,19 @@ try {
   console.error('Execution error:', error.message);
 }
 ```
+</TypeScriptExample>
+
 
 **Complex shell command:**
 
-```typescript
+<TypeScriptExample>
+```
 // Use shell features like pipes and redirects
 const result = await sandbox.exec('ls -la | grep ".py" | wc -l');
 console.log('Number of Python files:', result.stdout.trim());
 ```
+</TypeScriptExample>
+
 
 ---
 
@@ -104,9 +119,10 @@ console.log('Number of Python files:', result.stdout.trim());
 
 Execute a command and return a Server-Sent Events stream for real-time processing.
 
-```typescript
+```ts
 const stream = await sandbox.execStream(command: string, options?: ExecOptions): Promise<ReadableStream>
 ```
+
 
 #### Parameters
 
@@ -128,7 +144,8 @@ Event types:
 
 **Basic streaming:**
 
-```typescript
+<TypeScriptExample>
+```
 import { parseSSEStream, type ExecEvent } from '@cloudflare/sandbox';
 
 const stream = await sandbox.execStream('npm run build');
@@ -153,10 +170,13 @@ for await (const event of parseSSEStream<ExecEvent>(stream)) {
   }
 }
 ```
+</TypeScriptExample>
+
 
 **Streaming to client:**
 
-```typescript
+<TypeScriptExample>
+```
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const sandbox = getSandbox(env.Sandbox, 'user-123');
@@ -172,10 +192,13 @@ export default {
   }
 };
 ```
+</TypeScriptExample>
+
 
 **Progress tracking:**
 
-```typescript
+<TypeScriptExample>
+```
 let progress = 0;
 
 const stream = await sandbox.execStream('npm test');
@@ -193,6 +216,8 @@ for await (const event of parseSSEStream<ExecEvent>(stream)) {
   }
 }
 ```
+</TypeScriptExample>
+
 
 ---
 
@@ -200,9 +225,10 @@ for await (const event of parseSSEStream<ExecEvent>(stream)) {
 
 Start a long-running background process.
 
-```typescript
+```ts
 const process = await sandbox.startProcess(command: string, options?: ProcessOptions): Promise<ProcessInfo>
 ```
+
 
 #### Parameters
 
@@ -224,7 +250,8 @@ Returns a `Promise<ProcessInfo>` with:
 
 **Start a web server:**
 
-```typescript
+<TypeScriptExample>
+```
 const server = await sandbox.startProcess('python -m http.server 8000');
 
 console.log('Server started with PID:', server.pid);
@@ -234,10 +261,13 @@ console.log('Process ID:', server.id);
 // You can expose the port
 await sandbox.exposePort(8000);
 ```
+</TypeScriptExample>
+
 
 **Start multiple processes:**
 
-```typescript
+<TypeScriptExample>
+```
 // Start a backend server
 const api = await sandbox.startProcess('node api-server.js');
 
@@ -247,10 +277,13 @@ const frontend = await sandbox.startProcess('npm run dev');
 console.log('Started API server:', api.pid);
 console.log('Started frontend:', frontend.pid);
 ```
+</TypeScriptExample>
+
 
 **Process with custom environment:**
 
-```typescript
+<TypeScriptExample>
+```
 const process = await sandbox.startProcess('node app.js', {
   cwd: '/workspace/my-app',
   env: {
@@ -260,6 +293,8 @@ const process = await sandbox.startProcess('node app.js', {
   }
 });
 ```
+</TypeScriptExample>
+
 
 ---
 
@@ -267,9 +302,10 @@ const process = await sandbox.startProcess('node app.js', {
 
 List all running processes in the sandbox.
 
-```typescript
+```ts
 const processes = await sandbox.listProcesses(): Promise<ProcessInfo[]>
 ```
+
 
 #### Return value
 
@@ -277,7 +313,8 @@ Returns a `Promise<ProcessInfo[]>` with information about each running process.
 
 #### Example
 
-```typescript
+<TypeScriptExample>
+```
 const processes = await sandbox.listProcesses();
 
 for (const proc of processes) {
@@ -287,6 +324,8 @@ for (const proc of processes) {
   console.log(`  Status: ${proc.status}`);
 }
 ```
+</TypeScriptExample>
+
 
 ---
 
@@ -294,9 +333,10 @@ for (const proc of processes) {
 
 Terminate a specific process.
 
-```typescript
+```ts
 await sandbox.killProcess(processId: string, signal?: string): Promise<void>
 ```
+
 
 #### Parameters
 
@@ -305,7 +345,8 @@ await sandbox.killProcess(processId: string, signal?: string): Promise<void>
 
 #### Example
 
-```typescript
+<TypeScriptExample>
+```
 const server = await sandbox.startProcess('python -m http.server 8000');
 
 // Stop the server after some time
@@ -314,6 +355,8 @@ setTimeout(async () => {
   console.log('Server stopped');
 }, 60000);
 ```
+</TypeScriptExample>
+
 
 ---
 
@@ -321,17 +364,21 @@ setTimeout(async () => {
 
 Terminate all running processes in the sandbox.
 
-```typescript
+```ts
 await sandbox.killAllProcesses(): Promise<void>
 ```
 
+
 #### Example
 
-```typescript
+<TypeScriptExample>
+```
 // Clean up all processes
 await sandbox.killAllProcesses();
 console.log('All processes terminated');
 ```
+</TypeScriptExample>
+
 
 ---
 
@@ -339,9 +386,10 @@ console.log('All processes terminated');
 
 Stream logs from a running process in real-time.
 
-```typescript
+```ts
 const stream = await sandbox.streamProcessLogs(processId: string): Promise<ReadableStream>
 ```
+
 
 #### Parameters
 
@@ -353,7 +401,8 @@ Returns a `Promise<ReadableStream>` that emits `LogEvent` objects.
 
 #### Example
 
-```typescript
+<TypeScriptExample>
+```
 import { parseSSEStream, type LogEvent } from '@cloudflare/sandbox';
 
 const server = await sandbox.startProcess('node server.js');
@@ -368,6 +417,8 @@ for await (const log of parseSSEStream<LogEvent>(logStream)) {
   }
 }
 ```
+</TypeScriptExample>
+
 
 ---
 
@@ -375,9 +426,10 @@ for await (const log of parseSSEStream<LogEvent>(logStream)) {
 
 Get accumulated logs from a process.
 
-```typescript
+```ts
 const logs = await sandbox.getProcessLogs(processId: string): Promise<string>
 ```
+
 
 #### Parameters
 
@@ -389,7 +441,8 @@ Returns a `Promise<string>` with all accumulated output from the process.
 
 #### Example
 
-```typescript
+<TypeScriptExample>
+```
 const server = await sandbox.startProcess('node server.js');
 
 // Wait a bit
@@ -399,6 +452,8 @@ await new Promise(resolve => setTimeout(resolve, 5000));
 const logs = await sandbox.getProcessLogs(server.id);
 console.log('Server logs:', logs);
 ```
+</TypeScriptExample>
+
 
 ## Common patterns
 
@@ -406,7 +461,8 @@ console.log('Server logs:', logs);
 
 Execute a command and wait for it to complete:
 
-```typescript
+<TypeScriptExample>
+```
 const result = await sandbox.exec('npm run build');
 
 if (result.success) {
@@ -415,24 +471,30 @@ if (result.success) {
   throw new Error(`Build failed: ${result.stderr}`);
 }
 ```
+</TypeScriptExample>
+
 
 ### Run in background
 
 Start a process and let it run:
 
-```typescript
+<TypeScriptExample>
+```
 const process = await sandbox.startProcess('node server.js');
 await sandbox.exposePort(3000);
 
 // Process continues running
 // Client can access it via the exposed URL
 ```
+</TypeScriptExample>
+
 
 ### Monitor progress
 
 Stream output and track progress:
 
-```typescript
+<TypeScriptExample>
+```
 const stream = await sandbox.execStream('npm test');
 let passed = 0;
 let failed = 0;
@@ -448,12 +510,15 @@ for await (const event of parseSSEStream<ExecEvent>(stream)) {
   }
 }
 ```
+</TypeScriptExample>
+
 
 ### Cleanup processes
 
 Stop all processes when done:
 
-```typescript
+<TypeScriptExample>
+```
 try {
   // Run your code
   await sandbox.exec('npm run build');
@@ -462,6 +527,8 @@ try {
   await sandbox.killAllProcesses();
 }
 ```
+</TypeScriptExample>
+
 
 ## Related resources
 

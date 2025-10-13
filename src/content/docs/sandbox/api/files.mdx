@@ -5,6 +5,8 @@ sidebar:
   order: 2
 ---
 
+import { TypeScriptExample } from "~/components";
+
 The Files API provides methods for reading, writing, and managing files in the sandbox filesystem. All file operations use absolute paths within the container.
 
 ## Methods
@@ -13,7 +15,7 @@ The Files API provides methods for reading, writing, and managing files in the s
 
 Write content to a file in the sandbox.
 
-```typescript
+```ts
 await sandbox.writeFile(path: string, content: string, options?: WriteFileOptions): Promise<void>
 ```
 
@@ -29,24 +31,27 @@ await sandbox.writeFile(path: string, content: string, options?: WriteFileOption
 
 **Write a text file:**
 
-```typescript
-await sandbox.writeFile('/workspace/app.js', `
-console.log('Hello from sandbox!');
-`);
+<TypeScriptExample>
 ```
+await sandbox.writeFile('/workspace/app.js', `console.log('Hello from sandbox!');`);
+```
+</TypeScriptExample>
 
 **Write with specific encoding:**
 
-```typescript
+<TypeScriptExample>
+```
 // Write binary data as base64
 await sandbox.writeFile('/tmp/image.png', base64ImageData, {
   encoding: 'base64'
 });
 ```
+</TypeScriptExample>
 
 **Write configuration file:**
 
-```typescript
+<TypeScriptExample>
+```
 const config = {
   port: 3000,
   environment: 'production',
@@ -54,14 +59,18 @@ const config = {
 };
 
 await sandbox.writeFile(
-  '/workspace/config.json',
-  JSON.stringify(config, null, 2)
+'/workspace/config.json',
+JSON.stringify(config, null, 2)
 );
+
 ```
+</TypeScriptExample>
+
 
 **Create and write multiple files:**
 
-```typescript
+<TypeScriptExample>
+```
 // Package.json
 await sandbox.writeFile('/workspace/package.json', JSON.stringify({
   name: 'my-app',
@@ -88,13 +97,15 @@ await sandbox.exec('npm install');
 await sandbox.startProcess('node server.js');
 ```
 
+</TypeScriptExample>
+
 ---
 
 ### `readFile()`
 
 Read a file from the sandbox.
 
-```typescript
+```ts
 const file = await sandbox.readFile(path: string, options?: ReadFileOptions): Promise<FileInfo>
 ```
 
@@ -115,24 +126,31 @@ Returns a `Promise<FileInfo>` with:
 
 **Read a text file:**
 
-```typescript
+<TypeScriptExample>
+```
 const file = await sandbox.readFile('/workspace/app.js');
 console.log(file.content);
 ```
+</TypeScriptExample>
 
 **Read and parse JSON:**
 
-```typescript
+<TypeScriptExample>
+```
 const file = await sandbox.readFile('/workspace/package.json');
 const packageJson = JSON.parse(file.content);
 
 console.log('Project name:', packageJson.name);
 console.log('Version:', packageJson.version);
+
 ```
+</TypeScriptExample>
+
 
 **Read binary file:**
 
-```typescript
+<TypeScriptExample>
+```
 const file = await sandbox.readFile('/tmp/image.png', {
   encoding: 'base64'
 });
@@ -141,15 +159,21 @@ const file = await sandbox.readFile('/tmp/image.png', {
 const imageData = file.content;
 ```
 
+</TypeScriptExample>
+
 **Check file contents:**
 
-```typescript
+<TypeScriptExample>
+```
 const file = await sandbox.readFile('/workspace/.env');
 
 if (file.content.includes('API_KEY=')) {
-  console.log('API key is configured');
+console.log('API key is configured');
 }
+
 ```
+</TypeScriptExample>
+
 
 ---
 
@@ -157,7 +181,7 @@ if (file.content.includes('API_KEY=')) {
 
 Create a directory in the sandbox.
 
-```typescript
+```ts
 await sandbox.mkdir(path: string, options?: MkdirOptions): Promise<void>
 ```
 
@@ -172,22 +196,27 @@ await sandbox.mkdir(path: string, options?: MkdirOptions): Promise<void>
 
 **Create a single directory:**
 
-```typescript
+<TypeScriptExample>
+```
 await sandbox.mkdir('/workspace/src');
 ```
+</TypeScriptExample>
 
 **Create nested directories:**
 
-```typescript
+<TypeScriptExample>
+```
 // Create entire path
 await sandbox.mkdir('/workspace/src/components/ui', {
   recursive: true
 });
 ```
+</TypeScriptExample>
 
 **Create project structure:**
 
-```typescript
+<TypeScriptExample>
+```
 // Create multiple directories
 await sandbox.mkdir('/workspace/src', { recursive: true });
 await sandbox.mkdir('/workspace/tests', { recursive: true });
@@ -196,7 +225,10 @@ await sandbox.mkdir('/workspace/public', { recursive: true });
 // Then create files
 await sandbox.writeFile('/workspace/src/index.js', '// Main app');
 await sandbox.writeFile('/workspace/tests/app.test.js', '// Tests');
+
 ```
+</TypeScriptExample>
+
 
 ---
 
@@ -204,7 +236,7 @@ await sandbox.writeFile('/workspace/tests/app.test.js', '// Tests');
 
 Delete a file from the sandbox.
 
-```typescript
+```ts
 await sandbox.deleteFile(path: string): Promise<void>
 ```
 
@@ -216,13 +248,16 @@ await sandbox.deleteFile(path: string): Promise<void>
 
 **Delete a file:**
 
-```typescript
+<TypeScriptExample>
+```
 await sandbox.deleteFile('/workspace/temp.txt');
 ```
+</TypeScriptExample>
 
 **Clean up temporary files:**
 
-```typescript
+<TypeScriptExample>
+```
 const tempFiles = [
   '/tmp/build-output.log',
   '/tmp/cache.json',
@@ -230,13 +265,16 @@ const tempFiles = [
 ];
 
 for (const file of tempFiles) {
-  try {
-    await sandbox.deleteFile(file);
-  } catch (error) {
-    console.log(`Could not delete ${file}`);
-  }
+try {
+await sandbox.deleteFile(file);
+} catch (error) {
+console.log(`Could not delete ${file}`);
 }
+}
+
 ```
+</TypeScriptExample>
+
 
 ---
 
@@ -244,7 +282,7 @@ for (const file of tempFiles) {
 
 Rename a file in the sandbox.
 
-```typescript
+```ts
 await sandbox.renameFile(oldPath: string, newPath: string): Promise<void>
 ```
 
@@ -257,16 +295,16 @@ await sandbox.renameFile(oldPath: string, newPath: string): Promise<void>
 
 **Rename a file:**
 
-```typescript
-await sandbox.renameFile(
-  '/workspace/draft.txt',
-  '/workspace/final.txt'
-);
+<TypeScriptExample>
 ```
+await sandbox.renameFile('/workspace/draft.txt', '/workspace/final.txt');
+```
+</TypeScriptExample>
 
 **Rename with backup:**
 
-```typescript
+<TypeScriptExample>
+```
 // Create backup before overwriting
 await sandbox.renameFile(
   '/workspace/config.json',
@@ -275,7 +313,10 @@ await sandbox.renameFile(
 
 // Write new config
 await sandbox.writeFile('/workspace/config.json', newConfig);
+
 ```
+</TypeScriptExample>
+
 
 ---
 
@@ -283,7 +324,7 @@ await sandbox.writeFile('/workspace/config.json', newConfig);
 
 Move a file to a different directory.
 
-```typescript
+```ts
 await sandbox.moveFile(sourcePath: string, destinationPath: string): Promise<void>
 ```
 
@@ -296,27 +337,27 @@ await sandbox.moveFile(sourcePath: string, destinationPath: string): Promise<voi
 
 **Move a file:**
 
-```typescript
-await sandbox.moveFile(
-  '/tmp/download.txt',
-  '/workspace/data.txt'
-);
+<TypeScriptExample>
 ```
+await sandbox.moveFile('/tmp/download.txt', '/workspace/data.txt');
+```
+</TypeScriptExample>
 
 **Organize files:**
 
-```typescript
+<TypeScriptExample>
+```
 // Move source files to src directory
 await sandbox.mkdir('/workspace/src', { recursive: true });
 
 const files = ['app.js', 'server.js', 'utils.js'];
 for (const file of files) {
-  await sandbox.moveFile(
-    `/workspace/${file}`,
-    `/workspace/src/${file}`
-  );
+	await sandbox.moveFile(`/workspace/${file}`, `/workspace/src/${file}`);
 }
+
 ```
+</TypeScriptExample>
+
 
 ---
 
@@ -324,7 +365,7 @@ for (const file of files) {
 
 Clone a git repository into the sandbox.
 
-```typescript
+```ts
 await sandbox.gitCheckout(repoUrl: string, options?: GitCheckoutOptions): Promise<void>
 ```
 
@@ -340,22 +381,27 @@ await sandbox.gitCheckout(repoUrl: string, options?: GitCheckoutOptions): Promis
 
 **Clone a repository:**
 
-```typescript
+<TypeScriptExample>
+```
 await sandbox.gitCheckout('https://github.com/user/repo');
 ```
+</TypeScriptExample>
 
 **Clone specific branch:**
 
-```typescript
+<TypeScriptExample>
+```
 await sandbox.gitCheckout('https://github.com/user/repo', {
   branch: 'develop',
   targetDir: 'my-project'
 });
 ```
+</TypeScriptExample>
 
 **Clone and build:**
 
-```typescript
+<TypeScriptExample>
+```
 // Clone the repository
 await sandbox.gitCheckout('https://github.com/user/app');
 
@@ -365,44 +411,53 @@ await sandbox.exec('cd app && npm run build');
 
 // Read build output
 const buildOutput = await sandbox.readFile('/workspace/app/dist/index.html');
+
 ```
+</TypeScriptExample>
+
 
 **Shallow clone for faster cloning:**
 
-```typescript
+<TypeScriptExample>
+```
 await sandbox.gitCheckout('https://github.com/user/large-repo', {
   depth: 1  // Only fetch latest commit
 });
 ```
 
+</TypeScriptExample>
+
 ## Common patterns
 
 ### Create a project structure
 
-```typescript
+<TypeScriptExample>
+```
 // Create directories
 await sandbox.mkdir('/workspace/my-app/src', { recursive: true });
 await sandbox.mkdir('/workspace/my-app/tests', { recursive: true });
 
 // Create package.json
 await sandbox.writeFile('/workspace/my-app/package.json', JSON.stringify({
-  name: 'my-app',
-  version: '1.0.0',
-  scripts: {
-    start: 'node src/index.js',
-    test: 'jest'
-  }
+name: 'my-app',
+version: '1.0.0',
+scripts: {
+start: 'node src/index.js',
+test: 'jest'
+}
 }));
 
 // Create main file
-await sandbox.writeFile('/workspace/my-app/src/index.js', `
-console.log('App started!');
-`);
+await sandbox.writeFile('/workspace/my-app/src/index.js', `console.log('App started!');`);
+
 ```
+</TypeScriptExample>
+
 
 ### Read and modify files
 
-```typescript
+<TypeScriptExample>
+```
 // Read existing file
 const file = await sandbox.readFile('/workspace/config.json');
 const config = JSON.parse(file.content);
@@ -418,19 +473,26 @@ await sandbox.writeFile(
 );
 ```
 
+</TypeScriptExample>
+
 ### Copy files
 
-```typescript
+<TypeScriptExample>
+```
 // Read source file
 const source = await sandbox.readFile('/workspace/template.html');
 
 // Write to new location
 await sandbox.writeFile('/workspace/index.html', source.content);
+
 ```
+</TypeScriptExample>
+
 
 ### Batch operations
 
-```typescript
+<TypeScriptExample>
+```
 const files = {
   '/workspace/src/app.js': 'console.log("app");',
   '/workspace/src/utils.js': 'console.log("utils");',
@@ -445,15 +507,18 @@ await Promise.all(
 );
 ```
 
+</TypeScriptExample>
+
 ### Work with binary files
 
-```typescript
+<TypeScriptExample>
+```
 // Read binary file (e.g., from an upload)
 const imageBase64 = request.headers.get('X-Image-Data');
 
 // Write to sandbox
 await sandbox.writeFile('/workspace/upload.png', imageBase64, {
-  encoding: 'base64'
+encoding: 'base64'
 });
 
 // Process with Python
@@ -461,15 +526,19 @@ await sandbox.exec('python process-image.py /workspace/upload.png');
 
 // Read processed result
 const result = await sandbox.readFile('/workspace/output.png', {
-  encoding: 'base64'
+encoding: 'base64'
 });
+
 ```
+</TypeScriptExample>
+
 
 ## Error handling
 
 File operations may fail if files don't exist or permissions are insufficient:
 
-```typescript
+<TypeScriptExample>
+```
 try {
   const file = await sandbox.readFile('/workspace/missing.txt');
 } catch (error) {
@@ -482,6 +551,8 @@ try {
   }
 }
 ```
+
+</TypeScriptExample>
 
 ## Path conventions
 

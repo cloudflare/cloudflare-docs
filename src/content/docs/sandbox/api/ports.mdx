@@ -5,6 +5,8 @@ sidebar:
   order: 4
 ---
 
+import { TypeScriptExample } from "~/components";
+
 The Ports API enables you to expose services running in your sandbox to the internet via preview URLs. This allows you to run web servers, APIs, or any network service inside the sandbox and access them from outside.
 
 ## Overview
@@ -17,6 +19,7 @@ When you start a service in the sandbox (like a web server), it runs on localhos
 - **Multi-service apps** - Expose multiple ports for microservices
 
 Key features:
+
 - **Automatic URL generation** - Get a unique preview URL for each exposed port
 - **Secure proxying** - All traffic is proxied through Cloudflare's network
 - **Multiple ports** - Expose several services simultaneously
@@ -28,7 +31,7 @@ Key features:
 
 Expose a port running in the sandbox and get a preview URL.
 
-```typescript
+```ts
 const response = await sandbox.exposePort(port: number, options?: ExposePortOptions): Promise<ExposePortResponse>
 ```
 
@@ -52,7 +55,8 @@ Returns a `Promise<ExposePortResponse>` with:
 
 **Expose a web server:**
 
-```typescript
+<TypeScriptExample>
+```
 import { getSandbox } from '@cloudflare/sandbox';
 
 export default {
@@ -70,20 +74,25 @@ export default {
       url: exposed.exposedAt,
       port: exposed.port
     });
-  }
+
+}
 };
 
 // Response:
 // {
-//   "message": "Server running",
-//   "url": "https://abc123-8000.sandbox.workers.dev",
-//   "port": 8000
+// "message": "Server running",
+// "url": "https://abc123-8000.sandbox.workers.dev",
+// "port": 8000
 // }
+
 ```
+</TypeScriptExample>
+
 
 **Expose with a friendly name:**
 
-```typescript
+<TypeScriptExample>
+```
 // Start a Node.js API server
 await sandbox.startProcess('node api-server.js');
 
@@ -96,9 +105,12 @@ console.log('API available at:', api.exposedAt);
 console.log('Port name:', api.name);  // "api-server"
 ```
 
+</TypeScriptExample>
+
 **Expose multiple services:**
 
-```typescript
+<TypeScriptExample>
+```
 // Start backend API
 await sandbox.startProcess('node api.js');
 const api = await sandbox.exposePort(3000, { name: 'api' });
@@ -112,17 +124,21 @@ await sandbox.startProcess('python db-admin.py');
 const admin = await sandbox.exposePort(8080, { name: 'admin' });
 
 return Response.json({
-  services: {
-    api: api.exposedAt,
-    frontend: frontend.exposedAt,
-    admin: admin.exposedAt
-  }
+services: {
+api: api.exposedAt,
+frontend: frontend.exposedAt,
+admin: admin.exposedAt
+}
 });
+
 ```
+</TypeScriptExample>
+
 
 **Full development environment:**
 
-```typescript
+<TypeScriptExample>
+```
 // Clone a repository
 await sandbox.gitCheckout('https://github.com/user/my-app');
 
@@ -144,13 +160,15 @@ return Response.json({
 });
 ```
 
+</TypeScriptExample>
+
 ---
 
 ### `unexposePort()`
 
 Remove a previously exposed port and close its preview URL.
 
-```typescript
+```ts
 await sandbox.unexposePort(port: number): Promise<UnexposePortResponse>
 ```
 
@@ -170,7 +188,8 @@ Returns a `Promise<UnexposePortResponse>` with:
 
 **Unexpose a port:**
 
-```typescript
+<TypeScriptExample>
+```
 // Expose a port
 const exposed = await sandbox.exposePort(8000);
 console.log('Exposed at:', exposed.exposedAt);
@@ -178,11 +197,15 @@ console.log('Exposed at:', exposed.exposedAt);
 // Later, clean up
 await sandbox.unexposePort(8000);
 console.log('Port 8000 is no longer accessible');
+
 ```
+</TypeScriptExample>
+
 
 **Cleanup multiple ports:**
 
-```typescript
+<TypeScriptExample>
+```
 const ports = [3000, 5173, 8080];
 
 // Expose all ports
@@ -198,20 +221,26 @@ for (const port of ports) {
 console.log('All ports unexposed');
 ```
 
+</TypeScriptExample>
+
 **Conditional unexpose:**
 
-```typescript
+<TypeScriptExample>
+```
 // Get currently exposed ports
 const { ports } = await sandbox.getExposedPorts();
 
 // Unexpose only specific ports
 for (const portInfo of ports) {
-  if (portInfo.name === 'temporary-service') {
-    await sandbox.unexposePort(portInfo.port);
-    console.log(`Cleaned up ${portInfo.name}`);
-  }
+if (portInfo.name === 'temporary-service') {
+await sandbox.unexposePort(portInfo.port);
+console.log(`Cleaned up ${portInfo.name}`);
 }
+}
+
 ```
+</TypeScriptExample>
+
 
 ---
 
@@ -219,7 +248,7 @@ for (const portInfo of ports) {
 
 Get information about all currently exposed ports.
 
-```typescript
+```ts
 const response = await sandbox.getExposedPorts(): Promise<GetExposedPortsResponse>
 ```
 
@@ -239,22 +268,27 @@ Returns a `Promise<GetExposedPortsResponse>` with:
 
 **List all exposed ports:**
 
-```typescript
+<TypeScriptExample>
+```
 const { ports, count } = await sandbox.getExposedPorts();
 
 console.log(`${count} ports exposed:`);
 
 for (const port of ports) {
-  console.log(`  Port ${port.port}: ${port.exposedAt}`);
-  if (port.name) {
-    console.log(`    Name: ${port.name}`);
-  }
+console.log(`  Port ${port.port}: ${port.exposedAt}`);
+if (port.name) {
+console.log(`    Name: ${port.name}`);
 }
+}
+
 ```
+</TypeScriptExample>
+
 
 **Check if a specific port is exposed:**
 
-```typescript
+<TypeScriptExample>
+```
 const { ports } = await sandbox.getExposedPorts();
 
 const isExposed = ports.some(p => p.port === 3000);
@@ -265,9 +299,12 @@ if (!isExposed) {
 }
 ```
 
+</TypeScriptExample>
+
 **Return exposed services to client:**
 
-```typescript
+<TypeScriptExample>
+```
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const url = new URL(request.url);
@@ -286,13 +323,18 @@ export default {
     }
 
     return new Response('Not found', { status: 404 });
-  }
+
+}
 };
+
 ```
+</TypeScriptExample>
+
 
 **Monitor exposed ports:**
 
-```typescript
+<TypeScriptExample>
+```
 // Check which ports are exposed
 const before = await sandbox.getExposedPorts();
 console.log('Ports before:', before.count);
@@ -310,13 +352,16 @@ console.log('Ports after:', after.count);
 console.log('New ports:', after.ports.map(p => p.name));
 ```
 
+</TypeScriptExample>
+
 ## Common Patterns
 
 ### Start and expose a service
 
 The typical workflow for running a web service:
 
-```typescript
+<TypeScriptExample>
+```
 // 1. Start the service as a background process
 const process = await sandbox.startProcess('node server.js');
 console.log('Server started with PID:', process.pid);
@@ -326,22 +371,26 @@ await new Promise(resolve => setTimeout(resolve, 2000));
 
 // 3. Expose the port
 const exposed = await sandbox.exposePort(3000, {
-  name: 'my-api'
+name: 'my-api'
 });
 
 // 4. Return the URL to the client
 return Response.json({
-  status: 'running',
-  url: exposed.exposedAt,
-  processId: process.id
+status: 'running',
+url: exposed.exposedAt,
+processId: process.id
 });
+
 ```
+</TypeScriptExample>
+
 
 ### Development workflow
 
 Complete development environment setup:
 
-```typescript
+<TypeScriptExample>
+```
 async function setupDevEnvironment(sandbox: Sandbox, repoUrl: string) {
   // Clone the repository
   await sandbox.gitCheckout(repoUrl);
@@ -381,11 +430,14 @@ const env = await setupDevEnvironment(
 console.log('Dev environment ready:', env.url);
 ```
 
+</TypeScriptExample>
+
 ### Microservices architecture
 
 Run and expose multiple services:
 
-```typescript
+<TypeScriptExample>
+```
 interface Service {
   name: string;
   command: string;
@@ -393,44 +445,48 @@ interface Service {
 }
 
 const services: Service[] = [
-  { name: 'api', command: 'node api/server.js', port: 3000 },
-  { name: 'auth', command: 'node auth/server.js', port: 3001 },
-  { name: 'websocket', command: 'node ws/server.js', port: 3002 },
-  { name: 'admin', command: 'python admin/app.py', port: 8080 }
+{ name: 'api', command: 'node api/server.js', port: 3000 },
+{ name: 'auth', command: 'node auth/server.js', port: 3001 },
+{ name: 'websocket', command: 'node ws/server.js', port: 3002 },
+{ name: 'admin', command: 'python admin/app.py', port: 8080 }
 ];
 
 const exposedServices = [];
 
 for (const service of services) {
-  // Start the service
-  const process = await sandbox.startProcess(service.command);
+// Start the service
+const process = await sandbox.startProcess(service.command);
 
-  // Wait briefly
-  await new Promise(resolve => setTimeout(resolve, 1500));
+// Wait briefly
+await new Promise(resolve => setTimeout(resolve, 1500));
 
-  // Expose the port
-  const exposed = await sandbox.exposePort(service.port, {
-    name: service.name
-  });
+// Expose the port
+const exposed = await sandbox.exposePort(service.port, {
+name: service.name
+});
 
-  exposedServices.push({
-    name: service.name,
-    url: exposed.exposedAt,
-    processId: process.id
-  });
+exposedServices.push({
+name: service.name,
+url: exposed.exposedAt,
+processId: process.id
+});
 }
 
 return Response.json({
-  message: 'All services running',
-  services: exposedServices
+message: 'All services running',
+services: exposedServices
 });
+
 ```
+</TypeScriptExample>
+
 
 ### Temporary preview URLs
 
 Create temporary preview URLs that clean up automatically:
 
-```typescript
+<TypeScriptExample>
+```
 async function createTemporaryPreview(
   sandbox: Sandbox,
   command: string,
@@ -466,11 +522,14 @@ const previewUrl = await createTemporaryPreview(
 console.log('Preview available for 10 minutes:', previewUrl);
 ```
 
+</TypeScriptExample>
+
 ### Health checking
 
 Verify a service is ready before exposing:
 
-```typescript
+<TypeScriptExample>
+```
 async function exposeWithHealthCheck(
   sandbox: Sandbox,
   command: string,
@@ -480,9 +539,9 @@ async function exposeWithHealthCheck(
   // Start the service
   const process = await sandbox.startProcess(command);
 
-  // Poll until service is ready
-  for (let i = 0; i < maxRetries; i++) {
-    await new Promise(resolve => setTimeout(resolve, 1000));
+// Poll until service is ready
+for (let i = 0; i < maxRetries; i++) {
+await new Promise(resolve => setTimeout(resolve, 1000));
 
     // Check if service is responding
     const check = await sandbox.exec(`curl -f http://localhost:${port}/health || true`);
@@ -494,29 +553,34 @@ async function exposeWithHealthCheck(
     }
 
     console.log(`Waiting for service to be ready... (${i + 1}/${maxRetries})`);
-  }
 
-  throw new Error('Service failed to become ready');
+}
+
+throw new Error('Service failed to become ready');
 }
 
 // Usage
 try {
-  const url = await exposeWithHealthCheck(
-    sandbox,
-    'node server.js',
-    3000
-  );
-  console.log('Service ready:', url);
+const url = await exposeWithHealthCheck(
+sandbox,
+'node server.js',
+3000
+);
+console.log('Service ready:', url);
 } catch (error) {
-  console.error('Service failed to start:', error.message);
+console.error('Service failed to start:', error.message);
 }
+
 ```
+</TypeScriptExample>
+
 
 ## Error Handling
 
 ### Port already exposed
 
-```typescript
+<TypeScriptExample>
+```
 try {
   await sandbox.exposePort(3000);
 } catch (error) {
@@ -536,9 +600,12 @@ try {
 }
 ```
 
+</TypeScriptExample>
+
 ### Port not in use
 
-```typescript
+<TypeScriptExample>
+```
 // Try to expose a port that nothing is listening on
 try {
   await sandbox.exposePort(9999);
@@ -546,18 +613,22 @@ try {
   console.error('Port 9999 is not in use');
   console.log('Make sure a service is running on this port first');
 
-  // Start a service on that port
-  await sandbox.startProcess('python -m http.server 9999');
+// Start a service on that port
+await sandbox.startProcess('python -m http.server 9999');
 
-  // Wait and try again
-  await new Promise(resolve => setTimeout(resolve, 2000));
-  await sandbox.exposePort(9999);
+// Wait and try again
+await new Promise(resolve => setTimeout(resolve, 2000));
+await sandbox.exposePort(9999);
 }
+
 ```
+</TypeScriptExample>
+
 
 ### Cleanup on error
 
-```typescript
+<TypeScriptExample>
+```
 async function safeExposePort(sandbox: Sandbox, port: number) {
   try {
     const exposed = await sandbox.exposePort(port);
@@ -577,13 +648,16 @@ async function safeExposePort(sandbox: Sandbox, port: number) {
 }
 ```
 
+</TypeScriptExample>
+
 ## Best Practices
 
 ### 1. Wait for services to start
 
 Always wait briefly after starting a process before exposing its port:
 
-```typescript
+<TypeScriptExample>
+```
 // ✅ Good - wait for service to start
 await sandbox.startProcess('npm run dev');
 await new Promise(resolve => setTimeout(resolve, 2000));
@@ -591,14 +665,18 @@ await sandbox.exposePort(3000);
 
 // ❌ Bad - expose immediately
 await sandbox.startProcess('npm run dev');
-await sandbox.exposePort(3000);  // May fail if service isn't ready
+await sandbox.exposePort(3000); // May fail if service isn't ready
+
 ```
+</TypeScriptExample>
+
 
 ### 2. Use named ports for clarity
 
 When exposing multiple ports, use names to keep track:
 
-```typescript
+<TypeScriptExample>
+```
 // ✅ Good - named ports
 await sandbox.exposePort(3000, { name: 'api' });
 await sandbox.exposePort(5173, { name: 'frontend' });
@@ -610,11 +688,14 @@ await sandbox.exposePort(5173);
 await sandbox.exposePort(8080);
 ```
 
+</TypeScriptExample>
+
 ### 3. Clean up exposed ports
 
 Always unexpose ports when done:
 
-```typescript
+<TypeScriptExample>
+```
 try {
   await sandbox.exposePort(3000);
   // Use the service...
@@ -623,25 +704,31 @@ try {
   await sandbox.unexposePort(3000);
 }
 ```
+</TypeScriptExample>
 
 ### 4. Check before exposing
 
 Verify a port isn't already exposed:
 
-```typescript
+<TypeScriptExample>
+```
 const { ports } = await sandbox.getExposedPorts();
 const isExposed = ports.some(p => p.port === 3000);
 
 if (!isExposed) {
-  await sandbox.exposePort(3000);
+await sandbox.exposePort(3000);
 }
+
 ```
+</TypeScriptExample>
+
 
 ### 5. Handle port ranges
 
 Use valid port numbers (1-65535), avoiding reserved ranges:
 
-```typescript
+<TypeScriptExample>
+```
 // ✅ Good - user port range
 await sandbox.exposePort(3000);   // Typical web dev
 await sandbox.exposePort(8080);   // Typical HTTP alternate
@@ -652,6 +739,8 @@ await sandbox.exposePort(80);     // May require privileges
 await sandbox.exposePort(443);    // May require privileges
 ```
 
+</TypeScriptExample>
+
 ## Preview URL Format
 
 Preview URLs follow this pattern:
@@ -661,6 +750,7 @@ https://{sandbox-id}-{port}.sandbox.workers.dev
 ```
 
 For example:
+
 - Port 3000: `https://abc123-3000.sandbox.workers.dev`
 - Port 8080: `https://abc123-8080.sandbox.workers.dev`
 
@@ -672,7 +762,8 @@ The URL remains stable for the lifetime of the exposed port and automatically pr
 
 **Important**: Exposed ports are publicly accessible on the internet. Anyone with the URL can access your service.
 
-```typescript
+<TypeScriptExample>
+```
 // Be aware: This API is now public
 await sandbox.exposePort(3000);
 
@@ -683,26 +774,30 @@ const app = express();
 
 // Add authentication middleware
 app.use((req, res, next) => {
-  const token = req.headers.authorization;
-  if (token !== 'Bearer secret-token') {
-    return res.status(401).json({ error: 'Unauthorized' });
-  }
-  next();
+const token = req.headers.authorization;
+if (token !== 'Bearer secret-token') {
+return res.status(401).json({ error: 'Unauthorized' });
+}
+next();
 });
 
 app.get('/data', (req, res) => {
-  res.json({ message: 'Protected data' });
+res.json({ message: 'Protected data' });
 });
 
 app.listen(3000);
 `);
+
 ```
+</TypeScriptExample>
+
 
 ### Temporary URLs
 
 For security-sensitive applications, unexpose ports when no longer needed:
 
-```typescript
+<TypeScriptExample>
+```
 // Expose temporarily
 const exposed = await sandbox.exposePort(3000);
 
@@ -712,6 +807,8 @@ await doWork(exposed.exposedAt);
 // Clean up immediately
 await sandbox.unexposePort(3000);
 ```
+
+</TypeScriptExample>
 
 ## Related Resources
 

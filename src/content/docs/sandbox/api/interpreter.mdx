@@ -5,17 +5,21 @@ sidebar:
   order: 3
 ---
 
+import { TypeScriptExample } from "~/components";
+
 The Code Interpreter API provides a high-level interface for executing Python, JavaScript, and TypeScript code with rich output support. Unlike the Commands API which executes arbitrary shell commands, the Code Interpreter is designed specifically for interactive code execution with support for data visualizations, tables, charts, and formatted output.
 
 ## Overview
 
 The Code Interpreter API is ideal for:
+
 - **Data analysis workflows** - Execute pandas, numpy, matplotlib code
 - **Interactive notebooks** - Build Jupyter-like experiences
 - **AI code execution** - Run LLM-generated code safely
 - **Multi-language execution** - Python, JavaScript, TypeScript in isolated contexts
 
 Key features:
+
 - **Persistent contexts** - Maintain state across multiple executions
 - **Rich outputs** - Charts, tables, images, HTML, LaTeX, JSON
 - **Streaming support** - Real-time output with callbacks
@@ -28,7 +32,7 @@ Key features:
 
 Create a persistent execution context for running code. Contexts maintain state (variables, imports, functions) across multiple code executions.
 
-```typescript
+```ts
 const context = await sandbox.createCodeContext(options?: CreateContextOptions): Promise<CodeContext>
 ```
 
@@ -54,18 +58,23 @@ Returns a `Promise<CodeContext>` with:
 
 **Create Python context:**
 
-```typescript
+<TypeScriptExample>
+```
 const pythonCtx = await sandbox.createCodeContext({
   language: 'python',
   cwd: '/workspace'
 });
 
 console.log('Context ID:', pythonCtx.id);
+
 ```
+</TypeScriptExample>
+
 
 **Create JavaScript context with environment variables:**
 
-```typescript
+<TypeScriptExample>
+```
 const jsCtx = await sandbox.createCodeContext({
   language: 'javascript',
   envVars: {
@@ -75,14 +84,18 @@ const jsCtx = await sandbox.createCodeContext({
 });
 ```
 
+</TypeScriptExample>
+
 **Create TypeScript context:**
 
-```typescript
+<TypeScriptExample>
+```
 const tsCtx = await sandbox.createCodeContext({
   language: 'typescript',
   cwd: '/workspace/app'
 });
 ```
+</TypeScriptExample>
 
 ---
 
@@ -90,7 +103,7 @@ const tsCtx = await sandbox.createCodeContext({
 
 Execute code in a context and return the complete result with all outputs.
 
-```typescript
+```ts
 const result = await sandbox.runCode(code: string, options?: RunCodeOptions): Promise<ExecutionResult>
 ```
 
@@ -124,20 +137,25 @@ Returns a `Promise<ExecutionResult>` with:
 
 **Basic Python execution:**
 
-```typescript
+<TypeScriptExample>
+```
 const result = await sandbox.runCode(`
 print("Hello from Python!")
 x = 42
 x * 2
 `);
 
-console.log('Stdout:', result.logs.stdout);  // ["Hello from Python!"]
-console.log('Result:', result.results[0].text);  // "84"
+console.log('Stdout:', result.logs.stdout); // ["Hello from Python!"]
+console.log('Result:', result.results[0].text); // "84"
+
 ```
+</TypeScriptExample>
+
 
 **Python with data analysis:**
 
-```typescript
+<TypeScriptExample>
+```
 const ctx = await sandbox.createCodeContext({ language: 'python' });
 
 const result = await sandbox.runCode(`
@@ -161,9 +179,12 @@ console.log('Logs:', result.logs.stdout);
 console.log('Result:', result.results[0].text);  // "5.5"
 ```
 
+</TypeScriptExample>
+
 **JavaScript execution:**
 
-```typescript
+<TypeScriptExample>
+```
 const result = await sandbox.runCode(`
 const data = [1, 2, 3, 4, 5];
 const sum = data.reduce((a, b) => a + b, 0);
@@ -173,13 +194,17 @@ console.log('Average:', avg);
 avg;
 `, { language: 'javascript' });
 
-console.log(result.logs.stdout);  // ["Average: 3"]
-console.log(result.results[0].text);  // "3"
+console.log(result.logs.stdout); // ["Average: 3"]
+console.log(result.results[0].text); // "3"
+
 ```
+</TypeScriptExample>
+
 
 **Execution with streaming callbacks:**
 
-```typescript
+<TypeScriptExample>
+```
 const result = await sandbox.runCode(`
 for i in range(5):
     print(f"Processing item {i}...")
@@ -205,28 +230,35 @@ for i in range(5):
 // ...
 ```
 
+</TypeScriptExample>
+
 **Error handling:**
 
-```typescript
+<TypeScriptExample>
+```
 try {
   const result = await sandbox.runCode(`
 x = 1 / 0  # Division by zero
 `, { language: 'python' });
 
-  if (result.error) {
-    console.error('Execution error:');
-    console.error('Name:', result.error.name);        // "ZeroDivisionError"
-    console.error('Message:', result.error.value);    // "division by zero"
-    console.error('Traceback:', result.error.traceback);
-  }
-} catch (error) {
-  console.error('Failed to execute:', error.message);
+if (result.error) {
+console.error('Execution error:');
+console.error('Name:', result.error.name); // "ZeroDivisionError"
+console.error('Message:', result.error.value); // "division by zero"
+console.error('Traceback:', result.error.traceback);
 }
+} catch (error) {
+console.error('Failed to execute:', error.message);
+}
+
 ```
+</TypeScriptExample>
+
 
 **Working with persistent context:**
 
-```typescript
+<TypeScriptExample>
+```
 // Create context
 const ctx = await sandbox.createCodeContext({ language: 'python' });
 
@@ -246,32 +278,38 @@ area
 console.log('Result:', result.results[0].text);  // "78.53981633974483"
 ```
 
+</TypeScriptExample>
+
 **AI code execution example:**
 
-```typescript
+<TypeScriptExample>
+```
 import Anthropic from '@anthropic-ai/sdk';
 
 // Generate code with Claude
 const anthropic = new Anthropic({ apiKey: env.ANTHROPIC_API_KEY });
 const response = await anthropic.messages.create({
-  model: 'claude-3-5-sonnet-latest',
-  max_tokens: 1024,
-  messages: [{
-    role: 'user',
-    content: 'Write Python code to calculate the factorial of 10'
-  }]
+model: 'claude-3-5-sonnet-latest',
+max_tokens: 1024,
+messages: [{
+role: 'user',
+content: 'Write Python code to calculate the factorial of 10'
+}]
 });
 
 const generatedCode = response.content[0].text;
 
 // Execute safely in sandbox
 const result = await sandbox.runCode(generatedCode, {
-  language: 'python',
-  timeout: 5000  // 5 second timeout
+language: 'python',
+timeout: 5000 // 5 second timeout
 });
 
 console.log('Result:', result.results[0].text);
+
 ```
+</TypeScriptExample>
+
 
 ---
 
@@ -279,7 +317,7 @@ console.log('Result:', result.results[0].text);
 
 List all active code execution contexts for the sandbox.
 
-```typescript
+```ts
 const contexts = await sandbox.listCodeContexts(): Promise<CodeContext[]>
 ```
 
@@ -289,16 +327,20 @@ Returns a `Promise<CodeContext[]>` with all active contexts.
 
 #### Example
 
-```typescript
+<TypeScriptExample>
+```
 const contexts = await sandbox.listCodeContexts();
 
 for (const ctx of contexts) {
-  console.log(`Context: ${ctx.id}`);
-  console.log(`  Language: ${ctx.language}`);
-  console.log(`  Created: ${ctx.createdAt.toISOString()}`);
-  console.log(`  Last used: ${ctx.lastUsed.toISOString()}`);
+console.log(`Context: ${ctx.id}`);
+console.log(`  Language: ${ctx.language}`);
+console.log(`  Created: ${ctx.createdAt.toISOString()}`);
+console.log(`  Last used: ${ctx.lastUsed.toISOString()}`);
 }
+
 ```
+</TypeScriptExample>
+
 
 ---
 
@@ -306,7 +348,7 @@ for (const ctx of contexts) {
 
 Delete a code execution context and free its resources.
 
-```typescript
+```ts
 await sandbox.deleteCodeContext(contextId: string): Promise<void>
 ```
 
@@ -316,7 +358,8 @@ await sandbox.deleteCodeContext(contextId: string): Promise<void>
 
 #### Example
 
-```typescript
+<TypeScriptExample>
+```
 const ctx = await sandbox.createCodeContext({ language: 'python' });
 
 // Use the context...
@@ -325,11 +368,15 @@ await sandbox.runCode('print("Hello")', { context: ctx });
 // Clean up when done
 await sandbox.deleteCodeContext(ctx.id);
 console.log('Context deleted');
+
 ```
+</TypeScriptExample>
+
 
 **Cleanup pattern:**
 
-```typescript
+<TypeScriptExample>
+```
 // List and clean up old contexts
 const contexts = await sandbox.listCodeContexts();
 
@@ -344,6 +391,8 @@ for (const ctx of contexts) {
 }
 ```
 
+</TypeScriptExample>
+
 ## Rich Output Formats
 
 The Code Interpreter supports multiple output formats for data visualization and presentation:
@@ -352,7 +401,8 @@ The Code Interpreter supports multiple output formats for data visualization and
 
 Each execution returns `Result` objects with these properties:
 
-```typescript
+<TypeScriptExample>
+```
 interface Result {
   text?: string;          // Plain text representation
   html?: string;          // HTML tables, formatted output
@@ -366,15 +416,19 @@ interface Result {
   chart?: ChartData;     // Chart/visualization data
   data?: any;            // Raw data object
 
-  formats(): string[];   // List available formats
+formats(): string[]; // List available formats
 }
+
 ```
+</TypeScriptExample>
+
 
 ### Working with Charts
 
 **Python with matplotlib:**
 
-```typescript
+<TypeScriptExample>
+```
 const result = await sandbox.runCode(`
 import matplotlib.pyplot as plt
 import numpy as np
@@ -399,27 +453,34 @@ if (result.results[0]?.png) {
 }
 ```
 
+</TypeScriptExample>
+
 **Return image to client:**
 
-```typescript
+<TypeScriptExample>
+```
 const result = await sandbox.runCode(visualizationCode, {
   language: 'python'
 });
 
 // Return chart as image response
 if (result.results[0]?.png) {
-  const imageBuffer = Buffer.from(result.results[0].png, 'base64');
-  return new Response(imageBuffer, {
-    headers: { 'Content-Type': 'image/png' }
-  });
+const imageBuffer = Buffer.from(result.results[0].png, 'base64');
+return new Response(imageBuffer, {
+headers: { 'Content-Type': 'image/png' }
+});
 }
+
 ```
+</TypeScriptExample>
+
 
 ### Working with Tables
 
 **Python with pandas:**
 
-```typescript
+<TypeScriptExample>
+```
 const result = await sandbox.runCode(`
 import pandas as pd
 
@@ -442,19 +503,22 @@ if (result.results[0]?.html) {
 }
 ```
 
+</TypeScriptExample>
+
 ### Working with JSON Data
 
-```typescript
+<TypeScriptExample>
+```
 const result = await sandbox.runCode(`
 import json
 
 data = {
-    'status': 'success',
-    'items': [1, 2, 3, 4, 5],
-    'summary': {
-        'total': 15,
-        'average': 3.0
-    }
+'status': 'success',
+'items': [1, 2, 3, 4, 5],
+'summary': {
+'total': 15,
+'average': 3.0
+}
 }
 
 json.dumps(data)
@@ -462,16 +526,20 @@ json.dumps(data)
 
 // Access JSON result
 if (result.results[0]?.json) {
-  const jsonData = result.results[0].json;
-  return Response.json(jsonData);
+const jsonData = result.results[0].json;
+return Response.json(jsonData);
 }
+
 ```
+</TypeScriptExample>
+
 
 ## Common Patterns
 
 ### Interactive data analysis
 
-```typescript
+<TypeScriptExample>
+```
 // Create persistent context for analysis session
 const ctx = await sandbox.createCodeContext({ language: 'python' });
 
@@ -509,9 +577,12 @@ if (viz.results[0]?.png) {
 }
 ```
 
+</TypeScriptExample>
+
 ### Multi-language workflow
 
-```typescript
+<TypeScriptExample>
+```
 // Python for data processing
 const pythonCtx = await sandbox.createCodeContext({ language: 'python' });
 
@@ -520,13 +591,14 @@ import json
 
 data = [1, 2, 3, 4, 5]
 result = {
-    'sum': sum(data),
-    'avg': sum(data) / len(data)
+'sum': sum(data),
+'avg': sum(data) / len(data)
 }
 
 # Write results to file
+
 with open('/workspace/results.json', 'w') as f:
-    json.dump(result, f)
+json.dump(result, f)
 
 result
 `, { context: pythonCtx });
@@ -543,11 +615,15 @@ data;
 `, { language: 'javascript' });
 
 console.log(jsResult.logs.stdout);
+
 ```
+</TypeScriptExample>
+
 
 ### AI-powered data analysis
 
-```typescript
+<TypeScriptExample>
+```
 import OpenAI from 'openai';
 
 async function analyzeData(question: string, dataPath: string) {
@@ -587,17 +663,20 @@ if (analysis.results[0]) {
 }
 ```
 
+</TypeScriptExample>
+
 ### Real-time execution monitoring
 
-```typescript
+<TypeScriptExample>
+```
 let progress = 0;
 
 const result = await sandbox.runCode(`
 import time
 
 for i in range(10):
-    print(f"Step {i+1}/10")
-    time.sleep(0.5)
+print(f"Step {i+1}/10")
+time.sleep(0.5)
 
 print("Complete!")
 `, {
@@ -605,15 +684,19 @@ print("Complete!")
   onStdout: (output) => {
     if (output.text.startsWith('Step')) {
       progress++;
-      console.log(`Progress: ${progress * 10}%`);
-    }
-  }
+      console.log(`Progress: ${progress \* 10}%`);
+}
+}
 });
+
 ```
+</TypeScriptExample>
+
 
 ### Error recovery
 
-```typescript
+<TypeScriptExample>
+```
 const ctx = await sandbox.createCodeContext({ language: 'python' });
 
 async function executeWithRetry(code: string, maxRetries = 3) {
@@ -649,13 +732,16 @@ try {
 }
 ```
 
+</TypeScriptExample>
+
 ## Error Handling
 
 ### Execution Errors
 
 The Code Interpreter returns structured error information:
 
-```typescript
+<TypeScriptExample>
+```
 interface ExecutionError {
   name: string;          // Error type (e.g., 'NameError', 'SyntaxError')
   value: string;         // Error message
@@ -663,34 +749,40 @@ interface ExecutionError {
   lineNumber?: number;   // Line number where error occurred
 }
 ```
+</TypeScriptExample>
 
 **Example error handling:**
 
-```typescript
+<TypeScriptExample>
+```
 const result = await sandbox.runCode(`
 undefined_variable
 `, { language: 'python' });
 
 if (result.error) {
-  console.error('Error Type:', result.error.name);
-  console.error('Error Message:', result.error.value);
-  console.error('Stack Trace:');
-  result.error.traceback.forEach(line => console.error(line));
+console.error('Error Type:', result.error.name);
+console.error('Error Message:', result.error.value);
+console.error('Stack Trace:');
+result.error.traceback.forEach(line => console.error(line));
 
-  if (result.error.lineNumber) {
-    console.error('Error at line:', result.error.lineNumber);
-  }
+if (result.error.lineNumber) {
+console.error('Error at line:', result.error.lineNumber);
+}
 }
 
 // Output:
 // Error Type: NameError
 // Error Message: name 'undefined_variable' is not defined
 // Stack Trace: [traceback lines...]
+
 ```
+</TypeScriptExample>
+
 
 ### Timeout Handling
 
-```typescript
+<TypeScriptExample>
+```
 try {
   const result = await sandbox.runCode(`
 import time
@@ -708,11 +800,14 @@ time.sleep(120)  # Sleep for 2 minutes
 }
 ```
 
+</TypeScriptExample>
+
 ### Context Not Ready
 
 The Code Interpreter includes automatic retry logic for initialization:
 
-```typescript
+<TypeScriptExample>
+```
 // First execution might need time to initialize
 const result = await sandbox.runCode(`print("Hello")`, {
   language: 'python'
@@ -720,13 +815,17 @@ const result = await sandbox.runCode(`print("Hello")`, {
 
 // The SDK automatically retries if the interpreter is not ready
 // Default: 3 retries with exponential backoff
+
 ```
+</TypeScriptExample>
+
 
 ## Best Practices
 
 ### 1. Use persistent contexts for related executions
 
-```typescript
+<TypeScriptExample>
+```
 // ✅ Good - reuse context
 const ctx = await sandbox.createCodeContext({ language: 'python' });
 await sandbox.runCode('import pandas as pd', { context: ctx });
@@ -738,9 +837,12 @@ await sandbox.runCode('import pandas as pd', { language: 'python' });
 await sandbox.runCode('df = pd.read_csv("data.csv")', { language: 'python' });  // Import lost!
 ```
 
+</TypeScriptExample>
+
 ### 2. Set appropriate timeouts
 
-```typescript
+<TypeScriptExample>
+```
 // Short timeout for quick operations
 await sandbox.runCode('2 + 2', {
   language: 'python',
@@ -749,14 +851,18 @@ await sandbox.runCode('2 + 2', {
 
 // Longer timeout for data processing
 await sandbox.runCode(dataAnalysisCode, {
-  language: 'python',
-  timeout: 60000  // 1 minute
+language: 'python',
+timeout: 60000 // 1 minute
 });
+
 ```
+</TypeScriptExample>
+
 
 ### 3. Clean up contexts
 
-```typescript
+<TypeScriptExample>
+```
 const ctx = await sandbox.createCodeContext({ language: 'python' });
 
 try {
@@ -768,9 +874,12 @@ try {
 }
 ```
 
+</TypeScriptExample>
+
 ### 4. Handle errors gracefully
 
-```typescript
+<TypeScriptExample>
+```
 const result = await sandbox.runCode(userCode, {
   language: 'python',
   onError: (error) => {
@@ -780,17 +889,21 @@ const result = await sandbox.runCode(userCode, {
 });
 
 if (result.error) {
-  return Response.json({
-    success: false,
-    error: result.error.value,
-    traceback: result.error.traceback
-  }, { status: 400 });
+return Response.json({
+success: false,
+error: result.error.value,
+traceback: result.error.traceback
+}, { status: 400 });
 }
+
 ```
+</TypeScriptExample>
+
 
 ### 5. Use callbacks for long-running operations
 
-```typescript
+<TypeScriptExample>
+```
 let output = '';
 
 await sandbox.runCode(longRunningCode, {
@@ -805,6 +918,8 @@ await sandbox.runCode(longRunningCode, {
   }
 });
 ```
+
+</TypeScriptExample>
 
 ## Related Resources
 

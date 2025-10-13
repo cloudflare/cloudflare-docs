@@ -120,7 +120,7 @@ Your `wrangler.jsonc` file already contains the required configuration for Sandb
 
 Replace the contents of `src/index.ts` with the following code:
 
-```typescript
+```typescript collapse={1-16, 18-35}
 import { getSandbox, type Sandbox } from '@cloudflare/sandbox';
 import Anthropic from '@anthropic-ai/sdk';
 
@@ -298,7 +298,7 @@ curl -X POST http://localhost:8787/execute \
 
 You should see a response like:
 
-```json
+```json output
 {
   "success": true,
   "question": "What is the 10th Fibonacci number?",
