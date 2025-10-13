@@ -2,6 +2,9 @@
 params:
   - magicWord
   - productName
+  - productNameVirtual?
+  - maintenanceURL
+  - productOriginalName?
   - wan
   - lan
   - noConnectorShows
@@ -25,25 +28,21 @@ import {
 
 { props.magicWord === "virtual" && (
 	<>
-		<p>Virtual Magic WAN Connector (Virtual Connector) is a virtual appliance alternative to the hardware based Magic WAN Connector appliance. These two versions of Connector are identical otherwise.</p> <p>Currently, you can set up Virtual Connector on VMWare ESXi and Proxmox Virtual Environment. Support for Proxmox is in beta.</p>
+		<p>{props.productNameVirtual} is a virtual appliance alternative to the hardware based {props.productName}. These two versions of Connector are identical otherwise.</p> <p>Currently, you can set up {props.productNameVirtual} on VMWare ESXi and Proxmox Virtual Environment. Support for Proxmox is in beta.</p>
 	</>
 	)
 }
 
-In this page you will find instructions on how to configure Magic WAN Connector. This guide provides a step-by-step guide for Magic WAN Connector's initial setup. You can either return here after setting up your Connector, or refer to the [Maintenance](/magic-wan/configuration/connector/maintenance/) section where you will find instructions on how to update your settings.
+In this page you will find instructions on how to configure {props.productName}. This guide provides a step-by-step guide for {props.productName} initial setup. You can either return here after setting up your Connector, or refer to the <a href={props.maintenanceURL}>Maintenance</a> section where you will find instructions on how to update your settings.
 
 ## Prerequisites
 
 { props.magicWord === "hardware" && (
   <>
-		<Markdown
-		text={`
-		You need to purchase [Magic WAN](https://www.cloudflare.com/magic-wan/) before you can purchase and use the Magic WAN Connector. The Magic WAN Connector can function as your primary edge device for your network, or be deployed in-line with existing network gear.
+		<p>You need to purchase <a href="https://www.cloudflare.com/magic-wan">{props.productOriginalName}</a> before you can purchase and use the {props.productName}. The {props.productName} can function as your primary edge device for your network, or be deployed in-line with existing network gear.</p>
 
-		You also need to purchase a Magic WAN Connector before you can start configuring your settings in the Cloudflare dashboard. Contact your account representative to learn more about purchasing options for the Magic WAN Connector device.
-		`}
-		inline={false}
-		/>
+		<p>You also need to purchase a Magic WAN Connector before you can start configuring your settings in the Cloudflare dashboard. Contact your account representative to learn more about purchasing options for the Magic WAN Connector device.</p>
+
   </>
   )
 }
