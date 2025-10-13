@@ -163,7 +163,7 @@ You cannot enable high availability for an existing { props.magicWord === "virtu
 { props.magicWord === "virtual" && (
   <>
 		<AnchorHeading title="Configure a virtual machine" depth={2} />
-		<p>Select the appropriate tab below to learn how to configure Virtual Connector on VMWare ESXi or Proxmox Virtual Environment.</p>
+		<p>Select the appropriate tab below to learn how to configure {props.productNameVirtual} on VMWare ESXi or Proxmox Virtual Environment.</p>
 
 		<Tabs> <TabItem label="VMWare ESXi">
 
@@ -171,11 +171,11 @@ You cannot enable high availability for an existing { props.magicWord === "virtu
 		text={`
 		**1. Obtain the VMWare image**
 
-		Contact your account team at Cloudflare to obtain the Virtual Connector OVA package and license keys. The OVA image includes the files required to install and configure the virtual machine (VM) for Virtual Connector with the appropriate settings. Refer to [VMWare VMs documentation](https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.vsphere.vm_admin.doc/GUID-AE61948B-C2EE-436E-BAFB-3C7209088552.html) for more information on this topic.
+		Contact your account team at Cloudflare to obtain the ${props.productNameVirtual} OVA package and license keys. The OVA image includes the files required to install and configure the virtual machine (VM) for ${props.productNameVirtual} with the appropriate settings. Refer to [VMWare VMs documentation](https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.vsphere.vm_admin.doc/GUID-AE61948B-C2EE-436E-BAFB-3C7209088552.html) for more information on this topic.
 
-		This image can be deployed multiple times to create several instances of a Virtual Connector, in different locations or on the same ESXi host.
+		This image can be deployed multiple times to create several instances of a ${props.productNameVirtual}, in different locations or on the same ESXi host.
 
-		You will consume one license key for each instance created. For example, if you want to deploy 10 Virtual Connectors you should request 10 license keys, and your account team will create 10 Connector instances in your Cloudflare dashboard.
+		You will consume one license key for each instance created. For example, if you want to deploy 10 ${props.productNameVirtual}s you should request 10 license keys, and your account team will create 10 ${props.productNameVirtual} instances in your Cloudflare dashboard.
 		`}
 		inline={false}
 		/>
@@ -183,14 +183,14 @@ You cannot enable high availability for an existing { props.magicWord === "virtu
 		<Markdown
 		text={`
 
-		**2. Deploy the Virtual Connector on VMware**
+		**2. Deploy the ${props.productNameVirtual} on VMware**
 
 		The following instructions assume you already have VMware ESXi hypervisor installed with sufficient resources. Refer to [Prerequisites](#prerequisites) for more information.
 
-		1. When setting up your VMware ESXi, you need to create port groups for Virtual Connector. Go to **Networking** > **Port groups**, and prepare your vSwitch port groups and/or VLANs for your desired network topology. For example, a simple deployment typically has:
-			- A WAN port group where the Virtual Connector will get an IP address (static or DHCP) that has access to the Internet.
-			- A LAN port group, where the Virtual Connector will act as default router, and possibly DHCP server.
-			- A null, or unused, port group for allocating unused virtual interfaces in the Virtual Connector. You can, for example, create a null port group with the name of <code>Null port group</code>, and a **VLAN ID** of <code>999</code>.
+		1. When setting up your VMware ESXi, you need to create port groups for ${props.productNameVirtual}. Go to **Networking** > **Port groups**, and prepare your vSwitch port groups and/or VLANs for your desired network topology. For example, a simple deployment typically has:
+			- A WAN port group where the ${props.productNameVirtual} will get an IP address (static or DHCP) that has access to the Internet.
+			- A LAN port group, where the ${props.productNameVirtual} will act as default router, and possibly DHCP server.
+			- A null, or unused, port group for allocating unused virtual interfaces in the ${props.productNameVirtual}. You can, for example, create a null port group with the name of <code>Null port group</code>, and a **VLAN ID** of <code>999</code>.
 		`}
 		inline={false}
 		/>
@@ -210,7 +210,7 @@ You cannot enable high availability for an existing { props.magicWord === "virtu
 		text={`
 		Take note of the folder where you are extracting the files to, as you will need to refer to that folder when creating the VM.
 
-		3. Go to **Virtual Machines** > **Create/Register VM** wizard to start deploying the Virtual Connector.
+		3. Go to **Virtual Machines** > **Create/Register VM** wizard to start deploying the ${props.productNameVirtual}.
 
 		4. Select **Deploy a virtual machine from an OVF or OVA file** > **Next**.
 
@@ -230,7 +230,7 @@ You cannot enable high availability for an existing { props.magicWord === "virtu
 		10. Before completing the deployment wizard, disable **Power on automatically**. This is important so that you can configure the license key prior to boot.
 
 		11. Configure the virtual machine with the license key your account team provided you:
-			1. Select the Virtual Connector's VM > **Settings**.
+			1. Select the ${props.productNameVirtual}'s VM > **Settings**.
 			2. Go to **VM Options** > **Advanced** > **Edit Configuration**.
 			3. Select **Add parameter** to add your license key. Scroll down to the last entry (this is where VMware adds the new parameter), and add the following two new entries:
 				- **Key**: <code>guestinfo.cloudflare.identity</code>
@@ -243,7 +243,7 @@ You cannot enable high availability for an existing { props.magicWord === "virtu
 
 		<Markdown
 		text={`
-			12. Select **Save** to finish configuring your Virtual Connector.
+			12. Select **Save** to finish configuring your ${props.productNameVirtual}.
 			13. Continue setup in your <a href="#set-up-cloudflare-dashboard">Cloudflare dashboard.</a>
 		`}
 		inline={false}
@@ -253,18 +253,18 @@ You cannot enable high availability for an existing { props.magicWord === "virtu
 
 		<Markdown
 		text={`
-		**1. Obtain the Virtual Connector script**
+		**1. Obtain the ${props.productNameVirtual} script**
 
-		Contact your account team at Cloudflare to obtain your license keys and the Virtual Connector script for Proxmox. The script will set up and configure a Proxmox virtual machine with the appropriate settings for Virtual Connector. Refer to [Prerequisites](#prerequisites) for more information on system requirements.
+		Contact your account team at Cloudflare to obtain your license keys and the ${props.productNameVirtual} script for Proxmox. The script will set up and configure a Proxmox virtual machine with the appropriate settings for ${props.productNameVirtual}. Refer to [Prerequisites](#prerequisites) for more information on system requirements.
 
-		The script can be deployed multiple times to create several instances of a Virtual Connector, in different locations or on the same Proxmox host. You will consume one license key for each instance created. For example, if you want to deploy 10 Virtual Connectors you should request 10 license keys.
+		The script can be deployed multiple times to create several instances of a ${props.productNameVirtual}, in different locations or on the same Proxmox host. You will consume one license key for each instance created. For example, if you want to deploy 10 ${props.productNameVirtual}s you should request 10 license keys.
 
-		**2. Deploy the Virtual Connector on Proxmox**
+		**2. Deploy the ${props.productNameVirtual} on Proxmox**
 
 		The following instructions assume you already have Proxmox Virtual Environment installed with sufficient resources. Refer to [Prerequisites](#prerequisites) for more information.
 
 		1. In the terminal prompt of your Proxmox server, load the script provided by your account team. For example: \`bash YOUR_SCRIPT\`. You need elevated privileges to run the script.
-		2. You will be prompted to create a new Virtual Connector. Select **yes** to proceed.
+		2. You will be prompted to create a new ${props.productNameVirtual}. Select **yes** to proceed.
 		3. Set up your Virtual Connector name.
 		4. Enter your license key.
 				`}
@@ -275,7 +275,7 @@ You cannot enable high availability for an existing { props.magicWord === "virtu
 
 		<Markdown
 		text={`
-		5. Select the network interface card (NIC) you want to use with Virtual Connector.
+		5. Select the network interface card (NIC) you want to use with ${props.productNameVirtual}.
 		6. Select the network bridge that corresponds to the physical network interface card (NIC) on your host machine. This bridge allows the network adapter in the virtual machine to communicate through the NIC in the host, as if it were directly connected to the physical network.
 		7. (Optional) Configure your VLAN setting if needed.
 		`}
@@ -287,8 +287,8 @@ You cannot enable high availability for an existing { props.magicWord === "virtu
 		<Markdown
 		text={`
 		8. Finish your configuration.
-		9. The script will apply your settings and configure the virtual machine template for Virtual Connector.
-		10. In the **Hardware settings** for the new VM, make sure the hardware settings match the minimum requirements for running Virtual Connector. Make changes to the RAM and CPU if needed.
+		9. The script will apply your settings and configure the virtual machine template for ${props.productNameVirtual}.
+		10. In the **Hardware settings** for the new VM, make sure the hardware settings match the minimum requirements for running ${props.productNameVirtual}. Make changes to the RAM and CPU if needed.
 		11. Continue setup in your [Cloudflare dashboard](#set-up-cloudflare-dashboard).
 		`}
 		inline={false}
@@ -306,7 +306,7 @@ You cannot enable high availability for an existing { props.magicWord === "virtu
 { props.magicWord === "hardware" && (
   <>
 		<AnchorHeading title="Register your appliance" depth={3} />
-		<p>To set up and use Magic WAN Connector, you first need to register it with your account.</p>
+		<p>To set up and use {props.productOriginalName}, you first need to register it with your account.</p>
 		<Render file="register-hardware-appliance" product="networking-services/mconn" />
   </>
   )
