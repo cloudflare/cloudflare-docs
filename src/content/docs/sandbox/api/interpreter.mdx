@@ -1,0 +1,814 @@
+---
+title: Code Interpreter
+pcx_content_type: concept
+sidebar:
+  order: 3
+---
+
+The Code Interpreter API provides a high-level interface for executing Python, JavaScript, and TypeScript code with rich output support. Unlike the Commands API which executes arbitrary shell commands, the Code Interpreter is designed specifically for interactive code execution with support for data visualizations, tables, charts, and formatted output.
+
+## Overview
+
+The Code Interpreter API is ideal for:
+- **Data analysis workflows** - Execute pandas, numpy, matplotlib code
+- **Interactive notebooks** - Build Jupyter-like experiences
+- **AI code execution** - Run LLM-generated code safely
+- **Multi-language execution** - Python, JavaScript, TypeScript in isolated contexts
+
+Key features:
+- **Persistent contexts** - Maintain state across multiple executions
+- **Rich outputs** - Charts, tables, images, HTML, LaTeX, JSON
+- **Streaming support** - Real-time output with callbacks
+- **Multi-language** - Python 3.11, Node.js with TypeScript support
+- **Automatic retries** - Built-in retry logic for transient errors
+
+## Methods
+
+### `createCodeContext()`
+
+Create a persistent execution context for running code. Contexts maintain state (variables, imports, functions) across multiple code executions.
+
+```typescript
+const context = await sandbox.createCodeContext(options?: CreateContextOptions): Promise<CodeContext>
+```
+
+#### Parameters
+
+- **options** (`CreateContextOptions`, optional):
+  - `language` (`"python" | "javascript" | "typescript"`) - Programming language (default: `"python"`)
+  - `cwd` (`string`) - Working directory (default: `"/workspace"`)
+  - `envVars` (`Record<string, string>`) - Environment variables
+  - `timeout` (`number`) - Request timeout in milliseconds (default: 30000)
+
+#### Return value
+
+Returns a `Promise<CodeContext>` with:
+
+- `id` (`string`) - Unique context identifier
+- `language` (`string`) - Programming language
+- `cwd` (`string`) - Working directory
+- `createdAt` (`Date`) - When context was created
+- `lastUsed` (`Date`) - When context was last used
+
+#### Examples
+
+**Create Python context:**
+
+```typescript
+const pythonCtx = await sandbox.createCodeContext({
+  language: 'python',
+  cwd: '/workspace'
+});
+
+console.log('Context ID:', pythonCtx.id);
+```
+
+**Create JavaScript context with environment variables:**
+
+```typescript
+const jsCtx = await sandbox.createCodeContext({
+  language: 'javascript',
+  envVars: {
+    NODE_ENV: 'production',
+    API_KEY: process.env.API_KEY
+  }
+});
+```
+
+**Create TypeScript context:**
+
+```typescript
+const tsCtx = await sandbox.createCodeContext({
+  language: 'typescript',
+  cwd: '/workspace/app'
+});
+```
+
+---
+
+### `runCode()`
+
+Execute code in a context and return the complete result with all outputs.
+
+```typescript
+const result = await sandbox.runCode(code: string, options?: RunCodeOptions): Promise<ExecutionResult>
+```
+
+#### Parameters
+
+- **code** (`string`, required) - The code to execute
+- **options** (`RunCodeOptions`, optional):
+  - `context` (`CodeContext`) - Context to run in (creates default if not provided)
+  - `language` (`"python" | "javascript" | "typescript"`) - Language if no context provided
+  - `envVars` (`Record<string, string>`) - Environment variables for this execution
+  - `timeout` (`number`) - Execution timeout in milliseconds (default: 60000)
+  - `signal` (`AbortSignal`) - For cancelling execution
+  - `onStdout` (`(output: OutputMessage) => void`) - Callback for stdout
+  - `onStderr` (`(output: OutputMessage) => void`) - Callback for stderr
+  - `onResult` (`(result: Result) => void`) - Callback for results
+  - `onError` (`(error: ExecutionError) => void`) - Callback for errors
+
+#### Return value
+
+Returns a `Promise<ExecutionResult>` with:
+
+- `code` (`string`) - Code that was executed
+- `logs` (`object`) - Output logs
+  - `stdout` (`string[]`) - Standard output lines
+  - `stderr` (`string[]`) - Standard error lines
+- `results` (`Result[]`) - Rich execution results (charts, tables, etc.)
+- `error` (`ExecutionError`) - Execution error if any
+- `executionCount` (`number`) - Execution counter
+
+#### Examples
+
+**Basic Python execution:**
+
+```typescript
+const result = await sandbox.runCode(`
+print("Hello from Python!")
+x = 42
+x * 2
+`);
+
+console.log('Stdout:', result.logs.stdout);  // ["Hello from Python!"]
+console.log('Result:', result.results[0].text);  // "84"
+```
+
+**Python with data analysis:**
+
+```typescript
+const ctx = await sandbox.createCodeContext({ language: 'python' });
+
+const result = await sandbox.runCode(`
+import statistics
+
+data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+mean = statistics.mean(data)
+median = statistics.median(data)
+stdev = statistics.stdev(data)
+
+print(f"Mean: {mean}")
+print(f"Median: {median}")
+print(f"Std Dev: {stdev:.2f}")
+
+mean  # Last expression is returned
+`, { context: ctx });
+
+console.log('Logs:', result.logs.stdout);
+// ["Mean: 5.5", "Median: 5.5", "Std Dev: 3.03"]
+
+console.log('Result:', result.results[0].text);  // "5.5"
+```
+
+**JavaScript execution:**
+
+```typescript
+const result = await sandbox.runCode(`
+const data = [1, 2, 3, 4, 5];
+const sum = data.reduce((a, b) => a + b, 0);
+const avg = sum / data.length;
+
+console.log('Average:', avg);
+avg;
+`, { language: 'javascript' });
+
+console.log(result.logs.stdout);  // ["Average: 3"]
+console.log(result.results[0].text);  // "3"
+```
+
+**Execution with streaming callbacks:**
+
+```typescript
+const result = await sandbox.runCode(`
+for i in range(5):
+    print(f"Processing item {i}...")
+`, {
+  language: 'python',
+  onStdout: (output) => {
+    console.log('[STDOUT]', output.text);
+  },
+  onStderr: (output) => {
+    console.error('[STDERR]', output.text);
+  },
+  onResult: (result) => {
+    console.log('[RESULT]', result.text);
+  },
+  onError: (error) => {
+    console.error('[ERROR]', error.name, error.value);
+  }
+});
+
+// Logs appear in real-time:
+// [STDOUT] Processing item 0...
+// [STDOUT] Processing item 1...
+// ...
+```
+
+**Error handling:**
+
+```typescript
+try {
+  const result = await sandbox.runCode(`
+x = 1 / 0  # Division by zero
+`, { language: 'python' });
+
+  if (result.error) {
+    console.error('Execution error:');
+    console.error('Name:', result.error.name);        // "ZeroDivisionError"
+    console.error('Message:', result.error.value);    // "division by zero"
+    console.error('Traceback:', result.error.traceback);
+  }
+} catch (error) {
+  console.error('Failed to execute:', error.message);
+}
+```
+
+**Working with persistent context:**
+
+```typescript
+// Create context
+const ctx = await sandbox.createCodeContext({ language: 'python' });
+
+// First execution - define variables
+await sandbox.runCode(`
+import math
+radius = 5
+`, { context: ctx });
+
+// Second execution - use variables from previous execution
+const result = await sandbox.runCode(`
+area = math.pi * radius ** 2
+print(f"Area: {area:.2f}")
+area
+`, { context: ctx });
+
+console.log('Result:', result.results[0].text);  // "78.53981633974483"
+```
+
+**AI code execution example:**
+
+```typescript
+import Anthropic from '@anthropic-ai/sdk';
+
+// Generate code with Claude
+const anthropic = new Anthropic({ apiKey: env.ANTHROPIC_API_KEY });
+const response = await anthropic.messages.create({
+  model: 'claude-3-5-sonnet-latest',
+  max_tokens: 1024,
+  messages: [{
+    role: 'user',
+    content: 'Write Python code to calculate the factorial of 10'
+  }]
+});
+
+const generatedCode = response.content[0].text;
+
+// Execute safely in sandbox
+const result = await sandbox.runCode(generatedCode, {
+  language: 'python',
+  timeout: 5000  // 5 second timeout
+});
+
+console.log('Result:', result.results[0].text);
+```
+
+---
+
+### `listCodeContexts()`
+
+List all active code execution contexts for the sandbox.
+
+```typescript
+const contexts = await sandbox.listCodeContexts(): Promise<CodeContext[]>
+```
+
+#### Return value
+
+Returns a `Promise<CodeContext[]>` with all active contexts.
+
+#### Example
+
+```typescript
+const contexts = await sandbox.listCodeContexts();
+
+for (const ctx of contexts) {
+  console.log(`Context: ${ctx.id}`);
+  console.log(`  Language: ${ctx.language}`);
+  console.log(`  Created: ${ctx.createdAt.toISOString()}`);
+  console.log(`  Last used: ${ctx.lastUsed.toISOString()}`);
+}
+```
+
+---
+
+### `deleteCodeContext()`
+
+Delete a code execution context and free its resources.
+
+```typescript
+await sandbox.deleteCodeContext(contextId: string): Promise<void>
+```
+
+#### Parameters
+
+- **contextId** (`string`, required) - The context ID to delete
+
+#### Example
+
+```typescript
+const ctx = await sandbox.createCodeContext({ language: 'python' });
+
+// Use the context...
+await sandbox.runCode('print("Hello")', { context: ctx });
+
+// Clean up when done
+await sandbox.deleteCodeContext(ctx.id);
+console.log('Context deleted');
+```
+
+**Cleanup pattern:**
+
+```typescript
+// List and clean up old contexts
+const contexts = await sandbox.listCodeContexts();
+
+for (const ctx of contexts) {
+  const ageMinutes = (Date.now() - ctx.lastUsed.getTime()) / 1000 / 60;
+
+  // Delete contexts older than 30 minutes
+  if (ageMinutes > 30) {
+    await sandbox.deleteCodeContext(ctx.id);
+    console.log(`Deleted old context: ${ctx.id}`);
+  }
+}
+```
+
+## Rich Output Formats
+
+The Code Interpreter supports multiple output formats for data visualization and presentation:
+
+### Result Object
+
+Each execution returns `Result` objects with these properties:
+
+```typescript
+interface Result {
+  text?: string;          // Plain text representation
+  html?: string;          // HTML tables, formatted output
+  png?: string;           // PNG image (base64)
+  jpeg?: string;          // JPEG image (base64)
+  svg?: string;           // SVG vector graphics
+  latex?: string;         // LaTeX mathematical notation
+  markdown?: string;      // Markdown formatted text
+  javascript?: string;    // JavaScript code
+  json?: any;            // JSON data
+  chart?: ChartData;     // Chart/visualization data
+  data?: any;            // Raw data object
+
+  formats(): string[];   // List available formats
+}
+```
+
+### Working with Charts
+
+**Python with matplotlib:**
+
+```typescript
+const result = await sandbox.runCode(`
+import matplotlib.pyplot as plt
+import numpy as np
+
+x = np.linspace(0, 10, 100)
+y = np.sin(x)
+
+plt.figure(figsize=(10, 6))
+plt.plot(x, y)
+plt.title('Sine Wave')
+plt.xlabel('x')
+plt.ylabel('sin(x)')
+plt.grid(True)
+plt.show()
+`, { language: 'python' });
+
+// Access the chart image
+if (result.results[0]?.png) {
+  const imageData = result.results[0].png;
+  // imageData is base64-encoded PNG
+  console.log('Chart generated');
+}
+```
+
+**Return image to client:**
+
+```typescript
+const result = await sandbox.runCode(visualizationCode, {
+  language: 'python'
+});
+
+// Return chart as image response
+if (result.results[0]?.png) {
+  const imageBuffer = Buffer.from(result.results[0].png, 'base64');
+  return new Response(imageBuffer, {
+    headers: { 'Content-Type': 'image/png' }
+  });
+}
+```
+
+### Working with Tables
+
+**Python with pandas:**
+
+```typescript
+const result = await sandbox.runCode(`
+import pandas as pd
+
+data = {
+    'Name': ['Alice', 'Bob', 'Charlie'],
+    'Age': [25, 30, 35],
+    'City': ['NYC', 'LA', 'Chicago']
+}
+
+df = pd.DataFrame(data)
+df  # Returns HTML table representation
+`, { language: 'python' });
+
+// Access HTML table
+if (result.results[0]?.html) {
+  const tableHtml = result.results[0].html;
+  return new Response(tableHtml, {
+    headers: { 'Content-Type': 'text/html' }
+  });
+}
+```
+
+### Working with JSON Data
+
+```typescript
+const result = await sandbox.runCode(`
+import json
+
+data = {
+    'status': 'success',
+    'items': [1, 2, 3, 4, 5],
+    'summary': {
+        'total': 15,
+        'average': 3.0
+    }
+}
+
+json.dumps(data)
+`, { language: 'python' });
+
+// Access JSON result
+if (result.results[0]?.json) {
+  const jsonData = result.results[0].json;
+  return Response.json(jsonData);
+}
+```
+
+## Common Patterns
+
+### Interactive data analysis
+
+```typescript
+// Create persistent context for analysis session
+const ctx = await sandbox.createCodeContext({ language: 'python' });
+
+// Load data
+await sandbox.runCode(`
+import pandas as pd
+import numpy as np
+
+# Load dataset
+df = pd.read_csv('/workspace/data.csv')
+print(f"Loaded {len(df)} rows")
+`, { context: ctx });
+
+// Analyze data
+const analysis = await sandbox.runCode(`
+# Calculate statistics
+summary = df.describe()
+summary
+`, { context: ctx });
+
+console.log('Stats:', analysis.results[0].html);
+
+// Visualize data
+const viz = await sandbox.runCode(`
+import matplotlib.pyplot as plt
+
+df['value'].hist(bins=20)
+plt.title('Distribution')
+plt.show()
+`, { context: ctx });
+
+// Return chart
+if (viz.results[0]?.png) {
+  // Use chart image...
+}
+```
+
+### Multi-language workflow
+
+```typescript
+// Python for data processing
+const pythonCtx = await sandbox.createCodeContext({ language: 'python' });
+
+const processed = await sandbox.runCode(`
+import json
+
+data = [1, 2, 3, 4, 5]
+result = {
+    'sum': sum(data),
+    'avg': sum(data) / len(data)
+}
+
+# Write results to file
+with open('/workspace/results.json', 'w') as f:
+    json.dump(result, f)
+
+result
+`, { context: pythonCtx });
+
+// JavaScript for presentation
+const jsResult = await sandbox.runCode(`
+const fs = require('fs');
+const data = JSON.parse(fs.readFileSync('/workspace/results.json', 'utf8'));
+
+console.log('Sum:', data.sum);
+console.log('Average:', data.avg);
+
+data;
+`, { language: 'javascript' });
+
+console.log(jsResult.logs.stdout);
+```
+
+### AI-powered data analysis
+
+```typescript
+import OpenAI from 'openai';
+
+async function analyzeData(question: string, dataPath: string) {
+  const openai = new OpenAI({ apiKey: env.OPENAI_API_KEY });
+
+  // Ask AI to generate analysis code
+  const completion = await openai.chat.completions.create({
+    model: 'gpt-4',
+    messages: [{
+      role: 'user',
+      content: `Generate Python pandas code to answer: "${question}".
+Data is in: ${dataPath}. Return only code, no markdown.`
+    }]
+  });
+
+  const code = completion.choices[0].message.content;
+
+  // Execute in sandbox
+  const result = await sandbox.runCode(code, {
+    language: 'python',
+    timeout: 30000,
+    onStdout: (output) => console.log(output.text)
+  });
+
+  return result;
+}
+
+// Use it
+const analysis = await analyzeData(
+  'What is the average value by category?',
+  '/workspace/sales.csv'
+);
+
+console.log(analysis.logs.stdout);
+if (analysis.results[0]) {
+  console.log('Result:', analysis.results[0].text);
+}
+```
+
+### Real-time execution monitoring
+
+```typescript
+let progress = 0;
+
+const result = await sandbox.runCode(`
+import time
+
+for i in range(10):
+    print(f"Step {i+1}/10")
+    time.sleep(0.5)
+
+print("Complete!")
+`, {
+  language: 'python',
+  onStdout: (output) => {
+    if (output.text.startsWith('Step')) {
+      progress++;
+      console.log(`Progress: ${progress * 10}%`);
+    }
+  }
+});
+```
+
+### Error recovery
+
+```typescript
+const ctx = await sandbox.createCodeContext({ language: 'python' });
+
+async function executeWithRetry(code: string, maxRetries = 3) {
+  for (let attempt = 0; attempt < maxRetries; attempt++) {
+    const result = await sandbox.runCode(code, {
+      context: ctx,
+      timeout: 10000
+    });
+
+    if (!result.error) {
+      return result;
+    }
+
+    console.log(`Attempt ${attempt + 1} failed:`, result.error.value);
+
+    // Don't retry on syntax errors
+    if (result.error.name === 'SyntaxError') {
+      throw new Error('Syntax error in code');
+    }
+
+    // Wait before retry
+    await new Promise(resolve => setTimeout(resolve, 1000 * attempt));
+  }
+
+  throw new Error('Max retries exceeded');
+}
+
+try {
+  const result = await executeWithRetry('import requests; ...');
+  console.log('Success:', result.results[0].text);
+} catch (error) {
+  console.error('Failed:', error.message);
+}
+```
+
+## Error Handling
+
+### Execution Errors
+
+The Code Interpreter returns structured error information:
+
+```typescript
+interface ExecutionError {
+  name: string;          // Error type (e.g., 'NameError', 'SyntaxError')
+  value: string;         // Error message
+  traceback: string[];   // Full stack trace
+  lineNumber?: number;   // Line number where error occurred
+}
+```
+
+**Example error handling:**
+
+```typescript
+const result = await sandbox.runCode(`
+undefined_variable
+`, { language: 'python' });
+
+if (result.error) {
+  console.error('Error Type:', result.error.name);
+  console.error('Error Message:', result.error.value);
+  console.error('Stack Trace:');
+  result.error.traceback.forEach(line => console.error(line));
+
+  if (result.error.lineNumber) {
+    console.error('Error at line:', result.error.lineNumber);
+  }
+}
+
+// Output:
+// Error Type: NameError
+// Error Message: name 'undefined_variable' is not defined
+// Stack Trace: [traceback lines...]
+```
+
+### Timeout Handling
+
+```typescript
+try {
+  const result = await sandbox.runCode(`
+import time
+time.sleep(120)  # Sleep for 2 minutes
+`, {
+  language: 'python',
+  timeout: 5000  // 5 second timeout
+});
+} catch (error) {
+  if (error.message.includes('timeout')) {
+    console.error('Code execution timed out');
+  } else {
+    throw error;
+  }
+}
+```
+
+### Context Not Ready
+
+The Code Interpreter includes automatic retry logic for initialization:
+
+```typescript
+// First execution might need time to initialize
+const result = await sandbox.runCode(`print("Hello")`, {
+  language: 'python'
+});
+
+// The SDK automatically retries if the interpreter is not ready
+// Default: 3 retries with exponential backoff
+```
+
+## Best Practices
+
+### 1. Use persistent contexts for related executions
+
+```typescript
+// ✅ Good - reuse context
+const ctx = await sandbox.createCodeContext({ language: 'python' });
+await sandbox.runCode('import pandas as pd', { context: ctx });
+await sandbox.runCode('df = pd.read_csv("data.csv")', { context: ctx });
+await sandbox.runCode('df.describe()', { context: ctx });
+
+// ❌ Bad - creates new context each time
+await sandbox.runCode('import pandas as pd', { language: 'python' });
+await sandbox.runCode('df = pd.read_csv("data.csv")', { language: 'python' });  // Import lost!
+```
+
+### 2. Set appropriate timeouts
+
+```typescript
+// Short timeout for quick operations
+await sandbox.runCode('2 + 2', {
+  language: 'python',
+  timeout: 1000  // 1 second
+});
+
+// Longer timeout for data processing
+await sandbox.runCode(dataAnalysisCode, {
+  language: 'python',
+  timeout: 60000  // 1 minute
+});
+```
+
+### 3. Clean up contexts
+
+```typescript
+const ctx = await sandbox.createCodeContext({ language: 'python' });
+
+try {
+  // Use context...
+  await sandbox.runCode(code, { context: ctx });
+} finally {
+  // Always clean up
+  await sandbox.deleteCodeContext(ctx.id);
+}
+```
+
+### 4. Handle errors gracefully
+
+```typescript
+const result = await sandbox.runCode(userCode, {
+  language: 'python',
+  onError: (error) => {
+    // Log error but don't crash
+    console.error('Execution error:', error.name, error.value);
+  }
+});
+
+if (result.error) {
+  return Response.json({
+    success: false,
+    error: result.error.value,
+    traceback: result.error.traceback
+  }, { status: 400 });
+}
+```
+
+### 5. Use callbacks for long-running operations
+
+```typescript
+let output = '';
+
+await sandbox.runCode(longRunningCode, {
+  language: 'python',
+  onStdout: (msg) => {
+    output += msg.text + '\n';
+    // Stream to client, log, update UI, etc.
+  },
+  onResult: (result) => {
+    // Process result as it becomes available
+    console.log('Got result:', result.text);
+  }
+});
+```
+
+## Related Resources
+
+- [Build an AI Code Executor tutorial](/sandbox/tutorials/build-an-ai-code-executor/) - Complete AI integration example
+- [Commands API](/sandbox/api/commands/) - Lower-level command execution
+- [Files API](/sandbox/api/files/) - File operations
+- [API Overview](/sandbox/api/) - Complete API reference

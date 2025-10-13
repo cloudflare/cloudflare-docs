@@ -49,6 +49,22 @@ The Sandbox SDK is organized into focused APIs:
 	Execute Python and JavaScript code with rich outputs including charts, tables, and formatted data.
 </LinkTitleCard>
 
+<LinkTitleCard
+	title="Ports"
+	href="/sandbox/api/ports/"
+	icon="globe"
+>
+	Expose services running in the sandbox via preview URLs. Access web servers and APIs from the internet.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Sessions"
+	href="/sandbox/api/sessions/"
+	icon="wrench"
+>
+	Advanced: Create isolated execution contexts with persistent shell state. Configure environment variables and manage container lifecycle.
+</LinkTitleCard>
+
 </CardGrid>
 
 ## Quick reference
@@ -97,13 +113,6 @@ The Sandbox SDK is organized into focused APIs:
 | Method | Description |
 |--------|-------------|
 | `gitCheckout()` | Clone a repository into the sandbox |
-
-### Environment and sessions
-
-| Method | Description |
-|--------|-------------|
-| `setEnvVars()` | Set environment variables (must be called first) |
-| `createSession()` | Create an isolated execution session |
 
 ## Common patterns
 
