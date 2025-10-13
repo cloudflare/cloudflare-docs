@@ -79,11 +79,11 @@ There are a couple of decisions you need to make when installing your { props.ma
 
 ### Determine the need for a high availability configuration
 
-You can install up to two {props.productName}s for redundancy at each of your sites. If one of your Connectors fails, traffic will fail over to the other Connector ensuring that you never lose connectivity to that site.
+You can install up to two { props.magicWord === "virtual" ? props.productNameVirtual : props.productName }s for redundancy at each of your sites. If one of your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName }s fails, traffic will fail over to the other { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } ensuring that you never lose connectivity to that site.
 
 In this type of high availability (HA) configuration, you will choose a reliable LAN interface as the HA link which will be used to monitor the health of the peer connector. HA links can be dedicated links or can be shared with other LAN traffic.
 
-You must decide the type of configuration you want for your site from the beginning: no redundancy or with redundancy. You cannot add redundancy after finishing the configuration of your dashboard settings. If, at a later stage, you decide to enable redundancy, you will need to delete your Connector on-ramp in the Cloudflare dashboard, and start again.
+You must decide the type of configuration you want for your site from the beginning: no redundancy or with redundancy. You cannot add redundancy after finishing the configuration of your dashboard settings. If, at a later stage, you decide to enable redundancy, you will need to delete your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } on-ramp in the Cloudflare dashboard, and start again.
 
 <Card title="Do you need a high availability configuration?" icon="information">
 
@@ -96,7 +96,7 @@ You must decide the type of configuration you want for your site from the beginn
 </Card>
 
 :::caution
-You cannot enable high availability for an existing Connector on-ramp. To add high availability to an existing Connector on-ramp in the Cloudflare dashboard, you need to delete the on-ramp and start again. Plan accordingly to create a high availability configuration from the start if needed.
+You cannot enable high availability for an existing { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } on-ramp. To add high availability to an existing { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } on-ramp in the Cloudflare dashboard, you need to delete the on-ramp and start again. Plan accordingly to create a high availability configuration from the start if needed.
 :::
 
 
