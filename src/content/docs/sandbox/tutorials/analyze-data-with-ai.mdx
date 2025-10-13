@@ -5,700 +5,233 @@ sidebar:
   order: 2
 ---
 
-import { Render, PackageManagers, TabItem, Tabs } from "~/components";
+import { Render, PackageManagers } from "~/components";
 
-Build a complete AI-powered data analysis system that uploads CSV datasets, generates Python analysis code using Claude, executes it securely in sandboxes, and returns visualizations.
-
-## What you'll build
-
-A production-ready data analysis Worker that:
-
-- Accepts CSV file uploads from users
-- Uses Claude to generate Python analysis code based on user questions
-- Executes the generated code safely in a sandbox
-- Returns charts, statistics, and insights
-- Handles errors gracefully with proper validation
+Build an AI-powered data analysis system that accepts CSV uploads, uses Claude to generate Python analysis code, executes it in sandboxes, and returns visualizations.
 
 **Time to complete**: 25 minutes
-
-**What you'll learn**:
-- Upload files to sandboxes
-- Integrate Claude's function calling with sandboxes
-- Execute AI-generated Python code safely
-- Handle rich outputs (charts, tables, text)
-- Download files from sandboxes
-- Production error handling patterns
 
 ## Prerequisites
 
 <Render file="prereqs" product="workers" />
 
 You'll also need:
-- An [Anthropic API key](https://console.anthropic.com/settings/keys) (Claude)
-- Basic understanding of async/await in TypeScript
-- Familiarity with CSV data
+- An [Anthropic API key](https://console.anthropic.com/) for Claude
+- [Docker](https://www.docker.com/) running locally
 
-## 1. Create your Worker project
+## 1. Create your project
 
-Create a new Worker project:
+Create a new Sandbox SDK project:
 
-<PackageManagers pkg="create-cloudflare@latest" args={"analyze-data-worker"} />
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args={"analyze-data --template=cloudflare/sandbox-sdk/examples/minimal"}
+/>
 
-<Render file="c3-post-run-steps" product="workers" params={{ category: "hello-world", type: "Hello World Worker", lang: "TypeScript" }} />
+```sh
+cd analyze-data
+```
 
 ## 2. Install dependencies
 
-Install the Sandbox SDK and Anthropic SDK:
+<PackageManagers pkg="@anthropic-ai/sdk" />
 
-<PackageManagers type="npm" pkg="@cloudflare/sandbox @anthropic-ai/sdk" />
+## 3. Build the analysis handler
 
-## 3. Configure your Worker
+Replace `src/index.ts`:
 
-Update `wrangler.jsonc` to include the Sandbox binding and Anthropic API key:
-
-```jsonc title="wrangler.jsonc"
-{
-  "name": "analyze-data-worker",
-  "main": "src/index.ts",
-  "compatibility_date": "2024-09-02",
-  "compatibility_flags": ["nodejs_compat"],
-  "durable_objects": {
-    "bindings": [
-      {
-        "name": "Sandbox",
-        "class_name": "Sandbox",
-        "script_name": "@cloudflare/sandbox"
-      }
-    ]
-  },
-  "containers": [
-    {
-      "binding": "CONTAINER",
-      "image": "ghcr.io/cloudflare/sandbox-runtime:latest"
-    }
-  ],
-  "vars": {
-    "ANTHROPIC_API_KEY": "your-anthropic-api-key-here"
-  }
-}
-```
-
-:::caution[Security]
-For production, use [Wrangler secrets](/workers/configuration/secrets/) instead of `vars`:
-```bash
-wrangler secret put ANTHROPIC_API_KEY
-```
-:::
-
-Update your TypeScript environment configuration:
-
-```typescript title="src/index.ts"
-interface Env {
-  Sandbox: DurableObjectNamespace;
-  ANTHROPIC_API_KEY: string;
-}
-```
-
-## 4. Download example dataset
-
-For this tutorial, we'll use a real dataset. Download this sample movies dataset:
-
-1. Visit [TMDB 10K Movies Dataset](https://www.kaggle.com/datasets/muqarrishzaib/tmdb-10000-movies-dataset)
-2. Download the CSV file
-3. Save it as `test-dataset.csv` in your project root
-
-The dataset contains columns like:
-- `title` - Movie name
-- `release_date` - Release date (YYYY-MM-DD)
-- `vote_average` - Rating (0-10)
-- `vote_count` - Number of votes
-- `popularity` - Popularity score
-- `original_language` - Language code
-
-We'll use this for testing locally.
-
-## 5. Build the data analysis handler
-
-Create the main handler that orchestrates the data analysis workflow:
-
-```typescript title="src/index.ts"
-import { getSandbox } from '@cloudflare/sandbox';
+```typescript
+import { getSandbox, proxyToSandbox, type Sandbox } from '@cloudflare/sandbox';
 import Anthropic from '@anthropic-ai/sdk';
 
-export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
-    // Only accept POST requests
-    if (request.method !== 'POST') {
-      return Response.json(
-        { error: 'Method not allowed. Use POST to upload CSV and question.' },
-        { status: 405 }
-      );
-    }
-
-    try {
-      // Parse the multipart form data
-      const formData = await request.formData();
-      const csvFile = formData.get('file') as File;
-      const question = formData.get('question') as string;
-
-      // Validate inputs
-      if (!csvFile || !question) {
-        return Response.json(
-          { error: 'Missing required fields: file and question' },
-          { status: 400 }
-        );
-      }
-
-      if (!csvFile.name.endsWith('.csv')) {
-        return Response.json(
-          { error: 'File must be a CSV file' },
-          { status: 400 }
-        );
-      }
-
-      // Create a unique sandbox for this request
-      const sandboxId = `analysis-${Date.now()}-${Math.random().toString(36).substring(7)}`;
-      const sandbox = getSandbox(env.Sandbox, sandboxId);
-
-      try {
-        // Step 1: Upload the CSV to the sandbox
-        const csvContent = await csvFile.arrayBuffer();
-        const csvPath = '/workspace/dataset.csv';
-        await sandbox.writeFile(csvPath, new Uint8Array(csvContent));
-
-        console.log(`Uploaded ${csvFile.name} to sandbox at ${csvPath}`);
-
-        // Step 2: Analyze CSV structure
-        const structureResult = await sandbox.exec(
-          `python3 -c "import pandas as pd; df = pd.read_csv('${csvPath}'); print('Rows:', len(df)); print('Columns:', ', '.join(df.columns.tolist())); print('Types:', df.dtypes.to_dict())"`
-        );
-
-        if (!structureResult.success) {
-          throw new Error(`Failed to analyze CSV: ${structureResult.stderr}`);
-        }
-
-        console.log('CSV structure:', structureResult.stdout);
-
-        // Step 3: Generate analysis code with Claude
-        const analysisCode = await generateAnalysisCode(
-          env.ANTHROPIC_API_KEY,
-          csvPath,
-          question,
-          structureResult.stdout
-        );
-
-        console.log('Generated code:', analysisCode);
-
-        // Step 4: Execute the analysis code
-        const analysisResult = await sandbox.exec(
-          `python3 -c "${analysisCode.replace(/"/g, '\\"')}"`
-        );
-
-        if (!analysisResult.success) {
-          return Response.json(
-            {
-              error: 'Analysis code failed',
-              details: analysisResult.stderr,
-              code: analysisCode
-            },
-            { status: 500 }
-          );
-        }
-
-        // Step 5: Check for generated charts (saved as PNG)
-        let chartData: string | null = null;
-        try {
-          const chartPath = '/workspace/chart.png';
-          const chartBuffer = await sandbox.readFile(chartPath);
-          // Convert to base64 for JSON response
-          chartData = btoa(String.fromCharCode(...new Uint8Array(chartBuffer)));
-        } catch (error) {
-          console.log('No chart generated (this is OK)');
-        }
-
-        // Step 6: Return the results
-        return Response.json({
-          success: true,
-          question,
-          output: analysisResult.stdout,
-          error: analysisResult.stderr || null,
-          chart: chartData ? `data:image/png;base64,${chartData}` : null,
-          executionTime: analysisResult.duration,
-          code: analysisCode
-        });
-
-      } finally {
-        // Always clean up the sandbox
-        await sandbox.destroy();
-      }
-
-    } catch (error) {
-      console.error('Error:', error);
-      return Response.json(
-        {
-          error: 'Internal server error',
-          message: error instanceof Error ? error.message : String(error)
-        },
-        { status: 500 }
-      );
-    }
-  }
-};
-```
-
-## 6. Implement Claude integration
-
-Add the function that generates Python analysis code using Claude's function calling:
-
-```typescript title="src/index.ts"
-async function generateAnalysisCode(
-  apiKey: string,
-  csvPath: string,
-  question: string,
-  csvStructure: string
-): Promise<string> {
-  const client = new Anthropic({ apiKey });
-
-  const prompt = `
-I have a CSV file located at ${csvPath} with the following structure:
-${csvStructure}
-
-The user wants to analyze this data. Their question is:
-"${question}"
-
-Generate Python code that:
-1. Reads the CSV using pandas
-2. Answers the user's question with appropriate analysis
-3. If visualization would help, create a chart and save it as '/workspace/chart.png'
-4. Prints the key findings to stdout
-
-Important:
-- Use pandas, numpy, and matplotlib (they're installed)
-- Save any charts to '/workspace/chart.png'
-- Print clear, concise findings
-- Handle missing data appropriately
-- Keep output focused and relevant
-`;
-
-  const response = await client.messages.create({
-    model: 'claude-3-5-sonnet-20241022',
-    max_tokens: 2048,
-    messages: [
-      {
-        role: 'user',
-        content: prompt
-      }
-    ],
-    tools: [
-      {
-        name: 'generate_python_code',
-        description: 'Generate Python code for data analysis',
-        input_schema: {
-          type: 'object',
-          properties: {
-            code: {
-              type: 'string',
-              description: 'Complete Python code to analyze the data'
-            },
-            explanation: {
-              type: 'string',
-              description: 'Brief explanation of what the code does'
-            }
-          },
-          required: ['code']
-        }
-      }
-    ]
-  });
-
-  // Extract the generated code from tool use
-  for (const block of response.content) {
-    if (block.type === 'tool_use' && block.name === 'generate_python_code') {
-      const input = block.input as { code: string; explanation?: string };
-      console.log('Claude explanation:', input.explanation);
-      return input.code;
-    }
-  }
-
-  // Fallback: extract code from text response
-  const textBlock = response.content.find(block => block.type === 'text');
-  if (textBlock && textBlock.type === 'text') {
-    // Try to extract code from markdown code blocks
-    const codeMatch = textBlock.text.match(/```python\n([\s\S]*?)\n```/);
-    if (codeMatch) {
-      return codeMatch[1];
-    }
-    return textBlock.text;
-  }
-
-  throw new Error('Claude did not generate code');
-}
-```
-
-## 7. Test locally
-
-Start your development server:
-
-```bash
-wrangler dev
-```
-
-In a separate terminal, test the data analysis endpoint:
-
-```bash
-curl -X POST http://localhost:8787/ \
-  -F "file=@test-dataset.csv" \
-  -F "question=What is the trend in movie ratings over time?"
-```
-
-You should see a response like:
-
-```json
-{
-  "success": true,
-  "question": "What is the trend in movie ratings over time?",
-  "output": "Analysis complete:\n- Average rating from 1900-1980: 6.2\n- Average rating from 1980-2000: 6.5\n- Average rating from 2000-2020: 6.8\n- Overall trend: Ratings have increased over time",
-  "chart": "data:image/png;base64,iVBORw0KGgoAAAANS...",
-  "executionTime": 2341,
-  "code": "import pandas as pd\nimport matplotlib.pyplot as plt\n..."
-}
-```
-
-Try different questions:
-
-```bash
-# Find most popular languages
-curl -X POST http://localhost:8787/ \
-  -F "file=@test-dataset.csv" \
-  -F "question=Which languages have the most movies?"
-
-# Analyze vote patterns
-curl -X POST http://localhost:8787/ \
-  -F "file=@test-dataset.csv" \
-  -F "question=What's the relationship between vote count and rating?"
-```
-
-## 8. Add a web interface (optional)
-
-Create a simple HTML interface for easier testing:
-
-```typescript title="src/index.ts"
-export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
-    const url = new URL(request.url);
-
-    // Serve HTML form for GET requests
-    if (request.method === 'GET' && url.pathname === '/') {
-      return new Response(HTML_FORM, {
-        headers: { 'Content-Type': 'text/html' }
-      });
-    }
-
-    // Handle POST requests (data analysis)
-    if (request.method === 'POST' && url.pathname === '/analyze') {
-      // ... existing analysis code ...
-    }
-
-    return Response.json({ error: 'Not found' }, { status: 404 });
-  }
-};
-
-const HTML_FORM = `
-<!DOCTYPE html>
-<html>
-<head>
-  <title>AI Data Analysis</title>
-  <style>
-    body { font-family: system-ui; max-width: 800px; margin: 50px auto; padding: 0 20px; }
-    .form-group { margin: 20px 0; }
-    label { display: block; margin-bottom: 5px; font-weight: 500; }
-    input, textarea { width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ddd; border-radius: 4px; }
-    button { background: #0066ff; color: white; padding: 12px 24px; border: none; border-radius: 4px; font-size: 16px; cursor: pointer; }
-    button:hover { background: #0052cc; }
-    #result { margin-top: 30px; padding: 20px; background: #f5f5f5; border-radius: 4px; display: none; }
-    #chart { max-width: 100%; margin-top: 20px; }
-    pre { background: #fff; padding: 15px; border-radius: 4px; overflow-x: auto; }
-  </style>
-</head>
-<body>
-  <h1>📊 AI Data Analysis</h1>
-  <p>Upload a CSV file and ask a question about your data. Claude will generate Python code to analyze it.</p>
-
-  <form id="analysisForm">
-    <div class="form-group">
-      <label>CSV File:</label>
-      <input type="file" name="file" accept=".csv" required>
-    </div>
-    <div class="form-group">
-      <label>Question:</label>
-      <textarea name="question" rows="3" placeholder="Example: What is the trend in ratings over time?" required></textarea>
-    </div>
-    <button type="submit">Analyze Data</button>
-  </form>
-
-  <div id="result"></div>
-
-  <script>
-    document.getElementById('analysisForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const formData = new FormData(e.target);
-      const resultDiv = document.getElementById('result');
-
-      resultDiv.innerHTML = '<p>Analyzing... This may take 10-30 seconds.</p>';
-      resultDiv.style.display = 'block';
-
-      try {
-        const response = await fetch('/analyze', {
-          method: 'POST',
-          body: formData
-        });
-        const data = await response.json();
-
-        if (data.success) {
-          resultDiv.innerHTML = \`
-            <h3>Analysis Results</h3>
-            <p><strong>Question:</strong> \${data.question}</p>
-            <h4>Output:</h4>
-            <pre>\${data.output}</pre>
-            \${data.chart ? \`<img id="chart" src="\${data.chart}" alt="Generated chart">\` : ''}
-            <details>
-              <summary>View Generated Code</summary>
-              <pre>\${data.code}</pre>
-            </details>
-            <p><small>Execution time: \${data.executionTime}ms</small></p>
-          \`;
-        } else {
-          resultDiv.innerHTML = \`
-            <h3>Error</h3>
-            <p>\${data.error}</p>
-            <pre>\${data.details || data.message || ''}</pre>
-          \`;
-        }
-      } catch (error) {
-        resultDiv.innerHTML = \`<h3>Error</h3><p>\${error.message}</p>\`;
-      }
-    });
-  </script>
-</body>
-</html>
-`;
-```
-
-Update the form POST URL to `/analyze` and test at `http://localhost:8787`.
-
-## 9. Deploy to production
-
-Deploy your Worker to Cloudflare's global network:
-
-```bash
-wrangler deploy
-```
-
-Your data analysis system is now live! Test it:
-
-```bash
-curl -X POST https://analyze-data-worker.YOUR_SUBDOMAIN.workers.dev/analyze \
-  -F "file=@test-dataset.csv" \
-  -F "question=What trends do you see in this data?"
-```
-
-## Complete code
-
-<details>
-<summary>View the complete Worker code</summary>
-
-```typescript title="src/index.ts"
-import { getSandbox } from '@cloudflare/sandbox';
-import Anthropic from '@anthropic-ai/sdk';
+export { Sandbox } from '@cloudflare/sandbox';
 
 interface Env {
-  Sandbox: DurableObjectNamespace;
-  ANTHROPIC_API_KEY: string;
+	Sandbox: DurableObjectNamespace<Sandbox>;
+	ANTHROPIC_API_KEY: string;
 }
 
 export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
-    const url = new URL(request.url);
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const proxyResponse = await proxyToSandbox(request, env);
+		if (proxyResponse) return proxyResponse;
 
-    if (request.method === 'GET' && url.pathname === '/') {
-      return new Response(HTML_FORM, {
-        headers: { 'Content-Type': 'text/html' }
-      });
-    }
+		if (request.method !== 'POST') {
+			return Response.json({ error: 'POST CSV file and question' }, { status: 405 });
+		}
 
-    if (request.method !== 'POST') {
-      return Response.json(
-        { error: 'Method not allowed' },
-        { status: 405 }
-      );
-    }
+		try {
+			const formData = await request.formData();
+			const csvFile = formData.get('file') as File;
+			const question = formData.get('question') as string;
 
-    try {
-      const formData = await request.formData();
-      const csvFile = formData.get('file') as File;
-      const question = formData.get('question') as string;
+			if (!csvFile || !question) {
+				return Response.json({ error: 'Missing file or question' }, { status: 400 });
+			}
 
-      if (!csvFile || !question) {
-        return Response.json(
-          { error: 'Missing required fields: file and question' },
-          { status: 400 }
-        );
-      }
+			// Upload CSV to sandbox
+			const sandbox = getSandbox(env.Sandbox, `analysis-${Date.now()}`);
+			const csvPath = '/workspace/data.csv';
+			await sandbox.writeFile(csvPath, new Uint8Array(await csvFile.arrayBuffer()));
 
-      if (!csvFile.name.endsWith('.csv')) {
-        return Response.json(
-          { error: 'File must be a CSV file' },
-          { status: 400 }
-        );
-      }
+			// Analyze CSV structure
+			const structure = await sandbox.exec(
+				`python -c "import pandas as pd; df = pd.read_csv('${csvPath}'); print(f'Rows: {len(df)}'); print(f'Columns: {list(df.columns)[:5]}')"`
+			);
 
-      const sandboxId = `analysis-${Date.now()}-${Math.random().toString(36).substring(7)}`;
-      const sandbox = getSandbox(env.Sandbox, sandboxId);
+			if (!structure.success) {
+				return Response.json({ error: 'Failed to read CSV', details: structure.stderr }, { status: 400 });
+			}
 
-      try {
-        const csvContent = await csvFile.arrayBuffer();
-        const csvPath = '/workspace/dataset.csv';
-        await sandbox.writeFile(csvPath, new Uint8Array(csvContent));
+			// Generate analysis code with Claude
+			const code = await generateAnalysisCode(env.ANTHROPIC_API_KEY, csvPath, question, structure.stdout);
 
-        const structureResult = await sandbox.exec(
-          `python3 -c "import pandas as pd; df = pd.read_csv('${csvPath}'); print('Rows:', len(df)); print('Columns:', ', '.join(df.columns.tolist()))"`
-        );
+			// Write and execute the analysis code
+			await sandbox.writeFile('/workspace/analyze.py', code);
+			const result = await sandbox.exec('python /workspace/analyze.py');
 
-        if (!structureResult.success) {
-          throw new Error(`Failed to analyze CSV: ${structureResult.stderr}`);
-        }
+			if (!result.success) {
+				return Response.json({ error: 'Analysis failed', details: result.stderr }, { status: 500 });
+			}
 
-        const analysisCode = await generateAnalysisCode(
-          env.ANTHROPIC_API_KEY,
-          csvPath,
-          question,
-          structureResult.stdout
-        );
+			// Check for generated chart
+			let chart = null;
+			try {
+				const chartFile = await sandbox.readFile('/workspace/chart.png');
+				const buffer = new Uint8Array(chartFile.content);
+				chart = `data:image/png;base64,${btoa(String.fromCharCode(...buffer))}`;
+			} catch {
+				// No chart generated
+			}
 
-        const analysisResult = await sandbox.exec(
-          `python3 -c "${analysisCode.replace(/"/g, '\\"')}"`
-        );
+			await sandbox.destroy();
 
-        if (!analysisResult.success) {
-          return Response.json(
-            {
-              error: 'Analysis code failed',
-              details: analysisResult.stderr,
-              code: analysisCode
-            },
-            { status: 500 }
-          );
-        }
+			return Response.json({
+				success: true,
+				output: result.stdout,
+				chart,
+				code
+			});
 
-        let chartData: string | null = null;
-        try {
-          const chartBuffer = await sandbox.readFile('/workspace/chart.png');
-          chartData = btoa(String.fromCharCode(...new Uint8Array(chartBuffer)));
-        } catch {
-          console.log('No chart generated');
-        }
-
-        return Response.json({
-          success: true,
-          question,
-          output: analysisResult.stdout,
-          chart: chartData ? `data:image/png;base64,${chartData}` : null,
-          executionTime: analysisResult.duration,
-          code: analysisCode
-        });
-
-      } finally {
-        await sandbox.destroy();
-      }
-
-    } catch (error) {
-      console.error('Error:', error);
-      return Response.json(
-        {
-          error: 'Internal server error',
-          message: error instanceof Error ? error.message : String(error)
-        },
-        { status: 500 }
-      );
-    }
-  }
+		} catch (error: any) {
+			return Response.json({ error: error.message }, { status: 500 });
+		}
+	},
 };
 
 async function generateAnalysisCode(
-  apiKey: string,
-  csvPath: string,
-  question: string,
-  csvStructure: string
+	apiKey: string,
+	csvPath: string,
+	question: string,
+	csvStructure: string
 ): Promise<string> {
-  const client = new Anthropic({ apiKey });
+	const anthropic = new Anthropic({ apiKey });
 
-  const prompt = `
-I have a CSV file at ${csvPath} with structure:
+	const response = await anthropic.messages.create({
+		model: 'claude-sonnet-4-5',
+		max_tokens: 2048,
+		messages: [{
+			role: 'user',
+			content: `CSV at ${csvPath}:
 ${csvStructure}
 
 Question: "${question}"
 
-Generate Python code that answers this question. If visualization helps, save chart as '/workspace/chart.png'.
-Use pandas, numpy, matplotlib. Print findings to stdout.
-`;
+Generate Python code that:
+- Reads CSV with pandas
+- Answers the question
+- Saves charts to /workspace/chart.png if helpful
+- Prints findings to stdout
 
-  const response = await client.messages.create({
-    model: 'claude-3-5-sonnet-20241022',
-    max_tokens: 2048,
-    messages: [{ role: 'user', content: prompt }],
-    tools: [
-      {
-        name: 'generate_python_code',
-        description: 'Generate Python code for data analysis',
-        input_schema: {
-          type: 'object',
-          properties: {
-            code: { type: 'string' }
-          },
-          required: ['code']
-        }
-      }
-    ]
-  });
+Use pandas, numpy, matplotlib.`
+		}],
+		tools: [{
+			name: 'generate_python_code',
+			description: 'Generate Python code for data analysis',
+			input_schema: {
+				type: 'object',
+				properties: {
+					code: { type: 'string', description: 'Complete Python code' }
+				},
+				required: ['code']
+			}
+		}]
+	});
 
-  for (const block of response.content) {
-    if (block.type === 'tool_use' && block.name === 'generate_python_code') {
-      return (block.input as { code: string }).code;
-    }
-  }
+	for (const block of response.content) {
+		if (block.type === 'tool_use' && block.name === 'generate_python_code') {
+			return (block.input as { code: string }).code;
+		}
+	}
 
-  throw new Error('Claude did not generate code');
+	throw new Error('Failed to generate code');
 }
-
-const HTML_FORM = `...`; // HTML from step 8
 ```
-</details>
 
-## What you learned
+## 4. Set your API key
 
-You built a complete AI data analysis system that:
+```sh
+npx wrangler secret put ANTHROPIC_API_KEY
+```
 
-- ✅ Uploads CSV files to sandboxes
-- ✅ Uses Claude's function calling to generate analysis code
-- ✅ Executes Python code safely in isolated sandboxes
-- ✅ Returns text output and charts to users
-- ✅ Handles errors gracefully
-- ✅ Cleans up resources automatically
+## 5. Test locally
+
+Download a sample CSV:
+
+```sh
+# Create a test CSV
+echo "year,rating,title
+2020,8.5,Movie A
+2021,7.2,Movie B
+2022,9.1,Movie C" > test.csv
+```
+
+Start the dev server:
+
+```sh
+npm run dev
+```
+
+Test with curl:
+
+```sh
+curl -X POST http://localhost:8787 \
+  -F "file=@test.csv" \
+  -F "question=What is the average rating by year?"
+```
+
+Response:
+
+```json
+{
+  "success": true,
+  "output": "Average ratings by year:\n2020: 8.5\n2021: 7.2\n2022: 9.1",
+  "chart": "data:image/png;base64,...",
+  "code": "import pandas as pd\nimport matplotlib.pyplot as plt\n..."
+}
+```
+
+## 6. Deploy
+
+```sh
+npx wrangler deploy
+```
+
+:::caution
+Wait 2-3 minutes after first deployment for container provisioning.
+:::
+
+## What you built
+
+An AI data analysis system that:
+- Uploads CSV files to sandboxes
+- Uses Claude's tool calling to generate analysis code
+- Executes Python with pandas and matplotlib
+- Returns text output and visualizations
 
 ## Next steps
 
-Enhance your data analysis system:
-
-- **Support multiple file formats** - Add support for Excel, JSON, Parquet
-- **Persist sandboxes** - Keep user sandboxes alive for multi-step analysis
-- **Stream results** - Use `execStream()` for real-time progress updates
-- **Add authentication** - Protect your API with [Workers Auth](/workers/runtime-apis/web-crypto/)
-- **Store results** - Save analyses to [R2](/r2/) or [D1](/d1/)
-
-## Related resources
-
-- [File operations guide](/sandbox/guides/manage-files/) - Complete file management patterns
-- [Code execution guide](/sandbox/guides/code-execution/) - Advanced code interpreter usage
-- [Streaming output guide](/sandbox/guides/streaming-output/) - Real-time progress updates
-- [Files API reference](/sandbox/api/files/) - Complete file operations API
-- [Security model](/sandbox/concepts/security/) - Understanding isolation and safety
+- [Code Interpreter API](/sandbox/api/interpreter/) - Use the built-in code interpreter
+- [File operations](/sandbox/guides/manage-files/) - Advanced file handling
+- [Streaming output](/sandbox/guides/streaming-output/) - Real-time progress updates

@@ -1,677 +1,163 @@
 ---
-title: Create an automated testing pipeline
+title: Automated testing pipeline
 pcx_content_type: tutorial
 sidebar:
   order: 4
 ---
 
-import { Render, PackageManagers, TabItem, Tabs } from "~/components";
+import { Render, PackageManagers } from "~/components";
 
-Build a CI/CD testing pipeline that clones repositories, installs dependencies, runs test suites, and generates detailed HTML reports with streaming output.
-
-## What you'll build
-
-A production-ready testing pipeline that:
-
-- Clones Git repositories on-demand
-- Detects project type (Node.js, Python, Go, etc.)
-- Installs dependencies automatically
-- Runs test suites with streaming output
-- Generates HTML test reports
-- Caches dependencies for faster runs
-- Handles timeouts and errors gracefully
+Build a testing pipeline that clones Git repositories, installs dependencies, runs tests, and reports results.
 
 **Time to complete**: 25 minutes
-
-**What you'll learn**:
-- Clone and build projects in sandboxes
-- Stream test output in real-time
-- Install dependencies for multiple languages
-- Generate and download test reports
-- Implement caching strategies
-- Handle long-running processes
 
 ## Prerequisites
 
 <Render file="prereqs" product="workers" />
 
-You'll also need:
-- A GitHub repository with tests (public or with access token)
-- Basic understanding of package managers (npm, pip, etc.)
+You'll also need a GitHub repository with tests (public or private with access token).
 
-## 1. Create your Worker project
+## 1. Create your project
 
-Create a new Worker project:
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args={"test-pipeline --template=cloudflare/sandbox-sdk/examples/minimal"}
+/>
 
-<PackageManagers pkg="create-cloudflare@latest" args={"test-pipeline-worker"} />
-
-<Render file="c3-post-run-steps" product="workers" params={{ category: "hello-world", type: "Hello World Worker", lang: "TypeScript" }} />
-
-## 2. Install dependencies
-
-Install the Sandbox SDK:
-
-<PackageManagers type="npm" pkg="@cloudflare/sandbox" />
-
-## 3. Configure your Worker
-
-Update `wrangler.jsonc` to include the Sandbox binding:
-
-```jsonc title="wrangler.jsonc"
-{
-  "name": "test-pipeline-worker",
-  "main": "src/index.ts",
-  "compatibility_date": "2024-09-02",
-  "compatibility_flags": ["nodejs_compat"],
-  "durable_objects": {
-    "bindings": [
-      {
-        "name": "Sandbox",
-        "class_name": "Sandbox",
-        "script_name": "@cloudflare/sandbox"
-      }
-    ]
-  },
-  "containers": [
-    {
-      "binding": "CONTAINER",
-      "image": "ghcr.io/cloudflare/sandbox-runtime:latest"
-    }
-  ]
-}
+```sh
+cd test-pipeline
 ```
 
-Update your TypeScript types:
+## 2. Build the pipeline
 
-```typescript title="src/index.ts"
+Replace `src/index.ts`:
+
+```typescript
+import { getSandbox, proxyToSandbox, type Sandbox } from '@cloudflare/sandbox';
+
+export { Sandbox } from '@cloudflare/sandbox';
+
 interface Env {
-  Sandbox: DurableObjectNamespace;
-  GITHUB_TOKEN?: string; // Optional, for private repos
-}
-```
-
-## 4. Create the pipeline handler
-
-Build the main handler that orchestrates the testing workflow:
-
-```typescript title="src/index.ts"
-import { getSandbox } from '@cloudflare/sandbox';
-
-interface TestRequest {
-  repoUrl: string;
-  branch?: string;
-  testCommand?: string;
-  installCommand?: string;
-}
-
-interface TestResult {
-  success: boolean;
-  output: string;
-  exitCode: number;
-  duration: number;
-  report?: string; // HTML report if available
+	Sandbox: DurableObjectNamespace<Sandbox>;
+	GITHUB_TOKEN?: string;
 }
 
 export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
-    const url = new URL(request.url);
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const proxyResponse = await proxyToSandbox(request, env);
+		if (proxyResponse) return proxyResponse;
 
-    // Health check
-    if (url.pathname === '/health') {
-      return Response.json({ status: 'ok', service: 'test-pipeline' });
-    }
+		if (request.method !== 'POST') {
+			return new Response('POST { "repoUrl": "https://github.com/owner/repo", "branch": "main" }');
+		}
 
-    // Main test endpoint
-    if (url.pathname === '/test' && request.method === 'POST') {
-      return handleTestRequest(request, env);
-    }
+		try {
+			const { repoUrl, branch = 'main' } = await request.json();
 
-    // Streaming test endpoint
-    if (url.pathname === '/test/stream' && request.method === 'POST') {
-      return handleStreamingTest(request, env);
-    }
+			if (!repoUrl) {
+				return Response.json({ error: 'repoUrl required' }, { status: 400 });
+			}
 
-    return new Response(LANDING_PAGE, {
-      headers: { 'Content-Type': 'text/html' }
-    });
-  }
+			const sandbox = getSandbox(env.Sandbox, `test-${Date.now()}`);
+
+			try {
+				// Clone repository
+				let cloneUrl = repoUrl;
+				if (env.GITHUB_TOKEN && repoUrl.includes('github.com')) {
+					cloneUrl = repoUrl.replace('https://', `https://${env.GITHUB_TOKEN}@`);
+				}
+
+				await sandbox.exec(`git clone --depth=1 --branch=${branch} ${cloneUrl} /workspace/repo`);
+
+				// Detect project type
+				const projectType = await detectProjectType(sandbox);
+
+				// Install dependencies
+				const installCmd = getInstallCommand(projectType);
+				if (installCmd) {
+					const installResult = await sandbox.exec(`cd /workspace/repo && ${installCmd}`);
+					if (!installResult.success) {
+						return Response.json({
+							success: false,
+							error: 'Install failed',
+							output: installResult.stderr
+						});
+					}
+				}
+
+				// Run tests
+				const testCmd = getTestCommand(projectType);
+				const testResult = await sandbox.exec(`cd /workspace/repo && ${testCmd}`);
+
+				return Response.json({
+					success: testResult.exitCode === 0,
+					exitCode: testResult.exitCode,
+					output: testResult.stdout,
+					errors: testResult.stderr,
+					projectType
+				});
+
+			} finally {
+				await sandbox.destroy();
+			}
+
+		} catch (error: any) {
+			return Response.json({ error: error.message }, { status: 500 });
+		}
+	},
 };
 
-async function handleTestRequest(
-  request: Request,
-  env: Env
-): Promise<Response> {
-  try {
-    const body = await request.json() as TestRequest;
-
-    // Validate input
-    if (!body.repoUrl) {
-      return Response.json(
-        { error: 'Missing required field: repoUrl' },
-        { status: 400 }
-      );
-    }
-
-    // Create a unique sandbox
-    const sandboxId = `test-${Date.now()}-${Math.random().toString(36).substring(7)}`;
-    const sandbox = getSandbox(env.Sandbox, sandboxId);
-
-    try {
-      console.log(`Starting test pipeline for ${body.repoUrl}`);
-
-      // Run the complete test pipeline
-      const result = await runTestPipeline(
-        sandbox,
-        body.repoUrl,
-        body.branch || 'main',
-        body.testCommand,
-        body.installCommand,
-        env.GITHUB_TOKEN
-      );
-
-      return Response.json(result);
-
-    } finally {
-      // Always clean up
-      await sandbox.destroy();
-    }
-
-  } catch (error) {
-    console.error('Test pipeline error:', error);
-    return Response.json(
-      {
-        error: 'Pipeline failed',
-        message: error instanceof Error ? error.message : String(error)
-      },
-      { status: 500 }
-    );
-  }
-}
-```
-
-## 5. Implement the test pipeline
-
-Add the core pipeline logic that detects project type and runs tests:
-
-```typescript title="src/index.ts"
-async function runTestPipeline(
-  sandbox: any,
-  repoUrl: string,
-  branch: string,
-  customTestCmd?: string,
-  customInstallCmd?: string,
-  githubToken?: string
-): Promise<TestResult> {
-  const startTime = Date.now();
-
-  // Step 1: Clone the repository
-  console.log('Step 1: Cloning repository...');
-  let cloneUrl = repoUrl;
-
-  // Add GitHub token if provided (for private repos)
-  if (githubToken && repoUrl.includes('github.com')) {
-    cloneUrl = repoUrl.replace('https://', `https://${githubToken}@`);
-  }
-
-  const cloneResult = await sandbox.exec(
-    `git clone --depth=1 --branch=${branch} ${cloneUrl} /workspace/repo`,
-    { timeout: 60000 }
-  );
-
-  if (!cloneResult.success) {
-    return {
-      success: false,
-      output: `Clone failed: ${cloneResult.stderr}`,
-      exitCode: cloneResult.exitCode,
-      duration: Date.now() - startTime
-    };
-  }
-
-  console.log('Repository cloned successfully');
-
-  // Step 2: Detect project type
-  console.log('Step 2: Detecting project type...');
-  const projectType = await detectProjectType(sandbox);
-  console.log(`Detected project type: ${projectType}`);
-
-  // Step 3: Install dependencies
-  console.log('Step 3: Installing dependencies...');
-  const installCmd = customInstallCmd || getInstallCommand(projectType);
-
-  if (installCmd) {
-    const installResult = await sandbox.exec(
-      `cd /workspace/repo && ${installCmd}`,
-      { timeout: 300000 } // 5 minutes for npm install
-    );
-
-    if (!installResult.success) {
-      return {
-        success: false,
-        output: `Install failed: ${installResult.stderr}`,
-        exitCode: installResult.exitCode,
-        duration: Date.now() - startTime
-      };
-    }
-
-    console.log('Dependencies installed');
-  }
-
-  // Step 4: Run tests
-  console.log('Step 4: Running tests...');
-  const testCmd = customTestCmd || getTestCommand(projectType);
-
-  const testResult = await sandbox.exec(
-    `cd /workspace/repo && ${testCmd}`,
-    { timeout: 300000 } // 5 minutes for tests
-  );
-
-  // Step 5: Try to find and read test report
-  let report: string | undefined;
-  const reportPaths = [
-    '/workspace/repo/coverage/lcov-report/index.html',
-    '/workspace/repo/test-results.html',
-    '/workspace/repo/htmlcov/index.html', // Python coverage
-    '/workspace/repo/coverage.html'
-  ];
-
-  for (const reportPath of reportPaths) {
-    try {
-      const reportBuffer = await sandbox.readFile(reportPath);
-      report = new TextDecoder().decode(reportBuffer);
-      console.log(`Found test report at ${reportPath}`);
-      break;
-    } catch {
-      // Report not found, continue
-    }
-  }
-
-  const duration = Date.now() - startTime;
-
-  return {
-    success: testResult.exitCode === 0,
-    output: testResult.stdout + '\n' + testResult.stderr,
-    exitCode: testResult.exitCode,
-    duration,
-    report
-  };
-}
-
 async function detectProjectType(sandbox: any): Promise<string> {
-  // Check for package.json (Node.js)
-  try {
-    await sandbox.readFile('/workspace/repo/package.json');
-    return 'nodejs';
-  } catch {}
+	try {
+		await sandbox.readFile('/workspace/repo/package.json');
+		return 'nodejs';
+	} catch {}
 
-  // Check for requirements.txt or setup.py (Python)
-  try {
-    await sandbox.readFile('/workspace/repo/requirements.txt');
-    return 'python';
-  } catch {}
+	try {
+		await sandbox.readFile('/workspace/repo/requirements.txt');
+		return 'python';
+	} catch {}
 
-  try {
-    await sandbox.readFile('/workspace/repo/setup.py');
-    return 'python';
-  } catch {}
+	try {
+		await sandbox.readFile('/workspace/repo/go.mod');
+		return 'go';
+	} catch {}
 
-  // Check for go.mod (Go)
-  try {
-    await sandbox.readFile('/workspace/repo/go.mod');
-    return 'go';
-  } catch {}
-
-  // Check for Cargo.toml (Rust)
-  try {
-    await sandbox.readFile('/workspace/repo/Cargo.toml');
-    return 'rust';
-  } catch {}
-
-  return 'unknown';
+	return 'unknown';
 }
 
 function getInstallCommand(projectType: string): string {
-  switch (projectType) {
-    case 'nodejs':
-      return 'npm install';
-    case 'python':
-      return 'pip install -r requirements.txt || pip install -e .';
-    case 'go':
-      return 'go mod download';
-    case 'rust':
-      return 'cargo fetch';
-    default:
-      return '';
-  }
+	switch (projectType) {
+		case 'nodejs': return 'npm install';
+		case 'python': return 'pip install -r requirements.txt || pip install -e .';
+		case 'go': return 'go mod download';
+		default: return '';
+	}
 }
 
 function getTestCommand(projectType: string): string {
-  switch (projectType) {
-    case 'nodejs':
-      return 'npm test';
-    case 'python':
-      return 'python -m pytest || python -m unittest discover';
-    case 'go':
-      return 'go test ./...';
-    case 'rust':
-      return 'cargo test';
-    default:
-      return 'echo "No test command for this project type"';
-  }
+	switch (projectType) {
+		case 'nodejs': return 'npm test';
+		case 'python': return 'python -m pytest || python -m unittest discover';
+		case 'go': return 'go test ./...';
+		default: return 'echo "Unknown project type"';
+	}
 }
 ```
 
-## 6. Add streaming support
+## 3. Test locally
 
-Implement real-time test output streaming using Server-Sent Events:
+Start the dev server:
 
-```typescript title="src/index.ts"
-async function handleStreamingTest(
-  request: Request,
-  env: Env
-): Promise<Response> {
-  try {
-    const body = await request.json() as TestRequest;
-
-    if (!body.repoUrl) {
-      return Response.json(
-        { error: 'Missing required field: repoUrl' },
-        { status: 400 }
-      );
-    }
-
-    // Create SSE stream
-    const { readable, writable } = new TransformStream();
-    const writer = writable.getWriter();
-    const encoder = new TextEncoder();
-
-    // Send SSE helper
-    const sendEvent = (event: string, data: any) => {
-      const message = `event: ${event}\ndata: ${JSON.stringify(data)}\n\n`;
-      writer.write(encoder.encode(message));
-    };
-
-    // Run pipeline in background
-    (async () => {
-      const sandboxId = `test-stream-${Date.now()}`;
-      const sandbox = getSandbox(env.Sandbox, sandboxId);
-
-      try {
-        sendEvent('status', { message: 'Cloning repository...' });
-
-        // Clone
-        let cloneUrl = body.repoUrl;
-        if (env.GITHUB_TOKEN && body.repoUrl.includes('github.com')) {
-          cloneUrl = body.repoUrl.replace('https://', `https://${env.GITHUB_TOKEN}@`);
-        }
-
-        const cloneResult = await sandbox.exec(
-          `git clone --depth=1 ${cloneUrl} /workspace/repo`,
-          {
-            timeout: 60000,
-            onStdout: (chunk) => sendEvent('output', { type: 'stdout', data: chunk }),
-            onStderr: (chunk) => sendEvent('output', { type: 'stderr', data: chunk })
-          }
-        );
-
-        if (!cloneResult.success) {
-          sendEvent('error', { message: 'Clone failed', details: cloneResult.stderr });
-          sendEvent('done', { success: false });
-          await writer.close();
-          return;
-        }
-
-        sendEvent('status', { message: 'Detecting project type...' });
-        const projectType = await detectProjectType(sandbox);
-        sendEvent('status', { message: `Detected ${projectType} project` });
-
-        // Install dependencies
-        const installCmd = body.installCommand || getInstallCommand(projectType);
-        if (installCmd) {
-          sendEvent('status', { message: 'Installing dependencies...' });
-
-          const installResult = await sandbox.exec(
-            `cd /workspace/repo && ${installCmd}`,
-            {
-              timeout: 300000,
-              onStdout: (chunk) => sendEvent('output', { type: 'stdout', data: chunk }),
-              onStderr: (chunk) => sendEvent('output', { type: 'stderr', data: chunk })
-            }
-          );
-
-          if (!installResult.success) {
-            sendEvent('error', { message: 'Install failed' });
-            sendEvent('done', { success: false });
-            await writer.close();
-            return;
-          }
-        }
-
-        // Run tests
-        sendEvent('status', { message: 'Running tests...' });
-        const testCmd = body.testCommand || getTestCommand(projectType);
-
-        const testResult = await sandbox.exec(
-          `cd /workspace/repo && ${testCmd}`,
-          {
-            timeout: 300000,
-            onStdout: (chunk) => sendEvent('output', { type: 'stdout', data: chunk }),
-            onStderr: (chunk) => sendEvent('output', { type: 'stderr', data: chunk })
-          }
-        );
-
-        sendEvent('done', {
-          success: testResult.exitCode === 0,
-          exitCode: testResult.exitCode
-        });
-
-      } catch (error) {
-        sendEvent('error', {
-          message: error instanceof Error ? error.message : 'Unknown error'
-        });
-        sendEvent('done', { success: false });
-      } finally {
-        await sandbox.destroy();
-        await writer.close();
-      }
-    })();
-
-    return new Response(readable, {
-      headers: {
-        'Content-Type': 'text/event-stream',
-        'Cache-Control': 'no-cache',
-        'Connection': 'keep-alive'
-      }
-    });
-
-  } catch (error) {
-    return Response.json(
-      { error: 'Failed to start streaming test' },
-      { status: 500 }
-    );
-  }
-}
+```sh
+npm run dev
 ```
 
-## 7. Add a web interface
+Test with a repository:
 
-Create a simple web interface for testing:
-
-```typescript title="src/index.ts"
-const LANDING_PAGE = `
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Test Pipeline</title>
-  <style>
-    body { font-family: system-ui; max-width: 900px; margin: 40px auto; padding: 0 20px; }
-    h1 { color: #333; }
-    .form-group { margin: 20px 0; }
-    label { display: block; margin-bottom: 5px; font-weight: 500; }
-    input, select { width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ddd; border-radius: 4px; }
-    button { background: #0066ff; color: white; padding: 12px 24px; border: none; border-radius: 4px; font-size: 16px; cursor: pointer; margin-right: 10px; }
-    button:hover { background: #0052cc; }
-    #output { background: #1e1e1e; color: #d4d4d4; padding: 20px; border-radius: 4px; font-family: 'Monaco', monospace; font-size: 14px; line-height: 1.5; max-height: 500px; overflow-y: auto; margin-top: 20px; white-space: pre-wrap; }
-    .status { color: #4caf50; font-weight: bold; }
-    .error { color: #f44336; }
-    .stdout { color: #d4d4d4; }
-    .stderr { color: #ff9800; }
-    #loading { display: none; margin-top: 20px; }
-  </style>
-</head>
-<body>
-  <h1>🧪 Test Pipeline</h1>
-  <p>Run automated tests for any Git repository with streaming output.</p>
-
-  <form id="testForm">
-    <div class="form-group">
-      <label>Repository URL:</label>
-      <input type="text" name="repoUrl" placeholder="https://github.com/owner/repo" required>
-    </div>
-    <div class="form-group">
-      <label>Branch (optional):</label>
-      <input type="text" name="branch" placeholder="main" value="main">
-    </div>
-    <div class="form-group">
-      <label>Custom test command (optional):</label>
-      <input type="text" name="testCommand" placeholder="Auto-detected if empty">
-    </div>
-    <button type="submit" id="runBtn">Run Tests</button>
-    <button type="button" id="streamBtn">Run with Streaming</button>
-  </form>
-
-  <div id="loading">Running tests...</div>
-  <div id="output" style="display:none;"></div>
-
-  <script>
-    const form = document.getElementById('testForm');
-    const output = document.getElementById('output');
-    const loading = document.getElementById('loading');
-    const runBtn = document.getElementById('runBtn');
-    const streamBtn = document.getElementById('streamBtn');
-
-    runBtn.addEventListener('click', async (e) => {
-      e.preventDefault();
-      const formData = new FormData(form);
-      const data = Object.fromEntries(formData);
-
-      output.style.display = 'none';
-      loading.style.display = 'block';
-      output.innerHTML = '';
-
-      try {
-        const response = await fetch('/test', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data)
-        });
-        const result = await response.json();
-
-        loading.style.display = 'none';
-        output.style.display = 'block';
-
-        if (result.success) {
-          output.innerHTML = \`<div class="status">✅ Tests passed (\${result.duration}ms)</div>\n\n\${result.output}\`;
-        } else {
-          output.innerHTML = \`<div class="error">❌ Tests failed (exit code: \${result.exitCode})</div>\n\n\${result.output}\`;
-        }
-
-        if (result.report) {
-          output.innerHTML += \`\n\n<div class="status">📊 Test report available</div>\`;
-        }
-      } catch (error) {
-        loading.style.display = 'none';
-        output.style.display = 'block';
-        output.innerHTML = \`<div class="error">Error: \${error.message}</div>\`;
-      }
-    });
-
-    streamBtn.addEventListener('click', async (e) => {
-      e.preventDefault();
-      const formData = new FormData(form);
-      const data = Object.fromEntries(formData);
-
-      output.style.display = 'block';
-      loading.style.display = 'none';
-      output.innerHTML = '<div class="status">Starting test pipeline...</div>\n';
-
-      try {
-        const response = await fetch('/test/stream', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data)
-        });
-
-        const reader = response.body.getReader();
-        const decoder = new TextDecoder();
-
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) break;
-
-          const text = decoder.decode(value);
-          const lines = text.split('\n\n');
-
-          for (const line of lines) {
-            if (!line.trim()) continue;
-
-            const [eventLine, dataLine] = line.split('\n');
-            if (!eventLine || !dataLine) continue;
-
-            const event = eventLine.replace('event: ', '');
-            const data = JSON.parse(dataLine.replace('data: ', ''));
-
-            if (event === 'status') {
-              output.innerHTML += \`<div class="status">\${data.message}</div>\n\`;
-            } else if (event === 'output') {
-              output.innerHTML += \`<span class="\${data.type}">\${data.data}</span>\`;
-            } else if (event === 'error') {
-              output.innerHTML += \`<div class="error">Error: \${data.message}</div>\n\`;
-            } else if (event === 'done') {
-              output.innerHTML += \`\n<div class="\${data.success ? 'status' : 'error'}">\${data.success ? '✅ Tests passed' : '❌ Tests failed'}</div>\`;
-            }
-
-            output.scrollTop = output.scrollHeight;
-          }
-        }
-      } catch (error) {
-        output.innerHTML += \`<div class="error">Stream error: \${error.message}</div>\`;
-      }
-    });
-  </script>
-</body>
-</html>
-`;
-```
-
-## 8. Test locally
-
-Start your development server:
-
-```bash
-wrangler dev
-```
-
-Visit `http://localhost:8787` in your browser and test with a public repository:
-
-**Example repositories to test:**
-- Node.js: `https://github.com/vercel/next.js` (may take a while)
-- Python: `https://github.com/psf/requests`
-- Simple Node: `https://github.com/sindresorhus/is-promise`
-
-Try both regular and streaming modes to see the difference!
-
-## 9. Deploy to production
-
-Deploy your testing pipeline:
-
-```bash
-wrangler deploy
-```
-
-Test the deployed endpoint:
-
-```bash
-curl -X POST https://test-pipeline-worker.YOUR_SUBDOMAIN.workers.dev/test \
+```sh
+curl -X POST http://localhost:8787 \
   -H "Content-Type: application/json" \
   -d '{
     "repoUrl": "https://github.com/sindresorhus/is-promise",
@@ -679,106 +165,39 @@ curl -X POST https://test-pipeline-worker.YOUR_SUBDOMAIN.workers.dev/test \
   }'
 ```
 
-## Production enhancements
+Response:
 
-### Add caching for dependencies
-
-Use persistent sandboxes to cache installed dependencies:
-
-```typescript
-// Instead of creating temporary sandboxes
-const sandboxId = `test-${Date.now()}`;
-
-// Use project-specific sandboxes
-const repoSlug = repoUrl.split('/').slice(-2).join('-');
-const sandboxId = `test-cache-${repoSlug}`;
-
-// Don't destroy after use
-// await sandbox.destroy(); // Skip this for caching
-```
-
-### Add timeout handling
-
-```typescript
-const timeout = 600000; // 10 minutes
-const controller = new AbortController();
-const timeoutId = setTimeout(() => controller.abort(), timeout);
-
-try {
-  await sandbox.exec(command, { signal: controller.signal });
-} catch (error) {
-  if (error.name === 'AbortError') {
-    return { error: 'Test timed out after 10 minutes' };
-  }
-  throw error;
-} finally {
-  clearTimeout(timeoutId);
+```json
+{
+  "success": true,
+  "exitCode": 0,
+  "output": "...test output...",
+  "projectType": "nodejs"
 }
 ```
 
-### Add webhook integration
+## 4. Deploy
 
-Trigger tests on Git push events:
-
-```typescript
-if (url.pathname === '/webhook/github' && request.method === 'POST') {
-  const payload = await request.json();
-
-  if (payload.ref === 'refs/heads/main') {
-    // Trigger test pipeline
-    await runTestPipeline(
-      sandbox,
-      payload.repository.clone_url,
-      'main'
-    );
-  }
-}
+```sh
+npx wrangler deploy
 ```
 
-## Complete code
+For private repositories, set your GitHub token:
 
-<details>
-<summary>View the complete Worker code</summary>
-
-```typescript title="src/index.ts"
-import { getSandbox } from '@cloudflare/sandbox';
-
-interface Env {
-  Sandbox: DurableObjectNamespace;
-  GITHUB_TOKEN?: string;
-}
-
-// ... (include all code from steps 4-7)
+```sh
+npx wrangler secret put GITHUB_TOKEN
 ```
-</details>
 
-## What you learned
+## What you built
 
-You built a complete automated testing pipeline that:
-
-- ✅ Clones Git repositories into sandboxes
-- ✅ Detects project types automatically
-- ✅ Installs dependencies for multiple languages
-- ✅ Runs test suites with proper error handling
-- ✅ Streams output in real-time
-- ✅ Generates and returns test reports
-- ✅ Manages sandbox lifecycle efficiently
+An automated testing pipeline that:
+- Clones Git repositories
+- Detects project type (Node.js, Python, Go)
+- Installs dependencies automatically
+- Runs tests and reports results
 
 ## Next steps
 
-Enhance your testing pipeline:
-
-- **Matrix testing** - Run tests across multiple Node.js/Python versions
-- **Parallel execution** - Run tests in multiple sandboxes simultaneously
-- **Result storage** - Save test results to [D1](/d1/) or [R2](/r2/)
-- **Notifications** - Send test results to Slack/Discord
-- **GitHub integration** - Post test results as PR status checks
-- **Coverage tracking** - Parse and track test coverage over time
-
-## Related resources
-
-- [Git workflows guide](/sandbox/guides/git-workflows/) - Advanced Git operations
-- [Streaming output guide](/sandbox/guides/streaming-output/) - Real-time output patterns
-- [Background processes guide](/sandbox/guides/background-processes/) - Long-running jobs
-- [Sessions API](/sandbox/api/sessions/) - Persistent sandbox state
-- [Security model](/sandbox/concepts/security/) - Understanding isolation
+- [Streaming output](/sandbox/guides/streaming-output/) - Add real-time test output
+- [Background processes](/sandbox/guides/background-processes/) - Handle long-running tests
+- [Sessions API](/sandbox/api/sessions/) - Cache dependencies between runs
