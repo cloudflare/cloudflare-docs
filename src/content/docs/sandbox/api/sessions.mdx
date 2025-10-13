@@ -7,280 +7,93 @@ sidebar:
 
 import { TypeScriptExample } from "~/components";
 
-Sessions provide isolated execution contexts within a sandbox, similar to having multiple terminal panes open on your laptop. Each session maintains its own shell state, environment variables, and working directory across multiple invocations.
+Create isolated execution contexts within a sandbox. Each session maintains its own shell state, environment variables, and working directory. See [Session management concept](/sandbox/concepts/sessions/) for details.
 
 :::note
-Sessions are an advanced feature. Most applications work fine with the default session that's automatically created. Use explicit sessions when you need isolated environments or persistent shell state.
+Every sandbox has a default session that automatically maintains shell state. Create additional sessions when you need isolated shell contexts for different environments or parallel workflows.
 :::
 
-## When to use sessions
+## Methods
 
-### Use sessions when you need:
+### `createSession()`
 
-- **Isolated environments** - Different users or workflows with separate configurations
-- **Persistent shell state** - Environment variables and working directory that persist across commands
-- **Parallel execution** - Multiple independent execution contexts running simultaneously
-- **Session resumption** - Continue work from previous requests (e.g., in chat applications)
-
-### You don't need sessions for:
-
-- **Simple command execution** - The default session handles this automatically
-- **Background processes** - Processes are visible across all sessions (like on your local machine)
-- **File operations** - Files are shared across sessions
-
-## Default session behavior
-
-When you use sandbox methods without explicitly creating a session, a default session is automatically created with:
-
-<TypeScriptExample>
-```
-const sandbox = getSandbox(env.Sandbox, 'user-123');
-
-// These automatically use the default session
-await sandbox.exec('export API_KEY=secret');
-await sandbox.exec('echo $API_KEY'); // Prints: secret
-
-// Environment persists within the default session
-await sandbox.writeFile('/workspace/app.js', code);
-await sandbox.exec('node app.js'); // Can access API_KEY
-
-```
-</TypeScriptExample>
-
-
-The default session persists for the lifetime of the sandbox instance, maintaining shell state across all operations.
-
-## API methods
-
-### createSession()
-
-Create a new isolated execution session with custom environment and working directory.
+Create a new isolated execution session.
 
 ```ts
 const session = await sandbox.createSession(options?: SessionOptions): Promise<ExecutionSession>
 ```
 
-#### Parameters
+**Parameters**:
+- `options` (optional):
+  - `id` - Custom session ID (auto-generated if not provided)
+  - `env` - Environment variables for this session
+  - `cwd` - Working directory (default: `"/workspace"`)
 
-- **options** (`SessionOptions`, optional) - Session configuration options:
-  - `id` (`string`) - Custom session ID. Auto-generated if not provided.
-  - `env` (`Record<string, string>`) - Environment variables for this session
-  - `cwd` (`string`) - Working directory for this session. Defaults to `/workspace`
-
-#### Returns
-
-`Promise<ExecutionSession>` - Session wrapper with all sandbox methods bound to this session ID.
-
-#### Example: Multiple isolated environments
+**Returns**: `Promise<ExecutionSession>` with all sandbox methods bound to this session
 
 <TypeScriptExample>
 ```
-// Create session for production deployment
+// Multiple isolated environments
 const prodSession = await sandbox.createSession({
-  id: 'prod-deploy',
-  env: {
-    NODE_ENV: 'production',
-    API_URL: 'https://api.example.com'
-  },
+  id: 'prod',
+  env: { NODE_ENV: 'production', API_URL: 'https://api.example.com' },
   cwd: '/workspace/prod'
 });
 
-// Create session for test environment
 const testSession = await sandbox.createSession({
-id: 'test-deploy',
-env: {
-NODE_ENV: 'test',
-API_URL: 'http://localhost:3000'
-},
-cwd: '/workspace/test'
+  id: 'test',
+  env: { NODE_ENV: 'test', API_URL: 'http://localhost:3000' },
+  cwd: '/workspace/test'
 });
 
-// Run builds in parallel with different configurations
+// Run in parallel
 const [prodResult, testResult] = await Promise.all([
-prodSession.exec('npm run build'),
-testSession.exec('npm run build')
+  prodSession.exec('npm run build'),
+  testSession.exec('npm run build')
 ]);
-
-console.log('Production build:', prodResult.stdout);
-console.log('Test build:', testResult.stdout);
-
 ```
 </TypeScriptExample>
 
+### `getSession()`
 
-#### Example: Session per user in chat application
-
-<TypeScriptExample>
-```
-// Each user gets their own isolated session
-async function handleUserMessage(userId: string, message: string) {
-  const sandbox = getSandbox(env.Sandbox, `chat-${userId}`);
-
-  // Get or create user's session
-  const session = await sandbox.createSession({
-    id: userId,
-    env: {
-      USER_ID: userId,
-      CHAT_HISTORY_PATH: `/workspace/${userId}/history.txt`
-    }
-  });
-
-  // User's environment persists across messages
-  await session.exec(`echo "${message}" >> $CHAT_HISTORY_PATH`);
-  const result = await session.exec('python analyze_sentiment.py $CHAT_HISTORY_PATH');
-
-  return result.stdout;
-}
-```
-
-</TypeScriptExample>
-
-#### Example: Custom working directories
-
-<TypeScriptExample>
-```
-// Frontend session working in React app
-const frontend = await sandbox.createSession({
-  id: 'frontend',
-  cwd: '/workspace/client',
-  env: { PORT: '3000' }
-});
-
-// Backend session working in API server
-const backend = await sandbox.createSession({
-id: 'backend',
-cwd: '/workspace/server',
-env: { PORT: '8080' }
-});
-
-// Commands run in their respective directories
-await frontend.exec('npm install'); // Runs in /workspace/client
-await backend.exec('npm install'); // Runs in /workspace/server
-
-// Start both services
-await frontend.startProcess('npm start');
-await backend.startProcess('npm start');
-
-```
-</TypeScriptExample>
-
-
-### getSession()
-
-Retrieve an existing session by ID. Useful for resuming sessions across different requests.
+Retrieve an existing session by ID.
 
 ```ts
 const session = await sandbox.getSession(sessionId: string): Promise<ExecutionSession>
 ```
 
-#### Parameters
+**Parameters**:
+- `sessionId` - ID of an existing session
 
-- **sessionId** (`string`, required) - ID of an existing session
-
-#### Returns
-
-`Promise<ExecutionSession>` - Session wrapper bound to the specified session ID.
-
-:::note
-If the session doesn't exist, operations will fail. There's no explicit session existence check - just try to use it and handle errors.
-:::
-
-#### Example: Resume session across requests
+**Returns**: `Promise<ExecutionSession>` bound to the specified session
 
 <TypeScriptExample>
 ```
 // First request - create session
-app.post('/start', async (req) => {
-  const { userId } = req.body;
-  const sandbox = getSandbox(env.Sandbox, userId);
-
-const session = await sandbox.createSession({
-id: `user-${userId}`,
-env: { USER_ID: userId }
-});
-
+const session = await sandbox.createSession({ id: 'user-123' });
 await session.exec('git clone https://github.com/user/repo.git');
 await session.exec('cd repo && npm install');
 
-return { message: 'Setup complete', sessionId: session.id };
-});
-
-// Second request - resume session
-app.post('/build', async (req) => {
-const { userId, sessionId } = req.body;
-const sandbox = getSandbox(env.Sandbox, userId);
-
-// Resume existing session - environment and cwd are preserved
-const session = await sandbox.getSession(sessionId);
-
+// Second request - resume session (environment and cwd preserved)
+const session = await sandbox.getSession('user-123');
 const result = await session.exec('cd repo && npm run build');
-return { output: result.stdout };
-});
-
 ```
 </TypeScriptExample>
 
+### `setEnvVars()`
 
-#### Example: Multi-step workflows
-
-<TypeScriptExample>
-```
-// Step 1: Initialize environment
-async function initializeProject(projectId: string) {
-  const sandbox = getSandbox(env.Sandbox, projectId);
-  const session = await sandbox.createSession({
-    id: `project-${projectId}`,
-    cwd: '/workspace/project'
-  });
-
-  await session.exec('npm init -y');
-  await session.exec('npm install express');
-
-  return session.id;
-}
-
-// Step 2: Add code (different request/context)
-async function addCode(projectId: string, sessionId: string, code: string) {
-  const sandbox = getSandbox(env.Sandbox, projectId);
-  const session = await sandbox.getSession(sessionId);
-
-  await session.writeFile('app.js', code);
-  return 'Code added';
-}
-
-// Step 3: Run application (different request/context)
-async function runApp(projectId: string, sessionId: string) {
-  const sandbox = getSandbox(env.Sandbox, projectId);
-  const session = await sandbox.getSession(sessionId);
-
-  const result = await session.exec('node app.js');
-  return result.stdout;
-}
-```
-
-</TypeScriptExample>
-
-### setEnvVars()
-
-Set environment variables in the default session or globally in the sandbox.
+Set environment variables in the sandbox.
 
 ```ts
 await sandbox.setEnvVars(envVars: Record<string, string>): Promise<void>
 ```
 
-#### Parameters
+**Parameters**:
+- `envVars` - Key-value pairs of environment variables to set
 
-- **envVars** (`Record<string, string>`, required) - Key-value pairs of environment variables to set
-
-#### Returns
-
-`Promise<void>`
-
-:::caution[Call setEnvVars first]
+:::caution
 Call `setEnvVars()` **before** any other sandbox operations to ensure environment variables are available from the start.
 :::
-
-#### Example: Configure API credentials
 
 <TypeScriptExample>
 ```
@@ -288,67 +101,17 @@ const sandbox = getSandbox(env.Sandbox, 'user-123');
 
 // Set environment variables first
 await sandbox.setEnvVars({
-API_KEY: env.OPENAI_API_KEY,
-DATABASE_URL: env.DATABASE_URL,
-NODE_ENV: 'production'
+  API_KEY: env.OPENAI_API_KEY,
+  DATABASE_URL: env.DATABASE_URL,
+  NODE_ENV: 'production'
 });
 
 // Now commands can access these variables
-await sandbox.exec('python script.py'); // Can read API_KEY
-
+await sandbox.exec('python script.py');
 ```
 </TypeScriptExample>
 
-
-#### Example: Dynamic configuration
-
-<TypeScriptExample>
-```
-async function runUserCode(userId: string, code: string, config: Config) {
-  const sandbox = getSandbox(env.Sandbox, userId);
-
-  // Configure environment based on user's settings
-  await sandbox.setEnvVars({
-    USER_ID: userId,
-    TIMEOUT: config.timeout.toString(),
-    MAX_MEMORY: config.maxMemory,
-    ALLOWED_HOSTS: config.allowedHosts.join(',')
-  });
-
-  await sandbox.writeFile('/tmp/user_code.py', code);
-  const result = await sandbox.exec('python /tmp/user_code.py');
-
-  return result.stdout;
-}
-```
-
-</TypeScriptExample>
-
-#### Example: Session-specific environment
-
-<TypeScriptExample>
-```
-// Set environment in a specific session
-const session = await sandbox.createSession({
-  id: 'test-session',
-  env: {
-    NODE_ENV: 'test'
-  }
-});
-
-// Update environment variables within this session
-await session.setEnvVars({
-API_KEY: 'test-key-123',
-DEBUG: 'true'
-});
-
-await session.exec('npm test'); // Uses test environment
-
-```
-</TypeScriptExample>
-
-
-### destroy()
+### `destroy()`
 
 Destroy the sandbox container and free up resources.
 
@@ -356,264 +119,37 @@ Destroy the sandbox container and free up resources.
 await sandbox.destroy(): Promise<void>
 ```
 
-#### Returns
-
-`Promise<void>`
-
-:::note[Resource management]
-Containers automatically sleep after 3 minutes of inactivity, but they still count toward your account limits. Use `destroy()` to immediately free up container slots and stop billing.
+:::note
+Containers automatically sleep after 3 minutes of inactivity, but still count toward account limits. Use `destroy()` to immediately free up resources.
 :::
-
-#### When to use destroy()
-
-- **After one-time tasks** - Code execution, builds, or analysis that won't be reused
-- **Resource cleanup** - Free up container slots when you're done
-- **Cost optimization** - Stop billing for containers you no longer need
-- **Account limits** - Stay within your concurrent container limit
-
-#### Example: One-time code execution
 
 <TypeScriptExample>
 ```
 async function executeCode(code: string): Promise<string> {
   const sandbox = getSandbox(env.Sandbox, `temp-${Date.now()}`);
 
-try {
-await sandbox.writeFile('/tmp/code.py', code);
-const result = await sandbox.exec('python /tmp/code.py');
-return result.stdout;
-} finally {
-// Always clean up temporary sandboxes
-await sandbox.destroy();
-}
-}
-
-```
-</TypeScriptExample>
-
-
-#### Example: Batch processing with cleanup
-
-<TypeScriptExample>
-```
-async function processBatch(tasks: Task[]) {
-  const results = [];
-
-  for (const task of tasks) {
-    const sandbox = getSandbox(env.Sandbox, `task-${task.id}`);
-
-    try {
-      // Process task
-      await sandbox.writeFile('/workspace/input.json', JSON.stringify(task.data));
-      const result = await sandbox.exec('python process.py');
-      results.push(result.stdout);
-    } finally {
-      // Free up resources after each task
-      await sandbox.destroy();
-    }
-  }
-
-  return results;
-}
-```
-
-</TypeScriptExample>
-
-#### Example: Graceful shutdown
-
-<TypeScriptExample>
-```
-// Create sandbox for long-running workflow
-const sandbox = getSandbox(env.Sandbox, 'workflow-123');
-
-// Set up cleanup handlers
-process.on('SIGTERM', async () => {
-console.log('Shutting down gracefully...');
-await sandbox.destroy();
-process.exit(0);
-});
-
-// Run workflow
-await sandbox.exec('npm run workflow');
-
-```
-</TypeScriptExample>
-
-
-## ExecutionSession API
-
-The `ExecutionSession` object returned by `createSession()` and `getSession()` provides all sandbox methods bound to that specific session:
-
-### Command execution
-- `exec()` - Execute commands in this session
-- `execStream()` - Stream command output
-
-### Process management
-- `startProcess()` - Start background process
-- `listProcesses()` - List all processes (visible across sessions)
-- `getProcess()` - Get process info
-- `killProcess()` - Terminate process
-- `killAllProcesses()` - Terminate all processes
-- `getProcessLogs()` - Get process output
-- `streamProcessLogs()` - Stream process output
-
-### File operations
-- `writeFile()` - Write file
-- `readFile()` - Read file
-- `mkdir()` - Create directory
-- `deleteFile()` - Delete file
-- `renameFile()` - Rename file
-- `moveFile()` - Move file
-
-### Git operations
-- `gitCheckout()` - Clone repository
-
-### Environment management
-- `setEnvVars()` - Update environment variables in this session
-
-### Code interpreter
-- `createCodeContext()` - Create code execution context
-- `runCode()` - Execute Python/JavaScript code
-- `listCodeContexts()` - List active contexts
-- `deleteCodeContext()` - Delete context
-
-## Session behavior
-
-### Shell state isolation
-
-Each session maintains its own:
-- **Environment variables** - Set via `env` option or `setEnvVars()`
-- **Working directory** - Set via `cwd` option or `cd` commands
-- **Shell history** - Independent command history per session
-
-### Shared resources
-
-All sessions in a sandbox share:
-- **Filesystem** - Files written in one session are visible in others
-- **Background processes** - Processes started in any session are visible to all sessions
-- **Ports** - Exposed ports are shared across sessions
-
-Think of sessions like terminal tabs on your laptop - separate shells, but same filesystem and processes.
-
-### Session lifecycle
-
-- **Creation** - `createSession()` initializes a new session
-- **Persistence** - Sessions persist for the container's lifetime
-- **Resumption** - `getSession()` retrieves existing sessions
-- **Cleanup** - Sessions are automatically cleaned up when container shuts down
-
-## Error handling
-
-<TypeScriptExample>
-```
-try {
-  // Try to use a session
-  const session = await sandbox.getSession('nonexistent-session');
-  await session.exec('ls');
-} catch (error) {
-  if (error.message.includes('Session not found')) {
-    // Handle missing session
-    console.error('Session does not exist');
+  try {
+    await sandbox.writeFile('/tmp/code.py', code);
+    const result = await sandbox.exec('python /tmp/code.py');
+    return result.stdout;
+  } finally {
+    await sandbox.destroy();
   }
 }
 ```
-
 </TypeScriptExample>
 
-## Best practices
+## ExecutionSession methods
 
-### 1. Use default session for simple cases
+The `ExecutionSession` object has all sandbox methods bound to the specific session:
 
-<TypeScriptExample>
-```
-// Good - simple use case
-await sandbox.exec('npm install');
-await sandbox.exec('npm test');
-
-// Overkill - unnecessary session complexity
-const session = await sandbox.createSession();
-await session.exec('npm install');
-await session.exec('npm test');
-
-```
-</TypeScriptExample>
-
-
-### 2. Create sessions for isolation
-
-<TypeScriptExample>
-```
-// Good - isolated environments
-const dev = await sandbox.createSession({
-  id: 'dev',
-  env: { NODE_ENV: 'development' }
-});
-const prod = await sandbox.createSession({
-  id: 'prod',
-  env: { NODE_ENV: 'production' }
-});
-```
-
-</TypeScriptExample>
-
-### 3. Set environment variables early
-
-<TypeScriptExample>
-```
-// Good - set env vars first
-await sandbox.setEnvVars({ API_KEY: 'secret' });
-await sandbox.exec('python script.py');
-
-// Bad - env vars set too late
-await sandbox.exec('python script.py'); // API_KEY not available
-await sandbox.setEnvVars({ API_KEY: 'secret' });
-
-```
-</TypeScriptExample>
-
-
-### 4. Clean up temporary sandboxes
-
-<TypeScriptExample>
-```
-// Good - cleanup after one-time use
-try {
-  const result = await sandbox.exec('python analyze.py');
-  return result.stdout;
-} finally {
-  await sandbox.destroy();
-}
-
-// Bad - container keeps running unnecessarily
-const result = await sandbox.exec('python analyze.py');
-return result.stdout;
-// Container stays alive, using resources
-```
-
-</TypeScriptExample>
-
-### 5. Reuse sessions across requests
-
-<TypeScriptExample>
-```
-// Good - resume session
-const sessionId = req.body.sessionId;
-const session = await sandbox.getSession(sessionId);
-await session.exec('npm run build');
-
-// Bad - create new session every time
-const session = await sandbox.createSession();
-await session.exec('npm run build');
-// Loses state from previous requests
-
-```
-</TypeScriptExample>
-
+**Commands**: [`exec()`](/sandbox/api/commands/#exec), [`execStream()`](/sandbox/api/commands/#execstream)  
+**Processes**: [`startProcess()`](/sandbox/api/commands/#startprocess), [`listProcesses()`](/sandbox/api/commands/#listprocesses), [`killProcess()`](/sandbox/api/commands/#killprocess), [`killAllProcesses()`](/sandbox/api/commands/#killallprocesses), [`getProcessLogs()`](/sandbox/api/commands/#getprocesslogs), [`streamProcessLogs()`](/sandbox/api/commands/#streamprocesslogs)  
+**Files**: [`writeFile()`](/sandbox/api/files/#writefile), [`readFile()`](/sandbox/api/files/#readfile), [`mkdir()`](/sandbox/api/files/#mkdir), [`deleteFile()`](/sandbox/api/files/#deletefile), [`renameFile()`](/sandbox/api/files/#renamefile), [`moveFile()`](/sandbox/api/files/#movefile), [`gitCheckout()`](/sandbox/api/files/#gitcheckout)  
+**Environment**: [`setEnvVars()`](/sandbox/api/sessions/#setenvvars)  
+**Code Interpreter**: [`createCodeContext()`](/sandbox/api/interpreter/#createcodecontext), [`runCode()`](/sandbox/api/interpreter/#runcode), [`listCodeContexts()`](/sandbox/api/interpreter/#listcodecontexts), [`deleteCodeContext()`](/sandbox/api/interpreter/#deletecodecontext)
 
 ## Related resources
 
-- [Commands API](/sandbox/api/commands/) - Execute commands in sessions
-- [Files API](/sandbox/api/files/) - File operations in sessions
-- [Get Started](/sandbox/get-started/) - Basic sandbox usage without sessions
-- [Build a data analysis platform](/sandbox/tutorials/data-analysis/) - Multi-session example
-```
+- [Session management concept](/sandbox/concepts/sessions/) - How sessions work
+- [Commands API](/sandbox/api/commands/) - Execute commands
