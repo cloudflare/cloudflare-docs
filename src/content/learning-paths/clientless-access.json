@@ -1,10 +1,7 @@
 {
 	"title": "Deploy clientless access",
 	"path": "/learning-paths/clientless-access/concepts/",
-	"priority": 2,
 	"description": "Learn how to set up clientless access to internal applications with Cloudflare Zero Trust.",
 	"pcx_content_type": "learning-path",
-	"products": ["access", "cloudflare-tunnel", "browser-isolation"],
-	"product_group": "Cloudflare One",
-	"additional_groups": ["Application security", "Application performance"]
+	"products": ["access", "cloudflare-tunnel", "browser-isolation"]
 }

@@ -1,9 +1,7 @@
 {
 	"title": "Holistic AI security with Cloudflare One",
 	"path": "/learning-paths/holistic-ai-security/concepts/",
-	"priority": 18,
 	"description": "Address new security challenges and mitigate risks like shadow AI and data loss.",
 	"pcx_content_type": "learning-path",
-	"products": ["casb", "access", "gateway"],
-	"product_group": "Cloudflare One"
+	"products": ["casb", "access", "gateway"]
 }

@@ -1,10 +1,7 @@
 {
 	"title": "Introduction to Cloudflare Workflows",
 	"path": "/learning-paths/workflows-course/series/workflows-1/",
-	"priority": 2,
 	"pcx_content_type": "learning-path",
 	"description": "In this series, we introduce Cloudflare Workflows and the term 'Durable Execution' which comes from the desire to run applications that can resume execution from where they left off, even if the underlying host or compute fails.",
-	"products": ["durable-objects", "workers", "workflows"],
-	"product_group": "Developer platform",
-	"video": true
+	"products": ["durable-objects", "workers", "workflows"]
 }

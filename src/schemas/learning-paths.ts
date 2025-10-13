@@ -6,7 +6,6 @@ export const learningPathsSchema = z
 		title: z.string(),
 		uid: z.string().optional(),
 		path: z.string(),
-		priority: z.number(),
 		description: z.string(),
 		pcx_content_type: z.string().default("learning-path"),
 		products: z
@@ -15,9 +14,12 @@ export const learningPathsSchema = z
 			.describe(
 				"The names of related products (according to their file name in `src/content/products`). Usually, these correspond to file paths, but not always, such as with `cloudflare-tunnel`",
 			),
-		product_group: z.string(),
 		tags: z.string().array().optional(),
-		additional_groups: z.string().array().optional(),
-		video: z.boolean().default(false),
+		reviewed: z
+			.date()
+			.optional()
+			.describe(
+				"A `YYYY-MM-DD` value that signals when the page was last explicitly reviewed from beginning to end. This is used to sort learning paths presented in the [ResourcesBySelector component](/style-guide/components/resources-by-selector/).",
+			),
 	})
 	.strict();
