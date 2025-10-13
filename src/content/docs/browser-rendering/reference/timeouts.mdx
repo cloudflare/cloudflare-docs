@@ -15,12 +15,16 @@ Each timer controls a specific part of the rendering lifecycle — from page loa
 | -------------------------------------- | --------------- | --------------- | --------------- |
 |  `goToOptions.timeout`     | Time to wait for the page to load before timeout.  |   30 s       |   60 s        |
 <<<<<<< HEAD
+<<<<<<< HEAD
 |  `goToOptions.waitUntil`    |  Time until page load considered complete: <br />`load` = full page load, including resources, like images and stylesheets. <br />`Event.domcontentloaded` = waits until the DOM content has been fully loaded, fires before the page `load` event. <br />`Event.networkidle0` = there are no active network connections for at least 500 ms. <br />`Event.networkidle2` = there are no more than two active network connections for at least 500 ms.         |     —      |     —      |
 |  `waitForSelector`   | Time to wait for a specific element (any CSS selector) to appear on the page.  |    null      |     60 s      |
 |  `waitForTimeout`     | Additional amount of time to wait after the page has loaded to proceed with actions.  |     null     |      5 min     |
 |  `actionTimeout`     |  Time to wait for the action itself (for example: a screenshot, PDF, or scrape) to complete after the page has loaded.  |    null      |      5 min     |
 =======
 |  `goToOptions.waitUntil`    |  Waits for an event to fire. load (default) — waits for the full load event.domcontentloaded — waits for the DOMContentLoaded event.networkidle0 — waits until there are no more than 0 network connections for at least 500 ms.networkidle2 — waits until there are no more than 2 network connections for at least 500 ms. |  Load is the default        |     —      |
+=======
+|  `goToOptions.waitUntil`    |  Time to consider page load complete: <br/>*`load`—Full load<br/>*`Event.domcontentloaded`—`DOMContentLoaded` loads<br/>*`Event.networkidle0`—No active network connections for at least 500 ms<br/>*`networkidle2`—No more than 2 network connections for at least 500 ms         |     —      |
+>>>>>>> d796847136 (Update src/content/docs/browser-rendering/reference/timeouts.mdx)
 |  `waitForSelector`   | Time to wait for a specific element (any CSS selector) to appear on the page.  |    null      |     60 s      |
 <<<<<<< HEAD
 |  `waitForTimeout`     | After the page has loaded, waits an additional fixed time before proceeding.  |     null     |      60 s     |
