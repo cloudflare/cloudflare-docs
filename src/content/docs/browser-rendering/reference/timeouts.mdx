@@ -13,7 +13,7 @@ Each timer controls a specific part of the rendering lifecycle — from page loa
 
 | Timer                                | Scope           |Default           |Max           |
 | -------------------------------------- | --------------- | --------------- | --------------- |
-|  `goToOptions.timeout`     | How long to wait for the page to load.  |   30 s       |   60 s        |
+|  `goToOptions.timeout`     | Time to wait for the page to load before timeout.  |   30 s       |   60 s        |
 |  `goToOptions.waitUntil`    |  Waits for an event to fire. load (default) — waits for the full load event.domcontentloaded — waits for the DOMContentLoaded event.networkidle0 — waits until there are no more than 0 network connections for at least 500 ms.networkidle2 — waits until there are no more than 2 network connections for at least 500 ms. |  Load is the default        |     —      |
 |  `waitForSelector`   | Waits for a specific element to appear on the page. Can be any CSS selector.  |    null      |     60 s      |
 |  `waitForTimeout`     | After the page has loaded, waits an additional fixed time before proceeding.  |     null     |      60 s     |
