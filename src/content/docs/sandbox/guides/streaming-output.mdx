@@ -1,0 +1,530 @@
+---
+title: Stream output
+pcx_content_type: how-to
+sidebar:
+  order: 7
+---
+
+import { TypeScriptExample } from "~/components";
+
+This guide shows you how to handle real-time output from commands, processes, and code execution.
+
+## Prerequisites
+
+- Existing sandbox instance (see [Get Started](/sandbox/get-started/))
+- Understanding of async streams and Server-Sent Events (SSE)
+
+## When to use streaming
+
+Use streaming when you need:
+
+- **Real-time feedback** - Show progress as it happens
+- **Long-running operations** - Builds, tests, installations that take time
+- **Interactive applications** - Chat bots, code execution, live demos
+- **Large output** - Process output incrementally instead of all at once
+- **User experience** - Prevent users from waiting with no feedback
+
+Use non-streaming (`exec()`) for:
+
+- **Quick operations** - Commands that complete in seconds
+- **Small output** - When output fits easily in memory
+- **Post-processing** - When you need complete output before processing
+
+## Stream command execution
+
+### Using exec() with callbacks
+
+The simplest approach for streaming output:
+
+<TypeScriptExample>
+```
+import { getSandbox } from '@cloudflare/sandbox';
+
+const sandbox = getSandbox(env.Sandbox, 'my-sandbox');
+
+// Execute with streaming callbacks
+const result = await sandbox.exec('npm install express', {
+  stream: true,
+  onOutput: (stream, data) => {
+    if (stream === 'stdout') {
+      console.log('OUT:', data);
+    } else {
+      console.error('ERR:', data);
+    }
+  }
+});
+
+console.log('Installation complete, exit code:', result.exitCode);
+```
+</TypeScriptExample>
+
+### Using execStream() for full control
+
+For more control over stream handling:
+
+<TypeScriptExample>
+```
+import { parseSSEStream, type ExecEvent } from '@cloudflare/sandbox';
+
+// Execute and get stream
+const stream = await sandbox.execStream('npm run build');
+
+// Process events
+for await (const event of parseSSEStream<ExecEvent>(stream)) {
+  switch (event.type) {
+    case 'start':
+      console.log('Build started:', event.command);
+      break;
+
+    case 'stdout':
+      console.log('OUTPUT:', event.data);
+      break;
+
+    case 'stderr':
+      console.error('ERROR:', event.data);
+      break;
+
+    case 'complete':
+      console.log('Build finished with exit code:', event.exitCode);
+      break;
+
+    case 'error':
+      console.error('Execution failed:', event.error);
+      break;
+  }
+}
+```
+</TypeScriptExample>
+
+## Stream to client
+
+Return streaming output directly to users:
+
+<TypeScriptExample>
+```
+export default {
+  async fetch(request: Request, env: Env): Promise<Response> {
+    const url = new URL(request.url);
+
+    if (url.pathname === '/build') {
+      const sandbox = getSandbox(env.Sandbox, 'builder');
+
+      // Get stream from command
+      const stream = await sandbox.execStream('npm run build');
+
+      // Return stream directly to client
+      return new Response(stream, {
+        headers: {
+          'Content-Type': 'text/event-stream',
+          'Cache-Control': 'no-cache',
+          'Connection': 'keep-alive'
+        }
+      });
+    }
+
+    return new Response('Not found', { status: 404 });
+  }
+};
+```
+</TypeScriptExample>
+
+### Client-side consumption
+
+<TypeScriptExample>
+```
+// Browser JavaScript to consume SSE stream
+const eventSource = new EventSource('/build');
+
+eventSource.addEventListener('stdout', (event) => {
+  const data = JSON.parse(event.data);
+  console.log('Build output:', data.data);
+  document.getElementById('output').textContent += data.data + '\\n';
+});
+
+eventSource.addEventListener('complete', (event) => {
+  const data = JSON.parse(event.data);
+  console.log('Build complete, exit code:', data.exitCode);
+  eventSource.close();
+});
+
+eventSource.addEventListener('error', (event) => {
+  console.error('Stream error:', event);
+  eventSource.close();
+});
+```
+</TypeScriptExample>
+
+## Track progress
+
+### Parse output for progress indicators
+
+<TypeScriptExample>
+```
+const stream = await sandbox.execStream('npm test');
+
+let testsRun = 0;
+let testsPassed = 0;
+let testsFailed = 0;
+
+for await (const event of parseSSEStream<ExecEvent>(stream)) {
+  if (event.type === 'stdout') {
+    // Count test results
+    if (event.data.includes('✓')) {
+      testsPassed++;
+      testsRun++;
+      console.log(`Tests: ${testsPassed} passed, ${testsFailed} failed (${testsRun} total)`);
+    } else if (event.data.includes('✗')) {
+      testsFailed++;
+      testsRun++;
+      console.log(`Tests: ${testsPassed} passed, ${testsFailed} failed (${testsRun} total)`);
+    }
+  }
+
+  if (event.type === 'complete') {
+    console.log(`Test run complete: ${testsPassed}/${testsRun} passed`);
+  }
+}
+```
+</TypeScriptExample>
+
+### Real-time progress updates
+
+<TypeScriptExample>
+```
+export default {
+  async fetch(request: Request, env: Env): Promise<Response> {
+    const sandbox = getSandbox(env.Sandbox, 'build-system');
+
+    // Start build with streaming
+    const stream = await sandbox.execStream('npm run build');
+
+    // Transform stream to add progress info
+    const transformStream = new TransformStream({
+      transform(chunk, controller) {
+        // Parse SSE event
+        const text = new TextDecoder().decode(chunk);
+
+        if (text.includes('Building')) {
+          controller.enqueue(
+            new TextEncoder().encode(
+              `data: ${JSON.stringify({ type: 'progress', percent: 25 })}\\n\\n`
+            )
+          );
+        } else if (text.includes('Optimizing')) {
+          controller.enqueue(
+            new TextEncoder().encode(
+              `data: ${JSON.stringify({ type: 'progress', percent: 75 })}\\n\\n`
+            )
+          );
+        }
+
+        // Pass through original
+        controller.enqueue(chunk);
+      }
+    });
+
+    return new Response(stream.pipeThrough(transformStream), {
+      headers: {
+        'Content-Type': 'text/event-stream',
+        'Cache-Control': 'no-cache'
+      }
+    });
+  }
+};
+```
+</TypeScriptExample>
+
+## Stream process logs
+
+Monitor background process output:
+
+<TypeScriptExample>
+```
+import { parseSSEStream, type LogEvent } from '@cloudflare/sandbox';
+
+// Start background process
+const process = await sandbox.startProcess('node server.js');
+
+// Stream logs in real-time
+const logStream = await sandbox.streamProcessLogs(process.id);
+
+for await (const log of parseSSEStream<LogEvent>(logStream)) {
+  console.log(`[${log.timestamp}] ${log.data}`);
+
+  // React to specific log messages
+  if (log.data.includes('Server listening on port')) {
+    console.log('Server is ready');
+    // Expose port now that server is ready
+    await sandbox.exposePort(3000);
+    break;
+  }
+
+  if (log.data.includes('ERROR') || log.data.includes('FATAL')) {
+    console.error('Server error detected:', log.data);
+    // Handle error
+  }
+}
+```
+</TypeScriptExample>
+
+## Stream code execution
+
+Stream output from code interpreter:
+
+<TypeScriptExample>
+```
+// Create code context
+const context = await sandbox.createCodeContext({
+  language: 'python'
+});
+
+// Execute with streaming
+const result = await sandbox.runCode(
+  context.id,
+  `
+import time
+
+for i in range(10):
+    print(f"Processing item {i+1}/10...")
+    time.sleep(0.5)
+
+print("Complete!")
+`,
+  {
+    stream: true,
+    onOutput: (data) => {
+      console.log('Output:', data);
+      // Send to client via WebSocket or SSE
+    },
+    onResult: (result) => {
+      console.log('Execution complete');
+      console.log('Outputs:', result.outputs);
+    },
+    onError: (error) => {
+      console.error('Execution error:', error);
+    }
+  }
+);
+
+console.log('Final result:', result);
+```
+</TypeScriptExample>
+
+## Buffer and batch output
+
+For high-frequency output, buffer updates:
+
+<TypeScriptExample>
+```
+const stream = await sandbox.execStream('npm test -- --verbose');
+
+let buffer = '';
+let lastUpdate = Date.now();
+const UPDATE_INTERVAL = 100; // ms
+
+for await (const event of parseSSEStream<ExecEvent>(stream)) {
+  if (event.type === 'stdout' || event.type === 'stderr') {
+    buffer += event.data;
+
+    // Batch updates every 100ms
+    if (Date.now() - lastUpdate > UPDATE_INTERVAL) {
+      console.log(buffer);
+      buffer = '';
+      lastUpdate = Date.now();
+    }
+  }
+
+  if (event.type === 'complete') {
+    // Flush remaining buffer
+    if (buffer) {
+      console.log(buffer);
+    }
+    console.log('Complete');
+  }
+}
+```
+</TypeScriptExample>
+
+## Filter and transform output
+
+Process streaming output selectively:
+
+<TypeScriptExample>
+```
+const stream = await sandbox.execStream('npm install');
+
+for await (const event of parseSSEStream<ExecEvent>(stream)) {
+  if (event.type === 'stdout') {
+    // Filter out verbose npm output
+    if (event.data.includes('http fetch') || event.data.includes('timing')) {
+      continue; // Skip verbose messages
+    }
+
+    // Transform output
+    const cleaned = event.data
+      .replace(/\u001b\[[0-9;]*m/g, '') // Remove ANSI colors
+      .trim();
+
+    if (cleaned) {
+      console.log(cleaned);
+    }
+  } else if (event.type === 'stderr') {
+    // Always show errors
+    console.error('ERROR:', event.data);
+  }
+}
+```
+</TypeScriptExample>
+
+## Handle streaming errors
+
+<TypeScriptExample>
+```
+try {
+  const stream = await sandbox.execStream('npm run build');
+
+  for await (const event of parseSSEStream<ExecEvent>(stream)) {
+    switch (event.type) {
+      case 'stdout':
+        console.log(event.data);
+        break;
+
+      case 'stderr':
+        console.error(event.data);
+        break;
+
+      case 'error':
+        // Stream error occurred
+        throw new Error(`Build failed: ${event.error}`);
+
+      case 'complete':
+        if (event.exitCode !== 0) {
+          throw new Error(`Build failed with exit code ${event.exitCode}`);
+        }
+        console.log('Build succeeded');
+        break;
+    }
+  }
+} catch (error) {
+  console.error('Streaming failed:', error);
+
+  // Get accumulated logs if stream failed
+  try {
+    const logs = await sandbox.getProcessLogs(processId);
+    console.error('Full logs:', logs);
+  } catch {
+    // Ignore if can't get logs
+  }
+}
+```
+</TypeScriptExample>
+
+## Best practices
+
+### Stream handling
+
+- **Always consume streams** - Don't let streams hang unconsumed
+- **Handle all event types** - Process start, output, complete, and error events
+- **Close connections** - Clean up streams when done
+- **Use timeouts** - Set limits for long-running streams
+
+### Performance
+
+- **Buffer high-frequency output** - Batch updates to reduce overhead
+- **Filter unnecessary output** - Skip verbose messages early
+- **Use backpressure** - Let streams control flow
+- **Clean up resources** - Close streams promptly
+
+### User experience
+
+- **Show progress indicators** - Parse output for progress info
+- **Provide feedback** - Show something immediately, even if just "Starting..."
+- **Handle errors gracefully** - Show clear error messages
+- **Allow cancellation** - Let users stop long operations
+
+### Error handling
+
+- **Check exit codes** - Non-zero means failure
+- **Parse stderr** - Error details usually in stderr
+- **Save full output** - Keep complete logs for debugging
+- **Retry on failures** - Handle transient stream errors
+
+## Common patterns
+
+### Build pipeline with progress
+
+<TypeScriptExample>
+```
+async function buildWithProgress(sandbox: Sandbox) {
+  const stages = [
+    { name: 'Installing dependencies', command: 'npm install' },
+    { name: 'Running tests', command: 'npm test' },
+    { name: 'Building project', command: 'npm run build' },
+    { name: 'Running linter', command: 'npm run lint' }
+  ];
+
+  for (let i = 0; i < stages.length; i++) {
+    const stage = stages[i];
+    const progress = ((i + 1) / stages.length) * 100;
+
+    console.log(`[${progress.toFixed(0)}%] ${stage.name}...`);
+
+    const result = await sandbox.exec(stage.command, {
+      stream: true,
+      onOutput: (stream, data) => {
+        console.log(`  ${data}`);
+      }
+    });
+
+    if (!result.success) {
+      throw new Error(`${stage.name} failed: ${result.stderr}`);
+    }
+  }
+
+  console.log('[100%] Build pipeline complete');
+}
+```
+</TypeScriptExample>
+
+### Real-time log viewer
+
+<TypeScriptExample>
+```
+export default {
+  async fetch(request: Request, env: Env): Promise<Response> {
+    const url = new URL(request.url);
+
+    if (url.pathname === '/logs') {
+      const processId = url.searchParams.get('process');
+
+      if (!processId) {
+        return new Response('Missing process ID', { status: 400 });
+      }
+
+      const sandbox = getSandbox(env.Sandbox, 'my-sandbox');
+
+      // Stream logs to client
+      const logStream = await sandbox.streamProcessLogs(processId);
+
+      return new Response(logStream, {
+        headers: {
+          'Content-Type': 'text/event-stream',
+          'Cache-Control': 'no-cache',
+          'Connection': 'keep-alive',
+          'X-Accel-Buffering': 'no' // Disable nginx buffering
+        }
+      });
+    }
+
+    return new Response('Not found', { status: 404 });
+  }
+};
+```
+</TypeScriptExample>
+
+## Related resources
+
+- [Commands API reference](/sandbox/api/commands/) - Complete streaming API
+- [Execute commands guide](/sandbox/guides/execute-commands/) - Command execution patterns
+- [Background processes guide](/sandbox/guides/background-processes/) - Process log streaming
+- [Code Interpreter guide](/sandbox/guides/code-execution/) - Stream code execution output

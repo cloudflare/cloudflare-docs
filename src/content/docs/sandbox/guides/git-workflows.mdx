@@ -1,0 +1,571 @@
+---
+title: Work with Git
+pcx_content_type: how-to
+sidebar:
+  order: 6
+---
+
+import { TypeScriptExample } from "~/components";
+
+This guide shows you how to clone repositories, manage branches, and automate Git operations in the sandbox.
+
+## Prerequisites
+
+- Existing sandbox instance (see [Get Started](/sandbox/get-started/))
+- Git repository URLs (public or with authentication)
+
+## Clone repositories
+
+### Basic clone
+
+<TypeScriptExample>
+```
+import { getSandbox } from '@cloudflare/sandbox';
+
+const sandbox = getSandbox(env.Sandbox, 'my-sandbox');
+
+// Clone a public repository
+await sandbox.gitCheckout('https://github.com/user/repo');
+
+console.log('Repository cloned to /workspace/repo');
+```
+</TypeScriptExample>
+
+### Clone to specific directory
+
+<TypeScriptExample>
+```
+// Clone to custom location
+await sandbox.gitCheckout('https://github.com/user/my-app', {
+  targetDir: '/workspace/project'
+});
+
+console.log('Repository cloned to /workspace/project');
+```
+</TypeScriptExample>
+
+### Clone specific branch
+
+<TypeScriptExample>
+```
+// Clone a specific branch
+await sandbox.gitCheckout('https://github.com/user/repo', {
+  branch: 'develop',
+  targetDir: '/workspace/dev-branch'
+});
+
+console.log('Cloned develop branch');
+```
+</TypeScriptExample>
+
+### Shallow clone
+
+For faster cloning of large repositories:
+
+<TypeScriptExample>
+```
+// Clone only the latest commit
+await sandbox.gitCheckout('https://github.com/user/large-repo', {
+  depth: 1
+});
+
+console.log('Shallow clone completed');
+```
+</TypeScriptExample>
+
+## Clone private repositories
+
+### Using personal access token
+
+<TypeScriptExample>
+```
+// GitHub personal access token
+const token = env.GITHUB_TOKEN;
+const repoUrl = `https://${token}@github.com/user/private-repo.git`;
+
+await sandbox.gitCheckout(repoUrl);
+```
+</TypeScriptExample>
+
+### Using SSH key
+
+<TypeScriptExample>
+```
+// Set up SSH key
+await sandbox.writeFile('/root/.ssh/id_rsa', env.SSH_PRIVATE_KEY, {
+  mode: 0o600
+});
+
+await sandbox.writeFile('/root/.ssh/config', `
+Host github.com
+  StrictHostKeyChecking no
+  UserKnownHostsFile=/dev/null
+`);
+
+// Clone via SSH
+await sandbox.gitCheckout('git@github.com:user/private-repo.git');
+```
+</TypeScriptExample>
+
+## Clone and build
+
+Complete workflow for cloning and building projects:
+
+<TypeScriptExample>
+```
+async function cloneAndBuild(repoUrl: string) {
+  // Clone repository
+  await sandbox.gitCheckout(repoUrl);
+
+  // Extract repo name
+  const repoName = repoUrl.split('/').pop()?.replace('.git', '') || 'repo';
+
+  // Install dependencies
+  console.log('Installing dependencies...');
+  const install = await sandbox.exec(`cd ${repoName} && npm install`);
+
+  if (!install.success) {
+    throw new Error(`Install failed: ${install.stderr}`);
+  }
+
+  // Run build
+  console.log('Building project...');
+  const build = await sandbox.exec(`cd ${repoName} && npm run build`);
+
+  if (!build.success) {
+    throw new Error(`Build failed: ${build.stderr}`);
+  }
+
+  console.log('Build complete');
+
+  return {
+    repository: repoUrl,
+    directory: `/workspace/${repoName}`,
+    buildOutput: build.stdout
+  };
+}
+
+// Usage
+const result = await cloneAndBuild('https://github.com/user/my-app');
+console.log('Project ready at:', result.directory);
+```
+</TypeScriptExample>
+
+## Work with branches
+
+### List branches
+
+<TypeScriptExample>
+```
+await sandbox.gitCheckout('https://github.com/user/repo');
+
+// List all branches
+const branches = await sandbox.exec('cd repo && git branch -a');
+console.log('Branches:', branches.stdout);
+```
+</TypeScriptExample>
+
+### Switch branches
+
+<TypeScriptExample>
+```
+// Clone repository
+await sandbox.gitCheckout('https://github.com/user/repo');
+
+// Switch to different branch
+await sandbox.exec('cd repo && git checkout feature-branch');
+
+// Or fetch and checkout remote branch
+await sandbox.exec('cd repo && git fetch origin && git checkout -b local-branch origin/remote-branch');
+```
+</TypeScriptExample>
+
+### Create and switch to new branch
+
+<TypeScriptExample>
+```
+await sandbox.gitCheckout('https://github.com/user/repo');
+
+// Create new branch
+await sandbox.exec('cd repo && git checkout -b new-feature');
+
+console.log('Created and switched to new-feature branch');
+```
+</TypeScriptExample>
+
+## Make changes
+
+### Modify files and commit
+
+<TypeScriptExample>
+```
+// Clone repository
+await sandbox.gitCheckout('https://github.com/user/repo');
+
+// Read and modify file
+const readme = await sandbox.readFile('/workspace/repo/README.md');
+const updated = readme.content + '\\n\\n## New Section\\n\\nAdded via Sandbox SDK';
+
+await sandbox.writeFile('/workspace/repo/README.md', updated);
+
+// Commit changes
+await sandbox.exec('cd repo && git config user.name "Sandbox Bot"');
+await sandbox.exec('cd repo && git config user.email "bot@example.com"');
+await sandbox.exec('cd repo && git add README.md');
+await sandbox.exec('cd repo && git commit -m "Update README"');
+
+console.log('Changes committed');
+```
+</TypeScriptExample>
+
+### Create pull request
+
+<TypeScriptExample>
+```
+// Make changes and commit
+await sandbox.exec('cd repo && git checkout -b update-docs');
+// ... make changes ...
+await sandbox.exec('cd repo && git add . && git commit -m "Update documentation"');
+
+// Push to remote
+await sandbox.exec(`cd repo && git push https://${env.GITHUB_TOKEN}@github.com/user/repo.git update-docs`);
+
+// Create PR using GitHub API
+const pr = await fetch('https://api.github.com/repos/user/repo/pulls', {
+  method: 'POST',
+  headers: {
+    'Authorization': `token ${env.GITHUB_TOKEN}`,
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    title: 'Update documentation',
+    head: 'update-docs',
+    base: 'main',
+    body: 'Automated documentation updates'
+  })
+});
+
+const prData = await pr.json();
+console.log('Pull request created:', prData.html_url);
+```
+</TypeScriptExample>
+
+## Automated workflows
+
+### Clone multiple repositories
+
+<TypeScriptExample>
+```
+const repositories = [
+  'https://github.com/user/frontend',
+  'https://github.com/user/backend',
+  'https://github.com/user/shared'
+];
+
+// Clone all repositories in parallel
+await Promise.all(
+  repositories.map(repo => sandbox.gitCheckout(repo))
+);
+
+console.log('All repositories cloned');
+```
+</TypeScriptExample>
+
+### Sync repository changes
+
+<TypeScriptExample>
+```
+async function syncRepository(repoPath: string) {
+  // Fetch latest changes
+  const fetch = await sandbox.exec(`cd ${repoPath} && git fetch origin`);
+
+  if (!fetch.success) {
+    throw new Error('Failed to fetch updates');
+  }
+
+  // Check if behind remote
+  const status = await sandbox.exec(`cd ${repoPath} && git status -uno`);
+
+  if (status.stdout.includes('behind')) {
+    // Pull changes
+    const pull = await sandbox.exec(`cd ${repoPath} && git pull origin main`);
+
+    if (pull.success) {
+      console.log('Repository updated');
+      return { updated: true, changes: pull.stdout };
+    } else {
+      throw new Error(`Pull failed: ${pull.stderr}`);
+    }
+  }
+
+  console.log('Repository up to date');
+  return { updated: false };
+}
+
+// Usage
+const result = await syncRepository('/workspace/my-repo');
+if (result.updated) {
+  console.log('Changes pulled:', result.changes);
+}
+```
+</TypeScriptExample>
+
+### Monorepo workflows
+
+<TypeScriptExample>
+```
+async function setupMonorepo(repoUrl: string) {
+  // Clone monorepo
+  await sandbox.gitCheckout(repoUrl, {
+    targetDir: '/workspace/monorepo'
+  });
+
+  // List packages
+  const packages = await sandbox.exec('cd monorepo && ls -1 packages/');
+  const packageList = packages.stdout.trim().split('\\n');
+
+  console.log(`Found ${packageList.length} packages:`, packageList);
+
+  // Install dependencies for all packages
+  await sandbox.exec('cd monorepo && npm install');
+
+  // Build all packages
+  const build = await sandbox.exec('cd monorepo && npm run build --workspaces');
+
+  if (!build.success) {
+    throw new Error(`Monorepo build failed: ${build.stderr}`);
+  }
+
+  return {
+    packages: packageList,
+    buildOutput: build.stdout
+  };
+}
+
+// Usage
+const monorepo = await setupMonorepo('https://github.com/user/monorepo');
+console.log('Monorepo packages:', monorepo.packages);
+```
+</TypeScriptExample>
+
+## CI/CD integration
+
+### Run tests on clone
+
+<TypeScriptExample>
+```
+async function cloneAndTest(repoUrl: string, branch: string = 'main') {
+  // Clone specific branch
+  await sandbox.gitCheckout(repoUrl, { branch });
+
+  const repoName = repoUrl.split('/').pop()?.replace('.git', '');
+
+  // Install dependencies
+  await sandbox.exec(`cd ${repoName} && npm install`);
+
+  // Run tests
+  const test = await sandbox.exec(`cd ${repoName} && npm test`);
+
+  return {
+    success: test.success,
+    output: test.stdout,
+    errors: test.stderr,
+    exitCode: test.exitCode
+  };
+}
+
+// Usage in CI webhook
+export default {
+  async fetch(request: Request, env: Env): Promise<Response> {
+    const webhook = await request.json();
+
+    if (webhook.ref === 'refs/heads/main') {
+      const sandbox = getSandbox(env.Sandbox, `test-${webhook.after}`);
+
+      const results = await cloneAndTest(
+        webhook.repository.clone_url,
+        'main'
+      );
+
+      // Report results
+      await reportToGitHub(webhook, results);
+
+      return Response.json(results);
+    }
+
+    return new Response('OK', { status: 200 });
+  }
+};
+```
+</TypeScriptExample>
+
+### Automated deployment
+
+<TypeScriptExample>
+```
+async function deployFromGit(repoUrl: string, branch: string = 'main') {
+  // Clone repository
+  await sandbox.gitCheckout(repoUrl, { branch });
+
+  const repoName = repoUrl.split('/').pop()?.replace('.git', '');
+
+  // Install and build
+  await sandbox.exec(`cd ${repoName} && npm install && npm run build`);
+
+  // Start application
+  const process = await sandbox.startProcess(`cd ${repoName} && npm start`);
+
+  // Wait for server to start
+  await new Promise(resolve => setTimeout(resolve, 3000));
+
+  // Expose port
+  const exposed = await sandbox.exposePort(3000, {
+    name: 'deployment'
+  });
+
+  return {
+    status: 'deployed',
+    url: exposed.exposedAt,
+    processId: process.id,
+    branch
+  };
+}
+
+// Usage
+const deployment = await deployFromGit(
+  'https://github.com/user/app',
+  'production'
+);
+
+console.log('Deployed at:', deployment.url);
+```
+</TypeScriptExample>
+
+## Best practices
+
+### Repository management
+
+- **Use shallow clones** - Faster for large repos with `depth: 1`
+- **Clone to specific directories** - Avoid name conflicts with `targetDir`
+- **Clean up old clones** - Delete unused repositories to save space
+- **Cache credentials** - Store tokens in environment variables
+
+### Branch management
+
+- **Specify branches** - Clone specific branches when possible
+- **Check out sparse** - Use sparse checkout for large monorepos
+- **Track remote branches** - Keep local branches synced with remote
+- **Clean up branches** - Delete merged branches to save resources
+
+### Security
+
+- **Protect tokens** - Never hardcode tokens in code
+- **Use environment variables** - Store credentials securely
+- **Limit token scope** - Use minimal permissions needed
+- **Rotate tokens regularly** - Update credentials periodically
+
+### Performance
+
+- **Shallow clones** - Use `depth: 1` for CI/CD workflows
+- **Parallel clones** - Clone multiple repos concurrently
+- **Incremental updates** - Pull instead of re-cloning when possible
+- **Clean up** - Remove `.git` directory if not needed after clone
+
+## Common issues
+
+### Clone fails with authentication
+
+**Problem**: "Authentication failed" or "Permission denied" errors.
+
+**Solution**: Check credentials and repository access:
+
+<TypeScriptExample>
+```
+// Verify token has required permissions
+const token = env.GITHUB_TOKEN;
+
+if (!token) {
+  throw new Error('GITHUB_TOKEN not configured');
+}
+
+// Test token with API call
+const test = await fetch('https://api.github.com/user', {
+  headers: {
+    'Authorization': `token ${token}`
+  }
+});
+
+if (!test.ok) {
+  throw new Error('Invalid GitHub token');
+}
+
+// Now try cloning
+const repoUrl = `https://${token}@github.com/user/private-repo.git`;
+await sandbox.gitCheckout(repoUrl);
+```
+</TypeScriptExample>
+
+### Large repository timeout
+
+**Problem**: Clone times out for large repositories.
+
+**Solution**: Use shallow clone or sparse checkout:
+
+<TypeScriptExample>
+```
+// Option 1: Shallow clone (fastest)
+await sandbox.gitCheckout('https://github.com/user/large-repo', {
+  depth: 1
+});
+
+// Option 2: Sparse checkout (specific paths only)
+await sandbox.exec(`
+  git clone --filter=blob:none --sparse https://github.com/user/large-repo
+  cd large-repo
+  git sparse-checkout set packages/my-package
+`);
+```
+</TypeScriptExample>
+
+### Merge conflicts
+
+**Problem**: Pull fails due to merge conflicts.
+
+**Solution**: Stash changes or hard reset:
+
+<TypeScriptExample>
+```
+// Option 1: Stash changes
+await sandbox.exec('cd repo && git stash');
+await sandbox.exec('cd repo && git pull origin main');
+await sandbox.exec('cd repo && git stash pop');
+
+// Option 2: Hard reset (discards local changes)
+await sandbox.exec('cd repo && git fetch origin');
+await sandbox.exec('cd repo && git reset --hard origin/main');
+```
+</TypeScriptExample>
+
+### Submodule issues
+
+**Problem**: Repository has submodules that aren't cloned.
+
+**Solution**: Clone with submodules:
+
+<TypeScriptExample>
+```
+// Clone with submodules
+await sandbox.exec('git clone --recursive https://github.com/user/repo');
+
+// Or update submodules after cloning
+await sandbox.gitCheckout('https://github.com/user/repo');
+await sandbox.exec('cd repo && git submodule update --init --recursive');
+```
+</TypeScriptExample>
+
+## Related resources
+
+- [Files API reference](/sandbox/api/files/) - File operations after cloning
+- [Execute commands guide](/sandbox/guides/execute-commands/) - Run git commands
+- [Manage files guide](/sandbox/guides/manage-files/) - Work with cloned files
+- [CI/CD tutorial](/sandbox/tutorials/build-system/) - Automated testing workflows

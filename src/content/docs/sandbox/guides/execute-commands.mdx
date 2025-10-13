@@ -1,0 +1,363 @@
+---
+title: Execute commands
+pcx_content_type: how-to
+sidebar:
+  order: 1
+---
+
+import { TypeScriptExample } from "~/components";
+
+This guide shows you how to execute commands in the sandbox, handle output, and manage errors effectively.
+
+## Prerequisites
+
+- Existing sandbox instance (see [Get Started](/sandbox/get-started/))
+- Familiar with async/await patterns
+
+## Choose the right method
+
+The SDK provides two methods for command execution:
+
+- **`exec()`** - Run a command and wait for complete result. Best for most use cases.
+- **`execStream()`** - Stream output in real-time. Best for long-running commands where you need immediate feedback.
+
+## Execute basic commands
+
+Use `exec()` for simple commands that complete quickly:
+
+<TypeScriptExample>
+```
+import { getSandbox } from '@cloudflare/sandbox';
+
+const sandbox = getSandbox(env.Sandbox, 'my-sandbox');
+
+// Execute a single command
+const result = await sandbox.exec('python --version');
+
+console.log(result.stdout);   // "Python 3.11.0"
+console.log(result.exitCode); // 0
+console.log(result.success);  // true
+```
+</TypeScriptExample>
+
+## Pass arguments safely
+
+When passing user input or dynamic values, avoid string interpolation to prevent injection attacks:
+
+<TypeScriptExample>
+```
+// ❌ Unsafe - vulnerable to injection
+const filename = userInput;
+await sandbox.exec(`cat ${filename}`);
+
+// ✅ Safe - use proper escaping or validation
+const safeFilename = filename.replace(/[^a-zA-Z0-9_.-]/g, '');
+await sandbox.exec(`cat ${safeFilename}`);
+
+// ✅ Better - write to file and execute
+await sandbox.writeFile('/tmp/input.txt', userInput);
+await sandbox.exec('python process.py /tmp/input.txt');
+```
+</TypeScriptExample>
+
+## Handle errors
+
+Commands can fail in two ways:
+
+1. **Non-zero exit code** - Command ran but failed (result.success === false)
+2. **Execution error** - Command couldn't start (throws exception)
+
+<TypeScriptExample>
+```
+try {
+  const result = await sandbox.exec('python analyze.py');
+
+  if (!result.success) {
+    // Command failed (non-zero exit code)
+    console.error('Analysis failed:', result.stderr);
+    console.log('Exit code:', result.exitCode);
+
+    // Handle specific exit codes
+    if (result.exitCode === 1) {
+      throw new Error('Invalid input data');
+    } else if (result.exitCode === 2) {
+      throw new Error('Missing dependencies');
+    }
+  }
+
+  // Success - process output
+  return JSON.parse(result.stdout);
+
+} catch (error) {
+  // Execution error (couldn't start command)
+  console.error('Execution failed:', error.message);
+  throw error;
+}
+```
+</TypeScriptExample>
+
+## Stream output in real-time
+
+For long-running commands like builds or installations, use streaming to provide immediate feedback:
+
+<TypeScriptExample>
+```
+// Option 1: Using exec() with callbacks (simpler)
+const result = await sandbox.exec('npm install && npm run build', {
+  stream: true,
+  onOutput: (stream, data) => {
+    if (stream === 'stdout') {
+      console.log(data);
+    } else {
+      console.error(data);
+    }
+  }
+});
+
+console.log('Build complete, exit code:', result.exitCode);
+```
+</TypeScriptExample>
+
+<TypeScriptExample>
+```
+// Option 2: Using execStream() (more control)
+import { parseSSEStream, type ExecEvent } from '@cloudflare/sandbox';
+
+const stream = await sandbox.execStream('npm test');
+
+for await (const event of parseSSEStream<ExecEvent>(stream)) {
+  switch (event.type) {
+    case 'start':
+      console.log('Tests started');
+      break;
+
+    case 'stdout':
+      // Parse and process output in real-time
+      if (event.data.includes('PASS')) {
+        console.log('✓ Test passed');
+      }
+      break;
+
+    case 'stderr':
+      console.error('Error:', event.data);
+      break;
+
+    case 'complete':
+      console.log('Tests finished, exit code:', event.exitCode);
+      break;
+
+    case 'error':
+      console.error('Execution failed:', event.error);
+      break;
+  }
+}
+```
+</TypeScriptExample>
+
+## Execute shell commands
+
+The sandbox supports shell features like pipes, redirects, and variable expansion:
+
+<TypeScriptExample>
+```
+// Pipes and filters
+const result = await sandbox.exec('ls -la | grep ".py" | wc -l');
+console.log('Python files:', result.stdout.trim());
+
+// Output redirection
+await sandbox.exec('python generate.py > output.txt 2> errors.txt');
+
+// Multiple commands
+await sandbox.exec('cd /workspace && npm install && npm test');
+
+// Environment variables
+await sandbox.exec('export API_KEY=secret && python app.py');
+```
+</TypeScriptExample>
+
+## Run commands with timeouts
+
+Prevent commands from running indefinitely:
+
+<TypeScriptExample>
+```
+try {
+  const result = await sandbox.exec('python slow-script.py', {
+    timeout: 30000  // 30 second timeout
+  });
+
+  console.log('Completed in time:', result.stdout);
+
+} catch (error) {
+  if (error.message.includes('timeout')) {
+    console.error('Command timed out after 30 seconds');
+    // Handle timeout - maybe kill related processes
+    await sandbox.killAllProcesses();
+  } else {
+    throw error;
+  }
+}
+```
+</TypeScriptExample>
+
+## Execute Python scripts
+
+Common patterns for running Python code:
+
+<TypeScriptExample>
+```
+// Run inline Python
+const result = await sandbox.exec('python -c "print(sum([1, 2, 3, 4, 5]))"');
+console.log('Sum:', result.stdout.trim()); // "15"
+
+// Run a script file
+await sandbox.writeFile('/workspace/analyze.py', `
+import sys
+import json
+
+data = json.loads(sys.argv[1])
+result = sum(data)
+print(json.dumps({"sum": result}))
+`);
+
+const output = await sandbox.exec(
+  `python /workspace/analyze.py '${JSON.stringify([1, 2, 3])}'`
+);
+
+const parsed = JSON.parse(output.stdout);
+console.log('Result:', parsed.sum); // 6
+```
+</TypeScriptExample>
+
+## Execute Node.js scripts
+
+<TypeScriptExample>
+```
+// Install dependencies first
+await sandbox.exec('npm install lodash');
+
+// Run Node.js script
+await sandbox.writeFile('/workspace/process.js', `
+const _ = require('lodash');
+const data = [1, 2, 3, 4, 5];
+console.log(JSON.stringify({
+  sum: _.sum(data),
+  mean: _.mean(data)
+}));
+`);
+
+const result = await sandbox.exec('node /workspace/process.js');
+const stats = JSON.parse(result.stdout);
+
+console.log('Sum:', stats.sum);   // 15
+console.log('Mean:', stats.mean); // 3
+```
+</TypeScriptExample>
+
+## Best practices
+
+### Command design
+
+- **Keep commands simple** - Break complex operations into multiple commands
+- **Make commands idempotent** - Commands should be safe to retry
+- **Validate inputs** - Never trust user input in commands
+- **Use absolute paths** - Avoid ambiguity with working directories
+
+### Error handling
+
+- **Always check exit codes** - Non-zero means failure even if no exception
+- **Capture stderr** - Error messages help debug failures
+- **Provide context** - Log the command that failed for debugging
+- **Handle timeouts** - Don't let commands hang indefinitely
+
+### Performance
+
+- **Use streaming for long operations** - Provide immediate feedback to users
+- **Batch related commands** - Use `&&` to chain dependent operations
+- **Cache installations** - Don't reinstall packages every time
+- **Set appropriate timeouts** - Balance between too short and too long
+
+### Security
+
+- **Escape user input** - Prevent command injection attacks
+- **Limit command scope** - Use working directories to restrict access
+- **Validate command output** - Don't trust command results blindly
+- **Use environment variables** - Safer than inline secrets
+
+## Common issues
+
+### Command not found
+
+**Problem**: Command fails with "command not found" error.
+
+**Solution**: Verify the command exists or install it first:
+
+<TypeScriptExample>
+```
+// Check if command exists
+const check = await sandbox.exec('which python3');
+if (!check.success) {
+  // Install if needed
+  await sandbox.exec('apt-get update && apt-get install -y python3');
+}
+
+// Now safe to use
+await sandbox.exec('python3 script.py');
+```
+</TypeScriptExample>
+
+### Working directory issues
+
+**Problem**: Command can't find files because it's running in wrong directory.
+
+**Solution**: Use absolute paths or change directory in command:
+
+<TypeScriptExample>
+```
+// Option 1: Use absolute paths
+await sandbox.exec('python /workspace/my-app/script.py');
+
+// Option 2: Change directory in command
+await sandbox.exec('cd /workspace/my-app && python script.py');
+
+// Option 3: Use startProcess() with cwd option (for background processes)
+await sandbox.startProcess('python script.py', {
+  cwd: '/workspace/my-app'
+});
+```
+</TypeScriptExample>
+
+### Output too large
+
+**Problem**: Command produces huge output that causes performance issues.
+
+**Solution**: Stream output and process incrementally, or redirect to file:
+
+<TypeScriptExample>
+```
+// Option 1: Redirect to file
+await sandbox.exec('python generate-large-data.py > /tmp/output.txt');
+const result = await sandbox.readFile('/tmp/output.txt');
+
+// Option 2: Stream and process incrementally
+const stream = await sandbox.execStream('python generate-data.py');
+let processedCount = 0;
+
+for await (const event of parseSSEStream<ExecEvent>(stream)) {
+  if (event.type === 'stdout') {
+    // Process each line immediately
+    processLine(event.data);
+    processedCount++;
+  }
+}
+
+console.log(`Processed ${processedCount} lines`);
+```
+</TypeScriptExample>
+
+## Related resources
+
+- [Commands API reference](/sandbox/api/commands/) - Complete method documentation
+- [Background processes guide](/sandbox/guides/background-processes/) - Managing long-running processes
+- [Streaming output guide](/sandbox/guides/streaming-output/) - Advanced streaming patterns
+- [Code Interpreter guide](/sandbox/guides/code-execution/) - Higher-level code execution

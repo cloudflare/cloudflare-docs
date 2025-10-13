@@ -1,0 +1,564 @@
+---
+title: Manage files
+pcx_content_type: how-to
+sidebar:
+  order: 2
+---
+
+import { TypeScriptExample } from "~/components";
+
+This guide shows you how to read, write, organize, and synchronize files in the sandbox filesystem.
+
+## Prerequisites
+
+- Existing sandbox instance (see [Get Started](/sandbox/get-started/))
+- Understanding of absolute vs relative paths
+
+## Path conventions
+
+All file operations use absolute paths in the sandbox:
+
+- `/workspace` - Default working directory for application files (recommended)
+- `/tmp` - Temporary files (may be cleared)
+- `/home` - User home directory
+
+<TypeScriptExample>
+```
+// ✅ Use absolute paths
+await sandbox.writeFile('/workspace/app.js', code);
+
+// ❌ Don't use relative paths
+await sandbox.writeFile('app.js', code); // Will fail
+```
+</TypeScriptExample>
+
+## Write files
+
+### Write text files
+
+<TypeScriptExample>
+```
+import { getSandbox } from '@cloudflare/sandbox';
+
+const sandbox = getSandbox(env.Sandbox, 'my-sandbox');
+
+// Write a simple text file
+await sandbox.writeFile('/workspace/app.js', `
+console.log('Hello from sandbox!');
+`);
+
+// Write with specific encoding
+await sandbox.writeFile('/workspace/data.txt', content, {
+  encoding: 'utf-8'
+});
+```
+</TypeScriptExample>
+
+### Write JSON configuration
+
+<TypeScriptExample>
+```
+const config = {
+  name: 'my-app',
+  version: '1.0.0',
+  environment: 'production',
+  database: {
+    host: 'localhost',
+    port: 5432
+  }
+};
+
+await sandbox.writeFile(
+  '/workspace/config.json',
+  JSON.stringify(config, null, 2)
+);
+```
+</TypeScriptExample>
+
+### Write binary files
+
+<TypeScriptExample>
+```
+// Write base64-encoded image
+const imageBase64 = '...'; // Base64 image data
+
+await sandbox.writeFile('/workspace/logo.png', imageBase64, {
+  encoding: 'base64'
+});
+
+// Write buffer data
+const buffer = await fetch(imageUrl).then(r => r.arrayBuffer());
+const base64 = btoa(String.fromCharCode(...new Uint8Array(buffer)));
+
+await sandbox.writeFile('/workspace/image.png', base64, {
+  encoding: 'base64'
+});
+```
+</TypeScriptExample>
+
+## Read files
+
+### Read text files
+
+<TypeScriptExample>
+```
+// Read a file
+const file = await sandbox.readFile('/workspace/app.js');
+console.log(file.content);
+console.log(file.encoding); // 'utf-8'
+```
+</TypeScriptExample>
+
+### Read and parse JSON
+
+<TypeScriptExample>
+```
+const file = await sandbox.readFile('/workspace/package.json');
+const packageJson = JSON.parse(file.content);
+
+console.log('Project:', packageJson.name);
+console.log('Version:', packageJson.version);
+console.log('Dependencies:', Object.keys(packageJson.dependencies || {}));
+```
+</TypeScriptExample>
+
+### Read binary files
+
+<TypeScriptExample>
+```
+const file = await sandbox.readFile('/workspace/image.png', {
+  encoding: 'base64'
+});
+
+// file.content is base64-encoded
+const dataUrl = `data:image/png;base64,${file.content}`;
+
+// Or send to client
+return new Response(atob(file.content), {
+  headers: { 'Content-Type': 'image/png' }
+});
+```
+</TypeScriptExample>
+
+## Organize files
+
+### Create directories
+
+<TypeScriptExample>
+```
+// Create single directory
+await sandbox.mkdir('/workspace/src');
+
+// Create nested directories
+await sandbox.mkdir('/workspace/src/components/ui', {
+  recursive: true
+});
+
+// Create project structure
+await sandbox.mkdir('/workspace/src', { recursive: true });
+await sandbox.mkdir('/workspace/tests', { recursive: true });
+await sandbox.mkdir('/workspace/public', { recursive: true });
+```
+</TypeScriptExample>
+
+### Move and rename files
+
+<TypeScriptExample>
+```
+// Rename a file
+await sandbox.renameFile(
+  '/workspace/draft.txt',
+  '/workspace/final.txt'
+);
+
+// Move to different directory
+await sandbox.moveFile(
+  '/tmp/download.txt',
+  '/workspace/data.txt'
+);
+
+// Organize files into structure
+const files = ['app.js', 'server.js', 'utils.js'];
+await sandbox.mkdir('/workspace/src', { recursive: true });
+
+for (const file of files) {
+  await sandbox.moveFile(
+    `/workspace/${file}`,
+    `/workspace/src/${file}`
+  );
+}
+```
+</TypeScriptExample>
+
+### Delete files
+
+<TypeScriptExample>
+```
+// Delete a single file
+await sandbox.deleteFile('/workspace/temp.txt');
+
+// Clean up multiple files
+const tempFiles = [
+  '/tmp/build-output.log',
+  '/tmp/cache.json',
+  '/workspace/.env.local'
+];
+
+for (const file of tempFiles) {
+  try {
+    await sandbox.deleteFile(file);
+  } catch (error) {
+    console.log(`Could not delete ${file}:`, error.message);
+  }
+}
+```
+</TypeScriptExample>
+
+## Work with project structures
+
+### Create a complete project
+
+<TypeScriptExample>
+```
+// Create directory structure
+await sandbox.mkdir('/workspace/my-app/src', { recursive: true });
+await sandbox.mkdir('/workspace/my-app/tests', { recursive: true });
+
+// Create package.json
+await sandbox.writeFile('/workspace/my-app/package.json', JSON.stringify({
+  name: 'my-app',
+  version: '1.0.0',
+  scripts: {
+    start: 'node src/index.js',
+    test: 'jest'
+  },
+  dependencies: {
+    express: '^4.18.0'
+  }
+}, null, 2));
+
+// Create main application file
+await sandbox.writeFile('/workspace/my-app/src/index.js', `
+const express = require('express');
+const app = express();
+
+app.get('/', (req, res) => {
+  res.json({ status: 'running' });
+});
+
+app.listen(3000, () => {
+  console.log('Server started on port 3000');
+});
+`);
+
+// Install and run
+await sandbox.exec('cd /workspace/my-app && npm install');
+await sandbox.startProcess('node src/index.js', {
+  cwd: '/workspace/my-app'
+});
+```
+</TypeScriptExample>
+
+### Clone from Git and modify
+
+<TypeScriptExample>
+```
+// Clone repository
+await sandbox.gitCheckout('https://github.com/user/repo', {
+  targetDir: '/workspace/project'
+});
+
+// Read and modify configuration
+const configFile = await sandbox.readFile('/workspace/project/config.json');
+const config = JSON.parse(configFile.content);
+
+config.environment = 'development';
+config.apiUrl = 'https://api.example.com';
+
+// Write back
+await sandbox.writeFile(
+  '/workspace/project/config.json',
+  JSON.stringify(config, null, 2)
+);
+
+// Build project
+await sandbox.exec('cd /workspace/project && npm install && npm run build');
+```
+</TypeScriptExample>
+
+## Batch operations
+
+### Write multiple files
+
+<TypeScriptExample>
+```
+const files = {
+  '/workspace/src/app.js': 'console.log("app");',
+  '/workspace/src/utils.js': 'console.log("utils");',
+  '/workspace/src/config.js': 'module.exports = { port: 3000 };',
+  '/workspace/README.md': '# My Project\n\nA sample project.'
+};
+
+// Write all files in parallel
+await Promise.all(
+  Object.entries(files).map(([path, content]) =>
+    sandbox.writeFile(path, content)
+  )
+);
+
+console.log('All files created');
+```
+</TypeScriptExample>
+
+### Copy files
+
+The SDK doesn't have a direct copy method, but you can read and write:
+
+<TypeScriptExample>
+```
+// Copy a single file
+async function copyFile(source: string, destination: string) {
+  const file = await sandbox.readFile(source);
+  await sandbox.writeFile(destination, file.content);
+}
+
+await copyFile('/workspace/template.html', '/workspace/index.html');
+
+// Copy with transformation
+const template = await sandbox.readFile('/workspace/template.html');
+const customized = template.content.replace('{{title}}', 'My App');
+await sandbox.writeFile('/workspace/index.html', customized);
+```
+</TypeScriptExample>
+
+## Handle file errors
+
+### Check if file exists
+
+<TypeScriptExample>
+```
+async function fileExists(path: string): Promise<boolean> {
+  try {
+    await sandbox.readFile(path);
+    return true;
+  } catch (error) {
+    if (error.code === 'FILE_NOT_FOUND') {
+      return false;
+    }
+    throw error; // Other errors should still throw
+  }
+}
+
+// Use it
+if (await fileExists('/workspace/config.json')) {
+  console.log('Config file exists');
+} else {
+  // Create default config
+  await sandbox.writeFile('/workspace/config.json', '{}');
+}
+```
+</TypeScriptExample>
+
+### Create file with backup
+
+<TypeScriptExample>
+```
+async function writeFileWithBackup(path: string, content: string) {
+  // Check if file exists
+  try {
+    await sandbox.readFile(path);
+
+    // File exists - create backup
+    const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+    const backupPath = `${path}.${timestamp}.backup`;
+
+    await sandbox.renameFile(path, backupPath);
+    console.log('Created backup:', backupPath);
+
+  } catch (error) {
+    if (error.code !== 'FILE_NOT_FOUND') {
+      throw error;
+    }
+    // File doesn't exist - no backup needed
+  }
+
+  // Write new file
+  await sandbox.writeFile(path, content);
+}
+
+await writeFileWithBackup('/workspace/config.json', JSON.stringify(newConfig));
+```
+</TypeScriptExample>
+
+## Best practices
+
+### File organization
+
+- **Use `/workspace` for app files** - This is the standard working directory
+- **Use `/tmp` for temporary files** - These may be cleared periodically
+- **Create logical directory structures** - Organize code like a real project
+- **Use consistent naming** - Follow conventions (lowercase, hyphens)
+
+### Performance
+
+- **Batch file operations** - Use `Promise.all()` for independent writes
+- **Avoid reading large files repeatedly** - Cache file contents when possible
+- **Use streaming for large files** - Write to file instead of keeping in memory
+- **Clean up temporary files** - Don't let `/tmp` accumulate files
+
+### Security
+
+- **Validate file paths** - Prevent path traversal attacks
+- **Limit file sizes** - Don't write unbounded data
+- **Be careful with user content** - Sanitize filenames and content
+- **Use appropriate permissions** - Set file modes when needed
+
+### Reliability
+
+- **Handle file errors gracefully** - Files may not exist or be readable
+- **Create parent directories** - Use `recursive: true` for nested paths
+- **Check operation results** - Verify writes succeeded
+- **Back up important files** - Before overwriting
+
+## Common patterns
+
+### Template files
+
+<TypeScriptExample>
+```
+// Read template
+const template = await sandbox.readFile('/workspace/templates/email.html');
+
+// Replace placeholders
+const email = template.content
+  .replace('{{name}}', userName)
+  .replace('{{date}}', new Date().toISOString())
+  .replace('{{content}}', emailContent);
+
+// Write final file
+await sandbox.writeFile('/workspace/output/email.html', email);
+```
+</TypeScriptExample>
+
+### Configuration management
+
+<TypeScriptExample>
+```
+// Load base config
+const baseConfig = await sandbox.readFile('/workspace/config.base.json');
+const config = JSON.parse(baseConfig.content);
+
+// Override with environment-specific settings
+config.environment = 'production';
+config.debug = false;
+config.apiUrl = env.API_URL;
+
+// Write final config
+await sandbox.writeFile(
+  '/workspace/config.json',
+  JSON.stringify(config, null, 2)
+);
+```
+</TypeScriptExample>
+
+### Data processing pipeline
+
+<TypeScriptExample>
+```
+// 1. Read input data
+const input = await sandbox.readFile('/workspace/data/input.json');
+const data = JSON.parse(input.content);
+
+// 2. Process data
+const processed = data.map(item => ({
+  id: item.id,
+  value: item.value * 2,
+  timestamp: new Date().toISOString()
+}));
+
+// 3. Write output
+await sandbox.writeFile(
+  '/workspace/data/output.json',
+  JSON.stringify(processed, null, 2)
+);
+
+// 4. Generate report
+const report = `
+Processed ${data.length} items
+Output: /workspace/data/output.json
+Timestamp: ${new Date().toISOString()}
+`;
+
+await sandbox.writeFile('/workspace/reports/report.txt', report);
+```
+</TypeScriptExample>
+
+## Common issues
+
+### Path not found
+
+**Problem**: "No such file or directory" error.
+
+**Solution**: Create parent directories first:
+
+<TypeScriptExample>
+```
+// ❌ This will fail if /workspace/data doesn't exist
+await sandbox.writeFile('/workspace/data/file.txt', content);
+
+// ✅ Create directory first
+await sandbox.mkdir('/workspace/data', { recursive: true });
+await sandbox.writeFile('/workspace/data/file.txt', content);
+```
+</TypeScriptExample>
+
+### File encoding issues
+
+**Problem**: File content appears corrupted or garbled.
+
+**Solution**: Specify correct encoding:
+
+<TypeScriptExample>
+```
+// For binary files, use base64
+await sandbox.writeFile('/workspace/image.png', base64Data, {
+  encoding: 'base64'
+});
+
+// For text files, utf-8 is default
+await sandbox.writeFile('/workspace/data.txt', textContent, {
+  encoding: 'utf-8'
+});
+```
+</TypeScriptExample>
+
+### Large file handling
+
+**Problem**: Large files cause performance issues or memory errors.
+
+**Solution**: Process files in chunks or use command-line tools:
+
+<TypeScriptExample>
+```
+// Instead of reading entire file
+// const file = await sandbox.readFile('/workspace/huge-file.txt');
+
+// Use command-line tools to process in chunks
+await sandbox.exec('head -n 1000 /workspace/huge-file.txt > /tmp/chunk.txt');
+const chunk = await sandbox.readFile('/tmp/chunk.txt');
+
+// Or process line by line with streaming
+await sandbox.exec(`
+  while IFS= read -r line; do
+    echo "Processing: $line"
+  done < /workspace/huge-file.txt
+`);
+```
+</TypeScriptExample>
+
+## Related resources
+
+- [Files API reference](/sandbox/api/files/) - Complete method documentation
+- [Execute commands guide](/sandbox/guides/execute-commands/) - Run file operations with commands
+- [Git workflows guide](/sandbox/guides/git-workflows/) - Clone and manage repositories
+- [Code Interpreter guide](/sandbox/guides/code-execution/) - Generate and execute code files
