@@ -26,7 +26,7 @@ const props = z.object({
 	columns: z.union([z.literal(1), z.literal(2), z.literal(3)]).default(2),
 	showDescriptions: z.boolean().default(true),
 	showLastUpdated: z.boolean().default(false),
-	filterPlacement: z.string().default("top"),
+	filterPlacement: z.enum(["left", "top"]).default("top"),
 });
 
 const {
