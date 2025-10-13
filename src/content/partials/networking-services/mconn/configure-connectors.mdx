@@ -307,7 +307,7 @@ You cannot enable high availability for an existing { props.magicWord === "virtu
   <>
 		<AnchorHeading title="Register your appliance" depth={3} />
 		<p>To set up and use {props.productOriginalName}, you first need to register it with your account.</p>
-		<Render file="register-hardware-appliance" product="networking-services/mconn" />
+		<Render file="register-hardware-appliance" product="networking-services/mconn" params={{ productDashName: "Magic WAN's **Configuration** page", dashPath: "Under **Connectors**, select **Register your appliance**." }} />
   </>
   )
 }

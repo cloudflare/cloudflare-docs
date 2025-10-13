@@ -1,14 +1,16 @@
 ---
-{}
+params:
+  - productDashName
+  - dashPath
 ---
 
-import { DashButton } from "~/components";
+import { DashButton, Markdown } from "~/components";
 
-1. In the Cloudflare dashboard, go to Magic WAN's **Configuration** page.
+1. In the Cloudflare dashboard, go to <Markdown text={props.productDashName} />.
 
    <DashButton url="/?to=/:account/magic-wan/configuration" />
 
-2. Under **Connectors**, select **Register your appliance**.
+2. <Markdown text={props.dashPath} />
 3. In **Appliance details** > **Serial number**, insert the serial number for your device. You can optionally add notes about the Magic WAN Connector you are adding to the dashboard.
 4. (Optional) Select **Add** below **Serial number** to add multiple Magic WAN Connectors at once to your account.
 5. Select **Register appliance**.
