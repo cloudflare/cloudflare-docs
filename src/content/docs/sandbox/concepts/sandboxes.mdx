@@ -1,0 +1,458 @@
+---
+title: Sandbox lifecycle
+pcx_content_type: concept
+sidebar:
+  order: 2
+---
+
+This page explains how sandboxes are created, managed, and destroyed, and what that means for your applications.
+
+## What is a sandbox?
+
+A sandbox is an isolated execution environment where your code runs. Each sandbox:
+
+- Has a unique identifier (sandbox ID)
+- Contains an isolated filesystem
+- Runs in a dedicated Linux container
+- Persists state between requests
+- Can run multiple processes simultaneously
+- Exists as a Cloudflare Durable Object
+
+Think of a sandbox like a persistent virtual machine, but provisioned instantly at the edge.
+
+## Lifecycle states
+
+A sandbox progresses through several states during its lifetime:
+
+### 1. Creation
+
+A sandbox is created the first time you reference its ID:
+
+```typescript
+const sandbox = getSandbox(env.Sandbox, 'user-123');
+await sandbox.exec('echo "Hello"'); // First request creates sandbox
+```
+
+**What happens**:
+1. Cloudflare provisions a new Durable Object
+2. The container image is pulled (if needed)
+3. The container starts with a fresh Linux environment
+4. The request is processed
+5. The sandbox enters "active" state
+
+**Duration**: 100-300ms (cold start) or \<10ms (if warm)
+
+**Cost**: Billed per sandbox, per active time
+
+### 2. Active
+
+The sandbox is running and processing requests:
+
+```typescript
+// Sandbox is active and responding
+const result = await sandbox.exec('python script.py');
+```
+
+**Characteristics**:
+- Container is running
+- Filesystem is accessible
+- Processes can be started
+- Ports can be exposed
+- Fast response times (\<10ms for simple operations)
+
+**Persistence**:
+- Files written to disk remain
+- Background processes continue running
+- Environment variables persist
+- Code interpreter contexts stay alive
+
+### 3. Idle
+
+After a period of inactivity, the sandbox may enter idle state:
+
+**What happens**:
+- Container may be paused or stopped
+- Filesystem state is preserved
+- Background processes may be suspended
+- Next request triggers "warm start"
+
+**Duration**: Implementation-dependent (Cloudflare manages this)
+
+**Cost**: Reduced or no charges while idle
+
+### 4. Destruction
+
+Sandboxes are explicitly destroyed or automatically cleaned up:
+
+```typescript
+// Explicit cleanup
+await sandbox.destroy();
+// Sandbox is gone, all state deleted
+```
+
+**What's deleted**:
+- All files in the filesystem
+- All running processes
+- All exposed ports
+- All code interpreter contexts
+- The Durable Object itself
+
+**Irreversible**: Once destroyed, the sandbox cannot be recovered.
+
+## Persistence guarantees
+
+### What persists
+
+Between requests to the same sandbox:
+
+**Filesystem**:
+- Files in `/workspace`
+- Files in `/tmp`
+- Files in `/home`
+- File permissions and ownership
+
+**Processes**:
+- Background processes (started with `startProcess()`)
+- Their PIDs and status
+- Their accumulated logs
+
+**Code contexts**:
+- Python/JavaScript execution contexts
+- Variables and imports
+- Module state
+
+**Configuration**:
+- Environment variables
+- Working directory
+- Port exposures
+
+### What doesn't persist
+
+Across sandbox destruction:
+
+**Nothing persists** - Destruction is complete cleanup.
+
+**After container restart** (rare, managed by Cloudflare):
+- Background processes (will stop)
+- Exposed ports (will close)
+- In-memory state (will be lost)
+
+Note: Filesystem usually survives container restarts, but this isn't guaranteed.
+
+## Naming strategies
+
+How you name sandboxes affects behavior:
+
+### Per-user sandboxes
+
+One sandbox per user:
+
+```typescript
+const userId = 'user-123';
+const sandbox = getSandbox(env.Sandbox, userId);
+```
+
+**Benefits**:
+- User's work persists across sessions
+- Files and processes stay alive
+- Personal workspace feeling
+
+**Use for**:
+- Interactive dev environments
+- Code playgrounds
+- Personal notebooks
+
+### Per-session sandboxes
+
+Temporary sandboxes for each session:
+
+```typescript
+const sessionId = `session-${Date.now()}-${Math.random()}`;
+const sandbox = getSandbox(env.Sandbox, sessionId);
+
+// Later, clean up
+await sandbox.destroy();
+```
+
+**Benefits**:
+- Fresh environment each time
+- No cross-session contamination
+- Explicit resource management
+
+**Use for**:
+- One-time code execution
+- CI/CD builds
+- Isolated test runs
+
+### Per-task sandboxes
+
+One sandbox per specific task:
+
+```typescript
+const taskId = `build-${repoName}-${commit}`;
+const sandbox = getSandbox(env.Sandbox, taskId);
+```
+
+**Benefits**:
+- Idempotent operations
+- Can resume interrupted tasks
+- Clear task-to-sandbox mapping
+
+**Use for**:
+- Build systems
+- Data processing pipelines
+- Background jobs
+
+### Shared sandboxes
+
+Multiple users sharing one sandbox:
+
+```typescript
+const sandbox = getSandbox(env.Sandbox, 'shared-demo');
+```
+
+**Benefits**:
+- Reduced costs (fewer sandboxes)
+- Shared state between users
+- Collaborative environments
+
+**Risks**:
+- No isolation between users
+- Potential conflicts (file overwrites)
+- Security concerns
+
+**Use for**:
+- Public demos
+- Read-only environments
+- Trusted teams only
+
+## Lifecycle management
+
+### When to create sandboxes
+
+Sandboxes are created automatically on first use, but you should consider:
+
+**For user environments**:
+- Create on user signup
+- Create on first interaction
+- Reuse across sessions
+
+**For temporary work**:
+- Create per request
+- Destroy after completion
+- Use unique IDs
+
+### When to destroy sandboxes
+
+Explicit destruction prevents resource leaks:
+
+```typescript
+try {
+  const sandbox = getSandbox(env.Sandbox, sessionId);
+  await sandbox.exec('npm run build');
+} finally {
+  // Always clean up temporary sandboxes
+  await sandbox.destroy();
+}
+```
+
+**Destroy sandboxes when**:
+- Session ends
+- Task completes
+- User logs out
+- Resources are no longer needed
+
+**Don't destroy when**:
+- User's personal environment (persist across sessions)
+- Long-running services are needed
+- Background processes are still working
+
+### Automatic cleanup
+
+Cloudflare may automatically clean up sandboxes that are:
+
+- Completely idle for extended periods
+- Using excessive resources
+- Violating terms of service
+
+Always design applications to recreate sandboxes if needed.
+
+## Request routing
+
+Understanding where sandboxes run helps with performance:
+
+### Geographic location
+
+The first request to a sandbox determines its location:
+
+```typescript
+// User in San Francisco makes first request
+const sandbox = getSandbox(env.Sandbox, 'user-123');
+// Sandbox created in San Francisco region
+```
+
+**Subsequent requests** to the same sandbox ID route to the same location, even if the user moves.
+
+**Why this matters**:
+- First request has higher latency (provisioning)
+- Later requests are fast (already running)
+- Users far from sandbox location see higher latency
+
+### Multi-region considerations
+
+For global applications:
+
+**Option 1: User-local sandboxes**
+```typescript
+const region = getRegionFromRequest(request);
+const sandbox = getSandbox(env.Sandbox, `${userId}-${region}`);
+```
+
+**Benefits**: Low latency for all users
+**Drawbacks**: Multiple sandboxes per user, higher cost
+
+**Option 2: Single sandbox per user**
+```typescript
+const sandbox = getSandbox(env.Sandbox, userId);
+```
+
+**Benefits**: Simpler, lower cost
+**Drawbacks**: Some users see higher latency
+
+## Cost implications
+
+Sandbox lifecycle affects costs:
+
+### Billable states
+
+- **Active time** - When sandbox is processing requests or running processes
+- **Idle time** - May have reduced or no charges (Cloudflare-specific)
+
+### Cost optimization strategies
+
+**1. Destroy temporary sandboxes**:
+```typescript
+// Bad - sandbox stays alive forever
+const sandbox = getSandbox(env.Sandbox, `temp-${Date.now()}`);
+await sandbox.exec('npm test');
+
+// Good - explicit cleanup
+try {
+  const sandbox = getSandbox(env.Sandbox, `temp-${Date.now()}`);
+  await sandbox.exec('npm test');
+} finally {
+  await sandbox.destroy();
+}
+```
+
+**2. Reuse long-lived sandboxes**:
+```typescript
+// Good - one sandbox per user
+const sandbox = getSandbox(env.Sandbox, userId);
+```
+
+**3. Stop unused processes**:
+```typescript
+// Stop processes when done
+await sandbox.killAllProcesses();
+```
+
+**4. Batch operations**:
+```typescript
+// Good - multiple commands in one request
+await sandbox.exec('npm install && npm test && npm run build');
+
+// Less efficient - three separate requests
+await sandbox.exec('npm install');
+await sandbox.exec('npm test');
+await sandbox.exec('npm run build');
+```
+
+## Failure modes
+
+Understanding how sandboxes fail helps with resilience:
+
+### Container crashes
+
+If the container crashes (rare):
+
+**Symptoms**:
+- Commands fail with connection errors
+- Background processes disappear
+- Filesystem may be lost
+
+**Recovery**:
+```typescript
+try {
+  await sandbox.exec('command');
+} catch (error) {
+  if (error.message.includes('container') || error.message.includes('connection')) {
+    // Retry - container will be recreated
+    await sandbox.exec('command');
+  }
+}
+```
+
+### Durable Object eviction
+
+If the Durable Object is evicted (very rare):
+
+**Symptoms**:
+- Similar to container crash
+- State is lost
+- Next request creates new instance
+
+**Recovery**:
+- Application should handle gracefully
+- Recreate necessary state
+- Consider persisting critical data elsewhere (R2, D1)
+
+### Out of resources
+
+If sandbox hits resource limits:
+
+**Symptoms**:
+- Commands fail with memory/disk errors
+- Slow performance
+- Timeouts
+
+**Recovery**:
+```typescript
+// Clean up to free resources
+await sandbox.killAllProcesses();
+await sandbox.exec('rm -rf /tmp/*');
+
+// Or start fresh
+await sandbox.destroy();
+const newSandbox = getSandbox(env.Sandbox, `${oldId}-v2`);
+```
+
+## Best practices
+
+### Lifecycle management
+
+- **Name consistently** - Use clear, predictable naming schemes
+- **Clean up temporary sandboxes** - Destroy when done
+- **Reuse long-lived sandboxes** - Don't create unnecessarily
+- **Handle failures** - Retry or recreate on errors
+
+### State management
+
+- **Design for state** - Embrace persistence, don't fight it
+- **Clean up resources** - Stop processes, delete files when done
+- **Persist critical data externally** - Don't rely solely on sandbox state
+- **Version sandbox IDs** - Add version suffix for clean slate
+
+### Performance
+
+- **Keep sandboxes warm** - Periodic requests prevent cold starts
+- **Batch operations** - Combine multiple commands
+- **Colocate users** - Consider geography for global apps
+- **Monitor latency** - Track cold vs warm start performance
+
+## Related resources
+
+- [Architecture](/sandbox/concepts/architecture/) - How sandboxes fit in the overall system
+- [Container runtime](/sandbox/concepts/containers/) - What runs inside sandboxes
+- [Session management](/sandbox/concepts/sessions/) - Advanced state isolation
+- [Sessions API](/sandbox/api/sessions/) - Programmatic lifecycle control

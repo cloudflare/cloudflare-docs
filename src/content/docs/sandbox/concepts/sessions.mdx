@@ -1,0 +1,507 @@
+---
+title: Session management
+pcx_content_type: concept
+sidebar:
+  order: 4
+---
+
+This page explains what sessions are, when to use them, and how they differ from sandboxes.
+
+## What are sessions?
+
+Sessions provide isolated execution contexts within a sandbox. While sandboxes provide container-level isolation, sessions provide logical isolation within the same container.
+
+Think of it like this:
+
+- **Sandbox** = A computer (container)
+- **Session** = A user account on that computer (execution context)
+
+Multiple sessions can run in one sandbox, each with:
+- Isolated environment variables
+- Separate working directories
+- Independent shell state
+- Isolated code interpreter contexts
+
+But sessions share:
+- The same filesystem
+- The same running processes
+- The same exposed ports
+
+## Why use sessions?
+
+### When sessions make sense
+
+**Multi-tenant applications**:
+```typescript
+// Each user gets a session in a shared sandbox
+const session = await sandbox.createSession({
+  id: `user-${userId}`,
+  env: {
+    USER_ID: userId,
+    API_KEY: userApiKey
+  }
+});
+```
+
+**Isolated test environments**:
+```typescript
+// Each test run in its own session
+const session = await sandbox.createSession({
+  id: `test-${testName}`,
+  workingDirectory: `/workspace/test-${testName}`
+});
+```
+
+**Temporary isolated contexts**:
+```typescript
+// One-time code execution
+const session = await sandbox.createSession();
+await session.exec('python untrusted-script.py');
+await sandbox.deleteSession(session.id);
+```
+
+### When separate sandboxes make more sense
+
+Use separate sandboxes instead of sessions when you need:
+
+**Complete isolation**:
+```typescript
+// Untrusted users - separate sandboxes
+const sandbox = getSandbox(env.Sandbox, `user-${userId}`);
+```
+
+**Long-running services**:
+```typescript
+// Each service in its own sandbox
+const apiSandbox = getSandbox(env.Sandbox, 'api-server');
+const workerSandbox = getSandbox(env.Sandbox, 'background-worker');
+```
+
+**Different lifecycle**:
+```typescript
+// Some sandboxes persist, others are temporary
+const persistentSandbox = getSandbox(env.Sandbox, userId);
+const tempSandbox = getSandbox(env.Sandbox, `temp-${Date.now()}`);
+```
+
+## How sessions work
+
+### Session creation
+
+Sessions are lightweight execution contexts:
+
+```typescript
+const session = await sandbox.createSession({
+  id: 'my-session',  // Optional: Auto-generated if not provided
+  workingDirectory: '/workspace/project',  // Optional: Defaults to /workspace
+  env: {
+    NODE_ENV: 'production',
+    API_KEY: 'secret'
+  }
+});
+
+console.log('Session ID:', session.id);
+```
+
+**What happens**:
+1. Sandbox creates an execution context
+2. Environment variables are set
+3. Working directory is configured
+4. Session object is returned
+
+**Cost**: Minimal - just metadata tracking
+
+### Session API
+
+Sessions provide the same API as sandboxes:
+
+```typescript
+// Execute in session
+const result = await session.exec('node server.js');
+
+// File operations
+await session.writeFile('/workspace/config.json', data);
+
+// Background processes
+const process = await session.startProcess('npm run dev');
+
+// Code interpreter
+const context = await session.createCodeContext({ language: 'python' });
+```
+
+All operations run in the session's context.
+
+### Session lifecycle
+
+Sessions exist until explicitly deleted or sandbox is destroyed:
+
+```typescript
+// Create session
+const session = await sandbox.createSession({ id: 'temp' });
+
+// Use session
+await session.exec('python script.py');
+
+// Clean up
+await sandbox.deleteSession('temp');
+// Session is gone, but sandbox and its filesystem remain
+```
+
+## Session isolation
+
+### What's isolated
+
+Each session has its own:
+
+**Environment variables**:
+```typescript
+const session1 = await sandbox.createSession({
+  env: { API_KEY: 'key-1' }
+});
+
+const session2 = await sandbox.createSession({
+  env: { API_KEY: 'key-2' }
+});
+
+// Sessions see different environment variables
+```
+
+**Working directory**:
+```typescript
+const session1 = await sandbox.createSession({
+  workingDirectory: '/workspace/project1'
+});
+
+const session2 = await sandbox.createSession({
+  workingDirectory: '/workspace/project2'
+});
+
+// Relative paths resolve differently in each session
+```
+
+**Shell state**:
+```typescript
+// In session1
+await session1.exec('export MY_VAR=hello');
+
+// In session2
+await session2.exec('echo $MY_VAR');
+// Outputs nothing - MY_VAR not set in session2
+```
+
+### What's shared
+
+Sessions in the same sandbox share:
+
+**Filesystem**:
+```typescript
+// Session1 writes a file
+await session1.writeFile('/workspace/shared.txt', 'data');
+
+// Session2 can read it
+const file = await session2.readFile('/workspace/shared.txt');
+// Returns 'data' - filesystem is shared
+```
+
+**Processes**:
+```typescript
+// Session1 starts a server
+await session1.startProcess('node server.js');
+
+// Session2 sees it
+const processes = await session2.listProcesses();
+// Includes server.js process
+```
+
+**Ports**:
+```typescript
+// Session1 exposes a port
+await session1.exposePort(3000);
+
+// Session2 sees it
+const ports = await session2.getExposedPorts();
+// Includes port 3000
+```
+
+**Code interpreter contexts**:
+```typescript
+// Session1 creates a context
+const context = await session1.createCodeContext({
+  language: 'python'
+});
+
+// Session2 can access it using the context ID
+await session2.runCode(context.id, 'print("hello")');
+```
+
+## Common patterns
+
+### Per-user sessions
+
+Isolate users within a shared sandbox:
+
+```typescript
+export default {
+  async fetch(request: Request, env: Env): Promise<Response> {
+    const userId = getUserId(request);
+
+    // Shared sandbox
+    const sandbox = getSandbox(env.Sandbox, 'shared-environment');
+
+    // User-specific session
+    const session = await sandbox.getSession(`user-${userId}`);
+
+    if (!session) {
+      // Create session on first request
+      await sandbox.createSession({
+        id: `user-${userId}`,
+        workingDirectory: `/workspace/users/${userId}`,
+        env: {
+          USER_ID: userId,
+          USER_API_KEY: await getUserApiKey(userId)
+        }
+      });
+    }
+
+    // Use session for user-specific operations
+    const userSession = await sandbox.getSession(`user-${userId}`);
+    const result = await userSession.exec('python analyze.py');
+
+    return Response.json({ result });
+  }
+};
+```
+
+**Benefits**:
+- Lower cost (one sandbox for many users)
+- Isolated environments per user
+- Shared filesystem for common resources
+
+**Use when**:
+- Users are trusted
+- Cost optimization is important
+- Shared resources are beneficial
+
+### Temporary execution contexts
+
+One-time isolated execution:
+
+```typescript
+async function executeUntrustedCode(code: string) {
+  const sandbox = getSandbox(env.Sandbox, 'code-executor');
+
+  // Create temporary session
+  const session = await sandbox.createSession({
+    id: `temp-${Date.now()}`,
+    workingDirectory: `/tmp/exec-${Date.now()}`,
+    env: {
+      EXECUTION_ID: Date.now().toString()
+    }
+  });
+
+  try {
+    // Execute code in session
+    await session.writeFile('script.py', code);
+    const result = await session.exec('python script.py');
+
+    return result;
+  } finally {
+    // Always clean up
+    await sandbox.deleteSession(session.id);
+  }
+}
+```
+
+**Benefits**:
+- Clean state for each execution
+- Resource cleanup after use
+- Isolated environment variables
+
+### Test isolation
+
+Separate test contexts:
+
+```typescript
+async function runTests() {
+  const sandbox = getSandbox(env.Sandbox, 'test-runner');
+
+  const tests = ['auth', 'api', 'database'];
+  const results = [];
+
+  for (const test of tests) {
+    // Each test in its own session
+    const session = await sandbox.createSession({
+      id: `test-${test}`,
+      workingDirectory: `/workspace/tests/${test}`,
+      env: {
+        TEST_NAME: test,
+        NODE_ENV: 'test'
+      }
+    });
+
+    const result = await session.exec(`npm test -- ${test}`);
+    results.push({ test, passed: result.success });
+
+    // Clean up after each test
+    await sandbox.deleteSession(session.id);
+  }
+
+  return results;
+}
+```
+
+**Benefits**:
+- Isolated test environments
+- No test pollution
+- Parallel test execution potential
+
+## Design considerations
+
+### When sessions are sufficient
+
+Sessions work well when:
+
+**Isolation needs are limited**:
+- Environment variables need to differ
+- Working directories need to differ
+- Shell state needs to differ
+
+**Resources are shared**:
+- Multiple users share compute
+- Common files are accessed
+- Processes are shared services
+
+**Cost is a priority**:
+- One sandbox is cheaper than many
+- Shared resources reduce overhead
+
+### When to use separate sandboxes
+
+Use separate sandboxes when:
+
+**Strong isolation is required**:
+- Untrusted code execution
+- Security-sensitive applications
+- Regulatory compliance needs
+
+**Independent lifecycle**:
+- Some environments are long-lived
+- Some are temporary
+- Different destruction times
+
+**Resource separation**:
+- Each user needs dedicated compute
+- Independent processes required
+- No shared state desired
+
+## Performance implications
+
+### Session creation cost
+
+Sessions are lightweight:
+
+- **Creation time**: <1ms (just metadata)
+- **Memory overhead**: Minimal (environment variables only)
+- **No container startup**: Uses existing sandbox
+
+Compare to sandbox creation:
+
+- **Cold start**: 100-300ms (container provisioning)
+- **Memory overhead**: Full Linux environment
+- **Isolation overhead**: Container boundaries
+
+### Execution performance
+
+Sessions have no performance overhead:
+
+```typescript
+// Direct sandbox execution
+const result1 = await sandbox.exec('python script.py');
+
+// Session execution - same speed
+const result2 = await session.exec('python script.py');
+```
+
+Both execute identically in the container.
+
+### Resource limits
+
+Sessions share sandbox resources:
+
+- **CPU**: Shared between all sessions in sandbox
+- **Memory**: Shared pool
+- **Disk**: Shared filesystem
+- **Network**: Shared bandwidth
+
+If one session uses excessive resources, it affects all sessions in that sandbox.
+
+## Best practices
+
+### Session naming
+
+Use descriptive, unique session IDs:
+
+```typescript
+// ✅ Good - clear and unique
+await sandbox.createSession({ id: `user-${userId}` });
+await sandbox.createSession({ id: `test-${testName}-${timestamp}` });
+
+// ❌ Bad - generic or conflicting
+await sandbox.createSession({ id: 'session' });
+await sandbox.createSession({ id: 'temp' }); // Might conflict
+```
+
+### Session cleanup
+
+Always clean up temporary sessions:
+
+```typescript
+// ✅ Good - explicit cleanup
+try {
+  const session = await sandbox.createSession({ id: 'temp' });
+  await session.exec('command');
+} finally {
+  await sandbox.deleteSession('temp');
+}
+
+// ❌ Bad - session lingers
+const session = await sandbox.createSession();
+await session.exec('command');
+// Session never deleted
+```
+
+### Environment isolation
+
+Don't rely on sessions for security:
+
+```typescript
+// ❌ Bad - sessions share filesystem
+const userSession = await sandbox.createSession({ id: userId });
+await userSession.exec('rm -rf /workspace/*'); // Affects all users!
+
+// ✅ Good - use separate sandboxes for untrusted users
+const userSandbox = getSandbox(env.Sandbox, userId);
+await userSandbox.exec('rm -rf /workspace/*'); // Only affects this user
+```
+
+### Working directories
+
+Use session working directories for organization:
+
+```typescript
+// ✅ Good - organized per session
+await sandbox.createSession({
+  id: 'user-123',
+  workingDirectory: '/workspace/users/123'
+});
+
+// Commands run in user's directory automatically
+await session.exec('npm install'); // Installs in /workspace/users/123
+```
+
+## Related resources
+
+- [Sandbox lifecycle](/sandbox/concepts/sandboxes/) - Understanding sandbox vs session lifecycle
+- [Architecture](/sandbox/concepts/architecture/) - How sessions fit in the system
+- [Security model](/sandbox/concepts/security/) - Session isolation limits
+- [Sessions API](/sandbox/api/sessions/) - Complete session management API
