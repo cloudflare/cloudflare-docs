@@ -10,6 +10,9 @@ params:
   - lan
   - noConnectorShows
   - networkSegmentationURL
+  - dhcpServerURL
+  - dhcpRelayURL
+  - reserveIpAddressesURL
   - shippedLanguage
   - hardSoftConn
   - finalInstructions
@@ -433,11 +436,9 @@ After setting up your LANs, you can configure your { props.magicWord === "virtua
 Magic WAN Connector supports different types of DHCP configurations. Connector can:
 
 - Connect to a DHCP server or use a static IP address instead of connecting to a DHCP server.
-- Act as a [DHCP server](/magic-wan/configuration/connector/network-options/dhcp/dhcp-server/).
-- Use [DHCP relay](/magic-wan/configuration/connector/network-options/dhcp/dhcp-relay/) to connect to a DHCP server outside the location your Magic WAN Connector is in.
-- [Reserve IP addresses](/magic-wan/configuration/connector/network-options/dhcp/dhcp-static-address-reservation/) for specific devices on your network.
-
-Refer to [DHCP options](/magic-wan/configuration/connector/network-options/dhcp/) to learn more.
+- Act as a <a href={props.dhcpServerURL}>DHCP server</a>.
+- Use <a href={props.dhcpRelayURL}>DHCP relay</a> to connect to a DHCP server outside the location your Magic WAN Connector is in.
+- <a href={props.reserveIpAddressesURL}>Reserve IP addresses</a> for specific devices on your network.
 
 ### Add your Connector to a site
 
