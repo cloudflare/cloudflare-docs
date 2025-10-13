@@ -9,6 +9,7 @@ params:
   - wan
   - lan
   - noConnectorShows
+  - networkSegmentationURL
   - shippedLanguage
   - hardSoftConn
   - finalInstructions
@@ -425,7 +426,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{sit
 
 #### Network segmentation
 
-After setting up your LANs, you can configure your Connector to enable communication between them without traffic leaving your premises. Refer to [Network segmentation](/magic-wan/configuration/connector/network-options/network-segmentation/) for more information.
+After setting up your LANs, you can configure your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } to enable communication between them without traffic leaving your premises. Refer to <a href={props.networkSegmentationURL}>Network segmentation</a> for more information.
 
 #### DHCP options
 
