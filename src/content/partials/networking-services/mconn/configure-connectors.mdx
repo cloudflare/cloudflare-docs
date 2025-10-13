@@ -4,7 +4,7 @@ params:
   - productName
   - productNameVirtual?
   - maintenanceURL
-  - productOriginalName?
+  - productOriginalName
   - wan
   - lan
   - noConnectorShows
@@ -41,7 +41,7 @@ In this page you will find instructions on how to configure {props.productName}.
   <>
 		<p>You need to purchase <a href="https://www.cloudflare.com/magic-wan">{props.productOriginalName}</a> before you can purchase and use the {props.productName}. The {props.productName} can function as your primary edge device for your network, or be deployed in-line with existing network gear.</p>
 
-		<p>You also need to purchase a Magic WAN Connector before you can start configuring your settings in the Cloudflare dashboard. Contact your account representative to learn more about purchasing options for the Magic WAN Connector device.</p>
+		<p>You also need to purchase a {props.productName} before you can start configuring your settings in the Cloudflare dashboard. Contact your account representative to learn more about purchasing options for the Magic WAN Connector device.</p>
 
   </>
   )
@@ -51,7 +51,7 @@ In this page you will find instructions on how to configure {props.productName}.
   <>
 		<Markdown
 		text={`
-		Before you can install Virtual Connector, you need an Enterprise account with Magic WAN enabled. Additionally, you need to have a VMware or Proxmox host with sufficient compute, memory, and storage to run the virtual machine with Virtual Connector. This includes:
+		Before you can install ${props.productNameVirtual}, you need an Enterprise account with ${props.productOriginalName}. Additionally, you need to have a VMware or Proxmox host with sufficient compute, memory, and storage to run the virtual machine with Virtual Connector. This includes:
     - Intel x86 CPU architecture
     - ESXi hypervisor 7.0U1 or higher
     - 4 virtual CPUs per virtual connector (We recommend deployment with a 1:1 virtual CPU to physical core allocation to avoid CPU over contention which will cause packet loss.)
@@ -60,9 +60,9 @@ In this page you will find instructions on how to configure {props.productName}.
     - One vSwitch port group or VLAN with access to the Internet (for example, through a WAN)
     - One or more vSwitch port group or VLAN that will be the internal LAN
 
-    If you are installing Virtual Connector on ESXi, refer to [VMware's documentation](https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.esxi.install.doc/GUID-B2F01BF5-078A-4C7E-B505-5DFFED0B8C38.html) for more information on how to install ESXi and configure a virtual machine.
+    If you are installing ${props.productNameVirtual} on ESXi, refer to [VMware's documentation](https://docs.vmware.com/en/VMware-vSphere/7.0/com.vmware.esxi.install.doc/GUID-B2F01BF5-078A-4C7E-B505-5DFFED0B8C38.html) for more information on how to install ESXi and configure a virtual machine.
 
-		If you are installing Virtual Connector on Virtual Environment, refer to [Proxmox documentation](https://www.proxmox.com/en/products/proxmox-virtual-environment/get-started) for more information on how to install Virtual environment and configure a virtual machine.
+		If you are installing ${props.productNameVirtual} on Virtual Environment, refer to [Proxmox documentation](https://www.proxmox.com/en/products/proxmox-virtual-environment/get-started) for more information on how to install Virtual environment and configure a virtual machine.
 		`}
 		inline={false}
 		/>
