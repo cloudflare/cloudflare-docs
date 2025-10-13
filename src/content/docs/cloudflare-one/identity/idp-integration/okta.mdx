@@ -118,30 +118,35 @@ If you would like to only maintain one Okta app instance, Okta does support SAML
 
 5. On the **General Settings** tab, name your application and select **Next**.
 
-6. On the **Sign-on Options** tab, ensure that **SAML 2.0** is selected. Select **Done** to create the integration.
+6. On the **Sign-on Options** tab, ensure that **SAML 2.0** is selected.
 
-7. On the **Provisioning** tab, select **Configure API Integration**.
+7. Under **Credential Details**, set **Application username format** to either _Okta Username_ or _Email_. This value will be used for the SCIM `userName` attribute.
+	:::note
+	The `userName` attribute must match the user's email address in Zero Trust.
+	:::
 
-8. Select **Enable API integration**.
+8. Select **Done** to create the integration.
 
-9. In the **Base URL** field, enter the **SCIM Endpoint** obtained from Zero Trust.
+9. On the **Provisioning** tab, select **Configure API Integration**.
 
-10. In the **API Token** field, enter the **SCIM Secret** obtained from Zero Trust.
+10. Select **Enable API integration**.
+
+11. In the **Base URL** field, enter the **SCIM Endpoint** obtained from Zero Trust.
+
+12. In the **API Token** field, enter the **SCIM Secret** obtained from Zero Trust.
 
     ![Enter SCIM values into Okta](~/assets/images/cloudflare-one/identity/okta/enter-scim-values.png)
 
-11. Select **Test API Credentials** to ensure that the credentials were entered correctly. Select **Save**.
+13. Select **Test API Credentials** to ensure that the credentials were entered correctly. Select **Save**.
 
-12. On the **Provisioning** tab, select **Edit** and enable:
+14. On the **Provisioning** tab, select **Edit** and enable:
     - **Create Users**
     - **Update User Attributes**
     - **Deactivate Users**
 
     ![Configure provisioning settings in Okta](~/assets/images/cloudflare-one/identity/okta/enable-provisioning.png)
 
-13. Select **Save** to complete the configuration.
-
-14. In the **Assignments** tab, add the users you want to synchronize with Cloudflare Access. You can add users in batches by assigning a group. If a user is removed from the application assignment via a either direct user assignment or removed from the group that was assigned to the app, this will trigger a deprovisioning event from Okta to Cloudflare.
+15. In the **Assignments** tab, add the users you want to synchronize with Cloudflare Access. You can add users in batches by assigning a group. If a user is removed from the application assignment via a either direct user assignment or removed from the group that was assigned to the app, this will trigger a deprovisioning event from Okta to Cloudflare.
 
 15. In the **Push Groups** tab, add the Okta groups you want to synchronize with Cloudflare Access. These groups will display in the Access policy builder and are the group memberships that will be added and removed upon membership change in Okta.
 
