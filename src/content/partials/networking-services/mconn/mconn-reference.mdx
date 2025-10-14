@@ -16,6 +16,7 @@ params:
   - hcFrequencyURL
   - dhcpURL
   - routedSubnetsURL
+  - networkSegmentationURL
 ---
 
 import { GlossaryTooltip, Render } from "~/components"
@@ -128,4 +129,4 @@ If you do not have more than one anycast IP configured in your account, and you 
 
 Depending on your use case, you can define policies in your connector to either allow traffic to flow between your LANs without it leaving your local premises or to forward it via the Cloudflare network where you can add additional security features. The default behavior is to drop all LAN-to-LAN traffic. These policies can be created for specific subnets, and link two LANs.
 
-Refer to [Network segmentation](/magic-wan/configuration/connector/network-options/network-segmentation/) for more information.
+Refer to <a href={props.networkSegmentationURL}>Network segmentation</a> for more information.
