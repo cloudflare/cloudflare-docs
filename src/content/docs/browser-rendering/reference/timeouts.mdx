@@ -16,7 +16,11 @@ Each timer controls a specific part of the rendering lifecycle — from page loa
 |  `goToOptions.timeout`     | Time to wait for the page to load before timeout.  |   30 s       |   60 s        |
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 |  `goToOptions.waitUntil`    |  Time until page load considered complete: <br />`load` = full page load, including resources, like images and stylesheets. <br />`Event.domcontentloaded` = waits until the DOM content has been fully loaded, fires before the page `load` event. <br />`Event.networkidle0` = there are no active network connections for at least 500 ms. <br />`Event.networkidle2` = there are no more than two active network connections for at least 500 ms.         |     —      |     —      |
+=======
+|  `goToOptions.waitUntil`    |  Time until page load considered complete: <br />`load` = full page load. <br />`Event.domcontentloaded` = the `DOMContentLoaded` event has fired. <br />`Event.networkidle0` = there are no active network connections for at least 500 ms. <br />`Event.networkidle2` = there are no more than two active network connections for at least 500 ms.         |     —      |     —      |
+>>>>>>> f348e39d36 (Fixing table cell format)
 |  `waitForSelector`   | Time to wait for a specific element (any CSS selector) to appear on the page.  |    null      |     60 s      |
 |  `waitForTimeout`     | Additional amount of time to wait after the page has loaded to proceed with actions.  |     null     |      5 min     |
 |  `actionTimeout`     |  Time to wait for the action itself (for example: a screenshot, PDF, or scrape) to complete after the page has loaded.  |    null      |      5 min     |
