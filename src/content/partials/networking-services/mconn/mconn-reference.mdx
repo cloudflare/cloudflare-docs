@@ -40,12 +40,12 @@ You can setup VLAN IDs both for WAN and LAN. Refer to <a href={props.hardConnect
 
 ### Terminology
 
-- **Primary/Secondary**: Used to identify the two nodes which are part of a high availability (HA) configuration pair of Magic WAN Connectors. This identity allows the node to identify which configuration is attributed to it — for example, specifying a primary and secondary IP in a LAN configuration. This identity is configured by the user on the Cloudflare dashboard.
+- **Primary/Secondary**: Used to identify the two nodes which are part of a high availability (HA) configuration pair of {props.productName}s. This identity allows the node to identify which configuration is attributed to it — for example, specifying a primary and secondary IP in a LAN configuration. This identity is configured by the user on the Cloudflare dashboard.
 - **Active/Standby**: These are states that the two nodes in a HA pair will dynamically assume based on an election process. Only one node at any time is expected to be active.
 
 ### High availability
 
-A site set up in high availability (HA) mode has two Magic WAN Connectors with the same configuration but replicated in two nodes. In case of failure of a Connector, the other Connector becomes the active node, taking over configuration of the LAN gateway IP and allowing traffic to continue without disruption.
+A site set up in high availability (HA) mode has two {props.productName}s with the same configuration but replicated in two nodes. In case of failure of a {props.productName}, the other {props.productName} becomes the active node, taking over configuration of the LAN gateway IP and allowing traffic to continue without disruption.
 
 ### Active/Standby Election
 
