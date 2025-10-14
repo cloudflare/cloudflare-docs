@@ -1,6 +1,7 @@
 ---
 params:
   - productName
+  - activateURL
 ---
 
 import { Render } from "~/components";
@@ -85,7 +86,7 @@ If you are experiencing difficulties with your {props.productName}, refer to the
 
 ## I have set up a site, but my {props.productName} is not working
 
-Make sure that you have [activated your Connector](/magic-wan/configuration/connector/configure-hardware-connector/#activate-connector). Cloudflare ships the Magic WAN Connector deactivated, and the Connector will only establish a connection to the Cloudflare network when it is activated.
+Make sure that you have <a href={props.activateURL}>activated your Connector</a>. Cloudflare ships the Magic WAN Connector deactivated, and the Connector will only establish a connection to the Cloudflare network when it is activated.
 
 ## I have tried to activate Magic WAN Connector, but it is still not working
 
