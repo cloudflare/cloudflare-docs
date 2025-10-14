@@ -13,7 +13,7 @@ Once your account configurations are in place, consider the sections below to le
 
 ## Before you begin
 
-- Your prefix must be registered under one of the following Regional Internet Registries (RIRs):
+- Your prefix must be registered under one of the Regional Internet Registries (RIRs):
 
     - [AFRINIC](https://afrinic.net/)
     - [APNIC](https://www.apnic.net/)
@@ -131,7 +131,7 @@ For `2001:0db8::/34`, you would setup four (`2^(36-34)`) reverse DNS zones, for 
 cf-validation.<REVERSE_ZONE_ADDRESS> IN TXT <TOKEN>
 ```
 
-4. Update nameservers at your Regional Internet Registry (RIR).The exact steps to update your nameservers will depend on the registry you are using.
+4. Update nameservers at your Regional Internet Registry (RIR). The exact steps to update your nameservers will depend on the registry you are using.
 
 </TabItem> </Tabs>
 
@@ -261,7 +261,7 @@ Once a service binding is created (or deleted), it will take **four to six hours
 
 ## 3. Advertise the BGP prefix
 
-Once created, BGP prefixes are initially withdrawn. After all your configurations are in place - including [address maps](/byoip/address-maps/)[^2] if you will use CDN service -, proceed to advertise the BGP route for your prefix.
+Once automatically created (following [step 2](#2-create-service-bindings)), BGP prefixes are initially withdrawn. After all your configurations are in place - including [address maps](/byoip/address-maps/)[^2] if you will use CDN service -, proceed to advertise the BGP route for your prefix.
 
 1. Use the [Update BGP prefix](/api/resources/addressing/subresources/prefixes/subresources/bgp_prefixes/methods/edit/) endpoint to start the advertisement.
 
