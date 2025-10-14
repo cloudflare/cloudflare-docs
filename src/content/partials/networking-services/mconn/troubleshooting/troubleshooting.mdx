@@ -7,20 +7,20 @@ import { Render } from "~/components";
 
 ## Device metrics
 
-Cloudflare customers can inspect metrics for a specific {props.productName} in the Cloudflare dashboard. These metrics help you troubleshoot potential issues with your Connector. The information spans categories such as:
+Cloudflare customers can inspect metrics for a specific {props.productName} in the Cloudflare dashboard. These metrics help you troubleshoot potential issues with your device. The information spans categories such as:
 
 - Performance analytics
 - Port analytics
 - Event logs
 - DHCP leasing information
 
-To find the information above and start troubleshooting your Connector:
+To find the information above and start troubleshooting your {props.productName}:
 
 <Render file="mconn/troubleshooting/troubleshooting-steps"	product="networking-services" />
 
 ### Performance analytics
 
-In Performance analytics you can review your Connector's performance over time including:
+In Performance analytics you can review your {props.productName}'s performance over time including:
 
 - Kernel boot time (how long it has been running and if it is activated or not)
 - Last device snapshot (this also shows the frequency with which your device captures the snapshots that are used in several troubleshooting procedures)
@@ -35,19 +35,19 @@ To access performance analytics:
 
 ### Port analytics
 
-Port analytics gives you access to information related to the packets sent and received through the ports in your Connector. You can adjust the time range for the information displayed in the dashboard regarding to:
+Port analytics gives you access to information related to the packets sent and received through the ports in your {props.productName}. You can adjust the time range for the information displayed in the dashboard regarding to:
 
 - Rate for packets sent and received
 - Rate for data sent and received
 
-The dashboard provides this information for all active ports in your Connector. To access port analytics:
+The dashboard provides this information for all active ports in your {props.productName}. To access port analytics:
 
 <Render file="mconn/troubleshooting/troubleshooting-steps"	product="networking-services" />
 3. Select **Port analytics**.
 
 ### Event logs
 
-Use Event logs to identify general patterns and changes over time. This is useful to find correlations with other data and gather deeper insights into your Connector. The following event logs are available:
+Use Event logs to identify general patterns and changes over time. This is useful to find correlations with other data and gather deeper insights into your {props.productName}. The following event logs are available:
 
 - `Init`: Initialized `mcon-agent` process. This process manages Connector.
 - `Leave`: Stopped `mcon-agent` process.
@@ -81,9 +81,9 @@ Refer to the DHCP leasing section to identify DHCP assigned leases and their exp
 
 ## Troubleshooting tips
 
-If you are experiencing difficulties with your Magic WAN Connector, refer to the following tips to troubleshoot what might be happening.
+If you are experiencing difficulties with your {props.productName}, refer to the following tips to troubleshoot what might be happening.
 
-## I have set up a site, but my Connector is not working
+## I have set up a site, but my {props.productName} is not working
 
 Make sure that you have [activated your Connector](/magic-wan/configuration/connector/configure-hardware-connector/#activate-connector). Cloudflare ships the Magic WAN Connector deactivated, and the Connector will only establish a connection to the Cloudflare network when it is activated.
 
