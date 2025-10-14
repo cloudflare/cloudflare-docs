@@ -164,7 +164,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
 
 ### Include dynamic placeholders from page metadata
 
-You can include dynamic placeholders such as title, date, pageNumber, and totalPages in the header or footer to display metadata on each page. This example produces an A4 PDF with a company-branded header, current date and title, and page numbering in the footer.
+You can include dynamic placeholders such as `title`, `date`, `pageNumber`, and `totalPages` in the header or footer to display metadata on each page. This example produces an A4 PDF with a company-branded header, current date and title, and page numbering in the footer.
 
 ```bash
 curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/pdf' \
