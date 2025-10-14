@@ -1,0 +1,69 @@
+---
+pcx_content_type: configuration
+title: Skew Protection
+head: []
+description: Revert to an older version of your Worker.
+---
+import { DashButton } from "~/components";
+
+Skew Protection ensures that client-side JavaScript code continues to communicate with the same version of your Worker that originally served it, preventing version mismatch errors during deployments.
+
+Version skew occurs when a user's browser has loaded JavaScript from one version of your application, but subsequent requests (such as API calls or asset fetches) are handled by a different, incompatible version. For example, imagine your newest deployment changes an API endpoint's response format. Users with JavaScript from the old version loaded in their browser would receive responses they cannot parse, leading to application errors.
+
+Cloudflare's Skew Protection resolves this problem automatically by ensuring all requests from a client session are routed to the same Worker version that served the initial page load. This works seamlessly with gradual deployments, allowing you to safely roll out new versions without breaking active user sessions.
+
+### How it works
+
+Skew Protection works automatically for all requests without requiring any configuration or code changes. Cloudflare handles version consistency at the platform level for both client-to-server requests and Worker-to-Worker service binding calls.
+
+#### Automatic version tracking for clients
+
+When a user first loads your application, Cloudflare automatically:
+
+1. Sets a version cookie (`__cf_worker_version`) containing the deployment ID that served the initial page load
+2. Includes this cookie in all subsequent requests from the same browser session
+3. Routes requests to the same Worker version that set the cookie
+4. Maintains old deployments for active sessions during gradual rollouts
+
+#### Skew protection during a gradual rollout
+
+1. User visits your site and gets Version A (latest deployment)
+2. Cloudflare sets cookie: `__cf_worker_version=version-id`
+3. You deploy Version B with breaking API changes
+4. You create a gradual deployment: Version B at 20%, Version A at 80%
+5. User's browser makes an API call with the cookie
+6. Cloudflare routes the request to Version A (matching the cookie)
+7. User's session continues working without errors
+
+New users visiting the site have a 20% chance of getting Version B and will consistently use Version B for their session.
+
+### Service bindings and version consistency
+
+When using service bindings to connect multiple Workers, Skew Protection automatically propagates version context across Workers.
+
+When Worker A calls Worker B:
+
+1. Cloudflare detects the version context from the original client request
+2. Worker B is routed to a compatible version from its own version history
+3. The same version context is used for any subsequent Worker calls
+
+This ensures that for a given client session, all Workers in your architecture use consistent, compatible versions without any manual coordination.
+
+### Session expiration and version cleanup
+Sessions naturally expire after 12 hours (or your configured duration):
+
+- When a session expires, the user's next request creates a new session with current versions
+- Old Worker versions remain available as long as there are active sessions using them
+- Once all sessions using an old version have expired, that version can be safely deleted
+
+## Setting a version cutoff
+
+For critical security fixes, you can set a version cutoff to immediately stop serving older versions.
+```bash
+# Cut off all versions before a specific deployment
+npx wrangler versions cutoff set 
+
+# Or cut off to the latest
+npx wrangler versions cutoff set --latest
+```
+This forces all users to the cutoff version or newer on their next request, even if their session hasn't expired.
