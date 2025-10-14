@@ -15,6 +15,7 @@ params:
   - trafficSteeringURL
   - hcFrequencyURL
   - dhcpURL
+  - routedSubnetsURL
 ---
 
 import { GlossaryTooltip, Render } from "~/components"
@@ -121,7 +122,7 @@ If you do not have more than one anycast IP configured in your account, and you 
 - **VLAN ID**: Allows you to have multiple virtual LANs configured over the same port on your Magic WAN Connector. Refer to <a href={props.vlanIdURL}>VLAN ID</a> for more information.
 - **Static addressing:** Configures the type of IP addressing for your Connector. Depending on your use case, this is where you configure your LAN interface IP address, or enable  DHCP server or DHCP relay. Refer to <a href={props.dhcpURL}>DHCP options</a> to learn more.
 - **Static NAT prefix**: Enable NAT (network address translation). This is an optional setting.
-- **Routed subnets:** Configures additional subnets behind a layer 3 router. Refer to [Routed subnets](/magic-wan/configuration/connector/network-options/routed-subnets/) for more information.
+- **Routed subnets:** Configures additional subnets behind a layer 3 router. Refer to <a href={props.routedSubnetsURL}>Routed subnets</a> for more information.
 
 ### Restrict traffic to your premises
 
