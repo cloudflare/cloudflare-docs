@@ -16,22 +16,22 @@
             "value": "true"
         },
         {
+            "property_id": "price",
+            "value": [
+                {
+                    "unit": "per audio minute",
+                    "price": 0,
+                    "currency": "USD"
+                }
+            ]
+        },
+        {
             "property_id": "partner",
             "value": "true"
         },
         {
             "property_id": "realtime",
             "value": "true"
-        },
-        {
-            "property_id": "price",
-            "value": [
-                {
-                    "unit": "per 1k characters",
-                    "price": 0.0150,
-                    "currency": "USD"
-                }
-            ]
         }
     ],
     "schema": {

@@ -5,8 +5,8 @@
     "description": "An open source, community-driven, native audio turn detection model in 2nd version",
     "task": {
         "id": "ccb1ca5a-043d-41a7-8a3b-61017b2796fd",
-        "name": "Voice Activity Detection",
-        "description": "Detecting the presence or absence of human speech, used in speech processing."
+        "name": "Dumb Pipe",
+        "description": "Internal - Dumb Pipe models don't use tensors"
     },
     "created_at": "2025-08-04 10:08:04.219",
     "tags": [],
