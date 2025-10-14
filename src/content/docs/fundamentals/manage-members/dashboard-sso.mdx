@@ -47,18 +47,18 @@ Cloudflare recommends creating an [Account API token](/fundamentals/api/get-star
 <Tabs syncKey="dashPlusAPI">
 <TabItem label="Dashboard">
 
-Once you have configured an IdP in Zero Trust, head over to the account members settings page to manage SSO connectors.
+1. Once you have configured an IdP in Zero Trust, go to the **Members** page to manage SSO connectors.
 
 <DashButton url="/?to=/:account/members/settings" />
 
-If step 1 was successful, a button to add a new SSO domain will be present. Click the button to begin the process of adding a new SSO domain.
+2. If step 1 was successful, a button to add a new SSO domain will be present. Select the button to begin the process of adding a new SSO domain.  
 
 ![Screenshot of the SSO connector create modal](~/assets/images/fundamentals/members/sso/create_modal.png)
 
-Enter your email domain and click **Create** to move to the verification step.
+3. Enter your email domain and select **Create** to move to the verification step.  
 
 :::note
-Some top level domains, such as `.edu`, are prohibeted from being used as SSO domains.
+Some top level domains, such as `.edu`, are prohibited from being used as SSO domains.  
 :::
 
 </TabItem>
@@ -107,7 +107,7 @@ Copy the verification code and create a TXT record in your DNS configuration wit
 
 Cloudflare will automatically poll this DNS record until it is found or a timeout is reached within two days.
 
-If the verification process fails due to timeout, you may manually reinitiate the polling by clicking **Begin verification** in the actions menu for that connector in the list.
+If the verification process fails due to timeout, you can manually reinitiate the polling by selecting **Begin verification** in the actions menu for that connector in the list.  
 
 </TabItem>
 <TabItem label="API">
@@ -150,7 +150,7 @@ Domains that are associated with an already enabled connector belonging to a dif
 <Tabs syncKey="dashPlusAPI">
 <TabItem label="Dashboard">
 
-Enable the connector by clicking **Enable** in the actions menu for that connector in the list.
+Enable the connector by selecting **Enable** in the Actions menu for that connector in the list.  
 
 ![Screenshot of the SSO connector enable button](~/assets/images/fundamentals/members/sso/verified_domain.png)
 
@@ -283,11 +283,13 @@ Before disabling SSO, make sure you have access to your Cloudflare user email. T
 <Tabs syncKey="dashPlusAPI">
 <TabItem label="Dashboard">
 
-Navigate to the account members settings page.
+1. Navigate to the **Members** page.  
 
 <DashButton url="/?to=/:account/members/settings" />
 
-Click the actions menu for the SSO connector in the list and select **Disable**. Type the domain of the connector and click confirm to complete the disable action.
+2. Select the actions menu for the SSO connector in the list and select **Disable**. 
+
+3. Type the domain of the connector and click confirm to complete the disable action.  
 
 </TabItem>
 <TabItem label="API">
@@ -357,7 +359,7 @@ Cloudflare does not allow you to change your <GlossaryTooltip term="team name">t
 <Tabs syncKey="dashPlusAPI">
 <TabItem label="Dashboard">
 
-1. Navigate to the account members settings page.
+1. Navigate to the **Members** page.  
 
 <DashButton url="/?to=/:account/members/settings" />
 

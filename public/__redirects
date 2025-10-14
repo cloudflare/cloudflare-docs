@@ -2346,6 +2346,7 @@
 /autorag/* /ai-search/:splat 301
 
 # Cloudflare One / Zero Trust
+/cloudflare-one/applications/configure-apps/dash-sso-apps/ /fundamentals/account/account-security/dashboard-sso/ 301
 /cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/as-a-service/* /cloudflare-one/connections/connect-networks/configure-tunnels/local-management/as-a-service/:splat 301
 /cloudflare-one/connections/connect-apps/install-and-setup/deployment-guides/* /cloudflare-one/connections/connect-networks/deployment-guides/:splat 301
 /cloudflare-one/connections/connect-networks/deploy-tunnels/deployment-guides/* /cloudflare-one/connections/connect-networks/deployment-guides/:splat 301
@@ -2364,7 +2365,6 @@
 /cloudflare-one/policies/filtering/http-policies/data-loss-prevention/* /cloudflare-one/policies/data-loss-prevention/ 301
 /cloudflare-one/policies/data-loss-prevention/configuration-guides/* /cloudflare-one/policies/data-loss-prevention/dlp-policies/common-policies/ 301
 /cloudflare-one/policies/data-loss-prevention/datasets/* /cloudflare-one/policies/data-loss-prevention/detection-entries/:splat 301
-/cloudflare-one/applications/configure-apps/dash-sso-apps/* /fundamentals/account/account-security/dashboard-sso/:splat 301
 
 # Learning paths
 
