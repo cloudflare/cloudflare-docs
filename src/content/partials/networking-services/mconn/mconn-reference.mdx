@@ -8,6 +8,7 @@ params:
   - configHardProductName
   - configVirtualProductName
   - haSetupURL
+  - ecmpRoutingURL
 ---
 
 import { GlossaryTooltip, Render } from "~/components"
@@ -87,7 +88,8 @@ This is where you add and configure your WAN connections. Each configured WAN wi
 
 <Render file="mconn/wan-two-tunnels" product="networking-services" params={{ productName: "Magic WAN Connector" }} />
 
-When you have multiple WANs you can attribute different priorities to each one. Lower values mean a higher priority. This translates in Connector routing traffic through the higher priority WANs or, more precisely, over the IPsec tunnels established over that interface. On the other hand, if you configure multiple WANs of equal priority, traffic will be distributed over those links through [(Equal-Cost Multi-Path) ECMP routing](/magic-wan/reference/traffic-steering/#equal-cost-multi-path-routing).
+When you have multiple WANs you can attribute different priorities to each one. Lower values mean a higher priority. This translates in {props.productName} routing traffic through the higher priority WANs or, more precisely, over the IPsec tunnels established over that interface. On the other hand, if you configure multiple WANs of equal priority, traffic will be distributed over those links through <a href={props.ecmpURL}>(Equal-Cost Multi-Path) ECMP routing]</a>.
+
 
 Creating several WAN connections also means Connector can failover between circuits according to their health.
 
