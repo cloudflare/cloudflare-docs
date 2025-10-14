@@ -1,10 +1,7 @@
 {
 	"title": "Project Cybersafe Schools",
 	"path": "/learning-paths/cybersafe/concepts/",
-	"priority": 5,
 	"description": "Prevent children from accessing obscene or harmful content over the Internet.",
 	"pcx_content_type": "learning-path",
-	"products": ["gateway", "zero-trust-warp", "dns"],
-	"product_group": "Cloudflare One",
-	"additional_groups": ["Application security"]
+	"products": ["gateway", "zero-trust-warp", "dns"]
 }

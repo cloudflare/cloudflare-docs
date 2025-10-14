@@ -276,6 +276,84 @@ In the API documentation, refer to [SSL properties of a custom hostname](/api/re
 
 </Details>
 
+<Details header="Restrict cipher suites for custom hostname with custom certificate">
+
+In the API documentation, refer to [SSL properties of a custom hostname](/api/resources/custom_hostnames/methods/edit/). In the case of a custom hostname with custom certificate, you must include the custom certificate in the [Edit Custom Hostname PATCH call](/api/resources/custom_hostnames/methods/edit/), with the `settings` specifications where you must include `type` and `method` within the `ssl` object, as explained below.
+
+1. Make a `GET` request to the [Custom Hostname Details](/api/resources/custom_hostnames/methods/get/) endpoint to check what are the current values for `ssl.type` and `ssl.method`.
+
+<APIRequest
+  path="/zones/{zone_id}/custom_hostnames/{custom_hostname_id}"
+  method="GET"
+/>
+
+```json title="Response example" collapse={5-16, 21-40} ""method": "http"," ""type": "dv","
+  "success": true,
+  "result": {
+    "id": "<CUSTOM_HOSTNAME_ID>",
+    "ssl": {
+      "id": "<CERTIFICATE_ID>",
+      "bundle_method": "ubiquitous",
+      "certificate_authority": "<CERTIFICATE_AUTHORITY>",
+      "custom_certificate": "",
+      "custom_csr_id": "",
+      "custom_key": "",
+      "expires_on": "",
+      "hosts": [
+        "app.example.com",
+        "*.app.example.com"
+      ],
+      "issuer": "",
+      "method": "http",
+      "settings": {},
+      "signature": "SHA256WithRSA",
+      "type": "dv",
+      "uploaded_on": "2020-02-06T18:11:23.531995Z",
+      "validation_errors": [
+        {
+          "message": "SERVFAIL looking up CAA for app.example.com"
+        }
+      ],
+      "validation_records": [
+        {
+          "emails": [
+            "administrator@example.com",
+            "webmaster@example.com"
+          ],
+          "http_body": "ca3-574923932a82475cb8592200f1a2a23d",
+          "http_url": "http://app.example.com/.well-known/pki-validation/ca3-da12a1c25e7b48cf80408c6c1763b8a2.txt",
+          "txt_name": "_acme-challenge.app.example.com",
+          "txt_value": "810b7d5f01154524b961ba0cd578acc2"
+        }
+      ],
+      "wildcard": false
+    },
+  }
+```
+
+2. After you take note of these values, make a `PATCH` request to the [Edit Custom Hostname](/api/resources/custom_hostnames/methods/edit/) endpoint, providing both the list of authorized cipher suites and the same `type` and `method` values that you obtained from the previous step, but also the `custom_certificate` and `custom_key`.
+
+<APIRequest
+  path="/zones/{zone_id}/custom_hostnames/{custom_hostname_id}"
+  method="PATCH"
+	json={{
+		ssl: {
+			method: "http",
+			type: "dv",
+      custom_certificate: "<CERTIFICATE_STRING>",
+			custom_key: "<CERTIFICATE_PRIVATE_KEY>",
+			settings: {
+				"ciphers": ["ECDHE-ECDSA-AES128-GCM-SHA256","ECDHE-RSA-AES128-GCM-SHA256"],
+				"min_tls_version": "1.2"
+				}
+			}
+		}}
+/>
+
+</Details>
+
+
+
 ## Alerts for mutual TLS certificates
 
 You can configure alerts to receive notifications before your mutual TLS certificates expire.
