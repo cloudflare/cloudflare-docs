@@ -1,12 +1,13 @@
 ---
-{}
+params:
+  - productName
 ---
 
 import { Render } from "~/components";
 
 ## Device metrics
 
-Cloudflare customers can inspect metrics for a specific Magic WAN Connector in the Cloudflare dashboard. These metrics help you troubleshoot potential issues with your Connector. The information spans categories such as:
+Cloudflare customers can inspect metrics for a specific {props.productName} in the Cloudflare dashboard. These metrics help you troubleshoot potential issues with your Connector. The information spans categories such as:
 
 - Performance analytics
 - Port analytics
