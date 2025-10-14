@@ -154,17 +154,17 @@ The snippet above requires [Zod v3](https://v3.zod.dev/) and is currently not co
 Ensure your `package.json` has the following dependencies:
 
 	```json
-	{
-		// ...
-		"dependencies": {
-			"@browserbasehq/stagehand": "^2.5.0",
-			"@cloudflare/playwright": "^1.0.0",
-			"playwright-core",
-			"zod": "^3.25.76",
-			"zod-to-json-schema": "^3.24.6"
-			// ...
-		}
-	}
+	"devDependencies": {
+        "playwright-core": "^1.55.0",
+        // ...
+  },
+  "dependencies": {
+        "@browserbasehq/stagehand": "^2.5.0",
+        "@cloudflare/playwright": "^1.0.0",
+        "zod": "^3.25.76",
+        "zod-to-json-schema": "^3.24.6"
+    // ...
+  }
 	```
 :::
 
