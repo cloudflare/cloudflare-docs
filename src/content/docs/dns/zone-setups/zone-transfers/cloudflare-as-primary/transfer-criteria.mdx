@@ -21,11 +21,11 @@ As explained in [DNS record types](/dns/manage-dns-records/reference/dns-record-
 Depending on the [settings](/dns/cname-flattening/set-up-cname-flattening/) you have, when you use DNS-only CNAME records with outgoing zone transfers, you can expect the following:
 
 - For DNS-only CNAME records on the zone apex, Cloudflare will always transfer out the flattened IP addresses.
-- For DNS-only CNAME records on subdomains, Cloudflare will only transfer out flattened IP addresses if the setting [**Flatten all CNAMEs**](/dns/cname-flattening/set-up-cname-flattening/#for-all-cname-records) is enabled.
+- For DNS-only CNAME records on subdomains, Cloudflare will only transfer out flattened IP addresses if the setting [**CNAME flattening for all CNAME records**](/dns/cname-flattening/set-up-cname-flattening/#for-all-cname-records) is enabled.
 
 :::note[Per-record CNAME flattening]
 
-For records using [per-record CNAME flattening](/dns/cname-flattening/set-up-cname-flattening/#per-record) (meaning **Flatten all CNAMEs** is disabled), Cloudflare will transfer out the CNAME, not the flattened IP address.
+For records using [per-record CNAME flattening](/dns/cname-flattening/set-up-cname-flattening/#per-record) (meaning **CNAME flattening for all CNAME records** is disabled), Cloudflare will transfer out the CNAME, not the flattened IP address.
 
 :::
 
@@ -33,10 +33,10 @@ For records using [per-record CNAME flattening](/dns/cname-flattening/set-up-cna
 
 The following records are not transferred out when you use Cloudflare as primary:
 
-- [CAA records](/ssl/edge-certificates/caa-records/).
-- TXT records used for TLS certificate validation.
-- DNS-only [Load Balancing](/load-balancing/load-balancers/dns-records/) records.
+- [CAA records](/ssl/edge-certificates/caa-records/)
+- TXT records used for TLS certificate validation
+- DNS-only [Load Balancing](/load-balancing/load-balancers/dns-records/) records
 
 :::note
-Proxied Load Balancing records are transferred as [explained above](#proxied-records).
+Proxied Load Balancing records are transferred as explained in [Proxied records](#proxied-records).
 :::
