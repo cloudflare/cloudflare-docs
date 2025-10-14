@@ -66,7 +66,7 @@ The HA link cannot be connected back-to-back. It has to be connected over a swit
 
 ### Failure Detection and Failover
 
-The Magic WAN Connector's health can be in one of three states:
+The {props.productName}'s health can be in one of three states:
 
 - **Good** : All health parameters are good
 - **Degraded** : One of the following is true:
@@ -75,9 +75,9 @@ The Magic WAN Connector's health can be in one of three states:
 - **Down** : If one of the following is true:
   - Health of all tunnels is `DOWN`
   - All LAN interfaces are disconnected
-  - Connector software is not healthy
+  - {props.productName}'s software is not healthy
 
-A failover happens when the active node's health declines to a level lower than that of the standby node. For example, from `GOOD` to `DEGRADED`, or from `DEGRADED` to `DOWN`. In the case of a failover where a Connector is acting as a DHCP server, DHCP leases will be synchronized.
+A failover happens when the active node's health declines to a level lower than that of the standby node. For example, from `GOOD` to `DEGRADED`, or from `DEGRADED` to `DOWN`. In the case of a failover where a {props.productName} is acting as a DHCP server, DHCP leases will be synchronized.
 
 When a failover occurs, traffic is moved to the new active node. It could take up to 30 seconds for traffic to be fully restored over the new active node.
 
