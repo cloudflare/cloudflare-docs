@@ -1,6 +1,8 @@
 releaseNotes: |-
   This release contains improvements and new exciting features, including [post-quantum cryptography](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/#enable_post_quantum). By tunneling your corporate network traffic over Cloudflare, you can now gain the immediate protection of post-quantum cryptography without needing to upgrade any of your individual corporate applications or systems.
 
+  Devices using WARP client 2025.4.929.0 and up may experience Local Domain Fallback failures if a fallback server has not been configured. To configure a fallback server, refer to [Route traffic to fallback server](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/#route-traffic-to-fallback-server).
+
   **Changes and improvements**
   - Fixed a device registration issue causing WARP connection failures when changing networks.
   - Captive portal improvements and fixes:
