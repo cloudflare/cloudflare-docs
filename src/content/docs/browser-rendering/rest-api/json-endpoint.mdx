@@ -17,11 +17,32 @@ By default, the `/json` endpoint leverages [Workers AI](/workers-ai/) for data e
 
 :::
 
+## Endpoint
+
+```txt
+https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/json
+```
+
+## Required fields
+You must provide either `url` or `html`:
+-  `url` (string)
+-  `html` (string)
+
+And at least one of:
+-  `prompt` (string), or
+-  `response_format` (object with a JSON Schema)
+
+## Common use cases
+
+-  Extract product info (title, price, availability) or listings (jobs, rentals)
+-  Normalize article metadata (title, author, publish date, canonical URL)
+-  Convert unstructured pages into typed JSON for downstream pipelines
+
 ## Basic Usage
 
-<Tabs syncKey="workersExamples"> <TabItem label="curl">
-
 ### With a Prompt and JSON schema
+
+<Tabs syncKey="workersExamples"> <TabItem label="curl">
 
 This example captures webpage data by providing both a prompt and a JSON schema. The prompt guides the extraction process, while the JSON schema defines the expected structure of the output.
 
