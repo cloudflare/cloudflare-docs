@@ -119,6 +119,10 @@ Currently, this header is a JSON object, containing only one key called `scheme`
 
 `CDN-Loop` allows Cloudflare to specify how many times a request can enter Cloudflare's network before it is blocked as a looping request. For example: `CDN-Loop: cloudflare`.
 
+### CF-Connecting-O2O
+
+If [SSL for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/) is used for [the SaaS provider-owned zone](/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/how-it-works/), a HTTP header will be set to `cf-connecting-o2o: 1`.
+
 ### CF-Worker
 
 The `CF-Worker` request header is added to an edge Worker subrequest that identifies the host that spawned the subrequest. For example: `CF-Worker: example.com`.
