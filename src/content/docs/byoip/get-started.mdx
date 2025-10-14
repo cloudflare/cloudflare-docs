@@ -11,6 +11,10 @@ Work with your account team to make sure your contract covers everything you nee
 
 Once your account configurations are in place, consider the sections below to learn how to set up your BYOIP prefixes. Also make sure to review the [BYOIP Service-Specific Terms](https://www.cloudflare.com/service-specific-terms-network-services/#bring-your-own-ip-terms).
 
+:::note[Magic Transit]
+The process described on this page does not support onboarding IP prefixes for use with [Cloudflare Magic Transit](/magic-transit/). For further guidance, refer to the [Magic Transit get started](/magic-transit/get-started/).
+:::
+
 ## Before you begin
 
 - Your prefix must be registered under one of the Regional Internet Registries (RIRs):
@@ -168,10 +172,6 @@ In IP address management, service bindings map the traffic destined for a given 
 
 When you onboard your IP prefixes to Cloudflare, there must be one service binding that spans across your entire prefix. Traffic destined for a given IP address will be routed to this service by default. You can also configure [additional service bindings](#optional-additional-bindings) as described in the next step.
 
-:::note
-Magic Transit can only be used as default binding, spanning across your entire prefix. You can then add CDN or Spectrum bindings for smaller subnets but not the other way around. For details refer to [service bindings scope](/byoip/service-bindings/#scope).
-:::
-
 1. Make a `GET` request to the [List Services](/api/resources/addressing/subresources/services/methods/list/) endpoint and take note of the `id` associated with the service you want to use.
 2. (Optional) If needed, use the [List Prefixes](/api/resources/addressing/subresources/prefixes/methods/list/) endpoint to get or confirm the `id` associated with your prefix.
 3. Make a `POST` request to the [Create service binding](/api/resources/addressing/subresources/prefixes/subresources/service_bindings/methods/create/) endpoint, indicating the entire BYOIP prefix that you are onboarding and the service that should be used for your default binding.
@@ -187,13 +187,9 @@ json={{
 
 A corresponding BGP prefix will be created automatically. Allow five hours before you advertise the prefix.
 
-:::note
-For Magic Transit customers, the BGP prefix will be created in a `locked` state. Work with your account team to make sure it is unlocked after additional checks have passed.
-:::
-
 ### (Optional) Additional bindings
 
-If you want to selectively route traffic on a per-IP address basis to CDN or Spectrum, you can create additional service bindings. Magic Transit can only be used as default binding, spanning across your entire prefix.
+If you want to selectively route traffic on a per-IP address basis to CDN or Spectrum, you can create additional service bindings.
 
 :::note
 The steps below only cover assigning specific IPs to additional services. For guidance that includes CDN or Spectrum setup steps, refer to [Service bindings](/byoip/service-bindings/).
@@ -203,7 +199,7 @@ The steps below only cover assigning specific IPs to additional services. For gu
 
 <Details header="Example">
 
-**Magic Transit protected prefix:** `203.0.113.0/24`
+**Spectrum protected prefix:** `203.0.113.0/24`
 
 **IPs to upgrade to CDN:**
 
