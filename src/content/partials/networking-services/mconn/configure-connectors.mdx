@@ -349,7 +349,7 @@ To add a { props.magicWord === "virtual" ? props.productNameVirtual : props.prod
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-<Render file="mconn/wan-two-tunnels" product="networking-services" />
+<Render file="mconn/wan-two-tunnels" product="networking-services" params={{ productName: "Magic WAN Connector" }} />
 
 1. In **WAN configuration**, select **Create**. You can create one or more [wide area networks (WANs)](https://www.cloudflare.com/learning/network-layer/what-is-a-wan/). Configuring multiple WANs will create multiple <GlossaryTooltip term="IPsec tunnel">IPsec</GlossaryTooltip> tunnels (one IPsec tunnel per WAN port). This allows { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } to load balance traffic over WANs of equal priority. It also allows Connector to failover between circuits according to their <GlossaryTooltip term="tunnel health-check" link="/magic-wan/reference/tunnel-health-checks/">health</GlossaryTooltip>. Refer to [WAN settings](/magic-wan/configuration/connector/reference/#wan-settings) for more details.
 		:::note
