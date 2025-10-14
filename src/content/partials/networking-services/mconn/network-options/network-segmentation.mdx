@@ -1,6 +1,10 @@
 ---
 params:
   - productName
+  - hardConnectorURL
+  - virtualConnectorURL
+  - configHardProductName
+  - configVirtualProductName
 ---
 
 
@@ -32,13 +36,13 @@ _In the above example, the red path shows traffic that stays in the customer's p
 
 <br />
 
-As a best practice for security, we recommend sending all traffic through Cloudflare’s network for Zero Trust security filtering. Use these policies with care and only for scenarios where you have a hard requirement for LAN-to-LAN traffic flows.
+As a best practice for security, we recommend sending all traffic through Cloudflare's network for Zero Trust security filtering. Use these policies with care and only for scenarios where you have a hard requirement for LAN-to-LAN traffic flows.
 
 If you enable LAN to LAN traffic flows, communications can only be initiated from origin to destination — for example, LAN 1 to LAN 2 — and not the other way around. This is by design and prevents potential exfiltration of information. This does not mean bidirectional communication on TCP is not possible. It only means that the origin is the only one authorized to initiate communications.
 
 Unidirectional communication can be enabled for UDP and ICMP, but it is not available for TCP, as it would break that protocol.
 
-The following guide assumes you have already created a site and configured your Connector. To learn how to create a site and configure your Connector, refer to [Configure hardware Connector](/magic-wan/configuration/connector/configure-hardware-connector/) or [Configure virtual connector](/magic-wan/configuration/connector/configure-virtual-connector/), depending on the type of Magic WAN Connector you have on your premises.
+The following guide assumes you have already created a site and configured your {props.productName}. To learn how to create a site and configure your {props.productName}, refer to <a href={props.hardConnectorURL}>{props.configHardProductName}</a> or <a href={props.virtualConnectorURL}>{props.configVirtualProductName}</a>, depending on the type of Magic WAN Connector you have on your premises.
 
 ## Create a policy
 
