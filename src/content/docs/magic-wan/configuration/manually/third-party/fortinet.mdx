@@ -433,18 +433,7 @@ end
 
 ## Monitor Cloudflare Magic IPsec tunnel health checks
 
-<Render
-	file="tunnel-health/check-tunnel-healthchecks-dash"
-	product="networking-services"
-	params={{
-		dashInfo: "The dashboard shows the view of tunnel health as measured from each Cloudflare location where your traffic is likely to land.",
-		productPath: "**Magic WAN** > **Tunnel health**",
-		graphQL: "/magic-wan/analytics/query-tunnel-health/",
-		notificationsPath: "[notifications wizard](/magic-wan/configuration/common-settings/configure-magic-tunnel-health-alerts/)",
-		packetCaptures: "/magic-firewall/packet-captures/",
-		networkAnalytics: "/magic-wan/analytics/network-analytics/"
-	}}
-/>
+The Cloudflare dashboard monitors the health of all anycast tunnels on your account that route traffic from Cloudflare to your origin network. Refer to [Check tunnel health in the dashboard](/magic-wan/configuration/common-settings/check-tunnel-health-dashboard/) for more information.
 
 ## Troubleshooting
 
