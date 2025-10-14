@@ -7,6 +7,7 @@ params:
   - virtualConnectorURL
   - configHardProductName
   - configVirtualProductName
+  - haSetupURL
 ---
 
 import { GlossaryTooltip, Render } from "~/components"
@@ -57,7 +58,7 @@ The HA pair is configured in non-preemptive mode, meaning that once a node becom
 
 ### Configuration
 
-The two Connectors of a high availability (HA) pair are part of a single site. You designate the connectors [as primary and secondary](/magic-wan/configuration/connector/configure-hardware-connector/#create-a-high-availability-configuration) in the Cloudflare dashboard.
+The two Connectors of a high availability (HA) pair are part of a single site. You designate the connectors <a href={props.haSetupURL}>as primary and secondary</a> in the Cloudflare dashboard.
 
 :::note
 The HA link cannot be connected back-to-back. It has to be connected over a switch. This is because, in a direct connection, if the link is unplugged on one end, the other end also detects a link failure. Since we have configured the system to enter a `FAULT` state when the HA link goes down, the affected node will be unable to function as the active node.
