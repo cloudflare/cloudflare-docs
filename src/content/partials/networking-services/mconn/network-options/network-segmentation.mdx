@@ -12,7 +12,7 @@ You can define policies in your {props.productName} to either allow traffic to f
 	{`
 		flowchart LR
 		accTitle: In this example, there are LANs where traffic flows between each other, instead of going to Cloudflare first.
-				a(Magic WAN Connector) <---> b(Internet) <---> c(Cloudflare)
+				a(${props.productName}) <---> b(Internet) <---> c(Cloudflare)
 
 				subgraph Customer site
 				d[LAN 1] <---> a
