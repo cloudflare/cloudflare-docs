@@ -16,7 +16,6 @@ import {
 	PiCheckCircleLight,
 	PiXCircleLight,
 	PiChatCircleLight,
-	PiLinkLight,
 } from "react-icons/pi";
 import ClaudeIcon from "./icons/ClaudeIcon";
 import ChatGPTIcon from "./icons/ChatGPTIcon";
@@ -100,34 +99,7 @@ export default function CopyPageButton() {
 		}
 	};
 
-	const handleCopyPageLink = async () => {
-		try {
-			await navigator.clipboard.writeText(window.location.href);
-			track("clicked copy page button", {
-				value: "copy page link",
-			});
-
-			setCopyState("success");
-			setTimeout(() => {
-				setCopyState("idle");
-			}, 1500);
-		} catch (error) {
-			console.error("Failed to copy page link:", error);
-
-			setCopyState("error");
-			setTimeout(() => {
-				setCopyState("idle");
-			}, 1500);
-		}
-	};
-
 	const options = [
-		{
-			label: "Copy page link",
-			description: "Copy the current page URL to clipboard",
-			icon: PiLinkLight,
-			onClick: handleCopyPageLink,
-		},
 		{
 			label: "View Page as Markdown",
 			description: "Open the Markdown file in a new tab",
