@@ -122,7 +122,7 @@ dig cool.cats TXT +short
 "cloudflare_dashboard_sso=111111111"
 ```
 
-The `TXT` record must include the `cloudflared_dashboard_sso=` prefix along with the numerical code.
+The `TXT` record must include the `cloudflare_dashboard_sso=` prefix along with the numerical code.
 
 Cloudflare will automatically poll this DNS record until it is found or a timeout is reached within two days. If verification fails due to timeout, you may manually reinitiate the polling by running the following command:
 
