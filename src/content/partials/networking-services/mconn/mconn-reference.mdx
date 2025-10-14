@@ -20,15 +20,15 @@ import { GlossaryTooltip, Render } from "~/components"
 
 ## ICMP traffic
 
-<GlossaryTooltip term="ICMP">ICMP traffic</GlossaryTooltip> is routed through the Internet and bypasses <a href={props.gatewayURL}>Cloudflare Gateway</a>. This enables you to ping resources on the Internet from the Magic WAN connector directly, which can be useful for debugging.
+<GlossaryTooltip term="ICMP">ICMP traffic</GlossaryTooltip> is routed through the Internet and bypasses <a href={props.gatewayURL}>Cloudflare Gateway</a>. This enables you to ping resources on the Internet from the {props.productName} directly, which can be useful for debugging.
 
 ---
 
 ## VLAN ID
 
-This feature allows you to have multiple [virtual LANs](https://www.cloudflare.com/learning/network-layer/what-is-a-lan/) (VLANs) configured over the same physical port on your Magic WAN Connector. VLAN tagging adds an extra header to [packets](https://www.cloudflare.com/learning/network-layer/what-is-a-packet/) in order to identify which VLAN the packet belongs to and to route it appropriately. This effectively allows you to run multiple networks over the same physical port.
+This feature allows you to have multiple [virtual LANs](https://www.cloudflare.com/learning/network-layer/what-is-a-lan/) (VLANs) configured over the same physical port on your {props.productName}. VLAN tagging adds an extra header to [packets](https://www.cloudflare.com/learning/network-layer/what-is-a-packet/) in order to identify which VLAN the packet belongs to and to route it appropriately. This effectively allows you to run multiple networks over the same physical port.
 
-A non-zero value set up for the VLAN ID field in your WAN/LAN is used to handle VLAN-tagged traffic. Cloudflare uses the VLAN ID to handle traffic coming into your Magic WAN Connector device, and applies a VLAN tag with the configured VLAN ID for traffic going out of your Connector through WAN/LAN.
+A non-zero value set up for the VLAN ID field in your WAN/LAN is used to handle VLAN-tagged traffic. Cloudflare uses the VLAN ID to handle traffic coming into your {props.productName} device, and applies a VLAN tag with the configured VLAN ID for traffic going out of your {props.productName} through WAN/LAN.
 
 You can setup VLAN IDs both for WAN and LAN. Refer to [Configure hardware connector](/magic-wan/configuration/connector/configure-hardware-connector/) or [Configure software connector](/magic-wan/configuration/connector/configure-virtual-connector/) to learn where you can set up VLAN IDs.
 
