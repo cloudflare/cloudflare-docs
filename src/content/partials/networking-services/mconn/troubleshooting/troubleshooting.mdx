@@ -2,6 +2,8 @@
 params:
   - productName
   - activateURL
+  - firewallURL
+  - heartbeatURL
 ---
 
 import { Render } from "~/components";
@@ -92,19 +94,19 @@ Make sure that you have <a href={props.activateURL}>activated your Connector</a>
 
 Check if your {props.productName} is connected to the Internet via a port that can serve DHCP. This is required the first time a {props.productName} boots up so that it can reach the Cloudflare global network and download the required configurations that you set up in the Site configuration step. Refer to <a href={props.activateURL}>Activate Connector</a> for more details.
 
-If you have a firewall deployed upstream of the {props.productName}, [check your firewall settings](/magic-wan/configuration/connector/configure-hardware-connector/#firewall-settings-required). You might need to configure your firewall to allow traffic in specific ports for the Connector to work properly.
+If you have a firewall deployed upstream of the {props.productName}, <a href={props.firewallURL}>check your firewall settings</a>. You might need to configure your firewall to allow traffic in specific ports for the Connector to work properly.
 
-## I can access Magic WAN Connector's health checks, but there is no traffic
+## I can access {props.productName}'s health checks, but there is no traffic
 
-If you have a firewall deployed upstream of the Magic WAN Connector, make sure you review your [firewall settings](/magic-wan/configuration/connector/configure-hardware-connector/#firewall-settings-required). You might need to configure your firewall to allow traffic in specific ports for the Connector to work properly.
+If you have a firewall deployed upstream of the {props.productName}, make sure you review your <a href={props.firewallURL}>firewall settings</a>. You might need to configure your firewall to allow traffic in specific ports for the {props.productName} to work properly.
 
-## Devices I have behind Connector cannot connect to the Internet
+## Devices I have behind {props.productName} cannot connect to the Internet
 
-If you have other routing appliances behind Magic WAN Connector, make sure you create policy-based routing policies to send traffic from your devices through Connector, instead of these other routing devices.
+If you have other routing appliances behind {props.productName}, make sure you create policy-based routing policies to send traffic from your devices through {props.productName}, instead of these other routing devices.
 
 ## How do I know if my device is contacting Cloudflare?
 
-Magic WAN Connector sends a heartbeat periodically to Cloudflare. You can [access the Magic WAN dashboard](/magic-wan/configuration/connector/maintenance/heartbeat/), and check for the heartbeat status of your Connector device.
+{props.productName} sends a heartbeat periodically to Cloudflare. You can <a href={props.heartbeatURL}>access the dashboard</a>, and check for the heartbeat status of your Connector device.
 
 ## What do I do in the event of hardware issues with Magic WAN Connector?
 
