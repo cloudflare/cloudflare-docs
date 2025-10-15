@@ -8,7 +8,7 @@ head:
     content: TLS Settings — Cloudflare for SaaS
 ---
 
-import { AvailableNotifications, Details, Render, APIRequest, Tabs, TabItem } from "~/components";
+import { AvailableNotifications, Details, Render, APIRequest, Tabs, TabItem, DashButton } from "~/components";
 
 [Mutual TLS (mTLS)](https://www.cloudflare.com/learning/access-management/what-is-mutual-tls/) adds an extra layer of protection to application connections by validating certificates on the server and the client. When building a SaaS application, you may want to enforce mTLS to protect sensitive endpoints related to payment processing, database updates, and more.
 
@@ -113,10 +113,12 @@ Refer to [Minimum TLS version - SSL/TLS](/ssl/edge-certificates/additional-optio
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and website.
-2. Go to **SSL/TLS** > **Custom Hostnames**.
-3. Find the hostname to which you want to apply Minimum TLS Version. Select **Edit**.
-4. Choose the desired TLS version under **Minimum TLS Version** and select **Save**.
+1. In the Cloudflare dashboard, go to the **Custom Hostnames** page.
+
+    <DashButton url="/?to=/:account/:zone/ssl-tls/custom-hostnames" />
+
+2. Find the hostname to which you want to apply Minimum TLS Version. Select **Edit**.
+3. Choose the desired TLS version under **Minimum TLS Version** and select **Save**.
 
 </TabItem> <TabItem label="API">
 
