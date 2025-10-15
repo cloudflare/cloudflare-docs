@@ -177,7 +177,7 @@ Cloudflare Workers provides automatic tracing instrumentation **out of the box**
 - `cloudflare.d1.query.bookmark`
 - `cloudflare.d1.response.bookmark`
 
-#### [`d1_bind`](/d1/worker-api/prepared-statements/#bind)
+#### [`d1_all`](/d1/worker-api/prepared-statements/#run)
 
 - `cloudflare.d1.query.bookmark`
 - `cloudflare.d1.response.bookmark`
@@ -470,9 +470,9 @@ The SQL API allow you to modify the SQLite database embedded within a Durable Ob
 - `db.system.name`
 - `db.operation.name`
 
-#### [`durable_object_storage_exec`](/durable-objects/api/storage-api/#exec)
+#### [`durable_object_storage_exec`](/durable-objects/api/sqlite-storage-api/#exec)
 
-#### [`durable_object_storage_getDatabaseSize`](/durable-objects/api/storage-api/#databasesize)
+#### [`durable_object_storage_getDatabaseSize`](/durable-objects/api/sqlite-storage-api/#databasesize)
 
 - `cloudflare.durable_object.sql.query.statement`
 - `cloudflare.durable_object.sql.query.bindings`
@@ -488,23 +488,23 @@ The SQL API allow you to modify the SQLite database embedded within a Durable Ob
 - `cloudflare.durable_object.response.rows_written`
 - `cloudflare.durable_object.response.statement_count`
 
-#### [`durable_object_storage_kv_get`](/durable-objects/api/storage-api/#get)
+#### [`durable_object_storage_kv_get`](/durable-objects/api/sqlite-storage-api/#get)
 
 - `cloudflare.durable_object.kv.query.keys`
 - `cloudflare.durable_object.kv.query.keys.count`
 
-#### [`durable_object_storage_kv_put`](/durable-objects/api/storage-api/#put)
+#### [`durable_object_storage_kv_put`](/durable-objects/api/sqlite-storage-api/#put)
 
 - `cloudflare.durable_object.kv.query.keys`
 - `cloudflare.durable_object.kv.query.keys.count`
 
-#### [`durable_object_storage_kv_delete`](/durable-objects/api/storage-api/#delete)
+#### [`durable_object_storage_kv_delete`](/durable-objects/api/sqlite-storage-api/#delete)
 
 - `cloudflare.durable_object.kv.query.keys`
 - `cloudflare.durable_object.kv.query.keys.count`
 - `cloudflare.durable_object.kv.response.deleted_count`
 
-#### [`durable_object_storage_kv_list`](/durable-objects/api/storage-api/#list)
+#### [`durable_object_storage_kv_list`](/durable-objects/api/sqlite-storage-api/#list)
 
 - `cloudflare.durable_object.kv.query.start`
 - `cloudflare.durable_object.kv.query.startAfter`
@@ -515,9 +515,9 @@ The SQL API allow you to modify the SQLite database embedded within a Durable Ob
 
 ---
 
-### [Durable Object Storage KV API](/durable-objects/api/storage-api/)
+### [Durable Object Storage KV API](/durable-objects/api/legacy-kv-storage-api)
 
-The KV-backed API allows you to modify embedded storage within a Durable Object.
+The legacy KV-backed API allows you to modify embedded storage within a Durable Object.
 
 #### Attributes availabe on all Durable Object Storage KV API
 
@@ -525,14 +525,14 @@ The KV-backed API allows you to modify embedded storage within a Durable Object.
 - `cloudflare.durable_object.id`
 - `db.system.name`
 
-#### [`durable_object_storage_get`](/durable-objects/api/storage-api/#get)
+#### [`durable_object_storage_get`](/durable-objects/api/legacy-kv-storage-api/#do-kv-async-get)
 
 - `cloudflare.durable_object.kv.query.keys`
 - `cloudflare.durable_object.kv.query.keys.count`
 - `cloudflare.durable_object.kv.query.allow_concurrency`
 - `cloudflare.durable_object.kv.query.no_cache`
 
-#### [`durable_object_storage_put`](/durable-objects/api/storage-api/#put)
+#### [`durable_object_storage_put`](/durable-objects/api/legacy-kv-storage-api/#do-kv-async-put)
 
 - `cloudflare.durable_object.kv.query.keys`
 - `cloudflare.durable_object.kv.query.keys.count`
@@ -540,7 +540,7 @@ The KV-backed API allows you to modify embedded storage within a Durable Object.
 - `cloudflare.durable_object.kv.query.no_cache`
 - `cloudflare.durable_object.kv.query.allow_unconfirmed`
 
-#### [`durable_object_storage_delete`](/durable-objects/api/storage-api/#delete)
+#### [`durable_object_storage_delete`](/durable-objects/api/legacy-kv-storage-api/#do-kv-async-delete)
 
 - `cloudflare.durable_object.kv.query.keys`
 - `cloudflare.durable_object.kv.query.keys.count`
@@ -549,7 +549,7 @@ The KV-backed API allows you to modify embedded storage within a Durable Object.
 - `cloudflare.durable_object.kv.query.allow_unconfirmed`
 - `cloudflare.durable_object.kv.response.deleted_count`
 
-#### [`durable_object_storage_list`](/durable-objects/api/storage-api/#list)
+#### [`durable_object_storage_list`](/durable-objects/api/legacy-kv-storage-api/#do-kv-async-list)
 
 - `cloudflare.durable_object.kv.query.start`
 - `cloudflare.durable_object.kv.query.startAfter`
@@ -560,7 +560,7 @@ The KV-backed API allows you to modify embedded storage within a Durable Object.
 - `cloudflare.durable_object.kv.query.allow_concurrency`
 - `cloudflare.durable_object.kv.query.no_cache`
 
-#### [`durable_object_storage_deleteAll`](/durable-objects/api/storage-api/#deleteall)
+#### [`durable_object_storage_deleteAll`](/durable-objects/api/legacy-kv-storage-api/#deleteall)
 
 - `cloudflare.durable_object.kv.query.allow_concurrency`
 - `cloudflare.durable_object.kv.query.no_cache`

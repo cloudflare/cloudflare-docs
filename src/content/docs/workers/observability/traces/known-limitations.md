@@ -13,7 +13,7 @@ To provide more feedback and send feature requests, head to the [Workers tracing
 
 ### Non-I/O operations may report time of 0 ms
 
-Due to [security measures put in place to prevent Spectre attacks](workers/reference/security-model/#step-1-disallow-timers-and-multi-threading), the Workers
+Due to [security measures put in place to prevent Spectre attacks](/workers/reference/security-model/#step-1-disallow-timers-and-multi-threading), the Workers
 Runtime does not update time until I/O events take place. This means that some spans will return a length of `0 ms` even when the operation took longer.
 
 The Cloudflare Workers team is exploring security measures that would allow exposing time lengths at milisecond-level granularity in these cases.
