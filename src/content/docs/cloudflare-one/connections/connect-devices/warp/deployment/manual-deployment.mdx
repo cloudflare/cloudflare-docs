@@ -105,7 +105,7 @@ The WARP client supports URLs accessed through a direct link or with a URL handl
 To generate a URL for device enrollment:
 
 1. Copy the following link, replacing `<your-team-name>` with your Zero Trust <GlossaryTooltip term="team name">team name</GlossaryTooltip>:
-   `txt
+   `
 cf1app://oneapp.cloudflare.com/team?name=<your-team-name>
 `
 2. (Optional) Use any QR code generator to embed the link in a QR code.
@@ -147,3 +147,9 @@ The device is now protected by your organization's Zero Trust policies.
 ## Virtual machines
 
 By default, virtual machines (VMs) are subject to the WARP client settings of the host. If you want to deploy a separate instance of WARP in a VM, you must configure the VM to operate in bridged networking mode.
+
+## Troubleshooting
+
+### Enrollment request is invalid
+
+If you encounter an `Enrollment request is invalid` error during device enrollment, make sure your device enrollment policy includes at least one [Allow]() action with an [Include]() rule for a supported login method (for example, *One-time PIN* or your configured identity provider). Without this rule, Cloudflare cannot validate the authentication flow for enrollment requests.
