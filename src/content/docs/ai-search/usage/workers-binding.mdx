@@ -47,6 +47,8 @@ const answer = await env.AI.autorag("my-autorag").aiSearch({
 	max_num_results: 2,
 	ranking_options: {
 		score_threshold: 0.3,
+    enabled: true,
+    model: "@cf/baai/bge-reranker-base"
 	},
 	stream: true,
 });
@@ -116,6 +118,8 @@ const answer = await env.AI.autorag("my-autorag").search({
 	max_num_results: 2,
 	ranking_options: {
 		score_threshold: 0.3,
+    enabled: true,
+    model: "@cf/baai/bge-reranker-base"
 	},
 });
 ```
