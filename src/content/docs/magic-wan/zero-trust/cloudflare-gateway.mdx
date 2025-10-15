@@ -14,7 +14,16 @@ import { Render } from "~/components";
 	params={{
 		gatewayURL: "/cloudflare-one/policies/gateway/",
 		magicFirewallName: "Magic Firewall",
-		magicFirewallURL: "/magic-firewall/"
+		magicFirewallURL: "/magic-firewall/",
+		warpURL: "/cloudflare-one/connections/connect-devices/warp/",
+		cfAutoCertificatesURL: "/cloudflare-one/connections/connect-devices/user-side-certificates/automated-deployment/",
+		cfManualCertificatesURL: "/cloudflare-one/connections/connect-devices/user-side-certificates/manual-deployment/",
+		decryptTlsURL: "/cloudflare-one/policies/gateway/http-policies/tls-decryption/",
+		doNotInspectURL: "/cloudflare-one/policies/gateway/http-policies/#do-not-inspect",
+		magicWANName: "Magic WAN",
+		warpChecksURL: "/cloudflare-one/identity/devices/warp-client-checks/",
+		osVersionChecks: "/cloudflare-one/identity/devices/warp-client-checks/os-version/",
+		mwanOnrampsURL: "/magic-wan/on-ramps/"
 
 	}}
 />
