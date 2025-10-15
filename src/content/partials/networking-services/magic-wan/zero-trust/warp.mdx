@@ -8,6 +8,9 @@ params:
   - setupZeroTrustAccountURL
   - ztDashPath
   - splitTunnelsURL
+  - warpDeploymentURL
+  - warpIngressIpURL
+  - mwanConnectorName
 ---
 
 import { Markdown } from "~/components";
@@ -61,7 +64,7 @@ Optionally, you can configure Split Tunnels to include IP ranges or domains you 
 
 ### 3. Install the WARP client on your device
 
-Refer to [Deploy WARP to your organization](/cloudflare-one/connections/connect-devices/warp/deployment/) for more information on whether to choose a manual or managed deployment.
+Refer to <a href={props.warpDeploymentURL}>Deploy WARP to your organization</a> for more information on whether to choose a manual or managed deployment.
 
 You should be able to access Private IP addresses specified in the Split Tunnel configuration.
 
@@ -85,9 +88,9 @@ When a WARP user goes to a location (like an office) with a {props.productName} 
 
 Since WARP traffic is already protected on its own, Cloudflare recommends that you set up {props.productName} to exclude WARP traffic, sending it to the Internet through regular connections.
 
-To learn which IP addresses and UDP ports you should exclude to accomplish this, refer to [WARP ingress IP](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#warp-ingress-ip).
+To learn which IP addresses and UDP ports you should exclude to accomplish this, refer to <a href={props.warpIngressIpURL}>WARP ingress IP</a>.
 
-### WARP and {props.productName} Connector
+### WARP and {props.mwanConnectorName}
 
 <Render
 	file="mconn/network-options/app-aware-policies/warp-traffic"
