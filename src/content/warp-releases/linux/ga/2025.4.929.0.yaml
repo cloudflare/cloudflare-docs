@@ -2,7 +2,7 @@ releaseNotes: |-
   This release contains two significant changes all customers should be aware of:
   1. All DNS traffic now flows inside the WARP tunnel. Customers are no longer required to configure their local firewall rules to allow our [DoH IP addresses and domains](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#doh-ip).
   2. When using MASQUE, the connection will fall back to HTTP/2 (TCP) when we detect that HTTP/3 traffic is blocked. This allows for a much more reliable connection on some public WiFi networks.
-
+  
   **Changes and improvements**
   - Fixed an issue where the managed network policies could incorrectly report network location beacons as missing.
   - Improved DEX test error reporting.
@@ -13,6 +13,10 @@ releaseNotes: |-
   - DNS over HTTPS traffic is now included in the WARP tunnel by default.
   - Improvement for WARP to check if tunnel connectivity fails or times out at device wake before attempting to reconnect.
   - Fixed an issue causing WARP connection disruptions after network changes.
+
+  **Known issues**
+  - Devices using WARP client 2025.4.929.0 and up may experience Local Domain Fallback failures if a fallback server has not been configured. To configure a fallback server, refer to [Route traffic to fallback server](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/#route-traffic-to-fallback-server).
+
 version: 2025.4.929.0
 releaseDate: 2025-05-12T23:21:47.865Z
 packageURL: https://downloads.cloudflareclient.com/v1/download/noble-intel/version/2025.4.929.0

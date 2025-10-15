@@ -1,0 +1,197 @@
+---
+title: Environment variables
+pcx_content_type: configuration
+sidebar:
+  order: 3
+---
+
+Pass configuration, secrets, and runtime settings to your sandboxes using environment variables.
+
+### Command and process variables
+
+Pass environment variables when executing commands or starting processes:
+
+```typescript
+// Commands
+await sandbox.exec("node app.js", {
+	env: {
+		NODE_ENV: "production",
+		API_KEY: env.API_KEY, // Pass from Worker env
+		PORT: "3000",
+	},
+});
+
+// Background processes (same syntax)
+await sandbox.startProcess("python server.py", {
+	env: {
+		DATABASE_URL: env.DATABASE_URL,
+		SECRET_KEY: env.SECRET_KEY,
+	},
+});
+```
+
+### Session-level variables
+
+Set environment variables for all commands in a session:
+
+```typescript
+const session = await sandbox.createSession();
+
+await session.setEnvVars({
+	DATABASE_URL: env.DATABASE_URL,
+	SECRET_KEY: env.SECRET_KEY,
+});
+
+// All commands in this session have these vars
+await session.exec("python migrate.py");
+await session.exec("python seed.py");
+```
+
+## Common patterns
+
+### Pass Worker secrets to sandbox
+
+Securely pass secrets from Worker environment:
+
+```typescript
+interface Env {
+	Sandbox: DurableObjectNamespace;
+	OPENAI_API_KEY: string; // Set with `wrangler secret put`
+	DATABASE_URL: string;
+}
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const sandbox = getSandbox(env.Sandbox, "user-sandbox");
+
+		const result = await sandbox.exec("python analyze.py", {
+			env: {
+				OPENAI_API_KEY: env.OPENAI_API_KEY,
+				DATABASE_URL: env.DATABASE_URL,
+			},
+		});
+
+		return Response.json({ result });
+	},
+};
+```
+
+### Default values with spreading
+
+Combine default and command-specific variables:
+
+```typescript
+const defaults = {
+	NODE_ENV: env.ENVIRONMENT || "production",
+	LOG_LEVEL: "info",
+	TZ: "UTC",
+};
+
+await sandbox.exec("npm start", {
+	env: {
+		...defaults,
+		PORT: "3000", // Command-specific override
+		API_KEY: env.API_KEY,
+	},
+});
+```
+
+## Environment variable precedence
+
+When the same variable is set at multiple levels:
+
+1. **Command-level** (highest) - Passed to `exec()` or `startProcess()`
+2. **Session-level** - Set with `setEnvVars()`
+3. **Container default** - Built into the Docker image
+4. **System default** (lowest) - Operating system defaults
+
+Example:
+
+```typescript
+// In Dockerfile: ENV NODE_ENV=development
+// In session: await sandbox.setEnvVars({ NODE_ENV: 'staging' });
+
+// In command (overrides all):
+await sandbox.exec("node app.js", {
+	env: { NODE_ENV: "production" }, // This wins
+});
+```
+
+## Security best practices
+
+### Never hardcode secrets
+
+**Bad** - Secrets in code:
+
+```typescript
+await sandbox.exec("python app.py", {
+	env: {
+		API_KEY: "sk-1234567890abcdef", // NEVER DO THIS
+	},
+});
+```
+
+**Good** - Secrets from Worker environment:
+
+```typescript
+await sandbox.exec("python app.py", {
+	env: {
+		API_KEY: env.API_KEY, // From Wrangler secret
+	},
+});
+```
+
+Set secrets with Wrangler:
+
+```bash
+wrangler secret put API_KEY
+```
+
+## Debugging
+
+List all environment variables:
+
+```typescript
+const result = await sandbox.exec("env");
+console.log(result.stdout);
+```
+
+Check specific variable:
+
+```typescript
+const result = await sandbox.exec("echo $NODE_ENV");
+console.log("NODE_ENV:", result.stdout.trim());
+```
+
+## Troubleshooting
+
+### Variable not set
+
+Verify the variable is being passed:
+
+```typescript
+console.log("Worker env:", env.API_KEY ? "Set" : "Missing");
+
+const result = await sandbox.exec("env | grep API_KEY", {
+	env: { API_KEY: env.API_KEY },
+});
+console.log("Sandbox:", result.stdout);
+```
+
+### Shell expansion issues
+
+Use runtime-specific access instead of shell variables:
+
+```typescript
+// Instead of: await sandbox.exec('echo $NODE_ENV')
+await sandbox.exec('node -e "console.log(process.env.NODE_ENV)"', {
+	env: { NODE_ENV: "production" },
+});
+```
+
+## Related resources
+
+- [Wrangler configuration](/sandbox/configuration/wrangler/) - Setting Worker-level environment
+- [Secrets](/workers/configuration/secrets/) - Managing sensitive data
+- [Sessions API](/sandbox/api/sessions/) - Session-level environment variables
+- [Security model](/sandbox/concepts/security/) - Understanding data isolation

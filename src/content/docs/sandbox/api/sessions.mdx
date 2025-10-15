@@ -1,0 +1,155 @@
+---
+title: Sessions
+pcx_content_type: configuration
+sidebar:
+  order: 5
+---
+
+import { TypeScriptExample } from "~/components";
+
+Create isolated execution contexts within a sandbox. Each session maintains its own shell state, environment variables, and working directory. See [Session management concept](/sandbox/concepts/sessions/) for details.
+
+:::note
+Every sandbox has a default session that automatically maintains shell state. Create additional sessions when you need isolated shell contexts for different environments or parallel workflows.
+:::
+
+## Methods
+
+### `createSession()`
+
+Create a new isolated execution session.
+
+```ts
+const session = await sandbox.createSession(options?: SessionOptions): Promise<ExecutionSession>
+```
+
+**Parameters**:
+- `options` (optional):
+  - `id` - Custom session ID (auto-generated if not provided)
+  - `env` - Environment variables for this session
+  - `cwd` - Working directory (default: `"/workspace"`)
+
+**Returns**: `Promise<ExecutionSession>` with all sandbox methods bound to this session
+
+<TypeScriptExample>
+```
+// Multiple isolated environments
+const prodSession = await sandbox.createSession({
+  id: 'prod',
+  env: { NODE_ENV: 'production', API_URL: 'https://api.example.com' },
+  cwd: '/workspace/prod'
+});
+
+const testSession = await sandbox.createSession({
+  id: 'test',
+  env: { NODE_ENV: 'test', API_URL: 'http://localhost:3000' },
+  cwd: '/workspace/test'
+});
+
+// Run in parallel
+const [prodResult, testResult] = await Promise.all([
+  prodSession.exec('npm run build'),
+  testSession.exec('npm run build')
+]);
+```
+</TypeScriptExample>
+
+### `getSession()`
+
+Retrieve an existing session by ID.
+
+```ts
+const session = await sandbox.getSession(sessionId: string): Promise<ExecutionSession>
+```
+
+**Parameters**:
+- `sessionId` - ID of an existing session
+
+**Returns**: `Promise<ExecutionSession>` bound to the specified session
+
+<TypeScriptExample>
+```
+// First request - create session
+const session = await sandbox.createSession({ id: 'user-123' });
+await session.exec('git clone https://github.com/user/repo.git');
+await session.exec('cd repo && npm install');
+
+// Second request - resume session (environment and cwd preserved)
+const session = await sandbox.getSession('user-123');
+const result = await session.exec('cd repo && npm run build');
+```
+</TypeScriptExample>
+
+### `setEnvVars()`
+
+Set environment variables in the sandbox.
+
+```ts
+await sandbox.setEnvVars(envVars: Record<string, string>): Promise<void>
+```
+
+**Parameters**:
+- `envVars` - Key-value pairs of environment variables to set
+
+:::caution
+Call `setEnvVars()` **before** any other sandbox operations to ensure environment variables are available from the start.
+:::
+
+<TypeScriptExample>
+```
+const sandbox = getSandbox(env.Sandbox, 'user-123');
+
+// Set environment variables first
+await sandbox.setEnvVars({
+  API_KEY: env.OPENAI_API_KEY,
+  DATABASE_URL: env.DATABASE_URL,
+  NODE_ENV: 'production'
+});
+
+// Now commands can access these variables
+await sandbox.exec('python script.py');
+```
+</TypeScriptExample>
+
+### `destroy()`
+
+Destroy the sandbox container and free up resources.
+
+```ts
+await sandbox.destroy(): Promise<void>
+```
+
+:::note
+Containers automatically sleep after 3 minutes of inactivity, but still count toward account limits. Use `destroy()` to immediately free up resources.
+:::
+
+<TypeScriptExample>
+```
+async function executeCode(code: string): Promise<string> {
+  const sandbox = getSandbox(env.Sandbox, `temp-${Date.now()}`);
+
+  try {
+    await sandbox.writeFile('/tmp/code.py', code);
+    const result = await sandbox.exec('python /tmp/code.py');
+    return result.stdout;
+  } finally {
+    await sandbox.destroy();
+  }
+}
+```
+</TypeScriptExample>
+
+## ExecutionSession methods
+
+The `ExecutionSession` object has all sandbox methods bound to the specific session:
+
+**Commands**: [`exec()`](/sandbox/api/commands/#exec), [`execStream()`](/sandbox/api/commands/#execstream)  
+**Processes**: [`startProcess()`](/sandbox/api/commands/#startprocess), [`listProcesses()`](/sandbox/api/commands/#listprocesses), [`killProcess()`](/sandbox/api/commands/#killprocess), [`killAllProcesses()`](/sandbox/api/commands/#killallprocesses), [`getProcessLogs()`](/sandbox/api/commands/#getprocesslogs), [`streamProcessLogs()`](/sandbox/api/commands/#streamprocesslogs)  
+**Files**: [`writeFile()`](/sandbox/api/files/#writefile), [`readFile()`](/sandbox/api/files/#readfile), [`mkdir()`](/sandbox/api/files/#mkdir), [`deleteFile()`](/sandbox/api/files/#deletefile), [`renameFile()`](/sandbox/api/files/#renamefile), [`moveFile()`](/sandbox/api/files/#movefile), [`gitCheckout()`](/sandbox/api/files/#gitcheckout)  
+**Environment**: [`setEnvVars()`](/sandbox/api/sessions/#setenvvars)  
+**Code Interpreter**: [`createCodeContext()`](/sandbox/api/interpreter/#createcodecontext), [`runCode()`](/sandbox/api/interpreter/#runcode), [`listCodeContexts()`](/sandbox/api/interpreter/#listcodecontexts), [`deleteCodeContext()`](/sandbox/api/interpreter/#deletecodecontext)
+
+## Related resources
+
+- [Session management concept](/sandbox/concepts/sessions/) - How sessions work
+- [Commands API](/sandbox/api/commands/) - Execute commands

@@ -1,0 +1,212 @@
+---
+title: Getting started
+pcx_content_type: get-started
+sidebar:
+  order: 2
+---
+
+import { Render, PackageManagers, Steps, WranglerConfig } from "~/components";
+
+Build your first application with Sandbox SDK - a secure code execution environment. In this guide, you'll create a Worker that can execute Python code and work with files in isolated containers.
+
+:::note[What you're building]
+A simple API that can safely execute Python code and perform file operations in isolated sandbox environments.
+:::
+
+## Prerequisites
+
+<Render file="prereqs" product="workers" />
+
+### Ensure Docker is running locally
+
+Sandbox SDK uses [Docker](https://www.docker.com/) to build container images alongside your Worker. Docker must be running when you deploy or run locally.
+
+Install Docker by following the [Docker Desktop installation guide](https://docs.docker.com/desktop/).
+
+Verify Docker is running:
+
+```sh
+docker info
+```
+
+If Docker is not running, this command will hang or return "Cannot connect to the Docker daemon".
+
+## 1. Create a new project
+
+Create a new Sandbox SDK project:
+
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args={"my-sandbox --template=cloudflare/sandbox-sdk/examples/minimal"}
+/>
+
+This creates a `my-sandbox` directory with everything you need:
+
+- `src/index.ts` - Worker with sandbox integration
+- `wrangler.jsonc` - Configuration for Workers and Containers
+- `Dockerfile` - Container environment definition
+
+```sh
+cd my-sandbox
+```
+
+## 2. Explore the template
+
+The template provides a minimal Worker that demonstrates core sandbox capabilities:
+
+```typescript
+import { getSandbox, proxyToSandbox, type Sandbox } from '@cloudflare/sandbox';
+
+export { Sandbox } from '@cloudflare/sandbox';
+
+type Env = {
+  Sandbox: DurableObjectNamespace<Sandbox>;
+};
+
+export default {
+  async fetch(request: Request, env: Env): Promise<Response> {
+    // Required for preview URLs (if you expose ports later)
+    const proxyResponse = await proxyToSandbox(request, env);
+    if (proxyResponse) return proxyResponse;
+
+    const url = new URL(request.url);
+
+    // Get or create a sandbox instance
+    const sandbox = getSandbox(env.Sandbox, 'my-sandbox');
+
+    // Execute Python code
+    if (url.pathname === '/run') {
+      const result = await sandbox.exec('python -c "print(2 + 2)"');
+      return Response.json({
+        output: result.stdout,
+        success: result.success
+      });
+    }
+
+    // Work with files
+    if (url.pathname === '/file') {
+      await sandbox.writeFile('/workspace/hello.txt', 'Hello, Sandbox!');
+      const file = await sandbox.readFile('/workspace/hello.txt');
+      return Response.json({
+        content: file.content
+      });
+    }
+
+    return new Response('Try /run or /file');
+  },
+};
+```
+
+**Key concepts**:
+
+- `getSandbox()` - Gets or creates a sandbox instance by ID
+- `proxyToSandbox()` - Required at the top for preview URLs to work
+- `sandbox.exec()` - Execute commands and capture output
+- `sandbox.writeFile()` / `readFile()` - File operations
+
+## 3. Test locally
+
+Start the development server:
+
+```sh
+npm run dev
+```
+
+:::note
+First run builds the Docker container (2-3 minutes). Subsequent runs are much faster due to caching.
+:::
+
+Test the endpoints:
+
+```sh
+# Execute Python code
+curl http://localhost:8787/run
+
+# File operations
+curl http://localhost:8787/file
+```
+
+You should see JSON responses with the command output and file contents.
+
+## 4. Deploy to production
+
+Deploy your Worker and container:
+
+```sh
+npx wrangler deploy
+```
+
+This will:
+1. Build your container image using Docker
+2. Push it to Cloudflare's Container Registry
+3. Deploy your Worker globally
+
+:::caution[Wait for provisioning]
+After first deployment, wait 2-3 minutes before making requests. The Worker deploys immediately, but the container needs time to provision.
+:::
+
+Check deployment status:
+
+```sh
+npx wrangler containers list
+```
+
+## 5. Test your deployment
+
+Visit your Worker URL (shown in deploy output):
+
+```sh
+# Replace with your actual URL
+curl https://my-sandbox.YOUR_SUBDOMAIN.workers.dev/run
+```
+
+Your sandbox is now deployed.
+
+## Understanding the configuration
+
+Your `wrangler.jsonc` connects three pieces together:
+
+<WranglerConfig>
+
+```jsonc
+{
+  "containers": [
+    {
+      "class_name": "Sandbox",
+      "image": "./Dockerfile"
+    }
+  ],
+  "durable_objects": {
+    "bindings": [
+      {
+        "class_name": "Sandbox",
+        "name": "Sandbox"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "new_sqlite_classes": ["Sandbox"],
+      "tag": "v1"
+    }
+  ]
+}
+```
+
+</WranglerConfig>
+
+- **containers** - Your Dockerfile defines the execution environment
+- **durable_objects** - Makes the `Sandbox` binding available in your Worker
+- **migrations** - Initializes Durable Object storage (required once)
+
+For detailed configuration options including environment variables, secrets, and custom images, see the [Wrangler configuration reference](/sandbox/configuration/wrangler/).
+
+## Next steps
+
+Now that you have a working sandbox, explore more capabilities:
+
+- [Execute commands](/sandbox/guides/execute-commands/) - Run shell commands and stream output
+- [Manage files](/sandbox/guides/manage-files/) - Work with files and directories
+- [Expose services](/sandbox/guides/expose-services/) - Get public URLs for services running in your sandbox
+- [API reference](/sandbox/api/) - Complete API documentation

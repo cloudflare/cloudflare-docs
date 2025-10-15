@@ -63,8 +63,7 @@ export default function CopyPageButton() {
 		const indexMdUrl = new URL("index.md", window.location.href).toString();
 		const prompt = `Read this page from the Cloudflare docs: ${encodeURIComponent(indexMdUrl)} and answer questions about the content.`;
 		track("clicked copy page button", {
-			value: "docs ai",
-			label: vendor,
+			value: `${vendor} ai`,
 		});
 		window.open(`${externalAIURL}${prompt}`, "_blank");
 	};

@@ -1,0 +1,173 @@
+---
+title: Preview URLs
+pcx_content_type: concept
+sidebar:
+  order: 5
+---
+
+Preview URLs provide public access to services running inside sandboxes. When you expose a port, you get a unique HTTPS URL that proxies requests to your service.
+
+```typescript
+await sandbox.startProcess('python -m http.server 8000');
+const exposed = await sandbox.exposePort(8000);
+
+console.log(exposed.exposedAt);
+// https://abc123-8000.sandbox.workers.dev
+```
+
+## URL format
+
+Preview URLs follow this pattern:
+
+```
+https://{sandbox-id}-{port}.sandbox.workers.dev
+```
+
+**Examples**:
+- Port 3000: `https://abc123-3000.sandbox.workers.dev`
+- Port 8080: `https://abc123-8080.sandbox.workers.dev`
+
+**URL stability**: URLs remain the same for a given sandbox ID and port. You can share, bookmark, or use them in webhooks.
+
+## Request routing
+
+```
+User's Browser
+     ↓ HTTPS
+Your Worker
+     ↓
+Durable Object (sandbox)
+     ↓ HTTP
+Your Service (on exposed port)
+```
+
+**Important**: You must handle preview URL routing in your Worker using `proxyToSandbox()`:
+
+```typescript
+import { proxyToSandbox, getSandbox } from "@cloudflare/sandbox";
+
+export default {
+  async fetch(request, env) {
+    // Route preview URL requests to sandboxes
+    const proxyResponse = await proxyToSandbox(request, env);
+    if (proxyResponse) return proxyResponse;
+
+    // Your custom routes here
+    // ...
+  }
+};
+```
+
+Without this, preview URLs won't work.
+
+## Multiple ports
+
+Expose multiple services simultaneously:
+
+```typescript
+await sandbox.startProcess('node api.js');      // Port 3000
+await sandbox.startProcess('node admin.js');    // Port 3001
+
+const api = await sandbox.exposePort(3000, { name: 'api' });
+const admin = await sandbox.exposePort(3001, { name: 'admin' });
+
+// Each gets its own URL:
+// https://abc123-3000.sandbox.workers.dev
+// https://abc123-3001.sandbox.workers.dev
+```
+
+## What works
+
+- HTTP/HTTPS requests
+- WebSocket (WSS) via HTTP upgrade
+- Server-Sent Events
+- All HTTP methods (GET, POST, PUT, DELETE, etc.)
+- Request and response headers
+
+## What doesn't work
+
+- Raw TCP/UDP connections
+- Custom protocols (must wrap in HTTP)
+- Ports 80/443 (use 1024+)
+
+## Security
+
+:::caution
+Preview URLs are publicly accessible. Anyone with the URL can access your service.
+:::
+
+**Add authentication in your service**:
+
+```python
+from flask import Flask, request, abort
+
+app = Flask(__name__)
+
+@app.route('/data')
+def get_data():
+    token = request.headers.get('Authorization')
+    if token != 'Bearer secret-token':
+        abort(401)
+    return {'data': 'protected'}
+```
+
+**Security features**:
+- All traffic is HTTPS (automatic TLS)
+- URLs use random sandbox IDs (hard to guess)
+- You control authentication in your service
+
+## Troubleshooting
+
+### URL not accessible
+
+Check if service is running and listening:
+
+```typescript
+// 1. Is service running?
+const processes = await sandbox.listProcesses();
+
+// 2. Is port exposed?
+const ports = await sandbox.getExposedPorts();
+
+// 3. Is service binding to 0.0.0.0 (not 127.0.0.1)?
+// Good:
+app.run(host='0.0.0.0', port=3000)
+
+// Bad (localhost only):
+app.run(host='127.0.0.1', port=3000)
+```
+
+## Best practices
+
+**Service design**:
+- Bind to `0.0.0.0` to make accessible
+- Add authentication (don't rely on URL secrecy)
+- Include health check endpoints
+- Handle CORS if accessed from browsers
+
+**Cleanup**:
+- Unexpose ports when done: `await sandbox.unexposePort(port)`
+- Stop processes: `await sandbox.killAllProcesses()`
+
+## Local development
+
+:::caution[Local development only]
+When using `wrangler dev`, you must expose ports in your Dockerfile:
+
+```dockerfile
+FROM docker.io/cloudflare/sandbox:0.3.3
+
+# Required for local development
+EXPOSE 3000
+EXPOSE 8080
+```
+
+Without `EXPOSE`, you'll see: `connect(): Connection refused: container port not found`
+
+This is **only required for local development**. In production, all container ports are automatically accessible.
+:::
+
+## Related resources
+
+- [Ports API reference](/sandbox/api/ports/) - Complete port exposure API
+- [Expose services guide](/sandbox/guides/expose-services/) - Practical patterns

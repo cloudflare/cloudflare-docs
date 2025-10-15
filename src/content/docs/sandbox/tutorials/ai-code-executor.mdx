@@ -1,0 +1,223 @@
+---
+title: Build an AI code executor
+pcx_content_type: tutorial
+sidebar:
+  order: 1
+---
+
+import { Render, PackageManagers } from "~/components";
+
+Build an AI-powered code execution system using Sandbox SDK and Claude. Turn natural language questions into Python code, execute it securely, and return results.
+
+**Time to complete:** 20 minutes
+
+## What you'll build
+
+An API that accepts questions like "What's the 100th Fibonacci number?", uses Claude to generate Python code, executes it in an isolated sandbox, and returns the results.
+
+## Prerequisites
+
+<Render file="prereqs" product="workers" />
+
+You'll also need:
+- An [Anthropic API key](https://console.anthropic.com/) for Claude
+- [Docker](https://www.docker.com/) running locally
+
+## 1. Create your project
+
+Create a new Sandbox SDK project:
+
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args={"ai-code-executor --template=cloudflare/sandbox-sdk/examples/minimal"}
+/>
+
+```sh
+cd ai-code-executor
+```
+
+## 2. Install dependencies
+
+Install the Anthropic SDK:
+
+<PackageManagers pkg="@anthropic-ai/sdk" />
+
+## 3. Build your code executor
+
+Replace the contents of `src/index.ts`:
+
+```typescript
+import { getSandbox, type Sandbox } from '@cloudflare/sandbox';
+import Anthropic from '@anthropic-ai/sdk';
+
+export { Sandbox } from '@cloudflare/sandbox';
+
+interface Env {
+	Sandbox: DurableObjectNamespace<Sandbox>;
+	ANTHROPIC_API_KEY: string;
+}
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		if (request.method !== 'POST' || new URL(request.url).pathname !== '/execute') {
+			return new Response('POST /execute with { "question": "your question" }');
+		}
+
+		try {
+			const { question } = await request.json();
+
+			if (!question) {
+				return Response.json({ error: 'Question is required' }, { status: 400 });
+			}
+
+			// Use Claude to generate Python code
+			const anthropic = new Anthropic({ apiKey: env.ANTHROPIC_API_KEY });
+			const codeGeneration = await anthropic.messages.create({
+				model: 'claude-sonnet-4-5',
+				max_tokens: 1024,
+				messages: [{
+					role: 'user',
+					content: `Generate Python code to answer: "${question}"
+
+Requirements:
+- Use only Python standard library
+- Print the result using print()
+- Keep code simple and safe
+
+Return ONLY the code, no explanations.`
+				}],
+			});
+
+			const generatedCode = codeGeneration.content[0]?.type === 'text'
+				? codeGeneration.content[0].text
+				: '';
+
+			if (!generatedCode) {
+				return Response.json({ error: 'Failed to generate code' }, { status: 500 });
+			}
+
+			// Execute the code in a sandbox
+			const sandbox = getSandbox(env.Sandbox, 'demo-user');
+			await sandbox.writeFile('/tmp/code.py', generatedCode);
+			const result = await sandbox.exec('python /tmp/code.py');
+
+			return Response.json({
+				success: result.success,
+				question,
+				code: generatedCode,
+				output: result.stdout,
+				error: result.stderr
+			});
+
+		} catch (error: any) {
+			return Response.json(
+				{ error: 'Internal server error', message: error.message },
+				{ status: 500 }
+			);
+		}
+	},
+};
+```
+
+**How it works:**
+1. Receives a question via POST to `/execute`
+2. Uses Claude to generate Python code
+3. Writes code to `/tmp/code.py` in the sandbox
+4. Executes with `sandbox.exec('python /tmp/code.py')`
+5. Returns both the code and execution results
+
+## 4. Set your Anthropic API key
+
+Store your Anthropic API key as a secret:
+
+```sh
+npx wrangler secret put ANTHROPIC_API_KEY
+```
+
+Paste your API key from the [Anthropic Console](https://console.anthropic.com/) when prompted.
+
+## 5. Test locally
+
+Start the development server:
+
+```sh
+npm run dev
+```
+
+:::note
+First run builds the Docker container (2-3 minutes). Subsequent runs are much faster.
+:::
+
+Test with curl:
+
+```sh
+curl -X POST http://localhost:8787/execute \
+  -H "Content-Type: application/json" \
+  -d '{"question": "What is the 10th Fibonacci number?"}'
+```
+
+Response:
+
+```json
+{
+  "success": true,
+  "question": "What is the 10th Fibonacci number?",
+  "code": "def fibonacci(n):\n    if n <= 1:\n        return n\n    return fibonacci(n-1) + fibonacci(n-2)\n\nprint(fibonacci(10))",
+  "output": "55\n",
+  "error": ""
+}
+```
+
+## 6. Deploy
+
+Deploy your Worker:
+
+```sh
+npx wrangler deploy
+```
+
+:::caution
+After first deployment, wait 2-3 minutes for container provisioning. Check status with `npx wrangler containers list`.
+:::
+
+## 7. Test your deployment
+
+Try different questions:
+
+```sh
+# Factorial
+curl -X POST https://ai-code-executor.YOUR_SUBDOMAIN.workers.dev/execute \
+  -H "Content-Type: application/json" \
+  -d '{"question": "Calculate the factorial of 5"}'
+
+# Statistics
+curl -X POST https://ai-code-executor.YOUR_SUBDOMAIN.workers.dev/execute \
+  -H "Content-Type: application/json" \
+  -d '{"question": "What is the mean of [10, 20, 30, 40, 50]?"}'
+
+# String manipulation
+curl -X POST https://ai-code-executor.YOUR_SUBDOMAIN.workers.dev/execute \
+  -H "Content-Type: application/json" \
+  -d '{"question": "Reverse the string \"Hello World\""}'
+```
+
+## What you built
+
+You created an AI code execution system that:
+- Accepts natural language questions
+- Generates Python code with Claude
+- Executes code securely in isolated sandboxes
+- Returns results with error handling
+
+## Next steps
+
+- [Analyze data with AI](/sandbox/tutorials/analyze-data-with-ai/) - Add pandas and matplotlib for data analysis
+- [Code Interpreter API](/sandbox/api/interpreter/) - Use the built-in code interpreter instead of exec
+- [Streaming output](/sandbox/guides/streaming-output/) - Show real-time execution progress
+- [API reference](/sandbox/api/) - Explore all available methods
+
+## Related resources
+
+- [Anthropic Claude documentation](https://docs.anthropic.com/)
+- [Workers AI](/workers-ai/) - Use Cloudflare's built-in models
