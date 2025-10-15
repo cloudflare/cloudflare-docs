@@ -151,7 +151,7 @@ For example, if you have a CDN zone onboarded with a Magic Transit-protected ori
 
 ## BGP control to Magic routing table
 
-### Automatically announce and withdraw anycast based on Magic BGP routes
+### Automatically announce and withdraw anycast-based Magic BGP routes
 
 If you are a Magic Transit customer using Direct CNI with the 2.0 CNI dataplane, you can:
 - Automatically withdraw your prefixes from Cloudflare's global edge infrastructure when you withdraw all matching BGP learned prefixes from the Magic routing table.
@@ -188,7 +188,7 @@ As an alternative to setting [AS prepends on any anycast prefix with the API](#u
 If you need to switch to your alternate service provider, you can prepend Cloudflare's ASN multiple times. The intent is typically to make the route less preferred and allow for a graceful transition to the new provider. The higher the prepend count, the less preferred Cloudflare's connection will be if there are no other prioritization rules in place.
 
 :::caution
-BGP has different mechanisms to control route priorities which are set by the peered network, not by Cloudflare. As such, this is a best effort feature. Cloudflare cannot guarantee that peers will honor AS prepends on Cloudflare’s transit and peering connections.
+BGP has different mechanisms to control route priorities which are set by the peered network, not by Cloudflare. As such, this is a best-effort feature. Cloudflare cannot guarantee that peers will honor AS prepends on Cloudflare's transit and peering connections.
 :::
 
 ## BGP control with Cloudflare Route Reflectors
