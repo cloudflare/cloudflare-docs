@@ -1,6 +1,7 @@
 ---
 params:
   - productName
+  - warpURL
 ---
 
 :::note
@@ -13,7 +14,7 @@ If you do want to use WARP on a device behind {props.productName} and connect to
 
 import { GlossaryTooltip, Render } from "~/components";
 
-Use [WARP](/cloudflare-one/connections/connect-devices/warp/) as an <GlossaryTooltip term="on-ramp">on-ramp</GlossaryTooltip> to {props.productName} and route traffic from user devices with WARP installed to any network connected with Cloudflare Tunnel or Magic IP-layer tunnels (<GlossaryTooltip term="anycast">anycast</GlossaryTooltip> <GlossaryTooltip term="GRE tunnel" link="/magic-wan/configuration/manually/how-to/configure-tunnel-endpoints/#add-tunnels">GRE</GlossaryTooltip>, <GlossaryTooltip term="IPsec tunnel" link="/magic-wan/configuration/manually/how-to/configure-tunnel-endpoints/#add-tunnels">IPsec</GlossaryTooltip>, or [CNI](/network-interconnect/)). Take advantage of the integration between {props.productName} and [Magic Firewall](/magic-firewall/) and enforce policies at Cloudflare's global network.
+Use <a href={props.warpURL}>WARP</a> as an <GlossaryTooltip term="on-ramp">on-ramp</GlossaryTooltip> to {props.productName} and route traffic from user devices with WARP installed to any network connected with Cloudflare Tunnel or Magic IP-layer tunnels (<GlossaryTooltip term="anycast">anycast</GlossaryTooltip> <GlossaryTooltip term="GRE tunnel" link="/magic-wan/configuration/manually/how-to/configure-tunnel-endpoints/#add-tunnels">GRE</GlossaryTooltip>, <GlossaryTooltip term="IPsec tunnel" link="/magic-wan/configuration/manually/how-to/configure-tunnel-endpoints/#add-tunnels">IPsec</GlossaryTooltip>, or [CNI](/network-interconnect/)). Take advantage of the integration between {props.productName} and [Magic Firewall](/magic-firewall/) and enforce policies at Cloudflare's global network.
 
 ## Prerequisites
 
