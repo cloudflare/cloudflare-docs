@@ -18,6 +18,10 @@ Monitor Groups are only available to customers on an Enterprise plan with the Lo
 
 Configuration is available via the [API](/api/resources/load_balancers/subresources/monitor_groups/methods/create/) only.
 
+:::note
+Pools assigned to a monitor group via the API will appear as **Not monitored** on the dashboard.
+:::
+
 ## How it works
 
 When you attach a Monitor Group to a pool, the health of that pool is determined by aggregating the results of all enabled monitors within the group.
