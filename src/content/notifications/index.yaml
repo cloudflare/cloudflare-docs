@@ -511,12 +511,7 @@ entries:
     nextSteps: Monitor tunnel health over time and consider deploying [`cloudflared` replicas or load balancers](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-availability/).
     otherFilters: None.
     additional_information: |-
-      | <div style="width:75px">Health status</div> | Description  |
-      | ------------- | ------------ |
-      | Healthy       | The tunnel is active and serving traffic through four connections to the Cloudflare global network. |
-      | Degraded      | The tunnel is active and serving traffic, but at least one individual connection has failed. Further degradation in [tunnel availability](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-availability/) could risk the tunnel going down and failing to serve traffic.|
-      | Down          | The tunnel cannot serve traffic as it has no connections to the Cloudflare global network.|
-      | Inactive      | This value is reserved for tunnels which have been created, but have never been run.|
+      Refer to [Tunnel status](/cloudflare-one/connections/connect-networks/troubleshoot-tunnels/common-errors/#tunnel-status) to review the list of possible tunnel statuses (`Active`, `Inactive`, `Down` and `Degraded`).
 
   - name: Device connectivity anomaly
     audience: Zero Trust customers who want to be notified when Cloudflare detects a spike or drop in the number of devices connected to the WARP client.
