@@ -6,28 +6,11 @@ pcx_content_type: reference
 import { Render } from "~/components";
 
 <Render
-	file="magic-wan/zero-trust/gateway"
+	file="magic-wan/zero-trust/tunnel"
 	product="networking-services"
 	params={{
-		gatewayURL: "/cloudflare-one/policies/gateway/",
-		magicFirewallName: "Magic Firewall",
-		magicFirewallURL: "/magic-firewall/",
-		warpURL: "/cloudflare-one/connections/connect-devices/warp/",
-		cfAutoCertificatesURL: "/cloudflare-one/connections/connect-devices/user-side-certificates/automated-deployment/",
-		cfManualCertificatesURL: "/cloudflare-one/connections/connect-devices/user-side-certificates/manual-deployment/",
-		decryptTlsURL: "/cloudflare-one/policies/gateway/http-policies/tls-decryption/",
-		doNotInspectURL: "/cloudflare-one/policies/gateway/http-policies/#do-not-inspect",
-		magicWANName: "Magic WAN",
-		warpChecksURL: "/cloudflare-one/identity/devices/warp-client-checks/",
-		osVersionChecks: "/cloudflare-one/identity/devices/warp-client-checks/os-version/",
-		mwanOnrampsURL: "/magic-wan/on-ramps/",
-		gatewayResolverPoliciesURL: "/cloudflare-one/policies/gateway/resolver-policies/",
-		gatewayInternalDnsURL: "/cloudflare-one/policies/gateway/resolver-policies/#internal-dns",
-		egressPoliciesURL: "/cloudflare-one/policies/gateway/egress-policies/",
-		cloudflareTunnelURL:"/cloudflare-one/connections/connect-networks/",
-		gatewayLogsURL: "/cloudflare-one/insights/logs/gateway-logs/#http-logs",
-		tcpMssClampingURL: "/magic-wan/get-started/#set-maximum-segment-size",
-		ikeURL: "/magic-wan/reference/gre-ipsec-tunnels/#supported-configuration-parameters"
-
+		productName: "Magic WAN",
+		tunnelURL: "/cloudflare-one/connections/connect-networks/",
+		gatewayURL: "/cloudflare-one/policies/gateway/"
 	}}
 />
