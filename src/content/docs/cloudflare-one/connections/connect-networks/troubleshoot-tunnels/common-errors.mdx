@@ -15,6 +15,11 @@ You can check your tunnel’s connection status either from the Zero Trust dashb
 
 <Render file="tunnel/tunnel-status" product="cloudflare-one" />
 
+:::note[Tunnel status scope]
+
+The tunnel status only reflects the connection between `cloudflared` and the Cloudflare network. Tunnel status does not indicate whether `cloudflared` can successfully reach your internal services. As a result, a tunnel can appear `Healthy` while users are still unable to connect to an application.
+:::
+
 ## I see `cloudflared service is already installed`.
 
 If you see this error when installing a remotely-managed tunnel, ensure that no other `cloudflared` instances are running as a service on this machine. Only a single instance of `cloudflared` may run as a service on any given machine. Instead, we recommend adding additional routes to your existing tunnel. Alternatively, you can run `sudo cloudflared service uninstall` to uninstall `cloudflared`.
