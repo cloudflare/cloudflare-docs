@@ -64,6 +64,10 @@ console.log(snapshot.content);
 
 ## Advanced usage
 
+:::note[Looking for more parameters?]
+Visit the [Browser Rendering PDF API reference](/api/resources/browser_rendering/subresources/snapshot/methods/create/) for all available parameters, such as setting HTTP credentials using `authenticate`, setting `cookies`, and customizing load behavior using `gotoOptions`.
+:::
+
 The `html` property in the JSON payload, it sets the html to `<html><body>Advanced Snapshot</body></html>` then does the following steps:
 
 1. Disable JavaScript.
@@ -107,4 +111,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
   product="browser-rendering"
 />
 
-Many more options exist, like setting HTTP credentials using `authenticate`, setting `cookies`, and using `gotoOptions` to control page load behaviour - check the endpoint [reference](/api/resources/browser_rendering/subresources/snapshot/) for all available parameters.
+<Render
+  file="faq"
+  product="browser-rendering"
+/>

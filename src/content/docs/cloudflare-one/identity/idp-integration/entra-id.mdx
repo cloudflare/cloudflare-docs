@@ -235,7 +235,8 @@ If not already configured, Cloudflare recommends enabling the following user att
 
 | customappsso Attribute         | Entra ID Attribute | Recommendation |
 | ------------------------------ | ------------------ | -------------- |
-| `emails[type eq "work"].value` | `mail`             | Required       |
+| `userName`  									 | `userPrincipalName` or `mail` | Required. Must match the user's email address in Zero Trust.  |
+| `emails[type eq "work"].value` | `mail`             | Required. Must match the user's email address in Zero Trust.      |
 | `name.givenName`               | `givenName`        | Recommended    |
 | `name.familyName`              | `surname`          | Recommended    |
 
