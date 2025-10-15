@@ -11,6 +11,7 @@ params:
   - warpDeploymentURL
   - warpIngressIpURL
   - mwanConnectorName
+  - domainFallbackURL
 ---
 
 import { Markdown } from "~/components";
@@ -104,7 +105,7 @@ To learn which IP addresses and UDP ports you should exclude to accomplish this,
 
 ## Test WARP integration
 
-Before testing, be sure to [configure domain fallback](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/#add-a-domain) for the server or service in WARP settings. This is needed because by default Cloudflare Zero Trust excludes common top level domains used for local resolution from being sent to Gateway for processing.
+Before testing, be sure to <a href={props.domainFallbackURL}>configure domain fallback</a> for the server or service in WARP settings. This is needed because by default Cloudflare Zero Trust excludes common top level domains used for local resolution from being sent to Gateway for processing.
 
 If WARP integration has been enabled for the account within the last day, log off and on again in the WARP client before testing.
 
