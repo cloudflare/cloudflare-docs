@@ -17,6 +17,7 @@ For example, the following code from [this example MCP server](https://github.co
 ```ts title="src/index.ts"
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp";
 import { McpAgent } from "agents/mcp";
+import { z } from "zod";
 
 export class MyMCP extends McpAgent {
 	server = new McpServer({ name: "Demo", version: "1.0.0" });
