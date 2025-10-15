@@ -7,9 +7,36 @@ sidebar:
 
 import { Render } from "~/components";
 
-Cloudflare Workers provides automatic tracing instrumentation **out of the box** - no code changes or no SDK installation required. While we are continuing to expand our instrumentation, you can find a list of available spans and attributes below.
+Cloudflare Workers provides automatic tracing instrumentation **out of the box** - no code changes or SDK are required.
 
-## Currently supported spans and attributes 
+## Currently supported spans and attributes
+
+### Attributes available on all spans
+
+- `cloud.provider` - Always set to `cloudflare`
+- `cloud.platform` - Always set to `cloudflare.workers`
+- `faas.name` - The name of your Worker
+- `faas.invocation_id` - A unique identifier for this specific Worker invocation
+- `faas.version` - The deployed version tag of your Worker
+- `faas.invoked_region` - The region where the Worker was invoked
+- `service.name` - The name of your Worker
+- `cloudflare.colo` - The three-letter IATA airport code of the Cloudflare data center that processed the request (e.g., `SFO`, `LHR`)
+- `cloudflare.script_name` - The name of your Worker
+- `cloudflare.script_tags` - Tags associated with your Worker deployment
+- `cloudflare.script_version.id` - The version identifier of your deployed Worker
+- `telemetry.sdk.language` - The programming language used, set to `javascript`
+- `telemetry.sdk.name` - The telemetry SDK name, set to `cloudflare`
+
+---
+
+### Attributes available on all root spans
+
+- `faas.trigger` - The trigger that your Worker was invoked by (e.g., `http`, `cron`, `queue`, `email`)
+- `cloudflare.handler_type` - The type of handler that processed the request (e.g., `fetch`, `scheduled`, `queue`, `email`, `alarm`)
+- `cloudflare.entrypoint` - The entrypoint that was invoked in your Worker (e.g. the name of your Durable Object)
+- `cloudflare.execution_model` - The execution model of the Worker (e.g., `stateless`, `stateful` for Durable Objects)
+
+---
 
 ### [Runtime API](/workers/runtime-apis/)
 
@@ -46,7 +73,7 @@ Cloudflare Workers provides automatic tracing instrumentation **out of the box**
 
 ### [Handlers](/workers/runtime-apis/handlers/)
 
-#### Attributes availabe on all handlers 
+#### Attributes availabe on all handlers
 
 - `cloudflare.outcome`
 - `cloudflare.cpu_time`
@@ -94,19 +121,19 @@ Cloudflare Workers provides automatic tracing instrumentation **out of the box**
 
 #### [`RPC Handler`](/workers/runtime-apis/rpc/)
 
-- [`cloudflare.jsrpc.method`](/workers/runtime-apis/rpc/)
+- `cloudflare.jsrpc.method`
 
-#### [`EmailHandler`](/email-routing/email-workers/runtime-api/)
+#### [`Email Handler`](/email-routing/email-workers/runtime-api/)
 
 - `cloudflare.email.from`
 - `cloudflare.email.to`
 - `cloudflare.email.size`
 
-#### [`Trace Handler`](/workers/runtime-apis/handlers/tail/)
+#### [`Tail Handler`](/workers/runtime-apis/handlers/tail/)
 
 - `cloudflare.trace.count`
 
-#### [`AlarmHandler`](/durable-objects/api/alarms/#alarm)
+#### [`Alarm Handler`](/durable-objects/api/alarms/#alarm)
 
 - `cloudflare.scheduled_time`
 
@@ -114,7 +141,7 @@ Cloudflare Workers provides automatic tracing instrumentation **out of the box**
 
 ### [D1](/d1/)
 
-#### Attributes available on all D1 spans 
+#### Attributes available on all D1 spans
 
 - `db.system.name`
 - `db.operation.name`
@@ -150,7 +177,7 @@ Cloudflare Workers provides automatic tracing instrumentation **out of the box**
 - `cloudflare.d1.query.bookmark`
 - `cloudflare.d1.response.bookmark`
 
-#### [`d1_all`](/d1/worker-api/prepared-statements/#run)
+#### [`d1_bind`](/d1/worker-api/prepared-statements/#bind)
 
 - `cloudflare.d1.query.bookmark`
 - `cloudflare.d1.response.bookmark`
@@ -174,7 +201,7 @@ Cloudflare Workers provides automatic tracing instrumentation **out of the box**
 
 ### [Workers KV](/kv/)
 
-#### Attributes available on all KV spans 
+#### Attributes available on all KV spans
 
 - `db.system.name`
 - `db.operation.name`
@@ -264,7 +291,7 @@ Cloudflare Workers provides automatic tracing instrumentation **out of the box**
 - `cloudflare.r2.response.cache_expiry`
 - `cloudflare.r2.response.custom_metadata`
 
-#### [`r2_get`](/r2/api/workers/workers-api-reference/#bucket-method-definitions)
+#### [`r2_get`](/r2/api/workers/workers-api-reference/#r2getoptions)
 
 - `cloudflare.r2.request.key`
 - `cloudflare.r2.request.range.offset`
@@ -291,7 +318,7 @@ Cloudflare Workers provides automatic tracing instrumentation **out of the box**
 - `cloudflare.r2.response.cache_expiry`
 - `cloudflare.r2.response.custom_metadata`
 
-#### [`r2_put`](/r2/api/workers/workers-api-reference/#bucket-method-definitions)
+#### [`r2_put`](/r2/api/workers/workers-api-reference/#r2putoptions)
 
 - `cloudflare.r2.request.key`
 - `cloudflare.r2.request.size`
@@ -325,7 +352,7 @@ Cloudflare Workers provides automatic tracing instrumentation **out of the box**
 - `cloudflare.r2.response.cache_expiry`
 - `cloudflare.r2.response.custom_metadata`
 
-#### [`r2_list`](/r2/api/workers/workers-api-reference/#bucket-method-definitions)
+#### [`r2_list`](/r2/api/workers/workers-api-reference/#r2listoptions)
 
 - `cloudflare.r2.request.limit`
 - `cloudflare.r2.request.prefix`
@@ -343,7 +370,7 @@ Cloudflare Workers provides automatic tracing instrumentation **out of the box**
 
 - `cloudflare.r2.request.keys`
 
-#### [`r2_createMultipartUpload`](/r2/api/workers/workers-multipart-usage/)
+#### [`r2_createMultipartUpload`](/r2/api/workers/workers-api-reference/#r2multipartoptions)
 
 - `cloudflare.r2.request.key`
 - `cloudflare.r2.request.custom_metadata`
@@ -411,16 +438,17 @@ Cloudflare Workers provides automatic tracing instrumentation **out of the box**
 ### Dispatch Namespace
 
 #### [`wfp_get`](/cloudflare-for-platforms/workers-for-platforms/get-started/dynamic-dispatch/#configure-the-dispatch-namespace-binding)
+
 - `cloudflare.dispatch_namespace`
 - `cloudflare.binding.type`
 - `error.type`
-
 
 ---
 
 ### [Durable Object API](/durable-objects/)
 
 #### `durable_object_subrequest`
+
 RPC calls to your Durable Object (e.g. `env.MY_DO.fetch()`, `env.MY_DO.myMethod()`)
 
 - `cloudflare.binding.type`
@@ -432,7 +460,8 @@ RPC calls to your Durable Object (e.g. `env.MY_DO.fetch()`, `env.MY_DO.myMethod(
 
 ---
 
-### [Durable Object Storage SQL API](/durable-objects/api/sqlite-storage-api/)
+### [Durable Object Storage SQL API](/durable-objects/api/storage-api/#sql-api)
+
 The SQL API allow you to modify the SQLite database embedded within a Durable Object.
 
 #### Attributes availabe on all Durable Object Storage SQL API
@@ -441,9 +470,9 @@ The SQL API allow you to modify the SQLite database embedded within a Durable Ob
 - `db.system.name`
 - `db.operation.name`
 
-#### [`durable_object_storage_exec`](/durable-objects/api/sqlite-storage-api/#exec)
+#### [`durable_object_storage_exec`](/durable-objects/api/storage-api/#exec)
 
-#### [`durable_object_storage_getDatabaseSize`](/durable-objects/api/sqlite-storage-api/#databasesize)
+#### [`durable_object_storage_getDatabaseSize`](/durable-objects/api/storage-api/#databasesize)
 
 - `cloudflare.durable_object.sql.query.statement`
 - `cloudflare.durable_object.sql.query.bindings`
@@ -459,23 +488,23 @@ The SQL API allow you to modify the SQLite database embedded within a Durable Ob
 - `cloudflare.durable_object.response.rows_written`
 - `cloudflare.durable_object.response.statement_count`
 
-#### [`durable_object_storage_kv_get`](/durable-objects/api/sqlite-storage-api/#get)
+#### [`durable_object_storage_kv_get`](/durable-objects/api/storage-api/#get)
 
 - `cloudflare.durable_object.kv.query.keys`
 - `cloudflare.durable_object.kv.query.keys.count`
 
-#### [`durable_object_storage_kv_put`](/durable-objects/api/sqlite-storage-api/#put)
+#### [`durable_object_storage_kv_put`](/durable-objects/api/storage-api/#put)
 
 - `cloudflare.durable_object.kv.query.keys`
 - `cloudflare.durable_object.kv.query.keys.count`
 
-#### [`durable_object_storage_kv_delete`](/durable-objects/api/sqlite-storage-api/#delete)
+#### [`durable_object_storage_kv_delete`](/durable-objects/api/storage-api/#delete)
 
 - `cloudflare.durable_object.kv.query.keys`
 - `cloudflare.durable_object.kv.query.keys.count`
 - `cloudflare.durable_object.kv.response.deleted_count`
 
-#### [`durable_object_storage_kv_list`](/durable-objects/api/sqlite-storage-api/#list)
+#### [`durable_object_storage_kv_list`](/durable-objects/api/storage-api/#list)
 
 - `cloudflare.durable_object.kv.query.start`
 - `cloudflare.durable_object.kv.query.startAfter`
@@ -486,7 +515,8 @@ The SQL API allow you to modify the SQLite database embedded within a Durable Ob
 
 ---
 
-### [Durable Object Storage KV API](/durable-objects/api/legacy-kv-storage-api/)
+### [Durable Object Storage KV API](/durable-objects/api/storage-api/)
+
 The KV-backed API allows you to modify embedded storage within a Durable Object.
 
 #### Attributes availabe on all Durable Object Storage KV API
@@ -495,14 +525,14 @@ The KV-backed API allows you to modify embedded storage within a Durable Object.
 - `cloudflare.durable_object.id`
 - `db.system.name`
 
-#### [`durable_object_storage_get`](/durable-objects/api/legacy-kv-storage-api/#do-kv-async-get)
+#### [`durable_object_storage_get`](/durable-objects/api/storage-api/#get)
 
 - `cloudflare.durable_object.kv.query.keys`
 - `cloudflare.durable_object.kv.query.keys.count`
 - `cloudflare.durable_object.kv.query.allow_concurrency`
 - `cloudflare.durable_object.kv.query.no_cache`
 
-#### [`durable_object_storage_put`](/durable-objects/api/legacy-kv-storage-api/#do-kv-async-put)
+#### [`durable_object_storage_put`](/durable-objects/api/storage-api/#put)
 
 - `cloudflare.durable_object.kv.query.keys`
 - `cloudflare.durable_object.kv.query.keys.count`
@@ -510,7 +540,7 @@ The KV-backed API allows you to modify embedded storage within a Durable Object.
 - `cloudflare.durable_object.kv.query.no_cache`
 - `cloudflare.durable_object.kv.query.allow_unconfirmed`
 
-#### [`durable_object_storage_delete`](/durable-objects/api/legacy-kv-storage-api/#do-kv-async-delete)
+#### [`durable_object_storage_delete`](/durable-objects/api/storage-api/#delete)
 
 - `cloudflare.durable_object.kv.query.keys`
 - `cloudflare.durable_object.kv.query.keys.count`
@@ -519,7 +549,7 @@ The KV-backed API allows you to modify embedded storage within a Durable Object.
 - `cloudflare.durable_object.kv.query.allow_unconfirmed`
 - `cloudflare.durable_object.kv.response.deleted_count`
 
-#### [`durable_object_storage_list`](/durable-objects/api/legacy-kv-storage-api/#do-kv-async-list)
+#### [`durable_object_storage_list`](/durable-objects/api/storage-api/#list)
 
 - `cloudflare.durable_object.kv.query.start`
 - `cloudflare.durable_object.kv.query.startAfter`
@@ -530,7 +560,7 @@ The KV-backed API allows you to modify embedded storage within a Durable Object.
 - `cloudflare.durable_object.kv.query.allow_concurrency`
 - `cloudflare.durable_object.kv.query.no_cache`
 
-#### [`durable_object_storage_deleteAll`](/durable-objects/api/legacy-kv-storage-api/#deleteall)
+#### [`durable_object_storage_deleteAll`](/durable-objects/api/storage-api/#deleteall)
 
 - `cloudflare.durable_object.kv.query.allow_concurrency`
 - `cloudflare.durable_object.kv.query.no_cache`
@@ -583,8 +613,8 @@ The KV-backed API allows you to modify embedded storage within a Durable Object.
 
 #### [`queue_sendBatch`](/queues/configuration/javascript-apis/#queue)
 
-
 ### [`Rate limiting`](/workers/runtime-apis/bindings/rate-limit/)
+
 #### [`ratelimit_run`](/workers/runtime-apis/bindings/rate-limit/#best-practices)
 
 ---
@@ -606,27 +636,3 @@ The KV-backed API allows you to modify embedded storage within a Durable Object.
 #### [`vectorize_deleteBylds`](/vectorize/reference/client-api/#delete-vectors-by-id)
 
 ---
-
-### Attributes available on all spans 
-
-- `cloud.provider` - Always set to `cloudflare`
-- `cloud.platform` - Always set to `cloudflare.workers`
-- `faas.name` - The name of your Worker 
-- `faas.invocation_id` - A unique identifier for this specific Worker invocation
-- `faas.version` - The deployed version tag of your Worker
-- `faas.invoked_region` - The region where the Worker was invoked
-- `service.name` - The name of your Worker
-- `cloudflare.colo` - The three-letter IATA airport code of the Cloudflare data center that processed the request (e.g., `SFO`, `LHR`)
-- `cloudflare.script_name` - The name of your Worker
-- `cloudflare.script_tags` - Tags associated with your Worker deployment
-- `cloudflare.script_version.id` - The version identifier of your deployed Worker
-- `telemetry.sdk.language` - The programming language used, set to `javascript`
-- `telemetry.sdk.name` - The telemetry SDK name, set to `cloudflare`
-
-### Attributes available on all root spans
-
-- `faas.trigger` - The trigger that your Worker was invoked by (e.g., `http`, `cron`, `queue`, `email`)
-- `cloudflare.handler_type` - The type of handler that processed the request (e.g., `fetch`, `scheduled`, `queue`, `email`, `alarm`)
-- `cloudflare.entrypoint` - The entrypoint that was invoked in your Worker (e.g. the name of your Durable Object)
-- `cloudflare.execution_model` - The execution model of the Worker (e.g., `stateless`, `stateful` for Durable Objects)
-
