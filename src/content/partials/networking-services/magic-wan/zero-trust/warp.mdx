@@ -2,6 +2,10 @@
 params:
   - productName
   - warpURL
+  - greIpsecURL
+  - magicFirewallName
+  - magicFirewallURL
+  - setupZeroTrustAccountURL
 ---
 
 :::note
@@ -14,11 +18,11 @@ If you do want to use WARP on a device behind {props.productName} and connect to
 
 import { GlossaryTooltip, Render } from "~/components";
 
-Use <a href={props.warpURL}>WARP</a> as an <GlossaryTooltip term="on-ramp">on-ramp</GlossaryTooltip> to {props.productName} and route traffic from user devices with WARP installed to any network connected with Cloudflare Tunnel or Magic IP-layer tunnels (<GlossaryTooltip term="anycast">anycast</GlossaryTooltip> <GlossaryTooltip term="GRE tunnel" link="/magic-wan/configuration/manually/how-to/configure-tunnel-endpoints/#add-tunnels">GRE</GlossaryTooltip>, <GlossaryTooltip term="IPsec tunnel" link="/magic-wan/configuration/manually/how-to/configure-tunnel-endpoints/#add-tunnels">IPsec</GlossaryTooltip>, or [CNI](/network-interconnect/)). Take advantage of the integration between {props.productName} and [Magic Firewall](/magic-firewall/) and enforce policies at Cloudflare's global network.
+Use <a href={props.warpURL}>WARP</a> as an <GlossaryTooltip term="on-ramp">on-ramp</GlossaryTooltip> to {props.productName} and route traffic from user devices with WARP installed to any network connected with Cloudflare Tunnel or Magic IP-layer tunnels (<GlossaryTooltip term="anycast">anycast</GlossaryTooltip> <a href={props.greIpsecURL}>GRE, IPsec</a>, or [CNI](/network-interconnect/)). Take advantage of the integration between {props.productName} and <a href={props.magicFirewallURL}>{props.magicFirewallName}</a> and enforce policies at Cloudflare's global network.
 
 ## Prerequisites
 
-Before you can begin using WARP as an on-ramp to {props.productName}, you must set up your [Zero Trust account](/cloudflare-one/setup/#create-a-zero-trust-organization).
+Before you can begin using WARP as an on-ramp to {props.productName}, you must set up your <a href={props.setupZeroTrustAccountURL}>Zero Trust account</a>.
 
 ## IP ranges
 
