@@ -39,15 +39,27 @@ New users visiting the site have a 20% chance of getting Version B and will cons
 
 ### Service bindings and version consistency
 
-When using service bindings to connect multiple Workers, Skew Protection automatically propagates version context across Workers.
+When using service bindings to connect multiple Workers, Skew Protection ensures version consistency across the entire chain of Worker calls. 
 
-When Worker A calls Worker B:
+#### How version cookies work with service bindings
 
-1. Cloudflare detects the version context from the original client request
-2. Worker B is routed to a compatible version from its own version history
-3. The same version context is used for any subsequent Worker calls
+**On the initial page load:**
 
-This ensures that for a given client session, all Workers in your architecture use consistent, compatible versions without any manual coordination.
+1. Client requests Worker A
+2. Worker A sets `__cf_worker_version_worker_a` cookie
+3. Worker A calls Worker B
+4. Worker B sets `__cf_worker_version_worker_b` cookie in response
+5. Worker A forwards this cookie to the client
+6. Client now holds both cookies
+
+**On subsequent requests:**
+
+1. Client sends both `__cf_worker_version_worker_a` and `__cf_worker_version_worker_b` cookies
+2. Worker A reads its own cookie to select the correct version
+3. Worker A extracts Worker B's cookie and includes it when calling Worker B
+4. Worker B reads its cookie to select the correct version
+
+This ensures that both Worker A and Worker B maintain version consistency with the original deployment that served the client, even when they are deployed independently.
 
 ### Session expiration and version cleanup
 Sessions naturally expire after 12 hours (or your configured duration):
