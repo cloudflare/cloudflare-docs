@@ -14,6 +14,8 @@ params:
   - mwanOnrampsURL
   - gatewayResolverPoliciesURL
   - gatewayInternalDnsURL
+  - egressPoliciesURL
+  - cloudflareTunnelURL
 ---
 
 import { Render } from "~/components";
@@ -68,24 +70,24 @@ flowchart LR
 
 ## Outbound Internet traffic
 
-By default, the following traffic routed through Magic WAN tunnels and destined to public IP addresses is proxied/filtered through Cloudflare Gateway:
+By default, the following traffic routed through {props.magicWANName} tunnels and destined to public IP addresses is proxied/filtered through Cloudflare Gateway:
 
 - TCP, UDP, and ICMP traffic sourced from [RFC 1918](https://datatracker.ietf.org/doc/html/rfc1918) IPs or WARP devices.
 - TCP and UDP traffic sourced from [BYO](/byoip/) or [Leased IPs](/magic-transit/cloudflare-ips/) and destined to a well-known port (`0`-`1023`).
 
 Traffic destined to public IPs will be routed over the public Internet, unless explicitly specified otherwise. If you want to configure specific public IP ranges to be routed through your Magic WAN tunnels instead of over the public Internet after filtering, contact your account team.
 
-This traffic will egress from Cloudflare according to the [egress policies](/cloudflare-one/policies/gateway/egress-policies/) you define in Cloudflare Gateway. By default, it will egress from a shared Cloudflare public IP range.
+This traffic will egress from Cloudflare according to the <a href={props.egressPoliciesURL}>egress policies</a> you define in Cloudflare Gateway. By default, it will egress from a shared Cloudflare public IP range.
 
 ## Private traffic
 
-By default, TCP, UDP, and ICMP traffic routed through Magic WAN tunnels and destined to routes behind [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) will be proxied/filtered through Cloudflare Gateway.
+By default, TCP, UDP, and ICMP traffic routed through Magic WAN tunnels and destined to routes behind <a href={props.cloudflareTunnelURL}>Cloudflare Tunnel</a> will be proxied/filtered through Cloudflare Gateway.
 
-Contact your account team to enable Gateway filtering for traffic destined to routes behind Magic WAN tunnels.
+Contact your account team to enable Gateway filtering for traffic destined to routes behind {props.magicWANName} tunnels.
 
 If enabled, by default TCP/UDP traffic meeting **all** the following criteria will be proxied/filtered by Cloudflare Gateway:
 
-- Both source and destination IPs are part of either [RFC1918](https://datatracker.ietf.org/doc/html/rfc1918) space, [WARP](/cloudflare-one/connections/connect-devices/warp/), [BYO](/byoip/) or [Leased IPs](/magic-transit/cloudflare-ips/)
+- Both source and destination IPs are part of either [RFC1918](https://datatracker.ietf.org/doc/html/rfc1918) space, <a href={props.warpURL}>WARP</a>, [BYO](/byoip/) or [Leased IPs](/magic-transit/cloudflare-ips/)
 - Source port must be a client port strictly higher than `1023`
 - Destination port is a well-known port lower than `1024`
 
