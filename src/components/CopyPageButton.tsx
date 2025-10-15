@@ -61,7 +61,7 @@ export default function CopyPageButton() {
 	};
 
 	const handleViewAIOptions = () => {
-		const aiOptionsUrl = "/fundamentals/ai-tooling/";
+		const aiOptionsUrl = "/style-guide/ai-tooling/";
 		track("clicked copy page button", {
 			value: "view ai options",
 		});
