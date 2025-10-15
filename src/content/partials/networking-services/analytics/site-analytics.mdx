@@ -1,7 +1,12 @@
 ---
 params:
   - instructions?
+  - productName
+  - magicTunnelHcsURL
+  - setGeoCoordinatesURL
 ---
+
+
 
 import { Details, Markdown } from "~/components"
 
@@ -10,12 +15,12 @@ After adding your sites, the Network overview (beta) section of the dashboard pr
 Network overview (beta) has the following data types available:
 
 <Details header="Geographic map summary">
-	- [Aggregate Magic WAN site health](#site-health)
-	- [Magic WAN availability status for sites](#no-status-available)
-	- [Magic WAN site geographic location](#no-location-set)
+	- [Aggregate {props.productName} site health](#site-health)
+	- [{props.productName} availability status for sites](#no-status-available)
+	- [{props.productName} site geographic location](#no-location-set)
 </Details>
 
-<Details header="Magic WAN site data table">
+<Details header={`${props.productName} site data table`}>
 	- Site Name
 	- Site Health
 	- Site Tunnel Names
@@ -24,12 +29,12 @@ Network overview (beta) has the following data types available:
 	- Site Traffic Received
 </Details>
 
-<Details header="Magic WAN site data">
+<Details header={`${props.productName} site data`}>
 	- Traffic Sent by Tunnel
 	- Traffic Received by Tunnel
 </Details>
 
-To start using Magic WAN site analytics:
+To start using {props.productName} site analytics:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. Select **Magic WAN** > **Network overview (beta)**.
@@ -40,7 +45,7 @@ Review the topics below to learn more about the options available to you.
 
 ### Network map and traffic overview
 
-The network map section shows all the sites configured with Magic WAN. At a glance, you can check:
+The network map section shows all the sites configured with {props.productName}. At a glance, you can check:
 
 - How many active sites you have
 - Location for sites in a map (if you set up their geographic location)
@@ -52,20 +57,20 @@ Just below the map, Traffic overview shows a more granular list of your sites an
 
 #### Site health
 
-Sites can be healthy or unhealthy, and Magic WAN uses this information to route traffic. Refer to [Set thresholds for Magic WAN site health](#set-thresholds-for-magic-wan-site-health) to learn more about this topic.
+Sites can be healthy or unhealthy, and Magic WAN uses this information to route traffic. Refer to [Set thresholds for site health](#set-thresholds-for-site-health) to learn more about this topic.
 
 #### No status available
 
-The status of a site refers to its health. If your sites show a **No status available** message, this means you did not configure your alert settings when creating your site. Refer to [Configure Magic Tunnel health alerts](/magic-wan/configuration/common-settings/configure-magic-tunnel-health-alerts/) to learn how to create an alert for your site.
+The status of a site refers to its health. If your sites show a **No status available** message, this means you did not configure your alert settings when creating your site. Refer to <a href={props.magicTunnelHcsURL}>Configure Magic Tunnel health alerts</a> to learn how to create an alert for your site.
 
 #### No location set
 
-The dashboard shows you the number of sites with no location set, meaning sites for which you did not set up a geographic location. To add a location to a site, find the site you want to add location to, and select **no location set** to edit its location settings. Refer to [Set geographic coordinates](#set-geographic-coordinates) for more information.
+The dashboard shows you the number of sites with no location set, meaning sites for which you did not set up a geographic location. To add a location to a site, find the site you want to add location to, and select **no location set** to edit its location settings. Refer to <a href={props.setGeoCoordinatesURL}>Set geographic coordinates</a> for more information.
 
 
 ### Traffic overview
 
-Traffic overview aggregates all Magic WAN sites configured in your account. Here, you can check at-a-glance information about each site like:
+Traffic overview aggregates all {props.productName} sites configured in your account. Here, you can check at-a-glance information about each site like:
 
 - Site status
 - Traffic sent and received

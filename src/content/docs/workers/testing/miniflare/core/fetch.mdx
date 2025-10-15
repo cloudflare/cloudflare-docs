@@ -59,8 +59,7 @@ console.log(await res.json()); // { url: "http://localhost:8787/2", header: "2" 
 ```
 
 When dispatching events, you are responsible for adding
-[`CF-*` headers](https://support.cloudflare.com/hc/en-us/articles/200170986-How-does-Cloudflare-handle-HTTP-Request-headers-)
-and the
+[`CF-*` headers](/fundamentals/reference/http-headers/) and the
 [`cf` object](/workers/runtime-apis/request#incomingrequestcfproperties).
 This lets you control their values for testing:
 

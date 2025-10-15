@@ -1,5 +1,5 @@
 ---
-title: Overview
+title: Cloudflare Pipelines
 
 pcx_content_type: overview
 sidebar:
@@ -11,85 +11,66 @@ head:
     content: Pipelines
 ---
 
-import { CardGrid, Description, Feature, LinkTitleCard, Plan, RelatedProduct } from "~/components";
+import {
+	CardGrid,
+	Description,
+	Feature,
+	LinkTitleCard,
+	Plan,
+	RelatedProduct,
+} from "~/components";
+
+:::note
+Pipelines is in **open beta**, and any developer with a [Workers Paid plan](/workers/platform/pricing/) can start using it. Currently, outside of standard R2 storage and operations, you will not be billed for your use of Pipelines.
+:::
 
 <Description>
 
-Ingest real time data streams and load into R2, using Cloudflare Pipelines.
+Ingest, transform, and load streaming data into Apache Iceberg or Parquet in R2.
 
 </Description>
 
 <Plan type="paid" />
 
-Cloudflare Pipelines lets you ingest high volumes of real time data, without managing any infrastructure. Ingested data is automatically batched, written to output files, and delivered to an [R2 bucket](/r2/) in your account. You can use Pipelines to build a data lake of clickstream data, or to store events from a Worker.
+Cloudflare Pipelines ingests events, transforms them with SQL, and delivers them to R2 as [Iceberg tables](/r2/data-catalog/) or as Parquet and JSON files.
 
-## Create your first pipeline
-You can setup a pipeline to ingest data via HTTP, and deliver output to R2, with a single command:
+Whether you're processing server logs, mobile application events, IoT telemetry, or clickstream data, Pipelines provides durable ingestion via HTTP endpoints or Worker bindings, SQL-based transformations, and exactly-once delivery to R2. This makes it easy to build analytics-ready data warehouses and lakehouses without managing streaming infrastructure.
+
+Create your first pipeline by following the [getting started guide](/pipelines/getting-started) or running this [Wrangler](/workers/wrangler/) command:
 
 ```sh
-$ npx wrangler@latest pipelines create my-clickstream-pipeline --r2-bucket my-bucket
-
-🌀 Authorizing R2 bucket "my-bucket"
-🌀 Creating pipeline named "my-clickstream-pipeline"
-✅ Successfully created pipeline my-clickstream-pipeline
-
-Id:    0e00c5ff09b34d018152af98d06f5a1xvc
-Name:  my-clickstream-pipeline
-Sources:
-  HTTP:
-    Endpoint:        https://0e00c5ff09b34d018152af98d06f5a1xvc.pipelines.cloudflare.com/
-    Authentication:  off
-    Format:          JSON
-  Worker:
-    Format:  JSON
-Destination:
-  Type:         R2
-  Bucket:       my-bucket
-  Format:       newline-delimited JSON
-  Compression:  GZIP
-Batch hints:
-  Max bytes:     100 MB
-  Max duration:  300 seconds
-  Max records:   100,000
-
-🎉 You can now send data to your pipeline!
-
-Send data to your pipeline's HTTP endpoint:
-curl "https://0e00c5ff09b34d018152af98d06f5a1xvc.pipelines.cloudflare.com/" -d '[{ ...JSON_DATA... }]'
-
-To send data to your pipeline from a Worker, add the following configuration to your config file:
-{
-  "pipelines": [
-    {
-      "pipeline": "my-clickstream-pipeline",
-      "binding": "PIPELINE"
-    }
-  ]
-}
+npx wrangler pipelines setup
 ```
 
-Refer to the [getting started guide](/pipelines/getting-started) to start building with pipelines.
+---
 
-:::note
-While in beta, you will not be billed for Pipelines usage. You will be billed only for [R2 usage](/r2/pricing/).
-:::
-
-***
 ## Features
 
-<Feature header="HTTP as a source" href="/pipelines/build-with-pipelines/sources/http">
-Each pipeline generates a globally scalable HTTP endpoint, which supports authentication and CORS settings.
+<Feature header="Create your first pipeline" href="/pipelines/getting-started/" cta="Get started">
+
+Build your first pipeline to ingest data via HTTP or Workers, apply SQL transformations, and deliver to R2 as Iceberg tables or Parquet files.
+
 </Feature>
 
-<Feature header="Workers API" href="/pipelines/build-with-pipelines/sources/workers-apis/">
-Send data to a pipeline directly from a Cloudflare Worker.
+<Feature header="Streams" href="/pipelines/streams/" cta="Learn about Streams">
+
+Durable, buffered queues that receive events via HTTP endpoints or Worker bindings.
+
 </Feature>
 
-<Feature header="Customize output settings" href="/pipelines/build-with-pipelines/output-settings">
-Define batch sizes and enable compression to generate output files that are efficient to query.
+<Feature header="Pipelines" href="/pipelines/pipelines/" cta="Learn about Pipelines">
+
+Connect streams to sinks with SQL transformations that validate, filter, transform, and enrich your data at ingestion time.
+
 </Feature>
 
-***
+<Feature header="Sinks" href="/pipelines/sinks/" cta="Learn about Sinks">
+
+Configure destinations for your data. Write Apache Iceberg tables to R2 Data Catalog or export as Parquet and JSON files.
+
+</Feature>
+
+---
 
 ## Related products
 
@@ -105,22 +86,36 @@ Cloudflare Workers allows developers to build serverless applications and deploy
 
 </RelatedProduct>
 
-***
+---
 
 ## More resources
 
 <CardGrid>
 
-<LinkTitleCard title="Limits" href="/pipelines/platform/limits/" icon="document">
-Learn about pipelines limits.
+<LinkTitleCard
+	title="Limits"
+	href="/pipelines/platform/limits/"
+	icon="document"
+>
+	Learn about pipelines limits.
 </LinkTitleCard>
 
-<LinkTitleCard title="@CloudflareDev" href="https://x.com/cloudflaredev" icon="x.com">
-Follow @CloudflareDev on Twitter to learn about product announcements, and what is new in Cloudflare Workers.
+<LinkTitleCard
+	title="@CloudflareDev"
+	href="https://x.com/cloudflaredev"
+	icon="x.com"
+>
+	Follow @CloudflareDev on Twitter to learn about product announcements, and
+	what is new in Cloudflare Workers.
 </LinkTitleCard>
 
-<LinkTitleCard title="Developer Discord" href="https://discord.cloudflare.com" icon="discord">
-Connect with the Workers community on Discord to ask questions, show what you are building, and discuss the platform with other developers.
+<LinkTitleCard
+	title="Developer Discord"
+	href="https://discord.cloudflare.com"
+	icon="discord"
+>
+	Connect with the Workers community on Discord to ask questions, show what you
+	are building, and discuss the platform with other developers.
 </LinkTitleCard>
 
 </CardGrid>

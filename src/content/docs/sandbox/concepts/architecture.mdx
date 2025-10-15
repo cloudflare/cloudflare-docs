@@ -1,0 +1,139 @@
+---
+title: Architecture
+pcx_content_type: concept
+sidebar:
+  order: 1
+---
+
+The Sandbox SDK provides isolated code execution environments on Cloudflare's edge network. It combines three Cloudflare technologies:
+
+- **Workers** - JavaScript runtime at the edge
+- **Durable Objects** - Stateful compute with persistent storage
+- **Containers** - Isolated execution environments with full Linux capabilities
+
+## Three-layer architecture
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                     Your Application                    │
+│                    (Cloudflare Worker)                  │
+└───────────────────────────┬─────────────────────────────┘
+                            ├─ getSandbox()
+                            ├─ exec()
+                            ├─ writeFile()
+                            │
+           ┌────────────────▼──────────────────┐
+           │ Container-enabled Durable Object  │
+           │ (SDK methods via RPC from Worker) │
+           └───────────────────────────────────┘
+                            │ HTTP/JSON
+                            │
+                    ┌───────▼───────┐
+                    │ Durable Object │ Layer 2: State Management
+                    │  (Persistent)  │
+                    └───────┬───────┘
+                            │ Container Protocol
+                            │
+                    ┌───────▼───────┐
+                    │   Container   │ Layer 3: Isolated Execution
+                    │  (Linux + Bun) │
+                    └───────────────┘
+```
+
+### Layer 1: Client SDK
+
+The developer-facing API you use in your Workers:
+
+```typescript
+import { getSandbox } from "@cloudflare/sandbox";
+
+const sandbox = getSandbox(env.Sandbox, "my-sandbox");
+const result = await sandbox.exec("python script.py");
+```
+
+**Purpose**: Provide a clean, type-safe TypeScript interface for all sandbox operations.
+
+### Layer 2: Durable Object
+
+Manages sandbox lifecycle and routing:
+
+```typescript
+export class Sandbox extends DurableObject<Env> {
+	// Extends Cloudflare Container for isolation
+	// Routes requests between client and container
+	// Manages preview URLs and state
+}
+```
+
+**Purpose**: Provide persistent, stateful sandbox instances with unique identities.
+
+**Why Durable Objects**:
+
+- **Persistent identity** - Same sandbox ID always routes to same instance
+- **State management** - Filesystem and processes persist between requests
+- **Geographic distribution** - Sandboxes run close to users
+- **Automatic scaling** - Cloudflare manages provisioning
+
+### Layer 3: Container Runtime
+
+Executes code in isolation with full Linux capabilities.
+
+**Purpose**: Safely execute untrusted code.
+
+**Why containers**:
+
+- **True isolation** - Process-level isolation with namespaces
+- **Full environment** - Real Linux with Python, Node.js, Git, etc.
+- **Resource limits** - CPU, memory, disk constraints
+
+## Request flow
+
+When you execute a command:
+
+```typescript
+await sandbox.exec("python script.py");
+```
+
+1. **Client SDK** validates parameters and sends HTTP request to Durable Object
+2. **Durable Object** authenticates and routes to container runtime
+3. **Container Runtime** validates inputs, executes command, captures output
+4. **Response flows back** through all layers with proper error transformation
+
+## State persistence
+
+Sandboxes maintain state across requests:
+
+**Filesystem**:
+
+```typescript
+// Request 1
+await sandbox.writeFile("/workspace/data.txt", "hello");
+
+// Request 2 (minutes later)
+const file = await sandbox.readFile("/workspace/data.txt");
+// Returns 'hello' - file persisted
+```
+
+**Processes**:
+
+```typescript
+// Request 1
+await sandbox.startProcess("node server.js");
+
+// Request 2 (minutes later)
+const processes = await sandbox.listProcesses();
+// Server still running
+```
+
+## Performance
+
+**Cold start**: 100-300ms (container initialization)  
+**Warm start**: \<10ms (reuse existing container)  
+**Network latency**: 10-50ms (edge-to-edge)
+
+## Related resources
+
+- [Sandbox lifecycle](/sandbox/concepts/sandboxes/) - How sandboxes are created and managed
+- [Container runtime](/sandbox/concepts/containers/) - Inside the execution environment
+- [Security model](/sandbox/concepts/security/) - How isolation and validation work
+- [Session management](/sandbox/concepts/sessions/) - Advanced state management

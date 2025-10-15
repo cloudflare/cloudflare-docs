@@ -16,14 +16,14 @@ This capability allows extending tools that require DOM access (such as password
 
 :::note
 
-This step is not required when browsing via Clientless Web Isolation. You can access the Chrome Web Store at `https://<authdomain>.cloudflareaccess.com/browser/https://chrome.google.com/webstore`.
+This step is not required when browsing via Clientless Web Isolation. You can access the Chrome Web Store at `https://<authdomain>.cloudflareaccess.com/browser/https://chromewebstore.google.com/`.
 :::
 
-Installing extensions requires Chrome Web Store isolation. Create an [HTTP policy](/cloudflare-one/policies/gateway/http-policies/) to isolate the Chrome Web Store (`chrome.google.com`).
+Installing extensions requires Chrome Web Store isolation. Create an [HTTP policy](/cloudflare-one/policies/gateway/http-policies/) to isolate the Chrome Web Store (chromewebstore.google.com).
 
 ### Install an extension
 
-1. Go to `https://chrome.google.com/webstore` while isolated.
+1. Go to `https://chromewebstore.google.com/` while isolated.
 2. Choose your desired extension.
 3. Select **Add to Chrome**. To confirm extension installation, select **Add extension**.
 
@@ -41,8 +41,8 @@ Remote browser extensions are automatically reinstalled across isolated sessions
 
 ### Modify remote browser user agent
 
-[User-Agent Switcher for Chrome](https://chrome.google.com/webstore/detail/user-agent-switcher-for-c/djflhoibgkdhkhhcedjiklpkjnoahfmg) enables controlling the User Agent sent from the remote browser to an isolated website.
+[User-Agent Switcher for Chrome](https://chromewebstore.google.com/detail/user-agent-switcher-for-c/djflhoibgkdhkhhcedjiklpkjnoahfmg) enables controlling the User Agent sent from the remote browser to an isolated website.
 
 ### Control remote browser request headers
 
-[ModHeader](https://chrome.google.com/webstore/detail/modheader/idgpnmonknjnojddfkpgkljpfnnfcklj) enables controlling arbitrary request headers sent from the remote browser to an isolated website.
+[ModHeader](https://chromewebstore.google.com/detail/modheader/idgpnmonknjnojddfkpgkljpfnnfcklj) enables controlling arbitrary request headers sent from the remote browser to an isolated website.

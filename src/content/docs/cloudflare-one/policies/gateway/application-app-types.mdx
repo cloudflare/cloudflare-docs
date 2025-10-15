@@ -5,7 +5,12 @@ sidebar:
   order: 9
 ---
 
-import { GlossaryDefinition, GlossaryTooltip, Details } from "~/components";
+import {
+	GlossaryDefinition,
+	GlossaryTooltip,
+	Details,
+	Render,
+} from "~/components";
 
 Gateway allows you to create DNS, Network, and HTTP policies based on applications and app types. You can select individual applications or groups of app types to filter specific traffic on your network.
 
@@ -63,77 +68,11 @@ To ensure effective application behavior, Gateway only uses support hostnames in
 
 ## Application controls
 
-With [Application Granular Controls](/cloudflare-one/policies/gateway/http-policies/#application-granular-controls), you can choose specific actions and operations to match application traffic. Supported applications and operations include:
+When you use the [_Application_ selector](/cloudflare-one/policies/gateway/http-policies/#granular-controls) in an HTTP policy with the _is_ operator, you can choose specific actions and operations to match application traffic. Supported applications and operations include:
 
-<Details header="ChatGPT (app ID `1199`)">
+<Render file="gateway/granular-applications" product="cloudflare-one" />
 
-| Operation name     | Operation ID | Application Control name | Application Control ID | Contains payload | Operation Group | Operation Group ID |
-| ------------------ | ------------ | ------------------------ | ---------------------- | ---------------- | --------------- | ------------------ |
-| SendPrompt         | `8004`       | Prompt                   | `1652`                 | ✅               | Chat            | `1650`             |
-| UploadFile         | `8008`       | Upload                   | `1653`                 | ❌               | Chat            | `1650`             |
-| UploadFilePayload  | `8013`       | Upload                   | `1653`                 | ✅               | Chat            | `1650`             |
-| ShareResponse      | `8006`       | Share                    | `1654`                 | ❌               | Chat            | `1650`             |
-| ShareCanvas        | `8007`       | Share                    | `1654`                 | ❌               | Chat            | `1650`             |
-| TranscribeVoice    | `8011`       | Voice                    | `1655`                 | ❌               | Chat            | `1650`             |
-| EnableVoiceMode    | `8003`       | Voice                    | `1655`                 | ❌               | Chat            | `1650`             |
-| AllowTraining      | `8009`       |                          |                        | ❌               | Settings        | `1651`             |
-| AllowVoiceTraining | `8010`       |                          |                        | ❌               | Settings        | `1651`             |
-| AllowVideoTraining | `8016`       |                          |                        | ❌               | Settings        | `1651`             |
-| ExportData         | `8020`       |                          |                        | ❌               | Settings        | `1651`             |
-
-</Details>
-
-<Details header="Google Gemini (app ID `1340`)">
-
-| Operation name    | Operation ID | Application Control name | Application Control ID | Contains payload | Operation Group | Operation Group ID |
-| ----------------- | ------------ | ------------------------ | ---------------------- | ---------------- | --------------- | ------------------ |
-| SendPrompt        | `8021`       | Prompt                   | `1657`                 | ✅               | Chat            | `1656`             |
-| UploadFile        | `8022`       | Upload                   | `1658`                 | ❌               | Chat            | `1656`             |
-| UploadFilePayload | `8023`       | Upload                   | `1658`                 | ✅               | Chat            | `1656`             |
-| TranscribeVoice   | `8025`       | Voice                    | `1659`                 | ❌               | Chat            | `1656`             |
-
-</Details>
-
-<Details header="Perplexity (app ID `1937`)">
-
-| Operation name         | Operation ID | Application Control name | Application Control ID | Contains payload | Operation Group | Operation Group ID |
-| ---------------------- | ------------ | ------------------------ | ---------------------- | ---------------- | --------------- | ------------------ |
-| SendPrompt             | `11947`      | Prompt                   | `2598`                 | ✅               | Chat            | `2596`             |
-| ClarifyingPrompt       | `11951`      | Prompt                   | `2598`                 | ✅               | Chat            | `2596`             |
-| CreateUploadUrl        | `11948`      | Upload                   | `2599`                 | ❌               | Chat            | `2596`             |
-| UploadFile             | `11955`      | Upload                   | `2599`                 | ✅               | Chat            | `2596`             |
-| UploadOrganizationFile | `11950`      | Upload                   | `2599`                 | ❌               | Settings        | `2597`             |
-| ShareChat              | `11952`      | Share                    | `2600`                 | ❌               | Chat            | `2596`             |
-| VoiceTranscription     | `11953`      | Voice                    | `2601`                 | ❌               | Chat            | `2596`             |
-| ExportChat             | `11949`      |                          |                        | ❌               | Chat            | `2596`             |
-| DeleteThread           | `11954`      |                          |                        | ❌               | Chat            | `2596`             |
-| DeleteOrganizationFile | `11956`      |                          |                        | ❌               | Settings        | `2597`             |
-
-</Details>
-
-<Details header="Claude (app ID `2430`)">
-
-| Operation name        | Operation ID | Application Control name | Application Control ID | Contains payload | Operation Group | Operation Group ID |
-| --------------------- | ------------ | ------------------------ | ---------------------- | ---------------- | --------------- | ------------------ |
-| SendPrompt            | `10048`      | Prompt                   | `2127`                 | ✅               | Chat            | `2126`             |
-| PromptCompletion      | `10050`      | Prompt                   | `2127`                 | ✅               | Chat            | `2126`             |
-| RetryPromptCompletion | `10040`      | Prompt                   | `2127`                 | ✅               | Chat            | `2126`             |
-| UploadFile            | `10039`      | Upload                   | `2128`                 | ✅               | Chat            | `2126`             |
-| ConvertDocument       | `10041`      | Upload                   | `2128`                 | ✅               | Chat            | `2126`             |
-| ShareConversation     | `10043`      | Share                    | `2129`                 | ❌               | Chat            | `2126`             |
-| GetShares             | `10052`      | Share                    | `2129`                 | ❌               | Chat            | `2126`             |
-| CreateConversation    | `10038`      |                          |                        | ❌               | Chat            | `2126`             |
-| GetConversation       | `10046`      |                          |                        | ❌               | Chat            | `2126`             |
-| UpdateConversation    | `10047`      |                          |                        | ❌               | Chat            | `2126`             |
-| DeleteConversation    | `10045`      |                          |                        | ❌               | Chat            | `2126`             |
-| UpdateAccount         | `10036`      |                          |                        | ❌               | Settings        | `2125`             |
-| InitiateDataExport    | `10037`      |                          |                        | ❌               | Settings        | `2125`             |
-| GiveFeedback          | `10042`      |                          |                        | ❌               | Chat            | `2126`             |
-| SetConversationTitle  | `10044`      |                          |                        | ❌               | Chat            | `2126`             |
-| GetOrganisation       | `10049`      |                          |                        | ❌               | Settings        | `2125`             |
-| GetFilePreview        | `10051`      |                          |                        | ❌               | Chat            | `2126`             |
-
-</Details>
+For more information, refer to [Application Granular Controls](/cloudflare-one/policies/gateway/http-policies/granular-controls/).
 
 ## Usage
 

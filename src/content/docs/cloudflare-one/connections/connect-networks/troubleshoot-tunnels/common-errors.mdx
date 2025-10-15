@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import { Tabs, TabItem } from "~/components";
+import { Tabs, TabItem, GlossaryTooltip } from "~/components";
 
 This section covers the most common errors you might encounter when connecting resources with Cloudflare Tunnel. If you do not see your issue listed below, refer to the [troubleshooting FAQ](/cloudflare-one/faq/troubleshooting/), view your [Tunnel logs](/cloudflare-one/connections/connect-networks/monitor-tunnels/logs/), or [contact Cloudflare Support](/support/contacting-cloudflare-support/).
 
@@ -143,6 +143,11 @@ To ping an IP address behind Cloudflare Tunnel, your system must allow ICMP traf
 ## Cloudflare Tunnel is buffering my streaming response instead of streaming it live.
 
 Proxied traffic through Cloudflare Tunnel is buffered by default unless the origin server includes the response header `Content-Type: text/event-stream`. The `Content-Type: text/event-stream` response header tells `cloudflared` to stream data as it arrives instead of buffering the entire response.
+
+## I see `Error: This route's network is inside an existing subnet's network at "100.96.0.0/12"`.
+
+This error occurs when you try to add a CIDR route that falls within Cloudflare WARP's <GlossaryTooltip term="CGNAT IP">CGNAT IP range</GlossaryTooltip>. The `100.96.0.0/12` range, which covers addresses from `100.96.0.1` to `100.111.255.254`, is reserved for internal WARP routing and cannot be added as a Cloudflare Tunnel route. To connect your private network, you will need to change its IP/CIDR so that it does not overlap with `100.96.0.0/12`.
+
 
 ## Troubleshooting
 

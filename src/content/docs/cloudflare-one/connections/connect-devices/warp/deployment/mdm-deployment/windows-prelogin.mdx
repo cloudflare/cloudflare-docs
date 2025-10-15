@@ -96,8 +96,10 @@ To enable the Windows pre-login feature, an MDM file in the following format mus
 </dict>
 ```
 
-WARP will only apply the pre-login configuration when no other WARP registration exists and the user has not yet logged into Windows. When the pre-login configuration is in effect, the device will appear on **My Team** > **Devices** with the email `non_identity@<team-name>.cloudflareaccess.com`.
+WARP will apply the pre-login configuration when no other WARP registration exists and the user has not yet logged into Windows. When the pre-login configuration is in effect, the device will appear on **My Team** > **Devices** with the email `non_identity@<team-name>.cloudflareaccess.com`.
 
-After the user logs into Windows, WARP will automatically switch to the default MDM configuration and prompt the user to authenticate with the IdP. Once authenticated, WARP registers and connects with the user identity. The **My Team** > **Devices** page will now show a new device associated with the user's email. This user registration will then be used for any subsequent connections, including before the next Windows user login.
+After the user logs into Windows, WARP will automatically switch to the default MDM configuration and prompt the user to authenticate with the IdP. Once authenticated, WARP registers and connects with the user identity. The **My Team** > **Devices** page will now show a new device associated with the user's email.
 
-Deleting the user registration would cause WARP to switch back to the pre-login configuration as soon as the user logs out of Windows.
+If [multi-user mode](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/windows-multiuser/) is turned off, this user registration will be used for any subsequent connections, including before the next Windows user login. Deleting the user registration would cause WARP to switch back to the pre-login configuration as soon as the user logs out of Windows.
+
+To learn how the pre-login configuration works with [multi-user mode](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/windows-multiuser/), refer to the [WARP registration flowchart](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/windows-multiuser/#warp-registration-logic).

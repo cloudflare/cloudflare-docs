@@ -6,7 +6,7 @@
 
 **Local simulations**: During local development, your Worker code always executes locally and bindings connect to locally simulated resources [by default](/workers/development-testing/#remote-bindings). This is supported in [`wrangler dev`](/workers/wrangler/commands/#dev) and the [Cloudflare Vite plugin](/workers/vite-plugin/).
 
-**Remote binding connections:**: Allows you to connect to remote, deployed resources on a per-binding basis. Supported in [`wrangler dev --x-remote-bindings`](/workers/development-testing/#using-wrangler-with-remote-bindings) and the [Cloudflare Vite plugin](/workers/development-testing/#using-vite-with-remote-bindings).
+**Remote binding connections:**: Allows you to connect to remote resources on a [per-binding basis](/workers/development-testing/#remote-bindings). This is supported in [`wrangler dev`](/workers/wrangler/commands/#dev) and the [Cloudflare Vite plugin](/workers/vite-plugin/).
 
 | Binding                                 | Local simulations | Remote binding connections |
 | --------------------------------------- | :---------------: | :------------------------: |
@@ -15,7 +15,7 @@
 | **Analytics Engine**                    |        ✅         |             ❌             |
 | **Browser Rendering**                   |        ✅         |             ✅             |
 | **D1**                                  |        ✅         |             ✅             |
-| **Durable Objects**                     |        ✅         |             ❌             |
+| **Durable Objects**                     |        ✅         |             ❌ [^1]            |
 | **Containers**                          |        ✅         |             ❌             |
 | **Email Bindings**                      |        ✅         |             ✅             |
 | **Hyperdrive**                          |        ✅         |             ❌             |
@@ -28,6 +28,8 @@
 | **Service Bindings (multiple Workers)** |        ✅         |             ✅             |
 | **Vectorize**                           |        ❌         |             ✅             |
 | **Workflows**                           |        ✅         |             ❌             |
+
+[^1]: Refer to [Using remote resources with Durable Objects and Workflows](/workers/development-testing/#using-remote-resources-with-durable-objects-and-workflows) for recommended workarounds.
 
 ## Remote development
 

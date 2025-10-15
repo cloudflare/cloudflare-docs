@@ -49,7 +49,11 @@ export class MyDurableObject extends DurableObject {
 
 </TabItem> </Tabs>
 
-## Methods
+## Methods and Properties
+
+### `exports`
+
+Contains loopback bindings to the Worker's own top-level exports. This has exactly the same meaning as [`ExecutionContext`'s `ctx.exports`](/workers/runtime-apis/context/#exports).
 
 ### `waitUntil`
 

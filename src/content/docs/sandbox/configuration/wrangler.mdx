@@ -1,0 +1,249 @@
+---
+title: Wrangler configuration
+pcx_content_type: configuration
+sidebar:
+  order: 1
+---
+
+## Minimal configuration
+
+The minimum required configuration for using Sandbox SDK:
+
+```jsonc title="wrangler.jsonc"
+{
+	"name": "my-sandbox-worker",
+	"main": "src/index.ts",
+	"compatibility_date": "2025-10-13",
+	"compatibility_flags": ["nodejs_compat"],
+	"containers": [
+		{
+			"class_name": "Sandbox",
+			"image": "docker.io/cloudflare/sandbox:0.3.3",
+		},
+	],
+	"durable_objects": {
+		"bindings": [
+			{
+				"class_name": "Sandbox",
+				"name": "Sandbox",
+			},
+		],
+	},
+	"migrations": [
+		{
+			"new_sqlite_classes": ["Sandbox"],
+			"tag": "v1",
+		},
+	],
+}
+```
+
+## Required settings
+
+### containers
+
+Each container is backed by its own Durable Object. The container image contains your runtime environment.
+
+```jsonc
+{
+	"containers": [
+		{
+			"class_name": "Sandbox",
+			"image": "docker.io/cloudflare/sandbox:0.3.3",
+		},
+	],
+}
+```
+
+**Parameters**:
+
+- **class_name** (string, required) - Must match the `class_name` of the Durable Object.
+- **image** (string, required) - The Docker image to use. Must match your npm package version.
+
+For custom images, use a Dockerfile:
+
+```jsonc
+{
+	"containers": [
+		{
+			"class_name": "Sandbox",
+			"image": "./Dockerfile",
+		},
+	],
+}
+```
+
+See [Dockerfile reference](/sandbox/configuration/dockerfile/) for customization.
+
+### durable_objects.bindings
+
+Bind the Sandbox Durable Object to your Worker:
+
+```jsonc
+{
+	"durable_objects": {
+		"bindings": [
+			{
+				"class_name": "Sandbox",
+				"name": "Sandbox",
+			},
+		],
+	},
+}
+```
+
+**Parameters**:
+
+- **class_name** (string, required) - Must match the `class_name` of the container configuration.
+- **name** (string, required) - The binding name you'll use in your code. Conventionally `"Sandbox"`.
+
+### migrations
+
+Required for Durable Object initialization:
+
+```jsonc
+{
+	"migrations": [
+		{
+			"new_sqlite_classes": ["Sandbox"],
+			"tag": "v1",
+		},
+	],
+}
+```
+
+This tells Cloudflare to initialize the Sandbox Durable Object with SQLite storage.
+
+## Optional settings
+
+These settings are illustrative and not required for basic usage.
+
+### Environment variables
+
+Pass configuration to your Worker:
+
+```jsonc
+{
+	"vars": {
+		"ENVIRONMENT": "production",
+		"LOG_LEVEL": "info",
+	},
+}
+```
+
+Access in your Worker:
+
+```typescript
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		console.log(`Running in ${env.ENVIRONMENT} mode`);
+		// ...
+	},
+};
+```
+
+### Secrets
+
+Store sensitive values securely:
+
+```bash
+# Set secrets via CLI (never commit these)
+wrangler secret put ANTHROPIC_API_KEY
+wrangler secret put GITHUB_TOKEN
+wrangler secret put DATABASE_URL
+```
+
+Access like environment variables:
+
+```typescript
+interface Env {
+	Sandbox: DurableObjectNamespace;
+	ANTHROPIC_API_KEY: string;
+	GITHUB_TOKEN: string;
+}
+```
+
+### Cron triggers
+
+Run sandboxes on a schedule:
+
+```jsonc
+{
+	"triggers": {
+		"crons": ["0 0 * * *"], // Daily at midnight
+	},
+}
+```
+
+```typescript
+export default {
+	async scheduled(event: ScheduledEvent, env: Env): Promise<void> {
+		const sandbox = getSandbox(env.Sandbox, "scheduled-task");
+		await sandbox.exec("python3 /workspace/daily-report.py");
+		await sandbox.destroy();
+	},
+};
+```
+
+## Troubleshooting
+
+### Binding not found
+
+**Error**: `TypeError: env.Sandbox is undefined`
+
+**Solution**: Ensure your `wrangler.jsonc` includes the Durable Objects binding:
+
+```jsonc
+{
+	"durable_objects": {
+		"bindings": [
+			{
+				"class_name": "Sandbox",
+				"name": "Sandbox",
+			},
+		],
+	},
+}
+```
+
+### Container image pull fails
+
+**Error**: `Failed to pull container image`
+
+**Solution**: Ensure you're using the correct image version (must match npm package):
+
+```jsonc
+{
+	"containers": [
+		{
+			"class_name": "Sandbox",
+			"image": "docker.io/cloudflare/sandbox:0.3.3",
+		},
+	],
+}
+```
+
+### Missing migrations
+
+**Error**: Durable Object not initialized
+
+**Solution**: Add migrations for the Sandbox class:
+
+```jsonc
+{
+	"migrations": [
+		{
+			"new_sqlite_classes": ["Sandbox"],
+			"tag": "v1",
+		},
+	],
+}
+```
+
+## Related resources
+
+- [Wrangler documentation](/workers/wrangler/) - Complete Wrangler reference
+- [Durable Objects setup](/durable-objects/get-started/) - DO-specific configuration
+- [Dockerfile reference](/sandbox/configuration/dockerfile/) - Custom container images
+- [Environment variables](/sandbox/configuration/environment-variables/) - Passing configuration to sandboxes
+- [Get Started guide](/sandbox/get-started/) - Initial setup walkthrough

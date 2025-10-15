@@ -711,7 +711,7 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 
 ### Interact with your Hyperdrive binding locally
 
-To interact with your Hyperdrive binding locally, you must provide a local connection string to your database that your Pages project will connect to directly. You can set an environment variable `WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_<BINDING_NAME>` with the connection string of the database, or use the Wrangler file to configure your Hyperdrive binding with a `localConnectionString` as specified in [Hyperdrive documentation for local development](/hyperdrive/configuration/local-development/). Then, run [`npx wrangler pages dev <OUTPUT_DIR>`](/workers/wrangler/commands/#dev-1).
+To interact with your Hyperdrive binding locally, you must provide a local connection string to your database that your Pages project will connect to directly. You can set an environment variable `CLOUDFLARE_HYPERDRIVE_LOCAL_CONNECTION_STRING_<BINDING_NAME>` with the connection string of the database, or use the Wrangler file to configure your Hyperdrive binding with a `localConnectionString` as specified in [Hyperdrive documentation for local development](/hyperdrive/configuration/local-development/). Then, run [`npx wrangler pages dev <OUTPUT_DIR>`](/workers/wrangler/commands/#dev-1).
 
 ## Analytics Engine
 

@@ -3,6 +3,8 @@ reviewed: 2024-01-12
 category: 🔐 Access
 pcx_content_type: tutorial
 title: Use Microsoft Entra ID Conditional Access policies in Cloudflare Access
+description: >-
+  With Conditional Access in Microsoft Entra ID, administrators can enforce policies on applications and users directly in EntraID.
 ---
 
 With [Conditional Access](https://learn.microsoft.com/entra/identity/conditional-access/overview) in Microsoft Entra ID (formerly Azure Active Directory), administrators can enforce policies on applications and users directly in Entra ID. Conditional Access has a set of checks that are specialized to Windows and are often preferred by organizations with Windows power users.
@@ -32,9 +34,9 @@ Once the base IdP integration is tested and working, grant permission for Cloudf
 
 5. Select **Application permissions** and add `Policy.Read.ConditionalAccess`.
 
-	:::note
-	You must select **Application permissions**; delegated permissions will not work for this feature.
-	:::
+   :::note
+   You must select **Application permissions**; delegated permissions will not work for this feature.
+   :::
 
 6. Select **Grant admin consent**.
 

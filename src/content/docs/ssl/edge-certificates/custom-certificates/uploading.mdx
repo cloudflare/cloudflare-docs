@@ -12,6 +12,7 @@ import {
 	TabItem,
 	Tabs,
 	APIRequest,
+	DashButton,
 } from "~/components";
 
 This page lists Cloudflare requirements for custom certificates and explains how to upload and update these certificates using Cloudflare dashboard or API.
@@ -50,25 +51,23 @@ When using `compatible` or `modern` [bundling](/ssl/edge-certificates/custom-cer
 
 To upload a custom SSL certificate in the dashboard:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
+1. In the Cloudflare dashboard, go to the SSL/TLS **Edge Certificates** page.
 
-2. Select your application.
+<DashButton url="/?to=/:account/:zone/ssl-tls/edge-certificates" />
 
-3. Go to **SSL/TLS**.
+2. In **Edge Certificates**, select **Upload Custom SSL Certificate**.
 
-4. In **Edge Certificates**, select **Upload Custom SSL Certificate**.
-
-5. Copy and paste relevant values into **SSL Certificate** and **Private key** text areas (or select **Paste from file**).
+3. Copy and paste relevant values into **SSL Certificate** and **Private key** text areas (or select **Paste from file**).
 
    :::note
    If doing this manually, include the `---BEGIN CERTIFICATE---` and `---END CERTIFICATE---` like the placeholder text.
    :::
 
-6. Choose the appropriate [**Bundle Method**](/ssl/edge-certificates/custom-certificates/bundling-methodologies/).
+4. Choose the appropriate [**Bundle Method**](/ssl/edge-certificates/custom-certificates/bundling-methodologies/).
 
-7. Select a value for [**Private Key Restriction**](/ssl/edge-certificates/custom-certificates/#geo-key-manager-private-key-restriction).
+5. Select a value for [**Private Key Restriction**](/ssl/edge-certificates/custom-certificates/#geo-key-manager-private-key-restriction).
 
-8. Select a value for **Legacy Client Support**, which specifies <GlossaryTooltip term="Server Name Indication (SNI)" link="/ssl/reference/browser-compatibility/#non-sni-support">Server Name Indication (SNI)</GlossaryTooltip> support:
+6. Select a value for **Legacy Client Support**, which specifies <GlossaryTooltip term="Server Name Indication (SNI)" link="/ssl/reference/browser-compatibility/#non-sni-support">Server Name Indication (SNI)</GlossaryTooltip> support:
    - **Modern (recommended)**: SNI only
    - **Legacy**: Supports non-SNI
      :::caution
@@ -76,9 +75,9 @@ To upload a custom SSL certificate in the dashboard:
      Custom certificates of the type `legacy_custom` are not compatible with [BYOIP](/byoip/).
      :::
 
-9. Select **Upload Custom Certificate**. If you see an error for `The key you provided does not match the certificate`, contact your Certificate Authority to ensure the private key matches the certificate.
+7. Select **Upload Custom Certificate**. If you see an error for `The key you provided does not match the certificate`, contact your Certificate Authority to ensure the private key matches the certificate.
 
-10. (optional) [Add a CAA DNS record](/ssl/edge-certificates/caa-records/).
+8. (optional) [Add a CAA DNS record](/ssl/edge-certificates/caa-records/).
 
 </TabItem>
 
@@ -176,12 +175,15 @@ Replacing a custom certificate following these steps does not lead to any downti
 
 To update a certificate in the dashboard:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Select your application.
-3. Go to **SSL/TLS**.
-4. In **Edge Certificates**, locate a custom certificate.
-5. Select the wrench icon and select **Replace SSL certificate and key**.
-6. Follow the same steps as [upload a new certificate](#upload-a-custom-certificate).
+1. In the Cloudflare dashboard, go to the SSL/TLS **Edge Certificates** page.
+
+<DashButton url="/?to=/:account/:zone/ssl-tls/edge-certificates" />
+
+2. In **Edge Certificates**, locate a custom certificate and click on it to expand.
+
+3. Select the wrench icon and select **Replace SSL certificate and key**.
+
+4. Follow the same steps as [upload a new certificate](#upload-a-custom-certificate).
 
 </TabItem> <TabItem label="API">
 

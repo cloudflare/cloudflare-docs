@@ -5,14 +5,14 @@ sidebar:
   order: 1
 ---
 
-import { Aside, WranglerConfig, PackageManagers } from "~/components";
+import { Aside, WranglerConfig, PackageManagers, Render } from "~/components";
 
 As seen in [this Workers bindings guide](/browser-rendering/workers-bindings/screenshots/), Browser Rendering can be used to generate screenshots for any given URL. Alongside screenshots, you can also generate full PDF documents for a given webpage, and can also provide the webpage markup and style ourselves.
 
 You can generate PDFs with Browser Rendering in two ways:
 
-- **[REST API](/browser-rendering/rest-api/)**: Use the the [/pdf endpoint](/browser-rendering/rest-api/pdf-endpoint/). This is ideal if you don't need to customize rendering behavior. 
-- **[Workers Bindings](/browser-rendering/workers-bindings/)**: Use [Puppeteer](/browser-rendering/platform/puppeteer/) or [Playwright](/browser-rendering/platform/playwright/) with Workers Bindings for additional control and customization. 
+- **[REST API](/browser-rendering/rest-api/)**: Use the the [/pdf endpoint](/browser-rendering/rest-api/pdf-endpoint/). This is ideal if you don't need to customize rendering behavior.
+- **[Workers Bindings](/browser-rendering/workers-bindings/)**: Use [Puppeteer](/browser-rendering/platform/puppeteer/) or [Playwright](/browser-rendering/platform/playwright/) with Workers Bindings for additional control and customization.
 
 Choose the method that best fits your use case.
 
@@ -37,6 +37,8 @@ browser = { binding = "BROWSER" }
 ```
 
 </WranglerConfig>
+
+<Render file="remote-binding-note" product="workers" />
 
 4. Replace the contents of `src/index.ts` (or `src/index.js` for JavaScript projects) with the following skeleton script:
 
@@ -257,7 +259,7 @@ export default {
 };
 ```
 
-You can run this script to test it using [remote bindings](/workers/development-testing/#remote-bindings):
+You can run this script to test it via:
 
 <PackageManagers type="exec" pkg="wrangler" args="dev" />
 

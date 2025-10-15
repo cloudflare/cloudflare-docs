@@ -8,7 +8,8 @@ tags:
   - Node.js
 sidebar:
   order: 2
-
+description: >-
+  This tutorial will guide you through integrating Cloudflare Turnstile to protect your web forms, such as login, signup, or contact forms.
 ---
 
 import { Steps, DashButton } from "~/components";
@@ -23,12 +24,14 @@ This tutorial will guide you through integrating Cloudflare Turnstile to protect
 
 ## Get Your Turnstile sitekey and secret key
 
+{/* prettier-ignore */}
 <Steps>
-    1. In the Cloudflare dashboard, go to the **Turnstile** page.
-    
-        <DashButton url="/?to=/:account/turnstile" />
+	1. In the Cloudflare dashboard, go to the **Turnstile** page.
+
+    		<DashButton url="/?to=/:account/turnstile" />
     2. [Create a new Turnstile widget](/turnstile/get-started/).
     3. Copy the sitekey and the secret key to use in the next step.
+
 </Steps>
 
 ## Add the Turnstile widget to your HTML form
@@ -43,28 +46,36 @@ This tutorial will guide you through integrating Cloudflare Turnstile to protect
 ```html title="Example" {14-15,17}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Contact Form</title>
-    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-    <script>
-        function enableSubmit() {
-            document.getElementById("submit-button").disabled = false;
-        }
-    </script>
-</head>
-<body>
-    <form id="contact-form" action="/submit" method="POST">
-        <input type="text" name="name" placeholder="Name" required>
-        <input type="email" name="email" placeholder="Email" required>
-        <textarea name="message" placeholder="Message" required></textarea>
+	<head>
+		<meta charset="UTF-8" />
+		<title>Contact Form</title>
+		<script
+			src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+			async
+			defer
+		></script>
+		<script>
+			function enableSubmit() {
+				document.getElementById("submit-button").disabled = false;
+			}
+		</script>
+	</head>
+	<body>
+		<form id="contact-form" action="/submit" method="POST">
+			<input type="text" name="name" placeholder="Name" required />
+			<input type="email" name="email" placeholder="Email" required />
+			<textarea name="message" placeholder="Message" required></textarea>
 
-        <!-- Turnstile widget -->
-        <div class="cf-turnstile" data-sitekey="<YOUR-SITE-KEY>" data-callback="enableSubmit"></div>
+			<!-- Turnstile widget -->
+			<div
+				class="cf-turnstile"
+				data-sitekey="<YOUR-SITE-KEY>"
+				data-callback="enableSubmit"
+			></div>
 
-        <button type="submit" id="submit-button" disabled>Submit</button>
-    </form>
-</body>
+			<button type="submit" id="submit-button" disabled>Submit</button>
+		</form>
+	</body>
 </html>
 ```
 
@@ -73,42 +84,46 @@ This tutorial will guide you through integrating Cloudflare Turnstile to protect
 You will need to verify the Turnstile token sent from the client side. Below is an example in Node.js.
 
 ```js title="Node.js example"
-const express = require('express');
-const axios = require('axios');
-const bodyParser = require('body-parser');
+const express = require("express");
+const axios = require("axios");
+const bodyParser = require("body-parser");
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.post('/submit', async (req, res) => {
-    const turnstileToken = req.body['cf-turnstile-response'];
-    const secretKey = 'your-secret-key';
+app.post("/submit", async (req, res) => {
+	const turnstileToken = req.body["cf-turnstile-response"];
+	const secretKey = "your-secret-key";
 
-    try {
-        const response = await axios.post('https://challenges.cloudflare.com/turnstile/v0/siteverify', null, {
-            params: {
-                secret: secretKey,
-                response: turnstileToken
-            }
-        });
+	try {
+		const response = await axios.post(
+			"https://challenges.cloudflare.com/turnstile/v0/siteverify",
+			null,
+			{
+				params: {
+					secret: secretKey,
+					response: turnstileToken,
+				},
+			},
+		);
 
-        if (response.data.success) {
-            // Token is valid, proceed with form submission
-            const name = req.body.name;
-            const email = req.body.email;
-            const message = req.body.message;
-            // Your form processing logic here
-            res.send('Form submission successful');
-        } else {
-            res.status(400).send('Turnstile verification failed');
-        }
-    } catch (error) {
-        res.status(500).send('Error verifying Turnstile token');
-    }
+		if (response.data.success) {
+			// Token is valid, proceed with form submission
+			const name = req.body.name;
+			const email = req.body.email;
+			const message = req.body.message;
+			// Your form processing logic here
+			res.send("Form submission successful");
+		} else {
+			res.status(400).send("Turnstile verification failed");
+		}
+	} catch (error) {
+		res.status(500).send("Error verifying Turnstile token");
+	}
 });
 
 app.listen(3000, () => {
-    console.log('Server is running on port 3000');
+	console.log("Server is running on port 3000");
 });
 ```
 

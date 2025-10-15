@@ -7,7 +7,7 @@ head:
 
 ---
 
-import { FeatureTable } from "~/components"
+import { FeatureTable, DashButton } from "~/components"
 
 A Cache Key is an identifier that Cloudflare uses for a file in our cache, and the Cache Key Template defines the identifier for a given HTTP request.
 
@@ -25,14 +25,16 @@ A default cache key includes:
 
 Custom cache keys let you precisely set the cacheability setting for any resource. They provide the benefit of more control, though they may reduce your cache hit rate and result in cache sharding:
 
-1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
-2. Go to **Caching** > **Cache Rules**.
-3. Select **Create rule**.
-4. Under **When incoming requests match**, define the [rule expression](/ruleset-engine/rules-language/expressions/edit-expressions/#expression-builder).
-5. Under **Then**, in the **Cache eligibility** section, select **Eligible for cache**.
-6. Add the **Cache Key** setting to the rule and select the appropriate **Query String** setting.
-7. You can also select settings for **Headers**, **Cookie**, **Host**, and **User**.
-8. To save and deploy your rule, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
+1. In the Cloudflare dashboard, go to the **Cache Rules** page.
+
+   <DashButton url="/?to=/:account/:zone/caching/cache-rules" />
+
+2. Select **Create rule**.
+3. Under **When incoming requests match**, define the [rule expression](/ruleset-engine/rules-language/expressions/edit-expressions/#expression-builder).
+4. Under **Then**, in the **Cache eligibility** section, select **Eligible for cache**.
+5. Add the **Cache Key** setting to the rule and select the appropriate **Query String** setting.
+6. You can also select settings for **Headers**, **Cookie**, **Host**, and **User**.
+7. To save and deploy your rule, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
 
 :::note
 When [URL normalization](/rules/normalization/) is enabled, we recommend also enabling [Normalize URLs to origin](/rules/normalization/manage/), especially if you are setting custom cache keys or using cache by device type, which also modifies the cache key. This helps ensure the URL in the cache key matches the URL sent to the origin, preventing cache poisoning and ensuring consistent behavior.

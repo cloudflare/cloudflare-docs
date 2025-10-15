@@ -62,7 +62,7 @@ The [`wrangler versions upload`](/workers/wrangler/commands/#upload) command upl
    <DashButton url="/?to=/:account/workers-and-pages" />
 
 2. Select your Worker.
-2. Go to the **Deployments** tab, and find the version you would like to view.
+3. Go to the **Deployments** tab, and find the version you would like to view.
 
 ### Aliased preview URLs
 
@@ -97,29 +97,16 @@ The resulting alias would be associated with this version, and immediately avail
 When enabled, all preview URLs are available publicly. You can use [Cloudflare Access](/cloudflare-one/policies/access/) to require visitors to authenticate before accessing preview URLs. You can limit access to yourself, your teammates, your organization, or anyone else you specify in your [access policy](/cloudflare-one/policies/access).
 
 To limit your preview URLs to authorized emails only:
+
 1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
 
    <DashButton url="/?to=/:account/workers-and-pages" />
 
-2. Select **Create application**.
-3. Select **Self Hosted**.
-4. Name your application (for example, "my-worker") and add your `workers.dev` subdomain as the **Application domain**.
-
-For example, if you want to secure preview URLs for a Worker running on `my-worker.my-subdomain.workers.dev`.
-
-- Subdomain: `*-my-worker`
-- Domain: `my-subdomain.workers.dev`
-
-:::note
-You must press enter after you input your Application domain for it to save. You will see a "Zone is not associated with the current account" warning that you may ignore.
-:::
-
-6. Go to the next page.
-7. Add a name for your access policy (for example, "Allow employees access to preview URLs for my-worker").
-8. In the **Configure rules** section create a new rule with the **Emails** selector, or any other attributes which you wish to gate access to previews with.
-9. Enter the emails you want to authorize. View [access policies](/cloudflare-one/policies/access/#selectors) to learn about configuring alternate rules.
-10. Go to the next page.
-11. Add application.
+2. In **Overview**, select your Worker.
+3. Go to **Settings** > **Domains & Routes**.
+4. For Preview URLs, click **Enable Cloudflare Access**.
+5. Optionally, to configure the Access application, click **Manage Cloudflare Access**. There, you can change the email addresses you want to authorize. View [Access policies](/cloudflare-one/policies/access/#selectors) to learn about configuring alternate rules.
+6. [Validate the Access JWT](https://developers.cloudflare.com/cloudflare-one/identity/authorization-cookie/validating-json/#cloudflare-workers-example) in your Worker script using the audience (`aud`) tag and JWKs URL provided.
 
 ## Toggle Preview URLs (Enable or Disable)
 
@@ -131,6 +118,7 @@ Note:
 ### From the Dashboard
 
 To toggle Preview URLs for a Worker:
+
 1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
 
    <DashButton url="/?to=/:account/workers-and-pages" />
@@ -153,15 +141,19 @@ Older Wrangler versions will default to Preview URLs being enabled.
 To toggle Preview URLs for a Worker, include any of the following in your Worker's Wrangler file:
 
 <WranglerConfig>
+
 ```toml
 preview_urls = true
 ```
+
 </WranglerConfig>
 
 <WranglerConfig>
+
 ```toml
 preview_urls = false
 ```
+
 </WranglerConfig>
 
 If not given, `preview_urls = false` is the default.

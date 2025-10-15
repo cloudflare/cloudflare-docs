@@ -1,0 +1,141 @@
+---
+title: Sandbox lifecycle
+pcx_content_type: concept
+sidebar:
+  order: 2
+---
+
+A sandbox is an isolated execution environment where your code runs. Each sandbox:
+
+- Has a unique identifier (sandbox ID)
+- Contains an isolated filesystem
+- Runs in a dedicated Linux container
+- Persists state between requests
+- Exists as a Cloudflare Durable Object
+
+## Lifecycle states
+
+### Creation
+
+A sandbox is created the first time you reference its ID:
+
+```typescript
+const sandbox = getSandbox(env.Sandbox, 'user-123');
+await sandbox.exec('echo "Hello"'); // First request creates sandbox
+```
+
+**Duration**: 100-300ms (cold start) or \<10ms (if warm)
+
+### Active
+
+The sandbox is running and processing requests. Filesystem, processes, and environment variables persist across requests.
+
+### Idle
+
+After inactivity, the sandbox may enter idle state. Filesystem state is preserved, but the container may be paused. Next request triggers a warm start.
+
+### Destruction
+
+Sandboxes are explicitly destroyed or automatically cleaned up:
+
+```typescript
+await sandbox.destroy();
+// All files, processes, and state deleted permanently
+```
+
+## Persistence
+
+Between requests to the same sandbox:
+
+**What persists**:
+- Files in `/workspace`, `/tmp`, `/home`
+- Background processes (started with `startProcess()`)
+- Code interpreter contexts and variables
+- Environment variables and port exposures
+
+**What doesn't persist**:
+- Nothing survives `destroy()`
+- Background processes may stop after container restarts (rare)
+
+## Naming strategies
+
+### Per-user sandboxes
+
+```typescript
+const sandbox = getSandbox(env.Sandbox, `user-${userId}`);
+```
+
+User's work persists across sessions. Good for interactive environments, playgrounds, and notebooks.
+
+### Per-session sandboxes
+
+```typescript
+const sessionId = `session-${Date.now()}-${Math.random()}`;
+const sandbox = getSandbox(env.Sandbox, sessionId);
+// Later:
+await sandbox.destroy();
+```
+
+Fresh environment each time. Good for one-time execution, CI/CD, and isolated tests.
+
+### Per-task sandboxes
+
+```typescript
+const sandbox = getSandbox(env.Sandbox, `build-${repoName}-${commit}`);
+```
+
+Idempotent operations with clear task-to-sandbox mapping. Good for builds, pipelines, and background jobs.
+
+## Request routing
+
+The first request to a sandbox determines its geographic location. Subsequent requests route to the same location.
+
+**For global apps**:
+- Option 1: Multiple sandboxes per user with region suffix (`user-123-us`, `user-123-eu`)
+- Option 2: Single sandbox per user (simpler, but some users see higher latency)
+
+## Lifecycle management
+
+### When to destroy
+
+```typescript
+try {
+  const sandbox = getSandbox(env.Sandbox, sessionId);
+  await sandbox.exec('npm run build');
+} finally {
+  await sandbox.destroy(); // Clean up temporary sandboxes
+}
+```
+
+**Destroy when**: Session ends, task completes, resources no longer needed
+
+**Don't destroy**: Personal environments, long-running services
+
+### Failure recovery
+
+If container crashes or Durable Object is evicted (rare):
+
+```typescript
+try {
+  await sandbox.exec('command');
+} catch (error) {
+  if (error.message.includes('container') || error.message.includes('connection')) {
+    await sandbox.exec('command'); // Retry - container recreates
+  }
+}
+```
+
+## Best practices
+
+- **Name consistently** - Use clear, predictable naming schemes
+- **Clean up temporary sandboxes** - Always destroy when done
+- **Reuse long-lived sandboxes** - One per user is often sufficient
+- **Batch operations** - Combine commands: `npm install && npm test && npm build`
+- **Handle failures** - Design for container restarts
+
+## Related resources
+
+- [Architecture](/sandbox/concepts/architecture/) - How sandboxes fit in the system
+- [Container runtime](/sandbox/concepts/containers/) - What runs inside sandboxes
+- [Session management](/sandbox/concepts/sessions/) - Advanced state isolation
+- [Sessions API](/sandbox/api/sessions/) - Programmatic lifecycle control

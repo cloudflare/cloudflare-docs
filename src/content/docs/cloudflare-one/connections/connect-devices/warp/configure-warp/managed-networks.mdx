@@ -34,7 +34,7 @@ On this page, you will learn how to:
 
 ## Requirements
 
-- The WARP client scans all managed networks every time it detects a network change event from the operating system. To minimize performance impact, reuse the same TLS endpoint across multiple locations unless you require distinct settings profiles for each location.
+- The WARP client scans for managed networks when the operating system's default route changes, the SSID of the active Wi-Fi connection changes, or the DNS servers of the default interface change. To minimize performance impact, reuse the same TLS endpoint across multiple locations unless you require distinct settings profiles for each location.
 - Ensure that the device can only reach one managed network at any given time. If multiple managed networks are configured and reachable, there is no way to determine which settings profile the device will receive.
 
 ## WARP client managed network detection

@@ -4,6 +4,8 @@ category: 🔐 Zero Trust
 difficulty: Intermediate
 pcx_content_type: tutorial
 title: Use virtual networks to change user egress IPs
+description: >-
+  This tutorial gives administrators an easy way to allow their users to change their egress IP address between any of your assigned dedicated egress IP addresses.
 ---
 
 import { Details, TabItem, Tabs, APIRequest } from "~/components";
@@ -46,21 +48,21 @@ First, create [virtual networks](/cloudflare-one/connections/connect-networks/pr
 
 <TabItem label="API">
 
-1. Create a [virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/) corresponding to one of your dedicated egress IPs. We recommend using a name related to the location of the corresponding dedicated egress IP. For example, if your users will egress from the Americas, you can name the virtual network `vnet-AMER`.
+1.  Create a [virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/) corresponding to one of your dedicated egress IPs. We recommend using a name related to the location of the corresponding dedicated egress IP. For example, if your users will egress from the Americas, you can name the virtual network `vnet-AMER`.
 
-		<APIRequest
-			path="/accounts/{account_id}/teamnet/virtual_networks"
-			method="POST"
-			json={{
-				comment: "Virtual network to egress from the Americas",
-				is_default: false,
-				name: "vnet-AMER",
-			}}
-		/>
+        <APIRequest
+        	path="/accounts/{account_id}/teamnet/virtual_networks"
+        	method="POST"
+        	json={{
+        		comment: "Virtual network to egress from the Americas",
+        		is_default: false,
+        		name: "vnet-AMER",
+        	}}
+        />
 
-   For more information, refer to [Create a virtual network](/api/resources/zero_trust/subresources/networks/subresources/virtual_networks/methods/create/).
+    For more information, refer to [Create a virtual network](/api/resources/zero_trust/subresources/networks/subresources/virtual_networks/methods/create/).
 
-2. Repeat Step 1 for each dedicated egress IP you want users to switch between. For example, you can create another virtual network called `vnet-EMEA` for egress from Europe, the Middle East, and Africa.
+2.  Repeat Step 1 for each dedicated egress IP you want users to switch between. For example, you can create another virtual network called `vnet-EMEA` for egress from Europe, the Middle East, and Africa.
 
 </TabItem> </Tabs>
 
@@ -85,33 +87,33 @@ After creating your virtual networks, route your private network CIDRs over each
 
 <TabItem label="API">
 
-1. Assign your first virtual network to your private network route. For example, assign `vnet-AMER` to your tunnel that routes `10.0.0.0/8`:
+1.  Assign your first virtual network to your private network route. For example, assign `vnet-AMER` to your tunnel that routes `10.0.0.0/8`:
 
-		<APIRequest
-			path="/accounts/{account_id}/teamnet/routes/{route_id}"
-			method="PATCH"
-			json={{
-				network: "10.0.0.0/8",
-				tunnel_id: "<TUNNEL_UUID>",
-				virtual_network_id: "<VNET_AMER_UUID>",
-			}}
-		/>
+        <APIRequest
+        	path="/accounts/{account_id}/teamnet/routes/{route_id}"
+        	method="PATCH"
+        	json={{
+        		network: "10.0.0.0/8",
+        		tunnel_id: "<TUNNEL_UUID>",
+        		virtual_network_id: "<VNET_AMER_UUID>",
+        	}}
+        />
 
-   For more information, refer to [Update a tunnel route](/api/resources/zero_trust/subresources/networks/subresources/routes/methods/edit/).
+    For more information, refer to [Update a tunnel route](/api/resources/zero_trust/subresources/networks/subresources/routes/methods/edit/).
 
-2. Repeat this process for each virtual network you created. For example:
+2.  Repeat this process for each virtual network you created. For example:
 
-		<APIRequest
-			path="/accounts/{account_id}/teamnet/routes/{route_id}"
-			method="PATCH"
-			json={{
-				network: "10.0.0.0/8",
-				tunnel_id: "<TUNNEL_UUID>",
-				virtual_network_id: "<VNET_EMEA_UUID>",
-			}}
-		/>
+        <APIRequest
+        	path="/accounts/{account_id}/teamnet/routes/{route_id}"
+        	method="PATCH"
+        	json={{
+        		network: "10.0.0.0/8",
+        		tunnel_id: "<TUNNEL_UUID>",
+        		virtual_network_id: "<VNET_EMEA_UUID>",
+        	}}
+        />
 
-3. Repeat Steps 1-2 for each private network tunnel route.
+3.  Repeat Steps 1-2 for each private network tunnel route.
 
 </TabItem> </Tabs>
 
@@ -152,34 +154,34 @@ Next, assign your dedicated egress IPs to each virtual network using Gateway egr
 
 <TabItem label="API">
 
-1. Add a Gateway egress policy that matches the corresponding virtual network. For example:
+1.  Add a Gateway egress policy that matches the corresponding virtual network. For example:
 
-		<APIRequest
-			path="/accounts/{account_id}/gateway/rules"
-			method="POST"
-			json={{
-				action: "egress",
-				description: "Egress via North America by connecting to vnet-AMER",
-				enabled: true,
-				filters: [
-					"egress"
-				],
-				name: "Egress AMER vnet",
-				precedence: 0,
-				traffic: "net.vnet_id == <VNET_AMER_UUID>",
-				rule_settings: {
-					egress: {
-						ipv4: "<DEDICATED_IPV4_ADDRESS>",
-						ipv4_fallback: "<SECONDARY_DEDICATED_IPV6_ADDRESS>", // Note: Typo in original JSON - suggests IPv6 for fallback
-						ipv6: "<DEDICATED_IPV6_ADDRESS>",
-					}
-				},
-			}}
-		/>
+        <APIRequest
+        	path="/accounts/{account_id}/gateway/rules"
+        	method="POST"
+        	json={{
+        		action: "egress",
+        		description: "Egress via North America by connecting to vnet-AMER",
+        		enabled: true,
+        		filters: [
+        			"egress"
+        		],
+        		name: "Egress AMER vnet",
+        		precedence: 0,
+        		traffic: "net.vnet_id == <VNET_AMER_UUID>",
+        		rule_settings: {
+        			egress: {
+        				ipv4: "<DEDICATED_IPV4_ADDRESS>",
+        				ipv4_fallback: "<SECONDARY_DEDICATED_IPV6_ADDRESS>", // Note: Typo in original JSON - suggests IPv6 for fallback
+        				ipv6: "<DEDICATED_IPV6_ADDRESS>",
+        			}
+        		},
+        	}}
+        />
 
-   For more information, refer to [Create a Zero Trust Gateway rule](/api/resources/zero_trust/subresources/gateway/subresources/rules/methods/create/).
+    For more information, refer to [Create a Zero Trust Gateway rule](/api/resources/zero_trust/subresources/gateway/subresources/rules/methods/create/).
 
-2. Repeat Step 1 to create an egress policy for each virtual network you created.
+2.  Repeat Step 1 to create an egress policy for each virtual network you created.
 
 </TabItem> </Tabs>
 

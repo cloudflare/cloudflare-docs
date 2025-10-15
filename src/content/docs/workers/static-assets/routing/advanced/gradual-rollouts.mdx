@@ -64,7 +64,7 @@ Selected operation under **Modify request header**: _Set dynamic_
 
 **Header name**: `Cloudflare-Workers-Version-Key`
 
-**Value**: `http.cookie["session_id"]`
+**Value**: `http.request.cookies["session_id"][0]`
 
 </Example>
 
@@ -84,7 +84,7 @@ Selected operation under **Modify request header**: _Set dynamic_
 
 **Header name**: `Cloudflare-Workers-Version-Key`
 
-**Value**: `http.cookie["user_id"]`
+**Value**: `http.request.cookies["user_id"][0]`
 
 </Example>
 

@@ -6,6 +6,8 @@ sidebar:
 
 ---
 
+import { DashButton } from "~/components";
+
 To get started with Magic Cloud Networking (beta) you need to give Cloudflare permission to interact with cloud providers on your behalf. You might have multiple provider accounts for the same cloud provider — for example, you might want Cloudflare to manage virtual private clouds (VPCs) belonging to two different AWS accounts.
 
 Once Cloudflare has the credentials required to access your cloud environments, Magic Cloud Networking will automatically begin discovering your cloud resources — like routing tables and virtual private networks. Discovered resources appear in your [Cloud resource catalog](/magic-cloud-networking/manage-resources/#cloud-resource-catalog).
@@ -14,12 +16,14 @@ Once Cloudflare has the credentials required to access your cloud environments, 
 
 ### 1. Create integration
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account.
-2. Select **Networking** > **Cloud integrations**.
-3. Select **Add** > **AWS integration**.
-4. Give a descriptive name to your integration. Optionally, you can also add a description for it.
-5. Select **Create integration**.
-6. Select **Authorize access** to start the process of connecting your Cloudflare account to Amazon AWS.
+1. In the Cloudflare dashboard, go to **Cloud integrations**.
+
+	<DashButton url="/?to=/:account/mcn/integrations" />
+
+2. Select **Add** > **AWS integration**.
+3. Give a descriptive name to your integration. Optionally, you can also add a description for it.
+4. Select **Create integration**.
+5. Select **Authorize access** to start the process of connecting your Cloudflare account to Amazon AWS.
 
 ### 2. Create IAM policy
 
@@ -78,12 +82,14 @@ The first discovery of resources may not succeed in all regions, while the IAM p
 
 ### 1. Create integration
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account.
-2. Select **Networking** > **Cloud integrations**.
-3. Select **Add** > **Azure integration**.
-4. Give a descriptive name to your integration. Optionally, you can also add a description for it.
-5. Select **Create integration**.
-6. Select **Authorize access** to start the process of connecting your Cloudflare account to Microsoft Azure.
+1. In the Cloudflare dashboard, go to **Cloud integrations**.
+
+	<DashButton url="/?to=/:account/mcn/integrations" />
+
+2. Select **Add** > **Azure integration**.
+3. Give a descriptive name to your integration. Optionally, you can also add a description for it.
+4. Select **Create integration**.
+5. Select **Authorize access** to start the process of connecting your Cloudflare account to Microsoft Azure.
 
 ### 2. Authorize access to your Azure account
 
@@ -113,12 +119,14 @@ The first discovery of resources may not succeed in all regions, while the IAM p
 
 ### 1. Create integration
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account.
-2. Select **Networking** > **Cloud integrations**.
-3. Select **Add** > **Google  integration**.
-4. Give a descriptive name to your integration. Optionally, you can also add a description for it.
-5. Select **Create integration**.
-6. Select **Authorize access** to start the process of connecting your Cloudflare account to Google Cloud.
+1. In the Cloudflare dashboard, go to **Cloud integrations**.
+
+	<DashButton url="/?to=/:account/mcn/integrations" />
+
+2. Select **Add** > **Google  integration**.
+3. Give a descriptive name to your integration. Optionally, you can also add a description for it.
+4. Select **Create integration**.
+5. Select **Authorize access** to start the process of connecting your Cloudflare account to Google Cloud.
 
 ### 2. Authorize access to your Google account
 

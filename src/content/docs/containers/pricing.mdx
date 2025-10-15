@@ -5,6 +5,8 @@ sidebar:
   order: 11
 ---
 
+import { Render } from "~/components";
+
 ## vCPU, Memory and Disk
 
 Containers are billed for every 10ms that they are actively running at the following rates, with included monthly usage as part of the $5 USD per month [Workers Paid plan](/workers/platform/pricing/):
@@ -20,11 +22,7 @@ You only pay for what you use — charges start when a request is sent to the co
 
 When you add containers to your Worker, you specify an [instance type](/containers/platform-details/#instance-types). The instance type you select will impact your bill — larger instances include more vCPUs, memory and disk, and therefore incur additional usage costs. The following instance types are currently available, and larger instance types are coming soon:
 
-| Name     | Memory  | CPU       | Disk |
-| -------- | ------- | --------- | ---- |
-| dev      | 256 MiB | 1/16 vCPU | 2 GB |
-| basic    | 1 GiB   | 1/4 vCPU  | 4 GB |
-| standard | 4 GiB   | 1/2 vCPU  | 4 GB |
+<Render product="containers" file="instance-types" />
 
 ## Network Egress
 

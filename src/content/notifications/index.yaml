@@ -371,7 +371,7 @@ entries:
     otherFilters: None.
 
   - name: Universal SSL Alert
-    audience: Customers with universal certificates who want to receive a notification on validation, issuance, and renewal of certificates.
+    audience: Customers with universal certificates who want to receive a notification on validation, issuance, renewal, and expiration notices.
     availability: All Cloudflare plans.
     associatedProducts: SSL/TLS
     nextSteps: You only need to take action if you are notified that you have a certificate that failed. You can find the reasons why a certificate is not being issued in [Troubleshooting SSL errors](/ssl/troubleshooting/general-ssl-errors/).

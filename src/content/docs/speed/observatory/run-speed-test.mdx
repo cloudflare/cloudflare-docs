@@ -6,20 +6,18 @@ sidebar:
 description: Learn how to use Cloudflare's Observatory to assess the performance of your website.
 ---
 
-import { Render } from "~/components";
+import { Render, DashButton } from "~/components";
 
 ## Run Synthetic test
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
+1. In the Cloudflare dashboard, go to the **Synthetic Monitoring** page.
 
-2. Go to **Speed** > **Observatory**.
+   <DashButton url="/?to=/:account/:zone/speed/test" />
 
-3. Enter the URL you want to test. The URL must belong to the zone you are testing from.
-
+2. Enter the URL you want to test. The URL must belong to the zone you are testing from.
+3. Select the test type you want to use: **Browser** or **Network tests**.
 4. Select the **Region** the automated browser will use.
-
-5. Then, you can select, depending on your plan, **Run test once**, **Run daily test** or **Run weekly test**. Refer to the [Quotas](/speed/observatory/run-speed-test/#quotas) section for information on the test frequency available for your plan.
-
+5. Depending on your plan you can select to run the test **once**, **daily** or **weekly**. Refer to the [Quotas](/speed/observatory/run-speed-test/#quotas) section for information on the test frequency available for your plan. Note that these limits may change over time.
 6. After the test finishes running, you will get a Lighthouse score and you will have access to the list of the tests run. The test result page will give you details regarding the performance of your website, both for the desktop and mobile versions. Refer to [Understand test results](/speed/observatory/test-results/) for more information.
 
 <Render file="user-agents" product="speed" />
@@ -34,10 +32,9 @@ In the Tested URLs table, in the last column, you can select the three dots > **
 
 ## Enable real user monitoring (RUM)
 
-Once a test has been run, you can enable RUM data in the test results page:
+Once a test has been run, you can enable [RUM](/speed/observatory/#real-user-monitoring-rum) data in the test results page:
 
-1. In **Real user measurements**, select **Enable Rum for free**. You can always manage your website preferences in the **Web Analytics** section in the dashboard which also uses RUM data.
-
+1. Go to **Observatory** and select **Enable RUM**. You can choose to enable globally or enable everywhere except the EU.
 2. Once RUM data is running on your site, you can access **Real user measurements** on your test results page. Usually it takes less than five minutes to see the data coming in, but it will depend on traffic.
 
 Refer to [Understand test results](/speed/observatory/test-results/) for more information about the results provided by real user data.
@@ -50,47 +47,21 @@ RUM uses a lightweight JavaScript beacon to collect the information Observatory 
 
 Quota limits for the number of tests you can run per month are currently the following:
 
-<table>
-	<tr>
-		<th>Plan</th>
-		<th>Number of one-off tests</th>
-		<th>Number of recurring tests</th>
-		<th>Frequency of recurring tests</th>
-		<th>Regions</th>
-	</tr>
-	<tr>
-		<td>Free</td>
-		<td>30</td>
-		<td>1</td>
-		<td>Weekly</td>
-		<td>Iowa, USA</td>
-	</tr>
-	<tr>
-		<td>Pro</td>
-		<td>50</td>
-		<td>5</td>
-		<td>Daily</td>
-		<td rowspan="3">
-			Everything in Free and <br /> - South Carolina, USA <br /> - North
-			Virginia, USA <br /> - Dallas, USA <br /> - Oregon, USA <br /> - Hamina,
-			Finland <br /> - Madrid, Spain <br /> - St. Ghislain, Belgium <br /> -
-			Eemshaven, Netherlands <br /> - Milan, Italy <br /> - Paris, France <br />{" "}
-			- Changhua County, Taiwan <br /> - Tokyo, Japan <br /> - Osaka, Japan{" "}
-			<br /> - Tel Aviv, Israel <br /> - London, England <br /> - Jurong West,
-			Singapore <br /> - Sydney, Australia <br /> - Frankfurt, Germany <br /> -
-			Mumbai, India <br /> - São Paulo, Brazil
-		</td>
-	</tr>
-	<tr>
-		<td>Business</td>
-		<td>100</td>
-		<td>10</td>
-		<td>Daily</td>
-	</tr>
-	<tr>
-		<td>Enterprise</td>
-		<td>150</td>
-		<td>15</td>
-		<td>Daily</td>
-	</tr>
-</table>
+| Plan       | One-off tests | Recurring tests | Frequency of recurring tests |
+|------------|---------------|-----------------|------------------------------|
+| Pro        | 50            | 5               | Daily                        |
+| Business   | 100           | 10              | Daily                        |
+| Enterprise | 150           | 15              | Daily                        |
+
+**Available Regions (all plans):**
+
+| Region                | Region              | Region             |
+|------------------------|---------------------|--------------------|
+| Iowa, USA             | Hamina, Finland     | Changhua County, Taiwan |
+| South Carolina, USA   | Madrid, Spain       | Tokyo, Japan       |
+| North Virginia, USA   | St. Ghislain, Belgium | Osaka, Japan      |
+| Dallas, USA           | Eemshaven, Netherlands | Jurong West, Singapore |
+| Oregon, USA           | Milan, Italy        | Sydney, Australia  |
+| London, England       | Paris, France       | Mumbai, India      |
+| Frankfurt, Germany    | Tel Aviv, Israel    | São Paulo, Brazil  |
+

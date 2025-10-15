@@ -9,6 +9,8 @@ import { GlossaryTooltip, Render } from "~/components";
 
 Every instance of Turnstile belongs to a Turnstile widget. It is configured on a per-widget level. Every widget has a mode, a label, a <GlossaryTooltip term="sitekey">sitekey</GlossaryTooltip>, and a <GlossaryTooltip term="secret key">secret key</GlossaryTooltip>.
 
+Turnstile is hosted under `challenges.cloudflare.com`. Your application will connect to this origin.
+
 ## Widget components
 
 <Render file="widget-components" product="turnstile" />

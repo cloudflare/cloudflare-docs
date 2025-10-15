@@ -15,12 +15,6 @@ You can monitor your usage in the AI Gateway dashboard.
 
 ## Persistent logs
 
-:::note[Note]
-
-Billing for persistent logs has not yet started. Users on paid plans can store logs beyond the included volume of 200,000 logs stored a month without being charged during this period. (Users on the free plan remain limited to the 100,000 logs cap for their plan.) We will provide plenty of advanced notice before charging begins for persistent log storage.
-
-:::
-
 Persistent logs are available on all plans, with a free allocation for both free and paid plans. Charges for additional logs beyond those limits are based on the number of logs stored per month.
 
 ### Free allocation and overage pricing
@@ -28,11 +22,9 @@ Persistent logs are available on all plans, with a free allocation for both free
 | Plan         | Free logs stored   | Overage pricing                      |
 | ------------ | ------------------ | ------------------------------------ |
 | Workers Free | 100,000 logs total | N/A - Upgrade to Workers Paid        |
-| Workers Paid | 200,000 logs total | $8 per 100,000 logs stored per month |
+| Workers Paid | 1_000,000 logs total | N/A |
 
 Allocations are based on the total logs stored across all gateways. For guidance on managing or deleting logs, please see our [documentation](/ai-gateway/observability/logging).
-
-For example, if you are a Workers Paid plan user storing 300,000 logs, you will be charged for the excess 100,000 logs (300,000 total logs - 200,000 free logs), resulting in an $8/month charge.
 
 ## Logpush
 

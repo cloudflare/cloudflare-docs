@@ -17,6 +17,20 @@ Observatory uses synthetic tests and real user data from browsers to assess the 
 
 As its name suggests, synthetic testing uses servers to simulate the conditions that a user might encounter when accessing your website. This has the advantage of being consistent, as the conditions are easily replicated each time the test is run. It also allows you to have an analysis of how a code change might affect the overall performance of your website, as well as test any URL you want. However, due to its synthetic nature, it cannot replicate the breadth and diversity of different conditions that real users will experience.
 
+Observatory provides two different types of synthetic tests:
+
+### Browser test
+
+The browser test loads the requested page in a headless browser and runs Google Lighthouse on it. This reports key performance metrics and provides light suggestions for improvement.
+
+### Network test
+
+The network test is focused on giving a detailed breakdown of the network and back-end performance of an endpoint. For more information on metrics collected, refer to [Network monitoring metrics](/speed/observatory/test-results/#network-monitoring-metrics). 
+
+### Network comparison test
+
+You can also compare network tests in Observatory by selecting any two completed tests. The results for each test are displayed side by side as histograms, allowing you to easily visualize and compare the full distribution of data points across both tests.
+
 ## Real user monitoring (RUM)
 
 Real user monitoring (also known as RUM), on the other hand, captures real metrics from real users accessing a website. This provides information that synthetic tests cannot capture, as users might access your website from different parts of the world, with different network conditions, ISPs, browsers and computer hardware. However, RUM data is only applied to your own website. Real user data also includes two user interaction metrics that synthetic tests do not offer - [First Input Delay (FID)](https://web.dev/fid/) and [Interaction to Next Paint (INP)](https://web.dev/inp/).

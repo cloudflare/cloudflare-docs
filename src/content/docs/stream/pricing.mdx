@@ -6,6 +6,14 @@ sidebar:
 ---
 import { DashButton } from "~/components";
 
+:::note[Media Transformations is now GA:]
+
+Billing for Media Transformations will begin on November 1st, 2025.
+
+:::
+
+## Pricing for Stream
+
 Cloudflare Stream lets you broadcast, store, and deliver video using a simple, unified API and simple pricing. Stream bills on two dimensions only:
 
 - **Minutes of video stored:** the total duration of uploaded video and live recordings
@@ -15,7 +23,7 @@ On-demand and live video are billed the same way.
 
 Ingress (sending your content to us) and encoding are always free. Bandwidth is already included in "video delivered" with no additional egress (traffic/bandwidth) fees.
 
-## Minutes of video stored
+### Minutes of video stored
 
 Storage is a prepaid pricing dimension purchased in increments of $5 per 1,000 minutes stored, regardless of file size. You can check how much storage you have and how much you have used on the **Stream** page of the Cloudflare dashboard.
 
@@ -43,7 +51,7 @@ If you run out of storage, you will not be able to upload new videos or start ne
 Enterprise customers _may_ continue to upload new content beyond their contracted quota without interruption.
 :::
 
-## Minutes of video delivered
+### Minutes of video delivered
 
 Delivery is a post-paid, usage-based pricing dimension billed at $1 per 1,000 minutes delivered. You can check how much delivery you have used on the **Billing** page or the Stream **Analytics** page of the Cloudflare dashboard.
 <DashButton url="/?to=/:account/billing" />
@@ -63,7 +71,7 @@ Delivery is counted by HTTP requests for video segments or parts of the MP4. The
 
 Minutes delivered for web playback (Stream Player, HLS, and DASH) are rounded to the _segment_ length: for uploaded content, segments are four seconds. Live broadcast and recording segments are determined by the keyframe interval or GOP size of the original broadcast.
 
-## Example scenarios
+### Example scenarios
 
 **Two people each watch thirty minutes of a video or live broadcast. How much would it cost?**
 
@@ -91,3 +99,12 @@ If the recording is deleted, the storage use will be released.
 **I want to store and deliver millions of minutes a month. Do you have volume pricing?**
 
 Yes, contact our [Sales Team](https://www.cloudflare.com/plans/enterprise/contact/).
+
+## Pricing for Media Transformations
+
+After November 1st, 2025, Media Transforamtions and Image Transformations will use the same subscriptions and usage metrics.
+
+- Generating a still frame (single image) from a video counts as 1 transformation.
+- Generating an optimized video or extracting audio counts as 1 transformation _per second of the output_ content.
+- Each unique transformation, as determined by input and unique combination of flags, is only billed once per calendar month.
+- All Media and Image Transformations cost $0.50 per 1,000 monthly unique transformation operations, with a free monthly allocation of 5,000.

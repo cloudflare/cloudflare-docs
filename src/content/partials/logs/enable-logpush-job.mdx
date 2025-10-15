@@ -3,10 +3,14 @@
 
 ---
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
+import { DashButton } from "~/components";
 
-2. Select the Enterprise account or domain (also known as zone) you want to use with Logpush. Depending on your choice, you have access to [account-scoped datasets](/logs/logpush/logpush-job/datasets/account/) and [zone-scoped datasets](/logs/logpush/logpush-job/datasets/zone/), respectively.
+1. In the Cloudflare dashboard, go to the **Logpush** page at the account or or domain (also known as zone) level.
+ 
+   For account: <DashButton url="/?to=/:account/logs" />
+ 
+   For domain (also known as zone): <DashButton url="/?to=/:account/:zone/analytics/logs" />
 
-3. Go to **Analytics & Logs** > **Logpush**.
+2. Depending on your choice, you have access to [account-scoped datasets](/logs/logpush/logpush-job/datasets/account/) and [zone-scoped datasets](/logs/logpush/logpush-job/datasets/zone/), respectively.
 
-4. Select **Create a Logpush job**.
+3. Select **Create a Logpush job**.

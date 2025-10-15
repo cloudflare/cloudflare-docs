@@ -4,6 +4,8 @@ pcx_content_type: how-to
 
 ---
 
+import { DashButton } from "~/components"
+
 Development Mode temporarily suspends Cloudflare's edge caching and [Polish](/images/polish/) features for three hours unless disabled beforehand. Development Mode allows customers to immediately observe changes to their cacheable content like images, CSS, or JavaScript.
 
 :::note
@@ -15,7 +17,8 @@ To bypass cache for longer than three hours, use bypass cache in [Cache Rules](/
 
 Development Mode temporarily bypasses Cloudflare's cache and does not purge cached files. To instantly purge your Cloudflare cache, refer to [purge cache](/cache/how-to/purge-cache/).
 
-1. Log in to your Cloudflare account.
-2. Select your domain.
-3. Select **Caching**.
-4. Toggle **Development Mode** to **On**.
+1. In the Cloudflare dashboard, go to the **Configuration** page.
+
+   <DashButton url="/?to=/:account/:zone/caching/configuration" />
+
+2. Toggle **Development Mode** to **On**.

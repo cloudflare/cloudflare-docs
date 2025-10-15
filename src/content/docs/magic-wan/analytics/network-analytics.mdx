@@ -6,25 +6,14 @@ sidebar:
 head:
   - tag: title
     content: Magic WAN Network Analytics
-
 ---
 
-import { GlossaryTooltip, Render } from "~/components"
+import { Render } from "~/components";
 
-Magic WAN customers can view their real-time and historical network data in Network Analytics. Customers can see their network data in a time series that shows Magic WAN traffic (in <GlossaryTooltip term="data packet">packets</GlossaryTooltip> or bytes) over time, and can filter the time series data by different types of [packet](https://www.cloudflare.com/learning/network-layer/what-is-a-packet/) characteristics.
-
-<Render file="analytics/network-analytics-data-averages" product="networking-services" />
-
-Refer to [Network Analytics](/analytics/network-analytics/) documentation to learn more.
-
-## Network traffic data filters
-
-<Render
-	file="analytics/network-traffic-filters"
+<Render file="magic-wan/analytics/network-analytics"
 	product="networking-services"
-	params={{ magicProduct: "Magic WAN" }}
+	params={{
+		productName: "Magic WAN"
+
+		 }}
 />
-
-## Access Magic Tunnel traffic analytics
-
-<Render file="analytics/network-analytics" product="networking-services" />

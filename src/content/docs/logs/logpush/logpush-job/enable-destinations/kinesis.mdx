@@ -46,13 +46,13 @@ Logpush supports [Amazon Kinesis](https://aws.amazon.com/kinesis/) as a destinat
 3. Create a Logpush job, using the following format for the `destination_conf` field:
 
 ```bash
-kinesis://<STEAM_NAME>?region=<AWS_REGION>&sts-assume-role-arn=arn:aws:iam::<YOUR_AWS_ACCOUNT_NUMBER>:role/<IAM_ROLE_NAME>
+kinesis://<STREAM_NAME>?region=<AWS_REGION>&sts-assume-role-arn=arn:aws:iam::<YOUR_AWS_ACCOUNT_ID>:role/<IAM_ROLE_NAME>
 ```
 
 4. (optional) When using STS Assume Role, you can include `sts-external-id` as a `destination_conf` parameter so it is included in your Logpush job's requests to Kinesis. Refer to [Securely Using External ID for Accessing AWS Accounts Owned by Others](https://aws.amazon.com/blogs/apn/securely-using-external-id-for-accessing-aws-accounts-owned-by-others/) for more information.
 
 ```bash
-kinesis://<STEAM_NAME>?region=<AWS_REGION>&sts-assume-role-arn=arn:aws:iam::<YOUR_AWS_ACCOUNT_NUMBER>:role/<IAM_ROLE_NAME>&sts-external-id=<EXTERNAL_ID>
+kinesis://<STREAM_NAME>?region=<AWS_REGION>&sts-assume-role-arn=arn:aws:iam::<YOUR_AWS_ACCOUNT_ID>:role/<IAM_ROLE_NAME>&sts-external-id=<EXTERNAL_ID>
 ```
 
 ### STS Assume Role example
@@ -62,7 +62,7 @@ $ curl https://api.cloudflare.com/client/v4/zones/$ZONE_TAG/logpush/jobs \
 -H 'Authorization: Bearer <API_TOKEN>' \
 -H 'Content-Type: application/json' -d '{
   "name": "kinesis",
-  "destination_conf": "kinesis://<STEAM_NAME>?region=<AWS_REGION>&sts-assume-role-arn=arn:aws:iam::<YOUR_AWS_ACCOUNT_NUMBER>:role/<IAM_ROLE_NAME>",
+  "destination_conf": "kinesis://<STREAM_NAME>?region=<AWS_REGION>&sts-assume-role-arn=arn:aws:iam::<YOUR_AWS_ACCOUNT_ID>:role/<IAM_ROLE_NAME>",
   "dataset": "http_requests",
   "enabled": true
 }'

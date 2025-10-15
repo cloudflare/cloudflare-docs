@@ -21,16 +21,16 @@ You can also connect to a remote database for remote development using the `npx 
 
 To specify a database to connect to when developing locally, you can:
 
-- **Recommended:** Create a `WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_<BINDING_NAME>` [environmental variable](/workers/configuration/environment-variables/) with the connection string of your database. `<BINDING_NAME>` is the name of the binding assigned to your Hyperdrive in your [Wrangler configuration file](/workers/wrangler/configuration/) or Pages configuration. This allows you to avoid committing potentially sensitive credentials to source control in your Wrangler configuration file, if your test/development database is not ephemeral. If you have configured multiple Hyperdrive bindings, replace `<BINDING_NAME>` with the unique binding name for each.
+- **Recommended:** Create a `CLOUDFLARE_HYPERDRIVE_LOCAL_CONNECTION_STRING_<BINDING_NAME>` [environmental variable](/workers/configuration/environment-variables/) with the connection string of your database. `<BINDING_NAME>` is the name of the binding assigned to your Hyperdrive in your [Wrangler configuration file](/workers/wrangler/configuration/) or Pages configuration. This allows you to avoid committing potentially sensitive credentials to source control in your Wrangler configuration file, if your test/development database is not ephemeral. If you have configured multiple Hyperdrive bindings, replace `<BINDING_NAME>` with the unique binding name for each.
 - Set `localConnectionString` in the Wrangler configuration file.
 
-If both the `WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_<BINDING_NAME>` [environmental variable](/workers/configuration/environment-variables/) and `localConnectionString` in the Wrangler configuration file are set, `wrangler dev` will use the environmental variable instead. Use `unset WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_<BINDING_NAME>` to unset any existing environmental variables.
+If both the `CLOUDFLARE_HYPERDRIVE_LOCAL_CONNECTION_STRING_<BINDING_NAME>` [environmental variable](/workers/configuration/environment-variables/) and `localConnectionString` in the Wrangler configuration file are set, `wrangler dev` will use the environmental variable instead. Use `unset CLOUDFLARE_HYPERDRIVE_LOCAL_CONNECTION_STRING_<BINDING_NAME>` to unset any existing environmental variables.
 
 For example, to use the environmental variable, export the environmental variable before running `wrangler dev`:
 
 ```sh
 # Your configured Hyperdrive binding is "TEST_DB"
-export WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_TEST_DB="postgres://user:password@localhost:5432/databasename"
+export CLOUDFLARE_HYPERDRIVE_LOCAL_CONNECTION_STRING_TEST_DB="postgres://user:password@localhost:5432/databasename"
 # Start a local development session referencing this local instance
 npx wrangler dev
 ```
@@ -50,7 +50,7 @@ localConnectionString = "postgres://user:password@localhost:5432/databasename"
 
 ## Use `wrangler dev`
 
-The following example shows you how to check your wrangler version, set a `WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_TEST_DB` [environmental variable](/workers/configuration/environment-variables/), and run a `wrangler dev` session:
+The following example shows you how to check your wrangler version, set a `CLOUDFLARE_HYPERDRIVE_LOCAL_CONNECTION_STRING_TEST_DB` [environmental variable](/workers/configuration/environment-variables/), and run a `wrangler dev` session:
 
 ```sh
 # Confirm you are using wrangler v3.0+
@@ -63,7 +63,7 @@ npx wrangler --version
 
 ```sh
 # Set your environmental variable: your configured Hyperdrive binding is "TEST_DB".
-export WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_TEST_DB="postgres://user:password@localhost:5432/databasename"
+export CLOUDFLARE_HYPERDRIVE_LOCAL_CONNECTION_STRING_TEST_DB="postgres://user:password@localhost:5432/databasename"
 ```
 
 ```sh
@@ -73,7 +73,7 @@ npx wrangler dev
 
 ```sh output
 ------------------
-Found a non-empty WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_TEST_DB variable. Hyperdrive will connect to this database
+Found a non-empty CLOUDFLARE_HYPERDRIVE_LOCAL_CONNECTION_STRING_TEST_DB variable. Hyperdrive will connect to this database
 during local development.
 
 wrangler dev now uses local mode by default, powered by 🔥 Miniflare and 👷 workerd.
