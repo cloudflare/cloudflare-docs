@@ -9,4 +9,15 @@ head:
 
 ---
 
+import { Render } from "~/components"
 
+<Render file="security-filters"
+	product="networking-services"
+	params={{
+		productNameWAN: "Magic WAN",
+		magicFirewallPlansURL: "/magic-firewall/plans/",
+		productNameFirewall: "Magic Firewall",
+		magicFirewallURL: "/magic-firewall/",
+		gatewayURL: "/magic-wan/zero-trust/cloudflare-gateway/"
+		}}
+/>
