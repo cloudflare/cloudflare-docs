@@ -12,6 +12,8 @@ params:
   - warpChecksURL
   - osVersionChecks
   - mwanOnrampsURL
+  - gatewayResolverPoliciesURL
+  - gatewayInternalDnsURL
 ---
 
 import { Render } from "~/components";
@@ -42,9 +44,10 @@ If your organization onboards users to Magic WAN via an <a href={props.mwanOnram
 
 ## DNS filtering
 
-You can configure the DNS resolver for your Magic WAN networks to the shared IP addresses for the Gateway DNS resolver. The Gateway DNS resolver IPs are `172.64.36.1` and `172.64.36.2`. When you resolve DNS queries from Magic WAN through Gateway, Gateway will log the queries with the private source IP. You can use the private source IP to create [resolver policies](/cloudflare-one/policies/gateway/resolver-policies/) for queries intended for [internal DNS records](/cloudflare-one/policies/gateway/resolver-policies/#internal-dns).
+You can configure the DNS resolver for your {props.magicWANName} networks to the shared IP addresses for the Gateway DNS resolver. The Gateway DNS resolver IPs are `172.64.36.1` and `172.64.36.2`. When you resolve DNS queries from {props.magicWANName} through Gateway, Gateway will log the queries with the private source IP. You can use the private source IP to create <a href={props.gatewayResolverPoliciesURL}>resolver policies</a> for queries intended for <a href={props.gatewayInternalDnsURL}>internal DNS records</a>.
 
-```mermaid
+<pre class="mermaid">
+	{`
 flowchart LR
  subgraph subGraph0["Data center"]
     direction TB
@@ -55,12 +58,13 @@ flowchart LR
     ResolverPolicies -- Retain and use</br>Source Internal IP --> InternalDNS
     CloudflareGatewayDNSResolver -- <br> --> ResolverPolicies
     WarpConnector["WARP Connector"] -- DHCP/DNS resolver --> IPSecTunnel["IPsec tunnel"]
-    MagicWAN["Magic WAN"] -- DHCP/DNS resolver --> IPSecTunnel
+    MagicWAN[${props.magicWANName}] -- DHCP/DNS resolver --> IPSecTunnel
     IPSecTunnel -- Shared IP endpoints --> CloudflareGatewayDNSResolver
     ResolverPolicies@{ shape: proc}
     WarpConnector@{ shape: in-out}
     MagicWAN@{ shape: in-out}
-```
+	`}
+</pre>
 
 ## Outbound Internet traffic
 
