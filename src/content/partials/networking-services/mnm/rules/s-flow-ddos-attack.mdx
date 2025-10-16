@@ -1,5 +1,9 @@
+---
+params:
+  - productName
+---
 
-Magic Network Monitoring customers that send sFlow data to Cloudflare can receive alerts when a specific type of distributed denial-of-service (DDoS) attack is detected within their network traffic. Magic Network Monitoring uses the same DDoS attack detection rules that protect Cloudflare's global network to generate these alerts for customers.
+{props.productName} customers that send sFlow data to Cloudflare can receive alerts when a specific type of distributed denial-of-service (DDoS) attack is detected within their network traffic. {props.productName} uses the same DDoS attack detection rules that protect Cloudflare's global network to generate these alerts for customers.
 
 Only customers that send sFlow data to Cloudflare can configure a sFlow DDoS attack rule.
 
@@ -7,7 +11,7 @@ An sFlow DDoS attack rule can only be configured via Cloudflare's API. Today, cu
 
 ## Send sFlow data from your network to Cloudflare
 
-Customers can export sFlow data of their network traffic to Cloudflare via Magic Network Monitoring. There are [specific brands and models](/magic-network-monitoring/routers/supported-routers/) of routers that are capable of generating sFlow data. Make sure to check the router specifications to ensure that it is able to export sFlow data. Customers can follow this [sFlow configuration guide](/magic-network-monitoring/routers/sflow-config/) to configure sFlow exports to Magic Network Monitoring.
+Customers can export sFlow data of their network traffic to Cloudflare via {props.productName}. There are [specific brands and models](/magic-network-monitoring/routers/supported-routers/) of routers that are capable of generating sFlow data. Make sure to check the router specifications to ensure that it is able to export sFlow data. Customers can follow this [sFlow configuration guide](/magic-network-monitoring/routers/sflow-config/) to configure sFlow exports to {props.productName}.
 
 ## Rule configuration fields
 
@@ -21,7 +25,7 @@ Customers can export sFlow data of their network traffic to Cloudflare via Magic
 
 ## API documentation
 
-Go to the [Rules](/api/resources/magic_network_monitoring/subresources/rules/) section in the Magic Network Monitoring's API documentation to review an example API configuration call using CURL and the expected output for a successful response.
+Go to the [Rules](/api/resources/magic_network_monitoring/subresources/rules/) section in the {props.productName}'s API documentation to review an example API configuration call using CURL and the expected output for a successful response.
 
 ## Tune the sFlow DDoS alert thresholds
 
