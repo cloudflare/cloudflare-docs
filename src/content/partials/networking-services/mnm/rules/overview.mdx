@@ -18,7 +18,7 @@ There are three different types of rules that can be configured within {props.pr
 | :---- | :---- | :---- |
 | <a href={props.dynamicThresholdURL}>Dynamic threshold</a> (recommended) | A dynamic threshold rule will analyze a network's traffic patterns over time and automatically adjust the rule's DDoS threshold, in terms of bits or packets, based on traffic history. | API configuration only |
 | <a href={props.staticThresholdURL}>Static threshold</a> | A static threshold rule allows you to define a constant numeric threshold, in terms of bits or packets, for DDoS traffic monitoring. | API configuration and dashboard configuration |
-| <a href={props.sFlowDDoSAttackURL}>sFlow DDoS attack</a> | Magic Network Monitoring customers that send sFlow data to Cloudflare can receive alerts when a specific type of distributed denial-of-service (DDoS) attack is detected within their network traffic. | API configuration only. Only applicable to sFlow data sets |
+| <a href={props.sFlowDDoSAttackURL}>sFlow DDoS attack</a> | {props.productName} customers that send sFlow data to Cloudflare can receive alerts when a specific type of distributed denial-of-service (DDoS) attack is detected within their network traffic. | API configuration only. Only applicable to sFlow data sets |
 
 ## Create rules in the dashboard
 
@@ -83,7 +83,7 @@ Each rule must include a group of IP prefixes in its definition. All IP prefixes
 
 #### Rule IP prefixes example
 
-For a rule with two prefix CIDRs and a `packet_threshold` of `10000` as shown below, the rule will be flagged if the joint packet traffic of `192.168.0.0/24` and `172.118.0.0/24` is greater than `10000`. This also means that Cloudflare attempts to auto advertise both CIDRs if the rule has the auto advertisement flag enabled. Customers can also [configure Rule IP prefixes at scale via Cloudflare's API](https://developers.cloudflare.com/api/resources/magic_network_monitoring/subresources/rules/).
+For a rule with two prefix CIDRs and a `packet_threshold` of `10000` as shown below, the rule will be flagged if the joint packet traffic of `192.168.0.0/24` and `172.118.0.0/24` is greater than `10000`. This also means that Cloudflare attempts to auto advertise both CIDRs if the rule has the auto advertisement flag enabled. Customers can also [configure Rule IP prefixes at scale via Cloudflare's API](/api/resources/magic_network_monitoring/subresources/rules/).
 
 ```json
 "rules":[
