@@ -203,6 +203,6 @@ The load balancer does not distinguish between [replicas](/cloudflare-one/connec
 
 If you notice traffic imbalances across endpoints in different locations, you may have to adjust your load balancer setup.
 
-`cloudflared` connections give preference to tunnels that terminate in the same Cloudflare data center. This behavior can impact how connections are weighted and traffic is distributed.
+When an end user sends a request to your application, Cloudflare routes their traffic using [Anycast routing](https://www.cloudflare.com/learning/cdn/glossary/anycast-network/) and their request typically goes to the nearest Cloudflare data center. Cloudflare Tunnel will prefer to serve the request using `cloudflared` connections in the same data center. This behavior can impact how connections are weighted and traffic is distributed.
 
 The solution depends on the type of tunnel being used. If running [legacy tunnels](/cloudflare-one/connections/connect-networks/do-more-with-tunnels/migrate-legacy-tunnels/), put your origins in different pools. If running [`cloudflared` replicas](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-availability/) (using a shared UUID), switch to separate Cloudflare tunnels as distinct origins.
