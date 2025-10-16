@@ -11,7 +11,10 @@ When you write a Worker, you may need to import packages from [npm](https://www.
 
 Cloudflare Workers provides a subset of Node.js APIs in two forms:
 
-1. As built-in APIs provided by the Workers Runtime
+1. As built-in APIs provided by the Workers Runtime. Most of these APIs are
+   full implementations of the corresponding Node.js APIs, while a few are
+   partially supported or non-functional stubs intended for the APIs to be
+   available for import only but not for actual use.
 2. As polyfill shim implementations that [Wrangler](/workers/wrangler/) adds to your Worker's code, allowing it to import the module, but calling API methods will throw errors.
 
 ## Get Started
@@ -29,44 +32,55 @@ compatibility_date = "2024-09-23"
 
 ## Supported Node.js APIs
 
-The runtime APIs from Node.js listed below as "🟢 supported" are currently natively supported in the Workers Runtime.
+The runtime APIs from Node.js listed below as "🟢 supported" are currently natively supported in the Workers Runtime. Item listed as "🟡 partially supported" are either only partially implemented or are implemented as non-functional stubs.
 
 [Deprecated or experimental APIs from Node.js](https://nodejs.org/docs/latest/api/documentation.html#stability-index), and APIs that do not fit in a serverless context, are not included as part of the list below:
 
-| API Name                                                                         | Natively supported by the Workers Runtime                                          |
-| -------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
-| [Assertion testing](/workers/runtime-apis/nodejs/assert/)                        | 🟢 supported                                                                       |
-| [Asynchronous context tracking](/workers/runtime-apis/nodejs/asynclocalstorage/) | 🟢 supported                                                                       |
-| [Buffer](/workers/runtime-apis/nodejs/buffer/)                                   | 🟢 supported                                                                       |
-| Console                                                                          | 🟢 supported                                                                       |
-| [Crypto](/workers/runtime-apis/nodejs/crypto/)                                   | 🟢 supported                                                                       |
-| [Debugger](/workers/observability/dev-tools/)                                    | 🟢 supported via [Chrome Dev Tools integration](/workers/observability/dev-tools/) |
-| [Diagnostics Channel](/workers/runtime-apis/nodejs/diagnostics-channel/)         | 🟢 supported                                                                       |
-| [DNS](/workers/runtime-apis/nodejs/dns/)                                         | 🟢 supported                                                                       |
-| Errors                                                                           | 🟢 supported                                                                       |
-| Events                                                                           | 🟢 supported                                                                       |
-| File system                                                                      | 🟢 supported                                                                       |
-| Globals                                                                          | 🟢 supported                                                                       |
-| [HTTP](/workers/runtime-apis/nodejs/http/)                                       | 🟢 supported                                                                       |
-| HTTP/2                                                                           | ⚪ not yet supported                                                               |
-| [HTTPS](/workers/runtime-apis/nodejs/https/)                                     | 🟢 supported                                                                       |
-| Inspector                                                                        | 🟢 supported via [Chrome Dev Tools integration](/workers/observability/dev-tools/) |
-| [Net](/workers/runtime-apis/nodejs/net/)                                         | 🟢 supported                                                                       |
-| OS                                                                               | ⚪ not yet supported                                                               |
-| [Path](/workers/runtime-apis/nodejs/path/)                                       | 🟢 supported                                                                       |
-| Performance hooks                                                                | 🟡 partially supported                                                             |
-| [Process](/workers/runtime-apis/nodejs/process/)                                 | 🟢 supported                                                                       |
-| Query strings                                                                    | 🟢 supported                                                                       |
-| [Stream](/workers/runtime-apis/nodejs/streams/)                                  | 🟢 supported                                                                       |
-| [String decoder](/workers/runtime-apis/nodejs/string-decoder/)                   | 🟢 supported                                                                       |
-| [Timers](/workers/runtime-apis/nodejs/timers/)                                   | 🟢 supported                                                                       |
-| [TLS/SSL](/workers/runtime-apis/nodejs/tls/)                                     | 🟡 partially supported                                                             |
-| UDP/datagram                                                                     | ⚪ not yet supported                                                               |
-| [URL](/workers/runtime-apis/nodejs/url/)                                         | 🟢 supported                                                                       |
-| [Utilities](/workers/runtime-apis/nodejs/util/)                                  | 🟢 supported                                                                       |
-| Web Crypto API                                                                   | 🟢 supported                                                                       |
-| Web Streams API                                                                  | 🟢 supported                                                                       |
-| [Zlib](/workers/runtime-apis/nodejs/zlib/)                                       | 🟢 supported                                                                       |
+| API Name                                                                         | Natively supported by the Workers Runtime                                                    |
+| -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| [Assertion testing](/workers/runtime-apis/nodejs/assert/)                        | 🟢 supported                                                                                 |
+| [Asynchronous context tracking](/workers/runtime-apis/nodejs/asynclocalstorage/) | 🟢 supported                                                                                 |
+| [Async hooks](https://nodejs.org/docs/latest/api/async_hooks.html)               | 🟡 partially supported (non-functional)                                                      |
+| [Buffer](/workers/runtime-apis/nodejs/buffer/)                                   | 🟢 supported                                                                                 |
+| [Child processes](https://nodejs.org/docs/latest/api/child_process.html)         | 🟡 partially supported (non-functional)                                                      |
+| [Cluster](https://nodejs.org/docs/latest/api/cluster.html)                       | 🟡 partially supported (non-functional)                                                      |
+| [Console](https://nodejs.org/docs/latest/api/console.html)                       | 🟡 partially supported                                                                       |
+| [Crypto](/workers/runtime-apis/nodejs/crypto/)                                   | 🟢 supported                                                                                 |
+| [Debugger](/workers/observability/dev-tools/)                                    | 🟢 supported via [Chrome Dev Tools integration](/workers/observability/dev-tools/)           |
+| [Diagnostics Channel](/workers/runtime-apis/nodejs/diagnostics-channel/)         | 🟢 supported                                                                                 |
+| [DNS](/workers/runtime-apis/nodejs/dns/)                                         | 🟢 supported                                                                                 |
+| Errors                                                                           | 🟢 supported                                                                                 |
+| [Events](/workers/runtime-apis/nodejs/eventemitter/)                             | 🟢 supported                                                                                 |
+| [File system](/workers/runtime-apis/nodejs/fs/)                                  | 🟢 supported                                                                                 |
+| Globals                                                                          | 🟢 supported                                                                                 |
+| [HTTP](/workers/runtime-apis/nodejs/http/)                                       | 🟢 supported                                                                                 |
+| [HTTP/2](https://nodejs.org/docs/latest/api/http2.html)                          | 🟡 partially supported (non-functional)                                                      |
+| [HTTPS](/workers/runtime-apis/nodejs/https/)                                     | 🟢 supported                                                                                 |
+| [Inspector](https://nodejs.org/docs/latest/api/inspector.html)                   | 🟡 partially supported via [Chrome Dev Tools integration](/workers/observability/dev-tools/) |
+| [Module](https://nodejs.org/docs/latest/api/module.html)                         | 🟡 partially supported                                                                       |
+| [Net](/workers/runtime-apis/nodejs/net/)                                         | 🟢 supported                                                                                 |
+| [OS](https://nodejs.org/docs/latest/api/os.html)                                 | 🟡 partially supported                                                                       |
+| [Path](/workers/runtime-apis/nodejs/path/)                                       | 🟢 supported                                                                                 |
+| [Performance hooks](https://nodejs.org/docs/latest/api/perf_hooks.html)          | 🟡 partially supported                                                                       |
+| [Process](/workers/runtime-apis/nodejs/process/)                                 | 🟢 supported                                                                                 |
+| [Punycode](https://nodejs.org/docs/latest/api/punycode.html) (deprecated)        | 🟢 supported                                                                                 |
+| [Readline](https://nodejs.org/docs/latest/api/readline.html)                     | 🟡 partially supported (non-functional)                                                      |
+| [REPL](https://nodejs.org/docs/latest/api/repl.html)                             | 🟡 partially supported (non-functional)                                                      |
+| [Query strings](https://nodejs.org/docs/latest/api/querystring.html)             | 🟢 supported                                                                                 |
+| [SQLite](https://nodejs.org/docs/latest/api/sqlite.html)                         | ⚪ not yet supported                                                                         |
+| [Stream](/workers/runtime-apis/nodejs/streams)                                   | 🟢 supported                                                                                 |
+| [String decoder](/workers/runtime-apis/nodejs/string-decoder/)                   | 🟢 supported                                                                                 |
+| [Test runner](https://nodejs.org/docs/latest/api/test.html)                      | ⚪ not supported                                                                             |
+| [Timers](/workers/runtime-apis/nodejs/timers/)                                   | 🟢 supported                                                                                 |
+| [TLS/SSL](/workers/runtime-apis/nodejs/tls/)                                     | 🟡 partially supported                                                                       |
+| [UDP/datagram](https://nodejs.org/docs/latest/api/dgram.html)                    | 🟡 partially supported (non-functional)                                                      |
+| [URL](/workers/runtime-apis/nodejs/url/)                                         | 🟢 supported                                                                                 |
+| [Utilities](/workers/runtime-apis/nodejs/util/)                                  | 🟢 supported                                                                                 |
+| [V8](https://nodejs.org/docs/latest/api/v8.html)                                 | 🟡 partially supported (non-functional)                                                      |
+| [VM](https://nodejs.org/docs/latest/api/vm.html)                                 | 🟡 partially supported (non-functional)                                                      |
+| [Web Crypto API](/workers/runtime-apis/web-crypto/)                              | 🟢 supported                                                                                 |
+| [Web Streams API](/workers/runtime-apis/streams/)                                | 🟢 supported                                                                                 |
+| [Zlib](/workers/runtime-apis/nodejs/zlib/)                                       | 🟢 supported                                                                                 |
 
 Unless otherwise specified, native implementations of Node.js APIs in Workers are intended to match the implementation in the [Current release of Node.js](https://github.com/nodejs/release#release-schedule).
 
