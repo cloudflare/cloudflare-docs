@@ -2,7 +2,9 @@
 params:
   - productName
   - netFlowURL
-	- sFlowURL
+  - sFlowURL
+  - mwanIpsecURL
+  - encryptNetworkFlowDataURL
 ---
 
 
@@ -21,11 +23,11 @@ Yes. Both enterprise and free customers can send encrypted network flow data to 
 Enterprise customers with Magic Transit or Magic WAN are able to send encrypted network flow data via an IPsec tunnel to Cloudflare's network. You can achieve this by:
 
 1. Configuring your <a href={props.netFlowURL}>NetFlow</a> or <a href={props.sFlowURL}>sFlow</a> data to be sent to Cloudflare's network for parsing.
-2. Directing that network flow data to be sent over [Magic Transit IPsec tunnels](/magic-transit/how-to/configure-tunnel-endpoints/) or [Magic WAN IPsec tunnels](/magic-wan/configuration/manually/how-to/configure-tunnel-endpoints/) to Cloudflare's network.
+2. Directing that network flow data to be sent over [Magic Transit IPsec tunnels](/magic-transit/how-to/configure-tunnel-endpoints/) or <a href={props.mwanIpsecURL}>Magic WAN IPsec tunnels</a> to Cloudflare's network.
 
 Cloudflare's network will then identify this traffic via the destination IP address/port, and direct the network flow traffic to {props.productName} for parsing.
 
-Free customers can route their network flow traffic through a device that is running the WARP client. Then, network flow traffic can be forwarded from the WARP enabled device to Cloudflare's network flow endpoints. You can learn more about this in the [Encrypt network flow data tutorial](/magic-network-monitoring/tutorials/encrypt-network-flow-data).
+Free customers can route their network flow traffic through a device that is running the WARP client. Then, network flow traffic can be forwarded from the WARP enabled device to Cloudflare's network flow endpoints. You can learn more about this in the <a href={props.encryptNetworkFlowDataURL}>Encrypt network flow data tutorial</a>.
 
 ## I have Auto-Advertisement enabled and it was triggered by an attack. Do I have to turn Magic Transit off manually?
 
