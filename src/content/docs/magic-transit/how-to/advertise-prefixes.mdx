@@ -131,7 +131,7 @@ json={{
 
 AS prepending helps you gracefully transition traffic between network providers. By adding prepends to Cloudflare's advertisement, you make the route through Cloudflare less preferred for some Internet network providers. This allows you to simultaneously advertise the same prefix from an alternate provider with a shorter, more desirable `AS_PATH`. Advertising from both providers at once can provide a smoother traffic migration and minimize packet loss during a change of provider.
 
-The `"asn_prepend_count"` parameter accepts values from `0` to `3`. A higher value makes the route less preferred.  This parameter can also be changed using BGP, refer to [Use communities to set AS prepends on an anycast prefix](#use-communities-to-set-as-prepends-on-an-anycast-prefix).
+The `"asn_prepend_count"` parameter accepts values from `0` to `3`. A higher value makes the route less preferred.  This parameter can also be changed using BGP — refer to [Use communities to set AS prepends on an anycast prefix](#use-communities-to-set-as-prepends-on-an-anycast-prefix).
 
 When you use AS prepending to migrate traffic away from Magic Transit, the typical sequence of events is as follows:
 
@@ -155,7 +155,7 @@ For example, if you have a CDN zone onboarded with a Magic Transit-protected ori
 
 If you are a Magic Transit customer using Direct CNI with the 2.0 CNI dataplane, you can:
 - Automatically withdraw your prefixes from Cloudflare's global edge infrastructure when you withdraw all matching BGP learned prefixes from the Magic routing table.
-- Automatically advertise your prefixes via Cloudflare’s global edge infrastructure when you have at least one matching BGP learned prefix in the Magic routing table.
+- Automatically advertise your prefixes via Cloudflare's global edge infrastructure when you have at least one matching BGP learned prefix in the Magic routing table.
 
 To automatically control the withdrawal of the BGP session globally you must enable this feature on the BGP prefix using the [Addressing API](/api/resources/addressing/subresources/prefixes/subresources/bgp_prefixes/methods/edit/). For example:
 
