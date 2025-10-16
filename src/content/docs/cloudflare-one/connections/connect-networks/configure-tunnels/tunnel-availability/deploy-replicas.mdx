@@ -18,12 +18,13 @@ For information about running `cloudflared` in a Kubernetes deployment, refer to
 ## Remotely-managed tunnels
 
 1. To create a remotely-managed tunnel, follow the [dashboard setup guide](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/).
-2. On the **Tunnels** page, select your newly created tunnel. The **Connectors** section shows all of the `cloudflared` instances for that tunnel.
-3. Select **Configure**.
+2. On the **Tunnels** page, select your newly created tunnel.
+3. In the side panel, scroll down to **Connectors** to view the `cloudflared` instances for that tunnel.
+3. Select **Edit**.
 4. Select the operating system of the host where you want to deploy a replica.
 5. Copy the installation command and run it on the host.
 
-The new replica will appear on the **Connectors** list for the tunnel.
+The new replica will appear on the **Connectors** list for the tunnel. All replicas will serve the same routes and use the same configuration parameters.
 
 ## Locally-managed tunnels
 
