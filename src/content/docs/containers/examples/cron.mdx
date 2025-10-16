@@ -77,9 +77,7 @@ export default {
     let container = getContainer(env.CRON_CONTAINER);
     await container.start({
       envVars: {
-        LOCATION: "The Cloudflare San Francisco Office",
-        LATITUDE: "37.780259",
-        LONGITUDE: "-122.390519",
+				MESSAGE: "Start Time: " + new Date().toISOString(),
       }
     })
   },
