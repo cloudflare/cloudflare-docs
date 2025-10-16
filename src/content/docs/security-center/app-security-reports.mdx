@@ -17,9 +17,25 @@ Application Security Reports provide visibility into cyber attacks that targeted
 
 The reports are automatically generated on a monthly basis, and summarize the cyber attack insights and trends for all of the Enterprise zones in your account. 
 
-You can access reports by going to the **Security Reports** page or via the API. You can view reports from previous months by selecting the date from the dropdown. 
+You can access reports by going to the **Security Reports** page or via the [API](#api). You can view reports from previous months by selecting the date from the dropdown. 
+
+<DashButton url="/?to=/:account/security-center/reports" />
+
+To download the report, select **Print report**. 
 
 Reports from before April 2025 can be accessed through **Security Reports** > **Legacy reports**.
+
+The current reports are curated by Cloudflare and will be expanded to include more insights. The option to create custom reports, filter by various fields, and schedule reports will be added in upcoming improvements.
+
+---
+
+## Report types
+
+Currently, only Application Security Reports are available. They cover the entire suite of products such as [HTTP DDoS Protection](/ddos-protection/managed-rulesets/http/), [WAF](/waf/), and [Bot Management](/bots/).
+
+Reports for Application Performance, Cloudflare One, and Network Services, such as [Magic Transit](/magic-transit/) and [Zero Trust](/cloudflare-one/), will be made available in future improvements. 
+
+---
 
 ## Report layout
 
@@ -27,12 +43,20 @@ Each report includes the following sections:
 
 - Executive summary
 - Distribution of allowed and mitigated requests
-- Industry benchmarks - how you compare to your peers by selecting your industry
+- [Industry benchmarks](#industry-benchmarks) that show how you compare to your peers by selecting your industry
 - Top five source countries of allowed traffic and mitigated traffic including a map visualization
 - Top five most targeted hostnames
 - Top five most effective mitigation rules
 
 To view more details, apply filters, analyze the data, and generate ad-hoc reports, use the [Security Analytics dashboard](/waf/analytics/security-analytics/) or [Log Explorer](/log-explorer/).
+
+### Industry benchmarks
+
+If your account is not assigned an industry or if the shown industry is incorrect, use the link within the report to select the correct industry. 
+
+It may take a while for your new selection to take effect, and it may only be applied to future reports.
+
+If you have multiple Cloudflare accounts, select the industry that is most relevant for the specific account.
 
 ---
 
@@ -51,47 +75,41 @@ A Cloudflare user must have one of the following [roles](/fundamentals/manage-me
 
 ---
 
-## Download a report
+## API
+  
+```txt
 
-You can download the application security report via the Cloudflare dashboard or the API. 
+```
 
-<Tabs>
-  <TabItem label="Dashboard">
-    1. In the Cloudflare dashboard, go to the **Security Reports** page.
-
-       <DashButton url="/?to=/:account/security-center/reports" />
-    2. For a given month and year, select **Download** to download the report for that particular month.
-  </TabItem>
-  <TabItem label="API">
-    ```txt
-
-    ```
-    <Details header="Data returned by the API">
-      - Account ID
-      - Account Name
-      - Account Industry
-      - Time range
-      - Total zones
-      - Total zones analyzed
-      - Industry percentile (nullable float)
-      - Total requests (count, percentage)
-      - Total mitigated requests (count, percentage)
-      - Total served requests (count, percentage)
-      - Top 5 hostnames by mitigated requests (hostname, count)
-      - Top 5 source countries by served requests (country, count)
-      - Top 5 source countries by mitigated requests (country, count)
-      - Top 5 rules by mitigated requests (rule name, rule type, count)
-    </Details>
-  </TabItem>
-</Tabs>
-
-
+<Details header="Data returned by the API">
+  - Account ID
+  - Account Name
+  - Account Industry
+  - Time range
+  - Total zones
+  - Total zones analyzed
+  - Industry percentile (nullable float)
+  - Total requests (count, percentage)
+  - Total mitigated requests (count, percentage)
+  - Total served requests (count, percentage)
+  - Top 5 hostnames by mitigated requests (hostname, count)
+  - Top 5 source countries by served requests (country, count)
+  - Top 5 source countries by mitigated requests (country, count)
+  - Top 5 rules by mitigated requests (rule name, rule type, count)
+</Details>
+  
 ### Cross-account reports
 
-If you have more than one Cloudflare account with Enterprise zones, you can use the API to retrieve and combine the reports from your accounts.
+Each report is generated per account. You can use the [API](#api) to retrieve the reports for all of your accounts and aggregate the data.
+
+---
+
+## Limitations
+
+The security reports currently only support US Customer Metadata Boundary (CMB). They do not support the EU CMB yet.
 
 ---
 
 ## Availability
 
-Currently, this feature is only available in closed beta to Enterprise customers.
+This feature is available in closed beta to Enterprise customers.
