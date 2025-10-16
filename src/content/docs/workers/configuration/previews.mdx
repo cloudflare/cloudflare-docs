@@ -45,7 +45,7 @@ New versions of a Worker are created when you run:
 - [`wrangler versions upload`](/workers/wrangler/commands/#upload)
 - Or when you make edits via the Cloudflare dashboard
 
-If Preview URLs have been enabled, they are **public by default** and available immediately after version creation.
+If Preview URLs have been enabled, they are public and available immediately after version creation.
 
 :::note
 Minimum required Wrangler version: 3.74.0. Check your version by running `wrangler --version`. To update Wrangler, refer to [Install/Update Wrangler](/workers/wrangler/install-and-update/).
@@ -112,7 +112,8 @@ To limit your preview URLs to authorized emails only:
 
 Note:
 
-- Preview URLs are disabled by default.
+- Preview URLs are enabled by default when `workers_dev` is enabled.
+- Preview URLs are disabled by default when `workers_dev` is disabled.
 - Disabling Preview URLs will disable routing to both versioned and aliased preview URLs.
 
 ### From the Dashboard
@@ -156,7 +157,7 @@ preview_urls = false
 
 </WranglerConfig>
 
-If not given, `preview_urls = false` is the default.
+If not given, `preview_urls = workers_dev` is the default.
 
 :::caution
 If you enable or disable Preview URLs in the Cloudflare dashboard, but do not update your Worker's Wrangler file accordingly, the Preview URLs status will change the next time you deploy your Worker with Wrangler.
