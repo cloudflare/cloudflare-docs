@@ -76,7 +76,7 @@ graph LR
 
 - To intelligently steer traffic based on latency, geolocation, or other signals.
 - To implement failover logic if a tunnel reaches an inactive state.
-- To get alerted when a tunnel reaches an inactive state.
+- To get a [health alert](/notifications/notification-available/#load-balancing) when a tunnel reaches an inactive state.
 - To distribute traffic more evenly across your Cloudflare Tunnel-accessible origins or endpoints.
 
 For setup instructions, refer to [Public load balancers](/cloudflare-one/connections/connect-networks/routing-to-tunnel/public-load-balancers/) or [Private Network Load Balancing](/load-balancing/private-network/) depending on your [use case](#types-of-load-balancers).
@@ -85,5 +85,5 @@ For setup instructions, refer to [Public load balancers](/cloudflare-one/connect
 
 There are two types of load balancers that you can use with Cloudflare Tunnel endpoints:
 
-- [Public load balancers](/cloudflare-one/connections/connect-networks/routing-to-tunnel/public-load-balancers/) steer traffic from the Internet to applications published on a Cloudflare domain. Use this method if your service is connected to Cloudflare Tunnel via a [published application route](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/#2a-publish-an-application).
+- [Public load balancers](/cloudflare-one/connections/connect-networks/routing-to-tunnel/public-load-balancers/) steer traffic from the Internet to applications published on a Cloudflare domain. Use this method if your service is served by Cloudflare Tunnel via a [published application route](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/#2a-publish-an-application).
 - [Private load balancers](/load-balancing/private-network/) steer traffic from WARP clients, Magic WAN, and other <GlossaryTooltip term = "on-ramp">on-ramps</GlossaryTooltip> to an internal IP on your private network. Use this method if your service is connected to Cloudflare Tunnel via a [CIDR route](/cloudflare-one/connections/connect-networks/private-net/cloudflared/connect-cidr/).
