@@ -30,10 +30,12 @@ We'd love your feedback. Join the #python-workers channel in the [Cloudflare Dev
 
 ## Get started
 
+You need [uv](https://docs.astral.sh/uv/#installation) and Node.
+
 ```bash
 git clone https://github.com/cloudflare/python-workers-examples
 cd python-workers-examples/01-hello
-npx wrangler@latest dev
+uv run pywrangler dev
 ```
 
 A Python Worker can be as simple as three lines of code:
@@ -48,16 +50,25 @@ class Default(WorkerEntrypoint):
 
 Similar to Workers written in [JavaScript](/workers/languages/javascript), [TypeScript](/workers/languages/typescript), or [Rust](/workers/languages/rust/), the main entry point for a Python worker is the [`fetch` handler](/workers/runtime-apis/handlers/fetch). In a Python Worker, this handler is placed in a `Default` class that extends the `WorkerEntrypoint` class (which you can import from the `workers` SDK module).
 
-To run a Python Worker locally, you use [Wrangler](/workers/wrangler/), the CLI for Cloudflare Workers:
+To run a Python Worker locally, you use pywrangler, the CLI for Python Workers.
+To set it up, first you need to set up your development environment:
+```
+uv init
+uv tool install workers-py
+uv run pywrangler init
+```
+This will create a `pyproject.toml` file with `workers-py` as a development
+dependency. `pywrangler init` will create a wrangler config file. You can then
+run `pywrangler` with:
 
 ```bash
-npx wrangler@latest dev
+uv run pywrangler dev
 ```
 
-To deploy a Python Worker to Cloudflare, run [`wrangler deploy`](/workers/wrangler/commands/#deploy):
+To deploy a Python Worker to Cloudflare, run `pywrangler deploy`:
 
 ```bash
-npx wrangler@latest deploy
+uv run pywrangler deploy
 ```
 
 ## Modules
@@ -116,10 +127,9 @@ curl --header "Content-Type: application/json" \
 Hello, Python!
 ```
 
-## The `env` Parameter
+## The `env` Attribute
 
-In addition to the `request` parameter, the `env` parameter is also passed to
-the Python `fetch` handler and can be used to access
+The `env` attribute on the ``WorkerEntrypoint`` can be used to access
 [environment variables](/workers/configuration/environment-variables/),
 [secrets](/workers/configuration/secrets/),and
 [bindings](/workers/runtime-apis/bindings/).

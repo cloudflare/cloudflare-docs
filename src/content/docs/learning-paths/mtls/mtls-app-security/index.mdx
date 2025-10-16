@@ -69,6 +69,10 @@ Example WAF Custom Rule with action block:
 
 ![Example of a WAF custom rule with an action block in the Cloudflare dashboard during the validate client certificate step](~/assets/images/learning-paths/mtls/waf-custom-rule-action-block.png)
 
+:::note
+When using CNAME, enforce mTLS on the specific hostname where it should be checked. It is not enough to have it set on the CNAME target.
+:::
+
 ## Demo
 
 :::note

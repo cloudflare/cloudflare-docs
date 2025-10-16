@@ -33,7 +33,10 @@ Before you begin, ensure you have completed the following:
 
 1. Sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages) if you have not already.
 2. Install [`Node.js`](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm). Use a Node version manager like [nvm](https://github.com/nvm-sh/nvm) or [Volta](https://volta.sh/) to avoid permission issues and change Node.js versions. [Wrangler](/workers/wrangler/install-and-update/) requires a Node version of `16.17.0` or later.
-3. Have **a publicly accessible** PostgreSQL/MySQL (or compatible) database.
+3. Have PostgreSQL/MySQL (or compatible) database, accessible in one of the following ways:
+	* **Publicly Accessible**: Your database is directly reachable from the Internet.
+	* **Private Network**: Your database is in a private network (like a VPC) and can be securely connected using [Cloudflare Tunnel](/hyperdrive/configuration/connect-to-private-database/).
+
 
 ## 1. Log in
 
@@ -241,7 +244,7 @@ export default {
 		try {
 			// Connect to the database
 			await sql.connect();
-			
+
 			// Sample query
 			const results = await sql.query(`SELECT * FROM pg_tables`);
 

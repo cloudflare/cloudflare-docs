@@ -71,7 +71,14 @@ Beyond GRE and IPsec tunnels, you can also use Network Interconnect (CNI) to onb
 
 ## Add tunnels
 
-<Render file="icmp-mfirewall" product="networking-services" />
+<Render
+	file="icmp-mfirewall"
+	product="networking-services"
+	params={{
+		mFirewallName: "Magic Firewall rules",
+		mFirewallURL: "/magic-firewall/about/ruleset-logic/#magic-firewall-rules-and-magic-transit-endpoint-health-checks"
+	}}
+	/>
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 

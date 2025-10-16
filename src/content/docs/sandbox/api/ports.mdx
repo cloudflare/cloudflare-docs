@@ -1,0 +1,86 @@
+---
+title: Ports
+pcx_content_type: concept
+sidebar:
+  order: 4
+---
+
+import { TypeScriptExample } from "~/components";
+
+Expose services running in your sandbox via public preview URLs. See [Preview URLs concept](/sandbox/concepts/preview-urls/) for details.
+
+## Methods
+
+### `exposePort()`
+
+Expose a port and get a preview URL.
+
+```ts
+const response = await sandbox.exposePort(port: number, options?: ExposePortOptions): Promise<ExposePortResponse>
+```
+
+**Parameters**:
+- `port` - Port number to expose (1024-65535)
+- `options` (optional):
+  - `name` - Friendly name for the port
+
+**Returns**: `Promise<ExposePortResponse>` with `port`, `exposedAt` (preview URL), `name`
+
+<TypeScriptExample>
+```
+await sandbox.startProcess('python -m http.server 8000');
+const exposed = await sandbox.exposePort(8000);
+
+console.log('Available at:', exposed.exposedAt);
+// https://abc123-8000.sandbox.workers.dev
+
+// Multiple services with names
+await sandbox.startProcess('node api.js');
+const api = await sandbox.exposePort(3000, { name: 'api' });
+
+await sandbox.startProcess('npm run dev');
+const frontend = await sandbox.exposePort(5173, { name: 'frontend' });
+```
+</TypeScriptExample>
+
+### `unexposePort()`
+
+Remove an exposed port and close its preview URL.
+
+```ts
+await sandbox.unexposePort(port: number): Promise<void>
+```
+
+**Parameters**:
+- `port` - Port number to unexpose
+
+<TypeScriptExample>
+```
+await sandbox.unexposePort(8000);
+```
+</TypeScriptExample>
+
+### `getExposedPorts()`
+
+Get information about all currently exposed ports.
+
+```ts
+const response = await sandbox.getExposedPorts(): Promise<GetExposedPortsResponse>
+```
+
+**Returns**: `Promise<GetExposedPortsResponse>` with `ports` array (containing `port`, `exposedAt`, `name`)
+
+<TypeScriptExample>
+```
+const { ports } = await sandbox.getExposedPorts();
+
+for (const port of ports) {
+  console.log(`${port.name || port.port}: ${port.exposedAt}`);
+}
+```
+</TypeScriptExample>
+
+## Related resources
+
+- [Preview URLs concept](/sandbox/concepts/preview-urls/) - How preview URLs work
+- [Commands API](/sandbox/api/commands/) - Start background processes

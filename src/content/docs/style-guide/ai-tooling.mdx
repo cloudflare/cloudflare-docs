@@ -1,0 +1,54 @@
+---
+pcx_content_type: reference
+title: AI Tooling
+sidebar:
+  order: 4
+---
+
+import { Render, Tabs, TabItem } from "~/components";
+
+Use the following AI tools to get the most out of Cloudflare (and our docs).
+
+## llms.txt
+
+<Render file="llms-txt" product="style-guide" />
+
+## MCP
+
+Cloudflare runs a catalog of managed remote MCP Servers which you can connect to using OAuth on clients like [Claude](https://modelcontextprotocol.io/quickstart/user), [Windsurf](https://docs.windsurf.com/windsurf/cascade/mcp), our own [AI Playground](https://playground.ai.cloudflare.com/) or any [SDK that supports MCP](https://github.com/cloudflare/agents/tree/main/packages/agents/src/mcp).
+
+<Tabs>
+	<TabItem label="Cursor">
+
+    To install in Cursor, use this [Direct install link](https://cursor.com/en-US/install-mcp?name=cloudflare&config=eyJjb21tYW5kIjoibnB4IG1jcC1yZW1vdGUgaHR0cHM6Ly9kb2NzLm1jcC5jbG91ZGZsYXJlLmNvbS9zc2UifQ%3D%3D).
+
+    </TabItem>
+    <TabItem label="VSCode">
+
+    To install in VSCode, use this [Direct install link](vscode:mcp/install?%7B%22name%22%3A%22cloudflare%22%2C%22url%22%3A%22https%3A%2F%2Fdocs.mcp.cloudflare.com%2Fmcp%22%7D).
+
+    </TabItem>
+    <TabItem label="Manually">
+
+    To install manually, add the following specification to your MCP config:
+
+    ```json
+    	{
+    		"mcpServers": {
+    				"cloudflare": {
+    				"command": "npx",
+    				"args": ["mcp-remote", "https://docs.mcp.cloudflare.com/mcp"]
+    			}
+    		}
+    	}
+    ```
+
+    </TabItem>
+
+</Tabs>
+
+:::note
+
+For other MCP servers offered by Cloudflare, refer to [Cloudflare's MCP servers](/agents/model-context-protocol/mcp-servers-for-cloudflare/).
+
+:::

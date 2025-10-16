@@ -1,0 +1,242 @@
+---
+title: Build a code review bot
+pcx_content_type: tutorial
+sidebar:
+  order: 3
+---
+
+import { Render, PackageManagers } from "~/components";
+
+Build a GitHub bot that responds to pull requests, clones the repository in a sandbox, uses Claude to analyze code changes, and posts review comments.
+
+**Time to complete**: 30 minutes
+
+## Prerequisites
+
+<Render file="prereqs" product="workers" />
+
+You'll also need:
+- A [GitHub account](https://github.com/) and personal access token with repo permissions
+- An [Anthropic API key](https://console.anthropic.com/) for Claude
+- A GitHub repository for testing
+
+## 1. Create your project
+
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args={"code-review-bot --template=cloudflare/sandbox-sdk/examples/minimal"}
+/>
+
+```sh
+cd code-review-bot
+```
+
+## 2. Install dependencies
+
+<PackageManagers pkg="@anthropic-ai/sdk @octokit/rest" />
+
+## 3. Build the webhook handler
+
+Replace `src/index.ts`:
+
+```typescript
+import { getSandbox, proxyToSandbox, type Sandbox } from '@cloudflare/sandbox';
+import { Octokit } from '@octokit/rest';
+import Anthropic from '@anthropic-ai/sdk';
+
+export { Sandbox } from '@cloudflare/sandbox';
+
+interface Env {
+	Sandbox: DurableObjectNamespace<Sandbox>;
+	GITHUB_TOKEN: string;
+	ANTHROPIC_API_KEY: string;
+	WEBHOOK_SECRET: string;
+}
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const proxyResponse = await proxyToSandbox(request, env);
+		if (proxyResponse) return proxyResponse;
+
+		const url = new URL(request.url);
+
+		if (url.pathname === '/webhook' && request.method === 'POST') {
+			const signature = request.headers.get('x-hub-signature-256');
+			const body = await request.text();
+
+			// Verify webhook signature
+			if (!signature || !(await verifySignature(body, signature, env.WEBHOOK_SECRET))) {
+				return Response.json({ error: 'Invalid signature' }, { status: 401 });
+			}
+
+			const event = request.headers.get('x-github-event');
+			const payload = JSON.parse(body);
+
+			// Only handle opened PRs
+			if (event === 'pull_request' && payload.action === 'opened') {
+				reviewPullRequest(payload, env).catch(console.error);
+				return Response.json({ message: 'Review started' });
+			}
+
+			return Response.json({ message: 'Event ignored' });
+		}
+
+		return new Response('Code Review Bot\n\nConfigure GitHub webhook to POST /webhook');
+	},
+};
+
+async function verifySignature(payload: string, signature: string, secret: string): Promise<boolean> {
+	const encoder = new TextEncoder();
+	const key = await crypto.subtle.importKey(
+		'raw',
+		encoder.encode(secret),
+		{ name: 'HMAC', hash: 'SHA-256' },
+		false,
+		['sign']
+	);
+
+	const signatureBytes = await crypto.subtle.sign('HMAC', key, encoder.encode(payload));
+	const expected = 'sha256=' + Array.from(new Uint8Array(signatureBytes))
+		.map(b => b.toString(16).padStart(2, '0'))
+		.join('');
+
+	return signature === expected;
+}
+
+async function reviewPullRequest(payload: any, env: Env): Promise<void> {
+	const pr = payload.pull_request;
+	const repo = payload.repository;
+	const octokit = new Octokit({ auth: env.GITHUB_TOKEN });
+
+	// Post initial comment
+	await octokit.issues.createComment({
+		owner: repo.owner.login,
+		repo: repo.name,
+		issue_number: pr.number,
+		body: 'Code review in progress...'
+	});
+
+	const sandbox = getSandbox(env.Sandbox, `review-${pr.number}`);
+
+	try {
+		// Clone repository
+		const cloneUrl = `https://${env.GITHUB_TOKEN}@github.com/${repo.owner.login}/${repo.name}.git`;
+		await sandbox.exec(`git clone --depth=1 --branch=${pr.head.ref} ${cloneUrl} /workspace/repo`);
+
+		// Get changed files
+		const comparison = await octokit.repos.compareCommits({
+			owner: repo.owner.login,
+			repo: repo.name,
+			base: pr.base.sha,
+			head: pr.head.sha
+		});
+
+		const files = [];
+		for (const file of (comparison.data.files || []).slice(0, 5)) {
+			if (file.status !== 'removed') {
+				const content = await sandbox.readFile(`/workspace/repo/${file.filename}`);
+				files.push({
+					path: file.filename,
+					patch: file.patch || '',
+					content: content.content
+				});
+			}
+		}
+
+		// Generate review with Claude
+		const anthropic = new Anthropic({ apiKey: env.ANTHROPIC_API_KEY });
+		const response = await anthropic.messages.create({
+			model: 'claude-sonnet-4-5',
+			max_tokens: 2048,
+			messages: [{
+				role: 'user',
+				content: `Review this PR:
+
+Title: ${pr.title}
+
+Changed files:
+${files.map(f => `File: ${f.path}\nDiff:\n${f.patch}\n\nContent:\n${f.content.substring(0, 1000)}`).join('\n\n')}
+
+Provide a brief code review focusing on bugs, security, and best practices.`
+			}]
+		});
+
+		const review = response.content[0]?.type === 'text' ? response.content[0].text : 'No review generated';
+
+		// Post review comment
+		await octokit.issues.createComment({
+			owner: repo.owner.login,
+			repo: repo.name,
+			issue_number: pr.number,
+			body: `## Code Review\n\n${review}\n\n---\n*Generated by Claude*`
+		});
+
+	} catch (error: any) {
+		await octokit.issues.createComment({
+			owner: repo.owner.login,
+			repo: repo.name,
+			issue_number: pr.number,
+			body: `Review failed: ${error.message}`
+		});
+	} finally {
+		await sandbox.destroy();
+	}
+}
+```
+
+## 4. Set your secrets
+
+```sh
+# GitHub token (needs repo permissions)
+npx wrangler secret put GITHUB_TOKEN
+
+# Anthropic API key
+npx wrangler secret put ANTHROPIC_API_KEY
+
+# Webhook secret (generate a random string)
+npx wrangler secret put WEBHOOK_SECRET
+```
+
+## 5. Deploy
+
+```sh
+npx wrangler deploy
+```
+
+## 6. Configure GitHub webhook
+
+1. Go to your repository **Settings** > **Webhooks** > **Add webhook**
+2. Set **Payload URL**: `https://code-review-bot.YOUR_SUBDOMAIN.workers.dev/webhook`
+3. Set **Content type**: `application/json`
+4. Set **Secret**: Same value you used for `WEBHOOK_SECRET`
+5. Select **Let me select individual events** → Check **Pull requests**
+6. Click **Add webhook**
+
+## 7. Test with a pull request
+
+Create a test PR:
+
+```sh
+git checkout -b test-review
+echo "console.log('test');" > test.js
+git add test.js
+git commit -m "Add test file"
+git push origin test-review
+```
+
+Open the PR on GitHub and watch for the bot's review comment!
+
+## What you built
+
+A GitHub code review bot that:
+- Receives webhook events from GitHub
+- Clones repositories in isolated sandboxes
+- Uses Claude to analyze code changes
+- Posts review comments automatically
+
+## Next steps
+
+- [Git operations](/sandbox/api/files/#gitcheckout) - Advanced repository handling
+- [Sessions API](/sandbox/api/sessions/) - Manage long-running sandbox operations
+- [GitHub Apps](https://docs.github.com/en/apps) - Build a proper GitHub App

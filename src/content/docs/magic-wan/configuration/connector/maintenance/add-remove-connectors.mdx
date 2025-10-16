@@ -5,11 +5,12 @@ sidebar:
   order: 4
 ---
 
-To add a new Connector you first need to remove the one associated with the on-ramp. You can only have more than one Connector if you initially enabled high availability on your on-ramp.
+import { Render } from "~/components";
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to **Magic WAN** > **Connector on-ramps (beta)**.
-3. Find the on-ramp that you want to edit > select the three dots next to it > **Edit**.
-4. In **Connectors**, remove the Connector associated with the on-ramp.
-5. Select **Add Connector** to add a different Connector to your on-ramp.
-6. Select **Save**.
+<Render
+	file="mconn/maintenance/add-remove-connectors"
+	product="networking-services"
+	params={{
+		productName: "Magic WAN Connector"
+		}}
+/>

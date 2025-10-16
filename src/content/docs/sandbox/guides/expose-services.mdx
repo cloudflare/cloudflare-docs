@@ -1,0 +1,271 @@
+---
+title: Expose services
+pcx_content_type: how-to
+sidebar:
+  order: 4
+---
+
+import { TypeScriptExample } from "~/components";
+
+This guide shows you how to expose services running in your sandbox to the internet via preview URLs.
+
+## When to expose ports
+
+Expose ports when you need to:
+
+- **Test web applications** - Preview frontend or backend apps
+- **Share demos** - Give others access to running applications
+- **Develop APIs** - Test endpoints from external tools
+- **Debug services** - Access internal services for troubleshooting
+- **Build dev environments** - Create shareable development workspaces
+
+## Basic port exposure
+
+The typical workflow is: start service → wait for ready → expose port → handle requests with `proxyToSandbox`.
+
+<TypeScriptExample>
+```
+import { getSandbox, proxyToSandbox } from '@cloudflare/sandbox';
+
+const sandbox = getSandbox(env.Sandbox, 'my-sandbox');
+
+// 1. Start a web server
+await sandbox.startProcess('python -m http.server 8000');
+
+// 2. Wait for service to start
+await new Promise(resolve => setTimeout(resolve, 2000));
+
+// 3. Expose the port
+const exposed = await sandbox.exposePort(8000);
+
+// 4. Preview URL is now available (public by default)
+console.log('Server accessible at:', exposed.exposedAt);
+// Returns: https://abc123-8000.sandbox.workers.dev
+
+// 5. Handle preview URL requests in your Worker
+export default {
+  async fetch(request: Request, env: Env): Promise<Response> {
+    // Proxy requests to the exposed port
+    return proxyToSandbox(request, env.Sandbox, 'my-sandbox');
+  }
+};
+```
+</TypeScriptExample>
+
+:::caution
+**Preview URLs are public by default.** Anyone with the URL can access your service. Add authentication if needed.
+:::
+
+## Name your exposed ports
+
+When exposing multiple ports, use names to stay organized:
+
+<TypeScriptExample>
+```
+// Start and expose API server
+await sandbox.startProcess('node api.js', { env: { PORT: '8080' } });
+await new Promise(resolve => setTimeout(resolve, 2000));
+const api = await sandbox.exposePort(8080, { name: 'api' });
+
+// Start and expose frontend
+await sandbox.startProcess('npm run dev', { env: { PORT: '5173' } });
+await new Promise(resolve => setTimeout(resolve, 2000));
+const frontend = await sandbox.exposePort(5173, { name: 'frontend' });
+
+console.log('Services:');
+console.log('- API:', api.exposedAt);
+console.log('- Frontend:', frontend.exposedAt);
+```
+</TypeScriptExample>
+
+## Wait for service readiness
+
+Always verify a service is ready before exposing. Use a simple delay for most cases:
+
+<TypeScriptExample>
+```
+// Start service
+await sandbox.startProcess('npm run dev', { env: { PORT: '8080' } });
+
+// Wait 2-3 seconds
+await new Promise(resolve => setTimeout(resolve, 2000));
+
+// Now expose
+await sandbox.exposePort(8080);
+```
+</TypeScriptExample>
+
+For critical services, poll the health endpoint:
+
+<TypeScriptExample>
+```
+await sandbox.startProcess('node api-server.js', { env: { PORT: '8080' } });
+
+// Wait for health check
+for (let i = 0; i < 10; i++) {
+  await new Promise(resolve => setTimeout(resolve, 1000));
+
+  const check = await sandbox.exec('curl -f http://localhost:8080/health || echo "not ready"');
+  if (check.stdout.includes('ok')) {
+    break;
+  }
+}
+
+await sandbox.exposePort(8080);
+```
+</TypeScriptExample>
+
+## Multiple services
+
+Expose multiple ports for full-stack applications:
+
+<TypeScriptExample>
+```
+// Start backend
+await sandbox.startProcess('node api/server.js', {
+  env: { PORT: '8080' }
+});
+await new Promise(resolve => setTimeout(resolve, 2000));
+
+// Start frontend
+await sandbox.startProcess('npm run dev', {
+  cwd: '/workspace/frontend',
+  env: { PORT: '5173', API_URL: 'http://localhost:8080' }
+});
+await new Promise(resolve => setTimeout(resolve, 3000));
+
+// Expose both
+const api = await sandbox.exposePort(8080, { name: 'api' });
+const frontend = await sandbox.exposePort(5173, { name: 'frontend' });
+
+return Response.json({
+  api: api.exposedAt,
+  frontend: frontend.exposedAt
+});
+```
+</TypeScriptExample>
+
+## Manage exposed ports
+
+### List currently exposed ports
+
+<TypeScriptExample>
+```
+const { ports, count } = await sandbox.getExposedPorts();
+
+console.log(`${count} ports currently exposed:`);
+
+for (const port of ports) {
+  console.log(`  Port ${port.port}: ${port.exposedAt}`);
+  if (port.name) {
+    console.log(`    Name: ${port.name}`);
+  }
+}
+```
+</TypeScriptExample>
+
+### Unexpose ports
+
+<TypeScriptExample>
+```
+// Unexpose a single port
+await sandbox.unexposePort(8000);
+
+// Unexpose multiple ports
+for (const port of [3000, 5173, 8080]) {
+  await sandbox.unexposePort(port);
+}
+```
+</TypeScriptExample>
+
+## Best practices
+
+- **Wait for readiness** - Don't expose ports immediately after starting processes
+- **Use named ports** - Easier to track when exposing multiple ports
+- **Clean up** - Unexpose ports when done to prevent abandoned URLs
+- **Add authentication** - Preview URLs are public; protect sensitive services
+
+## Local development
+
+When developing locally with `wrangler dev`, you must expose ports in your Dockerfile:
+
+```dockerfile title="Dockerfile"
+FROM docker.io/cloudflare/sandbox:0.3.3
+
+# Expose ports you plan to use
+EXPOSE 8000
+EXPOSE 8080
+EXPOSE 5173
+```
+
+Update `wrangler.jsonc` to use your Dockerfile:
+
+```jsonc title="wrangler.jsonc"
+{
+  "containers": [
+    {
+      "class_name": "Sandbox",
+      "image": "./Dockerfile"
+    }
+  ]
+}
+```
+
+In production, all ports are available and controlled programmatically via `exposePort()` / `unexposePort()`.
+
+## Troubleshooting
+
+### Port 3000 is reserved
+
+Port 3000 is used by the internal Bun server and cannot be exposed:
+
+<TypeScriptExample>
+```
+// ❌ This will fail
+await sandbox.exposePort(3000);  // Error: Port 3000 is reserved
+
+// ✅ Use a different port
+await sandbox.startProcess('node server.js', { env: { PORT: '8080' } });
+await sandbox.exposePort(8080);
+```
+</TypeScriptExample>
+
+### Port not ready
+
+Wait for the service to start before exposing:
+
+<TypeScriptExample>
+```
+await sandbox.startProcess('npm run dev');
+await new Promise(resolve => setTimeout(resolve, 3000));
+await sandbox.exposePort(8080);
+```
+</TypeScriptExample>
+
+### Port already exposed
+
+Check before exposing to avoid errors:
+
+<TypeScriptExample>
+```
+const { ports } = await sandbox.getExposedPorts();
+if (!ports.some(p => p.port === 8080)) {
+  await sandbox.exposePort(8080);
+}
+```
+</TypeScriptExample>
+
+## Preview URL format
+
+Preview URLs follow the pattern `https://{sandbox-id}-{port}.sandbox.workers.dev`:
+
+- Port 8080: `https://abc123-8080.sandbox.workers.dev`
+- Port 5173: `https://abc123-5173.sandbox.workers.dev`
+
+**Note**: Port 3000 is reserved for the internal Bun server and cannot be exposed.
+
+## Related resources
+
+- [Ports API reference](/sandbox/api/ports/) - Complete port exposure API
+- [Background processes guide](/sandbox/guides/background-processes/) - Managing services
+- [Execute commands guide](/sandbox/guides/execute-commands/) - Starting services

@@ -437,6 +437,11 @@
 		"parent": ["Manage Account"]
 	},
 	{
+		"name": "Members Settings",
+		"deeplink": "/?to=/:account/members/settings",
+		"parent": ["Manage Account Members Settings"]
+	},
+	{
 		"name": "Account API tokens",
 		"deeplink": "/?to=/:account/api-tokens",
 		"parent": ["Manage Account"]
@@ -664,12 +669,12 @@
 		"deeplink": "/?to=/:account/:zone/speed"
 	},
 	{
-		"name": "Observatory",
+		"name": "Synthetic monitoring",
 		"deeplink": "/?to=/:account/:zone/speed/test",
 		"parent": ["Speed"]
 	},
 	{
-		"name": "Optimization",
+		"name": "Settings",
 		"deeplink": "/?to=/:account/:zone/speed/optimization",
 		"parent": ["Speed"]
 	},

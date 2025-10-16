@@ -27,3 +27,41 @@ You can find the CSR of a rule by going to its corresponding dashboard page:
 For [custom rules](/waf/custom-rules/) or [rate limiting rules](/waf/rate-limiting-rules/), go to your zone > **Security** > **Security rules**.
 
 </TabItem> </Tabs>
+
+---
+
+## Challenge actions in Security Events 
+
+If you find a Challenge Solved action, such as `[js]challengeSolved` or `challengeSolved`, in your Security Events that does not seem to match the underlying rule criteria, it is because this action refers to the successful mitigation of a previous request.
+
+The Challenge lifecycle involves two distinct events, which are crucial for interpreting your logs:
+
+- Challenge trigger: The original request matched a WAF custom rule with a Challenge action. This request contains the suspicious parameters that triggered the rule.
+- Challenge solved: The client's browser sends back a subsequent request containing the validated solution. This action is logged as Challenge Solved.
+
+The parameters of the solved request may no longer match the original rule's expression. For example, if a Challenge was issued due to a low Bot Score, the score for the solved request may have already changed to a non-suspicious value upon successful verification.
+
+The Challenge Solved action is purely an informative signal that a previously issued Challenge was answered, allowing the visitor's traffic to proceed. It does not imply that the subsequent request re-matched the initial trigger rule.
+
+---
+
+## Failed Challenges
+
+You will not find a dedicated metric for failed Challenges in Security Analytics because Cloudflare calculates failure indirectly, based on the difference between Challenges issued and Challenges solved.
+
+The system views any issued Challenge that does not result in a successful clearance cookie as a failure. This is why the number of failed Challenges may appear exceptionally high: the majority of issued Challenges are never completed.
+
+The official calculation for failures is:
+
+```txt
+Failed Challenges = Total Challenges Issued − Total Challenges Solved
+```
+
+The large number of unmatched Challenges is primarily due to automated traffic (bots or scrapers) that abandon the process immediately upon encountering the initial Challenge script.
+
+Key reasons a Challenge may be issued but never solved:
+
+- The visitor gives up on the Challenge or navigates away from the page.
+- The visitor attempts to solve the Challenge but cannot provide a valid answer.
+- The system receives an invalid or malformed answer from the client.
+- The script environment (often a bot's controlled browser) fails to run the necessary client-side checks.

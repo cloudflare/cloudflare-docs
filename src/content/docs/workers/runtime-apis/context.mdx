@@ -117,7 +117,7 @@ export default {
     let greeter = ctx.exports.Greeter({props: {greeting: "Welcome"}})
 
     // Greet the world. Returns "Welcome, World!"
-    let greeting = await ctx.exports.Greeter.greet("World")
+    let greeting = await greeter.greet("World")
 
     return new Response(greeting);
   }
@@ -145,7 +145,7 @@ export default {
     let greeter = ctx.exports.Greeter({props: {greeting: "Welcome"}})
 
     // Greet the world. Returns "Welcome, World!"
-    let greeting = await ctx.exports.Greeter.greet("World")
+    let greeting = await greeter.greet("World")
 
     return new Response(greeting);
   }

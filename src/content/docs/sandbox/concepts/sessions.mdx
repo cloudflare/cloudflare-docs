@@ -1,0 +1,153 @@
+---
+title: Session management
+pcx_content_type: concept
+sidebar:
+  order: 4
+---
+
+Sessions are bash shell execution contexts within a sandbox. Think of them like terminal tabs or panes in the same container.
+
+- **Sandbox** = A computer (container)
+- **Session** = A terminal shell session in that computer
+
+## Default session
+
+Every sandbox has a default session that maintains shell state across commands:
+
+```typescript
+const sandbox = getSandbox(env.Sandbox, 'my-sandbox');
+
+// These commands run in the default session
+await sandbox.exec("cd /app");
+await sandbox.exec("pwd");  // Output: /app
+
+await sandbox.exec("export MY_VAR=hello");
+await sandbox.exec("echo $MY_VAR");  // Output: hello
+```
+
+Shell state persists: working directory, environment variables, exported variables all carry over between commands.
+
+## Creating sessions
+
+Create additional sessions for isolated shell contexts:
+
+```typescript
+const buildSession = await sandbox.createSession({
+  name: "build",
+  env: { NODE_ENV: "production" },
+  cwd: "/build"
+});
+
+const testSession = await sandbox.createSession({
+  name: "test",
+  env: { NODE_ENV: "test" },
+  cwd: "/test"
+});
+
+// Different shell contexts
+await buildSession.exec("npm run build");
+await testSession.exec("npm test");
+```
+
+## What's isolated per session
+
+Each session has its own:
+
+**Shell environment**:
+```typescript
+await session1.exec("export MY_VAR=hello");
+await session2.exec("echo $MY_VAR");  // Empty - different shell
+```
+
+**Working directory**:
+```typescript
+await session1.exec("cd /workspace/project1");
+await session2.exec("pwd");  // Different working directory
+```
+
+**Environment variables** (set via `createSession` options):
+```typescript
+const session1 = await sandbox.createSession({
+  env: { API_KEY: 'key-1' }
+});
+const session2 = await sandbox.createSession({
+  env: { API_KEY: 'key-2' }
+});
+```
+
+## What's shared
+
+All sessions in a sandbox share:
+
+**Filesystem**:
+```typescript
+await session1.writeFile('/workspace/file.txt', 'data');
+await session2.readFile('/workspace/file.txt');  // Can read it
+```
+
+**Processes**:
+```typescript
+await session1.startProcess('node server.js');
+await session2.listProcesses();  // Sees the server
+```
+
+**Ports**:
+```typescript
+await session1.exposePort(3000);
+await session2.getExposedPorts();  // Sees port 3000
+```
+
+## When to use sessions
+
+**Use sessions when**:
+- You need isolated shell state for different tasks
+- Running parallel operations with different environments
+- Keeping AI agent credentials separate from app runtime
+
+**Example - separate dev and runtime environments**:
+```typescript
+// Phase 1: AI agent writes code (with API keys)
+const devSession = await sandbox.createSession({
+  name: "dev",
+  env: { ANTHROPIC_API_KEY: env.ANTHROPIC_API_KEY }
+});
+await devSession.exec('ai-tool "build a web server"');
+
+// Phase 2: Run the code (without API keys)
+const appSession = await sandbox.createSession({
+  name: "app",
+  env: { PORT: "3000" }
+});
+await appSession.exec("node server.js");
+```
+
+**Use separate sandboxes when**:
+- You need complete isolation (untrusted code)
+- Different users require fully separated environments
+- Independent resource allocation is needed
+
+## Best practices
+
+**Clean up temporary sessions**:
+```typescript
+try {
+  const session = await sandbox.createSession({ name: 'temp' });
+  await session.exec('command');
+} finally {
+  await sandbox.deleteSession('temp');
+}
+```
+
+**Sessions share filesystem**:
+```typescript
+// Bad - affects all sessions
+await session.exec('rm -rf /workspace/*');
+
+// Use separate sandboxes for untrusted isolation
+const userSandbox = getSandbox(env.Sandbox, userId);
+```
+
+## Related resources
+
+- [Sandbox lifecycle](/sandbox/concepts/sandboxes/) - Understanding sandbox management
+- [Sessions API](/sandbox/api/sessions/) - Complete session API reference

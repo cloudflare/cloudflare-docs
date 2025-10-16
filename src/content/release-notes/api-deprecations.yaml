@@ -3,6 +3,35 @@ link: "/fundamentals/api/reference/deprecations/"
 productName: API deprecations
 productLink: "/fundamentals/"
 entries:
+  - publish_date: "2025-10-15"
+    title: "Cloudflare Radar: Summary and Timeseries Groups Endpoints"
+    description: |-
+      Deprecation date: October 15, 2025
+
+      End of life date: April 15, 2026
+
+      The Radar API currently has multiple summary and timeseries groups endpoints per dataset (for example, `/radar/http/summary/device_type` and `/radar/http/timeseries_groups/device_type`), which share nearly identical parameters and schema.
+      To simplify the API and improve maintainability, these endpoints will be replaced with parameterized endpoints using a `{dimension}` path parameter.
+
+      Deprecated APIs:
+
+      * `GET /radar/http/summary/device_type`
+      * `GET /radar/http/summary/bot_class`
+      * `GET /radar/http/timeseries_groups/device_type`
+      * `GET /radar/http/timeseries_groups/bot_class`
+      * Other similar summary and timeseries groups endpoints for the following datasets: AI Bots, AI Inference, AS112, DNS, Email Routing, Email Security, HTTP, Layer 3 Attacks, Layer 7 Attacks, Leaked Credential Checks
+
+      Replacements:
+
+      * `GET /radar/http/summary/{dimension}`
+      * `GET /radar/http/timeseries_groups/{dimension}`
+      * ...
+
+      Here, `{dimension}` is a required path parameter listing all available dimensions for the dataset.
+
+      For users calling the API directly (not via the Cloudflare SDK), no action is required.
+      For users using the SDK, we recommend updating to the new operations to ensure compatibility after the operations are removed.
+
   - publish_date: "2025-07-01"
     title: "Cloudflare Radar: Verified Bots APIs"
     description: |-

@@ -22,10 +22,13 @@ You need to generate a signing key which will be used to authenticate your bot's
 {/* prettier-ignore */}
 <Steps>
 1. Generate a unique [Ed25519](https://ed25519.cr.yp.to/) private key to sign your requests. This example uses the [OpenSSL](https://openssl-library.org/) `genpkey` command:
+    :::note 
+    Cloudflare supports Ed25519 key algorithm.
+    :::
 
-   ```sh
-   openssl genpkey -algorithm ed25519 -out private-key.pem
-   ```
+    ```sh
+    openssl genpkey -algorithm ed25519 -out private-key.pem
+    ```
 2. Extract your public key.
 
    ```sh
@@ -158,6 +161,14 @@ Construct a [`Signature-Input` header](https://www.rfc-editor.org/rfc/rfc9421#na
 | `created`                    | This should be equal to a `Unix` timestamp associated with when the message was sent by your application.                                                                                                                                                 |
 | `expires`                    | This should be equal to a `Unix` timestamp associated with when Cloudflare should no longer attempt to verify the message. A short `expires` reduces the likelihood of replay attacks, and Cloudflare recommends choosing suitable short-lived intervals. |
 
+:::tip[`nonce`]
+The `nonce` parameter allows you to supply a `nonce` to prevent attackers from replaying past messages against a server.
+
+While Cloudflare recommends including it, there is currently no `nonce` validation, nor does Cloudflare guard against replay attacks using a database of seen `nonces`.
+
+Instead, Cloudflare recommends short `expires` as a protection against replay attacks. A minute is often sufficient.
+:::
+
 #### `Signature` header
 
 Construct a [`Signature` header](https://www.rfc-editor.org/rfc/rfc9421#name-the-signature-http-field) over your chosen components.
@@ -191,11 +202,48 @@ Signature: sig2=:jdq0SqOwHdyHr9+r5jw3iYZH6aNGKijYp/EstF4RQTQdi5N5YYKrD+mCT1HA1nZ
 You can test how Cloudflare interprets your signed requests against https://crawltest.com/cdn-cgi/web-bot-auth. This endpoint returns an HTTP `401` if your message is formatted correctly but your key is unknown, an HTTP `200` if the key is known and your message is verified, and an HTTP `400` otherwise. You may also see an HTTP `401` if your key is known but the message failed to verify.
 :::
 
+---
+
+## Limitations
+
+Cloudflare's implementation of Web Bot Auth does not support every component and parameter defined in IETF RFC 9421. If you include any of the following in your request's Signature-Input header, verification will fail.
+
+- `@query-params`: Cloudflare recommends signing the whole query using the `@query` component instead of signing an individual parameter.
+- `@status`: This is not possible to include in the request path.
+
+The following component parameters defined in IETF RFC 9421 are not supported, and Cloudflare will fail to verify a message if they are included:
+
+- `sf` (for HTTP header fields)
+- `bs` (for HTTP header fields)
+- `key` (for HTTP header fields)
+- `req` (for HTTP header fields or derived components)
+- `name` (for `@query-param` support - this requires `@query-param` support)
+
+---
+
+## Troubleshooting
+
+### Failed message validation
+
+If your message is failing validation, the cause(s) may include:
+
+- Ensure you have a [`Signature-Agent` header](/bots/reference/bot-verification/web-bot-auth/#signature-agent-header), and that its value is in double-quotes.
+- Ensure you include `signature-agent` in the component list in your [`Signature-Input` header](/bots/reference/bot-verification/web-bot-auth/#signature-agent-header).
+- Ensure your `expires` timestamp is not too short, such that, by the time it arrives at Cloudflare servers, it has already expired. A minute is often sufficient.
+- Ensure you are not signing components containing non-ASCII values, or on the unsupported list.
+
+### Use HTTP message signatures / Web Bot Auth on a zone without Cloudflare's verification
+
+If you wish to use HTTP Message Signatures (Web Bot Auth) for your own origin processing and do not want Cloudflare's verification to intervene or populate the `cf.bot_management.verified_bot` field, you can request that the Cloudflare verification feature be disabled for your zone.
+
+To disable Web Bot Auth verification, contact [Cloudflare Support](/support/contacting-cloudflare-support/).
+
+Disabling this feature means that Cloudflare will not validate incoming signatures. Verified bots will then fall back to other methods (such as reverse DNS validation) to determine if traffic is legitimate.
+
 ## Additional resources
 
 You may wish to refer to the following resources.
 
-- [Bots FAQs](/bots/frequently-asked-questions/).
 - Cloudflare blog: [Message Signatures are now part of our Verified Bots Program](https://blog.cloudflare.com/verified-bots-with-cryptography).
 - Cloudflare blog: [Forget IPs: using cryptography to verify bot and agent traffic](https://blog.cloudflare.com/web-bot-auth/).
 - Cloudflare's [`web-bot-auth` library in Rust](https://crates.io/crates/web-bot-auth).

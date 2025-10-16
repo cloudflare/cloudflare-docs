@@ -11,10 +11,12 @@ description: Learn how to integrate Cloudflare Magic WAN with other Cloudflare
 
 ---
 
-import { DirectoryListing } from "~/components"
+import { Render } from "~/components";
 
-Review the tutorials to learn more about how you can use Magic WAN with the following Cloudflare Zero Trust products.
-
-<DirectoryListing />
-
-If you want a deep dive into key architecture and functionalities aspects of Cloudflare One, and learn more about Magic WAN and its structure, refer to [Evolving to a SASE architecture with Cloudflare](/reference-architecture/architectures/sase/).
+<Render
+	file="magic-wan/zero-trust/overview"
+	product="networking-services"
+	params={{
+		productName: "Magic WAN"
+	}}
+/>

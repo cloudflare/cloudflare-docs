@@ -4,6 +4,8 @@ category: 🔐 Zero Trust
 difficulty: Advanced
 pcx_content_type: tutorial
 title: Zero Trust GitLab SSH & HTTP
+description: >-
+  Learn how to add Zero Trust rules to a self-hosted instance of GitLab. This tutorial walks you through deploying GitLab in DigitalOcean.
 ---
 
 import { DashButton } from "~/components";
@@ -242,7 +244,7 @@ You can now create DNS records for GitLab in the Cloudflare dashboard. Remember,
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and go to the **DNS Records** page for your domain.
 
-	<DashButton url="/?to=/:account/:zone/dns/records" />
+   <DashButton url="/?to=/:account/:zone/dns/records" />
 
 2. Select **Add record**. Choose `CNAME` as the record type.
 3. In the **Name** field, input `gitlab`.

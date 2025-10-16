@@ -5,7 +5,8 @@ params:
   - analyticsAnchorHeading
   - networkAnalyticsURL
   - traceRoutes
-  - graphQl
+  - graphQlTunnelBandwidthURL
+  - graphQlTunnelHealthURL
 ---
 
 import { AnchorHeading, Markdown } from "~/components";
@@ -66,5 +67,5 @@ Refer to [packet captures](/magic-firewall/packet-captures/) to learn more.
 
 GraphQL Analytics provides customers with a GraphQL API that they can query to receive raw JSON data of their Magic WAN traffic analytics. This data can be ingested into a SIEM or other tool and analyzed further.
 
-- <a href={`${props.graphQl}analytics/query-bandwidth/`}>Querying {props.productName} tunnel bandwidth analytics with GraphQL</a>
-- <a href={`${props.graphQl}analytics/query-tunnel-health/`}>Querying {props.productName} tunnel health check results with GraphQL</a>
+- <a href={props.graphQlTunnelBandwidthURL}>Querying {props.productName} tunnel bandwidth analytics with GraphQL</a>
+- <a href={props.graphQlTunnelHealthURL}>Querying {props.productName} tunnel health check results with GraphQL</a>

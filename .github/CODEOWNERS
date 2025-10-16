@@ -4,16 +4,17 @@
 
 # More dev-specific files
 
-/.github/ @kodster28 @pedrosousa @haleycode @kristianfreeman @GregBrimble @KianNH @maxvp @marciocloudflare @WalshyDev
+/.github/ @cloudflare/pcx-content-engineering
 /.github/CODEOWNERS @cloudflare/pcx-technical-writing
-/.github/actions/assign-pr/index.js @cloudflare/pcx-technical-writing
-/src/components/ @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @marciocloudflare @haleycode @maxvp @GregBrimble @KianNH @WalshyDev
-*.js @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode @GregBrimble @KianNH @WalshyDev
-*.ts @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode @GregBrimble @KianNH @WalshyDev
-*.astro @cloudflare/developer-advocacy @kristianfreeman @kodster28 @pedrosousa @haleycode @GregBrimble @KianNH @WalshyDev
-/src/schemas/tags.ts @kodster28 @KianNH @joslyn-cf
-/src/content/workers-ai-models/ @craigsdennis @pedrosousa @cloudflare/pcx-technical-writing
-/public/__redirects @GregBrimble @KianNH @pedrosousa @WalshyDev @cloudflare/pcx-technical-writing
+/.github/actions/assign-pr/index.js @cloudflare/pcx-technical-writing @kodster28
+/src/components/ @cloudflare/pcx-content-engineering @kodster28
+*.js @cloudflare/pcx-content-engineering @kodster28
+*.ts @cloudflare/pcx-content-engineering @kodster28
+*.astro @cloudflare/pcx-content-engineering @kodster28
+/src/schemas/tags.ts @cloudflare/pcx-content-engineering @joslyn-cf @kodster28
+/src/util/api.ts @cloudflare/pcx-content-engineering @pedrosousa @kodster28
+/src/content/workers-ai-models/ @craigsdennis @cloudflare/pcx-content-engineering @cloudflare/pcx-technical-writing @kodster28
+/public/__redirects @cloudflare/pcx-content-engineering @cloudflare/pcx-technical-writing @kodster28
 
 
 # AI
@@ -92,6 +93,7 @@
 # Developer Platform
 
 /src/content/docs/containers/ @mikenomitch @th0m @cloudflare/pcx-technical-writing @cloudflare/cloudchamber
+/src/content/partials/containers/ @mikenomitch @th0m @cloudflare/pcx-technical-writing @cloudflare/cloudchamber
 /src/content/docs/d1/ @elithrar @rozenmd @vy-ton @joshthoward @oxyjun @harshil1712 @cloudflare/pcx-technical-writing
 /src/content/release-notes/d1.yaml @elithrar @rozenmd @vy-ton @joshthoward @oxyjun @cloudflare/pcx-technical-writing
 /src/content/partials/d1/ @elithrar @rozenmd @vy-ton @joshthoward @oxyjun @harshil1712 @cloudflare/pcx-technical-writing
@@ -103,7 +105,7 @@
 /src/content/release-notes/hyperdrive.yaml @elithrar @thomasgauvin @sejoker @oxyjun @cloudflare/pcx-technical-writing
 /src/content/partials/hyperdrive/ @elithrar @thomasgauvin @sejoker @oxyjun @cloudflare/pcx-technical-writing
 /src/content/release-notes/durable-objects.yaml @elithrar @vy-ton @joshthoward @oxyjun @cloudflare/pcx-technical-writing
-/src/content/docs/images/ @ToriLindsay @cloudflare/pcx-technical-writing @renandincer @third774
+/src/content/docs/images/ @ToriLindsay @cloudflare/pcx-technical-writing @renandincer @third774 @deanna-cf
 /src/content/docs/pages/ @cloudflare/workers-docs @GregBrimble @WalshyDev @aninibread @irvinebroque @cloudflare/pcx-technical-writing @kodster28
 /src/assets/images/pages/ @cloudflare/workers-docs @GregBrimble @WalshyDev @aninibread @cloudflare/pcx-technical-writing @kodster28
 /src/content/release-notes/pages.yaml @cloudflare/workers-docs @GregBrimble @WalshyDev @aninibread @cloudflare/pcx-technical-writing
@@ -136,6 +138,7 @@
 /src/content/docs/workers/observability/ @irvinebroque @mikenomitch @rohinlohe @kodster28 @cloudflare/pcx-technical-writing
 /src/content/docs/workers/static-assets @irvinebroque @GregBrimble @WalshyDev @kodster28 @cloudflare/deploy-config @cloudflare/pcx-technical-writing
 /src/content/docs/workflows/ @elithrar @celso @cloudflare/pcx-technical-writing
+/src/content/docs/sandbox/ @whoiskatrin @ghostwriternr @cloudflare/pcx-technical-writing @ai-agents
 
 # DDoS Protection
 

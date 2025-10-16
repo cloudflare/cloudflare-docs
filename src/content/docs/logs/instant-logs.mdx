@@ -5,7 +5,7 @@ sidebar:
   order: 116
 ---
 
-import { FeatureTable, APIRequest } from "~/components";
+import { FeatureTable, APIRequest, DashButton } from "~/components";
 
 Instant Logs allows Cloudflare customers to access a live stream of the traffic for their domain from the Cloudflare dashboard or from a command-line interface (CLI). Seeing data in real time allows you to investigate an attack, troubleshoot, debug or test out changes made to your network. Instant Logs is lightweight, simple to use and does not require any additional setup.
 
@@ -15,13 +15,13 @@ Instant Logs allows Cloudflare customers to access a live stream of the traffic 
 
 ## Instant Logs via Cloudflare Dashboard
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select the [zone](/fundamentals/concepts/accounts-and-zones/#zones) you want to use with Instant Logs.
+1. In the Cloudflare dashboard, go to the **Instant Logs** page.
 
-2. Go to **Analytics & Logs** > **Instant Logs**.
+   <DashButton url="/?to=/:account/:zone/analytics/instant-logs" />
 
-3. Select **Start streaming**.
+2. Select **Start streaming**.
 
-4. (optional) Select **Add filter** to narrow down the events to be shown.
+3. (optional) Select **Add filter** to narrow down the events to be shown.
 
 Fields supported in our [HTTP requests dataset](/logs/logpush/logpush-job/datasets/zone/http_requests/) can be used when you add filters. Some fields with additional subscriptions required are not supported in the dashboard, you will need to use CLI instead.
 

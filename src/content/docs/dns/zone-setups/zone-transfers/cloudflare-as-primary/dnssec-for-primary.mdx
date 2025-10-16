@@ -7,6 +7,8 @@ sidebar:
 head:
   - tag: title
     content: Set up multi-signer DNSSEC with outgoing zone transfers
+description: >-
+  With outgoing zone transfers, you keep Cloudflare as your primary DNS provider and use one or more secondary providers for increased availability and fault tolerance.
 ---
 
 import { Example, APIRequest } from "~/components";
@@ -31,8 +33,8 @@ Note that:
 	path="/zones/{zone_id}/dnssec"
 	method="PATCH"
 	json={{
-  	"status": "active",
-  	"dnssec_multi_signer": true,
+		status: "active",
+		dnssec_multi_signer: true,
 	}}
 />
 

@@ -5,10 +5,9 @@ sidebar:
   order: 5
 ---
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to **Magic WAN** > **Connector on-ramps (beta)**.
-3. Find the on-ramp that you want to edit > select the three dots next to it > **Edit**.
-4. Go to **Network configuration** > **WAN configuration** or **LAN configuration**.
-5. Find the WAN/LAN you want to edit > select the three dots next to it > **Edit**.
-6. Make the necessary changes.
-7. Select **Save**.
+import { Render } from "~/components";
+
+<Render
+	file="mconn/maintenance/edit-network-settings"
+	product="networking-services"
+/>

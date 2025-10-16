@@ -11,24 +11,23 @@ import { Description, Render } from "~/components";
 Refer to [Area 1](/email-security/) if you are looking for the Area 1 documentation.
 :::
 
-<Description>Protect your email inbox with Email Security.</Description>
-
-Email Security protects your email inbox from phishing attacks, malware, [Business Email Compromise](https://www.cloudflare.com/en-gb/learning/email-security/business-email-compromise-bec/) attacks, and vendor email fraud.
-
-Email Security integrates with your existing email provider (such as Microsoft 365 or Gmail), and reduces the amount of spam and phishing emails landing in your inbox. You can configure Email Security via [API deployment](/cloudflare-one/email-security/setup/post-delivery-deployment/api/), [BCC](/cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/bcc-setup/gmail-bcc-setup/gmail-bcc-setup/)/[Journaling](/cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/journaling-setup/m365-journaling/), or [MX/Inline](/cloudflare-one/email-security/setup/pre-delivery-deployment/mx-inline-deployment-setup/). All three deployments aim at protecting your organization for malicious activities.
-
-The Cloudflare dashboard will display the Email Security overview page only after completing the [setup process](/cloudflare-one/email-security/setup/).
-
 :::note
 If you have not yet purchased Email Security, you can try Email Security with Retro Scan. Refer to [Retro Scan](/cloudflare-one/email-security/retro-scan/) to learn more.
 :::
 
-To access the Email Security overview:
+<Description>Protect your email inbox with Email Security.</Description>
 
-1. Log in to [Zero Trust](https://one.dash.cloudflare.com/).
-2. Go to **Email Security** > **Overview**.
+Email Security is the practice of protecting your email inbox from cyber attacks and unwanted communication sent via email.
 
-Email Security overview displays:
+Cloudflare's Email Security uses Artificial Intelligence (AI), threat intelligence, and expert security rules to analyze every incoming email.
+
+Email Security protects your email inbox from phishing attacks, malware, [Business Email Compromise](https://www.cloudflare.com/en-gb/learning/email-security/business-email-compromise-bec/) attacks, and vendor email fraud.
+
+Cloudflare's Email Security integrates with your existing email provider (such as Microsoft 365 or Gmail), and reduces the amount of spam and phishing emails landing in your inbox. You can configure Email Security via [API](/cloudflare-one/email-security/setup/post-delivery-deployment/api/), [BCC](/cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/bcc-setup/gmail-bcc-setup/gmail-bcc-setup/)/[Journaling](/cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/journaling-setup/m365-journaling/), or [MX/Inline](/cloudflare-one/email-security/setup/pre-delivery-deployment/mx-inline-deployment-setup/) deployment. All three deployments aim at protecting your organization from malicious activities.
+
+When you complete the [setup process](/cloudflare-one/email-security/setup/), the Cloudflare dashboard will display the Email Security overview page.
+
+The Email Security overview provides you with:
 
 - **Quick actions**, where you can:
   - View [reclassifications](/cloudflare-one/email-security/email-monitoring/search-email/#reclassify-messages)
@@ -38,3 +37,8 @@ Email Security overview displays:
 - **Email Security metrics**: Activity from the last seven days.
 - **Recently modified policies** A list of modified policies.
 - **Education and resources**: Links to [implementation guides](/cloudflare-one/implementation-guides/), [Email Security changelogs](/cloudflare-one/changelog/email-security/), and [API documentation](https://developers.cloudflare.com/api/resources/email_security/subresources/investigate/methods/get/)
+
+To access the Email Security overview:
+
+1. Log in to [Zero Trust](https://one.dash.cloudflare.com/).
+2. Go to **Email Security** > **Overview**.

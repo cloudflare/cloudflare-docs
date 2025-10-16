@@ -7,6 +7,8 @@ sidebar:
 head:
   - tag: title
     content: DNSSEC migration tutorial
+description: >-
+  Follow this tutorial to migrate an existing DNS zone to Cloudflare without having to disable DNSSEC.
 ---
 
 import { Details, APIRequest } from "~/components";
@@ -40,7 +42,7 @@ The provider you are migrating from must allow you to add DNSKEY records on the 
 	path="/zones/{zone_id}/dnssec"
 	method="PATCH"
 	json={{
-  	"status": "active",
+		status: "active",
 	}}
 />
 
@@ -50,7 +52,7 @@ The provider you are migrating from must allow you to add DNSKEY records on the 
 	path="/zones/{zone_id}/dnssec"
 	method="PATCH"
 	json={{
-  	"dnssec_multi_signer": true,
+		dnssec_multi_signer: true,
 	}}
 />
 
@@ -64,16 +66,16 @@ You can do this [on the dashboard](/dns/manage-dns-records/how-to/create-dns-rec
 	path="/zones/{zone_id}/dns_records"
 	method="POST"
 	json={{
-  "type": "DNSKEY",
-  "name": "<ZONE_NAME>",
-  "data": {
-    "flags": 256,
-    "protocol": 3,
-    "algorithm": 13,
-    "public_key": "<PUBLIC_KEY>"
-  },
-  "ttl": 3600
-}}
+		type: "DNSKEY",
+		name: "<ZONE_NAME>",
+		data: {
+			flags: 256,
+			protocol: 3,
+			algorithm: 13,
+			public_key: "<PUBLIC_KEY>",
+		},
+		ttl: 3600,
+	}}
 />
 
 2. Get Cloudflare's ZSK using either the API or a query from one of the assigned Cloudflare nameservers.
