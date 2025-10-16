@@ -9,7 +9,7 @@ sidebar:
 
 import { DashButton, Render, Tabs, TabItem, APIRequest, GlossaryTooltip } from "~/components"
 
-You can use Private Network Load Balancing to distribute WARP client traffic to private IP addresses connected via [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/).
+You can use Private Network Load Balancing to distribute WARP client traffic to private hostnames and IPs connected via [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/).
 
 For example, assume you have an internal application running in two data centers, and you want WARP users to access the application from the data center closest to their geographic location. A typical load balancing configuration is shown in the following diagram:
 
@@ -21,8 +21,8 @@ graph LR
 		subgraph D2[Data center 2]
 			cf2@{ shape: processes, label: "cloudflared" }
 			subgraph F[Pool 2]
-					S3["Endpoint <br> 10.0.0.1 (VNET-2)"]
-					S4["Endpoint <br> 10.0.0.2 (VNET-2)"]
+					S3["Endpoint <br> server3.internal.local <br> 10.0.0.1 (VNET-2)"]
+					S4["Endpoint <br> server4.internal.local <br> 10.0.0.2 (VNET-2)"]
 			end
 			cf2-->S3
 			cf2-->S4
@@ -30,8 +30,8 @@ graph LR
 		subgraph D1[Data center 1]
 			cf1@{ shape: processes, label: "cloudflared" }
 			subgraph E[Pool 1]
-					S1["Endpoint <br> 10.0.0.1 (VNET-1)"]
-					S2["Endpoint <br> 10.0.0.2 (VNET-1)"]
+					S1["Endpoint <br> server1.internal.local <br> 10.0.0.1 (VNET-1)"]
+					S2["Endpoint <br> server2.internal.local <br> 10.0.0.2 (VNET-1)"]
 			end
 			cf1-->S1
 			cf1-->S2
@@ -43,30 +43,15 @@ graph LR
 
 The components in the diagram include:
 - **cloudflared**: Each data center is connected to Cloudflare with its own Cloudflare Tunnel. `cloudflared` installs on one or [more](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-availability/#cloudflared-replicas) host machines in the network.
-- **Virtual network (VNET)**: If the networks behind each tunnel have the same internal IP range, you can assign a distinct [virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/) per tunnel so that Load Balancer can deterministically route requests to the correct endpoint.
 - **Private load balancer IP**: End users connect to the application using the load balancer's IP address. This can either be a Cloudflare-assigned CGNAT IP (`100.64.0.0/10`) or a custom [RFC 1918](https://datatracker.ietf.org/doc/html/rfc1918) IP.
 - **Load balancer pool**: The load balancer is configured with one [pool](/load-balancing/understand-basics/load-balancing-components/#pools) per tunnel.
-- **Load balancer endpoint**: A pool contains one or more endpoints, where each endpoint is a server behind `cloudflared` that is running the application. The load balancing endpoint is defined by the server's private IP address and virtual network (for example, `10.0.0.1 (VNET-1)`).
+- **Load balancer endpoint**: A pool contains one or more endpoints, where each endpoint is a server behind `cloudflared` that is running the application. We recommend defining endpoints using the server's private hostname (`server1.internal.local`) to avoid issues with overlapping IP ranges. If you prefer to manage endpoints using their IP, you can assign a distinct [virtual network (VNET)](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/) per tunnel so that Load Balancer can deterministically route requests to the correct endpoint.
 
-## 1. Create a Cloudflare Tunnel
+## Prerequisites
 
-Skip to [step 2](#2-create-load-balancer-pools) if you have already connected your private networks with Cloudflare Tunnel.
+- Your private hostname or IP routes through Cloudflare Tunnel. To learn how to connect your private network, refer to [Connect a private hostname](/cloudflare-one/connections/connect-networks/private-net/cloudflared/connect-private-hostname/) or [Connect an IP/CIDR](/cloudflare-one/connections/connect-networks/private-net/cloudflared/connect-cidr/).
 
-To create a new tunnel:
-
-<Render file="tunnel/create-tunnel" product="cloudflare-one" />
-9. Go to the **CIDR** tab.
-10. In **CIDR**, enter the private IP address or CIDR range of your service (for example, `10.0.0.1` or `10.0.0.0/8`).
-10. (Optional) Under **Additional settings**, select a virtual network. If you do not select a virtual network, the IP route will be assigned to the `default` network.
-
-	:::note
-	If you need to create a new virtual network, select **Manage virtual networks**. For more information, refer to the [virtual networks](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/) documentation.
-	:::
-11. Select **Complete seup**.
-
-You can go to **Networks** > **Routes** to view all of your IP routes and their associated virtual networks.
-
-## 2. Create load balancer pools
+## 1. Create load balancer pools
 
 Load balancer pools are logical groupings of endpoints, typically organized by physical datacenter or geographic region. The endpoints in the pool are the destinations where traffic is ultimately routed.
 
@@ -122,7 +107,7 @@ All endpoints with private IPs must have `virtual_network_id` specified.
 </Tabs>
 
 
-## 3. Create a private load balancer
+## 2. Create a private load balancer
 
 1. In the Cloudflare dashboard, go to the **Load Balancing** page.
 
@@ -138,7 +123,7 @@ All endpoints with private IPs must have `virtual_network_id` specified.
 
 After completing the setup, you will be redirected to the Load Balancing dashboard. You can locate your load balancer using the search bar or by filtering for **Private** load balancers. Be sure to note the load balancer IP as it will be required in the following steps.
 
-## 4. Route the load balancer IP through WARP
+## 3. Route the load balancer IP through WARP
 
 In order for WARP clients to connect to your load balancer, the load balancer's IP address must route through the WARP tunnel in your [Split Tunnel settings](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/).
 
@@ -154,7 +139,7 @@ In order for WARP clients to connect to your load balancer, the load balancer's 
 
 WARP traffic can now reach your private load balancer. For example, if your load balancer points to a web application, you can test by running `curl <load-balancer-IP>` from the WARP device. This traffic will be distributed over Cloudflare Tunnel to your private endpoints according to your configured steering method.
 
-## 5. (Optional) Assign a hostname to the load balancer
+## 4. (Optional) Assign a hostname to the load balancer
 
 If you want your load balancer and its endpoints to be transparently accessible to users via a hostname, you can create a Gateway DNS [Override policy](/cloudflare-one/policies/gateway/dns-policies/#override) that maps the hostname to the load balancer's IP address. This ensures that traffic destined for the hostname resolves to the correct IP.
 
