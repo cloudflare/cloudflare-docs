@@ -1,6 +1,8 @@
 ---
 params:
   - productName
+  - autoAdvertisementURL
+  - ruleIpPrefixesURL
 ---
 
 A dynamic threshold rule (beta) will analyze a network's traffic patterns over time and automatically adjust the rule's DDoS threshold, in terms of bits or packets, based on traffic history. The total traffic across all IP prefixes and IP addresses in the rule is compared to the current value of the dynamic threshold. If the total traffic exceeds the dynamic threshold, then an alert is sent.
@@ -19,8 +21,8 @@ A dynamic threshold rule can only be configured via [Cloudflare's {props.product
 | **Rule type** | zscore |
 | **Target** | Can be defined in either bits per second or packets per second. |
 | **Sensitivity** | Z-Score sensitivity has three values: low, medium, and high. |
-| **Auto-advertisement** | If you are a [Magic Transit On Demand](/magic-transit/on-demand) customer, you can enable this feature to automatically enable Magic Transit if the rule's dynamic threshold is triggered. {props.productName} supports Magic Transit's supernet capability. To learn more refer to [Auto-Advertisement section](/magic-network-monitoring/rules/#rule-auto-advertisement). |
-| **Rule IP prefix** | The IP prefix associated with the rule for monitoring traffic volume. Must be a CIDR range such as `160.168.0.1/24`. The maximum is 5,000 unique CIDR entries. To learn more and review an example, refer to the [Rule IP prefixes](/magic-network-monitoring/rules/#rule-ip-prefixes). |
+| **Auto-advertisement** | If you are a [Magic Transit On Demand](/magic-transit/on-demand) customer, you can enable this feature to automatically enable Magic Transit if the rule's dynamic threshold is triggered. {props.productName} supports Magic Transit's supernet capability. To learn more refer to <a href={props.autoAdvertisementURL}>Auto-Advertisement section</a>. |
+| **Rule IP prefix** | The IP prefix associated with the rule for monitoring traffic volume. Must be a CIDR range such as `160.168.0.1/24`. The maximum is 5,000 unique CIDR entries. To learn more and review an example, refer to the <a href={props.ruleIpPrefixesURL}>Rule IP prefixes</a> section. |
 
 ## API documentation
 
