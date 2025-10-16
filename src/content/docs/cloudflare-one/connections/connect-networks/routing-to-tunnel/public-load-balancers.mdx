@@ -63,7 +63,7 @@ The application will default to the Cloudflare settings for the load balancer ho
 
 Review common load balancing configurations for published applications behind Cloudflare Tunnel.
 
-### One tunnel per region
+### One app per load balancer
 
 For this example, assume we have a web application that runs on servers in two different data centers. We want to connect the application to Cloudflare so that users can access the application from anywhere in the world. Additionally, we want Cloudflare to load balance between the servers such that if the primary server fails, the secondary server receives all traffic.
 
@@ -106,9 +106,9 @@ As shown in the diagram, a typical setup includes:
 
 Users can now connect to the application using the load balancer hostname (`app.example.com`). Note that this configuration is only valid for [Active-Passive failover](/load-balancing/load-balancers/common-configurations/#active---passive-failover), since each pool only supports one endpoint per tunnel.
 
-### Multiple apps per tunnel
+### Multiple apps per load balancer
 
-The following diagram illustrates how to load balance traffic to two different applications on a private network.
+The following diagram illustrates how to steer traffic to two different applications on a private network using a single load balancer.
 
 ```mermaid
 graph LR
