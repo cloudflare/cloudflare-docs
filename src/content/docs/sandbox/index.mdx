@@ -7,8 +7,6 @@ sidebar:
   order: 1
   badge:
     text: Beta
-  group:
-    label: sandbox
 head:
   - tag: title
     content: Overview
@@ -45,74 +43,76 @@ With Sandbox, you can execute Python scripts, run Node.js applications, analyze 
 		```typescript
 		import { getSandbox } from '@cloudflare/sandbox';
 
-		export default {
-			async fetch(request: Request, env: Env): Promise<Response> {
-				const sandbox = getSandbox(env.Sandbox, 'user-123');
+    	export default {
+    		async fetch(request: Request, env: Env): Promise<Response> {
+    			const sandbox = getSandbox(env.Sandbox, 'user-123');
 
-				// Execute a command and get the result
-				const result = await sandbox.exec('python --version');
+    			// Execute a command and get the result
+    			const result = await sandbox.exec('python --version');
 
-				return Response.json({
-					output: result.stdout,
-					exitCode: result.exitCode,
-					success: result.success
-				});
-			}
-		};
-		```
-	</TabItem>
-	<TabItem label="Code Interpreter">
-		```typescript
-		import { getSandbox } from '@cloudflare/sandbox';
+    			return Response.json({
+    				output: result.stdout,
+    				exitCode: result.exitCode,
+    				success: result.success
+    			});
+    		}
+    	};
+    	```
+    </TabItem>
+    <TabItem label="Code Interpreter">
+    	```typescript
+    	import { getSandbox } from '@cloudflare/sandbox';
 
-		export default {
-			async fetch(request: Request, env: Env): Promise<Response> {
-				const sandbox = getSandbox(env.Sandbox, 'user-123');
+    	export default {
+    		async fetch(request: Request, env: Env): Promise<Response> {
+    			const sandbox = getSandbox(env.Sandbox, 'user-123');
 
-				// Create a Python execution context
-				const ctx = await sandbox.createCodeContext({ language: 'python' });
+    			// Create a Python execution context
+    			const ctx = await sandbox.createCodeContext({ language: 'python' });
 
-				// Execute Python code with automatic result capture
-				const result = await sandbox.runCode(`
+    			// Execute Python code with automatic result capture
+    			const result = await sandbox.runCode(`
+
 import pandas as pd
 data = {'product': ['A', 'B', 'C'], 'sales': [100, 200, 150]}
 df = pd.DataFrame(data)
 df['sales'].sum()  # Last expression is automatically returned
 				`, { context: ctx });
 
-				return Response.json({
-					result: result.results?.[0]?.text,
-					logs: result.logs
-				});
-			}
-		};
-		```
-	</TabItem>
-	<TabItem label="File Operations">
-		```typescript
-		import { getSandbox } from '@cloudflare/sandbox';
+    			return Response.json({
+    				result: result.results?.[0]?.text,
+    				logs: result.logs
+    			});
+    		}
+    	};
+    	```
+    </TabItem>
+    <TabItem label="File Operations">
+    	```typescript
+    	import { getSandbox } from '@cloudflare/sandbox';
 
-		export default {
-			async fetch(request: Request, env: Env): Promise<Response> {
-				const sandbox = getSandbox(env.Sandbox, 'user-123');
+    	export default {
+    		async fetch(request: Request, env: Env): Promise<Response> {
+    			const sandbox = getSandbox(env.Sandbox, 'user-123');
 
-				// Create a project structure
-				await sandbox.mkdir('/workspace/project/src', { recursive: true });
+    			// Create a project structure
+    			await sandbox.mkdir('/workspace/project/src', { recursive: true });
 
-				// Write files
-				await sandbox.writeFile(
-					'/workspace/project/package.json',
-					JSON.stringify({ name: 'my-app', version: '1.0.0' })
-				);
+    			// Write files
+    			await sandbox.writeFile(
+    				'/workspace/project/package.json',
+    				JSON.stringify({ name: 'my-app', version: '1.0.0' })
+    			);
 
-				// Read a file back
-				const content = await sandbox.readFile('/workspace/project/package.json');
+    			// Read a file back
+    			const content = await sandbox.readFile('/workspace/project/package.json');
 
-				return Response.json({ content });
-			}
-		};
-		```
-	</TabItem>
+    			return Response.json({ content });
+    		}
+    	};
+    	```
+    </TabItem>
+
 </Tabs>
 
 <LinkButton variant="primary" href="/sandbox/get-started/">
@@ -194,7 +194,7 @@ Stateful coordination layer that enables Sandbox to maintain persistent environm
 
 <CardGrid>
 
-<LinkTitleCard title="Examples" href="/sandbox/examples/" icon="pen">
+<LinkTitleCard title="Tutorials" href="/sandbox/tutorials/" icon="pen">
 	Explore complete examples including AI code execution, data analysis, and
 	interactive environments.
 </LinkTitleCard>
@@ -207,7 +207,11 @@ Stateful coordination layer that enables Sandbox to maintain persistent environm
 	Learn about the Sandbox Beta, current status, and upcoming features.
 </LinkTitleCard>
 
-<LinkTitleCard title="Pricing" href="/sandbox/platform/pricing/" icon="document">
+<LinkTitleCard
+	title="Pricing"
+	href="/sandbox/platform/pricing/"
+	icon="document"
+>
 	Understand Sandbox pricing based on the underlying Containers platform.
 </LinkTitleCard>
 
@@ -216,13 +220,9 @@ Stateful coordination layer that enables Sandbox to maintain persistent environm
 	them.
 </LinkTitleCard>
 
-<LinkTitleCard
-	title="Best Practices"
-	href="/sandbox/best-practices/"
-	icon="seti:lock"
->
-	Learn security best practices, performance optimization, and production
-	deployment patterns.
+<LinkTitleCard title="How-to Guides" href="/sandbox/guides/" icon="seti:lock">
+	Learn how to solve specific problems and implement features with the Sandbox
+	SDK.
 </LinkTitleCard>
 
 <LinkTitleCard

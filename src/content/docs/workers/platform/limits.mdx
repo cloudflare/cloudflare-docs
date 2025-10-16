@@ -35,7 +35,7 @@ import { Render, WranglerConfig, DashButton } from "~/components";
 
 URLs have a limit of 16 KB.
 
-Request headers observe a total limit of 32 KB, but each header is limited to 16 KB.
+Request headers observe a total limit of 128 KB.
 
 Cloudflare has network-wide limits on the request body size. This limit is tied to your Cloudflare account's plan, which is separate from your Workers plan. When the request body size of your `POST`/`PUT`/`PATCH` requests exceed your plan's limit, the request is rejected with a `(413) Request entity too large` error.
 
@@ -52,7 +52,7 @@ Cloudflare Enterprise customers may contact their account team or [Cloudflare Su
 
 ## Response limits
 
-Response headers observe a total limit of 32 KB, but each header is limited to 16 KB.
+Response headers observe a total limit of 128 KB.
 
 Cloudflare does not enforce response limits on response body sizes, but cache limits for [our CDN are observed](/cache/concepts/default-cache-behavior/). Maximum file size is 512 MB for Free, Pro, and Business customers and 5 GB for Enterprise customers.
 
