@@ -4,6 +4,7 @@ params:
   - supportedRoutersURL
   - sflowConfigURL
   - autoAdvertiseURL
+  - ruleIpPrefixesURL
 ---
 
 {props.productName} customers that send sFlow data to Cloudflare can receive alerts when a specific type of distributed denial-of-service (DDoS) attack is detected within their network traffic. {props.productName} uses the same DDoS attack detection rules that protect Cloudflare's global network to generate these alerts for customers.
@@ -24,7 +25,7 @@ Customers can export sFlow data of their network traffic to Cloudflare via {prop
 | **Rule type** | advanced_ddos |
 | **Prefix Match** | The field `prefix_match` determines how IP matches are handled. <ul><li>**Recommended**</li><ul><li>**Subnet**: Automatically advertise if the attacked IPs are within a subnet of a public IP prefix that can be advertised by Magic Transit.</li></ul><li>**Other prefix match options**</li><ul><li>**Exact**: Automatically advertise if the attacked IPs are an exact match with a public IP prefix that can be advertised by Magic Transit.</li><li>**Supernet**: Automatically advertise if the attacked IPs are a supernet of a public IP prefix that can be advertised by Magic Transit.</li></ul></ul> |
 | **Auto-advertisement** | If you are a [Magic Transit On Demand](/magic-transit/on-demand) customer, you can enable this feature to automatically enable Magic Transit if the rule's dynamic threshold is triggered. To learn more refer to <a href={props.autoAdvertiseURL}>Auto-Advertisement section</a>. |
-| **Rule IP prefix** | The IP prefix associated with the rule for monitoring traffic volume. Must be a CIDR range such as `160.168.0.1/24`. The maximum is 5,000 unique CIDR entries. To learn more and see an example, view the [Rule IP prefixes](/magic-network-monitoring/rules/#rule-ip-prefixes). |
+| **Rule IP prefix** | The IP prefix associated with the rule for monitoring traffic volume. Must be a CIDR range such as `160.168.0.1/24`. The maximum is 5,000 unique CIDR entries. To learn more and see an example, view the <a href={props.ruleIpPrefixesURL}>Rule IP prefixes</a>] section. |
 
 ## API documentation
 
