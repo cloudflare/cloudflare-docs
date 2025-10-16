@@ -5,7 +5,15 @@ sidebar:
   order: 2
 ---
 
-import { Stream, Details, GlossaryTooltip, Tabs, TabItem, Steps } from "~/components";
+import {
+	Stream,
+	Details,
+	GlossaryTooltip,
+	Tabs,
+	TabItem,
+	Steps,
+	DashButton,
+} from "~/components";
 
 The Cloudflare Web Application Firewall (Cloudflare WAF) checks incoming web and API requests and filters undesired traffic based on sets of rules called rulesets.
 
@@ -18,9 +26,9 @@ This guide focuses on configuring WAF for individual domains, known as <Glossary
 :::
 
 <Stream
-  id="1a426a3ae597ae3935eb97b5f97f106f"
-  title="Application Security: Get started guide"
-  thumbnail="https://pub-d9bf66e086fb4b639107aa52105b49dd.r2.dev/appsec-get-started-guide.png"
+	id="1a426a3ae597ae3935eb97b5f97f106f"
+	title="Application Security: Get started guide"
+	thumbnail="https://pub-d9bf66e086fb4b639107aa52105b49dd.r2.dev/appsec-get-started-guide.png"
 />
 
 ## Before you begin
@@ -47,8 +55,11 @@ The [Cloudflare Managed Ruleset](/waf/managed-rules/reference/cloudflare-managed
 
 <Steps>
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
-2. Go to **Security** > **Settings** and filter by **Web application exploits**.
+1. In the Cloudflare dashboard, go to the Security **Settings** page.
+
+   <DashButton url="/?to=/:account/:zone/security/settings" />
+
+2. (Optional) Filter by **Web application exploits**.
 3. Turn on **Cloudflare managed ruleset**.
 
 </Steps>
@@ -144,8 +155,13 @@ The Cloudflare OWASP Core Ruleset is prone to false positives and offers only ma
 
 <Steps>
 
-1. Go to your domain > **Security** > **Settings** and filter by **Web application exploits**.
-2. Turn on **OWASP Core**.<br/>
+1. In the Cloudflare dashboard, go to the Security **Settings** page.
+
+   <DashButton url="/?to=/:account/:zone/security/settings" />
+
+2. (Optional) Filter by **Web application exploits**.
+
+3. Turn on **OWASP Core**.<br/>
    This will deploy the Cloudflare OWASP Core Ruleset with the default configuration: paranoia level = _PL1_ and score threshold = _Medium - 40 and higher_.
 
 </Steps>
