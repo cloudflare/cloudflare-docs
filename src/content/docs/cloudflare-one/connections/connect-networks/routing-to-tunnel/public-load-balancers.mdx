@@ -26,7 +26,7 @@ To create a load balancer for Cloudflare Tunnel published applications:
 	 <DashButton url="/?to=/:account/load-balancing" />
 2. Select **Create load balancer**.
 3. Select **Public load balancer**.
-4. Choose the website to which you want to add this load balancer. To simplify DNS record management, we recommend using the same domain as your published application route.
+4. Under **Select website**, select the domain of your published application route.
 5. On the **Hostname** page, enter a hostname for the load balancer (for example, `lb.example.com`).
 6. On the **Pools** page, select **Create a pool**.
 7. Enter a descriptive name for the pool. For example, if you are configuring one pool per tunnel, the pool name can match your tunnel name.
@@ -70,11 +70,11 @@ For this example, assume we have a web application that runs on servers in two d
 ```mermaid
 graph LR
 		subgraph LB["Public load balancer <br> app.example.com "]
-			subgraph P1[Pool 1]
-				E1(["**Endpoint:** &lt;UUID_1&gt;.cfargotunnel.com<br> **Host header**: server1.example.com"])
+			subgraph P1[Pool 2]
+				E1(["**Endpoint:** &lt;UUID_1&gt;.cfargotunnel.com<br> **Host header**: server2.example.com"])
 			end
-			subgraph P2[Pool 2]
-				E2(["**Endpoint:** &lt;UUID_2&gt;.cfargotunnel.com<br> **Host header**: server2.example.com"])
+			subgraph P2[Pool 1]
+				E2(["**Endpoint:** &lt;UUID_2&gt;.cfargotunnel.com<br> **Host header**: server1.example.com"])
 			end
 		end
 		R@{ shape: text, label: "app.example.com" }
@@ -83,13 +83,13 @@ graph LR
     P2 -- Tunnel 2 --> cf2
 		subgraph D2[Private network]
 			subgraph r1[Region eu-west-1]
-			cf1@{ shape: processes, label: "cloudflared <br> **Route:** server1.example.com" }
-			S1(["Server 1<br> 10.0.0.1:80"])
+			cf1@{ shape: processes, label: "cloudflared <br> **Route:** server2.example.com" }
+			S1(["Server 2<br> 10.0.0.1:80"])
 			cf1-->S1
 			end
 			subgraph r2[Region us-east-1]
-			cf2@{ shape: processes, label: "cloudflared <br> **Route:** server2.example.com" }
-			S3(["Server 2 <br> 10.0.0.2:80"])
+			cf2@{ shape: processes, label: "cloudflared <br> **Route:** server1.example.com" }
+			S3(["Server 1 <br> 10.0.0.2:80"])
 			cf2-->S3
 			end
 		end
@@ -100,8 +100,8 @@ graph LR
 
 As shown in the diagram, a typical setup includes:
 - A dedicated Cloudflare Tunnel per data center.
-- One load balancer pool per tunnel.
-- One load balancer endpoint per pool, where the host header is set to the `cloudflared` published application hostname.
+- One load balancer pool per tunnel. The load balancer hostname is set to the user-facing application hostname (`app.example.com`).
+- One load balancer endpoint per pool. The endpoint host header is set to the `cloudflared` published application hostname (`server1.example.com`)
 - At least two `cloudflared` [replicas](#session-affinity-and-replicas) per tunnel in their respective data centers, in case a `cloudflared` host machine goes down.
 
 Users can now connect to the application using the load balancer hostname (`app.example.com`). Note that this configuration is only valid for [Active-Passive failover](/load-balancing/load-balancers/common-configurations/#active---passive-failover), since each pool only supports one endpoint per tunnel.
