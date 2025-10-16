@@ -41,7 +41,7 @@ Before you set up Secondary DNS override, make sure that you have:
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
 2. Go to **DNS** > **Settings**.
 3. Enable **Secondary DNS override**.
-4. On **DNS** > **Records**, for specific A, AAAA, or CNAME records, [change](/dns/manage-dns-records/how-to/create-dns-records/#edit-dns-records) their **Proxy status** to **Proxied**.
+4. On **DNS** > **Records**, for specific A, AAAA, or CNAME records, something else.
 
 </TabItem> <TabItem label="API">
 
@@ -51,7 +51,7 @@ Before you set up Secondary DNS override, make sure that you have:
 	path="/zones/{zone_id}/dns_settings"
 	method="PATCH"
 	json={{
-		"secondary_overrides": true,
+		secondary_overrides: true,
 	}}
 />
 
