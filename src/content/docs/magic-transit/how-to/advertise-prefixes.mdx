@@ -182,8 +182,8 @@ When you withdraw a prefix using BGP, you must ensure you withdraw all matching 
 As an alternative to setting [AS prepends on any anycast prefix with the API](#use-the-api-to-set-as-prepends-on-a-bgp-prefix) you can instead use BGP Communities to control the number of AS prepends that Cloudflare announces from its edge for your prefix. The community values are:
 
 - `13335:50101`: Prepends one time with the 13335 ASN
-- `13335:50102`: Prepend two times with the 13335 ASN
-- `13335:50103`: Prepend three times with the 13335 ASN
+- `13335:50102`: Prepends two times with the 13335 ASN
+- `13335:50103`: Prepends three times with the 13335 ASN
 
 If you need to switch to your alternate service provider, you can prepend Cloudflare's ASN multiple times. The intent is typically to make the route less preferred and allow for a graceful transition to the new provider. The higher the prepend count, the less preferred Cloudflare's connection will be if there are no other prioritization rules in place.
 
