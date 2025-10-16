@@ -5,3 +5,15 @@ structured_data: true
 sidebar:
   order: 11
 ---
+
+import { Render } from "~/components"
+
+<Render
+	file="mnm/faqs"
+	product="networking-services"
+	params={{
+		productName: "Magic Network Monitoring",
+		netFlowURL: "/magic-network-monitoring/routers/netflow-ipfix-config/",
+		sFlowURL: "/magic-network-monitoring/routers/sflow-config/"
+	}}
+/>
