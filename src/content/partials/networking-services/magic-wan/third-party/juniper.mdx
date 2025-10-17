@@ -1,8 +1,16 @@
 ---
-{}
+params:
+  - productName
+  - creatingTheIpsecTunnelsUrl
+  - magicStaticRoutesUrl
+  - equalcostMultipathUrl
+  - phase1ConfigurationParametersUrl
+  - phase2ConfigurationParametersUrl
+  - antireplayUrl
+---
 ---
 
-This tutorial provides information and examples of how to configure Juniper Networks SRX Series Firewalls with Magic WAN.
+This tutorial provides information and examples of how to configure Juniper Networks SRX Series Firewalls with {props.productName}.
 
 The configuration settings in this document are based on JUNOS 23.4R2.13.
 
@@ -18,16 +26,16 @@ Cloudflare supports route-based site-to-site IPsec tunnels, which require the cr
 
 Using a `/31` netmask is a more efficient use of IP addresses as it doubles the number of available subnets compared to a `/30`netmask. This is possible because with a `/31`netmask there is no need to reserve IP addresses for the subnet and broadcast addresses, as there would be if you opt to use a `/30` netmask. Additional details can be found in [RFC 3021 - Using 31-Bit Prefixes on IPv4 Point-to-Point Links](https://datatracker.ietf.org/doc/html/rfc3021).
 
-## Cloudflare Magic WAN configuration
+## Cloudflare {props.productName} configuration
 
 This section of the document will cover the configuration of:
 
 - Magic IPsec tunnels
 - Magic static routes
 
-### Magic WAN topology
+### {props.productName} topology
 
-This documentation assumes there are two locations connected via Magic WAN:
+This documentation assumes there are two locations connected via {props.productName}:
 
 | Site | Local/Remote | Security Zone | Subnet        |
 | ---- | ------------ | ------------- | ------------- |
@@ -36,7 +44,7 @@ This documentation assumes there are two locations connected via Magic WAN:
 
 ### Magic IPsec tunnels
 
-1. Start by [creating the IPsec tunnels](/magic-wan/configuration/manually/how-to/configure-tunnel-endpoints/#add-tunnels) in the Cloudflare dashboard with the following values:
+1. Start by [creating the IPsec tunnels]({props.creatingTheIpsecTunnelsUrl}) in the Cloudflare dashboard with the following values:
 	- **Tunnel name**: Up to 15 characters (no spaces).
 	- **Description** (Optional).
 	- **Interface address**: This is the Virtual Tunnel Interface (VTI = `st0.x`) RFC 1918 address — the IP address specified in this dialog box is the address on the Cloudflare side of the tunnel.
@@ -63,13 +71,13 @@ This documentation assumes there are two locations connected via Magic WAN:
 
 ### Magic static routes
 
-Refer to the Magic WAN Topology section above for more details on the IP subnet scheme.
+Refer to the {props.productName} Topology section above for more details on the IP subnet scheme.
 
-[Magic static routes](/magic-wan/configuration/manually/how-to/configure-routes/#create-a-static-route) effectively tell Magic WAN which tunnels to route traffic destined for a given Magic WAN site.
+[Magic static routes]({props.magicStaticRoutesUrl}) effectively tell {props.productName} which tunnels to route traffic destined for a given {props.productName} site.
 
 Since two tunnels are configured to each endpoint, it is necessary to configure two static routes.
 
-Cloudflare leverages [equal-cost multi-path](/magic-wan/reference/traffic-steering/) routing to control traffic steering across the tunnels. The default priority for each route is 100 — traffic will be load-balanced across the two tunnels equally via ECMP. You can modify the priorities as needed, however best practices dictate leaving the default values in place.
+Cloudflare leverages [equal-cost multi-path]({props.equalcostMultipathUrl}) routing to control traffic steering across the tunnels. The default priority for each route is 100 — traffic will be load-balanced across the two tunnels equally via ECMP. You can modify the priorities as needed, however best practices dictate leaving the default values in place.
 
 1. Create a static route with the following values. Make sure you select the first tunnel in **Tunnel/Next hop**:
 	- **Description:** The description for the static route assigned to your first tunnel.
@@ -79,7 +87,7 @@ Cloudflare leverages [equal-cost multi-path](/magic-wan/reference/traffic-steeri
 	- **Region code**: Leave set to **All Regions** unless otherwise specified.
 2. Select **Add Static Route** to add a second route for the same subnet. Make sure the second tunnel is selected in **Tunnel/Next hop**.
 3. Select **Test Routes** to ensure the settings are accepted, then select **Add Routes**.
-4. Confirm the routes were added correctly in **Magic WAN** > **Configuration** > **Static Routes**.
+4. Confirm the routes were added correctly in **{props.productName}** > **Configuration** > **Static Routes**.
 
 ## Juniper SRX configuration
 
@@ -192,7 +200,7 @@ interfaces {
 
 #### IKE proposal
 
-Add an IKE proposal that specifies the [Phase 1 Configuration Parameters](/magic-wan/reference/gre-ipsec-tunnels/#supported-configuration-parameters):
+Add an IKE proposal that specifies the [Phase 1 Configuration Parameters]({props.phase1ConfigurationParametersUrl}):
 
 ```txt
 set security ike proposal cf_magic_wan_ike_prop authentication-method pre-shared-keys
@@ -301,9 +309,9 @@ version v2-only;
 
 #### IPsec proposal
 
-Add an IPsec proposal that specifies the [Phase 2 Configuration Parameters](/magic-wan/reference/gre-ipsec-tunnels/#supported-configuration-parameters):
+Add an IPsec proposal that specifies the [Phase 2 Configuration Parameters]({props.phase2ConfigurationParametersUrl}):
 
-Add an IPsec proposal that specifies the [Phase 2 Configuration Parameters](/magic-wan/reference/gre-ipsec-tunnels/#supported-configuration-parameters):
+Add an IPsec proposal that specifies the [Phase 2 Configuration Parameters]({props.phase2ConfigurationParametersUrl}):
 
 ```txt
 set security ipsec proposal cf_magic_wan_ipsec_prop protocol esp
@@ -341,7 +349,7 @@ proposals cf_magic_wan_ipsec_prop;
 
 Define two IPsec policies - one for each of the two Magic IPsec tunnels. It is crucial to ensure that:
 
-- [Anti-replay](/magic-wan/reference/anti-replay-protection/) protection is disabled.
+- [Anti-replay]({props.antireplayUrl}) protection is disabled.
   - Use the [`no-anti-replay`](https://www.juniper.net/documentation/us/en/software/junos/interfaces-adaptive-services/topics/ref/statement/no-anti-replay-edit-services.html) option.
 - The SRX is the tunnel initiator:
   - Cloudflare will not instantiate the tunnel
@@ -407,11 +415,11 @@ Filter-based forwarding is implemented by configuring the following:
 :::note
 Firewall filters must incorporate at least two terms:
 
-- **Term 1**: Classify the traffic to forward to Magic WAN
-- **Term 2**: Permit all other traffic — otherwise, the firewall filters will discard any traffic not intended for Magic WAN destinations.
+- **Term 1**: Classify the traffic to forward to {props.productName}
+- **Term 2**: Permit all other traffic — otherwise, the firewall filters will discard any traffic not intended for {props.productName} destinations.
 :::
 
-This configuration only factors in one local site (`10.1.20.0/24`). In this example, we assume devices in the trust zone must route traffic to a remote subnet at another Magic WAN-protected site (`10.1.100.0/24`).
+This configuration only factors in one local site (`10.1.20.0/24`). In this example, we assume devices in the trust zone must route traffic to a remote subnet at another {props.productName}-protected site (`10.1.100.0/24`).
 
 Define a static route on the SRX to route traffic to `10.1.100.0/24` with redundant routes referencing each of the two tunnels.
 
@@ -419,13 +427,13 @@ Define a static route on the SRX to route traffic to `10.1.100.0/24` with redund
 
 [Routing Instances](https://www.juniper.net/documentation/us/en/software/junos/routing-overview/topics/concept/routing-instances-overview.html) effectively add additional routing tables to the SRX platform.
 
-As mentioned earlier, any traffic destined for other Magic WAN protected sites must be routed over the Magic IPsec tunnels.
+As mentioned earlier, any traffic destined for other {props.productName} protected sites must be routed over the Magic IPsec tunnels.
 
 The example includes two static routes - one to each of the two VTIs on the Cloudflare side of the  Magic IPsec Tunnels (`10.252.2.20` and `10.252.2.22`).
 
 While it is possible to be more prescriptive in terms of the destination subnets, we simply use `0.0.0.0/0` as the firewall filter ensures only traffic destined for `10.1.100.0/24` will be forwarded to the routing instance. Any other traffic not destined for `10.1.100.0/24` will continue to the primary routing table (`inet.0`) as it falls outside the scope of the firewall filter configured in the next section below.
 
-Leaving the destination subnet as `0.0.0.0/0` eases some administrative burden as you only need to modify the firewall filter to specify which traffic is destined for Magic WAN.
+Leaving the destination subnet as `0.0.0.0/0` eases some administrative burden as you only need to modify the firewall filter to specify which traffic is destined for {props.productName}.
 
 ```txt
 set routing-instances MAGIC_WAN_RI instance-type forwarding
@@ -558,7 +566,7 @@ rib-groups {
 
 ### Security policies
 
-Define security policies to permit traffic flows destined for Magic WAN-protected resources. The source/destination zones must incorporate the zone containing the tunnel interfaces.
+Define security policies to permit traffic flows destined for {props.productName}-protected resources. The source/destination zones must incorporate the zone containing the tunnel interfaces.
 
 There are two very simple rules to allow traffic bidirectionally — it is generally recommended to start with a similar policy and then add more stringent rules once general connectivity is established successfully.
 

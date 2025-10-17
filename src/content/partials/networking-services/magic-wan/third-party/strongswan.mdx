@@ -1,12 +1,15 @@
 ---
-{}
+params:
+  - productName
+  - bidirectionalHealthChecksUrl
+---
 ---
 
-This tutorial explains how to set up strongSwan along with Magic WAN. You will learn how to configure strongSwan, configure an IPsec tunnel and create a Policy Based Routing.
+This tutorial explains how to set up strongSwan along with {props.productName}. You will learn how to configure strongSwan, configure an IPsec tunnel and create a Policy Based Routing.
 
 ## 1. Health checks configuration
 
-Start by configuring the [bidirectional health checks](/magic-wan/configuration/manually/how-to/configure-tunnel-endpoints/#add-tunnels) target for Magic WAN. For this particular tutorial, we are using `172.64.240.252` as the target IP address, and `type` as the request.
+Start by configuring the [bidirectional health checks]({props.bidirectionalHealthChecksUrl}) target for {props.productName}. For this particular tutorial, we are using `172.64.240.252` as the target IP address, and `type` as the request.
 
 This can be set up [with the API](/api/resources/magic_transit/subresources/ipsec_tunnels/methods/update/). For example:
 
@@ -178,7 +181,7 @@ cloudflare-ipsec{4}:   0.0.0.0/0 === 0.0.0.0/0
 
 ## 5. Check connection status
 
-After you finish configuring StrongSwan with Magic WAN, you can use tcpdump to investigate the status of health checks originated from Cloudflare.
+After you finish configuring StrongSwan with {props.productName}, you can use tcpdump to investigate the status of health checks originated from Cloudflare.
 
 ```sh
 sudo tcpdump -i <OUTGOING_INTERFACE> esp and host <TUNNEL_CLOUDFLARE_ENDPOINT_IP>
