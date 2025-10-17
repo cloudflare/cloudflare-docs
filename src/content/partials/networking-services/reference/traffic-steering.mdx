@@ -47,16 +47,14 @@ The following IPv4 address ranges are allowed in the Magic Routing table:
 
 { props.magicWord === "Magic WAN" && (
   <>
-		<Markdown
-    text={`
-		- [RFC 1918](https://datatracker.ietf.org/doc/html/rfc1918) address space, specifically \`10.0.0.0/8\`, \`172.16.0.0/12\`, and \`192.168.0.0/16\`.
-
-		When using ${props.productName} and Cloudflare Tunnel together, remember to consider the IP ranges utilized in the static routes of Cloudflare Tunnel when selecting static routes for ${props.productName}. For more information, refer to <a href="${props.cfTunnelURL}">Cloudflare Tunnel</a>.
-
-		For prefixes outside RFC 1918 contact your Cloudflare customer service manager.
-			`}
-				inline={false}
-  	/>
+		<Render
+			file="routing/magic-wan-allowed-ip-ranges"
+			product="networking-services"
+			params={{
+				productName: props.productName,
+				cfTunnelURL: props.cfTunnelURL
+			}}
+		/>
   </>
   )
 }
