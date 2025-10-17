@@ -83,7 +83,7 @@
 		"jsonc-parser": "3.3.1",
 		"ldrs": "1.1.7",
 		"lz-string": "1.5.0",
-		"marked": "16.2.1",
+		"marked": "16.4.1",
 		"mdast-util-from-markdown": "2.0.2",
 		"mdast-util-mdx": "3.0.0",
 		"mdast-util-mdx-expression": "2.0.1",
