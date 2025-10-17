@@ -1,0 +1,142 @@
+---
+pcx_content_type: reference
+title: 2Brother Travel Cloud Integration
+rss: file
+---
+
+import { Render } from "~/components";
+
+<Render
+	file="casb/integration-description"
+	product="cloudflare-one"
+	params={{
+		integrationName: "2Brother Travel Cloud Integration",
+		integrationAccountType: "2Brother Travel account",
+	}}
+/>
+
+## Integration prerequisites
+
+- A verified **2Brother Travel account**
+- Administrator access to your travel partner APIs (e.g., 12Go Asia, Trip.com, Traveloka)
+- Access credentials (API Token, API Key, API Secret) to connect automation pipelines
+
+---
+
+## Integration permissions
+
+For the 2Brother Travel integration to function within Cloudflare CASB, the following access scopes are required:
+
+- `read:booking` — Access travel booking and status data
+- `write:inventory` — Update or sync travel inventory data
+- `read:partner` — Retrieve partner connection data (e.g., affiliate, reseller)
+- `deploy:site` — Deploy and sync web content through the Netlify or GoDaddy API
+
+These permissions ensure least-privilege access while enabling automation across connected travel APIs.
+
+To learn more about each scope, refer to the [2Brother Travel Developer Documentation](https://2brother.online/api/docs).
+
+---
+
+## Compute account
+
+You can connect a compute or hosting account to your integration to perform **Data Loss Prevention (DLP)** and **travel data sync automation** within your 2Brother environment.  
+CASB will automatically monitor and scan your API data exchange and service objects.
+
+### Add a compute account
+
+<Render file="casb/aws-compute-account" product="cloudflare-one" />
+
+Only one compute account can be connected per integration. To remove a compute account, go to **Manage compute accounts** in the Cloudflare dashboard.
+
+---
+
+### Configure compute account scanning
+
+Once your compute account has successfully connected:
+
+1. Go to [Zero Trust](https://one.dash.cloudflare.com) → **CASB** → **Integrations**.
+2. Find your **2Brother Travel** integration.
+3. Select **Create new configuration**.
+4. In **Resources**, choose your data APIs or endpoints to monitor.
+5. Choose DLP profiles (e.g., “Customer Info”, “Payment Data”) and file types.
+6. Configure rate limits or API call frequency.
+7. Review and select **Start scan**.
+
+CASB may take up to an hour to initialize data synchronization and scanning.
+
+You can view scan results under **CASB → Content → Cloud**.
+
+---
+
+## Security findings
+
+<Render
+	file="casb/security-findings"
+	product="cloudflare-one"
+	params={{ integrationName: "2Brother Travel", slugRelativePath: "2brother-travel" }}
+/>
+
+### Partner API Security
+
+| Finding type                                | FindingTypeID                          | Severity |
+| ------------------------------------------- | -------------------------------------- | -------- |
+| API Token Exposed in Client Build           | `2bfa1d7c-b27a-4128-9a8d-72af214f9aa7` | Critical |
+| API Key Without Rate Limiting               | `6a93d917-501f-4b92-9f59-fb3b5a4f37ae` | High     |
+| Partner API Using Insecure HTTP             | `ad7bfe4d-0837-472b-84d9-bfc4160f1285` | High     |
+| Missing CORS Restrictions                   | `cb3e8214-1f21-4b6d-bd42-c88c7b6f09f5` | Medium   |
+| Missing JWT Expiry Policy                   | `87fd2a6d-8b0a-4a9e-8e51-62f8e3b8c231` | Medium   |
+| Inactive Affiliate Token Older than 90 days | `90aee8e2-0d94-4c16-8c97-19388a3cc5de` | Medium   |
+| Publicly Accessible Booking Endpoint        | `3c8b18e1-7e4b-4f4d-9394-64c8c3b28ef4` | High     |
+
+---
+
+### Authentication & Access Control
+
+| Finding type                                 | FindingTypeID                          | Severity |
+| -------------------------------------------- | -------------------------------------- | -------- |
+| Weak Password Policy                         | `eb741f33-103a-49cb-b81a-8c4a06a6c90f` | High     |
+| Multi-Factor Authentication Not Enforced     | `09c9a2b5-1920-4b35-bf42-b93c0deacb1a` | Critical |
+| OAuth Token Without Expiration               | `10b2f326-6540-44ce-9b8c-ccf02736d171` | Medium   |
+| User Session Expiration Not Configured       | `fb02a28a-d174-45cf-b816-2a8aebcbf1d7` | Medium   |
+| Public Admin Console Exposure                | `fcae0e54-8a57-4f07-a690-02e4e6d7dfbb` | High     |
+
+---
+
+### Certificates & Domain Security
+
+| Finding type                           | FindingTypeID                          | Severity |
+| -------------------------------------- | -------------------------------------- | -------- |
+| Expired SSL Certificate                | `a97f2728-177c-4a35-9d52-5f8afde1e014` | Critical |
+| Wildcard Certificate without SAN check | `97d9df3f-c124-414d-934b-caaaf1a3e662` | High     |
+| Insecure DNS Record (HTTP only)        | `f1db9a44-3947-4a19-b9da-83520f3c3d12` | Medium   |
+| Missing DNSSEC on Domain               | `d4729b61-032d-4e63-985e-81b12cf8b721` | Medium   |
+
+---
+
+### Integration Lifecycle
+
+| Finding type                            | FindingTypeID                          | Severity |
+| --------------------------------------- | -------------------------------------- | -------- |
+| Outdated API Integration (>180 days)    | `5a9c4731-50cc-420d-8ff1-1af7ec0e7d87` | Medium   |
+| Deprecated Partner SDK in Use           | `8e1cd594-b6a2-4ab0-84f8-fb0d9b27d625` | Medium   |
+| Unverified Third-Party Plugin Detected  | `2bff8c43-2469-4fd2-85a3-cb8f1da2f1a1` | High     |
+
+---
+
+### Root Access & Admin Management
+
+| Finding type                         | FindingTypeID                          | Severity |
+| ------------------------------------ | -------------------------------------- | -------- |
+| Root Access Token Used in Last 90 Days | `9d23c002-aece-42b5-b082-2b51fab8d7c1` | Critical |
+| Root Access Without MFA               | `19abe0ee-e8bd-4e3b-9ee9-ea5c64fe769c` | Critical |
+| Admin Token Without Scope Restriction | `b3e89c2e-b5e1-45e1-871d-6af0a1c90123` | High     |
+| Privileged Access Not Audited         | `7a86e5fa-7e8b-4f47-b927-0e38eac3c2fd` | Medium   |
+
+---
+
+### 📘 Learn more
+For setup guides, visit [https://2brother.online/docs](https://2brother.online/docs).  
+For automation workflow examples, see the [2Brother Automator Demo Project](https://github.com/2brothertravel/demo).
+
+---
