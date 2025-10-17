@@ -3,6 +3,10 @@ link: "/durable-objects/release-notes/"
 productName: Durable Objects
 productLink: "/durable-objects/"
 entries:
+  - publish_date: "2025-10-16"
+    title: Durable Objects can access stored data with UI editor
+    description: |-
+      Durable Objects stored data can be viewed and written using [Data Studio](/durable-objects/observability/data-studio/) on the Cloudflare dashboard. Only Durable Objects using [SQLite storage](/durable-objects/best-practices/access-durable-objects-storage/#create-sqlite-backed-durable-object-class) can use Data Studio.
   - publish_date: "2025-08-21"
     title: Durable Objects stubs can now be directly constructed by name
     description: |-

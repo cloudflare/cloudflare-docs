@@ -8,7 +8,7 @@ head:
     content: Delegated DCV — Domain Control Validation — SSL/TLS
 ---
 
-import { Example, FeatureTable } from "~/components";
+import { Example, FeatureTable, Render } from "~/components";
 
 Delegated DCV allows zones with [partial DNS setups](/dns/zone-setups/partial-setup/) - meaning authoritative DNS is not provided by Cloudflare - to delegate the DCV process to Cloudflare.
 
@@ -72,15 +72,7 @@ _acme-challenge.sub.example.com CNAME sub.example.com.<COPIED_VALIDATION_URL>.
 
 </Example>
 
-:::caution[Remove previous TXT records]
-
-Existing TXT records for `_acme-challenge` will conflict with the delegated DCV CNAME record. Make sure to check and remove records such as the following:
-
-```txt
-_acme-challenge.example.com TXT <CERTIFICATE_VALIDATION_VALUE>
-```
-
-:::
+<Render file="dcv-conflicting-records" product="ssl" />
 
 Once the `CNAME` records are in place, Cloudflare will add TXT DCV tokens for every hostname on the Advanced certificate that has a DCV delegation record in place, as long as the zone is [active](/dns/zone-setups/reference/domain-status/) on Cloudflare.
 

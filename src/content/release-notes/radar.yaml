@@ -3,6 +3,10 @@ link: "/radar/release-notes/"
 productName: Radar
 productLink: "/radar/"
 entries:
+  - publish_date: "2025-10-09"
+    title: Add CT log activity statistics
+    description: |-
+      * Added new CT log activity stats to the [Get Certificate Log Details](/api/resources/radar/subresources/ct/subresources/logs/methods/get/) API response.
   - publish_date: "2025-10-06"
     title: Add PQ encryption browser support check
     description: |-

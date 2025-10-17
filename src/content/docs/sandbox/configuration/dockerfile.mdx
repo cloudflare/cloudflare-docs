@@ -1,0 +1,73 @@
+---
+title: Dockerfile reference
+pcx_content_type: configuration
+sidebar:
+  order: 2
+---
+
+Customize the sandbox container image with your own packages, tools, and configurations by extending the base runtime image.
+
+## Base image
+
+The Sandbox SDK uses a Ubuntu-based Linux container with Python, Node.js (via Bun), and common development tools pre-installed:
+
+```dockerfile
+FROM docker.io/cloudflare/sandbox:0.3.3
+```
+
+:::note
+Always match the Docker image version to your npm package version. If you're using `@cloudflare/sandbox@0.3.3`, use `docker.io/cloudflare/sandbox:0.3.3` as your base image.
+:::
+
+**What's included:**
+
+- Ubuntu 22.04 LTS base
+- Python 3.11+ with pip
+- Bun (JavaScript/TypeScript runtime)
+- Git, curl, wget, and common CLI tools
+- Pre-installed Python packages: pandas, numpy, matplotlib
+- System libraries for most common use cases
+
+## Creating a custom image
+
+Create a `Dockerfile` in your project root:
+
+```dockerfile title="Dockerfile"
+FROM docker.io/cloudflare/sandbox:0.3.3
+
+# Install additional Python packages
+RUN pip install --no-cache-dir \
+    scikit-learn==1.3.0 \
+    tensorflow==2.13.0 \
+    transformers==4.30.0
+
+# Install Node.js packages globally
+RUN npm install -g typescript ts-node prettier
+
+# Install system packages
+RUN apt-get update && apt-get install -y \
+    postgresql-client \
+    redis-tools \
+    && rm -rf /var/lib/apt/lists/*
+```
+
+Update `wrangler.jsonc` to reference your Dockerfile:
+
+```jsonc title="wrangler.jsonc"
+{
+	"containers": [
+		{
+			"binding": "CONTAINER",
+			"dockerfile": "./Dockerfile",
+		},
+	],
+}
+```
+
+When you run `wrangler dev` or `wrangler deploy`, Wrangler automatically builds your Docker image and pushes it to Cloudflare's container registry. You don't need to manually build or publish images.
+
+## Related resources
+
+- [Wrangler configuration](/sandbox/configuration/wrangler/) - Using custom images in wrangler.jsonc
+- [Docker documentation](https://docs.docker.com/reference/dockerfile/) - Complete Dockerfile syntax
+- [Container concepts](/sandbox/concepts/containers/) - Understanding the runtime environment

@@ -8,10 +8,12 @@ description: Breakout traffic allows you to define which applications should
 
 import { Render } from "~/components";
 
-<Render file="mconn/app-aware-policies/breakout-prioritized"
+<Render file="mconn/network-options/app-aware-policies/breakout-prioritized"
 	product="networking-services"
 	params={{
 	magicWord: "breakout",
+	productName: "Magic WAN Connector",
 	featureName: "Breakout traffic",
+	trafficSteeringURL: "/magic-wan/reference/traffic-steering/",
 	whatHappensApp: "will now go directly to the Internet and bypass Cloudflare's filtering"
 	}} />

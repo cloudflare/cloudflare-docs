@@ -5,8 +5,9 @@ sidebar:
   order: 7
 ---
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to **Magic WAN** > **Network overview (beta)**.
-3. Find the site you want to make changes on > select the three dots next to it > **Edit**.
-4. In **Basic information**, make changes to the site's name, description, and geographic coordinates.
-5. In **On-ramps**, add new on-ramps to your site. You can also remove existing ones.
+import { Render } from "~/components";
+
+<Render
+	file="mconn/maintenance/edit-sites"
+	product="networking-services"
+/>

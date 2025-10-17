@@ -1,11 +1,13 @@
 # homepage
 /docs/ /directory/ 301
+/api /api/ 301
 /products/ /directory/ 301
 /zero-trust/ /products/?product-group=Cloudflare+One 301
 /dashboard-landing/ / 301
 /tutorials/ /search/?content_type%5B0%5D=Tutorial 301
 /sitemap.xml /sitemap-index.xml
 /deprecations/ /fundamentals/api/reference/deprecations/ 301
+/learning-paths/ /resources/ 301
 
 # changelog
 /changelog/rss.xml /changelog/rss/index.xml 301
@@ -276,6 +278,7 @@
 /bots/concepts/bot/verified-bots/ip-validation/ /bots/reference/bot-verification/ip-validation/ 301
 /bots/concepts/bot/verified-bots/web-bot-auth/ /bots/reference/bot-verification/web-bot-auth/ 301
 /bots/concepts/bot/verified-bots/overview/  /bots/concepts/bot/verified-bots/ 301
+/bots/frequently-asked-questions/ /bots/ 301
 
 #browser-rendering
 /browser-rendering/get-started/browser-rendering-with-DO/ /browser-rendering/workers-bindings/browser-rendering-with-do/ 301
@@ -360,6 +363,9 @@
 /realtime/realtimekit/get-started/ /realtime/realtimekit/getting-started/ 302
 /realtime/introduction/ /realtime/realtimekit/introduction/ 302
 /realtime/concepts/ /realtime/realtimekit/concepts/ 302
+
+# Cloudflare Challenges
+/cloudflare-challenges/frequently-asked-questions/ /cloudflare-challenges/ 301
 
 # china network
 /support/about-cloudflare/enterprise-documentation/understanding-and-configuring-an-icp-number/ /china-network/concepts/icp/ 301
@@ -599,6 +605,7 @@
 /cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/journaling-setup/office365-journaling/ /cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/journaling-setup/m365-journaling/ 301
 /cloudflare-one/email-security/setup/pre-delivery-deployment/prerequisites/microsoft365-email-security-mx/ /cloudflare-one/email-security/setup/pre-delivery-deployment/prerequisites/m365-email-security-mx/ 301
 /cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/journaling-setup/manage-domains/ /cloudflare-one/email-security/setup/manage-domains/ 301
+/cloudflare-one/email-security/email-monitoring/download-disposition-report/ /cloudflare-one/email-security/email-monitoring/download-report/ 301
 
 # firewall
 /firewall/api/cf-lists/ /waf/tools/lists/lists-api/ 301
@@ -1423,6 +1430,7 @@
 /stream/reference/faq/ /stream/faq/ 301
 /stream/platform/ /stream/changelog/ 301
 /stream/reference/ /stream/faq/ 301
+/stream/examples/wordpress/ /stream/examples/ 301
 
 # style guide
 
@@ -2345,6 +2353,7 @@
 /autorag/* /ai-search/:splat 301
 
 # Cloudflare One / Zero Trust
+/cloudflare-one/applications/configure-apps/dash-sso-apps/ /fundamentals/account/account-security/dashboard-sso/ 301
 /cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/as-a-service/* /cloudflare-one/connections/connect-networks/configure-tunnels/local-management/as-a-service/:splat 301
 /cloudflare-one/connections/connect-apps/install-and-setup/deployment-guides/* /cloudflare-one/connections/connect-networks/deployment-guides/:splat 301
 /cloudflare-one/connections/connect-networks/deploy-tunnels/deployment-guides/* /cloudflare-one/connections/connect-networks/deployment-guides/:splat 301

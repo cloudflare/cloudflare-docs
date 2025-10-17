@@ -32,6 +32,11 @@ import { Render } from "~/components";
 
 ## Magic WAN Connector
 
-Magic WAN Connector also includes a heartbeat function, an additional way of communicating its health status which does not depend on successfully setting up any tunnels. The heartbeat function communicates periodically with Cloudflare via HTTPS and lets Cloudflare know that the Connector in question is connected to the Internet and reachable.
-
-Refer to [Heartbeat](/magic-wan/configuration/connector/maintenance/heartbeat/) to learn more.
+<Render
+	file="tunnel-health/mconn-heartbeat-health"
+	product="networking-services"
+	params={{
+		productName: "Magic WAN Connector",
+		heartbeatURL: "/magic-wan/configuration/connector/maintenance/heartbeat/"
+	}}
+/>

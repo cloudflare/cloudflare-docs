@@ -14,7 +14,7 @@ This error is often triggered by:
 
 - Origin server crashes or misconfigurations.
 - Firewalls or security plugins blocking [Cloudflare IPs](https://www.cloudflare.com/ips) at your origin.
-- Headers exceeding 16 KB (often due to excessive cookies).
+- Headers exceeding 128 KB (often due to excessive cookies).
 - Empty or malformed responses lacking an HTTP status code or response body.
 - Missing response headers or origin web server not returning [proper HTTP error responses](https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml).
 - Incorrect HTTP/2 configuration at the origin server.
@@ -38,7 +38,6 @@ As a temporary workaround, you can set the affected DNS record to [DNS-only](/dn
 - If HTTP/2 is enabled at your origin server, ensure it is correctly set up. Cloudflare connects to servers who announce support of HTTP/2 connections via [ALPN](https://blog.cloudflare.com/introducing-http2). If the origin web server accepts the HTTP/2 connection but then does not respect or support the protocol, an HTTP `520` error will be returned. You can disable the [HTTP/2 to Origin](/speed/optimization/protocol/http2-to-origin/#disable-http2-to-origin) in **Speed** > **Optimization** > **Protocol Optimization** on the Cloudflare dashboard.
 
 - If `520` errors continue after contacting your hosting provider or site administrator, provide the following information to [Cloudflare Support](/support/contacting-cloudflare-support/):
-
   - Full URL(s) of the resource requested when the error occurred.
   - Cloudflare **cf-ray** from the `520` error message.
   - Output from `http://<YOUR_DOMAIN>/cdn-cgi/trace`.

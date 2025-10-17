@@ -5,7 +5,14 @@ sidebar:
   order: 2
 ---
 
-import { FeatureTable, GlossaryTooltip, Steps, DashButton } from "~/components";
+import {
+	FeatureTable,
+	GlossaryTooltip,
+	Steps,
+	Tabs,
+	TabItem,
+	DashButton,
+} from "~/components";
 
 Security Events allows you to review <GlossaryTooltip term="mitigated request">mitigated requests</GlossaryTooltip> and helps you tailor your security configurations.
 
@@ -28,8 +35,19 @@ Available features vary according to your Cloudflare plan:
 
 To open Security Events for a given zone:
 
-- Old dashboard: Go to **Security** > **Events**.
-- New security dashboard: Go to **Security** > **Analytics** > **Events** tab.
+<Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
+
+- In the Cloudflare dashboard, go to **Security** > **Events**.
+
+</TabItem> <TabItem label="New dashboard" icon="rocket">
+
+1. In the Cloudflare dashboard, go to the **Analytics** page.
+
+   <DashButton url="/?to=/:account/:zone/security/analytics" />
+
+2. Select the **Events** tab.
+
+</TabItem> </Tabs>
 
 Additionally, Enterprise customers have access to the account-level dashboard:
 

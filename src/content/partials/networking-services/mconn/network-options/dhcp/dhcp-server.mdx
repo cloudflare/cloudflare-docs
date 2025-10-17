@@ -1,0 +1,47 @@
+---
+params:
+  - productName
+---
+
+import { APIRequest, Render, TabItem, Tabs, DashButton } from "~/components";
+
+When you use a static IP address, {props.productName} can also act as a DHCP server in your network. To enable this feature:
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Go to **Magic WAN** > **Connector on-ramps (beta)**.
+3. Select the Connector you want to configure > **Edit**.
+4. Select **Network Configuration**, and scroll down to **LAN configuration**.
+5. In **LAN configuration**, select the LAN where you want to enable DHCP server.
+6. Select **Edit**.
+7. Under **Static addressing**, select **This is a DHCP Server**. You also have to specify:
+	- The DNS server address. You can have more than one IP address. Select **Add DNS Server** for each server you want to add.
+	- The DHCP pool start
+	- The DHCP pool end
+
+</TabItem> <TabItem label="API">
+
+<Render file="account-id-api-key" product="networking-services" />
+
+Create a [`PUT` request](/api/resources/magic_transit/subresources/sites/subresources/lans/methods/update/) to update the LAN where you want to enable DHCP server:
+
+Example:
+
+<APIRequest
+  path="/accounts/{account_id}/magic/sites/{site_id}/lans/{lan_id}"
+  method="PUT"
+  json={{
+    "lan": {
+    "static_addressing": {
+      "dhcp_server": {
+        "dhcp_pool_end": "<IP_ADDRESS>",
+        "dhcp_pool_start": "<IP_ADDRESS>",
+        "dns_server": "<IP_ADDRESS>"
+      }
+    }
+  }
+  }}
+/>
+
+</TabItem> </Tabs>

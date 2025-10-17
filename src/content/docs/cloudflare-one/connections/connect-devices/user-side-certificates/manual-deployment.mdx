@@ -482,6 +482,26 @@ To configure Git to trust a Cloudflare certificate, run the following command:
 git config --global http.sslcainfo [PATH_TO_CLOUDFLARE_CERT]
 ```
 
+### cURL
+
+By default, cURL will use your operating system's native certificate store. To force cURL to use your default certificate, add the `--ca-native` flag to the command. For example:
+
+```curl
+curl --ca-native https://example.com
+```
+
+#### cURL on macOS
+
+To use a Cloudflare root certificate with cURL on macOS, [install the certificate to the operating system keychain](#macos). cURL will use the macOS root certificate by default.
+
+#### cURL on Windows
+
+To use a Cloudflare certificate with the version of cURL preinstalled on Windows or another version that uses the Schannel (WinSSL) backend, [install the certificate to the Windows certificate store](#windows). If you use an older or custom version of cURL built with the OpenSSL backend, you will need to [manually configure cURL to use the certificate](#curl).
+
+#### cURL on Linux
+
+To use a Cloudflare root certificate with cURL on Linux, [install the certificate to your distribution's certificate store](#linux). cURL will use the Linux root certificate by default.
+
 ### npm
 
 1. [Download a Cloudflare certificate](#download-the-cloudflare-root-certificate) in `.pem` format.

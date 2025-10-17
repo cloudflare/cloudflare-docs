@@ -7,106 +7,14 @@ sidebar:
 
 import { Render } from "~/components";
 
-## Device metrics
+<Render
+	file="mconn/troubleshooting/troubleshooting"
+	product="networking-services"
+	params={{
+		productName: "Magic WAN Connector",
+		activateURL: "/magic-wan/configuration/connector/configure-hardware-connector/#activate-connector",
+		firewallURL: "/magic-wan/configuration/connector/configure-hardware-connector/#firewall-settings-required",
+		heartbeatURL: "/magic-wan/configuration/connector/maintenance/heartbeat/"
+	}}
 
-Cloudflare customers can inspect metrics for a specific Magic WAN Connector in the Cloudflare dashboard. These metrics help you troubleshoot potential issues with your Connector. The information spans categories such as:
-
-- Performance analytics
-- Port analytics
-- Event logs
-- DHCP leasing information
-
-To find the information above and start troubleshooting your Connector:
-
-<Render file="mconn/troubleshooting"	product="networking-services" />
-
-### Performance analytics
-
-In Performance analytics you can review your Connector's performance over time including:
-
-- Kernel boot time (how long it has been running and if it is activated or not)
-- Last device snapshot (this also shows the frequency with which your device captures the snapshots that are used in several troubleshooting procedures)
-- CPU temperature
-- CPU load over time
-- Used RAM over time
-
-To access performance analytics:
-
-<Render file="mconn/troubleshooting"	product="networking-services" />
-4. Select **Performance analytics**.
-
-### Port analytics
-
-Port analytics gives you access to information related to the packets sent and received through the ports in your Connector. You can adjust the time range for the information displayed in the dashboard regarding to:
-
-- Rate for packets sent and received
-- Rate for data sent and received
-
-The dashboard provides this information for all active ports in your Connector. To access port analytics:
-
-<Render file="mconn/troubleshooting"	product="networking-services" />
-4. Select **Port analytics**.
-
-### Event logs
-
-Use Event logs to identify general patterns and changes over time. This is useful to find correlations with other data and gather deeper insights into your Connector. The following event logs are available:
-
-- `Init`: Initialized `mcon-agent` process. This process manages Connector.
-- `Leave`: Stopped `mcon-agent` process.
-- `StartAttestation`: Started attestation to verify the integrity of Connector before allowing the device to connect to your account.
-- `FinishAttestationSuccess`: Finished attestation successfully.
-- `FinishAttestationFailure`: Failed attestation.
-- `StartRotateCryptKey`: Started cryptography key rotation.
-- `FinishRotateCryptKeySuccess`: Finished cryptography key rotation.
-- `FinishRotateCryptKeyFailure`: Failed cryptography key rotation.
-- `StartRotatePki`: Started public key infrastructure (PKI) rotation.
-- `FinishRotatePkiSuccess`: Finished PKI rotation.
-- `FinishRotatePkiFailure`: Failed PKI rotation.
-- `StartUpgrade`: Began Connector's operating system upgrade.
-- `FinishUpgradeSuccess`: Finished operating system upgrade.
-- `FinishUpgradeFailure`: Failed operating system upgrade.
-- `Reconcile`: Cloudflare is comparing the system's current state against its desired state.
-- `ConfigureCloudflaredTunnel`: Configured Cloudflare Tunnel to debug device.
-
-To access event logs:
-
-<Render file="mconn/troubleshooting"	product="networking-services" />
-4. Select **Events**.
-5. You can filter results by specific events, and by time.
-
-### DHCP leasing
-
-Refer to the DHCP leasing section to identify DHCP assigned leases and their expiration dates. To access DHCP leasing:
-
-<Render file="mconn/troubleshooting"	product="networking-services" />
-4. Select **DHCP leasing**.
-
-## Troubleshooting tips
-
-If you are experiencing difficulties with your Magic WAN Connector, refer to the following tips to troubleshoot what might be happening.
-
-## I have set up a site, but my Connector is not working
-
-Make sure that you have [activated your Connector](/magic-wan/configuration/connector/configure-hardware-connector/#activate-connector). Cloudflare ships the Magic WAN Connector deactivated, and the Connector will only establish a connection to the Cloudflare network when it is activated.
-
-## I have tried to activate Magic WAN Connector, but it is still not working
-
-Check if your Magic WAN Connector is connected to the Internet via a port that can serve DHCP. This is required the first time a Connector boots up so that it can reach the Cloudflare global network and download the required configurations that you set up in the Site configuration step. Refer to [Activate Connector](/magic-wan/configuration/connector/configure-hardware-connector/#activate-connector) for more details.
-
-If you have a firewall deployed upstream of the Magic WAN Connector, [check your firewall settings](/magic-wan/configuration/connector/configure-hardware-connector/#firewall-settings-required). You might need to configure your firewall to allow traffic in specific ports for the Connector to work properly.
-
-## I can access Magic WAN Connector's health checks, but there is no traffic
-
-If you have a firewall deployed upstream of the Magic WAN Connector, make sure you review your [firewall settings](/magic-wan/configuration/connector/configure-hardware-connector/#firewall-settings-required). You might need to configure your firewall to allow traffic in specific ports for the Connector to work properly.
-
-## Devices I have behind Connector cannot connect to the Internet
-
-If you have other routing appliances behind Magic WAN Connector, make sure you create policy-based routing policies to send traffic from your devices through Connector, instead of these other routing devices.
-
-## How do I know if my device is contacting Cloudflare?
-
-Magic WAN Connector sends a heartbeat periodically to Cloudflare. You can [access the Magic WAN dashboard](/magic-wan/configuration/connector/maintenance/heartbeat/), and check for the heartbeat status of your Connector device.
-
-## What do I do in the event of hardware issues with Magic WAN Connector?
-
-Cloudflare is the single point of contact for any issues related to Magic WAN Connector, including issues with hardware. When required, Cloudflare Support will work with our partner, TD Synnex, to resolve any issues with the physical device.
+	/>

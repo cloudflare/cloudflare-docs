@@ -10,7 +10,7 @@ head:
     content: Create a custom rule in the dashboard
 ---
 
-import { Render, Tabs, TabItem, Steps } from "~/components";
+import { Render, Tabs, TabItem, Steps, DashButton } from "~/components";
 
 <Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
 
@@ -40,24 +40,24 @@ import { Render, Tabs, TabItem, Steps } from "~/components";
 
 <Steps>
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
+1. In the Cloudflare dashboard, go to the **Security rules** page.
 
-2. Go to **Security** > **Security rules**.
+   <DashButton url="/?to=/:account/:zone/security/security-rules" />
 
-3. To create a new empty rule, select **Create rule** > **Custom rules**. To duplicate an existing rule, select the three dots next to it > **Duplicate**.
+2. To create a new empty rule, select **Create rule** > **Custom rules**. To duplicate an existing rule, select the three dots next to it > **Duplicate**.
 
-4. <a id="rule-form" />
+3. <a id="rule-form" />
    Enter a descriptive name for the rule in **Rule name**.
 
    ![Custom rule creation page in the Cloudflare dashboard](~/assets/images/waf/custom-rules/firewall-custom-rule-create.png)
 
-5. Under **If incoming requests match**, use the **Field** drop-down list to choose an HTTP property. For each request, the value of the property you choose for **Field** is compared to the value you specify for **Value** using the operator selected in **Operator**.
+4. Under **If incoming requests match**, use the **Field** drop-down list to choose an HTTP property. For each request, the value of the property you choose for **Field** is compared to the value you specify for **Value** using the operator selected in **Operator**.
 
-6. Under **Then take action**, select the rule action in the **Choose action** dropdown. For example, selecting _Block_ tells Cloudflare to refuse requests that match the conditions you specified.
+5. Under **Then take action**, select the rule action in the **Choose action** dropdown. For example, selecting _Block_ tells Cloudflare to refuse requests that match the conditions you specified.
 
-7. (Optional) If you selected the _Block_ action, you can [configure a custom response](#configure-a-custom-response-for-blocked-requests).
+6. (Optional) If you selected the _Block_ action, you can [configure a custom response](#configure-a-custom-response-for-blocked-requests).
 
-8. To save and deploy your rule, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
+7. To save and deploy your rule, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
 
 </Steps>
 

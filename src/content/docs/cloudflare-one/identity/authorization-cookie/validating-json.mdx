@@ -113,6 +113,14 @@ import { jwtVerify, createRemoteJWKSet } from 'jose';
 
 export default {
 	async fetch(request, env, ctx) {
+		// Verify the POLICY_AUD environment variable is set
+		if (!env.POLICY_AUD) {
+			return new Response('Missing required audience', {
+				status: 403,
+				headers: { 'Content-Type': 'text/plain' }
+			});
+		}
+
 		// Get the JWT from the request headers
 		const token = request.headers.get('cf-access-jwt-assertion');
 
@@ -268,6 +276,10 @@ def verify_token(f):
     Decorator that wraps a Flask API call to verify the CF Access JWT
     """
     def wrapper():
+				# Check for the POLICY_AUD environment variable
+				if not POLICY_AUD:
+					return "missing required audience", 403
+
         token = ''
         if 'CF_Authorization' in request.cookies:
             token = request.cookies['CF_Authorization']
@@ -319,6 +331,14 @@ const JWKS = jose.createRemoteJWKSet(new URL(CERTS_URL));
 
 // verifyToken is a middleware to verify a CF authorization token
 const verifyToken = async (req, res, next) => {
+	// Check for the AUD environment variable
+	if (!AUD) {
+		return res.status(403).send({
+			status: false,
+			message: "missing required audience",
+		});
+	}
+
 	const token = req.headers["cf-access-jwt-assertion"];
 
 	// Make sure that the incoming request has our token header
@@ -329,13 +349,20 @@ const verifyToken = async (req, res, next) => {
 		});
 	}
 
-	const result = await jose.jwtVerify(token, JWKS, {
-		issuer: TEAM_DOMAIN,
-		audience: AUD,
-	});
+	try {
+		const result = await jose.jwtVerify(token, JWKS, {
+			issuer: TEAM_DOMAIN,
+			audience: AUD,
+		});
 
-	req.user = result.payload;
-	next();
+		req.user = result.payload;
+		next();
+	} catch (err) {
+		return res.status(403).send({
+			status: false,
+			message: "invalid token",
+		});
+	}
 };
 
 const app = express();
