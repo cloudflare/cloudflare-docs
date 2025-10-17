@@ -44,7 +44,7 @@ To access scraping detections:
 
 ```js title="Rule example"
 
-(any(cf.bot_management.detection_ids[*] eq 50331649))
+(any(cf.bot_management.detection_ids[*] eq 50331649) and not cf.bot_management.verified_bot)
 ```
 
 :::tip[Best practice]
