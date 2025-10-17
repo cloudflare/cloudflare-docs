@@ -38,7 +38,8 @@ To create a load balancer for Cloudflare Tunnel published applications:
 	:::note
 	A single origin pool cannot have the same Tunnel UUID referenced twice.
 	:::
-9. (Recommended) On the **Monitors** page, attach a monitor to the tunnel endpoint. For example, if your application is HTTP or HTTPS, you can create an HTTPS monitor to poll the application:
+9. On the **Pools** page, choose a **Fallback pool**. Refer to [Global traffic steering](/load-balancing/understand-basics/traffic-steering/steering-policies/) for information on how the load balancer routes traffic to pools.
+10. (Recommended) On the **Monitors** page, attach a monitor to the tunnel endpoint. For example, if your application is HTTP or HTTPS, you can create an HTTPS monitor to poll the application:
 	- **Type**: _HTTPS_
 	- **Path**: `/`
 	- **Port**: `443`
@@ -50,8 +51,8 @@ To create a load balancer for Cloudflare Tunnel published applications:
 	TCP monitors are not supported for tunnel endpoints. For a workaround, refer to [Monitors and TCP tunnel origins](#monitors-and-tcp-tunnel-origins).
 	:::
 
-10. Save and deploy the load balancer.
-11. To test the load balancer, access the application using the load balancer hostname (`lb.example.com`).
+11. Save and deploy the load balancer.
+12. To test the load balancer, access the application using the load balancer hostname (`lb.example.com`).
 
 Refer to the [Load Balancing documentation](/load-balancing/) for more details on load balancer settings and configurations.
 
