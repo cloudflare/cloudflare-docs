@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import { Render, Tabs, TabItem, Steps } from "~/components"
+import { Render, Tabs, TabItem, Steps, DashButton } from "~/components"
 
 Detection IDs are static rules used to detect predictable bot behavior with no overlap with human traffic. Detection IDs refer to the precise [detection](/bots/concepts/bot-detection-engines/) used to identify a bot, which could be from heuristics, verified bot detections, or anomaly detections. For example, a detection ID can identify if you sent your headers in a different order than what was expected of your browser.
 
@@ -38,27 +38,6 @@ Detection tags are available in Security Analytics, but not in the Security Even
 
 ---
 
-## Bot Detection IDs via Logpush
-
-You can create or edit existing Logpush jobs to include the new Bot Detection IDs field which will provide an array of IDs for each request that has heuristics match on it. The `BotDetectionIDs` field is available as part of the HTTP Requests dataset and you can add it to new or existing jobs via the Logpush API or on the Cloudflare dashboard. This is the primary method to discover Detection IDs.
-
-### Via the Cloudflare dashboard
-
-<Steps>
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-2. Go to **Analytics & Logs** > **Logs**.
-3. Select **Add Logpush Job**.
-4. Select **HTTP Requests** as the dataset.
-5. Select **BotDetectionIDs** under the General data field category.
-6. Select and enter the destination information.
-7. Prove the ownership.
-8. Select **Save**.
-</Steps>
-
-### Via the API
-
-[Update your logpush job](/logs/logpush/logpush-job/log-output-options/) by adding `BotDetectionIDs` to the  `output_options:`  parameters.
-
 ## Create or edit an expression
 
 <Tabs syncKey="dashNewNav"> 
@@ -72,11 +51,16 @@ You can create or edit existing Logpush jobs to include the new Bot Detection ID
   </TabItem> 
   <TabItem label="New dashboard" icon="rocket">
 		<Steps>
-      1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
-      2. Go to **Security** > **Analytics**.
-      3. Apply filters and select **Create custom security rule** to create a custom rule based on your filters. Alternatively, if you have already created a custom rule, you can go to the existing rule in **Security** > **Security rules** and edit the expression based on your filters.
-      4. Use the `cf.bot_management.detection_ids` field in the rule expression.
-      5. Select **Deploy**.
+      1. In the Cloudflare dashboard, go to the **Security Analytics** page.
+
+          <DashButton url="/?to=/:account/:zone/security/analytics" />
+      2. Apply filters and select **Create custom security rule** to create a custom rule based on your filters. 
+        
+          Alternatively, if you have already created a custom rule, you can go to the existing rule in **Security rules** and edit the expression based on your filters.
+
+          <DashButton url="/?to=/:account/:zone/security/security-rules" />
+      3. Use the `cf.bot_management.detection_ids` field in the rule expression.
+      4. Select **Deploy**.
       </Steps>
 	</TabItem> 
 </Tabs>
@@ -134,11 +118,12 @@ To access account takeover detections:
   </TabItem> 
   <TabItem label="New dashboard" icon="rocket">
 		<Steps>
-      1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
-      2. Go to **Security** > **Security rules**.
-      3. Select **Create rule** and choose **Custom rule**.
-      4. Fill out the form using **Bot Detection IDs** along with other necessary information.
-      5. Select **Save as draft** to return to it later, or **Deploy** to deploy the rule.
+      1. In the Cloudflare dashboard, go to the **Security rules** page.
+
+          <DashButton url="/?to=/:account/:zone/security/security-rules" />
+      2. Select **Create rule** and choose **Custom rule**.
+      3. Fill out the form using **Bot Detection IDs** along with other necessary information.
+      4. Select **Save as draft** to return to it later, or **Deploy** to deploy the rule.
       </Steps>
 	</TabItem> 
 </Tabs>
@@ -166,11 +151,12 @@ To use rate limiting rules with account takeover detections:
   </TabItem> 
   <TabItem label="New dashboard" icon="rocket">
 		<Steps>
-      1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
-      2. Go to **Security** > **Security rules**.
-      3. Select **Create rule** and choose **Rate limiting rule**.
-      4. Fill out the form using the **Custom expression builder** and `cf.bot_management_detection_ids` along with other necessary information.
-      5. Select **Save as draft** to return to it later, or **Deploy** to deploy the rule.
+      1. In the Cloudflare dashboard, go to the **Security rules** page.
+
+          <DashButton url="/?to=/:account/:zone/security/security-rules" />
+      2. Select **Create rule** and choose **Rate limiting rule**.
+      3. Fill out the form using the **Custom expression builder** and `cf.bot_management_detection_ids` along with other necessary information.
+      4. Select **Save as draft** to return to it later, or **Deploy** to deploy the rule.
     </Steps>
   </TabItem> 
 </Tabs>
@@ -185,6 +171,33 @@ The rule can be enhanced with Leaked Credential Checks. Refer to the [WAF docume
 | Detection ID | Description                              |
 | ------------ | ---------------------------------------- |
 | `50331651`   | Observes traffic from residential proxy networks and similar commercial proxies. <br /><br />When the ID matches a request, Bot Management sets the bot score to 29 and uses [anomaly detection](/bots/concepts/bot-detection-engines/#anomaly-detection-enterprise) as its score source. |
+
+---
+
+## Bot Detection IDs via Logpush
+
+You can create or edit existing Logpush jobs to include the new Bot Detection IDs field which will provide an array of IDs for each request that has heuristics match on it. The `BotDetectionIDs` field is available as part of the HTTP Requests dataset and you can add it to new or existing jobs via the Logpush API or on the Cloudflare dashboard. This is the primary method to discover Detection IDs.
+
+<Tabs>
+  <TabItem label="Dashboard">
+    <Steps>
+      1. In the Cloudflare dashboard, go to the **Logpush** page.
+
+          <DashButton url="/?to=/:account/logs" />
+      2. Select **Create a Logpush Job**.
+      3. Select and enter the destination information.
+      4. Select **HTTP Requests** as the dataset.
+      5. Select **BotDetectionIDs** under the General data field category.
+      6. Prove the ownership.
+      7. Select **Save**.
+    </Steps>
+  </TabItem>
+  <TabItem label="API">
+    [Update your logpush job](/logs/logpush/logpush-job/log-output-options/) by adding `BotDetectionIDs` to the  `output_options:`  parameters.
+  </TabItem>
+</Tabs>
+
+---
 
 ## Availability
 

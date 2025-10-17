@@ -1,0 +1,79 @@
+---
+params:
+  - productName
+  - troubleshootingURL
+---
+
+Cloudflare customers can inspect metrics for a specific {props.productName} in the Cloudflare dashboard. These metrics help you troubleshoot potential issues with your {props.productName}. Refer to <a href={props.troubleshootingURL}>Troubleshooting</a> for more information.
+
+## Query metrics with GraphQL
+
+Customers can query Cloudflare's GraphQL API to fetch their {props.productName} device metrics. The Cloudflare dashboard displays {props.productName} device metrics over the past one hour. Via the GraphQL API, customers can query for up to 30 days of historical {props.productName} device metrics.
+
+For example:
+
+```graphql graphql-api-explorer
+query telemetry(
+  $accountTag: string
+  $snapshotsFilter: AccountMconnTelemetrySnapshotsAdaptiveGroupsFilter_InputObject!
+  $snapshotMountsFilter: AccountMconnTelemetrySnapshotMountsAdaptiveGroupsFilter_InputObject!
+  $snapshotThermalsFilter: AccountMconnTelemetrySnapshotThermalsAdaptiveGroupsFilter_InputObject!
+  $limit: int64!
+) {
+  viewer {
+    accounts(filter: { accountTag: $accountTag }) {
+      snapshots: mconnTelemetrySnapshots(
+        filter: $snapshotsFilter
+        limit: $limit
+        orderBy: [datetimeFiveMinutes_DESC]
+      ) {
+        max {
+          cpuCount
+          loadAverage1m
+          memoryFreeBytes
+          memoryTotalBytes
+        }
+        dimensions {
+          connectorId
+          datetimeFiveMinutes
+        }
+      }
+      snapshotMounts: mconnTelemetrySnapshotMounts(
+        filter: $snapshotMountsFilter
+        limit: $limit
+        orderBy: [datetimeFiveMinutes_DESC]
+      ) {
+        max {
+          availableBytes
+          totalBytes
+        }
+        dimensions {
+          connectorId
+          datetimeFiveMinutes
+        }
+      }
+      snapshotThermals: mconnTelemetrySnapshotThermals(
+        filter: $snapshotThermalsFilter
+        limit: $limit
+        orderBy: [datetimeFiveMinutes_DESC, connectorId_DESC]
+      ) {
+        max {
+          currentCelcius
+        }
+        dimensions {
+          connectorId
+          datetimeFiveMinutes
+        }
+      }
+    }
+  }
+}
+```
+
+### Average CPU load explained
+
+The metric `average CPU load` is unique and distinctly different from `CPU utilization` which is another common CPU metric. The {props.productName} uses a [Unix-style CPU load calculation](<https://en.wikipedia.org/wiki/Load_(computing)>).
+
+CPU load is a measure of the number of processes that are currently running and that are waiting to be run on the CPU. Cloudflare collects the one minute load average from the device and converts that into a percentage based on the total number of cores in the CPU. If the {props.productName} CPU has eight cores, and a one minute load average of two, then the average CPU load is 25%. If the average CPU load is above 100%, then there are processes in the queue that are waiting to be executed on the CPU.
+
+Cloudflare is still evaluating the typical CPU load operating range on the MWAN Connector. In general, a healthy range for average CPU load on any device is between 30% and 70%. Customers may experience decreased MWAN Connector performance if the average CPU load is consistently above 100%.

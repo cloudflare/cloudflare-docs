@@ -6,6 +6,8 @@ sidebar:
 head:
   - tag: title
     content: Introduction to Terraform init
+description: >-
+  This tutorial shows you how to get started with Terraform. You will create a DNS record pointing www.example.com to a web server at 203.0.113.10.
 ---
 
 import { DashButton, Render } from "~/components";
@@ -13,8 +15,9 @@ import { DashButton, Render } from "~/components";
 This tutorial shows you how to get started with Terraform. You just signed up your domain (`example.com`) on Cloudflare to manage everything in Terraform and now you will create a DNS record pointing `www.example.com` to a web server at `203.0.113.10`.
 
 Before you begin, ensure you have:
-* [Installed Terraform](/terraform/installing/)
-* [Created an API Token](/fundamentals/api/get-started/create-token/) with permissions to edit resources for this tutorial
+
+- [Installed Terraform](/terraform/installing/)
+- [Created an API Token](/fundamentals/api/get-started/create-token/) with permissions to edit resources for this tutorial
 
 <Render file="v5-code-snippets" product="terraform" />
 ## 1. Create your configuration
@@ -57,6 +60,7 @@ resource "cloudflare_dns_record" "www" {
   comment = "Domain verification record"
 }
 ```
+
 :::caution
 
 To prevent accidentally exposing your Cloudflare credentials, do not save this file in your version control system. The [next tutorial](/terraform/tutorial/track-history/) will cover best practices for passing in your API token.
@@ -75,6 +79,7 @@ Review what will be created:
 ```sh
 terraform plan
 ```
+
 ```sh output
 
 Terraform used the selected providers to generate the following execution plan. Resource actions are
@@ -168,6 +173,7 @@ Test the web server response:
 ```sh
 curl https://www.example.com
 ```
+
 ```sh output
 Hello, this is 203.0.113.10!
 ```

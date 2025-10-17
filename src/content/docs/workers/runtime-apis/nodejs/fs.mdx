@@ -1,0 +1,138 @@
+---
+pcx_content_type: configuration
+title: fs
+---
+
+import { Render } from "~/components";
+
+<Render file="nodejs-compat-howto" product="workers" />
+
+You can use [`node:fs`](https://nodejs.org/api/fs.html) to access a virtual file
+system in Workers.
+
+The `node:fs` module is available in Workers runtimes that support Node.js
+compatibility using the `nodejs_compat` compatibility flag. Any Worker
+running with `nodejs_compat` enabled and with a compatibility date of
+`2025-09-01` or later will have access to `node:fs` by default. It is
+also possible to enable `node:fs` on Workers with an earlier compatibility
+date using a combination of the `nodejs_compat` and `enable_nodejs_fs_module`
+flags. To disable `node:fs` you can set the `disable_nodejs_fs_module` flag.
+
+```js
+import { readFileSync, writeFileSync } from "node:fs";
+
+const config = readFileSync("/bundle/config.txt", "utf8");
+
+writeFileSync("/tmp/abc.txt", "Hello, world!");
+```
+
+The Workers Virtual File System (VFS) is a memory-based file system that allows
+you to read modules included in your Worker bundle as read-only files, access a
+directory for writing temporary files, or access common
+[character devices](https://linux-kernel-labs.github.io/refs/heads/master/labs/device_drivers.html) like
+`/dev/null`, `/dev/random`, `/dev/full`, and `/dev/zero`.
+
+The directory structure initially looks like:
+
+```
+
+/bundle
+└── (one file for each module in your Worker bundle)
+/tmp
+└── (empty, but you can write files, create directories, symlinks, etc)
+/dev
+├── null
+├── random
+├── full
+└── zero
+
+```
+
+The `/bundle` directory contains the files for all modules included in your
+Worker bundle, which you can read using APIs like `readFileSync` or
+`read(...)`, etc. These are always read-only. Reading from the bundle
+can be useful when you need to read a config file or a template.
+
+```js
+import { readFileSync } from "node:fs";
+
+// The config.txt file would be included in your Worker bundle.
+// Refer to the Wrangler documentation for details on how to
+// include additional files.
+const config = readFileSync("/bundle/config.txt", "utf8");
+
+export default {
+	async fetch(request) {
+		return new Response(`Config contents: ${config}`);
+	},
+};
+```
+
+The `/tmp` directory is writable, and you can use it to create temporary files
+or directories. You can also create symlinks in this directory. However, the
+contents of `/tmp` are not persistent and are unique to each request. This means
+that files created in `/tmp` within the context of one request will not be
+available in other concurrent or subsequent requests.
+
+```js
+import { writeFileSync, readFileSync } from "node:fs";
+
+export default {
+	fetch(request) {
+		// The file `/tmp/hello.txt` will only exist for the duration
+		// of this request.
+		writeFileSync("/tmp/hello.txt", "Hello, world!");
+		const contents = readFileSync("/tmp/hello.txt", "utf8");
+		return new Response(`File contents: ${contents}`);
+	},
+};
+```
+
+The `/dev` directory contains common character devices:
+
+- `/dev/null`: A null device that discards all data written to it and returns
+  EOF on read.
+- `/dev/random`: A device that provides random bytes on reads and discards all
+  data written to it. Reading from `/dev/random` is only permitted when within
+  the context of a request.
+- `/dev/full`: A device that always returns EOF on reads and discards all data
+  written to it.
+- `/dev/zero`: A device that provides an infinite stream of zero bytes on reads
+  and discards all data written to it.
+
+All operations on the VFS are synchronous. You can use the synchronous,
+asynchronous callback, or promise-based APIs provided by the `node:fs` module
+but all operations will be performed synchronously.
+
+Timestamps for files in the VFS are currently always set to the Unix epoch
+(`1970-01-01T00:00:00Z`). This means that operations that rely on timestamps,
+like `fs.stat`, will always return the same timestamp for all files in the VFS.
+This is a temporary limitation that will be addressed in a future release.
+
+Since all temporary files are held in memory, the total size of all temporary
+files and directories created count towards your Worker’s memory limit. If you
+exceed this limit, the Worker instance will be terminated and restarted.
+
+The file system implementation has the following limits:
+
+- The maximum total length of a file path is 4096 characters, including path
+  separators. Because paths are handled as file URLs internally, the limit
+  accounts for percent-encoding of special characters, decoding characters
+  that do not need encoding before the limit is checked. For example, the
+  path `/tmp/abcde%66/ghi%zz' is 18 characters long because the `%66`does
+not need to be percent-encoded and is therefore counted as one character,
+while the`%zz` is an invalid percent-encoding that is counted as 3 characters.
+- The maximum number of path segments is 48. For example, the path `/a/b/c` is
+  3 segments.
+- The maximum size of an individual file is 128 MB total.
+
+The following `node:fs` APIs are not supported in Workers, or are only partially
+supported:
+
+- `fs.watch` and `fs.watchFile` operations for watching for file changes.
+- The `fs.globSync()` and other glob APIs have not yet been implemented.
+- The `force` option in the `fs.rm` API has not yet bee implemented.
+- Timestamps for files are always set to the Unix epoch (`1970-01-01T00:00:00Z`).
+- File permissions and ownership are not supported.
+
+The full `node:fs` API is documented in the [Node.js documentation for `node:fs`](https://nodejs.org/api/fs.html).

@@ -274,6 +274,10 @@ console.log(json);
 
 ## Advanced Usage
 
+:::note[Looking for more parameters?]
+Visit the [Browser Rendering PDF API reference](/api/resources/browser_rendering/subresources/json/methods/create/) for all available parameters, such as setting HTTP credentials using `authenticate`, setting `cookies`, and customizing load behavior using `gotoOptions`.
+:::
+
 ### Using a custom model (BYO API Key)
 
 Browser Rendering can use a custom model for which you supply credentials. List the model(s) in the `custom_ai` array:
@@ -352,5 +356,10 @@ In this example, Browser Rendering first calls Anthropic's Claude Sonnet 4 model
 
 <Render
   file="setting-custom-user-agent"
+  product="browser-rendering"
+/>
+
+<Render
+  file="faq"
   product="browser-rendering"
 />

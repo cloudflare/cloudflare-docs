@@ -1,0 +1,36 @@
+releaseNotes: |-
+  This release contains minor fixes, improvements, and new features including Path Maximum Transmission Unit Discovery (PMTUD). With PMTUD enabled, the client will dynamically adjust packet sizing to optimize connection performance. There is also a new connection status message in the GUI to inform users that the local network connection may be unstable. This will make it easier to debug connectivity issues.
+
+  WARP client version 2025.8.779.0 introduced an updated public key for Linux packages. The public key must be updated if it was installed before September 12, 2025 to ensure the repository remains functional after December 4, 2025. Instructions to make this update are available at [pkg.cloudflareclient.com](https://pkg.cloudflareclient.com/).
+
+  **Changes and improvements**
+  - The GUI now displays the health of the tunnel and DNS connections by showing a connection status message when the network may be unstable. This will make it easier to debug connectivity issues.
+  - Deleting registrations no longer returns an error when succeeding.
+  - Path Maximum Transmission Unit Discovery (PMTUD) is now used to discover the effective MTU of the connection. This allows the client to improve connection performance optimized for the current network.
+
+  **Known issues**
+  - Devices using WARP client 2025.4.929.0 and up may experience Local Domain Fallback failures if a fallback server has not been configured. To configure a fallback server, refer to [Route traffic to fallback server](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/#route-traffic-to-fallback-server).
+version: 2025.9.173.1
+releaseDate: 2025-10-15T23:18:22.366Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/jammy-arm/version/2025.9.173.1
+packageSize: 51555532
+platformName: Linux
+linuxPlatforms:
+  jammy-arm: 51555532
+  bullseye-arm: 51807344
+  noble-arm: 51962118
+  fedora35-intel: 55082058
+  centos8-intel: 54971956
+  focal-arm: 51880200
+  fedora35-arm: 54139702
+  focal-intel: 52699034
+  bookworm-intel: 52375426
+  fedora34-intel: 55429867
+  centos8-arm: 54353378
+  fedora34-arm: 54574223
+  noble-intel: 52172584
+  trixie-arm: 51781020
+  trixie-intel: 52175108
+  jammy-intel: 52382106
+  bookworm-arm: 51540838
+  bullseye-intel: 52601928

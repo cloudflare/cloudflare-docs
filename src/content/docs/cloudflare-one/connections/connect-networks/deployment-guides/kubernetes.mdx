@@ -169,38 +169,26 @@ Leave the Cloudflare Tunnel browser tab open while we focus on the Kubernetes de
 
 ## 4. Store the tunnel token
 
-`cloudflared` uses a tunnel token to run a remotely-managed Cloudflare Tunnel. You can store the tunnel token in a [Kubernetes secret](https://kubernetes.io/docs/concepts/configuration/secret/), which requires data to be encoded as a base64-encoded string. The encoding is not meant to protect the token from being read but to allow for the safe handling of binary data within Kubernetes.
+`cloudflared` uses a tunnel token to run a remotely-managed Cloudflare Tunnel. You can store the tunnel token in a [Kubernetes secret](https://kubernetes.io/docs/concepts/configuration/secret/).
 
-1. Convert the tunnel token into base64 format:
-
-	```sh
-	'eyJhIjoiNWFiNGU5Z...' | base64
-	```
-
-	```sh output
-	ZXlKa...NKOQo=
-	```
-
-2. In GKE Cloud Shell, create a `tunnel-token.yaml` file with the following content. Make sure to replace `<base64_tunnel_token>` with your base64-encoded token value (`ZXlKa...NKOQo=`).
+1. In GKE Cloud Shell, create a `tunnel-token.yaml` file with the following content. Make sure to replace `<YOUR_TUNNEL_TOKEN>` with your tunnel token (`eyJhIjoiNWFiNGU5Z...`).
 
 		```yaml title="tunnel-token.yaml"
 		apiVersion: v1
-		data:
-				token: <base64_tunnel_token>
 		kind: Secret
 		metadata:
-				name: tunnel-token
-				namespace: default
-		type: Opaque
+		  name: tunnel-token
+		stringData:
+		  token: <YOUR_TUNNEL_TOKEN>
 		```
 
-3. Create the secret:
+2. Create the secret:
 
 		```sh
 		kubectl create -f tunnel-token.yaml
 		```
 
-4. Check the newly created secret:
+3. Check the newly created secret:
 
 		```sh
 		kubectl get secrets

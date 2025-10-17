@@ -6,7 +6,7 @@ sidebar:
   order: 5
 ---
 
-import { Render, APIRequest } from "~/components";
+import { Render, APIRequest, DashButton } from "~/components";
 
 The following table represents the comparison operators that are supported and example values. Filters are added as escaped JSON strings formatted as `{"key":"<field>","operator":"<comparison_operator>","value":"<value>"}`.
 
@@ -89,11 +89,15 @@ Here is an example request using cURL via API:
 
 To set filters through the dashboard:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select the account or domain you want to use.
-2. Go to **Analytics & Logs** > **Logs**.
-3. Select **Add Logpush job**. A modal window will open.
-4. Select the dataset you want to push to a storage service.
-5. Below **Select data fields**, in the **Filter** section, you can set up your filters.
-6. You need to select a [dataset field](/logs/logpush/logpush-job/datasets/), an [Operator](/logs/logpush/logpush-job/filters/#logical-operators), and a **Value**.
-7. You can connect more filters using `AND` and `OR` logical operators.
-8. Select **Next** to continue the setting up of your Logpush job.
+1. In the Cloudflare dashboard, go to the **Logpush** page at the account or or domain (also known as zone) level.
+ 
+   For account: <DashButton url="/?to=/:account/logs" />
+ 
+   For domain (also known as zone): <DashButton url="/?to=/:account/:zone/analytics/logs" />
+
+
+2. Select the dataset you want to push to a storage service. Depending on your choice, you have access to [account-scoped datasets](/logs/logpush/logpush-job/datasets/account/) and [zone-scoped datasets](/logs/logpush/logpush-job/datasets/zone/), respectively.
+3. Below **Select data fields**, in the **Filter** section, you can set up your filters.
+4. You need to select a [dataset field](/logs/logpush/logpush-job/datasets/), an [Operator](/logs/logpush/logpush-job/filters/#logical-operators), and a **Value**.
+5. You can connect more filters using `AND` and `OR` logical operators.
+6. Select **Next** to continue the setting up of your Logpush job.

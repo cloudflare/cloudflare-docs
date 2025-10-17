@@ -3,18 +3,21 @@ id: 31178cc41d0ec56d42ef892160589635
 url: warp-1-basics
 title: WARP - Understand Cloudflare WARP basics
 description: In this episode, we explain the core features of the Cloudflare WARP client and how to troubleshoot common issues. After watching, you will have an understanding of the GUI, the differences between the consumer and corporate WARP, device profiles, the various operating modes of WARP, split tunneling, and more.
-products:
-  - warp, zero-trust
+pcx_content_type: video
+products: 
+  - zero-trust-warp
+  - cloudflare-one
 thumbnail:
   url: https://pub-d9bf66e086fb4b639107aa52105b49dd.r2.dev/Understand-Cloudflare-WARP-Basics%20thumbnail.png
-chapters: {
-  "Introduction and WARP GUI Basics": "0s",
-  "Consumer vs Corporate WARP": "57s",
-  "Device Profiles Explained": "01m35s",
-  "WARP Operating Modes": "02m12s",
-  "Split Tunneling": "03m4s",
-  "Conclusion": "04m56s"
-}
+chapters:
+  {
+    "Introduction and WARP GUI Basics": "0s",
+    "Consumer vs Corporate WARP": "57s",
+    "Device Profiles Explained": "01m35s",
+    "WARP Operating Modes": "02m12s",
+    "Split Tunneling": "03m4s",
+    "Conclusion": "04m56s",
+  }
 transcript: |
 
   WEBVTT
@@ -28,7 +31,7 @@ transcript: |
 
   2
   00:00:06.240 --> 00:00:10.200
-  <v Speaker1>Welcome. In this video, 
+  <v Speaker1>Welcome. In this video,
   you'll learn the basics of Cloudflare WARP.</v>
 
   3
@@ -37,57 +40,57 @@ transcript: |
 
   4
   00:00:12.480 --> 00:00:17.240
-  <v Speaker1>but this guide is all about empowering you to 
+  <v Speaker1>but this guide is all about empowering you to
   understand and solve issues faster on your</v>
 
   5
   00:00:17.240 --> 00:00:22.120
-  <v Speaker1>own. We will learn the Cloudflare WARP client 
+  <v Speaker1>own. We will learn the Cloudflare WARP client
   and how it differs from the consumer version</v>
 
   6
   00:00:22.120 --> 00:00:27.240
-  <v Speaker1>of WARP, also known as the app 1.1.1.1, 
+  <v Speaker1>of WARP, also known as the app 1.1.1.1,
   device profiles,</v>
 
   7
   00:00:27.520 --> 00:00:32.800
-  <v Speaker1>the different operating modes of WARP, 
+  <v Speaker1>the different operating modes of WARP,
   split tunneling exclude versus include modes,</v>
 
   8
   00:00:32.960 --> 00:00:36.000
-  <v Speaker1>and the WARP GUI and its intended versus 
+  <v Speaker1>and the WARP GUI and its intended versus
   actual state.</v>
 
   9
   00:00:36.560 --> 00:00:40.360
-  <v Speaker1>These are the basic concepts that will 
+  <v Speaker1>These are the basic concepts that will
   prepare you to troubleshoot any issues you</v>
 
   10
   00:00:40.360 --> 00:00:44.640
-  <v Speaker1>may encounter. Let's get started with What is 
+  <v Speaker1>may encounter. Let's get started with What is
   the Cloudflare WARP client?</v>
 
   11
   00:00:45.040 --> 00:00:49.920
-  <v Speaker1>Cloudflare WARP client allows you to protect 
+  <v Speaker1>Cloudflare WARP client allows you to protect
   corporate devices by securely and privately</v>
 
   12
   00:00:49.920 --> 00:00:53.800
-  <v Speaker1>sending traffic from those devices to 
+  <v Speaker1>sending traffic from those devices to
   Cloudflare's global network,</v>
 
   13
   00:00:54.040 --> 00:00:57.120
-  <v Speaker1>where Cloudflare Gateway can apply advanced 
+  <v Speaker1>where Cloudflare Gateway can apply advanced
   web filtering.</v>
 
   14
   00:00:57.440 --> 00:01:00.800
-  <v Speaker1>The consumer version of WARP, 
+  <v Speaker1>The consumer version of WARP,
   or the app 1.1.1.1,</v>
 
   15
@@ -96,22 +99,22 @@ transcript: |
 
   16
   00:01:03.140 --> 00:01:06.220
-  <v Speaker1>The corporate version integrates with 
+  <v Speaker1>The corporate version integrates with
   Cloudflare Zero Trust,</v>
 
   17
   00:01:06.380 --> 00:01:09.940
-  <v Speaker1>giving your IT team the ability to manage 
+  <v Speaker1>giving your IT team the ability to manage
   security policies,</v>
 
   18
   00:01:10.180 --> 00:01:12.940
-  <v Speaker1>control traffic routing, 
+  <v Speaker1>control traffic routing,
   and monitor usage.</v>
 
   19
   00:01:13.060 --> 00:01:16.100
-  <v Speaker1>If you're not sure which version of WARP 
+  <v Speaker1>If you're not sure which version of WARP
   you're currently using,</v>
 
   20
@@ -120,22 +123,22 @@ transcript: |
 
   21
   00:01:19.020 --> 00:01:21.820
-  <v Speaker1>The consumer version will display WARP in 
+  <v Speaker1>The consumer version will display WARP in
   red,</v>
 
   22
   00:01:21.980 --> 00:01:25.220
-  <v Speaker1>whereas the corporate version will display 
+  <v Speaker1>whereas the corporate version will display
   Zero Trust in blue.</v>
 
   23
   00:01:25.740 --> 00:01:28.500
-  <v Speaker1>If your intention is to use the corporate 
+  <v Speaker1>If your intention is to use the corporate
   version,</v>
 
   24
   00:01:28.660 --> 00:01:32.900
-  <v Speaker1>make sure you're seeing a blue Zero Trust 
+  <v Speaker1>make sure you're seeing a blue Zero Trust
   WARP banner by authenticating with your</v>
 
   25
@@ -148,72 +151,72 @@ transcript: |
 
   27
   00:01:37.940 --> 00:01:42.380
-  <v Speaker1>A device profile represents a different set 
+  <v Speaker1>A device profile represents a different set
   of parameters assigned to your device,</v>
 
   28
   00:01:42.380 --> 00:01:45.220
-  <v Speaker1>based on its relationship with the policy 
+  <v Speaker1>based on its relationship with the policy
   attributes.</v>
 
   29
   00:01:45.220 --> 00:01:49.540
-  <v Speaker1>You can create multiple profiles and apply 
+  <v Speaker1>You can create multiple profiles and apply
   different settings based on your user's</v>
 
   30
   00:01:49.540 --> 00:01:53.140
-  <v Speaker1>identity, the device location, 
+  <v Speaker1>identity, the device location,
   and other criteria.</v>
 
   31
   00:01:53.180 --> 00:01:57.140
-  <v Speaker1>IT administrators can assign different device 
+  <v Speaker1>IT administrators can assign different device
   profiles to their users.</v>
 
   32
   00:01:57.540 --> 00:02:01.220
-  <v Speaker1>For example, depending on office locations, 
+  <v Speaker1>For example, depending on office locations,
   teams,</v>
 
   33
   00:02:01.220 --> 00:02:05.100
-  <v Speaker1>device types, operating systems, 
+  <v Speaker1>device types, operating systems,
   or other attributes,</v>
 
   34
   00:02:05.310 --> 00:02:09.230
-  <v Speaker1>users might have different routes that need 
+  <v Speaker1>users might have different routes that need
   to be excluded from their WARP Tunnel,</v>
 
   35
   00:02:09.470 --> 00:02:13.070
-  <v Speaker1>or different DNS settings to accommodate 
+  <v Speaker1>or different DNS settings to accommodate
   local development services.</v>
 
   36
   00:02:16.070 --> 00:02:20.470
-  <v Speaker1>All right, it's important to know that WARP 
+  <v Speaker1>All right, it's important to know that WARP
   client can operate in different modes,</v>
 
   37
   00:02:20.470 --> 00:02:24.390
-  <v Speaker1>because each mode controls the types of 
+  <v Speaker1>because each mode controls the types of
   traffic sent to Cloudflare Gateway</v>
 
   38
   00:02:24.390 --> 00:02:29.430
-  <v Speaker1>differently. The WARP mode determines which 
+  <v Speaker1>differently. The WARP mode determines which
   Zero Trust features are available on the</v>
 
   39
   00:02:29.430 --> 00:02:33.590
-  <v Speaker1>device. Selecting the right mode depends on 
+  <v Speaker1>device. Selecting the right mode depends on
   your organization's needs.</v>
 
   40
   00:02:33.870 --> 00:02:39.520
-  <v Speaker1>For example, for Internet security or remote 
+  <v Speaker1>For example, for Internet security or remote
   access gateway with WARP or Secure Web</v>
 
   41
@@ -222,7 +225,7 @@ transcript: |
 
   42
   00:02:42.910 --> 00:02:47.470
-  <v Speaker1>and the latter should only be used in cases 
+  <v Speaker1>and the latter should only be used in cases
   where Cloudflare cannot control DNS</v>
 
   43
@@ -231,27 +234,27 @@ transcript: |
 
   44
   00:02:49.590 --> 00:02:53.550
-  <v Speaker1>Both Gateway with DoH and Proxy Mode are used 
+  <v Speaker1>Both Gateway with DoH and Proxy Mode are used
   for Internet filtering.</v>
 
   45
   00:02:54.150 --> 00:02:59.710
-  <v Speaker1>Gateway with DoH is only DNS traffic, 
+  <v Speaker1>Gateway with DoH is only DNS traffic,
   while Proxy Mode is only HTTP traffic.</v>
 
   46
   00:02:59.870 --> 00:03:05.150
-  <v Speaker1>Lastly, Device Information Only mode would be 
+  <v Speaker1>Lastly, Device Information Only mode would be
   useful for clientless access or browser based</v>
 
   47
   00:03:05.150 --> 00:03:09.530
-  <v Speaker1>remote access to use device posture without 
+  <v Speaker1>remote access to use device posture without
   proxying traffic to Cloudflare.</v>
 
   48
   00:03:09.570 --> 00:03:13.050
-  <v Speaker1>If you encounter a problem, 
+  <v Speaker1>If you encounter a problem,
   understanding which mode you're in will help</v>
 
   49
@@ -260,32 +263,32 @@ transcript: |
 
   50
   00:03:15.210 --> 00:03:19.290
-  <v Speaker1>And that's because WARP modes are 
+  <v Speaker1>And that's because WARP modes are
   combinations or absences of particular</v>
 
   51
   00:03:19.290 --> 00:03:24.250
-  <v Speaker1>features. For example, 
+  <v Speaker1>features. For example,
   Gateway with WARP includes both DNS and</v>
 
   52
   00:03:24.250 --> 00:03:26.810
-  <v Speaker1>Tunnel components. So when you're 
+  <v Speaker1>Tunnel components. So when you're
   troubleshooting,</v>
 
   53
   00:03:26.810 --> 00:03:31.770
-  <v Speaker1>you have to look at both the DNS and Tunnel 
+  <v Speaker1>you have to look at both the DNS and Tunnel
   components as opposed to Gateway with DoH</v>
 
   54
   00:03:32.090 --> 00:03:34.890
-  <v Speaker1>where you will only have to look at the DNS 
+  <v Speaker1>where you will only have to look at the DNS
   component.</v>
 
   55
   00:03:35.170 --> 00:03:38.050
-  <v Speaker1>But don't worry, you don't have to memorize 
+  <v Speaker1>But don't worry, you don't have to memorize
   all of this.</v>
 
   56
@@ -294,12 +297,12 @@ transcript: |
 
   57
   00:03:40.450 --> 00:03:45.730
-  <v Speaker1>Next up, split tunneling, 
+  <v Speaker1>Next up, split tunneling,
   a feature that allows you to control what IP</v>
 
   58
   00:03:45.770 --> 00:03:48.850
-  <v Speaker1>traffic goes through the WARP virtual 
+  <v Speaker1>traffic goes through the WARP virtual
   interface or tunnel.</v>
 
   59
@@ -316,37 +319,37 @@ transcript: |
 
   62
   00:03:57.090 --> 00:04:01.330
-  <v Speaker1>All traffic will be sent to Cloudflare 
+  <v Speaker1>All traffic will be sent to Cloudflare
   Gateway except for IPs and domains you</v>
 
   63
   00:04:01.330 --> 00:04:05.970
-  <v Speaker1>specify. The second mode is include IPs and 
+  <v Speaker1>specify. The second mode is include IPs and
   domains.</v>
 
   64
   00:04:06.290 --> 00:04:11.300
-  <v Speaker1>Only traffic destined to IPs or domains you 
+  <v Speaker1>Only traffic destined to IPs or domains you
   specify will be sent to Cloudflare Gateway.</v>
 
   65
   00:04:11.780 --> 00:04:16.700
-  <v Speaker1>All other traffic will bypass Gateway and 
+  <v Speaker1>All other traffic will bypass Gateway and
   will no longer be filtered by your network or</v>
 
   66
   00:04:16.740 --> 00:04:22.340
-  <v Speaker1>HTTP policies. Secure Web Gateway without DNS 
+  <v Speaker1>HTTP policies. Secure Web Gateway without DNS
   filtering and Device Information Only mode</v>
 
   67
   00:04:22.340 --> 00:04:25.420
-  <v Speaker1>will automatically disable domain based split 
+  <v Speaker1>will automatically disable domain based split
   tunneling.</v>
 
   68
   00:04:25.420 --> 00:04:28.180
-  <v Speaker1>So if you're experiencing issues related to 
+  <v Speaker1>So if you're experiencing issues related to
   domains,</v>
 
   69
@@ -355,40 +358,40 @@ transcript: |
 
   70
   00:04:30.340 --> 00:04:33.380
-  <v Speaker1>And lastly, here's a common point of 
+  <v Speaker1>And lastly, here's a common point of
   confusion.</v>
 
   71
   00:04:33.620 --> 00:04:36.940
-  <v Speaker1>The toggle button in the WARP GUI shows the 
+  <v Speaker1>The toggle button in the WARP GUI shows the
   intended state,</v>
 
   72
   00:04:36.980 --> 00:04:41.060
-  <v Speaker1>not the actual state. For example, 
+  <v Speaker1>not the actual state. For example,
   if the toggle is on,</v>
 
   73
   00:04:41.100 --> 00:04:46.140
-  <v Speaker1>it means that the client intends to connect, 
+  <v Speaker1>it means that the client intends to connect,
   but the actual status may show disconnected</v>
 
   74
   00:04:46.140 --> 00:04:51.100
-  <v Speaker1>if there's an issue. So always check the 
+  <v Speaker1>if there's an issue. So always check the
   message below the toggle for the current</v>
 
   75
   00:04:51.100 --> 00:04:55.900
-  <v Speaker1>connection state. You now understand the 
+  <v Speaker1>connection state. You now understand the
   foundation of WARP client components.</v>
 
   76
   00:04:55.900 --> 00:04:59.140
-  <v Speaker1>If you want to learn more, 
+  <v Speaker1>If you want to learn more,
   we also have additional resources on</v>
 
   77
   00:04:59.140 --> 00:05:02.380
-  <v Speaker1>Cloudflare docs. Thanks for watching and see 
+  <v Speaker1>Cloudflare docs. Thanks for watching and see
   you soon!</v>

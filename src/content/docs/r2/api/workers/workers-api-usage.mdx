@@ -83,7 +83,8 @@ Within your Worker code, your bucket is now available under the `MY_BUCKET` vari
 :::caution[Local Development mode in Wrangler]
 
 By default `wrangler dev` runs in local development mode. In this mode, all operations performed by your local worker will operate against local storage on your machine.
-You can set an R2 as a [remote binding](/workers/development-testing/#remote-bindings) if you want R2 operations made during development to be performed against a real R2 bucket.
+
+If you want the R2 operations that are performed during development to be performed against a real R2 bucket, you can set `"remote" : true` in the R2 binding configuration. Refer to [remote bindings documentation](/workers/development-testing/#remote-bindings) for more information.
 
 :::
 

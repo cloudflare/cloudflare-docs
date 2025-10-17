@@ -36,6 +36,10 @@ If you want to skip the steps and get started quickly, select **Deploy to Cloudf
 
 Make sure you have the [browser binding](/browser-rendering/platform/wrangler/#bindings) configured in your `wrangler.toml` file:
 
+:::note
+To use the latest version of `@cloudflare/playwright`, your Worker configuration must include the `nodejs_compat` compatibility flag and a `compatibility_date` of 2025-09-15 or later. This change is necessary because the library's functionality requires the native `node.fs` API.
+:::
+
 <WranglerConfig>
 
 ```toml
@@ -179,6 +183,63 @@ export default {
 		);
 	},
 };
+```
+
+### Storage state
+
+Playwright supports [storage state](https://playwright.dev/docs/api/class-browsercontext#browsercontext-storage-state) to obtain and persist cookies and other storage data. In this example, you will use storage state to persist cookies and other storage data in [Workers KV](/kv).
+
+
+First, ensure you have a KV namespace. You can create a new one with:
+
+```bash
+npx wrangler kv namespace create KV
+```
+
+Then, add the KV namespace to your `wrangler.toml` file:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"name": "storage-state-examples",
+	"main": "src/index.ts",
+	"compatibility_flags": ["nodejs_compat"],
+	"compatibility_date": "2025-09-17",
+	"browser": {
+		"binding": "MYBROWSER"
+	},
+	"kv_namespaces": [
+		{
+			"binding": "KV",
+			"id": "<YOUR-KV-NAMESPACE-ID>"
+		}
+	]
+}
+```
+
+</WranglerConfig>
+
+Now, you can use the storage state to persist cookies and other storage data in KV:
+
+```ts title="src/index.ts"
+// gets persisted storage state from KV or undefined if it does not exist
+const storageStateJson = await env.KV.get('storageState');
+const storageState = storageStateJson ? await JSON.parse(storageStateJson) as BrowserContextOptions['storageState'] : undefined;
+
+await using browser = await launch(env.MYBROWSER);
+// creates a new context with storage state persisted in KV
+await using context = await browser.newContext({ storageState });
+
+await using page = await context.newPage();
+
+// do some actions on the page that may update client-side storage
+
+// gets updated storage state: cookies, localStorage, and IndexedDB
+const updatedStorageState = await context.storageState({ indexedDB: true });
+
+// persists updated storage state in KV
+await env.KV.put('storageState', JSON.stringify(updatedStorageState));
 ```
 
 ### Keep Alive

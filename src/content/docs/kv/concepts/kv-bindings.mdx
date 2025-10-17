@@ -60,7 +60,7 @@ export default {
 
 When you use Wrangler to develop locally with the `wrangler dev` command, Wrangler will default to using a local version of KV to avoid interfering with any of your live production data in KV. This means that reading keys that you have not written locally will return `null`.
 
-To have `wrangler dev` connect to your Workers KV namespace running on Cloudflare's global network, set your KV as a [remote binding](/workers/development-testing/#remote-bindings).
+To have `wrangler dev` connect to your Workers KV namespace running on Cloudflare's global network, set `"remote" : true` in the KV binding configuration. Refer to the [remote bindings documentation](/workers/development-testing/#remote-bindings) for more information.
 
 <WranglerConfig>
 

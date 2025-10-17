@@ -5,6 +5,8 @@ sidebar:
   order: 1
 ---
 
+import { DashButton } from "~/components"
+
 With purge by single-file, cached resources are instantly removed from the stored assets in your Content Delivery Network (CDN) across all data centers. New requests for the purged asset receive the latest version from your origin web server and add it back to your CDN cache within the specific Cloudflare data center that served the request.
 
 For information on single-file purge rate limits, refer to the [limits](/cache/how-to/purge-cache/#single-file-purge-limits) section.
@@ -27,14 +29,16 @@ You can purge objects with these characteristics using an API call to ([purge fi
 Always use UTF-8 encoded URLs for single-file cache purges. Wildcards are not supported on single file purge, and you must use purge by hostname, prefix, or implement cache tags as an alternative solution.
 :::
 
-1. Log in to your [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
-2. Select **Caching** > **Configuration**.
-3. Under **Purge Cache**, select **Custom Purge**. The **Custom Purge** window appears.
-4. Under **Purge by**, select **URL**.
-5. Enter the appropriate value(s) in the text field using the format shown in the example. Be aware that the host part of the URL is not case-sensitive, meaning it will always be converted to lowercase according to RFC standards. However, the path portion is case-sensitive. For example, `https://EXAMPLE.com/helloHI` would be treated as `https://example.com/helloHI`.
-6. Perform any additional instructions to complete the form.
-7. Review your entries.
-8. Select **Purge**.
+1. In the Cloudflare dashboard, go to the **Configuration** page.
+
+   <DashButton url="/?to=/:account/:zone/caching/configuration" />
+
+2. Under **Purge Cache**, select **Custom Purge**. The **Custom Purge** window appears.
+3. Under **Purge by**, select **URL**.
+4. Enter the appropriate value(s) in the text field using the format shown in the example. Be aware that the host part of the URL is not case-sensitive, meaning it will always be converted to lowercase according to RFC standards. However, the path portion is case-sensitive. For example, `https://EXAMPLE.com/helloHI` would be treated as `https://example.com/helloHI`.
+5. Perform any additional instructions to complete the form.
+6. Review your entries.
+7. Select **Purge**.
 
 :::note
 For information on how to use single-file purge to purge assets cached by a Workers fetch, refer to [Single file purge assets cached by a Worker](/workers/reference/how-the-cache-works/#single-file-purge-assets-cached-by-a-worker).

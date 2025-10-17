@@ -138,7 +138,7 @@ The `warp-debugging-info` folder may contain multiple versions of the same log, 
 In timestamped logs such as `daemon.log`, the most recent events will appear at the end of the file.
 :::
 
-#### Log retention window
+### Log retention window
 
 Each WARP log file (such as `connection_stats.log`, `dns_stats.log`, `daemon.log`, `boringtun.log`, `daemon_dns.log`, `dex.log` and `captive-portal.log`) is limited by size and age:
 
@@ -149,6 +149,16 @@ Each WARP log file (such as `connection_stats.log`, `dns_stats.log`, `daemon.log
 Log files may include data from up to 96 hours (four days) prior to when `warp-diag` was run, but only if log activity is minimal. In environments with high logging volume (for example, repeated errors), logs may rotate more frequently, and the captured window could be much shorter (only a few hours).
 
 Always check the timestamps at the end of each log file to verify the time range covered by the diagnostic archive.
+
+:::note[Linux log behavior]
+
+On Linux, the WARP daemon logs are written to the system logs by the `warp-svc` service.
+
+If you need to adjust the maximum log level or filter what gets logged, you can configure the WARP `systemd` unit file using the [`LogLevelMax=` option](https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html#LogLevelMax=).
+
+Cloudflare WARP does not provide an official method to configure logging levels during the installation process.
+
+:::
 
 ## iOS/Android/ChromeOS
 

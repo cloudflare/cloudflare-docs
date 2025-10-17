@@ -3,7 +3,7 @@
 
 ---
 
-import { Steps, Tabs, TabItem } from "~/components"
+import { Steps, Tabs, TabItem, DashButton } from "~/components"
 
 <Tabs syncKey="dashNewNav">
     <TabItem label="Old dashboard">
@@ -28,24 +28,25 @@ import { Steps, Tabs, TabItem } from "~/components"
     </TabItem>
     <TabItem label="New dashboard" icon="rocket">
         <Steps>
-            1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-            2. Go to **Security** > **Security rules**. 
-            3. To create a new empty rule, select **Create rule** > **Custom rules**.
-            4. Enter a descriptive name for the rule in **Rule name**.
-            5. Under **When incoming requests match**, use the **Field** drop-down list to filter by **Sequences** and select from:
+            1. In the Cloudflare dashboard, go to the **Security rules** page.
+
+                <DashButton url="/?to=/:account/:zone/security/security-rules" />
+            2. To create a new empty rule, select **Create rule** > **Custom rules**.
+            3. Enter a descriptive name for the rule in **Rule name**.
+            4. Under **When incoming requests match**, use the **Field** drop-down list to filter by **Sequences** and select from:
                 - Current Operation
                 - Previous Operations
                 - Elapsed time
-            6. Under **Value**, select the edit icon to use Builder and build a sequence on the side panel.
-            7. Under **Select a hostname for this sequence**, choose all or a specific hostname from the dropdown list. Optionally, you can use the search bar to search for a specific hostname.
-            8. From the **Methods** dropdown list, choose all methods or a specific request method.
+            5. Under **Value**, select the edit icon to use Builder and build a sequence on the side panel.
+            6. Under **Select a hostname for this sequence**, choose all or a specific hostname from the dropdown list. Optionally, you can use the search bar to search for a specific hostname.
+            7. From the **Methods** dropdown list, choose all methods or a specific request method.
             8. Select the checkbox for each endpoint in the order that you want them to appear in the sequence.
-            8. Set the time to complete.
-            9. Select **Save**.
-            10. Under **Then take action**, select the rule action in the **Choose action** dropdown. For example, selecting *Block* tells Cloudflare to refuse requests that match the conditions you specified.
-            11. (Optional) If you selected the *Block* action, you can configure a custom response.
-            12. Under **Place at**, select the order of when the rule will fire.
-            13. To save and deploy your rule, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
+            9. Set the time to complete.
+            10. Select **Save**.
+            11. Under **Then take action**, select the rule action in the **Choose action** dropdown. For example, selecting *Block* tells Cloudflare to refuse requests that match the conditions you specified.
+            12. (Optional) If you selected the *Block* action, you can configure a custom response.
+            13. Under **Place at**, select the order of when the rule will fire.
+            14. To save and deploy your rule, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
         </Steps>
             :::note
             The fields in the custom rule are populated as a grouped sequence based on the values that you entered on Builder.

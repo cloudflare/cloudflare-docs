@@ -10,7 +10,7 @@ description: Page Shield tracks resources (such as scripts) loaded by your
   malicious resources.
 ---
 
-import { GlossaryTooltip } from "~/components";
+import { GlossaryTooltip, Render } from "~/components";
 
 Page Shield helps manage client-side resources loaded by your website visitors, including scripts, their connections, and [cookies](https://www.cloudflare.com/learning/privacy/what-are-cookies/). It can trigger alert notifications when resources change or are considered malicious.
 
@@ -26,10 +26,7 @@ Enterprise customers with a paid add-on have access to additional classification
 
 Enterprise customers with a paid add-on can create [policies](/page-shield/policies/) to define a positive security model (also known as positive blocking) for resources such as scripts.
 
-When you create policies, Cloudflare will generate CSP directives from those policies based on their configuration:
-
-- Log policies will create CSP directives for the `Content-Security-Policy-Report-Only` HTTP header.
-- Allow policies will create CSP directives for the `Content-Security-Policy` HTTP header.
+<Render file="policy-headers" product="page-shield" />
 
 For more information, refer to [Policies](/page-shield/policies/).
 

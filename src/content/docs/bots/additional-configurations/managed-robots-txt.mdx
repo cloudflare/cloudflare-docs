@@ -123,7 +123,7 @@ To implement a `robots.txt` file on your domain:
 	</TabItem>
 	<TabItem label="New dashboard" icon="rocket">
 		<Steps>
-			1. In the Cloudflare dashboard, go to the Security Settings page.
+			1. In the Cloudflare dashboard, go to the **Security Settings** page.
 				
 				<DashButton url="/?to=/:account/:zone/security/settings" />
 			2. Filter by **Bot traffic**.
@@ -173,6 +173,10 @@ If you would like to opt out of displaying the policy in your `robots.txt` file,
 <DashButton url="/?to=/:account/:zone/" />
 
 Alternatively, you can use [Security Settings](#implementation). 
+
+:::caution
+Google Search Console may occasionally report `Syntax not understood` for Content Signals and newer directives in the `robots.txt` standard. However, we have observed no impact on crawling rates or SEO as a result of these reports.
+:::
 
 ## Availability
 

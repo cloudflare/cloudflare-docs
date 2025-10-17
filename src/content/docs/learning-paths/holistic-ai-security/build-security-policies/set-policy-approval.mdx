@@ -15,9 +15,9 @@ If you use specific AI tools within your organization, you may want to create po
 3. Name the policy.
 4. Under **Traffic**, build a logical expression that defines the traffic you want to allow for AI at your organization.
 
-   | Selector | Operator | Value |
-   | -------- | -------- | ----- |
-   | Application | in | *Artificial Intelligence* |
+   | Selector    | Operator | Value                     |
+   | ----------- | -------- | ------------------------- |
+   | Application | in       | _Artificial Intelligence_ |
 
 5. For **Action**, select **Allow**.
 6. Select **Create policy**.
@@ -39,9 +39,9 @@ Cloudflare Workers are an easy method to stand up custom user coaching pages. Th
 3. Name the policy.
 4. Under **Traffic**, build a logical expression that defines the traffic you want to allow for AI at your organization.
 
-   | Selector | Operator | Value |
-   | -------- | -------- | ----- |
-   | Application | in | *Artificial Intelligence* |
+   | Selector    | Operator | Value                     |
+   | ----------- | -------- | ------------------------- |
+   | Application | in       | _Artificial Intelligence_ |
 
 5. For **Action**, select **Block**.
 6. To **Modify the Gateway block behavior**, determine how you want to redirect your users.
@@ -64,18 +64,43 @@ You can build policies that enable Prompt Capture for AI applications in specifi
 3. Name the policy.
 4. Under **Traffic**, build a logical expression that defines the traffic you want to allow for AI at your organization.
 
-   | Selector | Operator | Value |
-   | -------- | -------- | ----- |
-   | Application | in | *Artificial Intelligence* |
+   | Selector    | Operator | Value                     |
+   | ----------- | -------- | ------------------------- |
+   | Application | in       | _Artificial Intelligence_ |
 
 5. Under **Identity**, build a logical express that defines the user identity you want to capture and log their prompts to review for data loss prevention.
 
-   | Selector | Operator | API Value |
-   | -------- | -------- | ----- |
-   | Application | in | `any(identity.groups.name[*] in {\"contractors\" \"cohort-224\"})`|
+   | Selector    | Operator | API Value                                                          |
+   | ----------- | -------- | ------------------------------------------------------------------ |
+   | Application | in       | `any(identity.groups.name[*] in {\"contractors\" \"cohort-224\"})` |
 
 6. For **Action**, select **Allow**.
 7. Select **Create policy**.
+
+## Configure Gateway to use ChatGPT workspace header
+
+If your organization uses [ChatGPT Business](https://chatgpt.com/business/), you can configure a Gateway policy to enforce the use of your organization's workspace ID, ensuring all traffic to ChatGPT is correctly associated with your account. This will implement Gateway [tenant control](/cloudflare-one/policies/gateway/http-policies/tenant-control/), which lets you manage how users interact with specific applications.
+
+To create this policy, you will add a custom HTTP header to your Gateway policy. This header, `Chatgpt-Allowed-Workspace-Id`, ensures that only requests with your organization's unique workspace ID are permitted.
+
+1.  In [Zero Trust](https://one.dash.cloudflare.com), go to **Gateway** > **Firewall policies**.
+2.  In the **HTTP** tab, select **Add a policy**.
+3.  Name the policy.
+4.  Under **Traffic**, build a logical expression that defines the traffic you want to allow.
+
+    | Selector    | Operator | Value     |
+    | ----------- | -------- | --------- |
+    | Application | in       | _ChatGPT_ |
+
+5.  In **Action**, choose _Allow_.
+6.  In **Untrusted certificate action**, choose _Block_.
+7.  Under **Add headers to matched requests**, select **Add a header**.
+8.  Add the following values to each field:
+    - **Custom header name**: `Chatgpt-Allowed-Workspace-Id`
+    - **Custom header value**: Your organization's workspace ID
+9.  Select **Create policy**.
+
+For more information, refer to the [OpenAI documentation](https://help.openai.com/articles/8798594-what-is-a-workspace-how-do-i-access-my-chatgpt-business-workspace).
 
 ## Order your policies for specific inspection and enforcement
 
@@ -86,27 +111,27 @@ For example, if you want to prevent sensitive data being shared with AI but want
 
 1. The policy that blocks sensitive data being shared would need to be ordered first in this policy group. This will allow it to be enforced before the next policy in the policy group.
 
-   | Operator | Selector | Operator | Value | Action |
-   | -------- | -------- | -------- | ----- | ------ |
-   |          | Application | in | *Artificial Intelligence* | |
-   | And      | DLP Profile | in | *my-sensitive-data* | Block |
+   | Operator | Selector    | Operator | Value                     | Action |
+   | -------- | ----------- | -------- | ------------------------- | ------ |
+   |          | Application | in       | _Artificial Intelligence_ |        |
+   | And      | DLP Profile | in       | _my-sensitive-data_       | Block  |
 
 2. Next, create the policy that allows the use of AI and specifies the prompt capture for specific user groups.
 
-   | Selector | Operator | Value |
-   | -------- | -------- | ----- |
-   | Application | in | *Artificial Intelligence*|
+   | Selector    | Operator | Value                     |
+   | ----------- | -------- | ------------------------- |
+   | Application | in       | _Artificial Intelligence_ |
 
 3. Under **Traffic**:
 
-   |  Selector | Operator | Value|
-   | -------- | --------  | ------ |
-   | Application  | in | *Artificial Intelligence*|
+   | Selector    | Operator | Value                     |
+   | ----------- | -------- | ------------------------- |
+   | Application | in       | _Artificial Intelligence_ |
 
 4. Under **Identity**:
 
-   | Selector | Operator| API Value | Action |
-   | -------- | -------- | -------- | ------ |
-   | User Group Names    | in | `any(identity.groups.name[*] in {\"contractors\" \"cohort-224\"})`| Allow |
+   | Selector         | Operator | API Value                                                          | Action |
+   | ---------------- | -------- | ------------------------------------------------------------------ | ------ |
+   | User Group Names | in       | `any(identity.groups.name[*] in {\"contractors\" \"cohort-224\"})` | Allow  |
 
 By structuring your policies in this way, you ensure that any instance of sensitive data is blocked from AI applications, no matter which user group is involved. If Cloudflare does not detect sensitive data, it will allow the prompt while capturing it for the targeted user groups – in this case, users belonging to the `contractors` and `cohort-224` groups. If that same user group were to then use sensitive data in a prompt, it would be detected and blocked.

@@ -83,6 +83,19 @@ Verified Bot Categories is available on all plans.
 | Webhooks                   | `Webhooks`                   | Payment processors, WordPress Integration tools                         |
 | Other                      | `Other`                      |                                                                         |
 
+
+### Known issues
+
+The Yandex bot is classified as a Verified Bot, but traffic may occasionally be blocked by a [WAF Managed Rule](/waf/managed-rules/) (such as the rule with ID `...f6cbb163`).
+
+This typically occurs when Yandex updates its source IP address ranges. The new IPs are temporarily unrecognized by the WAF Managed Rules until the updated Verified Bot IP list is fully synchronized across the Cloudflare network.
+
+To restore Yandex traffic, deploy a [WAF exception](/waf/managed-rules/waf-exceptions/) that temporarily skips the managed rule with ID `<RuleID id="2854e3f18ad946049e6d90ccf6cbb163" />` when a request is coming from the **Yandex IP** and the user-agent contains **Yandex**. This ensures that legitimate Yandex traffic bypasses the blocking rule without disabling security features for other traffic.
+
+You can also create a [WAF Custom Rule](/waf/custom-rules/skip/) with the _Skip_ action targeting the managed ruleset that contains the blocking rule. The rule expression should specifically match the request's Yandex IP and User-Agent.
+
+The issue is transient and will resolve automatically once the new Yandex IP addresses are fully propagated to Cloudflare's systems. This propagation typically takes up to 48 hours. If the bot remains blocked after 48 hours, contact [Cloudflare Support](/support/contacting-cloudflare-support/).
+
 ---
 
 ## Availability

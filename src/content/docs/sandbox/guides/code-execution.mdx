@@ -1,0 +1,262 @@
+---
+title: Use code interpreter
+pcx_content_type: how-to
+sidebar:
+  order: 5
+---
+
+import { TypeScriptExample } from "~/components";
+
+This guide shows you how to execute Python and JavaScript code with rich outputs using the Code Interpreter API.
+
+## When to use code interpreter
+
+Use the Code Interpreter API for **simple, direct code execution** with minimal setup:
+
+- **Quick code execution** - Run Python/JS code without environment setup
+- **Rich outputs** - Get charts, tables, images, HTML automatically
+- **AI-generated code** - Execute LLM-generated code with structured results
+- **Persistent state** - Variables preserved between executions in the same context
+
+Use `exec()` for **advanced or custom workflows**:
+
+- **System operations** - Install packages, manage files, run builds
+- **Custom environments** - Configure specific versions, dependencies
+- **Shell commands** - Git operations, system utilities, complex pipelines
+- **Long-running processes** - Background services, servers
+
+## Create an execution context
+
+Code contexts maintain state between executions:
+
+<TypeScriptExample>
+```
+import { getSandbox } from '@cloudflare/sandbox';
+
+const sandbox = getSandbox(env.Sandbox, 'my-sandbox');
+
+// Create a Python context
+const pythonContext = await sandbox.createCodeContext({
+  language: 'python'
+});
+
+console.log('Context ID:', pythonContext.id);
+console.log('Language:', pythonContext.language);
+
+// Create a JavaScript context
+const jsContext = await sandbox.createCodeContext({
+  language: 'javascript'
+});
+```
+</TypeScriptExample>
+
+## Execute code
+
+### Simple execution
+
+<TypeScriptExample>
+```
+// Create context
+const context = await sandbox.createCodeContext({
+  language: 'python'
+});
+
+// Execute code
+const result = await sandbox.runCode(context.id, `
+print("Hello from Code Interpreter!")
+result = 2 + 2
+print(f"2 + 2 = {result}")
+`);
+
+console.log('Output:', result.output);
+console.log('Success:', result.success);
+```
+</TypeScriptExample>
+
+### Persistent state
+
+Variables and imports persist between executions in the same context:
+
+<TypeScriptExample>
+```
+const context = await sandbox.createCodeContext({
+  language: 'python'
+});
+
+// First execution - import and define variables
+await sandbox.runCode(context.id, `
+import pandas as pd
+import numpy as np
+
+data = [1, 2, 3, 4, 5]
+print("Data initialized")
+`);
+
+// Second execution - use previously defined variables
+const result = await sandbox.runCode(context.id, `
+mean = np.mean(data)
+print(f"Mean: {mean}")
+`);
+
+console.log(result.output); // "Mean: 3.0"
+```
+</TypeScriptExample>
+
+## Handle rich outputs
+
+The code interpreter returns multiple output formats:
+
+<TypeScriptExample>
+```
+const result = await sandbox.runCode(context.id, `
+import matplotlib.pyplot as plt
+
+plt.plot([1, 2, 3], [1, 4, 9])
+plt.title('Simple Chart')
+plt.show()
+`);
+
+// Check available formats
+console.log('Formats:', result.formats);  // ['text', 'png']
+
+// Access outputs
+if (result.outputs.png) {
+  // Return as image
+  return new Response(atob(result.outputs.png), {
+    headers: { 'Content-Type': 'image/png' }
+  });
+}
+
+if (result.outputs.html) {
+  // Return as HTML (pandas DataFrames)
+  return new Response(result.outputs.html, {
+    headers: { 'Content-Type': 'text/html' }
+  });
+}
+
+if (result.outputs.json) {
+  // Return as JSON
+  return Response.json(result.outputs.json);
+}
+```
+</TypeScriptExample>
+
+## Stream execution output
+
+For long-running code, stream output in real-time:
+
+<TypeScriptExample>
+```
+const context = await sandbox.createCodeContext({
+  language: 'python'
+});
+
+const result = await sandbox.runCode(
+  context.id,
+  `
+import time
+
+for i in range(10):
+    print(f"Processing item {i+1}/10...")
+    time.sleep(0.5)
+
+print("Done!")
+`,
+  {
+    stream: true,
+    onOutput: (data) => {
+      console.log('Output:', data);
+    },
+    onResult: (result) => {
+      console.log('Result:', result);
+    },
+    onError: (error) => {
+      console.error('Error:', error);
+    }
+  }
+);
+```
+</TypeScriptExample>
+
+## Execute AI-generated code
+
+Run LLM-generated code safely in a sandbox:
+
+<TypeScriptExample>
+```
+// 1. Generate code with Claude
+const response = await fetch('https://api.anthropic.com/v1/messages', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'x-api-key': env.ANTHROPIC_API_KEY,
+    'anthropic-version': '2023-06-01'
+  },
+  body: JSON.stringify({
+    model: 'claude-3-5-sonnet-20241022',
+    max_tokens: 1024,
+    messages: [{
+      role: 'user',
+      content: 'Write Python code to calculate fibonacci sequence up to 100'
+    }]
+  })
+});
+
+const { content } = await response.json();
+const code = content[0].text;
+
+// 2. Execute in sandbox
+const context = await sandbox.createCodeContext({ language: 'python' });
+const result = await sandbox.runCode(context.id, code);
+
+console.log('Generated code:', code);
+console.log('Output:', result.output);
+console.log('Success:', result.success);
+```
+</TypeScriptExample>
+
+## Manage contexts
+
+### List all contexts
+
+<TypeScriptExample>
+```
+const contexts = await sandbox.listCodeContexts();
+
+console.log(`${contexts.length} active contexts:`);
+
+for (const ctx of contexts) {
+  console.log(`  ${ctx.id} (${ctx.language})`);
+}
+```
+</TypeScriptExample>
+
+### Delete contexts
+
+<TypeScriptExample>
+```
+// Delete specific context
+await sandbox.deleteCodeContext(context.id);
+console.log('Context deleted');
+
+// Clean up all contexts
+const contexts = await sandbox.listCodeContexts();
+for (const ctx of contexts) {
+  await sandbox.deleteCodeContext(ctx.id);
+}
+console.log('All contexts deleted');
+```
+</TypeScriptExample>
+
+## Best practices
+
+- **Clean up contexts** - Delete contexts when done to free resources
+- **Handle errors** - Always check `result.success` and `result.error`
+- **Stream long operations** - Use streaming for code that takes >2 seconds
+- **Validate AI code** - Review generated code before execution
+
+## Related resources
+
+- [Code Interpreter API reference](/sandbox/api/interpreter/) - Complete API documentation
+- [AI code executor tutorial](/sandbox/tutorials/ai-code-executor/) - Build complete AI executor
+- [Execute commands guide](/sandbox/guides/execute-commands/) - Lower-level command execution

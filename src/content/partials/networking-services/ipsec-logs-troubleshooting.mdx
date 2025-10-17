@@ -3,12 +3,16 @@ params:
   - productName
 ---
 
+import { DashButton } from "~/components";
+
 {props.productName}	customers can use IPsec logs to help them troubleshoot issues with their IPsec tunnels. This functionality is specifically aimed at the key-exchange portion of the IPsec handshake, where customers can run into issues. With IPsec logs, customers can set up a logpush job to forward their IPsec logs to their preferred storage service. Once they have the logs, they can investigate and find the root cause of their key exchange issues.
 
 ## Set up an IPsec logpush job
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
-2. Go to **Analytics & Logs** > **Logpush**.
+1. In the Cloudflare dashboard, go to the **Logpush** page.
+
+	<DashButton url="/?to=/:account/logs" />
+
 3. Select **Create a Logpush job**.
 4. Select **IPsec logs** as your dataset.
 

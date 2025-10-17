@@ -6,17 +6,19 @@ sidebar:
 description: Learn how to use Cloudflare's Observatory to assess the performance of your website.
 ---
 
-import { Render } from "~/components";
+import { Render, DashButton } from "~/components";
 
 ## Run Synthetic test
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
-2. Go to **Speed** > **Synthetic Monitoring**.
-3. Enter the URL you want to test. The URL must belong to the zone you are testing from.
-4. Select the test type you want to use: **Browser** or **Network tests**.
-5. Select the **Region** the automated browser will use.
-6. Depending on your plan you can select to run the test **once**, **daily** or **weekly**. Refer to the [Quotas](/speed/observatory/run-speed-test/#quotas) section for information on the test frequency available for your plan. Note that these limits may change over time.
-7. After the test finishes running, you will get a Lighthouse score and you will have access to the list of the tests run. The test result page will give you details regarding the performance of your website, both for the desktop and mobile versions. Refer to [Understand test results](/speed/observatory/test-results/) for more information.
+1. In the Cloudflare dashboard, go to the **Synthetic Monitoring** page.
+
+   <DashButton url="/?to=/:account/:zone/speed/test" />
+
+2. Enter the URL you want to test. The URL must belong to the zone you are testing from.
+3. Select the test type you want to use: **Browser** or **Network tests**.
+4. Select the **Region** the automated browser will use.
+5. Depending on your plan you can select to run the test **once**, **daily** or **weekly**. Refer to the [Quotas](/speed/observatory/run-speed-test/#quotas) section for information on the test frequency available for your plan. Note that these limits may change over time.
+6. After the test finishes running, you will get a Lighthouse score and you will have access to the list of the tests run. The test result page will give you details regarding the performance of your website, both for the desktop and mobile versions. Refer to [Understand test results](/speed/observatory/test-results/) for more information.
 
 <Render file="user-agents" product="speed" />
 
@@ -30,9 +32,9 @@ In the Tested URLs table, in the last column, you can select the three dots > **
 
 ## Enable real user monitoring (RUM)
 
-Once a test has been run, you can enable RUM data in the test results page:
+Once a test has been run, you can enable [RUM](/speed/observatory/#real-user-monitoring-rum) data in the test results page:
 
-1. Go to **Observatory** and select **Enable Rum**. You can choose to enable globally or enable everywhere except the EU.
+1. Go to **Observatory** and select **Enable RUM**. You can choose to enable globally or enable everywhere except the EU.
 2. Once RUM data is running on your site, you can access **Real user measurements** on your test results page. Usually it takes less than five minutes to see the data coming in, but it will depend on traffic.
 
 Refer to [Understand test results](/speed/observatory/test-results/) for more information about the results provided by real user data.
@@ -45,67 +47,21 @@ RUM uses a lightweight JavaScript beacon to collect the information Observatory 
 
 Quota limits for the number of tests you can run per month are currently the following:
 
-<table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; width:100%; text-align:center;">
-  <thead style="background-color:#f5f5f5;">
-    <tr>
-      <th>Plan</th>
-      <th>One-off tests</th>
-      <th>Recurring tests</th>
-      <th>Frequency of recurring tests</th>
-      <th>Available Regions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Pro</td>
-      <td>50</td>
-      <td>5</td>
-      <td>Daily</td>
-      <td rowspan="3" style="text-align:left;">
-        <ul>
-          <li>Iowa, USA</li>
-          <li>South Carolina, USA</li>
-          <li>North Virginia, USA</li>
-          <li>Dallas, USA</li>
-          <li>Oregon, USA</li>
-        </ul>
-        <ul>
-          <li>Hamina, Finland</li>
-          <li>Madrid, Spain</li>
-          <li>St. Ghislain, Belgium</li>
-          <li>Eemshaven, Netherlands</li>
-          <li>Milan, Italy</li>
-          <li>Paris, France</li>
-          <li>London, England</li>
-          <li>Frankfurt, Germany</li>
-        </ul>
-        <ul>
-          <li>Changhua County, Taiwan</li>
-          <li>Tokyo, Japan</li>
-          <li>Osaka, Japan</li>
-          <li>Jurong West, Singapore</li>
-          <li>Sydney, Australia</li>
-          <li>Mumbai, India</li>
-        </ul>
-        <ul>
-          <li>Tel Aviv, Israel</li>
-        </ul>
-        <ul>
-          <li>São Paulo, Brazil</li>
-        </ul>
-      </td>
-    </tr>
-    <tr>
-      <td>Business</td>
-      <td>100</td>
-      <td>10</td>
-      <td>Daily</td>
-    </tr>
-    <tr>
-      <td>Enterprise</td>
-      <td>150</td>
-      <td>15</td>
-      <td>Daily</td>
-    </tr>
-  </tbody>
-</table>
+| Plan       | One-off tests | Recurring tests | Frequency of recurring tests |
+|------------|---------------|-----------------|------------------------------|
+| Pro        | 50            | 5               | Daily                        |
+| Business   | 100           | 10              | Daily                        |
+| Enterprise | 150           | 15              | Daily                        |
+
+**Available Regions (all plans):**
+
+| Region                | Region              | Region             |
+|------------------------|---------------------|--------------------|
+| Iowa, USA             | Hamina, Finland     | Changhua County, Taiwan |
+| South Carolina, USA   | Madrid, Spain       | Tokyo, Japan       |
+| North Virginia, USA   | St. Ghislain, Belgium | Osaka, Japan      |
+| Dallas, USA           | Eemshaven, Netherlands | Jurong West, Singapore |
+| Oregon, USA           | Milan, Italy        | Sydney, Australia  |
+| London, England       | Paris, France       | Mumbai, India      |
+| Frankfurt, Germany    | Tel Aviv, Israel    | São Paulo, Brazil  |
+

@@ -1,0 +1,203 @@
+---
+title: Automated testing pipeline
+pcx_content_type: tutorial
+sidebar:
+  order: 4
+---
+
+import { Render, PackageManagers } from "~/components";
+
+Build a testing pipeline that clones Git repositories, installs dependencies, runs tests, and reports results.
+
+**Time to complete**: 25 minutes
+
+## Prerequisites
+
+<Render file="prereqs" product="workers" />
+
+You'll also need a GitHub repository with tests (public or private with access token).
+
+## 1. Create your project
+
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args={"test-pipeline --template=cloudflare/sandbox-sdk/examples/minimal"}
+/>
+
+```sh
+cd test-pipeline
+```
+
+## 2. Build the pipeline
+
+Replace `src/index.ts`:
+
+```typescript
+import { getSandbox, proxyToSandbox, type Sandbox } from '@cloudflare/sandbox';
+
+export { Sandbox } from '@cloudflare/sandbox';
+
+interface Env {
+	Sandbox: DurableObjectNamespace<Sandbox>;
+	GITHUB_TOKEN?: string;
+}
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const proxyResponse = await proxyToSandbox(request, env);
+		if (proxyResponse) return proxyResponse;
+
+		if (request.method !== 'POST') {
+			return new Response('POST { "repoUrl": "https://github.com/owner/repo", "branch": "main" }');
+		}
+
+		try {
+			const { repoUrl, branch = 'main' } = await request.json();
+
+			if (!repoUrl) {
+				return Response.json({ error: 'repoUrl required' }, { status: 400 });
+			}
+
+			const sandbox = getSandbox(env.Sandbox, `test-${Date.now()}`);
+
+			try {
+				// Clone repository
+				let cloneUrl = repoUrl;
+				if (env.GITHUB_TOKEN && repoUrl.includes('github.com')) {
+					cloneUrl = repoUrl.replace('https://', `https://${env.GITHUB_TOKEN}@`);
+				}
+
+				await sandbox.exec(`git clone --depth=1 --branch=${branch} ${cloneUrl} /workspace/repo`);
+
+				// Detect project type
+				const projectType = await detectProjectType(sandbox);
+
+				// Install dependencies
+				const installCmd = getInstallCommand(projectType);
+				if (installCmd) {
+					const installResult = await sandbox.exec(`cd /workspace/repo && ${installCmd}`);
+					if (!installResult.success) {
+						return Response.json({
+							success: false,
+							error: 'Install failed',
+							output: installResult.stderr
+						});
+					}
+				}
+
+				// Run tests
+				const testCmd = getTestCommand(projectType);
+				const testResult = await sandbox.exec(`cd /workspace/repo && ${testCmd}`);
+
+				return Response.json({
+					success: testResult.exitCode === 0,
+					exitCode: testResult.exitCode,
+					output: testResult.stdout,
+					errors: testResult.stderr,
+					projectType
+				});
+
+			} finally {
+				await sandbox.destroy();
+			}
+
+		} catch (error: any) {
+			return Response.json({ error: error.message }, { status: 500 });
+		}
+	},
+};
+
+async function detectProjectType(sandbox: any): Promise<string> {
+	try {
+		await sandbox.readFile('/workspace/repo/package.json');
+		return 'nodejs';
+	} catch {}
+
+	try {
+		await sandbox.readFile('/workspace/repo/requirements.txt');
+		return 'python';
+	} catch {}
+
+	try {
+		await sandbox.readFile('/workspace/repo/go.mod');
+		return 'go';
+	} catch {}
+
+	return 'unknown';
+}
+
+function getInstallCommand(projectType: string): string {
+	switch (projectType) {
+		case 'nodejs': return 'npm install';
+		case 'python': return 'pip install -r requirements.txt || pip install -e .';
+		case 'go': return 'go mod download';
+		default: return '';
+	}
+}
+
+function getTestCommand(projectType: string): string {
+	switch (projectType) {
+		case 'nodejs': return 'npm test';
+		case 'python': return 'python -m pytest || python -m unittest discover';
+		case 'go': return 'go test ./...';
+		default: return 'echo "Unknown project type"';
+	}
+}
+```
+
+## 3. Test locally
+
+Start the dev server:
+
+```sh
+npm run dev
+```
+
+Test with a repository:
+
+```sh
+curl -X POST http://localhost:8787 \
+  -H "Content-Type: application/json" \
+  -d '{
+    "repoUrl": "https://github.com/sindresorhus/is-promise",
+    "branch": "main"
+  }'
+```
+
+Response:
+
+```json
+{
+  "success": true,
+  "exitCode": 0,
+  "output": "...test output...",
+  "projectType": "nodejs"
+}
+```
+
+## 4. Deploy
+
+```sh
+npx wrangler deploy
+```
+
+For private repositories, set your GitHub token:
+
+```sh
+npx wrangler secret put GITHUB_TOKEN
+```
+
+## What you built
+
+An automated testing pipeline that:
+- Clones Git repositories
+- Detects project type (Node.js, Python, Go)
+- Installs dependencies automatically
+- Runs tests and reports results
+
+## Next steps
+
+- [Streaming output](/sandbox/guides/streaming-output/) - Add real-time test output
+- [Background processes](/sandbox/guides/background-processes/) - Handle long-running tests
+- [Sessions API](/sandbox/api/sessions/) - Cache dependencies between runs

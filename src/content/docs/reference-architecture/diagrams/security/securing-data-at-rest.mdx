@@ -5,6 +5,8 @@ sidebar:
   order: 1
   label: Securing data at rest
 reviewed: 2024-05-01
+description: >-
+  Learn how Cloudflare's API-driven Cloud Access Security Broker (CASB) works and secures data at rest.
 ---
 
 ## Introduction
@@ -26,7 +28,6 @@ When Cloudflare CASB is combined with Cloudflare's [Secure Web Gateway](/cloudfl
 ## Securing user access to data at rest
 
 1. Cloudflare authenticates users attempting to access SaaS applications, whether they are initiating the request from managed or unmanaged endpoints.
-
    1. For managed endpoints, we recommend deploying our [device agent](/cloudflare-one/connections/connect-devices/warp/) to maximize visibility and control of all traffic between the end user’s device and the resources being requested.
    2. For unmanaged endpoints, we have [client-less solutions](/reference-architecture/diagrams/sase/sase-clientless-access-private-dns/) which all you to still have visibility over and inspection into the data accessed by users.
 

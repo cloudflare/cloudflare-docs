@@ -22,12 +22,13 @@
 # answers).
 # ai-train: training or fine-tuning AI models.
 
-# ANY RESTRICTIONS EXPRESSED VIA CONTENT-SIGNALS ARE EXPRESS
+# ANY RESTRICTIONS EXPRESSED VIA CONTENT SIGNALS ARE EXPRESS
 # RESERVATIONS OF RIGHTS UNDER ARTICLE 4 OF THE EUROPEAN
 # UNION DIRECTIVE 2019/790 ON COPYRIGHT AND RELATED RIGHTS
 # IN THE DIGITAL SINGLE MARKET.
 
 User-agent: *
+Content-Signal: ai-train=yes, search=yes, ai-input=yes
 
 Allow: /
 Disallow: /client-ip-geolocation
@@ -35,8 +36,5 @@ Disallow: /plans/
 Disallow: /constellation
 Disallow: /cdn-cgi/
 Disallow: /email-security/
-
-Content-Usage: tdm=y
-Content-Signal: ai-train=yes, search=yes, ai-input=yes
 
 Sitemap: https://developers.cloudflare.com/sitemap-index.xml

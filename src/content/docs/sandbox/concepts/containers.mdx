@@ -1,0 +1,131 @@
+---
+title: Container runtime
+pcx_content_type: concept
+sidebar:
+  order: 3
+---
+
+Each sandbox runs in an isolated Linux container based on Ubuntu 22.04.
+
+## Pre-installed software
+
+The base container comes pre-packaged with a full development environment:
+
+**Languages and runtimes**:
+- Python 3.11 (with pip)
+- Node.js 20 LTS (with npm)
+- Bun (JavaScript/TypeScript runtime)
+
+**Python packages**:
+- NumPy - Numerical computing
+- pandas - Data analysis
+- Matplotlib - Plotting and visualization
+- IPython - Interactive Python
+
+**Development tools**:
+- Git - Version control
+- Build tools (gcc, make, pkg-config)
+- Text editors (vim, nano)
+- Process monitoring (htop, procps)
+
+**Utilities**:
+- curl, wget - HTTP clients
+- jq - JSON processor
+- Network tools (ping, dig, netstat)
+- Compression (zip, unzip)
+
+Install additional software at runtime or [customize the base image](/sandbox/configuration/dockerfile/):
+
+```bash
+# Python packages
+pip install scikit-learn tensorflow
+
+# Node.js packages
+npm install express
+
+# System packages
+apt-get install redis-server
+```
+
+## Filesystem
+
+The container provides a standard Linux filesystem. You can read and write anywhere you have permissions.
+
+**Standard directories**:
+- `/workspace` - Default working directory for user code
+- `/tmp` - Temporary files
+- `/home` - User home directory
+- `/usr/bin`, `/usr/local/bin` - Executable binaries
+
+**Example**:
+```typescript
+await sandbox.writeFile('/workspace/app.py', 'print("Hello")');
+await sandbox.writeFile('/tmp/cache.json', '{}');
+await sandbox.exec('ls -la /workspace');
+```
+
+## Process management
+
+Processes run as you'd expect in a regular Linux environment.
+
+**Foreground processes** (`exec()`):
+```typescript
+const result = await sandbox.exec('npm test');
+// Waits for completion, returns output
+```
+
+**Background processes** (`startProcess()`):
+```typescript
+const process = await sandbox.startProcess('node server.js');
+// Returns immediately, process runs in background
+```
+
+## Network capabilities
+
+**Outbound connections** work:
+```bash
+curl https://api.example.com/data
+pip install requests
+npm install express
+```
+
+**Inbound connections** require port exposure:
+```typescript
+await sandbox.startProcess('python -m http.server 8000');
+const exposed = await sandbox.exposePort(8000);
+console.log(exposed.exposedAt); // Public URL
+```
+
+**Localhost** works within sandbox:
+```bash
+redis-server &      # Start server
+redis-cli ping      # Connect locally
+```
+
+## Security
+
+**Between sandboxes** (isolated):
+- Each sandbox is a separate container
+- Filesystem, memory and network are all isolated
+
+**Within sandbox** (shared):
+- All processes see the same files
+- Processes can communicate with each other
+- Environment variables are session-scoped
+
+To run untrusted code, use separate sandboxes per user:
+```typescript
+const sandbox = getSandbox(env.Sandbox, `user-${userId}`);
+```
+
+## Limitations
+
+**Cannot**:
+- Load kernel modules or access host hardware
+- Run nested containers (no Docker-in-Docker)
+
+## Related resources
+
+- [Architecture](/sandbox/concepts/architecture/) - How containers fit in the system
+- [Security model](/sandbox/concepts/security/) - Container isolation details
+- [Sandbox lifecycle](/sandbox/concepts/sandboxes/) - Container lifecycle management

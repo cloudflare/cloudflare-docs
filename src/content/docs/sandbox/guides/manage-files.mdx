@@ -1,0 +1,175 @@
+---
+title: Manage files
+pcx_content_type: how-to
+sidebar:
+  order: 2
+---
+
+import { TypeScriptExample } from "~/components";
+
+This guide shows you how to read, write, organize, and synchronize files in the sandbox filesystem.
+
+## Path conventions
+
+File operations support both absolute and relative paths:
+
+- `/workspace` - Default working directory for application files
+- `/tmp` - Temporary files (may be cleared)
+- `/home` - User home directory
+
+<TypeScriptExample>
+```
+// Absolute paths
+await sandbox.writeFile('/workspace/app.js', code);
+
+// Relative paths (session-aware)
+const session = await sandbox.createSession();
+await session.exec('cd /workspace/my-project');
+await session.writeFile('app.js', code);  // Writes to /workspace/my-project/app.js
+await session.writeFile('src/index.js', code);  // Writes to /workspace/my-project/src/index.js
+```
+</TypeScriptExample>
+
+## Write files
+
+<TypeScriptExample>
+```
+import { getSandbox } from '@cloudflare/sandbox';
+
+const sandbox = getSandbox(env.Sandbox, 'my-sandbox');
+
+// Write text file
+await sandbox.writeFile('/workspace/app.js', `console.log('Hello from sandbox!');`);
+
+// Write JSON
+const config = { name: 'my-app', version: '1.0.0' };
+await sandbox.writeFile('/workspace/config.json', JSON.stringify(config, null, 2));
+
+// Write binary file (base64)
+const buffer = await fetch(imageUrl).then(r => r.arrayBuffer());
+const base64 = btoa(String.fromCharCode(...new Uint8Array(buffer)));
+await sandbox.writeFile('/workspace/image.png', base64, { encoding: 'base64' });
+```
+</TypeScriptExample>
+
+## Read files
+
+<TypeScriptExample>
+```
+// Read text file
+const file = await sandbox.readFile('/workspace/app.js');
+console.log(file.content);
+
+// Read and parse JSON
+const configFile = await sandbox.readFile('/workspace/config.json');
+const config = JSON.parse(configFile.content);
+
+// Read binary file
+const imageFile = await sandbox.readFile('/workspace/image.png', { encoding: 'base64' });
+return new Response(atob(imageFile.content), {
+  headers: { 'Content-Type': 'image/png' }
+});
+```
+</TypeScriptExample>
+
+## Organize files
+
+<TypeScriptExample>
+```
+// Create directories
+await sandbox.mkdir('/workspace/src', { recursive: true });
+await sandbox.mkdir('/workspace/tests', { recursive: true });
+
+// Rename file
+await sandbox.renameFile('/workspace/draft.txt', '/workspace/final.txt');
+
+// Move file
+await sandbox.moveFile('/tmp/download.txt', '/workspace/data.txt');
+
+// Delete file
+await sandbox.deleteFile('/workspace/temp.txt');
+```
+</TypeScriptExample>
+
+## Batch operations
+
+Write multiple files in parallel:
+
+<TypeScriptExample>
+```
+const files = {
+  '/workspace/src/app.js': 'console.log("app");',
+  '/workspace/src/utils.js': 'console.log("utils");',
+  '/workspace/README.md': '# My Project'
+};
+
+await Promise.all(
+  Object.entries(files).map(([path, content]) =>
+    sandbox.writeFile(path, content)
+  )
+);
+```
+</TypeScriptExample>
+
+## Check if file exists
+
+<TypeScriptExample>
+```
+try {
+  await sandbox.readFile('/workspace/config.json');
+  console.log('File exists');
+} catch (error) {
+  if (error.code === 'FILE_NOT_FOUND') {
+    // Create default config
+    await sandbox.writeFile('/workspace/config.json', '{}');
+  }
+}
+```
+</TypeScriptExample>
+
+## Best practices
+
+- **Use `/workspace`** - Default working directory for app files
+- **Use absolute paths** - Always use full paths like `/workspace/file.txt`
+- **Batch operations** - Use `Promise.all()` for multiple independent file writes
+- **Create parent directories** - Use `recursive: true` when creating nested paths
+- **Handle errors** - Check for `FILE_NOT_FOUND` errors gracefully
+
+## Troubleshooting
+
+### Directory doesn't exist
+
+Create parent directories first:
+
+<TypeScriptExample>
+```
+// Create directory, then write file
+await sandbox.mkdir('/workspace/data', { recursive: true });
+await sandbox.writeFile('/workspace/data/file.txt', content);
+```
+</TypeScriptExample>
+
+### Binary file encoding
+
+Use base64 for binary files:
+
+<TypeScriptExample>
+```
+// Write binary
+await sandbox.writeFile('/workspace/image.png', base64Data, {
+  encoding: 'base64'
+});
+
+// Read binary
+const file = await sandbox.readFile('/workspace/image.png', {
+  encoding: 'base64'
+});
+```
+</TypeScriptExample>
+
+## Related resources
+
+- [Files API reference](/sandbox/api/files/) - Complete method documentation
+- [Execute commands guide](/sandbox/guides/execute-commands/) - Run file operations with commands
+- [Git workflows guide](/sandbox/guides/git-workflows/) - Clone and manage repositories
+- [Code Interpreter guide](/sandbox/guides/code-execution/) - Generate and execute code files

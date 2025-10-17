@@ -1,0 +1,20 @@
+releaseNotes: |-
+  This release contains minor fixes and improvements.
+
+  **Changes and improvements**
+  - Fixed a bug preventing the `warp-diag captive-portal` command from running successfully due to the client not parsing SSID on macOS.
+  - Improvements to maintain [Global WARP override](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#global-warp-override) settings when [switching between organizations](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/switch-organizations/#switch-organizations-in-warp).
+  - MASQUE is now the default [tunnel protocol](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#device-tunnel-protocol) for all new WARP device profiles.
+  - Improvement to limit idle connections in [Gateway with DoH mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#gateway-with-doh) to avoid unnecessary resource usage that can lead to DoH requests not resolving.
+  - Improvements to maintain client connectivity during network changes.
+  - The WARP client now supports macOS Tahoe (version 26.0).
+
+  **Known issues**
+  - macOS Sequoia: Due to changes Apple introduced in macOS 15.0.x, the WARP client may not behave as expected. Cloudflare recommends the use of macOS 15.4 or later.
+
+  - Devices using WARP client 2025.4.929.0 and up may experience Local Domain Fallback failures if a fallback server has not been configured. To configure a fallback server, refer to [Route traffic to fallback server](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/#route-traffic-to-fallback-server).
+version: 2025.7.176.0
+releaseDate: 2025-09-30T20:43:08.412Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2025.7.176.0
+packageSize: 108538272
+platformName: macOS

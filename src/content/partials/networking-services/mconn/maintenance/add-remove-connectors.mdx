@@ -1,0 +1,13 @@
+---
+params:
+  - productName
+---
+
+To add a new {props.productName} you first need to remove the one associated with the on-ramp. You can only have more than one {props.productName} if you initially enabled high availability on your on-ramp.
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Go to **Magic WAN** > **Connector on-ramps (beta)**.
+3. Find the on-ramp that you want to edit > select the three dots next to it > **Edit**.
+4. In **Connectors**, remove the Connector associated with the on-ramp.
+5. Select **Add Connector** to add a different Connector to your on-ramp.
+6. Select **Save**.
