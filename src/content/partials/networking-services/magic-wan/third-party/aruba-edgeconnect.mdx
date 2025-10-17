@@ -359,4 +359,4 @@ This validates the east-west traffic flow through Cloudflare {props.productName}
 
 At this point, the GRE or IPsec tunnels should be connected from the EdgeConnect appliances to Cloudflare's global network, and traffic is scoped to route over the tunnels using the EdgeConnect Business Intent Overlays.
 
-To begin filtering traffic and gathering analytics, refer to the <a href={prps.magicFirewallUrl}>Magic Firewall documentation</a> to learn how to create filters for east-west inter-branch traffic and the <a href={prps.gatewayUrl}>Secure Web Gateway documentation</a> to learn how to configure Gateway policies if you decide to send traffic from your local private subnets to the Internet through Cloudflare Gateway.
+To begin filtering traffic and gathering analytics, refer to the <a href={props.magicFirewallUrl}>Magic Firewall documentation</a> to learn how to create filters for east-west inter-branch traffic and the <a href={props.gatewayUrl}>Secure Web Gateway documentation</a> to learn how to configure Gateway policies if you decide to send traffic from your local private subnets to the Internet through Cloudflare Gateway.
