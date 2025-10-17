@@ -5,7 +5,6 @@ params:
   - typeId_ipv4_addrUrl
   - configureStaticRoutesUrl
 ---
----
 
 This tutorial describes how to configure the Furukawa Electric's FITELnet F220 and F70 devices to connect to Cloudflare {props.productName} via IPsec tunnels. The use cases described in this tutorial are for both east-west (branch to branch) and north-south (Internet-bound).
 
@@ -23,16 +22,16 @@ These configurations were tested on FITELnet F220 and F70 series with the follow
 1. Go to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. Go to **{props.productName}** > **Configuration**.
 3. From the **Tunnels** tab, select **Create**.
-4. For the first IPsec tunnel, ensure the following settings are defined (refer to [Add tunnels]({props.addTunnelsUrl}) for information on settings not mentioned here):
+4. For the first IPsec tunnel, ensure the following settings are defined (refer to <a href={props.addTunnelsUrl}>Add tunnels</a> for information on settings not mentioned here):
    - **Tunnel name**: `FITEL-tunnel-1`
    - **Interface address**: Enter `10.0.0.1/31` for your first tunnel.
-   - **Customer endpoint**: This setting is not required unless your router is using an IKE ID of [type `ID_IPV4_ADDR`]({props.typeId_ipv4_addrUrl}).
+   - **Customer endpoint**: This setting is not required unless your router is using an IKE ID of <a href={props.typeId_ipv4_addrUrl}>type `ID_IPV4_ADDR`</a>.
    - **Cloudflare endpoint**: The Cloudflare anycast IP assigned to you by your account team.
    - **Pre-shared key**: Create a pre-shared key for your first tunnel.
 5. For the second IPsec tunnel, make the same changes as you did for the first tunnel, and ensure these additional setting is defined:
    - **Tunnel name**: `FITEL-tunnel-2`
    - **Interface address**: Enter `10.0.0.3/31` for your second tunnel.
-   - **Customer endpoint**: This setting is not required unless your router is using an IKE ID of [type `ID_IPV4_ADDR`]({props.typeId_ipv4_addrUrl}).
+   - **Customer endpoint**: This setting is not required unless your router is using an IKE ID of <a href={props.typeId_ipv4_addrUrl}>type `ID_IPV4_ADDR`</a>.
    - **Cloudflare endpoint**: The Cloudflare anycast IP assigned to you by your account team.
    - **Pre-shared key**: Create a pre-shared key for your second tunnel.
 
@@ -179,7 +178,7 @@ To configure routes for east-west (branch to branch) connections, refer to the f
 1. Go to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 2. Go to **{props.productName}** > **Configuration**.
 3. From the **Static Routes** tab, select **Create**.
-4. For the first route, ensure the following settings are defined (refer to [Configure static routes]({props.configureStaticRoutesUrl}) to learn about settings not mentioned here):
+4. For the first route, ensure the following settings are defined (refer to <a href={props.configureStaticRoutesUrl}>Configure static routes</a> to learn about settings not mentioned here):
 
 - **Prefix**: `192.168.0.0/24`
 - **Tunnel/Next hop**: _FITEL-tunnel-1 / 10.0.0.0_
@@ -207,7 +206,6 @@ Use the CLI to configure these settings:
 ip route 192.168.1.0 255.255.255.0 tunnel 2
 ```
 
----
 
 ## Connection test
 

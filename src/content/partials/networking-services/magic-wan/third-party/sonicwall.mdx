@@ -7,7 +7,6 @@ params:
   - configureMagicWanHealthChecksUrl
   - checkTunnelHealthInTheDashboardUrl
 ---
----
 
 import { Render } from "~/components";
 
@@ -19,7 +18,7 @@ This tutorial shows you how to use {props.productName} with the following versio
 - **Software versions tested**:
   - SonicOS 7.0.1
 
-You can connect your SonicWall appliance through [IPsec tunnels]({props.ipsecTunnelsUrl}) to {props.productName}. Generic Routing Encapsulation (GRE) is not supported on SonicWall.
+You can connect your SonicWall appliance through <a href={props.ipsecTunnelsUrl}>IPsec tunnels</a> to {props.productName}. Generic Routing Encapsulation (GRE) is not supported on SonicWall.
 
 ## Topology
 
@@ -29,7 +28,7 @@ The following instructions show how to setup an IPsec connection on your SonicWa
 
 ## 1. Create an IPsec tunnel on your Cloudflare account
 
-1. Start by [creating your IPsec tunnels]({props.creatingYourIpsecTunnelsUrl}) on Cloudflare. Name and describe the tunnels as needed, and add the following settings:
+1. Start by <a href={props.creatingYourIpsecTunnelsUrl}>creating your IPsec tunnels</a> on Cloudflare. Name and describe the tunnels as needed, and add the following settings:
 
    - **Interface address**: Enter the internal tunnel IP on the Cloudflare side of the IPsec tunnel. In this example, it is `10.200.1.0/31`.
    - **Customer endpoint**: Enter the WAN IP address of your SonicWall device. In our example, this is `198.51.100.2`.
@@ -54,7 +53,7 @@ The interface address on the Cloudflare side of the tunnel is `10.200.1.0/31`. Y
 
 Static routes are required for any networks that will be reached via the IPsec tunnel. In our example, there are two networks: `172.31.3.0/24` and the tunnel network `10.200.1.0/31`.
 
-1. [Create your static routes]({props.createYourStaticRoutesUrl}). Name and describe them as needed, and add the following settings:
+1. <a href={props.createYourStaticRoutesUrl}>Create your static routes</a>. Name and describe them as needed, and add the following settings:
 
    - **First tunnel**: Following our example, add `10.200.1.0/31` as the **Prefix** and `10.200.1.1` for the **Tunnel/Next hop**.
    - **Second tunnel**: Following our example, add `172.31.3.0/24` as the **Prefix** and `10.200.1.1` for the **Tunnel/Next hop**.
@@ -205,4 +204,4 @@ Health checks might take some time to stabilize after the configuration is chang
 
 ## 9. Verify tunnel status on Cloudflare dashboard
 
-The Cloudflare dashboard monitors the health of all anycast tunnels on your account that route traffic from Cloudflare to your origin network. Refer to [Check tunnel health in the dashboard]({props.checkTunnelHealthInTheDashboardUrl}) for more information.
+The Cloudflare dashboard monitors the health of all anycast tunnels on your account that route traffic from Cloudflare to your origin network. Refer to <a href={props.checkTunnelHealthInTheDashboardUrl}>Check tunnel health in the dashboard</a> for more information.

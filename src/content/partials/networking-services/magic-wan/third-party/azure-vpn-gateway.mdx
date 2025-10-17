@@ -57,9 +57,9 @@ The time it takes for Azure to fully provision the Virtual Network Gateway depen
 
 ## Configure {props.productName}
 
-1. Create an [IPsec tunnel]({props.ipsecTunnelUrl}) in the Cloudflare dashboard.
+1. Create an <a href={props.ipsecTunnelUrl}>IPsec tunnel</a> in the Cloudflare dashboard.
 2. Make sure you have the following settings:
-   1. **Interface address**: As the Azure Local Network Gateway will only permit specifying the lower IP address in a `/31` subnet, add the upper IP address within the `/31` subnet selected in [step 2 of the Configure Azure section](#2-configure-local-network-gateway-for-magic-ipsec-tunnel-health-checks). Refer to [Tunnel endpoints]({props.tunnelEndpointsUrl}) for more details.
+   1. **Interface address**: As the Azure Local Network Gateway will only permit specifying the lower IP address in a `/31` subnet, add the upper IP address within the `/31` subnet selected in [step 2 of the Configure Azure section](#2-configure-local-network-gateway-for-magic-ipsec-tunnel-health-checks). Refer to <a href={props.tunnelEndpointsUrl}>Tunnel endpoints</a> for more details.
    2. **Customer endpoint**: The Public IP associated with your Azure Virtual Network Gateway. For example, `40.xxx.xxx.xxx`.
    3. **Cloudflare endpoint**: Use the Cloudflare anycast address you have received from your account team. This will also be the IP address corresponding to the Local Network Gateway in Azure. For example, `162.xxx.xxx.xxx`.
    4. **Health check rate**: Leave the default option (Medium) selected.
@@ -72,7 +72,7 @@ The time it takes for Azure to fully provision the Virtual Network Gateway depen
 3. If you are using the Active/Active configuration, select **Add IPsec tunnel** and repeat step 2 to create the second {props.productName} IPsec tunnel. Use the same **Cloudflare endpoint** as for the first tunnel.
 4. Select **Add Tunnels** when you are finished.
 5.The Cloudflare dashboard will show you a list of your tunnels. Edit the tunnel(s) you have created > select **Generate a new pre-shared key** > copy the generated key. If using the Active/Active configuration, select **Change to a new custom pre-shared key** on the second tunnel and use the PSK generated for the first tunnel.
-6. Create [static routes]({props.staticRoutesUrl}) for your Azure Virtual Network subnets, specifying the newly created tunnel as the next hop.
+6. Create <a href={props.staticRoutesUrl}>static routes</a> for your Azure Virtual Network subnets, specifying the newly created tunnel as the next hop.
 
 :::note
 Both tunnels in an Active/Active configuration must use the same **Cloudflare endpoint**, because an Active/Active Azure VPN connection creates two tunnels to the same remote address.
@@ -97,7 +97,7 @@ A single Cloudflare anycast address must be used in both Active/Active and Activ
 
 ### 2. Configure Local Network Gateway for Magic IPsec tunnel health checks
 
-{props.productName} uses [Tunnel Health Checks]({props.tunnelHealthChecksUrl}) to monitor whether a tunnel is available.
+{props.productName} uses <a href={props.tunnelHealthChecksUrl}>Tunnel Health Checks</a> to monitor whether a tunnel is available.
 
 Tunnel health checks make use of ICMP probes sent from the Cloudflare side of the Magic IPsec tunnel to the remote endpoint (Azure). Probes are sent from the tunnel's interface address, which you specify in two places:
 

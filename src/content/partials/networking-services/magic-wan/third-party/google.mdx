@@ -4,7 +4,6 @@ params:
   - addTunnelsUrl
   - createAStaticRouteUrl
 ---
----
 
 This tutorial provides information and examples of how to configure IPsec VPN between Cloudflare {props.productName} with a GCP Cloud VPN.
 
@@ -69,7 +68,7 @@ After configuring the Cloud VPN gateway VPN and the tunnels as mentioned above, 
 
 ### IPsec tunnels
 
-1. Refer to [Add tunnels]({props.addTunnelsUrl}) to learn how to add an IPsec tunnel. When creating your IPsec tunnel, make sure you define the following settings:
+1. Refer to <a href={props.addTunnelsUrl}>Add tunnels</a> to learn how to add an IPsec tunnel. When creating your IPsec tunnel, make sure you define the following settings:
    - **Tunnel name**: `tunnel01`
    - **Interface address**: The IPsec tunnel inner `/30`CIDR block. For example, `169.254.244.2`.
    - **Customer endpoint**: The IP address from GCP VPN tunnel outside IP address. For example, `35.xx.xx.xx`.
@@ -94,7 +93,7 @@ The static route in {props.productName} should point to the appropriate virtual 
 
 To create a static route:
 
-1. Refer to [Create a static route]({props.createAStaticRouteUrl}) to learn how to create one.
+1. Refer to <a href={props.createAStaticRouteUrl}>Create a static route</a> to learn how to create one.
 2. In **Prefix**, enter the subnet for your VM. For example, `192.xx.xx.xx/24`.
 3. For the **Tunnel/Next hop**, choose the IPsec tunnel you created in the previous step.
 4. Repeat the steps above for the second IPsec tunnel you created.

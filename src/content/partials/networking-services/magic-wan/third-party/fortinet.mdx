@@ -7,13 +7,12 @@ params:
   - configureStaticRoutesUrl
   - checkTunnelHealthInTheDashboardUrl
 ---
----
 
 import { Render } from "~/components";
 
 This tutorial provides information and examples of how to configure Cloudflare {props.productName} with IPsec tunnels in conjunction with Fortinet FortiGate firewalls.
 
-The FortiGate configuration settings presented here support [bidirectional health checks]({props.bidirectionalHealthChecksUrl}) as required by Cloudflare {props.productName}. However, they do not factor in any other traffic flows outside of the tunnel health checks. The configuration may need to be adjusted based on your current FortiGate configuration.
+The FortiGate configuration settings presented here support <a href={props.bidirectionalHealthChecksUrl}>bidirectional health checks</a> as required by Cloudflare {props.productName}. However, they do not factor in any other traffic flows outside of the tunnel health checks. The configuration may need to be adjusted based on your current FortiGate configuration.
 
 ## Testing Environment
 
@@ -39,13 +38,13 @@ Cloudflare recommends customers configure two Magic IPsec tunnels per firewall/r
 5. When creating your IPsec tunnels:
    - **Health check type**: Change to _Request_.
    - **Replay Protection**: Do not change from the default setting.
-   - Set up fields such as **Name**, **Description**, **Interface Address**, **Customer endpoint**, and **Cloudflare endpoint** with settings that work for you. Refer to [Add tunnels]({props.addTunnelsUrl}) to learn more.
+   - Set up fields such as **Name**, **Description**, **Interface Address**, **Customer endpoint**, and **Cloudflare endpoint** with settings that work for you. Refer to <a href={props.addTunnelsUrl}>Add tunnels</a> to learn more.
 
 ### Magic static routes
 
 Add two Magic static routes to define the IP address space that exists behind the Magic IPsec tunnels - one to each of the two Magic IPsec tunnels defined in the previous section.
 
-By default, the Magic static routes are defined with the priority set to `100`. Cloudflare leverages [Equal Cost Multipath Routing (ECMP)]({props.equalCostMultipathRoutingEcmpUrl}) and will load balance the traffic equally across the two tunnels. If you prefer to use an Active/Passive model, you can leave the default value for the first route set to `100`, and set the value for the second tunnel to `150` (higher value is a lower priority).
+By default, the Magic static routes are defined with the priority set to `100`. Cloudflare leverages <a href={props.equalCostMultipathRoutingEcmpUrl}>Equal Cost Multipath Routing (ECMP)</a> and will load balance the traffic equally across the two tunnels. If you prefer to use an Active/Passive model, you can leave the default value for the first route set to `100`, and set the value for the second tunnel to `150` (higher value is a lower priority).
 
 1. Go to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
 
@@ -53,7 +52,7 @@ By default, the Magic static routes are defined with the priority set to `100`. 
 
 3. From the **Static Routes** tab, select **Create**.
 
-4. For the first route, ensure the following settings are defined (refer to [Configure static routes]({props.configureStaticRoutesUrl}) to learn about settings not mentioned here):
+4. For the first route, ensure the following settings are defined (refer to <a href={props.configureStaticRoutesUrl}>Configure static routes</a> to learn about settings not mentioned here):
 
    - **Prefix**: Specify the [RFC1918](https://datatracker.ietf.org/doc/html/rfc1918) subnet that exists behind the first Magic IPsec tunnel you have defined in the previous section.
    - **Tunnel/Next hop**: Select your first tunnel (Tunnel 01 of 02).
@@ -439,7 +438,7 @@ end
 
 ## Monitor Cloudflare Magic IPsec tunnel health checks
 
-The Cloudflare dashboard monitors the health of all anycast tunnels on your account that route traffic from Cloudflare to your origin network. Refer to [Check tunnel health in the dashboard]({props.checkTunnelHealthInTheDashboardUrl}) for more information.
+The Cloudflare dashboard monitors the health of all anycast tunnels on your account that route traffic from Cloudflare to your origin network. Refer to <a href={props.checkTunnelHealthInTheDashboardUrl}>Check tunnel health in the dashboard</a> for more information.
 
 ## Troubleshooting
 

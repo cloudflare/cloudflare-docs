@@ -5,7 +5,6 @@ params:
   - addTunnelsUrl
   - staticRouteUrl
 ---
----
 
 This tutorial includes the steps required to configure IPsec tunnels to connect a pfSense firewall to Cloudflare {props.productName}.
 
@@ -40,11 +39,11 @@ The following IP addresses are used throughout this tutorial. Any legally routab
 
 ## 1. Configure {props.productName} IPsec tunnels
 
-Use the Cloudflare dashboard or API to [configure two IPsec tunnels]({props.configureTwoIpsecTunnelsUrl}). The settings mentioned below are used for the IPsec tunnels referenced throughout the remainder of this guide.
+Use the Cloudflare dashboard or API to <a href={props.configureTwoIpsecTunnelsUrl}>configure two IPsec tunnels</a>. The settings mentioned below are used for the IPsec tunnels referenced throughout the remainder of this guide.
 
 ### Add IPsec tunnels
 
-1. Follow the [Add tunnels]({props.addTunnelsUrl}) instructions to create the required IPsec tunnels with the following options:
+1. Follow the <a href={props.addTunnelsUrl}>Add tunnels</a> instructions to create the required IPsec tunnels with the following options:
    - **Tunnel name**: `PF_TUNNEL_01`
    - **Interface address**: `10.252.2.26/31`
    - **Customer endpoint**: `203.0.113.254`
@@ -66,7 +65,7 @@ Use the Cloudflare dashboard or API to [configure two IPsec tunnels]({props.conf
 4. Select **Add pre-shared key later** > **Add tunnels**.
 
 :::note
-If site-to-site traffic is a requirement for your use case, you need to enable replay protection. Refer to [Add tunnels]({props.addTunnelsUrl}) > IPsec tunnel to learn how to enable this feature.
+If site-to-site traffic is a requirement for your use case, you need to enable replay protection. Refer to <a href={props.addTunnelsUrl}>Add tunnels</a> > IPsec tunnel to learn how to enable this feature.
 :::
 
 ### Generate pre-shared keys
@@ -94,7 +93,7 @@ The User ID will be required when configuring IKE Phase 1 on the pfSense firewal
 
 ## 2. Create {props.productName} static routes
 
-Create a [static route]({props.staticRouteUrl}) for each of the two IPsec tunnels configured in the previous section, with the following settings (settings not mentioned here can be left with their default values):
+Create a <a href={props.staticRouteUrl}>static route</a> for each of the two IPsec tunnels configured in the previous section, with the following settings (settings not mentioned here can be left with their default values):
 
 ### Tunnel 01
 

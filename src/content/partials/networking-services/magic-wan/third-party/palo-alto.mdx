@@ -7,7 +7,6 @@ params:
   - staticRouteUrl
   - equalcostMultipathEcmpRoutingUrl
 ---
----
 
 This tutorial includes the steps required to configure IPsec tunnels to connect a Palo Alto Networks Next-Generation Firewall (NGFW) to Cloudflare {props.productName} through a Layer 3 deployment.
 
@@ -45,13 +44,12 @@ The following IP addresses are used throughout this tutorial. Any legally routab
 | VLAN0010 - remote {props.productName} site  | `10.1.10.0/24`                     |                              |
 | VLAN0020 - remote {props.productName} site  | `10.1.20.0/24`                     |                              |
 
----
 
 ## Cloudflare {props.productName}
 
 ### Magic IPsec Tunnels
 
-Use the Cloudflare dashboard or API to [configure two IPsec Tunnels]({props.configureTwoIpsecTunnelsUrl}). The settings mentioned in [Add IPsec tunnels](#add-ipsec-tunnels) below are used for the IPsec tunnels referenced throughout the remainder of this guide.
+Use the Cloudflare dashboard or API to <a href={props.configureTwoIpsecTunnelsUrl}>configure two IPsec Tunnels</a>. The settings mentioned in [Add IPsec tunnels](#add-ipsec-tunnels) below are used for the IPsec tunnels referenced throughout the remainder of this guide.
 
 These are the target IP addresses for bidirectional tunnel health checks:
 
@@ -59,12 +57,12 @@ These are the target IP addresses for bidirectional tunnel health checks:
 - `172.64.240.254`: Use with the secondary IPsec tunnel.
 
 :::caution
-You need to [configure bidirectional health checks]({props.configureBidirectionalHealthChecksUrl}) with {props.productName}. The settings must include custom target IP addresses for each tunnel. Additionally, Cloudflare recommends that you lower the rate at which health check probes are sent.
+You need to <a href={props.configureBidirectionalHealthChecksUrl}>configure bidirectional health checks</a> with {props.productName}. The settings must include custom target IP addresses for each tunnel. Additionally, Cloudflare recommends that you lower the rate at which health check probes are sent.
 :::
 
 #### Add IPsec tunnels
 
-1. Follow the [Add tunnels]({props.addTunnelsUrl}) instructions to create the required IPsec tunnels with the following options:
+1. Follow the <a href={props.addTunnelsUrl}>Add tunnels</a> instructions to create the required IPsec tunnels with the following options:
    - **Tunnel name**: `SFO_IPSEC_TUN01`
    - **Interface address**: `10.252.2.96/31`
    - **Customer endpoint**: `203.0.113.254`
@@ -108,7 +106,7 @@ After creating your IPsec tunnels, the Cloudflare dashboard will list them under
 
 If you refer to the [Environment section](#environment), you will notice there is one subnet within `Trust_L3_Zone`: `10.1.100.0/24`.
 
-Create a [static route]({props.staticRouteUrl}) for each of the two IPsec tunnels configured in the previous section, with the following settings (settings not mentioned here can be left with their default settings):
+Create a <a href={props.staticRouteUrl}>static route</a> for each of the two IPsec tunnels configured in the previous section, with the following settings (settings not mentioned here can be left with their default settings):
 
 #### Tunnel 01
 
@@ -933,7 +931,7 @@ rtt min/avg/max/mdev = 1.765/2.141/2.900/0.446 ms
 
 While we will leverage policy-based forwarding to implement policy-based routing, it is still a good idea to configure routing on the Virtual Router.
 
-Cloudflare {props.productName} implements [equal-cost multi-path (ECMP) routing]({props.equalcostMultipathEcmpRoutingUrl}) to steer traffic across IPsec tunnels. The default behavior is to load balance traffic equally across both tunnels.
+Cloudflare {props.productName} implements <a href={props.equalcostMultipathEcmpRoutingUrl}>equal-cost multi-path (ECMP) routing</a> to steer traffic across IPsec tunnels. The default behavior is to load balance traffic equally across both tunnels.
 
 :::note
 ECMP is disabled on the Palo Alto Networks Next-Generation Firewall by default. Enabling ECMP will force the Virtual Router to restart. While a restart of the Virtual Router is much faster than restarting the entire firewall, it is still recommended that you make this change during a scheduled maintenance window.

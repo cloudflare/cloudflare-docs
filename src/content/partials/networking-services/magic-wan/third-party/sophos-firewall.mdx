@@ -6,7 +6,6 @@ params:
   - configureTunnelEndpointsUrl
   - checkTunnelHealthInTheDashboardUrl
 ---
----
 
 import { Render } from "~/components";
 
@@ -21,7 +20,7 @@ This tutorial shows you how to use {props.productName} with the following versio
   - SFOS Version 19.0 MR2-Build 472
   - SFOS Version 19.5.1 MR1-Build 278
 
-You can connect through[ Generic Routing Encapsulation (GRE) or IPsec tunnels]({props.genericRoutingEncapsulationGreOrIpsecTunnelsUrl}) to {props.productName}.
+You can connect through<a href={props.genericRoutingEncapsulationGreOrIpsecTunnelsUrl}> Generic Routing Encapsulation (GRE) or IPsec tunnels</a> to {props.productName}.
 
 ## IPsec connection
 
@@ -62,7 +61,7 @@ The next step involves configuring a site-to-site IPsec VPN connection on your S
    - **Authentication type**: **Preshared key**
 5. In **Gateway settings**, make sure you have the following settings:
    - **Gateway address**: Enter your Cloudflare anycast IP address provided by Cloudflare.
-   - **Local ID type**: Add the [IKE ID]({props.ikeIdUrl}) provided by Cloudflare.
+   - **Local ID type**: Add the <a href={props.ikeIdUrl}>IKE ID</a> provided by Cloudflare.
 
 ![Configure an IPsec tunnel.](~/assets/images/magic-wan/third-party/sophos-firewall/2-ipsec-tunnel.png)
 
@@ -72,11 +71,11 @@ After setting up your IPsec tunnel, it will show up on the IPsec connections lis
 
 ### 3. Assign the XFRM interface address
 
-You must use an interface address from the `/31` subnet required to [configure tunnel endpoints]({props.configureTunnelEndpointsUrl}) on {props.productName}.
+You must use an interface address from the `/31` subnet required to <a href={props.configureTunnelEndpointsUrl}>configure tunnel endpoints</a> on {props.productName}.
 
 1. Go to **Configure** > **Network**.
 2. In **Interfaces**, select the corresponding interface to the IPsec tunnel you created in [step 2](#2-create-ipsec-connection-tunnel).
-3. Edit the interface to assign an address from the `/31` subnet required to [configure tunnel endpoints]({props.configureTunnelEndpointsUrl}). When you are finished, it should look similar to the following:
+3. Edit the interface to assign an address from the `/31` subnet required to <a href={props.configureTunnelEndpointsUrl}>configure tunnel endpoints</a>. When you are finished, it should look similar to the following:
 
 ![Configure a XFRM interface.](~/assets/images/magic-wan/third-party/sophos-firewall/3-xfrm-interface.png)
 
@@ -189,7 +188,7 @@ system gre route add net <IP_ADDRESS> tunnelname <TUNNEL_NAME>
 
 ## Verify tunnel status on Cloudflare dashboard
 
-The Cloudflare dashboard monitors the health of all anycast tunnels on your account that route traffic from Cloudflare to your origin network. Refer to [Check tunnel health in the dashboard]({props.checkTunnelHealthInTheDashboardUrl}) for more information.
+The Cloudflare dashboard monitors the health of all anycast tunnels on your account that route traffic from Cloudflare to your origin network. Refer to <a href={props.checkTunnelHealthInTheDashboardUrl}>Check tunnel health in the dashboard</a> for more information.
 
 ### Make Cloudflare health checks work
 

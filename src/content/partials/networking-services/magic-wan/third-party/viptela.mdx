@@ -5,7 +5,6 @@ params:
   - configureStaticRoutesUrl
   - ciscoIosXeUrl
 ---
----
 
 Cloudflare partners with Cisco's SD-WAN solution to provide users with an integrated SASE solution. The Cisco SD-WAN appliances (physical and virtual) manage subnets associated with branch offices and cloud instances. Anycast Tunnels are set up between these SD-WAN edge devices and Cloudflare to securely route Internet-bound traffic. This tutorial describes how to configure the Cisco Catalyst 8000 Edge Platforms (physical or virtual) in the SD-WAN mode for north-south (Internet-bound) use cases.
 
@@ -76,13 +75,13 @@ Because the template was created to add GRE tunnels, you only need to update the
 
 ## 3. Create tunnels in Cloudflare
 
-Refer to [Configure tunnel endpoints]({props.configureTunnelEndpointsUrl}) for more information on creating a GRE tunnel.
+Refer to <a href={props.configureTunnelEndpointsUrl}>Configure tunnel endpoints</a> for more information on creating a GRE tunnel.
 
 ![Established GRE tunne in Cloudflash dashboard](~/assets/images/magic-wan/third-party/viptela/viptela-gre-tunnel.png)
 
 ## 4. Define static routes
 
-Refer to [Configure static routes]({props.configureStaticRoutesUrl}) for more information on configuring your static routes.
+Refer to <a href={props.configureStaticRoutesUrl}>Configure static routes</a> for more information on configuring your static routes.
 
 ![Established GRE static routes in Cloudflare dashboard](~/assets/images/magic-wan/third-party/viptela/viptela-gre-static-routes.png)
 
@@ -100,4 +99,4 @@ A matching blocked log line is visible from the Cloudflare logs.
 
 ## Add new tunnels using IPsec
 
-IPsec tunnels to Cloudflare can only be created on Cisco 8000v in the router mode today. Refer to the [Cisco IOS XE]({props.ciscoIosXeUrl}) for more information.
+IPsec tunnels to Cloudflare can only be created on Cisco 8000v in the router mode today. Refer to the <a href={props.ciscoIosXeUrl}>Cisco IOS XE</a> for more information.

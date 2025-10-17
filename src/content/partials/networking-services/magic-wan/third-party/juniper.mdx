@@ -8,7 +8,6 @@ params:
   - phase2ConfigurationParametersUrl
   - antireplayUrl
 ---
----
 
 This tutorial provides information and examples of how to configure Juniper Networks SRX Series Firewalls with {props.productName}.
 
@@ -44,7 +43,7 @@ This documentation assumes there are two locations connected via {props.productN
 
 ### Magic IPsec tunnels
 
-1. Start by [creating the IPsec tunnels]({props.creatingTheIpsecTunnelsUrl}) in the Cloudflare dashboard with the following values:
+1. Start by <a href={props.creatingTheIpsecTunnelsUrl}>creating the IPsec tunnels</a> in the Cloudflare dashboard with the following values:
 	- **Tunnel name**: Up to 15 characters (no spaces).
 	- **Description** (Optional).
 	- **Interface address**: This is the Virtual Tunnel Interface (VTI = `st0.x`) RFC 1918 address — the IP address specified in this dialog box is the address on the Cloudflare side of the tunnel.
@@ -73,11 +72,11 @@ This documentation assumes there are two locations connected via {props.productN
 
 Refer to the {props.productName} Topology section above for more details on the IP subnet scheme.
 
-[Magic static routes]({props.magicStaticRoutesUrl}) effectively tell {props.productName} which tunnels to route traffic destined for a given {props.productName} site.
+<a href={props.magicStaticRoutesUrl}>Magic static routes</a> effectively tell {props.productName} which tunnels to route traffic destined for a given {props.productName} site.
 
 Since two tunnels are configured to each endpoint, it is necessary to configure two static routes.
 
-Cloudflare leverages [equal-cost multi-path]({props.equalcostMultipathUrl}) routing to control traffic steering across the tunnels. The default priority for each route is 100 — traffic will be load-balanced across the two tunnels equally via ECMP. You can modify the priorities as needed, however best practices dictate leaving the default values in place.
+Cloudflare leverages <a href={props.equalcostMultipathUrl}>equal-cost multi-path</a> routing to control traffic steering across the tunnels. The default priority for each route is 100 — traffic will be load-balanced across the two tunnels equally via ECMP. You can modify the priorities as needed, however best practices dictate leaving the default values in place.
 
 1. Create a static route with the following values. Make sure you select the first tunnel in **Tunnel/Next hop**:
 	- **Description:** The description for the static route assigned to your first tunnel.
@@ -200,7 +199,7 @@ interfaces {
 
 #### IKE proposal
 
-Add an IKE proposal that specifies the [Phase 1 Configuration Parameters]({props.phase1ConfigurationParametersUrl}):
+Add an IKE proposal that specifies the <a href={props.phase1ConfigurationParametersUrl}>Phase 1 Configuration Parameters</a>:
 
 ```txt
 set security ike proposal cf_magic_wan_ike_prop authentication-method pre-shared-keys
@@ -309,9 +308,9 @@ version v2-only;
 
 #### IPsec proposal
 
-Add an IPsec proposal that specifies the [Phase 2 Configuration Parameters]({props.phase2ConfigurationParametersUrl}):
+Add an IPsec proposal that specifies the <a href={props.phase2ConfigurationParametersUrl}>Phase 2 Configuration Parameters</a>:
 
-Add an IPsec proposal that specifies the [Phase 2 Configuration Parameters]({props.phase2ConfigurationParametersUrl}):
+Add an IPsec proposal that specifies the <a href={props.phase2ConfigurationParametersUrl}>Phase 2 Configuration Parameters</a>:
 
 ```txt
 set security ipsec proposal cf_magic_wan_ipsec_prop protocol esp
@@ -349,7 +348,7 @@ proposals cf_magic_wan_ipsec_prop;
 
 Define two IPsec policies - one for each of the two Magic IPsec tunnels. It is crucial to ensure that:
 
-- [Anti-replay]({props.antireplayUrl}) protection is disabled.
+- <a href={props.antireplayUrl}>Anti-replay</a> protection is disabled.
   - Use the [`no-anti-replay`](https://www.juniper.net/documentation/us/en/software/junos/interfaces-adaptive-services/topics/ref/statement/no-anti-replay-edit-services.html) option.
 - The SRX is the tunnel initiator:
   - Cloudflare will not instantiate the tunnel
