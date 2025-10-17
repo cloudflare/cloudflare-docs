@@ -591,16 +591,14 @@ export default {
 		...
 
 		if (request.method === "GET" && url.pathname === "/seats") {
-			return new Response(JSON.stringify(await stub.getSeats()), {
-				headers: { 'Content-Type': 'application/json' },
-			});
+			return Response.json(await stub.getSeats());
 		} else if (request.method === "POST" && url.pathname === "/book-seat") {
 			const { seatNumber, name } = (await request.json()) as {
 				seatNumber: string;
 				name: string;
 			};
 			const result = await stub.assignSeat(seatNumber, name);
-			return new Response(JSON.stringify(result));
+			return Response.json(result);
 		} else if (request.headers.get("Upgrade") === "websocket") {
 			return stub.fetch(request);
 		}

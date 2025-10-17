@@ -150,7 +150,7 @@ export default {
 			data = JSON.parse(cache);
 		}
 
-		return new Response(JSON.stringify(data));
+		return  Response.json(data);
 	},
 };
 ```

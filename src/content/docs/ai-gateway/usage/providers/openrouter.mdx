@@ -65,7 +65,7 @@ try {
 
 	const response = chatCompletion.choices[0].message;
 
-	return new Response(JSON.stringify(response));
+	return Response.json(response);
 } catch (e) {
 	return new Response(e);
 }

@@ -82,7 +82,7 @@ To connect to Neon using `@neondatabase/serverless`, follow these steps:
    		await client.connect();
    		const { rows } = await client.query("SELECT * FROM elements");
 
-   		return new Response(JSON.stringify(rows));
+   		return Response.json(rows);
    	},
    };
    ```

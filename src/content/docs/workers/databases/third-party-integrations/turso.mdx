@@ -89,7 +89,7 @@ To set up an integration with Turso:
    ```sh
    # Get your database URL
    turso db show my-db --url
-   
+
    # Create an authentication token
    turso db tokens create my-db
    ```
@@ -100,8 +100,8 @@ To set up an integration with Turso:
    # Add the database URL as a secret
    npx wrangler secret put TURSO_URL
    # When prompted, paste your database URL
-   
-   # Add the authentication token as a secret  
+
+   # Add the authentication token as a secret
    npx wrangler secret put TURSO_AUTH_TOKEN
    # When prompted, paste your authentication token
    ```
@@ -126,14 +126,12 @@ To set up an integration with Turso:
 
    		try {
    			const res = await client.execute("SELECT * FROM elements");
-   			return new Response(JSON.stringify(res), {
+   			return Response.json(res, {
    				status: 200,
-   				headers: { "Content-Type": "application/json" },
    			});
    		} catch (error) {
    			console.error("Error executing SQL query:", error);
-   			return new Response(
-   				JSON.stringify({ error: "Internal Server Error" }),
+   			return new Response({ error: "Internal Server Error" },
    				{
    					status: 500,
    				},

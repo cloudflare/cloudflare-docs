@@ -204,7 +204,7 @@ export default {
 
 			return modifiedResponse;
 		} catch (e) {
-			return new Response(JSON.stringify({ error: e.message }), {
+			return Response.json({ error: e.message }, {
 				status: 500,
 			});
 		}

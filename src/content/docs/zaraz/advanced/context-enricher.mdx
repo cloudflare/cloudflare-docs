@@ -36,7 +36,7 @@ export default {
       system.device.location.country = 'PI';
     */
 
-    return new Response(JSON.stringify({ system, client }));
+    return Response.json({ system, client });
   },
 };
 ```
@@ -85,7 +85,7 @@ export default {
     const newContext = getWeatherForLocation({ system, client });
 
     // Return as JSON
-    return new Response(JSON.stringify(newContext));
+    return Response.json(newContext);
   },
 };
 ```
@@ -126,7 +126,7 @@ export default {
     const newContext = redactEmailAddressesFromObject({ system, client });
 
     // Return as JSON
-    return new Response(JSON.stringify(newContext));
+    return Response.json(newContext);
   },
 };
 ```

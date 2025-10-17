@@ -148,13 +148,9 @@ class MyAgent extends Agent<Env, MyState> {
   async onRequest(request: Request) {
     if (request.method === "POST") {
       await this.incrementCounter();
-      return new Response(JSON.stringify(this.state), {
-        headers: { "Content-Type": "application/json" }
-      });
+      return Response.json(this.state);
     }
-    return new Response(JSON.stringify(this.state), {
-      headers: { "Content-Type": "application/json" }
-    });
+    return Response.json(this.state);
   }
 
   async incrementCounter() {

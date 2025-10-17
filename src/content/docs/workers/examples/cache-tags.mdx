@@ -35,7 +35,7 @@ export default {
 			const errorObject = {
 				error: "URL cannot be empty",
 			};
-			return new Response(JSON.stringify(errorObject), { status: 400 });
+			return Response.json(errorObject, { status: 400 });
 		}
 		const init = {
 			cf: {
@@ -50,15 +50,13 @@ export default {
 					cache: cacheStatus,
 					lastModified: lastModified,
 				};
-				return new Response(JSON.stringify(response), {
-					status: result.status,
-				});
+				return Response.json(response, { status: result.status });
 			})
 			.catch((err) => {
 				const errorObject = {
 					error: err.message,
 				};
-				return new Response(JSON.stringify(errorObject), { status: 500 });
+				return Response.json(errorObject, { status: 500 });
 			});
 	},
 };
@@ -78,7 +76,7 @@ export default {
 			const errorObject = {
 				error: "URL cannot be empty",
 			};
-			return new Response(JSON.stringify(errorObject), { status: 400 });
+			return Response.json(errorObject, { status: 400 });
 		}
 		const init = {
 			cf: {
@@ -93,15 +91,13 @@ export default {
 					cache: cacheStatus,
 					lastModified: lastModified,
 				};
-				return new Response(JSON.stringify(response), {
-					status: result.status,
-				});
+				return Response.json(response, { status: result.status });
 			})
 			.catch((err) => {
 				const errorObject = {
 					error: err.message,
 				};
-				return new Response(JSON.stringify(errorObject), { status: 500 });
+				return Response.json(errorObject, { status: 500 });
 			});
 	},
 } satisfies ExportedHandler;

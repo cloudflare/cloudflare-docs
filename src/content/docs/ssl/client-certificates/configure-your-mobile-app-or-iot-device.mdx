@@ -69,18 +69,13 @@ async function getTemperatures(request) {
 
 	const cache = await getCache(cacheKey);
 	if (!cache) {
-		return new Response(JSON.stringify(defaultData), {
+		return Response.json(defaultData, {
 			status: 200,
-			headers: { "content-type": "application/json" },
 		});
 	} else {
 		data = JSON.parse(cache);
-		const retval = JSON.stringify(
-			data.temperatures.sort(compareTimestamps).splice(0, 5),
-		);
-		return new Response(retval, {
+		return Response.json(data.temperatures.sort(compareTimestamps).splice(0, 5), {
 			status: 200,
-			headers: { "content-type": "application/json" },
 		});
 	}
 }

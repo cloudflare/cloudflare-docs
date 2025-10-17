@@ -96,7 +96,7 @@ export default {
 			response.headers.get("content-type")?.includes("application/json")
 		) {
 			const data = await response.json();
-			return new Response(JSON.stringify(data));
+			return Response.json(data);
 		}
 
 		return new Response("Invalid response", { status: 500 });

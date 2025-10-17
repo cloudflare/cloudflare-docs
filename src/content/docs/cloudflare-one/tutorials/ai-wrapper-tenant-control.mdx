@@ -156,9 +156,8 @@ export default {
 						},
 					);
 				} catch (error) {
-					return new Response(JSON.stringify({ error: error.message }), {
-						status: 500,
-						headers: { "Content-Type": "application/json" },
+					return Response.json({ error: error.message }, {
+						status: 500
 					});
 				}
 			}

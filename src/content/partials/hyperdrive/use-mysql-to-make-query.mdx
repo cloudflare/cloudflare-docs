@@ -44,11 +44,7 @@ export default {
 		});
 
 		// Return result  as JSON
-		return new Response(JSON.stringify(result), {
-			headers: {
-				"Content-Type": "application/json",
-			},
-		});
+		return Response.json(result);
 	},
 } satisfies ExportedHandler<Env>;
 ```

@@ -25,7 +25,7 @@ export default {
     try {
       const value = await env.NAMESPACE.list();
 
-      return new Response(JSON.stringify(value.keys), {
+      return Response.json(value.keys, {
         status: 200
       });
     }

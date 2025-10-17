@@ -73,7 +73,7 @@ export default {
 			return response;
 		});
 
-		return new Response(JSON.stringify(response));
+		return Response.json(response);
 	},
 };
 ```
@@ -162,7 +162,7 @@ export default {
 				],
 			},
 		);
-		return new Response(JSON.stringify(finalResponse));
+		return Response.json(finalResponse);
 	},
 };
 ```

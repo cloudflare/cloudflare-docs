@@ -106,7 +106,7 @@ export default {
 				},
 			},
 		);
-		return new Response(JSON.stringify(response));
+		return Response.json(response);
 	},
 } satisfies ExportedHandler<Env>;
 ```

@@ -119,7 +119,7 @@ export default {
             try {
               const uploadedPart: R2UploadedPart =
                 await multipartUpload.uploadPart(partNumber, request.body);
-              return new Response(JSON.stringify(uploadedPart));
+              return Response.json(uploadedPart);
             } catch (error: any) {
               return new Response(error.message, { status: 400 });
             }

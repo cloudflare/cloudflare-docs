@@ -44,7 +44,7 @@ const response = await env.AI.run("@hf/nousresearch/hermes-2-pro-mistral-7b", {
 	],
 });
 
-return new Response(JSON.stringify(response.tool_calls));
+return Response.json(response.tool_calls);
 ```
 
 The LLM will then return a JSON object with the required arguments and the name of the tool that was called. You can then pass this JSON object to make an API call.

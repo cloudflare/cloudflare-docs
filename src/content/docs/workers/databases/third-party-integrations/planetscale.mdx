@@ -91,11 +91,8 @@ To set up an integration with PlanetScale:
 
    		const conn = connect(config);
    		const data = await conn.execute("SELECT * FROM products;");
-   		return new Response(JSON.stringify(data.rows), {
+   		return Response.json(data.rows, {
    			status: 200,
-   			headers: {
-   				"Content-Type": "application/json",
-   			},
    		});
    	},
    };

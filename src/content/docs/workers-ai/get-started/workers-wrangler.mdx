@@ -88,7 +88,7 @@ export default {
 			prompt: "What is the origin of the phrase Hello, World",
 		});
 
-		return new Response(JSON.stringify(response));
+		return Response.json(response);
 	},
 } satisfies ExportedHandler<Env>;
 ```

@@ -193,7 +193,7 @@ const worker = {
 			// Re-serialize the messages and return a HTTP 200.
 			// The Content-Type is optional, but must either by
 			// "application/octet-stream" or left empty.
-			return new Response(JSON.stringify(outgoingMessages), { status: 200 });
+			return Response.json(outgoingMessages, { status: 200 });
 		}
 
 		return new Response("not a valid Broker request", { status: 403 });

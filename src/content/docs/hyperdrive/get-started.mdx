@@ -315,9 +315,8 @@ export default {
 			ctx.waitUntil(connection.end());
 
 			// Return result rows as JSON
-			return new Response(JSON.stringify({ results, fields }), {
+			return Response.json({ results, fields }, {
 				headers: {
-					'Content-Type': 'application/json',
 					'Access-Control-Allow-Origin': '*',
 				},
 			});

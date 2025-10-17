@@ -189,7 +189,7 @@ app.get('*', async (c) => {
   };
 
   // Create a new custom response with modified status, headers, and body
-  const response = new Response(JSON.stringify(modifiedBody), {
+  const response = Response.json(modifiedBody, {
     status: 500,
     statusText: "some message",
     headers: originalResponse.headers,

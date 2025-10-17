@@ -215,12 +215,12 @@ export default {
 		if (path === '/bills' && method === 'GET') {
 			// List bills
 			const result = await listBillStatements('1', env.DB);
-			return new Response(JSON.stringify(result), { status: 200 });
+			return Response.json(result, { status: 200 });
 		}
 		if (path === '/bill' && method === 'GET') {
 			// Get bill
 			const result = await getBillStatement('1', '1', 'first-unconstrained', env.DB);
-			return new Response(JSON.stringify(result), { status: 200 });
+			return Response.json(result, { status: 200 });
 		}
 
 		// Fetch using bookmark from cookie
@@ -234,7 +234,7 @@ export default {
 					?.split('=')[1] ?? 'first-unconstrained';
 			console.log('bookmark', bookmark);
 			const result = await getBillStatement('1', '1', bookmark, env.DB);
-			return new Response(JSON.stringify(result), {
+			return Response.json(result, {
 				status: 200,
 				headers: {
 					'Set-Cookie': `X-D1-Bookmark=${result.bookmark}; Path=/; SameSite=Strict`,
@@ -253,7 +253,7 @@ export default {
 				.run();
 			const bookmark = session.getBookmark() ?? 'first-unconstrained';
 
-			return new Response(JSON.stringify(results), {
+			return Response.json(results, {
 				status: 201,
 				headers: {
 					// Set bookmark cookie

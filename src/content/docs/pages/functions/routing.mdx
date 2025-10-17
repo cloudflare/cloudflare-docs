@@ -120,7 +120,7 @@ For files which match against multiple URL segments (use a double set of bracket
 
 ```js
 export function onRequest(context) {
-	return new Response(JSON.stringify(context.params.catchall));
+	return Response.json(context.params.catchall);
 }
 ```
 

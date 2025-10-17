@@ -35,10 +35,7 @@ export default {
 		const responses = await Promise.all([fetch(url1), fetch(url2)]);
 		const results = await Promise.all(responses.map((r) => r.json()));
 
-		const options = {
-			headers: { "content-type": "application/json;charset=UTF-8" },
-		};
-		return new Response(JSON.stringify(results), options);
+		return Response.json(results);
 	},
 };
 ```
@@ -56,10 +53,7 @@ export default {
 		const responses = await Promise.all([fetch(url1), fetch(url2)]);
 		const results = await Promise.all(responses.map((r) => r.json()));
 
-		const options = {
-			headers: { "content-type": "application/json;charset=UTF-8" },
-		};
-		return new Response(JSON.stringify(results), options);
+		return Response.json(results);
 	},
 } satisfies ExportedHandler;
 ```

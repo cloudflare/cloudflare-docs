@@ -200,9 +200,7 @@ export default {
 			]);
 
 			// Collect the raw row count inserted to return
-			const resp = new Response(JSON.stringify(insertResult.rowCount), {
-				headers: { "Content-Type": "application/json" },
-			});
+			const resp = Response.json(insertResult.rowCount);
 
 			return resp;
 
@@ -217,9 +215,7 @@ export default {
 			);
 
 			// Return the result as JSON
-			const resp = new Response(JSON.stringify(result.rows), {
-				headers: { "Content-Type": "application/json" },
-			});
+			const resp = Response.json(result.rows);
 
 			return resp;
 		}

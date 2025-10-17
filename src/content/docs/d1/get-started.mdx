@@ -416,9 +416,7 @@ You can query your D1 database using your Worker.
     			)
     				.bind("Bs Beverages")
     				.run();
-    			return new Response(JSON.stringify(results), {
-    				headers: { 'Content-Type': 'application/json' }
-    			});
+    			return Response.json(results);
     		}
 
     		return new Response(

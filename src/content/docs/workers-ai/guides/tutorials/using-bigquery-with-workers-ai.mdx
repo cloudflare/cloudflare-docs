@@ -652,9 +652,7 @@ export default {
 
 		const response = { data: formattedResults };
 
-		return new Response(JSON.stringify(response), {
-			headers: { "Content-Type": "application/json" },
-		});
+		return Response.json(response);
 	},
 };
 ```

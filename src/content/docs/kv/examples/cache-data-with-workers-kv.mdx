@@ -66,11 +66,9 @@ export default {
     }
 
     // Return the appropriate response format
-    	return new Response(JSON.stringify({
+    	return Response.json({
     		data,
     		fromCache
-    	}), {
-    		headers: { 'Content-Type': 'application/json' }
     	});
 
 }

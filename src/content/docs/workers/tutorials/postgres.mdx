@@ -214,11 +214,7 @@ export default {
         const result = await sql.query("SELECT * FROM products");
 
         // Return the result as JSON
-        return new Response(JSON.stringify(result.rows), {
-            headers: {
-                "Content-Type": "application/json",
-            },
-        });
+        return Response.json(result.rows);
 	},
 } satisfies ExportedHandler<Env>;
 ```
@@ -280,20 +276,14 @@ export default {
             );
 
             // Return the inserted row as JSON
-            return new Response(JSON.stringify(insertResult.rows), {
-                headers: { "Content-Type": "application/json" },
-            });
+            return Response.json(insertResult.rows);
         }
 
         // Query the products table
         const result = await sql.query("SELECT * FROM products");
 
         // Return the result as JSON
-        return new Response(JSON.stringify(result.rows), {
-            headers: {
-                "Content-Type": "application/json",
-            },
-        });
+        return Response.json(result.rows);
 	},
 } satisfies ExportedHandler<Env>;
 ```

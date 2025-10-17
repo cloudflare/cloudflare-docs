@@ -94,9 +94,7 @@ export default {
 		);
 
 		// Return the AI response as a JSON object
-		return new Response(JSON.stringify(response), {
-			headers: { "Content-Type": "application/json" },
-		});
+		return Response.json(response);
 	},
 } satisfies ExportedHandler<Env>;
 ```

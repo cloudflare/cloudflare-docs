@@ -112,9 +112,8 @@ export default {
 
   const [results, fields] = await connection.query('SHOW tables;');
 
-  return new Response(JSON.stringify({ results, fields }), {
+  return Response.json({ results, fields }, {
     headers: {
-      'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '\*',
     },
   });

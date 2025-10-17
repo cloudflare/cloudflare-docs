@@ -112,7 +112,7 @@ export default {
 			messages: [{ role: "user", content: `What is the square root of 9?` }],
 		});
 
-		return new Response(JSON.stringify(answer));
+		return Response.json(answer);
 	},
 };
 ```

@@ -192,9 +192,7 @@ export default {
 		// 	  ...
 		// ]
 
-		return new Response(JSON.stringify(results), {
-			headers: { "Content-Type": "application/json" },
-		});
+		return Response.json(results);
 	},
 };
 ```
@@ -223,9 +221,7 @@ export default {
 			),
 		);
 
-		return new Response(JSON.stringify(results), {
-			headers: { "Content-Type": "application/json" },
-		});
+		return Response.json(results);
 	},
 };
 

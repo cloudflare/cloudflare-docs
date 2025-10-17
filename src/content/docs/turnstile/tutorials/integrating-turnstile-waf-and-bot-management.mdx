@@ -43,7 +43,7 @@ If your site is on Cloudflare's network and subscribed to an Enterprise plan, yo
 
 <Steps>
 	1. In the Cloudflare dashboard, go to the **WAF** page.
-	
+
 		<DashButton url="/?to=/:account/application-security/waf" />
 	2. Create a new custom WAF rule by selecting **Edit expression**:
 		- Field: "Bot Score"
@@ -60,7 +60,7 @@ Turnstile can be used on any site, regardless of whether it is on Cloudflare's n
 
 <Steps>
     1. In the Cloudflare dashboard, go to the **Turnstile** page.
-    
+
         <DashButton url="/?to=/:account/turnstile" />
     2. Select **Add widget** and fill out the necessary information.
 	3. Add your domain to the Turnstile configuration.
@@ -145,14 +145,12 @@ export async function onRequestPost(context) {
 	const isValidLogin = await checkCredentials(username, password);
 
 	if (isValidLogin) {
-		return new Response(JSON.stringify({ message: "Login successful" }), {
+		return Response.json({ message: "Login successful" }, {
 			status: 200,
-			headers: { "Content-Type": "application/json" },
 		});
 	} else {
-		return new Response(JSON.stringify({ error: "Invalid credentials" }), {
+		return Response.json({ error: "Invalid credentials" }, {
 			status: 401,
-			headers: { "Content-Type": "application/json" },
 		});
 	}
 }
