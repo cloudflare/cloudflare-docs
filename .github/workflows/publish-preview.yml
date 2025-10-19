@@ -1,7 +1,7 @@
 on:
   push:
     branches-ignore:
-      - production
+      - partch-1
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
