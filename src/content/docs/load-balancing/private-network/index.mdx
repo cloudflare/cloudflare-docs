@@ -33,7 +33,7 @@ Currently, to be able to connect to private IP origins, Cloudflare load balancer
 
 Once the endpoint and virtual network (VNet) tunnel association is configured, Cloudflare can determine not only the tunnel health but also the health of the corresponding virtual or private IP targets.
 
-Refer to [Set up private IPs with Cloudflare Tunnel](/load-balancing/private-network/tunnels-setup/) for a detailed guide.
+Refer to [Set up Private Network Load Balancing with WARP-to-Tunnel](/load-balancing/private-network/warp-to-tunnel/) for a detailed guide.
 
 ### Magic WAN
 
@@ -58,5 +58,5 @@ When using [Spectrum](/spectrum/) as an on-ramp and [Magic WAN](/load-balancing/
 * **Intelligent traffic routing**: Benefit from failover for your private traffic and have the ability to monitor the health of these IP targets directly, rather than load balancing to a tunnel and only monitoring the health of the tunnel itself.
 
 * **Host applications on non-standard ports**: Easily specify and route traffic to applications hosted on private IP addresses using non-standard ports, allowing greater flexibility in service configuration without requiring changes to existing infrastructure.
- 
+
 * **Public and Private Load Balancers**: Public LBs can direct Internet traffic to private IP addresses, supporting all L7 products like WAF and API Shield. Private LBs direct traffic originating from private networks to private IP addresses and require an on-ramp like WARP or Magic WAN.

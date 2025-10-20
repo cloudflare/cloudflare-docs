@@ -5,6 +5,7 @@ params:
   - featureName
   - trafficSteeringURL?
   - whatHappensApp
+  - mwanName
 ---
 
 import { APIRequest, Aside, AnchorHeading, CURL, Markdown, Render, TabItem, Tabs } from "~/components";
@@ -228,8 +229,8 @@ You need to delete {props.featureName} applications for each of your existing si
 			file="mconn/network-options/app-aware-policies/warp-traffic"
 			product="networking-services"
 			params={{
-				connectorName: "Magic WAN Connector",
-				mwanName: "Magic WAN",
+				connectorName: props.productName,
+				mwanName: props.mwanName,
 				warpFirewallURL: "/cloudflare-one/connections/connect-devices/warp/deployment/firewall/"
 			}}
 			/>
