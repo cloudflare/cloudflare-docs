@@ -129,6 +129,25 @@ To test in Workers AI Playground:
 
 Workers AI Playground will show a **Connected** status and list the available tools. You can now ask the AI model to complete a task using an available tool. Requests made to an MCP server will appear in your [portal logs](#view-portal-logs).
 
+For MCP clients with server configuration files, we recommend the following configuration:
+
+``` json title= "MCP Portal configuration for MCP clients" 
+{
+    "mcpServers": {
+      "mcp-demo-connect": {
+        "command": "npx",
+        "args": [
+          "-y",
+          "mcp-remote@latest",
+          "https://mcp-dry-run.kennyatx.com/mcp"
+        ]
+      }
+    }
+} 
+```
+
+It is recommended that "mcp-remote@latest" is used. Using "serverURL" may cause issues with the portal session creation and management.
+
 ## View portal logs
 
 Portal logs allow you to monitor user activity through an MCP server portal. You can view logs on a per-portal or per-server basis.
