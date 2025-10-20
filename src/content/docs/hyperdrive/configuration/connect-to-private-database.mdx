@@ -183,7 +183,7 @@ This will create a Hyperdrive configuration using the usual database information
 In addition, it will also set the Access Client ID and the Access Client Secret of the Service Token. When Hyperdrive makes requests to the tunnel, requests will be intercepted by Access and validated using the credentials of the Service Token.
 
 :::note
-When creating the Hyperdrive configuration for the private database, you must enter the `access-client-id` and the `access-client-id`, and omit the `port`. Hyperdrive will route database messages to the public hostname of the tunnel, and the tunnel will rely on its service configuration (as configured in [1.2. Connect your database using a public hostname](#12-connect-your-database-using-a-public-hostname)) to route requests to the database within your private network.
+When creating the Hyperdrive configuration for the private database, you must enter the `access-client-id` and the `access-client-secret`, and omit the `port`. Hyperdrive will route database messages to the public hostname of the tunnel, and the tunnel will rely on its service configuration (as configured in [1.2. Connect your database using a public hostname](#12-connect-your-database-using-a-public-hostname)) to route requests to the database within your private network.
 :::
 
 </Details>
