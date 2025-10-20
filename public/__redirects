@@ -2345,7 +2345,7 @@
 /fundamentals/setup/manage-members/* /fundamentals/manage-members/:splat 301
 /logs/get-started/enable-destinations/* /logs/logpush/logpush-job/enable-destinations/:splat 301
 /logs/reference/log-fields/* /logs/logpush/logpush-job/datasets/:splat 301
-/speed/optimization/other/* /speed/optimization/:splat 301
+/speed/optimization/other/* /speed/optimization/ 301
 
 # AI Crawl Control
 /ai-audit/* /ai-crawl-control/:splat 301
