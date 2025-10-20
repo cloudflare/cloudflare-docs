@@ -44,42 +44,13 @@ To access scraping detections:
 
 ```js title="Rule example"
 
-(any(cf.bot_management.detection_ids[*] eq 50331649) and not cf.bot_management.verified_bot)
+(any(cf.bot_management.detection_ids[*] in {50331648 50331649}) and not cf.bot_management.verified_bot)
 ```
 
 :::tip[Best practice]
-If you are choosing to challenge as your rule action, check for any API calls on which you do not want to issue a challenge. To exclude requests to such paths, edit the [WAF custom rule](/waf/custom-rules/) to exclude the relevant paths. 
+If you are choosing to challenge as your rule action, ensure that you exclude any API calls on which you do not want to issue a challenge. To exclude requests to such paths, edit the [WAF custom rule](/waf/custom-rules/) to exclude the relevant paths. 
 :::
 
-## Limit scraping requests with scraping detections
-
-Rate limiting rules can limit the number of requests from a particular ASN or JA4 Fingerprint so long as it continues to exhibit suspicious behavior.
-
-To use rate limiting rules with scraping detections:
-
-<Tabs syncKey="dashNewNav"> 
-	<TabItem label="Old dashboard">
-		<Steps>
-            1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-            2. Go to **Security** > **WAF**.
-            3. Under **Rate limiting rules**, select **Create rule**.
-            4. Fill out the form using the **Custom expression builder** and `cf.bot_management_detection_ids` along with other necessary information.
-            5. Select **Save as draft** to return to the rule later, or **Deploy** to deploy the rule.
-        </Steps>
-  </TabItem> 
-  <TabItem label="New dashboard" icon="rocket">
-		<Steps>
-            1. In the Cloudflare dashboard, go to the **Security rules** page.
-
-                <DashButton url="/?to=/:account/:zone/security/security-rules" />
-            2. Select **Create rule** and choose **Rate limiting rule**.
-            3. Fill out the form using the **Custom expression builder** and `cf.bot_management_detection_ids` along with other necessary information.
-            4. Select **Save as draft** to return to the rule later, or **Deploy** to deploy the rule.
-        </Steps>
-    </TabItem>
-</Tabs>
-
 :::note
-Detection IDs `50331648` and `50331649` are dynamically recalculated, meaning a single fingerprint would not be permanently rate limited unless it continues to remain suspicious at all times. Rate limiting on these detection IDs allows for more lenient controls, as opposed to immediately challenging or blocking.
-
+The matched traffic for detection IDs `50331648` and `50331649` is dynamically re-calculated, meaning a single fingerprint would not be permanently flagged unless it continues to behave suspiciously at all times.
 :::
