@@ -38,7 +38,7 @@ Setting up {props.productNameManual} manually is done through a combination of t
 ## Prerequisites
 
 :::note
-The list of prerequisites below is only for customers planning to connect manually to Cloudflare with a third-party device. If you plan on using Magic WAN Connector, skip this section and refer to <a href={props.configureConnectorUrl}>Configure with Connector</a>.
+The list of prerequisites below is only for customers planning to connect manually to Cloudflare with a third-party device. If you plan on using {props.productNameConnector}, skip this section and refer to <a href={props.configureConnectorUrl}>Configure with Connector</a>.
 :::
 
 ### Use compatible tunnel endpoint routers
@@ -54,7 +54,7 @@ Magic WAN relies on <a href={props.greReferenceURL}>GRE</a> and <a href={props.i
 <Render
 	file="prerequisites/maximum-segment-size"
 	product="networking-services"
-	params={{ productName: "Magic WAN" }}
+	params={{ productName: props.productNameManual }}
 />
 
 #### MSS clamping recommendations
