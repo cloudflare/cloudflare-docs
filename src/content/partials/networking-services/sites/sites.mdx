@@ -3,6 +3,7 @@ params:
   - greIpsecTunnelsURL
   - connectorURL
   - cniURL
+  - connectorName
 ---
 
 import { set } from "date-fns";
@@ -10,7 +11,7 @@ import { Render } from "~/components";
 
 Sites represent the local network of a data center, office, or other physical location, and combine all on-ramps available there. Sites also allow you to check, at a glance, the state of your on-ramps and set up health alert settings so that you get notified when there are issues with the site's on-ramps.
 
-To use a site, start by setting up your on-ramps. These can be <a href={props.greIpsecTunnelsURL}>GRE or IPsec tunnels</a>, a <a href={props.connectorURL}>Magic WAN Connector</a>, or a direct <a href={props.cniURL}>CNI link</a>. When you are finished setting these up, refer to the steps below to learn how to set up a site.
+To use a site, start by setting up your on-ramps. These can be <a href={props.greIpsecTunnelsURL}>GRE or IPsec tunnels</a>, a <a href={props.connectorURL}>{props.connectorName}</a>, or a direct <a href={props.cniURL}>CNI link</a>. When you are finished setting these up, refer to the steps below to learn how to set up a site.
 
 ## Add a site
 

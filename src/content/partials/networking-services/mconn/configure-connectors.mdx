@@ -795,9 +795,9 @@ To set up a high availability configuration:
 
 ## IPsec tunnels and static routes
 
-Magic WAN Connector automatically creates <a href={props.ipsecTunnelsRefURL}>IPsec tunnels</a> and <a href={props.staticRoutesRefURL}>static routes</a> for you. You cannot configure these manually.
+{ props.magicWord === "virtual" ? props.productNameVirtual : props.productName } automatically creates <a href={props.ipsecTunnelsRefURL}>IPsec tunnels</a> and <a href={props.staticRoutesRefURL}>static routes</a> for you. You cannot configure these manually.
 
-To check the IPsec tunnels and static routes created by your Magic WAN Connector:
+To check the IPsec tunnels and static routes created by your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName }:
 
 1. In the Cloudflare dashboard, go to the **Sites** page.
 
