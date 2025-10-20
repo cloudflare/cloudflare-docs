@@ -148,7 +148,7 @@ For MCP clients with server configuration files, we recommend the following conf
 
 It is recommended that "mcp-remote@latest" is used. Using "serverURL" may cause issues with the portal session creation and management.
 
-If you want to force your MCP Client to reauthenticate, most MCP clients will refresh a session after removing the existing MCP OAuth sessions. Recommended command:
+If you want to force your MCP Client to reauthenticate, most MCP clients will refresh a session after removing the existing MCP OAuth sessions. Recommended command (note: this will trigger all MCP servers using mcp-remote@latest to force reauthenticate, not just Portals):
 
 `rm -rf ~/.mcp-auth`
 
