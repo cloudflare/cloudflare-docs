@@ -9,6 +9,7 @@ params:
   - chooseWeights
   - productGatewayOrEgress
   - dashButtonPath
+  - cfTunnelURL?
 ---
 
 import { Aside, APIRequest, Markdown, Render, TabItem, Tabs, DashButton } from "~/components";
@@ -28,6 +29,21 @@ Refer to <a href={props.trafficSteeringPage}>Traffic Steering</a> for more infor
 }
 
 ## Configure static routes
+
+{ props.magicWord === "Magic WAN" && (
+  <>
+		<p>The following IPv4 address ranges are allowed in the Magic Routing table:</p>
+		<Render
+			file="routing/magic-wan-allowed-ip-ranges"
+			product="networking-services"
+			params={{
+				productName: props.productName,
+				cfTunnelURL: props.cfTunnelURL
+			}}
+		/>
+	</>
+)
+}
 
 ### Create a static route
 

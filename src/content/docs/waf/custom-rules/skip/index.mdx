@@ -8,7 +8,7 @@ head:
     content: Configure a custom rule with the Skip action
 ---
 
-import { TabItem, Tabs, Steps } from "~/components";
+import { TabItem, Tabs, Steps, DashButton } from "~/components";
 
 Use the _Skip_ action in a custom rule to skip one or more security features. A rule configured with the _Skip_ action is also known as a skip rule.
 
@@ -40,21 +40,21 @@ For more information on the available options, refer to [Available skip options]
 
 <Steps>
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
+1. In the Cloudflare dashboard, go to the **Security rules** page.
 
-2. Go to **Security** > **Security rules**.
+   <DashButton url="/?to=/:account/:zone/security/security-rules" />
 
-3. [Create a custom rule](/waf/custom-rules/create-dashboard/) by selecting **Create rule** > **Custom rules**, or edit an existing custom rule.
+2. [Create a custom rule](/waf/custom-rules/create-dashboard/) by selecting **Create rule** > **Custom rules**, or edit an existing custom rule.
 
-4. Define the rule name and the rule expression.
+3. Define the rule name and the rule expression.
 
-5. Under **Choose action**, select _Skip_ from the dropdown.
+4. Under **Choose action**, select _Skip_ from the dropdown.
 
    ![Available Skip action options when configuring a custom rule](~/assets/images/waf/custom-rules/skip-action-options.png)
 
-6. Configure the desired [skip options](/waf/custom-rules/skip/options/).
+5. Configure the desired [skip options](/waf/custom-rules/skip/options/).
 
-7. Save your changes.
+6. Save your changes.
 
 </Steps>
 

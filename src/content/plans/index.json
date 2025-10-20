@@ -2321,20 +2321,6 @@
 	},
 	"speed": {
 		"title": "Speed",
-		"amp": {
-			"title": "AMP Real URL",
-			"link": "/speed/optimization/other/amp-real-url/",
-			"properties": {
-				"availability": {
-					"title": "Availability",
-					"summary": "Available on all plans",
-					"free": "Yes",
-					"pro": "Yes",
-					"biz": "Yes",
-					"ent": "Yes"
-				}
-			}
-		},
 		"automatic_platform_optimization": {
 			"title": "Automatic Platform Optimization",
 			"link": "/automatic-platform-optimization/",
@@ -2343,20 +2329,6 @@
 					"title": "Availability",
 					"summary": "Included with Pro and above",
 					"free": "Paid add-on",
-					"pro": "Yes",
-					"biz": "Yes",
-					"ent": "Yes"
-				}
-			}
-		},
-		"automatic_signed_exchanges": {
-			"title": "Automatic Signed Exchanges (SXGs)",
-			"link": "/speed/optimization/other/signed-exchanges/",
-			"properties": {
-				"availability": {
-					"title": "Availability",
-					"summary": "Included with Pro and above or [Automatic Platform Optimization](/automatic-platform-optimization/)",
-					"free": "No",
 					"pro": "Yes",
 					"biz": "Yes",
 					"ent": "Yes"

@@ -38,9 +38,12 @@ flowchart TD
     ST -- Resolver IP included in WARP Tunnel per Split Tunnel configuration --> QW["Query sent via WARP Tunnel to be resolved"]
     ST -- Resolver IP not included in WARP Tunnel per Split Tunnel configuration --> QO["Query sent to resolver IP outside WARP Tunnel"]
 
+    %% Gateway evaluation after query via WARP
     QW -- Allowed by Gateway --> OR["Evaluated by Cloudflare on-ramp routes"]
+    QW -- Blocked by Gateway Network or HTTP Policy --> BLK["Traffic blocked by Cloudflare"]
+
     OR -- Onramp routes do not include resolver IP --> GP["Gateway proxies query to resolver IP via normal WARP egress route"]
-    OR -- Onramp routes include, resolver IP --> ADV["Cloudflare onramps advertises route that includes Resolver IP"]
+    OR -- Onramp routes include resolver IP --> ADV["Cloudflare onramps advertise route that includes Resolver IP"]
     ADV --> PR["Private resolver returns IP address to WARP client"]
 
     %% Right branch (no LDF match)
@@ -48,9 +51,10 @@ flowchart TD
 
     GWR -- Resolver policy is not matched --> C1111a["1.1.1.1"]
 
-    GWR -- Resolver policy is matched --> IDNS["Internal DNS"]
-    GWR -- Resolver policy is matched --> C1111b["1.1.1.1"]
-    GWR -- Resolver policy is matched --> CUST["Custom resolver"]
+    GWR -- Resolver policy is matched --> MATCH((Resolver policy directs query to one of the following))
+    MATCH --> IDNS["Internal DNS"]
+    MATCH --> C1111b["1.1.1.1"]
+    MATCH --> CUST["Custom resolver"]
     CUST --> PNS["Private network services<br>(Cloudflare Tunnel, Magic WAN, WARP Connector)"]
 ```
 #### Terms mentioned

@@ -18,6 +18,7 @@ This feature replaces the legacy [private network app type](/cloudflare-one/appl
 
 - Private IPs and hostnames are reachable over Cloudflare WARP, Magic WAN or Browser Isolation. For more details, refer to [Connect a private network](/cloudflare-one/connections/connect-networks/private-net/).
 - Private hostnames route to your custom DNS resolver through [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/) or [Gateway resolver policies](/cloudflare-one/policies/gateway/resolver-policies/).
+- Public IPs and hostnames can be used to define a private application, however the IP or hostname must route through Cloudflare via [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/private-net/cloudflared/), [WARP Connector](/cloudflare-one/connections/connect-networks/private-net/warp-connector/), or [Magic WAN](/magic-wan/configuration/manually/how-to/configure-routes/).
 - (Optional) Turn on [Gateway TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/) if you want to use Access JWTs to manage [HTTPS application sessions](#https-applications).
 
 ## Add your application to Access
