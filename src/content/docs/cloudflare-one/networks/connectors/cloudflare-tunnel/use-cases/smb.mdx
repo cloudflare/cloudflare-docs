@@ -27,7 +27,7 @@ You can use Cloudflare Tunnel to create a secure, outbound-only connection from 
 <Render file="tunnel/connect-private-network" product="cloudflare-one" />
 
 3. In the **CIDR** tab for the tunnel, enter the private IP or CIDR address of your server.
-4. (Optional) [Set up Zero Trust policies](/cloudflare-one/connections/connect-networks/private-net/cloudflared/#4-recommended-filter-network-traffic-with-gateway) to fine-tune access to your server.
+4. (Optional) [Set up Zero Trust policies](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/#4-recommended-filter-network-traffic-with-gateway) to fine-tune access to your server.
 
 ### 2. Set up the client
 
@@ -69,7 +69,7 @@ The public hostname method can be implemented in conjunction with routing over W
 
 ### 1. Connect the server to Cloudflare
 
-1. Create a Cloudflare Tunnel by following our [dashboard setup guide](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/).
+1. Create a Cloudflare Tunnel by following our [dashboard setup guide](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/create-remote-tunnel/).
 
 2. In the **Published application routes** tab, choose a domain from the drop-down menu and specify any subdomain (for example, `smb.example.com`).
 
@@ -83,7 +83,7 @@ By default, anyone on the Internet can connect to the server using the hostname 
 
 ### 3. Connect as a user
 
-1. [Install `cloudflared`](/cloudflare-one/connections/connect-networks/downloads/) on the client machine.
+1. [Install `cloudflared`](/cloudflare-one/networks/connectors/cloudflare-tunnel/downloads/) on the client machine.
 
 2. Run the following command to open an SMB listening port. You can specify any available port on the client machine.
 
@@ -93,7 +93,7 @@ By default, anyone on the Internet can connect to the server using the hostname 
 
    This command can be wrapped as a desktop shortcut so that end users do not need to use the command line.
 
-3. [Open your SMB client](/cloudflare-one/connections/connect-networks/use-cases/smb/#4-connect-as-a-user) and configure the client to point to `smb://localhost:8445/sambashare`. Do not input the hostname.
+3. [Open your SMB client](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/smb/#4-connect-as-a-user) and configure the client to point to `smb://localhost:8445/sambashare`. Do not input the hostname.
 
 4. Sign in with the username and password created while setting up the server.
 

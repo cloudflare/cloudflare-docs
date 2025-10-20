@@ -68,7 +68,7 @@ This rule is only required for firewalls that enforce SNI.
 
 ### Region US
 
-When using the [US region](/cloudflare-one/connections/connect-networks/configure-tunnels/cloudflared-parameters/run-parameters/#region), ensure your firewall allows outbound connections to these US-region destinations on port `7844` (TCP/UDP) for tunnel operation.
+When using the [US region](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cloudflared-parameters/run-parameters/#region), ensure your firewall allows outbound connections to these US-region destinations on port `7844` (TCP/UDP) for tunnel operation.
 
 #### `us-region1.v2.argotunnel.com`
 
@@ -112,7 +112,7 @@ Allows `cloudflared` to download the latest release and perform a software updat
 
 #### `<your-team-name>.cloudflareaccess.com`
 
-Allows `cloudflared` to validate the Access JWT. Only required if the [`access`](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/configure-tunnels/cloudflared-parameters/origin-parameters/#access) setting is enabled.
+Allows `cloudflared` to validate the Access JWT. Only required if the [`access`](https://developers.cloudflare.com/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cloudflared-parameters/origin-parameters/#access) setting is enabled.
 
 | IPv4                            | IPv6                                                    | Port | Protocols   |
 | ------------------------------- | ------------------------------------------------------- | ---- | ----------- |

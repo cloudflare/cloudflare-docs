@@ -7,15 +7,15 @@ sidebar:
 
 import { Render, DashButton, Details } from "~/components";
 
-A [public load balancer](/load-balancing/load-balancers/) allows you to distribute traffic across the servers that are running your [published applications](/cloudflare-one/connections/connect-networks/routing-to-tunnel/).
+A [public load balancer](/load-balancing/load-balancers/) allows you to distribute traffic across the servers that are running your [published applications](/cloudflare-one/networks/connectors/cloudflare-tunnel/routing-to-tunnel/).
 
-When you add a [published application route](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/#2a-publish-an-application) to your Cloudflare Tunnel, Cloudflare generates a subdomain of `cfargotunnel.com` with the UUID of the created tunnel. You can add the application to a load balancer pool by using `<UUID>.cfargotunnel.com` as the [endpoint address](/load-balancing/understand-basics/load-balancing-components/#endpoints) and specifying the application hostname (`app.example.com`) in the [endpoint host header](/load-balancing/additional-options/override-http-host-headers/). Load Balancer does not support directly adding `app.example.com` as an endpoint if the service is behind Cloudflare Tunnel.
+When you add a [published application route](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/create-remote-tunnel/#2a-publish-an-application) to your Cloudflare Tunnel, Cloudflare generates a subdomain of `cfargotunnel.com` with the UUID of the created tunnel. You can add the application to a load balancer pool by using `<UUID>.cfargotunnel.com` as the [endpoint address](/load-balancing/understand-basics/load-balancing-components/#endpoints) and specifying the application hostname (`app.example.com`) in the [endpoint host header](/load-balancing/additional-options/override-http-host-headers/). Load Balancer does not support directly adding `app.example.com` as an endpoint if the service is behind Cloudflare Tunnel.
 
 ## Create a public load balancer
 
 ### Prerequisites
 
-- A Cloudflare Tunnel with a [published application route](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/#2a-publish-an-application)
+- A Cloudflare Tunnel with a [published application route](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/create-remote-tunnel/#2a-publish-an-application)
 
 ### Create a load balancer
 
@@ -156,7 +156,7 @@ Users can now access all applications through the load balancer. Since there are
 When you configure a published application route via the dashboard, Cloudflare will automatically generate a `CNAME` DNS record that points the application hostname (`app1.example.com`) to the tunnel subdomain (`<UUID>.cfargotunnel.com`). You can [edit these DNS records](/dns/manage-dns-records/how-to/create-dns-records/#edit-dns-records) so that they point to the load balancer hostname instead.
 
 :::note
-Tunnel routes configured via the API or CLI require [manually creating DNS records](/cloudflare-one/connections/connect-networks/routing-to-tunnel/dns/).
+Tunnel routes configured via the API or CLI require [manually creating DNS records](/cloudflare-one/networks/connectors/cloudflare-tunnel/routing-to-tunnel/dns/).
 :::
 
 Here is an example of what your DNS records will look like before and after setting up [Multiple apps per load balancer](#multiple-apps-per-load-balancer):
@@ -182,7 +182,7 @@ Here is an example of what your DNS records will look like before and after sett
 
 If you have a tunnel to a port or SSH port, do not set up a [TCP monitor](/load-balancing/monitors/). Instead, set up a health check endpoint on the `cloudflared` host and create an HTTPS monitor. For example, you can use `cloudflared` to return a fixed HTTP status response:
 
-1. In your Cloudflare Tunnel, [add a published application route](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/#2a-publish-an-application) to represent the health check endpoint:
+1. In your Cloudflare Tunnel, [add a published application route](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/create-remote-tunnel/#2a-publish-an-application) to represent the health check endpoint:
 	- **Hostame**: Enter a hostname for the health check endpoint (for example, `health-check.example.com`)
 	- **Service Type**: _HTTP_STATUS_
 	- **HTTP Status Code**: `200`
@@ -198,7 +198,7 @@ You can now assign this monitor to your load balancer endpoint. The monitor will
 
 ### Session affinity and replicas
 
-The load balancer does not distinguish between [replicas](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-availability/) of the same tunnel. If you run the same tunnel UUID on two separate hosts, the load balancer treats both hosts as a single endpoint. To maintain [session affinity](/load-balancing/understand-basics/session-affinity/) between a client and a particular host, you will need to connect each host to Cloudflare using a different tunnel UUID.
+The load balancer does not distinguish between [replicas](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-availability/) of the same tunnel. If you run the same tunnel UUID on two separate hosts, the load balancer treats both hosts as a single endpoint. To maintain [session affinity](/load-balancing/understand-basics/session-affinity/) between a client and a particular host, you will need to connect each host to Cloudflare using a different tunnel UUID.
 
 ### Local connection preference
 
@@ -206,4 +206,4 @@ If you notice traffic imbalances across endpoints in different locations, you ma
 
 When an end user sends a request to your application, Cloudflare routes their traffic using [Anycast routing](https://www.cloudflare.com/learning/cdn/glossary/anycast-network/) and their request typically goes to the nearest Cloudflare data center. Cloudflare Tunnel will prefer to serve the request using `cloudflared` connections in the same data center. This behavior can impact how connections are weighted and traffic is distributed.
 
-If you are running [`cloudflared` replicas](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-availability/), switch to separate Cloudflare tunnels so that you can have more granular control over [traffic steering](/load-balancing/understand-basics/traffic-steering/).
+If you are running [`cloudflared` replicas](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-availability/), switch to separate Cloudflare tunnels so that you can have more granular control over [traffic steering](/load-balancing/understand-basics/traffic-steering/).

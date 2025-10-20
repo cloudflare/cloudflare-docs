@@ -13,13 +13,13 @@ By default, all DNS requests on the user device are resolved by Cloudflare's [pu
 
 To resolve private DNS queries:
 
-1. [Connect your private network](/cloudflare-one/connections/connect-networks/get-started/) with Cloudflare Tunnel.
+1. [Connect your private network](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/) with Cloudflare Tunnel.
 
 2. Under **Networks** > **Routes**, verify that the IP address of your internal DNS resolver is included in the tunnel.
 
 		:::note
 
-		Ensure that **Split Tunnels** are configured to [include traffic to private IPs and hostnames](/cloudflare-one/connections/connect-networks/private-net/cloudflared/connect-cidr/#3-route-private-network-ips-through-warp).
+		Ensure that **Split Tunnels** are configured to [include traffic to private IPs and hostnames](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-cidr/#3-route-private-network-ips-through-warp).
 
 		:::
 
@@ -30,7 +30,7 @@ To resolve private DNS queries:
 
 4. [Enable the Gateway proxy](/cloudflare-one/policies/gateway/proxy/#turn-on-the-gateway-proxy) for TCP and UDP.
 
-5. Finally, ensure that your tunnel uses QUIC as the default [transport protocol](/cloudflare-one/connections/connect-networks/configure-tunnels/cloudflared-parameters/run-parameters/#protocol). This will enable `cloudflared` to proxy UDP-based traffic which is required in most cases to resolve DNS queries.
+5. Finally, ensure that your tunnel uses QUIC as the default [transport protocol](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cloudflared-parameters/run-parameters/#protocol). This will enable `cloudflared` to proxy UDP-based traffic which is required in most cases to resolve DNS queries.
 
 The WARP client will now send DNS queries to your internal DNS resolver for resolution. To learn more, refer to [How the WARP client handles DNS requests](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/#how-the-warp-client-handles-dns-requests).
 

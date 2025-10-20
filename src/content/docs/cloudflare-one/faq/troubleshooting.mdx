@@ -185,7 +185,7 @@ Gateway does not support this downgrade mechanism. When receiving the `HTTP_1_1_
 
 If you see an error with the title `This site can't provide a secure connection` and a subtitle of `<hostname> uses an unsupported protocol`, you must [order an Advanced Certificate](/ssl/edge-certificates/advanced-certificate-manager/manage-certificates/#create-a-certificate).
 
-If you added a [multi-level subdomain](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/#2a-connect-an-application) (more than one level of subdomain), you must [order an Advanced Certificate for the hostname](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/#2a-connect-an-application) as Cloudflare's Universal certificate will not cover the public hostname by default.
+If you added a [multi-level subdomain](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/create-remote-tunnel/#2a-connect-an-application) (more than one level of subdomain), you must [order an Advanced Certificate for the hostname](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/create-remote-tunnel/#2a-connect-an-application) as Cloudflare's Universal certificate will not cover the public hostname by default.
 
 ## As of February 2, 2025, my end-user device's browser is returning a `Your connection is not private` warning.
 
@@ -375,7 +375,7 @@ Cloudflare Access uses a [`CF_Session` cookie](/cloudflare-one/identity/authoriz
 
 ## Long-lived SSH sessions frequently disconnect.
 
-All connections proxied through Cloudflare Gateway, including traffic to [Access for Infrastructure](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/) SSH targets, have a maximum guaranteed duration of 10 hours. It is possible for connections to last longer than 10 hours. However, if a connection is active at the time of a Gateway release, Gateway will terminate the connection 10 hours later. Releases are not scheduled and can occur multiple times a week.
+All connections proxied through Cloudflare Gateway, including traffic to [Access for Infrastructure](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/) SSH targets, have a maximum guaranteed duration of 10 hours. It is possible for connections to last longer than 10 hours. However, if a connection is active at the time of a Gateway release, Gateway will terminate the connection 10 hours later. Releases are not scheduled and can occur multiple times a week.
 
 To prevent long-lived SSH connections from breaking unexpectedly, we recommend terminating sessions on a predefined schedule. For example, you could set an 8-hour idle timeout so that inactive sessions automatically disconnect during off hours. To configure an idle timeout, add the `ChannelTimeout` option to either the SSH server (`/etc/ssh/sshd_config`) or client configuration file (`~/.ssh/config`):
 

@@ -10,11 +10,11 @@ import { Render } from "~/components";
 
 End users can connect to an RDP server without the WARP client by authenticating through `cloudflared` in their native terminal. This method requires having `cloudflared` installed on both the server machine and on the client machine, as well as an active zone on Cloudflare. The traffic is proxied over this connection, and the user logs in to the server with their Cloudflare Access credentials.
 
-Client-side `cloudflared` can be used in conjunction with [routing over WARP](/cloudflare-one/connections/connect-networks/use-cases/rdp/rdp-warp-to-tunnel/) and [Browser-based RDP](/cloudflare-one/connections/connect-networks/use-cases/rdp/rdp-browser/) so that there are multiple ways to connect to the server. You can reuse the same Cloudflare Tunnel when configuring each connection method.
+Client-side `cloudflared` can be used in conjunction with [routing over WARP](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/rdp/rdp-warp-to-tunnel/) and [Browser-based RDP](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/rdp/rdp-browser/) so that there are multiple ways to connect to the server. You can reuse the same Cloudflare Tunnel when configuring each connection method.
 
 ## 1. Connect the server to Cloudflare
 
-1. Create a Cloudflare Tunnel by following our [dashboard setup guide](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/).
+1. Create a Cloudflare Tunnel by following our [dashboard setup guide](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/create-remote-tunnel/).
 
 2. In the **Published application routes** tab, choose a domain from the drop-down menu and specify any subdomain (for example, `rdp.example.com`).
 
@@ -28,7 +28,7 @@ By default, anyone on the Internet can connect to the server using the hostname 
 
 ## 3. Connect as a user
 
-1. [Install `cloudflared`](/cloudflare-one/connections/connect-networks/downloads/) on the client machine.
+1. [Install `cloudflared`](/cloudflare-one/networks/connectors/cloudflare-tunnel/downloads/) on the client machine.
 2. Run this command to open an RDP listening port:
 
    ```sh

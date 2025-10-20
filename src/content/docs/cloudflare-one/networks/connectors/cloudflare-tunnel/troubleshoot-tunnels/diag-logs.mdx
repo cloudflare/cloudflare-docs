@@ -36,7 +36,7 @@ These instructions apply to remotely-managed and locally-managed tunnels running
         cloudflared tunnel diag
         ```
 
-        If multiple instances of `cloudflared` are running on the same host, specify the [metrics server IP and port](/cloudflare-one/connections/connect-networks/monitor-tunnels/metrics/#configure-the-metrics-server-address) for the instance you want to diagnose. For example:
+        If multiple instances of `cloudflared` are running on the same host, specify the [metrics server IP and port](/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/metrics/#configure-the-metrics-server-address) for the instance you want to diagnose. For example:
 
         ```sh
         cloudflared tunnel diag --metrics 127.0.0.1:20241
@@ -46,9 +46,9 @@ This command will output the status of each diagnostic task and place a `cloudfl
 
 ### Docker
 
-`cloudflared` reads diagnostic data from the [tunnel metrics server](/cloudflare-one/connections/connect-networks/monitor-tunnels/metrics/). To get diagnostic logs, the metrics server must be exposed from the Docker container and reachable from the host machine.
+`cloudflared` reads diagnostic data from the [tunnel metrics server](/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/metrics/). To get diagnostic logs, the metrics server must be exposed from the Docker container and reachable from the host machine.
 
-1.  Determine the [metrics server port](/cloudflare-one/connections/connect-networks/monitor-tunnels/metrics/#default-metrics-server-address) for the `cloudflared` instance running in Docker.
+1.  Determine the [metrics server port](/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/metrics/#default-metrics-server-address) for the `cloudflared` instance running in Docker.
 
 2.  Ensure the container is deployed with port forwarding enabled. The diagnostic feature will request information from the Docker instance using local port `20241`, therefore you should forward port `20241` to the container port obtained in Step 1:
 
@@ -94,9 +94,9 @@ This command will output the status of each diagnostic task and place a `cloudfl
 
 ### Kubernetes
 
-The diagnostic feature will request data from the [tunnel metrics server](/cloudflare-one/connections/connect-networks/monitor-tunnels/metrics/) using ports `20241` to `20245`. You will need to use port forwarding to allow the local `cloudflared` instance to connect to the metrics server on one of these ports.
+The diagnostic feature will request data from the [tunnel metrics server](/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/metrics/) using ports `20241` to `20245`. You will need to use port forwarding to allow the local `cloudflared` instance to connect to the metrics server on one of these ports.
 
-1.  Determine the tunnel's [metrics server port](/cloudflare-one/connections/connect-networks/monitor-tunnels/metrics/#default-metrics-server-address).
+1.  Determine the tunnel's [metrics server port](/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/metrics/#default-metrics-server-address).
 
 2.  Enable port forwarding:
 

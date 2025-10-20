@@ -59,9 +59,9 @@ Private hostname routing only works for applications connected with `cloudflared
 
 | Connector                                                                             | Compatibility | Minimum version |
 | ------------------------------------------------------------------------------------------ | ------------- | -- |
-| [cloudflared](/cloudflare-one/connections/connect-networks/private-net/cloudflared/)                       | ✅           | 2025.7.0 |
-| [WARP-to-WARP](/cloudflare-one/connections/connect-networks/private-net/warp-to-warp/)             | ❌            | |
-| [WARP Connector](/cloudflare-one/connections/connect-networks/private-net/warp-connector/) | ❌            | |
+| [cloudflared](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/)                       | ✅           | 2025.7.0 |
+| [WARP-to-WARP](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-to-warp/)             | ❌            | |
+| [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/) | ❌            | |
 | [Magic WAN](/magic-wan/zero-trust/cloudflare-gateway/)                                     | ❌            | |
 
 ## Connect a private hostname
@@ -78,18 +78,18 @@ To connect to private hostnames, your devices must forward the following traffic
 <Checkbox label="Internal DNS resolver IP" />
 <Checkbox label="DNS queries for your private hostname" />
 
-Configuration steps vary depending on your [device on-ramp](/cloudflare-one/connections/connect-networks/private-net/cloudflared/connect-private-hostname/#device-connectivity):
+Configuration steps vary depending on your [device on-ramp](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-private-hostname/#device-connectivity):
 
 <Details header="WARP clients">
-1. In [Split Tunnels](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/), ensure that the IPs listed above route through the WARP tunnel. For example, if you are using the default Split Tunnels Exclude configuration and your application and DNS resolver have private IPs in the range `10.0.0.0/8`, delete `100.64.0.0/10` and `10.0.0.0/8` from the Split Tunnels list. We recommend adding back the IPs that are not explicitly used by your network — refer to our [Split Tunnels calculator](/cloudflare-one/connections/connect-networks/private-net/cloudflared/connect-cidr/#3-route-private-network-ips-through-warp) for details.
+1. In [Split Tunnels](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/), ensure that the IPs listed above route through the WARP tunnel. For example, if you are using the default Split Tunnels Exclude configuration and your application and DNS resolver have private IPs in the range `10.0.0.0/8`, delete `100.64.0.0/10` and `10.0.0.0/8` from the Split Tunnels list. We recommend adding back the IPs that are not explicitly used by your network — refer to our [Split Tunnels calculator](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-cidr/#3-route-private-network-ips-through-warp) for details.
 2. In [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/local-domains/), delete the top-level domain for your private hostname. This configures WARP to send the DNS query to Cloudflare Gateway for resolution.
 
 </Details>
 
 <Details header="WARP Connector">
 
-1. In your [WARP Connector device profile](/cloudflare-one/connections/connect-networks/private-net/warp-connector/site-to-site/#3-route-traffic-between-warp-connector-and-cloudflare), ensure that the IPs listed above route through the WARP tunnel.
-2. Depending on where you installed WARP Connector, you may also need to route those destination IPs through WARP Connector and point your DNS resolver to Cloudflare Gateway. Refer to [Route traffic from subnet to WARP Connector](/cloudflare-one/connections/connect-networks/private-net/warp-connector/site-to-site/#4-route-traffic-from-subnet-to-warp-connector).
+1. In your [WARP Connector device profile](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/site-to-site/#3-route-traffic-between-warp-connector-and-cloudflare), ensure that the IPs listed above route through the WARP tunnel.
+2. Depending on where you installed WARP Connector, you may also need to route those destination IPs through WARP Connector and point your DNS resolver to Cloudflare Gateway. Refer to [Route traffic from subnet to WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/site-to-site/#4-route-traffic-from-subnet-to-warp-connector).
 
 </Details>
 
@@ -136,7 +136,7 @@ To route your internal DNS resolver through Cloudflare Tunnel:
 Only available on Enterprise plans
 :::
 
-Gateway will automatically resolve DNS queries using your internal DNS server as long as the DNS server is behind the same Cloudflare Tunnel as your application. If your DNS server is behind a different Cloudflare Tunnel (for example, if you separated DNS traffic into its own tunnel for [high availability](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-availability/system-requirements/#private-dns)), then you need to point Gateway to the correct tunnel and DNS server.
+Gateway will automatically resolve DNS queries using your internal DNS server as long as the DNS server is behind the same Cloudflare Tunnel as your application. If your DNS server is behind a different Cloudflare Tunnel (for example, if you separated DNS traffic into its own tunnel for [high availability](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-availability/system-requirements/#private-dns)), then you need to point Gateway to the correct tunnel and DNS server.
 
 1. [Create a Gateway resolver policy](/cloudflare-one/policies/gateway/resolver-policies/#create-a-resolver-policy) that matches the private hostname for which you are establishing the route:
 
@@ -146,7 +146,7 @@ Gateway will automatically resolve DNS queries using your internal DNS server as
 
 2. Under **Configure custom DNS resolvers**, enter the IPv4 and/or IPv6 address of your internal DNS server. The dropdown menu will not populate until you type in the full IP address.
 
-3. From the dropdown menu, select the `- Private` routing option and the [virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/) where the DNS server is located.
+3. From the dropdown menu, select the `- Private` routing option and the [virtual network](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/tunnel-virtual-networks/) where the DNS server is located.
 
 ### 4. (Recommended) Filter network traffic with Gateway
 
@@ -231,7 +231,7 @@ You can run the following tests to check if private hostname routing is properly
 
 		If the DNS lookup fails, it means that WARP cannot connect to your internal DNS server through `cloudflared`. Check that you have a [tunnel route](#2-connect-the-dns-server-to-cloudflare) for the internal DNS server IP. Also, confirm that the DNS server IP [routes through the WARP tunnel](#split-tunnels).
 
-		For a general WARP-to-Tunnel troubleshooting procedure, refer to [Troubleshoot private network connectivity](/cloudflare-one/connections/connect-networks/troubleshoot-tunnels/private-networks/).
+		For a general WARP-to-Tunnel troubleshooting procedure, refer to [Troubleshoot private network connectivity](/cloudflare-one/networks/connectors/cloudflare-tunnel/troubleshoot-tunnels/private-networks/).
 
 2. Run a standard `nslookup` for the private hostname:
 
@@ -260,5 +260,5 @@ You can run the following tests to check if private hostname routing is properly
 		...
 		```
 
-		If the request fails, confirm that the initial resolved IP [routes through the WARP tunnel](#split-tunnels). You can also check your [tunnel logs](/cloudflare-one/connections/connect-networks/monitor-tunnels/logs/) to confirm that requests are routing to the application's private IP.
+		If the request fails, confirm that the initial resolved IP [routes through the WARP tunnel](#split-tunnels). You can also check your [tunnel logs](/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/logs/) to confirm that requests are routing to the application's private IP.
 

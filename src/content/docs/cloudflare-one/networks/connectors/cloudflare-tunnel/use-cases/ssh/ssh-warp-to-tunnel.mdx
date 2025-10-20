@@ -12,7 +12,7 @@ If you want to manage your own SSH keys, you can use Cloudflare Tunnel to create
 
 :::note
 
-If you want to create more granular access policies, allow Cloudflare to manage SSH keys for you, or to obtain command logs, consider using [Access for Infrastructure](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/) instead.
+If you want to create more granular access policies, allow Cloudflare to manage SSH keys for you, or to obtain command logs, consider using [Access for Infrastructure](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/) instead.
 :::
 
 This example walks through how to set up an SSH server on a Google Cloud Platform (GCP) virtual machine (VM), but you can use any machine that supports SSH connections.
@@ -63,7 +63,7 @@ In order to be able to establish an SSH connection, do not enable [OS Login](htt
 
 3. In the **CIDR** tab for the tunnel, enter the private IP or CIDR address of your server. In GCP, the server IP is the  **Internal IP** of the VM instance.
 
-4. (Optional) [Set up Zero Trust policies](/cloudflare-one/connections/connect-networks/private-net/cloudflared/#4-recommended-filter-network-traffic-with-gateway) to fine-tune access to your server.
+4. (Optional) [Set up Zero Trust policies](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/#4-recommended-filter-network-traffic-with-gateway) to fine-tune access to your server.
 
 ## 4. Set up the client
 

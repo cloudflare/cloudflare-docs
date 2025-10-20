@@ -33,12 +33,12 @@ A remotely-managed tunnel is a [tunnel](#tunnel) that was created in [Zero Trust
 
 ## Locally-managed tunnel
 
-A locally-managed tunnel is a [tunnel](#tunnel) that was created by running `cloudflared tunnel create <NAME>` on the command line. Tunnel configuration is stored in your local [cloudflared directory](#default-cloudflared-directory). For terminology specific to locally-managed tunnels, refer to the [Locally-managed tunnel glossary](/cloudflare-one/connections/connect-networks/do-more-with-tunnels/local-management/local-tunnel-terms/).
+A locally-managed tunnel is a [tunnel](#tunnel) that was created by running `cloudflared tunnel create <NAME>` on the command line. Tunnel configuration is stored in your local [cloudflared directory](#default-cloudflared-directory). For terminology specific to locally-managed tunnels, refer to the [Locally-managed tunnel glossary](/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/local-management/local-tunnel-terms/).
 
 ## Quick tunnels
 
-Quick tunnels, when run, will generate a URL that consists of a random subdomain of the website `trycloudflare.com`, and point traffic to localhost on port `8080`. If you have a web service running at that address, users who visit the generated subdomain will be able to visit your web service through Cloudflare's network. Refer to [TryCloudflare](/cloudflare-one/connections/connect-networks/do-more-with-tunnels/trycloudflare/) for more information on how to run quick tunnels.
+Quick tunnels, when run, will generate a URL that consists of a random subdomain of the website `trycloudflare.com`, and point traffic to localhost on port `8080`. If you have a web service running at that address, users who visit the generated subdomain will be able to visit your web service through Cloudflare's network. Refer to [TryCloudflare](/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/trycloudflare/) for more information on how to run quick tunnels.
 
 ## Virtual networks
 
-A [virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/) is a software abstraction that allows you to logically segregate resources on your private network. Virtual networks are especially useful for exposing resources which have overlapping IP routes. To connect to a resource, end users would select a virtual network in their WARP client settings before entering the destination IP.
+A [virtual network](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/tunnel-virtual-networks/) is a software abstraction that allows you to logically segregate resources on your private network. Virtual networks are especially useful for exposing resources which have overlapping IP routes. To connect to a resource, end users would select a virtual network in their WARP client settings before entering the destination IP.

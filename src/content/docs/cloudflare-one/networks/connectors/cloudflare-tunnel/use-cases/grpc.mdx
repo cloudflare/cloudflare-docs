@@ -63,7 +63,7 @@ You can configure [Gateway network policies](/cloudflare-one/policies/gateway/ne
 | -------------- | -------- | --------------- | ------ |
 | Destination IP | in       | `172.31.0.0/16` | Block  |
 
-For more details on setting up the Gateway proxy, refer to [Filter network traffic with Gateway](/cloudflare-one/connections/connect-networks/private-net/cloudflared/#4-recommended-filter-network-traffic-with-gateway).
+For more details on setting up the Gateway proxy, refer to [Filter network traffic with Gateway](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/#4-recommended-filter-network-traffic-with-gateway).
 
 ## 5. Set up the client
 
@@ -101,4 +101,4 @@ I0000 00:00:1721771484.489711 4414247 config.cc:230] gRPC experiments enabled: c
 Greeter client received: Hello, you!
 ```
 
-You can view [Tunnel logs](/cloudflare-one/connections/connect-networks/monitor-tunnels/logs/#view-logs-on-your-local-machine) to validate that requests are coming into the tunnel and reaching the gRPC server as intended.
+You can view [Tunnel logs](/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/logs/#view-logs-on-your-local-machine) to validate that requests are coming into the tunnel and reaching the gRPC server as intended.

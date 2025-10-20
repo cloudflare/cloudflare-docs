@@ -26,11 +26,11 @@ For Amazon Web Services (AWS) deployments:
 
 ## WARP Connector with cloudflared
 
-WARP Connector and [`cloudflared`](/cloudflare-one/connections/connect-networks/private-net/cloudflared/) can run together on the same Linux host. This configuration is useful when you want to use WARP Connector as a gateway for your private network, while also using the `cloudflared` daemon to expose specific applications.
+WARP Connector and [`cloudflared`](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/) can run together on the same Linux host. This configuration is useful when you want to use WARP Connector as a gateway for your private network, while also using the `cloudflared` daemon to expose specific applications.
 
-By design, WARP Connector captures all outbound traffic and routes it through Cloudflare's network. This prevents `cloudflared` from making its own [required outbound connections](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-with-firewall/#required-for-tunnel-operation) to Cloudflare, causing the tunnel to fail with connection timeouts.
+By design, WARP Connector captures all outbound traffic and routes it through Cloudflare's network. This prevents `cloudflared` from making its own [required outbound connections](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-with-firewall/#required-for-tunnel-operation) to Cloudflare, causing the tunnel to fail with connection timeouts.
 
-To allow `cloudflared` to connect, use [Split Tunnels](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/) to explicitly exclude the [Cloudflare Tunnel destinations](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-with-firewall/) from the WARP tunnel. For example, if you are using Split Tunnels in **Exclude** mode, add the following hostnames (or their corresponding IP ranges) to your Split Tunnel exclusion list:
+To allow `cloudflared` to connect, use [Split Tunnels](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/) to explicitly exclude the [Cloudflare Tunnel destinations](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-with-firewall/) from the WARP tunnel. For example, if you are using Split Tunnels in **Exclude** mode, add the following hostnames (or their corresponding IP ranges) to your Split Tunnel exclusion list:
 	- `region1.v2.argotunnel.com`
 	- `region2.v2.argotunnel.com`
 

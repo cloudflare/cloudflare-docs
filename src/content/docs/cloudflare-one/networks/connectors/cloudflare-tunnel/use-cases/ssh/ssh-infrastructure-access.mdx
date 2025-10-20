@@ -8,7 +8,7 @@ sidebar:
 
 import { Tabs, TabItem, Badge, Render, APIRequest } from "~/components";
 
-[Access for Infrastructure](/cloudflare-one/applications/non-http/infrastructure-apps/) provides granular control over how users can connect to your SSH servers. This feature uses the same deployment model as [WARP-to-Tunnel](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-warp-to-tunnel/) but unlocks more policy options and command logging functionality.
+[Access for Infrastructure](/cloudflare-one/applications/non-http/infrastructure-apps/) provides granular control over how users can connect to your SSH servers. This feature uses the same deployment model as [WARP-to-Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-warp-to-tunnel/) but unlocks more policy options and command logging functionality.
 
 <Render
 	file="access/short-lived-certs-intro"
@@ -96,7 +96,7 @@ chmod 600 /etc/ssh/ca.pub
 
 ## 8. Connect as a user
 
-Users can use any SSH client to connect to the target, as long as they are logged into the WARP client on their device. If the target is located within a particular virtual network, ensure that the WARP client is [connected to that virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/#connect-to-a-virtual-network) before initiating the connection. Users do not need to modify any SSH configs on their device. For example, to SSH from a terminal:
+Users can use any SSH client to connect to the target, as long as they are logged into the WARP client on their device. If the target is located within a particular virtual network, ensure that the WARP client is [connected to that virtual network](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/tunnel-virtual-networks/#connect-to-a-virtual-network) before initiating the connection. Users do not need to modify any SSH configs on their device. For example, to SSH from a terminal:
 
 ```sh
 ssh <username>@<target IP>
@@ -204,7 +204,7 @@ A user may be blocked by an Access policy from reaching your server because no e
 
 :::note[Access policies and infrastructure applications]
 
-The Access infrastructure application (created in [step 5](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/#5-add-an-infrastructure-application)) is the policy container for your SSH server. Cloudflare refers to your server that you connect to with SSH as a [target](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/#4-add-a-target).
+The Access infrastructure application (created in [step 5](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/#5-add-an-infrastructure-application)) is the policy container for your SSH server. Cloudflare refers to your server that you connect to with SSH as a [target](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/#4-add-a-target).
 
 [Access policies](/cloudflare-one/policies/access/policy-management/) are the rules attached to this Access infrastructure application, determining who can connect and what UNIX usernames they can log in as on the server. Cloudflare will not create new users on the target. UNIX users must already be present on the server.
 
@@ -218,7 +218,7 @@ As an end user, run [`warp-cli target list`](/cloudflare-one/applications/non-ht
 
 <Render file="tunnel/warp-cli-target-list" product="cloudflare-one" />
 
-- If the target appears in the list, confirm that the username you are attempting to connect with is shown in the output. If the username is not shown, an administrator must find the Access policy associated with the target and add that username to the Access policy. An administrator should have created an Access policy in [substep 9 of step 5: Add an infrastructure application](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/#5-add-an-infrastructure-application). If the username is shown, that means the Access policy should be granting access and you should ensure that the tunnel is healthy in [step 2](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/#2-check-target-machine-connection).
+- If the target appears in the list, confirm that the username you are attempting to connect with is shown in the output. If the username is not shown, an administrator must find the Access policy associated with the target and add that username to the Access policy. An administrator should have created an Access policy in [substep 9 of step 5: Add an infrastructure application](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/#5-add-an-infrastructure-application). If the username is shown, that means the Access policy should be granting access and you should ensure that the tunnel is healthy in [step 2](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/#2-check-target-machine-connection).
 
 - If the target does not appear in the list, an administrator must audit the Access policies for the target in the Zero Trust dashboard for potential misconfiguration that may be blocking connection.
 
@@ -238,7 +238,7 @@ You will need Cloudflare dashboard access and log view [permissions](/cloudflare
 
 3. Review the **Decision**. If the **Decision** is `Access denied`, select the application and copy the name under App.
 
-	If the decision is `Access granted`, Access policies are not interfering with your connection attempts and your connection issue is due to the Cloudflare Tunnel ([step 2](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/#2-check-target-machine-connection)), the SSH server ([step 3](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/#3-confirm-user-existence-on-the-target-server)), or the `sshd_config` file ([step 4](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/#4-debug-sshd_config-file-misconfiguration)).
+	If the decision is `Access granted`, Access policies are not interfering with your connection attempts and your connection issue is due to the Cloudflare Tunnel ([step 2](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/#2-check-target-machine-connection)), the SSH server ([step 3](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/#3-confirm-user-existence-on-the-target-server)), or the `sshd_config` file ([step 4](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/#4-debug-sshd_config-file-misconfiguration)).
 
 4. Go to **Access** > **Applications**.
 
@@ -265,11 +265,11 @@ To check the status of your tunnel:
 
 3. Copy the tunnel name.
 4. Go to **Networks** > **Tunnels** and search by your tunnel name.
-5. Review that the [Tunnel status](/cloudflare-one/connections/connect-networks/monitor-tunnels/notifications/#available-notifications) says `Active`, and not `Down`, `Degraded`, or `Inactive`.
+5. Review that the [Tunnel status](/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/notifications/#available-notifications) says `Active`, and not `Down`, `Degraded`, or `Inactive`.
 
 <Render file="tunnel/tunnel-status" product="cloudflare-one" />
 
-For detailed steps on troubleshooting, refer to the [Troubleshooting Tunnel documentation](/cloudflare-one/connections/connect-networks/troubleshoot-tunnels/). Review the [Tunnel with Firewall documentation](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-with-firewall/#test-connectivity) to ensure your network is correctly configured to allow `cloudflared` connections.
+For detailed steps on troubleshooting, refer to the [Troubleshooting Tunnel documentation](/cloudflare-one/networks/connectors/cloudflare-tunnel/troubleshoot-tunnels/). Review the [Tunnel with Firewall documentation](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-with-firewall/#test-connectivity) to ensure your network is correctly configured to allow `cloudflared` connections.
 
 After you have verified that there are no issues with your tunnel's health, confirm the user's existence on the server in the following step.
 
@@ -468,4 +468,4 @@ These troubleshooting steps could result in you being locked out of your SSH ser
 
 	<Render file="ssh/restart-server" product="cloudflare-one" />
 
-By completing all four troubleshooting steps, you should have resolved any connection issues caused by misconfiguration of the SSH server. If issues persist, [recheck `sshd` logs](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/#review-your-sshd-logs). The example [`sshd_config` shared above](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/#review-your-sshd_config-file-for-misconfigurations) enables debug logging and may expose more specific issues.
+By completing all four troubleshooting steps, you should have resolved any connection issues caused by misconfiguration of the SSH server. If issues persist, [recheck `sshd` logs](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/#review-your-sshd-logs). The example [`sshd_config` shared above](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/#review-your-sshd_config-file-for-misconfigurations) enables debug logging and may expose more specific issues.

@@ -62,7 +62,7 @@ A SASE platform replaces traditional VPN hardware by offering two key services. 
 
 Remote users authenticate and connect to a cloud hosted Zero Trust Network Access (ZTNA) service, which in turn has connectivity into the networks where the private applications reside. Cloudflare's [SASE reference architecture](/reference-architecture/architectures/sase/) describes three methods for connecting Cloudflare to your existing applications and networks:
 
-1. Software connectors ([`cloudflared`](/cloudflare-one/connections/connect-networks/private-net/cloudflared/) or [WARP Connector](/cloudflare-one/connections/connect-networks/private-net/warp-connector/))
+1. Software connectors ([`cloudflared`](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/) or [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/))
 2. IPsec or GRE tunnels using [Magic WAN](/magic-wan/)
 3. Direct network connections using [Cloudflare Network Interconnect](/network-interconnect/)
 
@@ -131,19 +131,19 @@ Although this phase focuses on using the Magic WAN service and IPsec tunnels for
 
 Cloudflare offers two types of software connectors:
 
-- [`cloudflared`](/cloudflare-one/connections/connect-networks/get-started/)
-- [WARP connector](/cloudflare-one/connections/connect-networks/private-net/warp-connector/)
+- [`cloudflared`](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/)
+- [WARP connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/)
 
 As discussed in the introduction, `cloudflared` is the preferred method for Zero Trust Network Access, but only supports inbound connectivity to your networks and application servers, any server initiated connection will not go via the tunnel and instead follow the server's default network path. WARP connector is designed to create tunnels that facilitate both inbound and outbound connectivity, but it doesn't currently have the same level of failover support and ease of configuration. For this guide, we will be discussing using `cloudflared` as it supports the internal DNS use case described.
 
-For large remote access use cases, Cloudflare recommends deploying connectors to dedicated hosts. See the [System Requirements documentation](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-availability/system-requirements/) for more deployment recommendations and server sizing. Where to deploy these servers depends on the access they need and the internal firewall rules and segmentation of the network. Some customers start with their first deployment in their DMZ, while others install it deeper in their network and evolve from there.
+For large remote access use cases, Cloudflare recommends deploying connectors to dedicated hosts. See the [System Requirements documentation](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-availability/system-requirements/) for more deployment recommendations and server sizing. Where to deploy these servers depends on the access they need and the internal firewall rules and segmentation of the network. Some customers start with their first deployment in their DMZ, while others install it deeper in their network and evolve from there.
 
-Installing `cloudflared` is best done in an automated manner, so we recommend deploying using a virtualization technology such as Docker or deploying as VMware guests and configuring via Ansible. Preferably, as traffic using `cloudflared` tunnels increases, such systems can scale the deployment automatically based on real-time metrics collected from the hosts. `cloudflared` instances can be monitored using the [Prometheus metrics endpoint](/cloudflare-one/connections/connect-networks/monitor-tunnels/metrics/). Prometheus is an HTTP-based monitoring and alerting system similar in functionality to SNMP, exposing metrics that can be polled from the resource to be monitored. Most monitoring systems on the market today support Prometheus as a format to collect the metrics needed for alerting and automatically scaling the deployment.
+Installing `cloudflared` is best done in an automated manner, so we recommend deploying using a virtualization technology such as Docker or deploying as VMware guests and configuring via Ansible. Preferably, as traffic using `cloudflared` tunnels increases, such systems can scale the deployment automatically based on real-time metrics collected from the hosts. `cloudflared` instances can be monitored using the [Prometheus metrics endpoint](/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/metrics/). Prometheus is an HTTP-based monitoring and alerting system similar in functionality to SNMP, exposing metrics that can be polled from the resource to be monitored. Most monitoring systems on the market today support Prometheus as a format to collect the metrics needed for alerting and automatically scaling the deployment.
 
 For more information about deploying `cloudflared` connectors at scale:
 
-- [Various guides to deploy and update](/cloudflare-one/connections/connect-networks/deployment-guides/) connectors in environments such as Ansible, Terraform and Kubernetes
-- High availability using [replicas](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-availability/#cloudflared-replicas)
+- [Various guides to deploy and update](/cloudflare-one/networks/connectors/cloudflare-tunnel/deployment-guides/) connectors in environments such as Ansible, Terraform and Kubernetes
+- High availability using [replicas](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-availability/#cloudflared-replicas)
 - [Monitor tunnels with Grafana](/cloudflare-one/tutorials/grafana/)
 
 ### DNS resolution with Resolver Policies
@@ -175,7 +175,7 @@ In most environments the IPsec termination points are limited in their throughpu
 Fortunately, most of these applications can be migrated one-by-one to the more scalable software connector based tunnels. Any application which doesn't rely on server-initiated traffic is eligible for this type of migration. With the experience gained during the initial deployment of `cloudflared` in phase 1:
 
 1. Deploy two or more `cloudflared` instances in the relevant environment, the USA datacenter in the example below.
-2. Add [Private Networks to the tunnel](/cloudflare-one/connections/connect-networks/private-net/cloudflared/) to define routing and access that is scoped more specifically to the network and applications it handles traffic for. For example, expose the 10.20.56.0/24 subnet via the software connector tunnel, instead of the larger 10.20.0.0/16 exposed by the Magic WAN managed IPsec tunnel.
+2. Add [Private Networks to the tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/) to define routing and access that is scoped more specifically to the network and applications it handles traffic for. For example, expose the 10.20.56.0/24 subnet via the software connector tunnel, instead of the larger 10.20.0.0/16 exposed by the Magic WAN managed IPsec tunnel.
 3. Traffic from employees will now be routed via the software connector tunnel for the /24 subnet instead of the /16 route going over the IPsec tunnel, thereby offloading the reliance on the IPsec termination device.
 
 ![An evolved architecture diagram showing software connector based tunnels offloading (or replacing) the IPsec tunnels.](~/assets/images/reference-architecture/design-guide-network-vpn-migr/phase-2.svg "Figure 5: An evolved phase 2 architecture diagram showing software connector based tunnels offloading (or replacing) the IPsec tunnels.")
@@ -186,7 +186,7 @@ In some cases (such as the Asia datacenter above) this might mean that the IPsec
 
 The first two phases of this guide have resulted in a design very similar to traditional VPNs leveraging VPN concentrators, where policy enforcement happens at the perimeter. Although we've done so for reasons laid out in the introduction, the promise of a zero trust architecture is to improve security posture by defining smaller application/network segments for which security policies are applied as close to the resource as possible.
 
-This phase is about making the resources exposed behind the tunnels smaller and more isolated to prevent lateral movement within internal networks. You will be able to use the visibility gained in the previous phases to select an application (or set of applications), associated IP addresses and deploy a dedicated software connector instance. See [the documentation on how to deploy connectors and expose private networks](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/) and in step 3 configure the IP addresses of the application.
+This phase is about making the resources exposed behind the tunnels smaller and more isolated to prevent lateral movement within internal networks. You will be able to use the visibility gained in the previous phases to select an application (or set of applications), associated IP addresses and deploy a dedicated software connector instance. See [the documentation on how to deploy connectors and expose private networks](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/create-remote-tunnel/) and in step 3 configure the IP addresses of the application.
 
 ![Example architecture of tunnels deployed per application to improve security posture by reducing lateral movement within data centers.](~/assets/images/reference-architecture/design-guide-network-vpn-migr/phase-3.svg "Figure 6: Example phase 3 architecture of tunnels deployed per application to improve security posture by reducing lateral movement within data centers.")
 
@@ -198,7 +198,7 @@ In the example above, subnets X and Y are completely segmented from the rest of 
 
 In addition to routing traffic for private IP addresses, `cloudflared` can expose internal applications via publicly resolvable hostnames. This makes it possible to connect to such applications without using any software on the device. This can be very useful for use cases where you are unable to install software on the device, such as giving application access to contractors or partners.
 
-In the example below, `erp.example.com` is added as [Public Hostname](/cloudflare-one/connections/connect-networks/routing-to-tunnel/) to the tunnel, routing traffic to port 80 and/or 443 to a specific IP address on the internal subnet Y. Access to this resource from the Internet is then protected using [Cloudflare Access security policies](/cloudflare-one/policies/access/) which also rely on the IdP connection you've set up for onboarding your employees.
+In the example below, `erp.example.com` is added as [Public Hostname](/cloudflare-one/networks/connectors/cloudflare-tunnel/routing-to-tunnel/) to the tunnel, routing traffic to port 80 and/or 443 to a specific IP address on the internal subnet Y. Access to this resource from the Internet is then protected using [Cloudflare Access security policies](/cloudflare-one/policies/access/) which also rely on the IdP connection you've set up for onboarding your employees.
 
 ![Adding a public hostname to a tunnel for clientless access to internal applications.](~/assets/images/reference-architecture/design-guide-network-vpn-migr/clientless-access.svg "Figure 7: Adding a public hostname to a tunnel for clientless access to internal applications.")
 

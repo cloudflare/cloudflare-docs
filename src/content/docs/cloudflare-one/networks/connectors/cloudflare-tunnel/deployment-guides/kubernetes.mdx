@@ -7,17 +7,17 @@ sidebar:
 
 [Kubernetes](https://kubernetes.io/) is a container orchestration tool that is used to deploy applications onto physical or virtual machines, scale the deployment to meet traffic demands, and push updates without downtime. The Kubernetes cluster, or environment, where the application instances are running is connected internally through a private network. You can install the `cloudflared` daemon inside of the Kubernetes cluster in order to connect applications inside of the cluster to Cloudflare.
 
-This guide will cover how to expose a Kubernetes service to the public Internet using a [remotely-managed](/cloudflare-one/connections/connect-networks/get-started/tunnel-useful-terms/#remotely-managed-tunnel) Cloudflare Tunnel. For the purposes of this example, we will deploy a basic web application alongside `cloudflared` in Google Kubernetes Engine (GKE). The same principles apply to any other Kubernetes environment (such as `minikube`, `kubeadm`, or a cloud-based Kubernetes service) where `cloudflared` can connect to Cloudflare's network.
+This guide will cover how to expose a Kubernetes service to the public Internet using a [remotely-managed](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/tunnel-useful-terms/#remotely-managed-tunnel) Cloudflare Tunnel. For the purposes of this example, we will deploy a basic web application alongside `cloudflared` in Google Kubernetes Engine (GKE). The same principles apply to any other Kubernetes environment (such as `minikube`, `kubeadm`, or a cloud-based Kubernetes service) where `cloudflared` can connect to Cloudflare's network.
 
 :::note[Locally-managed tunnels]
-If you are looking to set up a [locally-managed tunnel](/cloudflare-one/connections/connect-networks/get-started/tunnel-useful-terms/#locally-managed-tunnel) in Kubernetes, refer to the [example code in GitHub](https://github.com/cloudflare/argo-tunnel-examples/tree/master/named-tunnel-k8s).
+If you are looking to set up a [locally-managed tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/tunnel-useful-terms/#locally-managed-tunnel) in Kubernetes, refer to the [example code in GitHub](https://github.com/cloudflare/argo-tunnel-examples/tree/master/named-tunnel-k8s).
 :::
 
 ## Architecture
 
 ![Diagram showing how a user connects to Kubernetes services through Cloudflare Tunnel](~/assets/images/cloudflare-one/connections/connect-apps/kubernetes-tunnel.png)
 
-As shown in the diagram, we recommend setting up `cloudflared` as an adjacent [deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/) to the application deployments. Having a separate Kubernetes deployment for `cloudflared` allows you to scale `cloudflared` independently of the application. In the `cloudflared` deployment, you can spin up [multiple replicas](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-availability/) running the same Cloudflare Tunnel — there is no need to build a dedicated tunnel for each `cloudflared` pod. Each `cloudflared` replica / pod can reach all Kubernetes services in the cluster.
+As shown in the diagram, we recommend setting up `cloudflared` as an adjacent [deployment](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/) to the application deployments. Having a separate Kubernetes deployment for `cloudflared` allows you to scale `cloudflared` independently of the application. In the `cloudflared` deployment, you can spin up [multiple replicas](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-availability/) running the same Cloudflare Tunnel — there is no need to build a dedicated tunnel for each `cloudflared` pod. Each `cloudflared` replica / pod can reach all Kubernetes services in the cluster.
 
 :::note
 We do not recommend using `cloudflared` in autoscaling setups because downscaling (removing replicas) will break existing user connections to that replica. Additionally, `cloudflared` does not load balance across replicas; replicas are strictly for high availability. To load balance traffic to your nodes, you can use [Cloudflare Load Balancer](/load-balancing/private-network/) or a third-party load balancer.
@@ -291,7 +291,7 @@ To run the Cloudflare Tunnel in Kubernetes:
 	replicaset.apps/httpbin-deployment-bc6689c5d        2         2         2       3m37s
 	```
 
-You should see two `cloudflared` pods and two `httpbin` pods with a `Running` status. If your `cloudflared` pods keep restarting, check the `command` syntax in `tunnel.yaml` and make sure that the [tunnel run parameters](/cloudflare-one/connections/connect-networks/configure-tunnels/cloudflared-parameters/run-parameters/)  are in the correct order.
+You should see two `cloudflared` pods and two `httpbin` pods with a `Running` status. If your `cloudflared` pods keep restarting, check the `command` syntax in `tunnel.yaml` and make sure that the [tunnel run parameters](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cloudflared-parameters/run-parameters/)  are in the correct order.
 
 ## 6. Verify tunnel status
 
