@@ -4,15 +4,16 @@ title: Error 1033
 source: null
 ---
 
-## Error 1033: Argo Tunnel error
+import { Render } from "~/components";
 
-This error indicates an issue with resolving an Argo Tunnel.
+## Error 1033: Cloudflare Tunnel error
+
+This error indicates an issue with [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/).
 
 ### Common cause
 
-You have requested a page on a website (`tunnel.example.com`) that is on the Cloudflare network. The host (`tunnel.example.com`) is configured as an Argo Tunnel, and Cloudflare is currently unable to resolve it.
+You have requested a page on a website (`tunnel.example.com`) that is on the Cloudflare network. The host (`tunnel.example.com`) is configured with Cloudflare Tunnel, and Cloudflare is currently unable to resolve it.
 
 ### Resolution
 
-- **If you are a visitor to this website**: Please try again in a few minutes.
-- **If you are the owner of this website**: Ensure that _cloudflared_ is running and can reach the network. You may wish to enable [load balancing](/cloudflare-one/connections/connect-networks/routing-to-tunnel/lb) for your tunnel.
+<Render file="tunnel/1033-error" product="cloudflare-one" />

@@ -206,7 +206,7 @@ You cannot enable high availability for an existing { props.magicWord === "virtu
 		inline={false}
 		/>
 
-		<Render file="mconn/vlan-tagging" product="networking-services" params={{	url: "[VMware's documentation](https://kb.vmware.com/s/article/1003825)" }}/>
+		<Render file="mconn/vlan-tagging" product="networking-services" params={{	url: "[VMware's documentation](https://kb.vmware.com/s/article/1003825)", virtualConnectorName: props.productNameVirtual }}/>
 
 		<Markdown
 		text={`
@@ -250,7 +250,7 @@ You cannot enable high availability for an existing { props.magicWord === "virtu
 		inline={false}
 		/>
 
-		<Render file="mconn/licence-keys" product="networking-services" />
+		<Render file="mconn/licence-keys" product="networking-services" params={{ virtualConnectorName: props.productNameVirtual }} />
 
 		<Markdown
 		text={`
@@ -282,7 +282,7 @@ You cannot enable high availability for an existing { props.magicWord === "virtu
 		inline={false}
 		/>
 
-		<Render file="mconn/licence-keys" product="networking-services" />
+		<Render file="mconn/licence-keys" product="networking-services" params={{ virtualConnectorName: props.productNameVirtual }} />
 
 		<Markdown
 		text={`
@@ -293,7 +293,7 @@ You cannot enable high availability for an existing { props.magicWord === "virtu
 		inline={false}
 		/>
 
-		<Render file="mconn/vlan-tagging" product="networking-services" params={{	url: "[Proxmox documentation](https://www.proxmox.com/en/products/proxmox-virtual-environment/get-started)" }}/>
+		<Render file="mconn/vlan-tagging" product="networking-services" params={{	url: "[Proxmox documentation](https://www.proxmox.com/en/products/proxmox-virtual-environment/get-started)", virtualConnectorName: props.productNameVirtual }}/>
 
 		<Markdown
 		text={`
@@ -349,7 +349,7 @@ To add a { props.magicWord === "virtual" ? props.productNameVirtual : props.prod
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-<Render file="mconn/wan-two-tunnels" product="networking-services" params={{ productName: "Magic WAN Connector" }} />
+<Render file="mconn/wan-two-tunnels" product="networking-services" params={{ productName: props.productName }} />
 
 1. In **WAN configuration**, select **Create**. You can create one or more [wide area networks (WANs)](https://www.cloudflare.com/learning/network-layer/what-is-a-wan/). Configuring multiple WANs will create multiple <GlossaryTooltip term="IPsec tunnel">IPsec</GlossaryTooltip> tunnels (one IPsec tunnel per WAN port). This allows { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } to load balance traffic over WANs of equal priority. It also allows Connector to failover between circuits according to their <GlossaryTooltip term="tunnel health-check" link="/magic-wan/reference/tunnel-health-checks/">health</GlossaryTooltip>. Refer to [WAN settings](/magic-wan/configuration/connector/reference/#wan-settings) for more details.
 		:::note
@@ -407,7 +407,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{sit
    - **Next hop**: The address of the L3 router to which the Connector should forward packets for this subnet.
    - **Static NAT prefix**: Optional setting. If you want to enable NAT for a routed subnet, supply an "external" prefix for the overlay-facing side of the NAT to use. It must be the same size as **Prefix**. <br /> Refer to [Routed subnets](/magic-wan/configuration/connector/network-options/routed-subnets/) for more information.
 8. Select **Save**.
-9. Select **Done** to finish your configuration. Tunnels and <GlossaryTooltip term="static route">static routes</GlossaryTooltip> will be automatically created for your Magic WAN Connector, once it boots up.
+9. Select **Done** to finish your configuration. Tunnels and <GlossaryTooltip term="static route">static routes</GlossaryTooltip> will be automatically created for your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName }, once it boots up.
 
 </TabItem> <TabItem label="API">
 
@@ -440,11 +440,11 @@ After setting up your LANs, you can configure your { props.magicWord === "virtua
 
 #### DHCP options
 
-Magic WAN Connector supports different types of DHCP configurations. Connector can:
+{ props.magicWord === "virtual" ? props.productNameVirtual : props.productName } supports different types of DHCP configurations. Connector can:
 
 - Connect to a DHCP server or use a static IP address instead of connecting to a DHCP server.
 - Act as a <a href={props.dhcpServerURL}>DHCP server</a>.
-- Use <a href={props.dhcpRelayURL}>DHCP relay</a> to connect to a DHCP server outside the location your Magic WAN Connector is in.
+- Use <a href={props.dhcpRelayURL}>DHCP relay</a> to connect to a DHCP server outside the location your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } is in.
 - <a href={props.reserveIpAddressesURL}>Reserve IP addresses</a> for specific devices on your network.
 
 ### Add your Connector to a site
@@ -453,7 +453,7 @@ After finishing your { props.magicWord === "virtual" ? props.productNameVirtual 
 
 { props.magicWord === "hardware" && (
   <>
-		<AnchorHeading title="Set up your Magic WAN Connector" depth={2} />
+		<AnchorHeading title={`Set up your ${props.productName}`} depth={2} />
 
 		<AnchorHeading title="Device installation" depth={3} />
 		<p>There are several deployment options for {props.productName}. {props.productName} can act like a DHCP server for your local network, or integrate with your local setup and have static IP addresses assigned to it.</p>
@@ -461,8 +461,8 @@ After finishing your { props.magicWord === "virtual" ? props.productNameVirtual 
 
 		<pre class="mermaid">
 		{`flowchart LR
-		accTitle: Magic WAN Connector set up as a DHCP server, and connecting to the Internet.
-    a(Magic WAN Connector)--> b(Internet) --> c(Cloudflare)
+		accTitle: ${props.productName} set up as a DHCP server, and connecting to the Internet.
+    a(${props.productName})--> b(Internet) --> c(Cloudflare)
 
     subgraph Customer site
     d[LAN 1] --> a
@@ -477,8 +477,8 @@ After finishing your { props.magicWord === "virtual" ? props.productNameVirtual 
 
 		<pre class="mermaid">
 		{`flowchart LR
-		accTitle: Magic WAN Connector connects to the router in the site, and only some of the LANs connect to Connector.
-    a(Magic WAN Connector)--> b((Site's router)) --> c(Internet) --> i(Cloudflare)
+		accTitle: ${props.productName} connects to the router in the site, and only some of the LANs connect to Connector.
+    a(${props.productName})--> b((Site's router)) --> c(Internet) --> i(Cloudflare)
 
     subgraph Customer site
     d[LAN 1] --> a
@@ -491,7 +491,7 @@ After finishing your { props.magicWord === "virtual" ? props.productNameVirtual 
     class a,i orange`}
 		</pre>
 
-		<p>Refer to <a href="/reference-architecture/diagrams/sase/magic-wan-connector-deployment/">Magic WAN Connector deployment options</a> for a high-level explanation of the deployment options that make sense to most environments, as well as a few advanced use cases.</p>
+		<p>Refer to <a href="/reference-architecture/diagrams/sase/magic-wan-connector-deployment/">{props.productName} deployment options</a> for a high-level explanation of the deployment options that make sense to most environments, as well as a few advanced use cases.</p>
 
 		<AnchorHeading title="Firewall settings required" depth={4} />
 		<p>If there is a firewall deployed upstream of the {props.productName}, configure the firewall to allow the following traffic:</p>
@@ -547,7 +547,7 @@ When you are ready to connect your { props.magicWord === "virtual" ? props.produ
 2. Go to **Connectors**.
 3. Find the Connector you want to activate, select the three dots next to it > **Edit**. Make sure you verify the serial number to choose the right connector you want to activate.
 4. In the new window, the **Status** dropdown will show as **Deactivated**. Select it to change the status to **Activated**.
-5. The **Interrupt window** is the time period when the Magic WAN Connector software can update, which may result in interruption to existing connections. Choose a time period to minimize disruption to your sites. Refer to [Interrupt window](/magic-wan/configuration/connector/maintenance/interrupt-service-window/) for more details on how to define when the Connector can update its systems.
+5. The **Interrupt window** is the time period when the { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } software can update, which may result in interruption to existing connections. Choose a time period to minimize disruption to your sites. Refer to [Interrupt window](/magic-wan/configuration/connector/maintenance/interrupt-service-window/) for more details on how to define when the Connector can update its systems.
 6. Select **Update**.
 
 { props.magicWord === "virtual" && (
@@ -795,9 +795,9 @@ To set up a high availability configuration:
 
 ## IPsec tunnels and static routes
 
-Magic WAN Connector automatically creates <a href={props.ipsecTunnelsRefURL}>IPsec tunnels</a> and <a href={props.staticRoutesRefURL}>static routes</a> for you. You cannot configure these manually.
+{ props.magicWord === "virtual" ? props.productNameVirtual : props.productName } automatically creates <a href={props.ipsecTunnelsRefURL}>IPsec tunnels</a> and <a href={props.staticRoutesRefURL}>static routes</a> for you. You cannot configure these manually.
 
-To check the IPsec tunnels and static routes created by your Magic WAN Connector:
+To check the IPsec tunnels and static routes created by your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName }:
 
 1. In the Cloudflare dashboard, go to the **Sites** page.
 

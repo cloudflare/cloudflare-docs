@@ -7,11 +7,9 @@ sidebar:
 
 import { Render, TabItem, Tabs, DashButton } from "~/components";
 
-<Render
-	file="tunnel/dns-record"
-	product="cloudflare-one"
-	params={{ one: "an origin target", two: "a DNS record" }}
-/>
+When you create a tunnel, Cloudflare generates a subdomain of `cfargotunnel.com` with the UUID of the created tunnel. You can treat `<UUID>.cfargotunnel.com` as if it were an origin target in the Cloudflare dashboard.
+
+Unlike publicly routable IP addresses, `<UUID>.cfargotunnel.com` will only proxy traffic for a DNS record in the same Cloudflare account. The Tunnel UUID is not secret information; if someone discovers your subdomain UUID, they will not be able to create a DNS record in another account or system to proxy traffic to the address.
 
 ## Create a DNS record for the tunnel
 
