@@ -70,6 +70,6 @@ By default, a browser instance will time out after 60 seconds of inactivity. If 
 
 ### Is there a maximum session duration?
 
-There is no fixed maximum lifetime for a browser session as long as it remains active. By default, a browser will close after one minute of inactivity, but you can [extend this inactivity window](#can-i-increase-the-browser-timeout). Sessions will also be closed when Browser Rendering rolls out a new release.
+There is no fixed maximum lifetime for a browser session as long as it remains active. By default, Browser Rendering closes sessions after 1 minute of inactivity to prevent unintended usage. You can [increase this inactivity timeout](/browser-rendering/platform/puppeteer/#keep-alive) to up to 10 minutes. 
 
-
+If you need sessions to remain open longer, keep them active by sending a command at least once within your configured inactivity window (for example, every 10 minutes). Sessions also close when Browser Rendering rolls out a new release.
