@@ -1,21 +1,21 @@
 releaseNotes: |-
   This release contains two significant changes all customers should be aware of:
-  1. All DNS traffic now flows inside the WARP tunnel. Customers are no longer required to configure their local firewall rules to allow our [DoH IP addresses and domains](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#doh-ip).
+  1. All DNS traffic now flows inside the WARP tunnel. Customers are no longer required to configure their local firewall rules to allow our [DoH IP addresses and domains](/cloudflare-one/team-and-resources/devices/warp/deployment/firewall/#doh-ip).
   2. When using MASQUE, the connection will fall back to HTTP/2 (TCP) when we detect that HTTP/3 traffic is blocked. This allows for a much more reliable connection on some public WiFi networks.
-  
+
   **Changes and improvements**
   - Fixed an issue where the managed network policies could incorrectly report network location beacons as missing.
   - Improved DEX test error reporting.
   - Fixed an issue causing client notifications to fail in IPv6 only environments which prevented the client from receiving configuration changes to settings like device profile.
   - Added a TCP fallback for the MASQUE tunnel protocol to improve connectivity on networks that block UDP or HTTP/3 specifically.
-  - Added new IP addresses for [tunnel connectivity checks](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/#connectivity-checks). If your organization uses a firewall or other policies you will need to exempt these IPs.
+  - Added new IP addresses for [tunnel connectivity checks](/cloudflare-one/team-and-resources/devices/warp/deployment/firewall/#connectivity-checks). If your organization uses a firewall or other policies you will need to exempt these IPs.
   - Fixed an issue where frequent network changes could cause WARP to become unresponsive.
   - DNS over HTTPS traffic is now included in the WARP tunnel by default.
   - Improvement for WARP to check if tunnel connectivity fails or times out at device wake before attempting to reconnect.
   - Fixed an issue causing WARP connection disruptions after network changes.
 
   **Known issues**
-  - Devices using WARP client 2025.4.929.0 and up may experience Local Domain Fallback failures if a fallback server has not been configured. To configure a fallback server, refer to [Route traffic to fallback server](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/#route-traffic-to-fallback-server).
+  - Devices using WARP client 2025.4.929.0 and up may experience Local Domain Fallback failures if a fallback server has not been configured. To configure a fallback server, refer to [Route traffic to fallback server](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/local-domains/#route-traffic-to-fallback-server).
 
 version: 2025.4.929.0
 releaseDate: 2025-05-12T23:21:47.865Z
