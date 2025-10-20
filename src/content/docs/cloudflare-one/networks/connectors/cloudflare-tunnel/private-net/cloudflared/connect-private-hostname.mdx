@@ -81,8 +81,8 @@ To connect to private hostnames, your devices must forward the following traffic
 Configuration steps vary depending on your [device on-ramp](/cloudflare-one/connections/connect-networks/private-net/cloudflared/connect-private-hostname/#device-connectivity):
 
 <Details header="WARP clients">
-1. In [Split Tunnels](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/), ensure that the IPs listed above route through the WARP tunnel. For example, if you are using the default Split Tunnels Exclude configuration and your application and DNS resolver have private IPs in the range `10.0.0.0/8`, delete `100.64.0.0/10` and `10.0.0.0/8` from the Split Tunnels list. We recommend adding back the IPs that are not explicitly used by your network — refer to our [Split Tunnels calculator](/cloudflare-one/connections/connect-networks/private-net/cloudflared/connect-cidr/#3-route-private-network-ips-through-warp) for details.
-2. In [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/), delete the top-level domain for your private hostname. This configures WARP to send the DNS query to Cloudflare Gateway for resolution.
+1. In [Split Tunnels](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/), ensure that the IPs listed above route through the WARP tunnel. For example, if you are using the default Split Tunnels Exclude configuration and your application and DNS resolver have private IPs in the range `10.0.0.0/8`, delete `100.64.0.0/10` and `10.0.0.0/8` from the Split Tunnels list. We recommend adding back the IPs that are not explicitly used by your network — refer to our [Split Tunnels calculator](/cloudflare-one/connections/connect-networks/private-net/cloudflared/connect-cidr/#3-route-private-network-ips-through-warp) for details.
+2. In [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/local-domains/), delete the top-level domain for your private hostname. This configures WARP to send the DNS query to Cloudflare Gateway for resolution.
 
 </Details>
 
@@ -248,7 +248,7 @@ You can run the following tests to check if private hostname routing is properly
 		Address: 100.80.200.48
 		```
 
-		The query should resolve using [WARP's DNS proxy](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#dns-traffic) and return a Gateway <GlossaryTooltip term="initial resolved IP">initial resolved IP</GlossaryTooltip>. If the query fails to resolve or returns a different IP, check your [Local Domain Fallback configuration](#local-domain-fallback) and [Gateway resolver policies](#3-optional-create-a-resolver-policy).
+		The query should resolve using [WARP's DNS proxy](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/warp-architecture/#dns-traffic) and return a Gateway <GlossaryTooltip term="initial resolved IP">initial resolved IP</GlossaryTooltip>. If the query fails to resolve or returns a different IP, check your [Local Domain Fallback configuration](#local-domain-fallback) and [Gateway resolver policies](#3-optional-create-a-resolver-policy).
 
 3. When you connect to the application using its private hostname, the device should make a connection to the <GlossaryTooltip term="initial resolved IP">initial resolved IP</GlossaryTooltip>:
 		```sh

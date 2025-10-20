@@ -77,7 +77,7 @@ One simple method for securing access to SaaS applications, is to only allow acc
 
 Organizations that already use IP allow lists to secure access to SaaS applications can easily migrate to Cloudflare using [dedicated egress IPs](/cloudflare-one/policies/gateway/egress-policies/dedicated-egress-ips/). User traffic egresses from Cloudflare to the Internet and onto the SaaS application, sourced from a set of IP addresses unique to the organization. This approach supports various ways in which users access Cloudflare before gaining access to the SaaS application:
 
-- **Hybrid employees:** Connecting to Cloudflare using our Zero Trust client, [WARP](/cloudflare-one/connections/connect-devices/warp/).
+- **Hybrid employees:** Connecting to Cloudflare using our Zero Trust client, [WARP](/cloudflare-one/team-and-resources/devices/warp/).
 - **Office-based users:** Connecting to a local network which routes Internet bound traffic to Cloudflare through GRE or IPsec [Magic WAN tunnels](/magic-wan/).
 - **Contractors and external users:** Accessing SaaS applications through a [remote browser](/learning-paths/clientless-access/alternative-onramps/clientless-rbi/) hosted in a Cloudflare data center.
 

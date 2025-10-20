@@ -19,7 +19,7 @@ If WARP is stuck in the `Disconnected` state or frequently changes between `Conn
 
 </div>
 
-In your [WARP debug logs](/cloudflare-one/connections/connect-devices/warp/troubleshooting/warp-logs/), `daemon.log` will typically show one or more of the following errors:
+In your [WARP debug logs](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/warp-logs/), `daemon.log` will typically show one or more of the following errors:
 
 - Happy Eyeball checks failing:
 
@@ -42,7 +42,7 @@ A third-party service (such as a hardware or software firewall, router, MDM/grou
 
 #### Solution
 
-Configure the third-party service to exempt the [IP addresses required by WARP](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/).
+Configure the third-party service to exempt the [IP addresses required by WARP](/cloudflare-one/team-and-resources/devices/warp/deployment/firewall/).
 
 ### A third-party VPN is interfering with WARP
 
@@ -81,10 +81,10 @@ To confirm that the VPN is the source of the issue, temporarily uninstall (not d
 #### Solution
 
 1. Disable all DNS enforcement on the VPN. WARP must be the last client to touch the primary and secondary DNS server on the default interface.
-2. In [Zero Trust](https://one.dash.cloudflare.com/), create a [Split Tunnel rule](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) to exclude the VPN server you are connecting to (for example, `vpnserver.3rdpartyvpn.example.com`).
-3. Configure your VPN to only include routes to your internal resources. Make sure that the VPN routes do not overlap with the routes [included in the WARP tunnel](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/).
+2. In [Zero Trust](https://one.dash.cloudflare.com/), create a [Split Tunnel rule](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/) to exclude the VPN server you are connecting to (for example, `vpnserver.3rdpartyvpn.example.com`).
+3. Configure your VPN to only include routes to your internal resources. Make sure that the VPN routes do not overlap with the routes [included in the WARP tunnel](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/).
 
-For more information, refer to our [guide](/cloudflare-one/connections/connect-devices/warp/deployment/vpn/) for running VPNs alongside the WARP client.
+For more information, refer to our [guide](/cloudflare-one/team-and-resources/devices/warp/deployment/vpn/) for running VPNs alongside the WARP client.
 
 ### Your ISP or country is blocking WARP
 
@@ -120,17 +120,17 @@ A misconfigured Gateway firewall policy can result in traffic to some or all sit
 
 ### The device does not have a root certificate installed
 
-Installing and trusting a [root CA](/cloudflare-one/connections/connect-devices/user-side-certificates/) is a necessary step to enable advanced security features such as Browser Isolation, [TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/), AV scanning, and device posture.
+Installing and trusting a [root CA](/cloudflare-one/team-and-resources/devices/user-side-certificates/) is a necessary step to enable advanced security features such as Browser Isolation, [TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/), AV scanning, and device posture.
 
 If the root CA is not installed on the device, you will see untrusted certificate warnings on every website. Example warnings include `Certificate not trusted`, `Not trusted identity` or `SSL Error`.
 
 #### Solution
 
-[Install a Cloudflare certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/manual-deployment/) on all of your devices, or [upload your own certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/custom-certificate/) to Cloudflare.
+[Install a Cloudflare certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/manual-deployment/) on all of your devices, or [upload your own certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/custom-certificate/) to Cloudflare.
 
 :::note
 
-More and more applications (including browsers) are relying on their own certificate stores. In addition to ensuring a root certificate is trusted at the device level, you may also need to [add the certificate to individual applications](/cloudflare-one/connections/connect-devices/user-side-certificates/manual-deployment/#add-the-certificate-to-applications). For example, to use Firefox on Linux, you must install the certificate on both the system and on Firefox.
+More and more applications (including browsers) are relying on their own certificate stores. In addition to ensuring a root certificate is trusted at the device level, you may also need to [add the certificate to individual applications](/cloudflare-one/team-and-resources/devices/user-side-certificates/manual-deployment/#add-the-certificate-to-applications). For example, to use Firefox on Linux, you must install the certificate on both the system and on Firefox.
 
 :::
 
@@ -142,7 +142,7 @@ To diagnose the issue, go to `https://zero-trust-client.cloudflareclient.com/v0/
 
 #### Solution
 
-In the third-party security product, disable HTTPS inspection and TLS decryption for the [WARP IP addresses](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/).
+In the third-party security product, disable HTTPS inspection and TLS decryption for the [WARP IP addresses](/cloudflare-one/team-and-resources/devices/warp/deployment/firewall/).
 
 ### Docker container is failing DNS resolution
 
@@ -151,7 +151,7 @@ The `168.63.129.16` IP address is only accessible to Azure VMs and causes the co
 
 #### Solution
 
-To fix this issue, you must exclude the Azure-specific nameserver IP (`168.63.129.16`) from being routed through WARP tunnel. Refer to [Split Tunnels](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#change-split-tunnels-mode) and follow the instructions to exclude the Azure-specific IP.
+To fix this issue, you must exclude the Azure-specific nameserver IP (`168.63.129.16`) from being routed through WARP tunnel. Refer to [Split Tunnels](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/#change-split-tunnels-mode) and follow the instructions to exclude the Azure-specific IP.
 
 ## Cannot connect to a specific app or website
 
@@ -165,7 +165,7 @@ Some applications do not support SSL inspection or are otherwise [incompatible w
 
 Applications such as Firefox, Docker, Python, and npm rely on their own certificate store and the Cloudflare root certificate must be trusted in each.
 
-Refer to [our instructions](/cloudflare-one/connections/connect-devices/user-side-certificates/manual-deployment/#add-the-certificate-to-applications) for adding a root certificate to common applications. For applications not on our list, try searching the Internet for `<app-name> proxy support` or `<app-name> proxy certificate`.
+Refer to [our instructions](/cloudflare-one/team-and-resources/devices/user-side-certificates/manual-deployment/#add-the-certificate-to-applications) for adding a root certificate to common applications. For applications not on our list, try searching the Internet for `<app-name> proxy support` or `<app-name> proxy certificate`.
 
 #### Solution (last resort)
 
@@ -186,8 +186,8 @@ Some applications require traffic to flow either all inside or all outside of th
 #### Solution
 
 1. Determine the IP addresses and/or domains required for your application to function. Common Internet search terms include `<app-name> split tunnel list`, `<app-name> allow list`, or `<app-name> firewall ips`.
-2. In [Zero Trust](https://one.dash.cloudflare.com/), go to your [Split Tunnel settings](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/).
-3. Depending on the application, either include or exclude all of the necessary IPs and/or domains. For Microsoft applications, we provide a [one-click action](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#directly-route-microsoft-365-traffic) to exclude all Microsoft 365 IPs.
+2. In [Zero Trust](https://one.dash.cloudflare.com/), go to your [Split Tunnel settings](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/).
+3. Depending on the application, either include or exclude all of the necessary IPs and/or domains. For Microsoft applications, we provide a [one-click action](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#directly-route-microsoft-365-traffic) to exclude all Microsoft 365 IPs.
 
 ## Troubleshooting
 

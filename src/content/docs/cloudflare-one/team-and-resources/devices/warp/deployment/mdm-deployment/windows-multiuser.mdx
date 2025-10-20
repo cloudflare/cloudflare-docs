@@ -9,7 +9,7 @@ import { Details, Render } from "~/components";
 
 <Details header="Feature availability">
 
-| [WARP modes](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| [WARP modes](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
 | All modes                                                                                 | All plans                                                     |
 
@@ -32,7 +32,7 @@ If a user enables **Log DNS queries** in the WARP GUI (or runs `warp-cli dns log
 
 ## Enable multi-user mode
 
-To enable multi-user support on Windows, [deploy an MDM file](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/#windows) onto the device with the `multi_user` key set to `true`. For example:
+To enable multi-user support on Windows, [deploy an MDM file](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/#windows) onto the device with the `multi_user` key set to `true`. For example:
 
 ```xml
 <dict>
@@ -50,7 +50,7 @@ To enable multi-user support on Windows, [deploy an MDM file](/cloudflare-one/co
 </dict>
 ```
 
-To use multi-user mode alongside the [Windows pre-login](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/windows-prelogin/) and [Switch between Zero Trust organizations](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/switch-organizations/) options:
+To use multi-user mode alongside the [Windows pre-login](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/windows-prelogin/) and [Switch between Zero Trust organizations](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/switch-organizations/) options:
 
 ```xml
 <dict>
@@ -114,7 +114,7 @@ flowchart TB
 Requires [multi-user mode](#enable-multi-user-mode).
 :::
 
-[Fast user switching](https://learn.microsoft.com/windows/win32/shell/fast-user-switching) is a Windows feature that allows users to switch accounts without logging out. With fast user switching, multiple users may be logged in to the device and generating network traffic. The WARP client will attribute all traffic to the user who has the [interactive windows station](http://techcommunity.microsoft.com/blog/askperf/sessions-desktops-and-windows-stations/372473). For example, if user A is logged in and fast user switches to user B, traffic from both accounts will appear to come from user B. This is because user B is now actively using the Windows desktop GUI. Now assume that user B logs out and there is no [pre-login registration](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/windows-prelogin/); WARP will continue to attribute traffic to user B until user A logs back in to the Windows desktop.
+[Fast user switching](https://learn.microsoft.com/windows/win32/shell/fast-user-switching) is a Windows feature that allows users to switch accounts without logging out. With fast user switching, multiple users may be logged in to the device and generating network traffic. The WARP client will attribute all traffic to the user who has the [interactive windows station](http://techcommunity.microsoft.com/blog/askperf/sessions-desktops-and-windows-stations/372473). For example, if user A is logged in and fast user switches to user B, traffic from both accounts will appear to come from user B. This is because user B is now actively using the Windows desktop GUI. Now assume that user B logs out and there is no [pre-login registration](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/windows-prelogin/); WARP will continue to attribute traffic to user B until user A logs back in to the Windows desktop.
 
-To accurately attribute network traffic to specific users, Cloudflare recommends disabling fast user switching or at the very least configuring a [pre-login registration](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/windows-prelogin/).
+To accurately attribute network traffic to specific users, Cloudflare recommends disabling fast user switching or at the very least configuring a [pre-login registration](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/windows-prelogin/).
 

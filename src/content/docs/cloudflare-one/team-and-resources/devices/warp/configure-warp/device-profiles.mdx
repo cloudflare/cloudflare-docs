@@ -17,7 +17,7 @@ import { Render, TabItem, Tabs, APIRequest } from "~/components";
 2. In the **Profile settings** card, select **Create profile**. This will make a copy of the **Default** profile.
 3. Enter any name for the profile.
 4. Create rules to define the devices that will use this profile. Learn more about the available [Selectors](#selectors), [Operators](/cloudflare-one/policies/gateway/network-policies/#comparison-operators), and [Values](/cloudflare-one/policies/gateway/network-policies/#value).
-5. Configure [WARP settings](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#device-settings) for these devices.
+5. Configure [WARP settings](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#device-settings) for these devices.
 
 :::note
 
@@ -134,7 +134,7 @@ The device profile UUID is shown in the `Profile ID` field.
 
 ## Selectors
 
-You can configure device profiles to match against the following selectors, or criteria. Identity-based selectors are only available if the user [enrolled the device](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/) by logging in to an identity provider (IdP).
+You can configure device profiles to match against the following selectors, or criteria. Identity-based selectors are only available if the user [enrolled the device](/cloudflare-one/team-and-resources/devices/warp/deployment/manual-deployment/) by logging in to an identity provider (IdP).
 
 ### User email
 
@@ -196,7 +196,7 @@ Apply a device profile based on the [OS version](/cloudflare-one/identity/device
 
 ### Managed network
 
-Apply a device profile based on the [managed network](/cloudflare-one/connections/connect-devices/warp/configure-warp/managed-networks/) that the device is connected to.
+Apply a device profile based on the [managed network](/cloudflare-one/team-and-resources/devices/warp/configure-warp/managed-networks/) that the device is connected to.
 
 | UI name         | API example                    |
 | --------------- | ------------------------------ |
@@ -210,7 +210,7 @@ Apply a device profile based on an attribute name and value from a [SAML IdP](/c
 
 ### Service token
 
-Apply a device profile based on the [service token](/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/#check-for-service-token) used to enroll the device.
+Apply a device profile based on the [service token](/cloudflare-one/team-and-resources/devices/warp/deployment/device-enrollment/#check-for-service-token) used to enroll the device.
 
 | UI name       | API example                                                               |
 | ------------- | ------------------------------------------------------------------------- |

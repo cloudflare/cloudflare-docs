@@ -19,22 +19,22 @@ import { Render } from "~/components";
 
 ### When to use Split Tunnels
 
-Use Split Tunnels when you need to bypass Gateway entirely for a site or allow traffic through the [firewall that WARP creates](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#system-firewall). Common scenarios include:
+Use Split Tunnels when you need to bypass Gateway entirely for a site or allow traffic through the [firewall that WARP creates](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/warp-architecture/#system-firewall). Common scenarios include:
 
-- Connect to a third-party application which requires the actual IP address of the end-user device (for example, [Microsoft 365](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#directly-route-microsoft-365-traffic)).
+- Connect to a third-party application which requires the actual IP address of the end-user device (for example, [Microsoft 365](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#directly-route-microsoft-365-traffic)).
 - Optimize voice and video.
-- Connect to a [third-party VPN](/cloudflare-one/connections/connect-devices/warp/deployment/vpn/) endpoint.
+- Connect to a [third-party VPN](/cloudflare-one/team-and-resources/devices/warp/deployment/vpn/) endpoint.
 
 ### When not to use Split Tunnels
 
 Do not exclude a site from Split Tunnels if you want to see the traffic in your Gateway logs. In particular, we do not recommend using Split Tunnels to:
 
-- Solve connectivity issues with a specific website. For configuration guidance, refer to our [troubleshooting guide](/cloudflare-one/connections/connect-devices/warp/troubleshooting/common-issues/#cannot-connect-to-a-specific-app-or-website).
+- Solve connectivity issues with a specific website. For configuration guidance, refer to our [troubleshooting guide](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/common-issues/#cannot-connect-to-a-specific-app-or-website).
 - Solve performance issues with a specific website. Since Cloudflare operates within 50 milliseconds of 95% of the Internet-connected population, it is usually faster to send traffic through us. If you are encountering a performance-related issue, it is best to first explore your Gateway policies or reach out to Support.
 
 ## Routes for Split Tunnels Include mode
 
-Many Cloudflare Zero Trust services rely on traffic going through WARP, such as [device posture checks](/cloudflare-one/identity/devices/) and [WARP session durations](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-sessions/). If you are using Split Tunnels in Include mode, you will need to manually add Cloudflare Zero Trust domains and IPs in order for these features to function.
+Many Cloudflare Zero Trust services rely on traffic going through WARP, such as [device posture checks](/cloudflare-one/identity/devices/) and [WARP session durations](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-sessions/). If you are using Split Tunnels in Include mode, you will need to manually add Cloudflare Zero Trust domains and IPs in order for these features to function.
 
 ### Cloudflare Zero Trust domains
 
@@ -49,14 +49,14 @@ If you are using Split Tunnels in Include mode, you must include the following d
 
 #### Block page
 
-If you are using Split Tunnels in Include mode and have [DNS policies](/cloudflare-one/policies/gateway/dns-policies/) with the [block page](/cloudflare-one/policies/gateway/block-page/) enabled, you must include the IPs that blocked domains will resolve to. Unless you are using a [dedicated or BYOIP resolver IP](/cloudflare-one/connections/connect-devices/agentless/dns/locations/dns-resolver-ips/#dns-resolver-ip) the block page will resolve to:
+If you are using Split Tunnels in Include mode and have [DNS policies](/cloudflare-one/policies/gateway/dns-policies/) with the [block page](/cloudflare-one/policies/gateway/block-page/) enabled, you must include the IPs that blocked domains will resolve to. Unless you are using a [dedicated or BYOIP resolver IP](/cloudflare-one/team-and-resources/devices/agentless/dns/locations/dns-resolver-ips/#dns-resolver-ip) the block page will resolve to:
 
 - `162.159.36.12`
 - `162.159.46.12`
 
 #### Team domain
 
-In [Secure Web Gateway without DNS filtering](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#secure-web-gateway-without-dns-filtering) WARP mode, you cannot [add domains](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#cloudflare-zero-trust-domains) to Split Tunnels. If you are using Split Tunnels in Include mode, you must include the IPs that resolve to `<your-team-name>.cloudflareaccess.com` instead:
+In [Secure Web Gateway without DNS filtering](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#secure-web-gateway-without-dns-filtering) WARP mode, you cannot [add domains](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/#cloudflare-zero-trust-domains) to Split Tunnels. If you are using Split Tunnels in Include mode, you must include the IPs that resolve to `<your-team-name>.cloudflareaccess.com` instead:
 
 - `104.19.194.29`
 - `104.19.195.29`
@@ -100,7 +100,7 @@ Removing default Split Tunnel entries may cause users to lose Internet connectiv
 :::
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **WARP Client**.
-2. Under **Device settings**, locate the [device profile](/cloudflare-one/connections/connect-devices/warp/configure-warp/device-profiles/) you would like to modify and select **Configure**.
+2. Under **Device settings**, locate the [device profile](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-profiles/) you would like to modify and select **Configure**.
 3. Under **Split Tunnels**, select **Manage**.
 4. Find the IP address or hostname in the list and select **Delete**.
 
@@ -110,5 +110,5 @@ If you need to revert to the default Split Tunnel entries recommended by Cloudfl
 
 ## Related resources
 
-- [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/) - Resolve selected domains via local DNS instead of Cloudflare Gateway.
-- [WARP with firewall](/cloudflare-one/connections/connect-devices/warp/deployment/firewall/) - Learn which IPs, domains, and ports to allow so users can deploy and connect WARP successfully behind a firewall.
+- [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/local-domains/) - Resolve selected domains via local DNS instead of Cloudflare Gateway.
+- [WARP with firewall](/cloudflare-one/team-and-resources/devices/warp/deployment/firewall/) - Learn which IPs, domains, and ports to allow so users can deploy and connect WARP successfully behind a firewall.

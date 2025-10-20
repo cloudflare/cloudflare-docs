@@ -12,21 +12,21 @@ Below, you will find information on devices, software, and configurations that a
 
 ## Windows Server
 
-The WARP client does not run on Windows Server. Refer to the [downloads page](/cloudflare-one/connections/connect-devices/warp/download-warp/) for a list of supported operating systems.
+The WARP client does not run on Windows Server. Refer to the [downloads page](/cloudflare-one/team-and-resources/devices/warp/download-warp/) for a list of supported operating systems.
 
 ## Managed network on legacy Windows Server
 
-[Managed network detection](/cloudflare-one/connections/connect-devices/warp/configure-warp/managed-networks/) will not work when the TLS certificate is served from IIS 8.5 on Windows Server 2012 R2. To work around the limitation, move the certificate to a different host.
+[Managed network detection](/cloudflare-one/team-and-resources/devices/warp/configure-warp/managed-networks/) will not work when the TLS certificate is served from IIS 8.5 on Windows Server 2012 R2. To work around the limitation, move the certificate to a different host.
 
 ## Split Tunnels for Microsoft 365 traffic
 
-Microsoft has recently made changes to the IP addresses used by Microsoft 365 applications (such as Microsoft Teams). Customers using the [Directly route Microsoft 365 traffic](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#directly-route-microsoft-365-traffic) feature will need to manually add the following IPs to their [Split Tunnels Exclude list](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#add-a-route):
+Microsoft has recently made changes to the IP addresses used by Microsoft 365 applications (such as Microsoft Teams). Customers using the [Directly route Microsoft 365 traffic](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#directly-route-microsoft-365-traffic) feature will need to manually add the following IPs to their [Split Tunnels Exclude list](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/#add-a-route):
 - `24.24.24.24/32`
 - `52.120.0.0/14`
 
 ## nslookup on Windows in DoH mode
 
-On Windows devices in [Gateway with DoH mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#gateway-with-doh), `nslookup` by default sends DNS requests to the [WARP local DNS proxy](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#dns-traffic) over IPv6. However, because WARP uses an IPv4-mapped IPv6 address (instead of a real IPv6 address), `nslookup` will not recognize this address type and the query will fail:
+On Windows devices in [Gateway with DoH mode](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#gateway-with-doh), `nslookup` by default sends DNS requests to the [WARP local DNS proxy](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/warp-architecture/#dns-traffic) over IPv6. However, because WARP uses an IPv4-mapped IPv6 address (instead of a real IPv6 address), `nslookup` will not recognize this address type and the query will fail:
 
 ```txt
 C:\Users\JohnDoe>nslookup google.com
@@ -36,7 +36,7 @@ Address:  ::ffff:127.0.2.2
 *** UnKnown can't find google.com: No response from server
 ```
 
-To work around the issue, specify the IPv4 address of the [WARP local DNS proxy](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#dns-traffic) in your query:
+To work around the issue, specify the IPv4 address of the [WARP local DNS proxy](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/warp-architecture/#dns-traffic) in your query:
 
 ```bash
 C:\Users\JohnDoe>nslookup google.com 127.0.2.2
@@ -66,14 +66,14 @@ Comcast DNS traffic (to the IPs below) cannot be proxied through WARP. This is b
 
 To work around the issue, you can either:
 
-- Create a [Split Tunnel rule](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) that excludes the above IPs from WARP.
+- Create a [Split Tunnel rule](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/) that excludes the above IPs from WARP.
 - Configure your device or router to use a public DNS server such as [`1.1.1.1`](https://1.1.1.1/dns/).
 
 ## Cox DNS servers
 
 Similar to the [Comcast DNS servers](#comcast-dns-servers) limitation listed above, Cox DNS servers will not respond to traffic from the WARP egress IPs (or any IP that is not a Cox IP). The workaround is nearly identical, except that Cox DNS servers may be specific to the individual end user. You can either:
 
-- Create a [Split Tunnel rule](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) that excludes all Cox DNS servers. For business customers, refer to the [COX documentation](https://www.cox.com/business/support/cox-business-dns-and-mail-exchange-hosting-services.html) for the DNS server IPs. For residential customers, check your local DNS servers. The residential DNS servers typically fall under `68.105.28.0/24` and `68.105.29.0/24`.
+- Create a [Split Tunnel rule](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/) that excludes all Cox DNS servers. For business customers, refer to the [COX documentation](https://www.cox.com/business/support/cox-business-dns-and-mail-exchange-hosting-services.html) for the DNS server IPs. For residential customers, check your local DNS servers. The residential DNS servers typically fall under `68.105.28.0/24` and `68.105.29.0/24`.
 - Configure your device or router to use a public DNS server such as [`1.1.1.1`](https://1.1.1.1/dns/).
 
 ## HP Velocity
@@ -114,7 +114,7 @@ WARP runs a local DNS proxy on `127.0.2.2` and `127.0.2.3`. You may need access 
 
 To enable WARP DNS resolution with containers:
 
-- Use a [custom Docker network](https://docs.docker.com/engine/network/#user-defined-networks) (recommended): Allows the Docker container to still use the bridge network driver that maintains network isolation from the host. If you are creating your own bridge network, you should also [adjust the MTU accordingly](/cloudflare-one/connections/connect-devices/warp/troubleshooting/known-limitations/#docker-on-linux-with-bridged-networking).
+- Use a [custom Docker network](https://docs.docker.com/engine/network/#user-defined-networks) (recommended): Allows the Docker container to still use the bridge network driver that maintains network isolation from the host. If you are creating your own bridge network, you should also [adjust the MTU accordingly](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/known-limitations/#docker-on-linux-with-bridged-networking).
 - Use [host networking](https://docs.docker.com/engine/network/drivers/host/) (not recommended): Removes the security benefits of network isolation and may lead to port conflicts.
 
 The following example uses a special host (`connectivity-check.warp-svc`) that is only resolvable by the local DNS proxy to show the supported Docker networking modes.
@@ -165,11 +165,11 @@ Use of the WARP client in a Microsoft 365 Windows 10 Cloud PC is not supported. 
 
 ## IPv6 DNS resolution in Secure Web Gateway without DNS filtering mode
 
-In [Secure Web Gateway without DNS filtering mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/#secure-web-gateway-without-dns-filtering), devices using IPv6 DNS servers may experience connectivity issues if these servers are not manually excluded from the WARP tunnel.
+In [Secure Web Gateway without DNS filtering mode](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#secure-web-gateway-without-dns-filtering), devices using IPv6 DNS servers may experience connectivity issues if these servers are not manually excluded from the WARP tunnel.
 
 Unlike common IPv4 DHCP configurations where DNS servers often fall within automatically excluded private address ranges, IPv6 environments typically require manual exclusion of DNS server addresses via split tunnel settings for proper operation.
 
-If your DNS server uses an IPv6 address, you must manually exclude it using [split tunnel settings](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) for Secure Web Gateway without DNS filtering mode to work properly.
+If your DNS server uses an IPv6 address, you must manually exclude it using [split tunnel settings](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/) for Secure Web Gateway without DNS filtering mode to work properly.
 
 ## Troubleshooting
 

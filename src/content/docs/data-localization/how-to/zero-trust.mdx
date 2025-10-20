@@ -20,7 +20,7 @@ This allows your egress traffic to geolocate to the city selected in your [egres
 
 ### HTTP policies
 
-As part of Regional Services, Cloudflare Gateway will only perform [TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/) when using the [WARP client](/cloudflare-one/connections/connect-devices/warp/) (in default [Gateway with WARP mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/)).
+As part of Regional Services, Cloudflare Gateway will only perform [TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/) when using the [WARP client](/cloudflare-one/team-and-resources/devices/warp/) (in default [Gateway with WARP mode](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/)).
 
 {/* TODO: Reintroduce */}
 {/* <Render file="gateway/disable-udp" product="cloudflare-one" /> */}
@@ -43,7 +43,7 @@ Refer to the [WARP Settings](/data-localization/how-to/zero-trust/#warp-settings
 
 ### Custom certificates
 
-You can [bring your own certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/custom-certificate/) to Gateway but these cannot yet be restricted to a specific region.
+You can [bring your own certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/custom-certificate/) to Gateway but these cannot yet be restricted to a specific region.
 
 ### Logs and Analytics
 
@@ -66,11 +66,11 @@ You can [configure Cloudflare Tunnel](/cloudflare-one/connections/connect-networ
 
 ### Local Domain Fallback
 
-You can use the WARP setting [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/) in order to use a private DNS resolver, which you can manage yourself.
+You can use the WARP setting [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/local-domains/) in order to use a private DNS resolver, which you can manage yourself.
 
 ### Split Tunnels
 
-[Split Tunnels](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) allow you to decide which IP addresses/ranges and/or domains are routed through or excluded from Cloudflare.
+[Split Tunnels](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/) allow you to decide which IP addresses/ranges and/or domains are routed through or excluded from Cloudflare.
 
 :::caution
 

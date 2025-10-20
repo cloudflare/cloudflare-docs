@@ -7,7 +7,7 @@ sidebar:
 
 import { Details, GlossaryTooltip, Render } from "~/components";
 
-With Cloudflare Gateway, you can filter DNS over HTTPS (DoH) requests by [DNS location](/cloudflare-one/connections/connect-devices/agentless/dns/locations/) or by user without needing to install the WARP client on your devices.
+With Cloudflare Gateway, you can filter DNS over HTTPS (DoH) requests by [DNS location](/cloudflare-one/team-and-resources/devices/agentless/dns/locations/) or by user without needing to install the WARP client on your devices.
 
 Location-based policies require that you send DNS requests to a [location-specific DoH endpoint](#filter-doh-requests-by-location), while identity-based policies require that requests include a [user-specific DoH token](#filter-doh-requests-by-user).
 
@@ -29,7 +29,7 @@ Browsers can be configured to use any DNS over HTTPS (DoH) endpoint. If you choo
 
 <Render file="gateway/doh-instructions" product="cloudflare-one" />
 
-Your DNS queries will now be sent to Gateway for filtering. To filter these requests, build a DNS policy using the [**DNS Location**](/cloudflare-one/connections/connect-devices/agentless/dns/locations/) selector.
+Your DNS queries will now be sent to Gateway for filtering. To filter these requests, build a DNS policy using the [**DNS Location**](/cloudflare-one/team-and-resources/devices/agentless/dns/locations/) selector.
 
 ### Configure operating system for DoH
 

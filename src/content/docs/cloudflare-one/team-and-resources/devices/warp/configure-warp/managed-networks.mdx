@@ -9,7 +9,7 @@ import { Details, Render, TabItem, Tabs } from "~/components";
 
 <Details header="Feature availability">
 
-| [WARP modes](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| [WARP modes](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
 | All modes                                                                                 | All plans                                                     |
 
@@ -24,7 +24,7 @@ import { Details, Render, TabItem, Tabs } from "~/components";
 
 </Details>
 
-Cloudflare WARP allows you to selectively apply specific [device profiles](/cloudflare-one/connections/connect-devices/warp/configure-warp/device-profiles/) and WARP client settings when a device connects to a secure network location, such as an office. WARP identifies these managed networks by detecting a TLS endpoint you set up on the network.
+Cloudflare WARP allows you to selectively apply specific [device profiles](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-profiles/) and WARP client settings when a device connects to a secure network location, such as an office. WARP identifies these managed networks by detecting a TLS endpoint you set up on the network.
 
 On this page, you will learn how to:
 
@@ -247,7 +247,7 @@ SHA256 Fingerprint=DD4F4806C57A5BBAF1AA5B080F0541DA75DB468D0A1FE731310149500CCD8
 
 WARP will automatically exclude the TLS endpoint from all device profiles if it is specified as a private IP address. This exclusion prevents remote users from accessing the endpoint through the WARP tunnel on any port. If the TLS endpoint is specified as a hostname instead of a private IP, WARP will not automatically exclude it.
 
-If a device profile uses [Split Tunnels](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) in **Include** mode, ensure that the Split Tunnel entries do not contain the TLS endpoint IP address; otherwise, the entire IP range will be excluded from the WARP tunnel.
+If a device profile uses [Split Tunnels](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/) in **Include** mode, ensure that the Split Tunnel entries do not contain the TLS endpoint IP address; otherwise, the entire IP range will be excluded from the WARP tunnel.
 
 ## 4. Configure device profile
 
@@ -255,7 +255,7 @@ If a device profile uses [Split Tunnels](/cloudflare-one/connections/connect-dev
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client**.
 
-2. Under **Profile settings**, create a new [settings profile](/cloudflare-one/connections/connect-devices/warp/configure-warp/device-profiles/) or edit an existing profile.
+2. Under **Profile settings**, create a new [settings profile](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-profiles/) or edit an existing profile.
 
 3. To apply this profile whenever a device connects to your network, add the following rule:
 
@@ -300,6 +300,6 @@ To check if the WARP client detects the network location:
 
 ## Related resources
 
-- [Device profiles](/cloudflare-one/connections/connect-devices/warp/configure-warp/device-profiles/) - How to create and manage the device profiles you apply via managed networks.
-- [WARP settings](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/) - Defines how WARP behaves and what users can do.
-- [WARP troubleshooting guide](/cloudflare-one/connections/connect-devices/warp/troubleshooting/troubleshooting-guide/) - Troubleshoot common WARP issues.
+- [Device profiles](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-profiles/) - How to create and manage the device profiles you apply via managed networks.
+- [WARP settings](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/) - Defines how WARP behaves and what users can do.
+- [WARP troubleshooting guide](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/troubleshooting-guide/) - Troubleshoot common WARP issues.

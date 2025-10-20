@@ -18,7 +18,7 @@ To customize the default settings:
 
 2. Under **Device settings**, select the default profile and select **Configure**.
 
-3. Many users running Cloudflare Zero Trust {props.one} have a default profile that resembles the following. Refer to [WARP client settings](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/) for a description of each setting.
+3. Many users running Cloudflare Zero Trust {props.one} have a default profile that resembles the following. Refer to [WARP client settings](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/) for a description of each setting.
 
    | Setting                              | State                   | Notes                                                                                                                                                                                                                                                                                          |
    | ------------------------------------ | ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -36,7 +36,7 @@ To customize the default settings:
 
 4. Save the profile.
 
-5. Configure [global settings](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#global-settings) for all device profiles:
+5. Configure [global settings](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#global-settings) for all device profiles:
    1. (Recommended) Enable **Admin override code** if you turned on **Lock WARP switch**.
    2. Enable **Install CA to system certificate store** if you want users to see a [custom block page](/cloudflare-one/policies/gateway/block-page/).
 
@@ -105,7 +105,7 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/devices/settings \
 	}
 	```
 
-3. Configure [global settings](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#global-settings) using the [`cloudflare_zero_trust_device_settings`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_device_settings) resource:
+3. Configure [global settings](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#global-settings) using the [`cloudflare_zero_trust_device_settings`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_device_settings) resource:
 
 	```tf
 	resource "cloudflare_zero_trust_device_settings" "global_warp_settings" {
@@ -123,4 +123,4 @@ https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/devices/settings \
 
 You can configure a device settings profile to take effect when the device is connected to a trusted network such as an office. For example, you may wish to allow users in the office to access applications directly rather than route traffic through Cloudflare.
 
-For setup instructions, refer to [Add a managed network](/cloudflare-one/connections/connect-devices/warp/configure-warp/managed-networks/).
+For setup instructions, refer to [Add a managed network](/cloudflare-one/team-and-resources/devices/warp/configure-warp/managed-networks/).

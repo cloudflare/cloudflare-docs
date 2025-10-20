@@ -39,11 +39,11 @@ Using the API, enable client certificate provisioning for [your zone](/fundament
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client**.
 
-2. Under  **Profile settings** card, choose a [device profile](/cloudflare-one/connections/connect-devices/warp/configure-warp/device-profiles/) and select **Configure**.
+2. Under  **Profile settings** card, choose a [device profile](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-profiles/) and select **Configure**.
 
 3. For **Service mode**, select **Device Information Only**.
 
-4. [Enroll your device](/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/) into your Zero Trust organization.
+4. [Enroll your device](/cloudflare-one/team-and-resources/devices/warp/deployment/manual-deployment/) into your Zero Trust organization.
 
    When enrolled in Device Information Only mode, the WARP client will automatically generate a client certificate and install the certificate on the device. This certificate is necessary to confirm the source of outgoing traffic.
 
@@ -128,4 +128,4 @@ Device Information Only mode is now enabled on the device. To start enforcing de
 
 ## Limitations
 
-Device Information mode is not compatible with the [Windows pre-login](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/windows-prelogin/) feature. The user must be logged into Windows because WARP needs to [install a certificate](#3-optional-verify-the-client-certificate) in the user store.
+Device Information mode is not compatible with the [Windows pre-login](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/windows-prelogin/) feature. The user must be logged into Windows because WARP needs to [install a certificate](#3-optional-verify-the-client-certificate) in the user store.

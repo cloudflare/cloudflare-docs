@@ -14,9 +14,9 @@ import { Details, Render, TabItem, Tabs } from "~/components";
 This procedure is only required to enable specific Cloudflare Zero Trust features, and should only be done at the direction of your IT department. This procedure is not required to enable the WARP client for consumers.
 :::
 
-If your device does not support [certificate installation via WARP](/cloudflare-one/connections/connect-devices/user-side-certificates/automated-deployment/), you can manually install a Cloudflare certificate. You must add the certificate to both the [system keychain](#add-the-certificate-to-operating-systems) and to [individual application stores](#add-the-certificate-to-applications). These steps must be performed on each new device that is to be subject to HTTP filtering.
+If your device does not support [certificate installation via WARP](/cloudflare-one/team-and-resources/devices/user-side-certificates/automated-deployment/), you can manually install a Cloudflare certificate. You must add the certificate to both the [system keychain](#add-the-certificate-to-operating-systems) and to [individual application stores](#add-the-certificate-to-applications). These steps must be performed on each new device that is to be subject to HTTP filtering.
 
-Zero Trust will only inspect traffic using installed certificates set to [**Available** and **In-Use**](/cloudflare-one/connections/connect-devices/user-side-certificates/#activate-a-root-certificate).
+Zero Trust will only inspect traffic using installed certificates set to [**Available** and **In-Use**](/cloudflare-one/team-and-resources/devices/user-side-certificates/#activate-a-root-certificate).
 
 ## Download the Cloudflare root certificate
 
@@ -24,14 +24,14 @@ Zero Trust will only inspect traffic using installed certificates set to [**Avai
 You can only download Cloudflare-generated certificates from the Zero Trust dashboard or with WARP.
 :::
 
-First, [generate](/cloudflare-one/connections/connect-devices/user-side-certificates/#generate-a-cloudflare-root-certificate) and download a Cloudflare certificate. The certificate is available in both `.pem` and `.crt` file format. Certain applications require the certificate to be in a specific file type, so ensure you download the most appropriate file for your use case.
+First, [generate](/cloudflare-one/team-and-resources/devices/user-side-certificates/#generate-a-cloudflare-root-certificate) and download a Cloudflare certificate. The certificate is available in both `.pem` and `.crt` file format. Certain applications require the certificate to be in a specific file type, so ensure you download the most appropriate file for your use case.
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Resources**.
 2. In **Certificates**, select **Manage**.
 3. Select the certificate you want to download.
 4. Depending on which format you want, choose **Download .pem** and/or **Download .crt**.
 
-Alternatively, you can download and install a certificate [using WARP](/cloudflare-one/connections/connect-devices/user-side-certificates/automated-deployment/#install-a-certificate-using-warp). WARP will add the certificates to the device's system certificate store in `installed_certs/<certificate_id>.pem`.
+Alternatively, you can download and install a certificate [using WARP](/cloudflare-one/team-and-resources/devices/user-side-certificates/automated-deployment/#install-a-certificate-using-warp). WARP will add the certificates to the device's system certificate store in `installed_certs/<certificate_id>.pem`.
 
 ### Verify the downloaded certificate
 
@@ -338,7 +338,7 @@ For information on installing a Cloudflare certificate for organizations, refer 
 
 ### Mobile device management (MDM) software
 
-Zero Trust integrates with several [mobile device management (MDM) software partners](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/partners/) to deploy WARP across devices.
+Zero Trust integrates with several [mobile device management (MDM) software partners](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/partners/) to deploy WARP across devices.
 
 #### Microsoft Intune
 

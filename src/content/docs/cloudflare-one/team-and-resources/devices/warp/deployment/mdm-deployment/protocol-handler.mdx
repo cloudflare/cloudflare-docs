@@ -20,14 +20,14 @@ During the default WARP enrollment process, end users typically need to complete
 This guide covers how to eliminate steps 1, 2 and 4 from your WARP deployment.
 
 :::note[Service token authentication]
-If you are looking to eliminate all user interaction, you can [enroll devices using service tokens](/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/#check-for-service-token). Because users are not required to log in to an identity provider, identity-based policies and logging will not be available on these devices.
+If you are looking to eliminate all user interaction, you can [enroll devices using service tokens](/cloudflare-one/team-and-resources/devices/warp/deployment/device-enrollment/#check-for-service-token). Because users are not required to log in to an identity provider, identity-based policies and logging will not be available on these devices.
 :::
 
 On iOS and Android / ChromeOS, end users will still be asked questions required by their platform such as accepting notifications or installing the VPN Profile.
 
 ## Turn off onboarding screens
 
-To skip the Terms and Conditions screens that are usually presented to users, set the [`onboarding` parameter](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/) to `false` in your [MDM deployment file](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/). Here is an example `mdm.xml` file:
+To skip the Terms and Conditions screens that are usually presented to users, set the [`onboarding` parameter](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/) to `false` in your [MDM deployment file](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/). Here is an example `mdm.xml` file:
 
 ```xml
 <dict>
@@ -40,7 +40,7 @@ To skip the Terms and Conditions screens that are usually presented to users, se
 
 ## Turn on Instant Auth
 
-If you are only using one identity provider for device enrollment, turn on **Instant Auth** in your [device enrollment permissions](/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/#set-device-enrollment-permissions). This allow users to skip the Cloudflare Access login page and go directly to your SSO login event.
+If you are only using one identity provider for device enrollment, turn on **Instant Auth** in your [device enrollment permissions](/cloudflare-one/team-and-resources/devices/warp/deployment/device-enrollment/#set-device-enrollment-permissions). This allow users to skip the Cloudflare Access login page and go directly to your SSO login event.
 
 ## Allow browser to launch WARP
 
@@ -70,12 +70,12 @@ To add the registry key manually:
 
 	Be sure to replace `<your-team-name>` with your actual <GlossaryTooltip term="team name">Zero Trust team name</GlossaryTooltip>.
 
-Instead of using the Registry Editor, the registry key can also be created using a Group Policy Object (GPO), PowerShell script, or with an MDM such as [Intune](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/partners/intune/#update-mdm-parameters).
+Instead of using the Registry Editor, the registry key can also be created using a Group Policy Object (GPO), PowerShell script, or with an MDM such as [Intune](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/partners/intune/#update-mdm-parameters).
 
 </TabItem>
 <TabItem label="macOS">
 
-On macOS, you can configure `AutoLaunchProtocolsFromOrigins` by deploying a property list (plist) file for the browser. The exact instructions will vary depending on your [MDM](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/partners/). The general procedure is as follows:
+On macOS, you can configure `AutoLaunchProtocolsFromOrigins` by deploying a property list (plist) file for the browser. The exact instructions will vary depending on your [MDM](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/partners/). The general procedure is as follows:
 
 1. Create a new plist file with the following name (case sensitive):
 	- Google Chrome: `com.google.Chrome.plist`
