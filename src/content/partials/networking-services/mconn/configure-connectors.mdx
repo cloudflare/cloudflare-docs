@@ -250,7 +250,7 @@ You cannot enable high availability for an existing { props.magicWord === "virtu
 		inline={false}
 		/>
 
-		<Render file="mconn/licence-keys" product="networking-services" />
+		<Render file="mconn/licence-keys" product="networking-services" params={{ virtualConnectorName: props.productNameVirtual }} />
 
 		<Markdown
 		text={`
@@ -282,7 +282,7 @@ You cannot enable high availability for an existing { props.magicWord === "virtu
 		inline={false}
 		/>
 
-		<Render file="mconn/licence-keys" product="networking-services" />
+		<Render file="mconn/licence-keys" product="networking-services" params={{ virtualConnectorName: props.productNameVirtual }} />
 
 		<Markdown
 		text={`
