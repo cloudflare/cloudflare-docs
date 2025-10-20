@@ -206,7 +206,7 @@ You cannot enable high availability for an existing { props.magicWord === "virtu
 		inline={false}
 		/>
 
-		<Render file="mconn/vlan-tagging" product="networking-services" params={{	url: "[VMware's documentation](https://kb.vmware.com/s/article/1003825)" }}/>
+		<Render file="mconn/vlan-tagging" product="networking-services" params={{	url: "[VMware's documentation](https://kb.vmware.com/s/article/1003825)", virtualConnectorName: props.productNameVirtual }}/>
 
 		<Markdown
 		text={`
@@ -293,7 +293,7 @@ You cannot enable high availability for an existing { props.magicWord === "virtu
 		inline={false}
 		/>
 
-		<Render file="mconn/vlan-tagging" product="networking-services" params={{	url: "[Proxmox documentation](https://www.proxmox.com/en/products/proxmox-virtual-environment/get-started)" }}/>
+		<Render file="mconn/vlan-tagging" product="networking-services" params={{	url: "[Proxmox documentation](https://www.proxmox.com/en/products/proxmox-virtual-environment/get-started)", virtualConnectorName: props.productNameVirtual }}/>
 
 		<Markdown
 		text={`
