@@ -508,10 +508,10 @@ entries:
     audience: Customers who want to be warned about changes in health status for their Cloudflare Tunnels.
     availability: All Cloudflare Zero Trust plans.
     associatedProducts: Tunnel
-    nextSteps: Monitor tunnel health over time and consider deploying [`cloudflared` replicas or load balancers](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-availability/).
+    nextSteps: Monitor tunnel health over time and consider deploying [`cloudflared` replicas or load balancers](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-availability/).
     otherFilters: None.
     additional_information: |-
-      Refer to [Tunnel status](/cloudflare-one/connections/connect-networks/troubleshoot-tunnels/common-errors/#tunnel-status) to review the list of possible tunnel statuses (`Active`, `Inactive`, `Down` and `Degraded`).
+      Refer to [Tunnel status](/cloudflare-one/networks/connectors/cloudflare-tunnel/troubleshoot-tunnels/common-errors/#tunnel-status) to review the list of possible tunnel statuses (`Active`, `Inactive`, `Down` and `Degraded`).
 
   - name: Device connectivity anomaly
     audience: Zero Trust customers who want to be notified when Cloudflare detects a spike or drop in the number of devices connected to the WARP client.
