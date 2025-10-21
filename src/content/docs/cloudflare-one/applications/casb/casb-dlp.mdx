@@ -11,7 +11,7 @@ import { Render } from "~/components";
 Requires Cloudflare CASB and Cloudflare DLP.
 :::
 
-You can use [Cloudflare Data Loss Prevention (DLP)](/cloudflare-one/policies/data-loss-prevention/) to discover if files stored in a SaaS application contains sensitive data. To perform DLP scans in a SaaS app, first configure a [DLP profile](#configure-a-dlp-profile) with the data patterns you want to detect, then [add the profile](#enable-dlp-scans-in-casb) to a CASB integration.
+You can use [Cloudflare Data Loss Prevention (DLP)](/cloudflare-one/data-loss-prevention/) to discover if files stored in a SaaS application contains sensitive data. To perform DLP scans in a SaaS app, first configure a [DLP profile](#configure-a-dlp-profile) with the data patterns you want to detect, then [add the profile](#enable-dlp-scans-in-casb) to a CASB integration.
 
 ## Supported integrations
 
@@ -36,7 +36,7 @@ Your DLP profile is now ready to use with CASB.
 
 Your DLP profile is now ready to use with CASB.
 
-For more information, refer to [Configure a DLP profile](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/).
+For more information, refer to [Configure a DLP profile](/cloudflare-one/data-loss-prevention/dlp-profiles/).
 
 ## Enable DLP scans in CASB
 
@@ -70,6 +70,6 @@ In order to scan historical data, you must enable the DLP profile during the [in
 
 DLP in CASB will only scan:
 
-- [Text-based files](/cloudflare-one/policies/data-loss-prevention/#supported-file-types) such as documents, spreadsheets, and PDFs. Images are not supported.
+- [Text-based files](/cloudflare-one/data-loss-prevention/#supported-file-types) such as documents, spreadsheets, and PDFs. Images are not supported.
 - Files less than or equal 100 MB in size.
 - Source code with a minimum size of 5 KB for Java and R.

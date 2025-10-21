@@ -22,7 +22,7 @@ You can map a named location in Microsoft Entra ID to a location associated with
 
 Make sure you have:
 
-- In Cloudflare, a Zero Trust Enterprise plan with [dedicated egress IPs](/cloudflare-one/policies/gateway/egress-policies/dedicated-egress-ips/)
+- In Cloudflare, a Zero Trust Enterprise plan with [dedicated egress IPs](/cloudflare-one/traffic-policies/egress-policies/dedicated-egress-ips/)
 - In Microsoft 365, an organization managed with [Microsoft Entra ID](https://learn.microsoft.com/en-us/entra/identity/)
 
 ## Create an egress policy in Cloudflare Gateway
@@ -31,7 +31,7 @@ Make sure you have:
 
 2. Select **Add a policy**.
 
-3. Name your policy, then add conditions to check users are configured in Microsoft Entra ID. For example, you can check for [identity conditions](/cloudflare-one/policies/gateway/identity-selectors/):
+3. Name your policy, then add conditions to check users are configured in Microsoft Entra ID. For example, you can check for [identity conditions](/cloudflare-one/traffic-policies/identity-selectors/):
 
    | Selector         | Operator | Value                                         |
    | ---------------- | -------- | --------------------------------------------- |

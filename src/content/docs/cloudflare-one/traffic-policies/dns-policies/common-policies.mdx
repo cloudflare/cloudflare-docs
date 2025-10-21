@@ -12,11 +12,11 @@ import { Render, Tabs, TabItem, APIRequest } from "~/components";
 
 The following policies are commonly used to secure DNS traffic.
 
-Refer to the [DNS policies page](/cloudflare-one/policies/gateway/dns-policies/) for a comprehensive list of other selectors, operators, and actions.
+Refer to the [DNS policies page](/cloudflare-one/traffic-policies/dns-policies/) for a comprehensive list of other selectors, operators, and actions.
 
 ## Allow corporate domains
 
-This policy allows users to access official corporate domains. By deploying the policy with high [order of precedence](/cloudflare-one/policies/gateway/order-of-enforcement/#order-of-precedence), you ensure that employees can access trusted domains even if they fall under a blocked category like _Newly seen domains_ or _Login pages_.
+This policy allows users to access official corporate domains. By deploying the policy with high [order of precedence](/cloudflare-one/traffic-policies/order-of-enforcement/#order-of-precedence), you ensure that employees can access trusted domains even if they fall under a blocked category like _Newly seen domains_ or _Login pages_.
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -49,7 +49,7 @@ To get the UUIDs of your lists, use the [List Zero Trust lists](/api/resources/z
 
 ## Block security threats
 
-Block [security categories](/cloudflare-one/policies/gateway/domain-categories/#security-categories) such as Command & Control, Botnet and Malware based on Cloudflare's threat intelligence.
+Block [security categories](/cloudflare-one/traffic-policies/domain-categories/#security-categories) such as Command & Control, Botnet and Malware based on Cloudflare's threat intelligence.
 
 <Render
 	file="gateway/policies/dash-plus-api/dns/block-security-categories"
@@ -58,7 +58,7 @@ Block [security categories](/cloudflare-one/policies/gateway/domain-categories/#
 
 ## Block content categories
 
-The categories included in this policy are not always a security threat, but blocking them can help minimize the risk that your organization is exposed to. For more information, refer to [domain categories](/cloudflare-one/policies/gateway/domain-categories/).
+The categories included in this policy are not always a security threat, but blocking them can help minimize the risk that your organization is exposed to. For more information, refer to [domain categories](/cloudflare-one/traffic-policies/domain-categories/).
 
 <Render
 	file="gateway/policies/dash-plus-api/dns/block-content-categories"
@@ -75,7 +75,7 @@ You can add a list of category IDs to the [EDNS header](https://datatracker.ietf
 }
 ```
 
-With the [Request Context Categories](/cloudflare-one/policies/gateway/dns-policies/#request-context-categories) selector, you can block the category IDs sent with EDNS. This is useful to filter by categories not known at the time of creating a policy, or to enforce device-specific DNS content filtering without reaching your account limit. When Gateway uses this selector to block a DNS query, the request will return an Extended DNS Error (EDE) Code 15 - Blocked error, along with a field containing an array of the matched categories.
+With the [Request Context Categories](/cloudflare-one/traffic-policies/dns-policies/#request-context-categories) selector, you can block the category IDs sent with EDNS. This is useful to filter by categories not known at the time of creating a policy, or to enforce device-specific DNS content filtering without reaching your account limit. When Gateway uses this selector to block a DNS query, the request will return an Extended DNS Error (EDE) Code 15 - Blocked error, along with a field containing an array of the matched categories.
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -389,7 +389,7 @@ SafeSearch is a feature of search engines that helps you filter explicit or offe
 
 Filter DNS queries to allow only specific users access.
 
-The following example includes two policies. The first policy allows the specified group, while the second policy blocks all other users. To ensure the policies are evaluated properly, place the Allow policy above the Block policy. For more information, refer to the [order of precedence](/cloudflare-one/policies/gateway/order-of-enforcement/#order-of-precedence).
+The following example includes two policies. The first policy allows the specified group, while the second policy blocks all other users. To ensure the policies are evaluated properly, place the Allow policy above the Block policy. For more information, refer to the [order of precedence](/cloudflare-one/traffic-policies/order-of-enforcement/#order-of-precedence).
 
 ### 1. Allow a group
 
@@ -453,7 +453,7 @@ The following example includes two policies. The first policy allows the specifi
 
 ## Control IP version
 
-Enterprise users can pair these policies with an [egress policy](/cloudflare-one/policies/gateway/egress-policies/) to control which IP version is used to egress to the origin server.
+Enterprise users can pair these policies with an [egress policy](/cloudflare-one/traffic-policies/egress-policies/) to control which IP version is used to egress to the origin server.
 
 Optionally, you can use the Domain selector to control the IP version for specific sites.
 

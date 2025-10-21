@@ -14,12 +14,12 @@ import { Render } from "~/components";
 With TLS decryption turned on, you can apply advanced Gateway policies, such as:
 
 - Filtering based on the complete URL and path of requests
-- Scanning for sensitive data with [Cloudflare Data Loss Prevention (DLP)](/cloudflare-one/policies/data-loss-prevention/)
-- Starting a remote browser isolation session with [Cloudflare Browser Isolation](/cloudflare-one/policies/browser-isolation/)
+- Scanning for sensitive data with [Cloudflare Data Loss Prevention (DLP)](/cloudflare-one/data-loss-prevention/)
+- Starting a remote browser isolation session with [Cloudflare Browser Isolation](/cloudflare-one/remote-browser-isolation/)
 
-These features can increase the security posture of sensitive systems, but TLS decryption can also break your users' access to certain resources. For instance, if your internal applications use self-signed certificates, you will need to either configure a [Do Not Inspect](/cloudflare-one/policies/gateway/http-policies/#do-not-inspect) policy or an [Untrusted certificate _Pass through_](/cloudflare-one/policies/gateway/http-policies/#untrusted-certificates) policy to allow users to connect. To learn more, refer to [TLS decryption limitations](/cloudflare-one/policies/gateway/http-policies/tls-decryption/#inspection-limitations).
+These features can increase the security posture of sensitive systems, but TLS decryption can also break your users' access to certain resources. For instance, if your internal applications use self-signed certificates, you will need to either configure a [Do Not Inspect](/cloudflare-one/traffic-policies/http-policies/#do-not-inspect) policy or an [Untrusted certificate _Pass through_](/cloudflare-one/traffic-policies/http-policies/#untrusted-certificates) policy to allow users to connect. To learn more, refer to [TLS decryption limitations](/cloudflare-one/traffic-policies/http-policies/tls-decryption/#inspection-limitations).
 
-With TLS decryption turned off, Gateway can only inspect and apply HTTP policies to unencrypted HTTP requests. However, you can still apply network policies to HTTPS traffic based on user identity, device posture, IP, resolved domain, SNI, and other attributes that support a Zero Trust security implementation. For more information, refer to [Gateway network policies](/cloudflare-one/policies/gateway/network-policies/).
+With TLS decryption turned off, Gateway can only inspect and apply HTTP policies to unencrypted HTTP requests. However, you can still apply network policies to HTTPS traffic based on user identity, device posture, IP, resolved domain, SNI, and other attributes that support a Zero Trust security implementation. For more information, refer to [Gateway network policies](/cloudflare-one/traffic-policies/network-policies/).
 
 ## Enable TLS decryption
 

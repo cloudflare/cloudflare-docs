@@ -28,7 +28,7 @@ To secure your server behind Cloudflare Access:
 2. Create a [self-hosted Access application](/cloudflare-one/applications/configure-apps/self-hosted-public-app/) for the server.
 
 :::note
-If you do not wish to use Access, refer instead to our [SSH proxy instructions](/cloudflare-one/policies/gateway/network-policies/ssh-logging/).
+If you do not wish to use Access, refer instead to our [SSH proxy instructions](/cloudflare-one/traffic-policies/network-policies/ssh-logging/).
 :::
 
 ## 2. Ensure Unix usernames match user SSO identities
@@ -92,4 +92,4 @@ By default, the browser-based terminal prompts the user for a username/password 
 
 ---
 
-Your SSH server is now protected behind Cloudflare Access — users will be prompted to authenticate with your identity provider before they can connect. You can also enable SSH command logging by configuring a [Gateway Audit SSH policy](/cloudflare-one/policies/gateway/network-policies/ssh-logging/).
+Your SSH server is now protected behind Cloudflare Access — users will be prompted to authenticate with your identity provider before they can connect. You can also enable SSH command logging by configuring a [Gateway Audit SSH policy](/cloudflare-one/traffic-policies/network-policies/ssh-logging/).

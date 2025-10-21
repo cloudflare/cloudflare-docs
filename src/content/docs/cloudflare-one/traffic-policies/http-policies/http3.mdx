@@ -7,13 +7,13 @@ sidebar:
 
 import { Details } from "~/components";
 
-Gateway supports inspection of HTTP/3 traffic, which uses the QUIC protocol over UDP. HTTP/3 inspection requires a [user-side certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/) to be deployed and traffic to be proxied over UDP with [TLS version 1.3](/cloudflare-one/policies/gateway/http-policies/tls-decryption/).
+Gateway supports inspection of HTTP/3 traffic, which uses the QUIC protocol over UDP. HTTP/3 inspection requires a [user-side certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/) to be deployed and traffic to be proxied over UDP with [TLS version 1.3](/cloudflare-one/traffic-policies/http-policies/tls-decryption/).
 
-Gateway applies HTTP policies to HTTP/3 traffic last. For more information, refer to the [order of enforcement](/cloudflare-one/policies/gateway/order-of-enforcement/#http3-traffic).
+Gateway applies HTTP policies to HTTP/3 traffic last. For more information, refer to the [order of enforcement](/cloudflare-one/traffic-policies/order-of-enforcement/#http3-traffic).
 
 ## Enable HTTP/3 inspection
 
-To enable HTTP/3 inspection, turn on the [Gateway proxy](/cloudflare-one/policies/gateway/proxy/) for UDP:
+To enable HTTP/3 inspection, turn on the [Gateway proxy](/cloudflare-one/traffic-policies/proxy/) for UDP:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Network**.
 2. In **Firewall**, turn on **Proxy**.
@@ -28,7 +28,7 @@ If the UDP proxy is turned on in Zero Trust, Google Chrome will cancel all HTTP/
 
 ## Exempt HTTP/3 traffic from inspection
 
-If you require HTTP/3 traffic with end-to-end encryption from the client to the origin while still using the Gateway proxy, you can create a [Do Not Inspect HTTP policy](/cloudflare-one/policies/gateway/http-policies/#do-not-inspect) to match the desired traffic. Using a Do Not Inspect policy allows HTTP/3 traffic to preserve proxy performance and end-to-end encryption by bypassing Gateway's TLS decryption and inspection.
+If you require HTTP/3 traffic with end-to-end encryption from the client to the origin while still using the Gateway proxy, you can create a [Do Not Inspect HTTP policy](/cloudflare-one/traffic-policies/http-policies/#do-not-inspect) to match the desired traffic. Using a Do Not Inspect policy allows HTTP/3 traffic to preserve proxy performance and end-to-end encryption by bypassing Gateway's TLS decryption and inspection.
 
 ## Force HTTP/2 traffic
 

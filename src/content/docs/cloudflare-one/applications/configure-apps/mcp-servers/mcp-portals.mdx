@@ -38,7 +38,7 @@ To add an MCP server:
 4. Enter any name for the server.
 5. (Optional) Enter a custom string for the **Server ID**.
 6. In **HTTP URL**, enter the full URL of your MCP server. For example, if you want to add the [Cloudflare Documentation MCP server](https://github.com/cloudflare/mcp-server-cloudflare/tree/main/apps/docs-vectorize), enter `https://docs.mcp.cloudflare.com/sse`.
-7. Add [Access policies](/cloudflare-one/policies/access/) to show or hide the server in an [MCP server portal](#create-a-portal). The MCP server link will only appear in the portal for users who match an Allow policy. Users who do not pass an Allow policy will not see this server through any portals.
+7. Add [Access policies](/cloudflare-one/access-controls/policies/access/) to show or hide the server in an [MCP server portal](#create-a-portal). The MCP server link will only appear in the portal for users who match an Allow policy. Users who do not pass an Allow policy will not see this server through any portals.
 
 	:::caution
 	Blocked users can still connect to the server (and bypass your Access policies) by using its direct URL. If you want to enforce authentication through Cloudflare Access, [configure Access as the server's OAuth provider](/cloudflare-one/applications/configure-apps/mcp-servers/saas-mcp/).
@@ -93,7 +93,7 @@ To create an MCP server portal:
 		- `Enabled`: (default) User will be prompted to utilize their own login credentials to establish a connection with the MCP server.
 		- `Disabled`: Users who are connected to the portal will automatically have access to the MCP server via its [admin credential](#reauthenticate-the-mcp-server).
 
-7. Add [Access policies](/cloudflare-one/policies/access/) to define the users who can connect to the portal URL.
+7. Add [Access policies](/cloudflare-one/access-controls/policies/access/) to define the users who can connect to the portal URL.
 8. Select **Add an MCP server portal**.
 9. (Optional) [Customize the login experience](#customize-login-settings) for the portal.
 

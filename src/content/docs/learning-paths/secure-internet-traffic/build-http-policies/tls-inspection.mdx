@@ -26,14 +26,14 @@ To decide why and how you should turn on TLS inspection, we recommend you start 
 
 ### 1. Identify your goals
 
-Cloudflare Zero Trust requires TLS inspection for most advanced security and <GlossaryTooltip term="Cloudflare Data Loss Prevention (DLP)" link="/cloudflare-one/policies/data-loss-prevention/">data loss prevention (DLP)</GlossaryTooltip> features.
+Cloudflare Zero Trust requires TLS inspection for most advanced security and <GlossaryTooltip term="Cloudflare Data Loss Prevention (DLP)" link="/cloudflare-one/data-loss-prevention/">data loss prevention (DLP)</GlossaryTooltip> features.
 
 Some security organizations choose to avoid TLS inspection due to concerns about user privacy and acceptable use. This is an important and sometimes complicated organization decision, but you can simplify it by establishing goals related to your security practices. Questions to consider:
 
 - Is your organizational use of TLS inspection designed to protect from the "known" (such as sensitive data in corporate-sanctioned SaaS applications) or the "unknown" (such as users downloading or uploading files to brand-new blob storage buckets)?
 - Do you intend to primarily block by domain or hostname or by building policies for complete URLs?
 - Do you plan to scan the body of requests or files against DLP profiles or scan downloaded files with an antivirus or anti-malware engine?
-- Do you intend to use inline <GlossaryTooltip term="Cloudflare Browser Isolation" link="/cloudflare-one/policies/browser-isolation/">Remote Browser Isolation</GlossaryTooltip> to take advantage of data security capabilities like copy/paste blocking, keyboard blocking, and print blocking?
+- Do you intend to use inline <GlossaryTooltip term="Cloudflare Browser Isolation" link="/cloudflare-one/remote-browser-isolation/">Remote Browser Isolation</GlossaryTooltip> to take advantage of data security capabilities like copy/paste blocking, keyboard blocking, and print blocking?
 
 If the answer to a majority of these questions is no and your organization relies mostly on hostname or DNS-based security controls, then you may not need to inspect most, if not all TLS traffic. Because Cloudflare operates both as a secure web gateway and as a secure DNS resolver for your connected users, you can apply policy control that may increase your security posture without the need to broadly inspect TLS traffic.
 
@@ -50,7 +50,7 @@ To turn on TLS inspection for your Zero Trust organization:
 	product="cloudflare-one"
 	params={{
 		turnOnProcedure:
-			"you can turn on [protocol detection](/cloudflare-one/policies/gateway/network-policies/protocol-detection/) and configure Gateway to [inspect traffic on all ports](/cloudflare-one/policies/gateway/network-policies/protocol-detection/#inspect-on-all-ports)",
+			"you can turn on [protocol detection](/cloudflare-one/traffic-policies/network-policies/protocol-detection/) and configure Gateway to [inspect traffic on all ports](/cloudflare-one/traffic-policies/network-policies/protocol-detection/#inspect-on-all-ports)",
 	}}
 />
 

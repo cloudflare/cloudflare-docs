@@ -30,7 +30,7 @@ import { Tabs, TabItem, Badge, Render, APIRequest } from "~/components";
 To connect your devices to Cloudflare:
 
 1. [Deploy the WARP client](/cloudflare-one/team-and-resources/devices/warp/deployment/) on your devices in Gateway with WARP mode.
-2. [Enable the Gateway proxy for TCP](/cloudflare-one/policies/gateway/proxy/#turn-on-the-gateway-proxy).
+2. [Enable the Gateway proxy for TCP](/cloudflare-one/traffic-policies/proxy/#turn-on-the-gateway-proxy).
 3. [Create device enrollment rules](/cloudflare-one/team-and-resources/devices/warp/deployment/device-enrollment/) to determine which devices can enroll to your Zero Trust organization.
 
 ## 3. Route server IPs through WARP
@@ -135,7 +135,7 @@ To turn off SSH command logging, delete your uploaded public key:
 
 3. Select **Remove key** to confirm.
 
-Cloudflare will stop logging SSH commands to your targets, as well as any commands subject to [Gateway Audit SSH](/cloudflare-one/policies/gateway/network-policies/ssh-logging/) policies.
+Cloudflare will stop logging SSH commands to your targets, as well as any commands subject to [Gateway Audit SSH](/cloudflare-one/traffic-policies/network-policies/ssh-logging/) policies.
 
 </TabItem>
 <TabItem label="API">
@@ -206,7 +206,7 @@ A user may be blocked by an Access policy from reaching your server because no e
 
 The Access infrastructure application (created in [step 5](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/#5-add-an-infrastructure-application)) is the policy container for your SSH server. Cloudflare refers to your server that you connect to with SSH as a [target](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/#4-add-a-target).
 
-[Access policies](/cloudflare-one/policies/access/policy-management/) are the rules attached to this Access infrastructure application, determining who can connect and what UNIX usernames they can log in as on the server. Cloudflare will not create new users on the target. UNIX users must already be present on the server.
+[Access policies](/cloudflare-one/access-controls/policies/access/policy-management/) are the rules attached to this Access infrastructure application, determining who can connect and what UNIX usernames they can log in as on the server. Cloudflare will not create new users on the target. UNIX users must already be present on the server.
 
 You were guided to create an Access policy for your target in [substep 9 of step 5: Add an infrastructure application](#5-add-an-infrastructure-application).
 
@@ -246,9 +246,9 @@ You will need Cloudflare dashboard access and log view [permissions](/cloudflare
 
 6. Select **Configure**.
 
-7. Go to [**Policies**](/cloudflare-one/policies/access/policy-management/#test-your-policies) to review what criteria may be blocking the user.
+7. Go to [**Policies**](/cloudflare-one/access-controls/policies/access/policy-management/#test-your-policies) to review what criteria may be blocking the user.
 
-By adding an Access [policy](/cloudflare-one/policies/access/) to allow the user, the connection issue should be resolved. After saving your policy changes, attempt to connect to the server.
+By adding an Access [policy](/cloudflare-one/access-controls/policies/access/) to allow the user, the connection issue should be resolved. After saving your policy changes, attempt to connect to the server.
 
 If you are still having connection issues after auditing your Access policies, review tunnel health in the following step.
 

@@ -19,7 +19,7 @@ import {
 Only available on Enterprise plans.
 :::
 
-When your users connect to the Internet through Cloudflare Gateway, by default their traffic is assigned a source IP address that is shared across all Cloudflare WARP users. Enterprise users can purchase [dedicated egress IPs](/cloudflare-one/policies/gateway/egress-policies/dedicated-egress-ips/) to ensure that egress traffic from your organization is assigned a unique, static IP. These source IPs are dedicated to your account and can be used within allowlists on upstream services.
+When your users connect to the Internet through Cloudflare Gateway, by default their traffic is assigned a source IP address that is shared across all Cloudflare WARP users. Enterprise users can purchase [dedicated egress IPs](/cloudflare-one/traffic-policies/egress-policies/dedicated-egress-ips/) to ensure that egress traffic from your organization is assigned a unique, static IP. These source IPs are dedicated to your account and can be used within allowlists on upstream services.
 
 Egress policies allow you to control which dedicated egress IP is used and when, based on attributes such as identity, IP address, and geolocation. Traffic that does not match an egress policy will default to using the most performant dedicated egress IP.
 
@@ -33,7 +33,7 @@ When using either the default Cloudflare egress IPs or any dedicated egress IPs,
 
 ## Force IP version
 
-To control whether only IPv4 or IPv6 is used to egress, ensure you are [filtering DNS traffic](/cloudflare-one/policies/gateway/initial-setup/dns/), then create a DNS policy to [block AAAA or A records](/cloudflare-one/policies/gateway/dns-policies/common-policies/#control-ip-version).
+To control whether only IPv4 or IPv6 is used to egress, ensure you are [filtering DNS traffic](/cloudflare-one/traffic-policies/initial-setup/dns/), then create a DNS policy to [block AAAA or A records](/cloudflare-one/traffic-policies/dns-policies/common-policies/#control-ip-version).
 
 ## Example policies
 
@@ -52,7 +52,7 @@ For the best performance, we recommend creating a catch-all policy to route all 
 | --------------------- | -------- | -------- | ------------------------ | -------------------------------- |
 | Default egress policy | Protocol | in       | `All options (Protocol)` | Cloudflare default egress method |
 
-Since Gateway policies evaluate from [top to bottom](/cloudflare-one/policies/gateway/order-of-enforcement/#order-of-precedence) in the UI, be sure to place the catch-all policy at the bottom of the list. If you do not include a catch-all policy, all other traffic will attempt to use the closest dedicated egress IP location. To control which egress IP Gateway uses, create an egress policy.
+Since Gateway policies evaluate from [top to bottom](/cloudflare-one/traffic-policies/order-of-enforcement/#order-of-precedence) in the UI, be sure to place the catch-all policy at the bottom of the list. If you do not include a catch-all policy, all other traffic will attempt to use the closest dedicated egress IP location. To control which egress IP Gateway uses, create an egress policy.
 
 ## Egress methods
 
@@ -60,7 +60,7 @@ Choose one of the following options for your egress policy:
 
 - **Use default Cloudflare egress method** uses the default source IP range shared across all Zero Trust accounts. Ensures the most performant Internet experience as user traffic egresses from the nearest Cloudflare data center.
 
-- **Use dedicated egress IPs (Cloudflare or BYOIP)** uses the primary IPv4 address and IPv6 range selected in the dropdown menus. You can optionally specify a secondary IPv4 address in a different data center. If the primary data center goes down, Gateway will egress from the secondary data center to avoid traffic drops during reroutes. There is no need for a secondary IPv6 because IPv6 traffic can egress from any Cloudflare data center. Dedicated egress IPs can be provided by either Cloudflare or [BYOIP](/cloudflare-one/policies/gateway/egress-policies/dedicated-egress-ips/#bring-your-own-ip-address-byoip). To learn more about IPv4 and IPv6 egress behavior, refer to [Egress locations](/cloudflare-one/policies/gateway/egress-policies/dedicated-egress-ips/#egress-location).
+- **Use dedicated egress IPs (Cloudflare or BYOIP)** uses the primary IPv4 address and IPv6 range selected in the dropdown menus. You can optionally specify a secondary IPv4 address in a different data center. If the primary data center goes down, Gateway will egress from the secondary data center to avoid traffic drops during reroutes. There is no need for a secondary IPv6 because IPv6 traffic can egress from any Cloudflare data center. Dedicated egress IPs can be provided by either Cloudflare or [BYOIP](/cloudflare-one/traffic-policies/egress-policies/dedicated-egress-ips/#bring-your-own-ip-address-byoip). To learn more about IPv4 and IPv6 egress behavior, refer to [Egress locations](/cloudflare-one/traffic-policies/egress-policies/dedicated-egress-ips/#egress-location).
 
 ## Selectors
 
@@ -220,4 +220,4 @@ Gateway uses Rust to evaluate regular expressions. The Rust implementation is sl
 
 ### Selector prerequisites
 
-The [Application](#application), [Content Categories](#content-categories), [Domain](#domain), and [Host](#host) selectors require configuration changes in order to be operational. Before deploying policies with these selectors, refer to [Host selectors](/cloudflare-one/policies/gateway/egress-policies/host-selectors).
+The [Application](#application), [Content Categories](#content-categories), [Domain](#domain), and [Host](#host) selectors require configuration changes in order to be operational. Before deploying policies with these selectors, refer to [Host selectors](/cloudflare-one/traffic-policies/egress-policies/host-selectors).

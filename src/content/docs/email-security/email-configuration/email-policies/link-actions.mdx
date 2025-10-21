@@ -22,7 +22,7 @@ To update or create a new disposition action:
 
 ## Email Link Isolation
 
-Email Link Isolation rewrites links that could be exploited, alerts users when there is uncertainty around the website they are visiting, and protects against malware and vulnerabilities through [Cloudflare Browser Isolation](/cloudflare-one/policies/browser-isolation/).
+Email Link Isolation rewrites links that could be exploited, alerts users when there is uncertainty around the website they are visiting, and protects against malware and vulnerabilities through [Cloudflare Browser Isolation](/cloudflare-one/remote-browser-isolation/).
 
 When you enable Email Link Isolation, the service rewrites links in emails and opens them in a browser tab where all page contents are fetched and rendered on a remote server. When this feature is enabled, any malware that might be present in a web page or email link is isolated at the server level, and will not infect and compromise the client network at the endpoint.
 
@@ -55,7 +55,7 @@ Email Link Isolation is now enabled.
 
 :::note
 
-Email Link Isolation does not have advanced configuration options. If you need more fine-grained control over what users can do in an isolated browser session, you must have a Cloudflare Zero Trust account and make your changes on [Browser Isolation](/cloudflare-one/policies/browser-isolation/).
+Email Link Isolation does not have advanced configuration options. If you need more fine-grained control over what users can do in an isolated browser session, you must have a Cloudflare Zero Trust account and make your changes on [Browser Isolation](/cloudflare-one/remote-browser-isolation/).
 :::
 
 ## URL rewrite ignore patterns

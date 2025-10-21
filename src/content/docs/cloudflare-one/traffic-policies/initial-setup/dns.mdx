@@ -33,7 +33,7 @@ To filter DNS requests from an individual device such as a laptop or phone:
 
 1. [Install the WARP client](/cloudflare-one/team-and-resources/devices/warp/deployment/) on your device.
 2. In the WARP client Settings, log in to your organization's <GlossaryTooltip term="team name">Zero Trust instance</GlossaryTooltip>.
-3. (Optional) If you want to display a [custom block page](/cloudflare-one/policies/gateway/block-page/), [install a Cloudflare root certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/) on your device.
+3. (Optional) If you want to display a [custom block page](/cloudflare-one/traffic-policies/block-page/), [install a Cloudflare root certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/) on your device.
 
 ### Connect DNS locations
 
@@ -70,7 +70,7 @@ To create a new DNS policy:
 2. In the **DNS** tab, select **Add a policy**.
 3. Name the policy.
 4. Under **Traffic**, build a logical expression that defines the traffic you want to allow or block.
-5. Choose an **Action** to take when traffic matches the logical expression. For example, we recommend adding a policy to block all [security categories](/cloudflare-one/policies/gateway/domain-categories/#security-categories):
+5. Choose an **Action** to take when traffic matches the logical expression. For example, we recommend adding a policy to block all [security categories](/cloudflare-one/traffic-policies/domain-categories/#security-categories):
    <Render
    	file="gateway/policies/block-security-categories"
    	product="cloudflare-one"
@@ -88,7 +88,7 @@ To create a new DNS policy:
    | Account | Zero Trust | Edit       |
 
 2. (Optional) Configure your API environment variables to include your [account ID](/fundamentals/account/find-account-and-zone-ids/) and API token.
-3. Send a `POST` request to the [Create a Zero Trust Gateway rule](/api/resources/zero_trust/subresources/gateway/subresources/rules/methods/create/) endpoint. For example, we recommend adding a policy to block all [security categories](/cloudflare-one/policies/gateway/domain-categories/#security-categories):
+3. Send a `POST` request to the [Create a Zero Trust Gateway rule](/api/resources/zero_trust/subresources/gateway/subresources/rules/methods/create/) endpoint. For example, we recommend adding a policy to block all [security categories](/cloudflare-one/traffic-policies/domain-categories/#security-categories):
 
    <APIRequest
    	path="/accounts/{account_id}/gateway/rules"
@@ -118,8 +118,8 @@ To create a new DNS policy:
 
 </TabItem> </Tabs>
 
-For more information, refer to [DNS policies](/cloudflare-one/policies/gateway/dns-policies/).
+For more information, refer to [DNS policies](/cloudflare-one/traffic-policies/dns-policies/).
 
 ## 4. Add optional policies
 
-Refer to our list of [common DNS policies](/cloudflare-one/policies/gateway/dns-policies/common-policies) for other policies you may want to create.
+Refer to our list of [common DNS policies](/cloudflare-one/traffic-policies/dns-policies/common-policies) for other policies you may want to create.

@@ -29,6 +29,6 @@ When your users' devices are enrolled with the WARP client, Cloudflare will tran
 
 ### Clientless Web Isolation
 
-With [Clientless Web Isolation](/cloudflare-one/policies/browser-isolation/setup/clientless-browser-isolation/), Cloudflare will append a static link to the web address. For example, a user's browser going to `example.com` in an isolated session will display `<your-team-name>.cloudflareaccess.com/browser/https://www.example.com`.
+With [Clientless Web Isolation](/cloudflare-one/remote-browser-isolation/setup/clientless-browser-isolation/), Cloudflare will append a static link to the web address. For example, a user's browser going to `example.com` in an isolated session will display `<your-team-name>.cloudflareaccess.com/browser/https://www.example.com`.
 
 When Browser Isolation isolates traffic, Cloudflare can apply the security stack of TLS decryption, HTTP inspection, network inspection, DNS filtering, and DLP policy evaluation to the traffic in the request body. This provides a solution for securing unmanaged endpoint access to sensitive systems and can potentially upgrade traffic from users or services that may have otherwise been deemed as risky. Any method for Browser Isolation attaches the user to your dedicated egress IP addresses so you can apply policies across each method of access consistently.

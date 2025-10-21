@@ -132,7 +132,7 @@ Policies with Audit SSH actions allow administrators to log SSH traffic. Gateway
 
 Gateway only audits SSH traffic over port `22`. Non-standard ports, including those specified with the [Destination Port selector](#destination-port), are not supported.
 
-For more information on SSH logging, refer to [Configure SSH proxy and command logs](/cloudflare-one/policies/gateway/network-policies/ssh-logging/).
+For more information on SSH logging, refer to [Configure SSH proxy and command logs](/cloudflare-one/traffic-policies/network-policies/ssh-logging/).
 
 ### Block
 
@@ -303,7 +303,7 @@ Gateway matches network traffic against the following selectors, or criteria.
 
 ### Detected Protocol
 
-The inferred network protocol based on Cloudflare's [protocol detection](/cloudflare-one/policies/gateway/network-policies/protocol-detection/).
+The inferred network protocol based on Cloudflare's [protocol detection](/cloudflare-one/traffic-policies/network-policies/protocol-detection/).
 
 | UI name           | API example                       |
 | ----------------- | --------------------------------- |
@@ -337,7 +337,7 @@ To enable Gateway filtering on TCP and UDP, go to **Settings** > **Network** > *
 
 The host whose Server Name Indication (SNI) header Gateway will filter traffic against. This will allow for an exact match.
 
-By default, this selector only applies to HTTPS traffic on port `443`. To inspect traffic on every port, turn on [protocol detection](/cloudflare-one/policies/gateway/network-policies/protocol-detection/) and choose to [inspect on all ports](/cloudflare-one/policies/gateway/network-policies/protocol-detection/#inspect-on-all-ports).
+By default, this selector only applies to HTTPS traffic on port `443`. To inspect traffic on every port, turn on [protocol detection](/cloudflare-one/traffic-policies/network-policies/protocol-detection/) and choose to [inspect on all ports](/cloudflare-one/traffic-policies/network-policies/protocol-detection/#inspect-on-all-ports).
 
 | UI name | API example                         |
 | ------- | ----------------------------------- |
@@ -347,7 +347,7 @@ By default, this selector only applies to HTTPS traffic on port `443`. To inspec
 
 The domain whose Server Name Indication (SNI) header Gateway will filter traffic against. For example, a rule for `example.com` will match `example.com`, `www.example.com`, and `my.test.example.com`.
 
-By default, this selector only applies to HTTPS traffic on port `443`. To inspect traffic on every port, turn on [protocol detection](/cloudflare-one/policies/gateway/network-policies/protocol-detection/) and choose to [inspect on all ports](/cloudflare-one/policies/gateway/network-policies/protocol-detection/#inspect-on-all-ports).
+By default, this selector only applies to HTTPS traffic on port `443`. To inspect traffic on every port, turn on [protocol detection](/cloudflare-one/traffic-policies/network-policies/protocol-detection/) and choose to [inspect on all ports](/cloudflare-one/traffic-policies/network-policies/protocol-detection/#inspect-on-all-ports).
 
 | UI name    | API example                        |
 | ---------- | ---------------------------------- |

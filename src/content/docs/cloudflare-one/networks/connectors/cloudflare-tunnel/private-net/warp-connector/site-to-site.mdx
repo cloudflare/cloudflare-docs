@@ -72,7 +72,7 @@ If you would like to filter private DNS queries using Cloudflare Gateway, check 
 	- <GlossaryTooltip term="initial resolved IP">Initial resolved IP</GlossaryTooltip> CGNAT range:
 		<Render file="gateway/egress-selector-cgnat-ips" 	product="cloudflare-one"/>
 
-When you resolve DNS queries from WARP Connector through Gateway, Gateway will log the queries with the private source IP. You can use the private source IP to create [resolver policies](/cloudflare-one/policies/gateway/resolver-policies/) for queries intended for [internal DNS records](/cloudflare-one/policies/gateway/resolver-policies/#internal-dns).
+When you resolve DNS queries from WARP Connector through Gateway, Gateway will log the queries with the private source IP. You can use the private source IP to create [resolver policies](/cloudflare-one/traffic-policies/resolver-policies/) for queries intended for [internal DNS records](/cloudflare-one/traffic-policies/resolver-policies/#internal-dns).
 
 ## 4. Route traffic from subnet to WARP Connector
 

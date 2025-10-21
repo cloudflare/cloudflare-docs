@@ -41,7 +41,7 @@ We recommend using [Workers KV](/kv/) for storing session data, credentials (API
 
 Frequently read keys benefit from KV's [internal cache](/kv/concepts/how-kv-works/), and repeated reads to these "hot" keys will typically see latencies in the 500µs to 10ms range.
 
-Authentication frameworks like [OpenAuth](https://openauth.js.org/docs/storage/cloudflare/) use Workers KV as session storage when deployed to Cloudflare, and [Cloudflare Access](/cloudflare-one/policies/access/) uses KV to securely store and distribute user credentials so that they can be validated as close to the user as possible and reduce overall latency.
+Authentication frameworks like [OpenAuth](https://openauth.js.org/docs/storage/cloudflare/) use Workers KV as session storage when deployed to Cloudflare, and [Cloudflare Access](/cloudflare-one/access-controls/policies/access/) uses KV to securely store and distribute user credentials so that they can be validated as close to the user as possible and reduce overall latency.
 
 ## Product overviews
 

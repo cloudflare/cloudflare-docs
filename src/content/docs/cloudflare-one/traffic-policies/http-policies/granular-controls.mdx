@@ -7,17 +7,17 @@ sidebar:
 
 import { Render, Details, Tabs, TabItem, APIRequest } from "~/components";
 
-With Application Granular Controls, you can create [Gateway HTTP policies](/cloudflare-one/policies/gateway/http-policies/) to control specific user actions within supported SaaS applications. This allows you to give users access to an application while restricting the actions that they can take within the application.
+With Application Granular Controls, you can create [Gateway HTTP policies](/cloudflare-one/traffic-policies/http-policies/) to control specific user actions within supported SaaS applications. This allows you to give users access to an application while restricting the actions that they can take within the application.
 
 ## Prerequisites
 
 To use Application Granular Controls, you must:
 
 - Install a [Cloudflare certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/) or a [custom certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/custom-certificate/) on your users' devices.
-- Turn on [TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/).
-- Turn on the [Gateway proxy](/cloudflare-one/policies/gateway/proxy/#turn-on-the-gateway-proxy).
-- (Optional) If an application uses HTTP/3, turn on the [Gateway proxy for UDP traffic](/cloudflare-one/policies/gateway/http-policies/http3/#enable-http3-inspection).
-- (Optional) To turn on [AI prompt logging](/cloudflare-one/policies/data-loss-prevention/dlp-policies/logging-options/#log-generative-ai-prompt-content), create a [DLP payload encryption public key](/cloudflare-one/policies/data-loss-prevention/dlp-policies/logging-options/#set-a-dlp-payload-encryption-public-key).
+- Turn on [TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/).
+- Turn on the [Gateway proxy](/cloudflare-one/traffic-policies/proxy/#turn-on-the-gateway-proxy).
+- (Optional) If an application uses HTTP/3, turn on the [Gateway proxy for UDP traffic](/cloudflare-one/traffic-policies/http-policies/http3/#enable-http3-inspection).
+- (Optional) To turn on [AI prompt logging](/cloudflare-one/data-loss-prevention/dlp-policies/logging-options/#log-generative-ai-prompt-content), create a [DLP payload encryption public key](/cloudflare-one/data-loss-prevention/dlp-policies/logging-options/#set-a-dlp-payload-encryption-public-key).
 
 ## Create a policy with Application Granular Controls
 
@@ -62,7 +62,7 @@ Use the [Create a Zero Trust Gateway rule](/api/resources/zero_trust/subresource
 
 </TabItem> </Tabs>
 
-For more information, refer to [HTTP policies](/cloudflare-one/policies/gateway/http-policies/).
+For more information, refer to [HTTP policies](/cloudflare-one/traffic-policies/http-policies/).
 
 ## Control definitions
 
@@ -84,7 +84,7 @@ Operation Groups are groupings of operations defined by the application vendor. 
 
 ### DLP payloads
 
-You can use Application Granular Controls with [Data Loss Prevention (DLP)](/cloudflare-one/policies/data-loss-prevention/) for operations that contain scannable content. This includes operations that contain the content of uploaded or downloaded files or AI prompts. For example, when a user performs a file upload, a sequence of API operations may result, such as setting up the file metadata, uploading the file content, and finalizing the upload. When applying DLP to your Zero Trust traffic, it can be helpful to specifically target an operation that contains file content.
+You can use Application Granular Controls with [Data Loss Prevention (DLP)](/cloudflare-one/data-loss-prevention/) for operations that contain scannable content. This includes operations that contain the content of uploaded or downloaded files or AI prompts. For example, when a user performs a file upload, a sequence of API operations may result, such as setting up the file metadata, uploading the file content, and finalizing the upload. When applying DLP to your Zero Trust traffic, it can be helpful to specifically target an operation that contains file content.
 
 ## Application APIs
 

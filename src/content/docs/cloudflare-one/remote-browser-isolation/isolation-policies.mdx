@@ -62,7 +62,7 @@ The following optional settings appear in the Gateway HTTP policy builder when y
 ```
 
 - _Allow_: (Default) Users can copy content from an isolated website to their local clipboard.
-- _Allow only within isolated browser_: Users can only copy content from an isolated website to the remote clipboard. Users cannot copy content out of the remote browser to the local clipboard. You can use this setting alongside [**Paste (from client to remote)**: _Allow only within isolated browser_](/cloudflare-one/policies/browser-isolation/isolation-policies/#paste-from-client-to-remote) to only allow copy-pasting between isolated websites.
+- _Allow only within isolated browser_: Users can only copy content from an isolated website to the remote clipboard. Users cannot copy content out of the remote browser to the local clipboard. You can use this setting alongside [**Paste (from client to remote)**: _Allow only within isolated browser_](/cloudflare-one/remote-browser-isolation/isolation-policies/#paste-from-client-to-remote) to only allow copy-pasting between isolated websites.
 - _Do not allow_: Prohibits users from copying content from an isolated website.
 
 ### Paste (from client to remote)
@@ -82,7 +82,7 @@ The following optional settings appear in the Gateway HTTP policy builder when y
 ```
 
 - _Allow_: (Default) Users can paste content from their local clipboard to an isolated website.
-- _Allow only within isolated browser_: Users can only paste content from the remote clipboard to an isolated website. Users cannot paste content from their local clipboard to the remote browser. You can use this setting alongside [**Copy (from remote to client)**: _Allow only within isolated browser_](/cloudflare-one/policies/browser-isolation/isolation-policies/#copy-from-remote-to-client) to only allow copy-pasting between isolated websites.
+- _Allow only within isolated browser_: Users can only paste content from the remote clipboard to an isolated website. Users cannot paste content from their local clipboard to the remote browser. You can use this setting alongside [**Copy (from remote to client)**: _Allow only within isolated browser_](/cloudflare-one/remote-browser-isolation/isolation-policies/#copy-from-remote-to-client) to only allow copy-pasting between isolated websites.
 - _Do not allow_: Prohibits users from pasting content into an isolated website.
 
 ### File downloads
@@ -92,7 +92,7 @@ The following optional settings appear in the Gateway HTTP policy builder when y
 - _View in remote browser_: Users can open and view files in an isolated environment.
 
 :::note
-This option does not prevent files from being downloaded into the remote browser. To prevent files being downloaded into the remote browser, use HTTP Policies to block by [Download Mime Type](/cloudflare-one/policies/gateway/http-policies/#download-and-upload-mime-type).
+This option does not prevent files from being downloaded into the remote browser. To prevent files being downloaded into the remote browser, use HTTP Policies to block by [Download Mime Type](/cloudflare-one/traffic-policies/http-policies/#download-and-upload-mime-type).
 :::
 
 ### File uploads
@@ -101,7 +101,7 @@ This option does not prevent files from being downloaded into the remote browser
 - _Do not allow_: Prohibits users from uploading files from their local machine into an isolated website.
 
 :::note
-This option does not prevent files being uploaded to websites from third-party cloud file managers or files downloaded into the remote browser download bar from other isolated websites. To prevent files being uploaded from the remote browser into an isolated website, use HTTP Policies to block by [Upload Mime Type](/cloudflare-one/policies/gateway/http-policies/#download-and-upload-mime-type).
+This option does not prevent files being uploaded to websites from third-party cloud file managers or files downloaded into the remote browser download bar from other isolated websites. To prevent files being uploaded from the remote browser into an isolated website, use HTTP Policies to block by [Upload Mime Type](/cloudflare-one/traffic-policies/http-policies/#download-and-upload-mime-type).
 :::
 
 ### Keyboard
@@ -120,7 +120,7 @@ Mouse input remains available to allow users to browse a website by following hy
 
 ## Custom block dialog <Badge text="Beta" variant="note" />
 
-With custom block dialogs, you can host a custom block page when users are blocked from taking specific actions, like [copying](/cloudflare-one/policies/browser-isolation/isolation-policies/#copy-from-remote-to-client), [pasting](/cloudflare-one/policies/browser-isolation/isolation-policies/#paste-from-client-to-remote), [downloading](/cloudflare-one/policies/browser-isolation/isolation-policies/#file-downloads), [uploading](/cloudflare-one/policies/browser-isolation/isolation-policies/#file-uploads), [performing keyboard inputs](/cloudflare-one/policies/browser-isolation/isolation-policies/#keyboard), or [printing](/cloudflare-one/policies/browser-isolation/isolation-policies/#printing), within an isolated browser session.
+With custom block dialogs, you can host a custom block page when users are blocked from taking specific actions, like [copying](/cloudflare-one/remote-browser-isolation/isolation-policies/#copy-from-remote-to-client), [pasting](/cloudflare-one/remote-browser-isolation/isolation-policies/#paste-from-client-to-remote), [downloading](/cloudflare-one/remote-browser-isolation/isolation-policies/#file-downloads), [uploading](/cloudflare-one/remote-browser-isolation/isolation-policies/#file-uploads), [performing keyboard inputs](/cloudflare-one/remote-browser-isolation/isolation-policies/#keyboard), or [printing](/cloudflare-one/remote-browser-isolation/isolation-policies/#printing), within an isolated browser session.
 
 Administrators can configure custom block dialogs to explain the reason for the block, and guide the users on how to resolve their issue using the provided query parameters:
 

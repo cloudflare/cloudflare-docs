@@ -7,9 +7,9 @@ sidebar:
 
 import { Details } from "~/components";
 
-Cloudflare DLP can scan your web traffic and SaaS applications for specific data defined in custom detection entries. Detection entries allow you to define custom data patterns for DLP to detect using [DLP profiles](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/). Detection entries include custom [datasets](#datasets) with defined data, [document entries](#documents) with example fingerprints, and [AI prompt topics](#ai-prompt-topics).
+Cloudflare DLP can scan your web traffic and SaaS applications for specific data defined in custom detection entries. Detection entries allow you to define custom data patterns for DLP to detect using [DLP profiles](/cloudflare-one/data-loss-prevention/dlp-profiles/). Detection entries include custom [datasets](#datasets) with defined data, [document entries](#documents) with example fingerprints, and [AI prompt topics](#ai-prompt-topics).
 
-You can configure sensitive data to be hashed before reaching Cloudflare and redacted from matches in [payload logs](/cloudflare-one/policies/data-loss-prevention/dlp-policies/logging-options/#log-the-payload-of-matched-rules).
+You can configure sensitive data to be hashed before reaching Cloudflare and redacted from matches in [payload logs](/cloudflare-one/data-loss-prevention/dlp-policies/logging-options/#log-the-payload-of-matched-rules).
 
 ## Datasets
 
@@ -77,7 +77,7 @@ DLP will save your dataset in cleartext.
 
 </Details>
 
-The dataset will appear in the list with an **Uploading** status. Once the upload is complete, the status will change to **Complete**. To use your uploaded dataset, add it as an existing entry to a [custom DLP profile](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/#build-a-custom-profile).
+The dataset will appear in the list with an **Uploading** status. Once the upload is complete, the status will change to **Complete**. To use your uploaded dataset, add it as an existing entry to a [custom DLP profile](/cloudflare-one/data-loss-prevention/dlp-profiles/#build-a-custom-profile).
 
 ### Manage existing datasets
 
@@ -92,7 +92,7 @@ Uploaded DLP datasets are read-only. To update a dataset, you must upload a new 
 Your new dataset will replace the original dataset.
 
 :::caution[Remove existing column entries]
-If you want to update an Exact Data Match dataset to remove a column in use as an [existing detection entry](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/#build-a-custom-profile), you must remove the existing entry from any custom DLP profiles using it before updating the dataset.
+If you want to update an Exact Data Match dataset to remove a column in use as an [existing detection entry](/cloudflare-one/data-loss-prevention/dlp-profiles/#build-a-custom-profile), you must remove the existing entry from any custom DLP profiles using it before updating the dataset.
 :::
 
 ## Documents
@@ -119,7 +119,7 @@ To upload a new document entry to DLP:
 
 The document will appear in the list with a **Pending** status. Once the upload is complete, the status will change to **Complete**. If you created a document entry with Terraform, the status will be **No file** until you upload a file.
 
-To use your uploaded document fingerprint, add it as an existing entry to a [custom DLP profile](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/#build-a-custom-profile).
+To use your uploaded document fingerprint, add it as an existing entry to a [custom DLP profile](/cloudflare-one/data-loss-prevention/dlp-profiles/#build-a-custom-profile).
 
 ### Manage existing document entries
 
@@ -135,7 +135,7 @@ Your new document entry will replace the original document entry. If your file u
 
 ## AI prompt topics
 
-DLP uses [Application Granular Controls](/cloudflare-one/policies/gateway/http-policies/#application-granular-controls) to detect and categorize prompts submitted to generative AI tools. Application Granular Controls analyzes prompts for both content and user intent. Supported AI prompt protection detections include:
+DLP uses [Application Granular Controls](/cloudflare-one/traffic-policies/http-policies/#application-granular-controls) to detect and categorize prompts submitted to generative AI tools. Application Granular Controls analyzes prompts for both content and user intent. Supported AI prompt protection detections include:
 
 | Detection entry                       | Description                                                                                       |
 | ------------------------------------- | ------------------------------------------------------------------------------------------------- |
@@ -150,4 +150,4 @@ DLP uses [Application Granular Controls](/cloudflare-one/policies/gateway/http-p
 
 Each detection entry is categorized as either Content or Intent. Content focuses on the specific text or data the user provides the generative AI tool. It is the information the AI needs to process and analyze to generate a response. Intent focuses on the user's goal or objective for the AI's response. It dictates the type of output the user wants to receive. This category is particularly useful for customers who are using SaaS connectors or MCPs that provide the AI application access to internal data sources that contain sensitive information.
 
-To use an AI prompt topic, configure the corresponding [predefined DLP profile](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/predefined-profiles/#ai-prompt) or add it as an existing entry to a [custom DLP profile](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/#build-a-custom-profile). AI prompt protection is available for ChatGPT, Google Gemini, Perplexity, and Claude.
+To use an AI prompt topic, configure the corresponding [predefined DLP profile](/cloudflare-one/data-loss-prevention/dlp-profiles/predefined-profiles/#ai-prompt) or add it as an existing entry to a [custom DLP profile](/cloudflare-one/data-loss-prevention/dlp-profiles/#build-a-custom-profile). AI prompt protection is available for ChatGPT, Google Gemini, Perplexity, and Claude.

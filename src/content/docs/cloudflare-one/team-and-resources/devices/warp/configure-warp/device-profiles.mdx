@@ -16,7 +16,7 @@ import { Render, TabItem, Tabs, APIRequest } from "~/components";
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client**.
 2. In the **Profile settings** card, select **Create profile**. This will make a copy of the **Default** profile.
 3. Enter any name for the profile.
-4. Create rules to define the devices that will use this profile. Learn more about the available [Selectors](#selectors), [Operators](/cloudflare-one/policies/gateway/network-policies/#comparison-operators), and [Values](/cloudflare-one/policies/gateway/network-policies/#value).
+4. Create rules to define the devices that will use this profile. Learn more about the available [Selectors](#selectors), [Operators](/cloudflare-one/traffic-policies/network-policies/#comparison-operators), and [Values](/cloudflare-one/traffic-policies/network-policies/#value).
 5. Configure [WARP settings](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#device-settings) for these devices.
 
 :::note
@@ -148,7 +148,7 @@ Apply a device profile based on the user's email.
 
 ### User group emails
 
-Apply a device profile based on an [IdP group](/cloudflare-one/policies/gateway/identity-selectors/#idp-groups-in-gateway) email address of which the user is configured as a member in the IdP.
+Apply a device profile based on an [IdP group](/cloudflare-one/traffic-policies/identity-selectors/#idp-groups-in-gateway) email address of which the user is configured as a member in the IdP.
 
 <Render
 	file="gateway/selectors/user-group-email"
@@ -158,7 +158,7 @@ Apply a device profile based on an [IdP group](/cloudflare-one/policies/gateway/
 
 ### User group IDs
 
-Apply a device profile based on an [IdP group](/cloudflare-one/policies/gateway/identity-selectors/#idp-groups-in-gateway) ID of which the user is configured as a member in the IdP.
+Apply a device profile based on an [IdP group](/cloudflare-one/traffic-policies/identity-selectors/#idp-groups-in-gateway) ID of which the user is configured as a member in the IdP.
 
 <Render
 	file="gateway/selectors/user-group-ids"
@@ -168,7 +168,7 @@ Apply a device profile based on an [IdP group](/cloudflare-one/policies/gateway/
 
 ### User group names
 
-Apply a device profile based on an [IdP group](/cloudflare-one/policies/gateway/identity-selectors/#idp-groups-in-gateway) name of which the user is configured as a member in the IdP.
+Apply a device profile based on an [IdP group](/cloudflare-one/traffic-policies/identity-selectors/#idp-groups-in-gateway) name of which the user is configured as a member in the IdP.
 
 <Render
 	file="gateway/selectors/user-group-names"
@@ -204,7 +204,7 @@ Apply a device profile based on the [managed network](/cloudflare-one/team-and-r
 
 ### SAML attributes
 
-Apply a device profile based on an attribute name and value from a [SAML IdP](/cloudflare-one/policies/gateway/identity-selectors/#generic-saml-idp).
+Apply a device profile based on an attribute name and value from a [SAML IdP](/cloudflare-one/traffic-policies/identity-selectors/#generic-saml-idp).
 
 <Render file="gateway/selectors/saml-attributes" product="cloudflare-one" />
 

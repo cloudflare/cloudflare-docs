@@ -14,7 +14,7 @@ import { Render, Details, GlossaryTooltip } from "~/components";
 	product="cloudflare-one"
 />
 
-Cloudflare Tunnel can be used for source IP anchoring when you want to use existing egress IPs instead of purchasing [Cloudflare dedicated egress IPs](/cloudflare-one/policies/gateway/egress-policies/dedicated-egress-ips/). Some third-party websites may have an Access Control List (ACL) that only allow connections from certain source IPs. If you already a non-Cloudflare IP on their allowlist (such an egress IP provided by an ISP or a cloud provider like AWS), you can configure `cloudflared` to anchor user traffic to the same IPs that you use today.
+Cloudflare Tunnel can be used for source IP anchoring when you want to use existing egress IPs instead of purchasing [Cloudflare dedicated egress IPs](/cloudflare-one/traffic-policies/egress-policies/dedicated-egress-ips/). Some third-party websites may have an Access Control List (ACL) that only allow connections from certain source IPs. If you already a non-Cloudflare IP on their allowlist (such an egress IP provided by an ISP or a cloud provider like AWS), you can configure `cloudflared` to anchor user traffic to the same IPs that you use today.
 
 For example, assume that your organization's banking service, `app.bank.com`, expects user traffic to come from an AWS IP. You can install `cloudflared` in your AWS environment and add a public hostname route pointing to `app.bank.com`. When users connect to `app.bank.com` using the WARP client, Gateway will apply your network policies and route the filtered traffic down the corresponding Cloudflare Tunnel to AWS. The traffic can then egress to the public Internet using your AWS egress IP.
 
@@ -92,7 +92,7 @@ Your private network's CIDR block should also route through the WARP tunnel. For
 
 ## 4. (Optional) Configure network policies
 
-You can build [Gateway network policies](/cloudflare-one/policies/gateway/network-policies/) to filter HTTPS traffic to your public hostname on port `443`. For example, suppose that you want to block all WARP users from accessing `app.bank.com` except for a specific set of users or groups. Additionally, those authorized users should only access `app.bank.com` using your AWS egress IP. You can accomplish this using two policies: the first allows specific users to reach `app.bank.com`, and the second blocks all other port `443` traffic to `app.bank.com`.
+You can build [Gateway network policies](/cloudflare-one/traffic-policies/network-policies/) to filter HTTPS traffic to your public hostname on port `443`. For example, suppose that you want to block all WARP users from accessing `app.bank.com` except for a specific set of users or groups. Additionally, those authorized users should only access `app.bank.com` using your AWS egress IP. You can accomplish this using two policies: the first allows specific users to reach `app.bank.com`, and the second blocks all other port `443` traffic to `app.bank.com`.
 
 1. Allow company employees:
 	<Render file="gateway/policies/restrict-access-to-private-networks-allow" product="cloudflare-one" params={{ selector: "SNI", value: "app.bank.com" }} />
@@ -103,7 +103,7 @@ You can build [Gateway network policies](/cloudflare-one/policies/gateway/networ
 	| -------------- | -------- | ------------ | ------ |
 	| SNI            | in       | `app.bank.com` | Block  |
 
-Gateway does not currently support hostname-based filtering for traffic on non-`443` ports. To block traffic to `app.bank.com` on all ports, you will need to use the [Destination IP](/cloudflare-one/policies/gateway/network-policies/#destination-ip) selector and specify the public IP space of `app.bank.com`.
+Gateway does not currently support hostname-based filtering for traffic on non-`443` ports. To block traffic to `app.bank.com` on all ports, you will need to use the [Destination IP](/cloudflare-one/traffic-policies/network-policies/#destination-ip) selector and specify the public IP space of `app.bank.com`.
 
 ## 5. Test the connection
 

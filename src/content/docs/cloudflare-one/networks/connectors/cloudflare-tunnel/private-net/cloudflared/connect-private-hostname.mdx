@@ -138,7 +138,7 @@ Only available on Enterprise plans
 
 Gateway will automatically resolve DNS queries using your internal DNS server as long as the DNS server is behind the same Cloudflare Tunnel as your application. If your DNS server is behind a different Cloudflare Tunnel (for example, if you separated DNS traffic into its own tunnel for [high availability](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-availability/system-requirements/#private-dns)), then you need to point Gateway to the correct tunnel and DNS server.
 
-1. [Create a Gateway resolver policy](/cloudflare-one/policies/gateway/resolver-policies/#create-a-resolver-policy) that matches the private hostname for which you are establishing the route:
+1. [Create a Gateway resolver policy](/cloudflare-one/traffic-policies/resolver-policies/#create-a-resolver-policy) that matches the private hostname for which you are establishing the route:
 
    | Selector | Operator | Value                  |
    | -------- | -------- | ---------------------- |
@@ -166,7 +166,7 @@ If your private hostname points to an HTTPS application on port `443`, you can s
 
 	- **Option 1 (Recommended)**: Create an [Access self-hosted private app](/cloudflare-one/applications/non-http/self-hosted-private-app/) to manage user access alongside your SaaS and other web apps.
 
-	- **Option 2**: If you prefer to secure the application using a traditional firewall model, build Gateway network policies using the [SNI](/cloudflare-one/policies/gateway/network-policies/#sni) or [SNI Domain](/cloudflare-one/policies/gateway/network-policies/#sni-domain) selector. For an additional layer of protection, add a Gateway DNS policy to allow or block the [Host](/cloudflare-one/policies/gateway/dns-policies/#host) or [Domain](/cloudflare-one/policies/gateway/dns-policies/#domain) from resolving.
+	- **Option 2**: If you prefer to secure the application using a traditional firewall model, build Gateway network policies using the [SNI](/cloudflare-one/traffic-policies/network-policies/#sni) or [SNI Domain](/cloudflare-one/traffic-policies/network-policies/#sni-domain) selector. For an additional layer of protection, add a Gateway DNS policy to allow or block the [Host](/cloudflare-one/traffic-policies/dns-policies/#host) or [Domain](/cloudflare-one/traffic-policies/dns-policies/#domain) from resolving.
 
 		<Details header="Example network policies">
 		The following example consists of two policies: the first allows specific users to reach your application, and the second blocks all other traffic.
@@ -188,7 +188,7 @@ If your private hostname points to an HTTPS application on port `443`, you can s
 
 ##### Non-HTTPS applications
 
-Access policies and Gateway network policies only support hostname-based filtering for applications on port `443`. If your application runs on a non-`443` port, you will need to allow or block network traffic using the [Destination IP](/cloudflare-one/policies/gateway/network-policies/#destination-ip) selector. Then, add a Gateway DNS policy to allow or block the [Host](/cloudflare-one/policies/gateway/dns-policies/#host) or [Domain](/cloudflare-one/policies/gateway/dns-policies/#domain) from resolving.
+Access policies and Gateway network policies only support hostname-based filtering for applications on port `443`. If your application runs on a non-`443` port, you will need to allow or block network traffic using the [Destination IP](/cloudflare-one/traffic-policies/network-policies/#destination-ip) selector. Then, add a Gateway DNS policy to allow or block the [Host](/cloudflare-one/traffic-policies/dns-policies/#host) or [Domain](/cloudflare-one/traffic-policies/dns-policies/#domain) from resolving.
 		<Details header="Example network policies">
 		The following example consists of two policies: the first allows specific users to reach your application, and the second blocks all other traffic.
 

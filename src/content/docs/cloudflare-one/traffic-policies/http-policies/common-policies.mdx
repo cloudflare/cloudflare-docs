@@ -12,7 +12,7 @@ import { Render, Tabs, TabItem, APIRequest } from "~/components";
 
 The following policies are commonly used to secure HTTP traffic.
 
-Refer to the [HTTP policies page](/cloudflare-one/policies/gateway/http-policies/) for a comprehensive list of other selectors, operators, and actions.
+Refer to the [HTTP policies page](/cloudflare-one/traffic-policies/http-policies/) for a comprehensive list of other selectors, operators, and actions.
 
 ## Block sites
 
@@ -133,9 +133,9 @@ Block content categories which go against your organization's acceptable use pol
 
 ## Skip inspection for groups of applications
 
-Certain client applications, such as Zoom or Apple services, rely on certificate pinning. The [TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/) performed by Cloudflare Gateway will cause errors when users visit those applications. To avoid this behavior, you must add a Do Not Inspect HTTP policy.
+Certain client applications, such as Zoom or Apple services, rely on certificate pinning. The [TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/) performed by Cloudflare Gateway will cause errors when users visit those applications. To avoid this behavior, you must add a Do Not Inspect HTTP policy.
 
-Gateway [evaluates Do Not Inspect policies first](/cloudflare-one/policies/gateway/order-of-enforcement/#http-policies). We recommend moving your Do Not Inspect policies to the top of the list to reduce confusion.
+Gateway [evaluates Do Not Inspect policies first](/cloudflare-one/traffic-policies/order-of-enforcement/#http-policies). We recommend moving your Do Not Inspect policies to the top of the list to reduce confusion.
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -251,7 +251,7 @@ To get the UUIDs of your device posture checks, use the [List device posture rul
 
 ## Isolate high risk sites in remote browser
 
-If you are using the [Browser Isolation add-on](/cloudflare-one/policies/browser-isolation/), refer to our list of [common Isolate policies](/cloudflare-one/policies/browser-isolation/isolation-policies/#common-policies).
+If you are using the [Browser Isolation add-on](/cloudflare-one/remote-browser-isolation/), refer to our list of [common Isolate policies](/cloudflare-one/remote-browser-isolation/isolation-policies/#common-policies).
 
 ## Bypass inspection for self-signed certificates
 
@@ -289,7 +289,7 @@ When accessing origin servers with certificates not signed by a public certifica
 
 <Render file="gateway/policies/block-file-types" product="cloudflare-one" />
 
-For more information on supported file types, refer to [Download and Upload File Types](/cloudflare-one/policies/gateway/http-policies/#download-and-upload-file-types).
+For more information on supported file types, refer to [Download and Upload File Types](/cloudflare-one/traffic-policies/http-policies/#download-and-upload-file-types).
 
 ## Isolate or block shadow IT applications
 

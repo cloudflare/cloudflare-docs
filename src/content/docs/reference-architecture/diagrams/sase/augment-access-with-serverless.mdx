@@ -15,7 +15,7 @@ import { RelatedProduct, LinkCard} from "~/components";
 
 Companies using Zero Trust Network Access (ZTNA) services build policies to determine if a user can access a protected resource such as a privately hosted Wiki server or source code repository. Policies typically use group membership, authentication methods, device security posture to determine which users can access which resources.
 
-Secure access requires a range of attributes being available to the policy engine for evaluation. With Cloudflare's ZTNA service, [Access](/cloudflare-one/policies/access/), it is possible to include in the policy an external request to another API that provides part of the data required for the access decision.
+Secure access requires a range of attributes being available to the policy engine for evaluation. With Cloudflare's ZTNA service, [Access](/cloudflare-one/access-controls/policies/access/), it is possible to include in the policy an external request to another API that provides part of the data required for the access decision.
 
 For example, you might have a policy which states all members of the group "Engineers", who have authenticated with credentials that required a hard token, can have access to the self-hosted source code repository. But you also want to only allow engineers who have completed security training. That data might be available in another system, so Cloudflare allows you to, as part of the policy check, make a call using [Workers](https://workers.cloudflare.com/) to the training system to determine if this user has passed security training.
 
@@ -51,14 +51,14 @@ The following outlines how organizations can run their own custom business logic
 
 ### 1. Custom authorization process using your own rules
 
-During policy evaluation, the [external evaluation](/cloudflare-one/policies/access/external-evaluation/) rule allows for executing your own code during access policy evaluation. In this example an API exposed by Cloudflare Workers receives data about the user making the request, the important part being their username.
+During policy evaluation, the [external evaluation](/cloudflare-one/access-controls/policies/access/external-evaluation/) rule allows for executing your own code during access policy evaluation. In this example an API exposed by Cloudflare Workers receives data about the user making the request, the important part being their username.
 
 The code typically makes calls to either a [database](/d1/) or another API to evaluate if the passed username has access to the application. The external evaluation rule requires that the call returns either a True or False, and this is combined with the policy to determine access.
 
 <LinkCard
     title="Learn more"
     description="External authorization with Cloudflare's external evaluation functionality"
-    href="/cloudflare-one/policies/access/external-evaluation/"
+    href="/cloudflare-one/access-controls/policies/access/external-evaluation/"
 />
 
 ### 2. Analyze and validate the authentication material (JWT)
@@ -183,6 +183,6 @@ Using the details in the JWT, you can use a Worker to extract the details of the
 
 ## Related Resources
 
-- [External Evaluation rules](/cloudflare-one/policies/access/external-evaluation/)
+- [External Evaluation rules](/cloudflare-one/access-controls/policies/access/external-evaluation/)
 - [SASE reference architecture](/reference-architecture/architectures/sase/)
 - [External Evaluation blog post](https://blog.cloudflare.com/access-external-validation-rules/)

@@ -10,13 +10,13 @@ You can scan HTTP traffic for sensitive data through Secure Web Gateway policies
 
 ## Prerequisites
 
-- Set up [Gateway HTTP filtering](/cloudflare-one/policies/gateway/initial-setup/http/).
-  - HTTP filtering requires turning on the [Gateway proxy](/cloudflare-one/policies/gateway/proxy/#turn-on-the-gateway-proxy) for TCP traffic.
-- Turn on [TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/#turn-on-tls-decryption).
+- Set up [Gateway HTTP filtering](/cloudflare-one/traffic-policies/initial-setup/http/).
+  - HTTP filtering requires turning on the [Gateway proxy](/cloudflare-one/traffic-policies/proxy/#turn-on-the-gateway-proxy) for TCP traffic.
+- Turn on [TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/#turn-on-tls-decryption).
 
 ## 1. Configure a DLP profile
 
-Refer to [Configure a DLP profile](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/). We recommend getting started with a predefined profile.
+Refer to [Configure a DLP profile](/cloudflare-one/data-loss-prevention/dlp-profiles/). We recommend getting started with a predefined profile.
 
 :::caution[Important]
 
@@ -25,13 +25,13 @@ DLP scans will not start until you [create a DLP policy](#2-create-a-dlp-policy)
 
 ## 2. Create a DLP policy
 
-DLP Profiles may be used alongside other Zero Trust rules in a [Gateway HTTP policy](/cloudflare-one/policies/gateway/http-policies/). To start logging or blocking traffic, create a policy for DLP:
+DLP Profiles may be used alongside other Zero Trust rules in a [Gateway HTTP policy](/cloudflare-one/traffic-policies/http-policies/). To start logging or blocking traffic, create a policy for DLP:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Gateway** > **Firewall policies**. Select **HTTP**.
 
 2. Select **Add a policy**.
 
-3. Build an [HTTP policy](/cloudflare-one/policies/gateway/http-policies/) using the [DLP Profile](/cloudflare-one/policies/gateway/http-policies/#dlp-profile) selector. For example, the following policy prevents users from uploading sensitive data to any location other than an approved corporate application:
+3. Build an [HTTP policy](/cloudflare-one/traffic-policies/http-policies/) using the [DLP Profile](/cloudflare-one/traffic-policies/http-policies/#dlp-profile) selector. For example, the following policy prevents users from uploading sensitive data to any location other than an approved corporate application:
 
    | Selector    | Operator | Value                                                    | Logic | Action |
    | ----------- | -------- | -------------------------------------------------------- | ----- | ------ |
@@ -63,7 +63,7 @@ Different sites will send requests in different ways. For example, some sites wi
    - **DLP Profiles** shows the requests which matched a specific DLP profile.
    - **Policy** shows the requests which matched a specific DLP policy.
 
-You can expand an individual row to view details about the request. To see the data that triggered the DLP policy, [configure logging options](/cloudflare-one/policies/data-loss-prevention/dlp-policies/logging-options/).
+You can expand an individual row to view details about the request. To see the data that triggered the DLP policy, [configure logging options](/cloudflare-one/data-loss-prevention/dlp-policies/logging-options/).
 
 ### Report false positives
 

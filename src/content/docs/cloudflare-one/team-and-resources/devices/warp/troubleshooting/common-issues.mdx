@@ -120,7 +120,7 @@ A misconfigured Gateway firewall policy can result in traffic to some or all sit
 
 ### The device does not have a root certificate installed
 
-Installing and trusting a [root CA](/cloudflare-one/team-and-resources/devices/user-side-certificates/) is a necessary step to enable advanced security features such as Browser Isolation, [TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/), AV scanning, and device posture.
+Installing and trusting a [root CA](/cloudflare-one/team-and-resources/devices/user-side-certificates/) is a necessary step to enable advanced security features such as Browser Isolation, [TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/), AV scanning, and device posture.
 
 If the root CA is not installed on the device, you will see untrusted certificate warnings on every website. Example warnings include `Certificate not trusted`, `Not trusted identity` or `SSL Error`.
 
@@ -159,7 +159,7 @@ Below are the most common reasons why turning on WARP blocks a specific applicat
 
 ### TLS Decryption is enabled and the app or site does certificate pinning
 
-Some applications do not support SSL inspection or are otherwise [incompatible with TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/#inspection-limitations). Gateway provides a [list of applications known to perform certificate pinning](/cloudflare-one/policies/gateway/application-app-types/#do-not-inspect-applications).
+Some applications do not support SSL inspection or are otherwise [incompatible with TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/#inspection-limitations). Gateway provides a [list of applications known to perform certificate pinning](/cloudflare-one/traffic-policies/application-app-types/#do-not-inspect-applications).
 
 #### Solution (if the app has a private certificate store)
 
@@ -169,7 +169,7 @@ Refer to [our instructions](/cloudflare-one/team-and-resources/devices/user-side
 
 #### Solution (last resort)
 
-If you cannot install the certificate on the application, create a [Do Not Inspect policy](/cloudflare-one/policies/gateway/http-policies/#do-not-inspect) to exclude the application from Gateway inspection.
+If you cannot install the certificate on the application, create a [Do Not Inspect policy](/cloudflare-one/traffic-policies/http-policies/#do-not-inspect) to exclude the application from Gateway inspection.
 
 ### A Gateway firewall policy is blocking the app or site
 

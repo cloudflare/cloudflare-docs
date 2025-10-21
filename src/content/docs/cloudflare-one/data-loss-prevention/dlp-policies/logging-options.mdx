@@ -33,10 +33,10 @@ DLP can log the payload of matched HTTP requests in your Cloudflare logs.
 
 ### Turn on payload logging for a DLP policy
 
-You can enable payload logging for any Allow or Block HTTP policy that uses the [_DLP Profile_](/cloudflare-one/policies/gateway/http-policies/#dlp-profile) selector.
+You can enable payload logging for any Allow or Block HTTP policy that uses the [_DLP Profile_](/cloudflare-one/traffic-policies/http-policies/#dlp-profile) selector.
 
 1. Go to **Gateway** > **Firewall policies** > **HTTP**.
-2. Edit an existing Allow or Block DLP policy, or [create a new policy](/cloudflare-one/policies/data-loss-prevention/dlp-policies/#2-create-a-dlp-policy).
+2. Edit an existing Allow or Block DLP policy, or [create a new policy](/cloudflare-one/data-loss-prevention/dlp-policies/#2-create-a-dlp-policy).
 3. In the policy builder, scroll down to **Configure policy settings** and turn on **Log the payload of matched rules**.
 4. Select **Save**.
 
@@ -59,7 +59,7 @@ Cloudflare does not store the key or the decrypted payload.
 
 ### Report false and true positives to AI context analysis
 
-When you have [AI context analysis](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/advanced-settings/#ai-context-analysis) turned on for a DLP profile, you can train the AI model to adjust its confident threshold by reporting false and true positives.
+When you have [AI context analysis](/cloudflare-one/data-loss-prevention/dlp-profiles/advanced-settings/#ai-context-analysis) turned on for a DLP profile, you can train the AI model to adjust its confident threshold by reporting false and true positives.
 
 To report a DLP match payload as a false or true positive:
 
@@ -75,7 +75,7 @@ Based on your report, DLP's machine learning will adjust its confidence in futur
 - All Cloudflare logs are encrypted at rest. Encrypting the payload content adds a second layer of encryption for the matched values that triggered a DLP rule.
 - Cloudflare cannot decrypt encrypted payloads, since this operation requires your private key. Cloudflare staff will never ask for the private key.
 - DLP will redact all predefined alphanumeric characters in the log. For example, `123-45-6789` will become `XXX-XX-XXXX`.
-  - You can define sensitive data with [Exact Data Match (EDM)](/cloudflare-one/policies/data-loss-prevention/detection-entries/#exact-data-match). EDM match logs will redact your defined strings.
+  - You can define sensitive data with [Exact Data Match (EDM)](/cloudflare-one/data-loss-prevention/detection-entries/#exact-data-match). EDM match logs will redact your defined strings.
 
 ## Log generative AI prompt content
 
@@ -83,10 +83,10 @@ DLP can detect and log the prompt topic sent to an AI tool.
 
 ### Turn on AI prompt content logging for a DLP policy
 
-You can enable payload logging for any Allow or Block HTTP policy that uses the [_Application_](/cloudflare-one/policies/gateway/http-policies/#application) selector with a supported [Application Granular Controls](/cloudflare-one/policies/gateway/http-policies/#application-granular-controls) application.
+You can enable payload logging for any Allow or Block HTTP policy that uses the [_Application_](/cloudflare-one/traffic-policies/http-policies/#application) selector with a supported [Application Granular Controls](/cloudflare-one/traffic-policies/http-policies/#application-granular-controls) application.
 
 1. Go to **Gateway** > **Firewall policies** > **HTTP**.
-2. Edit an existing Allow or Block DLP policy, or [create a new policy](/cloudflare-one/policies/data-loss-prevention/dlp-policies/#2-create-a-dlp-policy).
+2. Edit an existing Allow or Block DLP policy, or [create a new policy](/cloudflare-one/data-loss-prevention/dlp-policies/#2-create-a-dlp-policy).
 3. In the policy builder, scroll down to **Configure policy settings** and turn on **Capture generative AI prompt content in logs**.
 4. Select **Save**.
 
@@ -120,7 +120,7 @@ To set up the DLP Forensic Copy Logpush job:
 4. Choose a [Logpush destination](/logs/logpush/logpush-job/enable-destinations/).
 5. In **Configure logpush job**, choose the _DLP forensic copies_ dataset. Select **Create Logpush job**.
 6. Return to Zero Trust and go to **Gateway** > **Firewall policies** > **HTTP**.
-7. Edit an existing Allow or Block policy, or [create a new policy](/cloudflare-one/policies/data-loss-prevention/dlp-policies/#2-create-a-dlp-policy). Your policy does not need to include a DLP profile.
+7. Edit an existing Allow or Block policy, or [create a new policy](/cloudflare-one/data-loss-prevention/dlp-policies/#2-create-a-dlp-policy). Your policy does not need to include a DLP profile.
 8. In the policy builder, scroll down to **Configure policy settings** and turn on **Send DLP forensic copies to storage**.
 9. Select a storage destination. Gateway will list any configured Logpush jobs or integrations that can receive HTTP requests.
 10. Select **Save policy**.

@@ -7,7 +7,7 @@ sidebar:
 
 import { Render, Tabs, TabItem } from "~/components";
 
-When Gateway blocks traffic with a [DNS](/cloudflare-one/policies/gateway/dns-policies/#block) or [HTTP Block policy](/cloudflare-one/policies/gateway/http-policies/#block), you can configure a block page to display in your users' browsers. You can provide a descriptive reason for blocking traffic and contact information, or you can redirect your users' browsers to another page. You can apply these customizations globally for every Block policy, or override the settings on a per-policy basis.
+When Gateway blocks traffic with a [DNS](/cloudflare-one/traffic-policies/dns-policies/#block) or [HTTP Block policy](/cloudflare-one/traffic-policies/http-policies/#block), you can configure a block page to display in your users' browsers. You can provide a descriptive reason for blocking traffic and contact information, or you can redirect your users' browsers to another page. You can apply these customizations globally for every Block policy, or override the settings on a per-policy basis.
 
 ## Prerequisites
 
@@ -43,7 +43,7 @@ To redirect users to a non-Cloudflare block page:
 
 Gateway will now redirect users to a custom page when user traffic matches a Block policy with the block page configured.
 
-To create an HTTP policy to redirect URLs, refer to the [Redirect action](/cloudflare-one/policies/gateway/http-policies/#redirect).
+To create an HTTP policy to redirect URLs, refer to the [Redirect action](/cloudflare-one/traffic-policies/http-policies/#redirect).
 
 #### Policy context
 

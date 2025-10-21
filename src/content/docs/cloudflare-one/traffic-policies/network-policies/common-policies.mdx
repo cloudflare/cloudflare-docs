@@ -12,7 +12,7 @@ import { Render, Tabs, TabItem, APIRequest } from "~/components";
 
 The following policies are commonly used to secure network traffic.
 
-Refer to the [network policies page](/cloudflare-one/policies/gateway/network-policies/) for a comprehensive list of other selectors, operators, and actions.
+Refer to the [network policies page](/cloudflare-one/traffic-policies/network-policies/) for a comprehensive list of other selectors, operators, and actions.
 
 ## Block unauthorized applications
 
@@ -93,7 +93,7 @@ To require users to re-authenticate after a certain amount of time has elapsed, 
 
 ## Allow only approved traffic
 
-Restrict user access to only the specific sites or applications configured in your [HTTP policies](/cloudflare-one/policies/gateway/http-policies/).
+Restrict user access to only the specific sites or applications configured in your [HTTP policies](/cloudflare-one/traffic-policies/http-policies/).
 
 ### 1. Allow HTTP and HTTPS traffic
 
@@ -156,7 +156,7 @@ Restrict user access to only the specific sites or applications configured in yo
 
 ## Filter HTTPS traffic when inspecting on all ports
 
-If your organization blocks traffic by default with a network policy and you want to [inspect HTTP traffic on all ports](/cloudflare-one/policies/gateway/network-policies/protocol-detection/#inspect-on-all-ports), you need to explicitly allow HTTP and TLS traffic to filter it.
+If your organization blocks traffic by default with a network policy and you want to [inspect HTTP traffic on all ports](/cloudflare-one/traffic-policies/network-policies/protocol-detection/#inspect-on-all-ports), you need to explicitly allow HTTP and TLS traffic to filter it.
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 

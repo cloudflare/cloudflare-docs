@@ -18,7 +18,7 @@ By the end of this tutorial, users that pass network policies will be able to ac
 Make sure you have:
 
 - A MySQL database listening for remote connections and configured with users that can connect remotely
-- (Optional)[Resolver policies](/cloudflare-one/policies/gateway/resolver-policies/) enabled on your account
+- (Optional)[Resolver policies](/cloudflare-one/traffic-policies/resolver-policies/) enabled on your account
 
 ## Create a Cloudflare Tunnel
 
@@ -40,7 +40,7 @@ The application and (optional) DNS server are now connected to Cloudflare.
 ## Create a Gateway network policy
 
 1. Go to **Gateway** > **Firewall policies** > **Network**.
-2. Add a [network policy](/cloudflare-one/policies/gateway/network-policies/) that targets the private IP address and the port of the MySQL database (port 3306 by default). The following example allows access to the database to the users that enrolled into WARP using an `@example.com` email address. The network policies can also take into consideration [device posture checks](/cloudflare-one/identity/devices/).
+2. Add a [network policy](/cloudflare-one/traffic-policies/network-policies/) that targets the private IP address and the port of the MySQL database (port 3306 by default). The following example allows access to the database to the users that enrolled into WARP using an `@example.com` email address. The network policies can also take into consideration [device posture checks](/cloudflare-one/identity/devices/).
 
 | Selector         | Operator      | Value           | Logic | Action |
 | ---------------- | ------------- | --------------- | ----- | ------ |
@@ -60,7 +60,7 @@ To allow users to access the MySQL database using an internal hostname instead o
 
 2. Select **Add a policy**.
 
-3. Create an expression to match against the private [domain](/cloudflare-one/policies/gateway/resolver-policies/#domain) or [hostname](/cloudflare-one/policies/gateway/resolver-policies/#host) of the application, like in the following example:
+3. Create an expression to match against the private [domain](/cloudflare-one/traffic-policies/resolver-policies/#domain) or [hostname](/cloudflare-one/traffic-policies/resolver-policies/#host) of the application, like in the following example:
 
    | Selector | Operator | Value                |
    | -------- | -------- | -------------------- |

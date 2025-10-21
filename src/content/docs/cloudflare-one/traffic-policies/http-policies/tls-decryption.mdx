@@ -18,7 +18,7 @@ Cloudflare Gateway can perform [SSL/TLS decryption](https://www.cloudflare.com/l
 
 When you turn on TLS decryption, Gateway will decrypt all traffic sent over HTTPS, apply your HTTP policies, and then re-encrypt the request with a [user-side certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/).
 
-Cloudflare prevents traffic interference by decrypting, inspecting, and re-encrypting HTTPS requests in its data centers in memory only. Gateway only stores eligible cache content at rest. All cache disks are encrypted at rest. You can configure where TLS decryption takes place with [Regional Services](/data-localization/regional-services/) in the [Cloudflare Data Localization Suite (DLS)](/data-localization/). To further control what data centers traffic egresses from, you can use [dedicated egress IPs](/cloudflare-one/policies/gateway/egress-policies/dedicated-egress-ips/).
+Cloudflare prevents traffic interference by decrypting, inspecting, and re-encrypting HTTPS requests in its data centers in memory only. Gateway only stores eligible cache content at rest. All cache disks are encrypted at rest. You can configure where TLS decryption takes place with [Regional Services](/data-localization/regional-services/) in the [Cloudflare Data Localization Suite (DLS)](/data-localization/). To further control what data centers traffic egresses from, you can use [dedicated egress IPs](/cloudflare-one/traffic-policies/egress-policies/dedicated-egress-ips/).
 
 Cloudflare supports connections from users to Gateway over TLS 1.1, 1.2, and 1.3.
 
@@ -49,7 +49,7 @@ Gateway does not support TLS decryption for applications which use:
 	product="cloudflare-one"
 	params={{
 		turnOnProcedure:
-			"you can turn on [protocol detection](/cloudflare-one/policies/gateway/network-policies/protocol-detection/) and configure Gateway to [inspect traffic on all ports](/cloudflare-one/policies/gateway/network-policies/protocol-detection/#inspect-on-all-ports)",
+			"you can turn on [protocol detection](/cloudflare-one/traffic-policies/network-policies/protocol-detection/) and configure Gateway to [inspect traffic on all ports](/cloudflare-one/traffic-policies/network-policies/protocol-detection/#inspect-on-all-ports)",
 	}}
 />
 
@@ -60,10 +60,10 @@ Applications that use certificate pinning and mTLS authentication do not trust C
 If you try to perform TLS decryption on an application with an incompatible certificate configuration, the application may return an SSL or trust error and/or fail to load. To resolve this issue, you can:
 
 - Add a [Cloudflare certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/manual-deployment/#add-the-certificate-to-applications) to supported applications.
-- Create a [Do Not Inspect policy](/cloudflare-one/policies/gateway/http-policies/#do-not-inspect) to exempt applications from inspection. The [Application selector](/cloudflare-one/policies/gateway/http-policies/#application) provides a list of trusted applications that are known to use embedded certificates. Note that if you create a Do Not Inspect policy for an application or website, you will lose the ability to log or block HTTP requests, apply DLP policies, and perform AV scanning.
+- Create a [Do Not Inspect policy](/cloudflare-one/traffic-policies/http-policies/#do-not-inspect) to exempt applications from inspection. The [Application selector](/cloudflare-one/traffic-policies/http-policies/#application) provides a list of trusted applications that are known to use embedded certificates. Note that if you create a Do Not Inspect policy for an application or website, you will lose the ability to log or block HTTP requests, apply DLP policies, and perform AV scanning.
 - Configure a [Split Tunnel](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/) in Include mode to ensure Gateway will only inspect traffic destined for your IPs or domains. This is useful for organizations that deploy Zero Trust on users' personal devices or otherwise expect personal applications to be used.
 
-Alternatively, to allow HTTP filtering while accessing a site with an insecure certificate, set your [Untrusted certificate action](/cloudflare-one/policies/gateway/http-policies/#untrusted-certificates) to _Pass through_.
+Alternatively, to allow HTTP filtering while accessing a site with an insecure certificate, set your [Untrusted certificate action](/cloudflare-one/traffic-policies/http-policies/#untrusted-certificates) to _Pass through_.
 
 ### Google Chrome automatic HTTPS upgrades
 
@@ -77,7 +77,7 @@ To disable automatic HTTPS upgrades for a URL across your Zero Trust organizatio
 
 1. Deploy a [custom root certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/custom-certificate/).
 
-2. Create an [HTTP policy](/cloudflare-one/policies/gateway/http-policies/) to match the domain of the URL being automatically upgraded. For example:
+2. Create an [HTTP policy](/cloudflare-one/traffic-policies/http-policies/) to match the domain of the URL being automatically upgraded. For example:
 
    | Selector | Operator | Value         | Action |
    | -------- | -------- | ------------- | ------ |
@@ -87,7 +87,7 @@ To disable automatic HTTPS upgrades for a URL across your Zero Trust organizatio
 
 4. Select **Create policy**.
 
-The pass through policy will bypass insecure connection upgrades for any device connected to your Zero Trust organization. For more information, refer to [Untrusted certificates](/cloudflare-one/policies/gateway/http-policies/#untrusted-certificates).
+The pass through policy will bypass insecure connection upgrades for any device connected to your Zero Trust organization. For more information, refer to [Untrusted certificates](/cloudflare-one/traffic-policies/http-policies/#untrusted-certificates).
 
 </TabItem> <TabItem label="Chrome browser flag">
 
@@ -101,13 +101,13 @@ Chrome Enterprise users can turn off automatic HTTPS upgrades for all URLs with 
 
 ### Mutual TLS (mTLS)
 
-When decrypting TLS to inspect traffic, connections that use mutual TLS (mTLS) will fail because Gateway cannot return the necessary client certificate. To prevent connection failures, create a [Do Not Inspect policy](/cloudflare-one/policies/gateway/http-policies/#do-not-inspect) for this traffic.
+When decrypting TLS to inspect traffic, connections that use mutual TLS (mTLS) will fail because Gateway cannot return the necessary client certificate. To prevent connection failures, create a [Do Not Inspect policy](/cloudflare-one/traffic-policies/http-policies/#do-not-inspect) for this traffic.
 
 ### ESNI and ECH
 
 Websites that adhere to [ESNI or Encrypted Client Hello (ECH) standards](https://blog.cloudflare.com/encrypted-client-hello/) encrypt the Server Name Indicator (SNI) during the TLS handshake and are therefore incompatible with HTTP inspection. This is because Gateway relies on the SNI to match an HTTP request to a policy. If the ECH fails, browsers will retry the TLS handshake using the unencrypted SNI from the initial request. To avoid this behavior, you can disable ECH in your users' browsers.
 
-You can still apply all [network policy filters](/cloudflare-one/policies/gateway/network-policies/#selectors) except for SNI and SNI Domain. To restrict ESNI and ECH traffic, an option is to filter out all port `80` and `443` traffic that does not include an SNI header.
+You can still apply all [network policy filters](/cloudflare-one/traffic-policies/network-policies/#selectors) except for SNI and SNI Domain. To restrict ESNI and ECH traffic, an option is to filter out all port `80` and `443` traffic that does not include an SNI header.
 
 ## Post-quantum support
 
@@ -129,7 +129,7 @@ By default, TLS decryption can use both TLS version 1.2 and 1.3. However, some e
 
 When FIPS compliance is enabled, Gateway will only choose [FIPS-compliant cipher suites](#cipher-suites) when connecting to the origin. If the origin does not support FIPS-compliant ciphers, the request will fail.
 
-FIPS-compliant traffic defaults to [HTTP/3](/cloudflare-one/policies/gateway/http-policies/http3/). To enforce HTTP policies for UDP traffic, you must turn on the [Gateway proxy for UDP](/cloudflare-one/policies/gateway/http-policies/http3/#enable-http3-inspection).
+FIPS-compliant traffic defaults to [HTTP/3](/cloudflare-one/traffic-policies/http-policies/http3/). To enforce HTTP policies for UDP traffic, you must turn on the [Gateway proxy for UDP](/cloudflare-one/traffic-policies/http-policies/http3/#enable-http3-inspection).
 
 ## FedRAMP compliance
 

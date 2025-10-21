@@ -21,8 +21,8 @@ This tutorial demonstrates how to automatically redirect users to a remote brows
 ## Prerequisites
 
 - Microsoft Entra ID Premium P2 license
-- [Cloudflare Browser Isolation](/cloudflare-one/policies/browser-isolation/) add-on
-- [Gateway HTTP filtering](/cloudflare-one/policies/gateway/initial-setup/http/) enabled on your devices
+- [Cloudflare Browser Isolation](/cloudflare-one/remote-browser-isolation/) add-on
+- [Gateway HTTP filtering](/cloudflare-one/traffic-policies/initial-setup/http/) enabled on your devices
 - [npm](https://docs.npmjs.com/getting-started) installation
 - [Node.js](https://nodejs.org/en/) installation
 
@@ -149,13 +149,13 @@ Cloudflare Access will now synchronize changes in group membership with Entra ID
 
 ## 5. Create a browser isolation policy
 
-Finally, create a [Gateway HTTP policy](/cloudflare-one/policies/gateway/http-policies/) to isolate traffic for risky user groups.
+Finally, create a [Gateway HTTP policy](/cloudflare-one/traffic-policies/http-policies/) to isolate traffic for risky user groups.
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Gateway** > **Firewall policies** > **HTTP**.
 
 2. Select **Add a policy**.
 
-3. Build an [Isolate policy](/cloudflare-one/policies/browser-isolation/isolation-policies/) that contains a _User Group Names_ rule. For example, the following policy serves `app1.example.com` and `app2.example.com` in a remote browser for all members flagged as high risk:
+3. Build an [Isolate policy](/cloudflare-one/remote-browser-isolation/isolation-policies/) that contains a _User Group Names_ rule. For example, the following policy serves `app1.example.com` and `app2.example.com` in a remote browser for all members flagged as high risk:
 
    | Selector         | Operator | Value                                         | Logic | Action  |
    | ---------------- | -------- | --------------------------------------------- | ----- | ------- |

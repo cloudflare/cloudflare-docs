@@ -45,7 +45,7 @@ Depending on which SaaS application your organization needs access to, different
 
 ### Microsoft 365
 
-Microsoft 365 tenant control requires two policies. When you order your policies, make sure they follow [order of precedence](/cloudflare-one/policies/gateway/order-of-enforcement/#order-of-precedence).
+Microsoft 365 tenant control requires two policies. When you order your policies, make sure they follow [order of precedence](/cloudflare-one/traffic-policies/order-of-enforcement/#order-of-precedence).
 
 | Precedence | Selector | Operator | Value            | Action | Untrusted certificate action |
 | ---------- | -------- | -------- | ---------------- | ------ | ---------------------------- |
@@ -131,7 +131,7 @@ You can include custom headers in an HTTP policy to allow your users through [Cl
 
 ## Use tenant control with Browser Isolation
 
-You can configure [Browser Isolation](/cloudflare-one/policies/browser-isolation/) to send custom headers. This is useful for implementing tenant control for isolated SaaS applications or sending arbitrary custom request headers to isolated websites.
+You can configure [Browser Isolation](/cloudflare-one/remote-browser-isolation/) to send custom headers. This is useful for implementing tenant control for isolated SaaS applications or sending arbitrary custom request headers to isolated websites.
 
 To use custom headers with Browser Isolation, create two HTTP policies targeting the same domain or application group. For example, you can create policies for [HTTPBin](https://httpbin.org/), an open-source site for testing HTTP requests:
 
