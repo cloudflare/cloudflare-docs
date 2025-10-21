@@ -12,7 +12,7 @@ Preview URLs work in local development without configuration. For production, yo
 Preview URLs provide public HTTPS access to services running inside sandboxes. When you expose a port, you get a unique URL that proxies requests to your service.
 
 ```typescript
-await sandbox.startProcess('python -m http.server 8000');
+await sandbox.startProcess("python -m http.server 8000");
 const exposed = await sandbox.exposePort(8000);
 
 console.log(exposed.exposedAt);
@@ -29,7 +29,7 @@ console.log(exposed.exposedAt);
 
 **Local development**: `http://localhost:8787/...`
 
-URLs remain stable for a given sandbox ID and port. You can share, bookmark, or use them in webhooks.
+Preview URLs remain stable while a port is exposed and can be shared during that time. However, if you unexpose and re-expose a port, a new random token is generated and the URL changes. For persistent URLs, keep ports exposed for the duration you need them accessible.
 
 ## Request Routing
 
@@ -39,14 +39,14 @@ You must call `proxyToSandbox()` first in your Worker's fetch handler to route p
 import { proxyToSandbox, getSandbox } from "@cloudflare/sandbox";
 
 export default {
-  async fetch(request, env) {
-    // Handle preview URL routing first
-    const proxyResponse = await proxyToSandbox(request, env);
-    if (proxyResponse) return proxyResponse;
+	async fetch(request, env) {
+		// Handle preview URL routing first
+		const proxyResponse = await proxyToSandbox(request, env);
+		if (proxyResponse) return proxyResponse;
 
-    // Your application routes
-    // ...
-  }
+		// Your application routes
+		// ...
+	},
 };
 ```
 
@@ -57,11 +57,11 @@ Requests flow: Browser → Your Worker → Durable Object (sandbox) → Your Ser
 Expose multiple services simultaneously:
 
 ```typescript
-await sandbox.startProcess('node api.js');      // Port 3000
-await sandbox.startProcess('node admin.js');    // Port 3001
+await sandbox.startProcess("node api.js"); // Port 3000
+await sandbox.startProcess("node admin.js"); // Port 3001
 
-const api = await sandbox.exposePort(3000, { name: 'api' });
-const admin = await sandbox.exposePort(3001, { name: 'admin' });
+const api = await sandbox.exposePort(3000, { name: "api" });
+const admin = await sandbox.exposePort(3001, { name: "admin" });
 
 // Each gets its own URL:
 // https://3000-abc123.example.com
@@ -71,7 +71,6 @@ const admin = await sandbox.exposePort(3001, { name: 'admin' });
 ## What Works
 
 - HTTP/HTTPS requests
-- WebSocket (WSS) via HTTP upgrade
 - Server-Sent Events
 - All HTTP methods (GET, POST, PUT, DELETE, etc.)
 - Request and response headers
@@ -80,15 +79,25 @@ const admin = await sandbox.exposePort(3001, { name: 'admin' });
 
 - Raw TCP/UDP connections
 - Custom protocols (must wrap in HTTP)
-- Ports 80/443 (use 1024+)
+- WebSocket connections
+- Ports outside range 1024-65535
+- Port 3000 (used internally by the SDK)
 
 ## Security
 
 :::caution
-Preview URLs are publicly accessible. Anyone with the URL can access your service.
+Preview URLs are publicly accessible by default, but require a valid access token that is generated when you expose a port.
 :::
 
-Add authentication in your service:
+**Built-in security**:
+
+- **Token-based access** - Each exposed port gets a unique token in the URL (for example, `https://8080-sandbox-abc123token.example.com`)
+- **HTTPS in production** - All traffic is encrypted with automatic TLS
+- **Unpredictable URLs** - Tokens are randomly generated and difficult to guess
+
+**Add application-level authentication**:
+
+For additional security, implement authentication within your application:
 
 ```python
 from flask import Flask, request, abort
@@ -97,16 +106,14 @@ app = Flask(__name__)
 
 @app.route('/data')
 def get_data():
-    token = request.headers.get('Authorization')
-    if token != 'Bearer secret-token':
+    # Check for your own authentication token
+    auth_token = request.headers.get('Authorization')
+    if auth_token != 'Bearer your-secret-token':
         abort(401)
     return {'data': 'protected'}
 ```
 
-**Security features**:
-- All traffic is HTTPS (automatic TLS)
-- URLs use random sandbox IDs (hard to guess)
-- You control authentication in your service
+This adds a second layer of security on top of the URL token.
 
 ## Troubleshooting
 
@@ -123,10 +130,10 @@ const ports = await sandbox.getExposedPorts();
 
 // 3. Is service binding to 0.0.0.0 (not 127.0.0.1)?
 // Good:
-app.run(host='0.0.0.0', port=3000)
+app.run((host = "0.0.0.0"), (port = 3000));
 
 // Bad (localhost only):
-app.run(host='127.0.0.1', port=3000)
+app.run((host = "127.0.0.1"), (port = 3000));
 ```
 
 ### Production Errors
@@ -135,7 +142,7 @@ For custom domain issues, see [Production Deployment troubleshooting](/sandbox/g
 
 ### Local Development
 
-:::caution[Local development only]
+:::caution[Local development limitation]
 When using `wrangler dev`, you must expose ports in your Dockerfile:
 
 ```dockerfile
