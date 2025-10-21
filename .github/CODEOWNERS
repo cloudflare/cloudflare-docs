@@ -138,7 +138,7 @@
 /src/content/docs/workers/observability/ @irvinebroque @mikenomitch @rohinlohe @kodster28 @cloudflare/pcx-technical-writing
 /src/content/docs/workers/static-assets @irvinebroque @GregBrimble @WalshyDev @kodster28 @cloudflare/deploy-config @cloudflare/pcx-technical-writing
 /src/content/docs/workflows/ @elithrar @celso @cloudflare/pcx-technical-writing
-/src/content/docs/sandbox/ @whoiskatrin @ghostwriternr @cloudflare/pcx-technical-writing @ai-agents
+/src/content/docs/sandbox/ @whoiskatrin @ghostwriternr @cloudflare/pcx-technical-writing @cloudflare/ai-agents
 
 # DDoS Protection
 

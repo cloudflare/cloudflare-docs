@@ -265,7 +265,7 @@ The `.dev.vars` file is automatically gitignored and only used during local deve
 
 ## 5. Expose local server with Cloudflare Tunnel
 
-To test with real GitHub webhooks locally, use [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) to expose your local development server.
+To test with real GitHub webhooks locally, use [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) to expose your local development server.
 
 Start the development server:
 
@@ -282,7 +282,7 @@ cloudflared tunnel --url http://localhost:8787
 This will output a public URL (for example, `https://example.trycloudflare.com`). Copy this URL for the next step.
 
 :::note
-If you do not have `cloudflared` installed, refer to [Install cloudflared](/cloudflare-one/connections/connect-networks/downloads/).
+If you do not have `cloudflared` installed, refer to [Downloads](/cloudflare-one/networks/connectors/cloudflare-tunnel/downloads/).
 :::
 
 ## 6. Configure GitHub webhook for local testing
