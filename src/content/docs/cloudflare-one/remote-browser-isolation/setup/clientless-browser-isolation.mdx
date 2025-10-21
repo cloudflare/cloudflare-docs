@@ -37,7 +37,7 @@ To open links using Browser Isolation:
 
 ## Filter DNS queries
 
-Gateway filters and resolves DNS queries for isolated sessions via [DNS policies](/cloudflare-one/traffic-policies/dns-policies/). Enterprise users can resolve domains available only through private resolvers by creating [resolver policies](/cloudflare-one/traffic-policies/resolver-policies/).
+Gateway filters and resolves DNS queries for isolated sessions via [DNS policies](/cloudflare-one/policies/dns-policies/). Enterprise users can resolve domains available only through private resolvers by creating [resolver policies](/cloudflare-one/policies/resolver-policies/).
 
 Gateway DNS and resolver policies will always apply to Clientless Web Isolation traffic, regardless of device configuration.
 
@@ -57,7 +57,7 @@ If `<url>` is not provided, users are presented with a Cloudflare Zero Trust lan
 
 ### Allow or block websites
 
-When users visit a website through the [Clientless Web Isolation URL](#use-the-remote-browser), the traffic passes through Cloudflare Gateway. This allows you to [apply HTTP policies](/cloudflare-one/traffic-policies/http-policies/) to control what websites the remote browser can connect to, even if the user's device does not have WARP installed.
+When users visit a website through the [Clientless Web Isolation URL](#use-the-remote-browser), the traffic passes through Cloudflare Gateway. This allows you to [apply HTTP policies](/cloudflare-one/policies/http-policies/) to control what websites the remote browser can connect to, even if the user's device does not have WARP installed.
 
 For example, if you use a third-party Secure Web Gateway to block `example.com`, users can still access the page in the remote browser by visiting `https://<your-team-name>.cloudflareaccess.com/browser/https://www.example.com/`. To block `https://<your-team-name>.cloudflareaccess.com/browser/https://www.example.com/`, create a Cloudflare Gateway HTTP policy to block `example.com`:
 
@@ -67,7 +67,7 @@ For example, if you use a third-party Secure Web Gateway to block `example.com`,
 
 ### Bypass TLS decryption
 
-If [TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/) is turned on, Gateway will decrypt all sites accessed through the Clientless Web Isolation URL. To connect to sites that are incompatible with TLS decryption, you will need to add a Do Not Inspect HTTP policy for the application or domain.
+If [TLS decryption](/cloudflare-one/policies/http-policies/tls-decryption/) is turned on, Gateway will decrypt all sites accessed through the Clientless Web Isolation URL. To connect to sites that are incompatible with TLS decryption, you will need to add a Do Not Inspect HTTP policy for the application or domain.
 
 | Selector | Operator | Value        | Action         |
 | -------- | -------- | ------------ | -------------- |
@@ -75,7 +75,7 @@ If [TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryptio
 
 :::note
 
-Clientless Web Isolation can function without TLS decryption enabled. However, TLS decryption is required to apply [HTTP policies](/cloudflare-one/traffic-policies/http-policies/) to Clientless Web Isolation traffic.
+Clientless Web Isolation can function without TLS decryption enabled. However, TLS decryption is required to apply [HTTP policies](/cloudflare-one/policies/http-policies/) to Clientless Web Isolation traffic.
 
 :::
 
@@ -92,7 +92,7 @@ All users with access to your remote browser can access your Cloudflare Tunnel a
 
 ### Disable remote browser controls
 
-You can configure [remote browser controls](/cloudflare-one/remote-browser-isolation/isolation-policies/#policy-settings) such as disabling copy/paste, printing, or keyboard input. These settings display in the Gateway [HTTP policy builder](/cloudflare-one/traffic-policies/http-policies/) when you select the Isolate action.
+You can configure [remote browser controls](/cloudflare-one/remote-browser-isolation/isolation-policies/#policy-settings) such as disabling copy/paste, printing, or keyboard input. These settings display in the Gateway [HTTP policy builder](/cloudflare-one/policies/http-policies/) when you select the Isolate action.
 
 ### Sync cookies between local and remote browser
 
@@ -112,7 +112,7 @@ The clientless address bar has three views: hostname notch, full address bar and
 
 By default the isolated domain name appears in the notch positioned at the top and center of an isolated page.
 
-![Viewing hostname of an isolated page in the clientless remote browser](~/assets/images/cloudflare-one/traffic-policies/rbi-address-bar-notch.png)
+![Viewing hostname of an isolated page in the clientless remote browser](~/assets/images/cloudflare-one/policies/rbi-address-bar-notch.png)
 
 Selecting **Expand** or the hostname text will expand the notch to the full address bar view. If isolated page content is obscured by the notch, expanding to the full address bar view will make the content accessible.
 
@@ -120,7 +120,7 @@ Selecting **Expand** or the hostname text will expand the notch to the full addr
 
 The full address bar allows users to search and go to isolated websites. Users can jump to the address bar at any time by pressing `CTRL + L` on the keyboard.
 
-![Viewing full address of an isolated page in the clientless remote browser](~/assets/images/cloudflare-one/traffic-policies/rbi-address-bar-full.png)
+![Viewing full address of an isolated page in the clientless remote browser](~/assets/images/cloudflare-one/policies/rbi-address-bar-full.png)
 
 ### Hidden view
 

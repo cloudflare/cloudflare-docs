@@ -24,9 +24,9 @@ import { Tabs, TabItem, Details, APIRequest } from "~/components";
 
 </Details>
 
-When Gateway receives a DNS query for hostname covered by the [Application](/cloudflare-one/traffic-policies/egress-policies/#application), [Content Categories](/cloudflare-one/traffic-policies/egress-policies/#content-categories), [Domain](/cloudflare-one/traffic-policies/egress-policies/#domain), and [Host](/cloudflare-one/traffic-policies/egress-policies/#host) selectors in an Egress policy, Gateway initially resolves DNS to an IP in the `100.80.0.0/16` or `2606:4700:0cf1:4000::/64` range. This process allows Gateway to map a destination IP with a hostname at [layer 4](https://www.cloudflare.com/learning/ddos/glossary/open-systems-interconnection-model-osi/) (where Gateway evaluates Egress policies). The destination IP for a hostname is not usually known at layer 4. Prior to evaluating Egress policies, the initially resolved IP is overwritten with the correct destination IP.
+When Gateway receives a DNS query for hostname covered by the [Application](/cloudflare-one/policies/egress-policies/#application), [Content Categories](/cloudflare-one/policies/egress-policies/#content-categories), [Domain](/cloudflare-one/policies/egress-policies/#domain), and [Host](/cloudflare-one/policies/egress-policies/#host) selectors in an Egress policy, Gateway initially resolves DNS to an IP in the `100.80.0.0/16` or `2606:4700:0cf1:4000::/64` range. This process allows Gateway to map a destination IP with a hostname at [layer 4](https://www.cloudflare.com/learning/ddos/glossary/open-systems-interconnection-model-osi/) (where Gateway evaluates Egress policies). The destination IP for a hostname is not usually known at layer 4. Prior to evaluating Egress policies, the initially resolved IP is overwritten with the correct destination IP.
 
-![Example egress policy flow](~/assets/images/cloudflare-one/traffic-policies/host-selector-diagram.png)
+![Example egress policy flow](~/assets/images/cloudflare-one/policies/host-selector-diagram.png)
 
 Additional configuration is required when using policies with these selectors.
 
