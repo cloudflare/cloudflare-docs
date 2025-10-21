@@ -97,7 +97,7 @@ At this point, you have a VNC server ready to test with browser-based VNC. We re
 
 ## Configure Cloudflare Tunnel on your machine
 
-1. Follow [these instructions](/cloudflare-one/connections/connect-networks/downloads/) to install `cloudflared`.
+1. Follow [these instructions](/cloudflare-one/networks/connectors/cloudflare-tunnel/downloads/) to install `cloudflared`.
 
 2. Authenticate `cloudflared` with the command:
 
@@ -129,7 +129,7 @@ At this point, you have a VNC server ready to test with browser-based VNC. We re
 
    As you do that, replace `<HOSTNAME>` with the domain you wish to use to expose your VNC server in the browser. Also, replace `5901` with the port your VNC server is running on. To get a list of ports, run `sudo ss -lnpt` and look for `VNC` to get the value that should be specified in your configuration file.
 
-6. [Route your Tunnel](/cloudflare-one/connections/connect-networks/routing-to-tunnel/dns/) to your website.
+6. [Route your Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/routing-to-tunnel/dns/) to your website.
 
 7. Run your Tunnel:
 
@@ -137,7 +137,7 @@ At this point, you have a VNC server ready to test with browser-based VNC. We re
    cloudflared tunnel --config path/config.yaml run <NAME>
    ```
 
-8. Follow [this guide](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-with-firewall/) to open outbound connections for Cloudflare Tunnel if you have a firewall enabled.
+8. Follow [this guide](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-with-firewall/) to open outbound connections for Cloudflare Tunnel if you have a firewall enabled.
 
 At this point you have a running VNC server and a Cloudflare Tunnel on your machine ready to accept inbound VNC requests.
 

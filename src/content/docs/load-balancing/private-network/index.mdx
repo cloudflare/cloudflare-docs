@@ -29,7 +29,7 @@ Since traffic steering decisions or failover mechanisms rely on the health infor
 
 ### Tunnel
 
-Currently, to be able to connect to private IP origins, Cloudflare load balancers require a [Cloudflare tunnel](/cloudflare-one/connections/connect-networks/) with an associated [virtual network (VNet)](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/).
+Currently, to be able to connect to private IP origins, Cloudflare load balancers require a [Cloudflare tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) with an associated [virtual network (VNet)](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/tunnel-virtual-networks/).
 
 Once the endpoint and virtual network (VNet) tunnel association is configured, Cloudflare can determine not only the tunnel health but also the health of the corresponding virtual or private IP targets.
 
@@ -43,7 +43,7 @@ Private Network Load Balancing supports off-ramping traffic for Magic WAN tunnel
 
 ## On-ramps
 
-Private Network Load Balancing on-ramps, on the other hand, refer to secure paths between the end-user request and the Cloudflare network. Cloudflare Load Balancing supports traffic from [CDN](/cache/), [Spectrum](/spectrum/), [WARP](/cloudflare-one/connections/connect-devices/warp/) and [Magic WAN](/magic-wan/) and forward that traffic to a load balancer, and then egress to an endpoint behind any off-ramp (CDN/CNI/IPSec/GRE/Tunnel). Your traffic can ingress and egress by any on-ramp/off-ramp combination.
+Private Network Load Balancing on-ramps, on the other hand, refer to secure paths between the end-user request and the Cloudflare network. Cloudflare Load Balancing supports traffic from [CDN](/cache/), [Spectrum](/spectrum/), [WARP](/cloudflare-one/team-and-resources/devices/warp/) and [Magic WAN](/magic-wan/) and forward that traffic to a load balancer, and then egress to an endpoint behind any off-ramp (CDN/CNI/IPSec/GRE/Tunnel). Your traffic can ingress and egress by any on-ramp/off-ramp combination.
 
 :::note
 When using [Spectrum](/spectrum/) as an on-ramp and [Magic WAN](/load-balancing/private-network/#magic-wan) as an off-ramp the [proxy protocol](/spectrum/how-to/enable-proxy-protocol/) setting in Spectrum is not supported.
@@ -53,7 +53,7 @@ When using [Spectrum](/spectrum/) as an on-ramp and [Magic WAN](/load-balancing/
 
 ## Use cases
 
-* **Requests originating from the public Internet and directed to a private/internal service**: You can route requests from the Internet to your internal services on internal IPs - such as accounting or production automation systems - using [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/).
+* **Requests originating from the public Internet and directed to a private/internal service**: You can route requests from the Internet to your internal services on internal IPs - such as accounting or production automation systems - using [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/).
 
 * **Intelligent traffic routing**: Benefit from failover for your private traffic and have the ability to monitor the health of these IP targets directly, rather than load balancing to a tunnel and only monitoring the health of the tunnel itself.
 

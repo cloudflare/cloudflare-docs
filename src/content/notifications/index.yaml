@@ -508,10 +508,10 @@ entries:
     audience: Customers who want to be warned about changes in health status for their Cloudflare Tunnels.
     availability: All Cloudflare Zero Trust plans.
     associatedProducts: Tunnel
-    nextSteps: Monitor tunnel health over time and consider deploying [`cloudflared` replicas or load balancers](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-availability/).
+    nextSteps: Monitor tunnel health over time and consider deploying [`cloudflared` replicas or load balancers](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-availability/).
     otherFilters: None.
     additional_information: |-
-      Refer to [Tunnel status](/cloudflare-one/connections/connect-networks/troubleshoot-tunnels/common-errors/#tunnel-status) to review the list of possible tunnel statuses (`Active`, `Inactive`, `Down` and `Degraded`).
+      Refer to [Tunnel status](/cloudflare-one/networks/connectors/cloudflare-tunnel/troubleshoot-tunnels/common-errors/#tunnel-status) to review the list of possible tunnel statuses (`Active`, `Inactive`, `Down` and `Degraded`).
 
   - name: Device connectivity anomaly
     audience: Zero Trust customers who want to be notified when Cloudflare detects a spike or drop in the number of devices connected to the WARP client.
@@ -525,7 +525,7 @@ entries:
         - **Colo**: Cloudflare data center that the device is connected to.
         - **Platform**: Operating system of the device.
         - **Version**: WARP client version (for example, `2024.3.409.0`).
-        - **Mode**: [WARP mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) deployed on the device.
+        - **Mode**: [WARP mode](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/) deployed on the device.
 
   - name: DEX test latency
     audience: Zero Trust customers who wish to receive alerts when there is a spike or drop in application latency, as measured by the HTTP test [Resource Fetch time](/cloudflare-one/insights/dex/tests/http/#test-results) or Traceroute test [Round trip time](/cloudflare-one/insights/dex/tests/traceroute/#test-results). Requires setting up a [DEX test](/cloudflare-one/insights/dex/tests/).

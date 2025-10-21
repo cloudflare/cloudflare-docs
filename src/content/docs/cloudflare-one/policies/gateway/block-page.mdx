@@ -11,7 +11,7 @@ When Gateway blocks traffic with a [DNS](/cloudflare-one/policies/gateway/dns-po
 
 ## Prerequisites
 
-In order to display the block page as the URL of the blocked domain, your organization's devices must have a [Cloudflare certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/manual-deployment/) installed. Enterprise users can also [deploy their own root CA certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/custom-certificate/). If you do not install a certificate, the block page [will not display correctly](#certificate-error).
+In order to display the block page as the URL of the blocked domain, your organization's devices must have a [Cloudflare certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/manual-deployment/) installed. Enterprise users can also [deploy their own root CA certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/custom-certificate/). If you do not install a certificate, the block page [will not display correctly](#certificate-error).
 
 ## Configure the block page
 
@@ -118,7 +118,7 @@ To turn on the block page or override your global block page setting for an indi
 
 ### Certificate error
 
-If your users receive a security risk warning in their browser when visiting a blocked page, check that you have correctly [installed a certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/manual-deployment/) on their devices. If a certificate is not installed or the installed certificate is invalid or expired, your user's browser may:
+If your users receive a security risk warning in their browser when visiting a blocked page, check that you have correctly [installed a certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/manual-deployment/) on their devices. If a certificate is not installed or the installed certificate is invalid or expired, your user's browser may:
 
 - Display an **HTTP Response Code: 526** error page, indicating an insecure upstream.
 - Close the connection and fail to display any pages.

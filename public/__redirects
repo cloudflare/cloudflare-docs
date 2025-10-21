@@ -2352,6 +2352,8 @@
 /logs/get-started/enable-destinations/* /logs/logpush/logpush-job/enable-destinations/:splat 301
 /logs/reference/log-fields/* /logs/logpush/logpush-job/datasets/:splat 301
 /speed/optimization/other/* /speed/optimization/ 301
+/cloudflare-one/connections/connect-devices/* /cloudflare-one/team-and-resources/devices 301
+/cloudflare-one/connections/connect-networks/* /cloudflare-one/networks/connectors/cloudflare-tunnel/ 301
 
 # AI Crawl Control
 /ai-audit/* /ai-crawl-control/:splat 301
@@ -2360,6 +2362,7 @@
 /autorag/* /ai-search/:splat 301
 
 # Cloudflare One / Zero Trust
+/cloudflare-one/connections/ /cloudflare-one/ 301
 /cloudflare-one/applications/configure-apps/dash-sso-apps/ /fundamentals/account/account-security/dashboard-sso/ 301
 /cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/as-a-service/* /cloudflare-one/connections/connect-networks/configure-tunnels/local-management/as-a-service/:splat 301
 /cloudflare-one/connections/connect-apps/install-and-setup/deployment-guides/* /cloudflare-one/connections/connect-networks/deployment-guides/:splat 301

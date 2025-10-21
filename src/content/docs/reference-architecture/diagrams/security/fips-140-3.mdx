@@ -91,7 +91,7 @@ The architecture diagram below illustrates the key components and data flow for 
 
 <Steps>
 1. **User/Client**: Initiates an HTTPS request to a domain protected by Cloudflare. The Server Name Indication (SNI) extension in the request specifies the domain name like, for example, `keyless.example.com`. That domain is mapped to a certificate declared as [keyless](/ssl/keyless-ssl/), which means that only the public is being imported to Cloudflare, but a keyless listener is also declared, for subsequent key operations.
-2. **Cloudflare secure tunnel establishment**: The Cloudflare [tunnel](/cloudflare-one/connections/connect-networks/) component is used to establish a secure and reliable connection with Cloudflare's global network. Only outgoing traffic is leaving the perimeter and the traffic can be narrowed down by a firewall. That secure connectivity will be used as a secured overlay for the key operations.
+2. **Cloudflare secure tunnel establishment**: The Cloudflare [tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) component is used to establish a secure and reliable connection with Cloudflare's global network. Only outgoing traffic is leaving the perimeter and the traffic can be narrowed down by a firewall. That secure connectivity will be used as a secured overlay for the key operations.
 3. **Key Operations**: Cloudflare [SSL](/ssl/)detects that a keyless operation is necessary and then sends all the key operations towards the keyless module installed on the private infrastructure. All the traffic is flowing through the previously established secured tunnel.
 4. **Keyless Module**: The [keyless module](/ssl/keyless-ssl/configuration/cloudflare-tunnel/#install) is responsible for forwarding the key operations to the Hardware Security Module (HSM) for cryptographic operations. The keyless module is a software component that acts as a proxy between Cloudflare and the HSM, ensuring that the private key never leaves the HSM.
 5. **Key operations via PKCS11**: The HSM performs cryptographic operations using the private key stored securely within the HSM. The HSM is a tamper-resistant device that securely manages cryptographic keys and performs cryptographic operations, ensuring the highest level of security for sensitive data.
@@ -99,7 +99,7 @@ The architecture diagram below illustrates the key components and data flow for 
 
 ## Further reading
 - [Cloudflare Keyless SSL](/ssl/keyless-ssl)
-- [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/)
+- [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/)
 - [Keyless SSL with secured Tunnel](/ssl/keyless-ssl/configuration/cloudflare-tunnel/)
 - Supported HSMs:
 	<DirectoryListing folder="ssl/keyless-ssl/hardware-security-modules" descriptions />

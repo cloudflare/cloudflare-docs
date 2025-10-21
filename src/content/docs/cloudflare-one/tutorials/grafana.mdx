@@ -7,7 +7,7 @@ description: >-
   This tutorial covers how to create the metrics endpoint and set up the Prometheus server.
 ---
 
-[Grafana](https://grafana.com/) is a dashboard tool that visualizes data stored in other databases. You can use Grafana to convert your [tunnel metrics](/cloudflare-one/connections/connect-networks/monitor-tunnels/metrics/) into actionable insights.
+[Grafana](https://grafana.com/) is a dashboard tool that visualizes data stored in other databases. You can use Grafana to convert your [tunnel metrics](/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/metrics/) into actionable insights.
 
 It is not possible to push metrics directly from `cloudflared` to Grafana. Instead, `cloudflared` runs a [Prometheus](https://prometheus.io) metrics endpoint, which a Prometheus server periodically scrapes. Grafana then uses Prometheus as a data source to present metrics to the administrator.
 
@@ -28,7 +28,7 @@ This tutorial covers how to create the metrics endpoint, set up the Prometheus s
 
 ## Before you begin
 
-- You will need a Cloudflare Tunnel. To create a tunnel, refer to our [getting started guide](/cloudflare-one/connections/connect-networks/get-started/).
+- You will need a Cloudflare Tunnel. To create a tunnel, refer to our [getting started guide](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/).
 
 ## Create the metrics endpoint
 
@@ -38,7 +38,7 @@ If your tunnel was created via the CLI, run the following command on the `cloudf
 cloudflared tunnel --metrics 192.168.1.1:60123 run my-tunnel
 ```
 
-If your tunnel was created via the dashboard, the [--metrics](/cloudflare-one/connections/connect-networks/configure-tunnels/cloudflared-parameters/run-parameters/#metrics) flag must be added to your `cloudflared` system service configuration. Refer to [Add tunnel run parameters](/cloudflare-one/connections/connect-networks/configure-tunnels/cloudflared-parameters/#update-tunnel-run-parameters) for instructions on how to do this.
+If your tunnel was created via the dashboard, the [--metrics](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cloudflared-parameters/run-parameters/#metrics) flag must be added to your `cloudflared` system service configuration. Refer to [Add tunnel run parameters](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cloudflared-parameters/#update-tunnel-run-parameters) for instructions on how to do this.
 
 ## Set up Prometheus
 
@@ -105,7 +105,7 @@ On the Prometheus and Grafana server (`192.168.1.2`):
 
    ![Prometheus dashboard showing tunnel metrics data](~/assets/images/cloudflare-one/secure-origin-connections/monitor-tunnels/Prometheus-dashboard.png)
 
-Refer to [Available metrics](/cloudflare-one/connections/connect-networks/monitor-tunnels/metrics/#available-metrics) to check what other metrics are available.
+Refer to [Available metrics](/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/metrics/#available-metrics) to check what other metrics are available.
 
 ## Connect Grafana to Prometheus
 
