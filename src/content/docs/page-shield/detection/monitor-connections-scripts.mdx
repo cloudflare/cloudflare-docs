@@ -5,7 +5,14 @@ sidebar:
   order: 2
 ---
 
-import { Render, Markdown, Steps } from "~/components";
+import {
+	Render,
+	Markdown,
+	Steps,
+	Tabs,
+	TabItem,
+	DashButton,
+} from "~/components";
 
 Once you [activate Page Shield's client-side resource monitoring](/page-shield/get-started/), the main client-side resources dashboard will show which resources (scripts and connections) are running on your domain, as well as the cookies recently detected in HTTP traffic.
 
@@ -26,13 +33,24 @@ To review the resources detected by Cloudflare:
 
 <Steps>
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+1. Go to the client-side resources page:
 
-2. Go to the client-side resources page:
-   - Old dashboard: Go to **Security** > **Page Shield**.
-   - New security dashboard: Go to **Security** > **Web assets** > **Client-side resources** tab.
+   <Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
 
-3. Review the list of scripts, connections, and cookies for your domain, depending on your plan. To apply a filter, select **Add filter** and use one or more of the available options.
+   1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+   2. Go to **Security** > **Page Shield**.
+
+   </TabItem> <TabItem label="New dashboard" icon="rocket">
+
+   1. In the Cloudflare dashboard, go to the **Web assets** page.
+
+      <DashButton url="/?to=/:account/:zone/security/web-assets" />
+
+   2. Select the **Client-side resources** tab.
+
+   </TabItem> </Tabs>
+
+2. Review the list of scripts, connections, and cookies for your domain, depending on your plan. To apply a filter, select **Add filter** and use one or more of the available options.
 
    <details>
    <summary>Available filters</summary>
@@ -47,7 +65,7 @@ To review the resources detected by Cloudflare:
 
    </details>
 
-4. Depending on your plan, you may be able to [view the details of each item](#view-details).
+3. Depending on your plan, you may be able to [view the details of each item](#view-details).
 
 </Steps>
 
@@ -59,14 +77,30 @@ The All Reported Connections and All Reported Scripts dashboards show all the de
 
 <Steps>
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-2. Go to the client-side resources page:
-   - Old dashboard: Go to **Security** > **Page Shield**.
-   - New security dashboard: Go to **Security** > **Web assets** > **Client-side resources** tab.
+{/* prettier-ignore-start */}
 
-3. Select **Scripts** or **Connections**.
-4. Select **View all scripts** or **View all connections**.
-5. Review the information displayed in the dashboard.
+1. Go to the client-side resources page:
+
+   <Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
+
+   1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+   2. Go to **Security** > **Page Shield**.
+
+   </TabItem> <TabItem label="New dashboard" icon="rocket">
+
+   1. In the Cloudflare dashboard, go to the **Web assets** page.
+
+      <DashButton url="/?to=/:account/:zone/security/web-assets" />
+
+   2. Select the **Client-side resources** tab.
+
+   </TabItem> </Tabs>
+
+2. Select **Scripts** or **Connections**.
+3. Select **View all scripts** or **View all connections**.
+4. Review the information displayed in the dashboard.
+
+{/* prettier-ignore-end */}
 
 </Steps>
 
@@ -78,19 +112,32 @@ You can filter the data in these dashboards using different criteria, and print 
 Only available to customers on Business and Enterprise plans.
 :::
 
-To view the details of an item:
-
 <Steps>
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+{/* prettier-ignore-start */}
 
-2. Go to the client-side resources page:
-   - Old dashboard: Go to **Security** > **Page Shield**.
-   - New security dashboard: Go to **Security** > **Web assets** > **Client-side resources** tab.
+1. Go to the client-side resources page:
 
-3. Select **Scripts**, **Connections**, or **Cookies** (the available options depend on your plan).
+   <Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
 
-4. Next to a script, connection, or cookie in the list, select **Details**.
+   1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+   2. Go to **Security** > **Page Shield**.
+
+   </TabItem> <TabItem label="New dashboard" icon="rocket">
+
+   1. In the Cloudflare dashboard, go to the **Web assets** page.
+
+      <DashButton url="/?to=/:account/:zone/security/web-assets" />
+
+   2. Select the **Client-side resources** tab.
+
+   </TabItem> </Tabs>
+
+2. Select **Scripts**, **Connections**, or **Cookies** (the available options depend on your plan).
+
+3. Next to a script, connection, or cookie in the list, select **Details**.
+
+{/* prettier-ignore-end */}
 
 </Steps>
 
@@ -150,13 +197,29 @@ To export script, connection, or cookie information in CSV format:
 
 <Steps>
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-2. Go to the client-side resources page:
-   - Old dashboard: Go to **Security** > **Page Shield**.
-   - New security dashboard: Go to **Security** > **Web assets** > **Client-side resources** tab.
+{/* prettier-ignore-start */}
 
-3. Select **Scripts**, **Connections**, or **Cookies**.
-4. (Optional) Apply any filters to the displayed data.
-5. Select **Download CSV**.
+1. Go to the client-side resources page:
+
+   <Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
+
+   1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+   2. Go to **Security** > **Page Shield**.
+
+   </TabItem> <TabItem label="New dashboard" icon="rocket">
+
+   1. In the Cloudflare dashboard, go to the **Web assets** page.
+
+      <DashButton url="/?to=/:account/:zone/security/web-assets" />
+
+   2. Select the **Client-side resources** tab.
+
+   </TabItem> </Tabs>
+
+2. Select **Scripts**, **Connections**, or **Cookies**.
+3. (Optional) Apply any filters to the displayed data.
+4. Select **Download CSV**.
+
+{/* prettier-ignore-end */}
 
 </Steps>

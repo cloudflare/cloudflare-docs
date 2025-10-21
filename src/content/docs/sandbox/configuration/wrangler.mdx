@@ -18,7 +18,7 @@ The minimum required configuration for using Sandbox SDK:
 	"containers": [
 		{
 			"class_name": "Sandbox",
-			"image": "docker.io/cloudflare/sandbox:0.3.3",
+			"image": "./Dockerfile",
 		},
 	],
 	"durable_objects": {
@@ -49,7 +49,7 @@ Each container is backed by its own Durable Object. The container image contains
 	"containers": [
 		{
 			"class_name": "Sandbox",
-			"image": "docker.io/cloudflare/sandbox:0.3.3",
+			"image": "./Dockerfile",
 		},
 	],
 }
@@ -60,20 +60,7 @@ Each container is backed by its own Durable Object. The container image contains
 - **class_name** (string, required) - Must match the `class_name` of the Durable Object.
 - **image** (string, required) - The Docker image to use. Must match your npm package version.
 
-For custom images, use a Dockerfile:
-
-```jsonc
-{
-	"containers": [
-		{
-			"class_name": "Sandbox",
-			"image": "./Dockerfile",
-		},
-	],
-}
-```
-
-See [Dockerfile reference](/sandbox/configuration/dockerfile/) for customization.
+See [Dockerfile reference](/sandbox/configuration/dockerfile/) for information on customizing your Docker image.
 
 ### durable_objects.bindings
 
@@ -203,23 +190,6 @@ export default {
 			},
 		],
 	},
-}
-```
-
-### Container image pull fails
-
-**Error**: `Failed to pull container image`
-
-**Solution**: Ensure you're using the correct image version (must match npm package):
-
-```jsonc
-{
-	"containers": [
-		{
-			"class_name": "Sandbox",
-			"image": "docker.io/cloudflare/sandbox:0.3.3",
-		},
-	],
 }
 ```
 

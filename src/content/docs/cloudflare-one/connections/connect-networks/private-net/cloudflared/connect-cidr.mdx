@@ -15,7 +15,13 @@ To connect your infrastructure with Cloudflare Tunnel:
 
 <Render file="tunnel/connect-private-network" product="cloudflare-one" />
 
-3. In the **CIDR** tab for the tunnel, enter the IP/CIDR range that you wish to route through the tunnel (for example `10.0.0.0/8`).
+3. In the **CIDR** tab for the tunnel, enter the IP/CIDR range that you wish to route through the tunnel (for example, `10.0.0.1` or `10.0.0.0/8`).
+
+4. (Optional) Under **Additional settings**, select a [virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/) for this tunnel route. This step is only needed if the route's IP/CIDR range overlaps with another route in your account. If you do not select a virtual network, the IP route will be assigned to the `default` network.
+
+	:::note
+	To create a new virtual network, select **Manage virtual networks**.
+	:::
 
 ## 2. Set up the client
 

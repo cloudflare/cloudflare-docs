@@ -5,9 +5,20 @@ sidebar:
   order: 2
 ---
 
-import { Tabs, TabItem, GlossaryTooltip } from "~/components";
+import { Tabs, TabItem, GlossaryTooltip, Render } from "~/components";
 
 This section covers the most common errors you might encounter when connecting resources with Cloudflare Tunnel. If you do not see your issue listed below, refer to the [troubleshooting FAQ](/cloudflare-one/faq/troubleshooting/), view your [Tunnel logs](/cloudflare-one/connections/connect-networks/monitor-tunnels/logs/), or [contact Cloudflare Support](/support/contacting-cloudflare-support/).
+
+## Tunnel status
+
+You can check your tunnel’s connection status either from the Zero Trust dashboard (by going to **Networks** > **Tunnels**) or by running the `cloudflared tunnel list` command. Each tunnel displays a status that reflects its current connection state:
+
+<Render file="tunnel/tunnel-status" product="cloudflare-one" />
+
+:::note[Tunnel status scope]
+
+The tunnel status only reflects the connection between `cloudflared` and the Cloudflare network. Tunnel status does not indicate whether `cloudflared` can successfully reach your internal services. As a result, a tunnel can appear `Healthy` while users are still unable to connect to an application.
+:::
 
 ## I see `cloudflared service is already installed`.
 
@@ -52,12 +63,9 @@ This means the origin is using a certificate that `cloudflared` does not trust. 
 
 ## I see an error 1033 when attempting to run a tunnel.
 
-An error 1033 indicates your tunnel is not connected to Cloudflare's edge. First, run `cloudflared tunnel list` to see whether your tunnel is listed as active. If it isn't, check the following:
+<Render file="tunnel/1033-error" product="cloudflare-one" />
 
-1. Make sure you correctly routed traffic to your tunnel (step 5 in the [Tunnel guide](/cloudflare-one/connections/connect-networks/do-more-with-tunnels/local-management/create-local-tunnel/#5-start-routing-traffic)) by assigning a CNAME record to point traffic to your tunnel. Alternatively, check [this guide](/cloudflare-one/connections/connect-networks/routing-to-tunnel/lb/) to route traffic to your tunnel using load balancers.
-2. Make sure you run your tunnel (step 6 in the [Tunnel guide](/cloudflare-one/connections/connect-networks/do-more-with-tunnels/local-management/create-local-tunnel/#6-run-the-tunnel)).
-
-For more information, here is a [comprehensive list](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/) of Cloudflare 1xxx errors.
+For more information, refer to the [comprehensive list](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/) of Cloudflare 1xxx errors.
 
 ## I see `ERR_TOO_MANY_REDIRECTS` when attempting to connect to an Access self-hosted app.
 

@@ -111,7 +111,7 @@ For more information on creating a DNS policy, refer to [DNS policies](/cloudfla
 ### Domain
 
 <Render
-	file="gateway/selectors/domain"
+	file="gateway/selectors/domain-dns"
 	product="cloudflare-one"
 	params={{ APIendpoint: "dns.domains" }}
 />
@@ -119,7 +119,7 @@ For more information on creating a DNS policy, refer to [DNS policies](/cloudfla
 ### Host
 
 <Render
-	file="gateway/selectors/host"
+	file="gateway/selectors/host-dns"
 	product="cloudflare-one"
 	params={{ APIendpoint: "dns.fqdn" }}
 />
@@ -138,19 +138,19 @@ For more information on creating a DNS policy, refer to [DNS policies](/cloudfla
 
 ### Source Continent
 
-Use this selector to filter based on the continent where the query arrived to Gateway from. <Render product="cloudflare-one" file="gateway/selectors/source-continent" params={{ one: "dns.src" }} />
+Use this selector to filter based on the continent where the query arrived to Gateway from. <Render product="cloudflare-one" file="gateway/selectors/source-continent-dns" params={{ one: "dns.src" }} />
 
 ### Source Country
 
-Use this selector to filter based on the country where the query arrived to Gateway from. <Render product="cloudflare-one" file="gateway/selectors/source-country" params={{ one: "dns.src" }} />
+Use this selector to filter based on the country where the query arrived to Gateway from. <Render product="cloudflare-one" file="gateway/selectors/source-country-dns" params={{ one: "dns.src" }} />
 
 ### Source IP
 
-<Render file="gateway/selectors/source-ip-dns" product="cloudflare-one" />
+<Render file="gateway/selectors/source-ip-resolver" product="cloudflare-one" />
 
 ### Users
 
-<Render file="gateway/selectors/users" product="cloudflare-one" />
+<Render file="gateway/selectors/users-dns" product="cloudflare-one" />
 
 ## Comparison operators
 

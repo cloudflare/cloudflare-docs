@@ -260,7 +260,7 @@ Gateway matches network traffic against the following selectors, or criteria.
 ### Application
 
 <Render
-	file="gateway/selectors/application"
+	file="gateway/selectors/application-http"
 	product="cloudflare-one"
 	params={{ policyType: "network" }}
 />
@@ -355,11 +355,11 @@ By default, this selector only applies to HTTPS traffic on port `443`. To inspec
 
 ### Source Continent
 
-The continent of the user making the request. <Render file="gateway/selectors/source-continent" product="cloudflare-one" params={{ one: "net.src" }} />
+The continent of the user making the request. <Render file="gateway/selectors/source-continent-http" product="cloudflare-one" params={{ one: "net.src" }} />
 
 ### Source Country
 
-The country of the user making the request. <Render file="gateway/selectors/source-country" product="cloudflare-one" params={{ one: "net.src" }} />
+The country of the user making the request. <Render file="gateway/selectors/source-country-http" product="cloudflare-one" params={{ one: "net.src" }} />
 
 ### Source Internal IP
 
@@ -383,7 +383,7 @@ The country of the user making the request. <Render file="gateway/selectors/sour
 
 ### Users
 
-<Render file="gateway/selectors/users" product="cloudflare-one" />
+<Render file="gateway/selectors/users-http" product="cloudflare-one" />
 
 ### Virtual Network
 

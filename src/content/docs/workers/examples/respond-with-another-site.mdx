@@ -34,7 +34,7 @@ import { Render, TabItem, Tabs } from "~/components";
 ```ts
 export default {
 	async fetch(request): Promise<Response> {
-		async function MethodNotAllowed(request) {
+		function MethodNotAllowed(request) {
 			return new Response(`Method ${request.method} not allowed.`, {
 				status: 405,
 				headers: {

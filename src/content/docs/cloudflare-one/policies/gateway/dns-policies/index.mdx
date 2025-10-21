@@ -288,7 +288,7 @@ Gateway matches DNS queries against the following selectors, or criteria:
 ### Application
 
 <Render
-	file="gateway/selectors/application"
+	file="gateway/selectors/application-dns"
 	product="cloudflare-one"
 	params={{ policyType: "DNS" }}
 />
@@ -358,7 +358,7 @@ Use this selector to filter DNS responses by their `TXT` records.
 ### Domain
 
 <Render
-	file="gateway/selectors/domain"
+	file="gateway/selectors/domain-dns"
 	product="cloudflare-one"
 	params={{ APIendpoint: "dns.domains" }}
 />
@@ -366,7 +366,7 @@ Use this selector to filter DNS responses by their `TXT` records.
 ### Host
 
 <Render
-	file="gateway/selectors/host"
+	file="gateway/selectors/host-dns"
 	product="cloudflare-one"
 	params={{ APIendpoint: "dns.fqdn" }}
 />
@@ -440,19 +440,19 @@ Use this selector to match a dynamic list of [category IDs](/cloudflare-one/poli
 
 ### Source Continent
 
-Use this selector to filter based on the continent where the query arrived to Gateway from. <Render file="gateway/selectors/source-continent" product="cloudflare-one" params={{ one: "dns.src" }} />
+Use this selector to filter based on the continent where the query arrived to Gateway from. <Render file="gateway/selectors/source-continent-dns" product="cloudflare-one" params={{ one: "dns.src" }} />
 
 ### Source Country
 
-Use this selector to filter based on the country where the query arrived to Gateway from. <Render file="gateway/selectors/source-country" product="cloudflare-one" params={{ one: "dns.src" }} />
+Use this selector to filter based on the country where the query arrived to Gateway from. <Render file="gateway/selectors/source-country-dns" product="cloudflare-one" params={{ one: "dns.src" }} />
 
 ### Source IP
 
-<Render file="gateway/selectors/source-ip-dns" product="cloudflare-one" />
+<Render file="gateway/selectors/source-ip-resolver" product="cloudflare-one" />
 
 ### Users
 
-<Render file="gateway/selectors/users" product="cloudflare-one" />
+<Render file="gateway/selectors/users-dns" product="cloudflare-one" />
 
 ## Comparison operators
 

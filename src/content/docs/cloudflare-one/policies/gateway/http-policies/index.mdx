@@ -411,7 +411,7 @@ The review approval status of an application from [Shadow IT Discovery](/cloudfl
 ### Application
 
 <Render
-	file="gateway/selectors/application"
+	file="gateway/selectors/application-http"
 	product="cloudflare-one"
 	params={{ policyType: "HTTP" }}
 />
@@ -495,7 +495,7 @@ Only applies to traffic sent through the [WARP client](/cloudflare-one/connectio
 ### Domain
 
 <Render
-	file="gateway/selectors/domain"
+	file="gateway/selectors/domain-http"
 	product="cloudflare-one"
 	params={{ APIendpoint: "http.conn.domains" }}
 />
@@ -622,7 +622,7 @@ Use [Cloudflare Data Loss Prevention (DLP)](/cloudflare-one/policies/data-loss-p
 ### Host
 
 <Render
-	file="gateway/selectors/host"
+	file="gateway/selectors/host-http"
 	product="cloudflare-one"
 	params={{ APIendpoint: "http.conn.hostname" }}
 />
@@ -657,11 +657,11 @@ The HTTP response status code received by the traffic.
 
 ### Source Continent
 
-The continent of the user making the request. <Render file="gateway/selectors/source-continent" product="cloudflare-one" params={{ one: "http.src_ip" }} />
+The continent of the user making the request. <Render file="gateway/selectors/source-continent-http" product="cloudflare-one" params={{ one: "http.src_ip" }} />
 
 ### Source Country
 
-The country of the user making the request. <Render file="gateway/selectors/source-country" product="cloudflare-one" params={{ one: "http.src_ip" }} />
+The country of the user making the request. <Render file="gateway/selectors/source-country-http" product="cloudflare-one" params={{ one: "http.src_ip" }} />
 
 ### Source Internal IP
 
@@ -713,7 +713,7 @@ The query of a webpage's URL.
 
 ### Users
 
-<Render file="gateway/selectors/users" product="cloudflare-one" />
+<Render file="gateway/selectors/users-http" product="cloudflare-one" />
 
 ### Virtual Network
 

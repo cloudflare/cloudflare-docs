@@ -455,6 +455,47 @@ entries:
 
       **Note**: This raw field may include some basic normalization done by Cloudflare's HTTP server. However, this can change in the future.
 
+  - name: raw.http.response.headers
+    data_type: Map<Array<String>>
+    categories: [Response, Headers, Raw fields]
+    keywords: [response, raw]
+    summary: The HTTP response headers without any transformation represented as a Map (or associative array).
+    description: |-
+      This is the raw field version of the [`http.response.headers`](/ruleset-engine/rules-language/fields/reference/http.response.headers/) field. Raw fields, prefixed with `raw.`, preserve original response values for later evaluations. These fields are immutable during the entire request evaluation workflow, and they are not affected by the actions of previously matched rules.
+    example_value: |-
+      {"server": ["nginx"]}
+    example_block: |-
+      any(raw.http.response.headers["server"][*] == "nginx")
+
+  - name: raw.http.response.headers.names
+    data_type: Array<String>
+    categories: [Response, Headers, Raw fields]
+    keywords: [response, raw]
+    summary: The names of the headers in the HTTP response without any transformation.
+    description: |-
+      This is the raw field version of the [`http.response.headers.names`](/ruleset-engine/rules-language/fields/reference/http.response.headers.names/) field. Raw fields, prefixed with `raw.`, preserve original response values for later evaluations. These fields are immutable during the entire request evaluation workflow, and they are not affected by the actions of previously matched rules.
+    example_value: |-
+      ["content-type"]
+    example_block: |-
+      any(raw.http.response.headers.names[*] == "content-type")
+
+  - name: raw.http.response.headers.values
+    data_type: Array<String>
+    categories: [Response, Headers, Raw fields]
+    keywords: [response, raw]
+    summary: The values of the headers in the HTTP response without any transformation.
+    description: |-
+      This is the raw field version of the [`http.response.headers.values`](/ruleset-engine/rules-language/fields/reference/http.response.headers.values/) field. Raw fields, prefixed with `raw.`, preserve original response values for later evaluations. These fields are immutable during the entire request evaluation workflow, and they are not affected by the actions of previously matched rules.
+    example_value: |-
+      Example 1: ["application/json"]
+      Example 2: ["This header value is longer than 10 bytes"]
+    example_block: |-
+      # Example 1: Check for specific header value.
+      any(raw.http.response.headers.values[*] == "application/json")
+
+      # Example 2: Match requests according to the specified operator and the length/size entered for the header value.
+      any(len(raw.http.response.headers.values[*])[*] gt 10)
+
   - name: ssl
     data_type: Boolean
     categories: [Request]

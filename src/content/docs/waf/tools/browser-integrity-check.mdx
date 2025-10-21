@@ -4,7 +4,7 @@ source: https://support.cloudflare.com/hc/en-us/articles/200170086-Understanding
 title: Browser Integrity Check
 ---
 
-import { Render, Tabs, TabItem, Steps } from "~/components";
+import { Render, Tabs, TabItem, Steps, DashButton } from "~/components";
 
 <Render file="bic-description" product="waf" />
 
@@ -31,10 +31,12 @@ To disable BIC globally for your zone:
 
 <Steps>
 
-1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com).
-2. Select your account and zone.
-3. Go to **Security** > **Settings** and filter by **DDoS attacks**.
-4. Turn off **Browser integrity check**.
+1. In the Cloudflare dashboard, go to the Security **Settings** page.
+
+   <DashButton url="/?to=/:account/:zone/security/settings" />
+
+2. (Optional) Filter by **DDoS attacks**.
+3. Turn off **Browser integrity check**.
 
 </Steps>
 
