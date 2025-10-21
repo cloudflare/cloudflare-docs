@@ -7,39 +7,61 @@ sidebar:
 
 Pass configuration, secrets, and runtime settings to your sandboxes using environment variables.
 
-### Command and process variables
+## Three ways to set environment variables
 
-Pass environment variables when executing commands or starting processes:
+The Sandbox SDK provides three methods for setting environment variables, each suited for different use cases:
+
+### 1. Sandbox-level with setEnvVars()
+
+Set environment variables globally for all commands in the sandbox:
 
 ```typescript
-// Commands
+const sandbox = getSandbox(env.Sandbox, "my-sandbox");
+
+// Set once, available for all subsequent commands
+await sandbox.setEnvVars({
+	DATABASE_URL: env.DATABASE_URL,
+	API_KEY: env.API_KEY,
+});
+
+await sandbox.exec("python migrate.py"); // Has DATABASE_URL and API_KEY
+await sandbox.exec("python seed.py"); // Has DATABASE_URL and API_KEY
+```
+
+**Use when:** You need the same environment variables for multiple commands.
+
+### 2. Per-command with exec() options
+
+Pass environment variables for a specific command:
+
+```typescript
 await sandbox.exec("node app.js", {
 	env: {
 		NODE_ENV: "production",
-		API_KEY: env.API_KEY, // Pass from Worker env
 		PORT: "3000",
 	},
 });
 
-// Background processes (same syntax)
+// Also works with startProcess()
 await sandbox.startProcess("python server.py", {
 	env: {
 		DATABASE_URL: env.DATABASE_URL,
-		SECRET_KEY: env.SECRET_KEY,
 	},
 });
 ```
 
-### Session-level variables
+**Use when:** You need different environment variables for different commands, or want to override sandbox-level variables.
 
-Set environment variables for all commands in a session:
+### 3. Session-level with createSession()
+
+Create an isolated session with its own environment variables:
 
 ```typescript
-const session = await sandbox.createSession();
-
-await session.setEnvVars({
-	DATABASE_URL: env.DATABASE_URL,
-	SECRET_KEY: env.SECRET_KEY,
+const session = await sandbox.createSession({
+	env: {
+		DATABASE_URL: env.DATABASE_URL,
+		SECRET_KEY: env.SECRET_KEY,
+	},
 });
 
 // All commands in this session have these vars
@@ -47,16 +69,25 @@ await session.exec("python migrate.py");
 await session.exec("python seed.py");
 ```
 
+**Use when:** You need isolated execution contexts with different environment variables running concurrently.
+
 ## Common patterns
 
 ### Pass Worker secrets to sandbox
 
-Securely pass secrets from Worker environment:
+Securely pass secrets from your Worker to the sandbox. First, set secrets using Wrangler:
+
+```bash
+wrangler secret put OPENAI_API_KEY
+wrangler secret put DATABASE_URL
+```
+
+Then pass them to your sandbox:
 
 ```typescript
 interface Env {
 	Sandbox: DurableObjectNamespace;
-	OPENAI_API_KEY: string; // Set with `wrangler secret put`
+	OPENAI_API_KEY: string;
 	DATABASE_URL: string;
 }
 
@@ -64,128 +95,77 @@ export default {
 	async fetch(request: Request, env: Env): Promise<Response> {
 		const sandbox = getSandbox(env.Sandbox, "user-sandbox");
 
-		const result = await sandbox.exec("python analyze.py", {
+		// Option 1: Set globally for all commands
+		await sandbox.setEnvVars({
+			OPENAI_API_KEY: env.OPENAI_API_KEY,
+			DATABASE_URL: env.DATABASE_URL,
+		});
+		await sandbox.exec("python analyze.py");
+
+		// Option 2: Pass per-command
+		await sandbox.exec("python analyze.py", {
 			env: {
 				OPENAI_API_KEY: env.OPENAI_API_KEY,
-				DATABASE_URL: env.DATABASE_URL,
 			},
 		});
 
-		return Response.json({ result });
+		return Response.json({ success: true });
 	},
 };
 ```
 
-### Default values with spreading
-
-Combine default and command-specific variables:
+### Combine default and specific variables
 
 ```typescript
-const defaults = {
-	NODE_ENV: env.ENVIRONMENT || "production",
-	LOG_LEVEL: "info",
-	TZ: "UTC",
-};
+const defaults = { NODE_ENV: "production", LOG_LEVEL: "info" };
 
 await sandbox.exec("npm start", {
-	env: {
-		...defaults,
-		PORT: "3000", // Command-specific override
-		API_KEY: env.API_KEY,
-	},
+	env: { ...defaults, PORT: "3000", API_KEY: env.API_KEY },
 });
+```
+
+### Multiple isolated sessions
+
+Run different tasks with different environment variables concurrently:
+
+```typescript
+// Production database session
+const prodSession = await sandbox.createSession({
+	env: { DATABASE_URL: env.PROD_DATABASE_URL },
+});
+
+// Staging database session
+const stagingSession = await sandbox.createSession({
+	env: { DATABASE_URL: env.STAGING_DATABASE_URL },
+});
+
+// Run migrations on both concurrently
+await Promise.all([
+	prodSession.exec("python migrate.py"),
+	stagingSession.exec("python migrate.py"),
+]);
 ```
 
 ## Environment variable precedence
 
-When the same variable is set at multiple levels:
+When the same variable is set at multiple levels, the most specific level takes precedence:
 
-1. **Command-level** (highest) - Passed to `exec()` or `startProcess()`
-2. **Session-level** - Set with `setEnvVars()`
-3. **Container default** - Built into the Docker image
+1. **Command-level** (highest) - Passed to `exec()` or `startProcess()` options
+2. **Sandbox or session-level** - Set with `setEnvVars()`
+3. **Container default** - Built into the Docker image with `ENV`
 4. **System default** (lowest) - Operating system defaults
 
 Example:
 
 ```typescript
 // In Dockerfile: ENV NODE_ENV=development
-// In session: await sandbox.setEnvVars({ NODE_ENV: 'staging' });
 
-// In command (overrides all):
+// Sandbox-level
+await sandbox.setEnvVars({ NODE_ENV: "staging" });
+
+// Command-level overrides all
 await sandbox.exec("node app.js", {
 	env: { NODE_ENV: "production" }, // This wins
-});
-```
-
-## Security best practices
-
-### Never hardcode secrets
-
-**Bad** - Secrets in code:
-
-```typescript
-await sandbox.exec("python app.py", {
-	env: {
-		API_KEY: "sk-1234567890abcdef", // NEVER DO THIS
-	},
-});
-```
-
-**Good** - Secrets from Worker environment:
-
-```typescript
-await sandbox.exec("python app.py", {
-	env: {
-		API_KEY: env.API_KEY, // From Wrangler secret
-	},
-});
-```
-
-Set secrets with Wrangler:
-
-```bash
-wrangler secret put API_KEY
-```
-
-## Debugging
-
-List all environment variables:
-
-```typescript
-const result = await sandbox.exec("env");
-console.log(result.stdout);
-```
-
-Check specific variable:
-
-```typescript
-const result = await sandbox.exec("echo $NODE_ENV");
-console.log("NODE_ENV:", result.stdout.trim());
-```
-
-## Troubleshooting
-
-### Variable not set
-
-Verify the variable is being passed:
-
-```typescript
-console.log("Worker env:", env.API_KEY ? "Set" : "Missing");
-
-const result = await sandbox.exec("env | grep API_KEY", {
-	env: { API_KEY: env.API_KEY },
-});
-console.log("Sandbox:", result.stdout);
-```
-
-### Shell expansion issues
-
-Use runtime-specific access instead of shell variables:
-
-```typescript
-// Instead of: await sandbox.exec('echo $NODE_ENV')
-await sandbox.exec('node -e "console.log(process.env.NODE_ENV)"', {
-	env: { NODE_ENV: "production" },
 });
 ```
 

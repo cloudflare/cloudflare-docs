@@ -3,6 +3,7 @@ title: Use code interpreter
 pcx_content_type: how-to
 sidebar:
   order: 5
+description: Execute Python and JavaScript code with rich outputs.
 ---
 
 import { TypeScriptExample } from "~/components";
@@ -73,9 +74,9 @@ console.log('Success:', result.success);
 ```
 </TypeScriptExample>
 
-### Persistent state
+### State within a context
 
-Variables and imports persist between executions in the same context:
+Variables and imports remain available between executions in the same context, as long as the container stays active:
 
 <TypeScriptExample>
 ```
@@ -101,6 +102,10 @@ print(f"Mean: {mean}")
 console.log(result.output); // "Mean: 3.0"
 ```
 </TypeScriptExample>
+
+:::note
+Context state is lost if the container restarts due to inactivity. For critical data, store results outside the sandbox or design your code to reinitialize as needed.
+:::
 
 ## Handle rich outputs
 

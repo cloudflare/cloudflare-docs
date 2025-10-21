@@ -7,6 +7,10 @@ sidebar:
 
 import { TypeScriptExample } from "~/components";
 
+:::note[Production requires custom domain]
+Preview URLs require a custom domain with wildcard DNS routing in production. See [Production Deployment](/sandbox/guides/production-deployment/).
+:::
+
 Expose services running in your sandbox via public preview URLs. See [Preview URLs concept](/sandbox/concepts/preview-urls/) for details.
 
 ## Methods
@@ -32,7 +36,7 @@ await sandbox.startProcess('python -m http.server 8000');
 const exposed = await sandbox.exposePort(8000);
 
 console.log('Available at:', exposed.exposedAt);
-// https://abc123-8000.sandbox.workers.dev
+// https://8000-abc123.example.com
 
 // Multiple services with names
 await sandbox.startProcess('node api.js');

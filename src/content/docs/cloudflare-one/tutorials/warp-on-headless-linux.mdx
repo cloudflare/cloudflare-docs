@@ -10,10 +10,10 @@ description: >-
 
 import { Render, GlossaryTooltip } from "~/components";
 
-This tutorial explains how to deploy the [Cloudflare WARP client](/cloudflare-one/connections/connect-devices/warp/) on Linux devices using a service token and an installation script. This deployment workflow is designed for headless servers - that is, servers which do not have access to a browser for identity provider logins - and for situations where you want to fully automate the onboarding process. Because devices will not register through an identity provider, [identity-based policies](/cloudflare-one/policies/gateway/identity-selectors/) and logging will be unavailable.
+This tutorial explains how to deploy the [Cloudflare WARP client](/cloudflare-one/team-and-resources/devices/warp/) on Linux devices using a service token and an installation script. This deployment workflow is designed for headless servers - that is, servers which do not have access to a browser for identity provider logins - and for situations where you want to fully automate the onboarding process. Because devices will not register through an identity provider, [identity-based policies](/cloudflare-one/policies/gateway/identity-selectors/) and logging will be unavailable.
 
 :::note
-This tutorial focuses on deploying WARP as an endpoint device agent. If you are looking to deploy WARP as a gateway to a private network, refer to the [WARP Connector documentation](/cloudflare-one/connections/connect-networks/private-net/warp-connector/).
+This tutorial focuses on deploying WARP as an endpoint device agent. If you are looking to deploy WARP as a gateway to a private network, refer to the [WARP Connector documentation](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/).
 :::
 
 ## Prerequisites
@@ -22,7 +22,7 @@ This tutorial focuses on deploying WARP as an endpoint device agent. If you are 
 
 ## 1. Create a service token
 
-Fully automated deployments rely on a service token to enroll the WARP client in your Zero Trust organization. You can use the same token to enroll multiple devices, or generate a unique token per device if they require different [device profile settings](/cloudflare-one/connections/connect-devices/warp/configure-warp/device-profiles/).
+Fully automated deployments rely on a service token to enroll the WARP client in your Zero Trust organization. You can use the same token to enroll multiple devices, or generate a unique token per device if they require different [device profile settings](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-profiles/).
 
 To create a service token:
 
@@ -101,7 +101,7 @@ You can use a shell script to automate WARP installation and registration. The f
 4.  Modify the values in the `mdm()` function:
     1. For `auth_client_id` and `auth_client_secret`, replace the string values with the Client ID and Client Secret of your [service token](/cloudflare-one/tutorials/warp-on-headless-linux/#1-create-a-service-token).
     2. For `organization`, replace `your-team-name` with your Zero Trust <GlossaryTooltip term="team name">team name</GlossaryTooltip>.
-    3. (Optional) Add or modify other [WARP deployment parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/) according to your preferences.
+    3. (Optional) Add or modify other [WARP deployment parameters](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/parameters/) according to your preferences.
 
 5.  Press `esc`, then type `:x` and press `Enter` to save and exit.
 
@@ -120,4 +120,4 @@ To install WARP using the example script:
    sudo ./install_warp.sh
    ```
 
-WARP is now deployed with the configuration parameters stored in `/var/lib/cloudflare-warp/mdm.xml`. Assuming [`auto_connect`](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/#auto_connect) is configured, WARP will automatically connect to your Zero Trust organization. Once connected, the device will appear in [Zero Trust](https://one.dash.cloudflare.com) under **My Team** > **Devices** with the email `non_identity@<team-name>.cloudflareaccess.com`.
+WARP is now deployed with the configuration parameters stored in `/var/lib/cloudflare-warp/mdm.xml`. Assuming [`auto_connect`](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/parameters/#auto_connect) is configured, WARP will automatically connect to your Zero Trust organization. Once connected, the device will appear in [Zero Trust](https://one.dash.cloudflare.com) under **My Team** > **Devices** with the email `non_identity@<team-name>.cloudflareaccess.com`.

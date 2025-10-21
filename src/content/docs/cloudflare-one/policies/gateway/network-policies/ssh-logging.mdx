@@ -9,7 +9,7 @@ sidebar:
 import { Render } from "~/components";
 
 :::note
-Not recommended for new deployments. We recommend using [Access for Infrastructure](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/) to manage SSH sessions and log SSH commands.
+Not recommended for new deployments. We recommend using [Access for Infrastructure](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/) to manage SSH sessions and log SSH commands.
 :::
 
 Cloudflare Zero Trust supports SSH proxying and command logging using Secure Web Gateway and the WARP client.
@@ -18,8 +18,8 @@ You can create network policies to manage and monitor SSH access to your applica
 
 ## Prerequisites
 
-- [Install the WARP client](/cloudflare-one/connections/connect-devices/warp/set-up-warp/) on end-user devices.
-- [Install the Cloudflare root certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/) on end-user devices.
+- [Install the WARP client](/cloudflare-one/team-and-resources/devices/warp/set-up-warp/) on end-user devices.
+- [Install the Cloudflare root certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/) on end-user devices.
 
 ## 1. Ensure Unix usernames match user SSO identities
 
@@ -65,7 +65,7 @@ cat /etc/ssh/sshd_config
 
 3. Name the policy and specify the [Destination IP](/cloudflare-one/policies/gateway/network-policies/#destination-ip) for your origin server.
 
-   You can enter either a public or private IP. To use a private IP, refer to [Connect private networks](/cloudflare-one/connections/connect-networks/private-net/cloudflared/).
+   You can enter either a public or private IP. To use a private IP, refer to [Connect private networks](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/).
 
 4. Add any other conditions to your policy. If a user does not meet the criteria, they will be blocked by default.
 

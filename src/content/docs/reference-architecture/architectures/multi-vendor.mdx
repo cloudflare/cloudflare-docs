@@ -328,7 +328,7 @@ Cloudflare also supports [Bring Your Own IP (BYOIP)](/byoip/). When BYOIP is con
 
 Another option is to have a private tunnel/connection over the Internet for additional security. Some vendors offer private connectivity via tunnels or VPNs which can be encrypted or unencrypted; these vary in complexity/management and require additional security/firewall updates to allow for connectivity. A traditional VPN setup is also limited via a centralized vendor location back to the origin.
 
-Cloudflare offers [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) which is tunneling software that provides an encrypted tunnel between your origin(s) and Cloudflare’s network. Also, since Cloudflare leverages anycast on its global network, the origin(s) will, like clients, connect to the closest Cloudflare data center(s).
+Cloudflare offers [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) which is tunneling software that provides an encrypted tunnel between your origin(s) and Cloudflare’s network. Also, since Cloudflare leverages anycast on its global network, the origin(s) will, like clients, connect to the closest Cloudflare data center(s).
 
 When you run a tunnel, a lightweight daemon in your infrastructure, cloudflared, establishes four outbound-only connections between the origin server and the Cloudflare network. These four connections are made to four different servers spread across at least two distinct data centers providing robust resiliency. It is possible to install many cloudflared instances to increase resilience between your origin servers and the Cloudflare network.
 

@@ -7,7 +7,7 @@ releaseNotes: |-
   **Known issues**
   No known issues
 
-  For releated Cloudflare for Teams documentation please see: https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp
+  For releated Cloudflare for Teams documentation please see: https://developers.cloudflare.com/cloudflare-one/team-and-resources/devices/warp
 version: 2022.3.186.0
 packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2022.3.186.0
 packageSize: 89055232
