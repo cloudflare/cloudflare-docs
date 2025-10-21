@@ -56,22 +56,36 @@ If you create a DNS record on `*.*.example.com`, only the first asterisk is inte
 
 A wildcard record applies only when no exact record exists at the queried name. If a record or delegation exists, the wildcard does not apply.
 
-Wildcards will be applied for multiple levels, but a specific record on any equal or lower level will terminate anything on or below this specific record.
+  <Details header="Example 1 - specific or below">
 
-  <Details header="Example">
-
-  If you have only these two records on your domain, `A` and `TXT`:
+  If you have only these two records on your domain:
 
   | Type  | Name                      | Content       |
   | ----- | ------------------------- | ------------- |
-  | `A`   | `*.example.com`           | `192.0.2.3`   |
-  | `TXT` | `subdomain1.example.com ` | `<some_text>` |
+  | `A`   | `*`           | `192.0.2.1`   |
+  | `TXT` | `abc` | `<some_text>` |
 
-  The `A` wildcard record will be used for queries going to any subdomain of `example.com` except `subdomain1.example.com` or anything below that specific label (`deeper.label.subdomain1.example.com`).
+  The `A` wildcard record will be used for queries going to any subdomain of `example.com` except `abc.example.com` or anything below that specific label (`123.abc.example.com` or `deeper.label.abc.example.com`, and so on).
 
-  The wildcard will still be used for deeper labels that are not below the specific record on `subdomain1.example.com` — for example, `deeper.label.subdomain2.example.com`.
+  The wildcard will still be used for deeper labels that are not below the specific record on `abc.example.com` — for example, `deeper.label.xyz.example.com`.
 
   </Details>
+
+	<Details header="Example 2 - implicit parent">
+
+	  If you have only these two records on your domain:
+
+  | Type  | Name                      | Content       |
+  | ----- | ------------------------- | ------------- |
+  | `A`   | `*`           | `192.0.2.1`   |
+  | `TXT` | `123.abc` | `<some_text>` |
+
+	In this example, `123.abc.example.com` is a descendant of `abc.example.com`, and `abc.example.com` has no records associated with it. The behavior will depend on the type of nameservers you are using:
+
+	- Standard nameservers: The wildcard `*.example.com` will still apply to `abc.example.com`.
+	- [Advanced nameservers](dns/foundation-dns/setup/)[^1]: In compliance with [RFC 4592](https://www.rfc-editor.org/rfc/rfc4592.html), the wildcard `*.example.com` will not apply to `abc.example.com`.
+
+	</Details>
 
 ## Availability
 
@@ -86,3 +100,5 @@ If you are using a [partial (CNAME) setup](/dns/zone-setups/partial-setup/) for 
 ## Additional information
 
 For more information on wildcard records — as well as more details about their limitations — refer to the [introductory blog post](https://blog.cloudflare.com/wildcard-proxy-for-everyone/).
+
+[^1]: An opt-in configuration available for Enterprise customers.
