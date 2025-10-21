@@ -461,7 +461,7 @@ entries:
     keywords: [response, raw]
     summary: The HTTP response headers without any transformation represented as a Map (or associative array).
     description: |-
-      This is the raw field version of the [`http.response.headers`](/ruleset-engine/rules-language/fields/reference/http.response.headers/) field. Raw fields, prefixed with `raw.`, preserve original request values for later evaluations. These fields are immutable during the entire request evaluation workflow, and they are not affected by the actions of previously matched rules.
+      This is the raw field version of the [`http.response.headers`](/ruleset-engine/rules-language/fields/reference/http.response.headers/) field. Raw fields, prefixed with `raw.`, preserve original response values for later evaluations. These fields are immutable during the entire request evaluation workflow, and they are not affected by the actions of previously matched rules.
     example_value: |-
       {"server": ["nginx"]}
     example_block: |-
@@ -473,7 +473,7 @@ entries:
     keywords: [response, raw]
     summary: The names of the headers in the HTTP response without any transformation.
     description: |-
-      This is the raw field version of the [`http.response.headers.names`](/ruleset-engine/rules-language/fields/reference/http.response.headers.names/) field. Raw fields, prefixed with `raw.`, preserve original request values for later evaluations. These fields are immutable during the entire request evaluation workflow, and they are not affected by the actions of previously matched rules.
+      This is the raw field version of the [`http.response.headers.names`](/ruleset-engine/rules-language/fields/reference/http.response.headers.names/) field. Raw fields, prefixed with `raw.`, preserve original response values for later evaluations. These fields are immutable during the entire request evaluation workflow, and they are not affected by the actions of previously matched rules.
     example_value: |-
       ["content-type"]
     example_block: |-
@@ -485,7 +485,7 @@ entries:
     keywords: [response, raw]
     summary: The values of the headers in the HTTP response without any transformation.
     description: |-
-      This is the raw field version of the [`http.response.headers.values`](/ruleset-engine/rules-language/fields/reference/http.response.headers.values/) field. Raw fields, prefixed with `raw.`, preserve original request values for later evaluations. These fields are immutable during the entire request evaluation workflow, and they are not affected by the actions of previously matched rules.
+      This is the raw field version of the [`http.response.headers.values`](/ruleset-engine/rules-language/fields/reference/http.response.headers.values/) field. Raw fields, prefixed with `raw.`, preserve original response values for later evaluations. These fields are immutable during the entire request evaluation workflow, and they are not affected by the actions of previously matched rules.
     example_value: |-
       Example 1: ["application/json"]
       Example 2: ["This header value is longer than 10 bytes"]
