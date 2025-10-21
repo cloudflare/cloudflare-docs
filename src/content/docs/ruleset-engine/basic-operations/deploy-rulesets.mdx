@@ -6,25 +6,25 @@ sidebar:
   order: 4
 ---
 
-import { APIRequest } from "~/components";
+import { APIRequest, RuleID } from "~/components";
 
 Use the [Rulesets API](/ruleset-engine/rulesets-api/) to deploy a ruleset. To deploy a ruleset, add a rule with `"action": "execute"` to a [phase entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset), specifying the ruleset ID to execute as an action parameter. Use a separate rule for each ruleset you want to deploy.
 
 A rule that executes a ruleset consists of:
 
-- The **ID of the ruleset** you want to execute.
-- An **expression**.
-- An **action**, set to `execute`.
+- The ID of the ruleset you want to execute, included in `action_parameters.id`.
+- An expression.
+- The `execute` action.
 
 The rules in the ruleset execute when a request satisfies the expression.
 
 :::note
-To apply a rule to every request in a phase at the **zone** level, set the rule expression to `true`.
+To apply a rule to every request in a phase at the zone level, set the rule expression to `true`.
 :::
 
 ## Example
 
-The following example deploys a [managed ruleset](/ruleset-engine/about/rulesets/#managed-rulesets) to the `http_request_firewall_managed` phase of a given zone (`$ZONE_ID`) by adding a rule that executes the managed ruleset.
+The following example deploys the [Cloudflare Managed Ruleset](/waf/managed-rules/reference/cloudflare-managed-ruleset/) (with ID <RuleID id="efb7b8c949ac4650a09736fc376e9aee" />) to the `http_request_firewall_managed` phase of a given zone (`$ZONE_ID`) by adding a rule that executes the managed ruleset.
 
 <APIRequest
 	path="/zones/{zone_id}/rulesets/phases/{ruleset_phase}/entrypoint"
@@ -37,7 +37,7 @@ The following example deploys a [managed ruleset](/ruleset-engine/about/rulesets
 			{
 				action: "execute",
 				action_parameters: {
-					id: "<CLOUDFLARE_MANAGED_RULESET_ID>",
+					id: "efb7b8c949ac4650a09736fc376e9aee",
 				},
 				expression: "true",
 				description: "Execute Cloudflare Managed Ruleset on my zone ruleset",
@@ -60,7 +60,7 @@ The following example deploys a [managed ruleset](/ruleset-engine/about/rulesets
 				"version": "1",
 				"action": "execute",
 				"action_parameters": {
-					"id": "<CLOUDFLARE_MANAGED_RULESET_ID>",
+					"id": "efb7b8c949ac4650a09736fc376e9aee",
 					"version": "3"
 				},
 				"expression": "true",
@@ -78,6 +78,10 @@ The following example deploys a [managed ruleset](/ruleset-engine/about/rulesets
 	"messages": []
 }
 ```
+
+:::caution
+This API request replaces any existing rules in the `http_request_firewall_managed` phase entry point ruleset with a single rule.
+:::
 
 ## Related resources
 
