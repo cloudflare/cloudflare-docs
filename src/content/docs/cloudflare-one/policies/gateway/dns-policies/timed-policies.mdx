@@ -9,12 +9,42 @@ import { APIRequest, Tabs, TabItem } from "~/components";
 
 By default, Cloudflare Gateway policies apply at all times when turned on. With timed DNS policies, you can control when DNS policies are active. You can configure a policy to be active during specific time periods or set the policy to expire after a certain duration.
 
-There are two types of timed DNS policies:
+There are two timed DNS policy options:
 
-- [Scheduled policies](#scheduled-policies): The policy is active during a recurring weekly schedule (for example, weekdays from 9 AM to 5 PM).
-- [Duration policies](#duration-policies): The policy is active for a specific amount of time after being turned on (for example, 30 minutes).
+- [Policy duration](#policy-duration): The policy is active for a specific amount of time after being turned on (for example, 30 minutes).
+- [Policy schedule](#policy-schedule): The policy is active during a recurring weekly schedule (for example, weekdays from 9 AM to 5 PM).
 
-## Scheduled policies
+## Policy duration
+
+You can use a time-based policy duration to set a specific time frame for the policy to turn on or configure an exact time for the policy to turn off.
+
+To set a duration for a DNS policy:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Gateway** > **Firewall policies** > **DNS**.
+2. Create a new DNS policy or choose an existing policy and select **Edit**.
+3. In **Apply durations and schedules**, turn on **Policy duration**.
+4. In **Input method**, choose the type of duration:
+   - Choose _Duration_ and enter a specific amount of time until the policy turns off.
+   - Choose _Exact end date_ and enter a specific date and time in your account's time zone for the policy to turn off.
+5. Select **Save policy**.
+
+When a policy turns off, it will remain off until you turn it back on.
+
+Policies with a set duration will retain their duration when turned off or on. For example, you can create a policy at 12:00 PM and set it to turn off after six hours. If you turn the policy off at 3:00 PM and turn it back on 4:00 PM, the policy will still turn off at 6:00 PM, six hours after the original time.
+
+### Reset a policy's duration
+
+When a policy's time duration expires, you can turn the policy back on for the duration you originally configured. To reset a policy's duration, select the policy and choose **Reset policy duration**.
+
+For policies with an exact end time, you can change the time before the policy turns off. Once the policy reaches its exact end time, you will need to edit the policy and set a new end time. To set a new exact end time:
+
+1. Select the policy.
+2. Choose **Edit**.
+3. Turn on **Set a policy duration**.
+4. In **Input method**, choose _Exact end date_. In **Date and time**, enter a new date and time for the policy to turn off.
+5. Select **Save policy**.
+
+## Policy schedule
 
 You can use Gateway to create a new DNS policy with a schedule or add a schedule to an existing policy.
 
@@ -23,9 +53,9 @@ You can use Gateway to create a new DNS policy with a schedule or add a schedule
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Gateway** > **Firewall policies** > **DNS**.
 2. Create a new DNS policy or choose an existing policy and select **Edit**.
-3. In **Time-based settings**, turn on **Policy schedule**.
-4. Choose a preset schedule or choose _Custom_ to define a custom schedule. You can choose up to three non-overlapping time ranges of 15 minute intervals.
-5. (Optional) Choose **Use user's timezone** to apply the policy based on the local time of the user making the DNS query, or choose **Enforce a specific timezone** to apply the policy based on the timezone you select, regardless of the user's location.
+3. In **Apply durations and schedules**, turn on **Policy schedule**.
+4. (Optional) In **Time Zone**, choose a time zone to apply the policy based on the time zone you select, regardless of the user's location. By default, Gateway will use the end user's time zone to apply the policy based on the local time of the user making the DNS query.
+5. In **Schedule template**, choose a preset schedule, or choose _Custom schedule_ to define a custom schedule. You can choose up to three non-overlapping time ranges of 15 minute intervals.
 6. Select **Save policy**.
 
 </TabItem>
@@ -106,31 +136,3 @@ The following command creates a DNS policy to block `clockin.com` only on weeken
 :::note
 Gateway will not change the policy's `enabled` status when inside or outside of the time period specified. When enabled, Gateway activates or deactivates the policy according to its schedule. When disabled, the policy is always deactivated.
 :::
-
-## Duration policies
-
-You can use a time-based policy duration to set a specific time frame for the policy to turn on or configure an exact time for the policy to turn off.
-
-To set a duration for a DNS policy:
-
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Gateway** > **Firewall policies** > **DNS**.
-2. Create a new DNS policy or choose an existing policy and select **Edit**.
-3. In **Time-based settings**, turn on **Policy duration**.
-4. In **Input method**, choose _Duration_ and enter a specific amount of time until the policy turns off or choose _Exact end date_ and enter a specific date and time in your account's time zone for the policy to turn off.
-5. Select **Save policy**.
-
-When a policy turns off, it will remain off until you turn it back on.
-
-Policies with a set duration will retain their duration when turned off or on. For example, you can create a policy at 12:00 PM and set it to turn off after six hours. If you turn the policy off at 3:00 PM and turn it back on 4:00 PM, the policy will still turn off at 6:00 PM, six hours after the original time.
-
-### Reset a policy's duration
-
-When a policy's time duration expires, you can turn the policy back on for the duration you originally configured. To reset a policy's duration, select the policy and choose **Reset policy duration**.
-
-For policies with an exact end time, you can change the time before the policy turns off. Once the policy reaches its exact end time, you will need to edit the policy and set a new end time. To set a new exact end time:
-
-1. Select the policy.
-2. Choose **Edit**.
-3. Turn on **Set a policy duration**.
-4. In **Input method**, choose _Exact end date_. In **Date and time**, enter a new date and time for the policy to turn off.
-5. Select **Save policy**.
