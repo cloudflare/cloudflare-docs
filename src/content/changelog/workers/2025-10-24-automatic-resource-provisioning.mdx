@@ -1,0 +1,33 @@
+---
+title: Automatic resource provisioning
+description: Wrangler can now automatically provision resources when deploying your Worker
+products:
+  - workers
+date: 2025-10-24
+---
+
+import { Render, TypeScriptExample, WranglerConfig } from "~/components";
+
+If your Wrangler configuration file includes a KV namespace, D1 database, or R2 bucket that does not yet exist on your account, you can still develop locally and deploy your application seamlessly, without having to run additional commands to create resources.
+
+You can set up your Wrangler configuration file like the following:
+
+```jsonc
+{
+	"kv_namespaces": {
+		"binding": "MY_KV",
+	},
+	"r2_buckets": {
+		"binding": "MY_R2",
+	},
+	"d1_databases": {
+		"binding": "MY_D1",
+	},
+}
+```
+
+When using this feature, the `id` field for KV and D1 and the `bucket_name` for R2 are optional in your wrangler configuration.
+
+When developing locally, you can interact with local versions of any KV, D1, R2 resources configured in your Wrangler configuration file, without having to include an id to existing resource
+
+Once ready to deploy, run `npx wrangler deploy`. Cloudflare will automatically create the resources that do not exist and bind them to your worker. Future deployments will use the same created resources.
