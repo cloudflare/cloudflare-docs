@@ -7,7 +7,7 @@ hidden: false
 date: 2025-06-18
 ---
 
-[Gateway](/cloudflare-one/policies/gateway/) will now evaluate [Network (Layer 4) policies](/cloudflare-one/policies/gateway/network-policies/) **before** [HTTP (Layer 7) policies](/cloudflare-one/policies/gateway/http-policies/). This change preserves your existing security posture and does not affect which traffic is filtered — but it may impact how notifications are displayed to end users.
+[Gateway](/cloudflare-one/traffic-policies/) will now evaluate [Network (Layer 4) policies](/cloudflare-one/traffic-policies/network-policies/) **before** [HTTP (Layer 7) policies](/cloudflare-one/traffic-policies/http-policies/). This change preserves your existing security posture and does not affect which traffic is filtered — but it may impact how notifications are displayed to end users.
 
 This change will roll out progressively between **July 14–18, 2025**. If you use HTTP policies, we recommend reviewing your configuration ahead of rollout to ensure the user experience remains consistent.
 
@@ -50,4 +50,4 @@ This update is based on user feedback and aims to:
 
 ---
 
-To learn more, visit the [Gateway order of enforcement documentation](/cloudflare-one/policies/gateway/order-of-enforcement/).
+To learn more, visit the [Gateway order of enforcement documentation](/cloudflare-one/traffic-policies/order-of-enforcement/).
