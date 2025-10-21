@@ -6,6 +6,8 @@ sidebar:
 head:
   - tag: title
     content: Set up a partial (CNAME) zone
+description: >-
+  A partial (CNAME) setup allows you to use Cloudflare's reverse proxy while maintaining your primary and authoritative DNS provider.
 ---
 
 import { Details, Render, GlossaryTooltip, Steps } from "~/components";
@@ -87,7 +89,7 @@ If your organization has multiple Cloudflare accounts, also consider using zone 
    ```
 
    </Details>
-   2. Remove any previously existing A, AAAA, or CNAME records referencing the hostnames you want to proxy through Cloudflare. For these hostnames, leave only the records pointing to `{your-hostname}.cdn.cloudflare.net`.
+2. Remove any previously existing A, AAAA, or CNAME records referencing the hostnames you want to proxy through Cloudflare. For these hostnames, leave only the records pointing to `{your-hostname}.cdn.cloudflare.net`.
 
 2. Repeat this process for each subdomain that should be proxied to Cloudflare.
 

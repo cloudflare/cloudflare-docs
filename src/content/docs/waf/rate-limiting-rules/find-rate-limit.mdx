@@ -8,7 +8,7 @@ head:
     content: Find an appropriate rate limit
 ---
 
-import { Steps } from "~/components";
+import { Steps, DashButton } from "~/components";
 
 The **Request rate analysis** tab in [Security Analytics](/waf/analytics/security-analytics/) displays data on the request rate for traffic matching the selected filters and time period. Use this tab to determine the most appropriate rate limit for incoming traffic matching the applied filters.
 
@@ -18,7 +18,7 @@ The **Request rate analysis** tab is only available to Enterprise customers.
 
 ## User interface overview
 
-The **Request rate analysis** tab is available at the zone level in **Security** > **Analytics**.
+The **Request rate analysis** tab is available at the zone level in the **Analytics** page.
 
 ![Screenshot of the Request rate analysis tab in Security Analytics](~/assets/images/waf/rate-limit-analytics.png)
 
@@ -42,17 +42,17 @@ For more information on how Cloudflare calculates the request rate of incoming t
 
 <Steps>
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and zone.
+1. In the Cloudflare dashboard, go to the **Analytics** page.
 
-2. Go to **Security** > **Analytics**.
+   <DashButton url="/?to=/:account/:zone/security/analytics" />
 
-3. In the **Traffic analysis** tab, select a specific time period:
+2. In the **Traffic analysis** tab, select a specific time period:
    - To look at the regular rate distribution, specify a period with non-peak traffic.
    - To analyze the rate of offending visitors/bots, select a period corresponding to an attack.
 
-4. Apply filters to analyze a particular situation in your application where you want to apply rate limiting (for example, filter by `/login` URL path).
+3. Apply filters to analyze a particular situation in your application where you want to apply rate limiting (for example, filter by `/login` URL path).
 
-5. (Optional) To focus on non-automated/human traffic, use the bot score quick filter in the sidebar.
+4. (Optional) To focus on non-automated/human traffic, use the bot score quick filter in the sidebar.
 
 </Steps>
 

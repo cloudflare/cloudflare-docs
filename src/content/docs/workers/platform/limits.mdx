@@ -18,7 +18,7 @@ import { Render, WranglerConfig, DashButton } from "~/components";
 | [Environment variables](#environment-variables)                                  | 64/Worker    | 128/Worker   |
 | [Environment variable<br/>size](#environment-variables)                          | 5 KB         | 5 KB         |
 | [Worker size](#worker-size)                                                      | 3 MB         | 10 MB        |
-| [Worker startup time](#worker-startup-time)                                      | 400 ms       | 400 ms       |
+| [Worker startup time](#worker-startup-time)                                      | 1 second     | 1 second     |
 | [Number of Workers](#number-of-workers)<sup>1</sup>                              | 100          | 500          |
 | Number of [Cron Triggers](/workers/configuration/cron-triggers/)<br/>per account | 5            | 250          |
 | Number of [Static Asset](#static-assets) files per Worker version                | 20,000       | 100,000      |
@@ -35,7 +35,7 @@ import { Render, WranglerConfig, DashButton } from "~/components";
 
 URLs have a limit of 16 KB.
 
-Request headers observe a total limit of 32 KB, but each header is limited to 16 KB.
+Request headers observe a total limit of 128 KB.
 
 Cloudflare has network-wide limits on the request body size. This limit is tied to your Cloudflare account's plan, which is separate from your Workers plan. When the request body size of your `POST`/`PUT`/`PATCH` requests exceed your plan's limit, the request is rejected with a `(413) Request entity too large` error.
 
@@ -52,7 +52,7 @@ Cloudflare Enterprise customers may contact their account team or [Cloudflare Su
 
 ## Response limits
 
-Response headers observe a total limit of 32 KB, but each header is limited to 16 KB.
+Response headers observe a total limit of 128 KB.
 
 Cloudflare does not enforce response limits on response body sizes, but cache limits for [our CDN are observed](/cache/concepts/default-cache-behavior/). Maximum file size is 512 MB for Free, Pro, and Business customers and 5 GB for Enterprise customers.
 
@@ -335,13 +335,15 @@ To reduce the upload size of a Worker, consider some of the following strategies
 
 ## Worker startup time
 
-A Worker must be able to be parsed and execute its global scope (top-level code outside of any handlers) within 400 ms. Worker size can impact startup because there is more code to parse and evaluate. Avoiding expensive code in the global scope can keep startup efficient as well.
+A Worker must be able to be parsed and execute its global scope (top-level code outside of any handlers) within 1 second. Worker size can impact startup because there is more code to parse and evaluate. Avoiding expensive code in the global scope can keep startup efficient as well.
 
 You can measure your Worker's startup time by deploying it to Cloudflare using [Wrangler](/workers/wrangler/). When you run `npx wrangler@latest deploy` or `npx wrangler@latest versions upload`, Wrangler will output the startup time of your Worker in the command-line output, using the `startup_time_ms` field in the [Workers Script API](/api/resources/workers/subresources/scripts/methods/update/) or [Workers Versions API](/api/resources/workers/subresources/scripts/subresources/versions/methods/create/).
 
 If you are having trouble staying under this limit, consider [profiling using DevTools](/workers/observability/dev-tools/) locally to learn how to optimize your code.
 
 When you attempt to deploy a Worker using the [Wrangler CLI](/workers/wrangler/), but your deployment is rejected because your Worker exceeds the maximum startup time, Wrangler will automatically generate a CPU profile that you can import into Chrome DevTools or open directly in VSCode. You can use this to learn what code in your Worker uses large amounts of CPU time at startup. Refer to [`wrangler check startup`](/workers/wrangler/commands/#startup) for more details.
+
+Exceeding this limit is most commonly caused by attempting to perform expensive initialization work directly in top level (global) scope, rather than either at build time or when your Worker's handler is invoked. For example, attempting to initialize an app by generating or consuming a large schema.
 
 <Render file="limits_increase" product="workers" />
 

@@ -53,7 +53,7 @@ You can create a response header transform rule [in the dashboard](/rules/transf
 
 - The response header values are calculated using the field values from the corresponding HTTP request. For example, the value of `ip.src.country` will be the country of the website visitor, not the origin where the response was sent from.
 
-- You cannot modify or remove HTTP response headers whose name starts with `cf-` or `x-cf-`.
+- You cannot add, modify, or remove HTTP response headers whose name starts with `cf-` or `x-cf-`.
 
 - You cannot modify the value of certain headers such as `server`, `eh-cache-tag`, or `eh-cdn-cache-control`.
 

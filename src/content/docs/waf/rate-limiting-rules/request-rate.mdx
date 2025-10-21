@@ -30,6 +30,8 @@ The counting model of this rate limiting rule is based on the number of incoming
 
 - The available characteristics depend on your Cloudflare plan. Refer to [Availability](/waf/rate-limiting-rules/#availability) for more information.
 
+- In some situations, Workers subrequests made to the same zone will be counted as separate requests, which will cause the rate limiting rule to trigger sooner than expected. Refer to [Troubleshooting](/waf/rate-limiting-rules/troubleshooting/#some-workers-subrequests-are-counted-as-separate-requests) for details.
+
 :::
 
 ## Example A

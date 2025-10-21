@@ -25,7 +25,7 @@ Logs Engine is going to be replaced by Log Explorer. For further details, consul
 
 ## Query logs
 
-You can use the API to query and download your logs by time range or RayID.
+You can use the API to query and download your logs by time range or [RayID](/fundamentals/reference/cloudflare-ray-id/).
 
 ## Authentication
 
@@ -89,7 +89,7 @@ Results can be piped to a file using `> logs.json`.
 
 Additionally, if you want to receive the raw GZIP bytes without them being transparently decompressed by your client, include the header `--header "Accept-Encoding: gzip"`.
 
-## ​Retrieve logs by RayID
+## ​Retrieve logs by Ray ID
 
 Using your logs stored in R2 - the Logpull RayID Lookup feature allows you to query an indexed time range for the presence of an RayID and return the matching result. This feature is available to users with the Logpull RayID Lookup beta subscription.
 

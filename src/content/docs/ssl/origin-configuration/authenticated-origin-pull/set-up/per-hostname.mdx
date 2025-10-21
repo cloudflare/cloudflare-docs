@@ -46,21 +46,17 @@ In the API response, save the certificate `id` since it will be required in step
 	product="ssl"
 />
 
-## 3. Enable Authenticated Origin Pulls (globally)
-
-<Render file="aop-enable-feature" product="ssl" />
-
-## 4. Enable Authenticated Origin Pulls for the hostname
+## 3. Enable Authenticated Origin Pulls for the hostname
 
 Use the Cloudflare API to send a [`PUT`](/api/resources/origin_tls_client_auth/subresources/hostnames/methods/update/) request to enable Authenticated Origin Pulls for specific hostnames.
 
 If you had set up logging on your origin during step 2, test and confirm that Authenticated Origin Pulls is working.
 
-## 5. Enforce validation check on your origin
+## 4. Enforce validation check on your origin
 
 <Render file="aop-enforce-validation" product="ssl" />
 
-## 6. (Optional) Set up alerts for hostname-level Authenticated Origin Pulls certificates
+## 5. (Optional) Set up alerts for hostname-level Authenticated Origin Pulls certificates
 
 You can configure alerts to receive notifications before your AOP certificates expire.
 

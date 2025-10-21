@@ -9,7 +9,7 @@ description: Diagnose issues with Workers metrics, and review request data for a
 
 ---
 
-import { GlossaryTooltip, DashButton } from "~/components"
+import { GlossaryTooltip, DashButton, Steps } from "~/components"
 
 There are two graphical sources of information about your Workers traffic at a given time: Workers metrics and zone-based Workers analytics.
 
@@ -21,11 +21,13 @@ Zone analytics show how much traffic all Workers assigned to a zone are handling
 
 Workers metrics aggregate request data for an individual Worker (if your Worker is running across multiple domains, and on `*.workers.dev`, metrics will aggregate requests across them). To view your Worker's metrics:
 
+<Steps>
 1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
 
    <DashButton url="/?to=/:account/workers-and-pages" />
 
 2. In **Overview**, select your Worker to view its metrics.
+</Steps>
 
 There are two metrics that can help you understand the health of your Worker in a given moment: requests success and error metrics, and invocation statuses.
 
@@ -65,6 +67,7 @@ The Duration per request chart shows historical [duration](/workers/platform/lim
 
 To review invocation statuses:
 
+<Steps>
 1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
 
    <DashButton url="/?to=/:account/workers-and-pages" />
@@ -72,6 +75,7 @@ To review invocation statuses:
 2. Select your Worker.
 4. Find the **Summary** graph in **Metrics**.
 5. Select **Errors**.
+</Steps>
 
 Worker invocation statuses indicate whether a Worker executed successfully or failed to generate a response in the Workers runtime. Invocation statuses differ from HTTP status codes. In some cases, a Worker invocation succeeds but does not generate a successful HTTP status because of another error encountered outside of the Workers runtime. Some invocation statuses result in a [Workers error code](/workers/observability/errors/#error-pages-generated-by-workers) being returned to the client.
 
@@ -110,12 +114,14 @@ Worker metrics can be inspected for up to three months in the past in maximum in
 Zone analytics aggregate request data for all Workers assigned to any [routes](/workers/configuration/routing/routes/) defined for a zone.
 
 To review zone metrics:
-1. In the Cloudflare dashboard, go to the **Account home** page.
 
-   <DashButton url="/?to=/:account/home" />
+<Steps>
+1. In the Cloudflare dashboard, go to the **Analytics & Logs** page for your zone.
 
-2. Select your domain.
-3. In **Analytics & Logs**, select **Workers**.
+   <DashButton url="/?to=/:account/:zone/analytics" />
+
+2. Select **Workers**.
+</Steps>
 
 Zone data can be scoped by time range within the last 30 days. The dashboard includes charts and information described below.
 

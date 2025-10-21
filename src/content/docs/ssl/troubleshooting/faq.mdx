@@ -157,3 +157,11 @@ We recommend one of the following options:
 
 * Change the Universal Certificate Authority to a different CA.
 * Add an [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/) or [custom certificate](/ssl/edge-certificates/custom-certificates/) using a different CA.
+
+***
+
+## What is the HTTP version used for OCSP?
+
+Our OCSP implementation uses HTTP/1.1 by default for plain HTTP connections.
+
+For HTTPS connections, the client automatically attempts to use HTTP/2 if the server supports it through the TLS ALPN (Application-Layer Protocol Negotiation) extension. If HTTP/2 is not available or supported by the server, it will fall back to HTTP/1.1.

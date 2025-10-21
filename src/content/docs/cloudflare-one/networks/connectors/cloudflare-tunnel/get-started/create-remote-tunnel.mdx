@@ -1,0 +1,46 @@
+---
+title: Create a tunnel (dashboard)
+pcx_content_type: how-to
+sidebar:
+  order: 1
+---
+
+import { Render } from "~/components";
+
+Follow this step-by-step guide to create your first [remotely-managed tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/tunnel-useful-terms/#remotely-managed-tunnel) using Zero Trust.
+
+## 1. Create a tunnel
+
+<Render file="tunnel/create-tunnel" product="cloudflare-one" />
+
+The next steps depend on whether you want to [publish an application to the Internet](#2a-publish-an-application) or [connect a private network](#2b-connect-a-network).
+
+## 2a. Publish an application
+
+Before you publish an application through your tunnel, you must:
+
+- [Add a website to Cloudflare](/fundamentals/manage-domains/add-site/).
+- [Change your domain nameservers to Cloudflare](/dns/zone-setups/full-setup/setup/).
+
+Follow these steps to publish an application to the Internet. If you are looking to connect a private resource, skip to the [Connect a network](#2b-connect-a-network) section.
+
+<Render file="tunnel/add-published-application" product="cloudflare-one" />
+
+Anyone on the Internet can now access the application at the specified hostname. To allow or block specific users, [create an Access application](/cloudflare-one/applications/configure-apps/self-hosted-public-app/).
+
+## 2b. Connect a network
+
+To connect a private network through your tunnel:
+
+1. Go to the **CIDR** tab.
+2. In **CIDR**, enter the private IP address or CIDR range of your service (for example, `10.0.0.1` or `10.0.0.0/8`).
+
+`cloudflared` can now route traffic to these destination IPs. To configure Zero Trust policies and connect as a user, refer to [Connect an IP/CIDR](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/).
+
+If you would like to route to a private application using its hostname instead of its IP, refer to [Connect a private hostname](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-private-hostname/).
+
+## 3. View your tunnel
+
+After saving the tunnel, you will be redirected to the **Tunnels** page. Look for your new tunnel to be listed along with its active connector.
+
+![Tunnel appearing in the Tunnels table](~/assets/images/cloudflare-one/connections/connect-apps/tunnel-table.png)

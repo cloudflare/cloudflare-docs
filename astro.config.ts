@@ -4,6 +4,7 @@ import starlightDocSearch from "@astrojs/starlight-docsearch";
 import starlightImageZoom from "starlight-image-zoom";
 import liveCode from "astro-live-code";
 import starlightLinksValidator from "starlight-links-validator";
+import starlightScrollToTop from "starlight-scroll-to-top";
 import icon from "astro-icon";
 import sitemap from "@astrojs/sitemap";
 import react from "@astrojs/react";
@@ -162,6 +163,14 @@ export default defineConfig({
 					clientOptionsModule: "./src/plugins/docsearch/index.ts",
 				}),
 				starlightImageZoom(),
+				starlightScrollToTop({
+					tooltipText: "Back to top",
+					showTooltip: true,
+					svgPath: "M12 6L6 12M12 6L18 12M12 12L6 18M12 12L18 18",
+					showProgressRing: true,
+					progressRingColor: "white",
+					showOnHomepage: false, // Hide on homepage (default)
+				}),
 			],
 			lastUpdated: true,
 			markdown: {

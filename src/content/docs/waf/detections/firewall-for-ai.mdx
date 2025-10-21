@@ -17,6 +17,7 @@ import {
 	Details,
 	Steps,
 	Type,
+	DashButton,
 } from "~/components";
 
 Firewall for AI is a detection that can help protect your services powered by <GlossaryTooltip term="LLM">large language models</GlossaryTooltip> (LLMs) against abuse. This model-agnostic detection currently helps you do the following:
@@ -45,8 +46,11 @@ Firewall for AI is only available in the new [application security dashboard](/s
 
 <Steps>
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-2. Go to **Security** > **Settings** and filter by **Detections**.
+1. In the Cloudflare dashboard, go to the Security **Settings** page.
+
+   <DashButton url="/?to=/:account/:zone/security/settings" />
+
+2. (Optional) Filter by **Detection tools**.
 3. Turn on **Firewall for AI**.
 
 </Steps>

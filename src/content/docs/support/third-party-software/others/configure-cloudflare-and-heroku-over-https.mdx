@@ -4,13 +4,13 @@ source: https://support.cloudflare.com/hc/en-us/articles/205893698-Configure-Clo
 title: Configure Cloudflare and Heroku over HTTPS
 ---
 
-import { Example } from "~/components";
+import { Example, DashButton  } from "~/components";
 
 ## Overview
 
 Heroku is a cloud PaaS that supports several pre-configured programming languages. Heroku deals with all your infrastructure so you can focus on your application without having to work at the command line.
 
-This article describes how to configure Heroku with Cloudflare to serve your traffic over HTTPS. For this article, we'll assume that you already have an [active domain on Cloudflare](https://support.cloudflare.com/hc/en-us/sections/200820158-CloudFlare-101), as well as a running Heroku app.
+This article describes how to configure Heroku with Cloudflare to serve your traffic over HTTPS. For this article, we'll assume that you already have an [active domain on Cloudflare](/fundamentals/manage-domains/), as well as a running Heroku app.
 
 ---
 
@@ -26,7 +26,11 @@ Below, you will need to add DNS records for a subdomain and the apex domain (als
 
 ### Step 2a - Add a subdomain
 
-To start, log in to your Cloudflare account, navigate to the **DNS** app and add a 'www' *CNAME* record that points to the custom domain (also known as *DNS target*) that you obtained in Step 1 above for your subdomain.
+In the Cloudflare dashboard, go to the **DNS** page.
+
+   <DashButton url="/?to=/:account/:zone/dns" />
+
+Add a 'www' *CNAME* record that points to the custom domain (also known as *DNS target*) that you obtained in Step 1 above for your subdomain.
 
 <Example>
 

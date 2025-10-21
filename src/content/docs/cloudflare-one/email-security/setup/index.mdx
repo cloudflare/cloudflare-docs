@@ -16,6 +16,19 @@ Before you start the onboarding process, you will have to:
 2. Learn about dispositions, impersonation registry, and reclassifications.
 3. Know the steps to configure your email environment correctly.
 
+The following table compares features available across API, BCC/Journaling and MX/Inline:
+
+| Feature                  	| API                                                 	| BCC                                                 	| Journaling                                                      	| MX/Inline                                                    	|
+|--------------------------	|-----------------------------------------------------	|-----------------------------------------------------	|-----------------------------------------------------------------	|--------------------------------------------------------------	|
+| Deployment Type          	| Post-delivery                                       	| Post-delivery                                       	| Post-delivery                                                   	| Pre-delivery (Inline)                                        	|
+| Supported Email Provider 	| Microsoft 365                                       	| Gmail, Microsoft 365                                	| Microsoft 365                                                   	| All email providers                                          	|
+| Inspection Timing        	| Scans messages already in the mailbox               	| Scans a copy of the message  upon delivery          	| Scans a copy of the message  upon delivery                      	| Scans the message before delivery                            	|
+| Mechanism                	| Uses MS Graph API  to integrate with Microsoft 365. 	| Uses a BCC rule  to send a copy to Cloudflare       	| Uses a Journal Rule in the Microsoft Purview portal  	| Changes MX records  to point email traffic to Cloudflare     	|
+| Message Remediation      	| Auto-moves through Read/Write API permissions     	| Auto-moves through Google or Microsoft integration  	| Auto-moves through Microsoft integration                        	| Messages can be blocked,  quarantined, or modified inline    	|
+| Message Modification     	| Primarily deletion/move post-delivery              	| Primarily deletion/move post-delivery             	| Primarily deletion/move post-delivery.                          	| Move post-delivery. Supports link actions and text add-ons.[^1]  	|
+
+[^1] With [inline deployment](/cloudflare-one/email-security/setup/pre-delivery-deployment/mx-inline-deployment/), Cloudflare recommends setting up the integrations to allow post-delivery response and phish submission response to work. Refer to step 7 in [Auto-moves](/cloudflare-one/email-security/auto-moves/) to learn more.
+
 ## 1. Choose a deployment
 
 ### Post-delivery deployment

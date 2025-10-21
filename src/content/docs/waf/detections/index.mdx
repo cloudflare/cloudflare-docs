@@ -14,10 +14,8 @@ import {
 	Tabs,
 	TabItem,
 	Steps,
-	Render,
+	DashButton,
 } from "~/components";
-
-<Render file="survey" product="waf" />
 
 Traffic detections check incoming requests for malicious or potentially malicious activity. Each enabled detection provides one or more scores — available in the [Security Analytics](/waf/analytics/security-analytics/) dashboard — that you can use in rule expressions.
 
@@ -49,8 +47,11 @@ To turn on a traffic detection:
 
 <Steps>
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-2. Go to **Security** > **Settings** and filter by **Detections**.
+1. In the Cloudflare dashboard, go to the Security **Settings** page.
+
+   <DashButton url="/?to=/:account/:zone/security/settings" />
+
+2. Filter by **Detection tools**.
 3. Turn on the desired detections.
 
 </Steps>

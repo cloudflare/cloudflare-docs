@@ -16,9 +16,9 @@ The [HTTP Event Collector (HEC)](https://dev.splunk.com/enterprise/docs/devtools
 
 <Render file="enable-logpush-job" product="logs" />
 
-5. In **Select a destination**, choose **Splunk**.
+4. In **Select a destination**, choose **Splunk**.
 
-6. Enter or select the following destination information:
+5. Enter or select the following destination information:
    - **Splunk HEC URL**
    - **Channel ID** - This is a random GUID that you can generate using [guidgenerator.com](https://guidgenerator.com/).
    - **Auth Token** - Event Collector token.
@@ -27,19 +27,19 @@ The [HTTP Event Collector (HEC)](https://dev.splunk.com/enterprise/docs/devtools
 
 When you are done entering the destination details, select **Continue**.
 
-7. Select the dataset to push to the storage service.
+6. Select the dataset to push to the storage service.
 
-8. In the next step, you need to configure your logpush job:
+7. In the next step, you need to configure your logpush job:
    - Enter the **Job name**.
    - Under **If logs match**, you can select the events to include and/or remove from your logs. Refer to [Filters](/logs/logpush/logpush-job/filters/) for more information. Not all datasets have this option available.
    - In **Send the following fields**, you can choose to either push all logs to your storage destination or selectively choose which logs you want to push.
 
-9. In **Advanced Options**, you can:
+8. In **Advanced Options**, you can:
    - Choose the format of timestamp fields in your logs (`RFC3339`(default),`Unix`, or `UnixNano`).
    - Select a [sampling rate](/logs/logpush/logpush-job/api-configuration/#sampling-rate) for your logs or push a randomly-sampled percentage of logs.
    - Enable redaction for `CVE-2021-44228`. This option will replace every occurrence of `${` with `x{`.
 
-10. Select **Submit** once you are done configuring your logpush job.
+9. Select **Submit** once you are done configuring your logpush job.
 
 ## Manage via API
 

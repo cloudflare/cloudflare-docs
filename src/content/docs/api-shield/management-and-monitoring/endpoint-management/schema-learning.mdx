@@ -6,7 +6,7 @@ sidebar:
   order: 2
 ---
 
-import { Steps, Tabs, TabItem } from "~/components"
+import { Steps, Tabs, TabItem, DashButton } from "~/components"
 
 Cloudflare learns schema parameters via traffic inspection. For all endpoints saved to Endpoint Management, you can export the learned schema in OpenAPI `v3.0.0` format by hostname.
 
@@ -26,8 +26,10 @@ To protect your API with a learned schema, refer to [Schema validation](/api-shi
   </TabItem>
   <TabItem label="New dashboard" icon="rocket">
     <Steps>
-      1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
-      2. Go to **Security** > **Web assets** > **Endpoints**.
+      1. In the Cloudflare dashboard, go to the **Web Assets** page.
+
+          <DashButton url="/?to=/:account/:zone/security/web-assets" />
+      2. Go to the **Endpoints** tab.
       3. Select **Export schema** and choose a hostname to export.
       4. Select whether to include learned parameters and rate limit recommendations
       5. Select **Export schema** and choose a location to save the file.

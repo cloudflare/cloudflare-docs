@@ -1,0 +1,162 @@
+---
+pcx_content_type: reference
+title: Common errors
+sidebar:
+  order: 2
+---
+
+import { Tabs, TabItem, GlossaryTooltip, Render } from "~/components";
+
+This section covers the most common errors you might encounter when connecting resources with Cloudflare Tunnel. If you do not see your issue listed below, refer to the [troubleshooting FAQ](/cloudflare-one/faq/troubleshooting/), view your [Tunnel logs](/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/logs/), or [contact Cloudflare Support](/support/contacting-cloudflare-support/).
+
+## Tunnel status
+
+You can check your tunnel’s connection status either from the Zero Trust dashboard (by going to **Networks** > **Tunnels**) or by running the `cloudflared tunnel list` command. Each tunnel displays a status that reflects its current connection state:
+
+<Render file="tunnel/tunnel-status" product="cloudflare-one" />
+
+:::note[Tunnel status scope]
+
+The tunnel status only reflects the connection between `cloudflared` and the Cloudflare network. Tunnel status does not indicate whether `cloudflared` can successfully reach your internal services. As a result, a tunnel can appear `Healthy` while users are still unable to connect to an application.
+:::
+
+## I see `cloudflared service is already installed`.
+
+If you see this error when installing a remotely-managed tunnel, ensure that no other `cloudflared` instances are running as a service on this machine. Only a single instance of `cloudflared` may run as a service on any given machine. Instead, we recommend adding additional routes to your existing tunnel. Alternatively, you can run `sudo cloudflared service uninstall` to uninstall `cloudflared`.
+
+## I see `An A, AAAA, or CNAME record with that host already exists`.
+
+If you are unable to save your tunnel's public hostname, choose a different hostname or delete the existing DNS record. [Check the DNS records](/dns/manage-dns-records/how-to/create-dns-records/) for your domain from the [Cloudflare dashboard](https://dash.cloudflare.com).
+
+## Tunnel credentials file doesn't exist or is not a file.
+
+If you encounter the following error when running a tunnel, double check your `config.yml` file and ensure that the `credentials-file` points to the correct location. You may need to change `/root/` to your home directory.
+
+```sh
+cloudflared tunnel run
+```
+
+```sh output
+2021-06-04T06:21:16Z INF Starting tunnel tunnelID=928655cc-7f95-43f2-8539-2aba6cf3592d
+Tunnel credentials file '/root/.cloudflared/928655cc-7f95-43f2-8539-2aba6cf3592d.json' doesn't exist or is not a file
+```
+
+## My tunnel fails to authenticate.
+
+To start using Cloudflare Tunnel, a super administrator in the Cloudflare account must first log in through `cloudflared login`. The client will launch a browser window and prompt the user to select a hostname in their Cloudflare account. Once selected, Cloudflare generates a certificate that consists of three components:
+
+- The public key of the origin certificate for that hostname
+- The private key of the origin certificate for that domain
+- A token that is unique to Cloudflare Tunnel
+
+Those three components are bundled into a single PEM file that is downloaded one time during that login flow. The host certificate is valid for the root domain and any subdomain one-level deep. Cloudflare uses that certificate file to authenticate `cloudflared` to create DNS records for your domain in Cloudflare.
+
+The third component, the token, consists of the zone ID (for the selected domain) and an API token scoped to the user who first authenticated with the login command. When user permissions change (if that user is removed from the account or becomes an admin of another account, for example), Cloudflare rolls the user's API key. However, the certificate file downloaded through `cloudflared` retains the older API key and can cause authentication failures. The user will need to login once more through `cloudflared` to regenerate the certificate. Alternatively, the administrator can create a dedicated service user to authenticate.
+
+## I see an error: x509: certificate signed by unknown authority.
+
+This means the origin is using a certificate that `cloudflared` does not trust. For example, you may get this error if you are using SSL/TLS inspection in a proxy between your server and Cloudflare. To solve this:
+
+- Add the certificate to the system certificate pool.
+- Use the `--origin-ca-pool` flag and specify the path to the certificate.
+- Use the `--no-tls-verify` flag to stop `cloudflared` checking the certificate for a trust chain.
+
+## I see an error 1033 when attempting to run a tunnel.
+
+<Render file="tunnel/1033-error" product="cloudflare-one" />
+
+For more information, refer to the [comprehensive list](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/) of Cloudflare 1xxx errors.
+
+## I see `ERR_TOO_MANY_REDIRECTS` when attempting to connect to an Access self-hosted app.
+
+This error occurs when `cloudflared` does not recognize the SSL/TLS certificate presented by your origin. To resolve the issue, set the [origin server name](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cloudflared-parameters/origin-parameters/#originservername) parameter to the hostname on your origin certificate. Here is an example of a locally-managed tunnel configuration:
+
+```txt
+ingress:
+  - hostname: test.example.com
+    service: https://localhost:443
+    originRequest:
+      originServerName: test.example.com
+```
+
+## `cloudflared access` shows an error `websocket: bad handshake`.
+
+This means that your `cloudflared access` client is unable to reach your `cloudflared tunnel` origin.
+To diagnose this, you should look at the `cloudflared tunnel` logs. A very often root cause is that the `cloudflared tunnel` is unable to proxy to your origin (e.g. because the ingress is mis-configured, or the origin is down, or because the origin HTTPS certificate cannot be validated by `cloudflared tunnel`).
+If `cloudflared tunnel` has no logs, it means Cloudflare Edge is not even able to route the websocket traffic to it.
+
+There are a few different possible root causes behind the `websocket: bad handshake` error:
+
+- Your `cloudflared tunnel` is either not running or not connected to Cloudflare Edge.
+
+- WebSockets are not [enabled](/network/websockets/#enable-websockets).
+
+- Your Cloudflare account has Universal SSL enabled but your SSL/TLS encryption mode is set to **Off (not secure)**. To resolve:
+
+  1. On the Cloudflare dashboard for your zone, go to **SSL/TLS** > **Overview**.
+  2. Ensure that your SSL/TLS encryption mode is set to either **Flexible**, **Full** or **Full (strict)**.
+
+- Your requests are blocked by [Super Bot Fight Mode](/bots/get-started/super-bot-fight-mode/). To resolve, make sure you set **Definitely automated** to _Allow_ in the bot fight mode settings.
+
+- Your SSH or RDP Access application has the [Binding Cookie](/cloudflare-one/identity/authorization-cookie/#binding-cookie) enabled. To disable the cookie, go to **Access** > **Applications** and edit the application settings.
+
+- One or more [Workers routes](/workers/configuration/routing/routes/) are overlapping with the tunnel hostname, and the Workers do not properly handle the traffic. To resolve, you could either exclude your tunnel from the Worker route by not defining a route that includes the tunnel's hostname or update your Worker to only handle specific paths and forward all other requests to the origin, for example, by using `return fetch(req)`.
+
+## My tunnel randomly disconnects.
+
+Long-lived connections initiated through the Cloudflare Zero Trust platform, such as SSH sessions, can last up to eight hours. However, disruptions along the service path may result in more frequent disconnects. Often, these disconnects are caused by regularly scheduled maintenance events such as data center, server, or service updates and restarts. If you believe these events are not the cause of disconnects in your environment, collect the relevant [WARP logs](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/warp-logs/) and [Tunnel logs](/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/logs/) and contact Support.
+
+## Tunnel connections fail with SSL error.
+
+If `cloudflared` returns error `error="remote error: tls: handshake failure"`, check to make sure the hostname in question is covered by a SSL certificate. If using a multi-level subdomain, an advanced certificate may be required as the Universal SSL will not cover more than one level of subdomain. This may surface in the browser as `ERR_SSL_VERSION_OR_CIPHER_MISMATCH`.
+
+## Tunnel connections fail with `Too many open files` error.
+
+If your [Cloudflare Tunnel logs](/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/logs/) returns a `socket: too many open files` error, it means that `cloudflared` has exhausted the open files limit on your machine. The maximum number of open files, or file descriptors, is an operating system setting that determines how many files a process is allowed to open. To increase the open file limit, you will need to [configure ulimit settings](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-availability/system-requirements/#ulimits) on the machine running `cloudflared`.
+
+## I see `failed to sufficiently increase receive buffer size` in my cloudflared logs.
+
+This buffer size increase is reported by the [quic-go library](https://github.com/quic-go/quic-go) leveraged by [cloudflared](https://github.com/cloudflare/cloudflared). You can learn more about the log message in the [quic-go repository](https://github.com/quic-go/quic-go/wiki/UDP-Buffer-Sizes). This log message is generally not impactful and can be safely ignored when troubleshooting. However, if you have deployed `cloudflared` within a unique, high-bandwidth environment then buffer size can be manually overridden for testing purposes.
+
+To set the maximum receive buffer size on Linux:
+
+1. Create a new file under `/etc/sysctl.d/`:
+
+```sh
+sudo vi 98-core-rmem-max.conf
+```
+
+2. In the file, define the desired buffer size:
+
+```txt
+net.core.rmem_max=2500000
+```
+
+3. Reboot the host machine running `cloudflared`.
+
+4. To validate that these changes have taken effect, use the `grep` command:
+
+```sh
+sudo sysctl -a | grep net.core.rmem_max
+```
+
+```sh output
+net.core.rmem_max = 2500000
+```
+
+## `ping` and `traceroute` commands do not work.
+
+To ping an IP address behind Cloudflare Tunnel, your system must allow ICMP traffic through `cloudflared`. For configuration instructions, refer to the [ICMP proxy documentation](/cloudflare-one/policies/gateway/proxy/#icmp).
+
+## Cloudflare Tunnel is buffering my streaming response instead of streaming it live.
+
+Proxied traffic through Cloudflare Tunnel is buffered by default unless the origin server includes the response header `Content-Type: text/event-stream`. The `Content-Type: text/event-stream` response header tells `cloudflared` to stream data as it arrives instead of buffering the entire response.
+
+## I see `Error: This route's network is inside an existing subnet's network at "100.96.0.0/12"`.
+
+This error occurs when you try to add a CIDR route that falls within Cloudflare WARP's <GlossaryTooltip term="CGNAT IP">CGNAT IP range</GlossaryTooltip>. The `100.96.0.0/12` range, which covers addresses from `100.96.0.1` to `100.111.255.254`, is reserved for internal WARP routing and cannot be added as a Cloudflare Tunnel route. To connect your private network, you will need to change its IP/CIDR so that it does not overlap with `100.96.0.0/12`.
+
+
+## Troubleshooting
+
+[Troubleshooting](/cloudflare-one/faq/troubleshooting/) - Browse other Cloudflare One-related troubleshooting errors and solutions.

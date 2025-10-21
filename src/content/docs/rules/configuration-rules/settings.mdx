@@ -154,7 +154,11 @@ API configuration property name: `"fonts"` (boolean).
 
 ## Mirage
 
-[Mirage](/speed/optimization/images/mirage/) (deprecated) accelerates image delivery for your visitors based on their device.
+:::caution[Deprecation notice]
+Mirage was deprecated on September 15, 2025.
+:::
+
+[Mirage](/speed/optimization/images/mirage/) accelerates image delivery for your visitors based on their device.
 
 Use this setting to turn on or off Mirage for matching requests.
 
@@ -292,27 +296,3 @@ API values: `"off"`, `"flexible"`, `"full"`, `"strict"`, `"origin_pull"`.
 <Render file="configuration-rule-link-to-examples" product="rules" />
 
 </Details>
-
-## SXG
-
-[Signed Exchanges (SXG)](/speed/optimization/other/signed-exchanges/) is an open standard that makes it possible to cryptographically authenticate the origin of a resource independently of how it is delivered.
-
-Use this setting to turn on or off signed exchanges for matching requests.
-
-<Details header="API information">
-
-API configuration property name: `"sxg"` (boolean).
-
-```json title="API configuration example"
-"action_parameters": {
-  "sxg": false
-}
-```
-
-<Render file="configuration-rule-link-to-examples" product="rules" />
-
-</Details>
-
-:::caution[Deprecation notice]
-Signed exchanges is being deprecated and will be removed on October 20, 2025.
-:::

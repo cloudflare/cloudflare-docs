@@ -3,6 +3,23 @@ link: "/d1/platform/release-notes/"
 productName: D1
 productLink: "/d1/"
 entries:
+  - publish_date: "2025-09-11"
+    title: D1 automatically retries read-only queries
+    description: |-
+      D1 now detects read-only queries and automatically attempts up to two retries to execute those queries in the event of failures with retryable errors. You can access the number of execution attempts in the returned [response metadata](/d1/worker-api/return-object/#d1result) property `total_attempts`.
+
+      At the moment, only read-only queries are retried, that is, queries containing only the following SQLite keywords: `SELECT`, `EXPLAIN`, `WITH`. Queries containing any [SQLite keyword](https://sqlite.org/lang_keywords.html) that leads to database writes are not retried.
+
+      The retry success ratio among read-only retryable errors varies from 5% all the way up to 95%, depending on the underlying error and its duration (like network errors or other internal errors).
+
+      The retry success ratio among all retryable errors is lower, indicating that there are write-queries that could be retried. Therefore, we recommend D1 users to continue applying [retries in their own code](/d1/best-practices/retry-queries/) for queries that are not read-only but are idempotent according to the business logic of the application.
+
+      ![D1 automatically query retries success ratio](/_astro/d1-auto-retry-success-ratio.yPw8B0tB_Z1kzKe0.webp)
+
+      D1 ensures that any retry attempt does not cause database writes, making the automatic retries safe from side-effects, even if a query causing changes slips through the read-only detection. D1 achieves this by checking for modifications after every query execution, and if any write occurred due to a retry attempt, the query is rolled back.
+
+      The read-only query detection heuristics are simple for now, and there is room for improvement to capture more cases of queries that can be retried, so this is just the beginning.
+
   - publish_date: "2025-07-01"
     title: Maximum D1 storage per account for the Workers paid plan is now 1 TB
     description: |-
@@ -15,12 +32,49 @@ entries:
 
       If you want to retain a backup of your D1 alpha database, please use `wrangler d1 backup` before 2025-07-01. A D1 alpha backup can be used to [migrate](/d1/platform/alpha-migration/#5-create-a-new-d1-database) to a newly created D1 database in its generally available state.
 
+  - publish_date: "2025-05-30"
+    title: 50-500ms Faster D1 REST API Requests
+    description: |-
+
+      Users using Cloudflare's [REST API](/api/resources/d1/) to query their D1 database can see lower end-to-end request latency now that D1 authentication is performed at the closest Cloudflare network data center that received the request. Previously, authentication required D1 REST API requests to proxy to Cloudflare's core, centralized data centers, which added network round trips and latency.
+
+      Latency improvements range from 50-500 ms depending on request location and [database location](/d1/configuration/data-location/) and only apply to the REST API. REST API requests and databases outside the United States see a bigger benefit since Cloudflare's primary core data centers reside in the United States.
+
+      D1 query endpoints like `/query` and `/raw` have the most noticeable improvements since they no longer access Cloudflare's core data centers. D1 control plane endpoints such as those to create and delete databases see smaller improvements, since they still require access to Cloudflare's core data centers for other control plane metadata.
+
   - publish_date: "2025-05-02"
     title: D1 HTTP API permissions bug fix
     description: |-
       A permissions bug that allowed Cloudflare account and user [API tokens](/fundamentals/api/get-started/account-owned-tokens/) with `D1:Read` permission and `Edit` permission on another Cloudflare product to perform D1 database writes is fixed. `D1:Edit` permission is required for any database writes via HTTP API.
 
       If you were using an existing API token without `D1:Edit` permission to make edits to a D1 database via the HTTP API, then you will need to [create or edit API tokens](/fundamentals/api/get-started/create-token/) to explicitly include `D1:Edit` permission.
+
+  - publish_date: "2025-04-10"
+    title: D1 Read Replication Public Beta
+    description: |-
+      D1 read replication is available in public beta to help lower average latency and increase overall throughput for read-heavy applications like e-commerce websites or content management tools.
+
+      Workers can leverage read-only database copies, called read replicas, by using D1 [Sessions API](/d1/best-practices/read-replication). A session encapsulates all the queries from one logical session for your application. For example, a session may correspond to all queries coming from a particular web browser session. With Sessions API, D1 queries in a session are guaranteed to be [sequentially consistent](/d1/best-practices/read-replication/#replica-lag-and-consistency-model) to avoid data consistency pitfalls. D1 [bookmarks](/d1/reference/time-travel/#bookmarks) can be used from a previous session to ensure logical consistency between sessions.
+
+      ```ts
+      // retrieve bookmark from previous session stored in HTTP header
+      const bookmark = request.headers.get("x-d1-bookmark") ?? "first-unconstrained";
+
+      const session = env.DB.withSession(bookmark);
+      const result = await session
+        .prepare(`SELECT * FROM Customers WHERE CompanyName = 'Bs Beverages'`)
+        .run();
+      // store bookmark for a future session
+      response.headers.set("x-d1-bookmark", session.getBookmark() ?? "");
+      ```
+
+      Read replicas are automatically created by Cloudflare (currently one in each supported [D1 region](/d1/best-practices/read-replication/#read-replica-locations)), are active/inactive based on query traffic, and are transparently routed to by Cloudflare at no additional cost.
+
+      To checkout D1 read replication, deploy the following Worker code using Sessions API, which will prompt you to create a D1 database and enable read replication on said database.
+
+      [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/templates/tree/main/d1-starter-sessions-api)
+
+      To learn more about how read replication was implemented, go to our [blog post](https://blog.cloudflare.com/d1-read-replication-beta).
 
   - publish_date: "2025-02-19"
     title: D1 supports `PRAGMA optimize`

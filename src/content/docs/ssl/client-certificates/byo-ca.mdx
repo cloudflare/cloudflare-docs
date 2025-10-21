@@ -23,10 +23,12 @@ Bring your own CA (BYOCA) is especially useful if you already have mTLS implemen
 
 ## CA certificate requirements
 
+When you upload your CA, Cloudflare validates the certificate according to certain requirements.
+
 <Render file="byo-ca-mtls-cert-requirements" product="ssl" />
 
 :::note
-Uploading the CA private key is only required if you wish to use [Zero Trust's block page](/cloudflare-one/connections/connect-devices/user-side-certificates/custom-certificate/). For more context on how mTLS works, refer to our [Learning Center](https://www.cloudflare.com/learning/access-management/what-is-mutual-tls/).
+Uploading the CA private key is only required if you wish to use [Zero Trust's block page](/cloudflare-one/team-and-resources/devices/user-side-certificates/custom-certificate/). For more context on how mTLS works, refer to our [Learning Center](https://www.cloudflare.com/learning/access-management/what-is-mutual-tls/).
 :::
 
 ## Set up mTLS with your CA
@@ -70,6 +72,10 @@ Uploading the CA private key is only required if you wish to use [Zero Trust's b
   "expression": "(http.host in {\"<HOSTNAME_1>\" \"<HOSTNAME_2>\"} and not cf.tls_client_auth.cert_verified)",
   "action": "block"
 ```
+
+:::note
+When using CNAME, enforce mTLS on the specific hostname where it should be checked. It is not enough to have it set on the CNAME target.
+:::
 
 ### Multiple CAs for one hostname
 

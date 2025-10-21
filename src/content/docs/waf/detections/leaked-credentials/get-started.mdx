@@ -16,6 +16,7 @@ import {
 	Steps,
 	GlossaryTooltip,
 	APIRequest,
+	DashButton,
 } from "~/components";
 
 ## 1. Turn on the detection
@@ -132,8 +133,11 @@ To check for leaked credentials in a way that is not covered by the default conf
 
 <Steps>
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-2. Go to **Security** > **Settings** and filter by **Detections**.
+1. In the Cloudflare dashboard, go to the Security **Settings** page.
+
+   <DashButton url="/?to=/:account/:zone/security/settings" />
+
+2. (Optional) Filter by **Detection tools**.
 3. Under **Leaked credential detection** > **Configurations**, select the edit icon.
 4. Select **Add custom username and password location**.
 5. In **Username location** and **Password location** (optional), enter expressions for obtaining the username and the password from the HTTP request. For example, you could use the following expressions:

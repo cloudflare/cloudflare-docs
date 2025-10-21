@@ -1,0 +1,167 @@
+---
+title: Files
+pcx_content_type: concept
+sidebar:
+  order: 2
+---
+
+import { TypeScriptExample } from "~/components";
+
+Read, write, and manage files in the sandbox filesystem. All paths are absolute (e.g., `/workspace/app.js`).
+
+## Methods
+
+### `writeFile()`
+
+Write content to a file.
+
+```ts
+await sandbox.writeFile(path: string, content: string, options?: WriteFileOptions): Promise<void>
+```
+
+**Parameters**:
+- `path` - Absolute path to the file
+- `content` - Content to write
+- `options` (optional):
+  - `encoding` - File encoding (default: `"utf-8"`)
+
+<TypeScriptExample>
+```
+await sandbox.writeFile('/workspace/app.js', `console.log('Hello!');`);
+
+// Binary data
+await sandbox.writeFile('/tmp/image.png', base64Data, { encoding: 'base64' });
+```
+</TypeScriptExample>
+
+### `readFile()`
+
+Read a file from the sandbox.
+
+```ts
+const file = await sandbox.readFile(path: string, options?: ReadFileOptions): Promise<FileInfo>
+```
+
+**Parameters**:
+- `path` - Absolute path to the file
+- `options` (optional):
+  - `encoding` - File encoding (default: `"utf-8"`)
+
+**Returns**: `Promise<FileInfo>` with `content` and `encoding`
+
+<TypeScriptExample>
+```
+const file = await sandbox.readFile('/workspace/package.json');
+const pkg = JSON.parse(file.content);
+
+// Binary data
+const image = await sandbox.readFile('/tmp/image.png', { encoding: 'base64' });
+```
+</TypeScriptExample>
+
+### `mkdir()`
+
+Create a directory.
+
+```ts
+await sandbox.mkdir(path: string, options?: MkdirOptions): Promise<void>
+```
+
+**Parameters**:
+- `path` - Absolute path to the directory
+- `options` (optional):
+  - `recursive` - Create parent directories if needed (default: `false`)
+
+<TypeScriptExample>
+```
+await sandbox.mkdir('/workspace/src');
+
+// Nested directories
+await sandbox.mkdir('/workspace/src/components/ui', { recursive: true });
+```
+</TypeScriptExample>
+
+### `deleteFile()`
+
+Delete a file.
+
+```ts
+await sandbox.deleteFile(path: string): Promise<void>
+```
+
+**Parameters**:
+- `path` - Absolute path to the file
+
+<TypeScriptExample>
+```
+await sandbox.deleteFile('/workspace/temp.txt');
+```
+</TypeScriptExample>
+
+### `renameFile()`
+
+Rename a file.
+
+```ts
+await sandbox.renameFile(oldPath: string, newPath: string): Promise<void>
+```
+
+**Parameters**:
+- `oldPath` - Current file path
+- `newPath` - New file path
+
+<TypeScriptExample>
+```
+await sandbox.renameFile('/workspace/draft.txt', '/workspace/final.txt');
+```
+</TypeScriptExample>
+
+### `moveFile()`
+
+Move a file to a different directory.
+
+```ts
+await sandbox.moveFile(sourcePath: string, destinationPath: string): Promise<void>
+```
+
+**Parameters**:
+- `sourcePath` - Current file path
+- `destinationPath` - Destination path
+
+<TypeScriptExample>
+```
+await sandbox.moveFile('/tmp/download.txt', '/workspace/data.txt');
+```
+</TypeScriptExample>
+
+### `gitCheckout()`
+
+Clone a git repository.
+
+```ts
+await sandbox.gitCheckout(repoUrl: string, options?: GitCheckoutOptions): Promise<void>
+```
+
+**Parameters**:
+- `repoUrl` - Git repository URL
+- `options` (optional):
+  - `branch` - Branch to checkout (default: main branch)
+  - `targetDir` - Directory to clone into (default: repo name)
+  - `depth` - Clone depth for shallow clone
+
+<TypeScriptExample>
+```
+await sandbox.gitCheckout('https://github.com/user/repo');
+
+// Specific branch
+await sandbox.gitCheckout('https://github.com/user/repo', {
+  branch: 'develop',
+  targetDir: 'my-project'
+});
+```
+</TypeScriptExample>
+
+## Related resources
+
+- [Manage files guide](/sandbox/guides/manage-files/) - Detailed guide with best practices
+- [Commands API](/sandbox/api/commands/) - Execute commands

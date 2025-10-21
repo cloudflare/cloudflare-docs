@@ -8,7 +8,7 @@ description: This page defines and articulates key concepts that are relevant to
   Cloudflare SSL/TLS and are used in the Cloudflare SSL/TLS documentation.
 ---
 
-import { Render } from "~/components";
+import { Stream, Render } from "~/components";
 
 This page defines and articulates key concepts that are relevant to Cloudflare SSL/TLS and are used in this documentation. For more concepts and broader descriptions, check out the [Cloudflare Learning Center](https://www.cloudflare.com/learning/ssl/what-is-ssl/).
 
@@ -22,12 +22,11 @@ Since [Cloudflare's global network](https://www.cloudflare.com/network/) is at t
 
 The [edge certificates](/ssl/edge-certificates/) are the ones that Cloudflare presents to clients visiting your website or application. You can manage edge certificates through the [Cloudflare Dashboard](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/edge-certificates).
 
-```mermaid
-flowchart LR
-        accTitle: Edge certificate and origin certificate
-        accDescr: Diagram showing how edge certificates are positioned between Cloudflare and the browser whereas origin certificates sit between Cloudflare and the origin server.
-        A[Browser] <--Edge certificate--> B((Cloudflare))<--Origin certificate--> C[(Origin server)]
-```
+<Stream
+  id="fe9344af4ab476bf81f4447000f36db66"
+  title="SSL/TLS concepts"
+  thumbnail="https://pub-d9bf66e086fb4b639107aa52105b49dd.r2.dev/Mermaid%20thumbnail_Concepts.png"
+/>
 
 ### Origin certificate
 

@@ -1,0 +1,25 @@
+---
+title: "Expanded File Type Controls for Executables and Disk Images"
+description: "Block uploads and downloads of Apple Disk Images (DMG), Microsoft Application Installers (MSIX), and macOS Installer Packages (MPKG) to prevent the transfer of unauthorized software."
+date: "2025-10-01"
+---
+
+You can now enhance your security posture by blocking additional application installer and disk image file types with Cloudflare Gateway. Preventing the download of unauthorized software packages is a critical step in securing endpoints from malware and unwanted applications.
+
+We have expanded Gateway's file type controls to include:
+
+- Apple Disk Image (dmg)
+- Microsoft Software Installer (msix, appx)
+- Apple Software Package (pkg)
+
+You can find these new options within the [_Upload File Types_ and _Download File Types_ selectors](/cloudflare-one/policies/gateway/http-policies/#download-and-upload-file-types) when creating or editing an HTTP policy. The file types are categorized as follows:
+
+- **System**: _Apple Disk Image (dmg)_
+- **Executable**: _Microsoft Software Installer (msix)_, _Microsoft Software Installer (appx)_, _Apple Software Package (pkg)_
+
+To ensure these file types are blocked effectively, please note the following behaviors:
+
+- DMG: Due to their file structure, DMG files are blocked at the very end of the transfer. A user's download may appear to progress but will fail at the last moment, preventing the browser from saving the file.
+- MSIX: To comprehensively block Microsoft Software Installers, you should also include the file type _Unscannable_. MSIX files larger than 100 MB are identified as Unscannable ZIP files during inspection.
+
+To get started, go to your HTTP policies in Zero Trust. For a full list of file types, refer to [supported file types](/cloudflare-one/policies/gateway/http-policies/#supported-file-types).

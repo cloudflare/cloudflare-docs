@@ -5,21 +5,15 @@ description: Enable static NAT for subnets in Magic WAN Connector to  re-use add
 
 ---
 
-Each subnet (directly-attached or routed) must have a unique address space within your Magic WAN. You can re-use address spaces locally by enabling static network address translation (NAT) for a subnet. NAT is static. This means that inbound connections - from Magic WAN to the site behind the Connector - are allowed, and connections do not have to be initiated by hosts behind the Connector. NAT is also 1:1, that is, the Connector will translate between corresponding addresses in two equal-sized prefixes.
+import { Render } from "~/components"
 
-To enable NAT, supply a WAN-facing address prefix the same size as the subnet's prefix, and the Magic WAN Connector will translate between the two.
-
-For example:
-
-- **Prefix**: `192.168.100.0/24`
-- **Static NAT prefix**: `10.10.100.0/24`
-
-With the example above, outbound traffic from host `192.168.100.13` in the subnet is translated to `10.10.100.13` in the Connector (and vice versa for incoming traffic).
-
-:::note
-Even if NAT is enabled, the local prefix for a subnet must be unique within its LAN. It can, however, be reused on other LANs or other sites. Overlay-facing prefixes - that is, a subnet's NAT prefix if NAT is enabled, and its local prefix otherwise - must always be unique across your whole Magic WAN.
-:::
-
-## Create NATs for subnets
-
-For more information on how to a create a NAT for a subnets, refer to **Create a LAN**, either in [Configure hardware Connector](/magic-wan/configuration/connector/configure-hardware-connector/#create-a-lan) or [Configure virtual Connector](/magic-wan/configuration/connector/configure-virtual-connector/#create-a-lan).
+<Render file="mconn/network-options/nat-subnet"
+	product="networking-services"
+	params={{
+	productName: "Magic WAN",
+	connectorName: "Connector",
+	hardConnectorURL: "/magic-wan/configuration/connector/configure-hardware-connector/#create-a-lan",
+  virtualConnectorURL: "/magic-wan/configuration/connector/configure-virtual-connector/#create-a-lan",
+  configHardProductName: "Configure hardware Connector",
+  configVirtualProductName: "Configure Virtual Connector",
+	}} />

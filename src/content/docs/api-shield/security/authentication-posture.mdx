@@ -7,7 +7,7 @@ sidebar:
 
 ---
 
-import { GlossaryTooltip, Render, Steps, Tabs, TabItem } from "~/components"
+import { GlossaryTooltip, Render, Steps, Tabs, TabItem, DashButton } from "~/components"
 
 Authentication Posture helps users identify authentication misconfigurations for APIs and alerts of their presence.
 
@@ -35,8 +35,10 @@ After configuring [session identifiers](/api-shield/get-started/#session-identif
   </TabItem>
   <TabItem label="New dashboard" icon="rocket">
     <Steps>
-      1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
-      2. Go to **Security** > **Web assets** > **Endpoints**.
+      1. In the Cloudflare dashboard, go to the **Web Assets** page.
+
+          <DashButton url="/?to=/:account/:zone/security/web-assets" />
+      2. Go to the **Endpoints** tab.
       3. Filter your endpoints by the `cf-risk-missing-auth` or `cf-risk-mixed-auth` labels.
       4. Select an endpoint to see its authentication posture details on the endpoint details page.
       5. Choose between the 24-hour and 7-day view options, and note any authentication changes over time.
