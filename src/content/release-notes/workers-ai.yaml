@@ -3,6 +3,11 @@ link: "/workers-ai/changelog/"
 productName: Workers AI
 productLink: "/workers-ai/"
 entries:
+  - publish_date: "2025-10-21"
+    title: New voice and LLM models on Workers AI
+    description: |-
+      - Deepgram Aura 2 brings new text-to-speech capabilities to Workers AI. Check out [`@cf/deepgram/aura-2-en`](/workers-ai/models/aura-2-en/) and [`@cf/deepgram/aura-2-es`](/workers-ai/models/aura-2-es/) on how to use the new models.
+      - IBM Granite model is also up! This new LLM model is small but mighty, take a look at the docs for more [`@cf/ibm-granite/granite-4.0-h-micro`](/workers-ai/models/granite-4.0-h-micro/)
   - publish_date: "2025-10-02"
     title: Deepgram Flux now available on Workers AI
     description: |-
