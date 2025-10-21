@@ -1,11 +1,12 @@
 ---
 params:
+  - magicWord?
   - productName
   - connectorName
   - connectorCta
   - getStartedUrl
   - onRampsUrl
-  - cloudNetworkingUrl
+  - cloudNetworkingUrl?
   - connectorUrl
   - thirdPartyUrl
   - zeroTrustUrl
@@ -26,7 +27,7 @@ import { CardGrid, Description, Feature, GlossaryTooltip, LinkTitleCard, Plan, R
 
 With {props.productName}, you can securely connect any traffic source - data centers, offices, devices, cloud properties - to Cloudflare's network and configure routing policies to get the bits where they need to go, all within one SaaS solution.
 
-{props.productName} supports a variety of <GlossaryTooltip term="on-ramp">on-ramps</GlossaryTooltip> including any device that supports <GlossaryTooltip term="anycast">anycast</GlossaryTooltip> <GlossaryTooltip term="GRE tunnel">GRE</GlossaryTooltip> or <GlossaryTooltip term="IPsec tunnel">IPsec</GlossaryTooltip> tunnels. To make it easier to onboard your cloud properties, you can use [Magic Cloud Networking]({props.cloudNetworkingUrl}), which automates the process of creating on-ramps from your cloud networks.
+{props.productName} supports a variety of <GlossaryTooltip term="on-ramp">on-ramps</GlossaryTooltip> including any device that supports <GlossaryTooltip term="anycast">anycast</GlossaryTooltip> <GlossaryTooltip term="GRE tunnel">GRE</GlossaryTooltip> or <GlossaryTooltip term="IPsec tunnel">IPsec</GlossaryTooltip> tunnels.{props.magicWord === "Magic WAN" && <> To make it easier to onboard your cloud properties, you can use <a href={props.cloudNetworkingUrl}>Magic Cloud Networking</a>, which automates the process of creating on-ramps from your cloud networks.</>}
 
 Refer to [On-ramps]({props.onRampsUrl}) for a full list of supported on-ramps.
 
