@@ -49,7 +49,7 @@ User traffic is on-ramped to Gateway using one of the following methods:
 
 ## 1. Connect your private network
 
-[Connect your private network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/connect-cidr/) to Cloudflare using `cloudflared`. For example, if you want traffic to egress from AWS, connect the private CIDR block of your AWS VPC.
+[Connect your private network](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-cidr/) to Cloudflare using `cloudflared`. For example, if you want traffic to egress from AWS, connect the private CIDR block of your AWS VPC.
 
 ::::note
 Requires `cloudflared` version 2025.7.0 or later.
@@ -71,7 +71,7 @@ To route a public hostname through Cloudflare Tunnel:
 
 ## 3. Route network traffic through WARP
 
-In your WARP [Split Tunnels](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) configuration, route the following IP addresses through the WARP tunnel to Gateway.
+In your WARP [Split Tunnels](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/) configuration, route the following IP addresses through the WARP tunnel to Gateway.
 
 ### Initial resolved IPs
 
@@ -88,7 +88,7 @@ To route initial resolved IPs through WARP:
 
 ### Private network IPs
 
-Your private network's CIDR block should also route through the WARP tunnel. For a detailed configuration example, refer to [Connect a private network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/connect-cidr/#3-route-private-network-ips-through-warp).
+Your private network's CIDR block should also route through the WARP tunnel. For a detailed configuration example, refer to [Connect a private network](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-cidr/#3-route-private-network-ips-through-warp).
 
 ## 4. (Optional) Configure network policies
 
@@ -109,4 +109,4 @@ Gateway does not currently support hostname-based filtering for traffic on non-`
 
 From a WARP device, open a browser and go to `app.bank.com`.
 
-You can search for `app.bank.com` in your [Gateway DNS logs](/cloudflare-one/insights/logs/gateway-logs/); the **DNS response details** section should show the public resolved IPs as well as an <GlossaryTooltip term="initial resolved IP">initial resolved IP</GlossaryTooltip>. You can also check your [Cloudflare Tunnel logs](/cloudflare-one/connections/connect-networks/monitor-tunnels/logs/) to confirm that requests are routing through the tunnel to the public resolved IPs.
+You can search for `app.bank.com` in your [Gateway DNS logs](/cloudflare-one/insights/logs/gateway-logs/); the **DNS response details** section should show the public resolved IPs as well as an <GlossaryTooltip term="initial resolved IP">initial resolved IP</GlossaryTooltip>. You can also check your [Cloudflare Tunnel logs](/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/logs/) to confirm that requests are routing through the tunnel to the public resolved IPs.

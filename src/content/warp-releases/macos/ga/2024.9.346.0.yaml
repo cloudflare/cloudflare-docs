@@ -4,7 +4,7 @@ releaseNotes: |
   All customers running macOS Ventura 13.0 and above (including macOS Sequoia) are advised to upgrade to this release. This release fixes an incompatibility with the firewall that may sometimes result in the firewall becoming disabled.
 
   **Changes and improvements:**
-  - Added `target list` to the `warp-cli` to enhance the user experience with the [Access for Infrastructure SSH](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/) solution.
+  - Added `target list` to the `warp-cli` to enhance the user experience with the [Access for Infrastructure SSH](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/) solution.
   - Added a `tunnel reset mtu` subcommand to the `warp-cli`.
   - Added the ability for `warp-cli` to use the team name provided in the MDM file for initial registration.
   - Added a JSON output option to the `warp-cli`.

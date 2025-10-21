@@ -1,0 +1,478 @@
+---
+pcx_content_type: reference
+title: WARP settings
+sidebar:
+  order: 2
+---
+
+import {
+	Details,
+	GlossaryTooltip,
+	Badge,
+	Render,
+	Tabs,
+	TabItem,
+} from "~/components";
+
+WARP settings define the WARP client modes and permissions available to end users.
+
+- [Global settings](#global-settings) apply to all devices enrolled in your Zero Trust organization.
+- [Device settings](#device-settings) may vary across devices depending on which [device profile](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-profiles/) is applied.
+
+:::note
+
+<Render file="warp/client-notification-lag" product="cloudflare-one" />
+:::
+
+## Global settings
+
+### Admin override
+
+<Render file="warp/all-systems-modes-plans" product="cloudflare-one" />
+
+:::note
+To use **Admin override**, you must first have enabled [**Lock WARP switch**](#lock-warp-switch).
+:::
+
+When [**Lock WARP switch**](#lock-warp-switch) is enabled, users cannot toggle the WARP client on and off on their device. Enabling **Admin override** gives users the ability to temporarily turn on or off the WARP client using an override code provided by an admin. **Admin override** is only needed in a configuration where **Lock WARP switch** is enabled.
+
+Example use cases for **Admin override** include:
+
+- Allowing users to momentarily turn off WARP to work around a temporary network issue such as an incompatible public Wi-Fi, or a firewall at a customer site blocking the connection.
+- Allowing test users to turn on WARP when [Global WARP override](#global-warp-override) is in effect.
+
+As admin, you can set a **Timeout** to define how long a user can toggle the WARP switch on or off after entering the override code. Cloudflare generates a new override code every hour that an admin can send to end users. The override code's validity adheres to fixed-hour time blocks and aims to be generous to the end user.
+
+:::caution[Troubleshooting]
+
+To learn more about override code timeouts and how Cloudflare calculates an override code's valid duration, refer to [Troubleshooting](/cloudflare-one/faq/troubleshooting/#i-entered-an-override-code-for-warp-that-was-supposed-to-be-valid-for-3-hours-but-the-override-code-expired-faster-than-i-expected).
+
+If [Auto connect](#auto-connect) is enabled, WARP will automatically reconnect, according to the value set for the auto connect timeout, even when using **Admin override**. Refer to [Troubleshooting](/cloudflare-one/faq/troubleshooting/#i-disabled-warp-using-an-override-code-but-warp-turned-on-by-itself-before-my-override-code-expired) for more information.
+
+:::
+
+#### Retrieve the override code
+
+To retrieve the one-time code for a user:
+
+1. Enable **Admin override**.
+2. Go to **My Team** > **Devices**.
+3. Select **View details** for a connected device.
+4. Scroll down to **User details** and select the user's name.
+5. Copy the 7-digit **Override code** shown in the side panel.
+6. Share this code with the user for them to enter on their device.
+
+The user will have an unlimited amount of time to activate their code.
+
+#### Enter the override code
+
+To activate the override code on a user device:
+
+1. In the WARP client, go to **Settings** > **Preferences** > **Advanced**.
+2. Select **Enter code**.
+3. Enter the override code.
+
+The user can now toggle the WARP switch or use the `warp-cli connect` command. The client will automatically reconnect after the [Auto connect period](#auto-connect), but the user can continue to turn on or off WARP until the override expires.
+
+### Install CA to system certificate store
+
+<Details header="Feature availability">
+
+| [WARP modes](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| Gateway with WARP, Proxy mode                                                             | All plans                                                     |
+
+| System   | Availability | Minimum WARP version |
+| -------- | ------------ | -------------------- |
+| Windows  | ✅           | 2024.12.554.0        |
+| macOS    | ✅           | 2024.12.554.0        |
+| Linux    | ✅           | 2024.12.554.0        |
+| iOS      | ❌           |                      |
+| Android  | ❌           |                      |
+| ChromeOS | ❌           |                      |
+
+</Details>
+
+When `Enabled`, the WARP client will [automatically install](/cloudflare-one/team-and-resources/devices/user-side-certificates/automated-deployment/) your organization's root certificate on the device.
+
+### Override local interface IP
+
+<Details header="Feature availability">
+
+| Operating Systems     | [WARP modes](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| --------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| Windows, macOS, Linux | Gateway with WARP, Secure Web Gateway without DNS Filtering                               | All plans                                                     |
+
+</Details>
+
+Overrides the default IP address of WARP's [virtual network interface](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/warp-architecture/#ip-traffic) such that each device has its own unique local interface IP.
+
+This setting is primarily used as a prerequisite for [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/) and [MASQUE](#device-tunnel-protocol). You can also use it when the default IP conflicts with other local services on your network.
+
+**Value:**
+
+- `Disabled`: (default) Sets the local interface IP to `172.16.0.2` on all devices. This configuration is only respected by devices using [WireGuard](#device-tunnel-protocol) and does not affect devices using [MASQUE](#device-tunnel-protocol).
+
+- `Enabled`: Sets the local interface IP on each device to its <GlossaryTooltip term="CGNAT IP">CGNAT IP</GlossaryTooltip>.
+
+The CGNAT IP assigned to a WARP device is permanent until the device unregisters from your Zero Trust organization. Disconnects and reconnects do not change the IP address assignment.
+
+### Global WARP override
+
+<Details header="Feature availability">
+
+| [WARP modes](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| All modes                                                                                 | All plans                                                     |
+
+| System   | Availability | Minimum WARP version |
+| -------- | ------------ | -------------------- |
+| Windows  | ✅           | 2025.2.600.0         |
+| macOS    | ✅           | 2025.2.600.0         |
+| Linux    | ✅           | 2025.2.600.0         |
+| iOS      | ❌           |                      |
+| Android  | ❌           |                      |
+| ChromeOS | ❌           |                      |
+
+</Details>
+
+:::note
+Requires the [Super Administrator](/cloudflare-one/roles-permissions/) role.
+:::
+
+Global WARP override allows administrators to fail open WARP in case of an incident occurring in your environment, independent from incidents or outages affecting Cloudflare's services. When you turn on **Global WARP override**, Cloudflare will disconnect all Windows, macOS, and Linux WARP clients that are connected to your Zero Trust organization. This includes end user devices, [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/) hosts, and [WARP-to-WARP](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-to-warp/) devices. End users will receive a notification on their device and the WARP client will display [`Admin directed disconnect`](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/client-errors/#admin-directed-disconnect).
+
+[Auto connect](#auto-connect) and [Lock WARP switch](#lock-warp-switch) will not apply while the global override is on. Additionally, the global override will clear any existing [Admin override](#admin-override) codes. The only way for users to reconnect during a global override is by using a new [Admin override](#admin-override) code. For example, you may want to provide IT staff with a code so that they can test resolution of the incident that led to the global disconnect.
+
+To resume normal operations, turn off **Global WARP override**. The WARP client will automatically reconnect.
+
+## Device settings
+
+### Captive portal detection
+
+<Render file="warp/all-systems-modes-plans" product="cloudflare-one" />
+
+When `Enabled`, the WARP client will automatically turn off when it detects a <GlossaryTooltip term="captive portal">captive portal</GlossaryTooltip>, and it will automatically turn back on after the **Timeout** duration.
+
+Since captive portal implementations vary, WARP may not detect all captive portals. For more information, refer to [Captive portal detection](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/captive-portals/).
+
+### Mode switch
+
+<Details header="Feature availability">
+
+| Operating Systems | [WARP modes](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| ----------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| All systems       | Any mode                                                                                  | All plans                                                     |
+
+</Details>
+
+When `Enabled`, users have the option to switch between [Gateway with WARP](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#gateway-with-warp-default) mode and [Gateway with DoH mode](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#gateway-with-doh). This feature does not support switching between any other modes.
+
+### Device tunnel protocol
+
+<Details header="Feature availability">
+
+| [WARP modes](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| <ul><li> Gateway with WARP</li><li> Secure Web Gateway without DNS filtering </li></ul>   | All plans                                                     |
+
+| System   | Availability | Minimum WARP version |
+| -------- | ------------ | -------------------- |
+| Windows  | ✅           | 2024.11.309.0        |
+| macOS    | ✅           | 2024.11.309.0        |
+| Linux    | ✅           | 2024.11.309.0        |
+| iOS      | ✅           | 1.7                  |
+| Android  | ✅           | 2.0                  |
+| ChromeOS | ✅           | 2.0                  |
+
+</Details>
+
+Configures the protocol used to route IP traffic from the device to Cloudflare Gateway. To check the active protocol on a device, open a terminal and run `warp-cli settings | grep protocol`.
+
+**Value**:
+
+- **WireGuard**: Establishes a [WireGuard](https://www.wireguard.com/) connection to Cloudflare. The WARP client will encrypt traffic using a non-FIPs compliant cipher suite, `TLS_CHACHA20_POLY1305_SHA256`. When switching from MASQUE to WireGuard, users may lose Internet connectivity if their Wi-Fi network blocks the [ports and IPs](/cloudflare-one/team-and-resources/devices/warp/deployment/firewall/#warp-ingress-ip) required for WireGuard to function.
+- **MASQUE**: (default) Establishes an HTTP/3 connection to Cloudflare. The WARP client will encrypt traffic using TLS 1.3 and a [FIPS 140-2](https://csrc.nist.gov/pubs/fips/140-2/upd2/final) compliant cipher suite, `TLS_AES_256_GCM_SHA384`. [Override local interface IP](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#override-local-interface-ip) is enabled by default for devices with MASQUE enabled.
+
+For more details on WireGuard versus MASQUE, refer to our [blog post](https://blog.cloudflare.com/zero-trust-warp-with-a-masque).
+
+### Lock WARP switch
+
+<Details header="Feature availability">
+
+| Operating Systems | [WARP modes](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| ----------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| All systems       | Any mode                                                                                  | All plans                                                     |
+
+</Details>
+
+Allows the user to turn off the WARP switch and disconnect the client.
+
+**Value:**
+
+- `Disabled`: (default) The user is able to turn the WARP switch on or off at their discretion. When the WARP switch is off, the user will not have the ability to reach sites protected by Access that leverage certain device posture checks.
+- `Enabled`: The user is prevented from turning off the WARP switch. The WARP client will always start in the connected state.
+
+On MDM deployments, you must also include the `auto_connect` parameter with at least a value of `0`. This will prevent clients from being deployed in the off state without a way for users to manually enable them.
+
+### Allow device to leave organization
+
+<Render file="warp/all-systems-modes-plans" product="cloudflare-one" />
+
+When `Enabled`, users can log out from your Zero Trust organization by selecting **Logout from Zero Trust** in the WARP client UI. The **Logout from Zero Trust** button is only available for devices that were [enrolled manually](/cloudflare-one/team-and-resources/devices/warp/deployment/manual-deployment/). Devices that enrolled using an <GlossaryTooltip term="MDM file">MDM file</GlossaryTooltip> are always prevented from leaving your Zero Trust organization.
+
+### Allow updates
+
+<Details header="Feature availability">
+
+| Operating Systems     | [WARP modes](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| --------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| macOS, Windows, Linux | Any mode                                                                                  | All plans                                                     |
+
+</Details>
+
+When `Enabled`, users will receive update notifications when a new version of the client is available. Only turn this on if your users are local administrators with the ability to add or remove software from their device.
+
+### Auto connect
+
+<Render file="warp/all-systems-modes-plans" product="cloudflare-one" />
+
+When `Enabled`, the client will automatically reconnect if it has been disabled for the specified **Timeout** value. This setting is best used in conjunction with [Lock WARP Switch](#lock-warp-switch) above.
+
+We recommend keeping this set to a very low value — usually just enough time for a user to log in to hotel or airport Wi-Fi. If any value is specified, the client defaults to the Connected state (for example, after a reboot or the initial install).
+
+**Value:**
+
+- `0`: Allow the switch to stay in the off position indefinitely until the user turns it back on.
+- `1` to `1440`: Turn switch back on automatically after the specified number of minutes.
+
+### Support URL
+
+<Render file="warp/all-systems-modes-plans" product="cloudflare-one" />
+
+When `Enabled`, the **Send Feedback** button in the WARP client appears and will launch the URL specified. Example **Support URL** values are:
+
+- `https://support.example.com`: Use an https\:// link to open your companies internal help site.
+- `mailto:yoursupport@example.com`: Use a `mailto:` link to open your default mail client.
+
+### Service mode
+
+<Render file="warp/all-systems-modes-plans" product="cloudflare-one" />
+
+Allows you to choose the operational mode of the client. Refer to [WARP Modes](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes) for a detailed description of each mode.
+
+### Local Domain Fallback
+
+<Details header="Feature availability">
+
+| Operating Systems | [WARP modes](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| ----------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| All systems       | Gateway with WARP, Gateway with DoH                                                       | All plans                                                     |
+
+</Details>
+
+Configures the WARP client to redirect DNS requests to a private DNS resolver. For more information, refer to our [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/local-domains/) documentation.
+
+### Split Tunnels
+
+<Render file="warp/all-systems-modes-plans" product="cloudflare-one" />
+
+Configures the WARP client to exclude or include traffic to specific IP addresses or domains. For more information, refer to our [Split Tunnel](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/) documentation.
+
+### Directly route Microsoft 365 traffic
+
+<Render file="warp/all-systems-modes-plans" product="cloudflare-one" />
+
+Creates [Split Tunnel](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/) Exclude entries for all [Microsoft 365 IP addresses specified by Microsoft](https://docs.microsoft.com/en-us/microsoft-365/enterprise/microsoft-365-ip-web-service). To use this setting, **Split Tunnels** must be set to **Exclude IPs and domains**. Once enabled, all Microsoft 365 network traffic will bypass WARP and Gateway.
+
+:::note
+Microsoft has recently made changes to the IPs used by their applications (such as Microsoft Teams). Until Microsoft updates their [IP address and URL web service](https://learn.microsoft.com/en-us/microsoft-365/enterprise/microsoft-365-ip-web-service?view=o365-worldwide), you will need to manually add the following IPs to your [Split Tunnels Exclude list](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/#add-a-route):
+- `24.24.24.24/32`
+- `52.120.0.0/14`
+:::
+
+### Allow users to enable local network exclusion
+
+<Details header="Feature availability">
+
+| [WARP modes](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| <ul><li> Gateway with WARP</li><li> Secure Web Gateway without DNS filtering </li></ul>   | All plans                                                     |
+
+| System   | Availability | Minimum WARP version |
+| -------- | ------------ | -------------------- |
+| Windows  | ✅           | 2024.1.159.0         |
+| macOS    | ✅           | 2024.1.160.0         |
+| Linux    | ✅           | 2024.2.62.0          |
+| iOS      | ❌           | N/A[^1]              |
+| Android  | ✅           | 1.4                  |
+| ChromeOS | ✅           | 1.4                  |
+
+[^1]: Current versions of iOS do not allow LAN traffic to route through the WARP tunnel. Therefore, this feature is not needed on iOS.
+
+</Details>
+
+This setting is intended as a workaround for users whose home network uses the same set of IP addresses as your corporate private network. To use this setting, **Split Tunnels** must be set to **Exclude IPs and domains**.
+
+When `Enabled`, users have the option to access local network resources (such as printers and storage devices) while connected to WARP. When the user turns on [**Access Local Network**](#access-local-network-as-a-user), WARP will detect the local IP range advertised by the user's home network (for example, `10.0.0.0/24`) and temporarily exclude this range from the WARP tunnel. The user will need to re-request access after the **Timeout** expires. Setting **Timeout** to `0 minutes` will allow LAN access until the next WARP reconnection, such as a reboot or a laptop waking from sleep.
+
+:::caution[Warning]
+
+Enabling this setting comes with two major consequences:
+
+- **Device is exposed to security threats.** The user may be unaware that traffic to what used to be their company's private network is now actually being routed to their local network. This leaves the device vulnerable to [on-path attackers](https://www.cloudflare.com/learning/security/threats/on-path-attack/) and other security vulnerabilities. For example, imagine that a user's typical workflow involves logging into a remote desktop on the corporate network at `10.0.0.30`. A bad actor could set up a fake server on the local network at `10.0.0.30`. If the user goes to `10.0.0.30` while **Access local network** is enabled, the attacker can now steal their credentials.
+- **User loses access to corporate resources.** — While accessing their local network, the user will be unable to connect to corporate resources that fall within the same IP/CIDR range.
+
+:::
+
+#### Access local network as a user
+
+To turn on local network access in the WARP client:
+
+<Tabs>
+
+<TabItem label="Windows and macOS">
+
+1. Select the Cloudflare logo in the menu bar.
+2. Select the gear icon.
+3. Select **Access Local Network**.
+
+</TabItem>
+
+<TabItem label="Linux">
+
+1. Open a terminal window.
+2. Run `warp-cli override local-network start`.
+
+</TabItem>
+
+<TabItem label="Android and ChromeOS">
+
+1. Open the Cloudflare One Agent app.
+2. Go to **Settings** > **Advanced** > **Connection Options**.
+3. Select **Access Local Network**.
+
+</TabItem>
+
+</Tabs>
+
+#### Limitations
+
+- WARP will only exclude local networks in the [RFC 1918](https://datatracker.ietf.org/doc/html/rfc1918) address space. Other IP addresses such as CGNAT are not supported.
+- The maximum excluded subnet size is `/24`.
+- If a device has multiple network interfaces with distinct local IP ranges, WARP will only exclude one of those networks. To access a specific local network, disable the other interfaces and disconnect/reconnect WARP.
+
+### WARP interface IP DNS registration
+
+<Details header="Feature availability">
+
+| [WARP modes](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| <ul><li> Gateway with WARP</li><li> Secure Web Gateway without DNS filtering </li></ul>   | All plans                                                     |
+
+| System   | Availability | Minimum WARP version |
+| -------- | ------------ | -------------------- |
+| Windows  | ✅           | 2025.2.600.0         |
+| macOS    | ❌           |                      |
+| Linux    | ❌           |                      |
+| iOS      | ❌           |                      |
+| Android  | ❌           |                      |
+| ChromeOS | ❌           |                      |
+
+</Details>
+
+When `Enabled`, the operating system will register WARP's [local interface IP](#override-local-interface-ip) (CGNAT IP or `172.16.0.2`) with your on-premise DNS server when the DNS server is reachable.
+
+If you use on-premise DNS infrastructure (such as Active Directory), we recommend turning this setting on for remote [device profiles](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-profiles/) and turning it off for [managed network](/cloudflare-one/team-and-resources/devices/warp/configure-warp/managed-networks/) device profiles. In this configuration, remote devices will register their WARP interface IP, while on-premise devices will only register their local DHCP address. This allows the on-premise DNS server to resolve device hostnames no matter where the device is located.
+
+### SCCM VPN boundary support
+
+<Details header="Feature availability">
+
+| [WARP modes](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| <ul><li> Gateway with WARP</li><li> Secure Web Gateway without DNS filtering </li></ul>   | All plans                                                     |
+
+| System   | Availability | Minimum WARP version |
+| -------- | ------------ | -------------------- |
+| Windows  | ✅           | 2025.5.735.1         |
+| macOS    | ❌           |                      |
+| Linux    | ❌           |                      |
+| iOS      | ❌           |                      |
+| Android  | ❌           |                      |
+| ChromeOS | ❌           |                      |
+
+</Details>
+
+Microsoft's [System Center Configuration Manager](https://learn.microsoft.com/en-us/intune/configmgr/) (SCCM) is used to manage software on Windows devices based on the [boundary group](https://learn.microsoft.com/en-us/intune/configmgr/core/servers/deploy/configure/define-site-boundaries-and-boundary-groups), or network location, to which they belong. You can assign WARP clients to a SCCM boundary group based on their [managed network](/cloudflare-one/team-and-resources/devices/warp/configure-warp/managed-networks/) and other device profile attributes. When **SCCM VPN Boundary Support** is turned on, the WARP client will modify the description field on its [virtual network interface](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/warp-architecture/#ip-traffic). This allows you to define a VPN boundary group that matches on the network interface description.
+
+**Value:**
+
+- `Disabled`: (default) WARP network interface description is `Cloudflare WARP Interface Tunnel`.
+
+- `Enabled`: WARP network interface description is `(SCCM) Cloudflare WARP Interface Tunnel` for devices which have the [SCCM client](https://learn.microsoft.com/en-us/intune/configmgr/core/clients/deploy/deploy-clients-to-windows-computers) installed. Devices without the SCCM client will still use the default `Cloudflare WARP Interface Tunnel` description. WARP checks if the SCCM client is installed by looking for the SMS Agent Host (`ccmexec.exe`) Windows service.
+
+#### Example SCCM configuration
+
+Assume you want to push software updates from a cloud based [distribution point](https://learn.microsoft.com/en-us/intune/configmgr/core/servers/deploy/configure/boundary-groups-distribution-points) if the device is remote, but use on-prem servers if the device is on the office network. To set up these boundary groups:
+
+1.  In Zero Trust:
+
+        a. Turn on **SCCM VPN Boundary Support** for remote [device profiles](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-profiles/).
+
+        b. Turn off **SCCM VPN Boundary Support** for [on-prem device profiles](/cloudflare-one/team-and-resources/devices/warp/configure-warp/managed-networks/#4-configure-device-profile).
+
+        c. (Optional) Verify device settings:
+
+    <Details header="Verify SCCM VPN Boundary Support">
+
+    To check if **SCCM VPN Boundary Support** is active on a device, run the following command:
+
+    ```cmd
+    warp-cli settings | findstr "SCCM VPN Boundary"
+    ```
+
+    ```cmd output
+    (network policy) SCCM VPN Boundary Support: true
+    ```
+
+    You can also verify network interface details for the `CloudflareWARP` adapter:
+
+    ```cmd
+    ipconfig /all
+    ```
+
+    ```cmd output {8}
+    Windows IP Configuration
+
+    ...
+
+    Unknown adapter CloudflareWARP:
+
+    	Connection-specific DNS Suffix  . :
+    	Description . . . . . . . . . . . : (SCCM) Cloudflare WARP Interface Tunnel
+    	Physical Address. . . . . . . . . :
+    	DHCP Enabled. . . . . . . . . . . : No
+    	Autoconfiguration Enabled . . . . : Yes
+    	IPv6 Address. . . . . . . . . . . : 2606:4700:110:8f79:145:f180:fc4:8106(Preferred)
+    	Link-local IPv6 Address . . . . . : fe80::83b:d647:4bed:d388%49(Preferred)
+    	IPv4 Address. . . . . . . . . . . : 172.16.0.2(Preferred)
+    	Subnet Mask . . . . . . . . . . . : 255.255.255.255
+    	Default Gateway . . . . . . . . . :
+    	DNS Servers . . . . . . . . . . . : 127.0.2.2
+    																			127.0.2.3
+    	NetBIOS over Tcpip. . . . . . . . : Enabled
+    ```
+
+    </Details>
+
+2.  In Microsoft SCCM:
+
+        a. [Create a boundary](https://learn.microsoft.com/en-us/intune/configmgr/core/servers/deploy/configure/boundaries#create-a-boundary) with the following settings:
+        	- **Description**: `Remote WARP clients`
+        	- **Type**: _VPN_
+        	- **Connection description**: `(SCCM) Cloudflare WARP Interface Tunnel`
+
+    b. Assign this boundary to one or more boundary groups.
+
+When the device is remote, the WARP interface description changes to `(SCCM) Cloudflare WARP Interface Tunnel` and the SCCM server will determine that the device belongs to the VPN boundary group. The device can now download updates from the distribution point assigned to this boundary group. When a network change occurs and WARP detects a managed network, it will revert the interface description to `Cloudflare WARP Interface Tunnel` and the boundary condition will no longer be satisfied. The device will match your local IP range and be considered as on-prem.

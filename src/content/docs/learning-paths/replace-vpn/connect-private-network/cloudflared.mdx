@@ -51,7 +51,7 @@ To connect your private network:
 		}
 		```
 
-4. Get the [token](/cloudflare-one/connections/connect-networks/configure-tunnels/remote-tunnel-permissions/) used to run the tunnel:
+4. Get the [token](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/remote-tunnel-permissions/) used to run the tunnel:
 		<Render file="terraform/get-tunnel-token" product="cloudflare-one" />
 
 5. Install `cloudflared` on a host machine in your private network and run the tunnel:
@@ -67,7 +67,7 @@ All internal applications and services in this IP range are now connected to Clo
 
 If the tunnel is disconnected:
 
-* Ensure that your on-premise or cloud firewall allows egress traffic on the [required ports](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-with-firewall/#required-for-tunnel-operation).
+* Ensure that your on-premise or cloud firewall allows egress traffic on the [required ports](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-with-firewall/#required-for-tunnel-operation).
 * Ensure that the `cloudflared` host machine can connect to your internal applications and services. Verify that the host has the proper security group memberships and that no firewalls will block traffic between the host and the target services.
 
 
@@ -76,8 +76,8 @@ If the tunnel is disconnected:
 ## Best practices
 
 * Segregate production and staging traffic among different Cloudflare tunnels.
-* Add a [`cloudflared` replica](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-availability/) to another host machine for an additional point of availability.
+* Add a [`cloudflared` replica](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-availability/) to another host machine for an additional point of availability.
 * Distribute access to critical services (for example, private DNS, Active Directory, and other critical systems) across different tunnels for blast-radius reduction in the event of a server-side outage.
-* [Enable notifications](/cloudflare-one/connections/connect-networks/monitor-tunnels/notifications/) in the Cloudflare dashboard to monitor tunnel health.
-* [Monitor performance metrics](/cloudflare-one/connections/connect-networks/monitor-tunnels/metrics/) to identify potential bottlenecks.
-* [Update `cloudflared`](/cloudflare-one/connections/connect-networks/downloads/update-cloudflared/) regularly.
+* [Enable notifications](/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/notifications/) in the Cloudflare dashboard to monitor tunnel health.
+* [Monitor performance metrics](/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/metrics/) to identify potential bottlenecks.
+* [Update `cloudflared`](/cloudflare-one/networks/connectors/cloudflare-tunnel/downloads/update-cloudflared/) regularly.

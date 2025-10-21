@@ -5,36 +5,11 @@ sidebar:
   order: 3
 ---
 
-Each sandbox runs in an isolated Linux container based on Ubuntu 22.04.
+Each sandbox runs in an isolated Linux container with Python, Node.js, and common development tools pre-installed. For a complete list of pre-installed software and how to customize the container image, see [Dockerfile reference](/sandbox/configuration/dockerfile/).
 
-## Pre-installed software
+## Runtime software installation
 
-The base container comes pre-packaged with a full development environment:
-
-**Languages and runtimes**:
-- Python 3.11 (with pip)
-- Node.js 20 LTS (with npm)
-- Bun (JavaScript/TypeScript runtime)
-
-**Python packages**:
-- NumPy - Numerical computing
-- pandas - Data analysis
-- Matplotlib - Plotting and visualization
-- IPython - Interactive Python
-
-**Development tools**:
-- Git - Version control
-- Build tools (gcc, make, pkg-config)
-- Text editors (vim, nano)
-- Process monitoring (htop, procps)
-
-**Utilities**:
-- curl, wget - HTTP clients
-- jq - JSON processor
-- Network tools (ping, dig, netstat)
-- Compression (zip, unzip)
-
-Install additional software at runtime or [customize the base image](/sandbox/configuration/dockerfile/):
+Install additional software at runtime using standard package managers:
 
 ```bash
 # Python packages
@@ -43,8 +18,8 @@ pip install scikit-learn tensorflow
 # Node.js packages
 npm install express
 
-# System packages
-apt-get install redis-server
+# System packages (requires apt-get update first)
+apt-get update && apt-get install -y redis-server
 ```
 
 ## Filesystem

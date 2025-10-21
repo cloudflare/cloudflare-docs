@@ -32,7 +32,7 @@ Cloudflare Access requires that the credentials: `same-origin parameter` be adde
 ## I see untrusted certificate warnings for every page and I am unable to browse the Internet.
 
 Advanced security features including HTTPS traffic inspection require users to install and trust the Cloudflare root certificate on their machine or device. If you are installing certificates manually on all of your devices, these steps will need to be performed on each new device that is to be subject to HTTP Filtering.
-To install the Cloudflare root certificate, follow [this guide](/cloudflare-one/connections/connect-devices/user-side-certificates/).
+To install the Cloudflare root certificate, follow [this guide](/cloudflare-one/team-and-resources/devices/user-side-certificates/).
 
 ## I see error 526 when browsing to a website.
 
@@ -100,7 +100,7 @@ If you see this warning, you may have to disable DNS over HTTPS setting in Firef
 
 ## Chrome shows `NET::ERR_CERT_AUTHORITY_INVALID` when I use the WARP client.
 
-Advanced security features including HTTPS traffic inspection require you to deploy a [root certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/) on the device. If [**Install CA to system certificate store**](/cloudflare-one/connections/connect-devices/user-side-certificates/automated-deployment/) is enabled, the WARP client will automatically install a new root certificate whenever you install or update WARP.
+Advanced security features including HTTPS traffic inspection require you to deploy a [root certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/) on the device. If [**Install CA to system certificate store**](/cloudflare-one/team-and-resources/devices/user-side-certificates/automated-deployment/) is enabled, the WARP client will automatically install a new root certificate whenever you install or update WARP.
 
 Certain web browsers (such as Chrome and Microsoft Edge) load and cache root certificates when they start. Therefore, if you install a root certificate while the browser is already running, the browser may not detect the new certificate. To resolve the error, restart the browser.
 
@@ -111,7 +111,7 @@ Cloudflare dashboard SSO does not currently support team domain changes. Contact
 
 ## WARP on Linux shows `DNS connectivity check failed`.
 
-This error means that the `systemd-resolved` service on Linux is not allowing WARP to resolve DNS requests. You can identify this issue in the [`daemon.log`](/cloudflare-one/connections/connect-devices/warp/troubleshooting/warp-logs/#warp-diag-logs) file of the `warp diag` logs, where the error message appears as `ERROR main_loop: warp::warp::connectivity_check: DNS connectivity check failed to resolve host="warp-svc."`.
+This error means that the `systemd-resolved` service on Linux is not allowing WARP to resolve DNS requests. You can identify this issue in the [`daemon.log`](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/warp-logs/#warp-diag-logs) file of the `warp diag` logs, where the error message appears as `ERROR main_loop: warp::warp::connectivity_check: DNS connectivity check failed to resolve host="warp-svc."`.
 
 To solve the issue:
 
@@ -135,7 +135,7 @@ sudo systemctl restart systemd-resolved.service
 
 To resolve the issue, you will need to edit two Windows registry keys:
 
-1. Configure NCSI to detect WARP's [local DNS proxy](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#dns-traffic).
+1. Configure NCSI to detect WARP's [local DNS proxy](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/warp-architecture/#dns-traffic).
 
    ```txt
    HKEY_LOCAL_MACHINE\SOFTWARE\POLICIES\MICROSOFT\Windows\NetworkConnectivityStatusIndicator
@@ -153,7 +153,7 @@ To resolve the issue, you will need to edit two Windows registry keys:
    Data: 1
    ```
 
-If you continue to have issues with Microsoft 365 applications, consider enabling [**Directly route Microsoft 365 traffic**](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#directly-route-microsoft-365-traffic).
+If you continue to have issues with Microsoft 365 applications, consider enabling [**Directly route Microsoft 365 traffic**](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#directly-route-microsoft-365-traffic).
 
 ## I see `WebGL Rendering Error`.
 
@@ -185,13 +185,13 @@ Gateway does not support this downgrade mechanism. When receiving the `HTTP_1_1_
 
 If you see an error with the title `This site can't provide a secure connection` and a subtitle of `<hostname> uses an unsupported protocol`, you must [order an Advanced Certificate](/ssl/edge-certificates/advanced-certificate-manager/manage-certificates/#create-a-certificate).
 
-If you added a [multi-level subdomain](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/#2a-connect-an-application) (more than one level of subdomain), you must [order an Advanced Certificate for the hostname](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/#2a-connect-an-application) as Cloudflare's Universal certificate will not cover the public hostname by default.
+If you added a [multi-level subdomain](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/create-remote-tunnel/#2a-connect-an-application) (more than one level of subdomain), you must [order an Advanced Certificate for the hostname](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/create-remote-tunnel/#2a-connect-an-application) as Cloudflare's Universal certificate will not cover the public hostname by default.
 
 ## As of February 2, 2025, my end-user device's browser is returning a `Your connection is not private` warning.
 
 ### Why am I getting this error?
 
-The default global Cloudflare root certificate expired on 2025-02-02 at 16:05 UTC. If you installed the default Cloudflare certificate before 2024-10-17, you must [generate a new certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/#generate-a-cloudflare-root-certificate) and activate it for your Zero Trust organization to avoid inspection errors. If you did not generate a new certificate before February 2, 2025, you will encounter browser warnings like `Your connection is not private`.
+The default global Cloudflare root certificate expired on 2025-02-02 at 16:05 UTC. If you installed the default Cloudflare certificate before 2024-10-17, you must [generate a new certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/#generate-a-cloudflare-root-certificate) and activate it for your Zero Trust organization to avoid inspection errors. If you did not generate a new certificate before February 2, 2025, you will encounter browser warnings like `Your connection is not private`.
 
 Starting with WARP client version 2024.12.554.0 and later, the WARP client will automatically install Cloudflare certificates in an end-user device's certificate store as soon as the Cloudflare certificates appear as **Available** in the Cloudflare dashboard.
 
@@ -199,14 +199,14 @@ For WARP client versions prior to 2024.12.554.0, certificates had to be marked a
 
 ### What do I need to do?
 
-Before deploying a new certificate, [update WARP](/cloudflare-one/connections/connect-devices/warp/download-warp/update-warp/#how-to-update-warp) to version 2024.12.554.0 or newer.
+Before deploying a new certificate, [update WARP](/cloudflare-one/team-and-resources/devices/warp/download-warp/update-warp/#how-to-update-warp) to version 2024.12.554.0 or newer.
 
 For WARP client versions before and after 2024.12.554.0, certificate propagation will only occur when the WARP client is responsible for automatically installing the certificate on the client device. To enable the WARP client to propogate certificates:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **WARP Client**.
 2. Turn on **Install CA to system certificate store**.
 
-If **Install CA to system certificate store** is turned off, you must [manually install the certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/manual-deployment/), use an [MDM solution](/cloudflare-one/connections/connect-devices/user-side-certificates/manual-deployment/#mobile-device-management-mdm-software) to distribute the Cloudflare certificate to your fleet of devices, or not use the Cloudflare certificate because you do not want to have TLS decryption enabled. [TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/) must be enabled to enforce Gateway HTTP policies for HTTPS traffic.
+If **Install CA to system certificate store** is turned off, you must [manually install the certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/manual-deployment/), use an [MDM solution](/cloudflare-one/team-and-resources/devices/user-side-certificates/manual-deployment/#mobile-device-management-mdm-software) to distribute the Cloudflare certificate to your fleet of devices, or not use the Cloudflare certificate because you do not want to have TLS decryption enabled. [TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/) must be enabled to enforce Gateway HTTP policies for HTTPS traffic.
 
 After enabling certificate propagation, you must update your certificate:
 
@@ -225,7 +225,7 @@ To reset the encryption keys:
 2. Select the gear icon on the top right > **Preferences**.
 3. Select **Connection**, then select **Reset Encryption Keys**.
 
-macOS Big Sur and newer releases do not allow WARP to automatically trust the certificate. You must either [manually trust the certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/automated-deployment/#macos) as the user or [use a MDM to trust the certificate](/cloudflare-one/connections/connect-devices/user-side-certificates/manual-deployment/#mobile-device-management-mdm-software).
+macOS Big Sur and newer releases do not allow WARP to automatically trust the certificate. You must either [manually trust the certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/automated-deployment/#macos) as the user or [use a MDM to trust the certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/manual-deployment/#mobile-device-management-mdm-software).
 
 After confirming that the certificate is installed and trusted on the end-user device, mark the certificate as **In-Use**. To mark the certificate as **In-Use**:
 
@@ -254,7 +254,7 @@ If the new certificate is not activating on the end-user device or you are getti
    warp-cli tunnel rotate-keys
    ```
 
-2. [Upgrade](/cloudflare-one/connections/connect-devices/warp/download-warp/update-warp/#how-to-update-warp) to WARP version 2024.12.554.0.
+2. [Upgrade](/cloudflare-one/team-and-resources/devices/warp/download-warp/update-warp/#how-to-update-warp) to WARP version 2024.12.554.0.
 
    Some customers who are on versions earlier than 2024.11.309.0 have experienced inconsistencies with certificate installation and may need to upgrade.
 
@@ -270,7 +270,7 @@ Turning off TLS decryption should be a temporary measure. TLS decryption should 
 
 ## I entered an override code for WARP that was supposed to be valid for 3 hours but the override code expired faster than I expected.
 
-[Admin override](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#admin-override) codes are time-sensitive and adhere to fixed-hour time blocks. Override codes can be reused until the end of their timeout. An override code's timeout begins in the hour the override code was generated in. Refer to the following scenarios.
+[Admin override](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#admin-override) codes are time-sensitive and adhere to fixed-hour time blocks. Override codes can be reused until the end of their timeout. An override code's timeout begins in the hour the override code was generated in. Refer to the following scenarios.
 
 ### Scenario one: Admin generates an override code at 9:00 AM with a timeout of one hour.
 
@@ -294,7 +294,7 @@ If the user attempts to enter the override code at **11:59 AM** the next day, th
 
 ## I disabled WARP using an override code but WARP turned on by itself before my override code expired.
 
-If you are using an [Admin override](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#admin-override) code with [Auto connect](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#auto-connect) also enabled, WARP will turn on automatically according to the Timeout set for **Auto connect**. Using an override code to override the WARP lock switch will not disable Auto connect. As best practice, review your Auto connect settings before sending the override code to the user.
+If you are using an [Admin override](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#admin-override) code with [Auto connect](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#auto-connect) also enabled, WARP will turn on automatically according to the Timeout set for **Auto connect**. Using an override code to override the WARP lock switch will not disable Auto connect. As best practice, review your Auto connect settings before sending the override code to the user.
 
 To prevent WARP from auto connecting while using an admin override code, disable Auto connect or set a longer **Timeout** for **Auto connect**. Note the changes you make to Auto connect while the end user is using the admin override code if you need to revert these changes later.
 
@@ -308,7 +308,7 @@ You can also examine logs in your identity provider to identify any denied reque
 
 ## WSL2 is losing connectivity when using WARP.
 
-If your WSL2 environment is losing connectivity while using WARP, check your [split tunnel configuration](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/).
+If your WSL2 environment is losing connectivity while using WARP, check your [split tunnel configuration](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/).
 
 The issue may arise because the IP range that the WSL environment uses to communicate with the host device is included in the split tunnel configuration. Excluding the WSL environment’s IP range should restore connectivity.
 
@@ -317,7 +317,7 @@ You must ensure the host device is included in the WARP tunnel while excluding t
 To debug this issue:
 
 1. Review the WSL2 environment's IP address and compare it with the laptop’s IP.
-2. Check if the WSL network is [included in the split tunnel configuration](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#change-split-tunnels-mode).
+2. Check if the WSL network is [included in the split tunnel configuration](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/#change-split-tunnels-mode).
 3. If the WSL network is included, exclude it from the split tunnel to prevent connectivity issues.
 
 ## Clientless Web Isolation is loading with a blank screen on a Windows device.
@@ -354,7 +354,7 @@ msiexec /i <PATH_TO_WARP_MSI> /L*V <PATH_TO_OUTPUT_LOG>
 
 Check the logs to verify if there are any missing DLLs (for example, `netstandard2.0`), which may point to a missing or outdated version of the .NET Framework.
 
-One common cause is a missing or outdated version of the [.NET Framework Runtime](/cloudflare-one/connections/connect-devices/warp/download-warp/#windows:~:text=NET%20Framework%20version-,4.7.2%20or%20later,-HD%20space). Cloudflare WARP requires a .NET Framework version of `4.7.2` or later.
+One common cause is a missing or outdated version of the [.NET Framework Runtime](/cloudflare-one/team-and-resources/devices/warp/download-warp/#windows:~:text=NET%20Framework%20version-,4.7.2%20or%20later,-HD%20space). Cloudflare WARP requires a .NET Framework version of `4.7.2` or later.
 
 Some legacy Windows systems (such as Windows 10 Enterprise 1607 LTSB, which is bundled with .NET `4.6`) do not include this runtime by default and may fail during installation with a `Setup Wizard ended prematurely` error. More recent Windows versions include .NET `4.7.2` or later by default and do not encounter this error.
 
@@ -375,7 +375,7 @@ Cloudflare Access uses a [`CF_Session` cookie](/cloudflare-one/identity/authoriz
 
 ## Long-lived SSH sessions frequently disconnect.
 
-All connections proxied through Cloudflare Gateway, including traffic to [Access for Infrastructure](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/) SSH targets, have a maximum guaranteed duration of 10 hours. It is possible for connections to last longer than 10 hours. However, if a connection is active at the time of a Gateway release, Gateway will terminate the connection 10 hours later. Releases are not scheduled and can occur multiple times a week.
+All connections proxied through Cloudflare Gateway, including traffic to [Access for Infrastructure](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/) SSH targets, have a maximum guaranteed duration of 10 hours. It is possible for connections to last longer than 10 hours. However, if a connection is active at the time of a Gateway release, Gateway will terminate the connection 10 hours later. Releases are not scheduled and can occur multiple times a week.
 
 To prevent long-lived SSH connections from breaking unexpectedly, we recommend terminating sessions on a predefined schedule. For example, you could set an 8-hour idle timeout so that inactive sessions automatically disconnect during off hours. To configure an idle timeout, add the `ChannelTimeout` option to either the SSH server (`/etc/ssh/sshd_config`) or client configuration file (`~/.ssh/config`):
 

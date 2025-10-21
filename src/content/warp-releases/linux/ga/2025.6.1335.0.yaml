@@ -8,7 +8,7 @@ releaseNotes: |-
   - Fixed an issue where recursive CNAME records could cause intermittent WARP connectivity issues.
 
   **Known issues**
-  - Devices using WARP client 2025.4.929.0 and up may experience Local Domain Fallback failures if a fallback server has not been configured. To configure a fallback server, refer to [Route traffic to fallback server](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/#route-traffic-to-fallback-server).
+  - Devices using WARP client 2025.4.929.0 and up may experience Local Domain Fallback failures if a fallback server has not been configured. To configure a fallback server, refer to [Route traffic to fallback server](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/local-domains/#route-traffic-to-fallback-server).
 version: 2025.6.1335.0
 releaseDate: 2025-08-19T19:45:33.863Z
 packageURL: https://downloads.cloudflareclient.com/v1/download/noble-arm/version/2025.6.1335.0

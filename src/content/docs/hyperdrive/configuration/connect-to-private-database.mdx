@@ -9,13 +9,13 @@ sidebar:
 
 import { TabItem, Tabs, Render, Steps, Details } from "~/components";
 
-Hyperdrive can securely connect to your private databases using [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) and [Cloudflare Access](/cloudflare-one/policies/access/).
+Hyperdrive can securely connect to your private databases using [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) and [Cloudflare Access](/cloudflare-one/policies/access/).
 
 ## How it works
 
 When your database is isolated within a private network (such as a [virtual private cloud](https://www.cloudflare.com/learning/cloud/what-is-a-virtual-private-cloud) or an on-premise network), you must enable a secure connection from your network to Cloudflare.
 
-- [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) is used to establish the secure tunnel connection.
+- [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) is used to establish the secure tunnel connection.
 - [Cloudflare Access](/cloudflare-one/policies/access/) is used to restrict access to your tunnel such that only specific Hyperdrive configurations can access it.
 
 A request from the Cloudflare Worker to the origin database goes through Hyperdrive, Cloudflare Access, and the Cloudflare Tunnel established by `cloudflared`. `cloudflared` must be running in the private network in which your database is accessible.
@@ -40,7 +40,7 @@ If your organization also uses [Super Bot Fight Mode](/bots/get-started/super-bo
 
 ### 1.1. Create a tunnel
 
-First, create a [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) in your private network to establish a secure connection between your network and Cloudflare. Your network must be configured such that the tunnel has permissions to egress to the Cloudflare network and access the database within your network.
+First, create a [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) in your private network to establish a secure connection between your network and Cloudflare. Your network must be configured such that the tunnel has permissions to egress to the Cloudflare network and access the database within your network.
 
 <Render file="tunnel/create-tunnel" product="cloudflare-one" />
 
@@ -55,7 +55,7 @@ Your tunnel must be configured to use a public hostname on Cloudflare so that Hy
 3. Select **Save tunnel**.
 
 :::note
-If you are setting up the tunnel through the CLI instead ([locally-managed tunnel](/cloudflare-one/connections/connect-networks/do-more-with-tunnels/local-management/)), you will have to complete these steps manually. Follow the Cloudflare Zero Trust documentation to [add a public hostname to your tunnel](/cloudflare-one/connections/connect-networks/routing-to-tunnel/dns/) and [configure the public hostname to route to the address of your database](/cloudflare-one/connections/connect-networks/do-more-with-tunnels/local-management/configuration-file/).
+If you are setting up the tunnel through the CLI instead ([locally-managed tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/local-management/)), you will have to complete these steps manually. Follow the Cloudflare Zero Trust documentation to [add a public hostname to your tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/routing-to-tunnel/dns/) and [configure the public hostname to route to the address of your database](/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/local-management/configuration-file/).
 :::
 
 ## 2. Create and configure Hyperdrive to connect to the Cloudflare Tunnel
@@ -213,7 +213,7 @@ Now, deploy your Worker:
 npx wrangler deploy
 ```
 
-If you successfully receive the list of `pg_tables` from your database when you access your deployed Worker, your Hyperdrive has now been configured to securely connect to a private database using [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) and [Cloudflare Access](/cloudflare-one/policies/access/).
+If you successfully receive the list of `pg_tables` from your database when you access your deployed Worker, your Hyperdrive has now been configured to securely connect to a private database using [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) and [Cloudflare Access](/cloudflare-one/policies/access/).
 
 </TabItem>
 <TabItem label="MySQL">
@@ -228,7 +228,7 @@ Now, deploy your Worker:
 npx wrangler deploy
 ```
 
-If you successfully receive the list of tables from your database when you access your deployed Worker, your Hyperdrive has now been configured to securely connect to a private database using [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) and [Cloudflare Access](/cloudflare-one/policies/access/).
+If you successfully receive the list of tables from your database when you access your deployed Worker, your Hyperdrive has now been configured to securely connect to a private database using [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) and [Cloudflare Access](/cloudflare-one/policies/access/).
 
 </TabItem>
 </Tabs>

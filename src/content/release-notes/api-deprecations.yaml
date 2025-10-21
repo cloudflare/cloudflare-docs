@@ -61,7 +61,7 @@ entries:
 
       As a result multiple fields are moving from Devices to Registrations and we are deprecating the endpoints listed below.
 
-      The deprecated endpoints are not supported on accounts with [multi-user mode](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/windows-multiuser/) enabled.
+      The deprecated endpoints are not supported on accounts with [multi-user mode](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/windows-multiuser/) enabled.
 
       Deprecated API:
 

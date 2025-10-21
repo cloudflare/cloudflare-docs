@@ -3,6 +3,7 @@ title: Execute commands
 pcx_content_type: how-to
 sidebar:
   order: 1
+description: Run commands with streaming output, error handling, and shell access.
 ---
 
 import { TypeScriptExample } from "~/components";
@@ -11,10 +12,15 @@ This guide shows you how to execute commands in the sandbox, handle output, and 
 
 ## Choose the right method
 
-The SDK provides two methods for command execution:
+The SDK provides multiple approaches for running commands:
 
-- **`exec()`** - Run a command and wait for complete result. Best for most use cases.
+- **`exec()`** - Run a command and wait for complete result. Best for one-time commands like builds, installations, and scripts.
 - **`execStream()`** - Stream output in real-time. Best for long-running commands where you need immediate feedback.
+- **`startProcess()`** - Start a background process. Best for web servers, databases, and services that need to keep running.
+
+:::note
+For **web servers, databases, or services that need to keep running**, use `startProcess()` instead. See the [Background processes guide](/sandbox/guides/background-processes/).
+:::
 
 ## Execute basic commands
 
@@ -132,6 +138,7 @@ await sandbox.exec('python /workspace/analyze.py data.csv');
 - **Check exit codes** - Always verify `result.success` and `result.exitCode`
 - **Validate inputs** - Escape or validate user input to prevent injection
 - **Use streaming** - For long operations, use `execStream()` for real-time feedback
+- **Use background processes** - For services that need to keep running (web servers, databases), use the [Background processes guide](/sandbox/guides/background-processes/) instead
 - **Handle errors** - Check stderr for error details
 
 ## Troubleshooting

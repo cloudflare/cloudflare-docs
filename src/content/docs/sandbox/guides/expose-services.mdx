@@ -3,9 +3,14 @@ title: Expose services
 pcx_content_type: how-to
 sidebar:
   order: 4
+description: Create preview URLs and expose ports for web services.
 ---
 
 import { TypeScriptExample } from "~/components";
+
+:::note[Production requires custom domain]
+Preview URLs require a custom domain with wildcard DNS routing in production. See [Production Deployment](/sandbox/guides/production-deployment/) for setup instructions.
+:::
 
 This guide shows you how to expose services running in your sandbox to the internet via preview URLs.
 
@@ -40,7 +45,8 @@ const exposed = await sandbox.exposePort(8000);
 
 // 4. Preview URL is now available (public by default)
 console.log('Server accessible at:', exposed.exposedAt);
-// Returns: https://abc123-8000.sandbox.workers.dev
+// Production: https://8000-abc123.example.com
+// Local dev: http://localhost:8787/...
 
 // 5. Handle preview URL requests in your Worker
 export default {
@@ -255,12 +261,14 @@ if (!ports.some(p => p.port === 8080)) {
 ```
 </TypeScriptExample>
 
-## Preview URL format
+## Preview URL Format
 
-Preview URLs follow the pattern `https://{sandbox-id}-{port}.sandbox.workers.dev`:
+**Production**: `https://{port}-{sandbox-id}.yourdomain.com`
 
-- Port 8080: `https://abc123-8080.sandbox.workers.dev`
-- Port 5173: `https://abc123-5173.sandbox.workers.dev`
+- Port 8080: `https://8080-abc123.example.com`
+- Port 5173: `https://5173-abc123.example.com`
+
+**Local development**: `http://localhost:8787/...`
 
 **Note**: Port 3000 is reserved for the internal Bun server and cannot be exposed.
 

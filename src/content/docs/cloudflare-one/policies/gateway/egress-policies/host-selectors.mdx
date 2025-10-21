@@ -9,7 +9,7 @@ import { Tabs, TabItem, Details, APIRequest } from "~/components";
 
 <Details header="Feature availability">
 
-| [WARP modes](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| [WARP modes](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
 | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
 | Gateway with WARP                                                                         | Enterprise                                                    |
 
@@ -63,10 +63,10 @@ Traffic must be on-ramped to Gateway with the following methods:
 
 | On-ramp method                                                                             | Compatibility |
 | ------------------------------------------------------------------------------------------ | ------------- |
-| [WARP](/cloudflare-one/connections/connect-devices/warp/)                                  | ✅            |
-| [PAC files](/cloudflare-one/connections/connect-devices/agentless/pac-files/)              | ✅            |
+| [WARP](/cloudflare-one/team-and-resources/devices/warp/)                                  | ✅            |
+| [PAC files](/cloudflare-one/team-and-resources/devices/agentless/pac-files/)              | ✅            |
 | [Browser Isolation](/cloudflare-one/policies/browser-isolation/)                           | ✅            |
-| [WARP Connector](/cloudflare-one/connections/connect-networks/private-net/warp-connector/) | ❌            |
+| [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/) | ❌            |
 | [Magic WAN](/magic-wan/zero-trust/cloudflare-gateway/)                                     | ❌            |
 
 Unsupported traffic will be resolved with your default Gateway settings. If you use DNS locations to send a DNS query to Gateway with IPv4, IPv6, DoT, or DoH, Gateway will not return the initial resolved IP for supported traffic nor resolve unsupported traffic.
@@ -79,7 +79,7 @@ Gateway will overwrite the DNS response for all supported traffic, even if you u
 
 To configure your Zero Trust organization to use Host selectors with Egress policies:
 
-1.  Ensure you have deployed [WARP version 2025.4.929.0](/cloudflare-one/connections/connect-devices/warp/download-warp/) or later on your users' desktop devices. If you need to apply your policies to mobile devices or devices running a version of WARP prior to 2025.4.929.0, add and deploy the following key-value pair to your devices' [WARP configuration file](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/) (`mdm.xml` on Windows and Linux or `com.cloudflare.warp.plist` on macOS):
+1.  Ensure you have deployed [WARP version 2025.4.929.0](/cloudflare-one/team-and-resources/devices/warp/download-warp/) or later on your users' desktop devices. If you need to apply your policies to mobile devices or devices running a version of WARP prior to 2025.4.929.0, add and deploy the following key-value pair to your devices' [WARP configuration file](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/) (`mdm.xml` on Windows and Linux or `com.cloudflare.warp.plist` on macOS):
 
     ```diff lang="xml"
     <array>
@@ -92,11 +92,11 @@ To configure your Zero Trust organization to use Host selectors with Egress poli
 
 {/* prettier-ignore-start */}
 
-2.  In your WARP [device profile](/cloudflare-one/connections/connect-devices/warp/configure-warp/device-profiles/), configure your [Split Tunnel](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) depending on the mode:
+2.  In your WARP [device profile](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-profiles/), configure your [Split Tunnel](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/) depending on the mode:
 
     <Tabs> <TabItem label="Exclude IPs and domains">
-		1.  [Remove the route](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#remove-a-route) to the IP address `100.64.0.0/10` from your Split Tunnel exclude list.
-		2.  [Add routes](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#add-a-route) to exclude the following IP addresses:
+		1.  [Remove the route](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/#remove-a-route) to the IP address `100.64.0.0/10` from your Split Tunnel exclude list.
+		2.  [Add routes](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/#add-a-route) to exclude the following IP addresses:
 			- `100.64.0.0/12`
 			- `100.81.0.0/16`
 			- `100.82.0.0/15`
@@ -105,8 +105,8 @@ To configure your Zero Trust organization to use Host selectors with Egress poli
 			- `100.96.0.0/11`
 
     </TabItem> <TabItem label="Include IPs and domains">
-		1.  Add the required [Zero Trust domains](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#cloudflare-zero-trust-domains) or [IP addresses](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#cloudflare-zero-trust-ip-addresses) to your Split Tunnel include list.
-		2.  [Add a route](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#add-a-route) to include the IP address `100.80.0.0/16`.
+		1.  Add the required [Zero Trust domains](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/#cloudflare-zero-trust-domains) or [IP addresses](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/#cloudflare-zero-trust-ip-addresses) to your Split Tunnel include list.
+		2.  [Add a route](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/#add-a-route) to include the IP address `100.80.0.0/16`.
 
     </TabItem> </Tabs>
 

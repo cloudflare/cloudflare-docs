@@ -10,7 +10,7 @@ sidebar:
 import { Details, InlineBadge, Render, Badge } from "~/components";
 
 :::note
-To enable this feature, download and deploy the [WARP client](/cloudflare-one/connections/connect-devices/warp/deployment/) on your devices.
+To enable this feature, download and deploy the [WARP client](/cloudflare-one/team-and-resources/devices/warp/deployment/) on your devices.
 :::
 
 With Cloudflare Zero Trust, you can configure policies to control network-level traffic leaving your endpoints. Using network selectors like IP addresses and ports, your policies will control access to any network origin. Because Cloudflare Zero Trust [integrates with your identity provider](/cloudflare-one/identity/idp-integration/), it also gives you the ability to create identity-based network policies. This means you can now control access to non-HTTP resources on a per-user basis regardless of where they are or what device they access that resource from.
@@ -121,7 +121,7 @@ API value: `audit_ssh`
 </Details>
 
 :::caution
-Gateway no longer supports the Audit SSH action for new policies. To log your SSH traffic, Cloudflare recommends deploying [Access for Infrastructure](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/) for your SSH server and configuring [SSH command logs](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/#ssh-command-logs).
+Gateway no longer supports the Audit SSH action for new policies. To log your SSH traffic, Cloudflare recommends deploying [Access for Infrastructure](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/) for your SSH server and configuring [SSH command logs](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/#ssh-command-logs).
 :::
 
 Policies with Audit SSH actions allow administrators to log SSH traffic. Gateway will detect SSH traffic over port `22`. For example, the following configuration logs SSH commands sent to a given IP address:

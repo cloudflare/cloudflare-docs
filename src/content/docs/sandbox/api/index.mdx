@@ -17,7 +17,7 @@ import { getSandbox } from '@cloudflare/sandbox';
 const sandbox = getSandbox(env.Sandbox, 'user-123');
 ```
 
-The sandbox ID should be unique per user or session. The same ID will always return the same sandbox instance with persistent state.
+The same sandbox ID will always return the same sandbox instance. You can architect your application to use a single sandbox ID for multiple users, or use unique IDs per user or session. Using unique sandbox IDs per user is recommended if you are providing code generation or execution capabilities directly to your users.
 
 ## API organization
 
