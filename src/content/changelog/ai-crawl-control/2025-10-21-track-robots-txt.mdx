@@ -1,0 +1,25 @@
+---
+title: Track robots.txt
+description: Monitor robots.txt file health, track crawler violations, and gain visibility into how AI crawlers interact with your directives.
+date: 2025-10-21
+---
+
+We are introducing a new **Robots.txt** tab in [AI Crawl Control](/ai-crawl-control/) that provides comprehensive insights into how AI crawlers interact with your `robots.txt` files. You can now monitor file availability, track request patterns, and identify crawlers that violate your directives.
+
+**Key features:**
+
+- **Availability monitoring:** View the health status of `robots.txt` files across all your hostnames, including **200 OK** and **404 Not Found** statuses. Quickly identify hostnames that need a `robots.txt` file.
+- **Request analytics:** Track the total number of requests to each `robots.txt` file, with breakdowns of allowed versus unsuccessful requests. Sort by request volume to identify high-traffic hostnames.
+- **Content signals:** See at a glance whether your `robots.txt` files contain Cloudflare-recommended directives for AI training, AI search, and AI input.
+- **Violation tracking:** Identify crawlers that request paths explicitly disallowed by your `robots.txt` directives. The violations table shows the crawler name, operator, violated path, specific directive, and violation count.
+- **Actionable insights:** Take immediate action by blocking non-compliant crawlers, creating custom WAF rules, or using Redirect Rules to guide crawlers to a different part of your site.
+
+**Filtering capabilities:**
+
+Apply filters to drill down into specific scenarios:
+
+- Filter by crawler, operator, or category
+- Select custom time ranges for historical analysis
+- View trends across all your hostnames
+
+Learn more in the [Track robots.txt documentation](/ai-crawl-control/features/track-robots-txt/).
