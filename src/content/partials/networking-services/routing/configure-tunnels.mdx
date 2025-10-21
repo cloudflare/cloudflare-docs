@@ -82,11 +82,33 @@ Beyond GRE and IPsec tunnels, you can also use Network Interconnect (CNI) to onb
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. In the Cloudflare dashboard, go to {props.productName}'s **{props.targetPageName}** page.
+{/* Dashboard steps for WAN Tunnels (Cloudflare One dashboard) */}
+{ props.magicWord === "WAN Tunnels" && (
+	<>
+	<ol>
+		<li>In the Cloudflare dashboard, go to <strong>Zero Trust</strong> &gt; <strong>Networks</strong> &gt; <strong>Connectors</strong> &gt; <strong>{props.targetPageName}</strong>.
+			<DashButton url={props.dashButtonPath} />
+		</li>
+		<li>From the <strong>Connectors</strong> tab, select <strong>Create</strong>.</li>
+		<li>On the <strong>Add connector</strong> page, choose either a <strong>GRE tunnel</strong> or <strong>IPsec tunnel</strong>.</li>
+	</ol>
+	</>
+)
+}
 
-   <DashButton url={props.dashButtonPath} />
-2. From the **Tunnels** tab, select **Create**.
-3. On the **Add tunnels** page, choose either a **GRE tunnel** or **IPsec tunnel**.
+{/* Dashboard steps for Magic WAN and Magic Transit (standalone dashboards) */}
+{ props.magicWord !== "WAN Tunnels" && (
+	<>
+	<ol>
+		<li>In the Cloudflare dashboard, go to {props.productName}'s <strong>{props.targetPageName}</strong> page.
+			<DashButton url={props.dashButtonPath} />
+		</li>
+		<li>From the <strong>Tunnels</strong> tab, select <strong>Create</strong>.</li>
+		<li>On the <strong>Add tunnels</strong> page, choose either a <strong>GRE tunnel</strong> or <strong>IPsec tunnel</strong>.</li>
+	</ol>
+	</>
+)
+}
 
 <Details header="GRE tunnel">
 
