@@ -22,11 +22,11 @@ Always match the Docker image version to your npm package version. If you're usi
 **What's included:**
 
 - Ubuntu 22.04 LTS base
-- Python 3.11+ with pip
-- Bun (JavaScript/TypeScript runtime)
-- Git, curl, wget, and common CLI tools
-- Pre-installed Python packages: pandas, numpy, matplotlib
-- System libraries for most common use cases
+- Python 3.11 with pip and venv
+- Node.js 20 LTS with npm
+- Bun 1.x (JavaScript/TypeScript runtime)
+- Pre-installed Python packages: matplotlib, numpy, pandas, ipython
+- System utilities: curl, wget, git, jq, zip, unzip, file, procps, ca-certificates
 
 ## Creating a custom image
 
@@ -57,8 +57,8 @@ Update `wrangler.jsonc` to reference your Dockerfile:
 {
 	"containers": [
 		{
-			"binding": "CONTAINER",
-			"dockerfile": "./Dockerfile",
+			"class_name": "Sandbox",
+			"image": "./Dockerfile",
 		},
 	],
 }

@@ -5,32 +5,11 @@ sidebar:
   order: 3
 ---
 
-Each sandbox runs in an isolated Linux container based on Ubuntu 22.04.
+Each sandbox runs in an isolated Linux container with Python, Node.js, and common development tools pre-installed. For a complete list of pre-installed software and how to customize the container image, see [Dockerfile reference](/sandbox/configuration/dockerfile/).
 
-## Pre-installed software
+## Runtime software installation
 
-The base container comes with essential development tools:
-
-**Languages and runtimes**:
-- Python 3.11 with pip and venv
-- Node.js 20 LTS with npm
-- Bun 1.x (JavaScript/TypeScript runtime)
-
-**Python packages**:
-- matplotlib - Plotting and visualization
-- numpy - Numerical computing
-- pandas - Data analysis
-- ipython - Interactive Python shell
-
-**System utilities**:
-- curl, wget - HTTP clients
-- git - Version control
-- jq - JSON processor
-- zip, unzip - Archive tools
-- file - File type identification
-- procps - Process utilities
-
-Install additional software at runtime or [customize the base image](/sandbox/configuration/dockerfile/):
+Install additional software at runtime using standard package managers:
 
 ```bash
 # Python packages
