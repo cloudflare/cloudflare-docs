@@ -8,7 +8,7 @@ params:
   - routePrioritization
   - chooseWeights
   - productGatewayOrEgress
-  - dashButtonPath
+  - dashButtonPath?
   - cfTunnelURL?
 ---
 
@@ -49,9 +49,27 @@ Refer to <a href={props.trafficSteeringPage}>Traffic Steering</a> for more infor
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. In the Cloudflare dashboard, go to {props.productName}'s **Configuration** page.
+{/* Dashboard steps for WAN Tunnels (Cloudflare One dashboard) */}
+{ props.magicWord === "WAN Tunnels" && (
+	<>
+	<ol>
+		<li>Log in to the Cloudflare One dashboard, and go to <strong>Networks</strong>.</li>
+	</ol>
+	</>
+)
+}
 
-	 <DashButton url={props.dashButtonPath} />
+{/* Dashboard steps for Magic WAN and Magic Transit (standalone dashboards) */}
+{ props.magicWord !== "WAN Tunnels" && (
+	<>
+	<ol>
+		<li>In the Cloudflare dashboard, go to {props.productName}'s <strong>Configuration</strong> page.
+			<DashButton url={props.dashButtonPath} />
+		</li>
+	</ol>
+	</>
+)
+}
 
 2. From the **Routes** tab, select **Create** to add a new route.
 3. Enter a descriptive name for your route in **Description**.
@@ -282,9 +300,27 @@ The Magic routing table is managed by the customer, who can select both the Clou
 
 By default, each BGP peering session will use the same Cloudflare-side ASN to represent peering with the {props.productName} routing table. This ASN is called the **CF Account ASN** and is set to `13335`. This can be configured to a private 2-byte ASN (for example, any values between `64512` and `65534`). To set this ASN:
 
-1. In the Cloudflare dashboard, go to {props.productName}'s **Configuration** page.
+{/* Dashboard steps for WAN Tunnels (Cloudflare One dashboard) */}
+{ props.magicWord === "WAN Tunnels" && (
+	<>
+	<ol>
+		<li>Log in to the Cloudflare One dashboard, and go to <strong>Networks</strong>.</li>
+	</ol>
+	</>
+)
+}
 
-	 <DashButton url={props.dashButtonPath} />
+{/* Dashboard steps for Magic WAN and Magic Transit (standalone dashboards) */}
+{ props.magicWord !== "WAN Tunnels" && (
+	<>
+	<ol>
+		<li>In the Cloudflare dashboard, go to {props.productName}'s <strong>Configuration</strong> page.
+			<DashButton url={props.dashButtonPath} />
+		</li>
+	</ol>
+	</>
+)
+}
 
 2. Go to **BGP configuration**.
 3. In **CF Account ASN**, enter Cloudflare's ASN.
@@ -335,9 +371,27 @@ You need to configure two ASNs:
 
 If you already have set up your Cloudflare account ASN, you can skip steps two and three below.
 
-1. In the Cloudflare dashboard, go to {props.productName}'s **Configuration** page.
+{/* Dashboard steps for WAN Tunnels (Cloudflare One dashboard) */}
+{ props.magicWord === "WAN Tunnels" && (
+	<>
+	<ol>
+		<li>Log in to the Cloudflare One dashboard, and go to <strong>Networks</strong>.</li>
+	</ol>
+	</>
+)
+}
 
-	 <DashButton url={props.dashButtonPath} />
+{/* Dashboard steps for Magic WAN and Magic Transit (standalone dashboards) */}
+{ props.magicWord !== "WAN Tunnels" && (
+	<>
+	<ol>
+		<li>In the Cloudflare dashboard, go to {props.productName}'s <strong>Configuration</strong> page.
+			<DashButton url={props.dashButtonPath} />
+		</li>
+	</ol>
+	</>
+)
+}
 
 2. Go to **BGP configuration**.
 3. In **CF Account ASN**, enter Cloudflare's ASN.
