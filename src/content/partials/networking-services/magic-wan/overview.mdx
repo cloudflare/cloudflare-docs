@@ -61,7 +61,9 @@ Learn how to <a href={props.getStartedUrl}>get started</a>.
 	{props.connectorName}, start here to learn how to set up {props.productName} manually.
 </Feature>
 
-<Feature
+{props.magicWord === "Magic WAN" && (
+	<>
+	<Feature
 	header="Automatic cloud on-ramps"
 	href={props.cloudNetworkingUrl}
 	cta="Automate your cloud on-ramps"
@@ -69,6 +71,10 @@ Learn how to <a href={props.getStartedUrl}>get started</a>.
 	Automate resource discovery, and reduce management burden when connecting to
 	your public cloud.
 </Feature>
+
+	</>
+	)
+}
 
 <Feature
 	header="Zero Trust integration"
