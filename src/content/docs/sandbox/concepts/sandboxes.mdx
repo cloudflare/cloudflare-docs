@@ -10,7 +10,7 @@ A sandbox is an isolated execution environment where your code runs. Each sandbo
 - Has a unique identifier (sandbox ID)
 - Contains an isolated filesystem
 - Runs in a dedicated Linux container
-- Persists state between requests
+- Maintains state while the container is active
 - Exists as a Cloudflare Durable Object
 
 ## Lifecycle states
@@ -28,11 +28,11 @@ await sandbox.exec('echo "Hello"'); // First request creates sandbox
 
 ### Active
 
-The sandbox is running and processing requests. Filesystem, processes, and environment variables persist across requests.
+The sandbox container is running and processing requests. All state remains available: files, running processes, shell sessions, and environment variables.
 
 ### Idle
 
-After inactivity, the sandbox may enter idle state. Filesystem state is preserved, but the container may be paused. Next request triggers a warm start.
+After a period of inactivity, the container stops to free resources. When the next request arrives, a fresh container starts. All previous state is lost and the environment resets to its initial state.
 
 ### Destruction
 
@@ -43,19 +43,23 @@ await sandbox.destroy();
 // All files, processes, and state deleted permanently
 ```
 
-## Persistence
+## Container lifetime and state
 
-Between requests to the same sandbox:
+Sandbox state exists only while the container is active. Understanding this is critical for building reliable applications.
 
-**What persists**:
-- Files in `/workspace`, `/tmp`, `/home`
-- Background processes (started with `startProcess()`)
-- Code interpreter contexts and variables
-- Environment variables and port exposures
+**While the container is active** (typically minutes to hours of activity):
+- Files written to `/workspace`, `/tmp`, `/home` remain available
+- Background processes continue running
+- Shell sessions maintain their working directory and environment
+- Code interpreter contexts retain variables and imports
 
-**What doesn't persist**:
-- Nothing survives `destroy()`
-- Background processes may stop after container restarts (rare)
+**When the container stops** (due to inactivity or explicit destruction):
+- All files are deleted
+- All processes terminate
+- All shell state resets
+- All code interpreter contexts are cleared
+
+The next request creates a fresh container with a clean environment.
 
 ## Naming strategies
 
@@ -65,7 +69,7 @@ Between requests to the same sandbox:
 const sandbox = getSandbox(env.Sandbox, `user-${userId}`);
 ```
 
-User's work persists across sessions. Good for interactive environments, playgrounds, and notebooks.
+User's work persists while actively using the sandbox. Good for interactive environments, playgrounds, and notebooks where users work continuously.
 
 ### Per-session sandboxes
 
@@ -111,18 +115,19 @@ try {
 
 **Don't destroy**: Personal environments, long-running services
 
-### Failure recovery
+### Handling container restarts
 
-If container crashes or Durable Object is evicted (rare):
+Containers restart after inactivity or failures. Design your application to handle state loss:
 
 ```typescript
-try {
-  await sandbox.exec('command');
-} catch (error) {
-  if (error.message.includes('container') || error.message.includes('connection')) {
-    await sandbox.exec('command'); // Retry - container recreates
-  }
+// Check if required files exist before using them
+const files = await sandbox.listFiles('/workspace');
+if (!files.includes('data.json')) {
+  // Reinitialize: container restarted and lost previous state
+  await sandbox.writeFile('/workspace/data.json', initialData);
 }
+
+await sandbox.exec('python process.py');
 ```
 
 ## Best practices
@@ -131,7 +136,7 @@ try {
 - **Clean up temporary sandboxes** - Always destroy when done
 - **Reuse long-lived sandboxes** - One per user is often sufficient
 - **Batch operations** - Combine commands: `npm install && npm test && npm build`
-- **Handle failures** - Design for container restarts
+- **Design for ephemeral state** - Containers restart after inactivity, losing all state
 
 ## Related resources
 

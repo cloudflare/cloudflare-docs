@@ -68,7 +68,7 @@ export class Sandbox extends DurableObject<Env> {
 **Why Durable Objects**:
 
 - **Persistent identity** - Same sandbox ID always routes to same instance
-- **State management** - Durable Object persists state across ephemeral container restarts
+- **Container management** - Durable Object owns and manages the container lifecycle
 - **Geographic distribution** - Sandboxes run close to users
 - **Automatic scaling** - Cloudflare manages provisioning
 
