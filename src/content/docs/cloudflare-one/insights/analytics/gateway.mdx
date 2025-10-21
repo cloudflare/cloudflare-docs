@@ -5,7 +5,7 @@ sidebar:
   order: 4
 ---
 
-Gateway analytics are composed of three separate dashboards:
+Gateway analytics include three separate dashboards:
 
 1. HTTP request analytics.
 2. DNS query analytics.
@@ -15,17 +15,15 @@ To view Gateway analytics, in [Zero Trust](https://one.dash.cloudflare.com/), go
 
 ## HTTP request analytics
 
-Cloudflare [Gateway HTTP policies](/cloudflare-one/policies/gateway/http-policies/) allow you to intercept all HTTP and HTTPS requests and either block, allow, or override specific elements such as websites, IP addresses, and file types. HTTP policies operate on Layer 7 for all TCP (and [optionally UDP](/cloudflare-one/policies/gateway/initial-setup/http/#1-connect-to-gateway)) traffic sent over ports `80` and `443`.
+The HTTP request analytics dashboard is powered by your [Gateway HTTP policies](/cloudflare-one/policies/gateway/http-policies/). If you are not using Gateway HTTP policies, the dashboard will appear empty.
 
-- [Actions](/cloudflare-one/policies/gateway/http-policies/#actions): Policies can use a variety of actions, including [Allow](/cloudflare-one/policies/gateway/http-policies/#allow), [Block](/cloudflare-one/policies/gateway/http-policies/#block), and [Redirect](/cloudflare-one/policies/gateway/http-policies/#redirect). More advanced actions include [Isolate](/cloudflare-one/policies/gateway/http-policies/#isolate) (to run a website in a remote browser), [Do Not Inspect](/cloudflare-one/policies/gateway/http-policies/#do-not-inspect) (to bypass SSL decryption), and [Do Not Scan](/cloudflare-one/policies/gateway/http-policies/#do-not-scan) (to bypass specific security features). The Do Not Inspect rules are always evaluated first to allow for critical exceptions.
+The HTTP request analytics dashboard helps you identify trends in how your HTTP policies are applied over time. By visualizing allowed, isolated, and do not inspect requests, the dashboard provides insights into traffic behavior and policy trends, making it easier to spot anomalies or shifts in usage patterns.
 
-- Logical expressions: Policies are built with a wide range of [selectors](/cloudflare-one/policies/gateway/http-policies/#selectors) that provide granular control, such as [Host](/cloudflare-one/policies/gateway/http-policies/#host), [User Email](/cloudflare-one/policies/gateway/http-policies/#users), [Destination IP](/cloudflare-one/policies/gateway/http-policies/#destination-ip), and [File Type](/cloudflare-one/policies/gateway/http-policies/#download-and-upload-file-types). Selectors allow for rules like `Block all downloads of .exe files for all users` or `Redirect traffic from this specific user to a different URL.`
-
-### Value of HTTP request traffic analytics
+To view a detailed description of an HTTP request and its associated policy, go to **Logs** > **Gateway** > **HTTP** in [Zero Trust](https://one.dash.cloudflare.com/).
 
 ### Provided analytics
 
-- HTTP Requests over Time
+- HTTP Requests over time
 	- Time series view of HTTP requests
 - Top Actions
 - Top Countries
@@ -36,17 +34,15 @@ Cloudflare [Gateway HTTP policies](/cloudflare-one/policies/gateway/http-policie
 
 ## DNS query analytics
 
-Cloudflare [Gateway DNS policies](/cloudflare-one/policies/gateway/dns-policies/) allow administrators to filter and secure their organization's DNS traffic. When a user makes a DNS request, it is evaluated against a set of rules defined by an action and a logical expression known as a selector.
+The DNS query analytics dashboard is powered by your [Gateway DNS policies](/cloudflare-one/policies/gateway/dns-policies/). If you are not using Gateway DNS policies, the dashboard will appear empty.
 
-- [Actions](/cloudflare-one/policies/gateway/dns-policies/#actions): The policies can take actions such as [Allow](/cloudflare-one/policies/gateway/dns-policies/#allow), which permits a request; [Block](/cloudflare-one/policies/gateway/dns-policies/#block), which prevents it; or [Override](/cloudflare-one/policies/gateway/dns-policies/#override), which reroutes the request to a different address.
+The DNS query analytics dashboard helps you identify trends in how your DNS policies are applied over time. By visualizing allowed, blocked, and overridden queries, the dashboard provides insights into traffic behavior and policy trends, making it easier to spot anomalies or shifts in usage patterns.
 
-- Logical expressions: Policies are highly customizable using [selectors](/cloudflare-one/policies/gateway/dns-policies/#selectors) (such as [Content Categories](/cloudflare-one/policies/gateway/dns-policies/#content-categories), [Security Categories](/cloudflare-one/policies/gateway/dns-policies/#security-categories), [Source IP](/cloudflare-one/policies/gateway/dns-policies/#source-ip), or [Resolved IP](/cloudflare-one/policies/gateway/dns-policies/#resolved-ip)) and [operators](/cloudflare-one/policies/gateway/dns-policies/#comparison-operators). Selectors and operators enable the creation of granular rules to control access to specific content or to block threats. Policies can be applied before or after DNS resolution is completed.
-
-### Value of DNS query analytics
+To view a detailed description of a DNS query and its associated policy, go to **Logs** > **Gateway** > **DNS** in [Zero Trust](https://one.dash.cloudflare.com/).
 
 ### Provided analytics
 
-- DNS Queries over Time
+- DNS Queries over time
 	- Time series view of DNS queries
 - Top Actions
 - Top Countries
@@ -56,17 +52,15 @@ Cloudflare [Gateway DNS policies](/cloudflare-one/policies/gateway/dns-policies/
 
 ## Network session analytics
 
-Cloudflare [Gateway network policies](/cloudflare-one/policies/gateway/network-policies/) allow administrators to control network-level traffic leaving their endpoints. Gateway network policies are identity-based, meaning they can be applied to individual users or groups to control access to non-HTTP resources.
+The Network session analytics dashboard is powered by your [Gateway network policies](/cloudflare-one/policies/gateway/network-policies/). If you are not using Gateway network policies, the dashboard will appear empty.
 
-- [Actions](/cloudflare-one/policies/gateway/network-policies/#actions): The primary actions for network policies are [Allow](/cloudflare-one/policies/gateway/network-policies/#allow) and [Block](/cloudflare-one/policies/gateway/network-policies/#block). The Allow action permits traffic to specific IPs or ports, while the Block action denies it. When traffic is blocked, an optional notification can be sent to the user via the WARP client, often with a custom message.
+The Network session analytics dashboard helps you identify trends in how your network policies are applied over time. By visualizing allowed, blocked, and overridden sessions, the dashboard provides insights into traffic behavior and policy trends, making it easier to spot anomalies or shifts in usage patterns.
 
-- Logical Expressions: Policies are created using a combination of [selectors](/cloudflare-one/policies/gateway/network-policies/#selectors), [operators](/cloudflare-one/policies/gateway/network-policies/#comparison-operators), and [values](/cloudflare-one/policies/gateway/network-policies/#value). Selectors include criteria such as [Destination IP](/cloudflare-one/policies/gateway/network-policies/#destination-ip), [Destination Port](/cloudflare-one/policies/gateway/network-policies/#destination-port), [Detected Protocol](/cloudflare-one/policies/gateway/network-policies/#detected-protocol), and [Source IP](/cloudflare-one/policies/gateway/network-policies/#source-ip). This allows for granular control over network traffic.
-
-### Value of network session analytics
+To view a detailed description of a network session and its associated policy, go to **Logs** > **Gateway** > **Network** in [Zero Trust](https://one.dash.cloudflare.com/).
 
 ### Provided analytics
 
-- Network Sessions over Time
+- Network Sessions over time
 	- Time series view of Network Sessions
 - Top Actions
 - Top Countries
