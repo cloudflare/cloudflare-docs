@@ -71,7 +71,6 @@ Learn how to <a href={props.getStartedUrl}>get started</a>.
 	Automate resource discovery, and reduce management burden when connecting to
 	your public cloud.
 </Feature>
-
 	</>
 	)
 }
@@ -92,14 +91,19 @@ Use BGP peering between your networks and Cloudflare to automate the process of 
 
 ## Related products
 
-<RelatedProduct
-	header="Cloudflare Zero Trust"
-	href="/cloudflare-one/"
-	product="cloudflare-one"
->
-	Cloudflare Zero Trust replaces legacy security perimeters with our global
-	edge, making the Internet faster and safer for teams around the world.
-</RelatedProduct>
+{props.magicWord === "Magic WAN" && (
+	<>
+		<RelatedProduct
+		header="Cloudflare Zero Trust"
+		href="/cloudflare-one/"
+		product="cloudflare-one"
+		>
+		Cloudflare Zero Trust replaces legacy security perimeters with our global
+		edge, making the Internet faster and safer for teams around the world.
+		</RelatedProduct>
+	</>
+	)
+}
 
 <RelatedProduct
 	header="Magic Firewall"
@@ -111,7 +115,9 @@ Use BGP peering between your networks and Cloudflare to automate the process of 
 	with advanced, and scalable protection.
 </RelatedProduct>
 
-<RelatedProduct
+{props.magicWord === "Magic WAN" && (
+	<>
+	<RelatedProduct
 	header="Magic Cloud Networking"
 	href="/magic-cloud-networking/"
 	product="magic-cloud-networking"
@@ -119,6 +125,9 @@ Use BGP peering between your networks and Cloudflare to automate the process of 
 	Simplify and automate cloud resource discovery, and reduce your management
 	burden when connecting to your public cloud.
 </RelatedProduct>
+	</>
+	)
+}
 
 <RelatedProduct
 	header="Cloudflare Network Interconnect"
