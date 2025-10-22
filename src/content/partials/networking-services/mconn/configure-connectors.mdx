@@ -44,7 +44,7 @@ import {
 
 { props.magicWord === "virtual" && (
 	<>
-		<p>{props.productNameVirtual} is a virtual appliance alternative to the hardware based {props.productName}. These two versions of {props.productName} are identical otherwise.</p> <p>Currently, you can set up {props.productNameVirtual} on VMWare ESXi and Proxmox Virtual Environment. Support for Proxmox is in beta.</p>
+		<p>{props.productNameVirtual} is a virtual device alternative to the hardware based {props.productName}. These two versions of {props.productName} are identical otherwise.</p> <p>Currently, you can set up {props.productNameVirtual} on VMWare ESXi and Proxmox Virtual Environment. Support for Proxmox is in beta.</p>
 	</>
 	)
 }
@@ -67,7 +67,7 @@ In this page you will find instructions on how to configure {props.productName}.
   <>
 		<Markdown
 		text={`
-		Before you can install ${props.productNameVirtual}, you need an Enterprise account with ${props.productOriginalName}. Additionally, you need to have a VMware or Proxmox host with sufficient compute, memory, and storage to run the virtual machine with Virtual Connector. This includes:
+		Before you can install ${props.productNameVirtual}, you need an Enterprise account with ${props.productOriginalName}. Additionally, you need to have a VMware or Proxmox host with sufficient compute, memory, and storage to run the virtual machine with ${props.productNameVirtual}. This includes:
     - Intel x86 CPU architecture
     - ESXi hypervisor 7.0U1 or higher
     - 4 virtual CPUs per virtual connector (We recommend deployment with a 1:1 virtual CPU to physical core allocation to avoid CPU over contention which will cause packet loss.)
