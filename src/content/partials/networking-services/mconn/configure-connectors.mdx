@@ -692,9 +692,9 @@ When you are ready to connect your { props.magicWord === "virtual" ? props.produ
 		text={`
 		To access the serial port on ${props.productName} you will need the following equipment:
 
-		- The ${props.productName} appliance
+		- The ${props.productName} device
 		- A Phillips-head screwdriver
-		- A micro-USB to USB-A cable (there should be one included in the packaging of your ${props.productName})
+		- A micro-USB to USB-A cable (there should be one included in the packaging of your ${props.productName} device)
 		- A computer with an available USB port
 		- A serial terminal client
 		- Optional: if needed, a USB-A to USB-C converter dongle if your computer requires it
@@ -709,16 +709,16 @@ When you are ready to connect your { props.magicWord === "virtual" ? props.produ
 		text={`
 		1. Using the Phillips screwdriver, loosen the screw covering the serial console panel on the back of the ${props.productName} and turn the panel out of the way.
 			- Pictures and more instructions can be found on [Dell's Technical Documents](https://www.dell.com/support/kbdoc/en-us/000134440/how-to-access-console-port-of-dell-emc-networking-virtual-edge-platform-1405-series).
-		2. Connect your computer to the Magic WAN Connector using the USB cable.
+		2. Connect your computer to your ${props.productName} device using the USB cable.
 		`}
 		inline={false}
 		/>
 
 		<AnchorHeading title="Default password" depth={4} />
-		<p>Your {props.productName}'s default password is the serial number (also known as a Service Tag for Dell devices), all uppercase followed by an <code>!</code> (for example, <code>A1B2C3D!</code>)</p>
+		<p>The default password for your {props.productName} device is the serial number (also known as a Service Tag for Dell devices), all uppercase followed by an <code>!</code> (for example, <code>A1B2C3D!</code>)</p>
 
 		<AnchorHeading title="2. Install a serial terminal client" depth={3} />
-		<p>To access ${props.productName}'s environment you need a serial terminal client. Follow the instructions below to install one, based on your operating system.</p>
+		<p>To access the {props.productName} device environment you need a serial terminal client. Follow the instructions below to install one, based on your operating system.</p>
 
 		<AnchorHeading title="Windows" depth={4} />
 
@@ -775,7 +775,7 @@ When you are ready to connect your { props.magicWord === "virtual" ? props.produ
 
 		<Markdown
 		text={`
-		1. Log into the ${props.productName}. You will be prompted to change your password if you attempt to log in with the default password.
+		1. Log into your ${props.productName} device. You will be prompted to change your password if you attempt to log in with the default password.
 		2. From the menu, go to **Bootstrap** with the arrow keys and select it with the Enter key.
 		3. Select the jack (physical port) you want to configure for the initialization of the connector.
 		4. Enter the VLAN tag (if applicable) of the network. Leave it blank if untagged.
@@ -784,14 +784,14 @@ When you are ready to connect your { props.magicWord === "virtual" ? props.produ
 		inline={false}
 		/>
 
-		<Aside>The main reason to use the bootstrapper is if every network the {props.productName} is plugged into is either static, behind a VLAN, or both. If you find yourself here and configuring a network with DHCP and no VLAN, you are probably not in the right place. See the section on configuring your {props.productName} <a href="#set-up-cloudflare-dashboard">via the dashboard</a>.</Aside>
+		<Aside>The main reason to use the bootstrapper is if every network your {props.productName} device is plugged into is either static, behind a VLAN, or both. If you find yourself here and configuring a network with DHCP and no VLAN, you are probably not in the right place. See the section on configuring your {props.productName} <a href="#set-up-cloudflare-dashboard">via the dashboard</a>.</Aside>
 
 		<Markdown
 		text={`
 		6. Enter the IP address you would like the connector to have in CIDR form (for example, <code>10.0.0.2/24</code>).
 		7. Enter the IP address of the Internet gateway (this must be in the same subnet as the previous IP address you entered and must not be the same address).
 		8. Select **Save** and confirm that you want to use the new settings.
-		9. The ${props.productName} will download the rest of the settings from Cloudflare. The last heartbeat of the Connector should update once it has made contact with Cloudflare.
+		9. The ${props.productName} will download the rest of the settings from Cloudflare. The last heartbeat of the ${props.productName} should update once it has made contact with Cloudflare.
 		`}
 		inline={false}
 		/>
