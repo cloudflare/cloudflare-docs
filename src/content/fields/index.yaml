@@ -1958,6 +1958,8 @@ entries:
     categories: [Response]
     keywords: [response]
     summary: The HTTP status code returned to the client, either set by a Cloudflare product or returned by the origin server.
+    description: |-
+      **Note**: The availability of HTTP response fields depends on the exact Cloudflare feature and your Cloudflare plan.
     example_value: |-
       403
 
@@ -1972,6 +1974,8 @@ entries:
       - **Decoding**: No decoding performed
       - **Whitespace**: Preserved
       - **Non-ASCII**: Preserved
+
+      **Note**: The availability of HTTP response fields depends on the exact Cloudflare feature and your Cloudflare plan.
     example_value: |-
       {"server": ["nginx"]}
     example_block: |-
@@ -1992,6 +1996,8 @@ entries:
       - **Decoding**: No decoding performed
       - **Whitespace**: Preserved
       - **Non-ASCII**: Preserved
+
+      **Note**: The availability of HTTP response fields depends on the exact Cloudflare feature and your Cloudflare plan.
     example_value: |-
       ["content-type"]
     example_block: |-
@@ -2012,6 +2018,8 @@ entries:
       - **Decoding**: No decoding performed
       - **Whitespace**: Preserved
       - **Non-ASCII**: Preserved
+
+      **Note**: The availability of HTTP response fields depends on the exact Cloudflare feature and your Cloudflare plan.
     example_value: |-
       Example 1: ["application/json"]
       Example 2: ["This header value is longer than 10 bytes"]
@@ -2041,6 +2049,7 @@ entries:
       | `text/HTML`                             | `"text/html"`       |
       | `text/html; charset=utf-8; other=value` | `"text/html"`       |
 
+      **Note**: The availability of HTTP response fields depends on the exact Cloudflare feature and your Cloudflare plan.
   - name: cf.response.1xxx_code
     data_type: Integer
     categories: [Response]
