@@ -47,7 +47,13 @@ The OS Version device posture attribute checks whether the version of a device's
 
         - **Version extra**: Enter the [patch version](#linux) of the kernel. For example, if the kernel is `6.50.0-1007-oem`, enter `1007`.
 
-        </TabItem> </Tabs>
+		  </TabItem> 
+
+        <TabItem label="Windows">
+
+        - **Version extra**: Enter the Windows UBR (Update Build Revision) you want devices to match (for example, `3803`). The UBR is the fourth part of the full Windows version number (for example, in `10.0.19045.3803`, the UBR is `3803`).
+
+		  </TabItem> </Tabs>
 
 6.  Select **Save**.
 
@@ -68,12 +74,21 @@ Operating systems display version numbers in different ways. This section covers
 
 ### Windows
 
+Windows version numbers consist of four parts: `Major.Minor.Build.UBR`. For example, `10.0.19045.3803` where:
+- `10.0` is the **Version** (Major.Minor)
+- `19045` is the **Build** number
+- `3803` is the **UBR** (Update Build Revision)
+
+To determine the Windows version on your device:
+
 1. Open a PowerShell window.
-2. Use the `Get-CimInstance` command to get the version property of the `Win32_OperatingSystem` class.
+2. Use the `Get-ItemProperty` command to read the registry:
 
    ```bash
-   (Get-CimInstance Win32_OperatingSystem).version
+   (Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion" -Name LCUVer).LCUVer
    ```
+
+   This returns the full version in the format `Major.Minor.Build.UBR` (for example, `10.0.19045.3803`).
 
 ### Linux
 
