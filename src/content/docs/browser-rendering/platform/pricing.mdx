@@ -50,7 +50,7 @@ You can monitor Browser Rendering usage in two ways:
 
    <DashButton url="/?to=/:account/workers/browser-rendering" />
 
-- `X-Browser-Ms-Used` header: Returned in every REST API response, reporting browser time used for that request (in milliseconds). You can also access this header using they Typescript SDK with the .asResponse() method: 
+- The `X-Browser-Ms-Used` header, which is returned in every REST API response, reports browser time used for the request (in milliseconds). You can also access this header using the Typescript SDK with the .asResponse() method: 
 
    ```ts
    const contentRes = await client.browserRendering.content.create({
