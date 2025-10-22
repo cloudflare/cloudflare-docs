@@ -2387,7 +2387,7 @@
 /cloudflare-one/policies/gateway/* /cloudflare-one/traffic-policies/:splat 301
 /cloudflare-one/policies/browser-isolation/* /cloudflare-one/remote-browser-isolation/:splat 301
 /cloudflare-one/policies/data-loss-prevention/* /cloudflare-one/data-loss-prevention/:splat 301
-/cloudflare-one/policies/access/* /cloudflare-one/access-controls/policies/access/:splat 301
+/cloudflare-one/policies/access/* /cloudflare-one/access-controls/policies/:splat 301
 /cloudflare-one/api-terraform/* /cloudflare-one/access-controls/policies/api-terraform/:splat 301
 
 # Learning paths
