@@ -116,7 +116,7 @@ You cannot enable high availability for an existing { props.magicWord === "virtu
 
 { props.magicWord === "hardware" && (
   <>
-    <p>You can use {props.productName} in both DHCP networks and networks that require a static IP configuration. At first boot, however, {props.productName} needs to reach out to Cloudflare to download your settings and go through the activation process. If any of the networks plugged into your Connector are DHCP enabled, does not use a VLAN, and have an Internet connection, that process is handled automatically. However, if all of the networks require more information to utilize, (such as a network with static IPs, or tagged VLAN networks) your {props.productName} might need some more information to proceed.</p>
+    <p>You can use {props.productName} in both DHCP networks and networks that require a static IP configuration. At first boot, however, {props.productName} needs to reach out to Cloudflare to download your settings and go through the activation process. If any of the networks plugged into your {props.productName} device are DHCP enabled, do not use a VLAN, and have an Internet connection, that process is handled automatically. However, if all of the networks require more information to utilize, (such as a network with static IPs, or tagged VLAN networks) your {props.productName} might need some more information to proceed.</p>
 
 		<p>There are couple of ways to provide this information. Choose the one that fits your workflow: </p>
 
@@ -125,7 +125,7 @@ You cannot enable high availability for an existing { props.magicWord === "virtu
 		<Markdown
 		text={`
 		1. Connect ${props.productName} to a DHCP port with access to the Internet.
-		2. Go through the [setup flow](#set-up-cloudflare-dashboard) below and activate your Connector.
+		2. Go through the [setup flow](#set-up-cloudflare-dashboard) below and activate your ${props.productName} device.
 		3. Refer to [WAN with a static IP address](#wan-with-a-static-ip-address).
 		`}
 		inline={false}
@@ -145,7 +145,7 @@ You cannot enable high availability for an existing { props.magicWord === "virtu
 		<Markdown
 		text={`
     1. Connect the machine with your ${props.productNameVirtual} VM to a DHCP port with access to the Internet.
-		2. Go through the [setup flow](#set-up-cloudflare-dashboard) below and activate your Connector.
+		2. Go through the [setup flow](#set-up-cloudflare-dashboard) below and activate your ${props.productNameVirtual} device.
 		3. Refer to [WAN with a static IP address](#wan-with-a-static-ip-address).
 		`}
 		inline={false}
