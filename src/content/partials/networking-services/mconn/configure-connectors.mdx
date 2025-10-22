@@ -556,7 +556,7 @@ After finishing your { props.magicWord === "virtual" ? props.productNameVirtual 
   <>
 		<p>When the {props.productNameVirtual} is first activated, one of the ports must be connected to the Internet through a device that supports DHCP. This is required so that the {props.productNameVirtual} can reach the Cloudflare global network and download the required configurations that you <a href="#set-up-cloudflare-dashboard">set up</a>.</p>
 
-		<Aside type="caution">Remember to connect {props.productNameVirtual} through a route that supports DHCP for its first connection to the Internet. Otherwise, the Connector will not work.</Aside>
+		<Aside type="caution">Remember to connect {props.productNameVirtual} through a route that supports DHCP for its first connection to the Internet. Otherwise, {props.productNameVirtual} will not work.</Aside>
 
   </>
   )
@@ -564,30 +564,35 @@ After finishing your { props.magicWord === "virtual" ? props.productNameVirtual 
 
 When you are ready to connect your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } to the Cloudflare network:
 
+{ props.productOriginalName === "WAN Tunnels" ? (
+	<>
+1. Log in to the Cloudflare One dashboard, and go to **Networks**.
+2. Go to **Connectors** > **Appliances**.
+3. Find the Appliances you want to activate, select the three dots next to it > **Edit**. Make sure you verify the serial number to choose the right Appliances you want to activate.
+4. In the new window, the **Status** dropdown will show as **Deactivated**. Select it to change the status to **Activated**.
+5. The **Interrupt window** is the time period when the { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } software can update, which may result in interruption to existing connections. Choose a time period to minimize disruption to your sites. Refer to <a href="/cloudflare-one/networks/connectors/wan-tunnels/configuration/appliances/maintenance/interrupt-service-window/">Interrupt window</a> for more details on how to define when the Appliances can update its systems.
+6. Select **Update**.
+	</>
+) : (
+	<>
 1. In the Cloudflare dashboard, go to Magic WAN's **Configuration** page.
 
    <DashButton url="/?to=/:account/magic-wan/configuration" />
 
 2. Go to **Connectors**.
-3. Find the Connector you want to activate, select the three dots next to it > **Edit**. Make sure you verify the serial number to choose the right connector you want to activate.
+3. Find the { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } you want to activate, select the three dots next to it > **Edit**. Make sure you verify the serial number to choose the right { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } you want to activate.
 4. In the new window, the **Status** dropdown will show as **Deactivated**. Select it to change the status to **Activated**.
-5. The **Interrupt window** is the time period when the { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } software can update, which may result in interruption to existing connections. Choose a time period to minimize disruption to your sites. Refer to [Interrupt window](/magic-wan/configuration/connector/maintenance/interrupt-service-window/) for more details on how to define when the Connector can update its systems.
+5. The **Interrupt window** is the time period when the { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } software can update, which may result in interruption to existing connections. Choose a time period to minimize disruption to your sites. Refer to <a href="/magic-wan/configuration/connector/maintenance/interrupt-service-window/">Interrupt window</a> for more details on how to define when the { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } can update its systems.
 6. Select **Update**.
+	</>
+)
+}
 
 { props.magicWord === "virtual" && (
   <>
 		<AnchorHeading title="Boot your Virtual Connector" depth={2} />
 
-		<Markdown
-		text={`
-		1. Boot up Virtual Connector's VM in your virtual machine.
-		2. The Virtual Connector will make a request to Cloudflare. This is the step where Virtual Connector registers your provided license key and downloads the [configuration you provided](#set-up-cloudflare-dashboard).
-		3. The Virtual Connector will set up the LAN and WAN connections according to the configuration downloaded from the site you created on the Cloudflare dashboard. The Virtual Connector will also establish IPsec tunnels.
-		4. If successful, the [tunnel health checks](/magic-wan/configuration/common-settings/check-tunnel-health-dashboard/) will show as healthy.
-		5. If you do not see a [healthy heartbeat](/magic-wan/configuration/connector/maintenance/heartbeat/) on the Cloudflare dashboard, reboot the Virtual Connector's VM in VMware.
-		`}
-		inline={false}
-		/>
+
 
 		<AnchorHeading title="Default password to access Virtual Connector" depth={2} />
 
