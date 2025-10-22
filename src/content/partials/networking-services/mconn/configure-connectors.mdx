@@ -464,14 +464,14 @@ After setting up your LANs, you can configure your { props.magicWord === "virtua
 
 #### DHCP options
 
-{ props.magicWord === "virtual" ? props.productNameVirtual : props.productName } supports different types of DHCP configurations. Connector can:
+{ props.magicWord === "virtual" ? props.productNameVirtual : props.productName } supports different types of DHCP configurations. { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } can:
 
 - Connect to a DHCP server or use a static IP address instead of connecting to a DHCP server.
 - Act as a <a href={props.dhcpServerURL}>DHCP server</a>.
 - Use <a href={props.dhcpRelayURL}>DHCP relay</a> to connect to a DHCP server outside the location your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } is in.
 - <a href={props.reserveIpAddressesURL}>Reserve IP addresses</a> for specific devices on your network.
 
-### Add your Connector to a site
+### Add your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } to a site
 
 After finishing your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } configuration, you need to add it to a site. <Render file="sites/sites-brief" product="networking-services" />
 
