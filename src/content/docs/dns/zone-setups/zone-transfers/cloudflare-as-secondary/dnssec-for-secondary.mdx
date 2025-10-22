@@ -14,6 +14,7 @@ import {
 	Tabs,
 	GlossaryTooltip,
 	APIRequest,
+	DashButton,
 } from "~/components";
 
 [DNS Security Extensions (DNSSEC)](https://www.cloudflare.com/learning/dns/dns-security/) increase security by adding cryptographic signatures to DNS records. When you use multiple providers and Cloudflare is secondary, you have a few options to enable DNSSEC for records served by Cloudflare.
@@ -38,13 +39,13 @@ In this setup, DNSSEC on your pirmary DNS provider does not need to be enabled.
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and zone.
+1. In the Cloudflare dashboard, go to the **DNS Settings** page.
 
-2. Go to **DNS** > **Settings**.
+   <DashButton url="/?to=/:account/:zone/dns/settings" />
 
-3. Under **DNSSEC with Secondary DNS** select **Live signing**. You will then have access to several necessary values to create a **DS** record at your registrar.
+2. Under **DNSSEC with Secondary DNS** select **Live signing**. You will then have access to several necessary values to create a **DS** record at your registrar.
 
-4. <Render file="dnssec-registrar-steps" product="dns" />
+3. <Render file="dnssec-registrar-steps" product="dns" />
 
 </TabItem> <TabItem label="API">
 
