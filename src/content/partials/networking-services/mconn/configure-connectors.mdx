@@ -564,6 +564,7 @@ After finishing your { props.magicWord === "virtual" ? props.productNameVirtual 
 
 When you are ready to connect your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } to the Cloudflare network:
 
+{/* Instructions for WAN Tunnels */}
 { props.productOriginalName === "WAN Tunnels" ? (
 	<>
 		<Markdown
@@ -580,6 +581,7 @@ When you are ready to connect your { props.magicWord === "virtual" ? props.produ
 	</>
 ) : (
 	<>
+		{/* Instructions for Magic WAN */}
 		<Markdown
 	text={`
 		1. In the Cloudflare dashboard, go to Magic WAN's **Configuration** page.`}
