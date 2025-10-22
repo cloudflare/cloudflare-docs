@@ -12,11 +12,11 @@ import { Render, GlossaryTooltip, Tabs, TabItem, APIRequest } from "~/components
 
 You can secure [Model Context Protocol (MCP) servers](https://www.cloudflare.com/learning/ai/what-is-model-context-protocol-mcp/) by using Cloudflare Access as an OAuth Single Sign-On (SSO) provider.
 
-This guide walks through how to deploy a remote <GlossaryTooltip term="MCP server">MCP server</GlossaryTooltip> on [Cloudflare Workers](/workers/) that requires Cloudflare Access for authentication. When users connect to the MCP server using an <GlossaryTooltip term="MCP client">MCP client</GlossaryTooltip>, they will be prompted to log in to your [identity provider](/cloudflare-one/identity/idp-integration/) and are only granted access if they pass your [Access policies](/cloudflare-one/policies/access/#selectors).
+This guide walks through how to deploy a remote <GlossaryTooltip term="MCP server">MCP server</GlossaryTooltip> on [Cloudflare Workers](/workers/) that requires Cloudflare Access for authentication. When users connect to the MCP server using an <GlossaryTooltip term="MCP client">MCP client</GlossaryTooltip>, they will be prompted to log in to your [identity provider](/cloudflare-one/integrations/identity-providers/) and are only granted access if they pass your [Access policies](/cloudflare-one/policies/access/#selectors).
 
 ## Prerequisites
 
-- Add an [identity provider](/cloudflare-one/identity/idp-integration/) to Cloudflare Zero Trust
+- Add an [identity provider](/cloudflare-one/integrations/identity-providers/) to Cloudflare Zero Trust
 - Install [npm](https://docs.npmjs.com/getting-started)
 - Install [Node.js](https://nodejs.org/en/)
 

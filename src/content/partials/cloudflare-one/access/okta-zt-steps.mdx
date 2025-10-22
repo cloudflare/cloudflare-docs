@@ -16,7 +16,7 @@ import {} from "~/components"
 
 14. (Optional) Create an Okta API token and enter it in Zero Trust (the token can be read-only). This will prevent your Okta groups from failing if you have more than 100 groups.
 
-15. (Optional) To configure [custom OIDC claims](/cloudflare-one/identity/idp-integration/generic-oidc/#custom-oidc-claims):
+15. (Optional) To configure [custom OIDC claims](/cloudflare-one/integrations/identity-providers/generic-oidc/#custom-oidc-claims):
     1. In Okta, create a [custom authorization server](https://developer.okta.com/docs/guides/customize-authz-server/main/) and ensure that the `groups` scope is enabled.
     2. In Zero Trust, enter the **Authorization Server ID** obtained from Okta.
     3. Under **Optional configurations**, enter the claims that you wish to add to your users' identity.
@@ -25,4 +25,4 @@ import {} from "~/components"
 
 17. Select **Save**.
 
-To [test](/cloudflare-one/identity/idp-integration/#test-idps-in-zero-trust) that your connection is working, select **Test**.
+To [test](/cloudflare-one/integrations/identity-providers/#test-idps-in-zero-trust) that your connection is working, select **Test**.
