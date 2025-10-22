@@ -803,7 +803,7 @@ When you are ready to connect your { props.magicWord === "virtual" ? props.produ
 
 ## About high availability configurations
 
-{props.hardSoftConn} When you set up a site in high availability, the WANs and LANs in your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } have the same configuration but are replicated on two nodes. In case of failure of a { props.magicWord === "virtual" ? props.productNameVirtual : props.productName }, the other { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } becomes the active node, taking over configuration of the LAN gateway IP and allowing traffic to continue without disruption.
+{props.hardSoftConn} When you set up a site in high availability, the WANs and LANs in your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } have the same configuration but are replicated on two nodes. In case of failure of one of the devices, the other device becomes the active node, taking over the configuration of the LAN gateway IP and allowing traffic to continue without disruption.
 
 Because { props.magicWord === "virtual" ? props.productNameVirtual : props.productName }s in high availability configurations share a single site, you need to set up:
 
