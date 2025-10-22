@@ -2352,8 +2352,8 @@
 /logs/get-started/enable-destinations/* /logs/logpush/logpush-job/enable-destinations/:splat 301
 /logs/reference/log-fields/* /logs/logpush/logpush-job/datasets/:splat 301
 /speed/optimization/other/* /speed/optimization/ 301
-/cloudflare-one/connections/connect-devices/* /cloudflare-one/team-and-resources/devices 301
-/cloudflare-one/connections/connect-networks/* /cloudflare-one/networks/connectors/cloudflare-tunnel/ 301
+/cloudflare-one/connections/connect-devices/* /cloudflare-one/team-and-resources/devices/:splat 301
+/cloudflare-one/connections/connect-networks/* /cloudflare-one/networks/connectors/cloudflare-tunnel/:splat 301
 
 # AI Crawl Control
 /ai-audit/* /ai-crawl-control/:splat 301
