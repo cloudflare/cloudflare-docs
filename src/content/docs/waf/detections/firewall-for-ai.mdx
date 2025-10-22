@@ -88,7 +88,7 @@ Alternatively, create a custom rule like the one described in the next step usin
 
 [Create a custom rule](/waf/custom-rules/create-dashboard/) that blocks requests where Cloudflare detected personally identifiable information (PII) in the incoming request (as part of an LLM prompt), returning a custom JSON body:
 
-- **If incoming requests match**:
+- **When incoming requests match**:
 
   | Field            | Operator | Value |
   | ---------------- | -------- | ----- |
@@ -155,7 +155,7 @@ When enabled, Firewall for AI populates the following fields:
 
 The following example [custom rule](/waf/custom-rules/create-dashboard/) will block requests with an LLM prompt that tries to obtain PII of a specific [category](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.pii_categories/):
 
-- **If incoming requests match**:
+- **When incoming requests match**:
 
   | Field              | Operator | Value         |
   | ------------------ | -------- | ------------- |
@@ -170,7 +170,7 @@ The following example [custom rule](/waf/custom-rules/create-dashboard/) will bl
 
 The following example [custom rule](/waf/custom-rules/create-dashboard/) will block requests with an LLM prompt containing unsafe content of specific [categories](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.unsafe_topic_categories/):
 
-- **If incoming requests match**:
+- **When incoming requests match**:
 
   | Field                       | Operator | Value                            |
   | --------------------------- | -------- | -------------------------------- |
@@ -185,7 +185,7 @@ The following example [custom rule](/waf/custom-rules/create-dashboard/) will bl
 
 The following example [custom rule](/waf/custom-rules/create-dashboard/) will block requests with an [injection score](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.injection_score/) below `20`. Using a low injection score value in the rule helps avoid false positives.
 
-- **If incoming requests match**:
+- **When incoming requests match**:
 
   | Field               | Operator  | Value |
   | ------------------- | --------- | ----- |
