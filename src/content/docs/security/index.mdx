@@ -16,8 +16,8 @@ import {
 	LinkTitleCard,
 	RelatedProduct,
 	Stream,
+	DashButton,
 } from "~/components";
-
 
 The application security dashboard is your starting point to better understand the security posture of your web applications, and to configure rules to protect them.
 
@@ -31,9 +31,11 @@ Cloudflare is gradually making the new **Security** dashboard available by defau
 
 To opt out of the new security dashboard:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
-2. Go to **Security** > **Settings**.
-3. Search for the setting **New application security dashboard** and turn it off.
+1. In the Cloudflare dashboard, go to the Security **Settings** page.
+
+   <DashButton url="/?to=/:account/:zone/security/settings" />
+
+2. Turn off the setting **New application security dashboard**.
 
 The opt-out option will be available for a limited time.
 

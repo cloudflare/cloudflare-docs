@@ -9,7 +9,7 @@ sidebar:
 import { Render } from "~/components";
 
 :::note
-Not recommended for new deployments. We recommend using [Access for Infrastructure](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/) to configure short-lived certificates for SSH.
+Not recommended for new deployments. We recommend using [Access for Infrastructure](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/) to configure short-lived certificates for SSH.
 :::
 
 <Render
@@ -24,7 +24,7 @@ Cloudflare Access short-lived certificates can work with any modern SSH server, 
 
 To secure your server behind Cloudflare Access:
 
-1. [Connect the server to Cloudflare](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/) as a published application.
+1. [Connect the server to Cloudflare](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/create-remote-tunnel/) as a published application.
 2. Create a [self-hosted Access application](/cloudflare-one/applications/configure-apps/self-hosted-public-app/) for the server.
 
 :::note
@@ -66,7 +66,7 @@ Cloudflare Access will take the identity from a token and, using short-lived cer
 
 ### Configure your client SSH config
 
-On the client side, [configure your device](/cloudflare-one/connections/connect-networks/use-cases/ssh/) to use Cloudflare Access to reach the protected machine. To use short-lived certificates, you must include the following settings in your SSH config file (`~/.ssh/config`).
+On the client side, [configure your device](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/) to use Cloudflare Access to reach the protected machine. To use short-lived certificates, you must include the following settings in your SSH config file (`~/.ssh/config`).
 
 To save time, you can use the following cloudflared command to print the required configuration command:
 

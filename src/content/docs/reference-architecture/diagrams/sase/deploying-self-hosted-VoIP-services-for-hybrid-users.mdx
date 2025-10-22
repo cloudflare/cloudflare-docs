@@ -18,7 +18,7 @@ Traditional VPN solutions create several problems for VoIP deployments, primaril
 
 Cloudflare improves over traditional VPN solutions by leveraging its [global network](https://www.cloudflare.com/network/) of data centers in <PublicStats id="data_center_cities" /> to significantly reduce latency for remote users. When using our device agent, remote users are automatically connected to the nearest Cloudflare data center, thus reducing latency.
 
-This document explains how to architect access to a self-hosted VoIP service using Cloudflare. Note the solution below uses our [WARP Connector](/cloudflare-one/connections/connect-networks/private-net/warp-connector/), a small piece of software deployed on a server in the same subnet as the VoIP servers and creates bi-directional traffic flow through Cloudflare to users.
+This document explains how to architect access to a self-hosted VoIP service using Cloudflare. Note the solution below uses our [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/), a small piece of software deployed on a server in the same subnet as the VoIP servers and creates bi-directional traffic flow through Cloudflare to users.
 
 ## Bi-directional VoIP traffic flow
 
@@ -50,7 +50,7 @@ The above diagram shows the high level signaling and media paths.
 4. The default gateway for the SIP server is `10.50.0.1`, but we have defined a static route such that for destination `100.96.0.0/12`, the next hop is the WARP Connector interface (`10.0.50.10`).
 5. The SIP INVITE message will be routed across the WARP Connector to the Cloudflare network and then received by Bob.
 6. Bob accepts and the SIP server will send SIP/SDP messages to both Alice and Bob specifying which parameters to use for the RTP (audio) data.
-7. For Direct Media paths where the SIP server is not in the audio path and the RTP streams are directly between Alice and Bob, ensure that [WARP-to-WARP connectivity](/cloudflare-one/connections/connect-networks/private-net/warp-to-warp/#enable-warp-to-warp) has been enabled in Cloudflare. Audio streams in the Direct Media use case will not need to route over the WARP Connector.
+7. For Direct Media paths where the SIP server is not in the audio path and the RTP streams are directly between Alice and Bob, ensure that [WARP-to-WARP connectivity](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-to-warp/#enable-warp-to-warp) has been enabled in Cloudflare. Audio streams in the Direct Media use case will not need to route over the WARP Connector.
 
 ### Remote user to on-premise user
 
@@ -82,6 +82,6 @@ With Cloudflare's WARP Connector, remote users communicating with other remote u
 
 ## Related resources
 
-- [Set up WARP Connector](/cloudflare-one/connections/connect-networks/private-net/warp-connector/)
-- [Enable WARP-to-WARP connectivity](/cloudflare-one/connections/connect-networks/private-net/warp-to-warp/#enable-warp-to-warp)
-- [About Cloudflare WARP](/cloudflare-one/connections/connect-devices/warp/)
+- [Set up WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/)
+- [Enable WARP-to-WARP connectivity](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-to-warp/#enable-warp-to-warp)
+- [About Cloudflare WARP](/cloudflare-one/team-and-resources/devices/warp/)

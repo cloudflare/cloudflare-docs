@@ -118,7 +118,7 @@ The `main` key is optional for assets-only Workers.
   - Enables use of `*.workers.dev` subdomain to deploy your Worker. If you have a Worker that is only for `scheduled` events, you can set this to `false`. Defaults to `true`. Refer to [types of routes](#types-of-routes).
 
 - `preview_urls` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Enables use of Preview URLs to test your Worker. Defaults to `false`. Refer to [Preview URLs](/workers/configuration/previews).
+  - Enables use of Preview URLs to test your Worker. Defaults to value of `workers_dev`. Refer to [Preview URLs](/workers/configuration/previews).
 
 - `route` <Type text="Route" /> <MetaInfo text="optional" />
   - A route that your Worker should be deployed to. Only one of `routes` or `route` is required. Refer to [types of routes](#types-of-routes).
@@ -992,7 +992,7 @@ The following options are available:
   - To specify a custom instance type, see [here](#custom-instance-types).
 
 - `max_instances` <Type text="string" /> <MetaInfo text="optional" />
-  - The maximum number of concurrent container instances you want to run at any given moment. Stopped containers do not count towards this - you may have more container instances than this number overall, but only this many actively running containers at once. If a request to start a container will exceed this limit, that request will error. 
+  - The maximum number of concurrent container instances you want to run at any given moment. Stopped containers do not count towards this - you may have more container instances than this number overall, but only this many actively running containers at once. If a request to start a container will exceed this limit, that request will error.
 
   - Defaults to 20.
 
@@ -1127,6 +1127,28 @@ Any files that match `rules` will also be included as unbundled, external module
 `base_dir` defaults to the directory containing your `main` entrypoint.
 
 See https://developers.cloudflare.com/workers/wrangler/bundling/ for more details and examples.
+
+### Python Workers
+
+By default, Python Workers bundle the files and folders in `python_modules` at the root of your Worker (alongside your wrangler config file).
+The files in this directory represent your vendored packages and is where the pywrangler tool copies packages into. In some cases, you
+may find that the files in this folder are too large and if your worker doesn't require them then they just grow your bundle size for
+no reason.
+
+To fix this, you can exclude certain files from being included. To do this use the `python_modules.excludes` option, for example:
+
+<WranglerConfig>
+
+```toml title="wrangler.toml"
+[python_modules]
+excludes = ["**/*.pyc", "**/__pycache__"]
+```
+
+</WranglerConfig>
+
+This will exclude any .pyc files and `__pycache__` directories inside any subdirectory in `python_modules`.
+
+By default, `python_modules.excludes` is set to `["**/*.pyc"]`, so be sure to include this when setting it to a different value.
 
 ## Local development settings
 

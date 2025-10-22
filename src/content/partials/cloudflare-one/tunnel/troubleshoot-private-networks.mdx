@@ -16,7 +16,7 @@ The WARP client GUI should display `Connected` and `Your Internet is protected`.
 
 </div>
 
-If WARP is stuck in the `Disconnected` state or frequently changes between `Connected` and `Disconnected`, refer to [Unable to connect WARP](/cloudflare-one/connections/connect-devices/warp/troubleshooting/common-issues/#unable-to-connect-warp).
+If WARP is stuck in the `Disconnected` state or frequently changes between `Connected` and `Disconnected`, refer to [Unable to connect WARP](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/common-issues/#unable-to-connect-warp).
 
 ## 2. Is the WARP client connecting to your private DNS server?
 
@@ -24,15 +24,15 @@ This step is only needed if users access your application via a private hostname
 
 - If you are using [custom resolver policies](/cloudflare-one/policies/gateway/resolver-policies/) to handle private DNS, go to your Gateway DNS logs (**Logs** > **Gateway** > **DNS**) and search for DNS queries to the hostname.
 
-- If you are using [Local Domain Fallback](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/local-domains/) to handle private DNS, go to your Gateway Network logs (**Logs** > **Gateway** > **Network**) and search for port `53` traffic to your DNS server IP.
+- If you are using [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/local-domains/) to handle private DNS, go to your Gateway Network logs (**Logs** > **Gateway** > **Network**) and search for port `53` traffic to your DNS server IP.
 
-If there are no relevant Gateway logs, it means that WARP was unable to forward the query to your private DNS server. Check your resolver policies or Local Domain Fallback configuration and refer to [How WARP handles DNS requests](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/#how-the-warp-client-handles-dns-requests).
+If there are no relevant Gateway logs, it means that WARP was unable to forward the query to your private DNS server. Check your resolver policies or Local Domain Fallback configuration and refer to [How WARP handles DNS requests](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/#how-the-warp-client-handles-dns-requests).
 
 ## 3. Is network traffic to the application going through WARP?
 
 Next, check if your Gateway Network logs (**Logs** > **Gateway** > **Network**) show any traffic to the destination IP.
 
-If WARP is connected but there are no network logs, it means that your private network IPs are not routing through WARP. You can confirm this by [searching the routing table](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#routing-table) on the device for the IP address of your application. Traffic to your application should route through the Cloudflare WARP interface. If another interface is used, [check your Split Tunnel configuration](/cloudflare-one/connections/connect-networks/private-net/cloudflared/#3-route-private-network-ips-through-warp).
+If WARP is connected but there are no network logs, it means that your private network IPs are not routing through WARP. You can confirm this by [searching the routing table](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/warp-architecture/#routing-table) on the device for the IP address of your application. Traffic to your application should route through the Cloudflare WARP interface. If another interface is used, [check your Split Tunnel configuration](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/#3-route-private-network-ips-through-warp).
 
 ## 4. Is the user blocked by a Gateway policy?
 
@@ -68,7 +68,7 @@ Under **Settings** > **Network**, ensure that **Proxy** is enabled for TCP, UDP,
 
 ## 7. Is the user's traffic reaching the tunnel?
 
-[Review your tunnel log stream](/cloudflare-one/connections/connect-networks/monitor-tunnels/logs/#view-logs-on-your-local-machine). If you do not see any requests to your application, ensure that you have added the appropriate static routes to your Cloudflare Tunnel.
+[Review your tunnel log stream](/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/logs/#view-logs-on-your-local-machine). If you do not see any requests to your application, ensure that you have added the appropriate static routes to your Cloudflare Tunnel.
 
 ## 8. Is the tunnel forwarding requests to your application?
 
@@ -102,7 +102,7 @@ You can also use a packet capture tool such as `tcpdump` or Wireshark to trace w
 
 1. Check if the application server has a local firewall in place that is blocking requests from the `cloudflared` host machine.
 
-2. Check if the application server needs to initiate any connection towards the user's device. If so, this is a limitation of `cloudflared` and you should instead [deploy WARP Connector](/cloudflare-one/connections/connect-networks/private-net/warp-connector/) to enable bidirectional traffic.
+2. Check if the application server needs to initiate any connection towards the user's device. If so, this is a limitation of `cloudflared` and you should instead [deploy WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/) to enable bidirectional traffic.
 
 ## 10. Is TLS inspection affecting the connection to your application?
 
@@ -123,5 +123,5 @@ To troubleshoot TLS inspection:
    To work around the issue:
 
    - **Option 1:** Create a permanent [`Do Not Inspect` HTTP policy](/cloudflare-one/policies/gateway/http-policies/#do-not-inspect) for this application.
-   - **Option 2:** Customers who use their [own certificate infrastructure](/cloudflare-one/connections/connect-devices/user-side-certificates/custom-certificate/) for inspection can opt to create an [Allow _Pass Through_ policy](/cloudflare-one/policies/gateway/http-policies/#untrusted-certificates) which enables our proxy to accept the TLS negotiation from your application. This will allow requests to flow correctly without the need for a `Do Not Inspect` policy.
-   - **Option 3:** If your application uses `HTTPS` or other common protocols, you can add a [published application](/cloudflare-one/connections/connect-networks/routing-to-tunnel/) to your Cloudflare Tunnel and set [noTLSVerify](/cloudflare-one/connections/connect-networks/configure-tunnels/cloudflared-parameters/origin-parameters/#notlsverify) to `true`. This will allow `cloudflared` to trust your self-signed certificate.
+   - **Option 2:** Customers who use their [own certificate infrastructure](/cloudflare-one/team-and-resources/devices/user-side-certificates/custom-certificate/) for inspection can opt to create an [Allow _Pass Through_ policy](/cloudflare-one/policies/gateway/http-policies/#untrusted-certificates) which enables our proxy to accept the TLS negotiation from your application. This will allow requests to flow correctly without the need for a `Do Not Inspect` policy.
+   - **Option 3:** If your application uses `HTTPS` or other common protocols, you can add a [published application](/cloudflare-one/networks/connectors/cloudflare-tunnel/routing-to-tunnel/) to your Cloudflare Tunnel and set [noTLSVerify](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cloudflared-parameters/origin-parameters/#notlsverify) to `true`. This will allow `cloudflared` to trust your self-signed certificate.

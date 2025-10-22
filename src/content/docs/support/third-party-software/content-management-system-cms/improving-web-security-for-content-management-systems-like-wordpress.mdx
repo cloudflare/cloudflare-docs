@@ -99,7 +99,7 @@ Do the following:
 2. Import the certificate to your computer’s key storage. With macOS Keychain, you can use the steps listed in [Test in the browser](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/#test-in-the-browser).
 3. [Enable mTLS](/ssl/client-certificates/enable-mtls/) by adding the correct host.
 4. In **SSL/TLS** > **Client Certificates**, select **Create mTLS Rule**.
-5. Under **If incoming requests match**, enter a value for thr **URI Path** field to narrow the rule scope to the admin section, otherwise you will block your visitors from accessing the public content.
+5. Under **When incoming requests match**, enter a value for thr **URI Path** field to narrow the rule scope to the admin section, otherwise you will block your visitors from accessing the public content.
 6. Set the rule to *Block* any requests made to your admin panel if the client certificate is not verified.
 7. Select **Deploy**. This creates a WAF custom rule that checks all requests to the admin section for a valid client certificate.
 

@@ -5,10 +5,7 @@ head:
   - tag: title
     content: JavaScript and web standards
 description: Standardized APIs for use by Workers running on Cloudflare's global network.
-
 ---
-
-***
 
 ## JavaScript standards
 
@@ -16,16 +13,16 @@ The Cloudflare Workers runtime is [built on top of the V8 JavaScript and WebAsse
 
 All of the [standard built-in objects](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference) supported by the current Google Chrome stable release are supported, with a few notable exceptions:
 
-* For security reasons, the following are not allowed:
-  * `eval()`
-  * `new Function`
-  * [`WebAssembly.compile`](https://developer.mozilla.org/en-US/docs/WebAssembly/JavaScript_interface/compile_static)
-  * [`WebAssembly.compileStreaming`](https://developer.mozilla.org/en-US/docs/WebAssembly/JavaScript_interface/compileStreaming_static)
-  * `WebAssembly.instantiate` with a [buffer parameter](https://developer.mozilla.org/en-US/docs/WebAssembly/JavaScript_interface/instantiate_static#primary_overload_%E2%80%94_taking_wasm_binary_code)
-  * [`WebAssembly.instantiateStreaming`](https://developer.mozilla.org/en-US/docs/WebAssembly/JavaScript_interface/instantiateStreaming_static)
-* `Date.now()` returns the time of the last I/O; it does not advance during code execution.
+- For security reasons, the following are not allowed:
+  - `eval()`
+  - `new Function`
+  - [`WebAssembly.compile`](https://developer.mozilla.org/en-US/docs/WebAssembly/JavaScript_interface/compile_static)
+  - [`WebAssembly.compileStreaming`](https://developer.mozilla.org/en-US/docs/WebAssembly/JavaScript_interface/compileStreaming_static)
+  - `WebAssembly.instantiate` with a [buffer parameter](https://developer.mozilla.org/en-US/docs/WebAssembly/JavaScript_interface/instantiate_static#primary_overload_%E2%80%94_taking_wasm_binary_code)
+  - [`WebAssembly.instantiateStreaming`](https://developer.mozilla.org/en-US/docs/WebAssembly/JavaScript_interface/instantiateStreaming_static)
+- `Date.now()` returns the time of the last I/O; it does not advance during code execution.
 
-***
+---
 
 ## Web standards and global APIs
 
@@ -33,57 +30,39 @@ The following methods are available per the [Worker Global Scope](https://develo
 
 ### Base64 utility methods
 
+- atob()
+  - Decodes a string of data which has been encoded using base-64 encoding.
 
-
-* atob()
-
-  * Decodes a string of data which has been encoded using base-64 encoding.
-
-* btoa()
-
-  * Creates a base-64 encoded ASCII string from a string of binary data.
-
-
+- btoa()
+  - Creates a base-64 encoded ASCII string from a string of binary data.
 
 ### Timers
 
+- setInterval()
+  - Schedules a function to execute every time a given number of milliseconds elapses.
 
+- clearInterval()
+  - Cancels the repeated execution set using [`setInterval()`](https://developer.mozilla.org/en-US/docs/Web/API/setInterval).
 
-* setInterval()
+- setTimeout()
+  - Schedules a function to execute in a given amount of time.
 
-  * Schedules a function to execute every time a given number of milliseconds elapses.
-
-* clearInterval()
-
-  * Cancels the repeated execution set using [`setInterval()`](https://developer.mozilla.org/en-US/docs/Web/API/setInterval).
-
-* setTimeout()
-
-  * Schedules a function to execute in a given amount of time.
-
-* clearTimeout()
-
-  * Cancels the delayed execution set using [`setTimeout()`](https://developer.mozilla.org/en-US/docs/Web/API/setTimeout).
-
-
+- clearTimeout()
+  - Cancels the delayed execution set using [`setTimeout()`](https://developer.mozilla.org/en-US/docs/Web/API/setTimeout).
 
 :::note
 
-
 Timers are only available inside of [the Request Context](/workers/runtime-apis/request/#the-request-context).
-
 
 :::
 
 ### `performance.timeOrigin` and `performance.now()`
 
-* performance.timeOrigin
+- performance.timeOrigin
+  - Returns the high resolution time origin. Workers uses the UNIX epoch as the time origin, meaning that `performance.timeOrigin` will always return `0`.
 
-  * Returns the high resolution time origin. Workers uses the UNIX epoch as the time origin, meaning that `performance.timeOrigin` will always return `0`.
-
-* performance.now()
-
-  * Returns a `DOMHighResTimeStamp` representing the number of milliseconds elapsed since `performance.timeOrigin`. Note that Workers intentionally reduces the precision of `performance.now()` such that it returns the time of the last I/O and does not advance during code execution. Effectively, because of this, and because `performance.timeOrigin` is always, `0`, `performance.now()` will always equal `Date.now()`, yielding a consistent view of the passage of time within a Worker.
+- performance.now()
+  - Returns a `DOMHighResTimeStamp` representing the number of milliseconds elapsed since `performance.timeOrigin`. Note that Workers intentionally reduces the precision of `performance.now()` such that it returns the time of the last I/O and does not advance during code execution. Effectively, because of this, and because `performance.timeOrigin` is always, `0`, `performance.now()` will always equal `Date.now()`, yielding a consistent view of the passage of time within a Worker.
 
 ### `EventTarget` and `Event`
 
@@ -95,23 +74,16 @@ The [`AbortController`](https://developer.mozilla.org/en-US/docs/Web/API/AbortCo
 
 ### Fetch global
 
-
-
-* fetch()
-
-  * Starts the process of fetching a resource from the network. Refer to [Fetch API](/workers/runtime-apis/fetch/).
-
-
+- fetch()
+  - Starts the process of fetching a resource from the network. Refer to [Fetch API](/workers/runtime-apis/fetch/).
 
 :::note
 
-
 The Fetch API is only available inside of [the Request Context](/workers/runtime-apis/request/#the-request-context).
-
 
 :::
 
-***
+---
 
 ## Encoding API
 
@@ -121,7 +93,7 @@ Both `TextEncoder` and `TextDecoder` support UTF-8 encoding/decoding.
 
 The [`TextEncoderStream`](https://developer.mozilla.org/en-US/docs/Web/API/TextEncoderStream) and [`TextDecoderStream`](https://developer.mozilla.org/en-US/docs/Web/API/TextDecoderStream) classes are also available.
 
-***
+---
 
 ## URL API
 
@@ -131,15 +103,13 @@ The URL API supports URLs conforming to HTTP and HTTPS schemes.
 
 :::note
 
-
 The default URL class behavior differs from the URL Spec documented above.
 
 A new spec-compliant implementation of the URL class can be enabled using the `url_standard` [compatibility flag](/workers/configuration/compatibility-flags/).
 
-
 :::
 
-***
+---
 
 ## Compression Streams
 
@@ -147,7 +117,7 @@ The `CompressionStream` and `DecompressionStream` classes support the deflate, d
 
 [Refer to the MDN documentation for more information](https://developer.mozilla.org/en-US/docs/Web/API/Compression_Streams_API)
 
-***
+---
 
 ## URLPattern API
 
@@ -155,7 +125,7 @@ The `URLPattern` API provides a mechanism for matching URLs based on a convenien
 
 [Refer to the MDN documentation for more information](https://developer.mozilla.org/en-US/docs/Web/API/URLPattern).
 
-***
+---
 
 ## `Intl`
 
@@ -163,7 +133,7 @@ The `Intl` API allows you to format dates, times, numbers, and more to the forma
 
 [Refer to the MDN documentation for more information](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl).
 
-***
+---
 
 ## `navigator.userAgent`
 
@@ -176,18 +146,18 @@ The [`unhandledrejection`](https://developer.mozilla.org/en-US/docs/Web/API/Wind
 The [`rejectionhandled`](https://developer.mozilla.org/en-US/docs/Web/API/Window/rejectionhandled_event) event is emitted by the global scope when a JavaScript promise rejection is handled late (after a rejection handler is attached to the promise after an `unhandledrejection` event has already been emitted).
 
 ```js title="worker.js"
-addEventListener('unhandledrejection', (event) => {
-  console.log(event.promise);  // The promise that was rejected.
-  console.log(event.reason);  // The value or Error with which the promise was rejected.
+addEventListener("unhandledrejection", (event) => {
+	console.log(event.promise); // The promise that was rejected.
+	console.log(event.reason); // The value or Error with which the promise was rejected.
 });
 
-addEventListener('rejectionhandled', (event) => {
-  console.log(event.promise);  // The promise that was rejected.
-  console.log(event.reason);  // The value or Error with which the promise was rejected.
+addEventListener("rejectionhandled", (event) => {
+	console.log(event.promise); // The promise that was rejected.
+	console.log(event.reason); // The value or Error with which the promise was rejected.
 });
 ```
 
-***
+---
 
 ## `navigator.sendBeacon(url[, data])`
 
@@ -196,12 +166,39 @@ When the [`global_navigator`](/workers/configuration/compatibility-flags/#global
 For example, you can replace:
 
 ```js
-const promise = fetch('https://example.com', { method: 'POST', body: 'hello world' });
+const promise = fetch("https://example.com", {
+	method: "POST",
+	body: "hello world",
+});
 ctx.waitUntil(promise);
 ```
 
 with `navigator.sendBeacon(...)`:
 
 ```js
-navigator.sendBeacon('https://example.com', 'hello world');
+navigator.sendBeacon("https://example.com", "hello world");
 ```
+
+## The Web File System Access API
+
+When the `enable_web_file_system` compatibility flag is set, Workers supports the [Web File System Access API](https://developer.mozilla.org/en-US/docs/Web/API/File_System_Access_API), which allows you to read and write files and directories to a virtual file system within the Worker environment. This API provides access to the same in-memory virtual file system as the [`node:fs` module](/workers/runtime-apis/nodejs/fs/) but does not require Node.js compatibility to be enabled.
+
+```js
+const root = await navigator.storage.getDirctory();
+
+export default {
+	async fetch(request) {
+		const fileHandle = await root.getFileHandle("hello.txt", { create: true });
+		const writable = await fileHandle.createWritable();
+		await writable.write("Hello, world!");
+		await writable.close();
+
+		const file = await fileHandle.getFile();
+		const contents = await file.text();
+
+		return new Response(contents, { status: 200 });
+	},
+};
+```
+
+Please refer to the [MDN documentation](https://developer.mozilla.org/en-US/docs/Web/API/File_System_Access_API) for more information on using this API, and to the [`node:fs` documentation](/workers/runtime-apis/nodejs/fs/) for details on the virtual file system structure and limitations.

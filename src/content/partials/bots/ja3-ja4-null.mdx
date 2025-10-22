@@ -3,6 +3,10 @@
 
 ---
 
-The [JA3/JA4 fingerprint](/bots/additional-configurations/ja3-ja4-fingerprint/) can be null or empty in some cases. The most common case is for HTTP requests because JA3 and JA4 are calculated in TLS. It can also be empty due to the Worker sending requests within the same zone or to a zone that is not proxied (or a third party).
+The JA3 or JA4 fingerprint is an SSL/TLS-based identifier and can be null or empty in logs under specific circumstances:
 
-[Orange to Orange (O2O)](/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/) should not cause null or empty JA3 or JA4 fingerprints, unless the eyeball zone is routing traffic to the target zone using a Worker.
+- Since JA3 and JA4 are calculated during the TLS (SSL) handshake, they will not be present for non-encrypted HTTP traffic.
+- The field may be empty when a [Worker](/workers/) sends a request to a zone that is either internal to Cloudflare's network (Orange-to-Orange traffic that is not proxied) or to a third-party origin, or when a Worker is routing traffic to the target zone.
+- The fingerprints may be absent when Bot Management itself is skipped for a request, as the feature is responsible for calculating and populating these values.
+
+Generally, [Orange to Orange (O2O) traffic](/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/) should include JA3 or JA4 fingerprints unless a Worker is used to route traffic from the eyeball (client-facing) zone to the target zone.

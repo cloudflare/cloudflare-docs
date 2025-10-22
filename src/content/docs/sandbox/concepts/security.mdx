@@ -1,0 +1,178 @@
+---
+title: Security model
+pcx_content_type: concept
+sidebar:
+  order: 6
+---
+
+The Sandbox SDK is built on [Containers](/containers/), which run each sandbox in its own VM for strong isolation.
+
+## Container isolation
+
+Each sandbox runs in a separate VM, providing complete isolation:
+
+- **Filesystem isolation** - Sandboxes cannot access other sandboxes' files
+- **Process isolation** - Processes in one sandbox cannot see or affect others
+- **Network isolation** - Sandboxes have separate network stacks
+- **Resource limits** - CPU, memory, and disk quotas are enforced per sandbox
+
+For complete security details about the underlying container platform, see [Containers architecture](/containers/platform-details/architecture/).
+
+## Within a sandbox
+
+All code within a single sandbox shares resources:
+
+- **Filesystem** - All processes see the same files
+- **Processes** - All sessions can see all processes
+- **Network** - Processes can communicate via localhost
+
+For complete isolation, use separate sandboxes per user:
+
+```typescript
+// Good - Each user in separate sandbox
+const userSandbox = getSandbox(env.Sandbox, `user-${userId}`);
+
+// Bad - Users sharing one sandbox
+const shared = getSandbox(env.Sandbox, 'shared');
+// Users can read each other's files!
+```
+
+## Input validation
+
+### Command injection
+
+Always validate user input before using it in commands:
+
+```typescript
+// Dangerous - user input directly in command
+const filename = userInput;
+await sandbox.exec(`cat ${filename}`);
+// User could input: "file.txt; rm -rf /"
+
+// Safe - validate input
+const filename = userInput.replace(/[^a-zA-Z0-9._-]/g, '');
+await sandbox.exec(`cat ${filename}`);
+
+// Better - use file API
+await sandbox.writeFile('/tmp/input', userInput);
+await sandbox.exec('cat /tmp/input');
+```
+
+## Authentication
+
+### Sandbox access
+
+Sandbox IDs provide basic access control but aren't cryptographically secure. Add application-level authentication:
+
+```typescript
+export default {
+  async fetch(request: Request, env: Env): Promise<Response> {
+    const userId = await authenticate(request);
+    if (!userId) {
+      return new Response('Unauthorized', { status: 401 });
+    }
+
+    // User can only access their sandbox
+    const sandbox = getSandbox(env.Sandbox, userId);
+    return Response.json({ authorized: true });
+  }
+};
+```
+
+### Preview URLs
+
+Preview URLs are public. Add authentication in your service:
+
+```python
+from flask import Flask, request, abort
+import os
+
+app = Flask(__name__)
+
+def check_auth():
+    token = request.headers.get('Authorization')
+    if token != f"Bearer {os.environ['AUTH_TOKEN']}":
+        abort(401)
+
+@app.route('/api/data')
+def get_data():
+    check_auth()
+    return {'data': 'protected'}
+```
+
+## Secrets management
+
+Use environment variables, not hardcoded secrets:
+
+```typescript
+// Bad - hardcoded in file
+await sandbox.writeFile('/workspace/config.js', `
+  const API_KEY = 'sk_live_abc123';
+`);
+
+// Good - use environment variables
+await sandbox.startProcess('node app.js', {
+  env: {
+    API_KEY: env.API_KEY,  // From Worker environment binding
+  }
+});
+```
+
+Clean up temporary sensitive data:
+
+```typescript
+try {
+  await sandbox.writeFile('/tmp/sensitive.txt', secretData);
+  await sandbox.exec('python process.py /tmp/sensitive.txt');
+} finally {
+  await sandbox.deleteFile('/tmp/sensitive.txt');
+}
+```
+
+## What the SDK protects against
+
+- Sandbox-to-sandbox access (VM isolation)
+- Resource exhaustion (enforced quotas)
+- Container escapes (VM-based isolation)
+
+## What you must implement
+
+- Authentication and authorization
+- Input validation and sanitization
+- Rate limiting
+- Application-level security (SQL injection, XSS, etc.)
+
+## Best practices
+
+**Use separate sandboxes for isolation**:
+```typescript
+const sandbox = getSandbox(env.Sandbox, `user-${userId}`);
+```
+
+**Validate all inputs**:
+```typescript
+const safe = input.replace(/[^a-zA-Z0-9._-]/g, '');
+await sandbox.exec(`command ${safe}`);
+```
+
+**Use environment variables for secrets**:
+```typescript
+await sandbox.startProcess('node app.js', {
+  env: { API_KEY: env.API_KEY }
+});
+```
+
+**Clean up temporary resources**:
+```typescript
+try {
+  const sandbox = getSandbox(env.Sandbox, sessionId);
+  await sandbox.exec('npm test');
+} finally {
+  await sandbox.destroy();
+}
+```
+
+## Related resources
+
+- [Containers architecture](/containers/platform-details/architecture/) - Underlying platform security
+- [Sandbox lifecycle](/sandbox/concepts/sandboxes/) - Resource management

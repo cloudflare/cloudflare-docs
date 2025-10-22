@@ -24,16 +24,16 @@ Changing egress IPs can be useful in quality assurance (QA) and other similar sc
 
 Make sure you have:
 
-- [Deployed the WARP client](/cloudflare-one/connections/connect-devices/warp/deployment/) on your users' devices.
-- [Configured tunnels](/cloudflare-one/connections/connect-networks/private-net/cloudflared/) to connect your private network to Cloudflare. This tutorial assumes you have:
-  - Created two tunnels [through the dashboard](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/).
+- [Deployed the WARP client](/cloudflare-one/team-and-resources/devices/warp/deployment/) on your users' devices.
+- [Configured tunnels](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/) to connect your private network to Cloudflare. This tutorial assumes you have:
+  - Created two tunnels [through the dashboard](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/create-remote-tunnel/).
   - Routed `10.0.0.0/8` through one tunnel.
   - Routed `192.168.88.0/24` through the other tunnel.
 - Received multiple [dedicated egress IP addresses](/cloudflare-one/policies/gateway/egress-policies/dedicated-egress-ips/).
 
 ## Create a virtual network for each egress route
 
-First, create [virtual networks](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/) corresponding to your dedicated egress IPs.
+First, create [virtual networks](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/tunnel-virtual-networks/) corresponding to your dedicated egress IPs.
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -48,7 +48,7 @@ First, create [virtual networks](/cloudflare-one/connections/connect-networks/pr
 
 <TabItem label="API">
 
-1.  Create a [virtual network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/) corresponding to one of your dedicated egress IPs. We recommend using a name related to the location of the corresponding dedicated egress IP. For example, if your users will egress from the Americas, you can name the virtual network `vnet-AMER`.
+1.  Create a [virtual network](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/tunnel-virtual-networks/) corresponding to one of your dedicated egress IPs. We recommend using a name related to the location of the corresponding dedicated egress IP. For example, if your users will egress from the Americas, you can name the virtual network `vnet-AMER`.
 
         <APIRequest
         	path="/accounts/{account_id}/teamnet/virtual_networks"

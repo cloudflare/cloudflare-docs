@@ -6,7 +6,7 @@ sidebar:
   order: 30
 ---
 
-import { Render, Plan } from "~/components";
+import { Render, Plan, DashButton } from "~/components";
 
 <Plan type="workers-all" />
 
@@ -14,7 +14,11 @@ import { Render, Plan } from "~/components";
 
 Users on the [Workers Free plan](/workers/platform/pricing/) are limited to **10 minutes of browser rendering usage per day**.
 
-To increase this limit, you will need to [upgrade to a Workers Paid plan](/workers/platform/pricing).
+To increase this limit, go to the **Compute (Workers) > Workers plans** page in the Cloudflare dashboard:
+
+    <DashButton url="/?to=/:account/workers/plans" />
+
+[Learn more about Workers Plans](/workers/platform/pricing).
 
 | Feature                                | Limit           |
 | -------------------------------------- | --------------- |
@@ -58,6 +62,10 @@ While the limits above define the maximum number of concurrent browser sessions 
 ### I upgraded from the Workers Free plan, but I'm still hitting the 10-minute per day limit. What should I do?
 
 If you recently upgraded to the [Workers Paid plan](/workers/platform/pricing/) but still encounter the 10-minute per day limit, redeploy your Worker to ensure your usage is correctly associated with the new plan.
+
+To upgrade, go to the **Compute (Workers) > Workers plans** page in the Cloudflare dashboard:
+
+    <DashButton url="/?to=/:account/workers/plans" />
 
 <Render
   file="manage-concurrency-faq"

@@ -1,9 +1,9 @@
 releaseNotes: |-
   This release contains significant improvements to reliability and a number of exciting new features.
-   
+
   **Notable updates**
-   
-  - Added connectivity error reasons to the UI. Examples of this UI and the types of errors your users will see can be found in the [client errors documentation](https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/troubleshooting/client-errors/)
+
+  - Added connectivity error reasons to the UI. Examples of this UI and the types of errors your users will see can be found in the [client errors documentation](https://developers.cloudflare.com/cloudflare-one/team-and-resources/devices/warp/troubleshooting/client-errors/)
   - Added new posture type: [Client certificate](https://developers.cloudflare.com/cloudflare-one/identity/devices/warp-client-checks/client-certificate/)
   - Added support for IPv6 DEX Traceroute tests (previously only IPv4 addresses could be used)
   - Improved reliability and efficiency in configurating split tunnel rules. Most `error petting the dog` errors should now be gone and organizations with large split tunnel configuration should see reliability improvements.
@@ -24,8 +24,8 @@ releaseNotes: |-
   - Fixed an issue where IPv6 traffic could be incorrectly sent down the tunnel in exclude mode
   - Fixed an issue where an invalid override code could cause warp to disconnect when the lock switch was not set to true
   - Fixed an issue where the UI could appear in the wrong location when the app starts
-   
-   
+
+
   **Known issues**
   - No known issues
 version: 2023.9.252.0

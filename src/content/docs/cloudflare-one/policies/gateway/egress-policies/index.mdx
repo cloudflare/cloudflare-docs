@@ -69,7 +69,7 @@ Gateway matches egress traffic against the following selectors, or criteria:
 ### Application <Badge text="Beta" variant="caution"/>
 
 <Render
-	file="gateway/selectors/application"
+	file="gateway/selectors/application-http"
 	product="cloudflare-one"
 	params={{ policyType: "egress" }}
 />
@@ -127,7 +127,7 @@ Gateway matches egress traffic against the following selectors, or criteria:
 ### Domain <Badge text="Beta" variant="caution"/>
 
 <Render
-	file="gateway/selectors/domain"
+	file="gateway/selectors/domain-http"
 	product="cloudflare-one"
 	params={{ APIendpoint: "net.fqdn.domains" }}
 />
@@ -140,7 +140,7 @@ Gateway matches egress traffic against the following selectors, or criteria:
 ### Host <Badge text="Beta" variant="caution"/>
 
 <Render
-	file="gateway/selectors/host"
+	file="gateway/selectors/host-http"
 	product="cloudflare-one"
 	params={{ APIendpoint: "net.fqdn.host" }}
 />
@@ -160,11 +160,11 @@ Gateway matches egress traffic against the following selectors, or criteria:
 
 ### Source Continent
 
-The continent of the user making the request. <Render file="gateway/selectors/source-continent" product="cloudflare-one" params={{ one: "net.src" }} />
+The continent of the user making the request. <Render file="gateway/selectors/source-continent-http" product="cloudflare-one" params={{ one: "net.src" }} />
 
 ### Source Country
 
-The country of the user making the request. <Render file="gateway/selectors/source-country" product="cloudflare-one" params={{ one: "net.src" }} />
+The country of the user making the request. <Render file="gateway/selectors/source-country-http" product="cloudflare-one" params={{ one: "net.src" }} />
 
 ### Source Internal IP
 
@@ -188,7 +188,7 @@ The country of the user making the request. <Render file="gateway/selectors/sour
 
 ### Users
 
-<Render file="gateway/selectors/users" product="cloudflare-one" />
+<Render file="gateway/selectors/users-http" product="cloudflare-one" />
 
 ### Virtual Network
 

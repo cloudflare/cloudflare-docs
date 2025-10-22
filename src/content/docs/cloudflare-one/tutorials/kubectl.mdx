@@ -41,7 +41,7 @@ You can connect to machines over `kubectl` using Cloudflare's Zero Trust platfor
 
 Cloudflare Tunnel creates a secure, outbound-only connection between this machine and Cloudflare's network. With an outbound-only model, you can prevent any direct access to this machine and lock down any externally exposed points of ingress. And with that, no open firewall ports.
 
-Cloudflare Tunnel is made possible through a lightweight daemon from Cloudflare called `cloudflared`. Download and install `cloudflared` on the DigitalOcean machine by following the instructions listed on the [Downloads](/cloudflare-one/connections/connect-networks/downloads/) page.
+Cloudflare Tunnel is made possible through a lightweight daemon from Cloudflare called `cloudflared`. Download and install `cloudflared` on the DigitalOcean machine by following the instructions listed on the [Downloads](/cloudflare-one/networks/connectors/cloudflare-tunnel/downloads/) page.
 
 ## Authenticate `cloudflared`
 
@@ -73,7 +73,7 @@ cloudflared tunnel list
 
 ## Configure the Tunnel
 
-You can now [configure the tunnel](/cloudflare-one/connections/connect-networks/do-more-with-tunnels/local-management/create-local-tunnel/#4-create-a-configuration-file) to serve traffic.
+You can now [configure the tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/local-management/create-local-tunnel/#4-create-a-configuration-file) to serve traffic.
 
 Create a `YAML` file that `cloudflared` can reach. By default, `cloudflared` will look for the file in the same folder where `cloudflared` has been installed.
 
@@ -99,7 +99,7 @@ ingress:
 
 ## Route to the Tunnel
 
-You can now create a DNS record that will route traffic to this Tunnel. Multiple DNS records can point to a single Tunnel and will send traffic to the configured service as long as the hostname is defined with an [ingress rule](/cloudflare-one/connections/connect-networks/do-more-with-tunnels/local-management/configuration-file/#file-structure-for-public-hostnames).
+You can now create a DNS record that will route traffic to this Tunnel. Multiple DNS records can point to a single Tunnel and will send traffic to the configured service as long as the hostname is defined with an [ingress rule](/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/local-management/configuration-file/#file-structure-for-public-hostnames).
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and go to the **DNS Records** page for your domain.
 
@@ -123,7 +123,7 @@ You can now run the Tunnel to connect the target service to Cloudflare. Use the 
 cloudflared tunnel run <NAME>
 ```
 
-We recommend that you run `cloudflared` [as a service](/cloudflare-one/connections/connect-networks/do-more-with-tunnels/local-management/as-a-service/) that is configured to launch on start.
+We recommend that you run `cloudflared` [as a service](/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/local-management/as-a-service/) that is configured to launch on start.
 
 ## Connect from a client machine
 

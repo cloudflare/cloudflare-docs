@@ -10,6 +10,8 @@ import { Render } from "~/components";
 
 You can securely publish internal tools and applications by adding Cloudflare Access as an authentication layer between the end user and your origin server.
 
+This guide covers how to make a web application accessible to anyone on the Internet via a public hostname. If you would like to make the application available over a private IP or hostname, refer to [Add a self-hosted private application](/cloudflare-one/applications/non-http/self-hosted-private-app/).
+
 ## Prerequisites
 
 - An [active domain on Cloudflare](/fundamentals/manage-domains/add-site/)
@@ -24,7 +26,7 @@ You can securely publish internal tools and applications by adding Cloudflare Ac
 
 ## 2. Connect your origin to Cloudflare
 
-[Set up a Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/) to publish your internal application. Only users who match your Access policies will be granted access.
+[Set up a Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/create-remote-tunnel/) to publish your internal application. Only users who match your Access policies will be granted access.
 
 :::note
 We recommend [creating an Access application](#1-add-your-application-to-access) before setting up the tunnel route. If you do not have an Access application in place, the published application will be available to anyone on the Internet.
