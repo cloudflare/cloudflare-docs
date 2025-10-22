@@ -44,15 +44,15 @@ After you have created your project, run the following command in the project di
 
 ## 3. Deploy your Project
 
-Your project can be deployed to a `*.workers.dev` subdomain or a [Custom Domain](/workers/configuration/routing/custom-domains/) from your own machine or from any CI/CD system, including Cloudflare's own [Workers Builds](/workers/ci-cd/builds/).
+You can deploy your project to a `*.workers.dev` subdomain or a [Custom Domain](/workers/configuration/routing/custom-domains/) from your own machine or from any CI/CD system, including Cloudflare's own [Workers Builds](/workers/ci-cd/builds/).
 
-The following command will build and deploy your project. If you are using CI, ensure you update your ["deploy command"](/workers/ci-cd/builds/configuration/#build-settings) configuration appropriately.
+The following command will build and deploy your project. If you are using CI, ensure you update your [**Deploy command**](/workers/ci-cd/builds/configuration/#build-settings) configuration appropriately.
 
 <PackageManagers type="run" args={"deploy"} />
 
 :::note
 
-Before deploying your application you can also run the `preview` script to preview the built output locally before deploying it.
+Before deploying your application, you can also run the `preview` script to preview the built output locally before deploying it.
 This can help you making sure that your application will work as intended once it's been deployed to the Cloudflare network:
 
 <PackageManagers type="run" args="preview" />
