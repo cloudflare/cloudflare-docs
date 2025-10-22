@@ -23,6 +23,8 @@ params:
   - healthCheckFrequencyURL
   - routedSubnetsURL
   - interruptWindowURL
+  - tunnelHealthChecksURL
+  - wanSettingsURL
   - networkOptionsURL
   - maintenanceURL
   - referenceInformationURL
@@ -376,7 +378,7 @@ You cannot enable high availability for an existing { props.magicWord === "virtu
 
 <Render file="mconn/wan-two-tunnels" product="networking-services" params={{ productName: props.magicWord === "virtual" ? props.productNameVirtual : props.productName, productOriginalName: props.productOriginalName }} />
 
-1. In **WAN configuration**, select **Create**. You can create one or more [wide area networks (WANs)](https://www.cloudflare.com/learning/network-layer/what-is-a-wan/). Configuring multiple WANs will create multiple <GlossaryTooltip term="IPsec tunnel">IPsec</GlossaryTooltip> tunnels (one IPsec tunnel per WAN port). This allows { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } to load balance traffic over WANs of equal priority. It also allows { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } to failover between circuits according to their <GlossaryTooltip term="tunnel health-check" link="/magic-wan/reference/tunnel-health-checks/">health</GlossaryTooltip>. Refer to [WAN settings](/magic-wan/configuration/connector/reference/#wan-settings) for more details.
+1. In **WAN configuration**, select **Create**. You can create one or more [wide area networks (WANs)](https://www.cloudflare.com/learning/network-layer/what-is-a-wan/). Configuring multiple WANs will create multiple <GlossaryTooltip term="IPsec tunnel">IPsec</GlossaryTooltip> tunnels (one IPsec tunnel per WAN port). This allows { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } to load balance traffic over WANs of equal priority. It also allows { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } to failover between circuits according to their <GlossaryTooltip term="tunnel health-check" link={props.tunnelHealthChecksURL}>health</GlossaryTooltip>. Refer to <a href={props.wanSettingsURL}>WAN settings</a> for more details.
 		:::note
 		This is not the same as a high availability (HA) configuration. HA configurations need two { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } devices to work. Refer to [About high availability configurations](#about-high-availability-configurations) for more information.
 		:::
