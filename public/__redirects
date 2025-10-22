@@ -1969,7 +1969,7 @@
 /workers/frameworks/framework-guides/nuxt/ /workers/framework-guides/web-apps/more-web-frameworks/nuxt/ 301
 /workers/frameworks/framework-guides/qwik/ /workers/framework-guides/web-apps/more-web-frameworks/qwik/ 301
 /workers/frameworks/framework-guides/solid/ /workers/framework-guides/web-apps/more-web-frameworks/solid/ 301
-/workers/framework-guides/web-apps/more-web-frameworks/tanstack/ /workers/framework-guides/web-apps/more-web-frameworks/tanstack-start/ 301
+/workers/framework-guides/web-apps/tanstack/ /workers/framework-guides/web-apps/tanstack-start/ 301
 
 /workers/testing/unit-testing/ /workers/testing/vitest-integration/write-your-first-test/ 301
 /workers/testing/integration-testing/ /workers/testing/ 301
