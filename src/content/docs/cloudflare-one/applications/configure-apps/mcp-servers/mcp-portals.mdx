@@ -24,7 +24,7 @@ An MCP server portal centralizes multiple [Model Context Protocol (MCP) servers]
 
 - An [active domain on Cloudflare](/fundamentals/manage-domains/add-site/)
 - Domain uses either a [full setup](/dns/zone-setups/full-setup/) or a [partial (`CNAME`) setup](/dns/zone-setups/partial-setup/)
-- An [identity provider](/cloudflare-one/identity/idp-integration/) configured on Cloudflare Zero Trust
+- An [identity provider](/cloudflare-one/integrations/identity-providers/) configured on Cloudflare Zero Trust
 
 ## Add an MCP server
 
@@ -107,7 +107,7 @@ Cloudflare Access automatically creates an Access application for each MCP serve
 2. Find the portal that you want to configure, then select the three dots > **Edit**.
 3. To configure identity providers for the portal:
 	1. Select the **Login methods** tab.
-	2. Select the [identity providers](/cloudflare-one/identity/idp-integration/) that you want to enable for your application.
+	2. Select the [identity providers](/cloudflare-one/integrations/identity-providers/) that you want to enable for your application.
 	3. (Recommended) If you plan to only allow access via a single identity provider, turn on **Instant Auth**. End users will not be shown the [Cloudflare Access login page](/cloudflare-one/applications/login-page/). Instead, Cloudflare will redirect users directly to your SSO login event.
 4. To customize the block page:
 	1. Select the **Experience settings** tab.
@@ -131,7 +131,7 @@ Workers AI Playground will show a **Connected** status and list the available to
 
 For MCP clients with server configuration files, we recommend using the `npx` command with the `mcp-remote@latest` argument:
 
-``` json title= "MCP client configuration for MCP portals" 
+``` json title= "MCP client configuration for MCP portals"
 {
     "mcpServers": {
       "example-mcp-server": {
@@ -143,7 +143,7 @@ For MCP clients with server configuration files, we recommend using the `npx` co
         ]
       }
     }
-} 
+}
 ```
 
 We do not recommend using the `serverURL` parameter since it may cause issues with portal session creation and management.

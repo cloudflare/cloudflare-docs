@@ -9,7 +9,25 @@ import { Tabs, TabItem, Render } from "~/components";
 
 The `/content` endpoint instructs the browser to navigate to a website and capture the fully rendered HTML of a page, including the `head` section, after JavaScript execution. This is ideal for capturing content from JavaScript-heavy or interactive websites.
 
+## Endpoint
+
+```txt
+https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/content
+```
+
+## Required fields
+You must provide either `url` or `html`:
+-  `url` (string)
+-  `html` (string)
+
+## Common use cases
+
+-  Capture the fully rendered HTML of a dynamic page
+-  Extract HTML for parsing, scraping, or downstream processing
+
 ## Basic usage
+
+### Fetch rendered HTML from a URL
 
 <Tabs syncKey="workersExamples"> <TabItem label="curl">
 
@@ -46,6 +64,8 @@ console.log(content);
 :::note[Looking for more parameters?]
 Visit the [Browser Rendering PDF API reference](/api/resources/browser_rendering/subresources/content/methods/create/) for all available parameters, such as setting HTTP credentials using `authenticate`, setting `cookies`, and customizing load behavior using `gotoOptions`.
 :::
+  
+### Block specific resource types
 
 Navigate to `https://cloudflare.com/` but block images and stylesheets from loading. Undesired requests can be blocked by resource type (`rejectResourceTypes`) or by using a regex pattern (`rejectRequestPattern`). The opposite can also be done, only allow requests that match `allowRequestPattern` or `allowResourceTypes`.
 

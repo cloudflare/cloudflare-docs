@@ -9,11 +9,30 @@ import { Tabs, TabItem, Render } from "~/components";
 
 The `/links` endpoint retrieves all links from a webpage. It can be used to extract all links from a page, including those that are hidden.
 
+## Endpoint
+
+```txt
+https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/links
+```
+
+## Required fields
+You must provide either `url` or `html`:
+-  `url` (string) 
+-  `html` (string)
+
+## Common use cases
+
+-  Collect only user-visible links for UX or SEO analysis
+-  Crawl a site by discovering links on seed pages
+-  Validate navigation/footers and detect broken or external links
+
 ## Basic usage
+
+### Get all links on a page
 
 <Tabs syncKey="workersExamples"> <TabItem label="curl">
 
-This example grabs all links from the Cloudflare Developers homepage.
+This example grabs all links from the [Cloudflare Doc's homepage](https://developers.cloudflare.com/).
 The response will be a JSON array containing the links found on the page.
 
 ```bash

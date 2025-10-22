@@ -94,7 +94,7 @@ In Gateway, a **User Group** refers to a group in your IdP (for example, an Okta
 
 ## IdP groups in Gateway
 
-Cloudflare Gateway can integrate with your organization's identity providers (IdPs). Before building a Gateway policy for IdP users or groups, be sure to [add the IdP as an authentication method](/cloudflare-one/identity/idp-integration/).
+Cloudflare Gateway can integrate with your organization's identity providers (IdPs). Before building a Gateway policy for IdP users or groups, be sure to [add the IdP as an authentication method](/cloudflare-one/integrations/identity-providers/).
 
 Because IdPs expose user groups in different formats, reference the list below to choose the appropriate identity-based selector.
 
@@ -104,9 +104,9 @@ Because IdPs expose user groups in different formats, reference the list below t
 | -------------- | ------------------------------------- |
 | User Group IDs | `61503835-b6fe-4630-af88-de551dd59a2` |
 
-**Value** is the [Object Id](/cloudflare-one/identity/idp-integration/entra-id/#entra-groups-in-zero-trust-policies) for an Entra group.
+**Value** is the [Object Id](/cloudflare-one/integrations/identity-providers/entra-id/#entra-groups-in-zero-trust-policies) for an Entra group.
 
-If you enabled user and group synchronization with [SCIM](/cloudflare-one/identity/idp-integration/entra-id/#synchronize-users-and-groups), the synchronized groups will appear under _User Group Names_:
+If you enabled user and group synchronization with [SCIM](/cloudflare-one/integrations/identity-providers/entra-id/#synchronize-users-and-groups), the synchronized groups will appear under _User Group Names_:
 
 | Selector         | Value        |
 | ---------------- | ------------ |
@@ -126,17 +126,17 @@ If you enabled user and group synchronization with [SCIM](/cloudflare-one/identi
 
 ### Okta (OIDC)
 
-If you added Okta as an [OIDC provider](/cloudflare-one/identity/idp-integration/okta/), use the User Group Names selector:
+If you added Okta as an [OIDC provider](/cloudflare-one/integrations/identity-providers/okta/), use the User Group Names selector:
 
 | Selector         | Value       |
 | ---------------- | ----------- |
 | User Group Names | `Marketing` |
 
-The Okta OIDC integration supports user and group synchronization with [SCIM](/cloudflare-one/identity/idp-integration/okta/#synchronize-users-and-groups).
+The Okta OIDC integration supports user and group synchronization with [SCIM](/cloudflare-one/integrations/identity-providers/okta/#synchronize-users-and-groups).
 
 ### Okta (SAML)
 
-If you added Okta as a [SAML provider](/cloudflare-one/identity/idp-integration/okta-saml/), use the SAML Attributes selector:
+If you added Okta as a [SAML provider](/cloudflare-one/integrations/identity-providers/okta-saml/), use the SAML Attributes selector:
 
 | Selector        | Attribute name | Attribute value |
 | --------------- | -------------- | --------------- |
@@ -144,7 +144,7 @@ If you added Okta as a [SAML provider](/cloudflare-one/identity/idp-integration/
 
 ### Generic SAML IdP
 
-For a [generic SAML provider](/cloudflare-one/identity/idp-integration/generic-saml/), use the SAML Attribute selector:
+For a [generic SAML provider](/cloudflare-one/integrations/identity-providers/generic-saml/), use the SAML Attribute selector:
 
 | Selector        | Attribute name | Attribute value |
 | --------------- | -------------- | --------------- |

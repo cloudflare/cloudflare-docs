@@ -1128,6 +1128,28 @@ Any files that match `rules` will also be included as unbundled, external module
 
 See https://developers.cloudflare.com/workers/wrangler/bundling/ for more details and examples.
 
+### Python Workers
+
+By default, Python Workers bundle the files and folders in `python_modules` at the root of your Worker (alongside your wrangler config file).
+The files in this directory represent your vendored packages and is where the pywrangler tool copies packages into. In some cases, you
+may find that the files in this folder are too large and if your worker doesn't require them then they just grow your bundle size for
+no reason.
+
+To fix this, you can exclude certain files from being included. To do this use the `python_modules.excludes` option, for example:
+
+<WranglerConfig>
+
+```toml title="wrangler.toml"
+[python_modules]
+excludes = ["**/*.pyc", "**/__pycache__"]
+```
+
+</WranglerConfig>
+
+This will exclude any .pyc files and `__pycache__` directories inside any subdirectory in `python_modules`.
+
+By default, `python_modules.excludes` is set to `["**/*.pyc"]`, so be sure to include this when setting it to a different value.
+
 ## Local development settings
 
 :::note

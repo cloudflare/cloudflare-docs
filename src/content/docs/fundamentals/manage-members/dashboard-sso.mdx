@@ -34,9 +34,9 @@ Cloudflare Dashboard SSO is available for free to all plans.
 
 ## 1. Set up an IdP
 
-Add an IdP to Cloudflare Zero Trust by following [our detailed instructions](/cloudflare-one/identity/idp-integration/).
+Add an IdP to Cloudflare Zero Trust by following [our detailed instructions](/cloudflare-one/integrations/identity-providers/).
 
-Once you configure your IdP, make sure you also [test your IdP](/cloudflare-one/identity/idp-integration/#test-idps-in-zero-trust).
+Once you configure your IdP, make sure you also [test your IdP](/cloudflare-one/integrations/identity-providers/#test-idps-in-zero-trust).
 
 ## 2. Register your domain with Cloudflare for SSO
 
@@ -51,14 +51,14 @@ Cloudflare recommends creating an [Account API token](/fundamentals/api/get-star
 
 <DashButton url="/?to=/:account/members/settings" />
 
-2. If step 1 was successful, a button to add a new SSO domain will be present. Select the button to begin the process of adding a new SSO domain.  
+2. If step 1 was successful, a button to add a new SSO domain will be present. Select the button to begin the process of adding a new SSO domain.
 
 ![Screenshot of the SSO connector create modal](~/assets/images/fundamentals/members/sso/create_modal.png)
 
-3. Enter your email domain and select **Create** to move to the verification step.  
+3. Enter your email domain and select **Create** to move to the verification step.
 
 :::note
-Some top level domains, such as `.edu`, are prohibited from being used as SSO domains.  
+Some top level domains, such as `.edu`, are prohibited from being used as SSO domains.
 :::
 
 </TabItem>
@@ -107,7 +107,7 @@ Copy the verification code and create a TXT record in your DNS configuration wit
 
 Cloudflare will automatically poll this DNS record until it is found or a timeout is reached within two days.
 
-If the verification process fails due to timeout, you can manually reinitiate the polling by selecting **Begin verification** in the actions menu for that connector in the list.  
+If the verification process fails due to timeout, you can manually reinitiate the polling by selecting **Begin verification** in the actions menu for that connector in the list.
 
 </TabItem>
 <TabItem label="API">
@@ -150,7 +150,7 @@ Domains that are associated with an already enabled connector belonging to a dif
 <Tabs syncKey="dashPlusAPI">
 <TabItem label="Dashboard">
 
-Enable the connector by selecting **Enable** in the Actions menu for that connector in the list.  
+Enable the connector by selecting **Enable** in the Actions menu for that connector in the list.
 
 ![Screenshot of the SSO connector enable button](~/assets/images/fundamentals/members/sso/verified_domain.png)
 
@@ -222,7 +222,7 @@ This section describes how to restore access to the Cloudflare dashboard in case
 
 ### Option 1: Add a backup IdP
 
-If there is an issue with your SSO IdP provider, you can add an alternate IdP using the API. The following example shows how to add [Cloudflare One-time PIN](/cloudflare-one/identity/one-time-pin/) as a login method:
+If there is an issue with your SSO IdP provider, you can add an alternate IdP using the API. The following example shows how to add [Cloudflare One-time PIN](/cloudflare-one/integrations/identity-providers/one-time-pin/) as a login method:
 
 1. [Add](/api/resources/zero_trust/subresources/identity_providers/methods/create/) one-time PIN login:
 
@@ -283,13 +283,13 @@ Before disabling SSO, make sure you have access to your Cloudflare user email. T
 <Tabs syncKey="dashPlusAPI">
 <TabItem label="Dashboard">
 
-1. Navigate to the **Members** page.  
+1. Navigate to the **Members** page.
 
 <DashButton url="/?to=/:account/members/settings" />
 
-2. Select the actions menu for the SSO connector in the list and select **Disable**. 
+2. Select the actions menu for the SSO connector in the list and select **Disable**.
 
-3. Type the domain of the connector and click confirm to complete the disable action.  
+3. Type the domain of the connector and click confirm to complete the disable action.
 
 </TabItem>
 <TabItem label="API">
@@ -359,7 +359,7 @@ Cloudflare does not allow you to change your <GlossaryTooltip term="team name">t
 <Tabs syncKey="dashPlusAPI">
 <TabItem label="Dashboard">
 
-1. Navigate to the **Members** page.  
+1. Navigate to the **Members** page.
 
 <DashButton url="/?to=/:account/members/settings" />
 

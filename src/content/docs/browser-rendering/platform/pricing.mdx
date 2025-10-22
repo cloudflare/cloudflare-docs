@@ -44,11 +44,23 @@ For **browser duration** and **concurrent browsers**:
 
 ### How do I estimate my Browser Rendering costs?
 
-To monitor your Browser Rendering usage in the Cloudflare dashboard, go to the **Browser Rendering** page.
+You can monitor Browser Rendering usage in two ways:
+
+- To monitor your Browser Rendering usage in the Cloudflare dashboard, go to the **Browser Rendering** page.
 
    <DashButton url="/?to=/:account/workers/browser-rendering" />
 
-Then, you can use [the pricing page](/browser-rendering/platform/pricing/) to estimate your costs.
+- The `X-Browser-Ms-Used` header, which is returned in every REST API response, reports browser time used for the request (in milliseconds). You can also access this header using the Typescript SDK with the .asResponse() method: 
+
+   ```ts
+   const contentRes = await client.browserRendering.content.create({
+    account_id: 'account_id',
+   }).asResponse();
+
+   const browserMsUsed = parseInt(contentRes.headers.get('X-Browser-Ms-Used') || '');
+   ```
+
+Then, you can use [the pricing page](/browser-rendering/platform/pricing/) to estimate your costs based on your usage.
 
 ###  Do failed API calls, such as those that time out, add to billable browser hours?
 No. If a request to the Browser Rendering REST API fails with a `waitForTimeout` error, the browser session is not charged.

@@ -1,0 +1,20 @@
+---
+title: "Schedule DNS policies from the UI"
+description: "All users can now create and manage scheduled DNS policies directly from the Cloudflare One dashboard."
+products:
+  - gateway
+date: "2025-10-20"
+---
+
+Admins can now create [scheduled DNS policies](/cloudflare-one/policies/gateway/dns-policies/timed-policies/) directly from the Zero Trust dashboard, without using the API. You can configure policies to be active during specific, recurring times, such as blocking social media during business hours or gaming sites on school nights.
+
+- **Preset Schedules**: Use built-in templates for common scenarios like Business Hours, School Days, Weekends, and more.
+- **Custom Schedules**: Define your own schedule with specific days and up to three non-overlapping time ranges per day.
+- **Timezone Control**: Choose to enforce a schedule in a specific timezone (for example, US Eastern) or based on the local time of each user.
+- **Combined with Duration**: Policies can have both a schedule and a duration. If both are set, the duration's expiration takes precedence.
+
+You can see the flow in the demo GIF:
+
+![Schedule DNS policies demo](src/assets/images/gateway/gateway-dns-scheduled-policies-ui.gif)
+
+This update makes time-based DNS policies accessible to all Gateway customers, removing the technical barrier of the API.

@@ -66,7 +66,7 @@ The following steps are specific to setting up JumpCloud with Cloudflare Access.
 
 7. Select **Save**.
 
-You can now [test your connection](/cloudflare-one/identity/idp-integration/#test-idps-in-zero-trust) and create [Access policies](/cloudflare-one/policies/access/) based on the configured login method and SAML attributes.
+You can now [test your connection](/cloudflare-one/integrations/identity-providers/#test-idps-in-zero-trust) and create [Access policies](/cloudflare-one/policies/access/) based on the configured login method and SAML attributes.
 
 ## Synchronize users and groups
 
@@ -83,7 +83,7 @@ The JumpCloud integration allows you to synchronize user groups and automaticall
 ### 2. Configure SCIM in JumpCloud
 
 1. In the [JumpCloud Admin Portal](https://console.jumpcloud.com/#/home), go to **SSO Applications**.
-2. Select the Cloudflare application that was created when you [Set up JumpCloud as a SAML provider](/cloudflare-one/identity/idp-integration/jumpcloud-saml/#set-up-jumpcloud-as-a-saml-provider).
+2. Select the Cloudflare application that was created when you [Set up JumpCloud as a SAML provider](/cloudflare-one/integrations/identity-providers/jumpcloud-saml/#set-up-jumpcloud-as-a-saml-provider).
 3. Select the **SSO** tab.
 4. To provision user groups, select **Include group attribute** and enter `groups`. The group attribute name has to exactly match `groups` or else it will be sent as a SAML attribute.
 5. Select the **Identity Management** tab.
