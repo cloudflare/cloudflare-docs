@@ -168,6 +168,6 @@ $ dig <ZONE_NAME> dnskey @<CLOUDFLARE_NAMESERVER> +noall +answer | grep 256
 
 ## 3. Set up registrar
 
-1. Add DS records to your registrar, one for each provider. You can see your Cloudflare DS record on the [dashboard](https://dash.cloudflare.com/?to=/:account/:zone/dns) by going to **DNS** > **Settings** > **DS Record**.
+1. Add DS records to your registrar, one for each provider. You can see your Cloudflare DS record on the [**DNS Settings**](https://dash.cloudflare.com/?to=/:account/:zone/dns/settings) page, under **DS Record**.
 
 2. Update the nameserver settings at your registrar to include the nameservers of all providers you will be using for your multi-signer DNSSEC setup.
