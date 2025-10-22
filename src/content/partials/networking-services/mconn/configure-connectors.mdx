@@ -850,13 +850,35 @@ inline={false}
 
 To check the IPsec tunnels and static routes created by your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName }:
 
-1. In the Cloudflare dashboard, go to the **Sites** page.
+{ props.productOriginalName === "WAN Tunnels" ? (
+	<>
+		<Markdown
+	text={`
+		1. Log in to the Cloudflare One dashboard, and go to **Insights** > **Network visibility**.
+	`}
+	inline={false}
+	/>
+	</>
+) : (
+	<>
+		<Markdown
+	text={`
+		1. In the Cloudflare dashboard, go to the **Sites** page.`}
+	inline={false}
+	/>
 
    <DashButton url="/?to=/:account/magic-wan/sites" />
 
-2. Select the name of the site for which you want to check the Connector's IPsec tunnels and static routes, and select **Edit**.
-
+	</>
+)
+}
+<Markdown
+text={`
+2. Select the name of the site for which you want to check the ${ props.magicWord === "virtual" ? props.productNameVirtual : props.productName }'s IPsec tunnels and static routes, and select **Edit**.
 3. Select **Tunnels** to check IPsec tunnels, and **Routes** for the static routes.
+`}
+inline={false}
+/>
 
 ---
 
