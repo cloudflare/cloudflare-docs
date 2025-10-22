@@ -25,6 +25,7 @@ params:
   - interruptWindowURL
   - tunnelHealthChecksURL
   - wanSettingsURL
+  - sitesURL
   - networkOptionsURL
   - maintenanceURL
   - referenceInformationURL
@@ -476,7 +477,7 @@ After setting up your LANs, you can configure your { props.magicWord === "virtua
 
 ### Add your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } to a site
 
-After finishing your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } configuration, you need to add it to a site. <Render file="sites/sites-brief" product="networking-services" />
+After finishing your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } configuration, you need to add it to a site. <Render file="sites/sites-brief" product="networking-services" params={{ sitesURL: props.sitesURL }} />
 
 { props.magicWord === "hardware" && (
   <>
