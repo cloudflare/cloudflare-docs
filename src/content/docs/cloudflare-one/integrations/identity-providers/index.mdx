@@ -7,7 +7,10 @@ tags:
 
 import { Render } from "~/components";
 
-Cloudflare Zero Trust allows you to integrate your organization's identity providers (IdPs) with Cloudflare Access. Your team can simultaneously use multiple providers, reducing friction when working with partners or contractors.
+
+Cloudflare Zero Trust integrates with your organization's identity provider to apply Zero Trust and Secure Web Gateway policies. If you work with partners, contractors, or other organizations, you can integrate multiple identity providers simultaneously.
+
+As an alternative to configuring an identity provider, Cloudflare Zero Trust can send a [one-time PIN (OTP)](/cloudflare-one/integrations/identity-providers/one-time-pin/) to approved email addresses. No configuration needed — simply add a user's email address to an [Access policy](/cloudflare-one/policies/access/) and to the group that allows your team to reach the application. You can simultaneously configure an OTP and an identity provider to allow users to use their own authentication method.
 
 Adding an identity provider as a login method requires configuration both in [Zero Trust](https://one.dash.cloudflare.com) and with the identity provider itself. Consult our IdP-specific documentation to learn more about what you need to set up.
 
