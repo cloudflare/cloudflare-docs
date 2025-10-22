@@ -40,20 +40,20 @@ import {
 
 { props.magicWord === "virtual" && (
 	<>
-		<p>{props.productNameVirtual} is a virtual appliance alternative to the hardware based {props.productName}. These two versions of Connector are identical otherwise.</p> <p>Currently, you can set up {props.productNameVirtual} on VMWare ESXi and Proxmox Virtual Environment. Support for Proxmox is in beta.</p>
+		<p>{props.productNameVirtual} is a virtual appliance alternative to the hardware based {props.productName}. These two versions of {props.productName} are identical otherwise.</p> <p>Currently, you can set up {props.productNameVirtual} on VMWare ESXi and Proxmox Virtual Environment. Support for Proxmox is in beta.</p>
 	</>
 	)
 }
 
-In this page you will find instructions on how to configure {props.productName}. This guide provides a step-by-step guide for {props.productName} initial setup. You can either return here after setting up your Connector, or refer to the <a href={props.maintenanceURL}>Maintenance</a> section where you will find instructions on how to update your settings.
+In this page you will find instructions on how to configure {props.productName}. This guide provides a step-by-step guide for {props.productName} initial setup. You can either return here after setting up your {props.productName}, or refer to the <a href={props.maintenanceURL}>Maintenance</a> section where you will find instructions on how to update your settings.
 
 ## Prerequisites
 
 { props.magicWord === "hardware" && (
   <>
-		<p>You need to purchase <a href="https://www.cloudflare.com/magic-wan">{props.productOriginalName}</a> before you can purchase and use the {props.productName}. The {props.productName} can function as your primary edge device for your network, or be deployed in-line with existing network gear.</p>
+		<p>You need to purchase <a href="https://www.cloudflare.com/magic-wan">{props.productOriginalName}</a> before you can purchase and use {props.productName}. {props.productName} can function as your primary edge device for your network, or be deployed in-line with existing network gear.</p>
 
-		<p>You also need to purchase a {props.productName} before you can start configuring your settings in the Cloudflare dashboard. Contact your account representative to learn more about purchasing options for the Magic WAN Connector device.</p>
+		<p>You also need to purchase {props.productName} before you can start configuring your settings in the Cloudflare dashboard. Contact your account representative to learn more about purchasing options for {props.productName}.</p>
 
   </>
   )
