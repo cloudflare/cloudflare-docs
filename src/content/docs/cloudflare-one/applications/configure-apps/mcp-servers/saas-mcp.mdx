@@ -18,11 +18,11 @@ import {
 
 You can secure [Model Context Protocol (MCP) servers](https://www.cloudflare.com/learning/ai/what-is-model-context-protocol-mcp/) by using Cloudflare Access as an OAuth Single Sign-On (SSO) provider.
 
-This guide walks through how to deploy a remote <GlossaryTooltip term="MCP server">MCP server</GlossaryTooltip> on [Cloudflare Workers](/workers/) that requires Cloudflare Access for authentication. When users connect to the MCP server using an <GlossaryTooltip term="MCP client">MCP client</GlossaryTooltip>, they will be prompted to log in to your [identity provider](/cloudflare-one/identity/idp-integration/) and are only granted access if they pass your [Access policies](/cloudflare-one/access-controls/policies/#selectors).
+This guide walks through how to deploy a remote <GlossaryTooltip term="MCP server">MCP server</GlossaryTooltip> on [Cloudflare Workers](/workers/) that requires Cloudflare Access for authentication. When users connect to the MCP server using an <GlossaryTooltip term="MCP client">MCP client</GlossaryTooltip>, they will be prompted to log in to your [identity provider](/cloudflare-one/integrations/identity-providers/) and are only granted access if they pass your [Access policies](/cloudflare-one/policies/access/#selectors).
 
 ## Prerequisites
 
-- Add an [identity provider](/cloudflare-one/identity/idp-integration/) to Cloudflare Zero Trust
+- Add an [identity provider](/cloudflare-one/integrations/identity-providers/) to Cloudflare Zero Trust
 - Install [npm](https://docs.npmjs.com/getting-started)
 - Install [Node.js](https://nodejs.org/en/)
 
@@ -94,8 +94,8 @@ The Worker will be deployed to your `*.workers.dev` subdomain at `mcp-server-cf-
 5. Select **Add application**.
 6. In **Redirect URLs**, enter the authorization callback URL for your MCP server. The callback URL for our [example MCP server](#1-deploy-an-example-mcp-server) is
    `txt
-	https://mcp-server-cf-access.<YOUR_SUBDOMAIN>.workers.dev/callback
-	`
+https://mcp-server-cf-access.<YOUR_SUBDOMAIN>.workers.dev/callback
+`
 7. Copy the following values to input into our example MCP server. Other MCP servers may require different sets of input values.
    - **Client secret**
    - **Client ID**

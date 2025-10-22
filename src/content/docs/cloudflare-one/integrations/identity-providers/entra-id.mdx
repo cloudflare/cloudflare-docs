@@ -43,7 +43,7 @@ To retrieve those values:
 
 8.  Next, return to Microsoft Entra ID and go to **Applications** > **App registrations**.
 
-9.  Select **All applications** and select the app you just created. Copy the **Application (client) ID** and **Directory (tenant) ID**. You will need these values when [adding Entra ID as an identity provider in step 3](/cloudflare-one/identity/idp-integration/entra-id/#3-add-entra-id-as-an-identity-provider).
+9.  Select **All applications** and select the app you just created. Copy the **Application (client) ID** and **Directory (tenant) ID**. You will need these values when [adding Entra ID as an identity provider in step 3](/cloudflare-one/integrations/identity-providers/entra-id/#3-add-entra-id-as-an-identity-provider).
 
     ![Viewing the Application ID and Directory ID in Azure](~/assets/images/cloudflare-one/identity/azure/azure-values.png)
 
@@ -55,7 +55,7 @@ To retrieve those values:
     When the client secret expires, users will be unable to log in through Access. Take note of your expiry date to prevent login errors and renew your client secret when necessary.
     :::
 
-12. After the client secret is created, copy its **Value** field. Store the client secret in a safe place, as it can only be viewed immediately after creation. You will need this client secret value when [adding Entra ID as an identity provider in step 3](/cloudflare-one/identity/idp-integration/entra-id/#3-add-entra-id-as-an-identity-provider).
+12. After the client secret is created, copy its **Value** field. Store the client secret in a safe place, as it can only be viewed immediately after creation. You will need this client secret value when [adding Entra ID as an identity provider in step 3](/cloudflare-one/integrations/identity-providers/entra-id/#3-add-entra-id-as-an-identity-provider).
 
     ![Location of client secret in Azure](~/assets/images/cloudflare-one/identity/azure/client-cert-value.png)
 
@@ -100,7 +100,7 @@ More narrow permissions may be used, however this is the set of permissions that
 
 5. Select **Save**.
 
-6. To [test](/cloudflare-one/identity/idp-integration/#test-idps-in-zero-trust) that your connection is working, select **Test**.
+6. To [test](/cloudflare-one/integrations/identity-providers/#test-idps-in-zero-trust) that your connection is working, select **Test**.
 
 7. (Optional) Configure the following settings:
    - **Proof Key for Code Exchange**: Perform [PKCE](https://www.oauth.com/oauth2-servers/pkce/) on all login attempts.
@@ -108,7 +108,7 @@ More narrow permissions may be used, however this is the set of permissions that
    - **Entra ID Policy Sync**: Refer to our [Entra ID Conditional Access tutorial](/cloudflare-one/tutorials/entra-id-conditional-access/).
    - **Enable SCIM**: Refer to [Synchronize users and groups](#synchronize-users-and-groups).
    - **Email claim**: Enter the Entra ID claim that you wish to use for user identification (for example, `preferred_username`).
-   - **OIDC Claims**: Enter [custom OIDC claims](/cloudflare-one/identity/idp-integration/generic-oidc/#custom-oidc-claims) that you wish to add to your users' identity.
+   - **OIDC Claims**: Enter [custom OIDC claims](/cloudflare-one/integrations/identity-providers/generic-oidc/#custom-oidc-claims) that you wish to add to your users' identity.
 
 </TabItem> <TabItem label="API">
 
@@ -167,7 +167,7 @@ To receive an email claim in the `id_token` from Microsoft Entra, you must:
 
 #### Object ID
 
-If you are concerned that users' emails or UPNs may change, you can pass the user's object ID (`oid`) from Microsoft Entra to Cloudflare Access. To configure Access to receive the object ID, refer to [custom OIDC claims](/cloudflare-one/identity/idp-integration/generic-oidc/#custom-oidc-claims). No additional configuration is required in Microsoft Entra.
+If you are concerned that users' emails or UPNs may change, you can pass the user's object ID (`oid`) from Microsoft Entra to Cloudflare Access. To configure Access to receive the object ID, refer to [custom OIDC claims](/cloudflare-one/integrations/identity-providers/generic-oidc/#custom-oidc-claims). No additional configuration is required in Microsoft Entra.
 
 ## Synchronize users and groups
 
@@ -201,9 +201,9 @@ SCIM requires a separate enterprise application from the one created during [ini
 
 5. After you have created the application, go to **Provisioning** > select **New Configuration**.
 
-6. In the **Tenant URL** field, enter the **SCIM Endpoint** obtained from your Entra ID integration in Zero Trust [in the previous step](/cloudflare-one/identity/idp-integration/entra-id/#1-enable-scim-in-zero-trust).
+6. In the **Tenant URL** field, enter the **SCIM Endpoint** obtained from your Entra ID integration in Zero Trust [in the previous step](/cloudflare-one/integrations/identity-providers/entra-id/#1-enable-scim-in-zero-trust).
 
-7. In the **Secret token** field, enter the **SCIM Secret** obtained from your Entra ID integration in Zero Trust [in the previous step](/cloudflare-one/identity/idp-integration/entra-id/#1-enable-scim-in-zero-trust).
+7. In the **Secret token** field, enter the **SCIM Secret** obtained from your Entra ID integration in Zero Trust [in the previous step](/cloudflare-one/integrations/identity-providers/entra-id/#1-enable-scim-in-zero-trust).
 
 8. Select **Test Connection** to ensure that the credentials were entered correctly. If the test fails, go to your Entra ID integration in Zero Trust, select **Regenerate Secret**, select **Save**, and enter your new **SCIM Secret** in the **Secret token** field.
 
@@ -212,7 +212,7 @@ SCIM requires a separate enterprise application from the one created during [ini
 10. Once the SCIM application is created, [assign users and groups to the application](https://learn.microsoft.com/entra/identity/enterprise-apps/assign-user-or-group-access-portal).
 
 :::note
-Groups in this SCIM application should match the groups in your other [Cloudflare Access enterprise application](/cloudflare-one/identity/idp-integration/entra-id/#set-up-entra-id-as-an-identity-provider). Because SCIM group membership updates will overwrite any groups in a user's identity, assigning the same groups to each app ensures consistent policy evaluation.
+Groups in this SCIM application should match the groups in your other [Cloudflare Access enterprise application](/cloudflare-one/integrations/identity-providers/entra-id/#set-up-entra-id-as-an-identity-provider). Because SCIM group membership updates will overwrite any groups in a user's identity, assigning the same groups to each app ensures consistent policy evaluation.
 :::
 
 11. Go to **Provisioning** and select **Start provisioning**.

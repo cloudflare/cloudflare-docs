@@ -10,7 +10,7 @@ import { GlossaryTooltip, Render } from "~/components";
 The Google Workspace IdP integration [is not supported](/cloudflare-one/faq/troubleshooting/#after-putting-google-workspace-behind-access-i-cant-log-in-it-keeps-redirecting-between-access-and-google-without-ever-completing-authentication) if your Google Workspace account is protected by Access.
 :::
 
-You can integrate a Google Workspace (formerly G Suite) account with Cloudflare Access. Unlike the instructions for [generic Google authentication](/cloudflare-one/identity/idp-integration/google/), the steps below will allow you to pull group membership information from your Google Workspace account.
+You can integrate a Google Workspace (formerly G Suite) account with Cloudflare Access. Unlike the instructions for [generic Google authentication](/cloudflare-one/integrations/identity-providers/google/), the steps below will allow you to pull group membership information from your Google Workspace account.
 
 Once integrated, users will log in with their Google Workspace credentials to reach resources protected by Cloudflare Access or to enroll their device into Cloudflare Gateway.
 
@@ -85,7 +85,7 @@ You do not need to be a Google Cloud Platform user to integrate Google Workspace
 
 4. (Optional) Enable [Proof of Key Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/). PKCE will be performed on all login attempts.
 
-5. (Optional) Under **Optional configurations**, enter [custom OIDC claims](/cloudflare-one/identity/idp-integration/generic-oidc/#custom-oidc-claims) that you wish to add to your user's identity.
+5. (Optional) Under **Optional configurations**, enter [custom OIDC claims](/cloudflare-one/integrations/identity-providers/generic-oidc/#custom-oidc-claims) that you wish to add to your user's identity.
 
 6. Select **Save**. To complete setup, you must visit the generated link. If you are not the Google Workspace administrator, share the link with the administrator.
 
