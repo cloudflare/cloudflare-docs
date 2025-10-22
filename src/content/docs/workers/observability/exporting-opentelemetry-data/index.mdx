@@ -64,14 +64,21 @@ After setting up destinations in the dashboard, configure your Worker to export 
     "traces": {
       "enabled": true,
       "destinations": ["tracing-destination-name"],
+      
       // traces sample rate of 5%
       "head_sampling_rate": 0.05
+
+      //traces not sent to the Cloudflare Dashboard
+      "persist": false
     },
     "logs": {
       "enabled": true,
       "destinations": ["logs-destination-name"],
       // logs sample rate of 60%
-      "head_sampling_rate": 0.6
+      "head_sampling_rate": 0.6,
+      
+      //traces not sent to the Cloudflare Dashboard
+      "persist": false
     }
   }
 }

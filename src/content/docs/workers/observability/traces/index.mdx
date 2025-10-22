@@ -64,6 +64,8 @@ You can also configure tracing independently by setting `observability.traces.en
 
 </WranglerConfig>
 
+
+
 ### Exporting OpenTelemetry traces to a 3rd party destination
 
 Workers tracing follows [OpenTelemetry (OTel) standards](https://opentelemetry.io/). This makes it compatible with popular observability platforms,
@@ -76,8 +78,7 @@ Learn more about exporting OpenTelemetry data from Workers [here](/workers/obser
 
 :::note[Default Sampling Rate]
 
-The default sampling rate is `1`, meaning 100% of requests will be traced if tracing is enabled. Set `head_sampling_rate` if
-you want to trace fewer requests.
+The default sampling rate is `1`, meaning 100% of requests will be traced if tracing is enabled. Set `head_sampling_rate` if you want to trace fewer requests.
 
 :::
 
