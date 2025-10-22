@@ -12,7 +12,7 @@ You can now enable [Cloudflare Access](/cloudflare-one/access-controls/policies/
 
 ![Screenshot of the Enable/Disable Cloudflare Access button on the workers.dev route settings page](~/assets/images/workers/changelog/workers-access.png)
 
-Access allows you to limit access to your Workers to specific users or groups. You can limit access to yourself, your teammates, your organization, or anyone else you specify in your [Access policy](/cloudflare-one/traffic-policies/access).
+Access allows you to limit access to your Workers to specific users or groups. You can limit access to yourself, your teammates, your organization, or anyone else you specify in your [Access policy](/cloudflare-one/access-controls/policies/access/).
 
 To enable Cloudflare Access:
 
@@ -36,9 +36,9 @@ export default {
 	async fetch(request, env, ctx) {
 		// Verify the POLICY_AUD environment variable is set
 		if (!env.POLICY_AUD) {
-			return new Response('Missing required audience', {
+			return new Response("Missing required audience", {
 				status: 403,
-				headers: { 'Content-Type': 'text/plain' }
+				headers: { "Content-Type": "text/plain" },
 			});
 		}
 

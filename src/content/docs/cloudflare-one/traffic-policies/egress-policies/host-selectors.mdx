@@ -10,8 +10,8 @@ import { Tabs, TabItem, Details, APIRequest } from "~/components";
 <Details header="Feature availability">
 
 | [WARP modes](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
-| ----------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| Gateway with WARP                                                                         | Enterprise                                                    |
+| ---------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| Gateway with WARP                                                                        | Enterprise                                                    |
 
 | System   | Availability | Minimum WARP version |
 | -------- | ------------ | -------------------- |
@@ -24,7 +24,7 @@ import { Tabs, TabItem, Details, APIRequest } from "~/components";
 
 </Details>
 
-When Gateway receives a DNS query for hostname covered by the [Application](/cloudflare-one/policies/egress-policies/#application), [Content Categories](/cloudflare-one/policies/egress-policies/#content-categories), [Domain](/cloudflare-one/policies/egress-policies/#domain), and [Host](/cloudflare-one/policies/egress-policies/#host) selectors in an Egress policy, Gateway initially resolves DNS to an IP in the `100.80.0.0/16` or `2606:4700:0cf1:4000::/64` range. This process allows Gateway to map a destination IP with a hostname at [layer 4](https://www.cloudflare.com/learning/ddos/glossary/open-systems-interconnection-model-osi/) (where Gateway evaluates Egress policies). The destination IP for a hostname is not usually known at layer 4. Prior to evaluating Egress policies, the initially resolved IP is overwritten with the correct destination IP.
+When Gateway receives a DNS query for hostname covered by the [Application](/cloudflare-one/traffic-policies/egress-policies/#application), [Content Categories](/cloudflare-one/traffic-policies/egress-policies/#content-categories), [Domain](/cloudflare-one/traffic-policies/egress-policies/#domain), and [Host](/cloudflare-one/traffic-policies/egress-policies/#host) selectors in an Egress policy, Gateway initially resolves DNS to an IP in the `100.80.0.0/16` or `2606:4700:0cf1:4000::/64` range. This process allows Gateway to map a destination IP with a hostname at [layer 4](https://www.cloudflare.com/learning/ddos/glossary/open-systems-interconnection-model-osi/) (where Gateway evaluates Egress policies). The destination IP for a hostname is not usually known at layer 4. Prior to evaluating Egress policies, the initially resolved IP is overwritten with the correct destination IP.
 
 ![Example egress policy flow](~/assets/images/cloudflare-one/policies/host-selector-diagram.png)
 
@@ -61,13 +61,13 @@ Use the [Patch Zero Trust account configuration](/api/resources/zero_trust/subre
 
 Traffic must be on-ramped to Gateway with the following methods:
 
-| On-ramp method                                                                             | Compatibility |
-| ------------------------------------------------------------------------------------------ | ------------- |
-| [WARP](/cloudflare-one/team-and-resources/devices/warp/)                                  | ✅            |
-| [PAC files](/cloudflare-one/team-and-resources/devices/agentless/pac-files/)              | ✅            |
-| [Browser Isolation](/cloudflare-one/remote-browser-isolation/)                           | ✅            |
+| On-ramp method                                                                                      | Compatibility |
+| --------------------------------------------------------------------------------------------------- | ------------- |
+| [WARP](/cloudflare-one/team-and-resources/devices/warp/)                                            | ✅            |
+| [PAC files](/cloudflare-one/team-and-resources/devices/agentless/pac-files/)                        | ✅            |
+| [Browser Isolation](/cloudflare-one/remote-browser-isolation/)                                      | ✅            |
 | [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/) | ❌            |
-| [Magic WAN](/magic-wan/zero-trust/cloudflare-gateway/)                                     | ❌            |
+| [Magic WAN](/magic-wan/zero-trust/cloudflare-gateway/)                                              | ❌            |
 
 Unsupported traffic will be resolved with your default Gateway settings. If you use DNS locations to send a DNS query to Gateway with IPv4, IPv6, DoT, or DoH, Gateway will not return the initial resolved IP for supported traffic nor resolve unsupported traffic.
 
