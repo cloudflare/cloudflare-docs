@@ -7,7 +7,7 @@ sidebar:
 
 import { Tabs, TabItem, APIRequest } from "~/components";
 
-Advanced security features such as [HTTPS traffic inspection](/cloudflare-one/policies/gateway/http-policies/tls-decryption/), [Data Loss Prevention](/cloudflare-one/policies/data-loss-prevention/), [anti-virus scanning](/cloudflare-one/policies/gateway/http-policies/antivirus-scanning/), [Access for Infrastructure](/cloudflare-one/applications/non-http/infrastructure-apps/), and [Browser Isolation](/cloudflare-one/policies/browser-isolation/) require users to install and trust a root certificate on their device. You can either install the certificate provided by Cloudflare (default option), or generate your own custom certificate and upload it to Cloudflare.
+Advanced security features such as [HTTPS traffic inspection](/cloudflare-one/traffic-policies/http-policies/tls-decryption/), [Data Loss Prevention](/cloudflare-one/data-loss-prevention/), [anti-virus scanning](/cloudflare-one/traffic-policies/http-policies/antivirus-scanning/), [Access for Infrastructure](/cloudflare-one/applications/non-http/infrastructure-apps/), and [Browser Isolation](/cloudflare-one/remote-browser-isolation/) require users to install and trust a root certificate on their device. You can either install the certificate provided by Cloudflare (default option), or generate your own custom certificate and upload it to Cloudflare.
 
 Zero Trust [generates a unique root CA](#generate-a-cloudflare-root-certificate) for each account and deploys it across the Cloudflare global network. Alternatively, Enterprise users can upload and deploy their own [custom certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/custom-certificate/).
 

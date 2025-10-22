@@ -29,7 +29,7 @@ The diagram above shows the WARP Connector and our device agent deployed to esta
 1. VoIP server resides on a private network with no public IP.
 2. WARP Connector creates a secure tunnel to Cloudflare and is configured as a virtual router in the private network.
 3. Allow traffic from Cloudflare to reach the VoIP server, but also allow private network initiated traffic, such as an outbound VoIP call from the server, to route over the Cloudflare tunnel. In the above diagram, we add a static route on the default gateway of `100.96.0.0/12` (the WARP CGNAT range) via `10.0.50.10` (the WARP Connector virtual router).
-4. Traffic passes through our [Secure Web Gateway](/cloudflare-one/policies/gateway/) (SWG), which applies network level firewall rules to both inbound and outbound traffic.
+4. Traffic passes through our [Secure Web Gateway](/cloudflare-one/traffic-policies/) (SWG), which applies network level firewall rules to both inbound and outbound traffic.
 5. A device agent is installed on remote user devices. The agent establishes a secure tunnel to Cloudflare, which allows VoIP software to both receive and make calls.
 
 ## Call flow examples

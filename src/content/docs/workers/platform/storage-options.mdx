@@ -31,9 +31,9 @@ Storage options can also be used by your front-end application built with Cloudf
 
 There are three options for SQL-based databases available when building applications with Workers.
 
-* **Hyperdrive** if you have an existing Postgres or MySQL database, require large (1TB, 100TB or more) single databases, and/or want to use your existing database tools. You can also connect Hyperdrive to database platforms like [PlanetScale](https://planetscale.com/) or [Neon](https://neon.tech/).
-* **D1** for lightweight, serverless applications that are read-heavy, have global users that benefit from D1's [read replication](/d1/best-practices/read-replication/), and do not require you to manage and maintain a traditional RDBMS.
-* **Durable Objects** for stateful serverless workloads, per-user or per-customer SQL state, and building distributed systems (D1 and Queues are built on Durable Objects) where Durable Object's [strict serializability](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/) enables global ordering of requests and storage operations.
+- **Hyperdrive** if you have an existing Postgres or MySQL database, require large (1TB, 100TB or more) single databases, and/or want to use your existing database tools. You can also connect Hyperdrive to database platforms like [PlanetScale](https://planetscale.com/) or [Neon](https://neon.tech/).
+- **D1** for lightweight, serverless applications that are read-heavy, have global users that benefit from D1's [read replication](/d1/best-practices/read-replication/), and do not require you to manage and maintain a traditional RDBMS.
+- **Durable Objects** for stateful serverless workloads, per-user or per-customer SQL state, and building distributed systems (D1 and Queues are built on Durable Objects) where Durable Object's [strict serializability](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/) enables global ordering of requests and storage operations.
 
 ### Session storage
 
@@ -41,7 +41,7 @@ We recommend using [Workers KV](/kv/) for storing session data, credentials (API
 
 Frequently read keys benefit from KV's [internal cache](/kv/concepts/how-kv-works/), and repeated reads to these "hot" keys will typically see latencies in the 500µs to 10ms range.
 
-Authentication frameworks like [OpenAuth](https://openauth.js.org/docs/storage/cloudflare/) use Workers KV as session storage when deployed to Cloudflare, and [Cloudflare Access](/cloudflare-one/policies/access/) uses KV to securely store and distribute user credentials so that they can be validated as close to the user as possible and reduce overall latency.
+Authentication frameworks like [OpenAuth](https://openauth.js.org/docs/storage/cloudflare/) use Workers KV as session storage when deployed to Cloudflare, and [Cloudflare Access](/cloudflare-one/access-controls/policies/) uses KV to securely store and distribute user credentials so that they can be validated as close to the user as possible and reduce overall latency.
 
 ## Product overviews
 
@@ -201,7 +201,3 @@ To get started with Vectorize:
 - Learn more about [how vector databases work](/vectorize/reference/what-is-a-vector-database/).
 
 <Render file="durable-objects-vs-d1" product="durable-objects" />
-
-
-
-

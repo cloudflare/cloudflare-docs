@@ -1,0 +1,750 @@
+---
+pcx_content_type: configuration
+title: HTTP policies
+sidebar:
+  order: 4
+---
+
+import { Details, InlineBadge, Render } from "~/components";
+
+:::note
+To use HTTP policies, install a [Cloudflare root certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/) or a [custom certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/custom-certificate/).
+:::
+
+HTTP policies allow you to intercept all HTTP and HTTPS requests and either block, allow, or override specific elements such as websites, IP addresses, and file types. HTTP policies operate on Layer 7 for all TCP (and [optionally UDP](/cloudflare-one/traffic-policies/initial-setup/http/#1-connect-to-gateway)) traffic sent over ports 80 and 443.
+
+An HTTP policy consists of an **Action** as well as a logical expression that determines the scope of the policy. To build an expression, you need to choose a **Selector** and an **Operator**, and enter a value or range of values in the **Value** field. You can use **And** and **Or** logical operators to evaluate multiple conditions.
+
+- [Actions](#actions)
+- [Selectors](#selectors)
+- [Comparison operators](#comparison-operators)
+- [Value](#value)
+- [Logical operators](#logical-operators)
+
+<Render
+	file="gateway/response"
+	product="cloudflare-one"
+	params={{ type: "query", example: "Source IP", example2: "Resolved IP" }}
+/>
+
+<Render file="gateway/terraform-precedence-warning" product="cloudflare-one" />
+
+## Actions
+
+Actions in HTTP policies allow you to choose what to do with a given set of elements (domains, IP addresses, file types, and so on). You can assign one action per policy.
+
+### Allow
+
+API value: `allow`
+
+<Details header="Available selectors">
+
+<Render file="gateway/http-allow-block-selectors" product="cloudflare-one" />
+
+</Details>
+
+The Allow action allows outbound traffic to reach destinations you specify within the [Selectors](#selectors) and [Value](#value) fields. For example, the following configuration allows traffic to reach all websites we categorize as belonging to the Education content category:
+
+| Selector           | Operator | Value       | Action |
+| ------------------ | -------- | ----------- | ------ |
+| Content Categories | in       | _Education_ | Allow  |
+
+#### Untrusted certificates
+
+The **Untrusted certificate action** determines how to handle insecure requests.
+
+| Option       | Action                                                                                                                                                                                                                                               |
+| ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Error        | Display Gateway error page. Matches the default behavior when no action is configured.                                                                                                                                                               |
+| Block        | Display [block page](/cloudflare-one/traffic-policies/block-page/) as set in Zero Trust.                                                                                                                                                             |
+| Pass through | Bypass insecure connection warnings and seamlessly connect to the upstream. For more information on what statuses are bypassed, refer to the [troubleshooting FAQ](/cloudflare-one/faq/troubleshooting/#i-see-error-526-when-browsing-to-a-website). |
+
+### Block
+
+API value: `block`
+
+<Details header="Available selectors">
+
+<Render file="gateway/http-allow-block-selectors" product="cloudflare-one" />
+
+</Details>
+
+The Block action blocks outbound traffic from reaching destinations you specify within the [Selectors](#selectors) and [Value](#value) fields. For example, the following configuration blocks users from being able to upload any file type to Google Drive:
+
+| Selector         | Operator      | Value          | Logic | Action |
+| ---------------- | ------------- | -------------- | ----- | ------ |
+| Application      | in            | `Google Drive` | And   | Block  |
+| Upload Mime Type | matches regex | `.*`           |       |        |
+
+#### WARP client block notifications
+
+<Render
+	file="gateway/client-notifications"
+	product="cloudflare-one"
+	params={{ toggleName: "**Display block notification for WARP Client**" }}
+/>
+
+### Redirect
+
+API value: `redirect`
+
+<Details header="Available selectors">
+
+**Traffic**
+
+- [Access Infrastructure Target](#access-infrastructure-target)
+- [Application](#application)
+- [Content Categories](#content-categories)
+- [Destination Continent IP Geolocation](#destination-continent)
+- [Destination Country IP Geolocation](#destination-country)
+- [Destination IP](#destination-ip)
+- [Domain](#domain)
+- [Host](#host)
+- [HTTP Method](#http-method)
+- [Proxy Endpoint](#proxy-endpoint)
+- [Security Risks](#security-risks)
+- [Source Continent IP Geolocation](#source-continent)
+- [Source Country IP Geolocation](#source-country)
+- [Source Internal IP](#source-internal-ip)
+- [Source IP](#source-ip)
+- [URL](#url)
+- [URL Path](#url-path)
+- [URL Path & Query](#url-path-and-query)
+- [URL Query](#url-query)
+- [Virtual Network](#virtual-network)
+
+**Identity**
+
+- [SAML Attributes](#users)
+- [User Email](#users)
+- [User Group Emails](#users)
+- [User Group IDs](#users)
+- [User Group Names](#users)
+- [User Name](#users)
+
+**Device Posture**
+
+- [Passed Device Posture Checks](#device-posture)
+
+</Details>
+
+The Redirect action allows you to redirect matched HTTP requests to a different URL you specify. For example, if your users browse to the public web page of a SaaS app, you can redirect them to your own self-hosted instance, a single sign-on page, or an internal policy page.
+
+To redirect URLs with a Block action and the block page, refer to [Redirect to a block page](/cloudflare-one/traffic-policies/block-page/#redirect-to-a-block-page).
+
+#### Policy settings
+
+In **Policy URL redirect**, you can define what URL to redirect matched requests to. The redirect URL can contain paths and queries. For example, you can redirect `example.com` to `cloudflare.com/path/to/page?querystring=x`.
+
+<Render file="gateway/policy-context" product="cloudflare-one" />
+
+When you turn on **Preserve original path and query string**, Gateway will append the original path and query string to the redirected URL. Paths and queries in the redirect URL take precedence over the original URL. For example, if the original URL is `example.com/path/to/page?querystring=X` and the redirect URL is `cloudflare.com/redirect-path?querystring=Y`, Gateway will redirect requests to:
+
+```txt "cloudflare.com/redirect-path" "?querystring=Y"
+cloudflare.com/redirect-path/path/to/page?querystring=Y
+```
+
+When you turn on both options, Gateway will preserve the original path and query string, then append policy context to the end of the redirect URL. For example, if the original URL is `example.com/path/to/page?querystring=X&k=1` and the redirect URL is `cloudflare.com/redirect-path?querystring=Y`, Gateway will redirect requests to:
+
+```txt "cloudflare.com/redirect-path" "?querystring=Y" ins="&cf_user_email=user@example.com"
+cloudflare.com/redirect-path/path/to/page?querystring=Y&k=1&cf_user_email=user@example.com
+```
+
+### Isolate
+
+API value: `isolate`
+
+<Details header="Available selectors">
+
+**Traffic**
+
+- [Application](#application)
+- [Content Categories](#content-categories)
+- [Domain](#domain)
+- [Host](#host)
+- [HTTP Method](#http-method)
+- [Security Risks](#security-risks)
+- [Source Continent IP Geolocation](#source-continent)
+- [Source Country IP Geolocation](#source-country)
+- [URL](#url)
+- [URL Path](#url-path)
+- [URL Path & Query](#url-path-and-query)
+- [URL Query](#url-query)
+
+**Identity**
+
+- [SAML Attributes](#users)
+- [User Email](#users)
+- [User Group Emails](#users)
+- [User Group IDs](#users)
+- [User Group Names](#users)
+- [User Name](#users)
+
+**Device Posture**
+
+- [Passed Device Posture Checks](#device-posture)
+
+</Details>
+
+The Isolate action serves matched traffic to users via [Cloudflare Browser Isolation](/cloudflare-one/remote-browser-isolation/). For more information on this action, refer to [Isolation policies](/cloudflare-one/remote-browser-isolation/isolation-policies/#isolate).
+
+### Do Not Inspect
+
+API value: `off`
+
+<Details header="Available selectors">
+
+**Traffic**
+
+- [Application](#application)
+- [Content Categories](#content-categories)
+- [Destination Continent IP Geolocation](#destination-continent)
+- [Destination Country IP Geolocation](#destination-country)
+- [Destination IP](#destination-ip)
+- [Domain](#domain)
+- [Host](#host)
+- [Proxy Endpoint](#proxy-endpoint)
+- [Security Risks](#security-risks)
+- [Source Continent IP Geolocation](#source-continent)
+- [Source Country IP Geolocation](#source-country)
+- [Source Internal IP](#source-internal-ip)
+- [Source IP](#source-ip)
+- [Virtual Network](#virtual-network)
+
+**Identity**
+
+- [SAML Attributes](#users)
+- [User Email](#users)
+- [User Group Emails](#users)
+- [User Group IDs](#users)
+- [User Group Names](#users)
+- [User Name](#users)
+
+**Device Posture**
+
+- [Passed Device Posture Checks](#device-posture)
+
+</Details>
+
+:::caution[Visibility limitation]
+
+When you create a Do Not Inspect policy for a given hostname, application, or app type, you will lose the ability to log or block HTTP requests, apply DLP policies, and perform AV scanning.
+
+Information contained within HTTPS encryption, such as the full requested URL, will not be visible if it bypasses Gateway inspection. However, you can still apply [network policies](/cloudflare-one/traffic-policies/network-policies/) to this traffic. For more information, refer to [TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/).
+
+:::
+
+Do Not Inspect lets you bypass certain elements from inspection. To prevent Gateway from decrypting and inspecting HTTPS traffic, your policy must match against the Server Name Indicator (SNI) in the TLS header. When accessing a Do Not Inspect site in the browser, your browser may display a **Your connection is not private** warning, which you can proceed through to connect. For more information about applications which may require a Do Not Inspect policy, refer to [TLS decryption limitations](/cloudflare-one/traffic-policies/http-policies/tls-decryption/#inspection-limitations).
+
+All Do Not Inspect rules are evaluated first, before any Allow or Block rules, to determine if inspection should occur. For more information, refer to [Order of enforcement](/cloudflare-one/traffic-policies/order-of-enforcement/#http-policies).
+
+### Do Not Isolate
+
+API value: `noisolate`
+
+<Details header="Available selectors">
+
+**Traffic**
+
+- [Application](#application)
+- [Content Categories](#content-categories)
+- [Domain](#domain)
+- [Host](#host)
+- [HTTP Method](#http-method)
+- [Security Risks](#security-risks)
+- [Source Continent IP Geolocation](#source-continent)
+- [Source Country IP Geolocation](#source-country)
+- [URL](#url)
+- [URL Path](#url-path)
+- [URL Path & Query](#url-path-and-query)
+- [URL Query](#url-query)
+
+**Identity**
+
+- [SAML Attributes](#users)
+- [User Email](#users)
+- [User Group Emails](#users)
+- [User Group IDs](#users)
+- [User Group Names](#users)
+- [User Name](#users)
+
+**Device Posture**
+
+- [Passed Device Posture Checks](#device-posture)
+
+</Details>
+
+The Do Not Isolate action turns off browser isolation for matched traffic. For more information on this action, refer to [Isolation policies](/cloudflare-one/remote-browser-isolation/isolation-policies/#do-not-isolate).
+
+### Do Not Scan
+
+API value: `noscan`
+
+<Details header="Available selectors">
+
+**Traffic**
+
+- [Application](#application)
+- [Content Categories](#content-categories)
+- [Destination Continent IP Geolocation](#destination-continent)
+- [Destination Country IP Geolocation](#destination-country)
+- [Destination IP](#destination-ip)
+- [Domain](#domain)
+- [Host](#host)
+- [HTTP Method](#http-method)
+- [Proxy Endpoint](#proxy-endpoint)
+- [Security Risks](#security-risks)
+- [Source Continent IP Geolocation](#source-continent)
+- [Source Country IP Geolocation](#source-country)
+- [Source Internal IP](#source-internal-ip)
+- [Source IP](#source-ip)
+- [URL](#url)
+- [URL Path](#url-path)
+- [URL Path & Query](#url-path-and-query)
+- [URL Query](#url-query)
+- [Virtual Network](#virtual-network)
+
+**Identity**
+
+- [SAML Attributes](#users)
+- [User Email](#users)
+- [User Group Emails](#users)
+- [User Group IDs](#users)
+- [User Group Names](#users)
+- [User Name](#users)
+
+**Device Posture**
+
+- [Passed Device Posture Checks](#device-posture)
+
+</Details>
+
+When an admin enables AV scanning for uploads and/or downloads, Gateway will scan every supported file. Admins can selectively choose to disable scanning by leveraging the HTTP rules. For example, to prevent AV scanning of files uploaded to or downloaded from `example.com`, an admin would configure the following rule:
+
+| Selector | Operator      | Value           | Action      |
+| -------- | ------------- | --------------- | ----------- |
+| Hostname | matches regex | `.*example.com` | Do Not Scan |
+
+When a Do Not Scan rule matches, nothing is scanned, regardless of file size or whether the file type is supported or not.
+
+### Quarantine
+
+API value: `quarantine`
+
+<Details header="Available selectors">
+
+**Traffic**
+
+- [Application](#application)
+- [Content Categories](#content-categories)
+- [Destination Continent IP Geolocation](#destination-continent)
+- [Destination Country IP Geolocation](#destination-country)
+- [Destination IP](#destination-ip)
+- [Domain](#domain)
+- [Host](#host)
+- [HTTP Method](#http-method)
+- [Proxy Endpoint](#proxy-endpoint)
+- [Security Risks](#security-risks)
+- [Source Continent IP Geolocation](#source-continent)
+- [Source Country IP Geolocation](#source-country)
+- [Source Internal IP](#source-internal-ip)
+- [Source IP](#source-ip)
+- [URL](#url)
+- [URL Path](#url-path)
+- [URL Path & Query](#url-path-and-query)
+- [URL Query](#url-query)
+- [Virtual Network](#virtual-network)
+
+**Identity**
+
+- [SAML Attributes](#users)
+- [User Email](#users)
+- [User Group Emails](#users)
+- [User Group IDs](#users)
+- [User Group Names](#users)
+- [User Name](#users)
+
+**Device Posture**
+
+- [Passed Device Posture Checks](#device-posture)
+
+</Details>
+
+The Quarantine action sends files in matching requests to a file sandbox to scan for malware. Gateway will only quarantine files not previously seen in the file sandbox. For more information on this action, refer to [File sandboxing](/cloudflare-one/traffic-policies/http-policies/file-sandboxing/).
+
+#### Sandbox file types
+
+In **Sandbox file types**, you can select which file types to quarantine with your policy. You must select at least one file type.
+
+<Render file="gateway/sandbox-file-types" product="cloudflare-one" />
+
+## Selectors
+
+:::note
+Policies created using the URL selector are case-sensitive.
+:::
+
+Gateway matches HTTP traffic against the following selectors, or criteria:
+
+### Access Infrastructure Target
+
+<Render
+	file="gateway/selectors/all-access-app-targets"
+	product="cloudflare-one"
+/>
+
+### Access Private App
+
+<Render
+	file="gateway/selectors/all-access-private-app-destinations"
+	product="cloudflare-one"
+/>
+
+### Application Approval Status
+
+The review approval status of an application from [Shadow IT Discovery](/cloudflare-one/insights/analytics/shadow-it-discovery/) or the [Application Library](/cloudflare-one/applications/app-library/). For more information, refer to [Review applications](/cloudflare-one/applications/app-library/#review-applications).
+
+| UI name            | API example                          |
+| ------------------ | ------------------------------------ |
+| Application Status | `any(app.statuses[*] == "approved")` |
+
+### Application
+
+<Render
+	file="gateway/selectors/application-http"
+	product="cloudflare-one"
+	params={{ policyType: "HTTP" }}
+/>
+
+:::caution[Multiple API selectors required for Terraform]
+When using Terraform to create a policy with the [Do Not Inspect](#do-not-inspect) action, you must use the `app.hosts_ids` and `app.supports_ids` selectors. For example, to create a Do Not Inspect policy for Google Cloud Platform traffic, create a policy with both `any(app.hosts_ids[*] in {1245})` and `any(app.supports_ids[*] in {1245})`.
+:::
+
+#### Granular controls
+
+When using the _is_ operator with the _Application_ selector, you can use Application Granular Controls to choose specific actions and operations to match application traffic. For example, you can block file uploads to ChatGPT without blocking all ChatGPT traffic:
+
+| Selector    | Operator | Value     | Controls | Action |
+| ----------- | -------- | --------- | -------- | ------ |
+| Application | is       | _ChatGPT_ | _Upload_ | Block  |
+
+You can match traffic based on **Application Controls**, which group multiple user actions together, or **Operations**, which allow for granular control of supported API-level actions for an application.
+
+For more information, refer to [Application Granular Controls](/cloudflare-one/traffic-policies/http-policies/granular-controls/).
+
+### Body Phase
+
+The phase of an HTTP request. You can use this selector to specify whether to scan either the data sent in an HTTP request to your user's device or from your user's device to a destination. Policies without this selector will scan both the HTTP request and response bodies.
+
+| UI name    | API example                       |
+| ---------- | --------------------------------- |
+| Body Phase | `http.body_phase == \"download\"` |
+
+:::caution[Body phase mismatch]
+When combining this selector with the [Download and Upload File Types selectors](#download-and-upload-file-types), ensure you use the matching phase togethers. If body phase and file type selector logic do not match, the policy may not filter traffic as intended.
+:::
+
+### Content Categories
+
+<Render
+	file="gateway/selectors/net-http-content-categories"
+	product="cloudflare-one"
+	params={{ APIendpoint: "http.conn.content_category" }}
+/>
+
+### Destination Continent
+
+:::note
+Only applies to traffic sent through the [WARP client](/cloudflare-one/team-and-resources/devices/warp/set-up-warp/#gateway-with-warp-default).
+:::
+
+<Render
+	file="gateway/selectors/destination-continent"
+	product="cloudflare-one"
+	params={{ one: "http.dst_ip" }}
+/>
+
+### Destination Country
+
+:::note
+Only applies to traffic sent through the [WARP client](/cloudflare-one/team-and-resources/devices/warp/set-up-warp/#gateway-with-warp-default).
+:::
+
+<Render
+	file="gateway/selectors/destination-country"
+	product="cloudflare-one"
+	params={{ one: "http.dst_ip" }}
+/>
+
+### Destination IP
+
+:::note
+Only applies to traffic sent through the [WARP client](/cloudflare-one/team-and-resources/devices/warp/set-up-warp/#gateway-with-warp-default).
+:::
+
+<Render
+	file="gateway/selectors/destination-ip"
+	product="cloudflare-one"
+	params={{ APIendpoint: "http.conn.dst_ip" }}
+/>
+
+### Device Posture
+
+<Render file="gateway/selectors/device-posture" product="cloudflare-one" />
+
+### Domain
+
+<Render
+	file="gateway/selectors/domain-http"
+	product="cloudflare-one"
+	params={{ APIendpoint: "http.conn.domains" }}
+/>
+
+### Download and Upload File Size
+
+Use these selectors to limit the file size of upload or download transactions. File sizes are measured in mebibytes (MiB).
+
+| UI name                  | API example                     |
+| ------------------------ | ------------------------------- |
+| Download File Size (MiB) | `http.download.file.size >= 10` |
+
+| UI name                | API example                  |
+| ---------------------- | ---------------------------- |
+| Upload File Size (MiB) | `http.upload.file.size < 10` |
+
+### Download and Upload File Types
+
+:::caution[Deprecated selectors]
+The _Download File Types_ and _Upload File Types_ selectors supersede the _Download File Type_ and _Upload File Type_ selectors. Gateway will still evaluate policies with the previous selectors. However, Cloudflare recommends migrating any policies with deprecated selectors to the new corresponding selectors.
+:::
+
+These selectors will scan file signatures in the HTTP body. You can select from file categories or [specific file types](#supported-file-types), such as executables, archives and compressed files, unscannable files, Microsoft 365/Office documents, and Adobe files.
+
+| UI name             | API example                                         |
+| ------------------- | --------------------------------------------------- |
+| Download File Types | `any(http.download.file.types[*] in {"docx" "7z"})` |
+
+| UI name           | API example                                        |
+| ----------------- | -------------------------------------------------- |
+| Upload File Types | `any(http.upload.file.types[*] in {"compressed"})` |
+
+#### Supported file types
+
+Gateway supports the following file types for use with the _Download File Types_ and _Upload File Types_ selectors:
+
+<Details header="Compressed">
+
+- 7-Zip archive (`.7z`)
+- `bzip2` archive (`.bz2`)
+- GNU Gzip archive (`.gz`)
+- Microsoft Cabinet file (`.cab`)
+- Microsoft Compiled HTML Help file (`.chm`)
+- RAR archive (`.rar`)
+- `xz` archive (`.xz`)
+- ZIP archive (`.zip`)
+
+</Details>
+
+<Details header="Documents">
+
+- Microsoft Office/365 files
+  - Word document (`.doc`, `.docx`, `.docm`)
+  - Excel spreadsheet (`.xls`, `.xlsx`, `.xlsm`)
+  - PowerPoint presentation (`.ppt`, `.pptx`, `.pptm`)
+- PDF document (`.pdf`)
+
+</Details>
+
+<Details header="Executable">
+
+- Apple Software Package (`.pkg`)
+- Dynamic-link library (DLL) file (`.dll`)
+- Executable and Linkable Format (ELF) file (`.elf`)
+- Java archive (JAR) package (`.jar`)
+- Java class file (`.class`)
+- Mach object (Mach-O) file (`.macho`)
+- Microsoft Windows installer (`.msi`)
+- Microsoft Software Installer (`.msix`, `.appx`)
+- Microsoft Windows executable (`.exe`)
+
+</Details>
+
+<Details header="Image">
+
+- Adobe Photoshop document (`.psd`)
+- Bitmap image (`.bmp`)
+- GIF image (`.gif`)
+- Icon file (`.ico`)
+- JPEG image (`.jpg`, `.jpeg`)
+- PNG image (`.png`)
+- WebP image (`.webp`)
+
+</Details>
+
+<Details header="Other">
+
+- BitTorrent file (`.torrent`)
+
+</Details>
+
+<Details header="System">
+
+- Apple Disk Image (`.dmg`)
+
+</Details>
+
+<Details header="Unscannable">
+
+<Render file="gateway/policies/unscannable-files" product="cloudflare-one" />
+
+</Details>
+
+### Download and Upload Mime Type
+
+These selectors depend on the `Content-Type` header being present in the request (for uploads) or response (for downloads).
+
+| UI name            | API example                          |
+| ------------------ | ------------------------------------ |
+| Download Mime Type | `http.download.mime == "image/png\"` |
+
+| UI name          | API example                        |
+| ---------------- | ---------------------------------- |
+| Upload Mime Type | `http.upload.mime == "image/png\"` |
+
+### DLP Profile
+
+Use [Cloudflare Data Loss Prevention (DLP)](/cloudflare-one/data-loss-prevention/) to scan HTTP traffic for the presence of sensitive data such as personally identifiable information (PII) or source code. You must configure a [DLP profile](/cloudflare-one/data-loss-prevention/dlp-profiles/) before you can use this selector in a policy.
+
+| UI name     | API example                                                          |
+| ----------- | -------------------------------------------------------------------- |
+| DLP Profile | `any(dlp.profiles[*] in {\"a0cabf16-7491-4c9a-ac02-f64cabc66394\"})` |
+
+### Host
+
+<Render
+	file="gateway/selectors/host-http"
+	product="cloudflare-one"
+	params={{ APIendpoint: "http.conn.hostname" }}
+/>
+
+### HTTP Method
+
+The HTTP request method used in the traffic.
+
+| UI name     | API example                    |
+| ----------- | ------------------------------ |
+| HTTP Method | `http.request.method == "GET"` |
+
+### HTTP Response
+
+The HTTP response status code received by the traffic.
+
+| UI name | API example                          |
+| ------- | ------------------------------------ |
+| URL     | `http.response.status_code == "200"` |
+
+### Proxy Endpoint
+
+<Render file="gateway/selectors/proxy-endpoint" product="cloudflare-one" />
+
+### Security Risks
+
+<Render
+	file="gateway/selectors/security-risks"
+	product="cloudflare-one"
+	params={{ APIendpoint: "http.conn.security_category" }}
+/>
+
+### Source Continent
+
+The continent of the user making the request. <Render file="gateway/selectors/source-continent-http" product="cloudflare-one" params={{ one: "http.src_ip" }} />
+
+### Source Country
+
+The country of the user making the request. <Render file="gateway/selectors/source-country-http" product="cloudflare-one" params={{ one: "http.src_ip" }} />
+
+### Source Internal IP
+
+<Render
+	file="gateway/selectors/source-internal-ip"
+	product="cloudflare-one"
+	params={{ one: "HTTP", two: "http.conn.internal_src_ip" }}
+/>
+
+### Source IP
+
+<Render
+	file="gateway/selectors/source-ip"
+	product="cloudflare-one"
+	params={{ APIendpoint: "http.conn.src_ip" }}
+/>
+
+### URL
+
+<Render file="gateway/url-slash" product="cloudflare-one" />
+
+| UI name | API example                                             |
+| ------- | ------------------------------------------------------- |
+| URL     | `not(any(http.request.uri.content_category[*] in {1}))` |
+
+### URL Path
+
+The pathname of a webpage's URL.
+
+| UI name  | API example                             |
+| -------- | --------------------------------------- |
+| URL Path | `http.request.uri.path == \"/foo/bar\"` |
+
+### URL Path and Query
+
+The pathname and query of a webpage's URL.
+
+| UI name            | API example                                                     |
+| ------------------ | --------------------------------------------------------------- |
+| URL Path and Query | `http.request.uri.path_and_query == \"/foo/bar?ab%242=%2A342\"` |
+
+### URL Query
+
+The query of a webpage's URL.
+
+| UI name   | API example                                 |
+| --------- | ------------------------------------------- |
+| URL Query | `http.request.uri.query == "ab%242=%2A342"` |
+
+### Users
+
+<Render file="gateway/selectors/users-http" product="cloudflare-one" />
+
+### Virtual Network
+
+<Render
+	file="gateway/selectors/virtual-network"
+	product="cloudflare-one"
+	params={{ one: "http.conn.vnet_id" }}
+/>
+
+## Comparison operators
+
+<Render file="gateway/comparison-operators" product="cloudflare-one" />
+
+## Value
+
+<Render
+	file="gateway/value"
+	product="cloudflare-one"
+	params={{ one: "hostnames", two: "Host" }}
+/>
+
+## Logical operators
+
+<Render
+	file="gateway/logical-operators"
+	product="cloudflare-one"
+	params={{ one: "**Identity** or **Device Posture**" }}
+/>
+
+<Render
+	file="gateway/response"
+	product="cloudflare-one"
+	params={{ type: "request", example: "Source IP", example2: "a DLP Profile" }}
+/>

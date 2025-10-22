@@ -17,13 +17,13 @@ import {
 	WranglerConfig,
 } from "~/components";
 
-This tutorial will walk you through extending the single-sign-on (SSO) capabilities of [Cloudflare Access](/cloudflare-one/policies/access/) with our serverless computing platform, [Cloudflare Workers](/workers/). Specifically, this guide will demonstrate how to modify requests sent to your secured origin to include additional information from the Cloudflare Access authentication event.
+This tutorial will walk you through extending the single-sign-on (SSO) capabilities of [Cloudflare Access](/cloudflare-one/access-controls/policies/) with our serverless computing platform, [Cloudflare Workers](/workers/). Specifically, this guide will demonstrate how to modify requests sent to your secured origin to include additional information from the Cloudflare Access authentication event.
 
 **Time to complete:** 45 minutes
 
 ## Authentication flow
 
-[Cloudflare Access](/cloudflare-one/policies/access/) is an authentication proxy in charge of validating a user's identity before they connect to your application. As shown in the diagram below, Access inserts a [JWT](/cloudflare-one/identity/authorization-cookie/application-token/) into the request, which can then be [verified](/cloudflare-one/identity/authorization-cookie/validating-json/#validate-jwts) by the origin server.
+[Cloudflare Access](/cloudflare-one/access-controls/policies/) is an authentication proxy in charge of validating a user's identity before they connect to your application. As shown in the diagram below, Access inserts a [JWT](/cloudflare-one/identity/authorization-cookie/application-token/) into the request, which can then be [verified](/cloudflare-one/identity/authorization-cookie/validating-json/#validate-jwts) by the origin server.
 
 ![Standard authentication flow for a request to an Access application](~/assets/images/cloudflare-one/applications/access-standard-flow.png)
 

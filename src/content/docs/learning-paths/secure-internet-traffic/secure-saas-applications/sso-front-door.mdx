@@ -31,11 +31,11 @@ Access for SaaS supports SCIM passthrough in an API-only closed beta. If you req
 
 ## Configure your SSO provider
 
-If you cannot use Access for SaaS for some or all of your SaaS apps, you can accomplish most of the same outcomes through a combination of strong security controls on your managed devices and your [Clientless Web Isolation](/cloudflare-one/policies/browser-isolation/setup/clientless-browser-isolation/) implementation. You can use your existing SSO provider to enforce a strong relationship between Cloudflare and your SaaS applications.
+If you cannot use Access for SaaS for some or all of your SaaS apps, you can accomplish most of the same outcomes through a combination of strong security controls on your managed devices and your [Clientless Web Isolation](/cloudflare-one/remote-browser-isolation/setup/clientless-browser-isolation/) implementation. You can use your existing SSO provider to enforce a strong relationship between Cloudflare and your SaaS applications.
 
 ### Policies based on dedicated egress IPs
 
-With [dedicated egress IPs](/cloudflare-one/policies/gateway/egress-policies/dedicated-egress-ips/), you can set explicit egress locations globally and share these IPs with your SSO provider. With this Zero Trust security approach, your users must meet all of your Cloudflare requirements (such as being enrolled in WARP or Browser Isolation) when they authenticate to your SSO provider. Using your dedicated egress IPs as a control mechanism within your SSO means you can set policies on the basis of which users are subject to security policy and inspection because they are guaranteed to be proxied through Cloudflare.
+With [dedicated egress IPs](/cloudflare-one/traffic-policies/egress-policies/dedicated-egress-ips/), you can set explicit egress locations globally and share these IPs with your SSO provider. With this Zero Trust security approach, your users must meet all of your Cloudflare requirements (such as being enrolled in WARP or Browser Isolation) when they authenticate to your SSO provider. Using your dedicated egress IPs as a control mechanism within your SSO means you can set policies on the basis of which users are subject to security policy and inspection because they are guaranteed to be proxied through Cloudflare.
 
 ### Generic IdP multi-factor authentication
 

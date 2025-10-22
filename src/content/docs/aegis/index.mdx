@@ -8,11 +8,19 @@ head:
     content: Overview
 ---
 
-import { CardGrid, Description, GlossaryTooltip, LinkTitleCard, Plan, RelatedProduct } from "~/components"
+import {
+	CardGrid,
+	Description,
+	GlossaryTooltip,
+	LinkTitleCard,
+	Plan,
+	RelatedProduct,
+} from "~/components";
 
 <Description>
 
 Leverage dedicated IPs to improve your origin security and implement Zero Trust.
+
 </Description>
 
 <Plan type="enterprise" />
@@ -21,29 +29,43 @@ Cloudflare Aegis provides dedicated egress IPs (from Cloudflare to your origin) 
 
 Both [BYOIP](/byoip) and Cloudflare-leased IPs are supported by Cloudflare Aegis.
 
-
 :::caution[Availability]
 Cloudflare Aegis is available in early access to Enterprise customers. Contact your account team to request access.
 :::
 
-
-***
+---
 
 ## Related products
 
-<RelatedProduct header="Cloudflare Access" href="/cloudflare-one/policies/access/" product="cloudflare-one">
-Cloudflare Access determines who can reach your application by applying the Access policies you configure.
+<RelatedProduct
+	header="Cloudflare Access"
+	href="/cloudflare-one/access-controls/policies/"
+	product="cloudflare-one"
+>
+	Cloudflare Access determines who can reach your application by applying the
+	Access policies you configure.
 </RelatedProduct>
 
-<RelatedProduct header="Cloudflare Tunnel" href="/cloudflare-one/networks/connectors/cloudflare-tunnel/" product="cloudflare-one">
-Cloudflare Tunnel provides you with a secure way to connect your resources to Cloudflare without a publicly routable IP address.
+<RelatedProduct
+	header="Cloudflare Tunnel"
+	href="/cloudflare-one/networks/connectors/cloudflare-tunnel/"
+	product="cloudflare-one"
+>
+	Cloudflare Tunnel provides you with a secure way to connect your resources to
+	Cloudflare without a publicly routable IP address.
 </RelatedProduct>
 
-<RelatedProduct header="Authenticated Origin Pulls" href="/ssl/origin-configuration/authenticated-origin-pull/" product="ssl">
-Authenticated Origin Pulls gives you the ability to perform mutual TLS between Cloudflare and your origin environment, providing cryptographically verifiable proof of the source of the traffic you receive.
+<RelatedProduct
+	header="Authenticated Origin Pulls"
+	href="/ssl/origin-configuration/authenticated-origin-pull/"
+	product="ssl"
+>
+	Authenticated Origin Pulls gives you the ability to perform mutual TLS between
+	Cloudflare and your origin environment, providing cryptographically verifiable
+	proof of the source of the traffic you receive.
 </RelatedProduct>
 
-***
+---
 
 ## More resources
 
@@ -52,11 +74,13 @@ Authenticated Origin Pulls gives you the ability to perform mutual TLS between C
 <LinkTitleCard title="Introductory blog post" href="https://blog.cloudflare.com/cloudflare-aegis/" icon="open-book">
 
 Deep dive into use cases where Aegis can help secure enterprise origins.
+
 </LinkTitleCard>
 
 <LinkTitleCard title="Multi-Vendor Architecture" href="/reference-architecture/architectures/multi-vendor/#connectivity-options" icon="document">
 
 Reference Architecture for multi-vendor application security and performance.
+
 </LinkTitleCard>
 
 </CardGrid>

@@ -4,16 +4,15 @@ title: Smartsheet
 reviewed: 2024-07-08
 sidebar:
   order: 25
-
 ---
 
 This guide covers how to configure [Smartsheet](https://help.smartsheet.com/articles/2483123-domain-level-saml-configuration) as a SAML application in Cloudflare Zero Trust.
 
 ## Prerequisites
 
-* An [identity provider](/cloudflare-one/integrations/identity-providers/) configured in Cloudflare Zero Trust
-* Admin access to a Smartsheet Enterprise account
-* A [domain](https://help.smartsheet.com/articles/2483051-domain-management) verified in Smartsheet
+- An [identity provider](/cloudflare-one/integrations/identity-providers/) configured in Cloudflare Zero Trust
+- Admin access to a Smartsheet Enterprise account
+- A [domain](https://help.smartsheet.com/articles/2483051-domain-management) verified in Smartsheet
 
 :::note
 In Smartsheet, SSO is configured for a domain. If you have multiple plans using the same domain, the SSO configuration will apply to all Smartsheet users in that domain, regardless of their plan type.
@@ -27,11 +26,11 @@ In Smartsheet, SSO is configured for a domain. If you have multiple plans using 
 4. For the authentication protocol, select **SAML**.
 5. Select **Add application**.
 6. Fill in the following fields:
-   * **Entity ID**: `urn:amazon:cognito:sp:us-east-1_xww1cbP43`
-   * **Assertion Consumer Service URL**: `https://saml.authn.smartsheet.com/saml2/idpresponse`
-   * **Name ID format**: *Unique ID*
+   - **Entity ID**: `urn:amazon:cognito:sp:us-east-1_xww1cbP43`
+   - **Assertion Consumer Service URL**: `https://saml.authn.smartsheet.com/saml2/idpresponse`
+   - **Name ID format**: _Unique ID_
 7. Copy the **SAML Metadata endpoint**.
-8. Configure [Access policies](/cloudflare-one/policies/access/) for the application.
+8. Configure [Access policies](/cloudflare-one/access-controls/policies/) for the application.
 9. Save the application.
 
 ## 2. Create and test a SAML SSO provider in Smartsheet

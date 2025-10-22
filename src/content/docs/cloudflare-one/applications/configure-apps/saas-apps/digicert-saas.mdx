@@ -4,16 +4,15 @@ title: Digicert
 reviewed: 2024-06-18
 sidebar:
   order: 9
-
 ---
 
 This guide covers how to configure [Digicert](https://docs.digicert.com/en/certcentral/manage-account/saml-admin-single-sign-on-guide/configure-saml-single-sign-on.html) as a SAML application in Cloudflare Zero Trust.
 
 ## Prerequisites
 
-* An [identity provider](/cloudflare-one/integrations/identity-providers/) configured in Cloudflare Zero Trust
-* Admin access to a Digicert account
-* [SAML](https://docs.digicert.com/en/certcentral/manage-account/saml-admin-single-sign-on-guide/saml-single-sign-on-prerequisites.html) enabled in your Digicert account
+- An [identity provider](/cloudflare-one/integrations/identity-providers/) configured in Cloudflare Zero Trust
+- Admin access to a Digicert account
+- [SAML](https://docs.digicert.com/en/certcentral/manage-account/saml-admin-single-sign-on-guide/saml-single-sign-on-prerequisites.html) enabled in your Digicert account
 
 ## 1. Add a SaaS application to Cloudflare Zero Trust
 
@@ -23,11 +22,11 @@ This guide covers how to configure [Digicert](https://docs.digicert.com/en/certc
 4. For the authentication protocol, select **SAML**.
 5. Select **Add application**.
 6. Fill in the following fields:
-   * **Entity ID**: `https://www.digicert.com/account/sso/metadata`
-   * **Assertion Consumer Service URL**: `https://www.digicert.com/account/sso/`
-   * **Name ID format**: *Email*
+   - **Entity ID**: `https://www.digicert.com/account/sso/metadata`
+   - **Assertion Consumer Service URL**: `https://www.digicert.com/account/sso/`
+   - **Name ID format**: _Email_
 7. Copy the **SAML Metadata endpoint**.
-8. Configure [Access policies](/cloudflare-one/policies/access/) for the application.
+8. Configure [Access policies](/cloudflare-one/access-controls/policies/) for the application.
 9. Save the application.
 
 ## 2. Add a SAML SSO provider in Digicert
@@ -44,12 +43,10 @@ This guide covers how to configure [Digicert](https://docs.digicert.com/en/certc
 1. In Digicert, select **Settings** > **Single Sign-On**.
 2. Copy the **SP Initiated Custom SSO URL**.
 3. Paste the URL into an incognito browser window and sign in. Upon successful sign in, SAML SSO is fully enabled.
-4. (Optional)  By default, users can choose to sign in directly or with SSO. To require SSO sign in, go to **Account** > **Users**. Turn on  **Only allow this user to log in through SAML/OIDC SSO** in the user details of the desired user.
+4. (Optional) By default, users can choose to sign in directly or with SSO. To require SSO sign in, go to **Account** > **Users**. Turn on **Only allow this user to log in through SAML/OIDC SSO** in the user details of the desired user.
 
 :::note
 
-
 Users can sign in using service provider initiated SSO by using the **SP Initiated Custom SSO URL**. Alternatively, users can go to `www.digicert.com/account`, select **Sign in with SSO**, and enter the name of the identity provider configured in step [2. Add a SAML SSO provider in Digicert](#2-add-a-saml-sso-provider-in-digicert).
-
 
 :::

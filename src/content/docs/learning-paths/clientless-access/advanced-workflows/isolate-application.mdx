@@ -12,12 +12,12 @@ import { Render, TabItem, Tabs } from "~/components";
 Requires the Browser Isolation add-on.
 :::
 
-[Cloudflare Browser Isolation](/cloudflare-one/policies/browser-isolation/) integrates with your web-delivered Access applications to protect sensitive applications from data loss. You can build Access policies that require certain users to access your application exclusively through Browser Isolation, while other users matching different policies continue to access the application directly. For example, you may wish to layer on additional security measures for third-party contractors or other users without a corporate device.
+[Cloudflare Browser Isolation](/cloudflare-one/remote-browser-isolation/) integrates with your web-delivered Access applications to protect sensitive applications from data loss. You can build Access policies that require certain users to access your application exclusively through Browser Isolation, while other users matching different policies continue to access the application directly. For example, you may wish to layer on additional security measures for third-party contractors or other users without a corporate device.
 
-Cloudflare sends all isolated traffic through our Secure Web Gateway inspection engine, which allows you to apply [Gateway HTTP policies](/cloudflare-one/policies/gateway/http-policies/) such as:
+Cloudflare sends all isolated traffic through our Secure Web Gateway inspection engine, which allows you to apply [Gateway HTTP policies](/cloudflare-one/traffic-policies/http-policies/) such as:
 
 - Restrict specific actions and HTTP request methods.
-- Inspect the request body to match against [Data Loss Prevention](/cloudflare-one/policies/data-loss-prevention/) (DLP) profiles with as much specificity and control as if the user had deployed an endpoint agent.
+- Inspect the request body to match against [Data Loss Prevention](/cloudflare-one/data-loss-prevention/) (DLP) profiles with as much specificity and control as if the user had deployed an endpoint agent.
 - Control users ability to cut and paste, upload and download files, or print while in an isolated session.
 
 ## Prerequisites
@@ -239,7 +239,7 @@ Block users on unmanaged devices from downloading files that contain credit card
 | Selector                                                                   | Operator | Value                      | Logic | Action |
 | -------------------------------------------------------------------------- | -------- | -------------------------- | ----- | ------ |
 | Host                                                                       | in       | `internal.site.com`        | And   | Block  |
-| [DLP Profile](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/) | in       | _Financial Information_    | And   |        |
+| [DLP Profile](/cloudflare-one/data-loss-prevention/dlp-profiles/) | in       | _Financial Information_    | And   |        |
 | Passed Device Posture Checks                                               | not in   | _Corporate serial numbers_ |       |        |
 
 </TabItem>

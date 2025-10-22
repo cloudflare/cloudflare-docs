@@ -49,7 +49,7 @@ Cloudflare offers an enhanced, protected DNS resolver service for Zero Trust cus
 
 ### DNS locations
 
-Cloudflare [DNS locations](/cloudflare-one/team-and-resources/devices/agentless/dns/locations/) are a collection of DNS endpoints which can be mapped to physical entities such as offices, homes or data centers. [Gateway](/cloudflare-one/policies/gateway/) identifies locations differently depending on the DNS query protocol. IPv4 traffic is identified from the source IP address from which a DNS query originated. IPv6 traffic can be identified by the unique IPv6 resolver address created in the Cloudflare dashboard. The following sections describe how to ensure DNS queries are appropriately mapped to your physical locations depending on the network environment and protocols being used. Later in this document you will learn how to use the location's IP address as an attribute which you can apply to Gateway DNS policies.
+Cloudflare [DNS locations](/cloudflare-one/team-and-resources/devices/agentless/dns/locations/) are a collection of DNS endpoints which can be mapped to physical entities such as offices, homes or data centers. [Gateway](/cloudflare-one/traffic-policies/) identifies locations differently depending on the DNS query protocol. IPv4 traffic is identified from the source IP address from which a DNS query originated. IPv6 traffic can be identified by the unique IPv6 resolver address created in the Cloudflare dashboard. The following sections describe how to ensure DNS queries are appropriately mapped to your physical locations depending on the network environment and protocols being used. Later in this document you will learn how to use the location's IP address as an attribute which you can apply to Gateway DNS policies.
 
 The goal is to have DNS requests from your Wi-Fi networks be sent via Cloudflare's secure DNS and secure web gateway service, where your DNS policies can filter requests and block those you deem risky. This guide walks through the different possible network architectures you might have for guest networks and gives guidance on how to implement Cloudflare to protect devices on those guest Wi-Fi networks.
 
@@ -128,7 +128,7 @@ To get started, navigate to **DNS Locations** in the Zero Trust dashboard. For d
 
 ### Creating DNS policies
 
-To get started, navigate to firewall policies and select DNS in the Zero Trust dashboard. For detailed, step-by-step instructions, refer to the [DNS Policies](/cloudflare-one/policies/gateway/dns-policies/) guide.
+To get started, navigate to firewall policies and select DNS in the Zero Trust dashboard. For detailed, step-by-step instructions, refer to the [DNS Policies](/cloudflare-one/traffic-policies/dns-policies/) guide.
 
 To keep your policies organized, we recommend using meaningful names that clearly indicate their purpose. For instance, a policy named **Guest-Security-Block** conveys:
 
@@ -136,7 +136,7 @@ To keep your policies organized, we recommend using meaningful names that clearl
 - **Security**: The type of content being evaluated.
 - **Block**: The action being taken.
 
-Cloudflare provides a range of managed categories which you can use to filter a wide range of different types of threats. For example, adding into the DNS policy the [security category](/cloudflare-one/policies/gateway/domain-categories/#security-categories) Malware will prevent a connected device from making a DNS request to any site that Cloudflare has tagged as being known as part of a malware campaign or might be hosting malware. As well as security categories, we also have [content categories](/cloudflare-one/policies/gateway/domain-categories/#content-categories) which identify sites such as Cryptocurrency, P2P sharing sites or adult themed sites. Cloudflare also manages a list of [applications](/cloudflare-one/policies/gateway/application-app-types/), so you can filter access to public cloud storage or file sharing sites.
+Cloudflare provides a range of managed categories which you can use to filter a wide range of different types of threats. For example, adding into the DNS policy the [security category](/cloudflare-one/traffic-policies/domain-categories/#security-categories) Malware will prevent a connected device from making a DNS request to any site that Cloudflare has tagged as being known as part of a malware campaign or might be hosting malware. As well as security categories, we also have [content categories](/cloudflare-one/traffic-policies/domain-categories/#content-categories) which identify sites such as Cryptocurrency, P2P sharing sites or adult themed sites. Cloudflare also manages a list of [applications](/cloudflare-one/traffic-policies/application-app-types/), so you can filter access to public cloud storage or file sharing sites.
 
 Cloudflare also allows [custom feeds](/security-center/indicator-feeds/#publicly-available-feeds) where you can either subscribe to another vendor to provide a list of sites to filter, or you can use some of the built in government based threat feeds. This allows you to be very selective about what sites you wish to filter.
 
@@ -177,7 +177,7 @@ For these reasons you should also consider applying security in layers and add n
 To provide network level filtering, Cloudflare must be in the traffic path for more than just the DNS request. This is achieved by routing Internet-bound traffic over an [IPsec](https://www.cloudflare.com/learning/network-layer/what-is-ipsec/) tunnel to Cloudflare. Cloudflare's [Magic WAN](/magic-wan/) service allows third-party devices to establish IPsec or GRE tunnels to the Cloudflare network. It is also possible to just deploy our [Magic WAN Connector](/magic-wan/configuration/connector/), a pre-configured lightweight network appliance that automatically creates the tunnel back to Cloudflare and can be managed remotely. Once traffic reaches Cloudflare multiple security controls can be overlaid such as:
 
 - Cloud based network firewall ([Magic Firewall](/magic-firewall/))
-- Secure web gateway ([Gateway](/cloudflare-one/policies/gateway/))
+- Secure web gateway ([Gateway](/cloudflare-one/traffic-policies/))
 
 Below is the high level traffic flow that correlates to the above diagram:
 
@@ -196,4 +196,4 @@ If you are interested in learning more about Gateway, or other aspects of the Cl
 
 - [Evolving to a SASE architecture with Cloudflare](/reference-architecture/architectures/sase/)
 - [Magic WAN Connector deployment options · Cloudflare Reference Architecture docs](/reference-architecture/diagrams/sase/magic-wan-connector-deployment/)
-- [DNS policies \- Cloudflare Zero Trust](/cloudflare-one/policies/gateway/dns-policies/)
+- [DNS policies \- Cloudflare Zero Trust](/cloudflare-one/traffic-policies/dns-policies/)

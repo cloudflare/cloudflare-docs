@@ -12,7 +12,7 @@ Refer to the sections below to learn about the use cases supported by the Zero T
 
 ## Agentless Cloudflare Access
 
-You can use [Cloudflare Access](/cloudflare-one/policies/access/) [self-hosted applications](/cloudflare-one/applications/configure-apps/self-hosted-public-app/) in an agentless configuration to protect your organization's Internet traffic to internal web applications. Refer to the [learning path](/learning-paths/clientless-access/initial-setup/) for detailed guidance.
+You can use [Cloudflare Access](/cloudflare-one/access-controls/policies/) [self-hosted applications](/cloudflare-one/applications/configure-apps/self-hosted-public-app/) in an agentless configuration to protect your organization's Internet traffic to internal web applications. Refer to the [learning path](/learning-paths/clientless-access/initial-setup/) for detailed guidance.
 
 Even if the applications themselves have not yet migrated to post-quantum (PQ) cryptography, they will be protected against quantum threats.
 
@@ -38,7 +38,7 @@ Putting it together, Cloudflare Access can provide end-to-end quantum safety for
 
 A [secure web gateway (SWG)](https://www.cloudflare.com/learning/access-management/what-is-a-secure-web-gateway/) is used to secure access to third-party websites on the public Internet by intercepting and inspecting TLS traffic.
 
-[Cloudflare Gateway](/cloudflare-one/policies/gateway/http-policies/) is now a [quantum-safe SWG for HTTPS traffic](/cloudflare-one/policies/gateway/http-policies/tls-decryption/#post-quantum-support). As long as the third-party website that is being inspected supports post-quantum key agreement, then Cloudflare's SWG also supports post-quantum key agreement. This is true regardless of the on-ramp that you use to get to Cloudflare's network, and only requires the use of a browser that supports post-quantum key agreement.
+[Cloudflare Gateway](/cloudflare-one/traffic-policies/http-policies/) is now a [quantum-safe SWG for HTTPS traffic](/cloudflare-one/traffic-policies/http-policies/tls-decryption/#post-quantum-support). As long as the third-party website that is being inspected supports post-quantum key agreement, then Cloudflare's SWG also supports post-quantum key agreement. This is true regardless of the on-ramp that you use to get to Cloudflare's network, and only requires the use of a browser that supports post-quantum key agreement.
 
 ![Diagram of how post-quantum cryptography works with Cloudflare's Secure Web Gateway](~/assets/images/ssl/pqc-secure-web-gateway.png).
 
@@ -53,4 +53,3 @@ A TLS connection is initiated from the user's browser to a data center in Cloudf
 A TLS connection is initiated from a data center in Cloudflare's network to the origin server, which is typically controlled by a third party. The connection from Cloudflare's SWG currently supports post-quantum key agreement, as long as the third-party's origin server also already supports post-quantum key agreement. You can test this out by using https://pq.cloudflareresearch.com/ as your third-party origin server.
 
 Putting it together, Cloudflare Gateway is quantum-ready to support secure access to any third-party website that is quantum ready today or in the future.
-

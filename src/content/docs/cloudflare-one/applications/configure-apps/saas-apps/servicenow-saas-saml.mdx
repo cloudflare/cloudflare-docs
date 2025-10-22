@@ -4,15 +4,14 @@ title: ServiceNow (SAML)
 reviewed: 2024-06-21
 sidebar:
   order: 23
-
 ---
 
 This guide covers how to configure [ServiceNow](https://docs.servicenow.com/bundle/washingtondc-platform-security/page/integrate/single-sign-on/task/t_CreateASAML2Upd1SSOConfigMultiSSO.html) as a SAML application in Cloudflare Zero Trust.
 
 ## Prerequisites
 
-* An [identity provider](/cloudflare-one/integrations/identity-providers/) configured in Cloudflare Zero Trust
-* Admin access to a ServiceNow account
+- An [identity provider](/cloudflare-one/integrations/identity-providers/) configured in Cloudflare Zero Trust
+- Admin access to a ServiceNow account
 
 ## 1. Add a SaaS application to Cloudflare Zero Trust
 
@@ -22,11 +21,11 @@ This guide covers how to configure [ServiceNow](https://docs.servicenow.com/bund
 4. For the authentication protocol, select **SAML**.
 5. Select **Add application**.
 6. Fill in the following fields:
-   * **Entity ID**: `https://<INSTANCE-NAME>.service-now.com`
-   * **Assertion Consumer Service URL**: `https://<INSTANCE-NAME>.service-now.com/navpage.do`
-   * **Name ID format**: *Email*
+   - **Entity ID**: `https://<INSTANCE-NAME>.service-now.com`
+   - **Assertion Consumer Service URL**: `https://<INSTANCE-NAME>.service-now.com/navpage.do`
+   - **Name ID format**: _Email_
 7. Copy the **SAML Metadata endpoint**.
-8. Configure [Access policies](/cloudflare-one/policies/access/) for the application.
+8. Configure [Access policies](/cloudflare-one/access-controls/policies/) for the application.
 9. Save the application.
 
 ## 2. Add the Multiple Provider Single Sign-On Installer Plugin to ServiceNow

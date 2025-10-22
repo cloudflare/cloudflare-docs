@@ -1,0 +1,130 @@
+---
+pcx_content_type: how-to
+title: Logging options
+sidebar:
+  order: 2
+---
+
+Data Loss Prevention allows you to capture, store, and view the data that triggered a specific DLP policy for use as forensic evidence. Users on all plans can log the [payload](#log-the-payload-of-matched-rules) or [generative AI prompt content](#log-generative-ai-prompt-content) of matched HTTP requests in their Cloudflare logs. Additionally, Enterprise users can [configure a Logpush job](#send-http-requests-to-logpush-destination) to send copies of entire matched HTTP requests to storage destinations.
+
+The data that triggers a DLP policy is stored in the portion of the HTTP request known as the payload. Payload logging is especially useful when diagnosing the behavior of DLP policies. Since the values that triggered a rule may contain sensitive data, they are encrypted with a customer-provided public key so that only you can examine them later. The stored data will include a redacted version of the match, plus 75 bytes of additional context on both sides of the match.
+
+## Set a DLP payload encryption public key
+
+Before you begin logging DLP payloads, you will need to set a DLP payload encryption public key.
+
+### Generate a key pair
+
+To generate a public/private key pair in the command line, refer to [these instructions](/waf/managed-rules/payload-logging/command-line/generate-key-pair/).
+
+### Upload the public key to Cloudflare
+
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Network**.
+2. In the **DLP Payload Encryption public key** field, paste your public key.
+3. Select **Save**.
+
+:::note
+The matching private key is required to view logs. If you lose your private key, you will need to [generate](#1-generate-a-key-pair) and [upload](#2-upload-the-public-key-to-cloudflare) a new public key. The payload of new requests will be encrypted with the new public key.
+:::
+
+## Log the payload of matched rules
+
+DLP can log the payload of matched HTTP requests in your Cloudflare logs.
+
+### Turn on payload logging for a DLP policy
+
+You can enable payload logging for any Allow or Block HTTP policy that uses the [_DLP Profile_](/cloudflare-one/traffic-policies/http-policies/#dlp-profile) selector.
+
+1. Go to **Gateway** > **Firewall policies** > **HTTP**.
+2. Edit an existing Allow or Block DLP policy, or [create a new policy](/cloudflare-one/data-loss-prevention/dlp-policies/#2-create-a-dlp-policy).
+3. In the policy builder, scroll down to **Configure policy settings** and turn on **Log the payload of matched rules**.
+4. Select **Save**.
+
+Data Loss Prevention will now store a portion of the payload for HTTP requests that match this policy.
+
+### View payload logs
+
+To view DLP payload logs:
+
+1. Go to **Logs** > **Gateway** > **HTTP**.
+2. Go to the DLP log you are interested in reviewing and expand the row.
+3. Select **Decrypt payload log**.
+4. Enter your private key and select **Decrypt**.
+
+You will see the [ID of the matched DLP Profile](/api/resources/zero_trust/subresources/dlp/subresources/profiles/methods/list/) followed by the decrypted payload.
+
+:::note
+Cloudflare does not store the key or the decrypted payload.
+:::
+
+### Report false and true positives to AI context analysis
+
+When you have [AI context analysis](/cloudflare-one/data-loss-prevention/dlp-profiles/advanced-settings/#ai-context-analysis) turned on for a DLP profile, you can train the AI model to adjust its confident threshold by reporting false and true positives.
+
+To report a DLP match payload as a false or true positive:
+
+1. [Find and decrypt](#4-view-payload-logs) the payload log you want to report.
+2. In **Log details**, choose a detected context match.
+3. In **Context**, select the redacted match data.
+4. In **Match details**, choose whether you want to report the match as a false positive or a true positive.
+
+Based on your report, DLP's machine learning will adjust its confidence in future matches for the associated profile.
+
+### Data privacy
+
+- All Cloudflare logs are encrypted at rest. Encrypting the payload content adds a second layer of encryption for the matched values that triggered a DLP rule.
+- Cloudflare cannot decrypt encrypted payloads, since this operation requires your private key. Cloudflare staff will never ask for the private key.
+- DLP will redact all predefined alphanumeric characters in the log. For example, `123-45-6789` will become `XXX-XX-XXXX`.
+  - You can define sensitive data with [Exact Data Match (EDM)](/cloudflare-one/data-loss-prevention/detection-entries/#exact-data-match). EDM match logs will redact your defined strings.
+
+## Log generative AI prompt content
+
+DLP can detect and log the prompt topic sent to an AI tool.
+
+### Turn on AI prompt content logging for a DLP policy
+
+You can enable payload logging for any Allow or Block HTTP policy that uses the [_Application_](/cloudflare-one/traffic-policies/http-policies/#application) selector with a supported [Application Granular Controls](/cloudflare-one/traffic-policies/http-policies/#application-granular-controls) application.
+
+1. Go to **Gateway** > **Firewall policies** > **HTTP**.
+2. Edit an existing Allow or Block DLP policy, or [create a new policy](/cloudflare-one/data-loss-prevention/dlp-policies/#2-create-a-dlp-policy).
+3. In the policy builder, scroll down to **Configure policy settings** and turn on **Capture generative AI prompt content in logs**.
+4. Select **Save**.
+
+Data Loss Prevention will now store the user prompt and AI model response for requests that match this policy.
+
+### View prompt logs
+
+To view generative AI prompt log details:
+
+1. Go to **Logs** > **Gateway** > **HTTP**.
+2. Go to the DLP log you are interested in reviewing and expand the row.
+3. Select **Decrypt payload log**.
+4. Enter your private key and select **Decrypt**.
+5. In **Summary** > **GenAI prompt captured**, select **View prompt**.
+
+Gateway logs will provide a summary of the conversation, including the topic and AI model used, and the user prompt and AI model's raw response if available. A text prompt must be present for DLP to capture the prompt.
+
+## Send DLP forensic copies to Logpush destination
+
+:::note[Availability]
+Only available on Enterprise plans.
+:::
+
+Gateway allows you to send copies of entire HTTP requests matched in HTTP Allow and Block policies to storage destinations configured in [Logpush](/logs/logpush/), including third-party destinations. Forensic copies include unaltered payloads and headers which may include sensitive data. Logpush logs are encrypted in transit only, such as when sent as TLS traffic. Further encryption depends on your storage destination's policies.
+
+To set up the DLP Forensic Copy Logpush job:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Logs** > **Logpush**.
+2. If this is your first Logpush job, select **Add a Logpush job**. Otherwise, select **Go to logpush configurations**.
+3. In Logpush, select **Create a Logpush job**.
+4. Choose a [Logpush destination](/logs/logpush/logpush-job/enable-destinations/).
+5. In **Configure logpush job**, choose the _DLP forensic copies_ dataset. Select **Create Logpush job**.
+6. Return to Zero Trust and go to **Gateway** > **Firewall policies** > **HTTP**.
+7. Edit an existing Allow or Block policy, or [create a new policy](/cloudflare-one/data-loss-prevention/dlp-policies/#2-create-a-dlp-policy). Your policy does not need to include a DLP profile.
+8. In the policy builder, scroll down to **Configure policy settings** and turn on **Send DLP forensic copies to storage**.
+9. Select a storage destination. Gateway will list any configured Logpush jobs or integrations that can receive HTTP requests.
+10. Select **Save policy**.
+
+DLP will now send a copy of HTTP requests that match this policy to your Logpush destination.
+
+Logpush supports up to four DLP Forensic Copy Logpush jobs per account. By default, Gateway will send all matched HTTP requests to your configured DLP Forensic Copy jobs. To send specific policy matches to specific jobs, configure [Log filters](/logs/logpush/logpush-job/filters/). If the request contains an archive file, DLP will only send up to 100 MB of uncompressed content to your configured storage.

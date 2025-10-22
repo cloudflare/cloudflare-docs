@@ -20,7 +20,7 @@ import {
 	Plan,
 	RelatedProduct,
 	Render,
-	Stream
+	Stream,
 } from "~/components";
 
 <Description>
@@ -33,7 +33,7 @@ Secure your organization with Cloudflare Zero Trust — a cloud security model t
 
 Cloudflare Zero Trust is part of Cloudflare One, our name for the Secure Access Service Edge (SASE) platform that protects enterprise applications, users, devices, and networks.
 
-By progressively adopting Cloudflare One, organizations can move away from a patchwork of hardware appliances and point solutions, and instead consolidate security and networking through a unified control plane that includes products like [Cloudflare Access](/cloudflare-one/policies/access/), [Secure Web Gateway (SWG)](/cloudflare-one/policies/gateway/), [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/), [Data Loss Prevention (DLP)](/cloudflare-one/policies/data-loss-prevention/), [Remote Browser Isolation (RBI)](/cloudflare-one/policies/browser-isolation/), [Cloud Access Security Broker (CASB)](/cloudflare-one/applications/casb/), and [Email Security](/cloudflare-one/email-security/).
+By progressively adopting Cloudflare One, organizations can move away from a patchwork of hardware appliances and point solutions, and instead consolidate security and networking through a unified control plane that includes products like [Cloudflare Access](/cloudflare-one/access-controls/policies/), [Secure Web Gateway (SWG)](/cloudflare-one/traffic-policies/), [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/), [Data Loss Prevention (DLP)](/cloudflare-one/data-loss-prevention/), [Remote Browser Isolation (RBI)](/cloudflare-one/remote-browser-isolation/), [Cloud Access Security Broker (CASB)](/cloudflare-one/applications/casb/), and [Email Security](/cloudflare-one/email-security/).
 
 Refer to our [SASE reference architecture](/reference-architecture/architectures/sase/) to learn how to plan, deploy, and manage SASE architecture with Cloudflare.
 
@@ -55,7 +55,7 @@ Refer to our [SASE reference architecture](/reference-architecture/architectures
 
 ## Products
 
-<RelatedProduct header="Access" href="/cloudflare-one/policies/access/" product="access">
+<RelatedProduct header="Access" href="/cloudflare-one/access-controls/policies/" product="access">
 
 Authenticate users accessing your applications, seamlessly onboard third-party users, and log every event and request.
 
@@ -67,7 +67,7 @@ Securely connect your resources to Cloudflare without exposing a public IP by us
 
 </RelatedProduct>
 
-<RelatedProduct header="Secure Web Gateway (SWG)" href="/cloudflare-one/policies/gateway/" product="gateway">
+<RelatedProduct header="Secure Web Gateway (SWG)" href="/cloudflare-one/traffic-policies/" product="gateway">
 
 Inspect and filter DNS, network, HTTP, and egress traffic to enforce your company's Acceptable Use Policy (UAP), block risky sites with custom blocklists and threat intelligence, and enhance visibility and protection across SaaS applications.
 
@@ -79,7 +79,7 @@ Protect corporate devices by privately sending traffic from those devices to Clo
 
 </RelatedProduct>
 
-<RelatedProduct header="Browser Isolation (RBI)" href="/cloudflare-one/policies/browser-isolation/" product="browser-isolation">
+<RelatedProduct header="Browser Isolation (RBI)" href="/cloudflare-one/remote-browser-isolation/" product="browser-isolation">
 
 Mitigate the impact of attacks by executing all browser code in the cloud and securely browse high-risk or sensitive websites in a remote browser.
 
@@ -91,7 +91,7 @@ Protect users and sensitive data at rest in SaaS applications and cloud environm
 
 </RelatedProduct>
 
-<RelatedProduct header="Data Loss Prevention (DLP)" href="/cloudflare-one/policies/data-loss-prevention/" product="data-loss-prevention">
+<RelatedProduct header="Data Loss Prevention (DLP)" href="/cloudflare-one/data-loss-prevention/" product="data-loss-prevention">
 
 Scan your web traffic and SaaS applications for the presence of sensitive data such as social security numbers, financial information, secret keys, and source code.
 

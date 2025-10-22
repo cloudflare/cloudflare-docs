@@ -9,14 +9,14 @@ sidebar:
 
 import { TabItem, Tabs, Render, Steps, Details } from "~/components";
 
-Hyperdrive can securely connect to your private databases using [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) and [Cloudflare Access](/cloudflare-one/policies/access/).
+Hyperdrive can securely connect to your private databases using [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) and [Cloudflare Access](/cloudflare-one/access-controls/policies/).
 
 ## How it works
 
 When your database is isolated within a private network (such as a [virtual private cloud](https://www.cloudflare.com/learning/cloud/what-is-a-virtual-private-cloud) or an on-premise network), you must enable a secure connection from your network to Cloudflare.
 
 - [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) is used to establish the secure tunnel connection.
-- [Cloudflare Access](/cloudflare-one/policies/access/) is used to restrict access to your tunnel such that only specific Hyperdrive configurations can access it.
+- [Cloudflare Access](/cloudflare-one/access-controls/policies/) is used to restrict access to your tunnel such that only specific Hyperdrive configurations can access it.
 
 A request from the Cloudflare Worker to the origin database goes through Hyperdrive, Cloudflare Access, and the Cloudflare Tunnel established by `cloudflared`. `cloudflared` must be running in the private network in which your database is accessible.
 
@@ -60,9 +60,9 @@ If you are setting up the tunnel through the CLI instead ([locally-managed tunne
 
 ## 2. Create and configure Hyperdrive to connect to the Cloudflare Tunnel
 
-To restrict access to the Cloudflare Tunnel to Hyperdrive, a [Cloudflare Access application](/cloudflare-one/applications/) must be configured with a [Policy](/cloudflare-one/policies/) that requires requests to contain a valid [Service Auth token](/cloudflare-one/policies/access/#service-auth).
+To restrict access to the Cloudflare Tunnel to Hyperdrive, a [Cloudflare Access application](/cloudflare-one/applications/) must be configured with a [Policy](/cloudflare-one/traffic-policies/) that requires requests to contain a valid [Service Auth token](/cloudflare-one/access-controls/policies/#service-auth).
 
-The Cloudflare dashboard can automatically create and configure the underlying [Cloudflare Access application](/cloudflare-one/applications/), [Service Auth token](/cloudflare-one/policies/access/#service-auth), and [Policy](/cloudflare-one/policies/) on your behalf. Alternatively, you can manually create the Access application and configure the Policies.
+The Cloudflare dashboard can automatically create and configure the underlying [Cloudflare Access application](/cloudflare-one/applications/), [Service Auth token](/cloudflare-one/access-controls/policies/#service-auth), and [Policy](/cloudflare-one/traffic-policies/) on your behalf. Alternatively, you can manually create the Access application and configure the Policies.
 
 <Details header="Automatic creation">
 
@@ -87,6 +87,7 @@ Create a Hyperdrive configuration in the Cloudflare dashboard to automatically c
 The service token will be used to restrict requests to the tunnel, and is needed for the next step.
 
 <Steps>
+
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Service auth** > **Service Tokens**.
 
 2. Select **Create Service Token**.
@@ -102,11 +103,12 @@ The service token will be used to restrict requests to the tunnel, and is needed
    :::caution
    This is the only time Cloudflare Access will display the Client Secret. If you lose the Client Secret, you must regenerate the service token.
    :::
+
 </Steps>
 
 ### 2.2. (Manual) Create an Access application to secure the tunnel
 
-[Cloudflare Access](/cloudflare-one/policies/access/) will be used to verify that requests to the tunnel originate from Hyperdrive using the service token created above.
+[Cloudflare Access](/cloudflare-one/access-controls/policies/) will be used to verify that requests to the tunnel originate from Hyperdrive using the service token created above.
 
 <Steps>
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
@@ -142,6 +144,7 @@ The service token will be used to restrict requests to the tunnel, and is needed
 16. Select **Next**.
 
 17. Save the application.
+
 </Steps>
 
 ### 2.3. (Manual) Create a Hyperdrive configuration
@@ -213,7 +216,7 @@ Now, deploy your Worker:
 npx wrangler deploy
 ```
 
-If you successfully receive the list of `pg_tables` from your database when you access your deployed Worker, your Hyperdrive has now been configured to securely connect to a private database using [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) and [Cloudflare Access](/cloudflare-one/policies/access/).
+If you successfully receive the list of `pg_tables` from your database when you access your deployed Worker, your Hyperdrive has now been configured to securely connect to a private database using [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) and [Cloudflare Access](/cloudflare-one/access-controls/policies/).
 
 </TabItem>
 <TabItem label="MySQL">
@@ -228,7 +231,7 @@ Now, deploy your Worker:
 npx wrangler deploy
 ```
 
-If you successfully receive the list of tables from your database when you access your deployed Worker, your Hyperdrive has now been configured to securely connect to a private database using [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) and [Cloudflare Access](/cloudflare-one/policies/access/).
+If you successfully receive the list of tables from your database when you access your deployed Worker, your Hyperdrive has now been configured to securely connect to a private database using [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) and [Cloudflare Access](/cloudflare-one/access-controls/policies/).
 
 </TabItem>
 </Tabs>

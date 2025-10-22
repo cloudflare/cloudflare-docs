@@ -9,17 +9,23 @@ head:
     content: Bringing Your Own IPs to Cloudflare
 ---
 
-import { Plan, Description, Feature, CardGrid, LinkTitleCard } from "~/components";
+import {
+	Plan,
+	Description,
+	Feature,
+	CardGrid,
+	LinkTitleCard,
+} from "~/components";
 
 <Description>
-Get Cloudflare's security and performance while using your own IPs.
+	Get Cloudflare's security and performance while using your own IPs.
 </Description>
 
 <Plan type="enterprise" />
 
 Considering [how Cloudflare works as a reverse proxy](/fundamentals/concepts/how-cloudflare-works/), for some customers it may be important to maintain this functionality while also keeping their website or application associated with their own public IP space (instead of Cloudflare's[^1]).
 
-With Bring Your Own IP (BYOIP), Cloudflare announces your IPs in all our locations. Use your IPs with [Magic Transit](/magic-transit/), [Spectrum](/spectrum/), [CDN services](/cache/), or Gateway [DNS locations](/cloudflare-one/team-and-resources/devices/agentless/dns/locations/) and [dedicated egress IPs](/cloudflare-one/policies/gateway/egress-policies/dedicated-egress-ips/).
+With Bring Your Own IP (BYOIP), Cloudflare announces your IPs in all our locations. Use your IPs with [Magic Transit](/magic-transit/), [Spectrum](/spectrum/), [CDN services](/cache/), or Gateway [DNS locations](/cloudflare-one/team-and-resources/devices/agentless/dns/locations/) and [dedicated egress IPs](/cloudflare-one/traffic-policies/egress-policies/dedicated-egress-ips/).
 
 Learn how to [get started](/byoip/get-started/).
 
@@ -28,11 +34,13 @@ Learn how to [get started](/byoip/get-started/).
 ## Features
 
 <Feature header="Service bindings" href="/byoip/service-bindings/">
-Control whether traffic destined for a given IP address is routed to Magic Transit, CDN, or Spectrum.
+	Control whether traffic destined for a given IP address is routed to Magic
+	Transit, CDN, or Spectrum.
 </Feature>
 
 <Feature header="Address maps" href="/byoip/address-maps/">
-Specify which IP addresses should be mapped to DNS records when they are proxied through Cloudflare.
+	Specify which IP addresses should be mapped to DNS records when they are
+	proxied through Cloudflare.
 </Feature>
 
 ---
@@ -41,12 +49,21 @@ Specify which IP addresses should be mapped to DNS records when they are proxied
 
 <CardGrid>
 
-<LinkTitleCard title="RPKI blog post" href="https://blog.cloudflare.com/rpki/" icon="open-book">
-An overview of BGP, RPKI, and other important aspects of Internet routing.
+<LinkTitleCard
+	title="RPKI blog post"
+	href="https://blog.cloudflare.com/rpki/"
+	icon="open-book"
+>
+	An overview of BGP, RPKI, and other important aspects of Internet routing.
 </LinkTitleCard>
 
-<LinkTitleCard title="Reference Architectures" href="/reference-architecture/" icon="document">
-Explore how you can leverage Cloudflare's platform to create solutions based on your business needs.
+<LinkTitleCard
+	title="Reference Architectures"
+	href="/reference-architecture/"
+	icon="document"
+>
+	Explore how you can leverage Cloudflare's platform to create solutions based
+	on your business needs.
 </LinkTitleCard>
 
 </CardGrid>

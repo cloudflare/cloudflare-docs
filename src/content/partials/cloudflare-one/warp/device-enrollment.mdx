@@ -1,18 +1,17 @@
 ---
 {}
-
 ---
 
-import { Tabs, TabItem } from '~/components';
+import { Tabs, TabItem } from "~/components";
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client**.
 2. In **Device enrollment permissions**, select **Manage**.
-3. In the **Policies** tab, configure one or more [Access policies](/cloudflare-one/policies/access/) to define who can join their device. For example, you could allow all users with a company email address:
-    | Rule type | Selector | Value |
+3. In the **Policies** tab, configure one or more [Access policies](/cloudflare-one/access-controls/policies/) to define who can join their device. For example, you could allow all users with a company email address:
+   | Rule type | Selector | Value |
    | --------- | ---------| ------ |
-   | Include   | Emails ending in    | `@company.com` |
+   | Include | Emails ending in | `@company.com` |
 
 :::note
 
@@ -21,52 +20,52 @@ Device posture checks are not supported in device enrollment policies. WARP can 
 
 4. In the **Login methods** tab:
 
-	a. Select the [identity providers](/cloudflare-one/integrations/identity-providers/) users can authenticate with. If you have not integrated an identity provider, you can use the [one-time PIN](/cloudflare-one/integrations/identity-providers/one-time-pin/).
+   a. Select the [identity providers](/cloudflare-one/integrations/identity-providers/) users can authenticate with. If you have not integrated an identity provider, you can use the [one-time PIN](/cloudflare-one/integrations/identity-providers/one-time-pin/).
 
-	b. (Optional) If you plan to only allow access via a single IdP, turn on **Instant Auth**. End users will not be shown the Cloudflare Access login page. Instead, Cloudflare will redirect users directly to your SSO login event.
+   b. (Optional) If you plan to only allow access via a single IdP, turn on **Instant Auth**. End users will not be shown the Cloudflare Access login page. Instead, Cloudflare will redirect users directly to your SSO login event.
 
 5. Select **Save**.
 
 </TabItem> <TabItem label="Terraform (v5)">
 
-1. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_token):
-	- `Access: Apps and Policies Write`
+1.  Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_token):
+    - `Access: Apps and Policies Write`
 
-2. Create a reusable Access policy using the [`cloudflare_zero_trust_access_policy`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_access_policy) resource:
+2.  Create a reusable Access policy using the [`cloudflare_zero_trust_access_policy`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_access_policy) resource:
 
-		```tf
-		resource "cloudflare_zero_trust_access_policy" "allow_company_emails" {
-			account_id   = var.cloudflare_account_id
-			name         = "Allow company emails"
-			decision     = "allow"
-			include      = [
-				{
-					email_domain = {
-						domain = "@example.com"
-					}
-				}
-			]
-		}
-		```
+        ```tf
+        resource "cloudflare_zero_trust_access_policy" "allow_company_emails" {
+        	account_id   = var.cloudflare_account_id
+        	name         = "Allow company emails"
+        	decision     = "allow"
+        	include      = [
+        		{
+        			email_domain = {
+        				domain = "@example.com"
+        			}
+        		}
+        	]
+        }
+        ```
 
-3. Use the [`cloudflare_zero_trust_access_application`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_access_application) resource to create an application with type `warp`.
+3.  Use the [`cloudflare_zero_trust_access_application`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_access_application) resource to create an application with type `warp`.
 
-	```tf
-	resource "cloudflare_zero_trust_access_application" "device_enrollment" {
-		account_id       = var.cloudflare_account_id
-		type             = "warp"
-		name             = "Warp device enrollment"
-		allowed_idps              = [cloudflare_zero_trust_access_identity_provider.microsoft_entra_id.id]
-		auto_redirect_to_identity = true
-		app_launcher_visible      = false
-		policies = [
-			{
-				id = cloudflare_zero_trust_access_policy.allow_company_emails.id
-				precedence = 1
-			}
-		]
-	}
-	```
+    ```tf
+    resource "cloudflare_zero_trust_access_application" "device_enrollment" {
+    	account_id       = var.cloudflare_account_id
+    	type             = "warp"
+    	name             = "Warp device enrollment"
+    	allowed_idps              = [cloudflare_zero_trust_access_identity_provider.microsoft_entra_id.id]
+    	auto_redirect_to_identity = true
+    	app_launcher_visible      = false
+    	policies = [
+    		{
+    			id = cloudflare_zero_trust_access_policy.allow_company_emails.id
+    			precedence = 1
+    		}
+    	]
+    }
+    ```
 
 </TabItem>
  </Tabs>

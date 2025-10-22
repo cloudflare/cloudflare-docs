@@ -79,7 +79,7 @@ Remember — [authentication is different from authorization](https://www.cloud
 
 ### (2) Cloudflare Access integration
 
-You can use Cloudflare Access as a Single Sign-On (SSO) provider to authorize users to your MCP server. Users log in using a [configured identity provider](/cloudflare-one/integrations/identity-providers/) or a [one-time PIN](/cloudflare-one/integrations/identity-providers/one-time-pin/), and they are only granted access if their identity matches your [Access policies](/cloudflare-one/policies/access/).
+You can use Cloudflare Access as a Single Sign-On (SSO) provider to authorize users to your MCP server. Users log in using a [configured identity provider](/cloudflare-one/integrations/identity-providers/) or a [one-time PIN](/cloudflare-one/integrations/identity-providers/one-time-pin/), and they are only granted access if their identity matches your [Access policies](/cloudflare-one/access-controls/policies/).
 
 To deploy an [example MCP server](https://github.com/cloudflare/ai/tree/main/demos/remote-mcp-cf-access) with Cloudflare Access as the OAuth provider, refer to [Secure MCP servers with Access for SaaS](/cloudflare-one/applications/configure-apps/mcp-servers/saas-mcp/).
 
@@ -135,6 +135,7 @@ Read the docs for the [Workers oAuth Provider Library](https://github.com/cloudf
 If your application already implements an OAuth Provider itself, or you use authorization-as-a-service provider, you can use this in the same way that you would use a third-party OAuth provider, described above in (2).
 
 You can use the auth provider to:
+
 - Allow users to authenticate to your MCP server through email, social logins, SSO (single sign-on), and MFA (multi-factor authentication).
 - Define scopes and permissions that directly map to your MCP tools.
 - Present users with a consent page corresponding with the requested permissions.
@@ -248,6 +249,7 @@ async init() {
 ```
 
 Benefits:
+
 - Authorization check at the tool level ensures proper access control
 - Allows you to define permission checks once and reuse them across tools
 - Provides clear feedback to users when permission is denied

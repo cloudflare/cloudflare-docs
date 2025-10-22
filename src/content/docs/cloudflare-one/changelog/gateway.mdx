@@ -17,7 +17,7 @@ import { ProductChangelog, Render } from "~/components";
 
 **Upload/Download File Size selectors for HTTP policies**
 
-Gateway and DLP users can now create HTTP policies with the [Download and Upload File Size (MiB)](/cloudflare-one/policies/gateway/http-policies/#download-and-upload-file-size) traffic selectors. This update allows users to block uploads or downloads based on file size.
+Gateway and DLP users can now create HTTP policies with the [Download and Upload File Size (MiB)](/cloudflare-one/traffic-policies/http-policies/#download-and-upload-file-size) traffic selectors. This update allows users to block uploads or downloads based on file size.
 
 ## 2025-02-02
 
@@ -35,7 +35,7 @@ Enterprise users can now [provide an IP address](/cloudflare-one/team-and-resour
 
 **Category filtering in the network policy builder**
 
-Gateway users can now create network policies with the [Content Categories](/cloudflare-one/policies/gateway/network-policies/#content-categories) and [Security Risks](/cloudflare-one/policies/gateway/network-policies/#security-risks) traffic selectors. This update simplifies malicious traffic blocking and streamlines network monitoring for improved security management.
+Gateway users can now create network policies with the [Content Categories](/cloudflare-one/traffic-policies/network-policies/#content-categories) and [Security Risks](/cloudflare-one/traffic-policies/network-policies/#security-risks) traffic selectors. This update simplifies malicious traffic blocking and streamlines network monitoring for improved security management.
 
 ## 2024-10-17
 
@@ -47,7 +47,7 @@ Gateway users can now generate [unique root CAs](/cloudflare-one/team-and-resour
 
 **Time-based policy duration**
 
-Gateway now offers [time-based DNS policy duration](/cloudflare-one/policies/gateway/dns-policies/timed-policies/#time-based-policy-duration). With policy duration, you can configure a duration of time for a policy to turn on or set an exact date and time to turn a policy off.
+Gateway now offers [time-based DNS policy duration](/cloudflare-one/traffic-policies/dns-policies/timed-policies/#time-based-policy-duration). With policy duration, you can configure a duration of time for a policy to turn on or set an exact date and time to turn a policy off.
 
 ## 2024-10-04
 
@@ -59,7 +59,7 @@ Gateway now offers new fields in [activity logs](/cloudflare-one/insights/logs/g
 
 **File sandboxing**
 
-Gateway users on Enterprise plans can create HTTP policies with [file sandboxing](/cloudflare-one/policies/gateway/http-policies/file-sandboxing/) to quarantine previously unseen files downloaded by your users and scan them for malware.
+Gateway users on Enterprise plans can create HTTP policies with [file sandboxing](/cloudflare-one/traffic-policies/http-policies/file-sandboxing/) to quarantine previously unseen files downloaded by your users and scan them for malware.
 
 ## 2024-07-30
 
@@ -77,10 +77,10 @@ Gateway users can now select which endpoints to use for a given DNS location. Av
 
 **Gateway DNS policy setting to ignore CNAME category matches**
 
-Gateway now offers the ability to selectively ignore CNAME domain categories in DNS policies via the [**Ignore CNAME domain categories** setting](/cloudflare-one/policies/gateway/domain-categories/#ignore-cname-domain-categories) in the policy builder and the [`ignore_cname_category_matches` setting](/api/resources/zero_trust/subresources/gateway/subresources/rules/methods/create/) in the API.
+Gateway now offers the ability to selectively ignore CNAME domain categories in DNS policies via the [**Ignore CNAME domain categories** setting](/cloudflare-one/traffic-policies/domain-categories/#ignore-cname-domain-categories) in the policy builder and the [`ignore_cname_category_matches` setting](/api/resources/zero_trust/subresources/gateway/subresources/rules/methods/create/) in the API.
 
 ## 2024-04-05
 
 **Gateway file type control improvements**
 
-Gateway now offers a more extensive, categorized [list of files](/cloudflare-one/policies/gateway/http-policies/#download-and-upload-file-types) to control uploads and downloads.
+Gateway now offers a more extensive, categorized [list of files](/cloudflare-one/traffic-policies/http-policies/#download-and-upload-file-types) to control uploads and downloads.

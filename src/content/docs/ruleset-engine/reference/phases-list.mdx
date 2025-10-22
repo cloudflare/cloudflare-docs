@@ -13,14 +13,13 @@ The following tables list the [phases](/ruleset-engine/about/phases/) of Cloudfl
 
 [Network-layer](https://www.cloudflare.com/learning/ddos/glossary/open-systems-interconnection-model-osi/) phases apply to packets received on the Cloudflare global network.
 
-
-| Phase name       | Used in product/feature                                                                            |
-| ---------------- | ------------------------------------------------------------------------------------------------   |
-| `ddos_l4`        | [Network-layer DDoS Attack Protection](/ddos-protection/managed-rulesets/network/network-overrides/configure-api/) |
-| `magic_transit`  | [Magic Firewall](/magic-firewall/how-to/add-rules/)                                                |
-| `magic_transit_managed`     | [Magic Firewall managed rulesets](/magic-firewall/how-to/enable-managed-rulesets/)      |
-| `magic_transit_ratelimit`   | [Magic Firewall rate limiting rules](/magic-firewall/how-to/create-rate-limiting-rules/)|
-| `magic_transit_ids_managed` | [Magic Firewall Intrusion Detection System (IDS)](/magic-firewall/about/ids/)           |
+| Phase name                  | Used in product/feature                                                                                            |
+| --------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| `ddos_l4`                   | [Network-layer DDoS Attack Protection](/ddos-protection/managed-rulesets/network/network-overrides/configure-api/) |
+| `magic_transit`             | [Magic Firewall](/magic-firewall/how-to/add-rules/)                                                                |
+| `magic_transit_managed`     | [Magic Firewall managed rulesets](/magic-firewall/how-to/enable-managed-rulesets/)                                 |
+| `magic_transit_ratelimit`   | [Magic Firewall rate limiting rules](/magic-firewall/how-to/create-rate-limiting-rules/)                           |
+| `magic_transit_ids_managed` | [Magic Firewall Intrusion Detection System (IDS)](/magic-firewall/about/ids/)                                      |
 
 ## Application layer
 
@@ -45,7 +44,7 @@ The phases execute in the order they appear in the table.
 | `http_request_api_gateway_late`    | [API Shield](/api-shield/)                                                      |
 | `http_request_firewall_managed`    | [WAF Managed Rules](/waf/managed-rules/)                                        |
 | `http_request_sbfm`                | [Super Bot Fight Mode](/bots/get-started/super-bot-fight-mode/)                 |
-| _N/A_ (internal phase)             | [Cloudflare Access](/cloudflare-one/policies/access/)                           |
+| _N/A_ (internal phase)             | [Cloudflare Access](/cloudflare-one/access-controls/policies/)                  |
 | `http_request_redirect`            | [Bulk Redirects](/rules/url-forwarding/bulk-redirects/)                         |
 | _N/A_ (internal phase)             | [Managed Transforms](/rules/transform/managed-transforms/)                      |
 | `http_request_late_transform`      | [Request Header Transform Rules](/rules/transform/request-header-modification/) |
@@ -69,4 +68,4 @@ The phases execute in the order they appear in the table.
 | `http_ratelimit`                  | [Rate limiting rules](/waf/rate-limiting-rules/) (when they use response information) |
 | `http_response_compression`       | [Compression Rules](/rules/compression-rules/)                                        |
 | `http_response_firewall_managed`  | [Cloudflare Sensitive Data Detection](/waf/managed-rules/) (Data Loss Prevention)     |
-| `http_log_custom_fields`          | [Logpush custom fields](/logs/logpush/logpush-job/custom-fields/)                               |
+| `http_log_custom_fields`          | [Logpush custom fields](/logs/logpush/logpush-job/custom-fields/)                     |

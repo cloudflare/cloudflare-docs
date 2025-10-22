@@ -30,7 +30,7 @@ import { Tabs, TabItem, Badge, Render, APIRequest } from "~/components";
 To connect your devices to Cloudflare:
 
 1. [Deploy the WARP client](/cloudflare-one/team-and-resources/devices/warp/deployment/) on your devices in Gateway with WARP mode.
-2. [Enable the Gateway proxy for TCP](/cloudflare-one/policies/gateway/proxy/#turn-on-the-gateway-proxy).
+2. [Enable the Gateway proxy for TCP](/cloudflare-one/traffic-policies/proxy/#turn-on-the-gateway-proxy).
 3. [Create device enrollment rules](/cloudflare-one/team-and-resources/devices/warp/deployment/device-enrollment/) to determine which devices can enroll to your Zero Trust organization.
 
 ## 3. Route server IPs through WARP
@@ -135,7 +135,7 @@ To turn off SSH command logging, delete your uploaded public key:
 
 3. Select **Remove key** to confirm.
 
-Cloudflare will stop logging SSH commands to your targets, as well as any commands subject to [Gateway Audit SSH](/cloudflare-one/policies/gateway/network-policies/ssh-logging/) policies.
+Cloudflare will stop logging SSH commands to your targets, as well as any commands subject to [Gateway Audit SSH](/cloudflare-one/traffic-policies/network-policies/ssh-logging/) policies.
 
 </TabItem>
 <TabItem label="API">
@@ -206,7 +206,7 @@ A user may be blocked by an Access policy from reaching your server because no e
 
 The Access infrastructure application (created in [step 5](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/#5-add-an-infrastructure-application)) is the policy container for your SSH server. Cloudflare refers to your server that you connect to with SSH as a [target](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/#4-add-a-target).
 
-[Access policies](/cloudflare-one/policies/access/policy-management/) are the rules attached to this Access infrastructure application, determining who can connect and what UNIX usernames they can log in as on the server. Cloudflare will not create new users on the target. UNIX users must already be present on the server.
+[Access policies](/cloudflare-one/access-controls/policies/policy-management/) are the rules attached to this Access infrastructure application, determining who can connect and what UNIX usernames they can log in as on the server. Cloudflare will not create new users on the target. UNIX users must already be present on the server.
 
 You were guided to create an Access policy for your target in [substep 9 of step 5: Add an infrastructure application](#5-add-an-infrastructure-application).
 
@@ -238,7 +238,7 @@ You will need Cloudflare dashboard access and log view [permissions](/cloudflare
 
 3. Review the **Decision**. If the **Decision** is `Access denied`, select the application and copy the name under App.
 
-	If the decision is `Access granted`, Access policies are not interfering with your connection attempts and your connection issue is due to the Cloudflare Tunnel ([step 2](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/#2-check-target-machine-connection)), the SSH server ([step 3](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/#3-confirm-user-existence-on-the-target-server)), or the `sshd_config` file ([step 4](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/#4-debug-sshd_config-file-misconfiguration)).
+   If the decision is `Access granted`, Access policies are not interfering with your connection attempts and your connection issue is due to the Cloudflare Tunnel ([step 2](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/#2-check-target-machine-connection)), the SSH server ([step 3](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/#3-confirm-user-existence-on-the-target-server)), or the `sshd_config` file ([step 4](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/#4-debug-sshd_config-file-misconfiguration)).
 
 4. Go to **Access** > **Applications**.
 
@@ -246,9 +246,9 @@ You will need Cloudflare dashboard access and log view [permissions](/cloudflare
 
 6. Select **Configure**.
 
-7. Go to [**Policies**](/cloudflare-one/policies/access/policy-management/#test-your-policies) to review what criteria may be blocking the user.
+7. Go to [**Policies**](/cloudflare-one/access-controls/policies/policy-management/#test-your-policies) to review what criteria may be blocking the user.
 
-By adding an Access [policy](/cloudflare-one/policies/access/) to allow the user, the connection issue should be resolved. After saving your policy changes, attempt to connect to the server.
+By adding an Access [policy](/cloudflare-one/access-controls/policies/) to allow the user, the connection issue should be resolved. After saving your policy changes, attempt to connect to the server.
 
 If you are still having connection issues after auditing your Access policies, review tunnel health in the following step.
 
@@ -261,7 +261,7 @@ To check the status of your tunnel:
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Networks** > **Routes**.
 2. Search your IP to find the tunnel associated with the IP.
 
-	This IP will be visible in the `warp-cli target list` output in [the previous step](#1-review-access-policies). If you are an admin, you can also go to **Networks** > **Targets** and find the IP next to your Hostname.
+   This IP will be visible in the `warp-cli target list` output in [the previous step](#1-review-access-policies). If you are an admin, you can also go to **Networks** > **Targets** and find the IP next to your Hostname.
 
 3. Copy the tunnel name.
 4. Go to **Networks** > **Tunnels** and search by your tunnel name.
@@ -444,15 +444,15 @@ These troubleshooting steps could result in you being locked out of your SSH ser
 
 1. Back up the existing `sshd_config` file.
 
-	```sh
-	mv /etc/ssh/sshd_config /etc/ssh/sshd_config.bak
-	```
+   ```sh
+   mv /etc/ssh/sshd_config /etc/ssh/sshd_config.bak
+   ```
 
 2. Create a new `sshd_config` file.
 
-	```sh
-	vi /etc/ssh/sshd_config
-	```
+   ```sh
+   vi /etc/ssh/sshd_config
+   ```
 
 3. Enter insert mode by pressing the `i` key on your keyboard.
 
@@ -462,10 +462,10 @@ These troubleshooting steps could result in you being locked out of your SSH ser
 6. Enter `:x` to save and exit.
 7. [Reload](#reload-your-ssh-server) your SSH server.
 
-	:::caution[Do not restart]
-	Restarting your `sshd` service will result in the termination of your current SSH connection. Make sure to reload instead of restarting to avoid terminating all currently open SSH sessions.
-	:::
+   :::caution[Do not restart]
+   Restarting your `sshd` service will result in the termination of your current SSH connection. Make sure to reload instead of restarting to avoid terminating all currently open SSH sessions.
+   :::
 
-	<Render file="ssh/restart-server" product="cloudflare-one" />
+   <Render file="ssh/restart-server" product="cloudflare-one" />
 
 By completing all four troubleshooting steps, you should have resolved any connection issues caused by misconfiguration of the SSH server. If issues persist, [recheck `sshd` logs](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/#review-your-sshd-logs). The example [`sshd_config` shared above](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/#review-your-sshd_config-file-for-misconfigurations) enables debug logging and may expose more specific issues.

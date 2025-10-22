@@ -41,7 +41,7 @@ The diagram above shows the general flow of how user traffic goes from their loc
 **Option 1: Clientless RBI**
 
 - Device agent not required
-- RBI URL can be protected by an [Access policy](/cloudflare-one/policies/access/) with authentication
+- RBI URL can be protected by an [Access policy](/cloudflare-one/access-controls/policies/) with authentication
 - A simpler way to begin rolling out Cloudflare Zero trust while transitioning away from VDI
 - A great option for third party contractor access who cannot install software on their device
 
@@ -82,14 +82,14 @@ Cloudflare's SASE platform is capable of much more than replacing VPNs and bolst
 
 ## Summary
 
-As shown, we have seen several ways to incorporate Cloudflare's Zero Trust services with your existing VDI, either by replacing it completely in favor of Remote Browser Isolation technology or further securing it with our [Access](/cloudflare-one/policies/access/) or [Gateway](/cloudflare-one/policies/gateway/) services.
+As shown, we have seen several ways to incorporate Cloudflare's Zero Trust services with your existing VDI, either by replacing it completely in favor of Remote Browser Isolation technology or further securing it with our [Access](/cloudflare-one/access-controls/policies/) or [Gateway](/cloudflare-one/traffic-policies/) services.
 
 For more thorough background, explanation and action steps to a smooth migration be sure to read the following resources:
 
 - [Decommissioning your VDI Blog Post](https://blog.cloudflare.com/decommissioning-virtual-desktop/)
 - [Leveraging Cloudflare's Secure Web Gateway with PAC files for VDI](/learning-paths/secure-internet-traffic/configure-device-agent/pac-files/#use-cases)
 - [Connect to private network services with Browser Isolation](https://blog.cloudflare.com/browser-isolation-private-network/)
-- [Clientless Web Isolation](/cloudflare-one/policies/browser-isolation/setup/clientless-browser-isolation)
+- [Clientless Web Isolation](/cloudflare-one/remote-browser-isolation/setup/clientless-browser-isolation)
 - [Determine When to use PAC Files](/learning-paths/secure-internet-traffic/configure-device-agent/pac-files/#use-cases)
 - [Agentless DNS Configurations](/cloudflare-one/team-and-resources/devices/agentless/dns/)
 - [PAC Files for Agentless HTTP Filtering](/cloudflare-one/team-and-resources/devices/agentless/pac-files/)

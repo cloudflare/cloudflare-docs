@@ -4,15 +4,14 @@ title: Pingboard
 reviewed: 2024-07-09
 sidebar:
   order: 21
-
 ---
 
 This guide covers how to configure [Pingboard](https://support.pingboard.com/hc/en-us/articles/360046585994-Set-Up-a-Custom-SSO-Solution) as a SAML application in Cloudflare Zero Trust.
 
 ## Prerequisites
 
-* An [identity provider](/cloudflare-one/integrations/identity-providers/) configured in Cloudflare Zero Trust
-* Admin access to a Pingboard account
+- An [identity provider](/cloudflare-one/integrations/identity-providers/) configured in Cloudflare Zero Trust
+- Admin access to a Pingboard account
 
 ## 1. Add a SaaS application to Cloudflare Zero Trust
 
@@ -22,11 +21,11 @@ This guide covers how to configure [Pingboard](https://support.pingboard.com/hc/
 4. For the authentication protocol, select **SAML**.
 5. Select **Add application**.
 6. Fill in the following fields:
-   * **Entity ID**: `http://app.pingboard.com/sp`
-   * **Assertion Consumer Service URL**: `https://sso-demo.pingboard.com/auth/saml/consume`
-   * **Name ID format**: *Email*
+   - **Entity ID**: `http://app.pingboard.com/sp`
+   - **Assertion Consumer Service URL**: `https://sso-demo.pingboard.com/auth/saml/consume`
+   - **Name ID format**: _Email_
 7. Copy the **SAML Metadata endpoint**.
-8. Configure [Access policies](/cloudflare-one/policies/access/) for the application.
+8. Configure [Access policies](/cloudflare-one/access-controls/policies/) for the application.
 9. Save the application.
 
 ## 2. Add a SAML SSO provider to Pingboard

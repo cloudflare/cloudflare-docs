@@ -4,15 +4,14 @@ title: Coupa
 reviewed: 2024-07-26
 sidebar:
   order: 8
-
 ---
 
 This guide covers how to configure [Coupa](https://compass.coupa.com/en-us/products/product-documentation/integration-technical-documentation/coupa-core-user-authentication/coupa-saml-sso-setup) as a SAML application in Cloudflare Zero Trust.
 
 ## Prerequisites
 
-* An [identity provider](/cloudflare-one/integrations/identity-providers/) configured in Cloudflare Zero Trust
-* Admin access to a Coupa Stage or Production account
+- An [identity provider](/cloudflare-one/integrations/identity-providers/) configured in Cloudflare Zero Trust
+- Admin access to a Coupa Stage or Production account
 
 ## 1. Add a SaaS application to Cloudflare Zero Trust
 
@@ -22,13 +21,13 @@ This guide covers how to configure [Coupa](https://compass.coupa.com/en-us/produ
 4. For the authentication protocol, select **SAML**.
 5. Select **Add application**.
 6. Fill in the following fields:
-   * **Entity ID**:
+   - **Entity ID**:
      `sso-stg1.coupahost.com` for a stage account or `sso-prd1.coupahost.com` for a production account
-   * **Assertion Consumer Service URL**: `https://sso-stg1.coupahost.com/sp/ACS.saml2` for a stage account or `https://sso-prd1.coupahost.com/sp/ACS.saml2` for a production account
-   * **Name ID format**: *Email*
+   - **Assertion Consumer Service URL**: `https://sso-stg1.coupahost.com/sp/ACS.saml2` for a stage account or `https://sso-prd1.coupahost.com/sp/ACS.saml2` for a production account
+   - **Name ID format**: _Email_
 7. Copy the **Access Entity ID or Issuer** and **SAML Metadata Endpoint**.
 8. In **Default relay state**, enter `https://<your-subdomain>.coupahost.com/sessions/saml_post`.
-9. Configure [Access policies](/cloudflare-one/policies/access/) for the application.
+9. Configure [Access policies](/cloudflare-one/access-controls/policies/) for the application.
 10. Save the application.
 
 ## 2. Download the metadata file
@@ -55,8 +54,6 @@ This guide covers how to configure [Coupa](https://compass.coupa.com/en-us/produ
 
 :::note
 
-
 You can use the following URL to bypass SSO and login via a username and password: `https://<your-subdomain>.coupahost.com/sessions/support_login`.
-
 
 :::

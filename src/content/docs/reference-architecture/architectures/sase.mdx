@@ -1,7 +1,19 @@
 ---
 title: Evolving to a SASE architecture with Cloudflare
 pcx_content_type: reference-architecture
-products: [access, gateway, casb, email-security-cf1, dex, browser-isolation, dlp, magic-wan, magic-firewall, magic-transit]
+products:
+  [
+    access,
+    gateway,
+    casb,
+    email-security-cf1,
+    dex,
+    browser-isolation,
+    dlp,
+    magic-wan,
+    magic-firewall,
+    magic-transit,
+  ]
 sidebar:
   order: 1
   label: Secure Access Service Edge (SASE)
@@ -190,7 +202,7 @@ SaaS applications are inherently always connected to and accessed via the public
 
 The SWG includes policies that examine outbound traffic requests and inbound content responses to determine if the user, device, or network location has access to resources on the Internet. Organizations can use these policies to control access to approved SaaS applications, as well as detect and block the use of unapproved applications (also known as [shadow IT](https://www.cloudflare.com/learning/access-management/what-is-shadow-it/)).
 
-Some SaaS applications allow organizations to configure an IP address allowlist, which limits access to the application based on the source IP address of the request. With Cloudflare, organizations can obtain dedicated [egress IP](/cloudflare-one/policies/gateway/egress-policies/dedicated-egress-ips/) addresses, which can be used as the source address for all traffic leaving their network. When combined with an allowlist in a SaaS application, organizations can ensure that users are only able to access applications if they are first connected to Cloudflare. (More detail on this approach is outlined in a later section about connecting user devices.)
+Some SaaS applications allow organizations to configure an IP address allowlist, which limits access to the application based on the source IP address of the request. With Cloudflare, organizations can obtain dedicated [egress IP](/cloudflare-one/traffic-policies/egress-policies/dedicated-egress-ips/) addresses, which can be used as the source address for all traffic leaving their network. When combined with an allowlist in a SaaS application, organizations can ensure that users are only able to access applications if they are first connected to Cloudflare. (More detail on this approach is outlined in a later section about connecting user devices.)
 
 Another method to secure access to SaaS applications is to configure single sign-on (SSO) so that Cloudflare becomes an identity proxy — acting as the identity provider (IDP) — as part of the authentication and authorization process.
 
@@ -395,7 +407,7 @@ Another option to ensure device traffic is sent to Cloudflare is to use [remote 
 
 RBI renders the received content in an isolated and secure cloud environment. Instead of executing the web content locally, the user device receives commands for how to "draw" the final rendered web page over a highly optimized protocol supported by all HTML5-compliant browsers on all operating systems. Because the remote browser runs on Cloudflare's servers, SWG policies are automatically applied to all browser requests.
 
-Ensuring access to sites is protected with RBI does not require any local software installation or reconfiguring the user's browser. Below are [several ways](/cloudflare-one/policies/browser-isolation/setup/) to accomplish this:
+Ensuring access to sites is protected with RBI does not require any local software installation or reconfiguring the user's browser. Below are [several ways](/cloudflare-one/remote-browser-isolation/setup/) to accomplish this:
 
 - Typically, a remote browser session is started as the result of an SWG policy — the user just requests websites without being notified that the content is loading in a remote browser.
 - Organizations can also provide users with a link that automatically ensures RBI always processes each request.
@@ -412,7 +424,7 @@ Isolating web applications and applying policies to risky websites helps organiz
 
 #### Agentless DNS Filtering
 
-Another option for securing traffic via the Cloudflare network is to configure the device to forward DNS traffic to Cloudflare to be inspected and filtered. First [DNS locations](/cloudflare-one/policies/gateway/initial-setup/dns/#connect-dns-locations) are created which allow policies to be applied based on different network locations. They can be determined either by the source IP address for the request or you can use "[DNS over TLS](https://www.cloudflare.com/learning/dns/dns-over-tls/)" or "[DNS over HTTPS](https://www.cloudflare.com/learning/dns/dns-over-tls/)".
+Another option for securing traffic via the Cloudflare network is to configure the device to forward DNS traffic to Cloudflare to be inspected and filtered. First [DNS locations](/cloudflare-one/traffic-policies/initial-setup/dns/#connect-dns-locations) are created which allow policies to be applied based on different network locations. They can be determined either by the source IP address for the request or you can use "[DNS over TLS](https://www.cloudflare.com/learning/dns/dns-over-tls/)" or "[DNS over HTTPS](https://www.cloudflare.com/learning/dns/dns-over-tls/)".
 
 When using source IP addresses, either the device will need to be told which DNS servers to use, or the local DNS server on the network the device is connected to needs to forward all DNS queries to Cloudflare. For DNS over TLS or HTTPS support, the devices need to be configured and support varies. Our recommendation is to use DNS over HTTPS which has wider operating system support.
 
@@ -536,9 +548,9 @@ Connecting an IdP to Cloudflare provides the ability to make access decisions ba
 
 ### Lists
 
-Cloudflare's vast intelligent network continually monitors billions of web assets and [categorizes them](/cloudflare-one/policies/gateway/domain-categories/) based on our threat intelligence and general knowledge of Internet content. You can use our free [Cloudflare Radar](https://radar.cloudflare.com/) service to examine what categories might be applied to any specific domain. Policies can then include these categories to block known and potential security risks on the public Internet, as well as specific categories of content.
+Cloudflare's vast intelligent network continually monitors billions of web assets and [categorizes them](/cloudflare-one/traffic-policies/domain-categories/) based on our threat intelligence and general knowledge of Internet content. You can use our free [Cloudflare Radar](https://radar.cloudflare.com/) service to examine what categories might be applied to any specific domain. Policies can then include these categories to block known and potential security risks on the public Internet, as well as specific categories of content.
 
-Additionally, Cloudflare's SWG offers the flexibility to create and maintain customized [lists of data](/cloudflare-one/policies/gateway/lists/). These lists can be uploaded via CSV files, manually maintained, or integrated with other processes and applications using the Cloudflare API. A list can contain the following data:
+Additionally, Cloudflare's SWG offers the flexibility to create and maintain customized [lists of data](/cloudflare-one/traffic-policies/lists/). These lists can be uploaded via CSV files, manually maintained, or integrated with other processes and applications using the Cloudflare API. A list can contain the following data:
 
 - URLs
 - Hostnames
@@ -663,15 +675,15 @@ Having acquired a comprehensive understanding of Cloudflare's SASE platform, you
 
 It's worth noting that many of the capabilities described in this document can be used for free, without any time constraints, for up to 50 users. [Sign up](https://dash.cloudflare.com/sign-up) for an account and head to the [Zero Trust](https://one.dash.cloudflare.com/) section. While this document has provided an overview of the platform as a whole, for those interested in delving deeper into specific areas, we recommend exploring the following resources.
 
-| Topic                     | Content                                                                                                                                                                  |
-| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Topic                     | Content                                                                                                                                                                           |
+| ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Cloudflare Tunnels        | [Understanding Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) - [Open source repository for `cloudflared`](https://github.com/cloudflare/cloudflared) |
-| WAN as a Service          | [Cloudflare Magic WAN documentation](/magic-wan/)                                                                                                                        |
-| Secure Web Gateway        | [How to build Gateway policies](/cloudflare-one/policies/gateway/)                                                                                                       |
-| Zero Trust Network Access | [How to build Access policies](/cloudflare-one/policies/access/)                                                                                                         |
-| Remote Browser Isolation  | [Understanding browser isolation](/cloudflare-one/policies/browser-isolation/)                                                                                           |
-| API-Driven CASB           | [Scanning SaaS applications](/cloudflare-one/applications/casb/)                                                                                                         |
-| Email Security            | [Understanding Cloudflare Email Security](/email-security/)                                                                                                              |
-| Replacing your VPN        | [Using Cloudflare to replace your VPN](/learning-paths/replace-vpn/concepts/)                                                                                            |
+| WAN as a Service          | [Cloudflare Magic WAN documentation](/magic-wan/)                                                                                                                                 |
+| Secure Web Gateway        | [How to build Gateway policies](/cloudflare-one/traffic-policies/)                                                                                                                |
+| Zero Trust Network Access | [How to build Access policies](/cloudflare-one/access-controls/policies/)                                                                                                         |
+| Remote Browser Isolation  | [Understanding browser isolation](/cloudflare-one/remote-browser-isolation/)                                                                                                      |
+| API-Driven CASB           | [Scanning SaaS applications](/cloudflare-one/applications/casb/)                                                                                                                  |
+| Email Security            | [Understanding Cloudflare Email Security](/email-security/)                                                                                                                       |
+| Replacing your VPN        | [Using Cloudflare to replace your VPN](/learning-paths/replace-vpn/concepts/)                                                                                                     |
 
 If you would like to discuss your SASE requirements in greater detail and connect with one of our architects, please visit [https://www.cloudflare.com/cloudflare-one/](https://www.cloudflare.com/cloudflare-one/) and request a consultation.

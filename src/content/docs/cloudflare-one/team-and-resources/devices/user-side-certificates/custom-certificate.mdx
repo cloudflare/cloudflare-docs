@@ -14,14 +14,14 @@ import { Render, Tabs, TabItem, APIRequest } from "~/components";
 Only available on Enterprise plans.
 :::
 
-Enterprise customers who do not wish to install a [Cloudflare certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/manual-deployment/) have the option to upload their own root certificate to Cloudflare. This feature is sometimes referred to as Bring Your Own Public Key Infrastructure (BYOPKI). Gateway will use your uploaded certificate to encrypt all sessions between the end user and Gateway, enabling all HTTPS inspection features that previously required a Cloudflare certificate. You can upload multiple certificates to your account, but only one can be active at any given time. You also need to upload a private key to intercept domains with JIT certificates and to enable the [block page](/cloudflare-one/policies/gateway/block-page/).
+Enterprise customers who do not wish to install a [Cloudflare certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/manual-deployment/) have the option to upload their own root certificate to Cloudflare. This feature is sometimes referred to as Bring Your Own Public Key Infrastructure (BYOPKI). Gateway will use your uploaded certificate to encrypt all sessions between the end user and Gateway, enabling all HTTPS inspection features that previously required a Cloudflare certificate. You can upload multiple certificates to your account, but only one can be active at any given time. You also need to upload a private key to intercept domains with JIT certificates and to enable the [block page](/cloudflare-one/traffic-policies/block-page/).
 
 You can upload up to five custom root certificates. If your organization requires more than five certificates, contact your account team.
 
 :::caution
 Custom certificates are limited to use between your users and the Gateway proxy. Gateway connects to origin servers using publicly trusted certificates, similar to how a browser validates secure websites.
 
-If your users need to connect to self-signed origin servers, create an HTTP Allow policy for the origin server with the [untrusted certificate action](/cloudflare-one/policies/gateway/http-policies/#untrusted-certificates) set to _Pass through_.
+If your users need to connect to self-signed origin servers, create an HTTP Allow policy for the origin server with the [untrusted certificate action](/cloudflare-one/traffic-policies/http-policies/#untrusted-certificates) set to _Pass through_.
 :::
 
 ## Generate a custom root CA

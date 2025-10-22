@@ -1,7 +1,18 @@
 ---
 title: Building zero trust architecture into your startup
 pcx_content_type: design-guide
-products: [access, browser-isolation, casb, dlp, email-security-cf1, gateway, magic-firewall, magic-transit, magic-wan]
+products:
+  [
+    access,
+    browser-isolation,
+    casb,
+    dlp,
+    email-security-cf1,
+    gateway,
+    magic-firewall,
+    magic-transit,
+    magic-wan,
+  ]
 sidebar:
   label: Zero trust architecture for startups
 reviewed: 2024-04-25
@@ -306,7 +317,7 @@ In a Zero Trust security framework, this kind of access should be explicitly sco
 
 Cloudflare can help provide scoped secure access for both web and network connectivity to your third-party users in a Zero Trust framework.
 
-- **Cloudflare Access can integrate and use [multiple identity providers simultaneously](/cloudflare-one/integrations/identity-providers/).** This can be scoped to a single application and a singular policy, and can have granular capabilities to 'force' some user access to authenticate in specific ways. There are also many third-party specific workflows — like [purpose justification](/cloudflare-one/policies/access/require-purpose-justification/) — that can ensure that user access is both easy for third parties, and documented and controllable for administrators.
+- **Cloudflare Access can integrate and use [multiple identity providers simultaneously](/cloudflare-one/integrations/identity-providers/).** This can be scoped to a single application and a singular policy, and can have granular capabilities to 'force' some user access to authenticate in specific ways. There are also many third-party specific workflows — like [purpose justification](/cloudflare-one/access-controls/policies/require-purpose-justification/) — that can ensure that user access is both easy for third parties, and documented and controllable for administrators.
 - **Cloudflare Zero Trust can be deployed with flexible endpoint agent parameters and [logical groupings](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-profiles/) for contractor and third-party users.** If you have external users with internal access needs, they can be both tightly-scoped and limit potential conflict with other external systems.
 - **[Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) can act as a unidirectional access model to provide corporate users access to scoped customer resources.** It is lightweight, easy to deploy, and can even be built into your deployment packages and deployed alongside the services you manage in customer environments.
 - **Cloudflare WARP Connector can help you build secure, extensible networks relevant for each of your client controls.** This is particularly helpful when bidirectional (site-to-site) traffic flows are a necessity for the way that you engage with your customers, interact with their applications, or address other management concerns. WARP Connector has all of the same inline security policy application and auditability controls as the rest of your deployment, so you can maintain a Zero Trust security posture while achieving customer connectivity.
@@ -387,7 +398,7 @@ This framework can also give your IT organization direction on which tools to co
 
 ### Where does Cloudflare fit in?
 
-Cloudflare can help set a foundation for visibility and management of your [shadow IT](/cloudflare-one/insights/analytics/shadow-it-discovery/) environment and subsequent discoveries. User traffic to the Internet can be audited and organized from the WARP client and our [Secure Web Gateway (SWG)](/cloudflare-one/policies/gateway/), and can you understand where your sensitive data moves outside of your corporate-accepted SaaS tenants.
+Cloudflare can help set a foundation for visibility and management of your [shadow IT](/cloudflare-one/insights/analytics/shadow-it-discovery/) environment and subsequent discoveries. User traffic to the Internet can be audited and organized from the WARP client and our [Secure Web Gateway (SWG)](/cloudflare-one/traffic-policies/), and can you understand where your sensitive data moves outside of your corporate-accepted SaaS tenants.
 
 This can then be an opportunity to further expand your Zero Trust strategy by ensuring those newly-discovered tools are either explicitly blocked or explicitly allowed, setting specific data security controls on them, or integrating them with your Zero Trust vendor (using something like [Access for SaaS](/cloudflare-one/applications/configure-apps/saas-apps/aws-sso-saas/) to apply security policies).
 

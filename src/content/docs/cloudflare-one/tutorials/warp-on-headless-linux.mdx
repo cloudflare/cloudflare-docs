@@ -10,7 +10,7 @@ description: >-
 
 import { Render, GlossaryTooltip } from "~/components";
 
-This tutorial explains how to deploy the [Cloudflare WARP client](/cloudflare-one/team-and-resources/devices/warp/) on Linux devices using a service token and an installation script. This deployment workflow is designed for headless servers - that is, servers which do not have access to a browser for identity provider logins - and for situations where you want to fully automate the onboarding process. Because devices will not register through an identity provider, [identity-based policies](/cloudflare-one/policies/gateway/identity-selectors/) and logging will be unavailable.
+This tutorial explains how to deploy the [Cloudflare WARP client](/cloudflare-one/team-and-resources/devices/warp/) on Linux devices using a service token and an installation script. This deployment workflow is designed for headless servers - that is, servers which do not have access to a browser for identity provider logins - and for situations where you want to fully automate the onboarding process. Because devices will not register through an identity provider, [identity-based policies](/cloudflare-one/traffic-policies/identity-selectors/) and logging will be unavailable.
 
 :::note
 This tutorial focuses on deploying WARP as an endpoint device agent. If you are looking to deploy WARP as a gateway to a private network, refer to the [WARP Connector documentation](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/).

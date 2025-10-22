@@ -11,7 +11,7 @@ description: >-
 
 import { TabItem, Tabs, Details, Render, DashButton } from "~/components";
 
-This tutorial explains how to use [Cloudflare AI Gateway](/ai-gateway/) and Zero Trust to create a functional and secure website wrapper for an AI agent. Cloudflare Zero Trust administrators can protect access to the wrapper with [Cloudflare Access](/cloudflare-one/policies/access/). Additionally, you can enforce [Gateway policies](/cloudflare-one/policies/gateway/) to control how your users interact with AI agents, including executing AI agents in an isolated browser with [Browser Isolation](/cloudflare-one/policies/browser-isolation/), enforcing [Data Loss Prevention](/cloudflare-one/policies/data-loss-prevention/) profiles to prevent your users from sharing sensitive data, and scanning content to avoid answers from AI agents that violate internal corporate guidelines. Creating an AI agent wrapper is also an effective way to enforce tenant control if you have an enterprise plan for a specific AI provider, such as ChatGPT Enterprise.
+This tutorial explains how to use [Cloudflare AI Gateway](/ai-gateway/) and Zero Trust to create a functional and secure website wrapper for an AI agent. Cloudflare Zero Trust administrators can protect access to the wrapper with [Cloudflare Access](/cloudflare-one/access-controls/policies/). Additionally, you can enforce [Gateway policies](/cloudflare-one/traffic-policies/) to control how your users interact with AI agents, including executing AI agents in an isolated browser with [Browser Isolation](/cloudflare-one/remote-browser-isolation/), enforcing [Data Loss Prevention](/cloudflare-one/data-loss-prevention/) profiles to prevent your users from sharing sensitive data, and scanning content to avoid answers from AI agents that violate internal corporate guidelines. Creating an AI agent wrapper is also an effective way to enforce tenant control if you have an enterprise plan for a specific AI provider, such as ChatGPT Enterprise.
 
 This tutorial uses ChatGPT as an example AI agent.
 
@@ -412,13 +412,13 @@ To secure the AI agent wrapper to ensure that only trusted users can access it:
 5. In **Session Duration**, choose when the user's application token should expire.
 6. Select **Add public hostname** and enter the custom domain you set for your Worker.
 7. [Configure your Access application](/cloudflare-one/applications/configure-apps/self-hosted-public-app/) for your Worker.
-8. Add [Access policies](/cloudflare-one/policies/access/policy-management/) to control who can connect to your application.
+8. Add [Access policies](/cloudflare-one/access-controls/policies/policy-management/) to control who can connect to your application.
 
 Now your AI wrapper can only be accessed by your users that successfully match your Access policies.
 
 ## 5. Block access to public AI agents with Gateway
 
-You can now block access to all unauthorized public AI agents with a Gateway [HTTP policy](/cloudflare-one/policies/gateway/http-policies/).
+You can now block access to all unauthorized public AI agents with a Gateway [HTTP policy](/cloudflare-one/traffic-policies/http-policies/).
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Gateway** > **Firewall policies**.
 2. Select **HTTP**.
@@ -433,7 +433,7 @@ You can now block access to all unauthorized public AI agents with a Gateway [HT
 
 This ensures that public AI agents are not accessible using a managed endpoint.
 
-Alternatively, you can prevent users from using public AI agents by displaying a [custom block message](/cloudflare-one/policies/gateway/block-page/#customize-the-block-page), [redirect](/cloudflare-one/policies/gateway/block-page/#redirect-to-a-block-page), or a [user notification](/cloudflare-one/policies/gateway/http-policies/#warp-client-block-notifications) directing users to the AI agent wrapper.
+Alternatively, you can prevent users from using public AI agents by displaying a [custom block message](/cloudflare-one/traffic-policies/block-page/#customize-the-block-page), [redirect](/cloudflare-one/traffic-policies/block-page/#redirect-to-a-block-page), or a [user notification](/cloudflare-one/traffic-policies/http-policies/#warp-client-block-notifications) directing users to the AI agent wrapper.
 
 ## 6. Enforce Data Loss Prevention and Clientless Browser Isolation
 
@@ -441,10 +441,10 @@ Now that you have full control over access to your AI agent wrapper, you can enf
 
 ### Apply Data Loss Prevention profiles
 
-You can use [Data Loss Prevention (DLP)](/cloudflare-one/policies/data-loss-prevention/) to prevent your users from sending sensitive data to the AI agent.
+You can use [Data Loss Prevention (DLP)](/cloudflare-one/data-loss-prevention/) to prevent your users from sending sensitive data to the AI agent.
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Data loss prevention** > **DLP profiles**.
-2. Ensure that the [DLP profiles](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/) you want to enforce are properly configured.
+2. Ensure that the [DLP profiles](/cloudflare-one/data-loss-prevention/dlp-profiles/) you want to enforce are properly configured.
 3. Add an HTTP policy to enforce the DLP profile for the hostname for your wrapper. For example:
 
    | Selector    | Operator | Value                    | Logic | Action |
@@ -454,11 +454,11 @@ You can use [Data Loss Prevention (DLP)](/cloudflare-one/policies/data-loss-prev
 
 4. Select **Create policy**.
 
-For more information on creating DLP policies, refer to [Scan HTTP traffic](/cloudflare-one/policies/data-loss-prevention/dlp-policies/).
+For more information on creating DLP policies, refer to [Scan HTTP traffic](/cloudflare-one/data-loss-prevention/dlp-policies/).
 
 ### Execute in a clientless isolated browser
 
-Because you published your wrapper as a self-hosted Access application, you can execute it in an [isolated session](/cloudflare-one/policies/browser-isolation/setup/clientless-browser-isolation/) for your users by creating an [Access policy](/cloudflare-one/policies/access/) and configuring it for your application.
+Because you published your wrapper as a self-hosted Access application, you can execute it in an [isolated session](/cloudflare-one/remote-browser-isolation/setup/clientless-browser-isolation/) for your users by creating an [Access policy](/cloudflare-one/access-controls/policies/) and configuring it for your application.
 
 <Render file="clientless-browser-isolation" product="cloudflare-one" />
 
@@ -478,7 +478,7 @@ Once the Access policy has been created, you can attach it to your wrapper.
 
 Because Clientless Web Isolation traffic applies your Gateway HTTP policies, your configured DLP profiles will apply to isolated sessions.
 
-For more information on isolating an Access application, refer to [Isolate self-hosted application](/cloudflare-one/policies/access/isolate-application/).
+For more information on isolating an Access application, refer to [Isolate self-hosted application](/cloudflare-one/access-controls/policies/isolate-application/).
 
 ## Additional benefits
 

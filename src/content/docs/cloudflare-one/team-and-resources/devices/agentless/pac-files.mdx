@@ -116,7 +116,7 @@ https://<SUBDOMAIN>.proxy.cloudflare-gateway.com
 
 ## 2. Test your proxy server
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), create an [HTTP policy](/cloudflare-one/policies/gateway/http-policies/) for testing purposes. For example:
+1. In [Zero Trust](https://one.dash.cloudflare.com/), create an [HTTP policy](/cloudflare-one/traffic-policies/http-policies/) for testing purposes. For example:
 
    | Selector | Operator | Value         | Action |
    | -------- | -------- | ------------- | ------ |
@@ -194,7 +194,7 @@ Safari relies on your operating system's proxy server settings. To configure you
 
 To test your configuration, you can test any [supported HTTP policy](#limitations), such as the example policy created in [Step 2](#2-test-your-proxy-server). When you go to `https://example.com` in your browser, you should see the Gateway block page.
 
-You can now use the Proxy Endpoint selector in [network](/cloudflare-one/policies/gateway/network-policies/#proxy-endpoint) and [HTTP](/cloudflare-one/policies/gateway/http-policies/#proxy-endpoint) policies to filter traffic proxied via PAC files.
+You can now use the Proxy Endpoint selector in [network](/cloudflare-one/traffic-policies/network-policies/#proxy-endpoint) and [HTTP](/cloudflare-one/traffic-policies/http-policies/#proxy-endpoint) policies to filter traffic proxied via PAC files.
 
 ## Configure firewall
 
@@ -312,9 +312,9 @@ To ensure responses are allowed through your firewall, add an inbound rule to al
 
 ### Traffic limitations
 
-The agentless HTTP proxy does not support [identity-based policies](/cloudflare-one/policies/gateway/identity-selectors/) or mTLS authentication.
+The agentless HTTP proxy does not support [identity-based policies](/cloudflare-one/traffic-policies/identity-selectors/) or mTLS authentication.
 
-To enforce HTTP policies for UDP traffic, you must turn on the [Gateway proxy for UDP](/cloudflare-one/policies/gateway/http-policies/http3/#enable-http3-inspection).
+To enforce HTTP policies for UDP traffic, you must turn on the [Gateway proxy for UDP](/cloudflare-one/traffic-policies/http-policies/http3/#enable-http3-inspection).
 
 ### Gateway DNS and resolver policies
 

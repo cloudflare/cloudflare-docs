@@ -1,7 +1,7 @@
 ---
 title: Network-focused migration from VPN concentrators to Zero Trust Network Access
 pcx_content_type: design-guide
-products:	[access, gateway, magic-wan, network-interconnect]
+products: [access, gateway, magic-wan, network-interconnect]
 sidebar:
   label: "Network-focused VPN migration"
 reviewed: 2024-09-17
@@ -109,13 +109,13 @@ Both employee devices and data center networks will connect to their closest Clo
 
 ### Connecting networks to Cloudflare
 
-Figure 4 shows traffic from end user devices to Cloudflare and tunnels routing traffic to private data centers. When user traffic reaches the closest Cloudflare access point, Cloudflare will route traffic destined for private applications directly to the data centers, while processing Internet-bound traffic through Cloudflare's [Secure Web Gateway](/cloudflare-one/policies/gateway/) (SWG). It is possible to leverage existing DNS services to resolve requests to private addresses using Cloudflare [Gateway DNS policies](/cloudflare-one/policies/gateway/dns-policies/). [Magic WAN](/magic-wan/on-ramps/) is used to create IPsec tunnels between Cloudflare and data centers and is configured with static routes that determine how traffic reaches each existing network and applications.
+Figure 4 shows traffic from end user devices to Cloudflare and tunnels routing traffic to private data centers. When user traffic reaches the closest Cloudflare access point, Cloudflare will route traffic destined for private applications directly to the data centers, while processing Internet-bound traffic through Cloudflare's [Secure Web Gateway](/cloudflare-one/traffic-policies/) (SWG). It is possible to leverage existing DNS services to resolve requests to private addresses using Cloudflare [Gateway DNS policies](/cloudflare-one/traffic-policies/dns-policies/). [Magic WAN](/magic-wan/on-ramps/) is used to create IPsec tunnels between Cloudflare and data centers and is configured with static routes that determine how traffic reaches each existing network and applications.
 
 ![A high level design of Cloudflare traffic routing for phase 1 of the migration.](~/assets/images/reference-architecture/design-guide-network-vpn-migr/phase-1.svg "Figure 4: A high level design of Cloudflare traffic routing for phase 1 of the migration.")
 
 By using existing network or security appliances to terminate IPsec tunnels, secure off-ramps can be created with limited impact on the current infrastructure. These IPsec tunnels also allow for outbound server-initiated traffic to continue flowing. However, depending on the scale of the deployment, the existing appliances might run into bandwidth limitations. It is best to consider this first phase a 'pilot' or low-scale deployment to get up and running quickly and validate user-application connectivity. The next phase will improve on the design using the insights gathered during this phase.
 
-With such a design in place, Cloudflare will be able to filter traffic based on the identity of the requesting user. For example, users authenticated to the corporate identity provider and are members of the "Engineering" group will only be allowed access to the internally hosted source code repository. Furthermore, the user device may need to pass [certain posture checks](/cloudflare-one/identity/devices/) before connecting. There are [example network policies](/cloudflare-one/policies/gateway/network-policies/common-policies/#restrict-access-to-private-networks) in the zero trust documentation you can use as a reference. In essence, this will enable you to define network access policies using user identities instead of their associated IP address ranges. Getting rid of traditional 5-tuple ACLs will be a first step towards a zero trust model.
+With such a design in place, Cloudflare will be able to filter traffic based on the identity of the requesting user. For example, users authenticated to the corporate identity provider and are members of the "Engineering" group will only be allowed access to the internally hosted source code repository. Furthermore, the user device may need to pass [certain posture checks](/cloudflare-one/identity/devices/) before connecting. There are [example network policies](/cloudflare-one/traffic-policies/network-policies/common-policies/#restrict-access-to-private-networks) in the zero trust documentation you can use as a reference. In essence, this will enable you to define network access policies using user identities instead of their associated IP address ranges. Getting rid of traditional 5-tuple ACLs will be a first step towards a zero trust model.
 
 ### Device agent deployment
 
@@ -148,9 +148,9 @@ For more information about deploying `cloudflared` connectors at scale:
 
 ### DNS resolution with Resolver Policies
 
-As you can see in Figure 4, both DNS and general network traffic will flow from the employee device to Cloudflare. By default, the device agent forwards all DNS queries to Cloudflare for inspection and filtering based on [DNS policies](/cloudflare-one/policies/gateway/dns-policies/). This is great, because it will allow administrators to configure [DNS policies to block potential security threats](/cloudflare-one/policies/gateway/dns-policies/common-policies/#block-security-threats) and immediately start to protect employees as they go online. This also applies to situations where Internet traffic is from the tunnel to Cloudflare, but the client still resolves hostname requests via Cloudflare DNS services.
+As you can see in Figure 4, both DNS and general network traffic will flow from the employee device to Cloudflare. By default, the device agent forwards all DNS queries to Cloudflare for inspection and filtering based on [DNS policies](/cloudflare-one/traffic-policies/dns-policies/). This is great, because it will allow administrators to configure [DNS policies to block potential security threats](/cloudflare-one/traffic-policies/dns-policies/common-policies/#block-security-threats) and immediately start to protect employees as they go online. This also applies to situations where Internet traffic is from the tunnel to Cloudflare, but the client still resolves hostname requests via Cloudflare DNS services.
 
-For internal domains, however, Cloudflare will need to know how to resolve them. This is where [resolver policies](/cloudflare-one/policies/gateway/resolver-policies/) come into play. After the DNS policies are applied to incoming DNS requests, customers can choose to forward requests for internal DNS hostnames to their internal DNS servers. For example, the domain `example.local` might be hosted on a DNS server running at 10.10.10.123. A resolver policy will make sure requests for hostnames part of that domain will be sent to that IP.
+For internal domains, however, Cloudflare will need to know how to resolve them. This is where [resolver policies](/cloudflare-one/traffic-policies/resolver-policies/) come into play. After the DNS policies are applied to incoming DNS requests, customers can choose to forward requests for internal DNS hostnames to their internal DNS servers. For example, the domain `example.local` might be hosted on a DNS server running at 10.10.10.123. A resolver policy will make sure requests for hostnames part of that domain will be sent to that IP.
 
 A tunnel exposing a route to the internal DNS server is needed. `cloudflared` should be deployed on a host that can route DNS traffic to the 10.10.10.123 IP address. Requests for internal domains via the DNS gateway will then be redirected to this DNS server, via the tunnel.
 
@@ -198,7 +198,7 @@ In the example above, subnets X and Y are completely segmented from the rest of 
 
 In addition to routing traffic for private IP addresses, `cloudflared` can expose internal applications via publicly resolvable hostnames. This makes it possible to connect to such applications without using any software on the device. This can be very useful for use cases where you are unable to install software on the device, such as giving application access to contractors or partners.
 
-In the example below, `erp.example.com` is added as [Public Hostname](/cloudflare-one/networks/connectors/cloudflare-tunnel/routing-to-tunnel/) to the tunnel, routing traffic to port 80 and/or 443 to a specific IP address on the internal subnet Y. Access to this resource from the Internet is then protected using [Cloudflare Access security policies](/cloudflare-one/policies/access/) which also rely on the IdP connection you've set up for onboarding your employees.
+In the example below, `erp.example.com` is added as [Public Hostname](/cloudflare-one/networks/connectors/cloudflare-tunnel/routing-to-tunnel/) to the tunnel, routing traffic to port 80 and/or 443 to a specific IP address on the internal subnet Y. Access to this resource from the Internet is then protected using [Cloudflare Access security policies](/cloudflare-one/access-controls/policies/) which also rely on the IdP connection you've set up for onboarding your employees.
 
 ![Adding a public hostname to a tunnel for clientless access to internal applications.](~/assets/images/reference-architecture/design-guide-network-vpn-migr/clientless-access.svg "Figure 7: Adding a public hostname to a tunnel for clientless access to internal applications.")
 
@@ -215,4 +215,4 @@ The flexibility of the Cloudflare connectivity cloud to connect any device, appl
 ### Further reading
 
 - Magic WAN integration: [WARP on-ramp to Magic WAN](/magic-wan/zero-trust/warp/)
-- Policy configuration: [Gateway Network policies](/cloudflare-one/policies/gateway/network-policies/)
+- Policy configuration: [Gateway Network policies](/cloudflare-one/traffic-policies/network-policies/)

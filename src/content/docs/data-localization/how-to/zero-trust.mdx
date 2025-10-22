@@ -15,25 +15,25 @@ Regional Services can be used with Gateway in all [supported regions](/data-loca
 
 ### Egress policies
 
-Enterprise customers can purchase a [dedicated egress IP](/cloudflare-one/policies/gateway/egress-policies/dedicated-egress-ips/) (IPv4 and IPv6) or range of IPs geolocated to one or more Cloudflare network locations.
-This allows your egress traffic to geolocate to the city selected in your [egress policies](/cloudflare-one/policies/gateway/egress-policies/).
+Enterprise customers can purchase a [dedicated egress IP](/cloudflare-one/traffic-policies/egress-policies/dedicated-egress-ips/) (IPv4 and IPv6) or range of IPs geolocated to one or more Cloudflare network locations.
+This allows your egress traffic to geolocate to the city selected in your [egress policies](/cloudflare-one/traffic-policies/egress-policies/).
 
 ### HTTP policies
 
-As part of Regional Services, Cloudflare Gateway will only perform [TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/) when using the [WARP client](/cloudflare-one/team-and-resources/devices/warp/) (in default [Gateway with WARP mode](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/)).
+As part of Regional Services, Cloudflare Gateway will only perform [TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/) when using the [WARP client](/cloudflare-one/team-and-resources/devices/warp/) (in default [Gateway with WARP mode](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/)).
 
 {/* TODO: Reintroduce */}
 {/* <Render file="gateway/disable-udp" product="cloudflare-one" /> */}
 
 #### Data Loss Prevention (DLP)
 
-You are able to [log the payload of matched DLP rules](/cloudflare-one/policies/data-loss-prevention/dlp-policies/logging-options/#log-the-payload-of-matched-rules) and encrypt them with your public key so that only you can examine them later.
+You are able to [log the payload of matched DLP rules](/cloudflare-one/data-loss-prevention/dlp-policies/logging-options/#log-the-payload-of-matched-rules) and encrypt them with your public key so that only you can examine them later.
 
-[Cloudflare cannot decrypt encrypted payloads](/cloudflare-one/policies/data-loss-prevention/dlp-policies/logging-options/#data-privacy).
+[Cloudflare cannot decrypt encrypted payloads](/cloudflare-one/data-loss-prevention/dlp-policies/logging-options/#data-privacy).
 
 ### Network policies
 
-You are able to [configure SSH proxy and command logs](/cloudflare-one/policies/gateway/network-policies/ssh-logging/). Generate a Hybrid Public Key Encryption (HPKE) key pair and upload the public key `sshkey.pub` to your dashboard. All proxied SSH commands are immediately encrypted using this public key. The matching private key – which is in your possession – is required to view logs.
+You are able to [configure SSH proxy and command logs](/cloudflare-one/traffic-policies/network-policies/ssh-logging/). Generate a Hybrid Public Key Encryption (HPKE) key pair and upload the public key `sshkey.pub` to your dashboard. All proxied SSH commands are immediately encrypted using this public key. The matching private key – which is in your possession – is required to view logs.
 
 ### DNS policies
 

@@ -4,30 +4,29 @@ title: GitHub Enterprise Cloud
 reviewed: 2024-07-18
 sidebar:
   order: 12
-
 ---
 
 This guide covers how to configure [GitHub Enterprise Cloud](https://docs.github.com/en/enterprise-cloud@latest/admin/managing-iam/using-saml-for-enterprise-iam/configuring-saml-single-sign-on-for-your-enterprise) as a SAML application in Cloudflare Zero Trust.
 
 ## Prerequisites
 
-* An [identity provider](/cloudflare-one/integrations/identity-providers/) configured in Cloudflare Zero Trust
-* A GitHub Enterprise Cloud subscription
-* Access to a GitHub account as an organization owner
+- An [identity provider](/cloudflare-one/integrations/identity-providers/) configured in Cloudflare Zero Trust
+- A GitHub Enterprise Cloud subscription
+- Access to a GitHub account as an organization owner
 
 ## 1. Add a SaaS application to Cloudflare Zero Trust
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
 2. Select **Add an application** > **SaaS** > **Select**.
-3. For **Application**, select *GitHub*.
+3. For **Application**, select _GitHub_.
 4. For the authentication protocol, select **SAML**.
 5. Select **Add application**.
 6. Fill in the following fields:
-   * **Entity ID**: `https://github.com/orgs/<your-organization>`
-   * **Assertion Consumer Service URL**: `https://github.com/orgs/<your-organization>/saml/consume`
-   * **Name ID format**: *Email*
+   - **Entity ID**: `https://github.com/orgs/<your-organization>`
+   - **Assertion Consumer Service URL**: `https://github.com/orgs/<your-organization>/saml/consume`
+   - **Name ID format**: _Email_
 7. Copy the **SSO endpoint**, **Access Entity ID or Issuer**, and **Public key**.
-8. Configure [Access policies](/cloudflare-one/policies/access/) for the application.
+8. Configure [Access policies](/cloudflare-one/access-controls/policies/) for the application.
 9. Save the application.
 
 ## 2. Create an X.509 certificate
@@ -40,9 +39,9 @@ This guide covers how to configure [GitHub Enterprise Cloud](https://docs.github
 1. In your GitHub organization page, go to **Settings** > **Authentication security**.
 2. Under **SAML single sign-on**, turn on **Enable SAML authentication**.
 3. Fill in the following fields:
-   * **Sign on URL**:  SSO endpoint from application configuration in Cloudflare Zero Trust.
-   * **Issuer**: Access Entity ID or Issuer from application configuration in Cloudflare Zero Trust.
-   * **Public certificate**: Paste the entire x.509 certificate from step [2. Create a x.509 certificate](#2-create-a-x509-certificate).
+   - **Sign on URL**: SSO endpoint from application configuration in Cloudflare Zero Trust.
+   - **Issuer**: Access Entity ID or Issuer from application configuration in Cloudflare Zero Trust.
+   - **Public certificate**: Paste the entire x.509 certificate from step [2. Create a x.509 certificate](#2-create-a-x509-certificate).
 
 ## 4. Test the integration
 

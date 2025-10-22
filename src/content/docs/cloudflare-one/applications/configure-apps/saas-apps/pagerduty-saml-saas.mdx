@@ -4,29 +4,28 @@ title: PagerDuty
 reviewed: 2024-07-10
 sidebar:
   order: 20
-
 ---
 
 This guide covers how to configure [PagerDuty](https://support.pagerduty.com/docs/sso) as a SAML application in Cloudflare Zero Trust.
 
 ## Prerequisites
 
-* An [identity provider](/cloudflare-one/integrations/identity-providers/) configured in Cloudflare Zero Trust
-* Admin access to a PagerDuty site
+- An [identity provider](/cloudflare-one/integrations/identity-providers/) configured in Cloudflare Zero Trust
+- Admin access to a PagerDuty site
 
 ## 1. Add a SaaS application to Cloudflare Zero Trust
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
 2. Select **Add an application** > **SaaS**.
-3. For **Application**, select *PagerDuty*.
+3. For **Application**, select _PagerDuty_.
 4. For the authentication protocol, select **SAML**.
 5. Select **Add application**.
 6. Fill in the following fields:
-   * **Entity ID**: `https://<your-subdomain>.pagerduty.com`
-   * **Assertion Consumer Service URL**: ` https://<your-subdomain>.pagerduty.com/sso/saml/consume`
-   * **Name ID format**: *Email*
+   - **Entity ID**: `https://<your-subdomain>.pagerduty.com`
+   - **Assertion Consumer Service URL**: ` https://<your-subdomain>.pagerduty.com/sso/saml/consume`
+   - **Name ID format**: _Email_
 7. Copy the **SSO endpoint** and **Public key**.
-8. Configure [Access policies](/cloudflare-one/policies/access/) for the application.
+8. Configure [Access policies](/cloudflare-one/access-controls/policies/) for the application.
 9. Save the application.
 
 ## 2. Create a x.509 certificate

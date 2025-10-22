@@ -46,7 +46,7 @@ To establish a secure, outbound-only connection to Cloudflare:
 
 ## 4. (Recommended) Create a Gateway policy
 
-You can configure [Gateway network policies](/cloudflare-one/policies/gateway/network-policies/) to either block or allow access to the gRPC server. The following example consists of two policies: the first allows gRPC connections from devices that pass [device posture checks](/cloudflare-one/identity/devices/), and the second blocks all other traffic. Make sure that the Allow policy has higher [priority](/cloudflare-one/policies/gateway/order-of-enforcement/#order-of-precedence).
+You can configure [Gateway network policies](/cloudflare-one/traffic-policies/network-policies/) to either block or allow access to the gRPC server. The following example consists of two policies: the first allows gRPC connections from devices that pass [device posture checks](/cloudflare-one/identity/devices/), and the second blocks all other traffic. Make sure that the Allow policy has higher [priority](/cloudflare-one/traffic-policies/order-of-enforcement/#order-of-precedence).
 
 ### 1. Allow secured devices
 

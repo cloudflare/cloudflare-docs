@@ -4,15 +4,14 @@ title: Greenhouse Recruiting
 reviewed: 2024-07-10
 sidebar:
   order: 15
-
 ---
 
 This guide covers how to configure [Greenhouse Recruiting](https://support.greenhouse.io/hc/en-us/articles/360040753811-Configure-single-sign-on-SSO-for-Greenhouse-Recruiting) as a SAML application in Cloudflare Zero Trust.
 
 ## Prerequisites
 
-* An [identity provider](/cloudflare-one/integrations/identity-providers/) configured in Cloudflare Zero Trust
-* Admin access to an Advanced or Expert Greenhouse Recruiting site
+- An [identity provider](/cloudflare-one/integrations/identity-providers/) configured in Cloudflare Zero Trust
+- Admin access to an Advanced or Expert Greenhouse Recruiting site
 
 ## 1. Add a SaaS application to Cloudflare Zero Trust
 
@@ -40,10 +39,10 @@ This guide covers how to configure [Greenhouse Recruiting](https://support.green
 ## 4. Finish adding a SaaS application to Cloudflare Zero Trust
 
 1. In your open Zero Trust window, fill in the following fields:
-   * **Entity ID**: `greenhouse.io`
-   * **Assertion Consumer Service URL**: SSO Assertion Consumer URL from SSO configuration in Greenhouse Recruiting.
-   * **Name ID format**: *Email*
-2. Configure [Access policies](/cloudflare-one/policies/access/) for the application.
+   - **Entity ID**: `greenhouse.io`
+   - **Assertion Consumer Service URL**: SSO Assertion Consumer URL from SSO configuration in Greenhouse Recruiting.
+   - **Name ID format**: _Email_
+2. Configure [Access policies](/cloudflare-one/access-controls/policies/) for the application.
 3. Save the application.
 
 ## 5. Test the integration and finalize configuration

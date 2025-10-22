@@ -1,6 +1,6 @@
 entries:
   - name: Expiring Access Service Token Alert
-    audience: "[Access](/cloudflare-one/policies/access/) customers who want to receive a notification when their service token is about to expire."
+    audience: "[Access](/cloudflare-one/access-controls/policies/) customers who want to receive a notification when their service token is about to expire."
     availability: Purchase of Access
     associatedProducts: Cloudflare Access
     nextSteps: Extend the expiration date of the service token. For more details, refer to [Renew your service token](/cloudflare-one/identity/service-tokens/#renew-service-tokens).
@@ -341,7 +341,7 @@ entries:
     otherFilters: None.
 
   - name: Access mTLS Certificate Expiration Alert
-    audience: "[Access](/cloudflare-one/policies/access/) customers that use client certificates for mutual TLS authentication. This notification will be sent 30 and 14 days before the expiration of the certificate."
+    audience: "[Access](/cloudflare-one/access-controls/policies/) customers that use client certificates for mutual TLS authentication. This notification will be sent 30 and 14 days before the expiration of the certificate."
     availability: Purchase of [Access](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/) and/or [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/enforce-mtls/).
     associatedProducts: SSL/TLS
     nextSteps: Upload a [renewed certificate](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/#add-mtls-authentication-to-your-access-configuration).

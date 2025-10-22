@@ -4,15 +4,14 @@ title: ServiceNow (OIDC)
 reviewed: 2024-06-21
 sidebar:
   order: 23
-
 ---
 
 This guide covers how to configure [ServiceNow](https://docs.servicenow.com/bundle/washingtondc-platform-security/page/integrate/single-sign-on/task/create-OIDC-configuration-SSO.html) as an OIDC application in Cloudflare Zero Trust.
 
 ## Prerequisites
 
-* An [identity provider](/cloudflare-one/integrations/identity-providers/) configured in Cloudflare Zero Trust
-* Admin access to a ServiceNow account
+- An [identity provider](/cloudflare-one/integrations/identity-providers/) configured in Cloudflare Zero Trust
+- Admin access to a ServiceNow account
 
 ## 1. Add a SaaS application to Cloudflare Zero Trust
 
@@ -25,9 +24,10 @@ This guide covers how to configure [ServiceNow](https://docs.servicenow.com/bund
 7. In **Redirect URLs**, enter `https://<INSTANCE-NAME>.service-now.com/navpage.do`.
 8. (Optional) Enable [Proof of Key Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/) if the protocol is supported by your IdP. PKCE will be performed on all login attempts.
 9. Copy the **Client secret** and **Client ID**.
-10. Configure [Access policies](/cloudflare-one/policies/access/) for the application.
+10. Configure [Access policies](/cloudflare-one/access-controls/policies/) for the application.
 11. (Optional) In **Experience settings**, configure [App Launcher settings](/cloudflare-one/applications/app-launcher/) by turning on **Enable App in App Launcher** and, in **App Launcher URL**, entering `https://<INSTANCE-NAME>.service-now.com`.
 12. Save the application.
+
 ## 2. Add the Multiple Provider Single Sign-On Installer Plugin to ServiceNow
 
 1. In ServiceNow, select **All**.
@@ -42,10 +42,10 @@ This guide covers how to configure [ServiceNow](https://docs.servicenow.com/bund
 2. In the search bar enter `Multi-Provider SSO`, and select **Identity Providers**.
 3. Select **New** > **OpenID Connect**.
 4. In the pop-up, fill in the following fields:
-   * **Name**: Name of the SSO (for example, `Cloudflare Access`). Unless otherwise configured, users will select this name when signing in to ServiceNow.
-   * **Client ID**: **Client ID** from application configuration in Cloudflare Zero Trust.
-   * **Client Secret**: **Client Secret** from application configuration in Cloudflare Zero Trust.
-   * **Well Known Configuration URL**: `https://<TEAM-DOMAIN>.cloudflareaccess.com/cdn-cgi/access/sso/oidc/<CLIENT-ID>/.well-known/openid-configuration`.
+   - **Name**: Name of the SSO (for example, `Cloudflare Access`). Unless otherwise configured, users will select this name when signing in to ServiceNow.
+   - **Client ID**: **Client ID** from application configuration in Cloudflare Zero Trust.
+   - **Client Secret**: **Client Secret** from application configuration in Cloudflare Zero Trust.
+   - **Well Known Configuration URL**: `https://<TEAM-DOMAIN>.cloudflareaccess.com/cdn-cgi/access/sso/oidc/<CLIENT-ID>/.well-known/openid-configuration`.
 5. Select **Import**.
 6. Ensure **Active** is turned on
 7. Turn on **Show as Login option**, and for **SSO label** enter a label for the user login screen, if desired.

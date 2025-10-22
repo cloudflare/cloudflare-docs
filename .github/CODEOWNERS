@@ -58,13 +58,13 @@
 /src/content/docs/cloudflare-one/ @ranbel @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-one/applications/ @kennyj42 @ranbel @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-one/identity/ @kennyj42 @ranbel @cloudflare/pcx-technical-writing
-/src/content/docs/cloudflare-one/policies/access/ @kennyj42 @ranbel @cloudflare/pcx-technical-writing
+/src/content/docs/cloudflare-one/access-controls/ @kennyj42 @ranbel @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-one/team-and-resources/devices/ @ranbel @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-one/networks/connectors/cloudflare-tunnel/ @nikitacano @ranbel @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-one/applications/casb/ @maxvp @cloudflare/pcx-technical-writing
-/src/content/docs/cloudflare-one/policies/gateway/ @maxvp @cloudflare/pcx-technical-writing
-/src/content/docs/cloudflare-one/policies/browser-isolation/ @maxvp @ranbel @cloudflare/pcx-technical-writing
-/src/content/docs/cloudflare-one/policies/data-loss-prevention/ @maxvp @cloudflare/pcx-technical-writing
+/src/content/docs/cloudflare-one/traffic-policies/ @maxvp @cloudflare/pcx-technical-writing
+/src/content/docs/cloudflare-one/remote-browser-isolation/ @deadlypants1973 @cloudflare/pcx-technical-writing
+/src/content/docs/cloudflare-one/data-loss-prevention/ @maxvp @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-one/insights/dex/ @deadlypants1973 @cloudflare/pcx-technical-writing
 /src/content/docs/email-security/ @Maddy-Cloudflare @cloudflare/pcx-technical-writing
 

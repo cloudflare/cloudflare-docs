@@ -4,23 +4,22 @@ title: Atlassian Cloud
 reviewed: 2024-06-18
 sidebar:
   order: 5
-
 ---
 
 This guide covers how to configure [Atlassian Cloud](https://support.atlassian.com/security-and-access-policies/docs/configure-saml-single-sign-on-with-an-identity-provider/) as a SAML application in Cloudflare Zero Trust.
 
 ## Prerequisites
 
-* An [identity provider](/cloudflare-one/integrations/identity-providers/) configured in Cloudflare Zero Trust
-* Admin access to an Atlassian Cloud account
-* Atlassian Guard Standard subscription
-* A [domain](https://support.atlassian.com/user-management/docs/verify-a-domain-to-manage-accounts/) verified in Atlassian Cloud
+- An [identity provider](/cloudflare-one/integrations/identity-providers/) configured in Cloudflare Zero Trust
+- Admin access to an Atlassian Cloud account
+- Atlassian Guard Standard subscription
+- A [domain](https://support.atlassian.com/user-management/docs/verify-a-domain-to-manage-accounts/) verified in Atlassian Cloud
 
 ## 1. Add a SaaS application to Cloudflare Zero Trust
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
 2. Select **Add an application** > **SaaS**.
-3. For **Application**, select *Atlassian*.
+3. For **Application**, select _Atlassian_.
 4. For the authentication protocol, select **SAML**.
 5. Select **Add application**.
 6. Copy the **Access Entity ID or Issuer**, **Public key**, and **SSO endpoint**.
@@ -33,32 +32,32 @@ This guide covers how to configure [Atlassian Cloud](https://support.atlassian.c
 
 ## 3. Configure an identity provider and SAML SSO in Atlassian Cloud
 
-1. In Atlassian Cloud, go to **Security** > **Identity providers**.
-2. Select **Other provider** > **Choose**.
-3. For **Directory name**, enter your desired name. For example, you could enter `Cloudflare Access`.
-4. Select **Add** > **Set up SAML single sign-on** > **Next**.
+1.  In Atlassian Cloud, go to **Security** > **Identity providers**.
+2.  Select **Other provider** > **Choose**.
+3.  For **Directory name**, enter your desired name. For example, you could enter `Cloudflare Access`.
+4.  Select **Add** > **Set up SAML single sign-on** > **Next**.
 
-		:::note
-		This screen will advise you to create an authentication policy before proceeding. You will do this in step [5. Create an application policy to test integration](#5-create-an-authentication-policy-to-test-integration).
-		:::
+        :::note
+        This screen will advise you to create an authentication policy before proceeding. You will do this in step [5. Create an application policy to test integration](#5-create-an-authentication-policy-to-test-integration).
+        :::
 
-5. Fill in the following fields:
-   * **Identity provider Entity ID**: Access Entity ID or Issuer from application configuration in Cloudflare Zero Trust.
-   * **Identity provider SSO URL**: SSO endpoint from application configuration in Cloudflare Zero Trust.
-   * **Public x509 certificate**: Paste the entire x.509 certificate from step [2. Create a x.509 certificate](#2-create-a-x509-certificate).
-6. Select **Next**.
-7. Copy the **Service provider entity URL** and **Service provider assertion consumer service URL**.
-8. Select **Next**.
-9. Under **Link domain**, select the domain you want to use with SAML SSO.
+5.  Fill in the following fields:
+    - **Identity provider Entity ID**: Access Entity ID or Issuer from application configuration in Cloudflare Zero Trust.
+    - **Identity provider SSO URL**: SSO endpoint from application configuration in Cloudflare Zero Trust.
+    - **Public x509 certificate**: Paste the entire x.509 certificate from step [2. Create a x.509 certificate](#2-create-a-x509-certificate).
+6.  Select **Next**.
+7.  Copy the **Service provider entity URL** and **Service provider assertion consumer service URL**.
+8.  Select **Next**.
+9.  Under **Link domain**, select the domain you want to use with SAML SSO.
 10. Select **Next** > **Stop and save SAML**.
 
 ## 4. Finish adding a SaaS application to Cloudflare Zero Trust
 
 1. In your open Zero Trust window, fill in the following fields:
-   * **Entity ID**: Service provider entity URL from Atlassian Cloud SAML SSO set-up.
-   * **Assertion Consumer Service URL**: Service provider assertion consumer service URL from Atlassian Cloud SAML SSO set-up.
-   * **Name ID format**: *Email*
-2. Configure [Access policies](/cloudflare-one/policies/access/) for the application.
+   - **Entity ID**: Service provider entity URL from Atlassian Cloud SAML SSO set-up.
+   - **Assertion Consumer Service URL**: Service provider assertion consumer service URL from Atlassian Cloud SAML SSO set-up.
+   - **Name ID format**: _Email_
+2. Configure [Access policies](/cloudflare-one/access-controls/policies/) for the application.
 3. Save the application.
 
 ## 5. Create an authentication policy to test integration

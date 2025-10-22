@@ -38,7 +38,7 @@ The integration of Access as a single sign-on provider for your Google Workspace
 When you put your Google Workspace behind Access, users will not be able to log in using [Google](/cloudflare-one/integrations/identity-providers/google/) or [Google Workspace](/cloudflare-one/integrations/identity-providers/google-workspace/) as an identity provider. To secure Google Workspace behind Access and avoid an [authentication loop](/cloudflare-one/faq/troubleshooting/#after-putting-google-workspace-behind-access-i-cant-log-in-it-keeps-redirecting-between-access-and-google-without-ever-completing-authentication), you must configure a different identity provider (not Google or Google Workspace) for authentication.
 :::
 
-4. [Create an Access policy](/cloudflare-one/policies/access/) for your application. For example, you could allow users with an `@your_domain.com` email address.
+4. [Create an Access policy](/cloudflare-one/access-controls/policies/) for your application. For example, you could allow users with an `@your_domain.com` email address.
 
 5. Copy the **SSO endpoint**, **Access Entity ID or Issuer**, and **Public key**. These values will be used to configure Google Workspace.
 

@@ -24,19 +24,22 @@ https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/json
 ```
 
 ## Required fields
+
 You must provide either `url` or `html`:
--  `url` (string)
--  `html` (string)
+
+- `url` (string)
+- `html` (string)
 
 And at least one of:
--  `prompt` (string), or
--  `response_format` (object with a JSON Schema)
+
+- `prompt` (string), or
+- `response_format` (object with a JSON Schema)
 
 ## Common use cases
 
--  Extract product info (title, price, availability) or listings (jobs, rentals)
--  Normalize article metadata (title, author, publish date, canonical URL)
--  Convert unstructured pages into typed JSON for downstream pipelines
+- Extract product info (title, price, availability) or listings (jobs, rentals)
+- Normalize article metadata (title, author, publish date, canonical URL)
+- Convert unstructured pages into typed JSON for downstream pipelines
 
 ## Basic Usage
 
@@ -223,7 +226,7 @@ curl --request POST 'https://api.cloudflare.com/client/v4/accounts/CF_ACCOUNT_ID
 			},
 			{
 				"name": "Access",
-				"link": "https://developers.cloudflare.com/cloudflare-one/policies/access/"
+				"link": "https://developers.cloudflare.com/cloudflare-one/access-controls/policies/"
 			},
 			{
 				"name": "Tunnel",
@@ -231,11 +234,11 @@ curl --request POST 'https://api.cloudflare.com/client/v4/accounts/CF_ACCOUNT_ID
 			},
 			{
 				"name": "Gateway",
-				"link": "https://developers.cloudflare.com/cloudflare-one/policies/gateway/"
+				"link": "https://developers.cloudflare.com/cloudflare-one/traffic-policies/"
 			},
 			{
 				"name": "Browser Isolation",
-				"link": "https://developers.cloudflare.com/cloudflare-one/policies/browser-isolation/"
+				"link": "https://developers.cloudflare.com/cloudflare-one/remote-browser-isolation/"
 			},
 			{
 				"name": "Replace your VPN",
@@ -254,40 +257,37 @@ Below is an example using the TypeScript SDK:
 import Cloudflare from "cloudflare";
 
 const client = new Cloudflare({
-  apiToken: process.env["CLOUDFLARE_API_TOKEN"], // This is the default and can be omitted
+	apiToken: process.env["CLOUDFLARE_API_TOKEN"], // This is the default and can be omitted
 });
 
 const json = await client.browserRendering.json.create({
-  account_id: process.env["CLOUDFLARE_ACCOUNT_ID"],
-  url: "https://developers.cloudflare.com/",
-  prompt: "Get me the list of AI products",
-  response_format: {
-    type: "json_schema",
-    schema: {
-        type: "object",
-        properties: {
-          products: {
-            type: "array",
-            items: {
-              type: "object",
-              properties: {
-                name: {
-                  type: "string"
-                },
-                link: {
-                  type: "string"
-                }
-              },
-              required: [
-                "name"
-              ]
-            }
-          }
-        }
-      }
-    }
-  }
-);
+	account_id: process.env["CLOUDFLARE_ACCOUNT_ID"],
+	url: "https://developers.cloudflare.com/",
+	prompt: "Get me the list of AI products",
+	response_format: {
+		type: "json_schema",
+		schema: {
+			type: "object",
+			properties: {
+				products: {
+					type: "array",
+					items: {
+						type: "object",
+						properties: {
+							name: {
+								type: "string",
+							},
+							link: {
+								type: "string",
+							},
+						},
+						required: ["name"],
+					},
+				},
+			},
+		},
+	},
+});
 console.log(json);
 ```
 
@@ -375,12 +375,6 @@ In this example, Browser Rendering first calls Anthropic's Claude Sonnet 4 model
 ]
 ```
 
-<Render
-  file="setting-custom-user-agent"
-  product="browser-rendering"
-/>
+<Render file="setting-custom-user-agent" product="browser-rendering" />
 
-<Render
-  file="faq"
-  product="browser-rendering"
-/>
+<Render file="faq" product="browser-rendering" />

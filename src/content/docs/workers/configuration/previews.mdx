@@ -94,7 +94,7 @@ The resulting alias would be associated with this version, and immediately avail
 
 ## Manage access to Preview URLs
 
-When enabled, all preview URLs are available publicly. You can use [Cloudflare Access](/cloudflare-one/policies/access/) to require visitors to authenticate before accessing preview URLs. You can limit access to yourself, your teammates, your organization, or anyone else you specify in your [access policy](/cloudflare-one/policies/access).
+When enabled, all preview URLs are available publicly. You can use [Cloudflare Access](/cloudflare-one/access-controls/policies/) to require visitors to authenticate before accessing preview URLs. You can limit access to yourself, your teammates, your organization, or anyone else you specify in your [access policy](/cloudflare-one/access-controls/policies/).
 
 To limit your preview URLs to authorized emails only:
 
@@ -105,7 +105,7 @@ To limit your preview URLs to authorized emails only:
 2. In **Overview**, select your Worker.
 3. Go to **Settings** > **Domains & Routes**.
 4. For Preview URLs, click **Enable Cloudflare Access**.
-5. Optionally, to configure the Access application, click **Manage Cloudflare Access**. There, you can change the email addresses you want to authorize. View [Access policies](/cloudflare-one/policies/access/#selectors) to learn about configuring alternate rules.
+5. Optionally, to configure the Access application, click **Manage Cloudflare Access**. There, you can change the email addresses you want to authorize. View [Access policies](/cloudflare-one/access-controls/policies/#selectors) to learn about configuring alternate rules.
 6. [Validate the Access JWT](https://developers.cloudflare.com/cloudflare-one/identity/authorization-cookie/validating-json/#cloudflare-workers-example) in your Worker script using the audience (`aud`) tag and JWKs URL provided.
 
 ## Toggle Preview URLs (Enable or Disable)

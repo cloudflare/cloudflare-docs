@@ -5,7 +5,12 @@ sidebar:
   order: 6
 ---
 
-import { AvailableNotifications, Render, APIRequest, DashButton } from "~/components";
+import {
+	AvailableNotifications,
+	Render,
+	APIRequest,
+	DashButton,
+} from "~/components";
 
 You can provide automated systems with service tokens to authenticate against your Zero Trust policies. Cloudflare Access will generate service tokens that consist of a Client ID and a Client Secret. Automated systems or applications can then use these values to reach an application protected by Access.
 
@@ -15,7 +20,7 @@ This section covers how to create, renew, and revoke a service token.
 
 <Render file="access/create-service-token" product="cloudflare-one" />
 
-You can now configure your Access applications and [device enrollment permissions](/cloudflare-one/team-and-resources/devices/warp/deployment/device-enrollment/#check-for-service-token) to accept this service token. Make sure to set the policy action to [**Service Auth**](/cloudflare-one/policies/access/#service-auth); otherwise, Access will prompt for an identity provider login.
+You can now configure your Access applications and [device enrollment permissions](/cloudflare-one/team-and-resources/devices/warp/deployment/device-enrollment/#check-for-service-token) to accept this service token. Make sure to set the policy action to [**Service Auth**](/cloudflare-one/access-controls/policies/#service-auth); otherwise, Access will prompt for an identity provider login.
 
 ## Connect your service to Access
 
@@ -124,7 +129,7 @@ An alert can be configured to notify a week before a service token expires to al
 To configure a service token expiration alert:
 
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com), go to the **Notifications** page.
-		<DashButton url="/?to=/:account/notifications" />
+   <DashButton url="/?to=/:account/notifications" />
 2. Select **Add**.
 3. Select _Expiring Access Service Token_.
 4. Enter a name for your alert and an optional description.

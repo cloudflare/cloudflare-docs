@@ -34,7 +34,7 @@ You can connect to machines over `kubectl` using Cloudflare's Zero Trust platfor
 3. Select **Self-hosted**.
 4. Enter a name for your Access application.
 5. Select **Add public hostname** and input a subdomain. This will be the hostname where your application will be available to users.
-6. [Create a new policy](/cloudflare-one/policies/access/policy-management/) to control who can reach the application, or select existing policies.
+6. [Create a new policy](/cloudflare-one/access-controls/policies/policy-management/) to control who can reach the application, or select existing policies.
 7. Follow the remaining [self-hosted application creation steps](/cloudflare-one/applications/configure-apps/self-hosted-public-app/) to publish the application.
 
 ## Install `cloudflared`
@@ -103,7 +103,7 @@ You can now create a DNS record that will route traffic to this Tunnel. Multiple
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and go to the **DNS Records** page for your domain.
 
-	<DashButton url="/?to=/:account/:zone/dns/records" />
+   <DashButton url="/?to=/:account/:zone/dns/records" />
 
 2. Select **Add record**. Choose `CNAME` as the record type. For **Name**, choose the hostname where you want to create a Tunnel. This should match the hostname of the Access policy.
 

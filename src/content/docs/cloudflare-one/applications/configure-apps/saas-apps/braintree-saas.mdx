@@ -4,15 +4,14 @@ title: Braintree
 reviewed: 2024-08-01
 sidebar:
   order: 7
-
 ---
 
 This guide covers how to configure [Braintree](https://developer.paypal.com/braintree/articles/guides/single-sign-on-sso) as a SAML application in Cloudflare Zero Trust.
 
 ## Prerequisites
 
-* An [identity provider](/cloudflare-one/integrations/identity-providers/) configured in Cloudflare Zero Trust
-* Admin access to a Braintree production or sandbox account
+- An [identity provider](/cloudflare-one/integrations/identity-providers/) configured in Cloudflare Zero Trust
+- Admin access to a Braintree production or sandbox account
 
 ## 1. Add a SaaS application to Cloudflare Zero Trust
 
@@ -22,11 +21,11 @@ This guide covers how to configure [Braintree](https://developer.paypal.com/brai
 4. For the authentication protocol, select **SAML**.
 5. Select **Add application**.
 6. Fill in the following fields with temporary values:
-   * **Entity ID**: `placeholder`
-   * **Assertion Consumer Service URL**: `https://www.placeholder.com`
-   * **Name ID format**: *Email*
+   - **Entity ID**: `placeholder`
+   - **Assertion Consumer Service URL**: `https://www.placeholder.com`
+   - **Name ID format**: _Email_
 7. Copy the **SSO endpoint** and **Public key**.
-8. Configure [Access policies](/cloudflare-one/policies/access/) for the application.
+8. Configure [Access policies](/cloudflare-one/access-controls/policies/) for the application.
 9. Save the application.
 
 ## 2. Enable SSO Configuration in Braintree
@@ -34,10 +33,10 @@ This guide covers how to configure [Braintree](https://developer.paypal.com/brai
 1. In Braintree, create a [support ticket](https://developer.paypal.com/braintree/help).
 2. In **Search Issues**, enter `Login and password issues` and select the corresponding value.
 3. In **Issue Details**, fill in the following:
-   * **Merchant ID**: Your Braintree Merchant ID. This is the 16-digit value that follows `/merchants/`in your Braintree Control Panel URL.
-   * **Email domain(s) to be used in user IDs**: The email domain(s) that should be allowed to sign in to your account via SSO.
-   * **Single Sign-on HTTP POST Binding URL**: SSO endpoint from application configuration in Cloudflare Zero Trust
-   * **Certificate for validation**: Public key from application configuration in Cloudflare Zero Trust.
+   - **Merchant ID**: Your Braintree Merchant ID. This is the 16-digit value that follows `/merchants/`in your Braintree Control Panel URL.
+   - **Email domain(s) to be used in user IDs**: The email domain(s) that should be allowed to sign in to your account via SSO.
+   - **Single Sign-on HTTP POST Binding URL**: SSO endpoint from application configuration in Cloudflare Zero Trust
+   - **Certificate for validation**: Public key from application configuration in Cloudflare Zero Trust.
 4. Select whether you are using a **Production** or **Sandbox** account.
 5. Fill out the **Your contact information** fields and select **Submit a help request**.
 6. When you receive an email stating SSO has been successfully configured for your account, you can proceed to the next step.

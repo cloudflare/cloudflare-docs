@@ -43,7 +43,7 @@ The table below provides a summary of the Data Localization Suite product's beha
 | Advanced Certificate Manager | ⚫️             | ⚫️               | ⚫️                        |
 | Advanced DDoS Protection     | ✅              | ✅                | 🚧 [^3]                    |
 | API Shield                   | ✅              | ✅                | 🚧 [^4]                    |
-| Bot Management               | ✅              | ✅                | ✅                    |
+| Bot Management               | ✅              | ✅                | ✅                         |
 | DNS Firewall                 | ⚫️             | ⚫️               | 🚧 [^22]                   |
 | Page Shield                  | ✅              | ✅                | ✅                         |
 | Rate Limiting                | ✅              | ✅                | ✅ [^37]                   |
@@ -84,7 +84,7 @@ The table below provides a summary of the Data Localization Suite product's beha
 | Static IP/BYOIP          | ⚫️             | ✅ [^26]          | ⚫️                        |
 | Magic Firewall           | ⚫️             | ⚫️               | ✅                         |
 | Magic Network Monitoring | ⚫️             | ⚫️               | 🚧 [^1]                    |
-| Magic Transit            | ⚫️             | ⚫️               | ✅                    |
+| Magic Transit            | ⚫️             | ⚫️               | ✅                         |
 | Magic WAN                | ⚫️             | ⚫️               | ✅                         |
 | Spectrum                 | ✅              | ✅ [^42]          | ✅                         |
 
@@ -116,9 +116,9 @@ The table below provides a summary of the Data Localization Suite product's beha
 
 [^2]: Regular and Custom Tiered Cache works; Smart Tiered Caching not available with Regional Services.
 
-[^3]: [Adaptive DDoS Protection](/ddos-protection/managed-rulesets/adaptive-protection/) is only supported for CMB = US. All other features are available to all CMB regions. 
+[^3]: [Adaptive DDoS Protection](/ddos-protection/managed-rulesets/adaptive-protection/) is only supported for CMB = US. All other features are available to all CMB regions.
 
-[^4]: API Discovery, Volumetric Abuse Detection and [Sequence Analytics and Mitigation](/api-shield/security/sequence-analytics/) will not work with CMB = EU. All other features are available to all CMB regions. 
+[^4]: API Discovery, Volumetric Abuse Detection and [Sequence Analytics and Mitigation](/api-shield/security/sequence-analytics/) will not work with CMB = EU. All other features are available to all CMB regions.
 
 [^6]: Only when using a Custom Domain set to a region, either through Workers or [Transform Rules](/images/transform-images/serve-images-custom-paths/) within the same zone.
 
@@ -143,12 +143,14 @@ The table below provides a summary of the Data Localization Suite product's beha
 [^16]: Customer Metadata Boundary can be used to limit data transfer outside region, but Access User Logs will not be available outside US region. EU customers must use Logpush to retain logs.
 
 [^17]: Currently may only be used with US FedRAMP region.
+
 [^18]: When Cloudflare Tunnel connects to Cloudflare, the connectivity options available are the Global Region (default) and [US FedRAMP Moderate Domestic region](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cloudflared-parameters/run-parameters/#region). For incoming requests to the Cloudflare Edge, Regional Services only applies when using [published applications](/cloudflare-one/networks/connectors/cloudflare-tunnel/routing-to-tunnel/). In this case, the region associated with the DNS record will apply.
+
 [^19]: Uses Gateway HTTP and CASB.
 
 [^20]: You can [bring your own certificate](https://blog.cloudflare.com/bring-your-certificates-cloudflare-gateway/) to Gateway but these cannot yet be restricted to a specific region.
 
-[^21]: Gateway HTTP supports Regional Services. Gateway DNS does not yet support regionalization. <br/> ICMP proxy and WARP-to-WARP proxy are not available to Regional Services users. [File Sandboxing](/cloudflare-one/policies/gateway/http-policies/file-sandboxing/) (add-on) is incompatible with DLS.
+[^21]: Gateway HTTP supports Regional Services. Gateway DNS does not yet support regionalization. <br/> ICMP proxy and WARP-to-WARP proxy are not available to Regional Services users. [File Sandboxing](/cloudflare-one/traffic-policies/http-policies/file-sandboxing/) (add-on) is incompatible with DLS.
 
 [^22]: Dashboard Analytics and Logs are empty when using CMB outside the US region. Use Logpush instead.
 
@@ -164,7 +166,7 @@ The table below provides a summary of the Data Localization Suite product's beha
 
 [^30]: Regular/Generic and Custom Tiered Cache works; Smart Tiered Caching does not work with Customer Metadata Boundary (CMB). <br/> With CMB set to EU, the Zone Dashboard **Caching** > **Tiered Cache** > **Smart Tiered Caching** option will not populate the Dashboard Analytics.
 
-[^31]: DLP is part of Gateway HTTP, however, [DLP detection entries](/cloudflare-one/policies/data-loss-prevention/detection-entries/) are not available outside US region when using Customer Metadata Boundary.
+[^31]: DLP is part of Gateway HTTP, however, [DLP detection entries](/cloudflare-one/data-loss-prevention/detection-entries/) are not available outside US region when using Customer Metadata Boundary.
 
 [^32]: Dashboard Analytics are empty when using CMB outside the US region. Use Logpush instead.
 

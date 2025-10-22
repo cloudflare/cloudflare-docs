@@ -41,13 +41,13 @@ The mTLS certificate is used only to verify the client certificate. It does not 
 
 5. In **Associated hostnames**, enter the fully-qualified domain names (FQDN) that will use this certificate.
 
-   These FQDNs will be the hostnames used for the resources being protected in the [Access policy](/cloudflare-one/policies/access/). You must associate the Root CA with the FQDN that the application being protected uses.
+   These FQDNs will be the hostnames used for the resources being protected in the [Access policy](/cloudflare-one/access-controls/policies/). You must associate the Root CA with the FQDN that the application being protected uses.
 
 6. Save the policy.
 
 7. Go to **Access** > **Policies**.
 
-8. [Create an Access policy](/cloudflare-one/policies/access/policy-management/#create-a-policy) using one of the following [selectors](/cloudflare-one/policies/access/#selectors):
+8. [Create an Access policy](/cloudflare-one/access-controls/policies/policy-management/#create-a-policy) using one of the following [selectors](/cloudflare-one/access-controls/policies/#selectors):
    - **Valid Certificate**: Any client certificate that can authenticate with the Root CA will be allowed to proceed.
    - **Common Name**: Only client certificates with a specific common name will be allowed to proceed.
 
@@ -98,7 +98,7 @@ When the authentication process completes successfully, a `CF_Authorization Set-
 
 :::caution
 
-Cloudflare Gateway cannot inspect traffic to mTLS-protected domains. If a device has the WARP client turned on and passes HTTP requests through Gateway, access will be blocked unless you [bypass HTTP inspection](/cloudflare-one/policies/gateway/http-policies/#do-not-inspect) for the domain.
+Cloudflare Gateway cannot inspect traffic to mTLS-protected domains. If a device has the WARP client turned on and passes HTTP requests through Gateway, access will be blocked unless you [bypass HTTP inspection](/cloudflare-one/traffic-policies/http-policies/#do-not-inspect) for the domain.
 :::
 
 ### Test in a browser

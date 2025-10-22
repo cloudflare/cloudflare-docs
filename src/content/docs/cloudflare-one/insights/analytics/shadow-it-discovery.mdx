@@ -13,7 +13,7 @@ To access Shadow IT SaaS analytics, in [Zero Trust](https://one.dash.cloudflare.
 
 ## Prerequisites
 
-To allow Cloudflare to discover shadow IT in your traffic, you must set up [HTTP filtering](/cloudflare-one/policies/gateway/initial-setup/http/).
+To allow Cloudflare to discover shadow IT in your traffic, you must set up [HTTP filtering](/cloudflare-one/traffic-policies/initial-setup/http/).
 
 ## Use Shadow IT SaaS analytics
 
@@ -30,7 +30,7 @@ Review the Shadow IT SaaS analytics dashboard for application usage. Filter the 
     | Field            | Description                                                                                                                  |
     | ---------------- | ---------------------------------------------------------------------------------------------------------------------------- |
     | Application      | SaaS application's name and logo.                                                                                            |
-    | Application type | [Application type](/cloudflare-one/policies/gateway/application-app-types/#app-types) assigned by Cloudflare Zero Trust.     |
+    | Application type | [Application type](/cloudflare-one/traffic-policies/application-app-types/#app-types) assigned by Cloudflare Zero Trust.     |
     | Status           | Application's approval status.                                                                           |
     | Secured          | Whether the application is currently secured behind Cloudflare Access.                                                       |
     | Users            | Number of users who connected to the application over the period of time specified on the Shadow IT Discovery overview page. |
@@ -39,10 +39,10 @@ To manage application statuses in bulk, select **Set Application Statuses** to r
 
 ### 3. Create policies
 
-After marking applications, you can create [HTTP policies](/cloudflare-one/policies/gateway/http-policies/) based on application review status. For example, you can create policies that:
+After marking applications, you can create [HTTP policies](/cloudflare-one/traffic-policies/http-policies/) based on application review status. For example, you can create policies that:
 
-- Launch all **Unreviewed** and **In review** applications in an [isolated browser](/cloudflare-one/policies/gateway/http-policies/common-policies/#1-isolate-unreviewed-or-in-review-applications).
-- [Block access](/cloudflare-one/policies/gateway/http-policies/common-policies/#2-block-unapproved-applications) to all **Unapproved** applications.
+- Launch all **Unreviewed** and **In review** applications in an [isolated browser](/cloudflare-one/traffic-policies/http-policies/common-policies/#1-isolate-unreviewed-or-in-review-applications).
+- [Block access](/cloudflare-one/traffic-policies/http-policies/common-policies/#2-block-unapproved-applications) to all **Unapproved** applications.
 - Limit file upload capabilities for specific application statuses.
 
 To create an HTTP status policy directly from Shadow IT Discovery:

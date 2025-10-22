@@ -4,15 +4,14 @@ title: Ironclad
 reviewed: 2024-07-19
 sidebar:
   order: 17
-
 ---
 
 This guide covers how to configure [Ironclad](https://support.ironcladapp.com/hc/articles/12286012625559-Set-Up-Generic-SSO-SAML-Integration) as a SAML application in Cloudflare Zero Trust.
 
 ## Prerequisites
 
-* An [identity provider](/cloudflare-one/integrations/identity-providers/) configured in Cloudflare Zero Trust
-* Admin access to a Ironclad site
+- An [identity provider](/cloudflare-one/integrations/identity-providers/) configured in Cloudflare Zero Trust
+- Admin access to a Ironclad site
 
 ## 1. Add a SaaS application to Cloudflare Zero Trust
 
@@ -30,17 +29,17 @@ This guide covers how to configure [Ironclad](https://support.ironcladapp.com/hc
 2. Select **Add SAML Configuration** > **Show Additional IdP Settings**.
 3. Copy the **Callback** value.
 4. Fill in the following fields:
-   * **Entry Point**: SSO endpoint from application configuration in Cloudflare Zero Trust.
-   * **Identity Provider Certificate**: Public key from application configuration in Cloudflare Zero Trust.  The key will automatically be wrapped in `-----BEGIN CERTIFICATE-----` and `-----END CERTIFICATE-----`.
+   - **Entry Point**: SSO endpoint from application configuration in Cloudflare Zero Trust.
+   - **Identity Provider Certificate**: Public key from application configuration in Cloudflare Zero Trust. The key will automatically be wrapped in `-----BEGIN CERTIFICATE-----` and `-----END CERTIFICATE-----`.
 5. Select **Save**.
 
 ## 3. Finish adding a SaaS application to Cloudflare Zero Trust
 
 1. In your open Zero Trust window, fill in the following fields:
-   * **Entity ID**: `ironcladapp.com`
-   * **Assertion Consumer Service URL**: Callback from Ironclad SAML SSO set-up.
-   * **Name ID format**: *Email*
-2. Configure [Access policies](/cloudflare-one/policies/access/) for the application.
+   - **Entity ID**: `ironcladapp.com`
+   - **Assertion Consumer Service URL**: Callback from Ironclad SAML SSO set-up.
+   - **Name ID format**: _Email_
+2. Configure [Access policies](/cloudflare-one/access-controls/policies/) for the application.
 3. Save the application.
 
 ## 4. Add a test user to Ironclad and test the integration

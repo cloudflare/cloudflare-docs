@@ -1,16 +1,17 @@
 ---
 title: Aruba EdgeConnect Enterprise
 pcx_content_type: integration-guide
-
 ---
 
 import { Render } from "~/components";
 
-<Render file="magic-wan/third-party/aruba-edgeconnect"
-  product="networking-services"
-  params={{
-    productName: "Magic WAN",
+<Render
+	file="magic-wan/third-party/aruba-edgeconnect"
+	product="networking-services"
+	params={{
+		productName: "Magic WAN",
 		tunnelHealthCheckUrl: "/magic-wan/reference/tunnel-health-checks/",
 		magicFirewallUrl: "/magic-firewall/",
-		gatewayUrl: "/cloudflare-one/policies/gateway/"
-  }} />
+		gatewayUrl: "/cloudflare-one/traffic-policies/",
+	}}
+/>

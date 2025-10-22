@@ -26,9 +26,9 @@ To resolve private DNS queries:
 3. Route specific DNS queries to your internal DNS resolver using one of the following options:
 
 	- [Create a Local Domain Fallback entry](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/local-domains/) that points to the internal DNS resolver. For example, you can instruct the WARP client to resolve all requests for `myorg.privatecorp` through an internal resolver at `10.0.0.25` rather than attempting to resolve this publicly.
-	- Alternatively, [create a resolver policy](/cloudflare-one/policies/gateway/resolver-policies/#create-a-resolver-policy) that points to the internal DNS resolver. <Render file="gateway/resolver-policies-intro" product="cloudflare-one"/>
+	- Alternatively, [create a resolver policy](/cloudflare-one/traffic-policies/resolver-policies/#create-a-resolver-policy) that points to the internal DNS resolver. <Render file="gateway/resolver-policies-intro" product="cloudflare-one"/>
 
-4. [Enable the Gateway proxy](/cloudflare-one/policies/gateway/proxy/#turn-on-the-gateway-proxy) for TCP and UDP.
+4. [Enable the Gateway proxy](/cloudflare-one/traffic-policies/proxy/#turn-on-the-gateway-proxy) for TCP and UDP.
 
 5. Finally, ensure that your tunnel uses QUIC as the default [transport protocol](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cloudflared-parameters/run-parameters/#protocol). This will enable `cloudflared` to proxy UDP-based traffic which is required in most cases to resolve DNS queries.
 
@@ -62,7 +62,7 @@ Use the following troubleshooting strategies if you are running into issues whil
 
 - Ensure that end-user devices are enrolled into WARP by visiting [https://help.teams.cloudflare.com](https://help.teams.cloudflare.com).
 
-- Double-check the [order of precedence](/cloudflare-one/policies/gateway/order-of-enforcement/#order-of-precedence) for your [Gateway network policies](/cloudflare-one/policies/gateway/network-policies/). Ensure that a more global Block or Allow policy will not supersede application-specific policies.
+- Double-check the [order of precedence](/cloudflare-one/traffic-policies/order-of-enforcement/#order-of-precedence) for your [Gateway network policies](/cloudflare-one/traffic-policies/network-policies/). Ensure that a more global Block or Allow policy will not supersede application-specific policies.
 
 - Check your [Gateway network logs](/cloudflare-one/insights/logs/gateway-logs/#network-logs) to see whether your UDP DNS resolutions are being allowed or blocked.
 

@@ -4,38 +4,37 @@ title: Asana
 reviewed: 2024-08-01
 sidebar:
   order: 4
-
 ---
 
 This guide covers how to configure [Asana](https://help.asana.com/hc/en-us/articles/14075208738587-Authentication-and-access-management-options-for-paid-plans#gl-saml) as a SAML application in Cloudflare Zero Trust.
 
 ## Prerequisites
 
-* An [identity provider](/cloudflare-one/integrations/identity-providers/) configured in Cloudflare Zero Trust
-* Super admin access to an Asana Enterprise, Enterprise+, or Legacy Enterprise account
+- An [identity provider](/cloudflare-one/integrations/identity-providers/) configured in Cloudflare Zero Trust
+- Super admin access to an Asana Enterprise, Enterprise+, or Legacy Enterprise account
 
 ## 1. Add a SaaS application to Cloudflare Zero Trust
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
 2. Select **Add an application** > **SaaS** > **Select**.
-3. For **Application**, select *Asana*.
+3. For **Application**, select _Asana_.
 4. For the authentication protocol, select **SAML**.
 5. Select **Add application**.
 6. Fill in the following fields:
-   * **Entity ID**: `https://app.asana.com/`
-   * **Assertion Consumer Service URL**: `https://app.asana.com/-/saml/consume`
-   * **Name ID format**: *Email*
+   - **Entity ID**: `https://app.asana.com/`
+   - **Assertion Consumer Service URL**: `https://app.asana.com/-/saml/consume`
+   - **Name ID format**: _Email_
 7. Copy the **SSO endpoint** and **Public key**.
-8. Configure [Access policies](/cloudflare-one/policies/access/) for the application.
+8. Configure [Access policies](/cloudflare-one/access-controls/policies/) for the application.
 9. Save the application.
 
 ## 2. Add a SAML SSO provider to Asana
 
 1. In Asana, select your profile picture > **Admin console** > **Security** > **SAML authentication**.
-2. Under **SAML options**, select *Optional*.
+2. Under **SAML options**, select _Optional_.
 3. Fill in the following fields:
-   * Sign-in page URL: SSO endpoint from application configuration in Cloudflare Zero Trust.
-   * X.509 certificate: Public key from application configuration in Cloudflare Zero Trust. Wrap the public key in `-----BEGIN CERTIFICATE-----` and `-----END CERTIFICATE-----`.
+   - Sign-in page URL: SSO endpoint from application configuration in Cloudflare Zero Trust.
+   - X.509 certificate: Public key from application configuration in Cloudflare Zero Trust. Wrap the public key in `-----BEGIN CERTIFICATE-----` and `-----END CERTIFICATE-----`.
 4. Select **Save changes**.
 
 ## 3. Test the integration and require SSO

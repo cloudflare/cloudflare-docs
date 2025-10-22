@@ -1,7 +1,17 @@
 ---
 title: Using a zero trust framework to secure SaaS applications
 pcx_content_type: design-guide
-products: [access, browser-isolation, cloudflare-one, casb, dlp, email-security-cf1, gateway, magic-wan]
+products:
+  [
+    access,
+    browser-isolation,
+    cloudflare-one,
+    casb,
+    dlp,
+    email-security-cf1,
+    gateway,
+    magic-wan,
+  ]
 sidebar:
   order: 1
   label: Zero Trust for SaaS applications
@@ -75,7 +85,7 @@ Note a section later in this document will cover how to gain visibility into, an
 
 One simple method for securing access to SaaS applications, is to only allow access from a specific set of IP addresses. This forces users to have to connect to, and have their traffic exit from a specific network and therefore ensure whatever access controls are in place on that network are applied to that traffic.
 
-Organizations that already use IP allow lists to secure access to SaaS applications can easily migrate to Cloudflare using [dedicated egress IPs](/cloudflare-one/policies/gateway/egress-policies/dedicated-egress-ips/). User traffic egresses from Cloudflare to the Internet and onto the SaaS application, sourced from a set of IP addresses unique to the organization. This approach supports various ways in which users access Cloudflare before gaining access to the SaaS application:
+Organizations that already use IP allow lists to secure access to SaaS applications can easily migrate to Cloudflare using [dedicated egress IPs](/cloudflare-one/traffic-policies/egress-policies/dedicated-egress-ips/). User traffic egresses from Cloudflare to the Internet and onto the SaaS application, sourced from a set of IP addresses unique to the organization. This approach supports various ways in which users access Cloudflare before gaining access to the SaaS application:
 
 - **Hybrid employees:** Connecting to Cloudflare using our Zero Trust client, [WARP](/cloudflare-one/team-and-resources/devices/warp/).
 - **Office-based users:** Connecting to a local network which routes Internet bound traffic to Cloudflare through GRE or IPsec [Magic WAN tunnels](/magic-wan/).
@@ -85,20 +95,20 @@ Organizations add the new dedicated egress IPs to the existing SaaS IP allow lis
 
 There are several advantages to using Cloudflare's dedicated egress IPs when compared with using IPs from on-prem infrastructure:
 
-- [Dedicated egress IPs can be geolocated](/cloudflare-one/policies/gateway/egress-policies/dedicated-egress-ips/#ip-geolocation) to one or more Cloudflare data centers in a geography of your choosing, instead of being restricted to the geographic locations of your existing Internet breakout data centers.
-- Users will always connect to Cloudflare [through the closest Cloudflare Data Center and Cloudflare will optimize the path towards the SaaS application](/cloudflare-one/policies/gateway/egress-policies/dedicated-egress-ips/#egress-location).
-- Dedicated egress IPs are assigned to user traffic using policies that follow zero trust principles. [Egress policies](/cloudflare-one/policies/gateway/egress-policies/) can be defined that will only assign a dedicated egress IP to a user if they belong to the correct IdP group and/or pass [device posture](/cloudflare-one/identity/devices/) checks. Otherwise, traffic will be sourced from Cloudflare's public IP range, which may not be part of the SaaS IP allowlist, preventing access to the SaaS application while still allowing Internet usage.
+- [Dedicated egress IPs can be geolocated](/cloudflare-one/traffic-policies/egress-policies/dedicated-egress-ips/#ip-geolocation) to one or more Cloudflare data centers in a geography of your choosing, instead of being restricted to the geographic locations of your existing Internet breakout data centers.
+- Users will always connect to Cloudflare [through the closest Cloudflare Data Center and Cloudflare will optimize the path towards the SaaS application](/cloudflare-one/traffic-policies/egress-policies/dedicated-egress-ips/#egress-location).
+- Dedicated egress IPs are assigned to user traffic using policies that follow zero trust principles. [Egress policies](/cloudflare-one/traffic-policies/egress-policies/) can be defined that will only assign a dedicated egress IP to a user if they belong to the correct IdP group and/or pass [device posture](/cloudflare-one/identity/devices/) checks. Otherwise, traffic will be sourced from Cloudflare's public IP range, which may not be part of the SaaS IP allowlist, preventing access to the SaaS application while still allowing Internet usage.
 - Dedicated egress IPs imply that traffic needs to flow through Cloudflare before reaching the SaaS application. This makes it easy to add secure web gateway policies to protect data in the SaaS applications once users have authenticated.
 
 ![Figure 3: Enforce only traffic that has been secured by Cloudflare is accepted by the SaaS application.](~/assets/images/reference-architecture/zero-trust-for-saas/zero-trust-saas-image-03.svg "Figure 3: Enforce only traffic that has been secured by Cloudflare is accepted by the SaaS application.")
 
 #### Using Cloudflare as an identity proxy
 
-With Cloudflare, [Zero Trust Network Access (ZTNA)](https://www.cloudflare.com/en-gb/learning/access-management/what-is-ztna/) can be applied to managed SaaS applications. In this scenario, Cloudflare acts as the [Single Sign-On (SSO)](https://www.cloudflare.com/en-gb/learning/access-management/what-is-sso/) service for an application, proxying user authentication requests to the organization's existing identity providers (IdPs). This allows for additional restrictions to be layered on before granting access, such as requiring [multi-factor authentication](https://www.cloudflare.com/en-gb/learning/access-management/what-is-multi-factor-authentication/), implementing [device posture checks](/cloudflare-one/identity/devices/), or [evaluating the country](/cloudflare-one/policies/access/#selectors) the request is coming from.
+With Cloudflare, [Zero Trust Network Access (ZTNA)](https://www.cloudflare.com/en-gb/learning/access-management/what-is-ztna/) can be applied to managed SaaS applications. In this scenario, Cloudflare acts as the [Single Sign-On (SSO)](https://www.cloudflare.com/en-gb/learning/access-management/what-is-sso/) service for an application, proxying user authentication requests to the organization's existing identity providers (IdPs). This allows for additional restrictions to be layered on before granting access, such as requiring [multi-factor authentication](https://www.cloudflare.com/en-gb/learning/access-management/what-is-multi-factor-authentication/), implementing [device posture checks](/cloudflare-one/identity/devices/), or [evaluating the country](/cloudflare-one/access-controls/policies/#selectors) the request is coming from.
 
 ![Figure 4: Cloudflare can act as an identity proxy, providing a consistent authentication experience for all SaaS applications.](~/assets/images/reference-architecture/zero-trust-for-saas/zero-trust-saas-image-04.svg "Figure 4: Cloudflare can act as an identity proxy, providing a consistent authentication experience for all SaaS applications.")
 
-Most organizations initially use Cloudflare's [ZTNA service](/cloudflare-one/policies/access/) for self-hosted applications. Extending it to SaaS applications simplifies IT management in several ways, as both self-hosted and SaaS apps will:
+Most organizations initially use Cloudflare's [ZTNA service](/cloudflare-one/access-controls/policies/) for self-hosted applications. Extending it to SaaS applications simplifies IT management in several ways, as both self-hosted and SaaS apps will:
 
 - Use the same access policies
 - Leverage the same IdP and device posture integrations
@@ -128,10 +138,10 @@ To mitigate these risks, controls should be implemented for both data in transit
 
 #### Data in transit
 
-As mentioned before, all traffic can be forced through Cloudflare using the device agent, Magic WAN (MWAN) tunnels, or the remote browser. This allows [secure web gateway](/cloudflare-one/policies/gateway/) policies to manage and protect data as it is uploaded or downloaded from SaaS applications. Common use cases include:
+As mentioned before, all traffic can be forced through Cloudflare using the device agent, Magic WAN (MWAN) tunnels, or the remote browser. This allows [secure web gateway](/cloudflare-one/traffic-policies/) policies to manage and protect data as it is uploaded or downloaded from SaaS applications. Common use cases include:
 
-- Restricting the ability to download [all](/cloudflare-one/policies/gateway/http-policies/common-policies/#block-google-drive-downloads) or a [subset of files](/cloudflare-one/policies/gateway/http-policies/common-policies/#block-file-types) from managed SaaS applications to specific groups of users within the organization.
-- Using [Data Loss Prevention (DLP)](/cloudflare-one/policies/data-loss-prevention/#_top) profiles to limit the download of data containing sensitive information from managed SaaS applications.
+- Restricting the ability to download [all](/cloudflare-one/traffic-policies/http-policies/common-policies/#block-google-drive-downloads) or a [subset of files](/cloudflare-one/traffic-policies/http-policies/common-policies/#block-file-types) from managed SaaS applications to specific groups of users within the organization.
+- Using [Data Loss Prevention (DLP)](/cloudflare-one/data-loss-prevention/#_top) profiles to limit the download of data containing sensitive information from managed SaaS applications.
 
 For more information about securing data in transit, refer to our [reference architecture center](/reference-architecture/diagrams/security/securing-data-in-transit/).
 
@@ -159,7 +169,7 @@ As described already, implementing ZTNA to secure your email platform offers num
 
 #### Tenant control
 
-Organizations with stringent requirements about email communications for compliance or regulatory reasons, operational control or accountability, or to reduce the potential for data leaks can block access to email tenants other than the organization's own. This can be achieved by using [Cloudflare Gateway SaaS tenant controls](/cloudflare-one/policies/gateway/http-policies/tenant-control/). Cloudflare injects custom HTTP headers into the traffic flow, informing Microsoft 365 and Google Workspace of the specific tenant users are allowed to authenticate into and blocking any access attempts to any other tenant.
+Organizations with stringent requirements about email communications for compliance or regulatory reasons, operational control or accountability, or to reduce the potential for data leaks can block access to email tenants other than the organization's own. This can be achieved by using [Cloudflare Gateway SaaS tenant controls](/cloudflare-one/traffic-policies/http-policies/tenant-control/). Cloudflare injects custom HTTP headers into the traffic flow, informing Microsoft 365 and Google Workspace of the specific tenant users are allowed to authenticate into and blocking any access attempts to any other tenant.
 
 ![Figure 7: Cloudflare can enforce access to only specific cloud email tenants.](~/assets/images/reference-architecture/zero-trust-for-saas/zero-trust-saas-image-07.svg "Figure 7: Cloudflare can enforce access to only specific cloud email tenants.")
 
@@ -187,7 +197,7 @@ Cloudflare also helps ensure the availability of cloud email services. It auto-s
 
 Organizations using Microsoft 365 can enhance protection against sensitive information leaks through email by integrating a Cloudflare add-in into their environment. This integration enables IT administrators to establish [outbound Data Loss Prevention (DLP) policies](/cloudflare-one/email-security/outbound-dlp/) that leverage the same DLP profiles used with the Secure Web Gateway (SWG) and API Cloud Access Security Broker (CASB).
 
-Moreover, organizations that utilize [Microsoft Purview Sensitivity Labels](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/integration-profiles/) for classifying and safeguarding sensitive documents can incorporate these labels into Cloudflare's DLP profiles. This capability allows the creation of targeted policies, such as blocking emails containing Microsoft Office documents marked as 'Highly Confidential' in Microsoft Outlook from being sent to external recipients. These DLP profiles can also be applied across SWG and API CASB.
+Moreover, organizations that utilize [Microsoft Purview Sensitivity Labels](/cloudflare-one/data-loss-prevention/dlp-profiles/integration-profiles/) for classifying and safeguarding sensitive documents can incorporate these labels into Cloudflare's DLP profiles. This capability allows the creation of targeted policies, such as blocking emails containing Microsoft Office documents marked as 'Highly Confidential' in Microsoft Outlook from being sent to external recipients. These DLP profiles can also be applied across SWG and API CASB.
 
 ## Regain control over unmanaged SaaS applications
 
@@ -212,10 +222,10 @@ With this information, IT teams can analyze and decide how to handle each unmana
 
 Data protection for unmanaged SaaS applications is similar to that for managed SaaS applications, but the focus shifts from mitigating the downloading of data to preventing the uploading of sensitive information. Policies can be configured using Cloudflare Gateway to address these risks. Common use cases include:
 
-- Restricting the ability to [upload certain file types](/cloudflare-one/policies/data-loss-prevention/dlp-policies/common-policies/#block-file-types) to SaaS applications, limiting this capability to specific groups of users within the organization.
+- Restricting the ability to [upload certain file types](/cloudflare-one/data-loss-prevention/dlp-policies/common-policies/#block-file-types) to SaaS applications, limiting this capability to specific groups of users within the organization.
 - Using Data Loss Prevention (DLP) profiles to block the upload of data containing sensitive information.
 
-In addition to these measures, [remote browser isolation](/cloudflare-one/policies/browser-isolation/#_top) can be considered for unmanaged SaaS applications. This approach allows users to access certain unmanaged SaaS applications while [restricting their actions within those applications](/cloudflare-one/policies/browser-isolation/isolation-policies/#policy-settings) to prevent misuse.
+In addition to these measures, [remote browser isolation](/cloudflare-one/remote-browser-isolation/#_top) can be considered for unmanaged SaaS applications. This approach allows users to access certain unmanaged SaaS applications while [restricting their actions within those applications](/cloudflare-one/remote-browser-isolation/isolation-policies/#policy-settings) to prevent misuse.
 
 ![Figure 10: DLP policies can be combined with browser isolation, to protect company data.](~/assets/images/reference-architecture/zero-trust-for-saas/zero-trust-saas-image-10.svg "Figure 10: DLP policies can be combined with browser isolation, to protect company data.")
 
@@ -223,7 +233,7 @@ In addition to these measures, [remote browser isolation](/cloudflare-one/polici
 
 Many SaaS applications offer a free version as part of their business model to encourage users to integrate them into their work. This helps demonstrate the application's usefulness and facilitates its adoption at the corporate level ([Cloudflare follows this model as well](https://www.cloudflare.com/en-gb/plans/zero-trust-services/)). When a previously unmanaged SaaS application is officially adopted by the organization, IT teams take over its management to ensure proper support and adherence to best practices. This involves aligning the new SaaS application with all the aspects discussed in the Securing Managed SaaS Applications section.
 
-After fully adopting the new SaaS application, access to the consumer version may be restricted. If the corporate SaaS version has a unique domain, access to other tenant domains or the consumer domain can be blocked using Cloudflare DNS and/or HTTP policies. Some SaaS solutions offer [native tenant control](/cloudflare-one/policies/gateway/http-policies/tenant-control/) through HTTP headers, which can be enforced by injecting these headers for data in transit using Cloudflare Gateway HTTP policies.
+After fully adopting the new SaaS application, access to the consumer version may be restricted. If the corporate SaaS version has a unique domain, access to other tenant domains or the consumer domain can be blocked using Cloudflare DNS and/or HTTP policies. Some SaaS solutions offer [native tenant control](/cloudflare-one/traffic-policies/http-policies/tenant-control/) through HTTP headers, which can be enforced by injecting these headers for data in transit using Cloudflare Gateway HTTP policies.
 
 ## Summary
 

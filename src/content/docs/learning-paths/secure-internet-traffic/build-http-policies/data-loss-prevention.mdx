@@ -7,7 +7,7 @@ sidebar:
 
 import { Render, TabItem, Tabs, APIRequest } from "~/components";
 
-In order to use Data Loss Prevention (DLP) tools within Cloudflare Zero Trust, you first need to define your DLP profiles. [DLP profiles](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/) are complex objects with dictionaries, pre-built detections, and custom logic that you can reference as selectors within your Gateway policies.
+In order to use Data Loss Prevention (DLP) tools within Cloudflare Zero Trust, you first need to define your DLP profiles. [DLP profiles](/cloudflare-one/data-loss-prevention/dlp-profiles/) are complex objects with dictionaries, pre-built detections, and custom logic that you can reference as selectors within your Gateway policies.
 
 ## Configure a DLP profile
 
@@ -113,7 +113,7 @@ For example, you can use a custom expression to detect when your users share pro
 
 #### DLP datasets
 
-If your data is a distinct [dataset](/cloudflare-one/policies/data-loss-prevention/detection-entries/#datasets) you have defined, you can build a profile by uploading a database to use in an Exact Data Match or Custom Wordlist function. Exact Data Match and Custom Wordlist feature some key differences:
+If your data is a distinct [dataset](/cloudflare-one/data-loss-prevention/detection-entries/#datasets) you have defined, you can build a profile by uploading a database to use in an Exact Data Match or Custom Wordlist function. Exact Data Match and Custom Wordlist feature some key differences:
 
 |                     | Exact Data Match                                        | Custom Wordlist                                                    |
 | ------------------- | ------------------------------------------------------- | ------------------------------------------------------------------ |
@@ -129,7 +129,7 @@ As your datasets change and grow, we recommend building a pipeline to update the
 
 If your data already contains Microsoft Information Protection (MIP) labeling schema, Cloudflare can detect those values in-transit automatically. To get started, connect your Microsoft 365 account with a [CASB integration](/cloudflare-one/applications/casb/casb-integrations/microsoft-365/). Cloudflare will automatically pull in your existing MIP definitions into Zero Trust. You can then use the MIP definitions to build DLP profiles for use in Gateway policies.
 
-For more information, refer to [Integration profiles](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/integration-profiles/).
+For more information, refer to [Integration profiles](/cloudflare-one/data-loss-prevention/dlp-profiles/integration-profiles/).
 
 ## Build DLP policies
 

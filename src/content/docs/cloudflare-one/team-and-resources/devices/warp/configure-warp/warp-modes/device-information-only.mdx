@@ -3,15 +3,14 @@ pcx_content_type: how-to
 title: Enable Device Information Only
 sidebar:
   order: 2
-
 ---
 
-import { TabItem, Tabs, Details, Width, APIRequest } from "~/components"
+import { TabItem, Tabs, Details, Width, APIRequest } from "~/components";
 
 <Details header="Feature availability">
 
 | System   | Availability |
-| ---------| -------------|
+| -------- | ------------ |
 | Windows  | ✅           |
 | macOS    | ✅           |
 | Linux    | ✅           |
@@ -28,18 +27,18 @@ Device Information Only mode allows you to enforce device posture rules when a u
 Using the API, enable client certificate provisioning for [your zone](/fundamentals/account/find-account-and-zone-ids/):
 
 <APIRequest
-  path="/zones/{zone_id}/devices/policy/certificates"
-  method="PATCH"
-  json={{
-    enabled: true,
-  }}
+	path="/zones/{zone_id}/devices/policy/certificates"
+	method="PATCH"
+	json={{
+		enabled: true,
+	}}
 />
 
 ## 2. Configure the WARP client
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client**.
 
-2. Under  **Profile settings** card, choose a [device profile](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-profiles/) and select **Configure**.
+2. Under **Profile settings** card, choose a [device profile](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-profiles/) and select **Configure**.
 
 3. For **Service mode**, select **Device Information Only**.
 
@@ -49,62 +48,61 @@ Using the API, enable client certificate provisioning for [your zone](/fundament
 
 ## 3. (Optional) Verify the client certificate
 
-1. To view the client certificates installed on the device:
+1.  To view the client certificates installed on the device:
 
-		<Tabs> <TabItem label="Windows">
+        <Tabs> <TabItem label="Windows">
 
-		1. Open the **Start** menu and select **Run**.
-		2. Enter `certlm.msc`.
-		3. Go to **Personal** > **Certificates**.
+        1. Open the **Start** menu and select **Run**.
+        2. Enter `certlm.msc`.
+        3. Go to **Personal** > **Certificates**.
 
-		</TabItem> <TabItem label="macOS">
+        </TabItem> <TabItem label="macOS">
 
-		1. Open **Keychain Access**.
-		2. Go to **System** > **My Certificates**.
+        1. Open **Keychain Access**.
+        2. Go to **System** > **My Certificates**.
 
-		</TabItem>
+        </TabItem>
 
-		<TabItem label="Linux">
+        <TabItem label="Linux">
 
-		Open a terminal window and run the following command:
+        Open a terminal window and run the following command:
 
-		```sh
-		$ certutil -L -d sql:/etc/pki/nssdb
-		```
+        ```sh
+        $ certutil -L -d sql:/etc/pki/nssdb
+        ```
 
-		</TabItem>
+        </TabItem>
 
-		<TabItem label="iOS">
+        <TabItem label="iOS">
 
-		Go to **Settings** > **General** > **About** > **Certificate Trust Settings**.
+        Go to **Settings** > **General** > **About** > **Certificate Trust Settings**.
 
-		</TabItem>
+        </TabItem>
 
-		<TabItem label="Android">
+        <TabItem label="Android">
 
-		The location of the client certificate may vary depending on the Android device.
+        The location of the client certificate may vary depending on the Android device.
 
-		- **Samsung**: Go to **Settings** > **Security** > **Other security settings** > **View security certificates**.
-		- **Google Pixel**: Go to **Security** > **Advanced settings** > **Encryption & credentials** > **Credential storage**.
+        - **Samsung**: Go to **Settings** > **Security** > **Other security settings** > **View security certificates**.
+        - **Google Pixel**: Go to **Security** > **Advanced settings** > **Encryption & credentials** > **Credential storage**.
 
-		</TabItem>
+        </TabItem>
 
-		<TabItem label="ChromeOS">
+        <TabItem label="ChromeOS">
 
-		Go to **Settings** > **Apps** > **Google Play Store** > **Manage Android Preferences** > **Security** > **Credentials**.
+        Go to **Settings** > **Apps** > **Google Play Store** > **Manage Android Preferences** > **Security** > **Credentials**.
 
-		</TabItem>
-		</Tabs>
+        </TabItem>
+        </Tabs>
 
-		The client certificate name should match the **Device ID** in your WARP client **Preferences**.
+        The client certificate name should match the **Device ID** in your WARP client **Preferences**.
 
-2. To verify the client certificate in your Cloudflare account:
+2.  To verify the client certificate in your Cloudflare account:
+    1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), select the zone for which you enabled client certificates.
+    2. Go to **SSL/TLS** > **Client Certificates**.
 
-   1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), select the zone for which you enabled client certificates.
-   2. Go to **SSL/TLS** > **Client Certificates**.
-
-   The certificate name is the WARP enrollment **Device ID**.
-   ![Example client certificate in the Cloudflare dashboard](~/assets/images/cloudflare-one/connections/device-information-only-cert.png)
+    The certificate name is the WARP enrollment **Device ID**.
+    ![Example client certificate in the Cloudflare dashboard](~/assets/images/cloudflare-one/connections/device-information-only-cert.png)
 
 ## 4. Enforce the client certificate
 
@@ -114,16 +112,17 @@ To block traffic from devices that do not have a valid client certificate:
 2. Under **Hosts**, select **Edit** and enter the hostname of your Access application (for example, `app.mycompany.com`). This enables mTLS authentication for the application.
 3. Select **Create mTLS rule**.
 4. Create a WAF custom rule that checks all requests to your application for a valid client certificate:
-    | Field | Operator | Value | Logic | Action |
-    | ----- | -------- | ----- | ----- | ------ |
-    | Client Certificate | equals | Off | And | Block |
-    | Hostname | equals |  `app.mycompany.com` | | |
+   | Field | Operator | Value | Logic | Action |
+   | ----- | -------- | ----- | ----- | ------ |
+   | Client Certificate | equals | Off | And | Block |
+   | Hostname | equals | `app.mycompany.com` | | |
 5. Select **Deploy**.
 
-Device Information Only mode is now enabled on the device. To start enforcing device posture, set up a [WARP client check](/cloudflare-one/identity/devices/warp-client-checks/) and add a *Require* device posture rule to your [Access policy](/cloudflare-one/policies/access/). When the device connects to the Access application for the first time, the browser will ask to use the client certificate installed by WARP.
+Device Information Only mode is now enabled on the device. To start enforcing device posture, set up a [WARP client check](/cloudflare-one/identity/devices/warp-client-checks/) and add a _Require_ device posture rule to your [Access policy](/cloudflare-one/access-controls/policies/). When the device connects to the Access application for the first time, the browser will ask to use the client certificate installed by WARP.
 
 <Width size="large">
-![Browser prompts for client certificate](~/assets/images/cloudflare-one/connections/device-information-only-browser.png)
+	![Browser prompts for client
+	certificate](~/assets/images/cloudflare-one/connections/device-information-only-browser.png)
 </Width>
 
 ## Limitations

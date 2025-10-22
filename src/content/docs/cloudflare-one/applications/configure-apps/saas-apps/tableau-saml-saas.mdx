@@ -4,21 +4,20 @@ title: Tableau Cloud
 reviewed: 2024-07-03
 sidebar:
   order: 27
-
 ---
 
 This guide covers how to configure [Tableau Cloud](https://help.tableau.com/current/online/en-us/saml_config_site.htm) as a SAML application in Cloudflare Zero Trust.
 
 ## Prerequisites
 
-* An [identity provider](/cloudflare-one/integrations/identity-providers/) configured in Cloudflare Zero Trust
-* Admin access to a Tableau Cloud site
+- An [identity provider](/cloudflare-one/integrations/identity-providers/) configured in Cloudflare Zero Trust
+- Admin access to a Tableau Cloud site
 
 ## 1. Add a SaaS application to Cloudflare Zero Trust
 
 1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
 2. Select **Add an application** > **SaaS**.
-3. For **Application**, select *Tableau*.
+3. For **Application**, select _Tableau_.
 4. For the authentication protocol, select **SAML**.
 5. Select **Add application**.
 6. Copy the **SAML Metadata endpoint**.
@@ -32,7 +31,7 @@ This guide covers how to configure [Tableau Cloud](https://help.tableau.com/curr
 ## 3. Add a SAML SSO provider to Tableau Cloud
 
 1. In Tableau Cloud, go to **Settings** > **Authentication**.
-2. Turn on **Enable an additional authentication method**. For **select authentication type**, select *SAML*.
+2. Turn on **Enable an additional authentication method**. For **select authentication type**, select _SAML_.
 3. Under **1. Get Tableau Cloud metadata**, copy the **Tableau Cloud entity ID** and **Tableau Cloud ACS URL**.
 4. Under **4. Upload metadata to Tableau**, select **Choose a file**, and upload the `.xml` file created in step [2. Download the metadata file](#2-download-the-metadata-file)
 5. Under **5. Map attributes**, turn on **Full name**. For **Name (full name)**, enter `name`.
@@ -42,10 +41,10 @@ This guide covers how to configure [Tableau Cloud](https://help.tableau.com/curr
 ## 4. Finish adding a SaaS application to Cloudflare Zero Trust
 
 1. In your open Zero Trust window, fill in the following fields:
-   * **Entity ID**: Tableau Cloud entity ID from Tableau Cloud SAML SSO set-up.
-   * **Assertion Consumer Service URL**: Tableau Cloud ACS URL from Tableau Cloud SAML SSO set-up.
-   * **Name ID format**: *Email*
-2. Configure [Access policies](/cloudflare-one/policies/access/) for the application.
+   - **Entity ID**: Tableau Cloud entity ID from Tableau Cloud SAML SSO set-up.
+   - **Assertion Consumer Service URL**: Tableau Cloud ACS URL from Tableau Cloud SAML SSO set-up.
+   - **Name ID format**: _Email_
+2. Configure [Access policies](/cloudflare-one/access-controls/policies/) for the application.
 3. Save the application.
 
 ## 5. Test the integration and set default authentication type

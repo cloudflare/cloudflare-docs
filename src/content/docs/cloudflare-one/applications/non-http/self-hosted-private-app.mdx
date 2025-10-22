@@ -17,9 +17,9 @@ This feature replaces the legacy [private network app type](/cloudflare-one/appl
 ## Prerequisites
 
 - Private IPs and hostnames are reachable over Cloudflare WARP, Magic WAN or Browser Isolation. For more details, refer to [Connect a private network](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/).
-- Private hostnames route to your custom DNS resolver through [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/local-domains/) or [Gateway resolver policies](/cloudflare-one/policies/gateway/resolver-policies/).
+- Private hostnames route to your custom DNS resolver through [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/local-domains/) or [Gateway resolver policies](/cloudflare-one/traffic-policies/resolver-policies/).
 - Public IPs and hostnames can be used to define a private application, however the IP or hostname must route through Cloudflare via [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/), [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/), or [Magic WAN](/magic-wan/configuration/manually/how-to/configure-routes/).
-- (Optional) Turn on [Gateway TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/) if you want to use Access JWTs to manage [HTTPS application sessions](#https-applications).
+- (Optional) Turn on [Gateway TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/) if you want to use Access JWTs to manage [HTTPS application sessions](#https-applications).
 
 ## Add your application to Access
 
@@ -29,10 +29,10 @@ This feature replaces the legacy [private network app type](/cloudflare-one/appl
 	params={{ private: true }}
 />
 
-6.  Add the private IP and/or private hostname that represents the application. You can use [wildcards](/cloudflare-one/policies/access/app-paths/) with private hostnames to protect multiple parts of an application that share a root path.
+6.  Add the private IP and/or private hostname that represents the application. You can use [wildcards](/cloudflare-one/access-controls/policies/app-paths/) with private hostnames to protect multiple parts of an application that share a root path.
 
     :::note
-    Private hostnames are currently only available over port `443` over HTTPS and the application must have a valid Server Name Indicator (SNI). If you are configuring a private IP on any port other than `443` and plan to use Browser Isolation, note that this [will result in a Gateway block page](/cloudflare-one/policies/browser-isolation/known-limitations/#browser-isolation-is-not-compatible-with-private-ips-on-non-443-ports).
+    Private hostnames are currently only available over port `443` over HTTPS and the application must have a valid Server Name Indicator (SNI). If you are configuring a private IP on any port other than `443` and plan to use Browser Isolation, note that this [will result in a Gateway block page](/cloudflare-one/remote-browser-isolation/known-limitations/#browser-isolation-is-not-compatible-with-private-ips-on-non-443-ports).
     :::
 
 7.  <Render file="access/add-access-policies" product="cloudflare-one" />
@@ -56,7 +56,7 @@ This feature replaces the legacy [private network app type](/cloudflare-one/appl
     	product="cloudflare-one"
     />
 
-        These settings only apply to private hostnames and require [Gateway TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/).
+        These settings only apply to private hostnames and require [Gateway TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/).
 
 14. Select **Save**.
 
@@ -66,9 +66,9 @@ Users can now connect to your private application after authenticating with Clou
 
 ### HTTPS applications
 
-If [Gateway TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/) is turned on and a user is accessing an HTTPS application on port `443`, Cloudflare Access will present a login page in the browser and issue an [application token](/cloudflare-one/identity/authorization-cookie/application-token/) to your origin. This is the same cookie-based authentication flow used by [self-hosted public apps](/cloudflare-one/applications/configure-apps/self-hosted-public-app/).
+If [Gateway TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/) is turned on and a user is accessing an HTTPS application on port `443`, Cloudflare Access will present a login page in the browser and issue an [application token](/cloudflare-one/identity/authorization-cookie/application-token/) to your origin. This is the same cookie-based authentication flow used by [self-hosted public apps](/cloudflare-one/applications/configure-apps/self-hosted-public-app/).
 
-If [Gateway TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/) is turned off, session management is [handled in the WARP client](#non-https-applications) instead of in the browser.
+If [Gateway TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/) is turned off, session management is [handled in the WARP client](#non-https-applications) instead of in the browser.
 
 ### Non-HTTPS applications
 
@@ -80,8 +80,12 @@ The WARP client manages sessions for all non-HTTPS applications. Users will rece
 
 ### Access vs Gateway policies
 
-<Render file="access/modify-gateway-policy-precedence" product="cloudflare-one" params={{ selector: "Access Private App", protocol: "private" }} />
+<Render
+	file="access/modify-gateway-policy-precedence"
+	product="cloudflare-one"
+	params={{ selector: "Access Private App", protocol: "private" }}
+/>
 
 ### Private hostname vs private IP
 
-An Access application defined by a private hostname takes precedence over an Access application defined by a private IP. For example, assume App-1 points to `wiki.internal.local` and App-2 points to `10.0.0.1`, but `wiki.internal.local` resolves to 	`10.0.0.1`. Users who go to `wiki.internal.local` will never match App-2; they will be allowed or blocked strictly based on App-1 Access policies (and [Gateway policies](#access-vs-gateway-policies)).
+An Access application defined by a private hostname takes precedence over an Access application defined by a private IP. For example, assume App-1 points to `wiki.internal.local` and App-2 points to `10.0.0.1`, but `wiki.internal.local` resolves to `10.0.0.1`. Users who go to `wiki.internal.local` will never match App-2; they will be allowed or blocked strictly based on App-1 Access policies (and [Gateway policies](#access-vs-gateway-policies)).
