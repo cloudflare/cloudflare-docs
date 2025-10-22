@@ -14,7 +14,7 @@ With Cloudflare Zero Trust, you can configure Zero Trust policies that rely on a
 Setup instructions and requirements vary depending on the device posture attribute. Refer to the links below to view the setup guide for your provider.
 
 - [WARP client checks](/cloudflare-one/identity/devices/warp-client-checks/) are performed by the Cloudflare WARP client.
-- [Service-to-service checks](/cloudflare-one/identity/devices/service-providers/) are performed by third-party device posture providers.
+- [Service-to-service checks](/cloudflare-one/integrations/service-providers/) are performed by third-party device posture providers.
 - [Access integration checks](/cloudflare-one/identity/devices/access-integrations/) are only configurable for Access applications. These attributes cannot be used in Gateway policies.
 
 ## 2. Verify device posture checks
@@ -37,7 +37,7 @@ Gateway does not support device posture checks for the [Tanium Access integratio
 
 ## 4. Ensure traffic is going through WARP
 
-[WARP client](/cloudflare-one/identity/devices/warp-client-checks/) and [service-to-service](/cloudflare-one/identity/devices/service-providers/) posture checks rely on traffic going through WARP to detect posture information for a device. In your [Split Tunnel configuration](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/), ensure that the following domains are included in WARP:
+[WARP client](/cloudflare-one/identity/devices/warp-client-checks/) and [service-to-service](/cloudflare-one/integrations/service-providers/) posture checks rely on traffic going through WARP to detect posture information for a device. In your [Split Tunnel configuration](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/), ensure that the following domains are included in WARP:
 
 - The IdP used to authenticate to Cloudflare Zero Trust if posture check is part of an Access policy.
 - `<your-team-name>.cloudflareaccess.com` if posture check is part of an Access policy.
@@ -77,4 +77,4 @@ By default, the WARP client polls the device for status changes every five minut
 
 #### Service provider checks
 
-When setting up a [service-to-service integration](/cloudflare-one/identity/devices/service-providers/), you will choose a polling frequency to determine how often Cloudflare will query the third-party API. To set the polling frequency via the API, use the [`interval`](/api/resources/zero_trust/subresources/devices/subresources/posture/subresources/integrations/methods/edit/) parameter.
+When setting up a [service-to-service integration](/cloudflare-one/integrations/service-providers/), you will choose a polling frequency to determine how often Cloudflare will query the third-party API. To set the polling frequency via the API, use the [`interval`](/api/resources/zero_trust/subresources/devices/subresources/posture/subresources/integrations/methods/edit/) parameter.

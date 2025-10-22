@@ -37,7 +37,7 @@ If you plan to grant access to services based on group membership, [view the use
 
 #### Device posture
 
-Most customers will also build policies that are contingent on the use of a corporate device. For example, all users on corporate devices can access `*.jira.internal.com`, but users on personal devices can only access `dev.internal.jira.com`. In order for this to be effective, we recommend defining a source of truth for your corporate devices. This is sometimes the presence of a specific [issued certificate](/cloudflare-one/identity/devices/warp-client-checks/client-certificate/), the presence of a [process with a matched hash](/cloudflare-one/identity/devices/warp-client-checks/application-check/), or an API integration with a supported [thirty-party endpoint security provider](/cloudflare-one/identity/devices/service-providers/) like Crowdstrike or SentinelOne.
+Most customers will also build policies that are contingent on the use of a corporate device. For example, all users on corporate devices can access `*.jira.internal.com`, but users on personal devices can only access `dev.internal.jira.com`. In order for this to be effective, we recommend defining a source of truth for your corporate devices. This is sometimes the presence of a specific [issued certificate](/cloudflare-one/identity/devices/warp-client-checks/client-certificate/), the presence of a [process with a matched hash](/cloudflare-one/identity/devices/warp-client-checks/application-check/), or an API integration with a supported [thirty-party endpoint security provider](/cloudflare-one/integrations/service-providers/) like Crowdstrike or SentinelOne.
 
 :::note
 
