@@ -5,7 +5,13 @@ sidebar:
   order: 2
 ---
 
-Before you can activate your Connector, you need to follow Cloudflare's instructions regarding DHCP. For full instructions on this, refer to:
+import { Render } from "~/components";
 
-- The [hardware version of Connector](/magic-wan/configuration/connector/configure-hardware-connector/#activate-connector)
-- The [virtual version of Connector](/magic-wan/configuration/connector/configure-virtual-connector/#activate-connector)
+<Render
+	file="mconn/maintenance/activate-connectors"
+	product="networking-services"
+	params={{
+		productName: "Magic WAN Connector",
+		hadwareConnectorURL: "/magic-wan/configuration/connector/configure-hardware-connector/#activate-connector",
+		virtualConnectorURL: "/magic-wan/configuration/connector/configure-virtual-connector/#activate-connector",
+		}} />

@@ -129,6 +129,35 @@ To test in Workers AI Playground:
 
 Workers AI Playground will show a **Connected** status and list the available tools. You can now ask the AI model to complete a task using an available tool. Requests made to an MCP server will appear in your [portal logs](#view-portal-logs).
 
+For MCP clients with server configuration files, we recommend using the `npx` command with the `mcp-remote@latest` argument:
+
+``` json title= "MCP client configuration for MCP portals" 
+{
+    "mcpServers": {
+      "example-mcp-server": {
+        "command": "npx",
+        "args": [
+          "-y",
+          "mcp-remote@latest",
+          "https://<subdomain>.<domain>.com/mcp"
+        ]
+      }
+    }
+} 
+```
+
+We do not recommend using the `serverURL` parameter since it may cause issues with portal session creation and management.
+
+If you want to force your MCP client to reauthenticate, most MCP clients will refresh a session after removing the existing MCP OAuth sessions.  To clear authentication credentials used by your MCP client, open a terminal and run the following command:
+
+:::note
+This command will trigger all MCP servers using `mcp-remote@latest` to force reauthenticate, not just MCP portals.
+:::
+
+```sh
+rm -rf ~/.mcp-auth
+```
+
 ## View portal logs
 
 Portal logs allow you to monitor user activity through an MCP server portal. You can view logs on a per-portal or per-server basis.

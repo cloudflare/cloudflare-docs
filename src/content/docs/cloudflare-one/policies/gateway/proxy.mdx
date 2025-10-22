@@ -9,7 +9,7 @@ import { Badge, Tabs, TabItem, Render } from "~/components";
 
 You can forward [HTTP](/cloudflare-one/policies/gateway/initial-setup/http/) and [network](/cloudflare-one/policies/gateway/initial-setup/network/) traffic to Gateway for logging and filtering. Gateway can proxy both outbound traffic and traffic directed to resources connected via a Cloudflare Tunnel, GRE tunnel, or IPsec tunnel. When a user connects to the Gateway proxy, Gateway will accept the connection and establish a new, separate connection to the origin server.
 
-The Gateway proxy is required for filtering HTTP and network traffic via the WARP client in Gateway with WARP mode. To proxy HTTP traffic without deploying the WARP client, you can configure [PAC files](/cloudflare-one/connections/connect-devices/agentless/pac-files/) on your devices.
+The Gateway proxy is required for filtering HTTP and network traffic via the WARP client in Gateway with WARP mode. To proxy HTTP traffic without deploying the WARP client, you can configure [PAC files](/cloudflare-one/team-and-resources/devices/agentless/pac-files/) on your devices.
 
 ## Proxy algorithm
 
@@ -35,7 +35,7 @@ By default, TCP connection attempts will timeout after 30 seconds and idle conne
 
 ### UDP
 
-The UDP proxy forwards UDP traffic such as VoIP, [internal DNS requests](/cloudflare-one/connections/connect-networks/private-net/cloudflared/private-dns/), and thick client applications.
+The UDP proxy forwards UDP traffic such as VoIP, [internal DNS requests](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/private-dns/), and thick client applications.
 
 When the UDP proxy is enabled, Gateway will force all HTTP/3 traffic to HTTP/2 to allow inspection. Otherwise, HTTP/3 traffic will bypass inspection. For more information, refer to [HTTP/3 inspection](/cloudflare-one/policies/gateway/http-policies/http3/).
 

@@ -9,6 +9,12 @@ import { Tabs, TabItem, Render } from "~/components";
 
 The `/markdown` endpoint retrieves a webpage's content and converts it into Markdown format. You can specify a URL and optional parameters to refine the extraction process.
 
+## Common use cases
+
+- **Content extraction:** Convert a blog post or article into Markdown format for storage or further processing.
+- **Static site generation:** Retrieve structured Markdown content for use in static site generators like Jekyll or Hugo.
+- **Automated summarization:** Extract key content from web pages while ignoring CSS, scripts, or unnecessary elements.
+
 ## Basic usage
 
 ### Using a URL
@@ -74,6 +80,10 @@ curl -X 'POST' 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browse
 
 ## Advanced usage
 
+:::note[Looking for more parameters?]
+Visit the [Browser Rendering PDF API reference](/api/resources/browser_rendering/subresources/markdown/methods/create/) for all available parameters, such as setting HTTP credentials using `authenticate`, setting `cookies`, and customizing load behavior using `gotoOptions`.
+:::
+
 You can refine the Markdown extraction by using the `rejectRequestPattern` parameter. In this example, requests matching the given regex pattern (such as CSS files) are excluded.
 
 ```bash
@@ -98,8 +108,7 @@ curl -X 'POST' 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browse
   product="browser-rendering"
 />
 
-## Potential use-cases
-
-1. **Content extraction:** Convert a blog post or article into Markdown format for storage or further processing.
-2. **Static site generation:** Retrieve structured Markdown content for use in static site generators like Jekyll or Hugo.
-3. **Automated summarization:** Extract key content from web pages while ignoring CSS, scripts, or unnecessary elements.
+<Render
+  file="faq"
+  product="browser-rendering"
+/>

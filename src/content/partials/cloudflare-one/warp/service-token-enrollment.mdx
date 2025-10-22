@@ -18,8 +18,8 @@ import { Tabs, TabItem } from '~/components';
    | Service Auth | Include   | Service Token | `<TOKEN-NAME>` |
 
 		 Make sure to set **Action** to _Service Auth_ instead of _Allow_.
-4. Add the Access policy to your [device enrollment permissions](/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/#set-device-enrollment-permissions).
-5. In your MDM [deployment parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/), add the following fields:
+4. Add the Access policy to your [device enrollment permissions](/cloudflare-one/team-and-resources/devices/warp/deployment/device-enrollment/#set-device-enrollment-permissions).
+5. In your MDM [deployment parameters](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/parameters/), add the following fields:
    * `auth_client_id`: The **Client ID** of your service token.
    * `auth_client_secret`: The **Client Secret** of your service token.
 
@@ -47,9 +47,9 @@ import { Tabs, TabItem } from '~/components';
 		]
 	}
 	```
-4. Add the policy to your [`cloudflared_zero_trust_access_application` for WARP](/cloudflare-one/connections/connect-devices/warp/deployment/device-enrollment/#set-device-enrollment-permissions).
+4. Add the policy to your [`cloudflared_zero_trust_access_application` for WARP](/cloudflare-one/team-and-resources/devices/warp/deployment/device-enrollment/#set-device-enrollment-permissions).
 
-5. In your MDM [deployment parameters](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/), add the following fields:
+5. In your MDM [deployment parameters](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/parameters/), add the following fields:
    * `auth_client_id`: The **Client ID** of your service token.
    * `auth_client_secret`: The **Client Secret** of your service token.
 

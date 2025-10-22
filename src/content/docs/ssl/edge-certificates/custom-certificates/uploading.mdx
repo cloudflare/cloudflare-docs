@@ -179,9 +179,9 @@ To update a certificate in the dashboard:
 
 <DashButton url="/?to=/:account/:zone/ssl-tls/edge-certificates" />
 
-2. In **Edge Certificates**, locate a custom certificate and click on it to expand.
+2. In **Edge Certificates**, locate a custom certificate and select it to expand.
 
-3. Select the wrench icon and select **Replace SSL certificate and key**.
+3. Select the wrench button and choose **Replace SSL certificate and key**.
 
 4. Follow the same steps as [upload a new certificate](#upload-a-custom-certificate).
 
@@ -196,3 +196,15 @@ To update a certificate using the API, send a [`PATCH`](/api/resources/custom_ce
 To update the **Private Key Restriction** setting of a certificate, delete and re-add the certificate.
 
 :::
+
+---
+
+## Delete a custom certificate
+
+1. In the Cloudflare dashboard, go to the SSL/TLS **Edge Certificates** page.
+
+<DashButton url="/?to=/:account/:zone/ssl-tls/edge-certificates" />
+
+2. In **Edge Certificates**, locate a custom certificate and select it to expand.
+3. Select the cross button.
+4. Select **Confirm** to delete the certificate.

@@ -14,28 +14,11 @@ import { Render, TabItem, Tabs, APIRequest, DashButton } from "~/components";
 
 With [outgoing zone transfers](/dns/zone-setups/zone-transfers/cloudflare-as-primary/), you can keep Cloudflare as your primary DNS provider and use one or more secondary providers for increased availability and fault tolerance.
 
-## Aspects to consider
-
-### DNS-only CNAME records
-
-As explained in [DNS record types](/dns/manage-dns-records/reference/dns-record-types/#cname), Cloudflare uses a process called [CNAME flattening](/dns/cname-flattening/) to return the final IP address instead of the CNAME target. CNAME flattening improves performance and is also what allows you to set a CNAME record on the zone apex.
-
-Depending on the [settings](/dns/cname-flattening/set-up-cname-flattening/) you have, when you use DNS-only CNAME records with outgoing zone transfers, you can expect the following:
-
-- For DNS-only CNAME records on the zone apex, Cloudflare will always transfer out the flattened IP addresses.
-- For DNS-only CNAME records on subdomains, Cloudflare will only transfer out flattened IP addresses if the setting [**Flatten all CNAMEs**](/dns/cname-flattening/set-up-cname-flattening/#for-all-cname-records) is enabled.
-
-### Proxied records
-
-For each [proxied DNS record](/dns/proxy-status/) in your zone, Cloudflare will transfer out two `A` and two `AAAA` records.
-
-These records correspond to the [Cloudflare IP addresses](https://www.cloudflare.com/ips) used for proxying traffic.
-
 ## Before you begin
 
 Make sure your account team has enabled your zone for outgoing zone transfers.
 
-Review your [existing DNS records](/dns/manage-dns-records/how-to/create-dns-records/) to make sure all of them have the desired **Proxy status**.
+Consider the [expected behaviors](/dns/zone-setups/zone-transfers/cloudflare-as-primary/transfer-criteria/) for different record types, and review your [existing DNS records](/dns/manage-dns-records/how-to/create-dns-records/) to make sure all of them have the desired **Proxy status**.
 
 If using the API, you may also want to [locate your Zone and Account IDs](/fundamentals/account/find-account-and-zone-ids/).
 

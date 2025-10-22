@@ -12,11 +12,25 @@ import { Render } from "~/components";
 	product="networking-services"
 	params={{
 	magicWord: "virtual",
-	productName: "Virtual Connector",
+	productName: "Magic WAN Connector",
+	productNameVirtual: "Virtual Connector",
+	maintenanceURL: "/magic-wan/configuration/connector/maintenance/",
+	productOriginalName: "Magic WAN",
 	wan: "needs to correspond to the virtual network interface on the Virtual Connector instance you have set up in VMware. Following our example from the previous steps, you need to choose port `1` since that is what corresponds to the `eno1` port we set up in VMware.",
 	lan: "needs to correspond to the virtual LAN interface on the Virtual Connector instance you have set up in VMware. Following our example from the previous steps, you need to choose port `2` since that is what corresponds to the `eno2` port we set up in VMware.",
 	noConnectorShows: "For a Virtual Connector to show up you need to: <br /><ul><li><strong>VMWare:</strong> Have already obtained your OVA package and license keys if you are installing on VMWare.</li><li><strong>Proxmox:</strong> Have already obtained your Virtual Connector Script and license keys if you are installing on Proxmox.</li></ul>\nFor more information, refer to [Configure a virtual machine](#configure-a-virtual-machine) and select the appropriate tab.\n",
+	networkSegmentationURL: "/magic-wan/configuration/connector/network-options/network-segmentation/",
+	dhcpServerURL: "/magic-wan/configuration/connector/network-options/dhcp/dhcp-server/",
+  dhcpRelayURL: "/magic-wan/configuration/connector/network-options/dhcp/dhcp-relay/",
+  reserveIpAddressesURL: "/magic-wan/configuration/connector/network-options/dhcp/dhcp-static-address-reservation/",
 	shippedLanguage: "Virtual Magic WAN Connector is deactivated after you install it",
 	hardSoftConn: "You need to install two Virtual Connectors before you can set up a site in high availability.",
-	finalInstructions:  "Follow the instructions in [Activate Connector](#activate-connector) to finish setting up your Connectors."
+	hcConfigsURL: "/magic-wan/configuration/connector/reference/#high-availability-configurations",
+	finalInstructions:  "Follow the instructions in [Activate Connector](#activate-connector) to finish setting up your Connectors.",
+	ipsecTunnelsRefURL: "/magic-wan/reference/gre-ipsec-tunnels/#ipsec-tunnels",
+	staticRoutesRefURL: "/magic-wan/reference/traffic-steering/",
+	networkOptionsURL: "/magic-wan/configuration/connector/network-options/",
+  maintenanceURL: "/magic-wan/configuration/connector/maintenance/",
+  referenceInformationURL: "/magic-wan/configuration/connector/reference/",
+  troubleshootingURL: "/magic-wan/configuration/connector/troubleshooting/"
 	}} />

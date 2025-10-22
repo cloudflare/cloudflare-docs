@@ -229,7 +229,7 @@
 /argo-tunnel/getting-started/installation/ /cloudflare-one/connections/connect-networks/get-started/ 301
 /argo-tunnel/quickstart/ /cloudflare-one/connections/connect-networks/get-started/ 301
 /argo-tunnel/reference/arguments/ /cloudflare-one/connections/connect-networks/configure-tunnels/ 301
-/argo-tunnel/reference/load-balancing/ /cloudflare-one/connections/connect-networks/routing-to-tunnel/lb/ 301
+/argo-tunnel/reference/load-balancing/ /cloudflare-one/connections/connect-networks/routing-to-tunnel/public-load-balancers/ 301
 /argo-tunnel/reference/service/ /cloudflare-one/connections/connect-networks/configure-tunnels/ 301
 /argo-tunnel/trycloudflare/ /cloudflare-one/connections/connect-networks/do-more-with-tunnels/trycloudflare/ 301
 
@@ -278,6 +278,7 @@
 /bots/concepts/bot/verified-bots/ip-validation/ /bots/reference/bot-verification/ip-validation/ 301
 /bots/concepts/bot/verified-bots/web-bot-auth/ /bots/reference/bot-verification/web-bot-auth/ 301
 /bots/concepts/bot/verified-bots/overview/  /bots/concepts/bot/verified-bots/ 301
+/bots/frequently-asked-questions/ /bots/ 301
 
 #browser-rendering
 /browser-rendering/get-started/browser-rendering-with-DO/ /browser-rendering/workers-bindings/browser-rendering-with-do/ 301
@@ -652,8 +653,8 @@
 /fundamentals/reference/the-internet/ /fundamentals/concepts/the-internet/ 301
 /fundamentals/reference/http-request-headers/ /fundamentals/reference/http-headers/ 301
 /fundamentals/security/browser-integrity-check/ /waf/tools/browser-integrity-check/ 301
-/fundamentals/signed-exchanges/ /speed/optimization/other/signed-exchanges/ 301
-/fundamentals/signed-exchanges/amp-real-ulr/reference/ /speed/optimization/other/amp-real-url/reference/ 301
+/fundamentals/signed-exchanges/ /speed/optimization/ 301
+/fundamentals/signed-exchanges/amp-real-ulr/reference/ /speed/optimization/ 301
 /fundamentals/speed/aim/ /speed/aim/ 301
 /fundamentals/speed/optimization/ /speed/optimization/ 301
 /fundamentals/speed/prefetch-urls/ /speed/optimization/content/prefetch-urls/ 301
@@ -1039,6 +1040,8 @@
 /load-balancing/local-traffic-management/ /load-balancing/private-network/ 301
 /load-balancing/local-traffic-management/ltm-tunnels-setup/ /load-balancing/private-network/tunnels-setup/ 301
 /load-balancing/local-traffic-management/ltm-magic-wan/ /load-balancing/private-network/magic-wan/ 301
+/load-balancing/private-network/tunnels-setup/ /load-balancing/private-network/warp-to-tunnel/ 301
+/load-balancing/private-network/warp/ /load-balancing/private-network/warp-to-tunnel/ 301
 
 # logs
 /logs/log-fields/ /logs/logpush/logpush-job/datasets/ 301
@@ -1340,19 +1343,19 @@
 /fundamentals/network/0-rtt-connection-resumption/ /speed/optimization/protocol/0-rtt-connection-resumption/ 301
 /support/speed/essentials/will-cloudflares-image-optimization-features-help-if-im-already-optimizing-images/ /speed/optimization/images/troubleshooting/multiple-optimizations/ 301
 /support/speed/optimization-delivery/configuring-cloudflare-mirage/ /speed/optimization/images/mirage/ 301
-/support/speed/optimization-mobile/understanding-cloudflare-mobile-redirect/ /speed/optimization/other/mobile-redirect/ 301
+/support/speed/optimization-mobile/understanding-cloudflare-mobile-redirect/ /rules/url-forwarding/examples/perform-mobile-redirects/ 301
 /support/speed/optimization-file-size/using-cloudflare-auto-minify/ /speed/optimization/content/ 301
 /support/speed/optimization-file-size/what-will-cloudflare-compress/ /speed/optimization/content/compression/ 301
 /speed/optimization/content/brotli/ /speed/optimization/content/compression/ 301
 /speed/optimization/content/brotli/enable/ /speed/optimization/content/compression/ 301
 /speed/optimization/content/brotli/content-compression/ /speed/optimization/content/compression/ 301
 /support/speed/optimization-file-size/why-isnt-auto-minify-working/ /speed/optimization/content/troubleshooting/ 301
-/support/speed/optimization-mobile/why-is-the-mobile-redirect-i-set-up-through-cloudflare-redirecting-my-static-assets/ /speed/optimization/other/troubleshooting/mobile-redirect-affect-static-assets/ 301
-/speed/optimization/other/amp-real-ulr/ /speed/optimization/other/amp-real-url/ 301
-/speed/optimization/other/amp-real-ulr/reference/ /speed/optimization/other/amp-real-url/reference/ 301
+/support/speed/optimization-mobile/why-is-the-mobile-redirect-i-set-up-through-cloudflare-redirecting-my-static-assets/ /rules/url-forwarding/examples/perform-mobile-redirects/ 301
+/speed/optimization/other/amp-real-ulr/ /speed/optimization/ 301
+/speed/optimization/other/amp-real-ulr/reference/ /speed/optimization/ 301
 /speed/optimization/other/mobile-redirect/ /rules/url-forwarding/examples/perform-mobile-redirects/ 301
-/speed/optimization/other/troubleshooting/mobile-redirect-affect-static-assets/ /speed/optimization/other/ 301
-/speed/optimization/other/troubleshooting/ /speed/optimization/other/ 301
+/speed/optimization/other/troubleshooting/mobile-redirect-affect-static-assets/ /speed/optimization/ 301
+/speed/optimization/other/troubleshooting/ /speed/optimization/ 301
 /speed/optimization/content/auto-minify/ /speed/optimization/content/ 301
 /speed/optimization/content/troubleshooting/auto-minify-not-working/ /speed/optimization/content/troubleshooting/ 301
 /speed/optimization/content/speculation/ /speed/optimization/content/speed-brain/ 301
@@ -1429,6 +1432,7 @@
 /stream/reference/faq/ /stream/faq/ 301
 /stream/platform/ /stream/changelog/ 301
 /stream/reference/ /stream/faq/ 301
+/stream/examples/wordpress/ /stream/examples/ 301
 
 # style guide
 
@@ -2194,12 +2198,14 @@
 /cloudflare-one/connections/connect-networks/install-and-setup/installation/ /cloudflare-one/connections/connect-networks/downloads/update-cloudflared/ 301
 /cloudflare-one/connections/connect-networks/do-more-with-tunnels/secure-server/ /cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-with-firewall/ 301
 /cloudflare-one/connections/connect-networks/do-more-with-tunnels/grafana/ /cloudflare-one/connections/connect-networks/monitor-tunnels/grafana/ 301
+/cloudflare-one/connections/connect-networks/do-more-with-tunnels/migrate-legacy-tunnels/ /cloudflare-one/connections/connect-networks/ 301
 /cloudflare-one/connections/connect-networks/downloads/system-requirements/ /cloudflare-one/connections/connect-networks/deploy-tunnels/system-requirements/ 301
 /cloudflare-one/connections/connect-networks/private-net/connect-private-networks/ /cloudflare-one/connections/connect-networks/private-net/cloudflared/ 301
 /cloudflare-one/connections/connect-networks/private-net/create-private-networks/ /cloudflare-one/connections/connect-networks/private-net/warp-to-warp/ 301
 /cloudflare-one/connections/connect-networks/private-net/private-hostnames-ips/ /cloudflare-one/connections/connect-networks/private-net/cloudflared/private-dns/ 301
 /cloudflare-one/connections/connect-networks/private-net/tunnel-virtual-networks/ /cloudflare-one/connections/connect-networks/private-net/cloudflared/tunnel-virtual-networks/ 301
 /cloudflare-one/connections/connect-networks/private-net/warp-connector/vpc-deployments/ /cloudflare-one/connections/connect-networks/private-net/warp-connector/tips/ 301
+/cloudflare-one/connections/connect-networks/routing-to-tunnel/lb/ /cloudflare-one/connections/connect-networks/routing-to-tunnel/public-load-balancers/ 301
 /argo-tunnel/faq/ /cloudflare-one/faq/cloudflare-tunnels-faq/ 301
 /cloudflare-one/policies/browser-isolation/clientless-browser-isolation/ /cloudflare-one/policies/browser-isolation/setup/clientless-browser-isolation/ 301
 /cloudflare-one/connections/connect-devices/agentless/dns-over-https/ /cloudflare-one/connections/connect-devices/agentless/dns/dns-over-https/ 301
@@ -2211,6 +2217,7 @@
 /cloudflare-one/connections/connect-devices/warp/warp-settings/ /cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/ 301
 /cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/ /cloudflare-one/connections/connect-devices/warp/user-side-certificates/manual-deployment/ 301
 /cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cert-with-warp/ /cloudflare-one/connections/connect-devices/warp/user-side-certificates/automated-deployment/ 301
+/cloudflare-one/connections/connect-networks/private-net/cloudflared/load-balancing/ /cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-availability/ 301
 /cloudflare-one/connections/connect-networks/locations/ /cloudflare-one/connections/connect-devices/agentless/dns/locations/ 301
 /cloudflare-one/connections/connect-networks/get-started/create-local-tunnel/ /cloudflare-one/connections/connect-networks/do-more-with-tunnels/local-management/create-local-tunnel/ 301
 /cloudflare-one/connections/connect-networks/configure-tunnels/remote-management/ /cloudflare-one/connections/connect-networks/configure-tunnels/cloudflared-parameters/ 301
@@ -2287,6 +2294,7 @@
 /cloudflare-one/tutorials/do-not-decrypt/ /cloudflare-one/policies/gateway/http-policies/common-policies/#skip-inspection-for-groups-of-applications 301
 /cloudflare-one/tutorials/identity-dns/ /cloudflare-one/policies/gateway/dns-policies/common-policies/#restrict-access-to-specific-groups 301
 /cloudflare-one/tutorials/many-cfd-one-tunnel/ /cloudflare-one/connections/connect-networks/deployment-guides/kubernetes/ 301
+/cloudflare-one/tutorials/migrate-lb-tunnel/ /cloudflare-one/connections/connect-networks/ 301
 /cloudflare-one/tutorials/multi-origin/ /cloudflare-one/connections/connect-networks/get-started/ 301
 /cloudflare-one/tutorials/review-gateway-block/ /cloudflare-one/analytics/logs/gateway-logs/ 301
 /cloudflare-one/tutorials/require-swg/ /cloudflare-one/identity/devices/ 301
@@ -2321,9 +2329,9 @@
 /fundamentals/get-started/setup/troubleshooting/* /fundamentals/setup/account-setup/add-site/ 301
 /fundamentals/get-started/basic-tasks/account-security/* /fundamentals/account-and-billing/account-security/:splat 301
 /fundamentals/get-started/setup/account-setup/* /fundamentals/account-and-billing/account-setup/:splat 301
-/fundamentals/speed/amp-real-ulr/* /speed/optimization/other/amp-real-ulr/:splat 301
+/fundamentals/speed/amp-real-ulr/* /speed/optimization/:splat 301
 /fundamentals/speed/rocket-loader/* /speed/optimization/content/rocket-loader/:splat 301
-/fundamentals/speed/signed-exchanges/* /speed/optimization/other/signed-exchanges/:splat 301
+/fundamentals/speed/signed-exchanges/* /speed/optimization/:splat 301
 /fundamentals/speed/speed-test/* /speed/observatory/:splat 301
 /speed/speed-test/* /speed/observatory/:splat 301
 /http-applications/* /version-management/:splat 301
@@ -2343,6 +2351,9 @@
 /fundamentals/setup/manage-members/* /fundamentals/manage-members/:splat 301
 /logs/get-started/enable-destinations/* /logs/logpush/logpush-job/enable-destinations/:splat 301
 /logs/reference/log-fields/* /logs/logpush/logpush-job/datasets/:splat 301
+/speed/optimization/other/* /speed/optimization/ 301
+/cloudflare-one/connections/connect-devices/* /cloudflare-one/team-and-resources/devices 301
+/cloudflare-one/connections/connect-networks/* /cloudflare-one/networks/connectors/cloudflare-tunnel/ 301
 
 # AI Crawl Control
 /ai-audit/* /ai-crawl-control/:splat 301
@@ -2351,6 +2362,8 @@
 /autorag/* /ai-search/:splat 301
 
 # Cloudflare One / Zero Trust
+/cloudflare-one/connections/ /cloudflare-one/ 301
+/cloudflare-one/applications/configure-apps/dash-sso-apps/ /fundamentals/account/account-security/dashboard-sso/ 301
 /cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/as-a-service/* /cloudflare-one/connections/connect-networks/configure-tunnels/local-management/as-a-service/:splat 301
 /cloudflare-one/connections/connect-apps/install-and-setup/deployment-guides/* /cloudflare-one/connections/connect-networks/deployment-guides/:splat 301
 /cloudflare-one/connections/connect-networks/deploy-tunnels/deployment-guides/* /cloudflare-one/connections/connect-networks/deployment-guides/:splat 301

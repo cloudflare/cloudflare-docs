@@ -37,7 +37,7 @@ Gateway does not support device posture checks for the [Tanium Access integratio
 
 ## 4. Ensure traffic is going through WARP
 
-[WARP client](/cloudflare-one/identity/devices/warp-client-checks/) and [service-to-service](/cloudflare-one/identity/devices/service-providers/) posture checks rely on traffic going through WARP to detect posture information for a device. In your [Split Tunnel configuration](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/), ensure that the following domains are included in WARP:
+[WARP client](/cloudflare-one/identity/devices/warp-client-checks/) and [service-to-service](/cloudflare-one/identity/devices/service-providers/) posture checks rely on traffic going through WARP to detect posture information for a device. In your [Split Tunnel configuration](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/), ensure that the following domains are included in WARP:
 
 - The IdP used to authenticate to Cloudflare Zero Trust if posture check is part of an Access policy.
 - `<your-team-name>.cloudflareaccess.com` if posture check is part of an Access policy.
@@ -59,7 +59,7 @@ A --> G[Service provider] --interval--> C
 
 :::caution
 
-Gateway does not terminate an [active session](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-sessions/#configure-warp-sessions-in-gateway) even if a subsequent posture check fails during that session. Gateway only evaluates posture checks at the beginning of a session, and ongoing sessions will remain uninterrupted.
+Gateway does not terminate an [active session](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-sessions/#configure-warp-sessions-in-gateway) even if a subsequent posture check fails during that session. Gateway only evaluates posture checks at the beginning of a session, and ongoing sessions will remain uninterrupted.
 
 For example, if you establish an SSH session based on a successful posture check, but a posture requirement fails after the session has started, the session will remain active.
 

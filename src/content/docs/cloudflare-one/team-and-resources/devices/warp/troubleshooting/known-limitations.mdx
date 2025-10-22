@@ -1,0 +1,176 @@
+---
+pcx_content_type: reference
+title: Known limitations
+sidebar:
+  order: 9
+head:
+  - tag: title
+    content: Known limitations - WARP
+---
+
+Below, you will find information on devices, software, and configurations that are incompatible with Cloudflare WARP.
+
+## Windows Server
+
+The WARP client does not run on Windows Server. Refer to the [downloads page](/cloudflare-one/team-and-resources/devices/warp/download-warp/) for a list of supported operating systems.
+
+## Managed network on legacy Windows Server
+
+[Managed network detection](/cloudflare-one/team-and-resources/devices/warp/configure-warp/managed-networks/) will not work when the TLS certificate is served from IIS 8.5 on Windows Server 2012 R2. To work around the limitation, move the certificate to a different host.
+
+## Split Tunnels for Microsoft 365 traffic
+
+Microsoft has recently made changes to the IP addresses used by Microsoft 365 applications (such as Microsoft Teams). Customers using the [Directly route Microsoft 365 traffic](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#directly-route-microsoft-365-traffic) feature will need to manually add the following IPs to their [Split Tunnels Exclude list](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/#add-a-route):
+- `24.24.24.24/32`
+- `52.120.0.0/14`
+
+## nslookup on Windows in DoH mode
+
+On Windows devices in [Gateway with DoH mode](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#gateway-with-doh), `nslookup` by default sends DNS requests to the [WARP local DNS proxy](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/warp-architecture/#dns-traffic) over IPv6. However, because WARP uses an IPv4-mapped IPv6 address (instead of a real IPv6 address), `nslookup` will not recognize this address type and the query will fail:
+
+```txt
+C:\Users\JohnDoe>nslookup google.com
+Server:  UnKnown
+Address:  ::ffff:127.0.2.2
+
+*** UnKnown can't find google.com: No response from server
+```
+
+To work around the issue, specify the IPv4 address of the [WARP local DNS proxy](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/warp-architecture/#dns-traffic) in your query:
+
+```bash
+C:\Users\JohnDoe>nslookup google.com 127.0.2.2
+```
+
+Alternatively, use PowerShell:
+
+```powershell
+Resolve-DnsName -Name google.com
+```
+
+## 4G/5G embedded modules
+
+Because of how the WARP client instantiates the local DNS Proxy, it is incompatible with 4G/5G cellular adapters which have IPv6 enabled. To run WARP on these devices, you will need to disable IPv6 on the system.
+
+:::note
+
+This limitation does not apply to mobile phones, only desktop machines with cellular connectivity.
+:::
+
+## Comcast DNS servers
+
+Comcast DNS traffic (to the IPs below) cannot be proxied through WARP. This is because Comcast rejects DNS traffic that is not sent directly from the user's device.
+
+- IPv4 Addresses: `75.75.75.75` and `75.75.76.76`
+- IPv6 Addresses: `2001:558:feed::1` and `2001:558:feed::2`
+
+To work around the issue, you can either:
+
+- Create a [Split Tunnel rule](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/) that excludes the above IPs from WARP.
+- Configure your device or router to use a public DNS server such as [`1.1.1.1`](https://1.1.1.1/dns/).
+
+## Cox DNS servers
+
+Similar to the [Comcast DNS servers](#comcast-dns-servers) limitation listed above, Cox DNS servers will not respond to traffic from the WARP egress IPs (or any IP that is not a Cox IP). The workaround is nearly identical, except that Cox DNS servers may be specific to the individual end user. You can either:
+
+- Create a [Split Tunnel rule](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/) that excludes all Cox DNS servers. For business customers, refer to the [COX documentation](https://www.cox.com/business/support/cox-business-dns-and-mail-exchange-hosting-services.html) for the DNS server IPs. For residential customers, check your local DNS servers. The residential DNS servers typically fall under `68.105.28.0/24` and `68.105.29.0/24`.
+- Configure your device or router to use a public DNS server such as [`1.1.1.1`](https://1.1.1.1/dns/).
+
+## HP Velocity
+
+The HP Velocity driver has a bug which will cause a blue screen error on devices running WARP. HP recommends [uninstalling this driver](https://support.hp.com/gb-en/document/c06266198).
+
+## Cisco Meraki
+
+Cisco Meraki devices have a bug where WARP traffic can sometimes be identified as [`Statistical-P2P`](https://www.cisco.com/c/en/us/td/docs/ios-xml/ios/qos_nbar/prot_lib/config_library/pp4600/nbar-prot-pack4600/s.html#wp1488575851) and de-prioritised or dropped entirely. To resolve the issue, disable `Statistical-P2P` on the Cisco Meraki device.
+
+## Windows Teredo
+
+The [Windows Teredo](https://learn.microsoft.com/en-us/windows/win32/teredo/about-teredo) interface conflicts with the WARP client. Since Teredo and WARP will fight for control over IPv6 traffic routing, you must disable Teredo on your Windows device. This allows the WARP client to provide IPv6 connectivity on the device.
+
+## Docker on Linux with bridged networking
+
+[Docker](https://www.docker.com/products/container-runtime/) on Linux does not perform the underlying network tunnel MTU changes required by WARP. This can cause connectivity issues inside of a Docker container when WARP is enabled on the host machine. For example, `curl -v https://cloudflare.com > /dev/null` will fail if run from a Docker container that is using the default bridge network driver.
+
+To work around this issue, users of WARP with Docker on Linux can manually reconfigure the MTU on Docker's network interface. You can either modify `/etc/docker/daemon.json` to include:
+
+```json
+{
+	"mtu": 1420
+}
+```
+
+or create a Docker network with a working MTU value:
+
+```sh
+docker network create -o "com.docker.network.driver.mtu=1420" my-docker-network
+```
+
+The MTU value should be set to the MTU of your host's default interface minus 80 bytes for the WARP protocol overhead. Most MTUs are 1500, so 1420 should work for most users.
+
+## Access WARP DNS from Docker
+
+WARP runs a local DNS proxy on `127.0.2.2` and `127.0.2.3`. You may need access to these addresses from within Docker containers to resolve internal-only or fallback domains. The default Docker [bridge network](https://docs.docker.com/engine/network/drivers/bridge/) copies the DNS settings from the host, but filters out loopback DNS addresses like `127.0.2.2` and `127.0.2.3`, so containers cannot use them.
+
+To enable WARP DNS resolution with containers:
+
+- Use a [custom Docker network](https://docs.docker.com/engine/network/#user-defined-networks) (recommended): Allows the Docker container to still use the bridge network driver that maintains network isolation from the host. If you are creating your own bridge network, you should also [adjust the MTU accordingly](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/known-limitations/#docker-on-linux-with-bridged-networking).
+- Use [host networking](https://docs.docker.com/engine/network/drivers/host/) (not recommended): Removes the security benefits of network isolation and may lead to port conflicts.
+
+The following example uses a special host (`connectivity-check.warp-svc`) that is only resolvable by the local DNS proxy to show the supported Docker networking modes.
+
+```
+# This host is not resolvable by default
+❯ docker run --rm alpine nslookup connectivity-check.warp-svc.
+Server:         8.8.8.8
+Address:        8.8.8.8:53
+
+** server can't find connectivity-check.warp-svc.: NXDOMAIN
+** server can't find connectivity-check.warp-svc.: NXDOMAIN
+
+# Create a bridge network called demo
+❯ docker network create demo
+e1e1943a6995a7e8c115a1c60357fe64f87a3ae90074ce6e4c3f0d2bba3fa892
+
+# The host is resolvable by running a container under this custom network
+❯ docker run --rm --net demo alpine nslookup connectivity-check.warp-svc.
+Server:         127.0.0.11
+Address:        127.0.0.11:53Non-authoritative answer:
+Name:   connectivity-check.warp-svc
+Address: ::ffff:127.0.2.2
+Name:   connectivity-check.warp-svc
+Address: ::ffff:127.0.2.3Non-authoritative answer:
+Name:   connectivity-check.warp-svc
+Address: 127.0.2.2
+Name:   connectivity-check.warp-svc
+Address: 127.0.2.3
+
+# The host is also resolvable by running a container using a host network
+❯ docker run --rm --net host alpine nslookup connectivity-check.warp-svc.
+Server:         127.0.0.11
+Address:        127.0.0.11:53Non-authoritative answer:
+Name:   connectivity-check.warp-svc
+Address: ::ffff:127.0.2.2
+Name:   connectivity-check.warp-svc
+Address: ::ffff:127.0.2.3Non-authoritative answer:
+Name:   connectivity-check.warp-svc
+Address: 127.0.2.2
+Name:   connectivity-check.warp-svc
+Address: 127.0.2.3
+```
+
+## Windows 10 in Microsoft 365 Cloud PC is not supported
+
+Use of the WARP client in a Microsoft 365 Windows 10 Cloud PC is not supported. To work around this limitation, use Windows 11.
+
+## IPv6 DNS resolution in Secure Web Gateway without DNS filtering mode
+
+In [Secure Web Gateway without DNS filtering mode](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#secure-web-gateway-without-dns-filtering), devices using IPv6 DNS servers may experience connectivity issues if these servers are not manually excluded from the WARP tunnel.
+
+Unlike common IPv4 DHCP configurations where DNS servers often fall within automatically excluded private address ranges, IPv6 environments typically require manual exclusion of DNS server addresses via split tunnel settings for proper operation.
+
+If your DNS server uses an IPv6 address, you must manually exclude it using [split tunnel settings](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/) for Secure Web Gateway without DNS filtering mode to work properly.
+
+## Troubleshooting
+
+- [Troubleshooting](/cloudflare-one/faq/troubleshooting/) - Review Troubleshooting for other WARP-related troubleshooting errors and solutions.

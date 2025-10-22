@@ -71,7 +71,7 @@ For example, some applications have an endpoint under the `/admin` route that mu
 | ------ | --------- | -------- | ---------- |
 | Bypass | Include   | Everyone | `Everyone` |
 
-As part of implementing a Zero Trust security model, Cloudflare does not recommend using Bypass to grant direct permanent access to your internal applications. To enable seamless and secure access for on-network employees, use Cloudflare Tunnel to [connect your private network](/cloudflare-one/connections/connect-networks/private-net/cloudflared/) and have users connect through WARP.
+As part of implementing a Zero Trust security model, Cloudflare does not recommend using Bypass to grant direct permanent access to your internal applications. To enable seamless and secure access for on-network employees, use Cloudflare Tunnel to [connect your private network](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/) and have users connect through WARP.
 
 :::note
 
@@ -154,7 +154,7 @@ Non-identity attributes are polled continuously, meaning they are-evaluated with
 | OIDC Claim               | Checks an OIDC claim name / value pair. This selector only displays if you use a [generic OIDC](/cloudflare-one/identity/idp-integration/generic-oidc/) identity provider.                                                                | ✅               | ❌                               | ✅                       |
 | Device posture           | Checks [device posture signals](/cloudflare-one/identity/devices/) from the WARP client or a third-party service provider.                                                                                                                | ✅               | ✅                               | ❌                       |
 | Warp                     | Checks that the device is connected to WARP, including the consumer version.                                                                                                                                                              | ✅               | ✅                               | ❌                       |
-| Gateway                  | Checks that the device is connected to your Zero Trust instance through the [WARP client](/cloudflare-one/connections/connect-devices/warp/).                                                                                             | ✅               | ✅                               | ❌                       |
+| Gateway                  | Checks that the device is connected to your Zero Trust instance through the [WARP client](/cloudflare-one/team-and-resources/devices/warp/).                                                                                             | ✅               | ✅                               | ❌                       |
 
 <sup>1</sup> For SaaS applications, Access can only enforce policies at the time
 of initial sign on and when reissuing the SaaS session. Once the user has

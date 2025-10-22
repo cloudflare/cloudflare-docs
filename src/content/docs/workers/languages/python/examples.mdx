@@ -11,6 +11,33 @@ Cloudflare has a wide range of Python examples in the [Workers Example gallery](
 
 In addition to those examples, consider the following ones that illustrate Python-specific behavior.
 
+## Modules in your Worker
+
+Let's say your Worker has the following structure:
+
+```
+├── src
+│   ├── module.py
+│   └── main.py
+├── uv.lock
+├── pyproject.toml
+└── wrangler.toml
+```
+
+In order to import `module.py` in `main.py`, you would use the following import statement:
+
+```python
+import module
+```
+
+In this case, the main module is set to `src/main.py` in the wrangler.toml file like so:
+
+```toml
+main = "src/main.py"
+```
+
+This means that the `src` directory does not need to be specified in the import statement.
+
 ## Parse an incoming request URL
 
 ```python
