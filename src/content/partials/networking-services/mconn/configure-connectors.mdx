@@ -631,7 +631,7 @@ When you are ready to connect your { props.magicWord === "virtual" ? props.produ
 
 { props.magicWord === "hardware" && (
   <>
-    <p>After activating your {props.productName}, you can use it in a network configuration with the WAN interface set to a static IP address — that is, an Internet configuration that is not automatically set by DHCP. To use your Connector on a network configuration with a static IP, follow the steps below.</p>
+    <p>After activating your device, you can use it in a network configuration with the WAN interface set to a static IP address — that is, an Internet configuration that is not automatically set by DHCP. To use your {props.productName} on a network configuration with a static IP, follow the steps below.</p>
 
 		<Aside type="caution">Make sure you complete the setup workflow and activate your {props.productName} before changing the WAN settings to a static IP.</Aside>
 
@@ -656,7 +656,7 @@ When you are ready to connect your { props.magicWord === "virtual" ? props.produ
 
 { props.magicWord === "virtual" && (
   <>
-		<p>After activating your {props.productNameVirtual}, you can use it in a network configuration with the WAN interface set to a static IP address - that is, an Internet configuration that is not automatically set by DHCP. To use your {props.productNameVirtual} on a network configuration with a static IP, follow the steps below.</p>
+		<p>After activating your device, you can use it in a network configuration with the WAN interface set to a static IP address - that is, an Internet configuration that is not automatically set by DHCP. To use your {props.productNameVirtual} on a network configuration with a static IP, follow the steps below.</p>
 
 		<Aside type="caution">Make sure you complete the setup workflow and activate your {props.productNameVirtual} before changing the WAN settings to a static IP.</Aside>
 
@@ -681,7 +681,7 @@ When you are ready to connect your { props.magicWord === "virtual" ? props.produ
 { props.magicWord === "hardware" && (
   <>
 		<AnchorHeading title="Bootstrap via Serial Console" depth={2} />
-		<p>Advanced users can locally configure their {props.productName} to work in a static IP configuration. This local method does not require having access to a DHCP Internet connection. However, it does require being comfortable with using tools to access the serial port on {props.productName} as well as using a serial terminal client to access the {props.productName}'s environment.</p>
+		<p>Advanced users can locally configure their {props.productName} to work in a static IP configuration. This local method does not require having access to a DHCP Internet connection. However, it does require being comfortable with using tools to access the serial port on {props.productName} as well as using a serial terminal client to access the environment in your {props.productName}.</p>
 		<p>Below is a detailed description of how to use the serial port to configure your {props.productName} locally.</p>
 
 		<Aside type="note">The <code>reset device</code> option in your {props.productName} clears most of the configuration that is locally cached, resets the password to the default, and reboots.</Aside>
