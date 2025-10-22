@@ -27,8 +27,8 @@ Below are common OTLP endpoint formats for popular observability providers. Refe
 | [**Honeycomb**](/workers/observability/exporting-opentelemetry-data/honeycomb/) | `https://api.honeycomb.io/v1/traces` | `https://api.honeycomb.io/v1/logs` |
 | [**Grafana Cloud**](/workers/observability/exporting-opentelemetry-data/grafana-cloud/) | `https://otlp-gateway-{region}.grafana.net/otlp/v1/traces`| `https://otlp-gateway-{region}.grafana.net/otlp/v1/logs`[^1] |
 | [**Axiom**](/workers/observability/exporting-opentelemetry-data/axiom/) | `https://api.axiom.co/v1/traces` | `https://api.axiom.co/v1/logs` |
-| **Datadog** | Not yet available. Pending release from Datadog | Not yet available. Pending release from Datadog |
 | [**Sentry**](/workers/observability/exporting-opentelemetry-data/sentry/) | `https://{HOST}/api/{PROJECT_ID}/integration/otlp/v1/traces` | `https://{HOST}/api/{PROJECT_ID}/integration/otlp/v1/logs` |
+| [**Datadog**](https://docs.datadoghq.com/opentelemetry/setup/otlp_ingest/) | Not yet available. Pending release from Datadog | Not yet available. Pending release from Datadog |
 
 :::note[Authentication]
 Most providers require authentication headers. Refer to your provider's documentation for specific authentication requirements.
@@ -66,9 +66,9 @@ After setting up destinations in the dashboard, configure your Worker to export 
       "destinations": ["tracing-destination-name"],
       
       // traces sample rate of 5%
-      "head_sampling_rate": 0.05
+      "head_sampling_rate": 0.05,
 
-      //traces not sent to the Cloudflare Dashboard
+      // (optional disable traces in Cloudflare dashboard
       "persist": false
     },
     "logs": {
@@ -77,7 +77,7 @@ After setting up destinations in the dashboard, configure your Worker to export 
       // logs sample rate of 60%
       "head_sampling_rate": 0.6,
       
-      //traces not sent to the Cloudflare Dashboard
+      // (optional disable logs in Cloudflare dashboard
       "persist": false
     }
   }
