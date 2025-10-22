@@ -538,7 +538,7 @@ After finishing your { props.magicWord === "virtual" ? props.productNameVirtual 
   )
 }
 
-## Activate Connector
+## Activate appliance
 
 {props.shippedLanguage}, and will only establish a connection to the Cloudflare network when it is activated. Cloudflare recommends leaving it deactivated until you finish [setting it up in the dashboard](#set-up-cloudflare-dashboard).
 
@@ -618,7 +618,7 @@ When you are ready to connect your { props.magicWord === "virtual" ? props.produ
 		1. Connect ${props.productName} to a DHCP port with access to the Internet.
 		2. ${props.productOriginalName === "WAN Tunnels" ? "[Create a new profile](#create-a-new-profile)" : "[Add a Connector on-ramp](#add-a-connector-on-ramp)"} in the Cloudflare dashboard.
 		3. Create a [DHCP WAN](#create-a-wan).
-		4. [Activate](#activate-connector) and power on your ${props.productName}.
+		4. [Activate](#activate-appliance) and power on your ${props.productName}.
 		5. Wait 60 seconds.
 		6. Make changes to the [WAN settings](#create-a-wan) in the Cloudflare dashboard to a static IP set up.
 		7. Wait 60 seconds again.
@@ -643,7 +643,7 @@ When you are ready to connect your { props.magicWord === "virtual" ? props.produ
 		1. Connect the machine where you installed the VM with ${props.productNameVirtual} to a DHCP port with access to the Internet.
 		2. ${props.productOriginalName === "WAN Tunnels" ? "[Create a new profile](#create-a-new-profile)" : "[Add a Connector on-ramp](#add-a-connector-on-ramp)"} in the Cloudflare dashboard.
 		3. Create a [DHCP WAN](#create-a-wan).
-		4. [Activate](#activate-connector) and boot your ${props.productNameVirtual}.
+		4. [Activate](#activate-appliance) and boot your ${props.productNameVirtual}.
 		5. Wait 60 seconds.
 		6. Make changes to the [WAN settings](#create-a-wan) in the Cloudflare dashboard to a static IP set up.
 		7. Wait 60 seconds again.
