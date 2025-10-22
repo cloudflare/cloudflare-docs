@@ -582,10 +582,14 @@ When you are ready to connect your { props.magicWord === "virtual" ? props.produ
 	<>
 		<Markdown
 	text={`
-		1. In the Cloudflare dashboard, go to Magic WAN's **Configuration** page.
+		1. In the Cloudflare dashboard, go to Magic WAN's **Configuration** page.`}
+	inline={false}
+	/>
 
-			<DashButton url="/?to=/:account/magic-wan/configuration" />
+   <DashButton url="/?to=/:account/magic-wan/configuration" />
 
+		<Markdown
+	text={`
 		2. Go to **Connectors**.
 		3. Find the ${ props.magicWord === "virtual" ? props.productNameVirtual : props.productName } you want to activate, select the three dots next to it > **Edit**. Make sure you verify the serial number to choose the right ${ props.magicWord === "virtual" ? props.productNameVirtual : props.productName } you want to activate.
 		4. In the new window, the **Status** dropdown will show as **Deactivated**. Select it to change the status to **Activated**.
