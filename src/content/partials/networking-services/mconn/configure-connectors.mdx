@@ -91,7 +91,7 @@ There are a couple of decisions you need to make when installing your { props.ma
 
 ### Determine the need for a high availability configuration
 
-You can install up to two { props.magicWord === "virtual" ? props.productNameVirtual : props.productName }s for redundancy at each of your sites. If one of your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName }s fails, traffic will fail over to the other { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } ensuring that you never lose connectivity to that site.
+You can install up to two instances of { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } for redundancy at each of your sites. If one of your devices fails, traffic will fail over to the other { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } ensuring that you never lose connectivity to that site.
 
 In this type of high availability (HA) configuration, you will choose a reliable LAN interface as the HA link which will be used to monitor the health of the peer connector. HA links can be dedicated links or can be shared with other LAN traffic.
 
