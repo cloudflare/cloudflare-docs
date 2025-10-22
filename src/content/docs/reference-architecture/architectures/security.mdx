@@ -1,7 +1,28 @@
 ---
 title: Cloudflare Security Architecture
 pcx_content_type: reference-architecture
-products: [access, casb, dlp, gateway, email-security-cf1, workers, turnstile, magic-wan, magic-firewall, magic-transit, api-shield, bots, ddos-protection, dns-firewall, page-shield, ssl, spectrum, security-center, waf]
+products:
+  [
+    access,
+    casb,
+    dlp,
+    gateway,
+    email-security-cf1,
+    workers,
+    turnstile,
+    magic-wan,
+    magic-firewall,
+    magic-transit,
+    api-shield,
+    bots,
+    ddos-protection,
+    dns-firewall,
+    page-shield,
+    ssl,
+    spectrum,
+    security-center,
+    waf,
+  ]
 sidebar:
   order: 1
   label: Security Architecture
@@ -505,9 +526,9 @@ Existing private infrastructure can be complex. Cloudflare provides a variety of
 | ------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [Magic WAN](/magic-wan/)                                                                                      | IPsec or GRE tunnel from networking devices to Cloudflare, routing entire network traffic.                                                                   | Connecting existing network routers to Cloudflare. Allowing all traffic into and out of the network to go through Cloudflare.                                               |
 | [Magic WAN Connector](/magic-wan/configuration/connector/)                                                    | Appliance-based IPsec or GRE tunnel from networking devices to Cloudflare, routing entire network traffic.                                                   | Uses the same technology as Magic WAN; however, instead of using existing networking devices, a dedicated appliance or virtual machine is used — the Magic WAN Connector.   |
-| [cloudflared](/cloudflare-one/networks/connectors/cloudflare-tunnel/)                                                  | Software agent deployed on servers or alongside services like Kubernetes for creating a tunnel for incoming connections to private applications or networks. | IT admins or application owners can easily install this tunnel software to expose their application to the Cloudflare network.                                              |
-| [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/)                    | Software agent deployed on servers for creating a tunnel for incoming and outgoing connections to private applications or networks.                          | Similar to cloudflared, but supports East to West traffic and is often used in place of Magic WAN when there is no ability to create an IPsec tunnel from existing devices. |
-| [WARP Desktop Agent](/cloudflare-one/team-and-resources/devices/warp/)                                       | Software agent deployed on user devices, creating a tunnel for traffic to and from private applications and networks.                                        | Connecting end user devices like phones and laptops to be part of the Cloudflare network.                                                                                   |
+| [cloudflared](/cloudflare-one/networks/connectors/cloudflare-tunnel/)                                         | Software agent deployed on servers or alongside services like Kubernetes for creating a tunnel for incoming connections to private applications or networks. | IT admins or application owners can easily install this tunnel software to expose their application to the Cloudflare network.                                              |
+| [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/)           | Software agent deployed on servers for creating a tunnel for incoming and outgoing connections to private applications or networks.                          | Similar to cloudflared, but supports East to West traffic and is often used in place of Magic WAN when there is no ability to create an IPsec tunnel from existing devices. |
+| [WARP Desktop Agent](/cloudflare-one/team-and-resources/devices/warp/)                                        | Software agent deployed on user devices, creating a tunnel for traffic to and from private applications and networks.                                        | Connecting end user devices like phones and laptops to be part of the Cloudflare network.                                                                                   |
 | [Cloudflare Network Interconnect](https://www.cloudflare.com/network-services/products/network-interconnect/) | Direct connection between your physical networks and Cloudflare.                                                                                             | When your applications live in the same data centers we operate in, we can connect those networks directly to Cloudflare.                                                   |
 
 For more details on how these methods work, please refer to our [SASE reference architecture](/reference-architecture/architectures/sase/).
@@ -542,7 +563,7 @@ This centralization of identity into a common access control layer allows you to
 
 The focus on this document is about security, and now that applications, devices, identities, and networks are all connected, every request to and from any resource on the network, and also to the Internet, is now subject to Cloudflare's access control and firewall services. There are two services that apply policy-based controls to traffic.
 
-- **Zero Trust Network Access**: Our [Access](/cloudflare-one/access-controls/policies/access/) product manages access to specific networks or applications that are deemed private. It enforces authentication either for users via an existing identity provider, or for other applications via service tokens or mTLS.
+- **Zero Trust Network Access**: Our [Access](/cloudflare-one/access-controls/policies/) product manages access to specific networks or applications that are deemed private. It enforces authentication either for users via an existing identity provider, or for other applications via service tokens or mTLS.
 - **Secure Web Gateway**: Our [Gateway](/cloudflare-one/traffic-policies/) product is used to analyze traffic and apply policies, no matter the destination. It is most commonly used to allow, block, or isolate traffic that is destined for the Internet. This can be used to apply access controls to SaaS applications, but any traffic flowing through Cloudflare can be inspected and acted upon by Gateway. Therefore it can also be used to add additional access controls to non-Internet, private tunneled applications.
 
 ![Cloudflare's ZTNA and SWG services can be combined to secure both private and Internet access.](~/assets/images/reference-architecture/security/security-ref-arch-21.svg)

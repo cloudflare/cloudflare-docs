@@ -16,15 +16,17 @@ https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/link
 ```
 
 ## Required fields
+
 You must provide either `url` or `html`:
--  `url` (string) 
--  `html` (string)
+
+- `url` (string)
+- `html` (string)
 
 ## Common use cases
 
--  Collect only user-visible links for UX or SEO analysis
--  Crawl a site by discovering links on seed pages
--  Validate navigation/footers and detect broken or external links
+- Collect only user-visible links for UX or SEO analysis
+- Crawl a site by discovering links on seed pages
+- Validate navigation/footers and detect broken or external links
 
 ## Basic usage
 
@@ -74,7 +76,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
 		"https://developers.cloudflare.com/ai-gateway/",
 		"https://playground.ai.cloudflare.com/",
 		"https://developers.cloudflare.com/products/?product-group=AI",
-		"https://developers.cloudflare.com/cloudflare-one/access-controls/policies/access/",
+		"https://developers.cloudflare.com/cloudflare-one/access-controls/policies/",
 		"https://developers.cloudflare.com/cloudflare-one/networks/connectors/cloudflare-tunnel/",
 		"https://developers.cloudflare.com/cloudflare-one/traffic-policies/",
 		"https://developers.cloudflare.com/cloudflare-one/remote-browser-isolation/",
@@ -190,7 +192,7 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
 		"https://developers.cloudflare.com/ai-gateway/",
 		"https://playground.ai.cloudflare.com/",
 		"https://developers.cloudflare.com/products/?product-group=AI",
-		"https://developers.cloudflare.com/cloudflare-one/access-controls/policies/access/",
+		"https://developers.cloudflare.com/cloudflare-one/access-controls/policies/",
 		"https://developers.cloudflare.com/cloudflare-one/networks/connectors/cloudflare-tunnel/",
 		"https://developers.cloudflare.com/cloudflare-one/traffic-policies/",
 		"https://developers.cloudflare.com/cloudflare-one/remote-browser-isolation/",

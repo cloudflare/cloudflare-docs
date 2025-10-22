@@ -15,7 +15,7 @@ Organizations today are increasingly adopting a [Zero Trust security](https://ww
 
 Typically two technologies play a role in a Zero Trust architecture. First, a [Secure Web Gateway (SWG)](https://www.cloudflare.com/learning/access-management/what-is-a-secure-web-gateway/) filters outbound traffic destined for the Internet and blocks users from accessing high risk websites such as those involved in phishing campaigns. Then, to enable remote access for users to SaaS apps, internally-hosted applications and networks, Zero Trust Network Access ([ZTNA](https://www.cloudflare.com/learning/access-management/what-is-ztna/)) services are used to create secure tunnels and provide access for remote users into private applications.
 
-This guide is for customers looking to deploy Cloudflare's ZTNA service ([Access](/cloudflare-one/access-controls/policies/access/)) and provides best practices and guidelines for how to effectively build the right policies. If you have not already done so, we recommend also reading Cloudflare's [SASE reference architecture](/reference-architecture/architectures/sase/), which goes into detail on all aspects of how to use Cloudflare as part of your Zero Trust initiatives.
+This guide is for customers looking to deploy Cloudflare's ZTNA service ([Access](/cloudflare-one/access-controls/policies/)) and provides best practices and guidelines for how to effectively build the right policies. If you have not already done so, we recommend also reading Cloudflare's [SASE reference architecture](/reference-architecture/architectures/sase/), which goes into detail on all aspects of how to use Cloudflare as part of your Zero Trust initiatives.
 
 ### Who is this document for and what will you learn?
 
@@ -25,7 +25,7 @@ This document is aimed at administrators who are evaluating or have adopted Clou
 - **Building policies**: The main components of an access policy and how they are combined.
 - **Use cases**: Common use cases and policies that can serve as blueprints for your own policy designs.
 
-This design guide assumes you have a basic understanding of Cloudflare's ZTNA solution, [Cloudflare Access](/cloudflare-one/access-controls/policies/access/). Therefore, this guide focuses on designing effective access policies and assumes you have already configured [DNS](/cloudflare-one/traffic-policies/initial-setup/dns/), [identity](/cloudflare-one/identity/) and [device posture providers](/cloudflare-one/identity/devices/service-providers/) as well as [created connectivity](/cloudflare-one/networks/) to self-hosted applications and related networks.
+This design guide assumes you have a basic understanding of Cloudflare's ZTNA solution, [Cloudflare Access](/cloudflare-one/access-controls/policies/). Therefore, this guide focuses on designing effective access policies and assumes you have already configured [DNS](/cloudflare-one/traffic-policies/initial-setup/dns/), [identity](/cloudflare-one/identity/) and [device posture providers](/cloudflare-one/identity/devices/service-providers/) as well as [created connectivity](/cloudflare-one/networks/) to self-hosted applications and related networks.
 
 By the end of this guide, you will be equipped to implement granular access policies that enforce Zero Trust principles across various common enterprise scenarios.
 
@@ -154,7 +154,7 @@ Each rule is a filter to determine which users this policy is going to affect. T
 
 - **Require** rules set mandatory conditions that must be met for access to be granted. Unlike Include rules, "Require" rules use AND logic — every rule must be met. This is typically used to layer security on top of the basic access criteria defined by Include rules. For example, administrators can require that anyone trying to access an application use specific MFA methods.
 
-- **Exclude** rules define exceptions to access, overriding other rule types. If a user matches an "Exclude" rule, they're denied access regardless of other policy conditions. For example, a user may meet a requirement to use a MFA method during login, but if their specific [multifactor authentication (MFA) method](/cloudflare-one/access-controls/policies/access/mfa-requirements/) is defined in an Exclude rule, they will be blocked by the policy. Alternatively, if a user is associated with a 'high risk' IdP group, they can be excluded on that basis even if they meet all the other posture requirements.
+- **Exclude** rules define exceptions to access, overriding other rule types. If a user matches an "Exclude" rule, they're denied access regardless of other policy conditions. For example, a user may meet a requirement to use a MFA method during login, but if their specific [multifactor authentication (MFA) method](/cloudflare-one/access-controls/policies/mfa-requirements/) is defined in an Exclude rule, they will be blocked by the policy. Alternatively, if a user is associated with a 'high risk' IdP group, they can be excluded on that basis even if they meet all the other posture requirements.
 
 A useful way to imagine how these different types of rules are applied, is to imagine a funnel. Include selectors define what attributes of the user, traffic or device are included in the policy that will be Allowed, Blocked and so on. Require then further filters from that list what attributes must be associated with the user with the Exclude type filtering out users who have matched both the Include and Require.
 
@@ -162,7 +162,7 @@ A useful way to imagine how these different types of rules are applied, is to im
 
 The above diagram visualises an example for the policy "All employees and contractors on secure devices using strong MFA". Anyone in the group "All Employees" or contractors who have authenticated with a username in their company domain will match this policy. They are required to be using a device that has the latest OS and is using encrypted storage. They must have authenticated with an MFA factor, but not SMS. Also, they must be accessing the application via Cloudflare's secure web gateway.
 
-There are many different [types of selectors](/cloudflare-one/access-controls/policies/access/#selectors). While every possible selector is not listed here, the following lists specific outcomes that organizations using Cloudflare Access typically desire when building policies. This will help you understand how to achieve a specific outcome.
+There are many different [types of selectors](/cloudflare-one/access-controls/policies/#selectors). While every possible selector is not listed here, the following lists specific outcomes that organizations using Cloudflare Access typically desire when building policies. This will help you understand how to achieve a specific outcome.
 
 - **Is user traffic coming over Cloudflare Gateway?**
   Guaranteeing that a user only accesses an application over our SWG, Cloudflare Gateway, is a great way to prevent unauthorized access due to phishing or credential theft. Additionally, you can ensure all traffic bound to the application is logged and filtered by Cloudflare Gateway.
@@ -217,7 +217,7 @@ Below are a few additional application settings to consider that help improve se
 
 ##### Isolate application
 
-Sometimes you want to manage access to a self-hosted application for less trusted, third-party users such as contractors or partners. You might want to allow them to read content in an application, but limit their ability to download files, copy and paste data, and print the page. Cloudflare Access allows you to render the application in a remote [browser](/cloudflare-one/access-controls/policies/access/isolate-application/) (using [remote browser isolation, or RBI](/cloudflare-one/remote-browser-isolation/)) so that the application is rendered using a headless browser on our network versus sending all the content down to the user's browser. This allows Cloudflare to then enforce a range of controls over how the user can interact with the content.
+Sometimes you want to manage access to a self-hosted application for less trusted, third-party users such as contractors or partners. You might want to allow them to read content in an application, but limit their ability to download files, copy and paste data, and print the page. Cloudflare Access allows you to render the application in a remote [browser](/cloudflare-one/access-controls/policies/isolate-application/) (using [remote browser isolation, or RBI](/cloudflare-one/remote-browser-isolation/)) so that the application is rendered using a headless browser on our network versus sending all the content down to the user's browser. This allows Cloudflare to then enforce a range of controls over how the user can interact with the content.
 
 The setting is at the policy level, so one policy can allow trusted users (such as employees) to access applications normally, while another policy with browser isolation enabled can apply the RBI service for contractors.
 
@@ -237,7 +237,7 @@ Add an additional layer of access control by requiring users to obtain "temporar
 
 ### Access Groups
 
-One of the most important parts of defining ZTNA policies is to leverage reusable elements called [Access Groups](/cloudflare-one/access-controls/policies/access/groups/). Each access group uses the same rules we've just described to define users, traffic or devices. These groups can then be used across many policies to allow, deny, bypass, or isolate access to an application.
+One of the most important parts of defining ZTNA policies is to leverage reusable elements called [Access Groups](/cloudflare-one/access-controls/policies/groups/). Each access group uses the same rules we've just described to define users, traffic or devices. These groups can then be used across many policies to allow, deny, bypass, or isolate access to an application.
 
 For example, you can define "Employees" once as an Access Group, and then use that in every application policy where you want to refer to employees. Updates to this Access Group would then be reflected in every policy. This is also a good way to include nested logic (for example, users with a Linux device and has antivirus software enabled)
 
@@ -470,7 +470,7 @@ Define the policy:
 
 Inside the policy, we have made this application available to our new access group for IT Admins. Under "Require," we are enforcing the use of Cloudflare WARP specifically (as opposed to only Cloudflare Gateway). The user must be on a company-managed device, with an active device client that is authenticated to the company's instance of Cloudflare, MFA must be used during login, and there is an additional option below for external evaluation.
 
-[External evaluation](/cloudflare-one/access-controls/policies/access/external-evaluation/) means we have an API endpoint containing some sort of [access logic](https://github.com/cloudflare/workers-access-external-auth-example) — in this case, time of day access. We are making an API call to this endpoint, and defining the key that Cloudflare is using to verify that the response came from the API. This is useful for several reasons:
+[External evaluation](/cloudflare-one/access-controls/policies/external-evaluation/) means we have an API endpoint containing some sort of [access logic](https://github.com/cloudflare/workers-access-external-auth-example) — in this case, time of day access. We are making an API call to this endpoint, and defining the key that Cloudflare is using to verify that the response came from the API. This is useful for several reasons:
 
 External evaluation allows users to create bespoke security posture checks based on criteria that may not be covered by the default set of posture checks. For this example, we will be using a service built on [Cloudflare Workers](https://workers.cloudflare.com/).
 

@@ -24,19 +24,22 @@ https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/json
 ```
 
 ## Required fields
+
 You must provide either `url` or `html`:
--  `url` (string)
--  `html` (string)
+
+- `url` (string)
+- `html` (string)
 
 And at least one of:
--  `prompt` (string), or
--  `response_format` (object with a JSON Schema)
+
+- `prompt` (string), or
+- `response_format` (object with a JSON Schema)
 
 ## Common use cases
 
--  Extract product info (title, price, availability) or listings (jobs, rentals)
--  Normalize article metadata (title, author, publish date, canonical URL)
--  Convert unstructured pages into typed JSON for downstream pipelines
+- Extract product info (title, price, availability) or listings (jobs, rentals)
+- Normalize article metadata (title, author, publish date, canonical URL)
+- Convert unstructured pages into typed JSON for downstream pipelines
 
 ## Basic Usage
 
@@ -223,7 +226,7 @@ curl --request POST 'https://api.cloudflare.com/client/v4/accounts/CF_ACCOUNT_ID
 			},
 			{
 				"name": "Access",
-				"link": "https://developers.cloudflare.com/cloudflare-one/access-controls/policies/access/"
+				"link": "https://developers.cloudflare.com/cloudflare-one/access-controls/policies/"
 			},
 			{
 				"name": "Tunnel",

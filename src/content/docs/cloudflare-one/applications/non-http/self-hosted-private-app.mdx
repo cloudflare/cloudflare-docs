@@ -29,7 +29,7 @@ This feature replaces the legacy [private network app type](/cloudflare-one/appl
 	params={{ private: true }}
 />
 
-6.  Add the private IP and/or private hostname that represents the application. You can use [wildcards](/cloudflare-one/access-controls/policies/access/app-paths/) with private hostnames to protect multiple parts of an application that share a root path.
+6.  Add the private IP and/or private hostname that represents the application. You can use [wildcards](/cloudflare-one/access-controls/policies/app-paths/) with private hostnames to protect multiple parts of an application that share a root path.
 
     :::note
     Private hostnames are currently only available over port `443` over HTTPS and the application must have a valid Server Name Indicator (SNI). If you are configuring a private IP on any port other than `443` and plan to use Browser Isolation, note that this [will result in a Gateway block page](/cloudflare-one/remote-browser-isolation/known-limitations/#browser-isolation-is-not-compatible-with-private-ips-on-non-443-ports).
@@ -80,8 +80,12 @@ The WARP client manages sessions for all non-HTTPS applications. Users will rece
 
 ### Access vs Gateway policies
 
-<Render file="access/modify-gateway-policy-precedence" product="cloudflare-one" params={{ selector: "Access Private App", protocol: "private" }} />
+<Render
+	file="access/modify-gateway-policy-precedence"
+	product="cloudflare-one"
+	params={{ selector: "Access Private App", protocol: "private" }}
+/>
 
 ### Private hostname vs private IP
 
-An Access application defined by a private hostname takes precedence over an Access application defined by a private IP. For example, assume App-1 points to `wiki.internal.local` and App-2 points to `10.0.0.1`, but `wiki.internal.local` resolves to 	`10.0.0.1`. Users who go to `wiki.internal.local` will never match App-2; they will be allowed or blocked strictly based on App-1 Access policies (and [Gateway policies](#access-vs-gateway-policies)).
+An Access application defined by a private hostname takes precedence over an Access application defined by a private IP. For example, assume App-1 points to `wiki.internal.local` and App-2 points to `10.0.0.1`, but `wiki.internal.local` resolves to `10.0.0.1`. Users who go to `wiki.internal.local` will never match App-2; they will be allowed or blocked strictly based on App-1 Access policies (and [Gateway policies](#access-vs-gateway-policies)).

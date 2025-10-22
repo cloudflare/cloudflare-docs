@@ -1,7 +1,17 @@
 ---
 title: Using a zero trust framework to secure SaaS applications
 pcx_content_type: design-guide
-products: [access, browser-isolation, cloudflare-one, casb, dlp, email-security-cf1, gateway, magic-wan]
+products:
+  [
+    access,
+    browser-isolation,
+    cloudflare-one,
+    casb,
+    dlp,
+    email-security-cf1,
+    gateway,
+    magic-wan,
+  ]
 sidebar:
   order: 1
   label: Zero Trust for SaaS applications
@@ -94,11 +104,11 @@ There are several advantages to using Cloudflare's dedicated egress IPs when com
 
 #### Using Cloudflare as an identity proxy
 
-With Cloudflare, [Zero Trust Network Access (ZTNA)](https://www.cloudflare.com/en-gb/learning/access-management/what-is-ztna/) can be applied to managed SaaS applications. In this scenario, Cloudflare acts as the [Single Sign-On (SSO)](https://www.cloudflare.com/en-gb/learning/access-management/what-is-sso/) service for an application, proxying user authentication requests to the organization's existing identity providers (IdPs). This allows for additional restrictions to be layered on before granting access, such as requiring [multi-factor authentication](https://www.cloudflare.com/en-gb/learning/access-management/what-is-multi-factor-authentication/), implementing [device posture checks](/cloudflare-one/identity/devices/), or [evaluating the country](/cloudflare-one/access-controls/policies/access/#selectors) the request is coming from.
+With Cloudflare, [Zero Trust Network Access (ZTNA)](https://www.cloudflare.com/en-gb/learning/access-management/what-is-ztna/) can be applied to managed SaaS applications. In this scenario, Cloudflare acts as the [Single Sign-On (SSO)](https://www.cloudflare.com/en-gb/learning/access-management/what-is-sso/) service for an application, proxying user authentication requests to the organization's existing identity providers (IdPs). This allows for additional restrictions to be layered on before granting access, such as requiring [multi-factor authentication](https://www.cloudflare.com/en-gb/learning/access-management/what-is-multi-factor-authentication/), implementing [device posture checks](/cloudflare-one/identity/devices/), or [evaluating the country](/cloudflare-one/access-controls/policies/#selectors) the request is coming from.
 
 ![Figure 4: Cloudflare can act as an identity proxy, providing a consistent authentication experience for all SaaS applications.](~/assets/images/reference-architecture/zero-trust-for-saas/zero-trust-saas-image-04.svg "Figure 4: Cloudflare can act as an identity proxy, providing a consistent authentication experience for all SaaS applications.")
 
-Most organizations initially use Cloudflare's [ZTNA service](/cloudflare-one/access-controls/policies/access/) for self-hosted applications. Extending it to SaaS applications simplifies IT management in several ways, as both self-hosted and SaaS apps will:
+Most organizations initially use Cloudflare's [ZTNA service](/cloudflare-one/access-controls/policies/) for self-hosted applications. Extending it to SaaS applications simplifies IT management in several ways, as both self-hosted and SaaS apps will:
 
 - Use the same access policies
 - Leverage the same IdP and device posture integrations

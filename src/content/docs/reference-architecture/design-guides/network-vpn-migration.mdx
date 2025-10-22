@@ -1,7 +1,7 @@
 ---
 title: Network-focused migration from VPN concentrators to Zero Trust Network Access
 pcx_content_type: design-guide
-products:	[access, gateway, magic-wan, network-interconnect]
+products: [access, gateway, magic-wan, network-interconnect]
 sidebar:
   label: "Network-focused VPN migration"
 reviewed: 2024-09-17
@@ -198,7 +198,7 @@ In the example above, subnets X and Y are completely segmented from the rest of 
 
 In addition to routing traffic for private IP addresses, `cloudflared` can expose internal applications via publicly resolvable hostnames. This makes it possible to connect to such applications without using any software on the device. This can be very useful for use cases where you are unable to install software on the device, such as giving application access to contractors or partners.
 
-In the example below, `erp.example.com` is added as [Public Hostname](/cloudflare-one/networks/connectors/cloudflare-tunnel/routing-to-tunnel/) to the tunnel, routing traffic to port 80 and/or 443 to a specific IP address on the internal subnet Y. Access to this resource from the Internet is then protected using [Cloudflare Access security policies](/cloudflare-one/access-controls/policies/access/) which also rely on the IdP connection you've set up for onboarding your employees.
+In the example below, `erp.example.com` is added as [Public Hostname](/cloudflare-one/networks/connectors/cloudflare-tunnel/routing-to-tunnel/) to the tunnel, routing traffic to port 80 and/or 443 to a specific IP address on the internal subnet Y. Access to this resource from the Internet is then protected using [Cloudflare Access security policies](/cloudflare-one/access-controls/policies/) which also rely on the IdP connection you've set up for onboarding your employees.
 
 ![Adding a public hostname to a tunnel for clientless access to internal applications.](~/assets/images/reference-architecture/design-guide-network-vpn-migr/clientless-access.svg "Figure 7: Adding a public hostname to a tunnel for clientless access to internal applications.")
 

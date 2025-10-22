@@ -12,10 +12,10 @@ Browser Isolation is enabled through [Secure Web Gateway HTTP policies](/cloudfl
 
 Setup instructions vary depending on how you want to connect your devices to Cloudflare. Refer to the links below to view the setup guide for each deployment option.
 
-| Connection                                                                                                  | Mode         | Description                                                                                                          |
-| ----------------------------------------------------------------------------------------------------------- | ------------ | -------------------------------------------------------------------------------------------------------------------- |
-| [Gateway with WARP](/cloudflare-one/traffic-policies/initial-setup/http/)                                   | In-line      | Apply identity-based HTTP policies to traffic proxied through the WARP client.                                       |
-| [Access](/cloudflare-one/access-controls/policies/access/isolate-application/)                                              | In-line      | Apply identity-based HTTP policies to Access applications that are rendered in a remote browser.                     |
+| Connection                                                                                                | Mode         | Description                                                                                                          |
+| --------------------------------------------------------------------------------------------------------- | ------------ | -------------------------------------------------------------------------------------------------------------------- |
+| [Gateway with WARP](/cloudflare-one/traffic-policies/initial-setup/http/)                                 | In-line      | Apply identity-based HTTP policies to traffic proxied through the WARP client.                                       |
+| [Access](/cloudflare-one/access-controls/policies/isolate-application/)                                   | In-line      | Apply identity-based HTTP policies to Access applications that are rendered in a remote browser.                     |
 | [Gateway proxy endpoint](/cloudflare-one/remote-browser-isolation/setup/non-identity/)                    | In-line      | Apply non-identity HTTP policies to traffic forwarded to a proxy endpoint.                                           |
 | [Magic WAN](/cloudflare-one/remote-browser-isolation/setup/non-identity/)                                 | In-line      | Apply non-identity HTTP policies to traffic connected through a GRE or IPsec tunnel.                                 |
 | [Clientless remote browser](/cloudflare-one/remote-browser-isolation/setup/clientless-browser-isolation/) | Prefixed URL | Render web pages in a remote browser when users go to `https://<your-team-name>.cloudflareaccess.com/browser/<URL>`. |
