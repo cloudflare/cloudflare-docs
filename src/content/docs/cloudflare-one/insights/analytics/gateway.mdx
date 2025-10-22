@@ -1,16 +1,73 @@
 ---
 pcx_content_type: reference
-title: Gateway analytics
+title: Gateway analytics (DNS, HTTP, network sessions)
 sidebar:
   order: 4
 ---
 
-To see the top Allowed and Blocked requests across all of your DNS locations, go to **Analytics** > **Gateway**. You can filter the data by selecting a specific location and/or time.
+Gateway analytics include three separate dashboards:
 
-- **Requests** — This chart shows an overview of the number of requests made by end users within the time period you specify. It shows a breakdown of requests based on the decision Gateway took (either Allowed or Blocked).
-- **Allowed requests** — This chart shows a breakdown of the five domains which received the highest number of Allowed requests. It also shows the five domains which received the lowest amount of Allowed requests. By selecting **View all** to the right of either section of the chart, you will see a list of highest 100 and lowest 100 domains ranked by number of Allowed requests.
-- **Top blocked requests** — This chart shows a breakdown of the five domains which received the highest number of Blocked requests. It also shows the five domains which received the lowest number of Blocked requests. By selecting **View all** to the right of either section of the chart, you'll see a list of highest 100 and lowest 100 domains ranked by number of Blocked requests.
-- **Requests by category** — The charts in this card show a breakdown of the **Top allowed categories** and the **Top blocked categories** based on the number of requests that Gateway classified as belonging to a content category.
+- HTTP request analytics.
+- DNS query analytics.
+- Network session analytics.
+
+To review Gateway analytics, log in to [Zero Trust](https://one.dash.cloudflare.com/) and go to **Analytics** > **Dashboards** > select your desired dashboard.
+
+## HTTP request analytics
+
+The HTTP request analytics dashboard is powered by your [Gateway HTTP policies](/cloudflare-one/policies/gateway/http-policies/). If you are not using Gateway HTTP policies, the dashboard will appear empty.
+
+The HTTP request analytics dashboard helps you identify trends in how your HTTP policies are applied over time. By visualizing allowed, isolated, and do not inspect requests, the dashboard provides insights into traffic behavior and policy trends, making it easier to spot anomalies or shifts in usage patterns.
+
+To review a detailed description of an HTTP request and its associated policy, log in to [Zero Trust](https://one.dash.cloudflare.com/) and go to **Logs** > **Gateway** > **HTTP**.
+
+### Provided analytics
+
+- HTTP Requests over time
+	- Time series view of HTTP requests
+- Top Actions
+- Top Countries
+- Top Blocked Users
+- Top Bandwidth Consumers
+- Top Devices
+- Top Source IPs
+
+## DNS query analytics
+
+The DNS query analytics dashboard is powered by your [Gateway DNS policies](/cloudflare-one/policies/gateway/dns-policies/). If you are not using Gateway DNS policies, the dashboard will appear empty.
+
+The DNS query analytics dashboard helps you identify trends in how your DNS policies are applied over time. By visualizing allowed, blocked, and overridden queries, the dashboard provides insights into traffic behavior and policy trends, making it easier to spot anomalies or shifts in usage patterns.
+
+To review a detailed description of a DNS query and its associated policy, log in to [Zero Trust](https://one.dash.cloudflare.com/) and go to **Logs** > **Gateway** > **DNS**.
+
+### Provided analytics
+
+- DNS Queries over time
+	- Time series view of DNS queries
+- Top Actions
+- Top Countries
+- Top Blocked Users
+- Top Allowed Users
+- Top Blocked Devices
+
+## Network session analytics
+
+The Network session analytics dashboard is powered by your [Gateway network policies](/cloudflare-one/policies/gateway/network-policies/). If you are not using Gateway network policies, the dashboard will appear empty.
+
+The Network session analytics dashboard helps you identify trends in how your network policies are applied over time. By visualizing allowed, blocked, and overridden sessions, the dashboard provides insights into traffic behavior and policy trends, making it easier to spot anomalies or shifts in usage patterns.
+
+To review a detailed description of a network session and its associated policy, log in to [Zero Trust](https://one.dash.cloudflare.com/) and go to **Logs** > **Gateway** > **Network**.
+
+### Provided analytics
+
+- Network Sessions over time
+	- Time series view of network sessions
+- Top Actions
+- Top Countries
+- Top Blocked Users
+- Top Bandwidth Consumers
+- Top Devices
+- Top Source IPs
 
 ## GraphQL queries
 

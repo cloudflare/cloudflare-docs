@@ -9,7 +9,25 @@ import { Tabs, TabItem, Render } from "~/components";
 
 The `/scrape` endpoint extracts structured data from specific elements on a webpage, returning details such as element dimensions and inner HTML.
 
+## Endpoint
+
+```txt
+https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/scrape
+```
+
+## Required fields
+You must provide either `url` or `elements`:
+-  `url` (string)
+-  `elements` (array of objects) — each object must include `selector` (string)
+
+## Common use cases
+
+-  Extract headings, links, prices, or other repeated content with CSS selectors
+-  Collect metadata (for example, titles, descriptions, canonical links)
+
 ## Basic usage
+
+### Extract headings and links from a URL
 
 <Tabs syncKey="workersExamples"> <TabItem label="curl">
 
