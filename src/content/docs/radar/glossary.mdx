@@ -134,6 +134,17 @@ It is an essential Internet service, and is also used to look up other network-r
 
 The data displayed on Radar for DNS is based on aggregated and anonymized DNS lookups to Cloudflare's [1.1.1.1](/1.1.1.1/) public resolver service.
 
+## DNS magnitude
+
+DNS Magnitude is a metric originally developed by [nic.at](https://www.nic.at/media/files/pdf/dns-magnitude-paper-20200601.pdf) to estimate a domain’s overall visibility on the Internet.
+
+Instead of simply counting the total number of DNS queries, DNS Magnitude incorporates a sense of how many unique clients send queries to domains within the TLD. This approach gives a more accurate picture of a TLD’s reach, since a small number of sources can generate a large number of queries.
+Our ranking is based on queries observed at Cloudflare’s [1.1.1.1](/1.1.1.1/) public resolver. We aggregate individual client IP addresses into subnets, referred to here as "networks".
+
+The magnitude value ranges from 0 to 10, with higher values (closer to 10) indicating that the TLD is queried by a broader range of networks.
+
+This reflects greater global visibility and, in some cases, a higher likelihood of name collision across different systems. [According to ICANN](https://www.icann.org/resources/pages/name-collision-2013-12-06-en), a name collision occurs when an attempt to resolve a name used in a private name space (such as under a non-delegated Top-Level Domain) results in a query to the public DNS. When the administrative boundaries of private and public namespaces overlap, name resolution may yield unintended or harmful results. For example, if ICANN were to delegate .home, that could cause significant issues for hobbyists that use the (currently non-delegated) TLD within their local networks.
+
 ## Domain rankings
 
 Domain Rankings is based on our anonymized and aggregated [1.1.1.1 DNS resolver](/1.1.1.1/) data, complies with our [privacy policy](https://www.cloudflare.com/en-gb/privacypolicy/), and aims to identify the top most popular domains that reflect how people use the Internet globally. Domain Rankings’ popularity metric is best described as the estimated number of unique users that access a domain over some period of time.
@@ -180,7 +191,7 @@ The IQI methodology requires a minimum number of measurements to generate estima
 
 ## IRR AS-SETs
 
-An IRR AS-SET is a named collection of Autonomous System Numbers (ASNs) within the Internet Routing Registry (IRR) used to define and manage BGP routing policies. By grouping related networks, such as customers and downstream peers, under a single identifier, network operators can automate the creation of BGP filters, which are essential for preventing the propagation of BGP route leaks. AS-SETs can be hierarchical, meaning they can include other AS-SETs as members, creating a scalable but complex structure. To quantify this complexity, the "AS Cone" measures the total number of unique ASNs in a fully expanded set (its downstream footprint), while "Upstreams" measures how many other AS-SETs include it directly or indirectly, providing insight into its role in the global routing system. 
+An IRR AS-SET is a named collection of Autonomous System Numbers (ASNs) within the Internet Routing Registry (IRR) used to define and manage BGP routing policies. By grouping related networks, such as customers and downstream peers, under a single identifier, network operators can automate the creation of BGP filters, which are essential for preventing the propagation of BGP route leaks. AS-SETs can be hierarchical, meaning they can include other AS-SETs as members, creating a scalable but complex structure. To quantify this complexity, the "AS Cone" measures the total number of unique ASNs in a fully expanded set (its downstream footprint), while "Upstreams" measures how many other AS-SETs include it directly or indirectly, providing insight into its role in the global routing system.
 
 An AS-SET does not inherently includes its owner networks. Cloudflare Radar infers the owner by matching the AS-SET name on [PeeringDB](https://www.peeringdb.com/) or by the name itself. When an AS-SET's owner can be inferred via both methods, we prefer the PeeringDB information.
 
