@@ -422,13 +422,13 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{sit
 2. Enter a descriptive name for your LAN in **Interface name**.
 3. **Interface number** <Markdown text={props.lan} />
 4. In **VLAN ID**, specify a <a href={props.vlanIdURL}>VLAN ID</a> to create virtual LANs.
-5. In **Static addressing** > **Static address** give your Connector's LAN interface its IP address. You can also enable the following options if they suit your use case:
-   - **This is a DHCP server**: If your Connector is a <a href={props.dhcpServerURL}>DHCP server</a>.
-   - **This is a DHCP relay**: If your Connector is a <a href={props.dhcpRelayURL}>DHCP relay</a>.
+5. In **Static addressing** > **Static address** give your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName }'s LAN interface its IP address. You can also enable the following options if they suit your use case:
+   - **This is a DHCP server**: If your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } is a <a href={props.dhcpServerURL}>DHCP server</a>.
+   - **This is a DHCP relay**: If your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } is a <a href={props.dhcpRelayURL}>DHCP relay</a>.
 6. (Optional) In **Directly attached subnet** > **Static NAT prefix**, enter a CIDR prefix to enable NAT (network address translation). The prefix you enter here should be the same size as the prefix entered in **Static addressing**. For example, both networks have a subnet mask of `/24`: `192.168.100.0/24` and `10.10.100.0/24`.
 7. (Optional) If your LAN contains additional subnets behind a layer 3 router, select **Add routed subnet** under **Routed subnets** to add them:
    - **Prefix**: The CIDR prefix for the subnet behind the L3 router.
-   - **Next hop**: The address of the L3 router to which the Connector should forward packets for this subnet.
+   - **Next hop**: The address of the L3 router to which the { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } should forward packets for this subnet.
    - **Static NAT prefix**: Optional setting. If you want to enable NAT for a routed subnet, supply an "external" prefix for the overlay-facing side of the NAT to use. It must be the same size as **Prefix**. <br /> Refer to <a href={props.routedSubnetsURL}>Routed subnets</a> for more information.
 8. Select **Save**.
 9. Select **Done** to finish your configuration. Tunnels and <GlossaryTooltip term="static route">static routes</GlossaryTooltip> will be automatically created for your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName }, once it boots up.
