@@ -322,7 +322,8 @@ You cannot enable high availability for an existing { props.magicWord === "virtu
 			file="mconn/maintenance/register-hardware-appliance"
 			product="networking-services"
 			params={{
-				productName: "Magic WAN Connector"
+				magicWord: props.productOriginalName,
+				productName: props.productName
 				}} />
   </>
   )
