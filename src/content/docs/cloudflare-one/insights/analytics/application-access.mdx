@@ -1,0 +1,77 @@
+---
+pcx_content_type: reference
+title: Application access report
+---
+
+The Application Access Report dashboard summarizes user login activity and Access policy usage across your organization. This dashboard helps administrators monitor authentication patterns, identity provider usage, and Access configuration metrics. If [Access](/cloudflare-one/policies/access/) is not configured in your account, the dashboard appears empty.
+
+To view the Application Access Report dashboard:
+
+1. Log into [Zero Trust](https://one.dash.cloudflare.com).
+2. Go to **Analytics** > **Dashboards**.
+3. Select **Application Access Report**.
+
+The Application Access Report dashboard is different from the [Access event analytics](/cloudflare-one/insights/analytics/access/) because 
+
+## Prerequisites
+
+To populate the Application Access Report dashboard, you must have:
+
+* At least one [Access application](/cloudflare-one/applications/) configured in your account.
+* Users authenticating to these applications through Cloudflare Access.
+
+## Available insights
+
+The Application Access Report dashboard includes the following panels and metrics:
+
+* [Summary of Access activity](#summary-of-access-activity)
+* [Access events](#access-events)
+* [Access decisions by event count](#access-decisions-by-event-count)
+* [Access applications by event count](#access-applications-by-event-count)
+* [Access events by type](#access-events-by-type)
+* [Top counts of event details](#top-counts-of-event-details)
+* [Access admin metrics](#access-admin-metrics)
+
+### Summary of Access activity
+
+
+
+### Access events
+
+Shows a time series of Access login events over a selected period. Each bar represents 
+You can use this view to track user authentication activity and detect unusual login spikes.
+
+### Access decisions by event count
+
+Displays the total number of Access decisions made, grouped by outcome (for example, **Granted** or ).  
+
+### Access applications by event count
+
+Shows a breakdown of authentication events by application type (for example, **Self-hosted**, **SaaS**, **Private network**, or **Infrastructure**).  
+Use this view to determine which application types users most frequently access.
+
+### Access events by type
+
+Categorizes authentication events by method, such as **SSO** or **Login** (direct credential-based authentication).  
+This panel helps administrators understand how users are authenticating across applications and identity providers.
+
+### Top counts of event details
+
+Lists the most common Access event attributes, including:
+
+* Application name — Displays the top accessed applications.
+* Identity provider — Shows which identity providers (IdPs) were most used.
+* Users — Lists top users by number of login events.
+* Countries — Displays top countries where users logged in.
+* IP addresses — Lists the top source IPs associated with login events.
+
+These insights help administrators identify usage patterns and trends.
+
+### Access admin metrics
+
+Provides a summary of Access configurations made by admin in your organization, including:
+
+* Applications configured — Total number of Access-protected applications, broken down by type (for example, Self-hosted, SaaS, RDP, SSH, Private network, and Dash SSO).
+* Policies configured — Total number of Access policies, grouped by policy type (for example, Allow, Block, Bypass, or Service Auth).
+
+This section helps administrators audit their Access setup and verify that expected resources and policies are in place.
