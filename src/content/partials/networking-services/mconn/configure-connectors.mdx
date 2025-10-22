@@ -566,24 +566,34 @@ When you are ready to connect your { props.magicWord === "virtual" ? props.produ
 
 { props.productOriginalName === "WAN Tunnels" ? (
 	<>
-1. Log in to the Cloudflare One dashboard, and go to **Networks**.
-2. Go to **Connectors** > **Appliances**.
-3. Find the Appliances you want to activate, select the three dots next to it > **Edit**. Make sure you verify the serial number to choose the right Appliances you want to activate.
-4. In the new window, the **Status** dropdown will show as **Deactivated**. Select it to change the status to **Activated**.
-5. The **Interrupt window** is the time period when the { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } software can update, which may result in interruption to existing connections. Choose a time period to minimize disruption to your sites. Refer to <a href="/cloudflare-one/networks/connectors/wan-tunnels/configuration/appliances/maintenance/interrupt-service-window/">Interrupt window</a> for more details on how to define when the Appliances can update its systems.
-6. Select **Update**.
+		<Markdown
+	text={`
+		1. Log in to the Cloudflare One dashboard, and go to **Networks**.
+		2. Go to **Connectors** > **Appliances**.
+		3. Find the Appliances you want to activate, select the three dots next to it > **Edit**. Make sure you verify the serial number to choose the right Appliances you want to activate.
+		4. In the new window, the **Status** dropdown will show as **Deactivated**. Select it to change the status to **Activated**.
+		5. The **Interrupt window** is the time period when the ${ props.magicWord === "virtual" ? props.productNameVirtual : props.productName } software can update, which may result in interruption to existing connections. Choose a time period to minimize disruption to your sites. Refer to <a href="/cloudflare-one/networks/connectors/wan-tunnels/configuration/appliances/maintenance/interrupt-service-window/">Interrupt window</a> for more details on how to define when the Appliances can update its systems.
+		6. Select **Update**.
+	`}
+	inline={false}
+	/>
 	</>
 ) : (
 	<>
-1. In the Cloudflare dashboard, go to Magic WAN's **Configuration** page.
+		<Markdown
+	text={`
+		1. In the Cloudflare dashboard, go to Magic WAN's **Configuration** page.
 
-   <DashButton url="/?to=/:account/magic-wan/configuration" />
+			<DashButton url="/?to=/:account/magic-wan/configuration" />
 
-2. Go to **Connectors**.
-3. Find the { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } you want to activate, select the three dots next to it > **Edit**. Make sure you verify the serial number to choose the right { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } you want to activate.
-4. In the new window, the **Status** dropdown will show as **Deactivated**. Select it to change the status to **Activated**.
-5. The **Interrupt window** is the time period when the { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } software can update, which may result in interruption to existing connections. Choose a time period to minimize disruption to your sites. Refer to <a href="/magic-wan/configuration/connector/maintenance/interrupt-service-window/">Interrupt window</a> for more details on how to define when the { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } can update its systems.
-6. Select **Update**.
+		2. Go to **Connectors**.
+		3. Find the ${ props.magicWord === "virtual" ? props.productNameVirtual : props.productName } you want to activate, select the three dots next to it > **Edit**. Make sure you verify the serial number to choose the right ${ props.magicWord === "virtual" ? props.productNameVirtual : props.productName } you want to activate.
+		4. In the new window, the **Status** dropdown will show as **Deactivated**. Select it to change the status to **Activated**.
+		5. The **Interrupt window** is the time period when the ${ props.magicWord === "virtual" ? props.productNameVirtual : props.productName } software can update, which may result in interruption to existing connections. Choose a time period to minimize disruption to your sites. Refer to <a href="/magic-wan/configuration/connector/maintenance/interrupt-service-window/">Interrupt window</a> for more details on how to define when the ${ props.magicWord === "virtual" ? props.productNameVirtual : props.productName } can update its systems.
+		6. Select **Update**.
+	`}
+	inline={false}
+	/>
 	</>
 )
 }
