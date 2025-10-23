@@ -41,9 +41,9 @@ Review the following recommendations to prevent crawler errors:
 
 * Do not block the United States via [custom rules](/waf/custom-rules/) or [IP Access rules](/waf/tools/ip-access-rules/).
 
-* Do not block User-Agents in your `.htaccess` file, server configuration, [`robots.txt`](http://support.google.com/webmasters/bin/answer.py?answer=35303), or web application.
+* Do not block Google User-Agents in your `.htaccess` file, server configuration, [`robots.txt`](http://support.google.com/webmasters/bin/answer.py?answer=35303), or web application.
 
-Google uses a [variety of User-Agents](https://support.google.com/webmasters/answer/1061943) to crawl your website. You can [test your `robots.txt` via Google](https://support.google.com/webmasters/answer/6062598?hl=en).
+Google uses a [variety of User-Agents](https://developers.google.com/search/docs/crawling-indexing/overview-google-crawlers) to crawl your website. You can [test your `robots.txt` via Google](https://support.google.com/webmasters/answer/6062598?hl=en).
 
 * Do not allow crawling of files in the `/cdn-cgi/` directory. This path is used internally by Cloudflare and Google encounters errors when crawling it. Disallow crawls of `cdn-cgi` via `robots.txt`:
 
