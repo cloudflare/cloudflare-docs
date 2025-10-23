@@ -169,9 +169,10 @@ Our implementation of the Cache API respects the following HTTP headers on the r
 
   * Results in a `304` response if a matching response is found with an `ETag` header with a value that matches a value in `If-None-Match`.
 
-* `cache.match()`
-  * Never sends a subrequest to the origin. If no matching response is found in cache, the promise that `cache.match()` returns is fulfilled with `undefined`.
+:::note
 
+`cache.match()` never sends a subrequest to the origin. If no matching response is found in cache, the promise that `cache.match()` returns is fulfilled with `undefined`.
+:::
 
 #### Errors
 
