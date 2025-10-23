@@ -89,13 +89,13 @@ If you are experiencing difficulties with your {props.productName}, refer to the
 
 ## I have set up a site, but my {props.productName} is not working
 
-Make sure that you have <a href={props.activateURL}>activated your Connector</a>. Cloudflare ships the {props.productName} deactivated, and the it will only establish a connection to the Cloudflare network when it is activated.
+Make sure that you have <a href={props.activateURL}>activated your {props.productName}</a>. Cloudflare ships the {props.productName} deactivated, and the it will only establish a connection to the Cloudflare network when it is activated.
 
 ## I have tried to activate {props.productName}, but it is still not working
 
 Check if your {props.productName} is connected to the Internet via a port that can serve DHCP. This is required the first time a {props.productName} boots up so that it can reach the Cloudflare global network and download the required configurations that you set up in the Site configuration step. Refer to <a href={props.activateURL}>Activate Connector</a> for more details.
 
-If you have a firewall deployed upstream of the {props.productName}, <a href={props.firewallURL}>check your firewall settings</a>. You might need to configure your firewall to allow traffic in specific ports for the Connector to work properly.
+If you have a firewall deployed upstream of the {props.productName}, <a href={props.firewallURL}>check your firewall settings</a>. You might need to configure your firewall to allow traffic in specific ports for the {props.productName} to work properly.
 
 ## I can access {props.productName}'s health checks, but there is no traffic
 
