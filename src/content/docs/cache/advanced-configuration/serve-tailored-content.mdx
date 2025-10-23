@@ -247,12 +247,12 @@ The simplest solution is to create a [Transform Rule](/rules/transform/) that ch
 2. Select **Create rule** and select the option **URL Rewrite Rule**.  
 3. Enter a name, such as `Vary by RSC Header`.
 4. In **If incoming requests match...**, select **Custom filter expression**.
-5. Under **When incoming requests match...**, set this expression to check for the presence of `RSC` header:
+5. Under **When incoming requests match...**, manually edit the expression so that it checks for the presence of the `RSC` header:
     - `(http.request.headers["rsc"] is not null)`
 
 6. Under `Then...` 
     - for **Path**, select **Preserve**
-    - for **Query**, select **Rewrite to**, select **Static**: `_rsc=1`
+    - for **Query**, select **Rewrite to**, select **Dynamic**: `_rsc=1`
 
 7. Select **Save**.
 
