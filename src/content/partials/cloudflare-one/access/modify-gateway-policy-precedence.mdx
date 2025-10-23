@@ -8,7 +8,7 @@ By default, Cloudflare will evaluate Access application policies after evaluatin
 
 <ol>
 <li>
-Create the following [Gateway network policy](/cloudflare-one/policies/gateway/network-policies/):
+Create the following [Gateway network policy](/cloudflare-one/traffic-policies/network-policies/):
 
 	| Selector                     | Operator | Value     | Action |
 	| ---------------------------- | -------- | --------- | ------ |
@@ -18,7 +18,7 @@ Create the following [Gateway network policy](/cloudflare-one/policies/gateway/n
 { props.protocol === "rdp" && (<> <li> Ensure that <strong>Enforce WARP client session duration</strong> is turned off, otherwise users will be blocked from accessing RDP targets. </li> </>)}
 
 <li>
-Update the policy's [order of precedence](/cloudflare-one/policies/gateway/order-of-enforcement/#order-of-precedence) using the dashboard or API.
+Update the policy's [order of precedence](/cloudflare-one/traffic-policies/order-of-enforcement/#order-of-precedence) using the dashboard or API.
 </li>
 
 </ol>

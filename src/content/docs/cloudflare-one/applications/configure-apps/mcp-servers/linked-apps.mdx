@@ -8,11 +8,11 @@ sidebar:
   label: Enable MCP OAuth to self-hosted apps
 ---
 
-import { Render, GlossaryTooltip, APIRequest } from "~/components"
+import { Render, GlossaryTooltip, APIRequest } from "~/components";
 
 Cloudflare Access can delegate access from any [self-hosted application](/cloudflare-one/applications/configure-apps/self-hosted-public-app/) to an [Access for SaaS MCP server](/cloudflare-one/applications/configure-apps/mcp-servers/saas-mcp/) via [OAuth](https://modelcontextprotocol.io/specification/2025-03-26/basic/authorization). The OAuth access token authorizes the MCP server to make requests to your self-hosted applications on behalf of the user, using the user's specific permissions and scopes.
 
-For example, your organization may wish to deploy an MCP server that helps employees interact with internal applications. You can configure [Access policies](/cloudflare-one/policies/access/#selectors) to ensure that only authorized users can access those applications, either directly or by using an <GlossaryTooltip term="MCP client">MCP client</GlossaryTooltip>.
+For example, your organization may wish to deploy an MCP server that helps employees interact with internal applications. You can configure [Access policies](/cloudflare-one/access-controls/policies/#selectors) to ensure that only authorized users can access those applications, either directly or by using an <GlossaryTooltip term="MCP client">MCP client</GlossaryTooltip>.
 
 ```mermaid
 flowchart LR
@@ -50,10 +50,7 @@ The first step is to add the MCP server to Cloudflare Access as an OIDC-based Sa
 
 Get the `id` of the MCP server SaaS application:
 
-<APIRequest
-  path="/accounts/{account_id}/access/apps"
-  method="GET"
-/>
+<APIRequest path="/accounts/{account_id}/access/apps" method="GET" />
 
 ```json title="Response"
 {
@@ -69,45 +66,45 @@ Get the `id` of the MCP server SaaS application:
 
 1. Create the following Access policy, replacing the `app_uid` value with the `id` of your SaaS application:
 
-	<APIRequest
-		path="/accounts/{account_id}/access/policies"
-		method="POST"
-		json={{
-			name: "Allow MCP server",
-			decision: "non_identity",
-			include: [
-			{
-				linked_app_token: {
-					app_uid: "3537a672-e4d8-4d89-aab9-26cb622918a1"
-				}
-			}
-			]
-		}}
-	/>
+   <APIRequest
+   	path="/accounts/{account_id}/access/policies"
+   	method="POST"
+   	json={{
+   		name: "Allow MCP server",
+   		decision: "non_identity",
+   		include: [
+   			{
+   				linked_app_token: {
+   					app_uid: "3537a672-e4d8-4d89-aab9-26cb622918a1",
+   				},
+   			},
+   		],
+   	}}
+   />
 
-	:::note
-	The `linked_app_token` rule type only works with [`non_identity` decisions](/cloudflare-one/policies/access/#service-auth), similar to service token rules.
-	:::
+   :::note
+   The `linked_app_token` rule type only works with [`non_identity` decisions](/cloudflare-one/access-controls/policies/#service-auth), similar to service token rules.
+   :::
 
 2. Copy the Access policy `id` returned in the response:
 
-	```json title="Response" {5}
-	{
-			"created_at": "2025-08-06T20:06:23Z",
-			"decision": "non_identity",
-			"exclude": [],
-			"id": "a38ab4d4-336d-4f49-9e97-eff8550c13fa",
-			"include": [
-				{
-					"linked_app_token": {
-						"app_uid": "6cdc3892-f9f1-4813-a5ce-38c2753e1208"
-					}
-				}
-			],
-			"name": "Allow MCP server",
-			...
-	}
-	```
+   ```json title="Response" {5}
+   {
+   		"created_at": "2025-08-06T20:06:23Z",
+   		"decision": "non_identity",
+   		"exclude": [],
+   		"id": "a38ab4d4-336d-4f49-9e97-eff8550c13fa",
+   		"include": [
+   			{
+   				"linked_app_token": {
+   					"app_uid": "6cdc3892-f9f1-4813-a5ce-38c2753e1208"
+   				}
+   			}
+   		],
+   		"name": "Allow MCP server",
+   		...
+   }
+   ```
 
 This policy will allow requests if they present a valid OAuth access token that was issued for the specified SaaS application.
 
@@ -117,22 +114,20 @@ You can add the `linked_app_token` policy to any `self_hosted` application in yo
 
 1. Get your existing self-hosted application configuration:
 
-	<APIRequest
-		path="/accounts/{account_id}/access/apps/{app_id}"
-		method="GET"
-	/>
+   <APIRequest
+   	path="/accounts/{account_id}/access/apps/{app_id}"
+   	method="GET"
+   />
 
 2. Add the Access policy to the self-hosted application. To avoid overwriting your existing configuration, the `PUT` request body should contain all fields returned by the previous `GET` request.
 
-	<APIRequest
-		path="/accounts/{account_id}/access/apps/{app_id}"
-		method="PUT"
-		json={{
-			policies: [
-				"a38ab4d4-336d-4f49-9e97-eff8550c13fa"
-			],
-		}}
-	/>
+   <APIRequest
+   	path="/accounts/{account_id}/access/apps/{app_id}"
+   	method="PUT"
+   	json={{
+   		policies: ["a38ab4d4-336d-4f49-9e97-eff8550c13fa"],
+   	}}
+   />
 
 ## 5. Configure the MCP server
 
@@ -143,6 +138,7 @@ Authorization: Bearer ACCESS_TOKEN
 ```
 
 The end-to-end authorization flow is as follows:
+
 1. The MCP server authenticates against the Access for SaaS app via OAuth.
 2. Upon success, the MCP server receives an `access_token`.
 3. The MCP server makes an API request to the self-hosted application with the token in the request headers.

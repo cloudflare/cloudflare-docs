@@ -50,7 +50,7 @@ There is no fixed limit on the number of requests per browser session. A single 
 
 ## Errors & Troubleshooting
 
-### I see `Cannot read properties of undefined (reading 'fetch')` when using Browser Rendering. How do I fix this?
+### `Cannot read properties of undefined (reading 'fetch')`
 
 This error typically occurs because your Puppeteer launch is not receiving the Browser binding. To resolve: Pass your Browser binding into `puppeteer.launch`.
 
@@ -83,8 +83,19 @@ Keep in mind that `page.evaluate` can only return primitive types like strings, 
 
 It may be because you increased the height and width of the viewport. To fix this, increase the value of the `deviceScaleFactor` (default is 1).
 
-### I see `Error processing the request: Unable to create new browser: code: 429: message: Browser time limit exceeded for today`. How do I fix it?
+### `Error processing the request: Unable to create new browser: code: 429: message: Browser time limit exceeded for today`
 
 This error indicates you have hit the daily browser-instance limit on the Workers Free plan. [Free-plan accounts are capped at free plan limit is 10 minutes of browser use a day](/browser-rendering/platform/limits/#workers-free) once you exceed those, further creation attempts return a 429 until the next UTC day.
 
 To resolve: [Upgrade to a Workers Paid plan](/workers/platform/pricing/) which allows for more than 10 minutes of usage a day and has higher [limits](/browser-rendering/platform/limits/#workers-paid). If you recently upgraded but still see this error, try redeploying your Worker to ensure your usage is correctly associated with your new plan.
+
+### `422 Unprocessable Entity`
+
+A `422 Unprocessable Entity` error usually means that Browser Rendering wasn’t able to complete an action because of an issue with the site.
+
+This can happen if:
+- The website consumes too much memory during rendering.
+- The page itself crashed or returned an error before the action completed.
+- The request exceeded one of the [timeout limits](/browser-rendering/reference/timeouts/) for page load, element load, or an action.
+
+Most often, this error is caused by a timeout. You can review the different timers and their limits in the [REST API timeouts reference](/browser-rendering/reference/timeouts/).

@@ -1,0 +1,192 @@
+---
+pcx_content_type: reference
+title: WARP with firewall
+sidebar:
+  order: 9
+---
+
+import { Render } from "~/components";
+
+If your organization uses a firewall or other policies to restrict or intercept Internet traffic, you may need to exempt the following IP addresses and domains to allow the WARP client to connect.
+
+## Client orchestration API
+
+The WARP client connects to Cloudflare via a standard HTTPS connection outside the tunnel for operations like registration or settings changes. To perform these operations, you must allow `zero-trust-client.cloudflareclient.com` which will lookup the following IP addresses:
+
+<Render file="warp/client-orchestration-ips" product="cloudflare-one" />
+
+<Render
+	file="warp/firewall"
+	product="cloudflare-one"
+	params={{
+		domain: "zero-trust-client.cloudflareclient.com",
+	}}
+/>
+
+## DoH IP
+
+:::note
+Only required for [Gateway with DoH](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#gateway-with-doh) mode.
+:::
+
+In [Gateway with DoH](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#gateway-with-doh) mode, the WARP client sends DNS requests to Gateway over an HTTPS connection. For DNS to work correctly, you must allow `<ACCOUNT_ID>.cloudflare-gateway.com` which will lookup the following IPs:
+
+- IPv4 DoH Addresses: `162.159.36.1` and `162.159.46.1`
+- IPv6 DoH Addresses: `2606:4700:4700::1111` and `2606:4700:4700::1001`
+
+<Render
+	file="warp/firewall"
+	product="cloudflare-one"
+	params={{
+		domain: "<ACCOUNT_ID>.cloudflare-gateway.com",
+	}}
+/>
+
+### Android devices
+
+If you are deploying the Cloudflare One Agent on Android/ChromeOS, you must also add `cloudflare-dns.com` to your firewall exception list. On Android/ChromeOS devices, WARP uses `cloudflare-dns.com` to resolve domains on your [Split Tunnel list](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/#domain-based-split-tunnels).
+
+## Client authentication endpoint
+
+When you [log in to your Zero Trust organization](/cloudflare-one/team-and-resources/devices/warp/deployment/manual-deployment/), you will have to complete the authentication steps required by your organization in the browser window that opens. To perform these operations, you must allow the following domains:
+
+- The IdP used to authenticate to Cloudflare Zero Trust
+- `<your-team-name>.cloudflareaccess.com`
+
+## WARP ingress IP
+
+WARP connects to the following IP addresses, depending on which [tunnel protocol](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#device-tunnel-protocol) is configured for your device (WireGuard or MASQUE). All network traffic from your device to Cloudflare goes through these IPs and ports over UDP.
+
+### WireGuard
+
+|                |                                             |
+| -------------- | ------------------------------------------- |
+| IPv4 address   | `162.159.193.0/24`                          |
+| IPv6 address   | `2606:4700:100::/48`                        |
+| Default port   | `UDP 2408`                                  |
+| Fallback ports | `UDP 500` <br/> `UDP 1701` <br/> `UDP 4500` |
+
+### MASQUE
+
+|                |                                                                                                                     |
+| -------------- | ------------------------------------------------------------------------------------------------------------------- |
+| IPv4 address   | `162.159.197.0/24`                                                                                                  |
+| IPv6 address   | `2606:4700:102::/48`                                                                                                |
+| Default port   | `UDP 443`                                                                                                           |
+| Fallback ports | `UDP 500` <br/> `UDP 1701` <br/> `UDP 4500` <br/> `UDP 4443` <br/> `UDP 8443` <br/> `UDP 8095` <br/> `TCP 443` [^1] |
+
+[^1]: Required for HTTP/2 fallback
+
+:::note
+
+Before you [log in to your Zero Trust organization](/cloudflare-one/team-and-resources/devices/warp/deployment/manual-deployment/), you may see the IPv4 range `162.159.192.0/24`. This IP is used for consumer WARP services ([1.1.1.1 w/ WARP](/warp-client/)) and is not required for Zero Trust deployments.
+:::
+
+## Captive portal
+
+The following domains are used as part of our captive portal check:
+
+- `cloudflareportal.com`
+- `cloudflareok.com`
+- `cloudflarecp.com`
+- `www.msftconnecttest.com`
+- `captive.apple.com`
+- `connectivitycheck.gstatic.com`
+
+## Connectivity checks
+
+As part of establishing the WARP connection, the client runs connectivity checks inside and outside of the WARP tunnel.
+
+### Outside tunnel
+
+The client connects to the following destinations to verify general Internet connectivity outside of the WARP tunnel. Make sure that these IPs and domains are on your firewall allowlist.
+
+- `engage.cloudflareclient.com`: The client will always send requests directly to an IP in the [WARP ingress IPv4 or IPv6 range](/cloudflare-one/team-and-resources/devices/warp/deployment/firewall/#warp-ingress-ip) (or to your [`override_warp_endpoint`](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/parameters/#override_warp_endpoint) if set). Requests will not use a proxy server, even if one is configured for the system.
+- `162.159.197.3`
+- `2606:4700:102::3`
+
+<Render
+	file="warp/firewall"
+	product="cloudflare-one"
+	params={{
+		domain: "engage.cloudflareclient.com",
+	}}
+/>
+
+### Inside tunnel
+
+The WARP client connects to the following IPs to verify connectivity inside of the WARP tunnel:
+
+- `162.159.197.4`
+- `2606:4700:102::4`
+
+Because this check happens inside of the tunnel, you do not need to add these IPs to your firewall allowlist. However, since the requests go through Gateway, ensure that they are not blocked by a Gateway HTTP or Network policy.
+
+<Render
+	file="warp/firewall"
+	product="cloudflare-one"
+	params={{
+		domain: "connectivity.cloudflareclient.com",
+	}}
+/>
+
+## NEL reporting (optional)
+
+The WARP client reports connectivity issues to our NEL endpoint via `a.nel.cloudflare.com`. This is not technically required to operate but will result in errors in our logs if not excluded properly.
+
+## Latency statistics (optional)
+
+The WARP client generates ICMP traffic to the [WARP ingress IPs](/cloudflare-one/team-and-resources/devices/warp/deployment/firewall/#warp-ingress-ip) when running tunnel latency tests. This is not technically required to operate but will result in errors in our logs if not excluded properly.
+
+## Time synchronization (optional)
+
+The WARP client attempts to synchronize the exact time by NTP (`UDP 123`) to [Cloudflare's Time Service](/time-services/ntp/usage/) via `time.cloudflare.com`. This is not technically required to operate but will result in errors in our logs if not excluded properly.
+
+## Scope of firewall rules
+
+### Required scopes
+
+If your organization does not currently allow inbound/outbound communication over the IP addresses, ports, and domains described above, you must manually add an exception. The rule at a minimum needs to be scoped to the following process based on your platform:
+
+- Windows: `C:\Program Files\Cloudflare\Cloudflare WARP\warp-svc.exe`
+- macOS: You must explicitly allow both the core networking daemon and GUI component as shown in the following instructions.
+  1.  Core networking daemon: `/Applications/Cloudflare WARP.app/Contents/Resources/CloudflareWARP`
+
+      This binary does not have a Bundle ID and must be allowed via full path.
+
+  2.  GUI component, choose one of the following three identifiers depending on your MDM or firewall vendor's preferred format:
+
+      `/Applications/Cloudflare WARP.app` (Path)
+
+      `/Applications/Cloudflare WARP.app/Contents/MacOS/Cloudflare WARP` (Path)
+
+      `com.cloudflare.1dot1dot1dot1dot1.macos` (Bundle ID)
+
+  :::caution
+
+  Due to changes in macOS Sequoia version 15.0 and 15.0.1., you must update your macOS firewall settings to allow the WARP client to manage your device's firewall.
+
+  To ensure proper functionality, disable the [Block all incoming connections](https://support.apple.com/guide/mac-help/change-firewall-settings-on-mac-mh11783/mac) option in your macOS firewall settings.
+
+  :::
+
+### Optional scopes
+
+#### DEX tests
+
+To run [Digital Experience Monitoring tests](/cloudflare-one/insights/dex/tests/), you will need to allow the `warp-dex` process to generate network traffic to your target destinations:
+
+- Windows: `C:\Program Files\Cloudflare\Cloudflare WARP\warp-dex.exe`
+- macOS: `/Applications/Cloudflare WARP.app/Contents/Resources/warp-dex`
+
+#### WARP network statistics
+
+To use the network connectivity tests built into the WARP GUI, you will need to allow the GUI application to generate network traffic:
+
+- Windows: `C:\Program Files\Cloudflare\Cloudflare WARP\Cloudflare WARP.exe`
+- macOS: `/Applications/Cloudflare WARP.app`
+
+## Related resources
+
+- [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/local-domains/) - Resolve selected domains via local DNS instead of Cloudflare Gateway.
+- [Split Tunnels](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/) - Control which traffic goes through WARP by including or excluding specific IPs or domains.

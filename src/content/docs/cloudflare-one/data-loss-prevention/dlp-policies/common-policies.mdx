@@ -1,0 +1,67 @@
+---
+pcx_content_type: reference
+title: Common policies
+sidebar:
+  order: 1
+head:
+  - tag: title
+    content: Common DLP policies
+---
+
+import { GlossaryTooltip, Render } from "~/components";
+
+The following in-line DLP policies are commonly used to secure data in uploaded and downloaded files.
+
+## Log uploads/downloads
+
+The **Allow** action functions as an implicit logger, providing visibility into where your sensitive data is going without impacting the end user experience. The following example scans for your enabled Financial Information profile entries when users upload or download data to file sharing apps.
+
+| Selector           | Operator | Value                   | Logic | Action |
+| ------------------ | -------- | ----------------------- | ----- | ------ |
+| DLP Profile        | in       | _Financial Information_ | And   | Allow  |
+| Content Categories | in       | _File Sharing_          |       |        |
+
+## Block file types
+
+<Render file="gateway/policies/block-file-types" product="cloudflare-one" />
+
+For more information on what file formats DLP can scan, refer to [Supported file types](/cloudflare-one/data-loss-prevention/#supported-file-types).
+
+## Block uploads/downloads for specific users
+
+You can configure access on a per-user or group basis by adding [identity-based conditions](/cloudflare-one/traffic-policies/identity-selectors/) to your policies. The following example blocks only contractors from uploading/downloading Financial Information to file sharing apps.
+
+| Selector           | Operator | Value                   | Logic | Action |
+| ------------------ | -------- | ----------------------- | ----- | ------ |
+| DLP Profile        | in       | _Financial Information_ | And   | Block  |
+| Content Categories | in       | _File Sharing_          | And   |        |
+| User Group Names   | in       | _Contractors_           |       |        |
+
+## Exclude Android applications
+
+Many Android applications (such as Google Drive) use <GlossaryTooltip term="certificate pinning" link="/ssl/reference/certificate-pinning/">certificate pinning</GlossaryTooltip>, which is incompatible with Gateway inspection. If needed, you can create a [Do Not Inspect policy](/cloudflare-one/traffic-policies/http-policies/#do-not-inspect) so that the app can continue to function on Android:
+
+1. Set up an [OS version device posture check](/cloudflare-one/identity/devices/warp-client-checks/os-version/) that checks for the Android operating system.
+
+2. Create the following HTTP policy in Gateway:
+
+   | Selector                     | Operator | Value                | Logic | Action         |
+   | ---------------------------- | -------- | -------------------- | ----- | -------------- |
+   | Application                  | in       | _Google Drive_       | And   | Do Not Inspect |
+   | Passed Device Posture Checks | in       | _OS Version Android_ |       |                |
+
+Android users can now use the app, but the app traffic will bypass DLP scanning.
+
+## Exclude specific sites
+
+In your [DLP logs](/cloudflare-one/data-loss-prevention/dlp-policies/#4-view-dlp-logs), you may find that certain sites are a common source of noise. To exempt these sites from DLP scanning:
+
+1. [Create a list](/cloudflare-one/traffic-policies/lists/) of hostnames or URLs.
+
+2. Exclude the list from your DLP policy as shown in the example below:
+
+   | Selector    | Operator    | Value                   | Logic | Action |
+   | ----------- | ----------- | ----------------------- | ----- | ------ |
+   | DLP Profile | in          | _Financial Information_ | And   | Block  |
+   | Application | in          | _Google Drive_          | And   |        |
+   | Domain      | not in list | _Do not DLP - SSN_      |       |        |

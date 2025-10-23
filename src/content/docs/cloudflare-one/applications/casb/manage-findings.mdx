@@ -54,7 +54,7 @@ The new severity level will only apply to the posture finding within this specif
 
 ## Content findings
 
-Content findings include instances of potential data exposure as identified by [DLP](/cloudflare-one/policies/data-loss-prevention/).
+Content findings include instances of potential data exposure as identified by [DLP](/cloudflare-one/data-loss-prevention/).
 
 To view details about the content findings that CASB found:
 
@@ -182,7 +182,7 @@ CASB supports creating a Gateway policy for findings from the [Google Workspace 
 </Details>
 
 :::note[Before you begin]
-Ensure that you have [enabled HTTP filtering](/cloudflare-one/policies/gateway/initial-setup/http/) for your organization.
+Ensure that you have [enabled HTTP filtering](/cloudflare-one/traffic-policies/initial-setup/http/) for your organization.
 :::
 
 To create a Gateway policy directly from a CASB finding:
@@ -195,7 +195,7 @@ To create a Gateway policy directly from a CASB finding:
    :::note
    Not all CASB findings will have the **Block with Gateway HTTP policy** option. Unsupported findings can only be resolved from your application dashboard or through your domain provider.
    :::
-6. (Optional) [Configure the HTTP policy](/cloudflare-one/policies/gateway/http-policies/). For example, if the policy blocks an unsanctioned third-party app, you can apply the policy to some or all users, or only block uploads or downloads.
+6. (Optional) [Configure the HTTP policy](/cloudflare-one/traffic-policies/http-policies/). For example, if the policy blocks an unsanctioned third-party app, you can apply the policy to some or all users, or only block uploads or downloads.
 7. Select **Save**.
 
 Your HTTP policy will now prevent future instances of the security finding.

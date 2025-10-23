@@ -1,0 +1,146 @@
+---
+pcx_content_type: reference
+title: Applications and app types
+sidebar:
+  order: 9
+---
+
+import {
+	GlossaryDefinition,
+	GlossaryTooltip,
+	Details,
+	Render,
+} from "~/components";
+
+Gateway allows you to create DNS, Network, and HTTP policies based on applications and app types. You can select individual applications or groups of app types to filter specific traffic on your network.
+
+## Applications
+
+When you choose the _Application_ selector in a Gateway policy builder, the **Value** field will include all supported applications and their respective app types. Alternatively, you can use the [Gateway API](/api/resources/zero_trust/subresources/gateway/subresources/app_types/methods/list/) to fetch a list of applications, app types, and ID numbers.
+
+To manage a consolidated list of applications across Zero Trust, you can use the [Application Library](/cloudflare-one/applications/app-library/).
+
+## App types
+
+Gateway sorts applications into the following app type groups:
+
+| Value                                          | Definition                                                                                                                  |
+| ---------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| Artificial Intelligence                        | AI assistance applications                                                                                                  |
+| Audio Streaming                                | Music streaming, podcasts, and other audio applications                                                                     |
+| Collaboration & Online Meetings                | Business communication and collaboration applications                                                                       |
+| Dating                                         | Online dating applications                                                                                                  |
+| Development                                    | Software development and development operations applications                                                                |
+| Email                                          | Email applications                                                                                                          |
+| Encrypted DNS                                  | DNS encryption applications                                                                                                 |
+| File Sharing                                   | File sharing applications                                                                                                   |
+| Finance & Accounting                           | Financial and accounting applications                                                                                       |
+| Gaming                                         | Games and gaming applications                                                                                               |
+| Human Resources                                | Employee management applications and workforce tools                                                                        |
+| Instant Messaging                              | Instant messaging applications                                                                                              |
+| IT Management                                  | IT deployment management applications                                                                                       |
+| Legal                                          | Legal tools and applications                                                                                                |
+| News                                           | News applications                                                                                                           |
+| Productivity                                   | Business and productivity applications                                                                                      |
+| Public Cloud                                   | Public cloud infrastructure management applications                                                                         |
+| Sales & Marketing                              | Sales and marketing applications                                                                                            |
+| Search Engines                                 | Web search engines and applications                                                                                         |
+| Security                                       | Information security applications, including <GlossaryTooltip term="shadow IT">shadow IT</GlossaryTooltip>                  |
+| Shopping                                       | Online shopping applications                                                                                                |
+| Social Networking                              | Social networking applications                                                                                              |
+| Sports                                         | Sports streaming and news applications                                                                                      |
+| Video Streaming                                | Video streaming applications                                                                                                |
+| [Do Not Inspect](#do-not-inspect-applications) | Applications incompatible with the TLS certificate required by the [Gateway proxy](/cloudflare-one/traffic-policies/proxy/) |
+
+## Application hostnames
+
+Applications categorized by Cloudflare may independently rely on a number of different internal and external resources to provide functionality. To enable effective behavior of Allow and Block Gateway policies, Zero Trust separates application definitions into [hostnames](#hostnames) and [support hostnames](#support-hostnames).
+
+### Hostnames
+
+Hostnames are domains that are core to the application and not [used by other applications](#overlapping-hostnames). These are the domains that are specifically blocked when you block an application. The App Library surfaces these hostnames in the [Hostnames table](/cloudflare-one/applications/app-library/#overview) for an application.
+
+### Support hostnames
+
+Support hostnames are shared resources which applications may call in order to function. Applications can use support hostnames for content delivery, application behavior, or third-party system integrations. Blocking these hostnames may result in unexpected behavior for other policies. In addition, not taking a specific action on one of these hostnames may affect the application's behavior, even if the application hostnames are allowed. For example, assume that `file-sharing-service.com` relies on `content-delivery.com`. If you allow access to `file-sharing-service.com` and its associated subdomains but not `content-delivery.com`, some of the functionality of `file-sharing-service.com` may break when Gateway matches the traffic.
+
+To ensure effective application behavior, Gateway only uses support hostnames in Allow policies. Cloudflare explicitly allows support hostname connections in these policies but will not block the connections in Block policies. For example, many Google applications use `accounts.google.com` for authentication. In a Zero Trust environment with highly restrictive policies, `accounts.google.com` must be allowed for many applications to function correctly. If you use an application with `accounts.google.com` in its support hostnames in an Allow policy, Gateway will allow both `accounts.google.com` and the application's domains.
+
+## Application controls
+
+When you use the [_Application_ selector](/cloudflare-one/traffic-policies/http-policies/#granular-controls) in an HTTP policy with the _is_ operator, you can choose specific actions and operations to match application traffic. Supported applications and operations include:
+
+<Render file="gateway/granular-applications" product="cloudflare-one" />
+
+For more information, refer to [Application Granular Controls](/cloudflare-one/traffic-policies/http-policies/granular-controls/).
+
+## Usage
+
+### Overlapping hostnames
+
+Overlapping hostnames are most common for vendors with many applications, such as Google or Meta. When you use the Application selector in Gateway policies, actions taken by Gateway will be limited to the specific application defined. Gateway will also log other applications that use the same hostnames, but it will not take action unless the application was matched by the policy. For example, both the Facebook and Facebook Messenger apps use the `chat-e2ee.facebook.com` hostname. When evaluating traffic to the Facebook Messenger app, Gateway will only take action on Facebook Messenger traffic but may log both the Facebook and Facebook Messenger apps.
+
+To ensure Gateway evaluates traffic with your desired precedence, order your most specific policies with the highest priority according to [order of precedence](/cloudflare-one/traffic-policies/order-of-enforcement/#priority-within-a-policy-builder).
+
+### Do Not Inspect applications
+
+Gateway automatically groups applications incompatible with TLS decryption into the _Do Not Inspect_ app type. As Cloudflare identifies incompatible applications, Gateway will periodically update this app type to add new applications. To ensure Gateway does not intercept any current or future incompatible traffic, you can [create a Do Not Inspect HTTP policy](/cloudflare-one/traffic-policies/http-policies/#do-not-inspect) with the entire _Do Not Inspect_ app type selected.
+
+When managing applications with the [Application Library](/cloudflare-one/applications/app-library/), Do Not Inspect applications will appear under the corresponding application. For example, the App Library will group _Google Drive (Do Not Inspect)_ under **Google Drive**.
+
+:::note[Install Cloudflare certificate manually to allow TLS decryption]
+Instead of creating a Do Not Inspect policy for an application, you may be able to configure the application to [trust a Cloudflare certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/manual-deployment/#add-the-certificate-to-applications). Doing so will allow the application to function without losing visibility into your traffic.
+:::
+
+#### TLS decryption limitations
+
+Applications can be incompatible with [TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/) for various reasons:
+
+- <GlossaryDefinition
+  	term="certificate pinning"
+  	prepend="**Certificate pinning**: Certificate pinning is "
+  />
+
+- **Non-web traffic**: Some applications send non-web traffic, such as Session Initiation Protocol (SIP) and Extensible Messaging and Presence Protocol (XMPP), over TLS. Gateway cannot inspect these protocols.
+
+#### Microsoft 365 integration
+
+To optimize performance for Microsoft 365 applications and services, you can bypass TLS decryption by turning on the Microsoft 365 traffic integration. This will create a [Do Not Inspect policy](/cloudflare-one/traffic-policies/http-policies/#do-not-inspect) for all [Microsoft 365 domains and IP addresses](https://docs.microsoft.com/en-us/microsoft-365/enterprise/microsoft-365-ip-web-service) specified by Microsoft. This policy also uses Cloudflare intelligence to identify other Microsoft 365 traffic not explicitly defined.
+
+To turn on the Microsoft 365 integration:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Network** > **Integrated experiences**.
+2. In **Bypass decryption of Microsoft 365 traffic**, select **Create policy**.
+3. To verify the policy was created, select **View policy**. Alternatively, go to **Gateway** > **Firewall policies** > **HTTP**. A policy named Microsoft 365 Auto Generated will be enabled in your list.
+
+All future Microsoft 365 traffic will bypass Gateway logging and filtering. To disable this behavior, turn off or delete the policy.
+
+### Terraform
+
+Terraform users can retrieve the app types list with the `cloudflare_zero_trust_gateway_app_types_list` data source. This allows you to create Gateway policies with the application's name rather than its numeric ID. For example:
+
+```tf
+data "cloudflare_zero_trust_gateway_app_types_list" "gateway_apptypes" {
+  account_id = var.cloudflare_account_id
+}
+
+locals {
+  apptypes_map = merge([
+    for c in data.cloudflare_zero_trust_gateway_app_types_list.gateway_apptypes.result :
+    { (c.name) = c.id }
+  ]...)
+}
+
+resource "cloudflare_zero_trust_gateway_policy" "zt_block_dns_apps" {
+  account_id = var.cloudflare_account_id
+  name       = "DNS Blocked apps"
+  action     = "block"
+  traffic    = "any(app.ids[*] in {${join(" ", [
+    local.apptypes_map["Discord"],
+    local.apptypes_map["GoToMeeting"],
+    local.apptypes_map["Greenhouse"],
+    local.apptypes_map["Zelle"],
+    local.apptypes_map["Microsoft Visual Studio"]
+  ])}})"
+}
+```

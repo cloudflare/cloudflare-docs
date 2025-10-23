@@ -13,8 +13,8 @@ No action is required if you already explicitly set `is_deleted=false` or if you
 
 This change affects the following API endpoints:
 * List all tunnels: [`GET /accounts/{account_id}/tunnels`](/api/resources/zero_trust/subresources/tunnels/methods/list/)
-* List [Cloudflare Tunnels](/cloudflare-one/connections/connect-networks/): [`GET /accounts/{account_id}/cfd_tunnel`](/api/resources/zero_trust/subresources/tunnels/subresources/cloudflared/methods/list/)
-* List [WARP Connector](/cloudflare-one/connections/connect-networks/private-net/warp-connector/) tunnels: [`GET /accounts/{account_id}/warp_connector`](/api/resources/zero_trust/subresources/tunnels/subresources/warp_connector/methods/list/)
+* List [Cloudflare Tunnels](/cloudflare-one/networks/connectors/cloudflare-tunnel/): [`GET /accounts/{account_id}/cfd_tunnel`](/api/resources/zero_trust/subresources/tunnels/subresources/cloudflared/methods/list/)
+* List [WARP Connector](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/) tunnels: [`GET /accounts/{account_id}/warp_connector`](/api/resources/zero_trust/subresources/tunnels/subresources/warp_connector/methods/list/)
 * List tunnel routes: [`GET /accounts/{account_id}/teamnet/routes`](/api/resources/zero_trust/subresources/networks/subresources/routes/methods/list/)
 * List subnets: [`GET /accounts/{account_id}/zerotrust/subnets`](/api/resources/zero_trust/subresources/networks/subresources/subnets/methods/list/)
 * List virtual networks: [`GET /accounts/{account_id}/teamnet/virtual_networks`](/api/resources/zero_trust/subresources/networks/subresources/virtual_networks/methods/list/)

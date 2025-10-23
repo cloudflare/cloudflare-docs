@@ -99,7 +99,7 @@ DNS and resolver policies are standalone. For example, if you block a site with 
 
 ### HTTP/3 traffic
 
-For proxied [HTTP/3 traffic](/cloudflare-one/policies/gateway/http-policies/http3/), Gateway applies your policies in the following order:
+For proxied [HTTP/3 traffic](/cloudflare-one/traffic-policies/http-policies/http3/), Gateway applies your policies in the following order:
 
 1. DNS policies
 2. Network policies
@@ -120,7 +120,7 @@ When DNS queries are received, Gateway evaluates policies with pre-resolution se
 
 Despite an explicit Allow policy ordered first, policy 2 takes precedence because the _Domain_ selector is evaluated before DNS resolution.
 
-If a policy contains both pre-resolution and post-resolution selectors, Gateway will evaluate the entire policy after DNS resolution. For information on when each selector is evaluated, refer to the [list of DNS selectors](/cloudflare-one/policies/gateway/dns-policies/#selectors).
+If a policy contains both pre-resolution and post-resolution selectors, Gateway will evaluate the entire policy after DNS resolution. For information on when each selector is evaluated, refer to the [list of DNS selectors](/cloudflare-one/traffic-policies/dns-policies/#selectors).
 
 ### Network policies
 
@@ -128,7 +128,7 @@ Gateway evaluates network policies in [order of precedence](#order-of-precedence
 
 ### HTTP policies
 
-Gateway applies HTTP policies based on a combination of [action type](/cloudflare-one/policies/gateway/http-policies/#actions) and [order of precedence](#order-of-precedence):
+Gateway applies HTTP policies based on a combination of [action type](/cloudflare-one/traffic-policies/http-policies/#actions) and [order of precedence](#order-of-precedence):
 
 1. All Do Not Inspect policies are evaluated first, in order of precedence.
 2. If no policies match, all Isolate policies are evaluated in order of precedence.
@@ -138,10 +138,10 @@ Gateway applies HTTP policies based on a combination of [action type](/cloudflar
 This order of enforcement allows Gateway to first determine whether decryption should occur. If a site matches a Do Not Inspect policy, it is automatically allowed through Gateway and bypasses all other HTTP policies.
 
 :::note
-The only exception is if you are using [Clientless Web Isolation](/cloudflare-one/policies/browser-isolation/setup/clientless-browser-isolation/) — all sites within the clientless remote browser are implicitly isolated even if they match a Do Not Inspect policy.
+The only exception is if you are using [Clientless Web Isolation](/cloudflare-one/remote-browser-isolation/setup/clientless-browser-isolation/) — all sites within the clientless remote browser are implicitly isolated even if they match a Do Not Inspect policy.
 :::
 
-Next, Gateway checks decrypted traffic against your Isolate policies. When a user makes a request which triggers an Isolate policy, the request will be rerouted to a [remote browser](/cloudflare-one/policies/browser-isolation/).
+Next, Gateway checks decrypted traffic against your Isolate policies. When a user makes a request which triggers an Isolate policy, the request will be rerouted to a [remote browser](/cloudflare-one/remote-browser-isolation/).
 
 Next, Gateway evaluates all Allow, Block, and Do Not Scan policies. These policies apply to both isolated and non-isolated traffic. For example, if `example.com` is isolated and `example.com/subpage` is blocked, Gateway will block the subpage (`example.com/subpage`) inside of the remote browser.
 
@@ -149,7 +149,7 @@ Lastly, Gateway inspects the body of the HTTP request by evaluating it against D
 
 ### Resolver policies
 
-When [resolver policies](/cloudflare-one/policies/gateway/resolver-policies/) are present, Gateway first evaluates any DNS policies with pre-resolution selectors, then routes any DNS queries according to the [order of precedence](#order-of-precedence) of your resolver policies, and lastly evaluates any DNS policies with post-resolution selectors.
+When [resolver policies](/cloudflare-one/traffic-policies/resolver-policies/) are present, Gateway first evaluates any DNS policies with pre-resolution selectors, then routes any DNS queries according to the [order of precedence](#order-of-precedence) of your resolver policies, and lastly evaluates any DNS policies with post-resolution selectors.
 
 ### Order of precedence
 

@@ -1,5 +1,5 @@
 releaseNotes: |-
-  This release contains improvements and new exciting features, including [post-quantum cryptography](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/#enable_post_quantum). By tunneling your corporate network traffic over Cloudflare, you can now gain the immediate protection of post-quantum cryptography without needing to upgrade any of your individual corporate applications or systems.
+  This release contains improvements and new exciting features, including [post-quantum cryptography](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/parameters/#enable_post_quantum). By tunneling your corporate network traffic over Cloudflare, you can now gain the immediate protection of post-quantum cryptography without needing to upgrade any of your individual corporate applications or systems.
 
   **Changes and improvements**
   - Fixed an issue where WARP sometimes failed to automatically relaunch after updating.
@@ -8,7 +8,7 @@ releaseNotes: |-
      - Captive portal sign in notifications will now be sent through operating system notification services.
      - Fix for firewall configuration issue affecting clients in DoH only mode.
   - Improved the connectivity status message in the client GUI.
-  -  The WARP client now applies post-quantum cryptography end-to-end on enabled devices accessing resources behind a Cloudflare Tunnel. This feature can be [enabled by MDM](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/parameters/#enable_post_quantum).
+  -  The WARP client now applies post-quantum cryptography end-to-end on enabled devices accessing resources behind a Cloudflare Tunnel. This feature can be [enabled by MDM](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/parameters/#enable_post_quantum).
   - Improvement to handle client configuration changes made by an MDM while WARP is not running.
   - Fixed an issue affecting Split Tunnel Include mode, where traffic outside the tunnel was blocked when switching between Wi-Fi and Ethernet networks.
   - Improvement for WARP connectivity issues on macOS due to the operating system not accepting DNS server configurations.

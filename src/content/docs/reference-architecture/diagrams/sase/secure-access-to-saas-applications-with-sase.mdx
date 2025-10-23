@@ -30,8 +30,8 @@ Cloudflare's SASE platform offers the ability to bring a more Zero Trust orienta
 
 The diagram below shows how Cloudflare sits between your users, devices and networks that require access to any SaaS application. The two main services proving security capabilities are:
 
-- [Zero Trust Network Access](/cloudflare-one/policies/access/). Allows Cloudflare to become an identity proxy, so that you can easily enable authentication with a wide variety of identity providers to a single SaaS application. This service also incorporates the ability to evaluate access based on device posture and network location.
-- [Secure Web Gateway](/cloudflare-one/policies/gateway/). Once all traffic to access the SaaS application flows through our gateway, HTTPS connections are terminated at Cloudflare and you have the ability to inspect the data flowing to and from the SaaS application. This allows you to block sensitive data from being exported to insecure locations.
+- [Zero Trust Network Access](/cloudflare-one/access-controls/policies/). Allows Cloudflare to become an identity proxy, so that you can easily enable authentication with a wide variety of identity providers to a single SaaS application. This service also incorporates the ability to evaluate access based on device posture and network location.
+- [Secure Web Gateway](/cloudflare-one/traffic-policies/). Once all traffic to access the SaaS application flows through our gateway, HTTPS connections are terminated at Cloudflare and you have the ability to inspect the data flowing to and from the SaaS application. This allows you to block sensitive data from being exported to insecure locations.
 
 ![Figure 1: Only traffic that has passed the Cloudflare network and relevant policies is authorized to access the SaaS application.](~/assets/images/reference-architecture/secure-access-to-saas-applications-with-sase/figure1.svg "Figure 1: Only traffic that has passed the Cloudflare network and relevant policies is authorized to access the SaaS application.")
 
@@ -55,7 +55,7 @@ When integrating with an XDR platform such as Crowdstrike, Sentinel One or Micro
 
 The following is an example set of policies which demonstrate how you can use Cloudflare to secure access to Salesforce.
 
-The first step is using an [egress IP policy under Cloudflare Gateway](/cloudflare-one/policies/gateway/egress-policies/). This allows you to purchase and assign specific IPs to users that have their traffic filtered via Gateway. Then in Salesforce, you enforce that access is only permitted for traffic with a source IP that matches the one in your egress policy. This combination ensures that the only way to get access to Salesforce is via Cloudflare.
+The first step is using an [egress IP policy under Cloudflare Gateway](/cloudflare-one/traffic-policies/egress-policies/). This allows you to purchase and assign specific IPs to users that have their traffic filtered via Gateway. Then in Salesforce, you enforce that access is only permitted for traffic with a source IP that matches the one in your egress policy. This combination ensures that the only way to get access to Salesforce is via Cloudflare.
 
 | Egress Policy                       |                |
 | :---------------------------------- | :------------- |

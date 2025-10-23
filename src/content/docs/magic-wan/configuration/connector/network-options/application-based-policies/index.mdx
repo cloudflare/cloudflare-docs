@@ -1,15 +1,17 @@
 ---
 pcx_content_type: concept
 title: Application-aware policies
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
-<Render file="mconn/network-options/app-aware-policies/overview"
+<Render
+	file="mconn/network-options/app-aware-policies/overview"
 	product="networking-services"
 	params={{
-	productName: "Magic WAN Connector",
-	gatewayPoliciesURL: "/cloudflare-one/policies/gateway/",
-	appTypesGatewayURL: "/cloudflare-one/policies/gateway/application-app-types/"
-	}} />
+		productName: "Magic WAN Connector",
+		gatewayPoliciesURL: "/cloudflare-one/traffic-policies/",
+		appTypesGatewayURL:
+			"/cloudflare-one/traffic-policies/application-app-types/",
+	}}
+/>

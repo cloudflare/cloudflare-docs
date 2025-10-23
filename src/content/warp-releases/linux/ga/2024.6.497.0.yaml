@@ -3,7 +3,7 @@ releaseNotes: |
 
     **New features**
     - The WARP client now supports operation on Ubuntu 24.04.
-    - Admins can now elect to have ZT WARP clients connect using the MASQUE protocol; this setting is in Device Profiles. Note: before MASQUE can be used, the global setting for Override local interface IP must be enabled. For more detail, refer to [Device tunnel protocol](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#device-tunnel-protocol). This feature will be rolled out to customers in stages over approximately the next month.
+    - Admins can now elect to have ZT WARP clients connect using the MASQUE protocol; this setting is in Device Profiles. Note: before MASQUE can be used, the global setting for Override local interface IP must be enabled. For more detail, refer to [Device tunnel protocol](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#device-tunnel-protocol). This feature will be rolled out to customers in stages over approximately the next month.
     - The Device Posture [client certificate check](/cloudflare-one/identity/devices/warp-client-checks/client-certificate/) has been substantially enhanced. The primary enhancement is the ability to check for client certificates that have unique common names, made unique by the inclusion of the device serial number or host name (for example, CN = `123456.mycompany`, where 123456 is the device serial number).
     - TCP MSS clamping is now used where necessary to meet the MTU requirements of the tunnel interface. This will be especially helpful in Docker use cases.
 

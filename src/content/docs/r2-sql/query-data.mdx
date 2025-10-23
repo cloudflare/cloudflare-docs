@@ -72,10 +72,10 @@ To query data with R2 SQL, you must provide a Cloudflare API token with R2 SQL, 
 
 ### Create API token in the dashboard
 
-Create an [R2 API token](/r2/api/tokens/#permissions) with **Admin Read only** permission. This permission includes:
+Create an [R2 API token](/r2/api/tokens/#permissions) with the following permissions:
 
 - Access to R2 Data Catalog (read-only)
-- Access to R2 storage (read-only)
+- Access to R2 storage (Admin read/write)
 - Access to R2 SQL (read-only)
 
 Use this token value for the `WRANGLER_R2_SQL_AUTH_TOKEN` environment variable when querying with Wrangler, or in the Authorization header when using the REST API.
@@ -96,18 +96,18 @@ To create an API token programmatically for use with R2 SQL, you'll need to spec
 			"com.cloudflare.edge.r2.bucket.4793d734c0b8e484dfc37ec392b5fa8a_eu_my-eu-bucket": "*"
 		},
 		"permission_groups": [
-			{
-				"id": "45db74139a62490b9b60eb7c4f34994b",
-				"name": "Workers R2 Data Catalog Read"
-			},
-			{
-				"id": "6a018a9f2fc74eb6b293b0c548f38b39",
-				"name": "Workers R2 Storage Bucket Item Read"
-			},
-			{
-				"id": "f45430d92e2b4a6cb9f94f2594c141b8",
-				"name": "Workers R2 SQL Read"
-			}
+      {
+        "id": "f45430d92e2b4a6cb9f94f2594c141b8",
+        "name": "Workers R2 SQL Read"
+      },
+      {
+        "id": "d229766a2f7f4d299f20eaa8c9b1fde9",
+        "name": "Workers R2 Data Catalog Write"
+      },
+      {
+        "id": "bf7481a1826f439697cb59a20b22293e",
+        "name": "Workers R2 Storage Write"
+      }
 		]
 	}
 ]

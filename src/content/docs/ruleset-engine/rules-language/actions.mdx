@@ -92,6 +92,9 @@ The available actions depend on the [phase](/ruleset-engine/about/phases/) where
       </td>
       <td>
         <p>Matching requests are denied access to the site.</p>
+				<p>Depending on the Cloudflare product performing the block action, the HTTP status code can be <a href="/support/troubleshooting/http-status-codes/4xx-client-error/error-403/#cloudflare-specific-information"><code>403</code></a> (most security features) or <a href="/support/troubleshooting/http-status-codes/4xx-client-error/error-429/#website-end-users"><code>429</code></a> (for example, rate limiting rules).</p>
+				<p>Customers on paid plans can customize the HTML error page displayed to website visitors due to the block action. Refer to <a href="/rules/custom-errors/#error-pages">Error Pages</a> for more information.</p>
+				<p>Customers in Pro plans and above can customize the response (HTML, JSON, XML, or plain text) and the response status code for each <a href="/waf/custom-rules/create-dashboard/#configure-a-custom-response-for-blocked-requests">custom rule</a> or <a href="/waf/rate-limiting-rules/create-zone-dashboard/#configure-a-custom-response-for-blocked-requests">rate limiting rule</a> that triggers a block action.</p>
       </td>
       <td>Yes</td>
     </tr>
@@ -265,7 +268,7 @@ The available actions depend on the [phase](/ruleset-engine/about/phases/) where
       </td>
       <td>No</td>
     </tr>
-        <tr>
+    <tr>
       <td>
         <strong>Set Cache Settings</strong><br />
         <br />
@@ -277,13 +280,53 @@ The available actions depend on the [phase](/ruleset-engine/about/phases/) where
           Cache Rules allows you to customize cache settings on Cloudflare.
         </p>
         <p>
-          Only available for <a href="/rules/compression-rules/">Cache Rules</a>, in the <code>http_request_cache_settings</code> phase.
+          Only available for <a href="/cache/how-to/cache-rules/">Cache Rules</a>, in the <code>http_request_cache_settings</code> phase.
         </p>
         <p>
           In the Cloudflare dashboard, this action is not listed in action selection dropdowns. To use this action, <a href="/cache/how-to/cache-rules/create-dashboard/">create a cache rule</a>.
         </p>
       </td>
       <td>No</td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Serve Error</strong><br />
+        <br />
+        API value:<br />
+        <code>serve_error</code>
+      </td>
+      <td>
+        <p>
+          Serves error content to the website visitor, according to the custom error rule configuration.
+        </p>
+        <p>
+          Only available for <a href="/rules/custom-errors/#custom-error-rules">Custom Error Rules</a>, in the <code>http_custom_errors</code> phase.
+        </p>
+        <p>
+          In the Cloudflare dashboard, this action is not listed in action selection dropdowns. To use this action, <a href="/rules/custom-errors/create-rules/#create-a-custom-error-rule-dashboard">create a custom error rule</a>.
+        </p>
+      </td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>
+        <strong>Log custom field</strong><br />
+        <br />
+        API value:<br />
+        <code>log_custom_field</code>
+      </td>
+      <td>
+        <p>
+          Configures custom fields for Logpush jobs in a zone.
+        </p>
+        <p>
+          Only available for <a href="/logs/logpush/logpush-job/custom-fields/">custom fields</a>, in the <code>http_log_custom_fields</code> phase.
+        </p>
+        <p>
+          In the Cloudflare dashboard, this action is not listed in action selection dropdowns. To use this action, <a href="/logs/logpush/logpush-job/custom-fields/#enable-custom-fields-via-dashboard">configure custom log fields</a> for Logpush jobs.
+        </p>
+      </td>
+      <td>Yes</td>
     </tr>
   </tbody>
 </table>

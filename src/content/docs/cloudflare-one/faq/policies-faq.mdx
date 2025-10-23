@@ -13,11 +13,11 @@ description: Review frequently asked questions about policies in Cloudflare Zero
 
 ## What is the order of policy enforcement?
 
-Gateway and Access policies generally trigger from top to bottom based on their position in the policy table in the UI. Exceptions include Bypass and Service Auth policies, which Access evaluates first. Similarly, for Gateway HTTP policies, Do Not Inspect and Isolate policies take precedence over all Allow or Block policies. To learn more about order of enforcement, refer to our documentation for [Access policies](/cloudflare-one/policies/access/#order-of-execution) and [Gateway policies](/cloudflare-one/policies/gateway/order-of-enforcement/).
+Gateway and Access policies generally trigger from top to bottom based on their position in the policy table in the UI. Exceptions include Bypass and Service Auth policies, which Access evaluates first. Similarly, for Gateway HTTP policies, Do Not Inspect and Isolate policies take precedence over all Allow or Block policies. To learn more about order of enforcement, refer to our documentation for [Access policies](/cloudflare-one/access-controls/policies/#order-of-execution) and [Gateway policies](/cloudflare-one/traffic-policies/order-of-enforcement/).
 
 ## **How can I bypass the L7 firewall for a website?**
 
-Cloudflare Gateway uses the hostname in the HTTP `CONNECT` header to identify the destination of the request. Administrators who wish to bypass a site must create a [Do Not Inspect](/cloudflare-one/policies/gateway/http-policies/#do-not-inspect) policy in order to prevent HTTP inspection from occurring on both encrypted and plaintext traffic.
+Cloudflare Gateway uses the hostname in the HTTP `CONNECT` header to identify the destination of the request. Administrators who wish to bypass a site must create a [Do Not Inspect](/cloudflare-one/traffic-policies/http-policies/#do-not-inspect) policy in order to prevent HTTP inspection from occurring on both encrypted and plaintext traffic.
 
 Bypassing the L7 firewall results in no HTTP traffic inspection, and logging is disabled for that HTTP session.
 
@@ -59,12 +59,12 @@ If the domain is only blocked by a network policy, it may be because:
 
 ## When does Access return a Forbidden status page versus a login page?
 
-Access returns a Forbidden page with status codes `401`/`403` when it determines there is no way a user can pass a [policy](/cloudflare-one/policies/access/). If Cloudflare can make a full policy determination that a user will not be able to log in, Access will return a Forbidden page instead of a [login page](/cloudflare-one/applications/login-page/).
+Access returns a Forbidden page with status codes `401`/`403` when it determines there is no way a user can pass a [policy](/cloudflare-one/access-controls/policies/). If Cloudflare can make a full policy determination that a user will not be able to log in, Access will return a Forbidden page instead of a [login page](/cloudflare-one/applications/login-page/).
 
-For example, your application has a policy that requires a user to be in a [specific geolocation](/cloudflare-one/policies/access/#allow) to log in.
+For example, your application has a policy that requires a user to be in a [specific geolocation](/cloudflare-one/access-controls/policies/#allow) to log in.
 
-As admin, you could define this geolocation policy by using [Include](/cloudflare-one/policies/access/#include) rules, meaning the user could log in to the application from Country A or Country B.
+As admin, you could define this geolocation policy by using [Include](/cloudflare-one/access-controls/policies/#include) rules, meaning the user could log in to the application from Country A or Country B.
 
-Or you could define this geolocation policy using a [Require](/cloudflare-one/policies/access/#require) rule, meaning the user must be in Country A to log in.
+Or you could define this geolocation policy using a [Require](/cloudflare-one/access-controls/policies/#require) rule, meaning the user must be in Country A to log in.
 
 If a user from country C attempts to access the application, in both the Include and Require scenarios, the user will receive the Forbidden page. This is because Country C was not defined in either scenario. Therefore, Cloudflare has determined that this user cannot meet policy requirements and will receive the Forbidden status page.

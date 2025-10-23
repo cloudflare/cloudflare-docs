@@ -29,12 +29,12 @@ When using [Spectrum](/load-balancing/private-network/#on-ramps) as an on-ramp a
 
 ## Cloudflare Tunnel
 
-Integrating Spectrum with [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) is only supported for **HTTP/HTTPS** applications. This is because Spectrum must upstream the request through the [Layer 7 CDN products](/spectrum/reference/layer-7-analytics/#the-overlap-layer-7-traffic-being-proxied-through-spectrum) to reach the Tunnel service.
+Integrating Spectrum with [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) is only supported for **HTTP/HTTPS** applications. This is because Spectrum must upstream the request through the [Layer 7 CDN products](/spectrum/reference/layer-7-analytics/#the-overlap-layer-7-traffic-being-proxied-through-spectrum) to reach the Tunnel service.
 
 To correctly route traffic from Spectrum through a Cloudflare Tunnel, you must:
 
 1.  Configure your Spectrum application with the type set to **HTTP** or **HTTPS**.
-2.  Point the Spectrum application's origin to a hostname that is already [routing traffic](/cloudflare-one/connections/connect-networks/routing-to-tunnel/) through your Cloudflare Tunnel (for example, via a [DNS record](/cloudflare-one/connections/connect-networks/routing-to-tunnel/dns/) or [Cloudflare Load Balancer](/cloudflare-one/connections/connect-networks/routing-to-tunnel/public-load-balancers/)).
+2.  Point the Spectrum application's origin to a hostname that is already [routing traffic](/cloudflare-one/networks/connectors/cloudflare-tunnel/routing-to-tunnel/) through your Cloudflare Tunnel (for example, via a [DNS record](/cloudflare-one/networks/connectors/cloudflare-tunnel/routing-to-tunnel/dns/) or [Cloudflare Load Balancer](/cloudflare-one/networks/connectors/cloudflare-tunnel/routing-to-tunnel/public-load-balancers/)).
 
 Using a Spectrum application of any other type (for example, TCP) with a Cloudflare Tunnel origin is not supported. Pointing a Spectrum application's origin directly to your Tunnel's subdomain (`<UUID>.cfargotunnel.com`) is also not a valid configuration and will not work.
 

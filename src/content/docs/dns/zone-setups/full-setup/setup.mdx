@@ -10,7 +10,7 @@ description: >-
   If you want to use Cloudflare as your primary DNS provider and manage your DNS records, your domain should be using a full setup.
 ---
 
-import { Render } from "~/components";
+import { Render, DashButton } from "~/components";
 
 <Render file="full-setup-definition" product="dns" />
 
@@ -64,8 +64,11 @@ When you start using Cloudflare's nameservers for authoritative DNS and your zon
 
 ### Get nameserver names
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
-2. On **Overview**, locate the nameserver names in **2. Replace with Cloudflare's nameservers**.
+1. In the Cloudflare dashboard, go to the zone **Overview** page.
+
+   <DashButton url="/?to=/:account/:zone/" />
+
+2. Locate the nameserver names in **2. Replace with Cloudflare's nameservers**.
 
    ![Find nameserver names on the Overview page of your domain](~/assets/images/dns/nameserver-names.png)
 

@@ -9,10 +9,10 @@ Devices must be actively connected to the Internet for remote captures to run.
 To capture data from a remote device:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **DEX** > **Remote captures**.
-2. Select up to 10 devices that you want to run a capture on. Devices must be [registered](/cloudflare-one/connections/connect-devices/warp/deployment/) in your Zero Trust organization.
+2. Select up to 10 devices that you want to run a capture on. Devices must be [registered](/cloudflare-one/team-and-resources/devices/warp/deployment/) in your Zero Trust organization.
 3. Configure the types of captures to run.
-   - **Packet captures (PCAP)**: Performs packet captures for traffic outside of the WARP tunnel (default network interface) and traffic inside of the WARP tunnel ([WARP virtual interface](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/warp-architecture/#ip-traffic)).
-   - **WARP Diagnostics Logs**: Generates a [WARP diagnostic log](/cloudflare-one/connections/connect-devices/warp/troubleshooting/warp-logs/#warp-diag-logs) of the past 96 hours. To include a routing test for all IPs and domains in your [Split Tunnel configuration](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/), select **Test all routes**.
+   - **Packet captures (PCAP)**: Performs packet captures for traffic outside of the WARP tunnel (default network interface) and traffic inside of the WARP tunnel ([WARP virtual interface](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/warp-architecture/#ip-traffic)).
+   - **WARP Diagnostics Logs**: Generates a [WARP diagnostic log](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/warp-logs/#warp-diag-logs) of the past 96 hours. To include a routing test for all IPs and domains in your [Split Tunnel configuration](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/), select **Test all routes**.
      :::note
      **Test all routes** will extend the time for diagnostics to run and may temporarily impact device performance during the test.
      :::

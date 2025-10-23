@@ -1,0 +1,533 @@
+---
+pcx_content_type: reference
+title: Common policies
+sidebar:
+  order: 1
+head:
+  - tag: title
+    content: Common HTTP policies
+---
+
+import { Render, Tabs, TabItem, APIRequest } from "~/components";
+
+The following policies are commonly used to secure HTTP traffic.
+
+Refer to the [HTTP policies page](/cloudflare-one/traffic-policies/http-policies/) for a comprehensive list of other selectors, operators, and actions.
+
+## Block sites
+
+Block attempts to reach sites by hostname or URL paths. Different approaches may be required based on how a site is organized.
+
+### Block sites by hostname
+
+Block all subdomains that use a host.
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+| Selector | Operator      | Value            | Action |
+| -------- | ------------- | ---------------- | ------ |
+| Host     | matches regex | `.*example\.com` | Block  |
+
+</TabItem>
+
+<TabItem label="API">
+
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "Block sites by hostname",
+		description: "Block all subdomains that use a specific hostname",
+		enabled: true,
+		action: "block",
+		filters: ["http"],
+		traffic: 'http.request.host matches ".*example\.com"',
+		identity: "",
+		device_posture: "",
+	}}
+/>
+
+</TabItem> </Tabs>
+
+### Block sites by URL
+
+Block a section of a site without blocking the entire site. For example, you can block a specific subreddit, such as `reddit.com/r/gaming`, without blocking `reddit.com`.
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+| Selector | Operator      | Value       | Action |
+| -------- | ------------- | ----------- | ------ |
+| URL      | matches regex | `/r/gaming` | Block  |
+
+</TabItem>
+
+<TabItem label="API">
+
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "Block sites by URL",
+		description: "Block specific parts of a site without blocking the hostname",
+		enabled: true,
+		action: "block",
+		filters: ["http"],
+		traffic: 'http.request.uri matches "/r/gaming"',
+		identity: "",
+		device_posture: "",
+	}}
+/>
+
+</TabItem> </Tabs>
+
+## Block content categories
+
+Block content categories which go against your organization's acceptable use policy.
+
+<Render
+	file="gateway/policies/dash-plus-api/http/block-content-categories"
+	product="cloudflare-one"
+/>
+
+## Block unauthorized applications
+
+<Render file="gateway/policies/block-applications" product="cloudflare-one" />
+
+<Render
+	file="gateway/policies/dash-plus-api/http/block-applications"
+	product="cloudflare-one"
+/>
+
+## Check user identity
+
+<Render file="gateway/policies/check-user-identity" product="cloudflare-one" />
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+| Selector         | Operator | Value         | Logic | Action |
+| ---------------- | -------- | ------------- | ----- | ------ |
+| Application      | in       | _Salesforce_  | And   | Block  |
+| User Group Names | in       | _Contractors_ |       |        |
+
+</TabItem>
+
+<TabItem label="API">
+
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "Check user identity",
+		description:
+			"Block access to Salesforce by temporary employees and contractors",
+		enabled: true,
+		action: "block",
+		filters: ["http"],
+		traffic: "any(app.ids[] in {606})",
+		identity: 'any(identity.groups.name[] in {"Contractors"})',
+		device_posture: "",
+	}}
+/>
+
+</TabItem> </Tabs>
+
+## Skip inspection for groups of applications
+
+Certain client applications, such as Zoom or Apple services, rely on certificate pinning. The [TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/) performed by Cloudflare Gateway will cause errors when users visit those applications. To avoid this behavior, you must add a Do Not Inspect HTTP policy.
+
+Gateway [evaluates Do Not Inspect policies first](/cloudflare-one/traffic-policies/order-of-enforcement/#http-policies). We recommend moving your Do Not Inspect policies to the top of the list to reduce confusion.
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+| Selector    | Operator | Value            | Action         |
+| ----------- | -------- | ---------------- | -------------- |
+| Application | in       | _Do Not Inspect_ | Do Not Inspect |
+
+</TabItem>
+
+<TabItem label="API">
+
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "Bypass incompatible applications",
+		description:
+			"Skip TLS decryption for applications that are incompatible with Gateway",
+		enabled: true,
+		action: "off",
+		filters: ["http"],
+		traffic: "any(app.type.ids[*] in {16})",
+		identity: "",
+		device_posture: "",
+	}}
+/>
+
+</TabItem> </Tabs>
+
+:::note
+You can select either individual applications or the entire Do Not Inspect set, which will update as new applications are added.
+:::
+
+## Check device posture
+
+Require devices to have certain software installed or other configuration attributes. For instructions on setting up a device posture check, refer to [Enforce device posture](/cloudflare-one/identity/devices/).
+
+### Enforce a minimum OS version
+
+Perform an [OS version check](/cloudflare-one/identity/devices/warp-client-checks/os-version/) to ensure users are running at least a minimum version.
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+| Selector                     | Operator | Value                | Action |
+| ---------------------------- | -------- | -------------------- | ------ |
+| Passed Device Posture Checks | in       | _Minimum OS version_ | Allow  |
+
+</TabItem>
+
+<TabItem label="API">
+
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "Require OS version",
+		description: "Perform an OS version check for minimum version",
+		enabled: true,
+		action: "allow",
+		filters: ["http"],
+		traffic: "",
+		identity: "",
+		device_posture:
+			'any(device_posture.checks.passed[*] in {"<POSTURE_CHECK_UUID>"})',
+	}}
+/>
+
+To get the UUIDs of your device posture checks, use the [List device posture rules](/api/resources/zero_trust/subresources/devices/subresources/posture/methods/list/) endpoint.
+
+</TabItem> </Tabs>
+
+### Check for a specific file
+
+Perform a [file check](/cloudflare-one/identity/devices/warp-client-checks/file-check/) to ensure users have a certain file on their device.
+
+Since the file path will be different for each operating system, you can configure a file check for each system and use the **Or** logical operator to only require one of the checks to pass.
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+| Selector                     | Operator | Value              | Logic | Action |
+| ---------------------------- | -------- | ------------------ | ----- | ------ |
+| Passed Device Posture Checks | in       | _macOS File Check_ | Or    | Allow  |
+| Passed Device Posture Checks | in       | _Linux File Check_ |       |        |
+
+</TabItem>
+
+<TabItem label="API">
+
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "Check for specific file",
+		description:
+			"Ensure users have a specific file on their device regardless of operating system",
+		enabled: true,
+		action: "allow",
+		filters: ["http"],
+		traffic: "",
+		identity: "",
+		device_posture:
+			'any(device_posture.checks.passed[] in {"<POSTURE_CHECK_1_UUID>"}) or any(device_posture.checks.passed[] in {"<POSTURE_CHECK_2_UUID>"})',
+	}}
+/>
+
+To get the UUIDs of your device posture checks, use the [List device posture rules](/api/resources/zero_trust/subresources/devices/subresources/posture/methods/list/) endpoint.
+
+</TabItem> </Tabs>
+
+## Enforce session duration
+
+[Require users to re-authenticate](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-sessions/) after a certain amount of time has elapsed.
+
+## Isolate high risk sites in remote browser
+
+If you are using the [Browser Isolation add-on](/cloudflare-one/remote-browser-isolation/), refer to our list of [common Isolate policies](/cloudflare-one/remote-browser-isolation/isolation-policies/#common-policies).
+
+## Bypass inspection for self-signed certificates
+
+When accessing origin servers with certificates not signed by a public certificate authority, you must bypass TLS decryption.
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+| Selector | Operator | Value                  | Action         |
+| -------- | -------- | ---------------------- | -------------- |
+| Domain   | in       | `internal.example.com` | Do Not Inspect |
+
+</TabItem>
+
+<TabItem label="API">
+
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "Bypass internal site inspection",
+		description:
+			"Bypass TLS decryption for internal sites with self-signed certificates",
+		enabled: true,
+		action: "off",
+		filters: ["http"],
+		traffic: 'any(http.conn.domains[*] in {"internal.example.com"})',
+		identity: "",
+		device_posture: "",
+	}}
+/>
+
+</TabItem> </Tabs>
+
+## Block file types
+
+<Render file="gateway/policies/block-file-types" product="cloudflare-one" />
+
+For more information on supported file types, refer to [Download and Upload File Types](/cloudflare-one/traffic-policies/http-policies/#download-and-upload-file-types).
+
+## Isolate or block shadow IT applications
+
+Isolate shadow IT applications discovered by the [Application Library](/cloudflare-one/applications/app-library/) that have not been reviewed yet or are currently under review, and block applications that are not approved by your organization.
+
+For more information on reviewing shadow IT applications, refer to [Review applications](/cloudflare-one/applications/app-library/#review-applications).
+
+### 1. Isolate unreviewed or in review applications
+
+Isolate applications if their approval status is _Unreviewed_ or _In review_.
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+| Selector           | Operator | Value        | Logic | Action  |
+| ------------------ | -------- | ------------ | ----- | ------- |
+| Application Status | is       | _Unreviewed_ | Or    | Isolate |
+| Application Status | is       | _In review_  |       |         |
+
+</TabItem>
+
+<TabItem label="API">
+
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "Isolate unreviewed or in review application status",
+		description:
+			"Isolate Shadow IT applications that have not been reviewed or are in review in the Application Library",
+		enabled: true,
+		action: "isolate",
+		filters: ["http"],
+		traffic:
+			'any(app.statuses[*] == "unreviewed") or any(app.statuses[*] == "in review")',
+		identity: "",
+		device_posture: "",
+	}}
+/>
+
+</TabItem> </Tabs>
+
+### 2. Block unapproved applications
+
+Block applications if their approval status is _Unapproved_.
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+| Selector           | Operator | Value        | Action |
+| ------------------ | -------- | ------------ | ------ |
+| Application Status | is       | _Unapproved_ | Block  |
+
+</TabItem>
+
+<TabItem label="API">
+
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "Block unapproved application status",
+		description:
+			"Block Shadow IT applications that have been marked as unapproved in the Application Library",
+		enabled: true,
+		action: "block",
+		filters: ["http"],
+		traffic: 'any(app.statuses[*] == "unapproved")',
+		identity: "",
+		device_posture: "",
+	}}
+/>
+
+</TabItem> </Tabs>
+
+## Block Google services
+
+To enable Gateway inspection for Google Drive traffic, you must [add a Cloudflare certificate to Google Drive](/cloudflare-one/team-and-resources/devices/user-side-certificates/manual-deployment/#google-drive).
+
+### Block Google Drive downloads
+
+Block file downloads from Google Drive.
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+| Selector         | Operator      | Value                      | Logic | Action |
+| ---------------- | ------------- | -------------------------- | ----- | ------ |
+| Application      | in            | _Google Drive_             | And   | Block  |
+| URL Path & Query | matches regex | `.*(e=download\|export).*` |       |        |
+
+</TabItem>
+
+<TabItem label="API">
+
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "Block Google Drive downloads",
+		description: "Block file downloads from Google Drive",
+		enabled: true,
+		action: "block",
+		filters: ["http"],
+		traffic:
+			'any(app.ids[] in {554}) and http.request.uri.path_and_query matches ".(e=download\|export).*"',
+		identity: "",
+		device_posture: "",
+	}}
+/>
+
+</TabItem> </Tabs>
+
+### Block Google Drive uploads
+
+Block file uploads from Google Drive.
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+| Selector         | Operator      | Value                                  | Logic | Action |
+| ---------------- | ------------- | -------------------------------------- | ----- | ------ |
+| Application      | in            | _Google Drive_                         | And   | Block  |
+| Upload Mime Type | matches regex | `.*`                                   | And   |        |
+| Host             | is not        | `drivefrontend-pa.clients6.google.com` |       |        |
+
+</TabItem>
+
+<TabItem label="API">
+
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "Block Google Drive uploads",
+		description: "Block file uploads to Google Drive",
+		enabled: true,
+		action: "block",
+		filters: ["http"],
+		traffic:
+			'any(app.ids[] in {554}) and http.upload.mime matches "." and not(http.request.host == "drivefrontend-pa.clients6.google.com")',
+		identity: "",
+		device_posture: "",
+	}}
+/>
+
+</TabItem> </Tabs>
+
+### Block Gmail downloads
+
+Block file downloads from Gmail.
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+| Selector         | Operator | Value                                   | Logic | Action |
+| ---------------- | -------- | --------------------------------------- | ----- | ------ |
+| Host             | is       | `mail-attachment.googleusercontent.com` | And   | Block  |
+| URL Path & Query | is       | `/attachment/u/0`                       |       |        |
+
+</TabItem>
+
+<TabItem label="API">
+
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "Block Gmail downloads",
+		description: "Block file downloads from Gmail",
+		enabled: true,
+		action: "block",
+		filters: ["http"],
+		traffic:
+			'http.request.host == "mail-attachment.googleusercontent.com" and http.request.uri.path_and_query matches "/attachment/u/0"',
+		identity: "",
+		device_posture: "",
+	}}
+/>
+
+</TabItem> </Tabs>
+
+### Block Google Translate proxy
+
+Block use of Google Translate to translate entire webpages.
+
+When translating a website, Google Translate proxies webpages with the `translate.goog` domain. Your users may be able to use this service to bypass other Gateway policies. If you block `translate.goog`, users will still be able to access other Google Translate features.
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+| Selector | Operator      | Value                      | Action |
+| -------- | ------------- | -------------------------- | ------ |
+| Domain   | matches regex | `^(.+\.)?translate\.goog$` | Block  |
+
+</TabItem>
+
+<TabItem label="API">
+
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "Block Google Translate for websites",
+		description: "Block use of Google Translate to translate entire webpages",
+		enabled: true,
+		action: "block",
+		filters: ["http"],
+		traffic:
+			'any(http.request.domains[*] matches "^(.+\\.)?translate\\.goog$")',
+		identity: "",
+		device_posture: "",
+	}}
+/>
+
+</TabItem> </Tabs>
+
+## Filter WebSocket traffic
+
+Gateway does not inspect or log [WebSocket](https://datatracker.ietf.org/doc/html/rfc6455) traffic. Instead, Gateway will only log the HTTP details used to make the WebSocket connection, as well as [network session information](/logs/logpush/logpush-job/datasets/account/zero_trust_network_sessions/). To filter your WebSocket traffic, create a policy with the `101` HTTP response code.
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+| Selector      | Operator | Value                     | Action |
+| ------------- | -------- | ------------------------- | ------ |
+| HTTP Response | is       | _101 SWITCHING_PROTOCOLS_ | Allow  |
+
+</TabItem>
+
+<TabItem label="API">
+
+<APIRequest
+	path="/accounts/{account_id}/gateway/rules"
+	method="POST"
+	json={{
+		name: "Filter WebSocket",
+		description: "Filter WebSocket traffic with HTTP response code 101",
+		enabled: true,
+		action: "allow",
+		filters: ["http"],
+		traffic: "http.response.status_code == 101",
+		identity: "",
+		device_posture: "",
+	}}
+/>
+
+</TabItem> </Tabs>

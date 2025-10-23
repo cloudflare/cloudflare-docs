@@ -1,0 +1,81 @@
+---
+pcx_content_type: reference
+title: Known limitations
+sidebar:
+  order: 9
+head:
+  - tag: title
+    content: Known limitations - Browser Isolation
+---
+
+Below, you will find information regarding the current limitations for Browser Isolation.
+
+## Website compatibility
+
+Our Network Vector Rendering (NVR) technology allows us to deliver a secure remote computing experience without the bandwidth limitations of video streams. While we expect most websites to work perfectly, some browser features and web technologies are unsupported and will be implemented in the future:
+
+- Webcam and microphone support is unavailable.
+- Websites that use WebGL may not function. To turn off WebGL in the browser, refer to [WebGL Rendering Error](/cloudflare-one/faq/troubleshooting/#i-see-webgl-rendering-error).
+- Netflix and Spotify Web Player are unavailable.
+- H.265/HEVC is not a supported video format at this time.
+
+## Browser compatibility
+
+| Browser                                      | Compatibility |
+| -------------------------------------------- | ------------- |
+| Google Chrome                                | ✅            |
+| Mozilla Firefox                              | ✅            |
+| Safari                                       | ✅            |
+| Microsoft Edge (Chromium-based)              | ✅            |
+| Other Chromium-based browsers (Opera, Brave) | ✅            |
+| Internet Explorer 11 and below               | ❌            |
+
+### Brave
+
+Brave’s WebRTC IP Handling Policy can impact how Cloudflare RBI loads and functions. If the WebRTC IP Handling Policy is configured to **Disable Non-Proxied UDP**, RBI may fail to load correctly.
+
+To ensure RBI loads correctly, go to `brave://settings/privacy` in your Brave browser window, find **WebRTC IP Handling Policy**, and change the setting from **Disable Non-Proxied UDP** to one of the following:
+
+- **Default**
+- **Default Public and Private Interfaces**
+- **Default Public Interface Only**
+
+## Protocol support
+
+Browser Isolation does not support HTTP.
+
+## Virtual machines
+
+Browser Isolation is not supported in virtualized environments (VMs).
+
+## Gateway selectors
+
+Certain selectors for Gateway HTTP policies bypass Browser Isolation, including:
+
+- [Destination Continent IP Geolocation](/cloudflare-one/traffic-policies/http-policies/#destination-continent)
+- [Destination Country IP Geolocation](/cloudflare-one/traffic-policies/http-policies/#destination-country)
+- [Destination IP](/cloudflare-one/traffic-policies/http-policies/#destination-ip)
+
+You cannot use these selectors to isolate traffic and isolation matches for these selectors will not appear in your Gateway logs. Additionally, you cannot apply other policies based on these selectors while in isolation. For example, if you have a Block policy that matches traffic based on destination IP, Gateway will not block the matching traffic if it is already isolated by an Isolate policy.
+
+## File download size
+
+When a user downloads a file within the remote browser, the file is held in memory and destroyed at the end of the remote browser session. Therefore, the total size of files downloaded per session is shared with the amount of memory available to the remote browser. We recommend a maximum individual file size of 512 MB.
+
+## Multifactor authentication
+
+[Clientless Web Isolation](/cloudflare-one/remote-browser-isolation/setup/clientless-browser-isolation/) does not support Yubikey or WebAuthN. These authentication technologies require the isolated website to use the same domain name as the non-isolated website. Therefore, they will not work with prefixed Clientless Web Isolation URLs but will work normally for [in-line deployments](/cloudflare-one/remote-browser-isolation/setup/) such as [isolated Access applications](/cloudflare-one/access-controls/policies/isolate-application/).
+
+## SAML applications
+
+Cloudflare Remote Browser Isolation now [supports SAML applications that use HTTP-POST bindings](/cloudflare-one/changelog/browser-isolation/#2025-05-13). This resolves previous issues such as `405` errors and login loops during SSO authentication flows.
+
+You no longer need to isolate both the Identity Provider (IdP) and Service Provider (SP), or switch to HTTP-Redirect bindings, to use Browser Isolation with POST-based SSO. Users can log in to internal or SaaS applications in the isolated browser securely and seamlessly.
+
+[Clientless Web Isolation](/cloudflare-one/remote-browser-isolation/setup/clientless-browser-isolation/) may still be preferred in some deployment models. Clientless Web Isolation implicitly isolates all traffic (both IdP and SP) and supports HTTP-POST SAML bindings.
+
+## Browser Isolation is not compatible with private IPs on non-`443` ports
+
+Browser Isolation is not compatible with [self-hosted private applications](/cloudflare-one/applications/non-http/self-hosted-private-app/) that use private IP addresses on ports other than `443`. Trying to access self-hosted applications defined by private IPs on ports other than `443` will result in a Gateway block page.
+
+To use Browser Isolation for an application on a private IP address with a non-`443` port, configure a [private network application](/cloudflare-one/applications/non-http/legacy-private-network-app/) instead.

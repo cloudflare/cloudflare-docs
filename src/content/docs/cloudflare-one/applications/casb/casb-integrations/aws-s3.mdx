@@ -32,7 +32,7 @@ These permissions follow the principle of least privilege to ensure that only th
 
 ## Compute account
 
-You can connect an AWS compute account to your CASB integration to perform [Data Loss Prevention](/cloudflare-one/policies/data-loss-prevention/) scans within your S3 bucket and avoid data egress. CASB will scan any objects that exist in the bucket at the time of configuration.
+You can connect an AWS compute account to your CASB integration to perform [Data Loss Prevention](/cloudflare-one/data-loss-prevention/) scans within your S3 bucket and avoid data egress. CASB will scan any objects that exist in the bucket at the time of configuration.
 
 ### Add a compute account
 
@@ -48,7 +48,7 @@ Once your AWS compute account has successfully connected to your CASB integratio
 2. Find and select your AWS integration.
 3. Select **Create new configuration**.
 4. In **Resources**, choose the buckets you want to scan. Select **Continue**.
-5. Choose the file types, sampling percentage, and [DLP profiles](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/) to scan for.
+5. Choose the file types, sampling percentage, and [DLP profiles](/cloudflare-one/data-loss-prevention/dlp-profiles/) to scan for.
 6. (Optional) Configure additional settings, such as the limit of API calls over time for CASB to adhere to.
 7. Select **Continue**.
 8. Review the details of the scan, then select **Start scan**.

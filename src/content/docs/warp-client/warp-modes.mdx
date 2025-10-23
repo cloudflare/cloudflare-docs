@@ -3,7 +3,6 @@ pcx_content_type: reference
 title: WARP modes
 sidebar:
   order: 2
-
 ---
 
 The WARP client has several modes to better suit different connection needs.
@@ -39,7 +38,7 @@ Because this feature restricts WARP to just applications configured to use the l
 
 This will enable the **WARP via Local Proxy** option in the **WARP Settings** menu.
 
-If you enable [FIPS compliance](/cloudflare-one/policies/gateway/http-policies/tls-decryption/#fips-compliance) for TLS decryption, you must [disable QUIC](/cloudflare-one/policies/gateway/http-policies/http3/#force-http2-traffic) in your users' browsers. Otherwise, HTTP/3 traffic will bypass inspection by the WARP client.
+If you enable [FIPS compliance](/cloudflare-one/traffic-policies/http-policies/tls-decryption/#fips-compliance) for TLS decryption, you must [disable QUIC](/cloudflare-one/traffic-policies/http-policies/http3/#force-http2-traffic) in your users' browsers. Otherwise, HTTP/3 traffic will bypass inspection by the WARP client.
 
 ## WARP+ Unlimited
 

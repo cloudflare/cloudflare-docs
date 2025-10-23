@@ -53,9 +53,9 @@ Disable public access to your [`r2.dev` subdomain](#disable-public-development-u
 
 :::
 
-### Minimum TLS Version
+### Minimum TLS Version & Cipher Suites
 
-To specify the minimum TLS version of a custom hostname of an R2 bucket, you can issue an API call to edit [R2 custom domain settings](/api/resources/r2/subresources/buckets/subresources/domains/subresources/custom/methods/update/).
+To customise the minimum TLS version or cipher suites of a custom hostname of an R2 bucket, you can issue an API call to edit [R2 custom domain settings](/api/resources/r2/subresources/buckets/subresources/domains/subresources/custom/methods/update/). You will need to add the optional `minTLS` and `ciphers` parameters to the request body. For a list of the cipher suites you can specify, refer to [Supported cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/supported-cipher-suites/).
 
 ## Add your domain to Cloudflare
 

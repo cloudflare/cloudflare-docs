@@ -40,7 +40,7 @@ To create an Access application for your R2 bucket:
 2. Select **Self-hosted**.
 3. Enter an **Application name**.
 4. Select **Add a public hostname** and enter the application domain. The **Domain** must be a domain hosted on Cloudflare, and the **Subdomain** part of the custom domain you will connect to your R2 bucket. For example, if you want to serve files from `behind-access.example.com` and `example.com` is a domain within your Cloudflare account, then enter `behind-access` in the subdomain field and select `example.com` from the **Domain** list.
-5. Add [Access policies](/cloudflare-one/policies/access/) to control who can connect to your application. This should be an **Allow** policy so that users can access objects within the bucket behind this Access application.
+5. Add [Access policies](/cloudflare-one/access-controls/policies/) to control who can connect to your application. This should be an **Allow** policy so that users can access objects within the bucket behind this Access application.
 
    :::note
    Ensure that your policies only allow the users within your organization that need access to this R2 bucket.

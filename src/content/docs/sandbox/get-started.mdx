@@ -19,17 +19,9 @@ A simple API that can safely execute Python code and perform file operations in 
 
 ### Ensure Docker is running locally
 
-Sandbox SDK uses [Docker](https://www.docker.com/) to build container images alongside your Worker. Docker must be running when you deploy or run locally.
+Sandbox SDK uses [Docker](https://www.docker.com/) to build container images alongside your Worker.
 
-Install Docker by following the [Docker Desktop installation guide](https://docs.docker.com/desktop/).
-
-Verify Docker is running:
-
-```sh
-docker info
-```
-
-If Docker is not running, this command will hang or return "Cannot connect to the Docker daemon".
+<Render product="containers" file="docker-setup" />
 
 ## 1. Create a new project
 
@@ -56,61 +48,58 @@ cd my-sandbox
 The template provides a minimal Worker that demonstrates core sandbox capabilities:
 
 ```typescript
-import { getSandbox, proxyToSandbox, type Sandbox } from '@cloudflare/sandbox';
+import { getSandbox, proxyToSandbox, type Sandbox } from "@cloudflare/sandbox";
 
-export { Sandbox } from '@cloudflare/sandbox';
+export { Sandbox } from "@cloudflare/sandbox";
 
 type Env = {
-  Sandbox: DurableObjectNamespace<Sandbox>;
+	Sandbox: DurableObjectNamespace<Sandbox>;
 };
 
 export default {
-  async fetch(request: Request, env: Env): Promise<Response> {
-    // Required for preview URLs (if you expose ports later)
-    const proxyResponse = await proxyToSandbox(request, env);
-    if (proxyResponse) return proxyResponse;
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const url = new URL(request.url);
 
-    const url = new URL(request.url);
+		// Get or create a sandbox instance
+		const sandbox = getSandbox(env.Sandbox, "my-sandbox");
 
-    // Get or create a sandbox instance
-    const sandbox = getSandbox(env.Sandbox, 'my-sandbox');
+		// Execute Python code
+		if (url.pathname === "/run") {
+			const result = await sandbox.exec('python3 -c "print(2 + 2)"');
+			return Response.json({
+				output: result.stdout,
+				error: result.stderr,
+				exitCode: result.exitCode,
+				success: result.success,
+			});
+		}
 
-    // Execute Python code
-    if (url.pathname === '/run') {
-      const result = await sandbox.exec('python -c "print(2 + 2)"');
-      return Response.json({
-        output: result.stdout,
-        success: result.success
-      });
-    }
+		// Work with files
+		if (url.pathname === "/file") {
+			await sandbox.writeFile("/workspace/hello.txt", "Hello, Sandbox!");
+			const file = await sandbox.readFile("/workspace/hello.txt");
+			return Response.json({
+				content: file.content,
+			});
+		}
 
-    // Work with files
-    if (url.pathname === '/file') {
-      await sandbox.writeFile('/workspace/hello.txt', 'Hello, Sandbox!');
-      const file = await sandbox.readFile('/workspace/hello.txt');
-      return Response.json({
-        content: file.content
-      });
-    }
-
-    return new Response('Try /run or /file');
-  },
+		return new Response("Try /run or /file");
+	},
 };
 ```
 
 **Key concepts**:
 
-- `getSandbox()` - Gets or creates a sandbox instance by ID
-- `proxyToSandbox()` - Required at the top for preview URLs to work
-- `sandbox.exec()` - Execute commands and capture output
-- `sandbox.writeFile()` / `readFile()` - File operations
+- `getSandbox()` - Gets or creates a sandbox instance by ID. Use the same ID to reuse the same sandbox instance across requests.
+- `sandbox.exec()` - Execute shell commands in the sandbox and capture stdout, stderr, and exit codes.
+- `sandbox.writeFile()` / `readFile()` - Write and read files in the sandbox filesystem.
 
 ## 3. Test locally
 
 Start the development server:
 
 ```sh
-npm run dev
+npm run dev. If you expect to have multiple sandbox instances, you can increase `max_instances`.
 ```
 
 :::note
@@ -138,6 +127,7 @@ npx wrangler deploy
 ```
 
 This will:
+
 1. Build your container image using Docker
 2. Push it to Cloudflare's Container Registry
 3. Deploy your Worker globally
@@ -161,7 +151,11 @@ Visit your Worker URL (shown in deploy output):
 curl https://my-sandbox.YOUR_SUBDOMAIN.workers.dev/run
 ```
 
-Your sandbox is now deployed.
+Your sandbox is now deployed and can execute code in isolated containers.
+
+:::note[Preview URLs require custom domain]
+If you plan to expose ports from sandboxes (using `exposePort()` for preview URLs), you will need to set up a custom domain with wildcard DNS routing. The `.workers.dev` domain does not support the subdomain patterns required for preview URLs. See [Production Deployment](/sandbox/guides/production-deployment/) when you are ready to expose services.
+:::
 
 ## Understanding the configuration
 
@@ -171,34 +165,36 @@ Your `wrangler.jsonc` connects three pieces together:
 
 ```jsonc
 {
-  "containers": [
-    {
-      "class_name": "Sandbox",
-      "image": "./Dockerfile"
-    }
-  ],
-  "durable_objects": {
-    "bindings": [
-      {
-        "class_name": "Sandbox",
-        "name": "Sandbox"
-      }
-    ]
-  },
-  "migrations": [
-    {
-      "new_sqlite_classes": ["Sandbox"],
-      "tag": "v1"
-    }
-  ]
+	"containers": [
+		{
+			"class_name": "Sandbox",
+			"image": "./Dockerfile",
+			"instance_type": "lite",
+			"max_instances": 1,
+		},
+	],
+	"durable_objects": {
+		"bindings": [
+			{
+				"class_name": "Sandbox",
+				"name": "Sandbox",
+			},
+		],
+	},
+	"migrations": [
+		{
+			"new_sqlite_classes": ["Sandbox"],
+			"tag": "v1",
+		},
+	],
 }
 ```
 
 </WranglerConfig>
 
-- **containers** - Your Dockerfile defines the execution environment
-- **durable_objects** - Makes the `Sandbox` binding available in your Worker
-- **migrations** - Initializes Durable Object storage (required once)
+- **containers** - Defines the [container image, instance type, and resource limits](/workers/wrangler/configuration/#containers) for your sandbox environment. If you expect to have multiple sandbox instances, you can increase `max_instances`.
+- **durable_objects** - You need not be familiar with [Durable Objects](/durable-objects) to use Sandbox SDK, but if you'd like, you can [learn more about Cloudflare Containers and Durable Objects](/containers/get-started/#each-container-is-backed-by-its-own-durable-object). This configuration creates a [binding](/workers/runtime-apis/bindings#what-is-a-binding) that makes the `Sandbox` Durable Object accessible in your Worker code.
+- **migrations** - Registers the `Sandbox` class, implemented by the Sandbox SDK, with [SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage) (required once)
 
 For detailed configuration options including environment variables, secrets, and custom images, see the [Wrangler configuration reference](/sandbox/configuration/wrangler/).
 
@@ -209,4 +205,5 @@ Now that you have a working sandbox, explore more capabilities:
 - [Execute commands](/sandbox/guides/execute-commands/) - Run shell commands and stream output
 - [Manage files](/sandbox/guides/manage-files/) - Work with files and directories
 - [Expose services](/sandbox/guides/expose-services/) - Get public URLs for services running in your sandbox
+- [Production Deployment](/sandbox/guides/production-deployment/) - Set up custom domains for preview URLs
 - [API reference](/sandbox/api/) - Complete API documentation

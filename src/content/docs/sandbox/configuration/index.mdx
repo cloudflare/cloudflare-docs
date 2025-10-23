@@ -14,90 +14,30 @@ Configure your Sandbox SDK deployment with Wrangler, customize container images,
 <LinkTitleCard
 	title="Wrangler configuration"
 	href="/sandbox/configuration/wrangler/"
-	icon="document"
+	icon="puzzle"
 >
-	Configure Durable Objects bindings, container images, and Worker settings in wrangler.jsonc.
+	Configure Durable Objects bindings, container images, and Worker settings in
+	wrangler.jsonc.
 </LinkTitleCard>
 
 <LinkTitleCard
 	title="Dockerfile reference"
 	href="/sandbox/configuration/dockerfile/"
-	icon="wrench"
+	icon="seti:docker"
 >
-	Customize the sandbox container image with your own packages, tools, and configurations.
+	Customize the sandbox container image with your own packages, tools, and
+	configurations.
 </LinkTitleCard>
 
 <LinkTitleCard
 	title="Environment variables"
 	href="/sandbox/configuration/environment-variables/"
-	icon="gear"
+	icon="seti:powershell"
 >
 	Pass configuration and secrets to your sandboxes using environment variables.
 </LinkTitleCard>
 
 </CardGrid>
-
-## Quick reference
-
-### Essential wrangler.jsonc settings
-
-```jsonc
-{
-  "name": "my-worker",
-  "main": "src/index.ts",
-  "compatibility_date": "2024-09-02",
-  "compatibility_flags": ["nodejs_compat"],
-  "durable_objects": {
-    "bindings": [
-      {
-        "name": "Sandbox",
-        "class_name": "Sandbox",
-        "script_name": "@cloudflare/sandbox"
-      }
-    ]
-  },
-  "containers": [
-    {
-      "binding": "CONTAINER",
-      "image": "ghcr.io/cloudflare/sandbox-runtime:latest"
-    }
-  ]
-}
-```
-
-### Common Dockerfile customizations
-
-```dockerfile
-FROM ghcr.io/cloudflare/sandbox-runtime:latest
-
-# Install additional Python packages
-RUN pip install scikit-learn tensorflow pandas
-
-# Install Node.js packages globally
-RUN npm install -g typescript ts-node
-
-# Install system packages
-RUN apt-get update && apt-get install -y postgresql-client
-
-# Add custom scripts
-COPY ./scripts /usr/local/bin/
-```
-
-### Environment variables
-
-```typescript
-// Pass to sandbox at creation
-const sandbox = getSandbox(env.Sandbox, 'my-sandbox');
-
-// Configure environment for commands
-await sandbox.exec('node app.js', {
-  env: {
-    NODE_ENV: 'production',
-    API_KEY: env.API_KEY,
-    DATABASE_URL: env.DATABASE_URL
-  }
-});
-```
 
 ## Related resources
 
