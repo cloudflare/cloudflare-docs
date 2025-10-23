@@ -141,5 +141,9 @@ try {
 
 This error indicates you have hit the daily browser-instance limit on the Workers Free plan. [Free-plan accounts are limited](/browser-rendering/platform/limits/#workers-free) to 10 minutes of browser rendering usage per day. If you exceed that limit, you will receive a `429` error until the next UTC day.
 
-To resolve: [Upgrade to a Workers Paid plan](/workers/platform/pricing/) which allows for more than 10 minutes of usage a day and has higher [limits](/browser-rendering/platform/limits/#workers-paid). If you recently upgraded but still see this error, try redeploying your Worker to ensure your usage is correctly associated with your new plan.
+You can [increase your limits](/browser-rendering/platform/limits/#workers-paid) by upgrading to a Workers Paid plan on the **Workers plans** page of the Cloudflare dashboard:
+
+    <DashButton url="/?to=/:account/workers/plans" />
+
+If you recently upgraded but still encounter the 10-minute per day limit, redeploy your Worker to ensure your usage is correctly associated with the new plan.
 
