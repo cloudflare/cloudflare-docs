@@ -2,6 +2,8 @@
 pcx_content_type: reference
 title: OpenAI
 rss: file
+sidebar:
+  order: 13
 ---
 
 import { Render } from "~/components";
@@ -36,7 +38,7 @@ Compliance API access is required to use the OpenAI CASB integration. To enable 
    - The name of the user who created the key
    - The requested scope (`read`, `write`, or both)
 2. OpenAI will verify the key and grant the requested Compliance API scopes.
-3. After the scopes are granted, [add the OpenAI integration to CASB](/cloudflare-one/applications/casb/#add-an-integration). When prompted, enter your Open AI Admin API key, Organization ID, and Workspace ID (available at `https://chatgpt.com/admin/settings`).
+3. After the scopes are granted, [add the OpenAI integration to CASB](/cloudflare-one/integrations/cloud-and-saas/#add-an-integration). When prompted, enter your Open AI Admin API key, Organization ID, and Workspace ID (available at `https://chatgpt.com/admin/settings`).
 
 For more information, refer to the [OpenAI Help Center](https://help.openai.com/articles/9261474-compliance-api-for-enterprise-customers).
 
