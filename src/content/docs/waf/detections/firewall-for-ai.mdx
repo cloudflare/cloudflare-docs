@@ -26,7 +26,7 @@ Firewall for AI is a detection that can help protect your services powered by <G
 - Detect and moderate unsafe or harmful prompts – for example, prompts potentially related to violent crimes.
 - Detect prompts intentionally designed to subvert the intended behavior of the LLM as specified by the developer – for example, <GlossaryTooltip term="prompt injection">prompt injection</GlossaryTooltip> attacks.
 
-When enabled, the detection runs on incoming traffic, searching for any LLM prompts attempting to exploit the model.
+When enabled, the detection runs on incoming traffic, searching for any LLM prompts attempting to exploit the model. Currently, the detection only handles requests with a JSON content type (`application/json`).
 
 Cloudflare will populate the existing [Firewall for AI fields](#firewall-for-ai-fields) based on the scan results. You can check these results in the [Security Analytics](/waf/analytics/security-analytics/) dashboard by filtering on the `cf-llm` [managed endpoint label](/api-shield/management-and-monitoring/endpoint-labels/) and reviewing the detection results on your traffic. Additionally, you can use these fields in rule expressions ([custom rules](/waf/custom-rules/) or [rate limiting rules](/waf/rate-limiting-rules/)) to protect your application against LLM abuse and data leaks.
 
@@ -42,7 +42,6 @@ Firewall for AI is available in closed beta to Enterprise customers proxying tra
 
 :::note
 Firewall for AI is only available in the new [application security dashboard](/security/).
-Additionally, it only triggers on `content-type` json.
 :::
 
 <Steps>
