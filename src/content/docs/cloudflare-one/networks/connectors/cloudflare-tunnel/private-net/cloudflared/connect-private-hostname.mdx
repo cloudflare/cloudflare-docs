@@ -164,7 +164,7 @@ Gateway will automatically resolve DNS queries using your internal DNS server as
 
 If your private hostname points to an HTTPS application on port `443`, you can secure it using either Access or Gateway policies:
 
-	- **Option 1 (Recommended)**: Create an [Access self-hosted private app](/cloudflare-one/applications/non-http/self-hosted-private-app/) to manage user access alongside your SaaS and other web apps.
+	- **Option 1 (Recommended)**: Create an [Access self-hosted private app](/cloudflare-one/access-controls/applications/non-http/self-hosted-private-app/) to manage user access alongside your SaaS and other web apps.
 
 	- **Option 2**: If you prefer to secure the application using a traditional firewall model, build Gateway network policies using the [SNI](/cloudflare-one/traffic-policies/network-policies/#sni) or [SNI Domain](/cloudflare-one/traffic-policies/network-policies/#sni-domain) selector. For an additional layer of protection, add a Gateway DNS policy to allow or block the [Host](/cloudflare-one/traffic-policies/dns-policies/#host) or [Domain](/cloudflare-one/traffic-policies/dns-policies/#domain) from resolving.
 
