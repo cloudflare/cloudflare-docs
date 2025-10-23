@@ -10,7 +10,7 @@ head:
 
 import { Render } from "~/components";
 
-With Require Gateway, you can allow access to your applications only to devices enrolled in your Zero Trust organization. Unlike [Require WARP](/cloudflare-one/identity/devices/warp-client-checks/require-warp/), which will check for any WARP instance (including the consumer version), Require Gateway will only allow requests coming from devices whose traffic is filtered by your organization's Cloudflare Gateway configuration. This policy is best used when you want to protect company-owned assets by only allowing access to employees.
+With Require Gateway, you can allow access to your applications only to devices enrolled in your Zero Trust organization. Unlike [Require WARP](/cloudflare-one/reusable-components/posture-checks/warp-client-checks/require-warp/), which will check for any WARP instance (including the consumer version), Require Gateway will only allow requests coming from devices whose traffic is filtered by your organization's Cloudflare Gateway configuration. This policy is best used when you want to protect company-owned assets by only allowing access to employees.
 
 ## Prerequisites
 
@@ -19,7 +19,7 @@ With Require Gateway, you can allow access to your applications only to devices 
   	product="cloudflare-one"
   	params={{
   		name: "WARP Client Checks",
-  		link: "/cloudflare-one/identity/devices/warp-client-checks/",
+  		link: "/cloudflare-one/reusable-components/posture-checks/warp-client-checks/",
   	}}
   />
 

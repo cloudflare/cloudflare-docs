@@ -2397,6 +2397,7 @@
 /cloudflare-one/identity/devices/service-providers/* /cloudflare-one/integrations/service-providers/:splat 301
 /cloudflare-one/applications/configure-apps/* /cloudflare-one/access-controls/applications/http-apps/:splat 301
 /cloudflare-one/applications/non-http/* /cloudflare-one/access-controls/applications/non-http/:splat 301
+/cloudflare-one/identity/devices/* /cloudflare-one/reusable-components/posture-checks/:splat 301
 
 # Learning paths
 

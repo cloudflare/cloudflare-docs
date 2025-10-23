@@ -19,7 +19,7 @@ Most of the parameters listed below are also configurable in Zero Trust under **
 
 ## Required for full Cloudflare Zero Trust features
 
-For the majority of Cloudflare Zero Trust features to work, you need to specify a team name. Examples of Cloudflare Zero Trust features which depend on the team name are [HTTP policies](/cloudflare-one/traffic-policies/http-policies/), [Browser Isolation](/cloudflare-one/remote-browser-isolation/), and [device posture](/cloudflare-one/identity/devices/).
+For the majority of Cloudflare Zero Trust features to work, you need to specify a team name. Examples of Cloudflare Zero Trust features which depend on the team name are [HTTP policies](/cloudflare-one/traffic-policies/http-policies/), [Browser Isolation](/cloudflare-one/remote-browser-isolation/), and [device posture](/cloudflare-one/reusable-components/posture-checks/).
 
 ### `organization`
 
@@ -239,7 +239,7 @@ This parameter replaces the old `enabled` property, which can no longer be used 
 Only valid for iOS and Android/ChromeOS.
 :::
 
-Assigns a unique identifier to the device for the [device UUID posture check](/cloudflare-one/identity/devices/warp-client-checks/device-uuid).
+Assigns a unique identifier to the device for the [device UUID posture check](/cloudflare-one/reusable-components/posture-checks/warp-client-checks/device-uuid).
 
 **Value Type:** `string`
 
