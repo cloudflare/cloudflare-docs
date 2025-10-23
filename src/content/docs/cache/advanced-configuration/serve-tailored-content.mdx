@@ -6,7 +6,7 @@ sidebar:
   label: Serving tailored content
 ---
 
-import { DashButton } from "~/components";
+import { DashButton, APIRequest } from "~/components";
 
 Content negotiation is the practice of serving different versions of a resource from a single URL, tailoring the experience to the end user. Common examples include delivering content in a specific language (`Accept-Language`), optimizing for a device (`User-Agent`), or serving modern image formats (`Accept`).
 
@@ -56,25 +56,16 @@ To enable this feature, create a _variants rule_ using the API. This rule maps f
 
 For example, the following API call tells Cloudflare that for `.jpeg` and `.jpg` files, your origin can serve `image/webp` and `image/avif` variants:
 
-```bash
-# Replace $ZONE_ID and $CLOUDFLARE_API_TOKEN with your actual values
-curl "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/cache/variants" \
-  --request PATCH \
-  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
-  --header "Content-Type: application/json" \
-  --json '{
-    "value": {
-      "jpeg": [
-        "image/webp",
-        "image/avif"
-      ],
-      "jpg": [
-        "image/webp",
-        "image/avif"
-      ]
+<APIRequest
+  path="/zones/{zone_id}/cache/variants"
+  method="PATCH"
+  json={{
+    value: {
+      jpeg: ["image/webp", "image/avif"],
+      jpg: ["image/webp", "image/avif"]
     }
-  }'
-```
+  }}
+/>
 
 After creating the rule, Cloudflare will create distinct cache entries for each image variant, improving performance for users with modern browsers.
 
