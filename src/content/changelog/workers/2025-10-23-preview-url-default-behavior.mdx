@@ -27,9 +27,7 @@ In July, [we introduced preview URLs to Workers](/changelog/2025-07-23-workers-p
 
 To address this, we made a [one-time update](/changelog/2025-09-17-update-preview-url-setting/) to disable preview URLs on existing Workers that had their workers.dev route disabled and changed the default behavior to be disabled for all new deployments where a preview URL setting was not explicitly configured.
 
-While this change helped secure many customers, it was also disruptive for customers who keep their `workers.dev` route enabled and actively use the preview functionality, as it now required them to explicitly enable preview URLs on every redeployment.
-T
-his new, more intuitive behavior ensures that your preview URL settings align with your `workers.dev` configuration by default, providing a more secure and predictable experience. 
+While this change helped secure many customers, it was disruptive for customers who keep their `workers.dev` route enabled and actively use the preview functionality, as it now required them to explicitly enable preview URLs on every redeployment.This new, more intuitive behavior ensures that your preview URL settings align with your `workers.dev` configuration by default, providing a more secure and predictable experience. 
 
 **Securing access to `workers.dev` and preview URL endpoints**
 
