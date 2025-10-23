@@ -8,7 +8,7 @@ description: >-
 
 import { Render } from "~/components";
 
-You can secure access to R2 buckets using [Cloudflare Access](/cloudflare-one/applications/configure-apps/).
+You can secure access to R2 buckets using [Cloudflare Access](/cloudflare-one/access-controls/applications/configure-apps/).
 
 Access allows you to only allow specific users, groups or applications within your organization to access objects within a bucket, or specific sub-paths, based on policies you define.
 
@@ -46,7 +46,7 @@ To create an Access application for your R2 bucket:
    Ensure that your policies only allow the users within your organization that need access to this R2 bucket.
    :::
 
-6. Follow the remaining [self-hosted application creation steps](/cloudflare-one/applications/configure-apps/self-hosted-public-app/) to publish the application.
+6. Follow the remaining [self-hosted application creation steps](/cloudflare-one/access-controls/applications/configure-apps/self-hosted-public-app/) to publish the application.
 
 ## 3. Connect a custom domain
 
@@ -66,10 +66,10 @@ Visit the custom domain you connected to your R2 bucket, which should present a 
 
 For example, if you connected Google and/or GitHub identity providers, you can log in with those providers. If the login is successful and you pass the Access policies configured in this guide, you will be able to access (read/download) objects within the R2 bucket.
 
-If you cannot authenticate or receive a block page after authenticating, check that you have an [Access policy](/cloudflare-one/applications/configure-apps/self-hosted-public-app/#1-add-your-application-to-access) configured within your Access application that explicitly allows the group your user account is associated with.
+If you cannot authenticate or receive a block page after authenticating, check that you have an [Access policy](/cloudflare-one/access-controls/applications/configure-apps/self-hosted-public-app/#1-add-your-application-to-access) configured within your Access application that explicitly allows the group your user account is associated with.
 
 ## Next steps
 
-- Learn more about [Access applications](/cloudflare-one/applications/configure-apps/) and how to configure them.
+- Learn more about [Access applications](/cloudflare-one/access-controls/applications/configure-apps/) and how to configure them.
 - Understand how to use [pre-signed URLs](/r2/api/s3/presigned-urls/) to issue time-limited and prefix-restricted access to objects for users not within your organization.
 - Review the [documentation on using API tokens to authenticate](/r2/api/tokens/) against R2 buckets.
