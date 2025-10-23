@@ -80,9 +80,9 @@ There is no fixed maximum lifetime for a browser session as long as it remains a
 
 If you recently upgraded to the [Workers Paid plan](/workers/platform/pricing/) but still encounter the 10-minute per day limit, redeploy your Worker to ensure your usage is correctly associated with the new plan.
 
-### Error: `429 Too Many Requests`
+### Error: `429 Too many requests`
 
-When you make too many requests in a short period of time, Browser Rendering will respond with HTTP status code `429 Too Many Requests`.
+When you make too many requests in a short period of time, Browser Rendering will respond with HTTP status code `429 Too many requests`.
 The response includes a `Retry-After` header, which specifies how many seconds to wait before retrying. You can view your account's rate limits on the [Limits](/browser-rendering/platform/limits/) page.
 
 The example below demonstrates how to handle rate limiting gracefully by reading the `Retry-After` value and retrying the request after that delay.
@@ -137,9 +137,9 @@ try {
 
 </TabItem> </Tabs>
 
-### Error: `Error processing the request: Unable to create new browser: code: 429: message: Browser time limit exceeded for today`
+### Error: `429 Browser time limit exceeded for today`
 
-This error indicates you have hit the daily browser-instance limit on the Workers Free plan. [Free-plan accounts are limited](/browser-rendering/platform/limits/#workers-free) to 10 minutes of browser rendering usage per day. If you exceed that limit, you will receive a `429` error until the next UTC day.
+This `Error processing the request: Unable to create new browser: code: 429: message: Browser time limit exceeded for today` indicates you have hit the daily browser limit on the Workers Free plan. [Workers Free plan accounts are limited](/browser-rendering/platform/limits/#workers-free) to 10 minutes of browser rendering usage per day. If you exceed that limit, you will receive a `429` error until the next UTC day.
 
 You can [increase your limits](/browser-rendering/platform/limits/#workers-paid) by upgrading to a Workers Paid plan on the **Workers plans** page of the Cloudflare dashboard:
 
