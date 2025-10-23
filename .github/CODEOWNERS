@@ -29,6 +29,11 @@
 /src/content/release-notes/vectorize.yaml @elithrar @mchenco @sejoker @cloudflare/pcx-technical-writing
 /src/content/docs/ai-search/ @rita3ko @irvinebroque @aninibread @cloudflare/pcx-technical-writing
 
+# AI Crawl Control
+/src/content/docs/ai-crawl-control/ @cloudflare/pcx-technical-writing @CameronWhiteside
+/src/content/changelog/ai-crawl-control/ @cloudflare/pcx-technical-writing @CameronWhiteside
+/src/content/partials/ai-crawl-control/ @cloudflare/pcx-technical-writing @CameronWhiteside
+
 # Analytics & Logs
 
 /src/content/docs/analytics/ @jimhawkridge @soheiokamoto @angelampcosta @cloudflare/pcx-technical-writing
