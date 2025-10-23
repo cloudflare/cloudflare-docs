@@ -14,11 +14,11 @@ Cloudflare Access offers three different block page options:
 
 - **Default**: Displays a Cloudflare branded block page.
 - **Custom Redirect URL** - Redirects blocked requests to the specified URL. For example, you could redirect the user to a [dynamic Access Denied page](https://github.com/cloudflare/cf-identity-dynamic) that fetches their identity and shows the exact reason they were blocked.
-- **Custom Page Template** - (Only available on Pay-as-you-go and Enterprise plans) Displays a [custom HTML page](/cloudflare-one/applications/block-page/#create-a-custom-block-page) hosted by Cloudflare.
+- **Custom Page Template** - (Only available on Pay-as-you-go and Enterprise plans) Displays a [custom HTML page](/cloudflare-one/reusable-components/custom-pages/access-block-page/#create-a-custom-block-page) hosted by Cloudflare.
 
 ### Identity versus non-identity
 
-You can display a different [type of block page](/cloudflare-one/applications/block-page/#types-of-block-pages) to users who fail an identity-based policy versus a non-identity policy.
+You can display a different [type of block page](/cloudflare-one/reusable-components/custom-pages/access-block-page/#types-of-block-pages) to users who fail an identity-based policy versus a non-identity policy.
 
 - **Identity failure block page**: Displays when the user is blocked by an identity-based Access policy (such as email, user group, or external evaluation rule), after logging in to their identity provider.
 - **Non-identity failure block page**: Displays when the user is blocked by a non-identity Access policy (such as country, IP, or device posture). Cloudflare checks non-identity attributes before prompting the user to login.
@@ -39,7 +39,7 @@ To create a custom block page for Access:
 
 4. Enter a unique name for the block page.
 
-5. In **Type**, select whether this is an [identity or non-identity block page](/cloudflare-one/applications/block-page/#identity-versus-non-identity).
+5. In **Type**, select whether this is an [identity or non-identity block page](/cloudflare-one/reusable-components/custom-pages/access-block-page/#identity-versus-non-identity).
 
 6. In **Custom HTML**, enter the HTML code for your custom page. For example,
 
