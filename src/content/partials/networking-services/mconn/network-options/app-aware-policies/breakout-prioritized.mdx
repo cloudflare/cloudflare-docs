@@ -12,7 +12,7 @@ import { APIRequest, Aside, AnchorHeading, CURL, Markdown, Render, TabItem, Tabs
 
 { props.magicWord === "breakout" && (
 	<>
-		<p>Breakout traffic allows you to define which applications should bypass Cloudflare's security filtering, and go directly to the Internet. It works via DNS requests inspection. This means that if your network is caching DNS requests, Breakout traffic will only take effect after you cache entries expire and your client issues a new DNS request that the {props.productName} can detect. This can take several minutes.</p>
+		<p>Breakout traffic allows you to define which applications should bypass Cloudflare's security filtering, and go directly to the Internet. It works via DNS requests inspection. This means that if your network is caching DNS requests, Breakout traffic will only take effect after you cache entries expire and your client issues a new DNS request that {props.productName} can detect. This can take several minutes.</p>
 		<Aside type="caution">Breakout traffic will not work for applications that use DNS-over-HTTPS.</Aside>
 	</>
 	)
@@ -47,7 +47,7 @@ import { APIRequest, Aside, AnchorHeading, CURL, Markdown, Render, TabItem, Tabs
 		text={`
 		We recommend [routing](https://www.cloudflare.com/learning/network-layer/what-is-routing/) all traffic through our global network for comprehensive security filtering and access controls. However, there may be specific cases where you want a subset of traffic to bypass Cloudflare's security filtering and route it directly to the Internet. You can scope this breakout traffic to specific applications from the Cloudflare dashboard.
 
-    Refer to <a href={props.trafficSteeringURL}>Traffic steering</a> to learn how Cloudflare routes traffic.
+    Refer to <a href="${props.trafficSteeringURL}">Traffic steering</a> to learn how Cloudflare routes traffic.
 		`}
 		inline={false}
 		/>
