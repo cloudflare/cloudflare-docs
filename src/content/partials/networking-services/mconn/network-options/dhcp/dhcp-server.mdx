@@ -1,17 +1,40 @@
 ---
 params:
   - productName
+  - wanName
 ---
 
-import { APIRequest, Render, TabItem, Tabs, DashButton } from "~/components";
+import { APIRequest, Markdown, Render, TabItem, Tabs, DashButton } from "~/components";
 
 When you use a static IP address, {props.productName} can also act as a DHCP server in your network. To enable this feature:
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to **Magic WAN** > **Connector on-ramps (beta)**.
-3. Select the Connector you want to configure > **Edit**.
+{ props.wanName === "WAN Tunnels" ? (
+	<>
+		<Markdown
+	text={`
+		1. Log in to the Cloudflare One dashboard, and go to **Networks**.
+		2. Go to **Connectors** > **Appliances** > **Profiles**.
+	`}
+	inline={false}
+	/>
+	</>
+) : (
+	<>
+		<Markdown
+	text={`
+		1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+		2. Go to **Magic WAN** > **Connector on-ramps (beta)**.
+	`}
+	inline={false}
+	/>
+	</>
+)
+}
+<Markdown
+text={`
+3. Select the ${props.productName} you want to configure > **Edit**.
 4. Select **Network Configuration**, and scroll down to **LAN configuration**.
 5. In **LAN configuration**, select the LAN where you want to enable DHCP server.
 6. Select **Edit**.
@@ -19,6 +42,9 @@ When you use a static IP address, {props.productName} can also act as a DHCP ser
 	- The DNS server address. You can have more than one IP address. Select **Add DNS Server** for each server you want to add.
 	- The DHCP pool start
 	- The DHCP pool end
+`}
+inline={false}
+/>
 
 </TabItem> <TabItem label="API">
 
