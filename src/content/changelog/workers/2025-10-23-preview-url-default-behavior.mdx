@@ -9,8 +9,8 @@ This change is intended to provide a more intuitive and secure experience by ali
 
 **What this means for you:**
 - **If neither setting is configured:** both the workers.dev route and the preview URL will default to enabled
-- **If your workers.dev route is enabled and no preview URL is set:** Preview URLs will default to enabled
-- **If your workers.dev route is disabled and no preview URL is set:** Preview URLs will default to disabled
+- **If your workers.dev route is enabled and you do not explicitly set Preview URLs to enabled or disabled:** Preview URLs will default to enabled
+- **If your workers.dev route is disabled and you do not explicitly set Preview URLs to enabled or disabled:** Preview URLs will default to disabled
 
 You can override the default setting by explicitly enabling or disabling the preview URL in your Worker's configuration through the [API](/api/resources/workers/subresources/scripts/subresources/subdomain/), [Dashboard](/workers/configuration/previews/#from-the-dashboard), or [Wrangler](/workers/configuration/previews/#from-the-wrangler-configuration-file). 
 
