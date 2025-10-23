@@ -211,7 +211,7 @@ export class MyAgent extends Agent<Env> {
 		let userId = new URL(request.url).searchParams.get('userId');
 		// Supply the type parameter to the query when calling this.sql
 		// This assumes the results returns one or more User rows with "id", "name", and "email" columns
-		const user = this.sql<User>`SELECT * FROM users WHERE id = ${userId}`;
+		const [user] = this.sql<User>`SELECT * FROM users WHERE id = ${userId}`;
 		return Response.json(user)
 	}
 }
