@@ -15,15 +15,17 @@ This change is intended to provide a more intuitive and secure experience by ali
 You can override the default setting by explicitly enabling or disabling the preview URL in your Worker's configuration through the [API](/api/resources/workers/subresources/scripts/subresources/subdomain/), [Dashboard](/workers/configuration/previews/#from-the-dashboard), or [Wrangler](/workers/configuration/previews/#from-the-wrangler-configuration-file). 
 
 **Wrangler Version Behavior**
+
 The default behavior depends on the version of Wrangler you are using. This new logic applies to the latest version. Here is a summary of the behavior across different versions:
-- Before v4.34.0: Preview URLs defaulted to enabled, regardless of the workers.dev setting.
-- v4.34.0 up to the latest version: Preview URLs defaulted to disabled, regardless of the workers.dev setting.
-- Latest version: Preview URLs now default to matching your workers.dev setting.
+- **Before v4.34.0:** Preview URLs defaulted to enabled, regardless of the workers.dev setting.
+- **v4.34.0 up to the latest version:** Preview URLs defaulted to disabled, regardless of the workers.dev setting.
+- **Latest version:** Preview URLs now default to matching your workers.dev setting.
 
 **Why we’re making this change**
-In July, we introduced preview URLs to Workers, which let you preview code changes before deploying to production. This made disabling your Worker’s workers.dev URL an ambiguous action — the preview URL, served as a subdomain of `workers.dev` (ex: `preview-id-worker-name.account-name.workers.dev`) would still be live even if you had disabled your Worker’s `workers.dev` route. If you misinterpreted what it meant to disable your `workers.dev` route, you might unintentionally leave preview URLs enabled when you didn’t mean to, and expose them to the public Internet.
 
-To address this, we made a one-time update to disable preview URLs on existing Workers that had their workers.dev route disabled and changed the default behavior to be disabled for all new deployments where a preview URL setting was not explicitly configured.
+In July, [we introduced preview URLs to Workers](/changelog/2025-07-23-workers-preview-urls/), which let you preview code changes before deploying to production. This made disabling your Worker’s workers.dev URL an ambiguous action — the preview URL, served as a subdomain of `workers.dev` (ex: `preview-id-worker-name.account-name.workers.dev`) would still be live even if you had disabled your Worker’s `workers.dev` route. If you misinterpreted what it meant to disable your `workers.dev` route, you might unintentionally leave preview URLs enabled when you didn’t mean to, and expose them to the public Internet.
+
+To address this, we made a [one-time update](/changelog/2025-09-17-update-preview-url-setting/) to disable preview URLs on existing Workers that had their workers.dev route disabled and changed the default behavior to be disabled for all new deployments where a preview URL setting was not explicitly configured.
 
 While this change helped secure many customers, it was also disruptive for customers who keep their `workers.dev` route enabled and actively use the preview functionality, as it now required them to explicitly enable preview URLs on every redeployment.
 T
