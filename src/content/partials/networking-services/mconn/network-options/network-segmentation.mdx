@@ -195,9 +195,29 @@ The new policy will ensure that traffic between the specified LANs flows locally
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
-2. Select **Magic WAN** > **Connector on-ramps (beta)**.
-3. Select the Connector you want to configure > **Edit**.
+{ props.wanName === "WAN Tunnels" ? (
+	<>
+		<Markdown
+	text={`
+		1. Log in to the <a href="https://one.dash.cloudflare.com/">Cloudflare One dashboard</a>, and go to **Networks**.
+		2. Go to **Connectors** > **Appliances** > **Profiles**.
+	`}
+	inline={false}
+	/>
+	</>
+) : (
+	<>
+		<Markdown
+	text={`
+		1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
+		2. Select **Magic WAN** > **Connector on-ramps (beta)**.
+	`}
+	inline={false}
+	/>
+	</>
+)
+}
+3. Select the {props.productName} you want to configure > **Edit**.
 4. Go to **Network Configuration**, and scroll down to **LAN configuration**.
 5. Select **LAN policies**.
 6. Select the policy you need to edit > **Edit**.
