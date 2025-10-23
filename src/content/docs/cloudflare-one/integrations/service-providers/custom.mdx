@@ -105,7 +105,7 @@ WARP uses an Access Client ID and Access Client Secret to securely authenticate 
 
 Next, secure the external API behind Cloudflare Access so that WARP can authenticate with the service token. To add the API endpoint to Access:
 
-1. [Create a self-hosted application](/cloudflare-one/access-controls/applications/configure-apps/self-hosted-public-app/) for your API endpoint.
+1. [Create a self-hosted application](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/) for your API endpoint.
 2. Add the following Access policy to the application. Make sure that **Action** is set to _Service Auth_ (not _Allow_).
 
    | Action       | Rule type | Selector      | Value          |
