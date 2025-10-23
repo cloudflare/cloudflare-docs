@@ -8,7 +8,7 @@ sidebar:
 
 import { Tabs, TabItem, Badge, Render, APIRequest } from "~/components";
 
-[Access for Infrastructure](/cloudflare-one/applications/non-http/infrastructure-apps/) provides granular control over how users can connect to your SSH servers. This feature uses the same deployment model as [WARP-to-Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-warp-to-tunnel/) but unlocks more policy options and command logging functionality.
+[Access for Infrastructure](/cloudflare-one/access-controls/applications/non-http/infrastructure-apps/) provides granular control over how users can connect to your SSH servers. This feature uses the same deployment model as [WARP-to-Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-warp-to-tunnel/) but unlocks more policy options and command logging functionality.
 
 <Render
 	file="access/short-lived-certs-intro"
@@ -104,7 +104,7 @@ ssh <username>@<target IP>
 
 Access for Infrastructure also supports `scp`, `sftp`, and `rsync` commands. Refer to [Known limitations](#known-limitations) for a list of unsupported SSH commands and features.
 
-To learn more about user connections, refer to the [Access for Infrastructure documentation](/cloudflare-one/applications/non-http/infrastructure-apps/#4-connect-as-a-user).
+To learn more about user connections, refer to the [Access for Infrastructure documentation](/cloudflare-one/access-controls/applications/non-http/infrastructure-apps/#4-connect-as-a-user).
 
 ## SSH command logs
 
@@ -214,7 +214,7 @@ You were guided to create an Access policy for your target in [substep 9 of step
 
 #### End users
 
-As an end user, run [`warp-cli target list`](/cloudflare-one/applications/non-http/infrastructure-apps/#display-available-targets) to verify that you have access to the target.
+As an end user, run [`warp-cli target list`](/cloudflare-one/access-controls/applications/non-http/infrastructure-apps/#display-available-targets) to verify that you have access to the target.
 
 <Render file="tunnel/warp-cli-target-list" product="cloudflare-one" />
 

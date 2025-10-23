@@ -76,6 +76,6 @@ You no longer need to isolate both the Identity Provider (IdP) and Service Provi
 
 ## Browser Isolation is not compatible with private IPs on non-`443` ports
 
-Browser Isolation is not compatible with [self-hosted private applications](/cloudflare-one/applications/non-http/self-hosted-private-app/) that use private IP addresses on ports other than `443`. Trying to access self-hosted applications defined by private IPs on ports other than `443` will result in a Gateway block page.
+Browser Isolation is not compatible with [self-hosted private applications](/cloudflare-one/access-controls/applications/non-http/self-hosted-private-app/) that use private IP addresses on ports other than `443`. Trying to access self-hosted applications defined by private IPs on ports other than `443` will result in a Gateway block page.
 
-To use Browser Isolation for an application on a private IP address with a non-`443` port, configure a [private network application](/cloudflare-one/applications/non-http/legacy-private-network-app/) instead.
+To use Browser Isolation for an application on a private IP address with a non-`443` port, configure a [private network application](/cloudflare-one/access-controls/applications/non-http/legacy-private-network-app/) instead.
