@@ -12,6 +12,7 @@ import { DashButton, Markdown } from '~/components';
 	text={`
 		1. Log in to the <a href="https://one.dash.cloudflare.com/">Cloudflare One dashboard</a>, and go to **Networks**.
 		2. Go to **Connectors** > **Appliances** > **Profiles**.
+		3. Find the ${props.productName} you want to deactivate, select the three dots next to it > **Edit**.
 	`}
 	inline={false}
 	/>
@@ -25,9 +26,14 @@ import { DashButton, Markdown } from '~/components';
 	inline={false}
 	/>
 		<DashButton url="/?to=/:account/magic-wan/configuration" />
+		<Markdown
+	text={`
+		3. In the **${props.productName}** tab, find the ${props.productName} you want to deactivate, select the three dots next to it > **Edit**.
+	`}
+	inline={false}
+	/>
 	</>
 )
 }
-3. In the **Connectors** tab, find the {props.productName} you want to deactivate, select the three dots next to it > **Edit**.
 4. In **Status**, select _Deactivated_ from the dropdown.
 5. Select **Update**.
