@@ -40,7 +40,7 @@ For **concurrent browsers**:
 For **browser duration** and **concurrent browsers**:
 <br/>$3.60 + $10.00 = $13.60
 
-## FAQ
+## Pricing FAQ
 
 ### How do I estimate my Browser Rendering costs?
 
@@ -50,7 +50,7 @@ You can monitor Browser Rendering usage in two ways:
 
    <DashButton url="/?to=/:account/workers/browser-rendering" />
 
-- The `X-Browser-Ms-Used` header, which is returned in every REST API response, reports browser time used for the request (in milliseconds). You can also access this header using the Typescript SDK with the .asResponse() method: 
+- The `X-Browser-Ms-Used` header, which is returned in every REST API response, reports browser time used for the request (in milliseconds). You can also access this header using the Typescript SDK with the .asResponse() method:
 
    ```ts
    const contentRes = await client.browserRendering.content.create({
