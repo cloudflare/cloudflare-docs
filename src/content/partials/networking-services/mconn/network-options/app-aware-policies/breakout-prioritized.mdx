@@ -95,15 +95,40 @@ You need to configure {props.featureName} applications for each of your existing
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
-2. Select **Magic WAN** > **Connector on-ramps (beta)**.
+{ props.mwanName === "WAN Tunnels" ? (
+	<>
+		<Markdown
+	text={`
+		1. Log in to the Cloudflare One dashboard, and go to **Networks**.
+		2. Go to **Connectors** > **Appliances** > **Profiles**.
+	`}
+	inline={false}
+	/>
+	</>
+) : (
+	<>
+		<Markdown
+	text={`
+		1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
+		2. Select **Magic WAN** > **Connector on-ramps (beta)**.
+	`}
+	inline={false}
+	/>
+	</>
+)
+}
+<Markdown
+text={`
 3. Select the Connector you want to configure > **Edit**.
 4. Select **Traffic Steering**.
-5. In **{props.featureName}**, select **Add**.
+5. In **${props.featureName}**, select **Add**.
 6. Select one or more applications that should bypass Cloudflare filtering from the list. You can also use the search box.
 7. Select **Save**.
 
-The traffic for the application you chose {props.whatHappensApp}.
+The traffic for the application you chose ${props.whatHappensApp}.
+`}
+inline={false}
+/>
 
 </TabItem> <TabItem label="API">
 
@@ -164,12 +189,37 @@ The traffic for the application you chose {props.whatHappensApp}.
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
-2. Select **Magic WAN** > **Connector on-ramps (beta)**.
+{ props.mwanName === "WAN Tunnels" ? (
+	<>
+		<Markdown
+	text={`
+		1. Log in to the Cloudflare One dashboard, and go to **Networks**.
+		2. Go to **Connectors** > **Appliances** > **Profiles**.
+	`}
+	inline={false}
+	/>
+	</>
+) : (
+	<>
+		<Markdown
+	text={`
+		1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
+		2. Select **Magic WAN** > **Connector on-ramps (beta)**.
+	`}
+	inline={false}
+	/>
+	</>
+)
+}
+<Markdown
+text={`
 3. Select the Connector you want to configure > **Edit**.
 4. Select **Traffic Steering**.
-5. In **{props.featureName}**, find the application you want to delete > select the **three dots** next to it > **Remove**.
+5. In **${props.featureName}**, find the application you want to delete > select the **three dots** next to it > **Remove**.
 6. (Optional) If you have several pages of applications, you can use the search box to quickly find the application you are looking for.
+`}
+inline={false}
+/>
 
 </TabItem> <TabItem label="API">
 
