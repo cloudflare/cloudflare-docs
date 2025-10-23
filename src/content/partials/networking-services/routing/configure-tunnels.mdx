@@ -15,9 +15,11 @@ params:
   - biVsUniHealthCheck
   - tunnelHealthDash
   - biVsUniHealthCheckDefaults
+  - configureRoutesURL?
+  - sitesURL?
 ---
 
-import { APIRequest, CURL, Details, GlossaryTooltip, Render, TabItem, Tabs, DashButton } from "~/components";
+import { AnchorHeading, APIRequest, CURL, DashButton, Details, GlossaryTooltip, Markdown, Render, TabItem, Tabs } from "~/components";
 
 Cloudflare recommends two tunnels for each ISP and network location router combination, one per Cloudflare endpoint. Shortly after your onboarding kickoff call, Cloudflare will assign two Cloudflare endpoint addresses  that you can use as the tunnel destinations on your network location's routers/endpoints.
 
@@ -416,7 +418,7 @@ You can change this setting via the API with `"bidirectional"` or `"unidirection
 
 To check for tunnel health, Cloudflare sends a <a href={props.tunnelHealthChecksPage}>health check probe</a> consisting of ICMP (Internet Control Message Protocol) reply [packets](https://www.cloudflare.com/learning/network-layer/what-is-a-packet/) to your network. Cloudflare needs to receive these probes to know if your tunnel is healthy.
 
-{/* 
+{/*
   Conditional logic explanation:
   - Magic Transit page: "unidirectional health checks for Magic Transit, and bidirectional health checks for Magic WAN"
   - Magic WAN/WAN Tunnels pages: "bidirectional health checks for [productName], and unidirectional health checks for Magic Transit"
@@ -437,3 +439,17 @@ For customers using the legacy health check system with a public IP range, Cloud
 
 - Configuring the tunnel health check target IP address to one within the `172.64.240.252/30` prefix range.
 - Applying a policy-based route that matches [packets](https://www.cloudflare.com/learning/network-layer/what-is-a-packet/) with a source IP address equal to the configured tunnel health check target (for example `172.64.240.253/32`), and route them over the tunnel back to Cloudflare.
+
+{ props.magicWord !== "Magic Transit" && (
+  <>
+    <AnchorHeading title="Next steps" depth={2} />
+    <Markdown
+      text={`
+			- Now that you have set up your tunnel endpoints you need to configure routes to route your traffic through Cloudflare. Refer to [Configure routes](${props.configureRoutesURL}) to learn more about static routing and BGP peering (only available through Direct CNI connection).
+			${props.sitesURL ? `- After configuring either static routes or BGP routing, you will have to [set up a site](${props.sitesURL}).` : ''}
+      `}
+      inline={false}
+    />
+  </>
+)
+}
