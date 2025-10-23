@@ -189,7 +189,7 @@ export class MyAgent extends Agent<Env> {
 
 		// 'users' is just an example here: you can create arbitrary tables and define your own schemas
 		// within each Agent's database using SQL (SQLite syntax).
-		let user = this.sql`SELECT * FROM users WHERE id = ${userId}`
+		let [user] = this.sql`SELECT * FROM users WHERE id = ${userId}`
 		return Response.json(user)
 	}
 }
