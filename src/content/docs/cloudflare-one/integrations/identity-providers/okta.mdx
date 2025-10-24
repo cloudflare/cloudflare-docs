@@ -89,7 +89,7 @@ To set up the Okta integration using the Okta Integration Network (OIN) App Cata
 
 ## Synchronize users and groups
 
-The Okta integration allows you to synchronize IdP groups and automatically deprovision users using [SCIM](/cloudflare-one/identity/users/scim/). To enable SCIM provisioning between Access and Okta, you need two separate app integrations in Okta:
+The Okta integration allows you to synchronize IdP groups and automatically deprovision users using [SCIM](/cloudflare-one/team-and-resources/users/scim/). To enable SCIM provisioning between Access and Okta, you need two separate app integrations in Okta:
 
 - The OIDC application you created when adding Okta as an identity provider. You can create this application via the [Okta App Catalog](#set-up-okta-as-an-oidc-provider-okta-app-catalog) or via a [Custom App Integration](#set-up-okta-as-an-oidc-provider-custom-app-integration).
 - A second Okta application of type **SCIM 2.0 Test App (Header Auth)**. This is technically a SAML app but is responsible for sending user and group info via SCIM.

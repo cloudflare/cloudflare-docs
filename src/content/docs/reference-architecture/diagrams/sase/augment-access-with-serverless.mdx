@@ -100,7 +100,7 @@ Cloudflare's Workers are a great candidate for interacting with incoming JSON We
 
 ### 3. Augment the authentication material (JWT) with extra authentication details
 
-In some situations, it is beneficial to elaborate on this JWT in order to execute additional processing on the protected destination application (for example, adding device [posture details](/cloudflare-one/identity/devices/) as part of an incoming request).
+In some situations, it is beneficial to elaborate on this JWT in order to execute additional processing on the protected destination application (for example, adding device [posture details](/cloudflare-one/reusable-components/posture-checks/) as part of an incoming request).
 
 In the following example, we want to make sure the exposed application is aware of the status of the device's firewall and disk encryption (Note that the WARP client needs to be installed on the client machine for these signals to be collected).
 

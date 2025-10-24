@@ -3,7 +3,7 @@ releaseNotes: |-
 
   **New features**
   - Admins can now elect to have ZT WARP clients connect using the MASQUE protocol; this setting is in Device Profiles. Note: before MASQUE can be used, the global setting for Override local interface IP must be enabled. For more detail, see https://developers.cloudflare.com/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#device-tunnel-protocol. This feature will be rolled out to customers in stages over approximately the next month.
-  - The Device Posture client certificate check has been substantially enhanced. The primary enhancement is the ability to check for client certificates that have unique common names, made unique by the inclusion of the device serial number or host name (for example, CN = 123456.mycompany, where 123456 is the device serial number). Additional details can be found here: https://developers.cloudflare.com/cloudflare-one/identity/devices/warp-client-checks/client-certificate/
+  - The Device Posture client certificate check has been substantially enhanced. The primary enhancement is the ability to check for client certificates that have unique common names, made unique by the inclusion of the device serial number or host name (for example, CN = 123456.mycompany, where 123456 is the device serial number). Additional details can be found here: https://developers.cloudflare.com/cloudflare-one/reusable-components/posture-checks/warp-client-checks/client-certificate/
 
   **Additional changes and improvements**
   - Fixed a known issue where the certificate was not always properly left behind in `/Library/Application Support/Cloudflare/installed_cert.pem`.

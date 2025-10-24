@@ -490,16 +490,16 @@ Not only does the user identity need to be verified, but the security posture of
 
 The following built-in posture checks are available:
 
-- [Application check](/cloudflare-one/identity/devices/warp-client-checks/application-check/): Checks that a specific application process is running
-- [File check](/cloudflare-one/identity/devices/warp-client-checks/file-check/): Checks for the presence of a file
-- [Firewall](/cloudflare-one/identity/devices/warp-client-checks/firewall/): Checks if a firewall is running
-- [Disk encryption](/cloudflare-one/identity/devices/warp-client-checks/disk-encryption/): Checks if/how many disks are encrypted
-- [Domain joined](/cloudflare-one/identity/devices/warp-client-checks/domain-joined/): Checks if the device is joined to a Microsoft Active Directory domain
-- [OS version](/cloudflare-one/identity/devices/warp-client-checks/os-version/): Checks what version of the OS is running
-- [Unique Client ID](/cloudflare-one/identity/devices/warp-client-checks/device-uuid/): When using an MDM too, organizations can assign a verifiable UUID to a mobile, desktop, or laptop device
-- [Device serial number](/cloudflare-one/identity/devices/warp-client-checks/corp-device/): Checks to see if the device serial matches a list of company desktop/laptop computers
+- [Application check](/cloudflare-one/reusable-components/posture-checks/warp-client-checks/application-check/): Checks that a specific application process is running
+- [File check](/cloudflare-one/reusable-components/posture-checks/warp-client-checks/file-check/): Checks for the presence of a file
+- [Firewall](/cloudflare-one/reusable-components/posture-checks/warp-client-checks/firewall/): Checks if a firewall is running
+- [Disk encryption](/cloudflare-one/reusable-components/posture-checks/warp-client-checks/disk-encryption/): Checks if/how many disks are encrypted
+- [Domain joined](/cloudflare-one/reusable-components/posture-checks/warp-client-checks/domain-joined/): Checks if the device is joined to a Microsoft Active Directory domain
+- [OS version](/cloudflare-one/reusable-components/posture-checks/warp-client-checks/os-version/): Checks what version of the OS is running
+- [Unique Client ID](/cloudflare-one/reusable-components/posture-checks/warp-client-checks/device-uuid/): When using an MDM too, organizations can assign a verifiable UUID to a mobile, desktop, or laptop device
+- [Device serial number](/cloudflare-one/reusable-components/posture-checks/warp-client-checks/corp-device/): Checks to see if the device serial matches a list of company desktop/laptop computers
 
-Cloudflare One can also integrate with any deployed endpoint security solution, such as [Microsoft Endpoint Manager](/cloudflare-one/integrations/service-providers/microsoft/), [Tanium](/cloudflare-one/identity/devices/access-integrations/tanium/), [Carbon Black](/cloudflare-one/identity/devices/warp-client-checks/carbon-black/), [CrowdStrike](/cloudflare-one/integrations/service-providers/crowdstrike/), [SentinelOne](/cloudflare-one/identity/devices/warp-client-checks/sentinel-one/), and more. Any data from those products can be passed to Cloudflare for use in access decisions.
+Cloudflare One can also integrate with any deployed endpoint security solution, such as [Microsoft Endpoint Manager](/cloudflare-one/integrations/service-providers/microsoft/), [Tanium](/cloudflare-one/reusable-components/posture-checks/access-integrations/tanium/), [Carbon Black](/cloudflare-one/reusable-components/posture-checks/warp-client-checks/carbon-black/), [CrowdStrike](/cloudflare-one/integrations/service-providers/crowdstrike/), [SentinelOne](/cloudflare-one/reusable-components/posture-checks/warp-client-checks/sentinel-one/), and more. Any data from those products can be passed to Cloudflare for use in access decisions.
 
 All of the above device information, combined with data on the user identity and also the network the device is on, is available in Cloudflare to be used as part of the company policy. For example, organizations could choose to only allow administrators to SSH into servers when all of the following conditions are met: their device is free from threats, running the latest operating system, and joined to the company domain.
 

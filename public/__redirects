@@ -1969,6 +1969,7 @@
 /workers/frameworks/framework-guides/nuxt/ /workers/framework-guides/web-apps/more-web-frameworks/nuxt/ 301
 /workers/frameworks/framework-guides/qwik/ /workers/framework-guides/web-apps/more-web-frameworks/qwik/ 301
 /workers/frameworks/framework-guides/solid/ /workers/framework-guides/web-apps/more-web-frameworks/solid/ 301
+/workers/framework-guides/web-apps/tanstack/ /workers/framework-guides/web-apps/tanstack-start/ 301
 
 /workers/testing/unit-testing/ /workers/testing/vitest-integration/write-your-first-test/ 301
 /workers/testing/integration-testing/ /workers/testing/ 301
@@ -2382,6 +2383,12 @@
 
 # Cloudflare One nav revamp
 /cloudflare-one/connections/ /cloudflare-one/ 301
+/cloudflare-one/identity/users/ /cloudflare-one/team-and-resources/users/ 301
+/cloudflare-one/identity/users/session-management/ /cloudflare-one/team-and-resources/users/session-management/ 301
+/cloudflare-one/identity/users/seat-management/ /cloudflare-one/team-and-resources/users/seat-management/ 301
+/cloudflare-one/identity/users/scim/ /cloudflare-one/team-and-resources/users/scim/ 301
+/cloudflare-one/applications/login-page/ /cloudflare-one/reusable-components/custom-pages/access-login-page/ 301
+/cloudflare-one/applications/block-page/ /cloudflare-one/reusable-components/custom-pages/access-block-page/ 301
 /cloudflare-one/connections/connect-devices/* /cloudflare-one/team-and-resources/devices/:splat 301
 /cloudflare-one/connections/connect-networks/* /cloudflare-one/networks/connectors/cloudflare-tunnel/:splat 301
 /cloudflare-one/policies/gateway/* /cloudflare-one/traffic-policies/:splat 301
@@ -2391,7 +2398,7 @@
 /cloudflare-one/identity/one-time-pin/ /cloudflare-one/integrations/identity-providers/one-time-pin/ 301
 /cloudflare-one/identity/idp-integration/* /cloudflare-one/integrations/identity-providers/:splat 301
 /cloudflare-one/identity/devices/service-providers/* /cloudflare-one/integrations/service-providers/:splat 301
-/cloudflare-one/applications/configure-apps/* /cloudflare-one/access-controls/applications/configure-apps/:splat 301
+/cloudflare-one/applications/configure-apps/* /cloudflare-one/access-controls/applications/http-apps/:splat 301
 /cloudflare-one/applications/non-http/* /cloudflare-one/access-controls/applications/non-http/:splat 301
 /cloudflare-one/email-security/email-monitoring/* /cloudflare-one/email-security/monitoring/:splat 301
 /cloudflare-one/email-security/phish-submissions/ /cloudflare-one/email-security/reclassifications/ 301
@@ -2399,6 +2406,7 @@
 /cloudflare-one/email-security/detection-settings/* /cloudflare-one/email-security/settings/detection-settings/:splat 301
 /cloudflare-one/email-security/auto-moves/ /cloudflare-one/email-security/settings/auto-moves/ 301
 /cloudflare-one/email-security/settings/invalid-submissions/ /cloudflare-one/email-security/reclassifications/invalid-submissions/ 301
+/cloudflare-one/identity/devices/* /cloudflare-one/reusable-components/posture-checks/:splat 301
 
 # Learning paths
 

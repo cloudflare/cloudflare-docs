@@ -325,7 +325,7 @@ By completing this step, you deliver the WARP client to targeted macOS devices, 
 
 Refer to the [generic instructions for iOS](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/#ios).
 
-Intune allows you to insert [predefined variables](https://learn.microsoft.com/en-us/mem/intune/apps/app-configuration-policies-use-ios#tokens-used-in-the-property-list) into the XML configuration file. For example, you can set the [`unique_client_id`](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/parameters/#unique_client_id) key to `{{deviceid}}` for a [device UUID posture check](/cloudflare-one/identity/devices/warp-client-checks/device-uuid/) deployment.
+Intune allows you to insert [predefined variables](https://learn.microsoft.com/en-us/mem/intune/apps/app-configuration-policies-use-ios#tokens-used-in-the-property-list) into the XML configuration file. For example, you can set the [`unique_client_id`](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/parameters/#unique_client_id) key to `{{deviceid}}` for a [device UUID posture check](/cloudflare-one/reusable-components/posture-checks/warp-client-checks/device-uuid/) deployment.
 
 ### Per-app VPN for iOS
 

@@ -10,7 +10,7 @@ releaseNotes: |-
   -  The WARP client now applies post-quantum cryptography end-to-end on enabled devices accessing resources behind a Cloudflare Tunnel. This feature can be [enabled by MDM](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/parameters/#enable_post_quantum).
   - Improvement to handle client configuration changes made by MDM while WARP is not running.
   - Fixed an issue affecting Split Tunnel Include mode, where traffic outside the tunnel was blocked when switching between Wi-Fi and Ethernet networks.
-  - Added a WARP client device posture check for SAN attributes to the [client certificate check](/cloudflare-one/identity/devices/warp-client-checks/client-certificate/).
+  - Added a WARP client device posture check for SAN attributes to the [client certificate check](/cloudflare-one/reusable-components/posture-checks/warp-client-checks/client-certificate/).
 
   **Known issues**
   - Devices using WARP client 2025.4.929.0 and up may experience Local Domain Fallback failures if a fallback server has not been configured. To configure a fallback server, refer to [Route traffic to fallback server](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/local-domains/#route-traffic-to-fallback-server).

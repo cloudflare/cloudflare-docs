@@ -9,7 +9,7 @@ import { Render } from "~/components";
 
 With Cloudflare Zero Trust, you can create Secure Web Gateway policies that filter outbound traffic down to the user identity level. To do that, you can build DNS, HTTP or Network policies using a set of [identity-based selectors](#identity-based-selectors). These selectors require you to deploy the Zero Trust WARP client in [Gateway with WARP mode](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/).
 
-You may also filter outbound traffic based on additional signals from [device posture checks](/cloudflare-one/identity/devices/).
+You may also filter outbound traffic based on additional signals from [device posture checks](/cloudflare-one/reusable-components/posture-checks/).
 
 ## Gateway identity checks
 
@@ -24,7 +24,7 @@ To view the identity that Gateway will use when evaluating policies, check the [
 
 ### Automatic SCIM IdP updates
 
-Gateway will automatically detect changes in user name, title, and group membership for IdPs configured with System for Cross-domain Identity Management (SCIM) provisioning. For more information, refer to [SCIM provisioning](/cloudflare-one/identity/users/scim/).
+Gateway will automatically detect changes in user name, title, and group membership for IdPs configured with System for Cross-domain Identity Management (SCIM) provisioning. For more information, refer to [SCIM provisioning](/cloudflare-one/team-and-resources/users/scim/).
 
 ### Extended email addresses
 

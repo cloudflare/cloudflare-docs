@@ -7,7 +7,7 @@ sidebar:
   order: 2
 ---
 
-import { Steps, Tabs, TabItem, DashButton } from "~/components";
+import { Aside, Steps, Tabs, TabItem, DashButton } from "~/components";
 
 AI Crawl Control metrics provide you with insight on how AI crawlers are interacting with your website ([Cloudflare zone](/fundamentals/concepts/accounts-and-zones/#zones)).
 
@@ -24,29 +24,55 @@ You can find meaningful information across both **Crawlers** and **Metrics** tab
 
 The **Crawlers** tab provides you with the following information:
 
-- Total number of requests to crawl your website from common AI crawlers
-- Number of requests made by each AI crawler
-- Number of `robots.txt` violations for each crawler
+| Metric                  | Description                                                             |
+| ----------------------- | ----------------------------------------------------------------------- |
+| **Total requests**      | Total number of requests to crawl your website from common AI crawlers. |
+| **Requests by crawler** | Number of requests made by each AI crawler.                             |
 
 ## View AI Crawl Control metrics
 
 The **Metrics** tab provides you with the following metrics to help you understand how AI crawlers are interacting with your website.
 
-| Metric                               | Description                                                                                                                                                                                       |
-| ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Total requests                       | The total number of requests to crawl your website, from all AI crawlers                                                                                                                          |
-| Allowed requests                     | The number of crawler requests that received a successful response from your site                                                                                                                 |
-| Unsuccessful requests                | The number of crawler requests that failed (HTTP 4xx or 5xx) as a result of a blocked request, other security rules, or website errors such as a crawler attempting to access a non-existent page |
-| Overall popular paths                | The most popular pages crawled by AI crawlers, from all AI crawlers                                                                                                                               |
-| Most active AI crawlers by operators | The AI crawler owners with the highest number of requests to access your site                                                                                                                     |
-| Request by AI crawlers               | A graph which displays the number of crawl requests from each AI crawler                                                                                                                          |
-| Most popular paths by AI crawlers    | The most popular pages crawled by AI crawlers, for each AI crawler                                                                                                                                |
-| Referrals                            | A graph which displays the number of visits that were directed to your site from each AI operator                                                                                                 |
-| Referers                             | The list of referers who directed visits to your site                                                                                                                                             |
+### Analyze referrer data
 
-## Filter date range
+<Aside type="note">
+	This feature is available for customers on a paid plan.
+</Aside>
 
-You can use the date filter to choose the period of time you wish to analyze.
+Identify traffic sources with referrer analytics to understand discovery patterns and content popularity from AI operators.
+
+- View top referrers driving traffic to your site.
+- Understand discovery patterns and content popularity from AI operators.
+
+### Track crawler requests over time
+
+Visualize crawler activity patterns over time using the **Requests over time** chart. You can group data by different dimensions to get more specific insights:
+
+| Dimension       | Description                                                                                 |
+| --------------- | ------------------------------------------------------------------------------------------- |
+| **Crawler**     | Track activity from individual AI crawlers (like GPTBot, ClaudeBot, and Bytespider).        |
+| **Category**    | Analyze crawlers by their purpose or type.                                                  |
+| **Operator**    | Discover which companies (such as OpenAI, Anthropic, and ByteDance) are crawling your site. |
+| **Host**        | Break down activity across multiple subdomains.                                             |
+| **Status Code** | Monitor HTTP response codes (200s, 300s, 400s, 500s) to crawlers.                           |
+
+### Understand what content is crawled
+
+The **Most popular paths** table shows you which pages on your site are most frequently requested by AI crawlers. This can help you understand what content is most popular with different AI models.
+
+| Column               | Description                                                             |
+| -------------------- | ----------------------------------------------------------------------- |
+| **Path**             | The path of the page on your website that was requested.                |
+| **Hostname**         | The hostname of the requested page.                                     |
+| **Crawler**          | The name of the AI crawler that made the request.                       |
+| **Operator**         | The company that operates the AI crawler.                               |
+| **Allowed requests** | The number of times the path was successfully requested by the crawler. |
+
+You can also filter the results by path or content type to narrow down your analysis.
+
+## Filter and export data
+
+You can use the date filter to choose the period of time you wish to analyze. To export your data, select **Download CSV**. The downloaded file will include all applied filters and groupings.
 
 <Tabs>
 <TabItem label="Free plans">

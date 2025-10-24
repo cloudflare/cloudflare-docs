@@ -40,7 +40,7 @@ The application and (optional) DNS server are now connected to Cloudflare.
 ## Create a Gateway network policy
 
 1. Go to **Gateway** > **Firewall policies** > **Network**.
-2. Add a [network policy](/cloudflare-one/traffic-policies/network-policies/) that targets the private IP address and the port of the MySQL database (port 3306 by default). The following example allows access to the database to the users that enrolled into WARP using an `@example.com` email address. The network policies can also take into consideration [device posture checks](/cloudflare-one/identity/devices/).
+2. Add a [network policy](/cloudflare-one/traffic-policies/network-policies/) that targets the private IP address and the port of the MySQL database (port 3306 by default). The following example allows access to the database to the users that enrolled into WARP using an `@example.com` email address. The network policies can also take into consideration [device posture checks](/cloudflare-one/reusable-components/posture-checks/).
 
 | Selector         | Operator      | Value           | Logic | Action |
 | ---------------- | ------------- | --------------- | ----- | ------ |

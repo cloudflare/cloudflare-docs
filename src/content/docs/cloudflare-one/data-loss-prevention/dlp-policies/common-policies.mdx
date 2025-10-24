@@ -41,7 +41,7 @@ You can configure access on a per-user or group basis by adding [identity-based 
 
 Many Android applications (such as Google Drive) use <GlossaryTooltip term="certificate pinning" link="/ssl/reference/certificate-pinning/">certificate pinning</GlossaryTooltip>, which is incompatible with Gateway inspection. If needed, you can create a [Do Not Inspect policy](/cloudflare-one/traffic-policies/http-policies/#do-not-inspect) so that the app can continue to function on Android:
 
-1. Set up an [OS version device posture check](/cloudflare-one/identity/devices/warp-client-checks/os-version/) that checks for the Android operating system.
+1. Set up an [OS version device posture check](/cloudflare-one/reusable-components/posture-checks/warp-client-checks/os-version/) that checks for the Android operating system.
 
 2. Create the following HTTP policy in Gateway:
 

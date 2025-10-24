@@ -12,7 +12,7 @@ releaseNotes: |-
   - Improvement to handle client configuration changes made by an MDM while WARP is not running.
   - Fixed an issue affecting Split Tunnel Include mode, where traffic outside the tunnel was blocked when switching between Wi-Fi and Ethernet networks.
   - Improvement for WARP connectivity issues on macOS due to the operating system not accepting DNS server configurations.
-  - Added a WARP client device posture check for SAN attributes to the [client certificate check](/cloudflare-one/identity/devices/warp-client-checks/client-certificate/).
+  - Added a WARP client device posture check for SAN attributes to the [client certificate check](/cloudflare-one/reusable-components/posture-checks/warp-client-checks/client-certificate/).
 
   **Known issues**
   - macOS Sequoia: Due to changes Apple introduced in macOS 15.0.x, the WARP client may not behave as expected. Cloudflare recommends the use of macOS 15.4 or later.

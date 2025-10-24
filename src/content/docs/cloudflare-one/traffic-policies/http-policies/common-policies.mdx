@@ -171,11 +171,11 @@ You can select either individual applications or the entire Do Not Inspect set, 
 
 ## Check device posture
 
-Require devices to have certain software installed or other configuration attributes. For instructions on setting up a device posture check, refer to [Enforce device posture](/cloudflare-one/identity/devices/).
+Require devices to have certain software installed or other configuration attributes. For instructions on setting up a device posture check, refer to [Enforce device posture](/cloudflare-one/reusable-components/posture-checks/).
 
 ### Enforce a minimum OS version
 
-Perform an [OS version check](/cloudflare-one/identity/devices/warp-client-checks/os-version/) to ensure users are running at least a minimum version.
+Perform an [OS version check](/cloudflare-one/reusable-components/posture-checks/warp-client-checks/os-version/) to ensure users are running at least a minimum version.
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -209,7 +209,7 @@ To get the UUIDs of your device posture checks, use the [List device posture rul
 
 ### Check for a specific file
 
-Perform a [file check](/cloudflare-one/identity/devices/warp-client-checks/file-check/) to ensure users have a certain file on their device.
+Perform a [file check](/cloudflare-one/reusable-components/posture-checks/warp-client-checks/file-check/) to ensure users have a certain file on their device.
 
 Since the file path will be different for each operating system, you can configure a file check for each system and use the **Or** logical operator to only require one of the checks to pass.
 
