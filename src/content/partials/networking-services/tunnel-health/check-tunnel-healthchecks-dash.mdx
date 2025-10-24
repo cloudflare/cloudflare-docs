@@ -6,6 +6,7 @@ params:
   - notificationsPath
   - packetCaptures
   - networkAnalytics
+  - magicWord
 ---
 
 import { GlossaryTooltip, Markdown, Tabs, TabItem } from "~/components";
@@ -20,6 +21,25 @@ To access more than one hour of tunnel health data, you should use the <a href={
 
 Not all data centers will be relevant to you at all times. You can refer to the **Average ingress traffic (last hour)** column to understand if a given data center is receiving traffic for your network, and if its health status is relevant to you.
 
+{ props.magicWord === "WAN Tunnels" ? (
+	<>
+	<p>To check for anycast tunnel health:</p>
+	<ol>
+		<li>Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a> and select your account.</li>
+		<li>Go to <strong>Insights</strong> {'>'}  <strong>Network visibility</strong> {'>'} <strong>WAN connector health</strong>.</li>
+		<li>In the next screen you can access a list of your tunnels and their current health status. You can also check the amount of health checks passed in the last hour as well as traffic volume for each tunnel.</li>
+		<li>Find the tunnel you wish to inspect, select the three dots in front of the tunnel and select:
+			<ul>
+				<li><strong>Create alert</strong>: This will send you to the <Markdown text={props.notificationsPath} /> so you can create specific alerts for that tunnel, to be warned when specific conditions are met.</li>
+				<li><strong>Network Analytics</strong>: This will send you to the Analytics section of the dash, prefiltered with the tunnel you want to inspect.</li>
+			</ul>
+		</li>
+		<li>Alternatively, from the list of tunnels, select the tunnel you want to inspect to access details about it.</li>
+	</ol>
+	</>
+) : (
+	<>
+
 :::note
 To change between the new dashboard experience and the old one, find the banner at the top of the screen.
 :::
@@ -31,7 +51,7 @@ To check for anycast tunnel health:
 		1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
 		2. Go to <Markdown text={props.productPath} />.
 		3. In **Cloudflare colos**, you can choose one or more Cloudflare data centers to filter out the traffic that shows up in your anycast tunnels. For example, if you chose the Lisbon data center, your anycast tunnels would only show connections to that data center.
-		4. Below, you have a list of all your anycast tunnels, as well as their current health status. Find the tunnel you wish to inspect and select the arrow (**>**) before it to open its details.
+		4. Below, you have a list of all your anycast tunnels, as well as their current health status. Find the tunnel you wish to inspect and select the arrow (**&gt;**) before it to open its details.
 		5. The details pane shows the connection status between different Cloudflare servers and your tunnel. Select **Traceroute for details** in one of the Cloudflare servers shown to check for issues between Cloudflare and your origin network.
 	</TabItem>
 
@@ -45,6 +65,10 @@ To check for anycast tunnel health:
 		5. Alternatively, from the list of tunnels, select the tunnel you want to inspect to access details about it.
 	</TabItem>
 </Tabs>
+
+	</>
+)
+}
 
 ## Check tunnel health for a specific tunnel
 
