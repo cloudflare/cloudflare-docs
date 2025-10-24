@@ -28,13 +28,13 @@ A tunnel health check probe comes from Cloudflare to the tunnel origin, then ret
 	)
 }
 
-{ props.magicWord === "Magic WAN" && (
+{ props.magicWord !== "Magic Transit" && (
 	<>
 		<Render
 			file="tunnel-health/health-checks-compatible-cmb-eu"
 			product="networking-services"
 			params={{
-				productName: "Magic WAN"
+				productName: props.productName
 			}}
 		/>
 	</>

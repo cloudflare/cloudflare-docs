@@ -177,7 +177,7 @@ Send a [`POST` request](/api/resources/alerting/subresources/policies/methods/cr
   )
 }
 
-{ props.magicWord === "Magic WAN" && (
+{ props.magicWord !== "Magic Transit" && (
   <>
 	<APIRequest
 		path="/accounts/{account_id}/alerting/v3/policies"
