@@ -41,20 +41,15 @@ Add two Magic static routes to define the IP address space that exists behind th
 
 By default, the Magic static routes are defined with the priority set to `100`. Cloudflare leverages <a href={props.equalCostMultipathRoutingEcmpUrl}>Equal Cost Multipath Routing (ECMP)</a> and will load balance the traffic equally across the two tunnels. If you prefer to use an Active/Passive model, you can leave the default value for the first route set to `100`, and set the value for the second tunnel to `150` (higher value is a lower priority).
 
-1. Go to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-
-2. Go to **{props.productName}** > **Configuration**.
-
-3. From the **Static Routes** tab, select **Create**.
-
-4. For the first route, ensure the following settings are defined (refer to <a href={props.configureStaticRoutesUrl}>Configure static routes</a> to learn about settings not mentioned here):
+1. Follow the <a href={props.configureStaticRoutesUrl}>Configure static routes</a> instructions to create a static route.
+2. For the first route, ensure the following settings are defined:
 
    - **Prefix**: Specify the [RFC1918](https://datatracker.ietf.org/doc/html/rfc1918) subnet that exists behind the first Magic IPsec tunnel you have defined in the previous section.
    - **Tunnel/Next hop**: Select your first tunnel (Tunnel 01 of 02).
 
    ![The first static route should have the values mentioned above.](~/assets/images/magic-wan/third-party/fortinet/edit-static-route-01.png)
 
-5. For the second route, ensure the following settings are defined:
+3. For the second route, ensure the following settings are defined:
 
    - **Prefix**: Specify the [RFC1918](https://datatracker.ietf.org/doc/html/rfc1918) subnet that exists behind the second Magic IPsec tunnel defined in the previous section.
    - **Tunnel/Next hop**: Select your second tunnel (Tunnel 02 of 02).
