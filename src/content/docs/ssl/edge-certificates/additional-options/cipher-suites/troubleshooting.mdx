@@ -18,6 +18,13 @@ When you adjust the setting used for your domain's [Minimum TLS Version](/ssl/ed
 
 This setting can cause issues if you are not supporting TLS 1.2 ciphers on your domain. If you experience issues, review your domain's [Minimum TLS Version](/ssl/edge-certificates/additional-options/minimum-tls/) setting and Cloudflare's [supported ciphers list](/ssl/edge-certificates/additional-options/cipher-suites/supported-cipher-suites/).
 
+### Testing Minimum TLS version with curl
+
+You can use the [--tls-max curl setting](https://curl.se/docs/manpage.html#--tls-max) to force a request to use `TLS 1.0`:
+`curl -svo /dev/null https://<hostname> --insecure --tlsv1.0 --tls-max 1.0`
+
+Please note that local VPN or device security client on your device may prevent unsecure connection using legacy protocol like `TLS 1.0`: you'll need to make sure to disable such network or security client before running the test on your device.
+
 ## Compatibility with certificate encryption
 
 If you [upload a custom certificate](/ssl/edge-certificates/custom-certificates/uploading/), make sure the certificate is compatible with the chosen cipher suites for your zone or hostname.
@@ -53,10 +60,3 @@ To remove these warnings, refer to [Customize cipher suites](/ssl/edge-certifica
 - `ECDHE-ECDSA-AES256-SHA384`
 - `ECDHE-ECDSA-AES128-SHA256`
 - `ECDHE-RSA-AES256-SHA384`
-
-## Testing Minimum TLS version with curl
-
-You can use the [--tls-max curl setting](https://curl.se/docs/manpage.html#--tls-max) to force a request to use `TLS 1.0`:
-`curl -svo /dev/null https://<hostname> --insecure --tlsv1.0 --tls-max 1.0`
-
-Please note that local VPN or device security client on your device may prevent unsecure connection using legacy protocol like `TLS 1.0`: you'll need to make sure to disable such network or security client before running the test on your device.
