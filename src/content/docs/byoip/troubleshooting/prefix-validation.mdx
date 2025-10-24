@@ -26,7 +26,7 @@ import { APIRequest, GlossaryTooltip } from "~/components";
     "on_demand_locked": false,
     "advertised": null,
     "advertised_modified_at": null,
-    "loa_document_id": null,
+    "loa_document_id": "b9ff4afe312246a8b2e7324d98f40b23",
     "asn": 13335,
     "ownership_validation_token": "<OWNERSHIP_VALIDATION_TOKEN>",
     "delegate_loa_creation" : true,
@@ -46,7 +46,7 @@ import { APIRequest, GlossaryTooltip } from "~/components";
 3. After applying the necessary changes, use the Validate Prefix endpoint to re-trigger the validation checks.
 
 ```bash
-curl https://api.cloudflare.com/accounts/{account_id}/addressing/prefixes/prefix_id/validate \
+curl https://api.cloudflare.com/accounts/{account_id}/addressing/prefixes/{prefix_id}/validate \
 --header "X-Auth-Email: <EMAIL>" \
 --header "X-Auth-Key: <API_KEY>"
 ```

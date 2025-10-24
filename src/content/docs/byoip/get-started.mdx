@@ -72,7 +72,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/addressing/prefix
     "on_demand_locked": false,
     "advertised": null,
     "advertised_modified_at": null,
-    "loa_document_id": null,
+    "loa_document_id": "b9ff4afe312246a8b2e7324d98f40b23",
     "asn": 13335,
     "ownership_validation_token": "<OWNERSHIP_VALIDATION_TOKEN>",
     "delegate_loa_creation" : true,
@@ -86,7 +86,7 @@ curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/addressing/prefix
 2. Take note of the `id` assigned to the prefix you added. It will be used in future steps.
 
 :::note[Letter of Agency (LOA)]
-The process described on this page leverages automated <GlossaryTooltip term="letter of agency" link="/byoip/concepts/loa/">LOA</GlossaryTooltip> generation. If you set `delegate_loa_creation` to `false`, you have to manually [upload your LOA](/api/resources/addressing/subresources/loa_documents/methods/create/), make a [PATCH request](/api/resources/addressing/subresources/prefixes/methods/edit/) once the prefix is approved, and contact your account team - which is more prone to error and increases the onboarding time.
+The process described on this page leverages automated <GlossaryTooltip term="letter of agency" link="/byoip/concepts/loa/">LOA</GlossaryTooltip> generation. If you set `delegate_loa_creation` to `false`, you have to manually upload your LOA, make a [PATCH request](/api/resources/addressing/subresources/prefixes/methods/edit/) once the prefix is approved, and contact your account team - which is more prone to error and increases the onboarding time.
 :::
 
 ### Validate prefix ownership
