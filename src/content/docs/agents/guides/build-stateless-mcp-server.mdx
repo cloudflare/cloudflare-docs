@@ -7,9 +7,7 @@ sidebar:
   order: 5
 ---
 
-import { Details, Render, PackageManagers } from "~/components";
-
-## Deploy a Stateless MCP Server
+import { Details, Render, PackageManagers, WranglerConfig } from "~/components";
 
 This guide will show you how to deploy a stateless MCP server on Cloudflare Workers using `experimental_createMcpHandler`. This is the simplest way to get started with MCP on Cloudflare.
 
@@ -39,12 +37,6 @@ Install the required dependencies:
 <PackageManagers
 	type="install"
 	pkg="@modelcontextprotocol/sdk agents zod"
-/>
-
-<PackageManagers
-	type="install"
-	pkg="wrangler"
-	dev
 />
 
 ### Implement your MCP server
@@ -157,12 +149,6 @@ Install the required dependencies:
 <PackageManagers
 	type="install"
 	pkg="@modelcontextprotocol/sdk agents zod @cloudflare/workers-oauth-provider hono"
-/>
-
-<PackageManagers
-	type="install"
-	pkg="wrangler"
-	dev
 />
 
 ### Set up KV namespace
@@ -386,31 +372,6 @@ For authenticated servers, the `OAuthProvider` wrapper:
 2. Validates access tokens for incoming requests
 3. Injects user context into `getMcpAuthContext()`
 4. Routes authenticated requests to your MCP handler
-
-### Architecture comparison
-
-**Stateless MCP Server (Worker):**
-```
-Client → Worker → createMcpHandler → MCP Server → Tools
-```
-
-**Authenticated Stateless MCP Server:**
-```
-Client → OAuth Flow → Token → Worker → OAuthProvider → createMcpHandler → MCP Server → Tools
-                                                                              ↓
-                                                                     getMcpAuthContext()
-```
-
-**Durable Object MCP Server (MCPAgent):**
-```
-Client → Worker → Durable Object (MCPAgent) → MCP Server → Tools
-                        ↓
-                   Persistent State
-```
-
-Stateless servers are ideal when you don't need persistent state between requests. For servers that need to maintain conversation history, state, or long-running sessions, consider using the [Durable Object-based MCPAgent approach](/agents/model-context-protocol/).
-
-Learn more about connecting MCP clients in the [Test a Remote MCP Server](/agents/guides/test-remote-mcp-server/) guide.
 
 ## Next steps
 
