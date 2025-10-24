@@ -23,7 +23,7 @@ The FortiGate configuration was tested on two different FortiGate firewalls:
 
 ## {props.productName} configuration
 
-The first step to setting up {props.productName} is to add {props.productName} IPsec tunnels and Magic static routes to your Cloudflare account via the dashboard or API.
+The first step to setting up {props.productName} is to add IPsec tunnels and Magic static routes to your Cloudflare account via the dashboard or API.
 
 Before proceeding, ensure that you have the anycast IPs associated with your account. Check with your Cloudflare account team if you do not yet have them.
 
@@ -31,14 +31,9 @@ Before proceeding, ensure that you have the anycast IPs associated with your acc
 
 Cloudflare recommends customers configure two Magic IPsec tunnels per firewall/router - one to each of the two anycast IP addresses.
 
-1. Go to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to **{props.productName}** > **Configuration**.
-3. From the **Tunnels** tab, select **Create**.
-4. Select **IPsec tunnel** > **Next**.
-5. When creating your IPsec tunnels:
+1. Follow the <a href={props.addTunnelsUrl}>Add tunnels</a> instructions to create the required IPsec tunnels with the following options:
    - **Health check type**: Change to _Request_.
    - **Replay Protection**: Do not change from the default setting.
-   - Set up fields such as **Name**, **Description**, **Interface Address**, **Customer endpoint**, and **Cloudflare endpoint** with settings that work for you. Refer to <a href={props.addTunnelsUrl}>Add tunnels</a> to learn more.
 
 ### Magic static routes
 
