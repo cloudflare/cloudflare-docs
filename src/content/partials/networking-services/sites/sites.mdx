@@ -143,4 +143,8 @@ If you add geographic coordinates to your site, it will show up in the Network m
 <Render
 	file="analytics/set-thresholds-site-health"
 	product="networking-services"
+	params={{
+		productName: props.productName,
+		magicTunnelHcsURL: props.magicTunnelHcsURL
+	}}
 />

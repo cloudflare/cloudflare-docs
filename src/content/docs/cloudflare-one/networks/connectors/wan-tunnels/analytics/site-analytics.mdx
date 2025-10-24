@@ -26,4 +26,11 @@ import { Render } from "~/components"
 
 ### Set thresholds for site health
 
-<Render file="analytics/set-thresholds-site-health"	product="networking-services" />
+<Render
+	file="analytics/set-thresholds-site-health"
+	product="networking-services"
+	params={{
+		productName: "WAN Tunnels",
+		magicTunnelHcsURL: "/cloudflare-one/networks/connectors/wan-tunnels/configuration/common-settings/configure-magic-tunnel-health-alerts/"
+	}}
+/>
