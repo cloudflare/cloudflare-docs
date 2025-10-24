@@ -270,7 +270,32 @@ Example:
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. In **Routes**, locate the static route you want to modify and select **Delete**.
+{/* Dashboard steps for WAN Tunnels (Cloudflare One dashboard) */}
+{ props.magicWord === "WAN Tunnels" && (
+	<>
+	<Markdown
+		text={`
+			1. In **Routes** > **WAN Routes**, locate the static route you want to modify, select the three dots > **Delete**.
+		`}
+		inline={false}
+	/>
+	</>
+)
+}
+
+{/* Dashboard steps for Magic WAN and Magic Transit (standalone dashboards) */}
+{ props.magicWord !== "WAN Tunnels" && (
+	<>
+	<Markdown
+		text={`
+			1. In **Routes**, locate the static route you want to modify, select the three dots > **Delete**.
+		`}
+		inline={false}
+	/>
+	</>
+)
+}
+
 2. Confirm the action by selecting the checkbox and select **Delete**.
 
 </TabItem> <TabItem label="API">
