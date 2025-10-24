@@ -19,6 +19,8 @@ params:
   - gatewayLogsURL
   - tcpMssClampingURL
   - ikeURL
+  - greIpsecURL
+  - tracerouteURL
 ---
 
 import { Render } from "~/components";
@@ -107,10 +109,10 @@ Source ports are hard-coded to `1024`-`65535` and may not be overridden.
 	product="networking-services"
 	params={{
 		productName: props.magicWANName,
-		greIpsecURL: "/magic-wan/configuration/manually/how-to/configure-tunnel-endpoints/",
-		warpURL: "/cloudflare-one/connections/connect-devices/warp/",
-		cloudflareTunnelURL: "/cloudflare-one/connections/connect-networks/",
-		tracerouteURL: "/magic-wan/configuration/manually/how-to/traceroute/"
+		greIpsecURL: props.greIpsecURL,
+		warpURL: props.warpURL,
+		cloudflareTunnelURL: props.cloudflareTunnelURL,
+		tracerouteURL: props.tracerouteURL
 		}}
 	/>
 
