@@ -24,6 +24,7 @@ Cloudflare Workers provides automatic tracing instrumentation **out of the box**
 - `cloudflare.script_name` - The name of your Worker
 - `cloudflare.script_tags` - Tags associated with your Worker deployment
 - `cloudflare.script_version.id` - The version identifier of your deployed Worker
+- `cloudflare.invocation.sequence.number` - A counter added to every emitted span and log that can be used to distinguish which was emitted first when the timestamps are the same
 - `telemetry.sdk.language` - The programming language used, set to `javascript`
 - `telemetry.sdk.name` - The telemetry SDK name, set to `cloudflare`
 
@@ -78,9 +79,7 @@ Cloudflare Workers provides automatic tracing instrumentation **out of the box**
 - `cloudflare.outcome`
 - `cloudflare.cpu_time`
 - `cloudflare.wall_time`
-- `cloudflare.cold_start_ms`
 - `faas.trigger`
-- `faas.cold_start`
 - `cloudflare.ray_id`
 - `cloudflare.verified_bot_category`
 - `cloudflare.asn`
@@ -448,15 +447,6 @@ Cloudflare Workers provides automatic tracing instrumentation **out of the box**
 ### [Durable Object API](/durable-objects/)
 
 #### `durable_object_subrequest`
-
-RPC calls to your Durable Object (e.g. `env.MY_DO.fetch()`, `env.MY_DO.myMethod()`)
-
-- `cloudflare.binding.type`
-- `cloudflare.binding.name`
-- `cloudflare.durable_object.id`
-- `cloudflare.durable_object.name`
-- `cloudflare.durable_object.class`
-- `cloudflare.durable_object.method`
 
 ---
 
