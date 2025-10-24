@@ -367,6 +367,8 @@ By default, each BGP peering session will use the same Cloudflare-side ASN to re
 	<Markdown
 		text={`
 			1. Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a>, and go to **Networks**.
+			2. Go to **Routes** > **WAN configuration**.
+			3. In **Account-level virtual network overlay**, select **Edit ASN** and enter your ASN.
 		`}
 		inline={false}
 	/>
@@ -378,16 +380,23 @@ By default, each BGP peering session will use the same Cloudflare-side ASN to re
 { props.magicWord !== "WAN Tunnels" && (
 	<>
 		<Markdown
-			text={`1. In the Cloudflare dashboard, go to ${props.productName}'s **Configuration** page.`}
+			text={`
+			1. In the Cloudflare dashboard, go to ${props.productName}'s **Configuration** page.
+			`}
 			inline={false}
 		/>
 		<DashButton url={props.dashButtonPath} />
+		<Markdown
+			text={`
+			2. Go to **BGP configuration**.
+			3. In **CF Account ASN**, enter Cloudflare's ASN.
+			`}
+			inline={false}
+		/>
 	</>
 )
 }
 
-2. Go to **BGP configuration**.
-3. In **CF Account ASN**, enter Cloudflare's ASN.
 4. Select **Update**.
 
 { props.magicWord === "Magic Transit" && (
