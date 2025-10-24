@@ -1,0 +1,86 @@
+---
+import { getEntry } from "astro:content";
+import { z } from "astro:schema";
+import { marked } from "marked";
+import AnchorHeading from "./AnchorHeading.astro";
+import Details from "./Details.astro";
+
+type Props = z.infer<typeof props>;
+
+const props = z
+	.object({
+		product: z.string().optional(),
+		notificationFilter: z.string().optional(),
+	})
+	.strict();
+
+const { product, notificationFilter } = props.parse(Astro.props);
+
+const entry = await getEntry("notifications", "index");
+
+if (!entry) {
+	throw new Error(`[AvailableNotifications] Unable to fetch notifications`);
+}
+
+let notifications = entry.data.entries;
+
+if (product) {
+	notifications = notifications.filter(
+		(x) => x.associatedProducts.toLowerCase() === product.toLowerCase(),
+	);
+}
+
+if (notificationFilter) {
+	notifications = notifications.filter(
+		(x) => x.name.toLowerCase() === notificationFilter.toLowerCase(),
+	);
+}
+
+const grouped = Object.groupBy(
+	notifications,
+	(entry) => entry.associatedProducts,
+);
+
+const showProductHeadings = !product && !notificationFilter;
+---
+
+{
+	Object.entries(grouped)
+		.sort()
+		.map(([product, entries]) => (
+			<>
+				{showProductHeadings && <AnchorHeading depth={2} title={product} />}
+				{(entries ?? []).map((notification) => (
+					<Details header={notification.name}>
+						<strong>Who is it for?</strong>
+						<p set:html={marked.parse(notification.audience)} />
+
+						<strong>Other options / filters</strong>
+						<p set:html={marked.parse(notification.otherFilters)} />
+
+						<strong>Included with</strong>
+						<p set:html={marked.parse(notification.availability)} />
+
+						<strong>What should you do if you receive one?</strong>
+						<p set:html={marked.parse(notification.nextSteps)} />
+
+						{notification.additional_information && (
+							<>
+								<strong>Additional information</strong>
+								<p
+									set:html={marked.parse(notification.additional_information)}
+								/>
+							</>
+						)}
+
+						{notification.limitations && (
+							<>
+								<strong>Limitations</strong>
+								<p set:html={marked.parse(notification.limitations)} />
+							</>
+						)}
+					</Details>
+				))}
+			</>
+		))
+}

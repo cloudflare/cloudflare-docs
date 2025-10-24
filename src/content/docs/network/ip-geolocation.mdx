@@ -1,0 +1,51 @@
+---
+pcx_content_type: concept
+source: https://support.cloudflare.com/hc/en-us/articles/200168236-Configuring-IP-geolocation
+title: IP geolocation
+tags:
+  - Geolocation
+---
+
+import { FeatureTable, TabItem, Tabs } from "~/components";
+
+IP geolocation adds the [`CF-IPCountry` header](/fundamentals/reference/http-headers/#cf-ipcountry) to all requests to your origin server.
+
+Cloudflare automatically updates its IP geolocation database multiple times per week.
+
+## Availability
+
+<FeatureTable id="network.ip_geolocation" />
+
+## Add IP geolocation information
+
+The recommended procedure to enable IP geolocation information is to [enable the **Add visitor location headers** Managed Transform](/rules/transform/managed-transforms/reference/#add-visitor-location-headers). This Managed Transform adds HTTP request headers with location information for the visitor's IP address, such as city, country, continent, longitude, and latitude.
+
+If you only want the request header for the visitor's country, you can enable **IP Geolocation**.
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+To enable **IP Geolocation** in the dashboard:
+
+1. Log in to your [Cloudflare account](https://dash.cloudflare.com) and go to a specific domain.
+2. Go to **Network**.
+3. For **IP Geolocation**, switch the toggle to **On**.
+
+</TabItem> <TabItem label="API">
+
+To enable **IP Geolocation** with the API, send a [`PATCH`](/api/resources/zones/subresources/settings/methods/edit/) request with `ip_geolocation` as the setting name in the URI path, and the `value` parameter set to `"on"`.
+
+</TabItem> </Tabs>
+
+:::note
+
+In order to use this data, you will need to then retrieve it from the [`CF-IPCountry` header](/fundamentals/reference/http-headers/#cf-ipcountry).
+
+:::
+
+---
+
+## Report an incorrect IP location
+
+If you find an IP address with a location that you believe is incorrect, fill in the [data correction form](https://www.cloudflare.com/lp/ip-corrections/) with the relevant IP address range(s) along with the correct information as applicable (country, state/province, city name, and ZIP code).
+
+If the data is confirmed, Cloudflare will make the necessary changes, which should be reflected within 48 hours.

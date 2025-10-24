@@ -1,4 +1,0 @@
-{{- $changelogData := index site.Data "changelogs" -}} 
-{{- $wrangler := partial "wrangler-changelog.html" -}}
-{{- $changelogData = merge $changelogData $wrangler -}}
-{{- return $changelogData -}}

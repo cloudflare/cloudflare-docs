@@ -1,0 +1,22 @@
+releaseNotes: >-
+  This release contains bug fixes from the previous beta (2022.8.692.1). We also
+
+  wanted to call out that we've made server side changes to significantly reduce
+
+  captcha issues for users with IPv6 enabled (no client related change but
+  wanted
+
+  to call out the work).
+   
+  **Notable updates**
+   
+  - Fixed failure to reconnect to WARP due to DNS stub server AddrInUse failures
+   
+  **Known issues**
+
+  - No known issues
+version: 2022.8.870.1
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2022.8.870.1
+packageSize: 45718456
+releaseDate: 2022-09-12T20:22:52.914Z
+platformName: macOS

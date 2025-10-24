@@ -1,0 +1,66 @@
+---
+pcx_content_type: concept
+title: Record attributes
+sidebar:
+  order: 4
+head:
+  - tag: title
+    content: DNS record comments and tags
+
+---
+
+import { FeatureTable } from "~/components"
+
+Use DNS record comments and tags to categorize and clarify the purpose of DNS records within Cloudflare.
+
+Comments provide a unique descriptions for specific records, whereas tags group similar records into categories.
+
+These attributes are particularly useful when:
+
+* Multiple teams are managing DNS records within the same zone.
+* Your zone contains a large number of DNS records.
+* You want to filter your DNS records based on matching attributes (for example, when they are managed by the same team or used for the same application).
+
+:::note
+
+
+The information in record attributes will not impact DNS record resolution or propagation timing and is only meant for your private reference. This information is only visible to [members](/fundamentals/manage-members/manage/) of your Cloudflare account and is not visible publicly.
+
+
+:::
+
+***
+
+## Availability
+
+Comments and tags are only supported for [full](/dns/zone-setups/full-setup/) and [partial zones](/dns/zone-setups/partial-setup/).
+
+### Record comments
+
+<FeatureTable id="dns.record_comments" />
+
+### Record tags
+
+<FeatureTable id="dns.record_tags" />
+
+***
+
+## Add or edit record attributes
+
+Create or edit record attributes just like any other aspect of DNS records, whether through the [dashboard](/dns/manage-dns-records/how-to/create-dns-records/) or [API](/api/resources/dns/subresources/records/methods/create/).
+
+You can also add or edit attributes by [exporting and re-importing](/dns/manage-dns-records/how-to/import-and-export/#dns-record-attributes) your records, or using the [Batch record changes API](/dns/manage-dns-records/how-to/batch-record-changes/#use-the-api).
+
+When exporting and importing, special tags starting by `cf-` allow you to control specific Cloudflare configurations. On export, these tags are automatically added to reflect the current configuration for each record on your zone. Refer to [reserved cf- tags](/dns/manage-dns-records/how-to/import-and-export/#reserved-cf--tags) for details.
+
+***
+
+## Reference
+
+### Comments
+
+Comments are treated as [graphic Unicode characters](https://en.wikipedia.org/wiki/Graphic_character), meaning that they are case-sensitive and do not have any character limitations. However, comments do not support newline (`\n`) or carriage return (`\r`) characters.
+
+### Tags
+
+Tags are treated as an array of `name:value` pairs, meaning that tag names are not case-sensitive and can only contain letters, numbers, `-`, and `_`. For tag values, the same character restrictions apply as for comments.

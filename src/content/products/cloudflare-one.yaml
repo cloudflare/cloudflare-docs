@@ -1,0 +1,14 @@
+name: Cloudflare Zero Trust
+
+product:
+  title: Cloudflare Zero Trust
+  url: /cloudflare-one/
+  group: Cloudflare One
+  wrap: true
+  preview_tryout: true
+
+meta:
+  title: Cloudflare Zero Trust docs
+  description: Replace legacy security perimeters with Cloudflare's network to protect your organization
+  author: "@cloudflare"
+  

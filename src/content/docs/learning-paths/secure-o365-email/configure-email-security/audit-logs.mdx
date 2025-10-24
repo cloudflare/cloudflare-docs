@@ -1,0 +1,21 @@
+---
+title: Enable audit logs
+pcx_content_type: how-to
+sidebar:
+  order: 6
+---
+
+With Email Security, you can enable logs to review actions performed on your account.
+
+To enable audit logs:
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/).
+2. Select **Analytics & Logs** > **Logpush**.
+3. Select **Audit logs**.
+4. Under **Configure logpush job**:
+  - **Job name**: Enter the job name.
+  - **If logs match**: Select Filtered logs:
+      - **Field**: Choose `ResourceType`.
+      - **Operator**: Choose `starts with`.
+      - **Value**: Enter `email_security`.
+5. Select **Submit**.

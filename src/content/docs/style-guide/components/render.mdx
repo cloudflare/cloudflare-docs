@@ -1,0 +1,210 @@
+---
+title: Render
+styleGuide:
+  component: Render
+---
+
+import { Code, Details, Type, MetaInfo, PartialsUsage } from "~/components";
+
+The `Render` component allows us to include a "partial", a reusable Markdown snippet, onto a page.
+
+It also accepts parameters that can be used as variables within the partial, so that even content which needs slight differences between usages can be turned into a partial.
+
+## Component
+
+```mdx live
+import { Render } from "~/components";
+
+<Render
+	file="simple-props"
+	product="style-guide"
+	params={{
+		name: "world",
+	}}
+/>
+```
+
+### Inputs
+
+- `file` <Type text="string" />
+
+  This should be the name of the partial, without the containing directory or file extension. For example, `/partials/style-guide/hello.mdx` would be `file="hello"`.
+
+- `product` <Type text="string" />
+
+  This should be the folder within `src/partials`.
+
+- `params` <Type text="object" /> <MetaInfo text="optional" />
+
+  If you wish to substitute values inside your partial, you can use pass params which can be referenced in your partial. Refer to [properties](#properties).
+
+## Properties
+
+### Defining expected properties in frontmatter
+
+Anything defined in the `params` property of the `Render` component is available inside the partial, using [JavaScript expressions](https://mdxjs.com/docs/using-mdx/).
+
+To protect against required properties being missed, any partial that relies on `params` should also define `params` in the partial's frontmatter. This should be an array of strings, matching the property names you expect. If a property is optional, such as for [conditional content](#properties-to-render-content-conditionally), add a `?` to the end of the name.
+
+```mdx
+---
+params:
+  - product
+  - deprecated?
+---
+```
+
+:::caution
+If you use the Markdown component to format your optional parameter, you need to craft it in a special way so you don't get an `Undefined` error in pages without the optional parameter.
+
+Say, for example, that your optional parameter is `instructions`. You would craft it like this:
+
+`{props.instructions && <Markdown text={props.instructions} />}`
+
+instead of `<Markdown text={props.instructions} />`
+
+:::
+
+For each of the below examples, you can open the dropdown to view the partial's content.
+
+### Properties as a plain string
+
+The below example would render `Hello, world!`.
+
+import simpleRaw from "~/content/partials/style-guide/simple-props.mdx?raw";
+
+<Details header="simple-props.mdx">
+	<Code code={simpleRaw} lang="mdx" />
+</Details>
+
+```mdx live
+import { Render } from "~/components";
+
+<Render file="simple-props" product="style-guide" params={{ name: "world" }} />
+```
+
+### Properties in Markdown syntax
+
+When using JavaScript expressions, you are now "inside JSX" and cannot use traditional Markdown syntax. Similarly, you cannot use a JavaScript expression inside Markdown syntax.
+
+Ideally, you should not use Markdown syntax, such as `**strong**` or `[text](link)`, with properties. If using JSX is not feasible, there is a [`Markdown`](/style-guide/components/markdown/) component that will take a `text` property.
+
+The [MDX documentation](https://mdxjs.com/table-of-components/#components) includes a mapping of common Markdown syntax to their equivalent JSX elements.
+
+#### Strong
+
+import strongRaw from "~/content/partials/style-guide/strong-in-props.mdx?raw";
+
+<Details header="strong-in-props.mdx">
+	<Code code={strongRaw} lang="mdx" />
+</Details>
+
+```mdx live
+import { Render } from "~/components";
+
+<Render
+	file="strong-in-props"
+	product="style-guide"
+	params={{ do: "Text", dont: "**Text**" }}
+/>
+```
+
+#### Links
+
+import linkRaw from "~/content/partials/style-guide/link-in-props.mdx?raw";
+
+<Details header="link-in-props.mdx">
+	<Code code={linkRaw} lang="mdx" />
+</Details>
+
+```mdx live
+import { Render } from "~/components";
+
+<Render
+	file="link-in-props"
+	product="style-guide"
+	params={{
+		link: "/style-guide/components/render/#links",
+	}}
+/>
+```
+
+#### Images
+
+import imageRaw from "~/content/partials/style-guide/image-in-props.mdx?raw";
+
+<Details header="image-in-props.mdx">
+	<Code code={imageRaw} lang="mdx" />
+</Details>
+
+```mdx live
+import { Render } from "~/components";
+
+<Render
+	file="image-in-props"
+	product="style-guide"
+	params={{ image: "/logo.svg" }}
+/>
+```
+
+#### Code blocks
+
+import codeRaw from "~/content/partials/style-guide/code-in-props.mdx?raw";
+
+<Details header="code-in-props.mdx">
+	<Code code={codeRaw} lang="mdx" />
+</Details>
+
+```mdx live
+import { Render } from "~/components";
+
+<Render
+	file="code-in-props"
+	product="style-guide"
+	params={{ code: "export const foo = 'bar';" }}
+/>
+```
+
+### Properties to render content conditionally
+
+Anything that you can represent in a JavaScript expression can be used in your conditional logic.
+
+This may be the [and (`&&`) operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Logical_AND) or [ternary (`? ... : ... `) operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_operator), the below example uses both.
+
+import optionalRaw from "~/content/partials/style-guide/optional-props.mdx?raw";
+
+<Details header="optional-props.mdx">
+	<Code code={optionalRaw} lang="mdx" />
+</Details>
+
+```mdx live
+import { Render } from "~/components";
+
+<Render
+	file="optional-props"
+	product="style-guide"
+	params={{ product: "Thing", deprecated: true }}
+/>
+
+<hr />
+
+<Render
+	file="optional-props"
+	product="style-guide"
+	params={{ product: "Thing Two" }}
+/>
+
+<hr />
+
+<Render
+	file="optional-props"
+	product="style-guide"
+	params={{ product: "Thing Three" }}
+/>
+```
+
+## Partials
+
+<div class="md-ignore">
+	<PartialsUsage />
+</div>

@@ -1,0 +1,99 @@
+---
+pcx_content_type: concept
+title: Single Page Application (SPA)
+description: How to configure and use a Single Page Application (SPA) with Workers.
+sidebar:
+  order: 2
+---
+
+import { WranglerConfig, TypeScriptExample, Render } from "~/components";
+
+Single Page Applications (SPAs) are web applications which are client-side rendered (CSR). They are often built with a framework such as [React](/workers/framework-guides/web-apps/react/), [Vue](/workers/framework-guides/web-apps/vue/) or [Svelte](/workers/framework-guides/web-apps/svelte/). The build process of these frameworks will produce a single `/index.html` file and accompanying client-side resources (e.g. JavaScript bundles, CSS stylesheets, images, fonts, etc.). Typically, data is fetched by the client from an API with client-side requests.
+
+When you configure `single-page-application` mode, Cloudflare provides default routing behavior that automatically serves your `/index.html` file for navigation requests (those with `Sec-Fetch-Mode: navigate` headers) which don't match any other asset. For more control over which paths invoke your Worker script, you can use [advanced routing control](#advanced-routing-control).
+
+## Configuration
+
+In order to deploy a Single Page Application to Workers, you must configure the `assets.directory` and `assets.not_found_handling` options in your [Wrangler configuration file](/workers/wrangler/configuration/#assets):
+
+<WranglerConfig>
+
+```json
+{
+	"name": "my-worker",
+	"compatibility_date": "$today",
+	"assets": {
+		"directory": "./dist/",
+		"not_found_handling": "single-page-application"
+	}
+}
+```
+
+</WranglerConfig>
+
+Configuring `assets.not_found_handling` to `single-page-application` overrides the default serving behavior of Workers for static assets. When an incoming request does not match a file in the `assets.directory`, Workers will serve the contents of the `/index.html` file with a `200 OK` status.
+
+<Render file="navigation_requests" product="workers" />
+
+## Advanced routing control
+
+For more explicit control over SPA routing behavior, you can use `run_worker_first` with an array of route patterns. This approach disables the automatic `Sec-Fetch-Mode: navigate` detection and gives you explicit control over which requests should be handled by your Worker script vs served as static assets.
+
+:::note
+Advanced routing control is supported in:
+
+- [Wrangler](/workers/wrangler/install-and-update/) v4.20.0 and above
+- [Cloudflare Vite plugin](/workers/vite-plugin/get-started/) v1.7.0 and above
+  :::
+
+<WranglerConfig>
+
+```json
+{
+	"name": "my-worker",
+	"compatibility_date": "$today",
+	"main": "./src/index.ts",
+	"assets": {
+		"directory": "./dist/",
+		"not_found_handling": "single-page-application",
+		"binding": "ASSETS",
+		"run_worker_first": ["/api/*", "!/api/docs/*"]
+	}
+}
+```
+
+</WranglerConfig>
+
+This configuration provides explicit routing control without relying on browser navigation headers, making it ideal for complex SPAs that need fine-grained routing behavior. Your Worker script can then handle the matched routes and (optionally using [the assets binding](/workers/static-assets/binding/#binding)) and serve dynamic content.
+
+**For example:**
+
+<TypeScriptExample filename="./src/index.ts">
+
+```ts
+export default {
+	async fetch(request, env): Promise<Response> {
+		const url = new URL(request.url);
+
+		if (url.pathname === "/api/name") {
+			return new Response(JSON.stringify({ name: "Cloudflare" }), {
+				headers: { "Content-Type": "application/json" },
+			});
+		}
+
+		return new Response(null, { status: 404 });
+	},
+} satisfies ExportedHandler;
+```
+
+</TypeScriptExample>
+
+## Local Development
+
+If you are using a Vite-powered SPA framework, you might be interested in using our [Vite plugin](/workers/vite-plugin/) which offers a Vite-native developer experience.
+
+<Render
+	file="static_asset_routing_reference"
+	product="workers"
+	params={{ not_found_handling: "single-page-application" }}
+/>

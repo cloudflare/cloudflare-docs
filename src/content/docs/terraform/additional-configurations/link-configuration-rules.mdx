@@ -1,0 +1,7 @@
+---
+pcx_content_type: navigation
+title: Configuration Rules
+external_link: /rules/configuration-rules/examples/define-single-configuration-terraform/
+sidebar:
+  order: 9
+---

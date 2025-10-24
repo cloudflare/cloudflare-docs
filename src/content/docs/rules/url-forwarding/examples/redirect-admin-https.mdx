@@ -1,0 +1,39 @@
+---
+pcx_content_type: example
+summary: Create a redirect rule to redirect requests for the administration area
+  of `store.example.com` to HTTPS, keeping the original path and query string.
+products: [redirect-rules]
+title: Redirect admin area requests to HTTPS
+description: Create a redirect rule to redirect requests for the administration
+  area of `store.example.com` to HTTPS, keeping the original path and query
+  string.
+---
+
+import { Example } from "~/components";
+
+This example single redirect for zone `example.com` will redirect requests for the administration area of a specific subdomain (`store.example.com`) to HTTPS, keeping the original path and query string.
+
+<Example>
+
+**When incoming requests match**
+
+- **Wildcard pattern**
+  - **Request URL**: `http://store.example.com/admin*`
+
+**Then**
+
+- **Target URL**: `https://store.example.com/admin${1}`
+- **Status code:** _301_
+- **Preserve query string:** Enabled
+
+</Example>
+
+For example, the redirect rule would perform the following redirects:
+
+| Request URL                                       | Target URL                                         | Status code |
+| ------------------------------------------------- | -------------------------------------------------- | ----------- |
+| `http://store.example.com/admin/products/`        | `https://store.example.com/admin/products/`        | `301`       |
+| `https://store.example.com/admin/products/`       | (unchanged)                                        | n/a         |
+| `http://store.example.com/admin/?logged_out=true` | `https://store.example.com/admin/?logged_out=true` | `301`       |
+| `http://store.example.com/?all_items=true`        | (unchanged)                                        | n/a         |
+| `http://example.com/admin/`                       | (unchanged)                                        | n/a         |

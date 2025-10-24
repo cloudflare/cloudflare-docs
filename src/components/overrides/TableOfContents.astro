@@ -1,0 +1,65 @@
+---
+import Default from "@astrojs/starlight/components/TableOfContents.astro";
+
+import { Icon } from "@astrojs/starlight/components";
+import FeedbackPrompt from "../FeedbackPrompt.tsx";
+
+const tags = Astro.locals.starlightRoute.entry.data.tags;
+const showFeedback = Astro.locals.starlightRoute.entry.data.feedback;
+---
+
+<Default />
+{
+	tags && (
+		<>
+			<br />
+			<div>
+				<h2>Tags</h2>
+				<div class="flex flex-wrap gap-2">
+					{tags.map((tag) => (
+						<a
+							href={`/search/?tags=${tag}`}
+							class="overflow-hidden rounded-sm border border-(--sl-color-hairline) px-3 text-ellipsis whitespace-nowrap text-black"
+							data-tag-serp-link={true}
+						>
+							{tag}
+						</a>
+					))}
+				</div>
+			</div>
+		</>
+	)
+}
+{
+	showFeedback && (
+		<>
+			<br />
+			<FeedbackPrompt client:idle />
+		</>
+	)
+}
+{
+	!Astro.url.pathname.startsWith("/support/") && (
+		<>
+			<br />
+			<div class="flex gap-2">
+				{Astro.locals.starlightRoute.editUrl && (
+					<a
+						href={Astro.locals.starlightRoute.editUrl}
+						class="inline-flex h-8 items-center justify-center gap-2 rounded-sm border border-(--sl-color-hairline) px-3 text-black"
+					>
+						<Icon name="pencil" />
+						Edit
+					</a>
+				)}
+				<a
+					href="https://github.com/cloudflare/cloudflare-docs/issues/new/choose"
+					class="inline-flex h-8 items-center justify-center gap-2 rounded-sm border border-(--sl-color-hairline) px-3 text-black"
+				>
+					<Icon name="github" />
+					Issue
+				</a>
+			</div>
+		</>
+	)
+}

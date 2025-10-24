@@ -1,0 +1,62 @@
+releaseNotes: >-
+  This release contains new features, reliability improvements and bug fixes
+  from both the previous beta and the previous GA build.
+   
+  **Notable updates**
+
+  - Added support for "SWG without DNS Filtering" mode. All DNS functionality
+  from the WARP client is disabled while in this service mode
+
+  - Added support for ProductVersionExtra to be used in OS Version device
+  posture checks
+
+  - Improved performance of domain-based split tunneling when an IP address is
+  already split tunneled (seen frequently with Zoom domains and IPs being used)
+
+  - Improved performance of the client when in the "Proxy Only" service mode
+
+  - Modified `warp-cli settings` to show if the applied settings came from local
+  (mdm) or network (warp settings profile) policy to make debugging profile
+  issues easier
+
+  - Fixed an issue that could result in increased latency when resolving queries
+
+  - Fixed an issue where inputting a license key of excessive length in the
+  consumer login could result in high CPU usage
+
+  - Optimized the performance of DNS queries to prevent minor memory leaks
+
+  - Fixed an issue when service token information was removed from .plist the
+  client would not prompt for user authentication as expected
+
+  - Fixed 3rd party VPN Compatibility by adding a default /32 subnet to
+  interfaces that don't have them by default (this was specifically to fix
+  compat with NordLayer but may help others)
+
+  - Fixed an issue where re-authentication button could show up in consumer
+  1.1.1.1 mode even though it is just a Zero Trust feature
+
+  - Fixed an issue that could cause many requests for authentication to open in
+  the browser
+
+  - Fixed an issue that could cause registration errors when auth ID or other
+  parameters are removed from a local MDM/.plist file
+
+  - Fixed an issue where the client would attempt to connect even when the "AUTO
+  CONNECT" setting was Disabled in WARP Settings or not specified either in an
+  MDM file
+
+  - Fixed an issue where the client could open multiple browser tabs to
+  "cloudflareportal.com/test" during authentication scenarios
+
+  - Fixed an issue where the GUI application would auto-populate upon return
+  from a standby power state
+   
+  **Known issues**
+
+  - No known issues
+version: 2023.7.8.0
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2023.7.8.0
+packageSize: 63442069
+releaseDate: 2023-07-07T19:12:43.737Z
+platformName: macOS

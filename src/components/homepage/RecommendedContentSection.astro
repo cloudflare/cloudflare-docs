@@ -1,0 +1,36 @@
+---
+import { z } from "astro:schema";
+import { marked } from "marked";
+import { CardGrid, Card, LinkCard } from "@astrojs/starlight/components";
+
+type Props = z.infer<typeof props>;
+
+const props = z.object({
+	title: z.string(),
+	cards: z
+		.object({
+			title: z.string(),
+			text: z.string(),
+			cta: z.object({
+				title: z.string(),
+				href: z.string(),
+			}),
+		})
+		.array(),
+});
+
+const { title, cards } = props.parse(Astro.props);
+---
+
+<h2>{title}</h2>
+<CardGrid>
+	{
+		cards.map((card) => (
+			<Card title={card.title}>
+				<span set:html={marked.parse(card.text)} />
+				<br />
+				<LinkCard title={card.cta.title} href={card.cta.href} />
+			</Card>
+		))
+	}
+</CardGrid>

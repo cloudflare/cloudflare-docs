@@ -1,0 +1,23 @@
+---
+title: Confirm DNS records
+pcx_content_type: how-to
+sidebar:
+  order: 6
+head:
+  - tag: title
+    content: Confirm DNS records
+---
+
+import { DashButton } from "~/components";
+
+Before you change your nameservers, confirm your DNS records are displaying correctly.
+
+1. In the Cloudflare dashboard, go to the DNS **Records** page.
+
+   <DashButton url="/?to=/:account/:zone/dns/records" />
+
+2. To add a record, select **Add record**.
+3. To edit an existing record, select **Edit** for the appropriate record.
+4. After making your changes, select **Save**.
+
+After you confirm your DNS records, [change your nameservers](/automatic-platform-optimization/get-started/change-nameservers/).

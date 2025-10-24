@@ -1,0 +1,174 @@
+---
+pcx_content_type: navigation
+title: Static Assets
+sidebar:
+  order: 11
+head: []
+description: Create full-stack applications deployed to Cloudflare Workers.
+---
+
+import {
+	Aside,
+	Badge,
+	Card,
+	CardGrid,
+	Details,
+	Description,
+	InlineBadge,
+	Icon,
+	Render,
+	TabItem,
+	Tabs,
+	Feature,
+	LinkButton,
+	LinkCard,
+	Stream,
+	Flex,
+	WranglerConfig,
+	Steps,
+	PackageManagers,
+} from "~/components";
+
+You can upload static assets (HTML, CSS, images and other files) as part of your Worker, and Cloudflare will handle caching and serving them to web browsers.
+
+**Start from CLI** - Scaffold a React SPA with an API Worker, and use the [Cloudflare Vite plugin](/workers/vite-plugin/).
+
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args="my-react-app --framework=react"
+/>
+---
+
+**Or just deploy to Cloudflare**
+
+[![Deploy to Workers](https://deploy.workers.cloudflare.com/button)](https://dash.cloudflare.com/?to=/:account/workers-and-pages/create/deploy-to-workers&repository=https://github.com/cloudflare/templates/tree/main/vite-react-template)
+
+Learn more about supported frameworks on Workers.
+
+<LinkCard
+	title="Supported frameworks"
+	href="/workers/framework-guides/"
+	description="Start building on Workers with our framework guides."
+/>
+
+### How it works
+
+When you deploy your project, Cloudflare deploys both your Worker code and your static assets in a single operation. This deployment operates as a tightly integrated "unit" running across Cloudflare's network, combining static file hosting, custom logic, and global caching.
+
+The **assets directory** specified in your [Wrangler configuration file](/workers/wrangler/configuration/#assets) is central to this design. During deployment, Wrangler automatically uploads the files from this directory to Cloudflare's infrastructure. Once deployed, requests for these assets are routed efficiently to locations closest to your users.
+
+<WranglerConfig>
+
+    ```toml {3-4}
+    	name = "my-spa"
+    	main = "src/index.js"
+    	compatibility_date = "2025-01-01"
+    	[assets]
+    	directory = "./dist"
+    	binding = "ASSETS"
+    	```
+
+</WranglerConfig>
+
+:::note
+If you are using the [Cloudflare Vite plugin](/workers/vite-plugin/), you do not need to specify `assets.directory`. For more information about using static assets with the Vite plugin, refer to the [plugin documentation](/workers/vite-plugin/reference/static-assets/).
+:::
+
+By adding an [**assets binding**](/workers/static-assets/binding/#binding), you can directly fetch and serve assets within your Worker code.
+
+```js {13}
+// index.js
+
+export default {
+	async fetch(request, env) {
+		const url = new URL(request.url);
+
+		if (url.pathname.startsWith("/api/")) {
+			return new Response(JSON.stringify({ name: "Cloudflare" }), {
+				headers: { "Content-Type": "application/json" },
+			});
+		}
+
+		return env.ASSETS.fetch(request);
+	},
+};
+```
+
+### Routing behavior
+
+By default, if a requested URL matches a file in the static assets directory, that file will be served — without invoking Worker code. If no matching asset is found and a Worker script is present, the request will be processed by the Worker. The Worker can return a response or choose to defer again to static assets by using the [assets binding](/workers/static-assets/binding/) (e.g. `env.ASSETS.fetch(request)`). If no Worker script is present, a `404 Not Found` response is returned.
+
+The default behavior for requests which don't match a static asset can be changed by setting the [`not_found_handling` option under `assets`](/workers/wrangler/configuration/#assets) in your Wrangler configuration file:
+
+- [`not_found_handling = "single-page-application"`](/workers/static-assets/routing/single-page-application/): Sets your application to return a `200 OK` response with `index.html` for requests which don't match a static asset. Use this if you have a Single Page Application. We recommend pairing this with selective routing using `run_worker_first` for [advanced routing control](/workers/static-assets/routing/single-page-application/#advanced-routing-control).
+- [`not_found_handling = "404-page"`](/workers/static-assets/routing/static-site-generation/#custom-404-pages): Sets your application to return a `404 Not Found` response with the nearest `404.html` for requests which don't match a static asset.
+
+<WranglerConfig>
+
+    ```toml
+    	[assets]
+    	directory = "./dist"
+    	not_found_handling = "single-page-application"
+
+    	```
+
+</WranglerConfig>
+
+If you want the Worker code to execute before serving assets, you can use the `run_worker_first` option. This can be set to `true` to invoke the Worker script for all requests, or configured as an array of route patterns for selective Worker-script-first routing:
+
+**Invoking your Worker script on specific paths:**
+
+<WranglerConfig>
+
+```json
+{
+	"name": "my-spa-worker",
+	"compatibility_date": "$today",
+	"main": "./src/index.ts",
+	"assets": {
+		"directory": "./dist/",
+		"not_found_handling": "single-page-application",
+		"binding": "ASSETS",
+		"run_worker_first": ["/api/*", "!/api/docs/*"]
+	}
+}
+```
+
+</WranglerConfig>
+
+<LinkCard
+	title="Routing options"
+	href="/workers/static-assets/routing/"
+	description="Learn more about how you can customize routing behavior."
+/>
+
+### Caching behavior
+
+Cloudflare provides automatic caching for static assets across its network, ensuring fast delivery to users worldwide. When a static asset is requested, it is automatically cached for future requests.
+
+- **First Request:** When an asset is requested for the first time, it is fetched from storage and cached at the nearest Cloudflare location.
+
+- **Subsequent Requests:** If a request for the same asset reaches a data center that does not have it cached, Cloudflare's [tiered caching system](/cache/how-to/tiered-cache/) allows it to be retrieved from a nearby cache rather than going back to storage. This improves cache hit ratio, reduces latency, and reduces unnecessary origin fetches.
+
+## Try it out
+
+<LinkCard
+	title="Vite + React SPA tutorial"
+	href="/workers/vite-plugin/tutorial/"
+	description="Learn how to build and deploy a full-stack Single Page Application with static assets and API routes."
+/>
+
+## Learn more
+
+<LinkCard
+	title="Supported frameworks"
+	href="/workers/framework-guides/"
+	description="Start building on Workers with our framework guides."
+/>
+
+<LinkCard
+	title="Billing and limitations"
+	href="/workers/static-assets/billing-and-limitations/"
+	description="Learn more about how requests are billed, current limitations, and troubleshooting."
+/>

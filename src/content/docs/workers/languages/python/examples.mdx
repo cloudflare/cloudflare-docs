@@ -1,0 +1,151 @@
+---
+pcx_content_type: example
+title: Examples
+head:
+  - tag: title
+    content: Python Worker Examples
+
+---
+
+Cloudflare has a wide range of Python examples in the [Workers Example gallery](/workers/examples/?languages=Python).
+
+In addition to those examples, consider the following ones that illustrate Python-specific behavior.
+
+## Modules in your Worker
+
+Let's say your Worker has the following structure:
+
+```
+├── src
+│   ├── module.py
+│   └── main.py
+├── uv.lock
+├── pyproject.toml
+└── wrangler.toml
+```
+
+In order to import `module.py` in `main.py`, you would use the following import statement:
+
+```python
+import module
+```
+
+In this case, the main module is set to `src/main.py` in the wrangler.toml file like so:
+
+```toml
+main = "src/main.py"
+```
+
+This means that the `src` directory does not need to be specified in the import statement.
+
+## Parse an incoming request URL
+
+```python
+from workers import WorkerEntrypoint, Response
+from urllib.parse import urlparse, parse_qs
+
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        # Parse the incoming request URL
+        url = urlparse(request.url)
+        # Parse the query parameters into a Python dictionary
+        params = parse_qs(url.query)
+
+        if "name" in params:
+            greeting = "Hello there, {name}".format(name=params["name"][0])
+            return Response(greeting)
+
+
+        if url.path == "/favicon.ico":
+          return Response("")
+
+        return Response("Hello world!")
+```
+
+## Parse JSON from the incoming request
+
+```python
+from workers import WorkerEntrypoint, Response
+
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        name = (await request.json()).name
+        return Response("Hello, {name}".format(name=name))
+```
+
+## Emit logs from your Python Worker
+
+```python
+# To use the JavaScript console APIs
+from js import console
+from workers import WorkerEntrypoint, Response
+# To use the native Python logging
+import logging
+
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        # Use the console APIs from JavaScript
+        # https://developer.mozilla.org/en-US/docs/Web/API/console
+        console.log("console.log from Python!")
+
+        # Alternatively, use the native Python logger
+        logger = logging.getLogger(__name__)
+
+        # The default level is warning. We can change that to info.
+        logging.basicConfig(level=logging.INFO)
+
+        logger.error("error from Python!")
+        logger.info("info log from Python!")
+
+        # Or just use print()
+        print("print() from Python!")
+
+        return Response("We're testing logging!")
+```
+
+## Publish to a Queue
+
+```python
+from js import Object
+from pyodide.ffi import to_js as _to_js
+
+from workers import WorkerEntrypoint, Response
+
+# to_js converts between Python dictionaries and JavaScript Objects
+def to_js(obj):
+   return _to_js(obj, dict_converter=Object.fromEntries)
+
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        # Bindings are available on the 'env' attribute
+        # https://developers.cloudflare.com/queues/
+
+        # The default contentType is "json"
+        # We can also pass plain text strings
+        await self.env.QUEUE.send("hello", contentType="text")
+        # Send a JSON payload
+        await self.env.QUEUE.send(to_js({"hello": "world"}))
+
+        # Return a response
+        return Response.json({"write": "success"})
+```
+
+## Query a D1 Database
+
+```python
+from workers import WorkerEntrypoint, Response
+
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        results = await self.env.DB.prepare("PRAGMA table_list").run()
+        # Return a JSON response
+        return Response.json(results)
+```
+
+Refer to [Query D1 from Python Workers](/d1/examples/query-d1-from-python-workers/) for a more in-depth tutorial that covers how to create a new D1 database and configure bindings to D1.
+
+## Next steps
+
+* If you're new to Workers and Python, refer to the [get started](/workers/languages/python/) guide
+* Learn more about [calling JavaScript methods and accessing JavaScript objects](/workers/languages/python/ffi/) from Python
+* Understand the [supported packages and versions](/workers/languages/python/packages/) currently available to Python Workers.

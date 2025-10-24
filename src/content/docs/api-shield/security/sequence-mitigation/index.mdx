@@ -1,0 +1,76 @@
+---
+pcx_content_type: concept
+title: Sequence mitigation
+sidebar:
+  order: 4
+
+---
+
+import { GlossaryTooltip, Render } from "~/components"
+
+Sequence mitigation allows you to enforce request patterns for authenticated clients communicating with your API. This feature utilizes the same underlying system that powers Sequence Analytics.
+
+You can use sequence rules to establish a set of known behavior for API clients.
+
+For example, you may expect that API requests made during a bank funds transfer could conform to the following order in time:
+
+| Order | Method | Path                                    | Description                                                                                                                                    |
+| ----- | ------ | --------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1     | `GET`  | `/api/v1/users/{user_id}/accounts`      | `user_id` is the active user.                                                                                                                  |
+| 2     | `GET`  | `/api/v1/accounts/{account_id}/balance` | `account_id` is one of the user’s accounts.                                                                                                    |
+| 3     | `GET`  | `/api/v1/accounts/{account_id}/balance` | `account_id` is a different account belonging to the user.                                                                                     |
+| 4     | `POST` | `/api/v1/transferFunds`                 | This contains a request body detailing an account to transfer funds from, an account to transfer funds to, and an amount of money to transfer. |
+
+You may want to enforce that an API user requests `GET /api/v1/users/{user_id}/accounts` before `GET /api/v1/accounts/{account_id}/balance` and that you request `GET /api/v1/accounts/{account_id}/balance` before `POST /api/v1/transferFunds`.
+
+Using sequence mitigation, you can enforce that request pattern with two new sequence mitigation rules.
+
+:::note
+
+You can create sequence mitigation rules for a sequence even if the sequence is not listed in [Sequence Analytics](/api-shield/security/sequence-analytics/). 
+:::
+
+## Process
+
+You can [create a sequence rule](/api-shield/security/sequence-mitigation/manage-sequence-rules/) to enforce behavior on your API over time in two different ways. Sequence rules can either protect an endpoint from users performing a known specific sequence of API calls (otherwise known as a negative security model) or from users making API requests outside of your expectations (otherwise known as a positive security model).
+
+Sequence rules built via the Cloudflare dashboard using API Shield rules utilize a lookback window to match endpoints in the sequence. The rule will match as long as both endpoints are found within [10 requests](/api-shield/security/sequence-mitigation/#request-limitations) (to endpoints within Endpoint Management) of each other and made within [10 minutes](/api-shield/security/sequence-mitigation/#time-limitations) of each other.
+
+If you want to add multiple endpoints, ignore the lookback window, and configure time-based constraints, refer to [Sequence mitigation custom rules](/api-shield/security/sequence-mitigation/custom-rules/).
+
+In the bank funds transfer example, enforcing that a user requests `GET /api/v1/accounts/{account_id}/balance` before `POST /api/v1/transferFunds` is considered a positive security model, since a user may only perform a funds transfer after listing an account balance.
+
+A negative security model may be useful if you see abusive behavior that is outside the norm of your application and you need to stop the requests while researching the correct positive security model to implement.
+
+For example, if there was an authorization bug that allowed users to iterate through other users' profiles that contain account numbers via `GET /api/v1/users/{var1}/profile` and then a user tries to make fradulent funds transfers, you could create up a rule to block or log the sequence `GET /api/v1/users/{var1}/profile` to `POST /api/v1/transferFunds`.
+
+
+## Limitations
+
+### Endpoint Management
+
+To track requests to <GlossaryTooltip term="API endpoint">API endpoints</GlossaryTooltip>, they must be added to [Endpoint Management](/api-shield/management-and-monitoring/). Add your endpoints to endpoint management via [API Discovery](/api-shield/security/api-discovery/), [Schema validation](/api-shield/security/schema-validation/), or [manually](/api-shield/management-and-monitoring/#add-endpoints-manually) through the Cloudflare dashboard.
+
+### Session Identifiers
+
+API Shield uses your configured <GlossaryTooltip term="session identifier">session identifier</GlossaryTooltip> to track sessions. You must configure a session identifier that is unique per end user of your API in order for sequence mitigation to function as expected.
+
+### Request limitations
+
+API Shield currently stores the last 10 requested endpoints by each API user identified by the session identifier. Sequence mitigation de-duplicates requests to the same endpoint while building the sequence.
+
+To illustrate, in the original [sequence example](/api-shield/security/sequence-mitigation/) listed above, sequence mitigation would store the following sequence:
+
+1. `GET /api/v1/users/{user_id}/accounts`
+2. `GET /api/v1/accounts/{account_id}/balance`
+3. `POST /api/v1/transferFunds`
+
+Sequence mitigation de-duplicated the two requests to `GET /api/v1/accounts/{account_id}/balance` and stored them as a single request.
+
+### Time limitations
+
+Sequence mitigation rules have a lookback period of 10 minutes. If you create a rule that one path must be requested before another path and more than 10 minutes elapses between a user requesting each path, the rule will not match.
+
+## Availability
+
+<Render file="sequence-mitigation-availability" product="api-shield" />

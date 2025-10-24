@@ -1,0 +1,109 @@
+---
+pcx_content_type: how-to
+title: Manage advanced certificates
+sidebar:
+  order: 1
+head: []
+description: Learn how to create, delete and perform other operations to manage
+  your Cloudflare Advanced SSL certificates.
+---
+
+import { AvailableNotifications, Render, TabItem, Tabs } from "~/components";
+
+## Create a certificate
+
+If you are using an existing [Universal SSL certificate](/ssl/edge-certificates/universal-ssl/), Cloudflare will automatically replace this certificate once you finish ordering your advanced certificate.
+
+Once you order a certificate, you can review the [certificate's status](/ssl/reference/certificate-statuses/) in the dashboard at **SSL/TLS** > **Edge Certificates** or via the API with a [GET request](/api/resources/ssl/subresources/certificate_packs/methods/list/).
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+To create a new advanced certificate in the dashboard:
+
+1. Log in to your Cloudflare account and select a domain.
+2. Go to **SSL/TLS** > **Edge Certificates**.
+3. Select **Order Advanced Certificate**.
+4. If Cloudflare does not have your billing information, you will need to enter that information.
+5. Enter the following information:
+   - Certificate authority
+   - Certificate hostnames
+     - For hostnames longer than 64 characters, use the API.
+   - Validation method
+   - Certificate validity period
+6. Select **Save**.
+
+</TabItem> <TabItem label="API">
+
+To create a new certificate using the API, send a [POST request](/api/resources/ssl/subresources/certificate_packs/methods/create/) to the Cloudflare API.
+
+If you need certificates for hostnames longer than 64 characters ([RFC 5280](https://www.rfc-editor.org/rfc/rfc5280.html)), set the `cloudflare_branding` option to `true`. This will add `sni.cloudflaressl.com` in the Common Name (CN) field and will include the long hostname as a part of the Subject Alternative Name (SAN).
+
+</TabItem> </Tabs>
+
+:::caution
+
+<Render file="acm-ca-hostnames-conditions" product="ssl" />
+
+:::
+
+---
+
+## Delete a certificate
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+To delete an advanced certificate in the dashboard:
+
+1. Log in to your Cloudflare account and select a domain.
+2. Select **SSL/TLS** > **Edge Certificates**.
+3. Select a certificate.
+4. Select **Delete Certificate**.
+
+</TabItem> <TabItem label="API">
+
+To delete a certificate using the API, send a [DELETE request](/api/resources/ssl/subresources/certificate_packs/methods/delete/) to the Cloudflare API.
+
+</TabItem> </Tabs>
+
+---
+
+## Restart validation
+
+To restart validation for a certificate in a `validation_timed_out` status, send a [PATCH request](/api/resources/ssl/subresources/certificate_packs/methods/edit/) to the API.
+
+---
+
+## Restrict cipher suites
+
+<Render file="cipher-suites-definition" product="ssl" />
+
+For more details, refer to [Customize cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/customize-cipher-suites/).
+
+---
+
+## Perform domain control validation (DCV)
+
+<Render file="dcv-definition" product="ssl" /> <br />
+
+Normally, you only need to update DCV if you have your application on a partial setup (Cloudflare does not run your authoritative nameservers).
+
+For more information about DCV, refer to [DCV methods](/ssl/edge-certificates/changing-dcv-method/).
+
+---
+
+## Set up alerts
+
+You can configure alerts to receive notifications for changes in your certificates.
+
+<AvailableNotifications
+	product="SSL/TLS"
+	notificationFilter="Advanced Certificate Alert"
+/>
+
+<Render file="get-started" product="notifications" />
+
+---
+
+## Advanced certificate renewal
+
+The certificate validity period you choose determines when the auto renewal will start for your certificate. For details, refer to [Validity period and renewal](/ssl/reference/certificate-validity-periods/).

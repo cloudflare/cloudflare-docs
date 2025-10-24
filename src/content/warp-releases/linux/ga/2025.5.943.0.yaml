@@ -1,0 +1,33 @@
+releaseNotes: |-
+  This release contains minor fixes and improvements.
+
+  **Changes and improvements**
+  - WARP proxy mode now uses the operating system's DNS settings. Changes made to system DNS settings while in proxy mode require the client to be turned off then back on to take effect.
+  - Fixed an issue affecting clients in Split Tunnel Include mode, where access to split-tunneled traffic was blocked after reconnecting the client.
+
+  **Known issues**
+  - Devices using WARP client 2025.4.929.0 and up may experience Local Domain Fallback failures if a fallback server has not been configured. To configure a fallback server, refer to [Route traffic to fallback server](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/local-domains/#route-traffic-to-fallback-server).
+version: 2025.5.943.0
+releaseDate: 2025-07-23T19:17:49.673Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/jammy-arm/version/2025.5.943.0
+packageSize: 44271222
+platformName: Linux
+linuxPlatforms:
+  jammy-arm: 44271222
+  buster-intel: 45887702
+  fedora34-arm: 47307473
+  focal-intel: 45800128
+  bullseye-arm: 44499920
+  bullseye-intel: 45713170
+  fedora35-arm: 46915674
+  fedora35-intel: 48084438
+  noble-arm: 44634472
+  fedora34-intel: 48392374
+  bookworm-arm: 44255560
+  noble-intel: 45349534
+  focal-arm: 44569124
+  buster-arm: 44577190
+  centos8-arm: 47092201
+  jammy-intel: 45512998
+  bookworm-intel: 45509306
+  centos8-intel: 48001094

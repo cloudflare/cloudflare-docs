@@ -1,0 +1,86 @@
+---
+productName: Magic WAN
+entries:
+  - term: anycast
+    general_definition: |-
+      Anycast is a network addressing and routing method in which incoming requests can be routed to a variety of different locations. Anycast typically routes incoming traffic to the nearest data center with the capacity to process the request efficiently.
+    associated_products:
+      - Magic Transit
+
+  - term: data packet
+    general_definition: |-
+      a data packet is a unit of data consisting of user and control information. Information in a network is broken down into packets, that might follow different paths to their final destination.
+    associated_products:
+      - Magic Transit
+      - Magic Firewall
+
+  - term: equal-cost multi-path routing
+    general_definition: |-
+      a technique that uses hashes calculated from packet data to determine the route chosen.
+    associated_products:
+      - Magic Transit
+
+  - term: GRE tunnel
+    general_definition: |-
+      stands for generic routing encapsulation. It is a protocol wrapping one data packet within another type of data packet. This is useful for enabling protocols that are not normally supported by a network.
+    associated_products:
+      - Magic Transit
+
+  - term: ICMP
+    general_definition: |-
+      Internet Control Message Protocol (ICMP) is used by network devices to send error messages and other operational information. ICMP is useful for diagnostic purposes, for example.
+    associated_products:
+      - Magic Transit
+      - DDoS Protection
+
+  - term: Internet key exchange (IKE)
+    general_definition: |-
+      the protocol Cloudflare uses to create the IPsec tunnel between Magic WAN and the customer's device.
+    associated_products:
+      - Magic Transit
+
+  - term: IPsec tunnel
+    general_definition: |-
+      stands for Internet Protocol secure. It is a group of protocols for securing connections between devices, by encrypting IP packets.
+    associated_products:
+      - Magic Transit
+
+  - term: maximum segment size (MSS)
+    general_definition: |-
+      MSS limits the size of packets, or small chunks of data, that travel across a network, such as the Internet.
+    associated_products:
+      - Magic Transit
+
+  - term: on-ramp
+    general_definition: |-
+      refers to a way of connecting a business network to Cloudflare. Examples of on-ramps, or ways to connect to Cloudflare, are Anycast GRE tunnels, Anycast IPsec tunnels, Cloudflare Network Interconnect (CNI), Cloudflare Tunnel, and WARP.
+    associated_products:
+      - Magic Transit
+
+  - term: traffic steering
+    general_definition: |-
+      Cloudflare evaluates your route's health and steers traffic according to priorities defined by you and / or tunnel health.
+    associated_products:
+      - Magic Transit
+
+  - term: tunnel health-check
+    general_definition: |-
+      a probe sent by Cloudflare to check for tunnel health. If a tunnel is not considered healthy, Cloudflare reroutes traffic to one that is considered healthy.
+    associated_products:
+      - Magic Transit
+
+  - term: static route
+    general_definition: |-
+      a fixed configuration to route traffic through Anycast tunnels from Cloudflare global network to the customer's locations.
+    associated_products:
+      - Magic Transit
+
+  - term: subnet
+    general_definition: |-
+      also known as subnetwork. It refers to a network that is part of another network.
+    associated_products:
+      - Magic Transit
+
+  - term: WAN
+    general_definition: |-
+      stands for Wide Area Network. It refers to a computer network that connects groups of computers over large distances. WANs are often used by businesses to connect their office networks. The objective is to make each of the local area networks (LANs) be remotely connected and accessible.

@@ -1,0 +1,97 @@
+---
+import { Image } from "astro:assets";
+import { z } from "astro:schema";
+import { marked } from "marked";
+
+import { CardGrid, Card, LinkCard } from "@astrojs/starlight/components";
+import YouTube from "../YouTube.astro";
+
+const props = z.object({
+	title: z.string(),
+	text: z.string(),
+	image: z.object({
+		light: z.any(),
+		dark: z.any(),
+	}),
+	cards: z
+		.object({
+			title: z.string(),
+			text: z.string(),
+			cta: z.object({
+				title: z.string(),
+				href: z.string(),
+			}),
+		})
+		.array(),
+	imagePosition: z.enum(["before", "after"]),
+});
+
+const { title, text, image, cards, imagePosition } = props.parse(Astro.props);
+---
+
+<div class="flex h-1/3 items-center">
+	{
+		imagePosition === "before" && (
+			<div class="m-8 w-full">
+				<Image
+					src={image.light}
+					alt={`${title} section image`}
+					class="dark:sl-hidden"
+				/>
+				<Image
+					src={image.dark}
+					alt={`${title} section image`}
+					class="light:sl-hidden"
+				/>
+				<h2>{title}</h2>
+				<span set:html={marked.parse(text)} />
+			</div>
+		)
+	}
+
+	<div class="w-full">
+		{
+			title === "Developer Platform" ? (
+				<div class="[&>article]:gap-0">
+					<Card title="">
+						<YouTube id="FH5-m0aiO5g" />
+
+						<LinkCard
+							title={"Explore our Developer Platform"}
+							href={"/directory/?product-group=Developer+platform"}
+						/>
+					</Card>
+				</div>
+			) : (
+				<CardGrid>
+					{cards.map((card) => (
+						<Card title={card.title}>
+							<span set:html={marked.parse(card.text)} />
+							<br />
+							<LinkCard title={card.cta.title} href={card.cta.href} />
+						</Card>
+					))}
+				</CardGrid>
+			)
+		}
+	</div>
+
+	{
+		imagePosition === "after" && (
+			<div class="m-8 w-full">
+				<Image
+					src={image.light}
+					alt={`${title} section image`}
+					class="dark:sl-hidden"
+				/>
+				<Image
+					src={image.dark}
+					alt={`${title} section image`}
+					class="light:sl-hidden"
+				/>
+				<h2>{title}</h2>
+				<span set:html={marked.parse(text)} />
+			</div>
+		)
+	}
+</div>

@@ -1,0 +1,132 @@
+---
+pcx_content_type: reference
+title: Encryption modes
+sidebar:
+  order: 1
+head: []
+description: Encryption modes allow you to control how Cloudflare connects to
+  your origin web server and how certificates presented by your origin are
+  validated.
+---
+
+import {
+	DirectoryListing,
+	Render,
+	TabItem,
+	Tabs,
+	APIRequest,
+} from "~/components";
+
+<Render file="encryption-mode-definition" product="ssl" /> <br />
+
+If possible, Cloudflare strongly recommends using [**Full**](/ssl/origin-configuration/ssl-modes/full/) or [**Full (strict)**](/ssl/origin-configuration/ssl-modes/full-strict/) modes to prevent malicious connections to your origin.
+
+For more details on how encryption modes fit into the bigger picture of Cloudflare SSL/TLS protection, refer to [Concepts](/ssl/concepts/#ssltls-certificate).
+
+## Available encryption modes
+
+[Automatic SSL/TLS](#automatic-ssltls-default) relies on the probes developed for the SSL/TLS Recommender to determine what encryption mode is the most secure and safest for a website to be set to. If there is a more secure option for your website (based on your origin certification or capabilities), Automatic SSL/TLS will find it and apply it for your domain. The other option, [Custom SSL/TLS](#custom-ssltls), will work exactly like the setting the encryption mode does today.
+
+:::note
+We are gradually rolling out the new [Automated SSL/TLS feature](#automatic-ssltls-default).
+
+If your zone has not been migrated yet, you will only have [Custom SSL/TLS](#custom-ssltls) options in your dashboard.
+:::
+
+To understand how the various encryption modes affect your cache, refer to the section on [Impact of SSL setting on cache behavior](/cache/how-to/cache-keys/#impact-of-ssl-settings-on-cache-behavior).
+
+### Automatic SSL/TLS (default)
+
+Automatic SSL/TLS leverages advanced methods developed by the SSL/TLS Recommender to select the most secure encryption mode for your website. The Recommender crawls your site using the Cloudflare-SSLDetector user agent, recognized as a trusted bot by Cloudflare, and bypasses `robots.txt` rules (except those that specifically target it) to ensure accuracy. It downloads content from your origin server over both HTTP and HTTPS, then applies a content similarity algorithm to assess consistency. By understanding your current SSL/TLS encryption mode and evaluating your origin's certification and capabilities, the Recommender can automatically adjust settings to maintain the highest security for your domain.
+
+:::note
+Automatic SSL/TLS will not change your setting to a less secure encryption mode. For example, if your origin certificate expires, the encryption mode will not change from **Full (strict)** to **Full**. You must ensure the validity of your origin SSL/TLS configuration at all times.
+:::
+
+Automatic upgrades are applied gradually. Automatic SSL/TLS begins to upgrade the domain by starting with just 1% of its traffic. If no issues are found, the new SSL/TLS encryption mode is applied to traffic in 10% increments until 100% of traffic uses the recommended mode.  If origin connectivity fails during this process, Cloudflare aborts the upgrade, immediately rolls traffic back to the previous mode, and logs the failure. Once 100% of traffic has been successfully upgraded with no TLS-related errors, the domain's SSL/TLS setting is permanently updated.
+
+Flexible → Full/Strict transitions are handled with extra caution since the origin scheme change (HTTP → HTTPS) alters cache keys. In this case, the ramp-up may proceed more slowly to allow cache warm-up before resuming standard increments.
+
+#### Additional details
+
+- **Scan frequency**: Automatic scans currently occur approximately once per month, though they may happen more frequently in some cases (for example, configuration changes or upgrades). Scans stop when:
+  - The site is already using the most secure mode (for example, **Full (strict)**), or
+  - You switch from auto mode to **Custom SSL/TLS**.
+
+- **Error checking before upgrades**: To prevent disruptions, Cloudflare checks for `5XX` errors (like `502` or `503`) and evaluates whether the HTTP and HTTPS content is consistent before upgrading a zone's encryption mode.
+
+- **Upgrade notifications**: Cloudflare sends weekly digest emails listing which zones have been upgraded. These emails are currently sent to Super Admins only.
+
+#### Opt out single zone
+
+If you want to opt a zone out via the API, you can make this API call on or before the grace period expiration date.
+
+<APIRequest
+	path="/zones/{zone_id}/settings/{setting_id}"
+	method="PATCH"
+	json={{
+		value: "custom",
+	}}
+	parameters={{
+		setting_id: "ssl_automatic_mode",
+	}}
+/>
+
+#### Opt out multiple zones
+
+If you wanted to opt out multiple zones:
+
+1. Create an API token with the following permissions:
+   - `Zone - Zone - Read`
+   - `Zone - Zone Settings - Read`
+   - `Zone - Zone Settings - Edit`
+2. Make a [`GET` request](/api/resources/zones/methods/list/) to get a list of zones (you can filter this list by `account.id`).
+
+   ```bash "account.id=<ACCOUNT_ID>"
+   curl 'https://api.cloudflare.com/client/v4/zones?account.id=<ACCOUNT_ID>' \
+   --header 'Authorization: Bearer <CF_API_TOKEN>' \
+   --header 'Content-Type: application/json'
+   ```
+
+3. Create a list of zone IDs you want to opt-out with each zone ID on a separate line (newline separate), stored in a file such as `zones.txt`.
+4. Create a bash script for `opt-out-multiple-zones.sh` and add the following. Add `zones.txt` to the same directory or update the path accordingly.
+
+   ```bash title="opt-out-multiple-zones.sh"
+   for zoneID in $(cat zone.txt); do
+     printf "Opting out ${zoneID}:\n"
+
+     curl --request PATCH \
+   		--url https://api.cloudflare.com/client/v4/zones/$zoneID/settings/ssl_automatic_mode \
+   		--header 'Authorization: Bearer <CF_API_TOKEN>' \
+   		--header 'Content-Type: application/json' \
+   		--data '{"value":"custom"}'
+
+     printf "\n\n"
+   done
+   ```
+
+5. Open your command line and run:
+
+   ```bash
+   bash opt-out-multiple-zones.sh
+   ```
+
+### Custom SSL/TLS
+
+To use Custom SSL/TLS, select the custom option (if you prefer to manually set the encryption mode instead of using [Automatic SSL/TLS](#automatic-ssltls-default)):
+
+<DirectoryListing descriptions />
+
+## Update your encryption mode
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+<Render file="change-encryption-mode-dash" product="ssl" />
+
+</TabItem> <TabItem label="API">
+
+<Render file="change-encryption-mode-api" product="ssl" />
+
+</TabItem> </Tabs>
+
+<Render file="configuration-rule-promotion" product="rules" />

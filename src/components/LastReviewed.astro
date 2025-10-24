@@ -1,0 +1,23 @@
+---
+import { z } from "astro:schema";
+import { formatDistance } from "date-fns";
+
+const timeAgo = (date: Date) => {
+	return formatDistance(date, new Date(), { addSuffix: true });
+};
+
+type Props = z.infer<typeof props>;
+
+const props = z.object({
+	date: z.coerce.date(),
+});
+
+const { date } = props.parse(Astro.props);
+---
+
+<div>
+	<span>
+		<strong>Last reviewed: </strong>
+		{timeAgo(date)}
+	</span>
+</div>

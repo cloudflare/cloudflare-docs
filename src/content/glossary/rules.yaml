@@ -1,0 +1,20 @@
+---
+productName: Rules
+entries:
+  - term: JSON web token (JWT)
+    general_definition: |-
+      a common authentication and authorization method used in web applications and APIs.
+    associated_products:
+      - API Shield
+
+  - term: URL normalization
+    general_definition: |-
+      the process of modifying the URLs of incoming requests so that they conform to a consistent formatting standard.
+
+  - term: URL rewrite
+    general_definition: |-
+      an operation performed by a server that converts a source URL into a target URL.
+
+  - term: Snippets subrequest
+    general_definition: |-
+      any request that a Snippet makes to either Internet resources using the Fetch API or requests to other Cloudflare services.

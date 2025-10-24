@@ -1,0 +1,121 @@
+---
+title: Cloudflare Pipelines
+
+pcx_content_type: overview
+sidebar:
+  order: 1
+  badge:
+    text: Beta
+head:
+  - tag: title
+    content: Pipelines
+---
+
+import {
+	CardGrid,
+	Description,
+	Feature,
+	LinkTitleCard,
+	Plan,
+	RelatedProduct,
+} from "~/components";
+
+:::note
+Pipelines is in **open beta**, and any developer with a [Workers Paid plan](/workers/platform/pricing/) can start using it. Currently, outside of standard R2 storage and operations, you will not be billed for your use of Pipelines.
+:::
+
+<Description>
+
+Ingest, transform, and load streaming data into Apache Iceberg or Parquet in R2.
+
+</Description>
+
+<Plan type="paid" />
+
+Cloudflare Pipelines ingests events, transforms them with SQL, and delivers them to R2 as [Iceberg tables](/r2/data-catalog/) or as Parquet and JSON files.
+
+Whether you're processing server logs, mobile application events, IoT telemetry, or clickstream data, Pipelines provides durable ingestion via HTTP endpoints or Worker bindings, SQL-based transformations, and exactly-once delivery to R2. This makes it easy to build analytics-ready data warehouses and lakehouses without managing streaming infrastructure.
+
+Create your first pipeline by following the [getting started guide](/pipelines/getting-started) or running this [Wrangler](/workers/wrangler/) command:
+
+```sh
+npx wrangler pipelines setup
+```
+
+---
+
+## Features
+
+<Feature header="Create your first pipeline" href="/pipelines/getting-started/" cta="Get started">
+
+Build your first pipeline to ingest data via HTTP or Workers, apply SQL transformations, and deliver to R2 as Iceberg tables or Parquet files.
+
+</Feature>
+
+<Feature header="Streams" href="/pipelines/streams/" cta="Learn about Streams">
+
+Durable, buffered queues that receive events via HTTP endpoints or Worker bindings.
+
+</Feature>
+
+<Feature header="Pipelines" href="/pipelines/pipelines/" cta="Learn about Pipelines">
+
+Connect streams to sinks with SQL transformations that validate, filter, transform, and enrich your data at ingestion time.
+
+</Feature>
+
+<Feature header="Sinks" href="/pipelines/sinks/" cta="Learn about Sinks">
+
+Configure destinations for your data. Write Apache Iceberg tables to R2 Data Catalog or export as Parquet and JSON files.
+
+</Feature>
+
+---
+
+## Related products
+
+<RelatedProduct header="R2" href="/r2/" product="r2">
+
+Cloudflare R2 Object Storage allows developers to store large amounts of unstructured data without the costly egress bandwidth fees associated with typical cloud storage services.
+
+</RelatedProduct>
+
+<RelatedProduct header="Workers" href="/workers/" product="workers">
+
+Cloudflare Workers allows developers to build serverless applications and deploy instantly across the globe for exceptional performance, reliability, and scale.
+
+</RelatedProduct>
+
+---
+
+## More resources
+
+<CardGrid>
+
+<LinkTitleCard
+	title="Limits"
+	href="/pipelines/platform/limits/"
+	icon="document"
+>
+	Learn about pipelines limits.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="@CloudflareDev"
+	href="https://x.com/cloudflaredev"
+	icon="x.com"
+>
+	Follow @CloudflareDev on Twitter to learn about product announcements, and
+	what is new in Cloudflare Workers.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Developer Discord"
+	href="https://discord.cloudflare.com"
+	icon="discord"
+>
+	Connect with the Workers community on Discord to ask questions, show what you
+	are building, and discuss the platform with other developers.
+</LinkTitleCard>
+
+</CardGrid>

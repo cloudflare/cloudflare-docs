@@ -1,0 +1,146 @@
+---
+pcx_content_type: concept
+title: Custom Indicator Feeds
+sidebar:
+  order: 8
+---
+
+import { Render } from "~/components";
+
+Cloudflare's threat intelligence team crowdsources attack trends and protects users automatically, such as from zero-day vulnerabilities like the [HTTP/2 Rapid Reset attack](https://blog.cloudflare.com/technical-breakdown-http2-rapid-reset-ddos-attack/). However, in some cases, Cloudflare will partner with external entities that have their own feeds which can be shared with eligible Cloudflare users.
+
+With Custom Indicator Feeds, Cloudflare provides a threat intelligence feed based on data received from various Cyber Defense Collaboration groups. The security filtering capabilities are available to eligible public and private sector organizations.
+
+## Publicly available feeds
+
+Cloudflare provides some feeds to Gateway users without the need to establish a provider relationship.
+
+| Name                                                                                                                                                  | Description                                                                                                                                                                         | Availability                              |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- |
+| [Treasury Early Indicator Feed](https://www.cloudflare.com/press-releases/2024/us-department-of-treasury-pnnl-finserv-threat-intel-feed/), Feed ID 14 | Threat data for financial institutions provided by the US Department of Treasury and Pacific Northwest National Laboratory (PNNL). For more information, contact your account team. | Approved financial services organizations |
+| [UK NCSC Public Threat Indicators](https://www.ncsc.gov.uk/information/pdns) Feed ID 24                                                               | Recursive DNS service supplied by the UK National Cyber Security Centre (NCSC) to block DNS-based malware.                                                                          | All users                                 |
+| Cloudforce One - Public Feed Feed ID 34                                                                                                               | Feed of indicators.                                                                                                                                                                 | All users                                 |
+
+## Get started
+
+<Render file="indicator-feeds-overview" product="security-center" />
+
+If your organization is interested in becoming a provider or a subscriber, contact your account team.
+
+### Create a Custom Indicator Feed
+
+Providers can create and manage a Custom Indicator Feed with the [Custom Indicator Feeds API endpoints](/api/resources/intel/subresources/indicator_feeds/methods/list/):
+
+1. Contact your account team to configure your account as an indicator feed provider.
+2. Create a feed with the [Create new indicator feed endpoint](/api/resources/intel/subresources/indicator_feeds/methods/create/). Make note of the `feed_id` generated for your feed. For example:
+
+   ```bash title="Create new indicator feed"
+   curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/intel/indicator-feeds" \
+   	--header 'Content-Type: application/json' \
+   	--header 'X-Auth-Email: <EMAIL>' \
+   	--header 'X-Auth-Key: <API_KEY>' \
+   	--data '{
+   	"description": "Custom indicator feed to detect threats",
+   	"name": "threat_indicator_feed"
+   }'
+   ```
+
+   ```json output {3}
+   {
+   	"result": {
+   		"id": 10,
+   		"name": "threat_indicator_feed",
+   		"description": "Custom indicator feed to detect threats",
+   		"created_on": "2024-09-17T21:16:09.412Z",
+   		"modified_on": "2024-09-17T21:16:09.412Z"
+   	},
+   	"success": true,
+   	"errors": [],
+   	"messages": []
+   }
+   ```
+
+3. Upload data to the feed with the [Update indicator feed data endpoint](/api/resources/intel/subresources/indicator_feeds/subresources/snapshots/methods/update/). Uploaded indicator data must be in a [`.stix2`](https://oasis-open.github.io/cti-documentation/stix/intro) formatted file. The [maximum upload file size](/r2/platform/limits/) is 4.995 GiB.
+
+   ```bash title="Update indicator feed data"
+   curl --request PUT \
+   	"https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/intel/indicator-feeds/<FEED_ID>/snapshot" \
+   	--header 'Content-Type: multipart/form-data' \
+   	--header 'X-Auth-Email: <EMAIL>' \
+   	--header 'X-Auth-Key: <API_KEY>' \
+   	--form 'source=@/path/to/file'
+   ```
+
+   ```json output
+   {
+   	"result": {
+   		"file_id": 1,
+   		"filename": "snapshot_file.unified",
+   		"status": "unified"
+   	},
+   	"errors": [],
+   	"messages": [],
+   	"success": true
+   }
+   ```
+
+   :::note
+   Indicator feeds use a snapshot system. To update feeds with new data, providers must upload a file containing all previous and new indicators.
+   :::
+
+4. (Optional) Verify the status of your feed upload with the [Get indicator feed data endpoint](/api/resources/intel/subresources/indicator_feeds/methods/data/). For example:
+
+   ```bash title="Get indicator feed data"
+   curl --request GET \
+   	"https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/intel/indicator-feeds/<FEED_ID>/data" \
+   	--header 'Content-Type: application/json' \
+   	--header 'X-Auth-Email: <EMAIL>' \
+   	--header 'X-Auth-Key: <API_KEY>'
+   ```
+
+   ```json output {8}
+   {
+   	"result": {
+   		"id": 10,
+   		"name": "threat_indicator_feed",
+   		"description": "Custom indicator feed to detect threats",
+   		"created_on": "2023-08-01T18:00:26.65715Z",
+   		"modified_on": "2023-08-01T18:00:26.65715Z",
+   		"latest_upload_status": "Complete"
+   	},
+   	"success": true,
+   	"errors": [],
+   	"messages": []
+   }
+   ```
+
+5. Grant access to subscribers with the [Grant permission to indicator feed endpoint](/api/resources/intel/subresources/indicator_feeds/subresources/permissions/methods/create/). You can add subscribers to the feed's allowed subscribers list using their [account IDs](/fundamentals/account/find-account-and-zone-ids/). For example:
+
+   ```bash title="Update indicator feed data"
+   curl --request PUT \
+   	"https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/intel/indicator-feeds/<FEED_ID>/snapshot" \
+   	--header 'Content-Type: multipart/form-data' \
+   	--header 'X-Auth-Email: <EMAIL>' \
+   	--header 'X-Auth-Key: <API_KEY>' \
+   	--data '{
+   	"account_tag": "823f45f16fd2f7e21e1e054aga4d2859",
+   	"feed_id": 10
+   }'
+   ```
+
+### Use a feed in Gateway
+
+Once an account is granted access to a feed, it will be available to match traffic as a [selector in Gateway DNS policies](/cloudflare-one/traffic-policies/dns-policies/#indicator-feeds).
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Gateway** > **Firewall policies**. Select **DNS**.
+2. To create a new DNS policy, select **Add a policy**.
+3. Name your policy.
+4. In **Traffic**, add a condition with the **Indicator Feeds** selector. If your account has been granted access to a Custom Indicator Feed, Gateway will list the feed in **Value**. For example, you can block sites that appear in a feed:
+
+   | Selector        | Operator | Value               | Action |
+   | --------------- | -------- | ------------------- | ------ |
+   | Indicator Feeds | in       | _Threat Intel Feed_ | Block  |
+
+5. Select **Create policy**.
+
+For more information on creating Gateway policies, refer to [DNS policies](/cloudflare-one/traffic-policies/dns-policies/).

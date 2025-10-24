@@ -1,0 +1,36 @@
+---
+import { Aside } from "@astrojs/starlight/components";
+import { reference, getEntry } from "astro:content";
+import { z } from "astro:schema";
+
+const props = z.object({
+	flag: reference("compatibility-flags"),
+});
+
+const { flag } = await props.parseAsync(Astro.props);
+
+const entry = await getEntry("compatibility-flags", flag.id);
+
+if (!entry) {
+	throw new Error("Failed to load data");
+}
+
+const { enable_flag, enable_date } = entry.data;
+---
+
+<Aside>
+	To use this feature,
+	{
+		enable_date && (
+			<span>
+				<a href="/workers/configuration/compatibility-dates/">
+					define a compatibility date
+				</a>{" "}
+				of <code>{enable_date}</code> or higher, or
+			</span>
+		)
+	} include <code>{enable_flag}</code> in your <a
+		href={`/workers/configuration/compatibility-flags/#setting-compatibility-flags`}
+		>compatibility flags</a
+	>.
+</Aside>

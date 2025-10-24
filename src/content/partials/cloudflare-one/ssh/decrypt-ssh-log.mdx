@@ -1,0 +1,11 @@
+---
+{}
+---
+
+To decrypt the log, follow the instructions in the [SSH Logging CLI repository](https://github.com/cloudflare/ssh-log-cli/). In the following example, `sshkey` is the private key that matches the public key uploaded to Cloudflare.
+
+   ```sh
+   ./ssh-log-cli decrypt -i sshlog -k sshkey
+   ```
+
+   This command outputs a `sshlog-decrypted.zip` file with the decrypted logs.

@@ -1,0 +1,41 @@
+---
+{}
+---
+
+import { TabItem, Tabs, PackageManagers, DashButton } from "~/components";
+
+### Dashboard
+
+Editing in the dashboard is helpful for simpler use cases.
+
+Once you have created your Worker script, you can edit and deploy your Worker using the Cloudflare dashboard:
+
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+2. Select your application.
+3. Select **Edit Code**.
+
+![Edit code directly within the Cloudflare dashboard](~/assets/images/workers/workers-edit-code.png)
+
+### Wrangler CLI
+
+To develop more advanced applications or [implement tests](/workers/testing/), start working in the Wrangler CLI.
+
+1. Install [`npm`](https://docs.npmjs.com/getting-started).
+2. Install [`Node.js`](https://nodejs.org/en/).
+
+:::note[Node.js version manager]
+
+Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues and change Node.js versions. [Wrangler](/workers/wrangler/install-and-update/), discussed later in this guide, requires a Node version of `16.17.0` or later.
+:::
+
+3. Run the following command, replacing the value of `[<DIRECTORY>]` which the location you want to put your Worker Script.
+
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args="[<DIRECTORY>] --type=pre-existing"
+/>
+
+After you run this command - and work through the prompts - your local changes will not automatically sync with dashboard. So, once you download your script, continue using the CLI.

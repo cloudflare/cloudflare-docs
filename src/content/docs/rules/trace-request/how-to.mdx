@@ -1,0 +1,87 @@
+---
+pcx_content_type: reference
+title: Use Cloudflare Trace
+sidebar:
+  order: 2
+  badge:
+    text: Beta
+head:
+  - tag: title
+    content: How to - Cloudflare Trace (beta)
+description: Learn how to use Cloudflare Trace in the dashboard and with the API.
+---
+
+import { GlossaryTooltip, DashButton, Steps } from "~/components";
+
+## Use Trace in the dashboard
+
+### 1. Configure one or more Cloudflare products
+
+<Steps>
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account.
+2. Set configuration settings at the account level, or select a domain and configure settings for one or more Cloudflare products.
+
+</Steps>
+
+### 2. Build a trace
+
+<Steps>
+
+1. In the Cloudflare dashboard, go to the **Trace** page.
+
+   <DashButton url="/?to=/:account/trace" />
+
+2. Enter a URL to trace. The URL must include a hostname that belongs to your account.
+
+3. Select an HTTP method. If you select _POST_, _PUT_, or _PATCH_, you should enter a value in **Request Body**.
+
+4. (Optional) Define any custom request properties to simulate the conditions of a specific HTTP/S request. You can customize the following request properties:
+   - **Protocol** (HTTP protocol version)
+   - **User Agent and Request Headers**
+   - **Cookies**
+   - **Geolocation** (request source [country](/ruleset-engine/rules-language/fields/reference/ip.src.country/), [region](/ruleset-engine/rules-language/fields/reference/ip.src.region/), and [city](/ruleset-engine/rules-language/fields/reference/ip.src.city/))
+   - [**Bot Score**](/bots/concepts/bot-score/)
+   - **Request Body** (for `POST`, `PUT`, and `PATCH` requests)
+   - **Skip Challenge** (skips a Cloudflare-issued [challenge](/cloudflare-challenges/), if any, allowing the trace to continue)
+
+5. Select **Send Trace**.
+
+</Steps>
+
+### 3. Assess results
+
+The **Trace results** page shows all evaluated and executed configurations from different Cloudflare products, in evaluation order. Any inactive rules are not evaluated.
+
+<Steps>
+
+1. Analyze the different [steps](#steps-in-trace-results) with evaluated and executed configurations for the current trace. Trace results include matches for all active rules and configurations, whether configured at the account level or for a specific domain or subdomain.
+
+   To show all configurations, including the ones that did not match the request, select _All configurations_ in the **Results shown** dropdown.
+
+2. (Optional) Update your Cloudflare configuration (at the account or at the domain/subdomain level) and create a new trace to check the impact of your changes.
+
+</Steps>
+
+### 4. (Optional) Save the trace configuration
+
+To run a trace later with the same configuration:
+
+<Steps>
+
+1. Copy the JSON shown in the dashboard with the current trace configuration.
+2. When creating a new trace, paste it in the JSON box to define all the settings of the new trace.
+
+</Steps>
+
+## Use Trace via API
+
+Use the [Request Trace](/api/resources/request_tracers/subresources/traces/methods/create/) operation to perform a trace using the Cloudflare API.
+
+---
+
+## Steps in trace results
+
+- Execution of one or more rules of Cloudflare products built on the [Ruleset Engine](/ruleset-engine/). Refer to the Ruleset Engine's [Phases list](/ruleset-engine/reference/phases-list/) for a list of such products.
+- [Page Rules](/rules/page-rules/): Execution of one or more rules.
+- [Workers](/workers/): Execution of one or more scripts.

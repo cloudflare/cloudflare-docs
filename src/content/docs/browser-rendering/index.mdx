@@ -1,0 +1,127 @@
+---
+title: Browser Rendering
+pcx_content_type: overview
+description: Control headless browsers with Cloudflare's Workers Browser Rendering API. Automate tasks, take screenshots, convert pages to PDFs, and test web apps.
+sidebar:
+  order: 1
+head:
+  - tag: title
+    content: Browser Rendering
+---
+
+import {
+	CardGrid,
+	Description,
+	LinkTitleCard,
+	Plan,
+	RelatedProduct,
+} from "~/components";
+
+<Description>
+
+Browser automation for [Cloudflare Workers](/workers/) and [quick browser actions](/browser-rendering/rest-api/).
+
+</Description>
+
+<Plan type="workers-all" />
+
+Browser Rendering enables developers to programmatically control and interact with headless browser instances running on Cloudflare’s global network. This facilitates tasks such as automating browser interactions, capturing screenshots, generating PDFs, and extracting data from web pages.
+
+## Integration Methods
+
+You can integrate Browser Rendering into your applications using one of the following methods:
+
+- **[REST API](/browser-rendering/rest-api/)**: Ideal for simple, stateless tasks like capturing screenshots, generating PDFs, extracting HTML content, and more.
+- **[Workers Bindings](/browser-rendering/workers-bindings/)**: Suitable for advanced browser automation within [Cloudflare Workers](/workers/). This method provides greater control, enabling more complex workflows and persistent sessions.
+
+Choose the method that best fits your use case. For example, use the [REST API endpoints](/browser-rendering/rest-api/) for straightforward tasks from external applications and use [Workers Bindings](/browser-rendering/workers-bindings/) for complex automation within the Cloudflare ecosystem.
+
+## Use Cases
+
+Browser Rendering can be utilized for various purposes, including:
+
+- Fetch HTML content of a page.
+- Capture screenshot of a webpage.
+- Convert a webpage into a PDF document.
+- Take a webpage snapshot.
+- Scrape specified HTML elements from a webpage.
+- Retrieve data in a structured format.
+- Extract Markdown content from a webpage.
+- Gather all hyperlinks found on a webpage.
+
+## Related products
+
+<RelatedProduct header="Workers" href="/workers/" product="workers">
+
+Build serverless applications and deploy instantly across the globe for exceptional performance, reliability, and scale.
+
+</RelatedProduct>
+
+<RelatedProduct header="Durable Objects" href="/durable-objects/" product="durable-objects">
+
+A globally distributed coordination API with strongly consistent storage.
+
+</RelatedProduct>
+
+<RelatedProduct header="Agents" href="/agents/" product="agents">
+
+Build and deploy AI-powered agents that can autonomously perform tasks.
+
+</RelatedProduct>
+
+## More resources
+
+<CardGrid>
+
+<LinkTitleCard
+	title="Get started"
+	href="/browser-rendering/get-started/"
+	icon="open-book"
+>
+	Deploy your first Browser Rendering project using Wrangler and Cloudflare's
+	version of Puppeteer.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Limits"
+	href="/browser-rendering/platform/limits/"
+	icon="document"
+>
+	Learn about Browser Rendering limits.
+</LinkTitleCard>
+
+<LinkTitleCard
+  title="Pricing"
+  icon="seti:shell"
+  href="/browser-rendering/platform/pricing/"
+>
+  Learn about Browser Rendering pricing.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Learning Path"
+	href="/learning-paths/workers/concepts/"
+	icon="pen"
+>
+	New to Workers? Get started with the Workers Learning Path.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Developer Discord"
+	href="https://discord.cloudflare.com"
+	icon="discord"
+>
+	Connect with the Workers community on Discord to ask questions, show what you
+	are building, and discuss the platform with other developers.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="@CloudflareDev"
+	href="https://x.com/cloudflaredev"
+	icon="x.com"
+>
+	Follow @CloudflareDev on Twitter to learn about product announcements, and
+	what is new in Cloudflare Workers.
+</LinkTitleCard>
+
+</CardGrid>

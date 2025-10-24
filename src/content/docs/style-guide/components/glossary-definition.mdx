@@ -1,0 +1,22 @@
+---
+title: Glossary definition
+styleGuide:
+  component: GlossaryDefinition
+---
+
+Use the this component to add extra information to an existing glossary entry. `term` defines which glossary entry you want to prepend information to, while `prepend=` adds the extra info.
+
+## Component
+
+```mdx live
+import { GlossaryDefinition } from "~/components"
+
+<GlossaryDefinition term="example" prepend="The definition for example is: " />
+```
+
+## Glossary
+
+import { Code } from "~/components"
+import glossary from "~/content/glossary/style-guide.yaml?raw"
+
+<Code title="/src/content/glossary/style-guide.yaml" code={glossary} lang="yaml" />

@@ -1,0 +1,36 @@
+---
+import { z } from "astro:schema";
+
+type Props = z.infer<typeof props>;
+
+const props = z.object({
+	author: z.string(),
+	platform: z.string(),
+	link: z.string(),
+});
+
+const { author, platform, link } = props.parse(Astro.props);
+---
+
+<div class="not-content">
+	<p>
+		<strong>
+			<a href="/developer-spotlight/">Developer Spotlight</a> community contribution
+		</strong>
+	</p>
+	<p>
+		<strong>Written by: </strong>{author}
+	</p>
+	<p>
+		<strong>Profile: </strong>
+		<a href={link}>
+			{platform}
+		</a>
+	</p>
+</div>
+
+<style>
+	a {
+		color: var(--sl-color-text-accent);
+	}
+</style>

@@ -1,0 +1,45 @@
+releaseNotes: >-
+  This release contains a number of exciting new features and several
+  improvements and bug fixes.
+
+
+  **Notable updates**
+
+  - Added the ability for the Client to display Gateway NETWORK and HTTP block
+  notifications to the user.
+
+  - Added the ability for administrators to specify multiple configurations in
+  MDM files that users can toggle between. This allows users to more easily
+  switch between production and test environments or for China users to switch
+  between their override endpoints within the UI.
+
+  - Added the ability for administrators to allow their end users to temporarily
+  obtain access to local network resources in the event their home IP space
+  overlaps with traffic normally routed through the WARP tunnel.
+
+  - Improved existing re-auth notifications to be more visible and time
+  sensitive.
+
+  - Improved the handling of DNS server addresses to avoid conflicts with
+  Windows OS setting of DHCP-sourced DNS server addresses.
+
+  - Improved the retry mechanisms for DEX test results.
+
+  - Improved the Device Posture Firewall check on Windows to ensure that all
+  policy stores are checked.
+
+  - Fixed an issue where DEX tests would run before the client was fully
+  connected.
+
+
+  **Known issues**
+
+  - When `Install CA to system certificate store` is enabled, the certificate is
+  not always properly left behind in
+  `%ProgramData%\Cloudflare\installed_cert.pem`. This issue will be fixed in a
+  future release.
+version: 2024.1.159.0
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2024.1.159.0
+packageSize: 115130368
+releaseDate: 2024-01-24T18:44:43.138Z
+platformName: Windows

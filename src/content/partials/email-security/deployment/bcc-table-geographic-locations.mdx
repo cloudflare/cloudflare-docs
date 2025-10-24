@@ -1,0 +1,17 @@
+---
+{}
+
+---
+
+Select from the following BCC addresses to process email in the correct geographic location.
+
+| Host                                        | Location                | Note                                                                                                               |
+| ---------------------------------------------------------------------- | ----------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| `<customer_name>@journaling.mxrecord.io`                               | US                      | Best option to ensure all email traffic processing happens US data centers.                                        |
+| `<customer_name>@journaling.mailstream-eu-primary.mxrecord.io`         | EU                      | Best option to ensure all email traffic processing happens in Germany, with backup to US data centers.           |
+| `<customer_name>@journaling.mailstream-eu1.mxrecord.io`                | EU                      | Best option to ensure all email traffic processing happens within the EU without backup to US data centers.      |
+| `<customer_name>@journaling.mailstream-bom.mxrecord.mx`                | India                   | Best option to ensure all email traffic processing happens within India.                                           |
+| `<customer_name>@journaling.mailstream-india-primary.mxrecord.mx`      | India                   | Same as `mailstream-bom.mxrecord.mx`, with backup to US data centers.                                            |
+| `<customer_name>@journaling.mailstream-asia.mxrecord.mx`               | India                   | Best option to ensure all email traffic processing happens in India, with Australia data centers as backup.                                                            |
+| `<customer_name>@journaling.mailstream-syd.area1.cloudflare.net`       | Australia / New Zealand | Best option to ensure all email traffic processing happens within Australia.                                       |
+| `<customer_name>@journaling.mailstream-australia.area1.cloudflare.net` | Australia / New Zealand | Best option to ensure all email traffic processing happens in Australia, with India and US data centers as backup. |

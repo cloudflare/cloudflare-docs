@@ -1,0 +1,24 @@
+---
+title: Configure routes
+pcx_content_type: learning-unit
+sidebar:
+  order: 2
+---
+
+import { Render } from "~/components"
+
+<Render
+	file="routing/configure-routes"
+	product="networking-services"
+	params={{
+		magicWord: "Magic Transit",
+		trafficSteeringPage: "/magic-transit/reference/traffic-steering/",
+		productName: "Magic Transit",
+		tunnelEndpoints: "/magic-transit/how-to/configure-tunnel-endpoints/",
+		routePrioritization: "/magic-transit/reference/traffic-steering/#route-prioritization",
+		chooseWeights: "/magic-transit/reference/traffic-steering/#set-priority-and-weights-for-static-routes",
+		publicAsnMT: "[Public ASNs used for Magic Transit](/magic-transit/how-to/advertise-prefixes/#cloudflare-asn-vs-your-own-asn) are verified during the onboarding process.",
+		productGatewayOrEgress: "Magic Transit with Egress",
+		dashButtonPath: "/?to=/:account/magic-transit/configuration"
+	}}
+/>

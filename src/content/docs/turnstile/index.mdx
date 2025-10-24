@@ -1,0 +1,110 @@
+---
+title: Cloudflare Turnstile
+pcx_content_type: overview
+sidebar:
+  order: 1
+head:
+  - tag: title
+    content: Overview
+---
+
+import {
+	Description,
+	Feature,
+	FeatureTable,
+	LinkButton,
+	Plan,
+	RelatedProduct,
+	Render,
+	CardGrid,
+	LinkTitleCard,
+} from "~/components";
+
+<Description>
+
+Cloudflare's smart CAPTCHA alternative.
+
+</Description>
+
+Turnstile can be embedded into any website without sending traffic through Cloudflare and works without showing visitors a CAPTCHA.
+
+![Turnstile Overview](~/assets/images/turnstile/turnstile-overview.png)
+
+<Render file="challenge-behavior" product="turnstile" />
+
+## How Turnstile works
+
+Turnstile adapts the challenge outcome to the individual visitor or browser. First, we run a series of small non-interactive JavaScript challenges to gather signals about the visitor or browser environment.
+
+These challenges include proof-of-work, proof-of-space, probing for web APIs, and various other challenges for detecting browser-quirks and human behavior. As a result, we can fine-tune the difficulty of the challenge to the specific request and avoid showing a visual or interactive puzzle to a user.
+
+:::note
+For detailed information on Turnstile's data privacy practices, refer to the [Turnstile Privacy Addendum](https://www.cloudflare.com/turnstile-privacy-policy/).
+:::
+
+### Widget types
+
+Turnstile [widget types](/turnstile/concepts/widget/) include:
+
+- **Non-interactive**: Visitors never need to interact with the widget.
+- **Managed**: Visitors are presented with an interactive checkbox if they are a suspected bot.
+- **Invisible**: The widget is completely hidden from the visitor.
+
+---
+
+## Accessibility
+
+Turnstile is WCAG 2.1 AA compliant.
+
+---
+
+## Features
+
+<Feature header="Turnstile Analytics" href="/turnstile/turnstile-analytics/">
+	Assess the number of challenges issued, evaluate the [challenge solve
+	rate](/cloudflare-challenges/reference/challenge-solve-rate/), and view the
+	metrics of issued challenges.
+</Feature>
+
+<Feature
+	header="Pre-clearance"
+	href=" /cloudflare-challenges/concepts/clearance/#pre-clearance-support-in-turnstile"
+>
+	Integrate Cloudflare challenges on single-page applications (SPAs) by allowing
+	Turnstile to issue a Pre-Clearance cookie.
+</Feature>
+
+---
+
+## Related products
+
+<RelatedProduct header="Bots" href="/bots/" product="bots">
+	Cloudflare bot solutions identify and mitigate automated traffic to protect
+	your domain from bad bots.
+</RelatedProduct>
+
+<RelatedProduct
+	header="DDoS Protection"
+	href="/ddos-protection/"
+	product="ddos-protection"
+>
+	Detect and mitigate Distributed Denial of Service (DDoS) attacks using
+	Cloudflare's Autonomous Edge.
+</RelatedProduct>
+
+<RelatedProduct header="WAF" href="/waf/" product="waf">
+	Get automatic protection from vulnerabilities and the flexibility to create
+	custom rules.
+</RelatedProduct>
+
+---
+
+## More resources
+
+<CardGrid>
+<LinkTitleCard title="Plans" href="/turnstile/plans/" icon="document">
+
+Learn more about Turnstile's plan availability.
+
+</LinkTitleCard>
+</CardGrid>

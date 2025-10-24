@@ -1,0 +1,72 @@
+---
+pcx_content_type: concept
+title: How Python Workers Work
+sidebar:
+  order: 1
+head:
+  - tag: title
+    content: How Python Workers Work
+
+---
+
+import { Render, WranglerConfig } from "~/components"
+
+Workers written in Python are executed by [Pyodide](https://pyodide.org/en/stable/index.html). Pyodide is a port of [CPython](https://github.com/python) (the reference implementation of Python — commonly referred to as just "Python") to WebAssembly.
+
+When you write a Python Worker, your code is interpreted directly by Pyodide, within a V8 isolate. Refer to [How Workers works](/workers/reference/how-workers-works/) to learn more.
+
+## Local Development Lifecycle
+
+```python
+from workers import Response, WorkerEntrypoint
+
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        return Response("Hello world!")
+```
+
+…with a [Wrangler configuration file](/workers/wrangler/configuration/) that points to a .py file:
+
+<WranglerConfig>
+
+```toml
+name = "hello-world-python-worker"
+main = "src/entry.py"
+compatibility_date = "2024-04-01"
+```
+
+</WranglerConfig>
+
+When you run `npx wrangler@latest dev` in local dev, the Workers runtime will:
+
+1. Determine which version of Pyodide is required, based on your compatibility date
+2. Create a new v8 isolate for your Worker, and automatically inject Pyodide
+3. Serve your Python code using Pyodide
+
+There no extra toolchain or precompilation steps needed. The Python execution environment is provided directly by the Workers runtime, mirroring how Workers written in JavaScript work.
+
+Refer to the [Python examples](/workers/languages/python/examples/) to learn how to use Python within Workers.
+
+## Deployment Lifecycle
+
+To reduce cold start times, when you deploy a Python Worker, Cloudflare performs as much of the expensive work as possible upfront, at deploy time. When you run npx `wrangler@latest deploy`, the following happens:
+
+1. Wrangler uploads your Python code and any vendored packages to the Workers API.
+2. Cloudflare sends your Python code, and any vendored packages to the Workers runtime to be validated.
+3. Cloudflare creates a new v8 isolate for your Worker, and automatically injects Pyodide plus any built-in packages requested by your bundle.
+4. Cloudflare scans the Worker’s code for import statements, execute them, and then take a snapshot of the Worker’s WebAssembly linear memory. Effectively, we perform the expensive work of importing packages at deploy time, rather than at runtime.
+5. Cloudflare deploys this snapshot alongside your Worker’s Python code to the Cloudflare network.
+
+<Render file="python-workers-beta-packages" product="workers" />
+
+When a request comes in to your Worker, we load this snapshot and use it to bootstrap your Worker in an isolate, avoiding expensive initialization time:
+
+![Diagram of how Python Workers are deployed to Cloudflare](~/assets/images/workers/languages/python/python-workers-deployment.png)
+
+Refer to the [blog post introducing Python Workers](https://blog.cloudflare.com/python-workers) for more detail about performance optimizations and how the Workers runtime will reduce cold starts for Python Workers.
+
+## Pyodide and Python versions
+
+A new version of Python is released every year in August, and a new version of Pyodide is released six (6) months later. When this new version of Pyodide is published, we will add it to Workers by gating it behind a Compatibility Flag, which is only enabled after a specified Compatibility Date. This lets us continually provide updates, without risk of breaking changes, extending the commitment we’ve made for JavaScript to Python.
+
+Each Python release has a [five (5) year support window](https://devguide.python.org/versions/). Once this support window has passed for a given version of Python, security patches are no longer applied, making this version unsafe to rely on. To mitigate this risk, while still trying to hold as true as possible to our commitment of stability and long-term support, after five years any Python Worker still on a Python release that is outside of the support window will be automatically moved forward to the next oldest Python release. Python is a mature and stable language, so we expect that in most cases, your Python Worker will continue running without issue. But we recommend updating the compatibility date of your Worker regularly, to stay within the support window.

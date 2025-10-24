@@ -1,0 +1,37 @@
+releaseNotes: >-
+  This release contains no new features and is focused exclusively on
+  improvements.
+
+
+  **Notable updates**
+
+  - Windows client downloads will now contain version numbers in the file name
+  to allow easy identification.
+
+  - Enabled re-authentication and other notifications to always be shown
+  (without sound) regardless of Windows Focus Assist settings.
+
+  - Suppressed the GUI certificate error message "Limited connectivity: A
+  certificate missing; please contact your administrator" for a scenario where
+  it was not needed.
+
+  - Improved the re-connection logic to minimize impact to existing tunneled TCP
+  sessions.
+
+  - Corrected an issue where the DNS server information was being improperly
+  persisted across network changes.
+
+  - Increased the data collected by warp-diag to improve debugging capabilities.
+
+
+  **Known issues**
+
+  - When `Install CA to system certificate store` is enabled, the certificate is
+  not always properly left behind in
+  `%ProgramData%\Cloudflare\installed_cert.pem`. This issue will be fixed in a
+  future release.
+version: 2024.3.409.0
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2024.3.409.0
+packageSize: 116297728
+releaseDate: 2024-03-29T22:35:59.309Z
+platformName: Windows

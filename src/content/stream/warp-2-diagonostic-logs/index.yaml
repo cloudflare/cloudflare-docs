@@ -1,0 +1,655 @@
+---
+id: c29964ab3dcf7c3432ebb2b4e93c3aca
+url: warp-2-diagnostic-logs
+title: WARP - Understand Cloudflare WARP through diagnostic logs
+description: In this more advanced episode, we explain how to use warp-diag files to identify and resolve connection issues with the WARP client. You will learn how to locate and interpret three key files - warp-status, warp-settings, and daemonlog. The video also provides troubleshooting tips, including specific keyword searches and guidance on how to cross-reference logs to identify a bigger picture of the problem.
+pcx_content_type: video
+products:
+  - zero-trust-warp
+  - cloudflare-one
+thumbnail:
+  url: https://pub-d9bf66e086fb4b639107aa52105b49dd.r2.dev/Warp-diagnostics%20thumbnail.png
+chapters:
+  {
+    00:00 Introduction": "0s",
+    "What are warp-diag files?": "44s",
+    "How to download and navigate warp-diag files": "01m16s",
+    "warp-statustxt": "02m06s",
+    "warp-settingstxt": "02m29s",
+    "daemonlog": "03m37s",
+    "Additonal tips": "08m07s",
+    "Conclusion": "08m43s",
+  }
+transcript: |
+
+  WEBVTT
+
+  STYLE
+  ::cue(v[voice="Speaker1"]) { color: white }
+
+  1
+  00:00:07.360 --> 00:00:09.280
+  <v Speaker1>Hi, I'm Jess from Cloudflare.</v>
+
+  2
+  00:00:09.440 --> 00:00:14.320
+  <v Speaker1>Welcome. This is a WARP troubleshooting video
+  where you'll learn how to interpret warp-diag</v>
+
+  3
+  00:00:14.640 --> 00:00:19.600
+  <v Speaker1>files. This is a more advanced episode,
+  so if you come across any concepts you aren't</v>
+
+  4
+  00:00:19.600 --> 00:00:24.560
+  <v Speaker1>fully familiar with, we also have a WARP
+  basics video that brings you up to speed.</v>
+
+  5
+  00:00:24.680 --> 00:00:27.520
+  <v Speaker1>And as always, our support team will be here
+  to help.</v>
+
+  6
+  00:00:27.720 --> 00:00:29.160
+  <v Speaker1>Here's what we will go through.</v>
+
+  7
+  00:00:29.560 --> 00:00:31.200
+  <v Speaker1>What are warp-diag files?</v>
+
+  8
+  00:00:31.640 --> 00:00:34.360
+  <v Speaker1>How to download and navigate the warp-diag
+  files,</v>
+
+  9
+  00:00:35.000 --> 00:00:39.920
+  <v Speaker1>warp-status file, warp-settings file,
+  daemon.log file,</v>
+
+  10
+  00:00:39.920 --> 00:00:42.440
+  <v Speaker1>and a few additional tips for analyzing them.</v>
+
+  11
+  00:00:42.800 --> 00:00:50.680
+  <v Speaker1>Let's get started. So what are warp-diag
+  files?</v>
+
+  12
+  00:00:51.040 --> 00:00:55.120
+  <v Speaker1>They contain valuable information about the
+  device connection status,</v>
+
+  13
+  00:00:55.120 --> 00:00:57.520
+  <v Speaker1>configuration, and WARP logs.</v>
+
+  14
+  00:00:57.880 --> 00:01:01.920
+  <v Speaker1>These files are your first line of defense
+  when troubleshooting any issues.</v>
+
+  15
+  00:01:02.830 --> 00:01:07.390
+  <v Speaker1>Each of these files serves different purposes
+  and contains specific information,</v>
+
+  16
+  00:01:07.390 --> 00:01:11.670
+  <v Speaker1>such as combination of logs and outputs
+  created when warp-diag runs.</v>
+
+  17
+  00:01:17.510 --> 00:01:19.990
+  <v Speaker1>Now where are the WARP files?</v>
+
+  18
+  00:01:20.350 --> 00:01:24.270
+  <v Speaker1>When WARP is installed,
+  a command line tool called warp-diag is also</v>
+
+  19
+  00:01:24.270 --> 00:01:30.270
+  <v Speaker1>installed. Simply running the command
+  warp-diag in a terminal will generate a zip</v>
+
+  20
+  00:01:30.270 --> 00:01:32.830
+  <v Speaker1>file and place it on the user's desktop.</v>
+
+  21
+  00:01:33.270 --> 00:01:37.510
+  <v Speaker1>Each time warp-diag is run,
+  a new set of logs will be generated,</v>
+
+  22
+  00:01:37.510 --> 00:01:42.710
+  <v Speaker1>and now we can start by unzipping the file
+  produced by warp-diag and opening its content</v>
+
+  23
+  00:01:42.710 --> 00:01:48.510
+  <v Speaker1>in a text editor. I'm using VS Code here,
+  but any other text editor will also work.</v>
+
+  24
+  00:01:48.870 --> 00:01:53.190
+  <v Speaker1>In this video, we'll only look at three
+  particularly useful ones for initial</v>
+
+  25
+  00:01:53.190 --> 00:01:57.030
+  <v Speaker1>troubleshooting: warp-status,
+  warp-settings,</v>
+
+  26
+  00:01:57.150 --> 00:02:02.190
+  <v Speaker1>and daemon.log. So now I'll walk you through
+  each of these files and tell you why they're</v>
+
+  27
+  00:02:02.190 --> 00:02:04.190
+  <v Speaker1>useful for troubleshooting.</v>
+
+  28
+  00:02:09.180 --> 00:02:11.620
+  <v Speaker1>First, let's take a look at warp-status.</v>
+
+  29
+  00:02:12.020 --> 00:02:13.620
+  <v Speaker1>This file is straightforward.</v>
+
+  30
+  00:02:13.620 --> 00:02:17.100
+  <v Speaker1>It contains the status of the client when
+  warp-diag was executed.</v>
+
+  31
+  00:02:17.300 --> 00:02:21.780
+  <v Speaker1>The connection status is useful to know when
+  you're analyzing any files that are outputs</v>
+
+  32
+  00:02:21.780 --> 00:02:25.340
+  <v Speaker1>of common command line tools such as listing
+  interfaces,</v>
+
+  33
+  00:02:25.460 --> 00:02:28.620
+  <v Speaker1>printing the routing table,
+  and current DNS configuration.</v>
+
+  34
+  00:02:28.820 --> 00:02:31.020
+  <v Speaker1>And that's it! On to warp-
+  settings.</v>
+
+  35
+  00:02:32.860 --> 00:02:37.660
+  <v Speaker1>This file contains all of the currently
+  active settings configured for the device,</v>
+
+  36
+  00:02:37.660 --> 00:02:39.820
+  <v Speaker1>such as the modes and device profile.</v>
+
+  37
+  00:02:40.500 --> 00:02:45.020
+  <v Speaker1>This file can help verify if the settings
+  you're making in a dashboard are actually</v>
+
+  38
+  00:02:45.020 --> 00:02:46.340
+  <v Speaker1>being applied locally.</v>
+
+  39
+  00:02:46.860 --> 00:02:50.940
+  <v Speaker1>We should always check this file to see if
+  there are any unexpected values.</v>
+
+  40
+  00:02:51.420 --> 00:02:55.700
+  <v Speaker1>For example, let's say the user you're
+  troubleshooting for is expected to have a</v>
+
+  41
+  00:02:55.700 --> 00:03:01.180
+  <v Speaker1>specific device profile like office users,
+  meaning their devices should be connected to</v>
+
+  42
+  00:03:01.220 --> 00:03:05.180
+  <v Speaker1>a corporate network. First,
+  confirm that warp -settings has the correct</v>
+
+  43
+  00:03:05.180 --> 00:03:09.090
+  <v Speaker1>profile ID. If the profile ID is not the
+  expected value,</v>
+
+  44
+  00:03:09.330 --> 00:03:13.210
+  <v Speaker1>this might be an indication that the user
+  isn't matching the rules you've defined in</v>
+
+  45
+  00:03:13.210 --> 00:03:15.250
+  <v Speaker1>your Cloudflare device profile settings.</v>
+
+  46
+  00:03:15.290 --> 00:03:19.770
+  <v Speaker1>Also, if any specific changes have been made
+  to the device profile settings,</v>
+
+  47
+  00:03:19.770 --> 00:03:23.930
+  <v Speaker1>you can use this file to ensure the user is
+  receiving those updates.</v>
+
+  48
+  00:03:23.970 --> 00:03:28.770
+  <v Speaker1>For example, if you've updated a device
+  profile to use the MASQUE tunneling type</v>
+
+  49
+  00:03:28.770 --> 00:03:32.730
+  <v Speaker1>instead of WireGuard,
+  you can verify that the user has received</v>
+
+  50
+  00:03:32.730 --> 00:03:36.130
+  <v Speaker1>that update and will indeed attempt to
+  connect via MASQUE.</v>
+
+  51
+  00:03:40.850 --> 00:03:45.410
+  <v Speaker1>Daemon.log is a fairly detailed file that
+  contains everything going on in WARP,</v>
+
+  52
+  00:03:45.650 --> 00:03:47.010
+  <v Speaker1>such as the debug logs.</v>
+
+  53
+  00:03:47.370 --> 00:03:50.890
+  <v Speaker1>But before we open the file,
+  what is the WARP daemon?</v>
+
+  54
+  00:03:51.010 --> 00:03:54.490
+  <v Speaker1>It's the background process of WARP,
+  also known as service,</v>
+
+  55
+  00:03:54.490 --> 00:03:56.254
+  <v Speaker1>depending on your operating system.</v>
+
+  56
+  00:03:56.254 --> 00:03:59.546
+  <v Speaker1>When WARP is installed,
+  it's installed as both daemon,</v>
+
+  57
+  00:03:59.546 --> 00:04:03.690
+  <v Speaker1>the background process,
+  and as a GUI, which is the interface you see</v>
+
+  58
+  00:04:03.730 --> 00:04:09.680
+  <v Speaker1>here. The GUI, warp-diag and warp-cli can all
+  communicate with the Daemon.</v>
+
+  59
+  00:04:10.360 --> 00:04:13.680
+  <v Speaker1>There are multiple Daemon.log files and their
+  name chronologically.</v>
+
+  60
+  00:04:14.240 --> 00:04:18.640
+  <v Speaker1>Daemon.log is the most recent,
+  and daemon.3 .log is the oldest.</v>
+
+  61
+  00:04:19.160 --> 00:04:20.520
+  <v Speaker1>Let's go over the file now.</v>
+
+  62
+  00:04:20.560 --> 00:04:24.600
+  <v Speaker1>Line by line, we'll look at how daemon.log
+  should look like when WARP connects as</v>
+
+  63
+  00:04:24.600 --> 00:04:28.600
+  <v Speaker1>expected. When WARP starts,
+  it prints out its version information,</v>
+
+  64
+  00:04:28.600 --> 00:04:33.760
+  <v Speaker1>so we'll start there. Search for the string
+  "warp _ service :</v>
+
+  65
+  00:04:33.760 --> 00:04:37.200
+  <v Speaker1>Version :" and look for the most recent
+  entry.</v>
+
+  66
+  00:04:37.560 --> 00:04:39.200
+  <v Speaker1>That should be your current session.</v>
+
+  67
+  00:04:39.360 --> 00:04:43.680
+  <v Speaker1>Our team is optimizing warp-diag constantly,
+  so the string we mentioned in this video</v>
+
+  68
+  00:04:43.720 --> 00:04:45.600
+  <v Speaker1>might change slightly in the future.</v>
+
+  69
+  00:04:45.760 --> 00:04:50.360
+  <v Speaker1>The registration contains all the necessary
+  information to connect the WARP client,</v>
+
+  70
+  00:04:50.360 --> 00:04:52.520
+  <v Speaker1>which is stored securely on the machine.</v>
+
+  71
+  00:04:53.520 --> 00:04:58.480
+  <v Speaker1>If the GUI detects a missing registration,
+  it may attempt to obtain one if configured to</v>
+
+  72
+  00:04:58.520 --> 00:05:02.680
+  <v Speaker1>do so. Otherwise, it'll display missing
+  registration.</v>
+
+  73
+  00:05:03.960 --> 00:05:07.400
+  <v Speaker1>Once the registration is loaded,
+  WARP will attempt to connect,</v>
+
+  74
+  00:05:07.400 --> 00:05:10.000
+  <v Speaker1>but only if configured to do so
+  automatically.</v>
+
+  75
+  00:05:10.560 --> 00:05:14.680
+  <v Speaker1>Otherwise, it will only attempt to connect if
+  it was previously connected.</v>
+
+  76
+  00:05:15.360 --> 00:05:20.440
+  <v Speaker1>After registration, WARP will then retrieve
+  the device profile remotely via an API.</v>
+
+  77
+  00:05:21.040 --> 00:05:24.960
+  <v Speaker1>This includes the device configurations and
+  mode that will be used.</v>
+
+  78
+  00:05:26.000 --> 00:05:30.120
+  <v Speaker1>It's very important to be aware that the
+  device profile can be further influenced by a</v>
+
+  79
+  00:05:30.120 --> 00:05:33.840
+  <v Speaker1>local configuration file,
+  which is used by an MDM provider,</v>
+
+  80
+  00:05:33.840 --> 00:05:35.560
+  <v Speaker1>such as Intune or Kandji.</v>
+
+  81
+  00:05:36.120 --> 00:05:39.480
+  <v Speaker1>For more information on Cloudflare MDM
+  configuration,</v>
+
+  82
+  00:05:39.480 --> 00:05:41.680
+  <v Speaker1>you can refer to our documentation.</v>
+
+  83
+  00:05:41.680 --> 00:05:45.280
+  <v Speaker1>At this point, which components connect is
+  determined by the mode.</v>
+
+  84
+  00:05:46.480 --> 00:05:51.640
+  <v Speaker1>If the mode contains the Tunnel component,
+  for example Secure web gateway without DNS</v>
+
+  85
+  00:05:51.680 --> 00:05:58.080
+  <v Speaker1>filtering, we'll see "Initiate WARP." if the
+  mode contains the DNS component like Gateway</v>
+
+  86
+  00:05:58.080 --> 00:06:00.800
+  <v Speaker1>with DoH, we'll see "Initiate DNS".</v>
+
+  87
+  00:06:01.640 --> 00:06:06.120
+  <v Speaker1>If it contains both, like Gateway with WARP
+  will eventually see both.</v>
+
+  88
+  00:06:06.880 --> 00:06:08.240
+  <v Speaker1>Let's now review each.</v>
+
+  89
+  00:06:10.000 --> 00:06:13.480
+  <v Speaker1>Starting with initiate WARP for modes with
+  the Tunnel component.</v>
+
+  90
+  00:06:14.110 --> 00:06:16.590
+  <v Speaker1>The Tunnel component includes a firewall.</v>
+
+  91
+  00:06:16.990 --> 00:06:21.550
+  <v Speaker1>It starts off by allowing the tunnel endpoint
+  through the firewall and attempting to</v>
+
+  92
+  00:06:21.550 --> 00:06:28.150
+  <v Speaker1>connect it. When connecting the tunnel,
+  WARP attempts to connect to both IPv4 and</v>
+
+  93
+  00:06:28.190 --> 00:06:30.070
+  <v Speaker1>IPv6 at the same time.</v>
+
+  94
+  00:06:30.350 --> 00:06:34.150
+  <v Speaker1>This makes sure the end user will be
+  connected as fast as possible,</v>
+
+  95
+  00:06:34.350 --> 00:06:36.790
+  <v Speaker1>and this process is called Happy Eyeballs.</v>
+
+  96
+  00:06:37.430 --> 00:06:42.230
+  <v Speaker1>Once connected, a network interface is
+  created and it begins the task of updating</v>
+
+  97
+  00:06:42.230 --> 00:06:46.710
+  <v Speaker1>the routing table and the firewall according
+  to the exclude or include split tunnel</v>
+
+  98
+  00:06:46.710 --> 00:06:50.470
+  <v Speaker1>entries. These entries can be either domains
+  or IPs.</v>
+
+  99
+  00:06:50.910 --> 00:06:54.310
+  <v Speaker1>WARP will update the routing table
+  immediately for any IPs,</v>
+
+  100
+  00:06:54.310 --> 00:06:59.030
+  <v Speaker1>but for domains, it will rely on a DNS
+  resolution for these domains and will update</v>
+
+  101
+  00:06:59.030 --> 00:07:00.990
+  <v Speaker1>the routing table upon completion.</v>
+
+  102
+  00:07:01.110 --> 00:07:05.030
+  <v Speaker1>Once that's completed,
+  WARP performs two connectivity tests,</v>
+
+  103
+  00:07:05.270 --> 00:07:07.550
+  <v Speaker1>one in the tunnel and one out of the tunnel.</v>
+
+  104
+  00:07:08.470 --> 00:07:12.710
+  <v Speaker1>Moving on to initiate DNS and this is for
+  modes with DNS component.</v>
+
+  105
+  00:07:13.270 --> 00:07:17.740
+  <v Speaker1>For DNS, WARP will set itself as the default
+  DNS global provider,</v>
+
+  106
+  00:07:17.740 --> 00:07:23.620
+  <v Speaker1>and forward all DNS requests to Cloudflare
+  via DNS over HTTPS or DoH.</v>
+
+  107
+  00:07:24.340 --> 00:07:27.300
+  <v Speaker1>And in order to do that,
+  the following sequence needs to complete</v>
+
+  108
+  00:07:27.300 --> 00:07:31.820
+  <v Speaker1>successfully. First, attempt to connect to
+  the DoH endpoint.</v>
+
+  109
+  00:07:32.900 --> 00:07:36.900
+  <v Speaker1>Second, receive a DNS response from that DoH
+  endpoint.</v>
+
+  110
+  00:07:38.060 --> 00:07:43.740
+  <v Speaker1>Third, bind to localhost on 127.0.2.2 and
+  127.0.2.3.</v>
+
+  111
+  00:07:44.860 --> 00:07:49.460
+  <v Speaker1>Fourth, update the system to use these IP's
+  as the DNS provider.</v>
+
+  112
+  00:07:50.220 --> 00:07:54.540
+  <v Speaker1>If all four steps happen without error,
+  WARP then performs a series of DNS</v>
+
+  113
+  00:07:54.540 --> 00:07:59.340
+  <v Speaker1>connectivity checks. These are end to end
+  tests which confirm that WARP is successfully</v>
+
+  114
+  00:07:59.340 --> 00:08:03.780
+  <v Speaker1>receiving DNS requests,
+  forwarding them to Cloudflare for resolution,</v>
+
+  115
+  00:08:03.940 --> 00:08:05.900
+  <v Speaker1>and receiving a valid response.</v>
+
+  116
+  00:08:06.380 --> 00:08:09.140
+  <v Speaker1>Here are some additional tips to make
+  troubleshooting easier.</v>
+
+  117
+  00:08:11.060 --> 00:08:15.340
+  <v Speaker1>You should use the search function in your
+  text editor to quickly locate terms like</v>
+
+  118
+  00:08:15.340 --> 00:08:17.740
+  <v Speaker1>error, DNS, or disconnected.</v>
+
+  119
+  00:08:18.530 --> 00:08:21.570
+  <v Speaker1>Also look for patterns such as repeated
+  entries.</v>
+
+  120
+  00:08:21.810 --> 00:08:23.850
+  <v Speaker1>These can point to specific issues.</v>
+
+  121
+  00:08:24.450 --> 00:08:27.850
+  <v Speaker1>And finally cross-referencing files from warp
+  -settings,</v>
+
+  122
+  00:08:28.010 --> 00:08:31.930
+  <v Speaker1>warp-s tatus and daemon.log can reveal
+  insights and a bigger picture.</v>
+
+  123
+  00:08:32.690 --> 00:08:36.170
+  <v Speaker1>For example, if warp -status shows
+  disconnected,</v>
+
+  124
+  00:08:36.410 --> 00:08:41.090
+  <v Speaker1>check daemon.log for error details and warp
+  -settings for potential misconfigurations.</v>
+
+  125
+  00:08:45.930 --> 00:08:49.890
+  <v Speaker1>There are other files that provide more
+  specific information depending on your issue.</v>
+
+  126
+  00:08:50.290 --> 00:08:55.050
+  <v Speaker1>Our team is optimizing warp-diag constantly,
+  so you might find more files in the future.</v>
+
+  127
+  00:08:55.410 --> 00:08:58.250
+  <v Speaker1>For an updated view on what you can find in
+  which file,</v>
+
+  128
+  00:08:58.370 --> 00:09:02.610
+  <v Speaker1>check out our troubleshooting guide. You now
+  understand the basics of warp-diag .</v>
+
+  129
+  00:09:02.770 --> 00:09:05.850
+  <v Speaker1>If you're still experiencing issues after
+  following these steps,</v>
+
+  130
+  00:09:05.850 --> 00:09:08.250
+  <v Speaker1>don't hesitate to reach out to our support
+  team.</v>
+
+  131
+  00:09:08.290 --> 00:09:09.610
+  <v Speaker1>We're always here to help.</v>
+
+  132
+  00:09:09.930 --> 00:09:11.930
+  <v Speaker1>Thanks for watching and see you soon.</v>

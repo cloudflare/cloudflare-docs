@@ -1,0 +1,51 @@
+---
+title: Get started
+pcx_content_type: get-started
+sidebar:
+  order: 2
+head: []
+description: Learn how to enable Argo Smart Routing in the Cloudflare dashboard.
+---
+
+import { Render, TabItem, Tabs, DashButton } from "~/components";
+
+<Render file="smart-shield-callout" product="smart-shield" />
+
+Argo Smart Routing is a one-click solution to speed up your global traffic.
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+To enable [Argo Smart Routing](https://dash.cloudflare.com/?to=/:account/:zone/traffic) in the dashboard:
+
+1. In the Cloudflare dashboard, go to the **Argo Smart Routing** page.
+
+   <DashButton url="/?to=/:account/:zone/traffic" />
+
+2. For **Argo Smart Routing**, switch the toggle to **On**.
+3. Provide your billing information.
+
+   - If you do not have a [billing profile](/billing/create-billing-profile/), enter your billing information.
+
+   - If you have a billing profile, confirm your billing information.
+
+</TabItem> <TabItem label="API">
+
+To enable or disable Argo Smart Routing with the API, send a [`PATCH`](/api/resources/argo/subresources/smart_routing/methods/edit/) request with the `value` parameter set to your desired setting (`"on"` or `"off"`).
+
+You will need to already have a [billing profile](/billing/create-billing-profile/) on your account to enable Argo Smart Routing.
+
+</TabItem> </Tabs>
+
+<Render file="non-contract-enablement" product="fundamentals" />
+
+## Billing
+
+If Cloudflare mitigates attacks on your site - whether through DDoS protection, the WAF, or other mechanisms - that traffic will not be included in any charges for Argo Smart Routing.
+
+<Render file="ubb-recommendation" product="fundamentals" />
+
+## Enable Tiered Cache
+
+[Cache](/cache/) works by storing a copy of website content at Cloudflare's data centers. [Tiered Cache](/cache/how-to/tiered-cache/) divides these data centers into a hierarchy based on location. This behavior allows Cloudflare to deliver content from data centers closest to your visitor.
+
+Argo Smart Routing and Tiered Cache work together to provide the most efficient connection for visitors to your site. For more information, go to [Tiered Cache](/cache/how-to/tiered-cache/).

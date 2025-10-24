@@ -1,0 +1,143 @@
+---
+import { marked } from "marked";
+import { getGlossaryEntries } from "~/util/glossary";
+
+interface Props {
+	product?: string;
+}
+
+const { product } = Astro.props;
+
+let terms = await getGlossaryEntries(product);
+
+terms = terms.sort((a, b) => a.term.localeCompare(b.term));
+
+const INITIAL_VISIBLE_ROWS = 20;
+---
+
+<div class="my-4">
+	<input
+		type="text"
+		id="glossary-search"
+		placeholder="Search terms..."
+		class="focus:ring-cl1-brand-orange w-full rounded-md border border-gray-300 px-4 py-2 focus:border-transparent focus:ring-2 focus:outline-none"
+	/>
+</div>
+<table id="glossary-table" class="table-fixed">
+	<thead>
+		<tr>
+			<th class="min-w-64">Term</th>
+			<th class="w-full">Definition</th>
+			{!product && <th class="min-w-48">Product</th>}
+		</tr>
+	</thead>
+	<tbody>
+		{
+			terms.map((entry, idx) => (
+				<tr class:list={[{ hidden: idx > INITIAL_VISIBLE_ROWS }]}>
+					<td>{entry.term}</td>
+					<td
+						set:html={marked.parse(
+							entry.general_definition.charAt(0).toUpperCase() +
+								entry.general_definition.slice(1),
+						)}
+					/>
+					{!product && <td>{entry.product}</td>}
+				</tr>
+			))
+		}
+	</tbody>
+</table>
+
+{
+	terms.length > INITIAL_VISIBLE_ROWS && (
+		<div class="flex items-center justify-center">
+			<button
+				id="glossary-button"
+				class="bg-cl1-brand-orange text-cl1-black h-12 cursor-pointer rounded-sm px-6 font-medium"
+			>
+				View more terms
+			</button>
+		</div>
+	)
+}
+
+<script>
+	const button = document.querySelector<HTMLAnchorElement>("#glossary-button");
+	const searchInput =
+		document.querySelector<HTMLInputElement>("#glossary-search");
+	const table = document.querySelector<HTMLTableElement>("#glossary-table");
+
+	let isSearching = false;
+
+	function showRows() {
+		if (!table) return;
+
+		const rows =
+			table.querySelectorAll<HTMLTableRowElement>("tbody > tr.hidden");
+
+		if (!rows) return;
+		if (rows.length === 0) {
+			button?.classList.add("hidden");
+		}
+		const extraRows = Array.from(rows).slice(0, 20);
+
+		extraRows.forEach((row) => row.classList.remove("hidden"));
+	}
+
+	function filterRows(searchTerm: string) {
+		if (!table) return;
+
+		const rows = table.querySelectorAll<HTMLTableRowElement>("tbody > tr");
+		const normalizedSearchTerm = searchTerm.toLowerCase().trim();
+
+		isSearching = normalizedSearchTerm.length > 0;
+
+		if (button) {
+			if (isSearching) {
+				button.classList.add("hidden");
+			} else {
+				const hiddenRows =
+					table.querySelectorAll<HTMLTableRowElement>("tbody > tr.hidden");
+				if (hiddenRows.length > 0) {
+					button.classList.remove("hidden");
+				}
+			}
+		}
+
+		let index = 0;
+		for (const row of rows) {
+			if (isSearching) {
+				const rowText = row.textContent?.toLowerCase() || "";
+				const matches = rowText.includes(normalizedSearchTerm);
+
+				if (matches) {
+					row.classList.remove("hidden");
+				} else {
+					row.classList.add("hidden");
+				}
+			} else {
+				if (index > 20) {
+					row.classList.add("hidden");
+				} else {
+					row.classList.remove("hidden");
+				}
+			}
+			index++;
+		}
+	}
+
+	if (button) {
+		button.addEventListener("click", (e) => {
+			e.preventDefault();
+			showRows();
+		});
+	}
+
+	if (searchInput) {
+		searchInput.addEventListener("input", (e) => {
+			const target = e.target as HTMLInputElement;
+			filterRows(target.value);
+		});
+	}
+</script>

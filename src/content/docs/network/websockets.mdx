@@ -1,0 +1,76 @@
+---
+pcx_content_type: concept
+source: https://support.cloudflare.com/hc/en-us/articles/200169466-Using-Cloudflare-with-WebSockets
+title: WebSockets
+---
+
+import { FeatureTable, TabItem, Tabs } from "~/components";
+
+Cloudflare supports proxied WebSocket connections without additional configuration.
+
+## Background
+
+WebSockets are open connections sustained between the client and the origin server. Inside a WebSockets connection, the client and the origin can pass data back and forth without having to reestablish sessions. This makes exchanging data within a WebSockets connection fast. WebSockets are often used for real-time applications such as live chat and gaming.
+
+## Enable WebSockets
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+To enable **WebSockets** connections to your origin server in the dashboard:
+
+1. Log in to your [Cloudflare account](https://dash.cloudflare.com) and go to a specific domain.
+2. Go to **Network**.
+3. For **WebSockets**, switch the toggle to **On**.
+
+</TabItem> <TabItem label="API">
+
+To enable **WebSockets** connections to your origin server with the API, send a [`PATCH`](/api/resources/zones/subresources/settings/methods/edit/) request with `websockets` as the setting name in the URI path, and the `value` parameter set to `"on"`.
+
+</TabItem> </Tabs>
+
+## Compatibility notes
+
+| Product                                  | Compatible | Notes                                                                                                                                                                                                                                                            |
+| ---------------------------------------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Argo](/argo-smart-routing/)             | No         | Argo is not compatible with WebSockets.                                                                                                   |
+| [SSL](/ssl/)                             | Yes        |                                                                                                                                                                                                                                                                  |
+| [WAF](/waf/)                             | Yes\*      | The initial HTTP 101 request is subject to WAF managed rules, custom rules, rate limiting rules, and other WAF features like any other WebSockets connection. However, once a connection has been established, the WAF does not perform any further inspections. |
+| [Workers](/workers/examples/websockets/) | Yes        | You can also use [Durable Objects](/durable-objects/) as an endpoint for WebSocket sessions, giving you full control over messages sent to and from clients.                                                                                                     |
+
+:::note
+
+Cloudflare also supports [ASP.NET SignalR](http://signalr.net/), which helps negotiate which transport method to use (long polling or WebSockets).
+
+:::
+
+## Availability
+
+WebSockets are supported on all Cloudflare plans.
+
+## Requests and Bandwidth measurement
+
+Given the nature of WebSocket connections, you may notice they differ from typical HTTP traffic in terms of requests and bandwidth usage. If you are an Enterprise customer, it is important to consider how Cloudflare measures requests and bandwidth to accurately estimate your usage.
+
+Cloudflare measures a single WebSocket connection in the following way:
+
+- **Requests**: Cloudflare recognizes only the initial upgrade request per WebSocket connection as an HTTP request. Even though you can send a bidirectional message stream through the established WebSocket connection, it will be counted as a single long-lived HTTP request.
+
+- **Bandwidth**: Cloudflare measures data transfer sent from Cloudflare to the client. This typically means that messages from the WebSocket server behind Cloudflare to the WebSocket client are counted towards bandwidth usage.
+
+Once a WebSocket connection is closed, you can view your aggregated WebSocket usage through [Traffic Analytics](/analytics/account-and-zone-analytics/zone-analytics/#traffic), the [GraphQL Analytics API](/analytics/graphql-api/), and [HTTP requests logs](/logs/logpush/logpush-job/datasets/zone/http_requests/).
+
+## Technical note
+
+When Cloudflare releases new code to its global network, we may restart servers, which terminates WebSockets connections.
+
+### Best practices
+
+- Implement a [keepalive](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_servers#pings_and_pongs_the_heartbeat_of_websockets).
+- Review and then remove or extend timeout settings on the origin and/or on the client.
+
+### Troubleshooting
+
+Investigating issues with Websocket can be facilitated with client tools like [wscat](https://github.com/websockets/wscat).
+Being able to reproduce an issue on a single URL with a minimalistic tool helps narrowing down the issue.
+
+The `EdgeStartTimestamp` and `EdgeStopTimestamp` fields in [HTTP requests logs](/logs/logpush/logpush-job/datasets/zone/http_requests/) represent the duration of the WebSocket connection (they do not represent the initial HTTP connection).

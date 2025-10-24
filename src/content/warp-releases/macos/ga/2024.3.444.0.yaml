@@ -1,0 +1,17 @@
+releaseNotes: >-
+  This is a macOS only hot fix from the 2024.3.407.0 release.
+
+
+  **Notable updates**
+
+  - Fixed an issue by correcting the WARP client setting of macOS firewall
+  rules. This relates to TunnelVision (CVE-2024-3661).
+
+
+  **Known issues**
+   - No known issues.
+version: 2024.3.444.0
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2024.3.444.0
+packageSize: 73556157
+releaseDate: 2024-05-08T23:21:59.630Z
+platformName: macOS

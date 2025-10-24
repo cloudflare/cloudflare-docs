@@ -1,0 +1,36 @@
+---
+import { getCollection } from "astro:content";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import { marked } from "marked";
+
+const versions = await getCollection("pages-build-environment");
+---
+
+<Tabs>
+	{
+		versions.reverse().map((version) => (
+			<TabItem label={version.id}>
+				<table>
+					<tbody>
+						<tr>
+							<td>
+								<strong>Build environment</strong>
+							</td>
+							<td
+								set:html={marked.parse(
+									version.data.build_environment.operating_system,
+								)}
+							/>
+						</tr>
+						<tr>
+							<td>
+								<strong>Architecture</strong>
+							</td>
+							<td>{version.data.build_environment.architecture}</td>
+						</tr>
+					</tbody>
+				</table>
+			</TabItem>
+		))
+	}
+</Tabs>

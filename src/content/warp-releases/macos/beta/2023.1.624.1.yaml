@@ -1,0 +1,27 @@
+releaseNotes: >-
+  This release contains bug fixes and new features from the previous Beta
+  release.
+   
+  **Notable updates**
+
+  - Improved user validation logic during manual ZT login.
+
+  - Fixed issue where the WARP daemon can crash and lose connectivity.
+
+  - Fixed issue where warp-diag could run traceroutes longer than expected.
+  Traceroute tests will now timeout after 65 seconds.
+
+  - Fixed issue introduced with previous beta release where you could end up in
+  a bad registration state if .plist was removed prior to upgrade.
+
+  - Fixed issue where manually logging into a ZT org could fail if certificate
+  authentication was used.
+   
+  **Known issues**
+
+  - No known issues.
+version: 2023.1.624.1
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2023.1.624.1
+packageSize: 47457782
+releaseDate: 2023-02-22T20:28:35.040Z
+platformName: macOS

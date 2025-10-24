@@ -1,0 +1,65 @@
+---
+pcx_content_type: concept
+
+title: Schema learning
+sidebar:
+  order: 2
+---
+
+import { Steps, Tabs, TabItem, DashButton } from "~/components"
+
+Cloudflare learns schema parameters via traffic inspection. For all endpoints saved to Endpoint Management, you can export the learned schema in OpenAPI `v3.0.0` format by hostname.
+
+To protect your API with a learned schema, refer to [Schema validation](/api-shield/security/schema-validation/#add-validation-by-applying-a-learned-schema-to-an-entire-hostname).
+
+## Export a schema
+
+<Tabs syncKey="dashNewNav">
+  <TabItem label="Old dashboard">
+    <Steps>
+      1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
+      2. Select **Security** > **API Shield** > **Endpoint Management**.
+      4. Select **Export schema** and choose a hostname to export.
+      5. Select whether to include [learned parameters](/api-shield/management-and-monitoring/#learned-schemas-will-always-include) and [rate limit recommendations](/api-shield/security/volumetric-abuse-detection/)
+      6. Select **Export schema** and choose a location to save the file.
+    </Steps>
+  </TabItem>
+  <TabItem label="New dashboard" icon="rocket">
+    <Steps>
+      1. In the Cloudflare dashboard, go to the **Web Assets** page.
+
+          <DashButton url="/?to=/:account/:zone/security/web-assets" />
+      2. Go to the **Endpoints** tab.
+      3. Select **Export schema** and choose a hostname to export.
+      4. Select whether to include learned parameters and rate limit recommendations
+      5. Select **Export schema** and choose a location to save the file.
+    </Steps>
+  </TabItem>
+</Tabs>
+
+:::note
+The schema is saved as a JSON file in OpenAPI `v3.0.0` format.
+:::
+
+Learned schemas will always include:
+
+- The listed hostname in the servers section
+- All endpoints by host, method, and path
+
+For endpoints that receive sufficient traffic, learned schemas will also include:
+
+- Detected path variables and formats
+- Detected query parameters and formats
+- Detected `POST`, `PUT`, and `PATCH` body variable names and formats for `application/json` content types
+
+Learned schemas can optionally include:
+
+- API Shield's rate limit threshold recommendations
+
+## Limitations
+
+Endpoints must be added for at least 24 hours before schema learning begins. Schema learning is a continuous process that inspects the last 72 hours of traffic to an endpoint.
+
+Schema learning only learns from requests with `2xx` response codes.
+
+Schema learning works best with high volumes of traffic. You may see less confident learned schemas for endpoints with less than 10,000 requests in the last 72 hours.

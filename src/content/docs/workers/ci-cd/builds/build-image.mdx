@@ -1,0 +1,90 @@
+---
+pcx_content_type: reference
+title: Build image
+description: Understand the build image used in Workers Builds.
+sidebar:
+  order: 4
+---
+
+Workers Builds uses a build image with support for a variety of languages and tools such as Node.js, Python, PHP, Ruby, and Go.
+
+## Supported Tooling
+
+Workers Builds supports a variety of runtimes, languages, and tools. Builds will use the default versions listed below unless a custom version is detected or specified. You can [override the default versions](/workers/ci-cd/builds/build-image/#overriding-default-versions) using environment variables or version files. All versions are available for override.
+
+:::note[Default version updates]
+The default versions will be updated regularly to the latest minor version. No major version updates will be made without notice. If you need a specific minor version, please specify it by [overriding the default version](/workers/ci-cd/builds/build-image/#overriding-default-versions).
+:::
+
+### Runtime
+
+| Tool        | Default version | Environment variable | File                         |
+| ----------- | --------------- | -------------------- | ---------------------------- |
+| **Go**      | 1.24.3          | `GO_VERSION`         |                              |
+| **Node.js** | 22.16.0         | `NODE_VERSION`       | .nvmrc, .node-version        |
+| **Python**  | 3.13.3          | `PYTHON_VERSION`     | .python-version, runtime.txt |
+| **Ruby**    | 3.4.4           | `RUBY_VERSION`       | .ruby-version                |
+
+### Tools and languages
+
+| Tool        | Default version  | Environment variable |
+| ----------- | ---------------- | -------------------- |
+| **Bun**     | 1.2.15           | `BUN_VERSION`        |
+| **Hugo**    | extended_0.147.7 | `HUGO_VERSION`       |
+| **npm**     | 10.9.2           |                      |
+| **yarn**    | 4.9.1            | `YARN_VERSION`       |
+| **pnpm**    | 10.11.1          | `PNPM_VERSION`       |
+| **pip**     | 25.1.1           |                      |
+| **gem**     | 3.6.9            |                      |
+| **poetry**  | 2.1.3            |                      |
+| **pipx**    | 1.7.1            |                      |
+| **bundler** | 2.6.9            |                      |
+
+## Advanced Settings
+
+### Overriding Default Versions
+
+If you need to override a [specific version](/workers/ci-cd/builds/build-image/#overriding-default-versions) of a language or tool within the image, you can specify it as a [build environment variable](/workers/ci-cd/builds/configuration/#build-settings), or set the relevant file in your source code as shown above.
+
+To set the version using a build environment variables, you can:
+
+1. Find the environment variable name for the language or tool and desired version (e.g. `NODE_VERSION = 22`)
+2. Add and save the environment variable on the dashboard by going to **Settings** > **Build** > **Build Variables and Secrets** in your Workers project
+
+Or, to set the version by adding a file to your project, you can:
+
+1. Find the filename for the language or tool (e.g. `.nvmrc`)
+2. Add the specified file name to the root directory and set the desired version number as the file's content. For example, if the version number is 22, the file should contain '22'.
+
+### Skip dependency install
+
+You can add the following build variable to disable automatic dependency installation and run a custom install command instead.
+
+| Build variable            | Value         |
+| ------------------------- | ------------- |
+| `SKIP_DEPENDENCY_INSTALL` | `1` or `true` |
+
+## Pre-installed Packages
+
+In the following table, review the pre-installed packages in the build image. The packages are installed with `apt`, a package manager for Linux distributions.
+
+|                   |                   |                   |
+| ----------------- | ----------------- | ----------------- |
+| `curl`            | `libbz2-dev`      | `libreadline-dev` |
+| `git`             | `libc++1`         | `libssl-dev`      |
+| `git-lfs`         | `libdb-dev`       | `libvips-dev`     |
+| `unzip`           | `libgdbm-dev`     | `libyaml-dev`     |
+| `autoconf`        | `libgdbm6`        | `tzdata`          |
+| `build-essential` | `libgbm1`         | `wget`            |
+| `bzip2`           | `libgmp-dev`      | `zlib1g-dev`      |
+| `gnupg`           | `liblzma-dev`     | `zstd`            |
+| `libffi-dev`      | `libncurses5-dev` |                   |
+
+## Build Environment
+
+Workers Builds are run in the following environment:
+
+|                       |              |
+| --------------------- | ------------ |
+| **Build Environment** | Ubuntu 24.04 |
+| **Architecture**      | x86_64       |

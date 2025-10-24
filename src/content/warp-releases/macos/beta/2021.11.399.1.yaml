@@ -1,0 +1,10 @@
+releaseNotes: |-
+  This release contains new features and improvements from the last release.
+
+  **Notable updates**
+  - Fixed an issue with DNS not working after waking from sleep.
+version: 2021.11.399.1
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2021.11.399.1
+packageSize: 41352858
+releaseDate: 2021-12-09T00:56:20.876Z
+platformName: macOS

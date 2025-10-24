@@ -1,0 +1,21 @@
+---
+pcx_content_type: reference
+title: API commands
+sidebar:
+  order: 5
+
+---
+
+Use the following API commands to manage advanced certificates. If you are using our API for the first time, review our [API documentation](/fundamentals/api/).
+
+
+
+| Command                                                                                                                                                 | Method   | Endpoint                                             | Additional notes                                                                            |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- | ---------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| [Order advanced certificate](/api/resources/ssl/subresources/certificate_packs/methods/create/)                                     | `POST`   | `zones/<<ZONE_ID>>/ssl/certificate_packs/order`      |                                                                                             |
+| [Restart certificate validation](/api/resources/ssl/subresources/certificate_packs/methods/edit/)                | `PATCH`  | `zones/<<ZONE_ID>>/ssl/certificate_packs/<<ID>>`     | For a Certificate Pack in a `validation_timed_out` status.                                                                                             |
+| [Delete certificate pack](/api/resources/ssl/subresources/certificate_packs/methods/delete/)                                       | `DELETE` | `zones/<<ZONE_ID>>/ssl/certificate_packs/<<ID>>`     |                                                                                             |
+| [List certificate packs in a zone](/api/resources/ssl/subresources/certificate_packs/methods/list/)                                                            | `GET`    | `zones/<<ZONE_ID>>/ssl/certificate_packs?status=all` | This API call returns all certificate packs for a domain (Universal, Custom, and Advanced). |
+| List Cipher Suite settings: [Get zone setting](/api/resources/zones/subresources/settings/methods/get/) with `ciphers` as the setting name in the URI path     | `GET`    | `zones/<<ZONE_ID>>/settings/ciphers`                 |                                                                                             |
+| Change Cipher Suite settings: [Edit zone setting](/api/resources/zones/subresources/settings/methods/edit/) with `ciphers` as the setting name in the URI path | `PATCH`  | `zones/<<ZONE_ID>>/settings/ciphers`                 | To restore default settings, send a blank array in the `value` parameter.                   |
+

@@ -1,0 +1,27 @@
+---
+pcx_content_type: reference
+source: https://support.cloudflare.com/hc/en-us/articles/200170056-Understanding-the-Cloudflare-Security-Level
+title: Security Level
+---
+
+In the old Cloudflare dashboard, security level has the value _Always protected_ and you cannot change this setting. To turn [Under Attack mode](/fundamentals/reference/under-attack-mode/) on or off, use the separate toggle.
+
+In the new security dashboard, the Cloudflare API, and in Terraform, use security level to turn Under Attack mode on or off.
+
+Cloudflare's [Under Attack mode](/fundamentals/reference/under-attack-mode/) performs additional security checks to help mitigate layer 7 DDoS attacks. When you enable Under Attack mode, Cloudflare will present a JS challenge page.
+
+:::caution
+
+Only use [Under Attack mode](/fundamentals/reference/under-attack-mode/) when a website is under a DDoS attack. Under Attack mode may affect some actions on your domain, such as your API traffic.
+
+To enable or disable Under Attack mode for your API or any other part of your domain, create a [configuration rule](/rules/configuration-rules/).
+
+:::
+
+## Threat score
+
+Previously, a threat score represented a Cloudflare threat score from 0–100, where 0 indicates low risk. Now, the threat score is always `0` (zero).
+
+:::note[Recommendation]
+Currently we do not recommend creating rules based on the threat score, since this score is no longer being populated.
+:::

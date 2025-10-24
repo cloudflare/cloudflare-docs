@@ -1,0 +1,71 @@
+releaseNotes: >-
+  This release has support for new Zero Trust network location aware feature and
+  contains improvements to stability and bug fixes.
+   
+  **Hotfix Updates**
+
+  - Fixed issue where clients could lose IPv4 connectivity (2nd hotfix applied).
+
+  - Fixed issue where clients would attempt to configure DNS even when in
+  posture-only, or proxy modes.
+
+  - Increased MDM file timeout to improve compatibility with certain management
+  solutions.
+    
+  **Notable updates in previous GA (2022.12.475.0)**
+
+  - Added support for new Zero Trust network location aware WARP feature. More
+  info to be released soon on how you can test.
+
+  - Improved captive portal handling for some more captive portals.
+
+  - Improved reconnect logic when a setting changes to no longer always do a
+  full disconnect->reconnect cycle (for instance when turning on DNS logging).
+
+  - Modified initial connectivity check behavior to now validate both IPv4 and
+  IPv6 are working (previously we only checked IPv4). Test will pass if either
+  connects successfully.
+
+  - Fixed issue where client could be stuck on `Connecting` if certain DNS
+  checks failed once.
+
+  - Fixed DNS issue where TXT records were not being correctly returned when at
+  the end of a CNAME chain.
+
+  - Fixed issue where the client may not receive notifications of new settings,
+  re-auth events or posture from the service until reboot.
+
+  - Fixed issue where users could be pointing at an old gateway_doh_subdomain if
+  you have `Allowed to Leave` set to true and they've manually joined their
+  client to your organization.
+
+  - Fixed slow DNS timeout issue that could occur when IPv6 is enabled and an
+  NXDOMAIN record is returned.
+
+  - Fixed issue with `Gateway with DoH` mode could say `Connected` when it
+  wasn't really connected as we could sometimes test the wrong endpoint.
+
+  - Fixed issue where our local DNS proxy server could get unset with an overly
+  active DHCP renew time or by plugging in/out a tethered device.
+
+  - Fixed issue where `warp-cli teams-enroll` wouldn't work when an mdm file was
+  present.
+
+  - Fixed issue where our localhost dns endpoints (ex. 127.0.2.2) could appear
+  in the fallback configuration potentially causing DNS lookups to fail
+
+  - Fixed issues where GUI could crash when opening from the Menu Bar.
+
+  - Fixed issue that could cause some DNS queries to take upto 15 seconds to
+  complete.
+    
+  **Known issues**
+
+  - If you are having issues with upgrading to new beta, please uninstall
+  current app, install the GA version from https://1.1.1.1/ and participate in
+  beta program from Preferences->Advanced.
+version: 2022.12.593.0
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2022.12.593.0
+packageSize: 47747133
+releaseDate: 2023-01-18T19:03:02.025Z
+platformName: macOS

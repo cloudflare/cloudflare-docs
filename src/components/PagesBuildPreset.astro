@@ -1,0 +1,49 @@
+---
+import { z } from "astro:schema";
+import { getEntry } from "astro:content";
+
+type Props = z.infer<typeof props>;
+
+const props = z.object({
+	framework: z.string(),
+});
+
+const { framework } = props.parse(Astro.props);
+
+const entry = await getEntry("pages-framework-presets", "index");
+
+if (!entry) {
+	throw new Error("Failed to load data");
+}
+
+const presets = entry.data.build_configs;
+
+const preset = presets[framework];
+
+if (!preset) {
+	throw new Error(
+		`[PagesBuildPreset] Failed to find preset for ${framework}, included on ${Astro.params.slug}`,
+	);
+}
+---
+
+<table>
+	<thead>
+		<th>Configuration option</th>
+		<th>Value</th>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Production branch</td>
+			<td><code>main</code></td>
+		</tr>
+		<tr>
+			<td>Build command</td>
+			<td><code>{preset.build_command}</code></td>
+		</tr>
+		<tr>
+			<td>Build directory</td>
+			<td><code>{preset.build_output_directory}</code></td>
+		</tr>
+	</tbody>
+</table>

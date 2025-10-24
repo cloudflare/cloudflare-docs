@@ -1,0 +1,52 @@
+---
+import { z } from "astro:schema";
+import { render, getEntry } from "astro:content";
+
+type Props = z.infer<typeof props>;
+
+const props = z.object({
+	file: z.string(),
+	product: z.string(),
+	params: z.record(z.string(), z.any()).optional(),
+});
+
+let { file, product, params } = props.parse(Astro.props);
+
+const id = `${product}/${file}`;
+let partial = await getEntry("partials", id);
+
+if (!partial) {
+	throw new Error(
+		`[Render] Couldn't find "${id}" included on "${Astro.url.pathname}"`,
+	);
+}
+
+// We currently only enforce parameters if `params` is set in the frontmatter,
+// until we can migrate existing `inputParameters` frontmatter to `params`.
+if (partial.data.params) {
+	const expected = partial.data.params.sort();
+	const optional = expected.filter((p) => p.endsWith("?"));
+	const received = Object.keys(params ?? {}).sort();
+
+	const maximum = expected.length;
+	const minimum = maximum - optional.length;
+
+	if (
+		received.length < minimum ||
+		received.length > maximum ||
+		expected.some((p: string) => {
+			if (p.endsWith("?")) return false;
+
+			return !received.includes(p);
+		})
+	) {
+		throw new Error(
+			`[Render] Expected parameters ${JSON.stringify(expected)} but received parameters ${JSON.stringify(received)} for "${file}" included on "${Astro.url.pathname}"`,
+		);
+	}
+}
+
+const { Content } = await render(partial);
+---
+
+<Content {...params} />

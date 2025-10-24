@@ -1,0 +1,42 @@
+---
+pcx_content_type: changelog
+title: Digital Experience Monitoring
+head:
+  - tag: title
+    content: Digital Experience Monitoring Changelog
+description: Review recent changes to Digital Experience Monitoring.
+---
+
+import { ProductChangelog, Render } from "~/components";
+
+{/* <!-- All changelog entries live in src/content/changelogs/dex/. */}
+
+<ProductChangelog product="dex" hideEntry="2024-06-16-cloudflare-one" />
+
+## 2025-01-24
+
+**IP visibility**
+
+[IP visibility](/cloudflare-one/insights/dex/ip-visibility/) enables admins to inspect the different IP addresses associated with an end-user device. IP types available for review on the Cloudflare dashboard include: the device's private IP, the public IP assigned to the device by the ISP, and the router's (that the device is connected to) private IP.
+
+## 2024-12-19
+
+**Remote captures**
+
+Admins can now collect packet captures (PCAPs) and WARP diagnostic logs from end-user devices. For more information, refer to [Remote captures](/cloudflare-one/insights/dex/remote-captures/).
+
+## 2024-05-20
+
+**Last seen ISP**
+
+Admins can view the last ISP seen for a device by going to **My Team** > **Devices**. Requires setting up a [traceroute test](/cloudflare-one/insights/dex/tests/traceroute/).
+
+## 2024-05-13
+
+**DEX alerts**
+
+Admins can now set [DEX alerts](/cloudflare-one/insights/dex/notifications/) using [Cloudflare Notifications](/notifications/). Three new DEX alert types:
+
+- Device connectivity anomaly
+- Test latency
+- Test low availability

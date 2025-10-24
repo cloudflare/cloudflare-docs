@@ -1,0 +1,19 @@
+---
+pcx_content_type: troubleshooting
+title: Error 1033
+source: null
+---
+
+import { Render } from "~/components";
+
+## Error 1033: Cloudflare Tunnel error
+
+This error indicates an issue with [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/).
+
+### Common cause
+
+You have requested a page on a website (`tunnel.example.com`) that is on the Cloudflare network. The host (`tunnel.example.com`) is configured with Cloudflare Tunnel, and Cloudflare is currently unable to resolve it.
+
+### Resolution
+
+<Render file="tunnel/1033-error" product="cloudflare-one" />

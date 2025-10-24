@@ -1,0 +1,125 @@
+---
+pcx_content_type: concept
+title: Brand Protection
+sidebar:
+  order: 7
+  badge:
+    text: Beta
+---
+
+import { AvailableNotifications, Render, DashButton } from "~/components";
+
+:::note[User permission]
+While the Brand Protection tool is in beta, all Cloudflare Enterprise customers have automatic access to Brand Protection, including five saved queries. Only Admin, Super Admin and users with a Brand Protection role can access Brand Protection
+:::
+
+<Render file="brand-protection-definition" product="security-center" />
+
+## Domain search
+
+To start searching for new domains that might be trying to impersonate your brand:
+
+1. In the Cloudflare dashboard, go to the **Brand Protection** page.
+
+   <DashButton url="/?to=/:account/security-center/brand-protection" />
+
+2. In **String query**, provide a name for your query. You can add multiple brand phrases on the same query, and the results will generate matches for all of those. Once you entered the string queries, select **Search matches**.
+
+3. In the **Character distance**, select from `0-3`. The number of characters the results can differ from your domain.
+
+   :::note
+
+   If a brand phrase or search term has less than five characters, you can only choose a max distance of `0` (zero).
+   :::
+
+4. You can select **Save query** to monitor it in the future and perform other actions, such as delete, clone and set up alerts, according to your Paid plan limits.
+
+5. To export all matches from a saved query, select your **Query name** > select the three dots > **Export matches**.
+
+In the section **Monitor Strings**, you can check all the string queries that you selected to monitor. You can delete, clone, or create notifications for a string query. Refer to [Brand Protection Alerts](#brand-protection-alerts) to set up notifications.
+
+### Report abuse
+
+:::note[Submit abuse report]
+You can only submit an abuse report if your domain is with [Cloudflare Registrar](https://www.cloudflare.com/products/registrar/), or if the IP used by the domain is hosted by Cloudflare.
+:::
+
+To submit abuse reports directly from the dashboard:
+
+1. In the Cloudflare dashboard, go to the **Brand Protection** page.
+
+   <DashButton url="/?to=/:account/security-center/brand-protection" />
+2. Go to **Monitor Strings**, select the query you want to report.
+3. Select **Report to Cloudflare**.
+4. Fill in the details to submit an abuse report.
+5. Select **Submit**.
+
+To view abuse reports, in the Cloudflare dashboard, go to the **Abuse Reports** page.
+   
+   <DashButton url="/?to=/:account/abuse-reports" />
+
+You can review abuse reports against your zones and any mitigations taken against reports in response.
+
+You can also **Request review** of most mitigations.
+
+## Logo queries
+
+To set up a new logo query:
+
+1. Select **Monitor Logos** and select **Add logo**.
+3. Add a name for your query and upload your logo. Only the `.png`, `.jpeg`, and `.jpg` file extensions are supported.
+4. Select **Save logo**.
+
+The browser will return to the **Monitored Logos** page, where you can access your query and configure notifications.
+
+## Investigate a query
+
+In this section, the dashboard displays:
+
+- **Domain overview** where you can request to [change categorization](/security-center/investigate/change-categorization/) and view the resolution history of your domain for up to seven days.
+- **WHOIS** that provides details about the date the domain was created, registrant and nameservers.
+- **Domain history** that provides information on the domain category and when it was last changed. Refer to [Investigate threats](/security-center/investigate/investigate-threats/) for more details.
+- **URL Reports** that provides information on any reported URL.
+
+To investigate a string query:
+
+1. Go to the **Monitor Strings** or **Monitor Logos** section to view all your queries.
+2. Select a monitored query to inspect all the domains that matched your query.
+3. Next to the domain, select **Domain** or **URL**. This will trigger a search on the [**Investigate**](/security-center/investigate/) section in a separate tab. URL scanner will also be triggered from **Brand Protection** through **Security Center** > **Investigate**. You will also have access to a report which will be generated automatically. The report will display screenshots of the matched domain, and the registrar of your domain.
+
+## Brand Protection API
+
+The [Brand Protection API](/api/resources/brand_protection/) allows you to:
+
+- Create new strings or logo queries
+- Delete strings or logo queries
+- Download matches for both logo and string queries
+- Read matches for both logo and string queries
+
+## Brand Protection Alerts
+
+<Render file="brand-protection-alerts" product="security-center" />
+
+<AvailableNotifications product="Security Center" />
+
+To set up a Brand Protection Alert:
+
+1. Go to **Monitor Strings** and locate the query for which you would like to create notifications.
+
+2. Select **alerts**. This should redirect you to the **Add Notification** page, where you can configure what you want to be notified about, and how.
+
+   :::note
+
+   You can also set up the alerts from your [Notifications](/notifications/) menu.
+   :::
+
+3. Create a notification name, add a description (optional), and select the monitored queries. You can also add a Webhook, and a notification email. You can add multiple email addresses.
+
+4. Select **Save**.
+
+Manage your notifications in the **All notifications** tab. You can disable, edit, delete, or test them.
+
+## Limitations
+
+- While this product is in beta, all Enterprise customers and Cloudforce One subscribers have access to Brand Protection. Enterprise customers are entitled to five saved queries for their account.
+- You may only use the Brand Protection search tools to search for domains that may be attempting to impersonate your brand or a brand that has authorized you to conduct such search on its behalf.

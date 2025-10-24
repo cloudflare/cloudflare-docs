@@ -1,0 +1,19 @@
+---
+import StarlightPage, {
+	type StarlightPageProps,
+} from "@astrojs/starlight/components/StarlightPage.astro";
+import InstantSearch from "../components/search/InstantSearch.tsx";
+
+const props = {
+	frontmatter: {
+		title: "Search",
+		template: "splash",
+	},
+	hideTitle: true,
+	hideBreadcrumbs: true,
+} as StarlightPageProps;
+---
+
+<StarlightPage {...props}>
+	<InstantSearch client:load />
+</StarlightPage>

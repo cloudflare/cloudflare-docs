@@ -1,0 +1,71 @@
+---
+productName: WAF
+entries:
+  - term: allowlist
+    general_definition: |-
+      an allowlist is a list of items (usually websites, IP addresses, email addresses, etc.) that are permitted to access a system.
+    associated_products:
+      - DDoS Protection
+
+  - term: attack score
+    general_definition: |-
+      a number from 1 (likely malicious) to 99 (likely clean) classifying how likely an incoming request is malicious or not. Allows you to detect new attack techniques before they are publicly known.
+
+  - term: blocklist
+    general_definition: |-
+      a blocklist is a list of items (usually websites, IP addresses, email addresses, etc.) that are prevented from accessing a system.
+
+  - term: content object
+    general_definition: |-
+      a content object is any binary part of a request body (as detected by Cloudflare systems) that does not match any of the following content types: `text/html`, `text/x-shellscript`, `application/json`, `text/csv`, or `text/xml`.
+
+  - term: credential stuffing
+    general_definition: |-
+      credential stuffing is the automated injection of stolen username and password pairs (known as "credentials") into website login forms, trying to gain access to user accounts.
+
+  - term: leaked credentials
+    general_definition: |-
+      leaked credentials refers to sensitive authentication information disclosed in some way (for example, due to misconfigurations, data breaches, or simple human error), allowing other parties to gain access to digital resources.
+
+      Credentials may include usernames, passwords, API keys, authentication tokens, or private keys.
+
+  - term: firewall
+    general_definition: |-
+      a firewall is a security system that monitors and controls network traffic based on a set of security rules.
+    associated_products:
+      - Magic Firewall
+
+  - term: LLM
+    general_definition: |-
+      a machine learning model that can comprehend and generate human language text. It works by analyzing massive data sets of language.
+
+  - term: mitigated request
+    general_definition: |-
+      a request to which Cloudflare applied a terminating action such as block or challenge.
+
+  - term: paranoia level
+    general_definition: |-
+      classifies rules of the OWASP managed ruleset according to their aggressiveness.
+
+  - term: prompt injection
+    general_definition: |-
+      the process of overwriting the system prompt for a large language model (LLM), which instructs the LLM on how to respond to user input.
+
+  - term: rate limiting
+    general_definition: |-
+      rate limiting is a technique used in computer systems to control the rate at which requests are processed. It can be used as a security measure to prevent attacks, or to limit resource usage in your origin servers.
+
+  - term: rule characteristics
+    general_definition: |-
+      the set of parameters of a rate limiting rule that define how Cloudflare tracks the rate for the rule.
+
+  - term: SIEM
+    general_definition: |-
+      a Security Information and Event Management (SIEM) solution collects, analyzes, and correlates data to help manage security incidents, detect anomalies, and meet compliance requirements.
+    associated_products:
+      - Cloudflare One
+      - Area 1
+
+  - term: threat score
+    general_definition: |-
+      the threat score was a score from `0` (zero risk) to `100` (high risk) classifying the IP reputation of a visitor. Currently, the threat score is always `0` (zero).

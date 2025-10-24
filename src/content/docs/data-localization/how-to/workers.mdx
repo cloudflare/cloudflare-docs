@@ -1,0 +1,49 @@
+---
+title: Workers
+pcx_content_type: how-to
+sidebar:
+  order: 8
+
+---
+
+import { DashButton } from "~/components";
+
+In the following sections, we will give you some details about how to configure Workers with Regional Services and Customer Metadata Boundary.
+
+## Regional Services
+
+To configure Regional Services for hostnames [proxied](/dns/proxy-status/) through Cloudflare and ensure that processing of a Workers project occurs only in-region, follow these steps:
+
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+
+2. Select your Workers project.
+3. Follow the steps to [create a custom domain](/workers/configuration/routing/custom-domains/).
+4. Run the [API POST](/data-localization/regional-services/get-started/#configure-regional-services-via-api) command on the configured Workers Custom Domain to create a `regional_hostnames` with a specific region.
+
+### Caveats
+
+Regional Services only applies to the custom domain configured for a Workers project. Therefore, it will run only in-region Cloudflare locations.
+
+Regional Services does not apply to [subrequests](/workers/platform/limits/#subrequests).
+
+Regional Services does not apply to other Worker triggers, like [Queues](/queues/) or [Cron Triggers](/workers/configuration/cron-triggers/).
+
+## Customer Metadata Boundary
+
+Customer Metadata Boundary applies to the custom domain configured, as well as the [`*.workers.dev`](/workers/configuration/routing/workers-dev/) subdomain.
+
+Workers [Metrics and Analytics](/workers/observability/metrics-and-analytics/) are not available outside the US region when using Customer Metadata Boundary.
+
+With Customer Metadata Boundary set to `EU`, **Workers & Pages** > **Workers** > **Metrics** tab the zone dashboard will not be populated.
+
+:::note
+
+
+It is recommended to not store any Personally Identifiable Information (PII) in the Workers code. If sensitive information needs to be used, it is recommended to use [Secrets](/workers/configuration/secrets/).
+
+
+:::
+
+Refer to the [Workers documentation](/workers/) for more information.

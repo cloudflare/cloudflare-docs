@@ -1,0 +1,26 @@
+/*
+	Override the default `overflow-wrap: anywhere` when inside a table.
+*/
+table * {
+	overflow-wrap: normal;
+}
+
+/*
+	First and last row padding
+*/
+.sl-markdown-content
+	:is(th:first-child, td:first-child):not(:where(.not-content *)) {
+	padding-inline-start: 1rem;
+}
+
+.sl-markdown-content
+	:is(th:last-child, td:last-child):not(:where(.not-content *)) {
+	padding-inline-end: 1rem;
+}
+
+/*
+	Alternating row shading
+*/
+.sl-markdown-content tr:nth-child(2n):not(:where(.not-content *)) {
+	background-color: var(--sl-color-gray-7, #1f1f1f);
+}

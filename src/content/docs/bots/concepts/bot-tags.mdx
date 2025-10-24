@@ -1,0 +1,47 @@
+---
+
+pcx_content_type: reference
+title: Bot tags
+sidebar:
+  order: 3
+
+---
+
+import { Render, GlossaryTooltip } from "~/components"
+
+<GlossaryTooltip term="bot tags">Bot tags</GlossaryTooltip> provide more detail about *why* Cloudflare assigned a <GlossaryTooltip term="bot score" link="/bots/concepts/bot-score/">bot score</GlossaryTooltip> to a request.
+
+Use these tags to learn more about your bot traffic and better inform security settings.
+
+:::note
+
+Bot tags are only available to Enterprise customers who have purchased Bot Management.
+:::
+
+## Potential values
+
+Once you [enable bot tags](#enable-bot-tags), you can see more information about bot requests, such as whether a request came from a verified bot (like Bing) or a category of verified bot (like SearchEngine).
+
+The following values are **examples** of what may be present in the `BotTags` log field, but not an exhaustive list:
+
+- api
+- google
+- bing
+- googleAds
+- googleMedia
+- googleImageProxy
+- pinterest
+- newRelic
+- baidu
+- apple
+- yandex
+
+## Enable bot tags
+
+To enable bot tags, include the `BotTags` log field when using our [Logpush service](/logs/logpush/).
+
+## Limitations
+
+Currently, bot tags are only available in log fields.
+
+Future work will add more values and extend bot tags to other Cloudflare products.

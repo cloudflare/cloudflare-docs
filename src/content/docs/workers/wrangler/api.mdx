@@ -1,0 +1,447 @@
+---
+pcx_content_type: configuration
+title: API
+sidebar:
+  order: 2
+head: []
+description: A set of programmatic APIs that can be integrated with local
+  Cloudflare Workers-related workflows.
+---
+
+import {
+	Render,
+	TabItem,
+	Tabs,
+	Type,
+	MetaInfo,
+	WranglerConfig,
+	PackageManagers,
+} from "~/components";
+
+Wrangler offers APIs to programmatically interact with your Cloudflare Workers.
+
+- [`unstable_startWorker`](#unstable_startworker) - Start a server for running integration tests against your Worker.
+- [`unstable_dev`](#unstable_dev) - Start a server for running either end-to-end (e2e) or integration tests against your Worker.
+- [`getPlatformProxy`](#getplatformproxy) - Get proxies and values for emulating the Cloudflare Workers platform in a Node.js process.
+
+## `unstable_startWorker`
+
+This API exposes the internals of Wrangler's dev server, and allows you to customise how it runs. For example, you could use `unstable_startWorker()` to run integration tests against your Worker. This example uses `node:test`, but should apply to any testing framework:
+
+```js
+import assert from "node:assert";
+import test, { after, before, describe } from "node:test";
+import { unstable_startWorker } from "wrangler";
+
+describe("worker", () => {
+	let worker;
+
+	before(async () => {
+		worker = await unstable_startWorker({ config: "wrangler.json" });
+	});
+
+	test("hello world", async () => {
+		assert.strictEqual(
+			await (await worker.fetch("http://example.com")).text(),
+			"Hello world",
+		);
+	});
+
+	after(async () => {
+		await worker.dispose();
+	});
+});
+```
+
+## `unstable_dev`
+
+Start an HTTP server for testing your Worker.
+
+Once called, `unstable_dev` will return a `fetch()` function for invoking your Worker without needing to know the address or port, as well as a `stop()` function to shut down the HTTP server.
+
+By default, `unstable_dev` will perform integration tests against a local server. If you wish to perform an e2e test against a preview Worker, pass `local: false` in the `options` object when calling the `unstable_dev()` function. Note that e2e tests can be significantly slower than integration tests.
+
+:::note
+
+The `unstable_dev()` function has an `unstable_` prefix because the API is experimental and may change in the future. We recommend migrating to the `unstable_startWorker()` API, documented above.
+
+If you have been using `unstable_dev()` for integration testing and want to migrate to Cloudflare's Vitest integration, refer to the [Migrate from `unstable_dev` migration guide](/workers/testing/vitest-integration/migration-guides/migrate-from-unstable-dev/) for more information.
+
+:::
+
+### Constructor
+
+```js
+const worker = await unstable_dev(script, options);
+```
+
+### Parameters
+
+- `script` <Type text="string" />
+
+  - A string containing a path to your Worker script, relative to your Worker project's root directory.
+
+- `options` <Type text="object" /> <MetaInfo text="optional" />
+
+  - Optional options object containing `wrangler dev` configuration settings.
+  - Include an `experimental` object inside `options` to access experimental features such as `disableExperimentalWarning`.
+    - Set `disableExperimentalWarning` to `true` to disable Wrangler's warning about using `unstable_` prefixed APIs.
+
+### Return Type
+
+`unstable_dev()` returns an object containing the following methods:
+
+- `fetch()` `Promise<Response>`
+
+  - Send a request to your Worker. Returns a Promise that resolves with a [`Response`](/workers/runtime-apis/response) object.
+  - Refer to [`Fetch`](/workers/runtime-apis/fetch/).
+
+- `stop()` `Promise<void>`
+
+  - Shuts down the dev server.
+
+### Usage
+
+When initiating each test suite, use a `beforeAll()` function to start `unstable_dev()`. The `beforeAll()` function is used to minimize overhead: starting the dev server takes a few hundred milliseconds, starting and stopping for each individual test adds up quickly, slowing your tests down.
+
+In each test case, call `await worker.fetch()`, and check that the response is what you expect.
+
+To wrap up a test suite, call `await worker.stop()` in an `afterAll` function.
+
+#### Single Worker example
+
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
+
+```js
+const { unstable_dev } = require("wrangler");
+
+describe("Worker", () => {
+	let worker;
+
+	beforeAll(async () => {
+		worker = await unstable_dev("src/index.js", {
+			experimental: { disableExperimentalWarning: true },
+		});
+	});
+
+	afterAll(async () => {
+		await worker.stop();
+	});
+
+	it("should return Hello World", async () => {
+		const resp = await worker.fetch();
+		const text = await resp.text();
+		expect(text).toMatchInlineSnapshot(`"Hello World!"`);
+	});
+});
+```
+
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
+
+```ts
+import { unstable_dev } from "wrangler";
+import type { UnstableDevWorker } from "wrangler";
+
+describe("Worker", () => {
+	let worker: UnstableDevWorker;
+
+	beforeAll(async () => {
+		worker = await unstable_dev("src/index.ts", {
+			experimental: { disableExperimentalWarning: true },
+		});
+	});
+
+	afterAll(async () => {
+		await worker.stop();
+	});
+
+	it("should return Hello World", async () => {
+		const resp = await worker.fetch();
+		const text = await resp.text();
+		expect(text).toMatchInlineSnapshot(`"Hello World!"`);
+	});
+});
+```
+
+</TabItem> </Tabs>
+
+#### Multi-Worker example
+
+You can test Workers that call other Workers. In the below example, we refer to the Worker that calls other Workers as the parent Worker, and the Worker being called as a child Worker.
+
+If you shut down the child Worker prematurely, the parent Worker will not know the child Worker exists and your tests will fail.
+
+<Tabs> <TabItem label="JavaScript" icon="seti:javascript">
+
+```js
+import { unstable_dev } from "wrangler";
+
+describe("multi-worker testing", () => {
+	let childWorker;
+	let parentWorker;
+
+	beforeAll(async () => {
+		childWorker = await unstable_dev("src/child-worker.js", {
+			config: "src/child-wrangler.toml",
+			experimental: { disableExperimentalWarning: true },
+		});
+		parentWorker = await unstable_dev("src/parent-worker.js", {
+			config: "src/parent-wrangler.toml",
+			experimental: { disableExperimentalWarning: true },
+		});
+	});
+
+	afterAll(async () => {
+		await childWorker.stop();
+		await parentWorker.stop();
+	});
+
+	it("childWorker should return Hello World itself", async () => {
+		const resp = await childWorker.fetch();
+		const text = await resp.text();
+		expect(text).toMatchInlineSnapshot(`"Hello World!"`);
+	});
+
+	it("parentWorker should return Hello World by invoking the child worker", async () => {
+		const resp = await parentWorker.fetch();
+		const parsedResp = await resp.text();
+		expect(parsedResp).toEqual("Parent worker sees: Hello World!");
+	});
+});
+```
+
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
+
+```ts
+import { unstable_dev } from "wrangler";
+import type { UnstableDevWorker } from "wrangler";
+
+describe("multi-worker testing", () => {
+	let childWorker: UnstableDevWorker;
+	let parentWorker: UnstableDevWorker;
+
+	beforeAll(async () => {
+		childWorker = await unstable_dev("src/child-worker.js", {
+			config: "src/child-wrangler.toml",
+			experimental: { disableExperimentalWarning: true },
+		});
+		parentWorker = await unstable_dev("src/parent-worker.js", {
+			config: "src/parent-wrangler.toml",
+			experimental: { disableExperimentalWarning: true },
+		});
+	});
+
+	afterAll(async () => {
+		await childWorker.stop();
+		await parentWorker.stop();
+	});
+
+	it("childWorker should return Hello World itself", async () => {
+		const resp = await childWorker.fetch();
+		const text = await resp.text();
+		expect(text).toMatchInlineSnapshot(`"Hello World!"`);
+	});
+
+	it("parentWorker should return Hello World by invoking the child worker", async () => {
+		const resp = await parentWorker.fetch();
+		const parsedResp = await resp.text();
+		expect(parsedResp).toEqual("Parent worker sees: Hello World!");
+	});
+});
+```
+
+</TabItem> </Tabs>
+
+## `getPlatformProxy`
+
+The `getPlatformProxy` function provides a way to obtain an object containing proxies (to **local** `workerd` bindings) and emulations of Cloudflare Workers specific values, allowing the emulation of such in a Node.js process.
+
+:::caution
+
+`getPlatformProxy` is, by design, to be used exclusively in Node.js applications. `getPlatformProxy` cannot be run inside the Workers runtime.
+
+:::
+
+One general use case for getting a platform proxy is for emulating bindings in applications targeting Workers, but running outside the Workers runtime (for example, framework local development servers running in Node.js), or for testing purposes (for example, ensuring code properly interacts with a type of binding).
+
+:::note
+
+Binding proxies provided by this function are a best effort emulation of the real production bindings. Although they are designed to be as close as possible to the real thing, there might be slight differences and inconsistencies between the two.
+
+:::
+
+### Syntax
+
+```js
+const platform = await getPlatformProxy(options);
+```
+
+### Parameters
+
+- `options` <Type text="object" /> <MetaInfo text="optional" />
+
+  - Optional options object containing preferences for the bindings:
+
+    - `environment` string
+
+      The environment to use.
+
+    - `configPath` string
+
+      The path to the config file to use.
+
+      If no path is specified, the default behavior is to search from the current directory up the filesystem for a [Wrangler configuration file](/workers/wrangler/configuration/) to use.
+
+      **Note:** this field is optional but if a path is specified it must point to a valid file on the filesystem.
+
+    - `persist` boolean | `{ path: string }`
+
+      Indicates if and where to persist the bindings data. If `true` or `undefined`, defaults to the same location used by Wrangler, so data can be shared between it and the caller. If `false`, no data is persisted to or read from the filesystem.
+
+      **Note:** If you use `wrangler`'s `--persist-to` option, note that this option adds a subdirectory called `v3` under the hood while `getPlatformProxy`'s `persist` does not. For example, if you run `wrangler dev --persist-to ./my-directory`, to reuse the same location using `getPlatformProxy`, you will have to specify: `persist: { path: "./my-directory/v3" }`.
+
+    - `experimental` `{ remoteBindings: boolean }`
+
+      Object used to enable experimental features, no guarantees are made to the stability of this API, use at your own risk.
+
+      - `remoteBindings` Enables `getPlatformProxy` to connect to [remote bindings](/workers/development-testing/#remote-bindings).
+
+### Return Type
+
+`getPlatformProxy()` returns a `Promise` resolving to an object containing the following fields.
+
+- `env` `Record<string, unknown>`
+
+  - Object containing proxies to bindings that can be used in the same way as production bindings. This matches the shape of the `env` object passed as the second argument to modules-format workers. These proxy to binding implementations run inside `workerd`.
+  - TypeScript Tip: `getPlatformProxy<Env>()` is a generic function. You can pass the shape of the bindings record as a type argument to get proper types without `unknown` values.
+
+- `cf` IncomingRequestCfProperties read-only
+
+  - Mock of the `Request`'s `cf` property, containing data similar to what you would see in production.
+
+- `ctx` object
+
+  - Mock object containing implementations of the [`waitUntil`](/workers/runtime-apis/context/#waituntil) and [`passThroughOnException`](/workers/runtime-apis/context/#passthroughonexception) functions that do nothing.
+
+- `caches` object
+
+  - Emulation of the [Workers `caches` runtime API](/workers/runtime-apis/cache/).
+  - For the time being, all cache operations do nothing. A more accurate emulation will be made available soon.
+
+- `dispose()` () => `Promise<void>`
+
+  - Terminates the underlying `workerd` process.
+  - Call this after the platform proxy is no longer required by the program. If you are running a long running process (such as a dev server) that can indefinitely make use of the proxy, you do not need to call this function.
+
+### Usage
+
+The `getPlatformProxy` function uses bindings found in the [Wrangler configuration file](/workers/wrangler/configuration/). For example, if you have an [environment variable](/workers/configuration/environment-variables/#add-environment-variables-via-wrangler) configuration set up in the Wrangler configuration file:
+
+<WranglerConfig>
+
+```toml
+[vars]
+MY_VARIABLE = "test"
+```
+
+</WranglerConfig>
+
+You can access the bindings by importing `getPlatformProxy` like this:
+
+```js
+import { getPlatformProxy } from "wrangler";
+
+const { env } = await getPlatformProxy();
+```
+
+To access the value of the `MY_VARIABLE` binding add the following to your code:
+
+```js
+console.log(`MY_VARIABLE = ${env.MY_VARIABLE}`);
+```
+
+This will print the following output: `MY_VARIABLE = test`.
+
+### Supported bindings
+
+All supported bindings found in your [Wrangler configuration file](/workers/wrangler/configuration/) are available to you via `env`.
+
+The bindings supported by `getPlatformProxy` are:
+
+- [Environment variables](/workers/configuration/environment-variables/)
+
+- [Service bindings](/workers/runtime-apis/bindings/service-bindings/)
+
+- [KV namespace bindings](/kv/api/)
+
+- [R2 bucket bindings](/r2/api/workers/workers-api-reference/)
+
+- [Queue bindings](/queues/configuration/javascript-apis/)
+
+- [D1 database bindings](/d1/worker-api/)
+
+- [Hyperdrive bindings](/hyperdrive)
+
+  :::note[Hyperdrive values are simple passthrough ones]
+
+  Values provided by hyperdrive bindings such as `connectionString` and `host` do not have a valid meaning outside of a `workerd` process.
+  This means that Hyperdrive proxies return passthrough values, which are values corresponding to the database connection provided by the user. Otherwise, it would return values which would be unusable from within node.js.
+
+  :::
+
+- [Workers AI bindings](/workers-ai/get-started/workers-wrangler/#2-connect-your-worker-to-workers-ai)
+
+  <Render file="ai-local-usage-charges" product="workers" />
+
+- [Durable Object bindings](/durable-objects/api/)
+
+  - To use a Durable Object binding with `getPlatformProxy`, always specify a [`script_name`](/workers/wrangler/configuration/#durable-objects).
+
+    For example, you might have the following binding in a Wrangler configuration file read by `getPlatformProxy`.
+
+    <WranglerConfig>
+
+    ```toml
+    [[durable_objects.bindings]]
+    name = "MyDurableObject"
+    class_name = "MyDurableObject"
+    script_name = "external-do-worker"
+    ```
+
+    </WranglerConfig>
+
+    You will need to declare your Durable Object `"MyDurableObject"` in another Worker, called `external-do-worker` in this example.
+
+        ```ts title="./external-do-worker/src/index.ts"
+        export class MyDurableObject extends DurableObject {
+        	// Your DO code goes here
+        }
+
+        export default {
+        	fetch() {
+        			// Doesn't have to do anything, but a DO cannot be the default export
+        			return new Response("Hello, world!");
+        	},
+        };
+        ```
+        That Worker also needs a Wrangler configuration file that looks like this:
+
+        <WranglerConfig>
+        ```json
+        {
+        	"name": "external-do-worker",
+        	"main": "src/index.ts",
+        	"compatibility_date": "XXXX-XX-XX"
+        }
+        ```
+        </WranglerConfig>
+
+        If you are not using RPC with your Durable Object, you can run a separate Wrangler dev session alongside your framework development server.
+
+        Otherwise, you can build your application and run both Workers in the same Wrangler dev session.
+
+        If you are using Pages run:
+        <PackageManagers type="exec" pkg="wrangler" args="pages dev -c path/to/pages/wrangler.jsonc -c path/to/external-do-worker/wrangler.jsonc" />
+
+        If you are using Workers with Assets run:
+        <PackageManagers type="exec" pkg="wrangler" args="dev -c path/to/workers-assets/wrangler.jsonc -c path/to/external-do-worker/wrangler.jsonc" />

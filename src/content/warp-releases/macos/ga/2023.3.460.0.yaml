@@ -1,0 +1,16 @@
+releaseNotes: >-
+  This is a Mac only hotfix from the 2023.3.415.0 release
+   
+  **Notable updates**
+
+  - Fixes an issue where entering team name with case sensitivity would result
+  in a registration error(s).
+   
+  **Known issues**
+
+  No known issues
+version: 2023.3.460.0
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2023.3.460.0
+packageSize: 49522156
+releaseDate: 2023-05-04T17:36:29.622Z
+platformName: macOS

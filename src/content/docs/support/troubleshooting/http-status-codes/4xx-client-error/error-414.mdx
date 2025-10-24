@@ -1,0 +1,19 @@
+---
+pcx_content_type: troubleshooting
+title: Error 414
+source: null
+---
+
+## 414 URI Too Long
+
+The `414 URI Too Long` status code indicates that the server refuses to process the request because the URI provided by the client is excessively long.
+
+For more details, refer to [RFC 7231](https://tools.ietf.org/html/rfc7231).
+
+### Common use cases
+
+For example, if a client is attempting a `GET` request with an unusually long URI, such as one containing an excessive number of query parameters, after a `POST`, this could be seen as a security risk and a `414` is generated.
+
+### Cloudflare-specific information
+
+Cloudflare will generate a `414` response if the URI length exceeds 32KB.

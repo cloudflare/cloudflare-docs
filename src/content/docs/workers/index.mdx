@@ -1,0 +1,155 @@
+---
+title: Cloudflare Workers
+
+pcx_content_type: overview
+sidebar:
+  order: 1
+head:
+  - tag: title
+    content: Overview
+---
+
+import { Description, RelatedProduct, LinkButton } from "~/components";
+
+<Description>
+A serverless platform for building, deploying, and scaling apps across [Cloudflare's global network](https://www.cloudflare.com/network/) with a single command  —  no infrastructure to manage, no complex configuration
+</Description>
+
+With Cloudflare Workers, you can expect to:
+- Deliver fast performance with high reliability anywhere in the world
+- Build full-stack apps with your framework of choice, including [React](/workers/framework-guides/web-apps/react/), [Vue](/workers/framework-guides/web-apps/vue/), [Svelte](/workers/framework-guides/web-apps/svelte/), [Next](/workers/framework-guides/web-apps/nextjs/), [Astro](/workers/framework-guides/web-apps/astro/), [React Router](/workers/framework-guides/web-apps/react-router/), [and more](/workers/framework-guides/)
+- Use your preferred language, including [JavaScript](/workers/languages/javascript/), [TypeScript](/workers/languages/typescript/), [Python](/workers/languages/python/), [Rust](/workers/languages/rust/), [and more](/workers/runtime-apis/webassembly/)
+- Gain deep visibility and insight with built-in [observability](/workers/observability/logs/)
+- Get started for free and grow with flexible [pricing](/workers/platform/pricing/), affordable at any scale
+
+Get started with your first project:
+
+<LinkButton href="https://dash.cloudflare.com/?to=/:account/workers-and-pages/templates">Deploy a template</LinkButton>
+
+
+<LinkButton href="/workers/get-started/guide/" variant="minimal">
+  Deploy with Wrangler CLI
+</LinkButton>
+
+---
+
+## Build with Workers
+
+<div>
+#### Front-end applications
+
+<span>Deploy [static assets](/workers/static-assets/) to Cloudflare's [CDN & cache](/cache/) for fast rendering</span>
+</div>
+
+<div>
+#### Back-end applications
+
+<span>Build APIs and connect to data stores with [Smart Placement](/workers/configuration/smart-placement/) to optimize latency</span>
+</div>
+
+<div>
+#### Serverless AI inference
+
+<span>Run LLMs, generate images, and more with [Workers AI](/workers-ai/)</span>
+</div>
+
+<div>
+#### Background jobs
+
+<span>Schedule [cron jobs](/workers/configuration/cron-triggers/), run durable [Workflows](/workflows/), and integrate with [Queues](/queues/)</span>
+</div>
+
+<div>
+#### Observability & monitoring
+
+<span>Monitor performance, debug issues, and analyze traffic with [real-time logs](/workers/observability/logs/) and [analytics](/workers/observability/metrics-and-analytics/)</span>
+</div>
+
+---
+
+## Integrate with Workers
+
+Connect to external services like databases, APIs, and storage via [Bindings](/workers/runtime-apis/bindings/), enabling functionality with just a few lines of code:
+
+**Storage**
+
+<RelatedProduct header="Durable Objects" href="/durable-objects/" product="durable-objects">
+
+Scalable stateful storage for real-time coordination.
+
+</RelatedProduct>
+
+<RelatedProduct header="D1" href="/d1/" product="d1">
+
+Serverless SQL database built for fast, global queries.
+
+</RelatedProduct>
+
+<RelatedProduct header="KV" href="/kv/" product="kv">
+
+Low-latency key-value storage for fast, edge-cached reads.
+
+</RelatedProduct>
+
+<RelatedProduct header="Queues" href="/queues/" product="queues">
+
+Guaranteed delivery with no charges for egress bandwidth.
+
+</RelatedProduct>
+
+<RelatedProduct header="Hyperdrive" href="/hyperdrive/" product="hyperdrive">
+
+Connect to your external database with accelerated queries, cached at the edge.
+
+</RelatedProduct>
+
+**Compute**
+
+<RelatedProduct header="Workers AI" href="/workers-ai/" product="workers-ai">
+
+Machine learning models powered by serverless GPUs.
+
+</RelatedProduct>
+
+<RelatedProduct header="Workflows" href="/workflows/" product="workflows">
+
+Durable, long-running operations with automatic retries.
+
+</RelatedProduct>
+
+<RelatedProduct header="Vectorize" href="/vectorize/" product="vectorize">
+
+Vector database for AI-powered semantic search.
+
+</RelatedProduct>
+
+<RelatedProduct header="R2" href="/r2/" product="r2">
+
+Zero-egress object storage for cost-efficient data access.
+
+</RelatedProduct>
+
+<RelatedProduct header="Browser Rendering" href="/browser-rendering/" product="browser-rendering">
+
+Programmatic serverless browser instances.
+
+</RelatedProduct>
+
+**Media**
+
+<RelatedProduct header="Cache / CDN" href="/cache/" product="cache">
+
+Global caching for high-performance, low-latency delivery.
+
+</RelatedProduct>
+
+<RelatedProduct header="Images" href="/images/" product="images">
+
+Streamlined image infrastructure from a single API.
+
+</RelatedProduct>
+
+
+---
+
+Want to connect with the Workers community? [Join our Discord](https://discord.cloudflare.com)

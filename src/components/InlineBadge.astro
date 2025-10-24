@@ -1,0 +1,48 @@
+---
+import { Badge } from "@astrojs/starlight/components";
+import { type ComponentProps } from "astro/types";
+
+interface Props extends ComponentProps<typeof Badge> {
+	preset?: "alpha" | "beta" | "deprecated" | "early-access" | "legacy";
+}
+
+let { preset, text, variant, ...attrs } = Astro.props;
+
+if (!preset && !text) {
+	throw new Error(
+		`[Badge] Expected 'preset' or 'text', got neither, included on ${Astro.params.slug}`,
+	);
+}
+
+if (preset) {
+	switch (preset) {
+		case "alpha": {
+			text = "Alpha";
+			variant = "success";
+			break;
+		}
+		case "beta": {
+			text = "Beta";
+			variant = "caution";
+			break;
+		}
+		case "deprecated": {
+			text = "Deprecated";
+			variant = "danger";
+			break;
+		}
+		case "early-access": {
+			text = "Early Access";
+			variant = "note";
+			break;
+		}
+		case "legacy": {
+			text = "Legacy";
+			variant = "danger";
+			break;
+		}
+	}
+}
+---
+
+<Badge class="inline" text={text} variant={variant} {...attrs} />

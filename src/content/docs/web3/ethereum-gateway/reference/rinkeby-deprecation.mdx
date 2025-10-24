@@ -1,0 +1,81 @@
+---
+pcx_content_type: reference
+title: Rinkeby deprecation
+sidebar:
+  order: 5
+
+---
+
+Though Cloudflare's Ethereum Gateway launched with support for the Rinkeby testnet, Rinkeby did not run through [The Merge](https://ethereum.org/en/upgrades/merge/) and - as a result - will no longer be a reliable staging environment for mainnet.
+
+Cloudflare will be deprecating support for Rinkeby on January 30, 2023.
+
+## Migration
+
+To avoid any issues with your Web3 development or debugging, you should switch over to the [Sepolia testnet](/web3/ethereum-gateway/reference/supported-networks/), which is fully supported with your Ethereum Gateway.
+
+To migrate, you should update the endpoints you use when [reading from or writing to](/web3/how-to/use-ethereum-gateway/) the Ethereum network.
+
+For example, you might have been using the previous endpoints to interact with your Ethereum Gateway.
+
+```bash title="Previous curl" {1}
+curl https://web3-trial.cloudflare-eth.com/v1/rinkeby \
+--header 'Content-Type: application/json' \
+--data '{
+  "jsonrpc": "2.0",
+  "method": "eth_getBlockByNumber",
+  "params": ["0x2244", true],
+  "id": 1
+}'
+```
+
+```js title="Previous JS Fetch API" {2}
+await fetch(
+  new Request('https://web3-trial.cloudflare-eth.com/v1/rinkeby', {
+    method: 'POST',
+    body: JSON.stringify({
+      jsonrpc: '2.0',
+      method: 'eth_getBlockByNumber',
+      params: ['0x2244', true],
+      id: 1,
+    }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+).then(resp => {
+  return resp.json();
+});
+```
+
+To migrate away from Rinkeby, change the end of your endpoint to use another testnet.
+
+```bash title="New curl" {1}
+curl https://web3-trial.cloudflare-eth.com/v1/sepolia \
+--header 'Content-Type: application/json' \
+--data '{
+  "jsonrpc": "2.0",
+  "method": "eth_getBlockByNumber",
+  "params": ["0x2244", true],
+  "id": 1
+}'
+```
+
+```js title="New JS Fetch API" {2}
+await fetch(
+  new Request('https://web3-trial.cloudflare-eth.com/v1/sepolia', {
+    method: 'POST',
+    body: JSON.stringify({
+      jsonrpc: '2.0',
+      method: 'eth_getBlockByNumber',
+      params: ['0x2244', true],
+      id: 1,
+    }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+).then(resp => {
+  return resp.json();
+});
+```

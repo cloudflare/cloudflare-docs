@@ -1,0 +1,83 @@
+---
+title: Create an origin rule via API
+pcx_content_type: how-to
+sidebar:
+  order: 3
+  label: Create a rule via API
+---
+
+import { Details, Render, APIRequest } from "~/components";
+
+Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create origin rules via API.
+
+## Basic rule settings
+
+When creating an origin rule via API, make sure you:
+
+- Set the rule action to `route`.
+- Define the [parameters](/rules/origin-rules/parameters/) in the `action_parameters` field according to the type of origin override.
+- Deploy the rule to the `http_request_origin` phase at the zone level.
+
+## Procedure
+
+<Render
+	file="rules-creation-workflow"
+	product="rules"
+	params={{ ruleName: "an origin rule", phaseName: "http_request_origin" }}
+/>
+
+Make sure your API token has the [required permissions](#required-api-token-permissions) to perform the API operations.
+
+## Example requests
+
+<Details header="Example: Add a rule that overrides the `Host` header of incoming requests and the resolved DNS record">
+
+<Render file="origin-rules-api-change-host-header-dns-record" product="rules" />
+
+</Details>
+
+<Details header="Example: Add a rule that overrides the port of incoming requests">
+
+<Render file="origin-rules-api-change-port" product="rules" />
+
+</Details>
+
+<Details header="Example: Add a rule that overrides the SNI value of incoming requests">
+
+The following example sets the rules of an existing phase ruleset (`$RULESET_ID`) to a single origin rule — overriding the SNI value of incoming requests addressed at `admin.example.com` — using the [Update a zone ruleset](/api/resources/rulesets/methods/update/) operation.
+
+<APIRequest
+	path="/zones/{zone_id}/rulesets/{ruleset_id}"
+	method="PUT"
+	json={{
+		rules: [
+			{
+				ref: "override_sni_for_admin",
+				expression: 'http.host eq "admin.example.com"',
+				description: "SNI Override for the admin area",
+				action: "route",
+				action_parameters: {
+					sni: {
+						value: "sni.example.com",
+					},
+				},
+			},
+		],
+	}}
+/>
+
+<Render
+	file="terraform-use-ref-field"
+	product="rules"
+	params={{ addDocsLocation: true }}
+/>
+
+</Details>
+
+---
+
+## Required API token permissions
+
+The API token used in API requests to manage origin rules must have at least the following permission:
+
+- _Zone_ > _Origin Rules_ > _Edit_

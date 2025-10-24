@@ -1,0 +1,58 @@
+---
+pcx_content_type: example
+summary: Create a compression rule to set Gzip compression as the preferred
+  compression method for CSV files.
+products: [compression-rules]
+title: Use Gzip compression for CSV files
+description: Create a compression rule to set Gzip compression as the preferred
+  compression method for CSV files.
+---
+
+import { Example, TabItem, Tabs, APIRequest, Render } from "~/components";
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+The following example rule will configure Gzip compression as the preferred compression method for CSV files. If the visitor does not support this algorithm, Cloudflare will try to compress the response using a different algorithm supported by the visitor.
+
+<Example>
+
+**When incoming requests match**
+
+- Custom filter expression:
+  - _File extension_ _equals_ `csv`
+
+**Then**
+
+- **Compression options**: Custom
+- **Define a custom order for compression types**: `Gzip`, `Auto`
+
+</Example>
+
+</TabItem> <TabItem label="API">
+
+The following example sets the rules of an existing [entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset) (with ID `{ruleset_id}`) for the `http_response_compression` phase to a single compression rule, using the [Update a zone ruleset](/api/resources/rulesets/methods/update/) operation:
+
+<APIRequest
+	path="/zones/{zone_id}/rulesets/{ruleset_id}"
+	method="PUT"
+	json={{
+		rules: [
+			{
+				ref: "use_gzip_for_csv",
+				expression: 'http.request.uri.path.extension eq "csv"',
+				action: "compress_response",
+				action_parameters: {
+					algorithms: [{ name: "gzip" }, { name: "auto" }],
+				},
+			},
+		],
+	}}
+/>
+
+<Render
+	file="terraform-use-ref-field"
+	product="rules"
+	params={{ addDocsLocation: true }}
+/>
+
+</TabItem> </Tabs>

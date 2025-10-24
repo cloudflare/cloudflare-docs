@@ -1,0 +1,48 @@
+---
+pcx_content_type: configuration
+title: Common configurations
+sidebar:
+  order: 6
+
+---
+
+Consider the following sections to understand how to achieve some commonly used load balancer configurations.
+
+This page assumes you understand the Cloudflare [Load Balancing components](/load-balancing/understand-basics/load-balancing-components/) and how to create and edit each of them.
+
+## Active - Passive Failover
+
+An **active-passive failover** sends traffic to the endpoints in your active pool until a failure threshold (configurable) is reached. At the point of failure, your load balancer then redirects traffic to the passive pool.
+
+This setup ensures uninterrupted service and helps with planned outages, but it might lead to slower traffic overall.
+
+To set up a load balancer with **active-passive failover**:
+
+1. Create a load balancer with two pools (`primary` and `secondary`).
+2. In the list of pools, set the following order:
+   1. `primary`
+   2. `secondary`
+3. For **Traffic Steering**, select [**Off**](/load-balancing/understand-basics/traffic-steering/steering-policies/standard-options/#off---failover).
+
+With this setup, your load balancer will direct all traffic to `primary` until `primary` has fewer available endpoints than specified in its **Health Threshold**. Only then will your load balancer direct traffic to `secondary`.
+
+In the event that all pools are marked down, Cloudflare uses the **fallback pool**, which is the option of last resort for successfully sending traffic to an endpoint. Since the fallback pool is a last resort, its health is not taken into account, and Cloudflare reports its status as **No Health**. You can select the fallback pool via the API or in the Cloudflare dashboard. For more on working with fallback pools, refer to [Pool-level steering](/load-balancing/understand-basics/traffic-steering/steering-policies/).
+
+## Active - Active Failover
+
+An **active-active failover** distributes traffic to endpoints in the same pool until the pool reaches its failure threshold (configurable). At the point of failure, your load balancer would then re-direct traffic to the **fallback pool**.
+
+This setup speeds up overall requests, but is more vulnerable to planned or unplanned outages.
+
+To set up a load balancer with **active-active failover**, either:
+
+* Create a load balancer with a single pool (`primary`) with multiple endpoints (`endpoint-1` and `endpoint-2`) and set the same [**Weight**](/load-balancing/understand-basics/traffic-steering/origin-level-steering/#weights) for each endpoint.
+* Create a load balancer with two pools (`primary` and `secondary`) and — for [**Traffic Steering**](/load-balancing/understand-basics/traffic-steering/steering-policies/) — select any option except for **Off**.
+
+:::note
+
+
+For more background reading on server failover and common configurations, refer to [our Learning Center](https://www.cloudflare.com/learning/performance/what-is-server-failover/).
+
+
+:::

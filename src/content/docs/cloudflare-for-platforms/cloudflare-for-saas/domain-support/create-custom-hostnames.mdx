@@ -1,0 +1,50 @@
+---
+pcx_content_type: how-to
+title: Create custom hostnames
+sidebar:
+  order: 1
+head: []
+description: Learn how to create custom hostnames.
+---
+
+import { Render, TabItem, Tabs } from "~/components";
+
+There are several required steps before a custom hostname can become active. For more details, refer to our [Get started guide](/cloudflare-for-platforms/cloudflare-for-saas/start/getting-started/).
+
+To create a custom hostname:
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+<Render file="create-custom-hostname" product="cloudflare-for-platforms" />
+
+<Render
+	file="create-custom-hostname-limitations"
+	product="cloudflare-for-platforms"
+/>
+
+</TabItem> <TabItem label="API">
+
+<Render file="create-custom-hostname-api" product="cloudflare-for-platforms" />
+
+<Render
+	file="create-custom-hostname-limitations"
+	product="cloudflare-for-platforms"
+/>
+
+</TabItem> </Tabs>
+
+<Render file="issue-certs-preamble" product="cloudflare-for-platforms" />
+
+## Hostnames over 64 characters
+
+The Common Name (CN) restriction establishes a limit of 64 characters ([RFC 5280](https://www.rfc-editor.org/rfc/rfc5280.html)). If you have a hostname that exceeds this length, you can set `cloudflare_branding` to `true` when creating your custom hostnames [via API](/api/resources/custom_hostnames/methods/create/).
+
+```txt
+
+"ssl": {
+    "cloudflare_branding": true
+  }
+
+```
+
+Cloudflare branding means that `sni.cloudflaressl.com` will be added as the certificate Common Name (CN) and the long hostname will be included as a part of the Subject Alternative Name (SAN).

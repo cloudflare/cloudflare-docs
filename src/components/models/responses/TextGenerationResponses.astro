@@ -1,0 +1,136 @@
+---
+import { z } from "astro:schema";
+import { Code } from "@astrojs/starlight/components";
+
+type Props = z.infer<typeof props>;
+
+const props = z.object({
+	name: z.string(),
+});
+
+const { name } = props.parse(Astro.props);
+
+const js = `
+const stream = await env.AI.run('${name}', {
+  stream: true,
+  messages,
+});
+
+return new Response(stream, {
+  headers: {
+    "content-type": "text/event-stream",
+  },
+});
+`;
+
+const curl = `
+curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/${name} \\
+  -X POST \\
+  -H "Authorization: Bearer {API_TOKEN}" \\
+  -d '{ "stream": true, "messages": [{ "role": "system", "content": "You are a friendly assistant" }, { "role": "user", "content": "Why is pizza so good?" }]}'
+`;
+
+const curlStreaming = `
+curl -X POST \\
+"https://api.cloudflare.com/client/v4/accounts/<account>/ai/run/${name}" \\
+-H "Authorization: Bearer {API_TOKEN}" \\
+-H "Content-Type:application/json" \\
+-d '{ "prompt": "where is new york?", "stream": true }'
+
+data: {"response":"New"}
+
+data: {"response":" York"}
+
+data: {"response":" is"}
+
+data: {"response":" located"}
+
+data: {"response":" in"}
+
+data: {"response":" the"}
+
+...
+
+data: [DONE]
+`;
+
+const clientStreaming = `
+const source = new EventSource("/"); // Workers AI streaming endpoint
+source.onmessage = (event) => {
+  if (event.data == "[DONE]") {
+    source.close();
+    return;
+  }
+  const data = JSON.parse(event.data);
+  el.innerHTML += data.response;
+};
+`;
+
+const response = `
+{
+  "response": "The origin of the phrase \\"Hello, World\\" is not well-documented, but it is believed to have originated in the early days of computing. In the 1970s, when personal computers were first becoming popular, many programming languages, including C, had a simple \\"Hello, World\\" program that was used to demonstrate the basics of programming.\\nThe idea behind the program was to print the words \\"Hello, World\\" on the screen, and it was often used as a first program for beginners to learn the basics of programming. Over time, the phrase \\"Hello, World\\" became a common greeting among programmers and computer enthusiasts, and it is now widely recognized as a symbol of the computing industry.\\nIt's worth noting that the phrase \\"Hello, World\\" is not a specific phrase that was coined by any one person or organization, but rather a catchphrase that evolved over time as a result of its widespread use in the computing industry."
+}
+`;
+---
+
+<h2>Responses</h2>
+
+<h3>Using streaming</h3>
+
+<p>The recommended method to handle text generation responses is streaming.</p>
+<p>
+	LLMs work internally by generating responses sequentially using a process of
+	repeated inference — the full output of a LLM model is essentially a sequence
+	of hundreds or thousands of individual prediction tasks. For this reason,
+	while it only takes a few milliseconds to generate a single token, generating
+	the full response takes longer, on the order of seconds.
+</p>
+
+<p>
+	You can use streaming to start displaying the response as soon as the first
+	tokens are generated, and append each additional token until the response is
+	complete. This yields a much better experience for the end user. Displaying
+	text incrementally as it's generated not only provides instant responsiveness,
+	but also gives the end-user time to read and interpret the text.
+</p>
+
+<p>
+	To enable, set the <code>stream</code> parameter to true.
+</p>
+
+<p>Using the Workers API:</p>
+
+<Code code={js} lang="js" />
+
+<p>Using the REST API:</p>
+
+<Code code={curl} lang="sh" />
+
+<p>
+	Streaming responses use <a
+		href="https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events"
+		>server-sent events</a
+	>; the are easy to use, simple to implement on the server side, standardized,
+	and broadly available across many platforms natively or as a polyfill.
+</p>
+
+<Code code={curlStreaming} lang="sh" />
+
+<h4>Handling streaming responses in the client</h4>
+
+<p>
+	Below is an example showing how to parse this response in JavaScript, from the
+	browser:
+</p>
+
+<Code code={clientStreaming} lang="js" />
+
+<h3>Non-streaming response</h3>
+
+<p>
+	Non-streaming responses may be helpful in some contexts, and they are
+	possible; however, be aware that we limit the maximum number of output
+	sequence tokens to avoid timeouts. Whenever possible, use streaming.
+</p>
+
+<Code code={response} lang="json" />

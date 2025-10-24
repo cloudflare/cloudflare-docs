@@ -1,0 +1,44 @@
+---
+title: Post prefix advertisement monitoring and fine tuning
+pcx_content_type: reference
+sidebar:
+  order: 10
+---
+
+On this page, you can find suggestions to monitor your prefix advertisements and fine-tune them.
+
+## DDOS Managed Rules
+
+### Adaptive DDOS rules
+
+[These rules](/ddos-protection/managed-rulesets/adaptive-protection/) are based on a seven-day rolling window. We recommend reviewing the logs from these adaptive rules in Network Analytics seven days after your last prefix advertisement.
+
+If you see matches for legitimate traffic, consider lowering the sensitivity of the rule and then review the logs again. Once you are satisfied that legitimate traffic is not being flagged, [create a DDoS override](/ddos-protection/managed-rulesets/network/network-overrides/configure-dashboard/#create-a-ddos-override) for this rule with action as `DDOS Dynamic` or `Block`.
+
+### Advanced TCP Protection and Advanced DNS Protection
+
+For both [Advanced TCP Protection](/ddos-protection/advanced-ddos-systems/overview/advanced-tcp-protection/) and [Advanced DNS Protection](/ddos-protection/advanced-ddos-systems/overview/advanced-dns-protection/), your Cloudflare account team will need to configure manual thresholds for your account, based on your ingress traffic.
+
+Once all your prefixes are advertised and/or once all your expected traffic is cut over to the Magic Transit prefixes, reach out to your Cloudflare account team to have the thresholds configured.
+
+You can then change the mode on your Advanced TCP and DNS protections from `monitoring` to `mitigation`. You can also create a filter for `monitoring` mode for any traffic flows for which you see false positives. Try to keep this specific so that the protection is enabled for other inbound traffic flows.
+
+## Magic Firewall rules
+
+We strongly encourage you to ensure you have a Magic Firewall ruleset configured and customized to your environment to help stop unwanted and attack traffic.
+
+You can configure Magic Firewall rules and keep them in `disabled` mode to review the traffic that would have matched, using `verdict = drop` and the rule ID within Network Analytics. Once you are satisfied that the rule is blocking/permitting the intended traffic, you can change the mode to `enabled`.
+
+Refer to Magic Firewall's [best practices](/magic-firewall/best-practices/) for configuration guidance and suggestions.
+
+## Alerts for Magic Tunnel health checks and DDoS
+
+- Ensure all teams/members needing to receive these are getting the alerts.
+- Check the Magic Tunnel Health Check Alert configuration for Sensitivity and Alert interval and tunnels in-scope.
+- Refer to [Set up Magic Tunnel health alerts](/learning-paths/data-center-protection/enable-notifications/#set-up-magic-tunnel-health-alerts) and [DDoS alerts](/ddos-protection/reference/alerts/) for more details.
+
+## Optional
+
+- Enable [Logpush](/logs/logpush/) to your Security Information and Event Management (SIEM).
+- Enable Magic Firewall's [Intrusion Detection System (IDS)](/magic-firewall/about/ids/). Requires Logpush and is only available for accounts with [Advanced Magic Firewall](/magic-firewall/plans/#advanced-features).
+- Use [Magic Network Monitoring](/magic-network-monitoring/) for visibility into traffic on your non-Magic Transit prefixes, using NetFlow or sFlow from your CPEs.

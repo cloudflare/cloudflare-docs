@@ -1,0 +1,25 @@
+---
+import { z } from "astro:schema";
+import { Card } from "@astrojs/starlight/components"
+
+type Props = z.infer<typeof props>;
+
+const props = z.object({
+	title: z.string().default("")
+});
+
+const { title } = props.parse(Astro.props);
+---
+
+<Card title={title}>
+	<slot />
+</Card>
+
+{
+	title === "" &&
+	<style>
+	.card {
+		gap: 0 !important;
+	}
+	</style>	
+}

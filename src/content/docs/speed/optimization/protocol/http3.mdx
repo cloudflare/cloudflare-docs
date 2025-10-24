@@ -1,0 +1,46 @@
+---
+pcx_content_type: how-to
+title: HTTP/3 (with QUIC)
+sidebar:
+  order: 1
+---
+
+import { FeatureTable, TabItem, Tabs } from "~/components";
+
+HTTP/3 uses QUIC, which is a secure-by-default transport protocol. HTTP/3 improves page load times in a similar way to HTTP/2. However, the QUIC transport protocol solves TCP's head-of-line blocking problem, meaning that performance over lossy networks can be better.
+
+:::note
+
+For more background on HTTP/3, visit the [Learning Center](https://www.cloudflare.com/learning/performance/what-is-http3/).
+
+:::
+
+:::note
+
+This setting is for connection between the user and Cloudflare. HTTP/3 connection to the origin is not yet supported.
+
+:::
+
+## Availability
+
+<FeatureTable id="speed.http3" />
+
+## Enable HTTP/3
+
+HTTP/3 is available to all plans (though it does require an [SSL certificate at Cloudflare’s edge network](/ssl/get-started/)).
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+To enable **HTTP/3** in the dashboard:
+
+1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com).
+2. Select your account and zone.
+3. Go to **Speed** > **Optimization**.
+4. Go to **Protocol Optimization**.
+5. For **HTTP/3**, switch the toggle to **On**.
+
+</TabItem> <TabItem label="API">
+
+To enable **HTTP/3** with the API, send a [`PATCH`](/api/resources/zones/subresources/settings/methods/edit/) request with `http3` as the setting name in the URI path, and the `value` parameter set to `"on"`.
+
+</TabItem> </Tabs>

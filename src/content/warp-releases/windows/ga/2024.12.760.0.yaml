@@ -1,0 +1,19 @@
+releaseNotes: |
+  This release contains only a hotfix from the 2024.12.554.0 release.
+
+    **Changes and improvements:**
+    - Fixed an issue that could prevent clients with certain split tunnel configurations from connecting.
+
+    **Known issues:**
+    - DNS resolution may be broken when the following conditions are all true:
+      - WARP is in Secure Web Gateway without DNS filtering (tunnel-only) mode.
+      - A custom DNS server address is configured on the primary network adapter.
+      - The custom DNS server address on the primary network adapter is changed while WARP is connected.
+
+      To work around this issue, reconnect the WARP client by toggling off and back on.
+
+version: 2024.12.760.0
+releaseDate: 2025-01-09T16:09:25.966Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2024.12.760.0
+packageSize: 126201856
+platformName: Windows

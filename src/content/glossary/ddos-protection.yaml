@@ -1,0 +1,6 @@
+---
+productName: DDoS Protection
+entries:
+  - term: IP spoofing
+    general_definition: |-
+      IP spoofing is the creation of Internet Protocol (IP) packets which have a modified source address to hide the identity of the sender, impersonate another computer system, or both.

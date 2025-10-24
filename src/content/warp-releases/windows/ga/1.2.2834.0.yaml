@@ -1,0 +1,30 @@
+releaseNotes: |-
+  This release contains some minor improvements and fixes from the last release. 
+
+  **Notable updates**
+
+  - Changes to UI based on feedback
+  - Cloudflare for Teams split tunnel support
+  - Improved connectivity checks and stabilization. Please let us know if you see any issues connecting to WARP.
+  - AT&T Cloudflare for Teams users should be able reliably connect now. This was a backend change but noting here for users who experiences the issue
+  - Many localization fixes
+  - Added localization for the following languages: EG, DE, ES, FR, ID, IT, JP, KR, NL, PL, BR, RU, TR, CN, TW. If you are native speaker please help us by providing feedback on translations!
+  - Updated UI throughout the product
+  - Added version number of file properties of .msi so you can more easily see the version
+  - Better error handling when too many devices are added to existing WARP+ License
+  - Improve waking from sleep connectivity
+  - Fixed: Connection timeout issue reported by some users
+  - Fixed: Settings Menu does not update after switching OS between light & dark modes
+  - Fixed: Home window layout on some languages
+
+  **Known issues**
+
+  - You are unable to subscribe to WARP+ via the Desktop apps. You must subscribe first on your mobile device and then copy/paste your license key into the Accounts page on desktop
+  - To opt-out of the beta please uninstall via the instructions here: https://developers.cloudflare.com/warp-client/warp-for-everyone/setting-up/windows#how-to-remove-application and install from from the link here: https://developers.cloudflare.com/warp-client/warp-for-everyone/setting-up/requirements#windows
+
+  For a complete list of known issues please visit https://developers.cloudflare.com/warpclient/known-issues-and-faq
+version: 1.2.2834.0
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/1.2.2834.0
+packageSize: 78643200
+releaseDate: 2020-12-31T00:30:25.057Z
+platformName: Windows

@@ -1,0 +1,37 @@
+---
+inputParameters: hardRetract
+
+---
+
+import { GlossaryTooltip, Markdown } from "~/components"
+
+You can set up auto-retraction to automatically move messages matching certain <GlossaryTooltip term="disposition">dispositions</GlossaryTooltip> to specific folders within a user's mailbox.
+
+To set up automatic retraction:
+
+1. Log in to the [Email Security (formerly Area 1) dashboard](https://horizon.area1security.com/).
+
+2. Go to **Settings** (the gear icon).
+
+3. On **Email Configuration**, go to **Retract Settings** > **Auto-Retract**.
+
+4. Select **Edit**.
+
+5. For each disposition, choose which folder the message should be sent to:
+
+   * **No Action**: Do not move the message.
+   * **Junk Email**: Sends the message to the junk or spam email folder.
+   * **Trash**: Sends the message to the trash or deleted items email folder.
+   * **Soft Delete — user recoverable** (Microsoft only): Sends the message to the user's **Deleted Items** folder. Messages can be recovered by the user.
+   * **Hard Delete — admin recoverable**: Completely deletes messages from a user's inbox. {props.one}
+
+6. Select **Update Auto-retract Settings**.
+
+### Post delivery retractions for new threats
+
+Email Security (formerly Area 1) is continuously gathering new information about <GlossaryTooltip term="phishing">phishing</GlossaryTooltip> campaigns. Users might have email messages in their inboxes that were scanned by Email Security (formerly Area 1) but not retracted initially because, at the time of scan, these email messages had not been identified as a threat. To mitigate risk, Email Security (formerly Area 1) offers you tools to re-evaluate email messages at a fixed time interval based on knowledge Cloudflare may have acquired since initial delivery. Any email messages that fit this new threat knowledge will be retracted.
+
+You can enable two options:
+
+* **Post Delivery Response**:  Email Security (formerly Area 1) will continue to re-evaluate emails already delivered to your users' inboxes at a fixed time interval in search for phishing sites or campaigns not previously known to Cloudflare. If any email messages fitting these new criteria are found, Email Security (formerly Area 1) retracts them. Rescans occur at a five minute, 12 hour, and 24 hour intervals.
+* **Phish Submission Response**: Email Security (formerly Area 1) will retract emails already delivered that are reported by your users as phishing, and are found to be malicious by Email Security (formerly Area 1). Retraction will occur according to your configuration.

@@ -1,0 +1,21 @@
+---
+title: Create CIPA policy
+pcx_content_type: learning-unit
+sidebar:
+  order: 6
+---
+
+import { Render } from "~/components";
+
+## Create CIPA policy
+
+1. Go to **Gateway** > **Firewall policies**.
+2. Create a policy to block using the CIPA filter:
+
+   | Selector           | Operator | Value         | Action |
+   | ------------------ | -------- | ------------- | ------ |
+   | Content Categories | in       | _CIPA Filter_ | Block  |
+
+3. In **Logs** > **Gateway** > **DNS**, verify that you see the blocked domain.
+
+Your environment is now protected against all of the subcategories listed in [Configuration](/fundamentals/reference/policies-compliances/cybersafe/#configuration).

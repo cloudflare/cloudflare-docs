@@ -1,0 +1,67 @@
+---
+title: 2 - Junk email and user managed quarantine
+pcx_content_type: integration-guide
+reviewed: 2023-01-12
+sidebar:
+  order: 2
+head:
+  - tag: title
+    content: Junk email and user managed quarantine - Office 365
+---
+
+import { Render } from "~/components";
+
+In this tutorial, you will learn how to deliver `SUSPICIOUS` and `BULK` messages to the user's junk folder, and `SPAM` and `SPOOF` messages to the user managed quarantine.
+
+## Configure domains
+
+<Render
+	file="deployment/o365-use-case-configure-domain"
+	product="email-security"
+	params={{ one: "Only MALICIOUS dispotions should be checked." }}
+/>
+
+## Create quarantine policies
+
+<Render
+	file="deployment/o365-use-case-2-4-create-quarantine-policy"
+	product="email-security"
+/>
+
+## Configure quarantine notifications
+
+<Render
+	file="deployment/o365-use-case-configure-quarantine-notifications"
+	product="email-security"
+/>
+
+## Configure anti-spam policies
+
+<Render
+	file="deployment/o365-use-cases-antispam"
+	product="email-security"
+	params={{
+		one: "_UserNotifyUserRelease_",
+		two: "_UserNotifyAdminRelease_",
+		three: "_UserNotifyAdminRelease_",
+	}}
+/>
+
+## Create transport rules
+
+<Render
+	file="deployment/o365-use-case-transport-rules"
+	product="email-security"
+	params={{
+		one: "`Area 1 Deliver to Junk Email folder`",
+		two: "`SUSPICIOUS`, `BULK`",
+		three:
+			"_Modify the message properties_ > _Set the Spam Confidence Level (SCL)_ > _5_",
+		four: "step4-rules.png",
+		five: "`Area 1 User Quarantine Message`",
+		six: "`UCE`, `SPOOF`",
+		seven:
+			"_Modify the message properties_ > _Set the Spam Confidence Level (SCL)_ > _9_",
+		eight: "step10-user-quarantine.png",
+	}}
+/>

@@ -1,0 +1,60 @@
+---
+import { z } from "astro:schema";
+import { Code } from "@astrojs/starlight/components";
+import Details from "~/components/Details.astro";
+
+type Props = z.infer<typeof props>;
+
+const props = z.object({
+	name: z.string(),
+});
+
+const { name } = props.parse(Astro.props);
+
+const worker = `
+export interface Env {
+  AI: Ai;
+}
+
+export default {
+  async fetch(request, env): Promise<Response> {
+
+    // Picture of a dog
+    const exampleInputImage = await fetch(
+      "https://pub-1fb693cb11cc46b2b2f656f51e015a2c.r2.dev/dog.png"
+    );
+
+    const inputs = {
+      prompt: "Change to a lion",
+      image: [...new Uint8Array(await exampleInputImage.arrayBuffer())],
+    };
+
+    const response = await env.AI.run(
+      "${name}",
+      inputs
+    );
+
+    return new Response(response, {
+      headers: {
+        "content-type": "image/png",
+      },
+    });
+  },
+} satisfies ExportedHandler<Env>;
+`;
+
+const curl = `
+curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run/${name}  \\
+  -X POST  \\
+  -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN"  \\
+  -d '{ "prompt": "cyberpunk cat" }'
+`;
+---
+
+<Details header="Workers - TypeScript">
+	<Code code={worker} lang="ts" />
+</Details>
+
+<Details header="curl">
+	<Code code={curl} lang="sh" />
+</Details>

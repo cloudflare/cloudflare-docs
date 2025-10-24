@@ -1,0 +1,12 @@
+---
+params:
+  - APIendpoint
+---
+
+import { Markdown } from "~/components";
+
+Applications within a specific [security category](/cloudflare-one/traffic-policies/domain-categories/#security-categories) as categorized by [Cloudflare Radar](/radar/glossary/#content-categories).
+
+| UI name        | API example                                       |
+| -------------- | ------------------------------------------------- |
+| Security Risks | <code>any({props.APIendpoint}[*] in \{1\})</code> |

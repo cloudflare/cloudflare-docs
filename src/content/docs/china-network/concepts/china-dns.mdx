@@ -1,0 +1,63 @@
+---
+title: China Authoritative DNS
+pcx_content_type: concept
+sidebar:
+  order: 4
+---
+
+import { Details, Steps } from "~/components";
+
+Cloudflare China Network provides a nearest-to-client nameservice by default. The DNS request is resolved on the data center nearest to the client out of China, and the HTTP request is served on the data center nearest to the client. The closest Cloudflare data center outside of China is adopted for clients outside of China, and the JD Cloud data center in China is adopted for clients in China.
+
+## In-China Nameserver
+
+Cloudflare is able to deploy DNS service in Mainland China to improve the Time to First Byte (TTFB) performance. With this deployment, the DNS query will be resolved in Mainland China instead of the global DNS servers.
+
+## When to use
+
+Before you enable China Authoritative DNS, you should confirm that majority (over 90%) of your traffic is coming from Mainland China. After you enable China Authoritative DNS, all the global DNS requests will be routed to JD Cloud data centers in Mainland China instead of the nearest data centers.
+
+## Comparison
+
+The following table compares the default DNS offering with the In-China Nameserver option.
+
+| DNS option   | Behavior                                      |
+| ------------ | --------------------------------------------- |
+| Default      | Uses the DNS server closest to the end user.  |
+| In-China DNS | Uses only DNS in China, operated by JD Cloud. |
+
+## General setup
+
+After you [enable the Cloudflare China Network service](/china-network/get-started/), do the following:
+
+<Steps>
+
+1. Contact your Cloudflare sales team to enable the feature. Currently you cannot enable it in the Cloudflare dashboard.
+
+   The current China Network supports both a [full setup](/dns/zone-setups/full-setup/) and a [partial setup](/dns/zone-setups/partial-setup/).
+
+2. Update your domain registrar with the assigned in-China nameservers.
+   - For a full setup: These nameservers are displayed in the Cloudflare dashboard.
+   - For a partial setup: Create a `CNAME` record pointing to `<hostname>.cdn.cloudflareanycast.net` for global default DNS setting and `<hostname>.cdn.cloudflarecn.net` for In-China DNS.
+
+   <Details header="Example 1: China Network zone named `example.cn` that requires In-China DNS" open={true}>
+
+   If you have two DNS records, `www` and `media`, pointing to two different origin servers. Your Authoritative DNS server will have the following DNS records:
+   - CNAME `www.example.cn` to `www.example.cn.cdn.cloudflarecn.net`
+   - CNAME `media.example.cn` to `media.example.cn.cdn.cloudflarecn.net`
+
+   </Details>
+
+   <Details header="Example 2: China Network zone named `example.com` that requires global default DNS setting" open={true}>
+
+   If you have two DNS records, `www` and `media`, pointing to two different origin servers. Your Authoritative DNS server will have the following DNS records:
+   - CNAME `www.example.com` to `www.example.com.cdn.cloudflareanycast.net`
+   - CNAME `media.example.com` to `media.example.com.cdn.cloudflareanycast.net`
+
+   </Details>
+
+3. Test your configuration by checking if the domain resolves correctly.
+
+</Steps>
+
+For further assistance, contact your account team.

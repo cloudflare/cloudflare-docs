@@ -1,0 +1,23 @@
+releaseNotes: |
+  This release contains minor fixes and improvements.
+
+  **Changes and improvements:**
+  - Fixed an issue where SSH sessions and other application connections over TCP or UDP could drop when a device that is using MASQUE changes its primary network interface.
+  - Fixed an issue to ensure the Cloudflare root certificate (or custom certificate) is installed in the trust store if not already there.
+  - Fixed an issue with the WARP client becoming unresponsive during startup.
+  - Extended diagnostics collection time in `warp-diag` to ensure logs are captured reliably.
+  - Fixed an issue that was preventing proper operation of DNS-over-TLS (DoT) for consumer users.
+
+  **Known issues:**
+  - DNS resolution may be broken when the following conditions are all true:
+    - WARP is in Secure Web Gateway without DNS filtering (tunnel-only) mode.
+    - A custom DNS server address is configured on the primary network adapter.
+    - The custom DNS server address on the primary network adapter is changed while WARP is connected.
+
+    To work around this issue, reconnect the WARP client by toggling off and back on.
+
+version: 2024.11.309.0
+releaseDate: 2024-11-18T21:57:58.477Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2024.11.309.0
+packageSize: 123125760
+platformName: Windows

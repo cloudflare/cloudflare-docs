@@ -1,0 +1,117 @@
+---
+pcx_content_type: reference
+title: Endpoints
+sidebar:
+  order: 2
+head:
+  - tag: title
+    content: Endpoints - Firewall rules
+---
+
+To invoke a Cloudflare Firewall Rules API operation, append the endpoint to the Cloudflare API base URL:
+
+```txt
+https://api.cloudflare.com/client/v4/
+```
+
+For authentication instructions, refer to [Getting Started: Requests](/fundamentals/api/) in the Cloudflare API documentation.
+
+For help with endpoints and pagination, refer to [Getting Started: Endpoints](/fundamentals/api/).
+
+:::note
+
+The Firewall Rules API endpoints require a value for `<ZONE_ID>`.
+
+To retrieve a list of zones associated with your account, use the [List Zones](/api/resources/zones/methods/list/) operation and note the zone ID associated with the domain whose firewall rules you want to manage.
+
+:::
+
+The Cloudflare Firewall Rules API supports the operations outlined below. Visit the pages in this section for examples.
+
+<table style="table-layout:fixed; width:100%">
+  <thead>
+    <tr>
+      <th>Operation</th>
+      <th style="width: 60%">Method & Endpoint</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <a href="/api/resources/firewall/subresources/rules/methods/create/">
+          Create firewall rules
+        </a>
+      </td>
+      <td>`POST zones/<ZONE_ID>/firewall/rules`</td>
+      <td>Handled as a single transaction. If there is an error, the entire operation fails.</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="/api/resources/firewall/subresources/rules/methods/list/">
+          List firewall rules
+        </a>
+      </td>
+      <td>`GET zones/<ZONE_ID>/firewall/rules`</td>
+      <td>
+        Lists all current firewall rules. Results return paginated with 25 items per page by default. Use optional parameters to narrow results.
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href="/api/resources/firewall/subresources/rules/methods/get/">
+          Get a firewall rule
+        </a>
+      </td>
+      <td>`GET zones/<ZONE_ID>/firewall/rules/<RULE_ID>`</td>
+      <td>Retrieve a single firewall rule by ID.</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="/api/resources/firewall/subresources/rules/methods/bulk_update/">
+          Update firewall rules
+        </a>
+      </td>
+      <td>`PUT zones/<ZONE_ID>/firewall/rules`</td>
+      <td>
+        Handled as a single transaction. All rules must exist for operation to succeed. If there is
+        an error, the entire operation fails.
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href="/api/resources/firewall/subresources/rules/methods/update/">
+          Update a firewall rule
+        </a>
+      </td>
+      <td>`PUT zones/<ZONE_ID>/firewall/rules/<RULE_ID>`</td>
+      <td>Update a single firewall rule by ID.</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="/api/resources/firewall/subresources/rules/methods/bulk_delete/">
+          Delete firewall rules
+        </a>
+      </td>
+      <td>`DELETE zones/<ZONE_ID>/firewall/rules`</td>
+      <td>
+        <p>Delete existing firewall rules. Must specify list of firewall rule IDs.</p>
+        <p>
+          Empty requests result in no deletion. Returns HTTP status code 200 if a specified rule
+          does not exist.
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href="/api/resources/firewall/subresources/rules/methods/delete/">
+          Delete a firewall rule
+        </a>
+      </td>
+      <td>`DELETE zones/<ZONE_ID>/firewall/rules/<RULE_ID>`</td>
+      <td>
+        <p>Delete a firewall rule by ID.</p>
+      </td>
+    </tr>
+  </tbody>
+</table>

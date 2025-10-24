@@ -1,0 +1,32 @@
+releaseNotes: |-
+  This release contains support for a new WARP setting, [Global WARP override](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#global-warp-override). It also includes significant improvements to our captive portal / public Wi-Fi detection logic. If you have experienced captive portal issues in the past, re-test and give this version a try.
+
+  **Changes and improvements**
+  - Improved [captive portal detection](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/captive-portals/) to make more public networks compatible and have faster detection.
+  - WARP tunnel protocol details can now be viewed using the `warp-cli tunnel stats` command.
+  - Fixed an issue with device revocation and re-registration when switching configurations.
+  - Added a new [Global WARP override](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#global-warp-override) setting. This setting puts account administrators in control of disabling and enabling WARP across all devices registered to an account from the dashboard. Global WARP override is disabled by default.
+version: 2025.2.600.0
+releaseDate: 2025-03-31T17:32:13.302Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/noble-intel/version/2025.2.600.0
+packageSize: 44482626
+platformName: Linux
+linuxPlatforms:
+  bookworm-arm: 43403072
+  bullseye-arm: 43660666
+  bullseye-intel: 44893376
+  jammy-arm: 43411016
+  buster-intel: 44966318
+  centos8-arm: 45764934
+  focal-intel: 44920658
+  focal-arm: 43695898
+  jammy-intel: 44589546
+  noble-intel: 44482626
+  centos8-intel: 46736110
+  fedora35-intel: 46861937
+  fedora34-intel: 47125564
+  fedora34-arm: 46020899
+  bookworm-intel: 44590448
+  noble-arm: 43502562
+  buster-arm: 43681856
+  fedora35-arm: 45690428

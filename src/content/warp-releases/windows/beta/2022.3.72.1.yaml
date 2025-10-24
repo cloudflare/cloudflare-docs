@@ -1,0 +1,34 @@
+releaseNotes: >-
+  This release contains new features and improvements from the last release. 
+   
+
+   
+  **Notable updates**
+   
+  - Added support for Device Information only mode. This allows for posture to
+  be used for Access policies without Gateway being enabled.
+
+  - Fixed issue where UI would not update immediately based on a dashboard
+  settings change
+
+  - Fixed issue where the client could fail to check for updates
+
+  - Fixed issue for Zero Trust accounts with Captive Portal disabled where they
+  client may not always reconnect when it should
+
+  - Fixed issue where the UI would show disconnected when the client was instead
+  just temporarily paused
+
+  - Fixed issue where serial numbers with spaces in the string were not
+  correctly reported
+   
+
+   
+  **Known issues** 
+
+  - No known issues
+version: 2022.3.72.1
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2022.3.72.1
+packageSize: 88788992
+releaseDate: 2022-03-10T18:09:26.981Z
+platformName: Windows

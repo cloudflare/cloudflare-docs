@@ -1,0 +1,80 @@
+---
+pcx_content_type: reference
+source: https://support.cloudflare.com/hc/en-us/articles/360046106112-Understanding-the-CSAM-Scanning-Tool
+title: CSAM Scanning Tool
+
+---
+
+The Child Sexual Abuse Material (CSAM) Scanning Tool allows website owners to proactively identify and take action on CSAM located on their website. By enabling this tool, Cloudflare will compare content served for your website through the Cloudflare cache to known lists of CSAM. These lists are provided to Cloudflare by leading child safety advocacy groups such as the National Center for Missing and Exploited Children (NCMEC).
+
+Remember, by enabling the Service, you agree to the [Service-Specific Terms](https://www.cloudflare.com/service-specific-terms-application-services/#csam-scanning-tool-terms) for the CSAM Scanning Tool. You agree to use this tool solely for the purposes of preventing the spread of CSAM.
+
+***
+
+## Why would a URL be blocked?
+
+Because knowingly distributing or viewing CSAM is illegal, the owner of the website has enabled Cloudflare's CSAM scanning tool to proactively identify and block images identified as CSAM located on their website.
+
+***
+
+## Configure the CSAM scanning tool
+
+To enable the tool:
+
+1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com/).
+2. Select your account and zone.
+3. Go to **Caching** > **Configuration**.
+4. For **CSAM Scanning Tool**, select **Configure**.
+
+You must provide an email address, which will be used to notify you in the event Cloudflare detects a positive match.
+
+***
+
+## What happens when a match is detected?
+
+When a potential match is detected with the tool:
+
+1. An email is sent to you once per day to inform you of any detections made in the past 24 hours. This email will include the file paths of any content that was matched.
+2. If possible, a block is placed to prevent further serving of the matched content. If a block fails, we will indicate that the content has not been blocked in the email.
+
+***
+
+## What action should I take when a match is detected?
+
+You are responsible for understanding and complying with any legal obligations you have as a website owner when made aware of any potential CSAM. Although legal obligations vary based on the provider and the jurisdiction, website owners often have obligations to report apparent CSAM, to remove content, and to preserve records. Some of those possible obligations are as follows:
+
+- You likely have an obligation to report apparent CSAM to the appropriate authorities. You can file a report to NCMEC with additional information via NCMEC's CyberTip reporting form or find the preferred reporting portal for your jurisdiction via the INHOPE website.
+
+<br/>
+
+- You may need to preserve and securely store a copy of the content and related data in the case NCMEC or law enforcement reach out for additional details.
+- You likely have an obligation to securely preserve certain information related to your report for at least 90 days in the case of an investigation. To ensure that access to the content is limited, take care not to store this information anywhere accessible to anyone but those within your organization responsible for legal requests.
+
+<br/>
+
+- You should remove the content and notify Cloudflare of the removal.
+- Once any preservation obligations have been fulfilled, you should remove the content from your website. This is especially important if Cloudflare's notice to you indicates that our block was unsuccessful.
+
+***
+
+## How do I have a block removed from my website?
+
+To disable a block, either because you have determined that the blocked content is not CSAM (a false positive) or because you have taken down the blocked content, view [Blocked Content in the Security Center](/security-center/blocked-content/) in the Cloudflare Dashboard and request reviews on the relevant blocks. A request to remove a block must be accompanied by a representation from you confirming that the blocked content is not CSAM or has been removed. 
+
+These actions are available to users with the following roles:
+
+- Admin
+- Super Admin
+- Trust & Safety
+
+***
+
+## Additional Resources
+
+[CSAM Scanning Tool Supplemental Terms](https://www.cloudflare.com/supplemental-terms/)
+
+[National Center for Missing and Exploited Children (NCMEC)](https://www.missingkids.org/)
+
+[NCMEC CyberTipline](https://www.missingkids.org/gethelpnow/cybertipline)
+
+[INHOPE](https://www.inhope.org/)

@@ -1,0 +1,66 @@
+---
+pcx_content_type: concept
+source: https://support.cloudflare.com/hc/en-us/articles/229666767-Understanding-and-configuring-Cloudflare-s-IPv6-support
+title: IPv6 compatibility
+tags:
+  - IPv6
+---
+
+import { FeatureTable, TabItem, Tabs } from "~/components";
+
+Cloudflare enables IPv6 on all domains without requiring additional configuration or hardware (as long as your host provides IPv6 support).
+
+When IPv6 compatibility is turned on, Cloudflare auto generates [`AAAA` DNS records](/dns/manage-dns-records/reference/dns-record-types/#a-and-aaaa) to allow IPv6 clients to connect. On the other hand, when IPv6 compatibility is turned off, Cloudflare does not automatically generate and advertise `AAAA` DNS for the zone. Client software will determine whether to use IPv4 or IPv6 to connect to a hostname that supports both methods.
+
+For [proxied DNS records](/dns/proxy-status/) that have both an IPv6 and IPv4 origin address, Cloudflare will prefer the IPv4 address when connecting to your origin server.
+
+## Availability
+
+<FeatureTable id="network.ipv6" />
+
+## Enable IPv6 compatibility
+
+By default, IPv6 compatibility is turned on for your domain and will apply to all domains and subdomains covered by [proxied DNS records](/dns/proxy-status/).
+
+:::note
+If you have signed up for Cloudflare through a [Cloudflare hosting partner](http://www.cloudflare.com/hosting-partners) or by use [partial setup](/dns/zone-setups/partial-setup/), IPv6 compatibility does not apply to your apex domain.
+:::
+
+## Disable IPv6 compatibility
+
+If your origin web server only understands IPv4 formatted IP addresses, non-Enterprise customers should [enable **Pseudo IPv4**](/network/pseudo-ipv4/).
+
+Alternatively, customers with an Enterprise account can disable Cloudflare's IPv6 compatibility.
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+To turn off IPv6 compatibility in the dashboard:
+
+1. Log in to your [Cloudflare account](https://dash.cloudflare.com) and go to a specific domain.
+2. Go to **Network**.
+3. Turn off **IPv6 Compatibility**.
+
+</TabItem> <TabItem label="API">
+
+To disable IPv6 compatibility using the API, send a [`PATCH`](/api/resources/zones/subresources/settings/methods/edit/) request with `ipv6` as the setting name in the URI path, and the `value` parameter set to `"off"`.
+
+</TabItem> </Tabs>
+
+:::note
+
+Even when IPv6 is disabled, domains may still receive IPv6 traffic (for example, via the Tor network). To completely disable all IPv6 traffic:
+
+- Turn off [**Onion Routing**](/network/onion-routing/).
+- Use a [WAF custom rule](/waf/custom-rules/create-dashboard/) to block `0:0:0:0:0:0:0:0/0` using the filter `ip.src in {::/0}`.
+
+:::
+
+---
+
+## Troubleshoot an IPv6 network issue
+
+Provide the following information to [Cloudflare Support](/support/contacting-cloudflare-support/) if you experience issues with IPv6 connectivity:
+
+- A [traceroute](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#perform-a-traceroute) that demonstrates the IPv6 connection issues.
+- The [Cloudflare data center serving your request](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#identify-the-cloudflare-data-center-serving-your-request) when the IPv6 issues occur.
+- Confirmation of whether [disabling IPv6 Compatibility](#disable-ipv6-compatibility) resolves the issue.

@@ -1,0 +1,465 @@
+---
+
+summary: Verify a signed request using the HMAC and SHA-256 algorithms or return a 403.
+tags:
+  - Security
+  - WebCrypto
+  - JavaScript
+  - TypeScript
+  - Python
+preview:
+  - true
+pcx_content_type: example
+title: Sign requests
+reviewed: 2024-01-11
+sidebar:
+  order: 1001
+description: Verify a signed request using the HMAC and SHA-256 algorithms or return a 403.
+---
+
+If you want to get started quickly, click on the button below.
+
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/docs-examples/tree/main/workers/signing-requests)
+
+This creates a repository in your GitHub account and deploys the application to Cloudflare Workers.
+
+import { TabItem, Tabs } from "~/components";
+
+:::note
+
+This example Worker makes use of the [Node.js Buffer API](/workers/runtime-apis/nodejs/buffer/), which is available as part of the Workers runtime [Node.js compatibility mode](/workers/runtime-apis/nodejs/). To run this Worker, you will need to [enable the `nodejs_compat` compatibility flag](/workers/runtime-apis/nodejs/#get-started).
+:::
+
+You can both verify and generate signed requests from within a Worker using the [Web Crypto APIs](https://developer.mozilla.org/en-US/docs/Web/API/Crypto/subtle).
+
+The following Worker will:
+
+- For request URLs beginning with `/generate/`, replace `/generate/` with `/`, sign the resulting path with its timestamp, and return the full, signed URL in the response body.
+
+- For all other request URLs, verify the signed URL and allow the request through.
+
+<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
+
+```js
+import { Buffer } from "node:buffer";
+
+const encoder = new TextEncoder();
+
+// How long an HMAC token should be valid for, in seconds
+const EXPIRY = 60;
+
+export default {
+	/**
+	 *
+	 * @param {Request} request
+	 * @param {{SECRET_DATA: string}} env
+	 * @returns
+	 */
+	async fetch(request, env) {
+		// You will need some secret data to use as a symmetric key. This should be
+		// attached to your Worker as an encrypted secret.
+		// Refer to https://developers.cloudflare.com/workers/configuration/secrets/
+		const secretKeyData = encoder.encode(
+			env.SECRET_DATA ?? "my secret symmetric key",
+		);
+
+		// Import your secret as a CryptoKey for both 'sign' and 'verify' operations
+		const key = await crypto.subtle.importKey(
+			"raw",
+			secretKeyData,
+			{ name: "HMAC", hash: "SHA-256" },
+			false,
+			["sign", "verify"],
+		);
+
+		const url = new URL(request.url);
+
+		// This is a demonstration Worker that allows unauthenticated access to /generate
+		// In a real application you would want to make sure that
+		// users could only generate signed URLs when authenticated
+		if (url.pathname.startsWith("/generate/")) {
+			url.pathname = url.pathname.replace("/generate/", "/");
+
+			const timestamp = Math.floor(Date.now() / 1000);
+
+			// This contains all the data about the request that you want to be able to verify
+			// Here we only sign the timestamp and the pathname, but often you will want to
+			// include more data (for instance, the URL hostname or query parameters)
+			const dataToAuthenticate = `${url.pathname}${timestamp}`;
+
+			const mac = await crypto.subtle.sign(
+				"HMAC",
+				key,
+				encoder.encode(dataToAuthenticate),
+			);
+
+			// Refer to https://developers.cloudflare.com/workers/runtime-apis/nodejs/
+			// for more details on using Node.js APIs in Workers
+			const base64Mac = Buffer.from(mac).toString("base64");
+
+			url.searchParams.set("verify", `${timestamp}-${base64Mac}`);
+
+			return new Response(`${url.pathname}${url.search}`);
+			// Verify all non /generate requests
+		} else {
+			// Make sure you have the minimum necessary query parameters.
+			if (!url.searchParams.has("verify")) {
+				return new Response("Missing query parameter", { status: 403 });
+			}
+
+			const [timestamp, hmac] = url.searchParams.get("verify").split("-");
+
+			const assertedTimestamp = Number(timestamp);
+
+			const dataToAuthenticate = `${url.pathname}${assertedTimestamp}`;
+
+			const receivedMac = Buffer.from(hmac, "base64");
+
+			// Use crypto.subtle.verify() to guard against timing attacks. Since HMACs use
+			// symmetric keys, you could implement this by calling crypto.subtle.sign() and
+			// then doing a string comparison -- this is insecure, as string comparisons
+			// bail out on the first mismatch, which leaks information to potential
+			// attackers.
+			const verified = await crypto.subtle.verify(
+				"HMAC",
+				key,
+				receivedMac,
+				encoder.encode(dataToAuthenticate),
+			);
+
+			if (!verified) {
+				return new Response("Invalid MAC", { status: 403 });
+			}
+
+			// Signed requests expire after one minute. Note that this value should depend on your specific use case
+			if (Date.now() / 1000 > assertedTimestamp + EXPIRY) {
+				return new Response(
+					`URL expired at ${new Date((assertedTimestamp + EXPIRY) * 1000)}`,
+					{ status: 403 },
+				);
+			}
+		}
+
+		return fetch(new URL(url.pathname, "https://example.com"), request);
+	},
+};
+```
+
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
+
+```ts
+import { Buffer } from "node:buffer";
+
+const encoder = new TextEncoder();
+
+// How long an HMAC token should be valid for, in seconds
+const EXPIRY = 60;
+
+interface Env {
+	SECRET_DATA: string;
+}
+export default {
+	async fetch(request, env): Promise<Response> {
+		// You will need some secret data to use as a symmetric key. This should be
+		// attached to your Worker as an encrypted secret.
+		// Refer to https://developers.cloudflare.com/workers/configuration/secrets/
+		const secretKeyData = encoder.encode(
+			env.SECRET_DATA ?? "my secret symmetric key",
+		);
+
+		// Import your secret as a CryptoKey for both 'sign' and 'verify' operations
+		const key = await crypto.subtle.importKey(
+			"raw",
+			secretKeyData,
+			{ name: "HMAC", hash: "SHA-256" },
+			false,
+			["sign", "verify"],
+		);
+
+		const url = new URL(request.url);
+
+		// This is a demonstration Worker that allows unauthenticated access to /generate
+		// In a real application you would want to make sure that
+		// users could only generate signed URLs when authenticated
+		if (url.pathname.startsWith("/generate/")) {
+			url.pathname = url.pathname.replace("/generate/", "/");
+
+			const timestamp = Math.floor(Date.now() / 1000);
+
+			// This contains all the data about the request that you want to be able to verify
+			// Here we only sign the timestamp and the pathname, but often you will want to
+			// include more data (for instance, the URL hostname or query parameters)
+			const dataToAuthenticate = `${url.pathname}${timestamp}`;
+
+			const mac = await crypto.subtle.sign(
+				"HMAC",
+				key,
+				encoder.encode(dataToAuthenticate),
+			);
+
+			// Refer to https://developers.cloudflare.com/workers/runtime-apis/nodejs/
+			// for more details on using NodeJS APIs in Workers
+			const base64Mac = Buffer.from(mac).toString("base64");
+
+			url.searchParams.set("verify", `${timestamp}-${base64Mac}`);
+
+			return new Response(`${url.pathname}${url.search}`);
+			// Verify all non /generate requests
+		} else {
+			// Make sure you have the minimum necessary query parameters.
+			if (!url.searchParams.has("verify")) {
+				return new Response("Missing query parameter", { status: 403 });
+			}
+
+			const [timestamp, hmac] = url.searchParams.get("verify").split("-");
+
+			const assertedTimestamp = Number(timestamp);
+
+			const dataToAuthenticate = `${url.pathname}${assertedTimestamp}`;
+
+			const receivedMac = Buffer.from(hmac, "base64");
+
+			// Use crypto.subtle.verify() to guard against timing attacks. Since HMACs use
+			// symmetric keys, you could implement this by calling crypto.subtle.sign() and
+			// then doing a string comparison -- this is insecure, as string comparisons
+			// bail out on the first mismatch, which leaks information to potential
+			// attackers.
+			const verified = await crypto.subtle.verify(
+				"HMAC",
+				key,
+				receivedMac,
+				encoder.encode(dataToAuthenticate),
+			);
+
+			if (!verified) {
+				return new Response("Invalid MAC", { status: 403 });
+			}
+
+			// Signed requests expire after one minute. Note that this value should depend on your specific use case
+			if (Date.now() / 1000 > assertedTimestamp + EXPIRY) {
+				return new Response(
+					`URL expired at ${new Date((assertedTimestamp + EXPIRY) * 1000)}`,
+					{ status: 403 },
+				);
+			}
+		}
+
+		return fetch(new URL(url.pathname, "https://example.com"), request);
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TabItem> <TabItem label="Hono" icon="seti:typescript">
+
+```ts
+import { Buffer } from "node:buffer";
+import { Hono } from "hono";
+import { proxy } from "hono/proxy";
+
+const encoder = new TextEncoder();
+
+// How long an HMAC token should be valid for, in seconds
+const EXPIRY = 60;
+
+interface Env {
+	SECRET_DATA: string;
+}
+
+const app = new Hono();
+
+// Handle URL generation requests
+app.get("/generate/*", async (c) => {
+	const env = c.env;
+
+	// You will need some secret data to use as a symmetric key
+	const secretKeyData = encoder.encode(
+		env.SECRET_DATA ?? "my secret symmetric key",
+	);
+
+	// Import the secret as a CryptoKey for both 'sign' and 'verify' operations
+	const key = await crypto.subtle.importKey(
+		"raw",
+		secretKeyData,
+		{ name: "HMAC", hash: "SHA-256" },
+		false,
+		["sign", "verify"],
+	);
+
+	// Replace "/generate/" prefix with "/"
+	let pathname = c.req.path.replace("/generate/", "/");
+
+	const timestamp = Math.floor(Date.now() / 1000);
+
+	// Data to authenticate: pathname + timestamp
+	const dataToAuthenticate = `${pathname}${timestamp}`;
+
+	// Sign the data
+	const mac = await crypto.subtle.sign(
+		"HMAC",
+		key,
+		encoder.encode(dataToAuthenticate),
+	);
+
+	// Convert the signature to base64
+	const base64Mac = Buffer.from(mac).toString("base64");
+
+	// Add verification parameter to URL
+	url.searchParams.set("verify", `${timestamp}-${base64Mac}`);
+
+	return c.text(`${pathname}${url.search}`);
+});
+
+// Handle verification for all other requests
+app.all("*", async (c) => {
+	const env = c.env;
+	const url = c.req.url;
+
+	// You will need some secret data to use as a symmetric key
+	const secretKeyData = encoder.encode(
+		env.SECRET_DATA ?? "my secret symmetric key",
+	);
+
+	// Import the secret as a CryptoKey for both 'sign' and 'verify' operations
+	const key = await crypto.subtle.importKey(
+		"raw",
+		secretKeyData,
+		{ name: "HMAC", hash: "SHA-256" },
+		false,
+		["sign", "verify"],
+	);
+
+	// Make sure the request has the verification parameter
+	if (!c.req.query("verify")) {
+		return c.text("Missing query parameter", 403);
+	}
+
+	// Extract timestamp and signature
+	const [timestamp, hmac] = c.req.query("verify")!.split("-");
+	const assertedTimestamp = Number(timestamp);
+
+	// Recreate the data that should have been signed
+	const dataToAuthenticate = `${c.req.path}${assertedTimestamp}`;
+
+	// Convert base64 signature back to ArrayBuffer
+	const receivedMac = Buffer.from(hmac, "base64");
+
+	// Verify the signature
+	const verified = await crypto.subtle.verify(
+		"HMAC",
+		key,
+		receivedMac,
+		encoder.encode(dataToAuthenticate),
+	);
+
+	// If verification fails, return 403
+	if (!verified) {
+		return c.text("Invalid MAC", 403);
+	}
+
+	// Check if the signature has expired
+	if (Date.now() / 1000 > assertedTimestamp + EXPIRY) {
+		return c.text(
+			`URL expired at ${new Date((assertedTimestamp + EXPIRY) * 1000)}`,
+			403,
+		);
+	}
+
+	// If verification passes, proxy the request to example.com
+	return proxy(`https://example.com/${c.req.path}`, ...c.req);
+});
+
+export default app;
+```
+
+</TabItem> <TabItem label="Python" icon="seti:python">
+
+```py
+from workers import WorkerEntrypoint
+from pyodide.ffi import to_js as _to_js
+from js import Response, URL, TextEncoder, Buffer, fetch, Object, crypto
+
+def to_js(x):
+    return _to_js(x, dict_converter=Object.fromEntries)
+
+encoder = TextEncoder.new()
+
+# How long an HMAC token should be valid for, in seconds
+EXPIRY = 60
+
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        # Get the secret key
+        secret_key_data = encoder.encode(getattr(self.env, "SECRET_DATA", None) or "my secret symmetric key")
+
+        # Import the secret as a CryptoKey for both 'sign' and 'verify' operations
+        key = await crypto.subtle.importKey(
+            "raw",
+            secret_key_data,
+            to_js({"name": "HMAC", "hash": "SHA-256"}),
+            False,
+            ["sign", "verify"]
+        )
+
+        url = URL.new(request.url)
+
+        if url.pathname.startswith("/generate/"):
+            url.pathname = url.pathname.replace("/generate/", "/", 1)
+
+            timestamp = int(Date.now() / 1000)
+
+            # Data to authenticate
+            data_to_authenticate = f"{url.pathname}{timestamp}"
+
+            # Sign the data
+            mac = await crypto.subtle.sign(
+                "HMAC",
+                key,
+                encoder.encode(data_to_authenticate)
+            )
+
+            # Convert to base64
+            base64_mac = Buffer.from(mac).toString("base64")
+
+            # Set the verification parameter
+            url.searchParams.set("verify", f"{timestamp}-{base64_mac}")
+
+            return Response.new(f"{url.pathname}{url.search}")
+        else:
+            # Verify the request
+            if not "verify" in url.searchParams:
+                return Response.new("Missing query parameter", status=403)
+
+            verify_param = url.searchParams.get("verify")
+            timestamp, hmac = verify_param.split("-")
+
+            asserted_timestamp = int(timestamp)
+
+            data_to_authenticate = f"{url.pathname}{asserted_timestamp}"
+
+            received_mac = Buffer.from(hmac, "base64")
+
+            # Verify the signature
+            verified = await crypto.subtle.verify(
+                "HMAC",
+                key,
+                received_mac,
+                encoder.encode(data_to_authenticate)
+            )
+
+            if not verified:
+                return Response.new("Invalid MAC", status=403)
+
+            # Check expiration
+            if Date.now() / 1000 > asserted_timestamp + EXPIRY:
+                expiry_date = Date.new((asserted_timestamp + EXPIRY) * 1000)
+                return Response.new(f"URL expired at {expiry_date}", status=403)
+
+        # Proxy to example.com if verification passes
+        return fetch(URL.new(f"https://example.com{url.pathname}"), request)
+```
+
+</TabItem> </Tabs>
+
+## Validate signed requests using the WAF
+
+The provided example code for signing requests is compatible with the [`is_timed_hmac_valid_v0()`](/ruleset-engine/rules-language/functions/#hmac-validation) Rules language function. This means that you can verify requests signed by the Worker script using a [custom rule](/waf/custom-rules/use-cases/configure-token-authentication/#option-2-configure-using-custom-rules).

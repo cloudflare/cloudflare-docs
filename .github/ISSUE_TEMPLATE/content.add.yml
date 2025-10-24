@@ -2,85 +2,16 @@ name: Request content addition
 description: Request NEW documentation content.
 labels: ["documentation", "content:new"]
 body:
-  - type: dropdown
-    id: products
+  - type: textarea
+    id: location-urls
     validations:
       required: true
     attributes:
-      label: Which Cloudflare product(s) does this pertain to?
-      multiple: true
-      options:
-        - "1.1.1.1"
-        - Analytics
-        - API
-        - API Shield
-        - Argo Smart Routing
-        - Automatic Platform Optimization
-        - Bots
-        - Browser Rendering
-        - BYOIP
-        - Cache
-        - China Network
-        - Client IP Geolocation
-        - Cloudflare for Platforms
-        - D1
-        - Data Localization
-        - DDoS Protection
-        - DMARC Management
-        - DNS
-        - Durable Objects
-        - Email Routing
-        - Email Security
-        - Firewall
-        - Fundamentals
-        - Health Checks
-        - Hyperdrive
-        - Images
-        - KV
-        - Load Balancing
-        - Logs
-        - Magic Firewall
-        - Magic Network Monitoring
-        - Magic Transit
-        - Magic WAN
-        - Network Error Logging
-        - Network Interconnect
-        - Notifications
-        - Page Shield
-        - Pages
-        - Privacy Gateway
-        - Pub/Sub
-        - Pulumi
-        - Queues
-        - R2
-        - Radar
-        - Railgun
-        - Randomness Beacon
-        - Reference Architecture
-        - Registrar
-        - Rules
-        - Ruleset Engine
-        - Security Center
-        - Spectrum
-        - Speed
-        - SSL
-        - Stream
-        - Style Guide
-        - Support
-        - Tenant
-        - Terraform
-        - Time Services
-        - Turnstile
-        - Vectorize
-        - Version Management
-        - WAF
-        - Waiting Room
-        - WARP Client
-        - Web3
-        - Workers
-        - Workers AI
-        - Zaraz
-        - Zero Trust
+      label: Proposed changes
+      description: Provide links to the top-level section of `https://developers.cloudflare.com/` or specific proposed pages.
+      placeholder: |
+        - https://developers.cloudflare.com/cloudflare-one/
+        - https://developers.cloudflare.com/workers/examples/
 
   - type: input
     id: subject

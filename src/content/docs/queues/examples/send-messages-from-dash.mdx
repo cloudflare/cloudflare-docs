@@ -1,0 +1,33 @@
+---
+pcx_content_type: example
+title: Send messages from the dashboard
+summary: Use the dashboard to send messages to a queue.
+sidebar:
+  order: 1003
+head:
+  - tag: title
+    content: Cloudflare Queues - Sending messages from the dashboard
+description: Use the dashboard to send messages to a queue.
+
+---
+
+import { DashButton } from "~/components";
+
+Sending messages from the dashboard allows you to debug Queues or queue consumers without a producer Worker.
+
+To send messages from the dashboard:
+
+1. In the Cloudflare dashboard, go to the **Queues** page.
+
+	 <DashButton url="/?to=/:account/workers/queues" />
+
+2. Select the queue to send a message to.
+3. Select the **Messages** tab.
+4. Select **Send**.
+5. Choose your message **Content Type**: _Text_ or _JSON_.
+5. Enter your message. Alternatively, drag a file over the textbox to upload a file as a message.
+6. Select **Send**.
+
+Your message will be sent to the queue.
+
+Refer to the [Get Started guide](/queues/get-started/) to learn how to send messages to a queue from a Worker.

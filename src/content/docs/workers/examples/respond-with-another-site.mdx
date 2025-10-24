@@ -1,0 +1,71 @@
+---
+summary: Respond to the Worker request with the response from another website
+  (example.com in this example).
+demo: https://respond-with-another-site.workers-sites-examples.workers.dev
+tags:
+  - Middleware
+  - JavaScript
+  - TypeScript
+  - Python
+preview:
+  - true
+pcx_content_type: example
+title: Respond with another site
+sidebar:
+  order: 12
+description: Respond to the Worker request with the response from another
+  website (example.com in this example).
+---
+
+If you want to get started quickly, click on the button below.
+
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/docs-examples/tree/main/workers/respond-with-another-site)
+
+This creates a repository in your GitHub account and deploys the application to Cloudflare Workers.
+
+import { Render, TabItem, Tabs } from "~/components";
+
+<Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
+
+<Render file="respond-another-site-example-js" product="workers" />
+
+</TabItem> <TabItem label="TypeScript" icon="seti:typescript">
+
+```ts
+export default {
+	async fetch(request): Promise<Response> {
+		function MethodNotAllowed(request) {
+			return new Response(`Method ${request.method} not allowed.`, {
+				status: 405,
+				headers: {
+					Allow: "GET",
+				},
+			});
+		}
+		// Only GET requests work with this proxy.
+		if (request.method !== "GET") return MethodNotAllowed(request);
+		return fetch(`https://example.com`);
+	},
+} satisfies ExportedHandler;
+```
+
+</TabItem> <TabItem label="Python" icon="seti:python">
+
+```py
+from workers import WorkerEntrypoint, Response, fetch
+
+class Default(WorkerEntrypoint):
+    def fetch(self, request):
+        def method_not_allowed(request):
+            msg = f'Method {request.method} not allowed.'
+            headers = {"Allow": "GET"}
+            return Response(msg, headers=headers, status=405)
+
+        # Only GET requests work with this proxy.
+        if request.method != "GET":
+            return method_not_allowed(request)
+
+        return fetch("https://example.com")
+```
+
+</TabItem></Tabs>

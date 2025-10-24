@@ -1,0 +1,33 @@
+---
+pcx_content_type: concept
+title: Universal SSL
+sidebar:
+  order: 1
+head:
+  - tag: title
+    content: Free Universal SSL/TLS certificates
+
+---
+
+import { FeatureTable, GlossaryDefinition, Render } from "~/components"
+
+<GlossaryDefinition term="Universal SSL certificate" />
+
+Universal certificates are [Domain Validated (DV)](/ssl/concepts/#validation-level). For setup details, refer to [Enable Universal SSL](/ssl/edge-certificates/universal-ssl/enable-universal-ssl/).
+
+:::note
+
+
+If your website or application requires an SSL certificate prior to migrating traffic to Cloudflare, or if you need to [customize cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/customize-cipher-suites/), refer to [Advanced](/ssl/edge-certificates/advanced-certificate-manager/) or [Custom](/ssl/edge-certificates/custom-certificates/) certificates.
+
+
+:::
+
+## Availability
+
+<FeatureTable id="ssl.universal_certificates" />
+
+## Related resources
+
+- [Backup certificates](/ssl/edge-certificates/backup-certificates/)
+- [Validity period and renewal](/ssl/reference/certificate-validity-periods/#universal-ssl)

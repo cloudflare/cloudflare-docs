@@ -1,0 +1,17 @@
+---
+title: UDP and ICMP Monitor Support for Private Load Balancing Endpoints
+description: Use UDP or ICMP to monitor the health of your private IP-based applications.
+date: 2025-05-06
+---
+
+Cloudflare Load Balancing now supports **UDP (Layer 4)** and **ICMP (Layer 3)** health monitors for **private endpoints**. This makes it simple to track the health and availability of internal services that don’t respond to HTTP, TCP, or other protocol probes.
+
+### What you can do:
+
+- Set up **ICMP ping monitors** to check if your private endpoints are reachable.
+- Use **UDP monitors** for lightweight health checks on non-TCP workloads, such as DNS, VoIP, or custom UDP-based services.
+- Gain better visibility and uptime guarantees for services running behind **Private Network Load Balancing**, without requiring public IP addresses.
+
+This enhancement is ideal for internal applications that rely on low-level protocols, especially when used in conjunction with [**Cloudflare Tunnel**](/cloudflare-one/networks/connectors/cloudflare-tunnel/), [**WARP**](/cloudflare-one/team-and-resources/devices/warp/), and [**Magic WAN**](/magic-wan/) to create a secure and observable private network.
+
+Learn more about [Private Network Load Balancing](/load-balancing/private-network/) or view the full list of [supported health monitor protocols](/load-balancing/monitors/#supported-protocols).

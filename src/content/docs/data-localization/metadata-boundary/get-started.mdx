@@ -1,0 +1,81 @@
+---
+title: Get started
+pcx_content_type: get-started
+sidebar:
+  order: 2
+---
+
+import { Details, APIRequest, DashButton } from "~/components";
+
+You can configure the Metadata Boundary to select the region where your logs and analytics are stored via API or dashboard.
+
+Currently, this can only be applied at the account-level. If you only want the Metadata Boundary to be applied on a portion of zones beneath the same account, you will have to [move the rest of zones to a new account](/fundamentals/manage-domains/move-domain/).
+
+## Configure Customer Metadata Boundary in the dashboard
+
+To configure Customer Metadata Boundary in the dashboard:
+
+1. In the Cloudflare dashboard, go to the **Settings** page.
+
+   <DashButton url="/?to=/:account/configurations" />
+
+2. In **Customer Metadata Boundary**, select the region you want to use. You have the option to select `EU` or `US`. If you want to select both regions, select `Global` instead.
+
+## Configure Customer Metadata Boundary via API
+
+You can also configure Customer Metadata Boundary via API.
+
+Currently, only SuperAdmins and Admin roles can edit DLS configurations. Use the **Account-level Logs:Read/Write** API permissions for the `/logs/control/cmb` endpoint to read/write Customer Metadata Boundary configurations.
+
+These are some examples of API requests.
+
+<Details header="Get current regions">
+
+Here is an example request using cURL to get current regions (if any):
+
+<APIRequest
+  path="/accounts/{account_id}/logs/control/cmb/config"
+  method="GET"
+/>
+
+</Details>
+
+<Details header="Setting regions">
+
+Here is an example request using cURL to set regions:
+
+<APIRequest
+  path="/accounts/{account_id}/logs/control/cmb/config"
+  method="POST"
+  json={{
+    regions: "eu",
+    allow_out_of_region_access: false
+  }}
+/>
+
+This will overwrite any previous regions.
+Change will be in effect after several minutes.
+
+</Details>
+
+<Details header="Delete regions">
+
+Here is an example request using cURL to delete regions:
+
+<APIRequest
+  path="/accounts/{account_id}/logs/control/cmb/config"
+  method="DELETE"
+/>
+
+</Details>
+
+## View or change settings
+
+To view or change your Customer Metadata Boundary setting:
+
+1. In the Cloudflare dashboard, go to the **Settings** page.
+
+   <DashButton url="/?to=/:account/configurations" />
+
+2. Go to **Preferences**.
+3. Locate the **Customer Metadata Boundary** section.

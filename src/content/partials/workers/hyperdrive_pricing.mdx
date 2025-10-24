@@ -1,0 +1,21 @@
+---
+{}
+---
+
+import { Markdown, Details } from "~/components";
+
+Hyperdrive is included in both the Free and Paid [Workers plans](/workers/platform/pricing/).
+
+|                              | Free plan[^1] | Paid plan |
+| ---------------------------- | --------------------- | --------- |
+| Database queries[^2] | 100,000 / day         | Unlimited |
+
+[^1]: The Workers Free plan includes limited Hyperdrive usage. All limits reset daily at 00:00 UTC. If you exceed any one of these limits, further operations of that type will fail with an error.
+
+[^2]: Database queries refers to any database statement made via Hyperdrive, whether a query (`SELECT`), a modification (`INSERT`,`UPDATE`, or `DELETE`) or a schema change (`CREATE`, `ALTER`, `DROP`).
+
+<Details header="Footnotes" open={true}>
+1: The Workers Free plan includes limited Hyperdrive usage. All limits reset daily at 00:00 UTC. If you exceed any one of these limits, further operations of that type will fail with an error.
+
+2: Database queries refers to any database statement made via Hyperdrive, whether a query (`SELECT`), a modification (`INSERT`,`UPDATE`, or `DELETE`) or a schema change (`CREATE`, `ALTER`, `DROP`).
+</Details>

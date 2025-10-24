@@ -1,0 +1,53 @@
+---
+title: Resources by selector
+styleGuide:
+  component: ResourcesBySelector
+---
+
+import { Type, MetaInfo } from "~/components";
+
+The `ResourcesBySelector` component allows you to pull in documentation resources based on the `pcx_content_type`, `tags` and `products` frontmatter properties.
+
+## Component
+
+```mdx live
+import { ResourcesBySelector } from "~/components";
+
+<ResourcesBySelector
+	directory="workers/examples/"
+	types={["example"]}
+	filterables={["tags"]}
+/>
+```
+
+### Inputs
+
+- `directory` <Type text="string" />
+
+  The directory to search for resources in, relative to `src/content/docs/`. For example, for Workers tutorials, `directory="workers/tutorials/"`.
+
+- `filterables` <Type text="string[]" />
+
+  An array of frontmatter properties to show in the frontend filter dropdown. For example, `filterables={["tags"]}` will allow users to filter based on each pages' `tags` frontmatter.
+
+- `types` <Type text="string[]" />
+
+  An array of `pcx_content_type` values to filter which content gets pulled into the component. For example, `types={["example"]}`.
+
+- `tags` <Type text="string[]" /> <MetaInfo text="optional" />
+
+  An array of `tags` values to filter which content gets pulled into the component. For example, `tags={["AI"]}`.
+
+  To see a list of the available tags, and which pages are associated with them, refer to [this list](/style-guide/frontmatter/tags/).
+
+- `products` <Type text="string[]" /> <MetaInfo text="optional" />
+
+  An array of `products` values to filter which content gets pulled into the component. For example, `products={["D1"]}`.
+
+- `showDescriptions` <Type text="boolean" /> <MetaInfo text="optional (default true)" />
+
+  If set to `false`, will only show the titles of associated pages, not the showDescriptions
+
+- `showLastUpdated` <Type text="boolean" /> <MetaInfo text="optional (default false)" />
+
+  If set to `true`, will add the last updated date, which is added in the [`updated` frontmatter value](/style-guide/frontmatter/custom-properties/#updated).

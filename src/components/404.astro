@@ -1,0 +1,46 @@
+<div class="flex flex-col items-center justify-center md:py-28">
+	<h1>404</h1>
+	<p>
+		Check the URL, try using our <a id="404-search-link" href="/search/"
+			>search</a
+		> or try our LLM-friendly
+		<a href="/llms.txt"> llms.txt directory</a>.
+	</p>
+</div>
+
+<script>
+	import { track } from "~/util/zaraz";
+	import { openGlobalSearch } from "~/util/search";
+
+	const { pathname } = window.location;
+
+	const anchor = document.getElementById("404-search-link");
+	const pretty = decodeURIComponent(
+		pathname.replaceAll("/", " ").replaceAll("-", " ").trim(),
+	);
+
+	if (anchor) {
+		anchor.setAttribute("href", `/search/?q=${encodeURIComponent(pretty)}`);
+		anchor.addEventListener("click", () => {
+			track("serp from location", { value: "404", query: pretty });
+		});
+	}
+
+	document.addEventListener(
+		"keydown",
+		(keyboardEvent) => {
+			if (
+				(keyboardEvent.metaKey || keyboardEvent.ctrlKey) &&
+				keyboardEvent.key === "k"
+			) {
+				keyboardEvent.preventDefault();
+				keyboardEvent.stopPropagation();
+
+				openGlobalSearch(pretty);
+			}
+		},
+		{
+			capture: true,
+		},
+	);
+</script>

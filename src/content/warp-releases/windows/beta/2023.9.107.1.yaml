@@ -1,0 +1,30 @@
+releaseNotes: >-
+  This release contains reliability improvements and general bug fixes.
+   
+  **Notable updates**
+
+  - Improved DNS logging to track down an issue where DNS isn't properly applied
+  coming out of sleep
+
+  - Tweaked DNS behavior to work better with some captive portals (United in
+  particular)
+
+  - Fixed an issue with Managed Networks where if the managed endpoint
+  overlapped with your exclude split tunnel configuration, the split tunnel
+  would only be open for IP traffic destined to the same port as your managed
+  TLS endpoint
+
+  - Fixed an issue where IPv6 traffic could be incorrectly sent down the tunnel
+  in exclude mode
+
+  - Fixed an issue introduced in previous beta where the client could be stuck
+  on connecting forever
+    
+  **Known issues**
+
+  - No known issues
+version: 2023.9.107.1
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2023.9.107.1
+packageSize: 112439296
+releaseDate: 2023-09-18T14:12:59.245Z
+platformName: Windows

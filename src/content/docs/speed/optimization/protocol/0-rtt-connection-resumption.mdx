@@ -1,0 +1,44 @@
+---
+pcx_content_type: how-to
+title: 0-RTT Connection Resumption
+sidebar:
+  order: 5
+---
+
+import { FeatureTable, TabItem, Tabs, DashButton } from "~/components";
+
+Zero round trip time resumption (0-RTT) improves performance for clients who have previously connected to your website, reducing latency for returning users. This feature is especially beneficial for those who frequently visit your application or connect over mobile networks.
+
+We support 0-RTT for GET, HEAD, and OPTIONS requests, facilitating faster responses for these types of requests. Note that 0-RTT is not supported for POST requests.
+
+In line with 0-RTT standards, we add the `Early-Data: 1` header to 0-RTT requests, which allows origin servers to identify when a request has used 0-RTT resumption. Customers should be able to see the `Early-Data: 1` header for any 0-RTT requests connecting to their origin.
+
+For more information on 0-RTT, including its functionality and potential limitations, refer to our [blog post](https://blog.cloudflare.com/even-faster-connection-establishment-with-quic-0-rtt-resumption/).
+
+## Availability
+
+<FeatureTable id="network.0_rtt" />
+
+## Enable 0-RTT Connection Resumption
+
+By default, 0-RTT Connection Resumption is not enabled on your Cloudflare application.
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+To enable 0-RTT Connection Resumption in the dashboard:
+
+1. In the Cloudflare dashboard, go to the **Speed** > **Settings** page.
+
+   <DashButton url="/?to=/:account/:zone/speed/optimization" />
+
+2. Go to the **Protocol Optimization** tab and under **0-RTT Connection Resumption**, switch the toggle to **On**.
+
+</TabItem> <TabItem label="API">
+
+To adjust your 0-RTT Connection Resumption settings with the API, send a [`PATCH`](/api/resources/zones/subresources/settings/methods/edit/) request with `0rtt` as the setting name in the URI path, and the `value` parameter set to `"on"` or `"off"`.
+
+</TabItem> </Tabs>
+
+:::note
+The 0-RTT Connection Resumption is only established between the client and Cloudflare. It does not extend to the origin server.
+:::

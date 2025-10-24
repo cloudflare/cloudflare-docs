@@ -1,0 +1,11 @@
+---
+{}
+---
+
+import { Tabs, TabItem, Render } from "~/components";
+
+:::note
+
+Access and WARP will evaluate identity based on a user's last-known state. If a user authenticates via your Identity Provider, but later authenticates with a different method (such as One-Time PIN), Access will no longer evaluate the user's Identity Provider group memberships. Identity Provider group memberships are created and managed by the IdP and group membership data can only persist in an IdP-based authentication.
+
+:::

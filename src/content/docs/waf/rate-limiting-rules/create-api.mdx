@@ -1,0 +1,181 @@
+---
+pcx_content_type: how-to
+title: Create a rate limiting rule via API
+sidebar:
+  order: 15
+  label: Create via API
+head:
+  - tag: title
+    content: Create a rate limiting rule via API for a zone
+---
+
+import { Render, APIRequest } from "~/components";
+
+Use the [Rulesets API](/ruleset-engine/rulesets-api/) to create a rate limiting rule via API at the zone level.
+
+A rate limiting rule is similar to a regular rule handled by the Ruleset Engine, but contains an additional `ratelimit` object with the rate limiting configuration. Refer to [Rate limiting parameters](/waf/rate-limiting-rules/parameters/) for more information on this field and its parameters.
+
+You must deploy rate limiting rules to the `http_ratelimit` [phase entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset).
+
+Rate limiting rules must appear at the end of the rules list.
+
+If you are using Terraform, refer to [Rate limiting rules configuration using Terraform](/terraform/additional-configurations/rate-limiting-rules/).
+
+## Create a rate limiting rule
+
+<Render
+	file="api-generic-create-rule-procedure"
+	product="waf"
+	params={{
+		ruleType: "rate limiting rule",
+		extraObject: "with a `ratelimit` object",
+		phaseName: "http_ratelimit",
+	}}
+/>
+
+### Example A - Rate limiting based on request properties
+
+This example adds a rate limiting rule to the `http_ratelimit` phase entry point ruleset for the zone with ID `$ZONE_ID`. The phase entry point ruleset already exists, with ID `$RULESET_ID`.
+
+<APIRequest
+	path="/zones/{zone_id}/rulesets/{ruleset_id}/rules"
+	method="POST"
+	json={{
+		description: "My rate limiting rule",
+		expression: '(http.request.uri.path matches "^/api/")',
+		action: "block",
+		ratelimit: {
+			characteristics: [
+				"cf.colo.id",
+				"ip.src",
+				'http.request.headers["x-api-key"]',
+			],
+			period: 60,
+			requests_per_period: 100,
+			mitigation_timeout: 600,
+		},
+	}}
+	roles={false}
+/>
+
+<Render file="api-create-ruleset-with-rule" product="waf" />
+
+### Example B - Rate limiting with a custom response
+
+This example adds a rate limiting rule to the `http_ratelimit` phase entry point ruleset for the zone with ID `$ZONE_ID`. The phase entry point ruleset already exists, with ID `$RULESET_ID`.
+
+The new rule defines a [custom response](/waf/rate-limiting-rules/create-zone-dashboard/#configure-a-custom-response-for-blocked-requests) for requests blocked due to rate limiting.
+
+<APIRequest
+	path="/zones/{zone_id}/rulesets/{ruleset_id}/rules"
+	method="POST"
+	json={{
+		description: "My rate limiting rule",
+		expression: '(http.request.uri.path matches "^/api/")',
+		action: "block",
+		action_parameters: {
+			response: {
+				status_code: 403,
+				content: "You have been rate limited.",
+				content_type: "text/plain",
+			},
+		},
+		ratelimit: {
+			characteristics: [
+				"cf.colo.id",
+				"ip.src",
+				'http.request.headers["x-api-key"]',
+			],
+			period: 60,
+			requests_per_period: 100,
+			mitigation_timeout: 600,
+		},
+	}}
+	code={{
+		mark: [{ range: "9-13" }],
+	}}
+	roles={false}
+/>
+
+<Render file="api-create-ruleset-with-rule" product="waf" />
+
+### Example C - Rate limiting ignoring cached assets
+
+This example adds a rate limiting rule to the `http_ratelimit` phase entry point ruleset for the zone with ID `$ZONE_ID`. The phase entry point ruleset already exists, with ID `$RULESET_ID`.
+
+The new rule does not consider requests for cached assets when calculating the rate (`"requests_to_origin": true`).
+
+<APIRequest
+	path="/zones/{zone_id}/rulesets/{ruleset_id}/rules"
+	method="POST"
+	json={{
+		description: "My rate limiting rule",
+		expression: '(http.request.uri.path matches "^/api/")',
+		action: "block",
+		ratelimit: {
+			characteristics: [
+				"cf.colo.id",
+				"ip.src",
+				'http.request.headers["x-api-key"]',
+			],
+			period: 60,
+			requests_per_period: 100,
+			mitigation_timeout: 600,
+			requests_to_origin: true,
+		},
+	}}
+	code={{ mark: [17] }}
+	roles={false}
+/>
+
+<Render file="api-create-ruleset-with-rule" product="waf" />
+
+### Example D - Complexity-based rate limiting rule
+
+:::note
+[Complexity-based rate limiting](/waf/rate-limiting-rules/request-rate/#complexity-based-rate-limiting) is only available to Enterprise customers with Advanced Rate Limiting.
+:::
+
+This example adds a rate limiting rule to the `http_ratelimit` phase entry point ruleset for the zone with ID `$ZONE_ID`. The phase entry point ruleset already exists, with ID `$RULESET_ID`.
+
+The new rule is a complexity-based rate limiting rule that takes the `my-score` HTTP response header into account to calculate a total complexity score for the client. The counter with the total score is updated when there is a match for the rate limiting rule's counting expression (in this case, the same as the rule expression since `counting_expression` is an empty string). When this total score becomes larger than `400` during a period of `60` seconds (one minute), any later client requests will be blocked for a period of `600` seconds (10 minutes).
+
+<APIRequest
+	path="/zones/{zone_id}/rulesets/{ruleset_id}/rules"
+	method="POST"
+	json={{
+		description: "My complexity-based rate limiting rule",
+		expression: '(http.request.uri.path wildcard "/graphql/*")',
+		action: "block",
+		ratelimit: {
+			characteristics: ["cf.colo.id", 'http.request.headers["x-api-key"]'],
+			score_response_header_name: "my-score",
+			score_per_period: 400,
+			period: 60,
+			mitigation_timeout: 600,
+			counting_expression: "",
+		},
+	}}
+	code={{
+		mark: [{ range: "13-14" }],
+	}}
+	roles={false}
+/>
+
+<Render file="api-create-ruleset-with-rule" product="waf" />
+
+---
+
+## Next steps
+
+Use the different operations in the [Rulesets API](/ruleset-engine/rulesets-api/) to work with the rule you just created. The following table has a list of common tasks for working with rate limiting rules at the zone level:
+
+<Render
+	file="rules-next-steps-table"
+	product="waf"
+	params={{ rulesType: "rate limiting rules", phaseName: "http_ratelimit" }}
+/>
+
+## More resources
+
+For instructions on deploying rate limiting rules at the account level via API, refer to [Create a rate limiting ruleset via API](/waf/account/rate-limiting-rulesets/create-api/).

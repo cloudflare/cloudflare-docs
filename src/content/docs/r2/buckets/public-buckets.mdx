@@ -1,0 +1,144 @@
+---
+pcx_content_type: how-to
+title: Public buckets
+sidebar:
+  order: 2
+---
+
+import { Render } from "~/components";
+
+Public Bucket is a feature that allows users to expose the contents of their R2 buckets directly to the Internet. By default, buckets are never publicly accessible and will always require explicit user permission to enable.
+
+Public buckets can be set up in either one of two ways:
+
+- Expose your bucket as a custom domain under your control.
+- Expose your bucket using a Cloudflare-managed `https://r2.dev` subdomain for non-production use cases.
+
+These options can be used independently. Enabling custom domains does not require enabling `r2.dev` access.
+
+To use features like WAF custom rules, caching, access controls, or bot management, you must configure your bucket behind a custom domain. These capabilities are not available when using the `r2.dev` development url.
+
+:::note
+
+Currently, public buckets do not let you list the bucket contents at the root of your (sub) domain.
+
+:::
+
+## Custom domains
+
+### Caching
+
+Domain access through a custom domain allows you to use [Cloudflare Cache](/cache/) to accelerate access to your R2 bucket.
+
+Configure your cache to use [Smart Tiered Cache](/cache/how-to/tiered-cache/#smart-tiered-cache) to have a single upper tier data center next to your R2 bucket.
+
+:::note
+
+By default, only certain file types are cached. To cache all files in your bucket, you must set a Cache Everything page rule.
+
+For more information on default Cache behavior and how to customize it, refer to [Default Cache Behavior](/cache/concepts/default-cache-behavior/#default-cached-file-extensions)
+
+:::
+
+### Access control
+
+To restrict access to your custom domain's bucket, use Cloudflare's existing security products.
+
+- [Cloudflare Zero Trust Access](/cloudflare-one/access-controls/): Protects buckets that should only be accessible by your teammates. Refer to [Protect an R2 Bucket with Cloudflare Access](/r2/tutorials/cloudflare-access/) tutorial for more information.
+- [Cloudflare WAF Token Authentication](/waf/custom-rules/use-cases/configure-token-authentication/): Restricts access to documents, files, and media to selected users by providing them with an access token.
+
+:::caution
+
+Disable public access to your [`r2.dev` subdomain](#disable-public-development-url) when using products like WAF or Cloudflare Access. If you do not disable public access, your bucket will remain publicly available through your `r2.dev` subdomain.
+
+:::
+
+### Minimum TLS Version & Cipher Suites
+
+To customise the minimum TLS version or cipher suites of a custom hostname of an R2 bucket, you can issue an API call to edit [R2 custom domain settings](/api/resources/r2/subresources/buckets/subresources/domains/subresources/custom/methods/update/). You will need to add the optional `minTLS` and `ciphers` parameters to the request body. For a list of the cipher suites you can specify, refer to [Supported cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/supported-cipher-suites/).
+
+## Add your domain to Cloudflare
+
+The domain being used must have been added as a [zone](/fundamentals/concepts/accounts-and-zones/#zones) in the same account as the R2 bucket.
+
+- If your domain is already managed by Cloudflare, you can proceed to [Connect a bucket to a custom domain](/r2/buckets/public-buckets/#connect-a-bucket-to-a-custom-domain).
+- If your domain is not managed by Cloudflare, you need to set it up using a [partial (CNAME) setup](/dns/zone-setups/partial-setup/) to add it to your account.
+
+Once the domain exists in your Cloudflare account (regardless of setup type), you can link it to your bucket.
+
+## Connect a bucket to a custom domain
+
+<Render file="custom-domain-steps" product="r2" />
+
+To view the added DNS record, select **...** next to the connected domain and select **Manage DNS**.
+
+:::note
+
+If the zone is on an Enterprise plan, make sure that you [release the zone hold](/fundamentals/account/account-security/zone-holds/#release-zone-holds) before adding the custom domain.
+
+A zone hold would prevent the custom subdomain from activating.
+
+:::
+
+## Disable domain access
+
+Disabling a domain will turn off public access to your bucket through that domain. Access through other domains or the managed `r2.dev` subdomain are unaffected.
+The specified domain will also remain connected to R2 until you remove it or delete the bucket.
+
+To disable a domain:
+
+1. In **R2**, select the bucket you want to modify.
+2. On the bucket page, Select **Settings**, go to **Custom Domains**.
+3. Next to the domain you want to disable, select **...** and **Disable domain**.
+4. The badge under **Access to Bucket** will update to **Not allowed**.
+
+## Remove domain
+
+Removing a custom domain will disconnect it from your bucket and delete its configuration from the dashboard. Your bucket will remain publicly accessible through any other enabled access method, but the domain will no longer appear in the connected domains list.
+
+To remove a domain:
+
+1. In **R2**, select the bucket you want to modify.
+2. On the bucket page, Select **Settings**, go to **Custom Domains**.
+3. Next to the domain you want to disable, select **...** and **Remove domain**.
+4. Select **Remove domain** in the confirmation window. This step also removes the CNAME record pointing to the domain. You can always add the domain again.
+
+## Public development URL
+
+Expose the contents of this R2 bucket to the internet through a Cloudflare-managed r2.dev subdomain. This endpoint is intended for non-production traffic.
+
+:::note
+
+Public access through `r2.dev` subdomains are rate limited and should only be used for development purposes.
+
+To enable access management, Cache and bot management features, you must set up a custom domain when enabling public access to your bucket.
+
+Avoid creating a CNAME record pointing to the `r2.dev` subdomain. This is an **unsupported access path**, and we cannot guarantee consistent reliability or performance. For production use, [add your domain to Cloudflare](#add-your-domain-to-cloudflare) instead.
+:::
+
+### Enable public development url
+
+When you enable public development URL access for your bucket, its contents become available on the internet through a Cloudflare-managed `r2.dev` subdomain.
+
+To enable access through `r2.dev` for your buckets:
+
+1. In **R2**, select the bucket you want to modify.
+2. On the bucket page, select **Settings**.
+3. Under **Public Development URL**, select **Enable**.
+4. In **Allow Public Access?**, confirm your choice by typing `allow` to confirm and select **Allow**.
+5. You can now access the bucket and its objects using the Public Bucket URL.
+
+To verify that your bucket is publicly accessible, check that **Public URL Access** shows **Allowed** in you bucket settings.
+
+### Disable public development url
+
+Disabling public development URL access removes your bucket's exposure through the `r2.dev` subdomain. The bucket and its objects will no longer be accessible via the Public Bucket URL.
+
+If you have connected other domains, the bucket will remain accessible for those domains.
+
+To disable public access for your bucket:
+
+1. In **R2**, select the bucket you want to modify.
+2. On the bucket page, select **Settings**.
+3. Under **Public Development URL**, select **Disable**.
+4. In **Disallow Public Access?**, type `disallow` to confirm and select **Disallow**.

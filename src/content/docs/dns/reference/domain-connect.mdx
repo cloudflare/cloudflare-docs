@@ -1,0 +1,141 @@
+---
+pcx_content_type: reference
+title: Domain Connect
+sidebar:
+  order: 5
+head: []
+description: Learn how to onboard your templates to use Domain Connect with Cloudflare as DNS provider.
+---
+
+If you are a service provider, consider this page for information on how Cloudflare supports [Domain Connect](https://www.domainconnect.org/) and how you can onboard your template.
+
+## What is Domain Connect
+
+Domain Connect is an open standard that allows service providers - such as email or web hosting platforms - to make it easier for their end users to configure functionality, without having to manually edit DNS records.
+
+This is achieved with templates that close the gap between necessary configurations (required by the service provider) and necessary DNS records changes (that must happen at the authoritative DNS provider).
+
+In practice, this means that when a user that owns `example.com` and has Cloudflare as their authoritative DNS provider wants to use your service, instead of having to manually update their DNS records, they will only have to authenticate themselves and the necessary changes will be applied automatically.
+
+## Setup
+
+### Before you begin
+
+* Note that Cloudflare only supports the [Domain Connect synchronous flow](https://www.domainconnect.org/getting-started/).
+* Domain Connect templates and tools are published on GitHub, so you must have a GitHub account and be familiar with [GitHub forks and pull requests](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks).
+
+### 1. Add templates to the repository
+
+Domain Connect templates are published and maintained on a GitHub repository.
+
+1. Create a fork of the [templates repository](https://github.com/Domain-Connect/Templates).
+2. Add your template. You can create a copy of one of the existing templates and edit it according to your needs.
+   * Refer to the [Domain Connect Specification](https://github.com/Domain-Connect/spec/blob/master/Domain%20Connect%20Spec%20Draft.adoc) for details on the different available fields.
+	 :::note
+	 Not all fields (properties) are supported by Cloudflare, and some will be mandatory for onboarding your template. Refer to the [properties support](#properties-support) section below for details.
+	 :::
+   * If present, you must set the `syncBlock` field on your template to `false`. This means the template flow will be synchronous, which is the only option supported by Cloudflare.
+   * You must also provide a synchronous public key domain (`syncPubKeyDomain` [^1]). When your template is in use, synchronous calls will be digitally signed.
+3. Make sure you follow the naming format defined by Domain Connect: `<providerId>.<serviceId>.json`.
+
+:::note[Tip]
+
+You can use Domain Connect's [linter tool](https://github.com/Domain-Connect/dc-template-linter) with the option `-cloudflare` enabled to check your template against Cloudflare specific rules.
+:::
+
+4. Submit a pull request to have your template(s) added to the repository.
+
+Once your pull request has been reviewed and merged, contact Cloudflare as specified below.
+
+### 2. Contact Cloudflare to onboard your template
+
+When your template is onboarded, a graphical user interface flow will be available to your end users.
+
+Send an email to `domain-connect@cloudflare.com`, including the following information:
+
+1. List of template(s) you want to onboard, with their corresponding GitHub hyperlinks.
+2. A logo to be displayed as part of the Domain Connect flow. Preferably in `SVG` format.
+3. The default [proxy status](/dns/proxy-status/) you would like Cloudflare to set for `A`, `AAAA`, and `CNAME` records that are part of your template(s). Proxying other record types is not supported.
+
+   :::note
+
+   Proxy status is applied per template. If needed, organize the records in different templates to specify a different default proxy status per template. Once the records have been created, the domain owner can always change the proxy status for `A`, `AAAA`, and `CNAME` records later.
+   :::
+4. (Optional) A Cloudflare [account ID](/fundamentals/account/find-account-and-zone-ids/) for you to test the flow.
+
+   If you have a [DNS provider discovery](https://github.com/Domain-Connect/spec/blob/master/Domain%20Connect%20Spec%20Draft.adoc#dns-provider-discovery) automation in place and will not list new DNS providers manually, Cloudflare can initially restrict your template to be exposed to the specified account only. Once you confirm everything is working as expected, Cloudflare will publish your template on the discovery endpoint, to be picked up by your automation.
+
+## Properties support
+
+In the [Domain Connect Specification](https://github.com/Domain-Connect/spec/blob/master/Domain%20Connect%20Spec%20Draft.adoc) you will find the following properties:
+
+- Properties that you can use with your [apply template URL](https://github.com/Domain-Connect/spec/blob/master/Domain%20Connect%20Spec%20Draft.adoc#apply-template).
+- Properties for [defining the template itself](https://github.com/Domain-Connect/spec/blob/master/Domain%20Connect%20Spec%20Draft.adoc#template-definition).
+- Properties for defining the individual [DNS records](https://github.com/Domain-Connect/spec/blob/master/Domain%20Connect%20Spec%20Draft.adoc#template-record).
+
+While most of these are supported by Cloudflare, some are required and others are not supported.
+
+:::note[Linter tool]
+Use Domain Connect's [linter tool](https://github.com/Domain-Connect/dc-template-linter) with the option `-cloudflare` enabled to check your template against Cloudflare specific rules.
+:::
+
+### Apply template URL
+
+For the full list, refer to the [Domain Connect Specification](https://github.com/Domain-Connect/spec/blob/master/Domain%20Connect%20Spec%20Draft.adoc). Below are the details specific to Cloudflare.
+
+- **Redirect URI**: Domain Connect's documentation states that it must be scoped to the `syncRedirectDomain` from the template, or the request must be signed. Cloudflare requires the request to be signed and, as such, does not check if the `redirect_uri` is scoped to the `syncRedirectDomain`.
+- **State**: Is not supported and will be ignored.
+- **Service Name**: Is not supported and will be ignored.
+- **Signature**: Required. It also must be the last query parameter.
+- **Key**: Required. You must publish your public key and place it in a DNS TXT record on a domain specified in the template as `syncPubKeyDomain`. To allow for key rotation, the hostname of the TXT record must be appended as another variable on the query string of the form.
+
+### Template definition
+
+For the full list, refer to the [Domain Connect Specification](https://github.com/Domain-Connect/spec/blob/master/Domain%20Connect%20Spec%20Draft.adoc). Below are the details specific to Cloudflare.
+
+- **Service Provider Name**: Will be displayed on the user interface.
+- **Service Name**: Will **not** be displayed on the user interface.
+- **Logo**: If present, will be displayed on the user interface.
+- **Synchronous Block**: Is not supported and will be ignored. Cloudflare only supports the synchronous flow.
+- **Shared**: Is not supported and will be ignored.
+- **Shared Service Name**: Is not supported and will be ignored.
+- **Synchronous Public Key Domain**: Required. Cloudflare only supports the synchronous flow and always checks for signature.
+- **Synchronous Redirect Domains**: Is not supported and will be ignored. Cloudflare looks at the `redirect_uri` provided in the signed apply template URL.
+- **Multiple Instance**: Is not supported and will be ignored.
+- **Warn Phishing**: Is not supported and will be ignored.
+- **Host Required**: Is not supported and will be ignored.
+
+### DNS records
+
+For the full list, refer to the [Domain Connect Specification](https://github.com/Domain-Connect/spec/blob/master/Domain%20Connect%20Spec%20Draft.adoc). Below are the details specific to Cloudflare.
+
+- **Essential**: Is not supported and will be ignored.
+- **TXT Conflict Matching Mode**: Is not supported and will be ignored.
+- **TXT Conflict Matching Prefix**: Is not supported and will be ignored.
+
+## Template updates
+
+Since September, 2024, template updates are picked up by an automation.
+
+The automation compares the template version number in Cloudflare with the authoritative source of the template on the Internet. This check runs multiple times a day. Although Cloudflare cannot guarantee when exactly each update will be picked up, the process is expected to take no longer than eight hours.
+
+:::note
+The authoritative source must be in raw `json` format for the automation to work correctly, as in [this example](https://raw.githubusercontent.com/Domain-Connect/Templates/master/exampleservice.domainconnect.org.template1.json).
+
+If the source template is unavailable, or technically invalid, Cloudflare will keep the previous template in use until the updated version is fixed.
+:::
+
+You can contact Cloudflare to opt out of the automatic updates. Once the automation is disabled, you can request template updates individually, by writing to `domain-connect@cloudflare.com`.
+
+### Troubleshooting
+
+Send an email to `domain-connect@cloudflare.com` with the following information:
+
+1. Detailed description of what is wrong:
+   - List the record(s) that the issue is related with.
+   - Describe what the template did.
+   - Describe what you expected the template to do.
+
+2. A [HAR file](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#generate-a-har-file) attachment containing the problematic update.
+
+[^1]: A domain that can be queried for `TXT` records containing a public key to verify your digital signature.

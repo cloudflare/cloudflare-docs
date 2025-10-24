@@ -1,0 +1,57 @@
+---
+pcx_content_type: concept
+title: Advanced certificates
+sidebar:
+  order: 2
+---
+
+import {
+	DirectoryListing,
+	FeatureTable,
+	GlossaryTooltip,
+	Render,
+} from "~/components";
+
+<Render file="acm-definition" product="ssl" />
+<br />
+
+To order advanced certificates you must purchase the Advanced Certificate Manager add-on, which also includes other features.
+
+## Advanced Certificate Manager
+
+Advanced Certificate Manager allows you to:
+
+- Order advanced certificates that can:
+  - Include the zone apex and up to 50 hosts as covered hostnames.
+  - Cover more than one level of subdomain.
+  - Be issued by the certificate authority (CA) you choose.
+  - Use your preferred validation method.
+  - Have the validity period you choose.
+- Use [delegated DCV](/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/) to delegate the <GlossaryTooltip term="domain control validation (DCV)">DCV process</GlossaryTooltip> of your <GlossaryTooltip term="partial setup" link="/dns/zone-setups/partial-setup/">partial zones</GlossaryTooltip> to Cloudflare.
+- Enable [Total TLS](/ssl/edge-certificates/additional-options/total-tls/) to automatically protect proxied hostnames.
+- Select a [custom trust store](/ssl/origin-configuration/custom-origin-trust-store/) for origin authentication.
+- Control [cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/customize-cipher-suites/) and [per-hostname minimum TLS version](/ssl/edge-certificates/additional-options/minimum-tls/#per-hostname).
+
+:::note
+
+Enterprise customers can also purchase a subscription for Advanced Certificate Manager, which allows them to add up to 100 <GlossaryTooltip term="edge certificate">edge certificates</GlossaryTooltip> per zone.
+
+:::
+
+## Availability
+
+<FeatureTable id="ssl.advanced_certificates" />
+
+<Render file="non-contract-enablement" product="fundamentals" />
+
+## Limitations
+
+Advanced certificates are not used with [Cloudflare Pages](/pages/) nor [R2](/r2/) due to [certificate prioritization](/ssl/reference/certificate-and-hostname-priority/). Both Pages and R2 custom domains use Cloudflare for SaaS certificates.
+
+Advanced certificates are [Domain Validated (DV)](/ssl/concepts/#validation-level). If your organization needs Organization Validated (OV) or Extended Validation (EV) certificates, refer to [Custom certificates](/ssl/edge-certificates/custom-certificates/). <br/>
+
+Advanced certificates do not cover multiple different domains. For multi-domain certificate (MDC), consider the [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/) product. You can also find further guidance in [Leveraging Cloudflare for your SaaS applications](/reference-architecture/design-guides/leveraging-cloudflare-for-your-saas-applications/).
+
+## Related resources
+
+<DirectoryListing />

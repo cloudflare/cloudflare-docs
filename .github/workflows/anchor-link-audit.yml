@@ -5,34 +5,41 @@ name: Anchor link audit
 # **Who does it impact**: PCX team
 
 on:
-  schedule:
-    - cron: "0 0 * * 0"  # Run at 00:00 UTC every Sunday
   workflow_dispatch:
 
 jobs:
   compile:
     name: Compiles
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 1
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
-          node-version: 18.1
-      - uses: peaceiris/actions-hugo@v2
+          node-version: 22
+
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        shell: bash
+        run: echo "dir=$(npm config get cache)" >> ${GITHUB_OUTPUT}
+
+      - uses: actions/cache@v4
+        id: npm-cache
         with:
-          hugo-version: '0.110.0'
-          extended: true
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
-      - name: (env) pnpm
-        run: curl -L https://raw.githubusercontent.com/pnpm/self-installer/master/install.js | node
+      - run: npm ci
 
-      - run: pnpm install
-
-      - run: make build
+      - run: npm run build
         env:
-          NODE_OPTIONS: "--max-old-space-size=8192"
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_OPTIONS: "--max-old-space-size=4192"
 
       - name: Install dependencies
         run: curl https://htmltest.wjdp.uk | bash
@@ -51,4 +58,4 @@ jobs:
           curl --silent -X POST -H "Authorization: Bearer $GITHUB_TOKEN" \
             -H "Accept: application/vnd.github+json" \
             "https://api.github.com/repos/$GITHUB_REPOSITORY/issues" \
-            -d "{\"title\": \"Broken Header Links Found\", \"body\": \"$(cat issue_body.txt)\", \"assignees\": [\"kodster28\", \"haleycode\"]}"
+            -d "{\"title\": \"Broken Header Links Found\", \"body\": \"$(cat issue_body.txt)\", \"assignees\": [\"haleycode\"]}"

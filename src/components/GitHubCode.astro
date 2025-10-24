@@ -1,0 +1,88 @@
+---
+import { z } from "astro:schema";
+import { Code } from "@astrojs/starlight/components";
+import TypeScriptExample from "./TypeScriptExample.astro";
+import type { ComponentProps } from "astro/types";
+
+type Props = z.infer<typeof props>;
+
+const props = z
+	.object({
+		repo: z.string(),
+		commit: z.string(),
+		file: z.string(),
+		lang: z.string(),
+		lines: z
+			.string()
+			.transform((val) => val.split("-").map(Number))
+			.optional(),
+		tag: z.string().optional(),
+		useTypeScriptExample: z.boolean().default(false),
+		code: z.custom<ComponentProps<typeof Code>>().optional(),
+	})
+	.strict()
+	.refine(
+		(val) => {
+			return !(val.lines && val.tag);
+		},
+		{ message: "Lines and tag are mutually exclusive filters." },
+	)
+	.refine(
+		(val) => {
+			return !val.useTypeScriptExample || val.lang === "ts";
+		},
+		{
+			message:
+				"useTypeScriptExample can only be used when 'lang' is set to 'ts'",
+		},
+	);
+
+const { repo, commit, file, lang, lines, tag, useTypeScriptExample, code } =
+	props.parse(Astro.props);
+
+const res = await fetch(
+	`https://gh-code.developers.cloudflare.com/${repo}/${commit}/${file}`,
+);
+
+if (!res.ok) {
+	throw new Error(`[GitHubCode] Received ${res.status} from Worker.`);
+}
+
+const content = await res.text();
+let contentLines = content.split("\n");
+
+if (lines) {
+	const [start, end] = lines;
+
+	if (contentLines.length < end - 1) {
+		throw new Error(
+			`[GitHubCode] End line requested is beyond content length (${contentLines.length}).`,
+		);
+	}
+
+	contentLines = contentLines.slice(start - 1, end);
+} else if (tag) {
+	const startTag = contentLines.findIndex((x) =>
+		x.includes(`<docs-tag name="${tag}">`),
+	);
+	const endTag = contentLines.findIndex((x) =>
+		x.includes(`</docs-tag name="${tag}">`),
+	);
+
+	if (startTag === -1 || endTag === -1) {
+		throw new Error(`[GitHubCode] Unable to find a region using tag "${tag}".`);
+	}
+
+	contentLines = contentLines.slice(startTag + 1, endTag);
+}
+
+contentLines = contentLines.filter(
+	(line) => !/<[/]?docs-tag name=".*">/.test(line),
+);
+
+const Wrapper = useTypeScriptExample ? TypeScriptExample : Fragment;
+---
+
+<Wrapper code={code}>
+	<Code {...code} code={contentLines.join("\n")} lang={lang} />
+</Wrapper>

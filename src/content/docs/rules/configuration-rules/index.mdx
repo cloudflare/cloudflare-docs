@@ -1,0 +1,43 @@
+---
+pcx_content_type: concept
+title: Configuration Rules
+sidebar:
+  order: 3
+head:
+  - tag: title
+    content: Configuration Rules
+---
+
+import { FeatureTable, Render } from "~/components";
+
+Configuration Rules allow you to customize certain Cloudflare [configuration settings](/rules/configuration-rules/settings/) for matching incoming requests.
+
+The configuration rule expression will determine to which requests the rule settings will apply. For more information on expressions, refer to [Expressions](/ruleset-engine/rules-language/expressions/) and [Edit expressions in the dashboard](/ruleset-engine/rules-language/expressions/edit-expressions/).
+
+<Render
+	file="rules-requirements"
+	product="rules"
+	params={{ sentenceIntro: "Configuration Rules require" }}
+/>
+
+---
+
+## Rules templates
+
+<Render file="rules-templates" product="rules" />
+
+## Availability
+
+The number of available configuration rules varies according to your Cloudflare plan:
+
+<FeatureTable id="rules.config_rules" />
+
+## Execution order
+
+<Render file="product-execution-order" product="rules" />
+
+<Render
+	file="troubleshoot-rules-with-trace"
+	product="rules"
+	params={{ rulesFeatureName: "Configuration Rules" }}
+/>

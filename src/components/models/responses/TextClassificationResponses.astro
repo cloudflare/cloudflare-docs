@@ -1,0 +1,20 @@
+---
+import { Code } from "@astrojs/starlight/components";
+
+const json = `{
+  "items": [
+    {
+    "label": "POSITIVE",
+    "score": 0.9998738765716553
+    },
+    {
+      "label": "NEGATIVE",
+      "score": 0.00012611268903128803
+    }
+  ]
+}`;
+---
+
+<h2>Response</h2>
+
+<Code code={json} lang="json" />

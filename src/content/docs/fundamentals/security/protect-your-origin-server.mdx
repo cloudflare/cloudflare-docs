@@ -1,0 +1,75 @@
+---
+pcx_content_type: how-to
+title: Protect your origin server
+head:
+  - tag: title
+    content: Protect your origin server
+
+---
+
+import { GlossaryTooltip, Render } from "~/components"
+
+Your [origin server](https://www.cloudflare.com/learning/cdn/glossary/origin-server) is a physical or virtual machine that is not owned by Cloudflare and hosts your application content (data, webpages, etc.).
+
+Receiving too many requests can be bad for your origin. These requests might increase latency for visitors, incur higher costs — particularly for cloud-based machines — and could knock your application offline.
+
+## Secure origin connections
+
+When you secure origin connections, it prevents attackers from discovering and overloading your origin server with requests.
+
+* **DNS**:
+
+  1. **Proxy records** (when possible): Set up [proxied (orange-clouded) DNS records](/dns/proxy-status/) to hide your origin IP addresses and provide DDoS protection. As part of this, you should [allow Cloudflare IP addresses](/fundamentals/concepts/cloudflare-ip-addresses/) at your origin to prevent requests from being blocked.
+  2. **Review DNS-only records**: Audit existing **DNS-only** records (`SPF`, `TXT`, and more) to make sure they do not contain origin IP information.
+  3. **Evaluate mail infrastructure**: If possible, do not host a mail service on the same server as the web resource you want to protect, since emails sent to non-existent addresses get bounced back to the attacker and reveal the mail server IP.
+  4. **Rotate origin IPs**: Once [onboarded](/dns/zone-setups/full-setup/setup/#verify-changes), rotate your origin IPs, as DNS records are in the public domain. Historical records are kept and would contain IP addresses prior to joining Cloudflare
+
+### Application layer
+
+<Render file="limit-external-connections-application" product="learning-paths" />
+
+### Transport Layer
+
+<Render file="limit-external-connections-transport" product="learning-paths" />
+
+### Network Layer
+
+<Render file="limit-external-connections-network" product="learning-paths" />
+
+<Render file="ent-only-network-security" product="learning-paths" />
+
+## Monitor origin health
+
+For passive monitoring, [create notifications](/notifications/get-started/#create-a-notification) for **Origin Error Rate Alerts** to receive alerts when your origin returns 5xx codes above a configurable threshold and **Passive Origin Monitoring** to see when Cloudflare is unable to reach your origin for a few minutes.
+
+For more active monitoring, set up [standalone health checks](/health-checks/) for your origin.
+
+:::note
+
+If you have multiple servers and want to proactively prevent origin problems, [set up load balancing](/load-balancing/) as an add-on service.
+
+:::
+
+### Zero Downtime Failover
+
+If you have another *A* or *AAAA* record in your Cloudflare **DNS** or your Cloudflare **Load Balancer** provides another <GlossaryTooltip term="endpoint" link="/load-balancing/understand-basics/load-balancing-components/">endpoint</GlossaryTooltip> in the same pool, **Zero-Downtime Failover** automatically retries requests to your origin even before a Load Balancing decision is made.
+
+<Render file="zero-downtime-failover-retry-on-error" product="fundamentals" /> <br />
+
+## Reduce origin traffic
+
+### Block traffic
+
+For more details, refer to [Secure your website](/learning-paths/application-security/account-security/).
+
+### Increase caching
+
+The [cache](/cache/) stores data from your application (webpages, etc.) at Cloudflare data centers around the world, which reduces the number of requests sent to your origin server.
+
+### Distribute traffic
+
+To randomly distribute traffic across multiple servers, [set up multiple DNS records](/dns/manage-dns-records/how-to/round-robin-dns/).
+
+For more fine-grained control over traffic distribution — including automatic failover, intelligent routing, and more — set up our [add-on load balancing service](/load-balancing/).
+
+To protect specific endpoints from being overwhelmed by traffic spikes, [set up a waiting room](/waiting-room/).

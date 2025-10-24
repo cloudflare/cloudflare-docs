@@ -1,0 +1,26 @@
+releaseNotes: >-
+  This is the latest release for Windows that addresses many issues reported by
+  users.
+
+
+  **Notable improvements in this release:**
+
+
+  - More specific error messages when configuring a license
+
+  - Fixed potential vulnerability with Windows Service component
+
+  - Fixed bug configuring custom gateway with managed Teams clients
+
+  - Fixed issue with incorrect UI after logging out of Teams
+
+  - Fixed issue where UI would not respond correctly to monitor DPI changes
+
+  - Fixed various issues with DNS resolution
+
+  - Other minor performance and bug fixes
+version: 1.2.2544.0
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/1.2.2544.0
+packageSize: 80068608
+releaseDate: 2020-11-17T16:57:10.397Z
+platformName: Windows

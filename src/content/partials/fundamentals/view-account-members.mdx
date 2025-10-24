@@ -1,0 +1,19 @@
+---
+{}
+---
+
+import { DashButton, TabItem, Tabs } from "~/components";
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+To view members using the dashboard:
+
+In the [Cloudflare dashboard, go to the **Members** page.
+
+    <DashButton url="/?to=/:account/members" />
+
+</TabItem> <TabItem label="API">
+
+To view members using the API, send a [`GET` request](/api/resources/accounts/subresources/members/methods/list/).
+
+</TabItem> </Tabs>

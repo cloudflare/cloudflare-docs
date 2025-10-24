@@ -1,0 +1,43 @@
+---
+params:
+  - productName
+---
+
+import { APIRequest, Render, TabItem, Tabs } from "~/components";
+
+If you configure your {props.productName} to be a DHCP server, you can also assign IP addresses to specific devices on your network. To reserve IP addresses:
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. Configure your Connector to be a [DHCP server](/magic-wan/configuration/connector/network-options/dhcp/dhcp-server/).
+2. Select **Add DHCP Reservation**.
+3. In **Hardware Address** enter the [MAC address](https://en.wikipedia.org/wiki/MAC_address) for the device you want a specific IP address for.
+4. In **IP Address**, enter the IP address for that device.
+5. (Optional) If you need to reserve more IP addresses, select **Add DHCP Reservation** as many times as needed, and enter the new values.
+
+</TabItem> <TabItem label="API">
+
+<Render file="account-id-api-key" product="networking-services" />
+
+Create a [`PUT` request](/api/resources/magic_transit/subresources/sites/subresources/lans/methods/update/) to update the LAN where you want to reserve addresses:
+
+Example:
+
+<APIRequest
+  path="/accounts/{account_id}/magic/sites/{site_id}/lans/{lan_id}"
+  method="PUT"
+  json={{
+    "lan": {
+    "static_addressing": {
+      "dhcp_server": {
+        "reservations": {
+          "<HARDWARE_MAC_ADDRESS>": "<IP_ADDRESS>",
+          "<HARDWARE_MAC_ADDRESS_2>": "<IP_ADDRESS>"
+        }
+      }
+    }
+  }
+  }}
+/>
+
+</TabItem> </Tabs>

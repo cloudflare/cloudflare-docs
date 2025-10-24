@@ -1,0 +1,75 @@
+---
+import { z } from "astro:schema";
+import { getCollection } from "astro:content";
+import { sortBySidebarOrder } from "~/util/sidebar";
+import DirectoryListingItem from "./DirectoryListingItem.astro";
+
+interface PageNode {
+	page: (typeof allPages)[0];
+	children: PageNode[];
+}
+
+type Props = z.infer<typeof props>;
+
+const props = z.object({
+	descriptions: z.boolean().default(false),
+	folder: z.string().optional(),
+	maxDepth: z.number().default(1),
+	tag: z.string().optional(),
+});
+
+let { descriptions, folder, maxDepth, tag } = props.parse(Astro.props);
+
+if (!folder) folder = Astro.params.slug!;
+
+// Strip leading or trailing slashes
+folder = folder.replace(/^\/|\/$/g, '')
+
+const baseDepth = folder.split("/").length;
+
+let allPages = await getCollection("docs", (page) => {
+	const pageDepth = page.id.split("/").length;
+	return page.id.startsWith(`${folder}/`) && pageDepth <= baseDepth + maxDepth;
+});
+
+allPages.sort(sortBySidebarOrder);
+
+function getChildren(parentPath: string, depth: number) {
+	return allPages.filter((page) => {
+		const pagePath = page.id;
+		const pageDepth = pagePath.split("/").length;
+		return (
+			pageDepth === depth &&
+			pagePath.startsWith(parentPath) &&
+			(tag ? page.data.tags?.includes(tag) : true)
+		);
+	});
+}
+
+function buildPageTree(parentPath: string, currentDepth: number): PageNode[] {
+	const children = getChildren(parentPath, currentDepth);
+	return children.map((page) => ({
+		page,
+		children:
+			currentDepth < baseDepth + maxDepth
+				? buildPageTree(page.id, currentDepth + 1)
+				: [],
+	}));
+}
+
+const pageTree = buildPageTree(folder, baseDepth + 1);
+
+if (pageTree.length === 0) {
+	throw new Error (
+		`[DirectoryListing] Bad folder parameter (determined by current folder OR the "folder" input) of "${folder}". Check to make sure "${folder}" exists, has child pages, .`
+	)
+}
+---
+
+<ul>
+	{
+		pageTree.map((node) => (
+			<DirectoryListingItem node={node} descriptions={descriptions} />
+		))
+	}
+</ul>

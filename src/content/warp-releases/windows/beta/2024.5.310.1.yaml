@@ -1,0 +1,34 @@
+releaseNotes: >-
+  This is a release focused on fixes and improvements.
+
+
+  **Notable updates**
+
+  - Added a new Unable to Connect message to the UI to help in troubleshooting.
+
+  - In the upgrade window, a change was made to use international date formats
+  to resolve an issue with localization.
+
+  - Made a change to ensure DEX tests are not running when the tunnel is not up
+  due to the device going to or waking from sleep. This is specific to devices
+  using the S3 power model.
+
+  - Fixed a known issue where the certificate was not always properly left
+  behind in `%ProgramData%\Cloudflare\installed_cert.pem`.
+
+  - Fixed an issue where ICMPv6 Neighbor Solicitation messages were being
+  incorrectly sent on the WARP tunnel.
+
+
+  **Known issues**
+
+  - If a user has an MDM file configured to support multiple profiles (for the
+  switch configurations feature), and then changes to an MDM file configured for
+  a single profile, the WARP client may not connect. The workaround is to use
+  the 'warp-cli registration delete' command to clear the registration, and then
+  re-register the client.
+version: 2024.5.310.1
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2024.5.310.1
+packageSize: 116621312
+releaseDate: 2024-05-22T15:01:49.271Z
+platformName: Windows

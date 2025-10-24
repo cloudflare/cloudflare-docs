@@ -1,0 +1,23 @@
+releaseNotes: >-
+  This release contains only bug fixes from the previous beta release.
+   
+  As stated in the previous beta notes, we are now feature complete for the
+  quarter and will begin focusing exclusively on QA and bug fixes only. We
+  encourage customers to test with this version and report issues ASAP.
+   
+  **Notable updates**
+
+  - Fixed issue introduced in previous beta where client would show unable to
+  connect briefly before connecting properly
+
+  - Fixed issue when running in local proxy mode where too many log entries were
+  written
+   
+  **Known issues**
+
+  No known issues
+version: 2023.3.267.1
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2023.3.267.1
+packageSize: 49319776
+releaseDate: 2023-03-22T23:39:05.875Z
+platformName: macOS

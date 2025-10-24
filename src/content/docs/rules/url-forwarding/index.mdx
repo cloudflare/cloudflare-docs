@@ -1,0 +1,56 @@
+---
+pcx_content_type: concept
+title: Redirects
+sidebar:
+  order: 6
+---
+
+import { FeatureTable, Render } from "~/components";
+
+URL forwarding, also known as URL redirection, navigates the user from a source URL to a target URL with a specific HTTP status code.
+
+Use the following Cloudflare products to perform URL redirects, according to your use case:
+
+- [**Single Redirects**](/rules/url-forwarding/single-redirects/): Allow you to create static or dynamic redirects at the zone level. A simple interface with [wildcard support](/ruleset-engine/rules-language/operators/#wildcard-matching) lets you easily define source and target URL patterns without needing complex functions or regular expressions, efficiently covering thousands of URLs with a single rule.
+
+- [**Bulk Redirects**](/rules/url-forwarding/bulk-redirects/): Allow you to define a large number of redirects at the account level. These URL redirects are essentially static — they do not support string replacement operations or regular expressions. However, you can configure parameters that affect the redirects' URL matching behavior and their runtime behavior.
+
+- [**Snippets**](/rules/snippets/): Use short pieces of JavaScript code for a more flexible way to define complex redirect functionality. Consider a few [examples](/rules/snippets/examples/?operation=Redirect) to get started.
+
+<Render
+	file="rules-requirements"
+	product="rules"
+	params={{ sentenceIntro: "Single Redirects and Bulk Redirects require" }}
+/>
+
+## Redirect Rules templates
+
+<Render file="rules-templates" product="rules" />
+
+## Availability
+
+Single Redirects and Bulk Redirects are available on all Cloudflare plans. The exact quotas and features depend on your plan.
+
+### Bulk redirects
+
+<FeatureTable id="rules.bulk_redirects" />
+
+For _URL redirects across lists_, this table provides the default quota for the Enterprise plan. Bulk Redirects supports several million URL redirects — to get more redirects, contact your account team.
+
+Bulk Redirects features and quotas are per account and they depend on the highest Cloudflare plan on your account.
+
+### Single Redirects
+
+<FeatureTable id="rules.single_redirects" />
+
+Single Redirects features and quotas are per zone and depend on the zone plan.
+
+## Execution order
+
+<Render file="product-execution-order" product="rules" />
+
+<Render
+	file="troubleshoot-rules-with-trace"
+	product="rules"
+	params={{ rulesFeatureName: "URL redirects" }}
+/>

@@ -1,0 +1,43 @@
+---
+pcx_content_type: concept
+title: How Challenges work
+sidebar:
+  order: 1
+  label: Challenges
+---
+
+Challenges can be issued in three primary ways depending on which Cloudflare products or features are in use. Each method is designed to balance security with seamless visitor experience. 
+
+| Product | Challenge type(s) |
+| --- | --- |
+| [WAF](/waf/) ([custom rules](/waf/custom-rules/), [rate limiting rules](/waf/rate-limiting-rules/), [IP access rules](/waf/tools/ip-access-rules/)) | [Interstitial Challenge Page](/cloudflare-challenges/challenge-types/challenge-pages/) |
+| [Bot Management](/bots/get-started/bot-management/) | [JavaScript Detections](/bots/additional-configurations/javascript-detections/) |
+| [Bot Fight Mode](/bots/get-started/bot-fight-mode/), [Super Bot Fight Mode](/bots/get-started/super-bot-fight-mode/) | [Interstitial Challenge Page](/cloudflare-challenges/challenge-types/challenge-pages/) |
+| [Turnstile](/turnstile/) | Embedded widget |
+| [HTTP DDoS attack protection](/ddos-protection/managed-rulesets/http/) | Any Challenge |
+| [Under Attack Mode](/fundamentals/reference/under-attack-mode/) | [Managed Challenge](/cloudflare-challenges/challenge-types/challenge-pages/#managed-challenge-recommended) |
+
+Challenge Pages and Turnstile rely on the same underlying mechanism to issue Challenges to your website or application's visitors.
+
+JavaScript Detections supports Cloudflare's Enterprise Bot Management. While it still relies on client-side detections, JavaScript Detections function using a more performant challenge logic than Challenge Pages or Turnstile.
+
+---
+
+## Available Challenges
+
+Refer to the following pages for more information on the different challenge types:
+
+- [Interstitial Challenge Pages](/cloudflare-challenges/challenge-types/challenge-pages/)
+- [Turnstile](/cloudflare-challenges/challenge-types/turnstile/)
+- [JavaScript Detections](/cloudflare-challenges/challenge-types/javascript-detections/)
+
+---
+
+## Limitations
+
+Cloudflare Challenges cannot support the following:
+
+- [Browser extensions](/cloudflare-challenges/reference/supported-browsers/#browser-extensions) that modify the browser's `User-Agent` value or Web APIs such as `Canvas` and `WebGL`.
+- Implementations where a domain serves a challenge page originally requested for another domain.
+- Challenge Pages cannot be embedded in cross-origin iframes.
+- Client software where the solve request of a Managed Challenge comes from a different IP than the original IP a Challenge request was issued to. For example, if you receive the Challenge from one IP and solve it using another IP, the solve is not valid and you may encounter a Challenge loop.

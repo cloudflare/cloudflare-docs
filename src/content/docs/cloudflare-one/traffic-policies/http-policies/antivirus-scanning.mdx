@@ -1,0 +1,126 @@
+---
+pcx_content_type: concept
+title: AV scanning
+sidebar:
+  order: 5
+---
+
+import { Render, Details } from "~/components";
+
+Cloudflare Gateway protects users as they browse the Internet. When users download or upload a file to an origin on the Internet, that file could potentially contain malicious code that may cause their device to perform undesired behavior. To prevent this, Cloudflare Gateway allows admins to turn on anti-virus (AV) scanning of files that are uploaded or downloaded by users as the file passes through Gateway.
+
+In addition to scanning files, Gateway can quarantine files as your users download them. Quarantining files helps protect organizations from zero-day vulnerabilities not yet available in anti-virus databases. For more information, refer to [File sandboxing](/cloudflare-one/traffic-policies/http-policies/file-sandboxing/).
+
+## Get started
+
+To turn on AV scanning:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Network**.
+2. In **Firewall**, turn on **AV inspection**.
+3. Choose whether to scan files for malicious payloads during uploads, downloads, or both. You can also block requests containing [non-scannable files](#non-scannable-files).
+4. (Optional) Turn on **Display AV block notification for WARP Client** to send [block notifications](#warp-client-block-notifications) to users connected to Gateway with the WARP Client when AV inspection blocks a file.
+
+When a request is blocked due to the presence of malware, Gateway will log the match as a Block decision in your [HTTP logs](/cloudflare-one/insights/logs/gateway-logs/#http-logs).
+
+### WARP client block notifications
+
+<Render
+	file="gateway/client-notifications"
+	product="cloudflare-one"
+	params={{ toggleName: "**Display AV block notification for WARP Client**" }}
+/>
+
+## File scan criteria
+
+If AV scanning is turned on, Gateway will use the following criteria to determine whether a file is present in a request or response, and whether to scan that file. The first match will result in the file being scanned.
+
+- If the `Content-Disposition` HTTP header is `Attachment`
+- If the byte signature of the body of the request matches a signature Gateway identifies as one of the following file type categories:
+  - **Executable** (for example, `.exe`, `.bat`, `.dll`, and `.wasm`)
+  - **Documents** (for example, `.doc`, `.docx`, `.pdf`, `.ppt`, and `.xls`)
+  - **Compressed** (for example, `.7z`, `.gz`, `.zip`, and `.rar`)
+- If the file name in the `Content-Disposition` header contains a file extension that indicates it is one of the file type categories above
+
+If none of the above conditions trigger a file to be scanned, Gateway will use the origin's `Content-Type` header to determine whether or not to scan the file. Additionally, Gateway will not scan files it determines to be image, video, or audio files.
+
+If a file does not trigger a scan based on the three methods above but also does not match criteria to be exempted from scanning, Gateway will default to scanning the file for malware.
+
+## Opt content out from scanning
+
+When an admin turns on AV scanning for uploads and/or downloads, Gateway will scan every supported file. Admins can selectively choose to disable scanning using HTTP policies. All [HTTP selectors](/cloudflare-one/traffic-policies/http-policies/#selectors) can opt HTTP traffic out from AV scanning using the **Do Not Scan** action. When traffic matches a Do Not Scan policy, nothing is scanned, regardless of file size or whether the file type is supported or not. For example, to prevent AV scanning of files uploaded to or downloaded from `example.com`, you can create the following policy:
+
+| Selector | Operator      | Value         | Action      |
+| -------- | ------------- | ------------- | ----------- |
+| Hostname | matches regex | `example.com` | Do Not Scan |
+
+Opting out of AV scanning applies to uploads and/or downloads of files, matching your account's global AV scanning setting. For example, if you have configured Gateway to globally scan uploads only, then opting out of AV scanning will only apply to uploads.
+
+## Compatibility
+
+### Supported compressed file types
+
+In addition to standard object files like PDFs, Zero Trust supports AV scanning for the following archive types:
+
+<Details header="Supported compressed file types">
+
+- 7-Zip
+- 7-Zip SFX
+- ACE
+- ACE SFX
+- AutoHotkey
+- AutoIt
+- BASE64
+- BZ2
+- CHM Help Files
+- CPIO SVR4
+- Chrome Extension (CRX) Package Format
+- eXtensible ARchive format (XAR)
+- GZIP compressed files
+- ISO 9660
+- Inno Setup
+- Indigo Rose Setup Factory
+- Java ARchive
+- LZH/LHA
+- MacBinary
+- MIME base64
+- MSCOMPRESS
+- Microsoft CAB
+- Microsoft TNEF
+- NSIS Nullsoft Installer
+- Office Legacy XML
+- PGP signed message, document, etc.
+- RPM
+- RAR
+- SAPCar
+- Self-extracting ARJ
+- Self-extracting CA
+- Self-extracting LZH/LHA
+- Self-extracting RAR
+- Self-extracting ZIP
+- Smart Install Maker
+- TAR
+- UUE and XXE compressed files
+- Windows Imaging File (WIM)
+- XE compressed files (UUE and XXE)
+- XZ file format
+- ZIP
+- ZOO
+
+</Details>
+
+Gateway cannot scan [certain archive files](#non-scannable-files) regardless of file type, such as large or encrypted files.
+
+### Non-scannable files
+
+Gateway cannot scan all files for malware. When Gateway encounters a non-scannable file, you can configure AV scanning whether to fail open (allow the file to pass through unscanned) or to fail closed (deny the file transfer).
+
+Gateway cannot scan requests containing the following files:
+
+- Files larger than:
+  - 15 MB on Free plans
+  - 25 MB on Pay-as-you-go plans
+  - 100 MB on Enterprise plans
+- PGP encrypted files
+- Password protected archives
+- Archives with more than three recursion levels
+- Archives with more than 300 files

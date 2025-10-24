@@ -1,7 +1,0 @@
-name: Account and Billing
-
-product:
-  title: Account and Billing
-  group: Cloudflare essentials
-  url: /fundamentals/account-and-billing/
-  grid_placeholder: true

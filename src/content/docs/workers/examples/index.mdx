@@ -1,0 +1,17 @@
+---
+hideChildren: true
+pcx_content_type: navigation
+title: Examples
+sidebar:
+  order: 3
+---
+
+import { GlossaryTooltip, ResourcesBySelector } from "~/components";
+
+Explore the following <GlossaryTooltip term="code example">examples</GlossaryTooltip> for Workers.
+
+<ResourcesBySelector
+	directory="workers/examples/"
+	types={["example"]}
+	filterables={["tags"]}
+/>

@@ -1,0 +1,23 @@
+---
+productName: Magic Transit
+entries:
+  - term: letter of agency
+    general_definition: |-
+      sometimes referred to as a Letter of Authorization. A document that authorizes Cloudflare to advertise your prefixes. This is required so transit providers can accept the routes Cloudflare advertises on your behalf.
+    associated_products:
+      - BYOIP
+
+  - term: policy-based routing
+    general_definition: |-
+      policy-based routing (PBR) is a technique used to make routing decisions based on policies set by your administrador.
+    associated_products:
+      - Magic WAN
+
+  - term: prefix
+    general_definition: |-
+      a number that identifies the network portion of an IP address. It tells devices if an IP address is on the same network or not. It is shown as a number after a slash (for example, `/31`) at the end of the IP address. 
+
+      Using an analogy, the prefix is like a street address. If an IP is in the same street, it belongs to the same network of devices.
+    associated_products:
+      - Magic WAN
+      - Magic Network Monitoring

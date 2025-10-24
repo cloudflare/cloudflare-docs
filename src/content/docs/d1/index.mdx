@@ -1,0 +1,104 @@
+---
+title: Cloudflare D1
+order: 0
+
+pcx_content_type: overview
+sidebar:
+  order: 1
+head:
+  - tag: title
+    content: Overview
+---
+
+import { CardGrid, Description, Feature, LinkTitleCard, Plan, RelatedProduct } from "~/components"
+
+<Description>
+
+
+Create new serverless SQL databases to query from your Workers and Pages projects.
+
+
+</Description>
+
+<Plan type="workers-all" />
+
+D1 is Cloudflare's managed, serverless database with SQLite's SQL semantics, built-in disaster recovery, and Worker and HTTP API access.
+
+D1 is designed for horizontal scale out across multiple, smaller (10 GB) databases, such as per-user, per-tenant or per-entity databases. D1 allows you to build applications with thousands of databases at no extra cost for isolating with multiple databases. D1 pricing is based only on query and storage costs.
+
+Create your first D1 database by [following the Get started guide](/d1/get-started/), learn how to [import data into a database](/d1/best-practices/import-export-data/), and how to [interact with your database](/d1/worker-api/) directly from [Workers](/workers/) or [Pages](/pages/functions/bindings/#d1-databases).
+
+***
+
+## Features
+
+<Feature header="Create your first D1 database" href="/d1/get-started/" cta="Create your D1 database">
+
+Create your first D1 database, establish a schema, import data and query D1 directly from an application [built with Workers](/workers/).
+
+
+</Feature>
+
+<Feature header="SQLite" href="/d1/sql-api/sql-statements/" cta="Execute SQL queries">
+
+Execute SQL with SQLite's SQL compatibility and D1 Client API.
+
+
+</Feature>
+
+<Feature header="Time Travel" href="/d1/reference/time-travel/" cta="Learn about Time Travel">
+
+Time Travel is D1’s approach to backups and point-in-time-recovery, and allows you to restore a database to any minute within the last 30 days.
+
+
+</Feature>
+
+***
+
+## Related products
+
+<RelatedProduct header="Workers" href="/workers/" product="workers">
+
+Build serverless applications and deploy instantly across the globe for exceptional performance, reliability, and scale.
+
+
+</RelatedProduct>
+
+<RelatedProduct header="Pages" href="/pages/" product="pages">
+
+Deploy dynamic front-end applications in record time.
+
+
+</RelatedProduct>
+
+***
+
+## More resources
+
+<CardGrid>
+
+<LinkTitleCard title="Pricing" href="/d1/platform/pricing/" icon="seti:shell">
+Learn about D1's pricing and how to estimate your usage.
+</LinkTitleCard>
+
+<LinkTitleCard title="Limits" href="/d1/platform/limits/" icon="document">
+Learn about what limits D1 has and how to work within them.
+</LinkTitleCard>
+
+<LinkTitleCard title="Community projects" href="/d1/reference/community-projects/" icon="pen">
+Browse what developers are building with D1.
+</LinkTitleCard>
+
+<LinkTitleCard title="Storage options" href="/workers/platform/storage-options/" icon="document">
+Learn more about the storage and database options you can build on with Workers.
+</LinkTitleCard>
+
+<LinkTitleCard title="Developer Discord" href="https://discord.cloudflare.com" icon="discord">
+Connect with the Workers community on Discord to ask questions, show what you are building, and discuss the platform with other developers.
+</LinkTitleCard>
+
+<LinkTitleCard title="@CloudflareDev" href="https://x.com/cloudflaredev" icon="x.com">
+Follow @CloudflareDev on Twitter to learn about product announcements, and what is new in Cloudflare Developer Platform.
+</LinkTitleCard>
+
+</CardGrid>

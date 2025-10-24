@@ -1,0 +1,29 @@
+---
+pcx_content_type: concept
+title: Mutual TLS (mTLS)
+sidebar:
+  order: 7
+
+---
+
+import { GlossaryDefinition, Render } from "~/components";
+
+<Render file="mtls-api-shield-support" product="api-shield" />
+
+<GlossaryDefinition term="mTLS (mutual TLS)" />
+
+![mTLS sequence diagram](~/assets/images/api-shield/api-shield-call-sequence.png)
+
+Support includes [gRPC](https://grpc.io/docs/what-is-grpc/introduction/)-based APIs, which use binary formats such as protocol buffers rather than JSON.
+
+## Setup
+
+To set up mTLS for one or more hosts using the dashboard, refer to [Configure mTLS](/api-shield/security/mtls/configure/).
+
+## Availability
+
+All Cloudflare plans can set up mTLS with a Cloudflare-managed certificate authority (CA). Enterprise customers can [upload up to five non-Cloudflare CAs](/ssl/client-certificates/byo-ca/). For higher limits, contact your account team.
+
+## Limitations
+
+When using Yubikeys, the browser may prompt for unlocking the key due to a problem in Yubikey's PKCS#11 library.

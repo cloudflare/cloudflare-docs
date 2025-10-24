@@ -1,0 +1,38 @@
+---
+pcx_content_type: how-to
+title: Setup
+sidebar:
+  order: 4
+head:
+  - tag: title
+    content: Protect against random prefix attacks
+
+---
+
+import { APIRequest } from "~/components";
+
+In order to enable automatic mitigation of [random prefix attacks](/dns/dns-firewall/random-prefix-attacks/about/):
+
+1. Set up [DNS Firewall](/dns/dns-firewall/setup/).
+2. Send a [`PATCH` request](/api/resources/dns_firewall/methods/edit/) to update your DNS Firewall cluster.
+
+   <APIRequest
+   	path="/accounts/{account_id}/dns_firewall/{dns_firewall_id}"
+   	method="PATCH"
+   	json={{
+      "attack_mitigation": {
+        "enabled": true,
+        "only_when_upstream_unhealthy": true,
+      }
+   	}}
+   />
+
+Once you receive a `200` success response from the API, queries identified as being part of a random prefix attack will receive a `REFUSED` response.
+
+:::note
+
+
+If you do not specify otherwise in your API call, Cloudflare automatically sets the `"only_when_upstream_unhealthy"` parameter to true, which means that Cloudflare will only mitigate attacks when we detect that the upstream is unresponsive (possibly as a result of an attack). This setting can also be changed via the API, using a request similar to the ones shown above.
+
+
+:::

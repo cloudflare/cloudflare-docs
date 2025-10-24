@@ -1,0 +1,64 @@
+---
+{}
+
+---
+
+import { APIRequest } from "~/components";
+
+## Forward a client certificate
+
+In addition to enforcing mTLS authentication for your host, you can also forward a client certificate to your origin server as an HTTP header. This setup is often helpful for server logging.
+
+To avoid adding the certificate to every single request, the certificate is only forwarded on the first request of an mTLS connection.
+
+:::caution
+This process is only available on accounts with [Cloudflare Access](/cloudflare-one/).
+:::
+
+### Cloudflare API
+
+The most common approach to forwarding a certificate is to use the Cloudflare API to [update an mTLS certificate's hostname settings](/api/resources/zero_trust/subresources/access/subresources/certificates/subresources/settings/methods/update/).
+
+<APIRequest
+  path="/zones/{zone_id}/access/certificates/settings"
+  method="PUT"
+  json={{
+		  "settings": [
+    {
+      "hostname": "<HOSTNAME>",
+      "china_network": false,
+      "client_certificate_forwarding": true
+    }
+  ]
+	}}
+	code={{
+		mark: [10]
+	}}
+/>
+
+Once `client_certificate_forwarding` is set to `true`, every request within an mTLS connection will now include the following headers:
+
+* `Cf-Client-Cert-Der-Base64`
+* `Cf-Client-Cert-Sha256`
+
+### Managed Transforms
+
+You can also [modify HTTP response headers](/rules/transform/response-header-modification/) using Managed Transforms to pass along **TLS client auth headers**.
+
+### Cloudflare Workers
+
+Additionally, Workers can provide details around the [client certificate](/workers/runtime-apis/bindings/mtls/).
+
+```js
+const tlsHeaders = {
+    'X-CERT-ISSUER-DN': request.cf.tlsClientAuth.certIssuerDN,
+    'X-CERT-SUBJECT-DN': request.cf.tlsClientAuth.certSubjectDN,
+    'X-CERT-ISSUER-DN-L': request.cf.tlsClientAuth.certIssuerDNLegacy,
+    'X-CERT-SUBJECT-DN-L': request.cf.tlsClientAuth.certSubjectDNLegacy,
+    'X-CERT-SERIAL': request.cf.tlsClientAuth.certSerial,
+    'X-CERT-FINGER': request.cf.tlsClientAuth.certFingerprintSHA1,
+    'X-CERT-VERIFY': request.cf.tlsClientAuth.certVerify,
+    'X-CERT-NOTBE': request.cf.tlsClientAuth.certNotBefore,
+    'X-CERT-NOTAF': request.cf.tlsClientAuth.certNotAfter
+};
+```

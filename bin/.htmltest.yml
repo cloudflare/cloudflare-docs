@@ -1,9 +1,10 @@
-DirectoryPath: "public"
+DirectoryPath: "dist"
 EnforceHTTPS: false
 IgnoreURLs:
-- "/api/*"
-IgnoreDirs:
-- "support/other-languages/"
+  - "/api/*"
+  - "/llms-full.txt$"
+IgnoreDir:
+  - "changelog"
 CheckLinks: true
 CheckImages: false
 CheckScripts: false

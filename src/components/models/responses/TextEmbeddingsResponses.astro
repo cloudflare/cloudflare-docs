@@ -1,0 +1,28 @@
+---
+import { Code } from "@astrojs/starlight/components";
+
+const json_single = `{
+  "shape":[1,768],
+  "data": [
+    [0.03190500661730766, 0.006071353796869516, 0.025971125811338425,...]
+  ]
+}`;
+
+const json_batch = `{
+  "shape":[2,768],
+  "data":[
+    [0.002439928939566016, -0.021352028474211693, 0.06229676678776741,...],
+    [-0.02154572866857052,0.09098546206951141,0.006273532286286354,...]
+  ]
+}`;
+---
+
+<h2>Response</h2>
+
+<p>Single string:</p>
+
+<Code code={json_single} lang="json" />
+
+<p>Batch of two strings:</p>
+
+<Code code={json_batch} lang="json" />

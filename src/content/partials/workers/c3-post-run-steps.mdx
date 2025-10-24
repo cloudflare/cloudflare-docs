@@ -1,0 +1,30 @@
+---
+inputParameters: templateCategory;;templateType;;language
+---
+
+import { Markdown } from "~/components";
+
+For setup, select the following options:
+
+{(function () {
+switch (props.category) {
+case 'hello-world':
+return (<ul>
+
+<li>For <em>What would you like to start with?</em>, choose <code>Hello World example</code>.</li>
+<li>For <em>Which template would you like to use?</em>, choose <code>{props.type}</code>.</li>
+<li>For <em>Which language do you want to use?</em>, choose <code>{props.lang}</code>.</li>
+<li>For <em>Do you want to use git for version control?</em>, choose <code>Yes</code>.</li>
+<li>For <em>Do you want to deploy your application?</em>, choose <code>No</code> (we will be making some changes before deploying).</li>
+</ul>);
+case 'web-framework':
+return (<ul>
+<li>For <em>What would you like to start with?</em>, choose <code>Framework Starter</code>.</li>
+<li>For <em>Which development framework do you want to use?</em>, choose <code>{props.framework}</code>.</li>
+<li>Complete the framework's own CLI wizard.</li>
+<li>For <em>Do you want to use git for version control?</em>, choose <code>Yes</code>.</li>
+<li>For <em>Do you want to deploy your application?</em>, choose <code>No</code> (we will be making some changes before deploying).</li>
+</ul>);
+default: {
+throw new Error(`[DOCS ERROR] UNKNOWN C3 CATEGORY: ${props.category}`);
+}}})()}

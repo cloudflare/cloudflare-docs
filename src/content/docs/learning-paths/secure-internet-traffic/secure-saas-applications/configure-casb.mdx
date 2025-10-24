@@ -1,0 +1,31 @@
+---
+title: Scan SaaS applications with Cloudflare CASB
+pcx_content_type: learning-unit
+sidebar:
+  order: 4
+---
+
+import { GlossaryDefinition, Render } from "~/components";
+
+:::note
+
+Only available on Enterprise plans.
+:::
+
+<GlossaryDefinition term="Cloudflare CASB" />
+
+Cloudflare's API-implemented CASB addresses the final, common security concern for administrators of SaaS applications or security organizations: How can I get insights into the existing configurations of my SaaS tools and proactively address issues before there is an incident? CASB integrates with a number of leading SaaS applications and surfaces instant security insights related to misconfiguration and potential for data loss. CASB also powers [risk score heuristics](/cloudflare-one/insights/risk-score/) organized by severity.
+
+For more information on Cloudflare CASB, including available SaaS integrations, refer to [Scan SaaS applications](/cloudflare-one/applications/casb/).
+
+## Manage CASB integrations
+
+<Render file="casb/manage-integrations" product="cloudflare-one" />
+
+### Integrate DLP policies
+
+If you use both Cloudflare CASB and Cloudflare Data Loss Prevention (DLP), you can use DLP to discover if files stored in your SaaS application contain sensitive data. CASB integrations supported by DLP include:
+
+<Render file="casb/casb-dlp-integrations" product="cloudflare-one" />
+
+For more information, refer to [Scan SaaS applications with DLP](/cloudflare-one/applications/casb/casb-dlp/).

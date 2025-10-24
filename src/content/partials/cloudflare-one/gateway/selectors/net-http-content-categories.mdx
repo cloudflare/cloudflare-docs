@@ -1,0 +1,10 @@
+---
+params:
+  - APIendpoint
+---
+
+Applications within a specific [security category](/cloudflare-one/traffic-policies/domain-categories/#content-categories) as categorized by [Cloudflare Radar](/radar/glossary/#content-categories).
+
+| UI name            | API example                                       |
+| ------------------ | ------------------------------------------------- |
+| Content Categories | <code>any({props.APIendpoint}[*] in \{1\})</code> |

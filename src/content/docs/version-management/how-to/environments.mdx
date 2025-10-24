@@ -1,0 +1,111 @@
+---
+title: Manage environments
+pcx_content_type: how-to
+sidebar:
+  order: 2
+
+---
+
+import { DashButton, Render } from "~/components"
+
+<Render file="environment-definition" product="version-management" />
+
+***
+
+## Create environment
+
+<Render file="enable-default-creation" product="version-management" />
+
+<Render file="create-environment-situation" product="version-management" /> <br/>
+
+To create a new environment:
+
+1. In the Cloudflare dashboard, go to the **Account home** page and select your account and zone.
+
+    <DashButton url="/?to=/:account/home" />
+
+2. Go to **Version Management**.
+3. Go to **Environments**.
+4. Select **Create Environment**.
+5. Provide the following information:
+
+* **Environment Name**: A unique, descriptive name for the environment.
+* [**Traffic filter**](/version-management/reference/traffic-filters/): Limits which requests are sent to this environment.
+* **Initial position**: Controls where this environment should be in your testing process.
+
+6. Select **Create**.
+
+:::note
+
+
+You can only adjust the [**Read-only Environment**](/version-management/reference/read-only-environments/) configuration after an environment has been created.
+
+
+:::
+
+***
+
+## Edit environment
+
+To edit an environment:
+
+1. In the Cloudflare dashboard, go to the **Account home** page and select your account and zone.
+
+    <DashButton url="/?to=/:account/home" />
+
+2. Go to **Version Management**.
+3. Select **Environments**.
+4. On a specific environment, select **Edit**.
+5. Make any required changes.
+6. Select **Save**.
+
+***
+
+## Change environment version
+
+To prevent accidental changes, you can only update an environment's version through the process of **Promotion** or **Roll back**.
+
+For more details on the flow of versions and environments, refer to [How it works](/version-management/about/).
+
+### Promote a version
+
+Promotion moves a version from a lower-ranked environment to the next highest one.
+
+<Render file="promote-version" product="version-management" /> <br/>
+
+### Roll back a version
+
+When you roll back a version, you revert the environment to the previous version assigned to it.
+
+To roll back a version:
+
+1. In the Cloudflare dashboard, go to the **Account home** page and select your account and zone.
+
+    <DashButton url="/?to=/:account/home" />
+
+2. Go to **Version Management**.
+3. Select **Environments**.
+4. On a specific environment, select **Roll back**.
+
+***
+
+## Delete environment
+
+To delete an environment:
+
+1. In the Cloudflare dashboard, go to the **Account home** page and select your account and zone.
+
+    <DashButton url="/?to=/:account/home" />
+
+2. Go to **Version Management**.
+3. Select **Environments**.
+4. On a specific environment, select **Edit**.
+5. Select **Delete Environment**.
+
+:::note
+
+
+You cannot delete your **Production** environment.
+
+
+:::

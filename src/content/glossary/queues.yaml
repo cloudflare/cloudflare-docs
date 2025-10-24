@@ -1,0 +1,14 @@
+---
+productName: Queues
+entries:
+  - term: queue
+    general_definition: |-
+      a queue is a buffer or list that automatically scales as messages are written to it, and allows a consumer Worker to pull messages from that same queue.
+
+  - term: producer
+    general_definition: |-
+      a producer is the term for a client that is publishing or producing messages on to a queue.
+
+  - term: consumer
+    general_definition: |-
+      a consumer is the term for a client that is subscribing to or consuming messages from a queue.

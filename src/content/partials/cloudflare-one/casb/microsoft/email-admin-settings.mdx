@@ -1,0 +1,16 @@
+---
+{}
+---
+
+Discover suspicious or insecure email configurations in your Microsoft domain. Missing SPF and DMARC records make it easier for bad actors to spoof email, while SPF records configured to another domain can be a potential warning sign of malicious activity.
+
+| Finding type                                        | FindingTypeID                          | Severity |
+| --------------------------------------------------- | -------------------------------------- | -------- |
+| Microsoft: Domain SPF record allows any IP address  | `27893e48-663e-43f9-83d4-c158c50259d0` | High     |
+| Microsoft: Domain SPF record not present            | `009093d9-43df-45a2-bdc6-2f35fc3a0c71` | Medium   |
+| Microsoft: Domain DMARC record not present          | `bb3d3760-2c4e-4161-9164-cff92e809f9c` | Medium   |
+| Microsoft: Domain DMARC not enforced                | `a020d87d-332b-49d1-acc3-16c19d72fba4` | Medium   |
+| Microsoft: Domain DMARC not enforced for subdomains | `1837a549-4d4e-4101-917c-e9a4036e0c08` | Medium   |
+| Microsoft: Domain DMARC only partially enforced     | `943414ed-7c79-4d17-a253-8d73f34dcc1d` | Medium   |
+| Microsoft: Domain not verified                      | `dd1e9aba-57ee-4cf1-a895-dd2f1fc166a7` | Medium   |
+| Microsoft: App certification expires within 90 Days | `d5ede282-0339-4983-88f3-849ac59ba840` | Low      |

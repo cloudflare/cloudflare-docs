@@ -1,0 +1,14 @@
+---
+pcx_content_type: configuration
+title: Block traffic from specific countries
+---
+
+This example custom rule blocks requests based on country code using the [`ip.src.country`](/ruleset-engine/rules-language/fields/reference/ip.src.country/) field.
+
+- **Expression**: `(ip.src.country in {"KP" "SY"})`
+- **Action**: _Block_
+
+## Other resources
+
+- [Use case: Block traffic by geographical location](/waf/custom-rules/use-cases/block-by-geographical-location/)
+- [Use case: Allow traffic from specific countries only](/waf/custom-rules/use-cases/allow-traffic-from-specific-countries/)

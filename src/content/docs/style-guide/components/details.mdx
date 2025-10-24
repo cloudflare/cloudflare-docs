@@ -1,0 +1,34 @@
+---
+title: Details
+styleGuide:
+  component: Details
+---
+
+import { Type, MetaInfo } from "~/components";
+
+When you want to provide additional information in context, but you do not want it to clutter up the more important content, use `<Details>` to add a collapsible container.
+
+```mdx live
+import { Details } from "~/components";
+
+<Details header="Open me!">Hello, world!</Details>
+```
+
+You can specify the default configuration of each instance of the `<Details>` component (that is, whether it is open or closed by default).
+
+```mdx live
+import { Details } from "~/components";
+
+<Details header="Close me!" open={true}>
+	Long piece of code example.
+</Details>
+```
+
+## Properties
+
+- `header` <Type text="string" /> <MetaInfo text="required" />
+- `id` <Type text="string" /> <MetaInfo text="optional" />
+
+  Adds a specific `id` to the HTML element
+
+- `open` <Type text="boolean" /> <MetaInfo text="optional" />

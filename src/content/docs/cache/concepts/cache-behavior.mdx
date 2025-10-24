@@ -1,0 +1,26 @@
+---
+title: Head Requests and Set-Cookie Headers
+pcx_content_type: concept
+
+---
+
+In this page, we document how Cloudflare's cache system behaves in interaction with:
+
+* `HEAD` requests
+* `Set-Cookie` response headers
+
+## Interaction of `HEAD` requests with Cache
+
+Cloudflare converts `HEAD` requests to `GET` requests for cacheable requests.
+
+When you make a `HEAD` request for a cacheable resource and Cloudflare does not have that resource in the edge cache, a cache miss happens. Cloudflare will send a `GET` request to your origin, cache the full response and return the response headers only. Make sure the origin server is setup to handle `GET` requests, even if only `HEAD` requests are expected, so that compatibility with this behavior is ensured.
+
+## Interaction of `Set-Cookie` response header with Cache
+
+For non-cacheable requests, `Set-Cookie` is always preserved. For cacheable requests, there are three possible behaviors:
+
+* `Set-Cookie` is returned from origin and the default cache level is used. If [origin cache control](/cache/concepts/cache-control/) is not enabled, Cloudflare removes the `Set-Cookie` and caches the asset. If origin cache control is enabled, Cloudflare does not cache the asset and preserves the `Set-Cookie`. A cache status of `BYPASS` is returned.
+
+* `Set-Cookie` is returned from origin and the cache level is set to `Cache Everything` in Page Rules, or `Eligible for cache` in Cache Rules. In this case, Cloudflare preserves the `Set-Cookie` but does not cache the asset. A cache `MISS` will be returned every time.
+
+* `Set-Cookie` is returned from origin, the cache level is set to `Cache Everything` in Page Rules, or `Eligible for cache` in Cache Rules, and edge cache TTL is set. In this case, Cloudflare removes the `Set-Cookie` and the asset is cached.

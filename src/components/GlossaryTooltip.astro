@@ -1,0 +1,49 @@
+---
+/* eslint-disable astro/jsx-a11y/no-noninteractive-tabindex */
+import { z } from "astro:schema";
+import { getGlossaryEntry } from "~/util/glossary";
+import { marked } from "marked";
+
+type Props = z.infer<typeof props>;
+
+const props = z.object({
+	term: z.string(),
+	prepend: z.string().optional(),
+	link: z.string().optional(),
+});
+
+const { term, prepend, link } = props.parse(Astro.props);
+
+const tooltip = await getGlossaryEntry(term);
+
+let definition = prepend
+	? prepend.concat(tooltip.general_definition)
+	: tooltip.general_definition;
+
+definition = definition.charAt(0).toUpperCase() + definition.slice(1);
+
+definition = definition.split(/\r?\n/)[0];
+---
+
+<!-- prettier-ignore -->
+<span
+	id={tooltip.term}
+	data-tooltip
+	data-content={marked.parse(definition)}
+	class="border-b-2 border-dashed border-accent"
+	tabindex="0"
+	>{
+		link ? (
+			<a href={link}><slot /></a>
+		) : (
+			<slot />
+		)
+	}</span><script>
+	import { addTooltip } from "~/util/tippy";
+
+	const tooltips = document.querySelectorAll<HTMLSpanElement>("[data-tooltip]");
+
+	for (const tooltip of tooltips) {
+		addTooltip(tooltip, tooltip.dataset.content as string);
+	}
+</script>

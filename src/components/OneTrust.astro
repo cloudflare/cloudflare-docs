@@ -1,0 +1,43 @@
+---
+import { Image } from "astro:assets";
+import PrivacyChoicesImage from "~/assets/privacyoptions.svg";
+
+const isProduction = import.meta.env.PROD;
+
+const uuid = isProduction
+	? "b1e05d49-f072-4bae-9116-bdb78af15448"
+	: "b1e05d49-f072-4bae-9116-bdb78af15448-test";
+---
+
+<script
+	src="https://ot.www.cloudflare.com/public/vendor/onetrust/scripttemplates/otSDKStub.js"
+	type="text/javascript"
+	charset="UTF-8"
+	data-domain-script={uuid}
+	is:inline></script>
+<script type="text/javascript" is:inline>
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	function OptanonWrapper() {}
+</script>
+<!-- OneTrust Cookies Settings button start -->
+<div class="inline-flex items-center gap-2">
+	<Image src={PrivacyChoicesImage} alt="privacy options" height="12" />
+	<button id="ot-sdk-btn" class="ot-sdk-show-settings">Cookie Settings</button>
+</div>
+<!-- OneTrust Cookies Settings button end -->
+
+<style>
+	#ot-sdk-btn.ot-sdk-show-settings {
+		border: none !important;
+		color: inherit !important;
+		font-size: inherit !important;
+		line-height: inherit !important;
+		padding: inherit !important;
+		font-family: var(--sl-font-family) !important;
+		background-color: inherit !important;
+	}
+
+	#ot-sdk-btn.ot-sdk-show-settings:hover {
+		background-color: inherit !important;
+	}
+</style>

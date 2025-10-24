@@ -1,0 +1,30 @@
+---
+productName: Logs
+entries:
+  - term: log
+    general_definition: |-
+      a chronological record of events, actions, or transactions, typically used for tracking and troubleshooting purposes.
+
+  - term: logging
+    general_definition: |-
+      the process of recording events, actions, or transactions in a log.
+
+  - term: timestamp
+    general_definition: |-
+      a data field indicating the date and time when an event occurred, often used for sequencing and analysis.
+
+  - term: event
+    general_definition: |-
+      an occurrence or happening that is significant and worthy of being recorded in a log.
+
+  - term: log file
+    general_definition: |-
+      a file containing a collection of log entries, usually stored in a structured or semi-structured format.
+
+  - term: debugging
+    general_definition: |-
+      the process of identifying and resolving errors or issues within software applications or systems, often facilitated by analyzing log data.
+
+  - term: deprecation
+    general_definition: |-
+      deprecation in software development involves officially labeling a feature as outdated. While a deprecated software feature remains within the software, users are warned and encouraged to adopt alternatives. Eventually, deprecated features may be removed. This approach ensures backward compatibility and gives programmers time to update their code.

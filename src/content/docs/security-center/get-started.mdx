@@ -1,0 +1,33 @@
+---
+pcx_content_type: get-started
+title: Get started
+sidebar:
+  order: 2
+---
+
+import { Render, DashButton } from "~/components";
+
+This guide covers the steps you need to take to set up Security Center in your Cloudflare account for the first time.
+
+## Prerequisites
+
+- A Cloudflare account
+- At least one zone onboarded to Cloudflare
+
+## Enable Security Insights and start initial scan
+
+<Render file="setup" product="security-center" />
+
+### Start a new scan
+
+To manually start a scan:
+
+1. In the Cloudflare dashboard, go to the **Infrastructure** page.
+
+   <DashButton url="/?to=/:account/security-center/inventory" />
+
+2. Select **Scan now**.
+
+### Scan Frequency
+
+Once you enable Security Insights, Cloudflare performs scans at a [regular frequency](/security-center/security-insights/how-it-works/#scan-frequency), according to your Cloudflare plan.

@@ -1,0 +1,22 @@
+releaseNotes: >-
+  This release is a mirror of GA release 2022.10.107.0
+   
+  **Notable updates**
+
+  - Fixed issue where GUI may still think user is registered after "warp-cli
+  delete" is run
+
+  - Decreased warp-diag zip file sizes by 60-80%
+   
+
+   
+  **Known issues**
+
+  - If you are having issues with upgrading to new beta, please uninstall
+  current app, install the GA version from https://1.1.1.1/ and participate in
+  beta program from Preferences->Advanced.
+version: 2022.10.112.1
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2022.10.112.1
+packageSize: 52159065
+releaseDate: 2022-11-17T06:28:17.592Z
+platformName: macOS

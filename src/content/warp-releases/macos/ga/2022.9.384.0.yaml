@@ -1,0 +1,38 @@
+releaseNotes: >-
+  This release primarily contains improvements to stability and bug fixes.
+   
+  **Notable updates**
+
+  - Fixed issue where GUI would show no text and only the toggle after updating
+  mdm.plist file
+
+  - Improved connection time on slow network connections
+
+  - Improved reliability of opening the browser for registration or
+  authentication requests. We now try multiple times and will display an error
+  message if it fails to open
+
+  - Fixed DNS fallback timeouts and related performance issues
+
+  - Fixed issue where coming out of sleep on some systems could take an
+  unreasonably long time to connect
+
+  - Fixed InvalidPacket error in logs that indicated the client needed to reset
+  its connection
+
+  - Fixed issue where user experienced no network after boot
+
+  - Fixed issue where warp-diag rotated daemon logs did not collect older logs
+
+  - Fixed crash in parsing of route changes
+
+   
+  **Known issues**
+
+  - Device posture check results stop sending after 24 hours (or possibly even
+  sooner)
+version: 2022.9.384.0
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2022.9.384.0
+packageSize: 49718631
+releaseDate: 2022-09-30T18:37:22.860Z
+platformName: macOS

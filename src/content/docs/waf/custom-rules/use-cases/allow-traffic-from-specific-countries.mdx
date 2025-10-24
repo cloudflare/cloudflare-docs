@@ -1,0 +1,14 @@
+---
+pcx_content_type: configuration
+title: Allow traffic from specific countries only
+---
+
+This example custom rule blocks requests based on country code using the [`ip.src.country`](/ruleset-engine/rules-language/fields/reference/ip.src.country/) field, only allowing requests from two countries: United States and Mexico.
+
+- **Expression**: `(not ip.src.country in {"US" "MX"})`
+- **Action**: _Block_
+
+## Other resources
+
+- [Use case: Block traffic by geographical location](/waf/custom-rules/use-cases/block-by-geographical-location/)
+- [Use case: Block traffic from specific countries](/waf/custom-rules/use-cases/block-traffic-from-specific-countries/)

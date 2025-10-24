@@ -1,0 +1,296 @@
+---
+pcx_content_type: concept
+title: Read key-value pairs
+sidebar:
+  order: 4
+---
+
+To get the value for a given key, call the `get()` method of the [KV binding](/kv/concepts/kv-bindings/) on any [KV namespace](/kv/concepts/kv-namespaces/) you have bound to your Worker code:
+
+```js
+// Read individual key
+env.NAMESPACE.get(key);
+
+// Read multiple keys
+env.NAMESPACE.get(keys);
+```
+
+The `get()` method returns a promise you can `await` on to get the value.
+
+If you request a single key as a string, you will get a single response in the promise. If the key is not found, the promise will resolve with the literal value `null`.
+
+You can also request an array of keys. The return value with be a `Map` of the key-value pairs found,
+with keys not found having `null` values.
+
+```js
+export default {
+	async fetch(request, env, ctx) {
+		try {
+			// Read single key, returns value or null
+			const value = await env.NAMESPACE.get("first-key");
+
+			// Read multiple keys, returns Map of values
+			const values = await env.NAMESPACE.get(["first-key", "second-key"]);
+
+			// Read single key with metadata, returns value or null
+			const valueWithMetadata = await env.NAMESPACE.getWithMetadata("first-key");
+
+			// Read multiple keys with metadata, returns Map of values
+			const valuesWithMetadata = await env.NAMESPACE.getWithMetadata(["first-key", "second-key"]);
+
+			return new Response({
+				value: value,
+				values: Object.fromEntries(values),
+				valueWithMetadata: valueWithMetadata,
+				valuesWithMetadata: Object.fromEntries(valuesWithMetadata)
+			});
+		} catch (e) {
+			return new Response(e.message, { status: 500 });
+		}
+	},
+};
+```
+
+:::note
+
+`get()` and `getWithMetadata()` methods may return stale values. If a given key has recently been read in a given location, writes or updates to the key made in other locations may take up to 60 seconds (or the duration of the `cacheTtl`) to display.
+
+:::
+
+
+## Reference
+
+The following methods are provided to read from KV:
+
+- [get()](#request-a-single-key-with-getkey-string)
+- [getWithMetadata()](#request-multiple-keys-with-getkeys-string)
+
+### `get()` method
+
+Use the `get()` method to get a single value, or multiple values if given multiple keys:
+
+- Read single keys with [get(key: string)](#request-a-single-key-with-getkey-string)
+- Read multiple keys with [get(keys: string[])](#request-multiple-keys-with-getkeys-string)
+
+#### Request a single key with `get(key: string)`
+
+To get the value for a single key, call the `get()` method on any KV namespace you have bound to your Worker code with:
+
+```js
+env.NAMESPACE.get(key, type?);
+// OR
+env.NAMESPACE.get(key, options?);
+```
+
+##### Parameters
+
+- `key`: `string`
+  - The key of the KV pair.
+- `type`: `"text" | "json" | "arrayBuffer" | "stream"`
+  - Optional. The type of the value to be returned. `text` is the default.
+- `options`: `{
+    cacheTtl?: number,
+    type?: "text" | "json" | "arrayBuffer" | "stream"
+}`
+  - Optional. Object containing the optional `cacheTtl` and `type` properties. The `cacheTtl` property defines the length of time in seconds that a KV result is cached in the global network location it is accessed from (minimum: 60). The `type` property defines the type of the value to be returned.
+
+##### Response
+
+- `response`: `Promise<string | Object | ArrayBuffer | ReadableStream | null>`
+  - The value for the requested KV pair. The response type will depend on the `type` parameter provided for the `get()` command as follows:
+    - `text`: A `string` (default).
+    - `json`: An object decoded from a JSON string.
+    - `arrayBuffer`: An [`ArrayBuffer`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer) instance.
+    - `stream`: A [`ReadableStream`](https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream).
+
+#### Request multiple keys with `get(keys: string[])`
+
+To get the values for multiple keys, call the `get()` method on any KV namespace you have bound to your Worker code with:
+
+```js
+env.NAMESPACE.get(keys, type?);
+// OR
+env.NAMESPACE.get(keys, options?);
+```
+
+##### Parameters
+
+- `keys`: `string[]`
+  - The keys of the KV pairs. Max: 100 keys
+- `type`: `"text" | "json"`
+  - Optional. The type of the value to be returned. `text` is the default.
+- `options`: `{
+    cacheTtl?: number,
+    type?: "text" | "json"
+}`
+  - Optional. Object containing the optional `cacheTtl` and `type` properties. The `cacheTtl` property defines the length of time in seconds that a KV result is cached in the global network location it is accessed from (minimum: 60). The `type` property defines the type of the value to be returned.
+
+:::note
+
+The `.get()` function to read multiple keys does not support `arrayBuffer` or `stream` return types. If you need to read multiple keys of `arrayBuffer` or `stream` types, consider using the `.get()` function to read individual keys in parallel with `Promise.all()`.
+
+:::
+
+##### Response
+
+- `response`: `Promise<Map<string, string | Object | null>>`
+  - The value for the requested KV pair. If no key is found, `null` is returned for the key. The response type will depend on the `type` parameter provided for the `get()` command as follows:
+    - `text`: A `string` (default).
+    - `json`: An object decoded from a JSON string.
+
+The limit of the response size is 25 MB. Responses above this size will fail with a `413 Error` error message.
+
+### `getWithMetadata()` method
+
+Use the `getWithMetadata()` method to get a single value along with its metadata, or multiple values with their metadata:
+
+- Read single keys with [getWithMetadata(key: string)](#request-a-single-key-with-getwithmetadatakey-string)
+- Read multiple keys with [getWithMetadata(keys: string[])](#request-multiple-keys-with-getwithmetadatakeys-string)
+
+#### Request a single key with `getWithMetadata(key: string)`
+
+To get the value for a given key along with its metadata, call the `getWithMetadata()` method on any KV namespace you have bound to your Worker code:
+
+```js
+env.NAMESPACE.getWithMetadata(key, type?);
+// OR
+env.NAMESPACE.getWithMetadata(key, options?);
+```
+
+Metadata is a serializable value you append to each KV entry.
+
+##### Parameters
+
+- `key`: `string`
+  - The key of the KV pair.
+- `type`: `"text" | "json" | "arrayBuffer" | "stream"`
+  - Optional. The type of the value to be returned. `text` is the default.
+- `options`: `{
+    cacheTtl?: number,
+    type?: "text" | "json" | "arrayBuffer" | "stream"
+}`
+  - Optional. Object containing the optional `cacheTtl` and `type` properties. The `cacheTtl` property defines the length of time in seconds that a KV result is cached in the global network location it is accessed from (minimum: 60). The `type` property defines the type of the value to be returned.
+
+##### Response
+
+- `response`: `Promise<{
+value: string | Object | ArrayBuffer | ReadableStream | null,
+metadata: string | null
+}>`
+
+  - An object containing the value and the metadata for the requested KV pair. The type of the value attribute will depend on the `type` parameter provided for the `getWithMetadata()` command as follows:
+    - `text`: A `string` (default).
+    - `json`: An object decoded from a JSON string.
+    - `arrayBuffer`: An [`ArrayBuffer`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer) instance.
+    - `stream`: A [`ReadableStream`](https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream).
+
+If there is no metadata associated with the requested key-value pair, `null` will be returned for metadata.
+
+#### Request multiple keys with `getWithMetadata(keys: string[])`
+
+To get the values for a given set of keys along with their metadata, call the `getWithMetadata()` method on any KV namespace you have bound to your Worker code with:
+
+```js
+env.NAMESPACE.getWithMetadata(keys, type?);
+// OR
+env.NAMESPACE.getWithMetadata(keys, options?);
+```
+
+##### Parameters
+
+- `keys`: `string[]`
+  - The keys of the KV pairs. Max: 100 keys
+- `type`: `"text" | "json"`
+  - Optional. The type of the value to be returned. `text` is the default.
+- `options`: `{
+    cacheTtl?: number,
+    type?: "text" | "json"
+}`
+  - Optional. Object containing the optional `cacheTtl` and `type` properties. The `cacheTtl` property defines the length of time in seconds that a KV result is cached in the global network location it is accessed from (minimum: 60). The `type` property defines the type of the value to be returned.
+
+:::note
+The `.get()` function to read multiple keys does not support `arrayBuffer` or `stream` return types. If you need to read multiple keys of `arrayBuffer` or `stream` types, consider using the `.get()` function to read individual keys in parallel with `Promise.all()`.
+:::
+
+##### Response
+
+- `response`: `Promise<Map<string, {
+value: string | Object | null,
+metadata: string | Object | null
+}>`
+
+  - An object containing the value and the metadata for the requested KV pair. The type of the value attribute will depend on the `type` parameter provided for the `getWithMetadata()` command as follows:
+    - `text`: A `string` (default).
+    - `json`: An object decoded from a JSON string.
+  - The type of the metadata will just depend on what is stored, which can be either a string or an object.
+
+If there is no metadata associated with the requested key-value pair, `null` will be returned for metadata.
+
+The limit of the response size is 25 MB. Responses above this size will fail with a `413 Error` error message.
+
+## Guidance
+
+### Type parameter
+
+For simple values, use the default `text` type which provides you with your value as a `string`. For convenience, a `json` type is also specified which will convert a JSON value into an object before returning the object to you. For large values, use `stream` to request a `ReadableStream`. For binary values, use `arrayBuffer` to request an `ArrayBuffer`.
+
+For large values, the choice of `type` can have a noticeable effect on latency and CPU usage. For reference, the `type` can be ordered from fastest to slowest as `stream`, `arrayBuffer`, `text`, and `json`.
+
+### CacheTtl parameter
+
+`cacheTtl` is a parameter that defines the length of time in seconds that a KV result is cached in the global network location it is accessed from.
+
+Defining the length of time in seconds is useful for reducing cold read latency on keys that are read relatively infrequently. `cacheTtl` is useful if your data is write-once or write-rarely.
+
+:::note[Hot and cold read]
+
+A hot read means that the data is cached on Cloudflare's edge network using the [CDN](https://developers.cloudflare.com/cache/), whether it is in a local cache or a regional cache. A cold read means that the data is not cached, so the data must be fetched from the central stores. Both existing key-value pairs and non-existent key-value pairs (also known as negative lookups) are cached at the edge.
+:::
+
+`cacheTtl` is not recommended if your data is updated often and you need to see updates shortly after they are written, because writes that happen from other global network locations will not be visible until the cached value expires.
+
+The `cacheTtl` parameter must be an integer greater than or equal to `60`, which is the default. The maximum value for `cacheTtl` is [`Number.MAX_SAFE_INTEGER`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MAX_SAFE_INTEGER).
+
+Once a key has been read with a given `cacheTtl` in a region, it will remain cached in that region until the end of the `cacheTtl` or eviction. This affects regional and central tiers of KV's built-in caching layers. When writing to Workers KV, the regions in the regional and central caching layers internal to KV will get revalidated with the newly written result.
+
+### Requesting more keys per Worker invocation with bulk requests
+
+Workers are limited to 1,000 operations to external services per invocation. This applies to Workers KV, as documented in [Workers KV limits](/kv/platform/limits/).
+
+To read more than 1,000 keys per operation, you can use the bulk read operations to read multiple keys in a single operation. These count as a single operation against the 1,000 operation limit.
+
+### Reducing cardinality by coalescing keys
+
+If you have a set of related key-value pairs that have a mixed usage pattern (some hot keys and some cold keys), consider coalescing them. By coalescing cold keys with hot keys, cold keys will be cached alongside hot keys which can provide faster reads than if they were uncached as individual keys.
+
+#### Merging into a "super" KV entry
+
+One coalescing technique is to make all the keys and values part of a super key-value object. An example is shown below.
+
+```
+key1: value1
+key2: value2
+key3: value3
+```
+
+becomes
+
+```
+coalesced: {
+  key1: value1,
+  key2: value2,
+  key3: value3,
+}
+```
+
+By coalescing the values, the cold keys benefit from being kept warm in the cache because of access patterns of the warmer keys.
+
+This works best if you are not expecting the need to update the values independently of each other, which can pose race conditions.
+
+- **Advantage**: Infrequently accessed keys are kept in the cache.
+- **Disadvantage**: Size of the resultant value can push your worker out of its memory limits. Safely updating the value requires a [locking mechanism](/kv/api/write-key-value-pairs/#concurrent-writes-to-the-same-key) of some kind.
+
+
+## Other methods to access KV
+
+You can [read key-value pairs from the command line with Wrangler](/kv/reference/kv-commands/#kv-key-get) and [from the REST API](/api/resources/kv/subresources/namespaces/subresources/values/methods/get/).

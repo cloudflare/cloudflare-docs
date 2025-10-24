@@ -1,0 +1,27 @@
+---
+pcx_content_type: troubleshooting
+title: Troubleshooting
+sidebar:
+  order: 10
+
+---
+
+import { GlossaryTooltip } from "~/components";
+
+The following topics are useful for troubleshooting BYOIP issues.
+
+## uRPF filtering and packet loss
+
+Routers receive IP packets and forward the packets to the destination IP address. Unicast Reverse Path Forwarding (uRPF) is a security feature that can prevent spoofing attacks. uRPF operates under two modes: strict and loose mode.
+
+Under **strict mode**, the router performs two checks on incoming packets to look for a matching entry in the source routing table and to determine whether the interface that received the packet can be used to reach the source. If the incoming IP packets pass both checks, the packets are forwarded; if the checks do not pass, the packets are dropped.
+
+When uRPF is set to loose mode, the router performs a single check when it receives an IP packet to look for a source's matching entry in the routing table.
+
+If you are experiencing packet loss as a result of an upstream ISP implementing uRPF filtering, contact your ISP and request the link be set to **loose mode**.
+
+## Non-SNI support
+
+Currently, BYOIP cannot be used with [legacy custom certificates](/ssl/edge-certificates/custom-certificates/uploading/) to support <GlossaryTooltip term="Server Name Indication (SNI)" link="/ssl/reference/browser-compatibility/#non-sni-support">non-SNI</GlossaryTooltip> requests.
+
+Instead, you can use Address Maps to set a default SNI for IPs on your account or zone. Refer to [Setup](/byoip/address-maps/setup/#non-sni-support) for further guidance.

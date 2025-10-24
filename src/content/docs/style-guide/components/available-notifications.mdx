@@ -1,0 +1,24 @@
+---
+title: Available notifications
+styleGuide:
+  component: AvailableNotifications
+---
+
+## Components
+
+```mdx live
+import { AvailableNotifications } from "~/components";
+
+<AvailableNotifications product="Traffic Monitoring" />
+<AvailableNotifications
+    product="dns"
+    notificationFilter="Secondary DNS all Primaries Failing"
+/>
+```
+
+## Notifications
+
+import { Code } from "~/components"
+import glossary from "~/content/notifications/index.yaml?raw"
+
+<Code title="/src/content/notifications/index.yaml" code={glossary} lang="yaml" wrap={true} />

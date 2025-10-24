@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>PayloadContent</key>
+  <array>
+    <dict>
+      <key>PayloadDisplayName</key>
+      <string>Warp Configuration</string>
+      <key>PayloadIdentifier</key>
+      <string>com.cloudflare.warp.CB8B22D4-50E1-48E8-8874-A7594627013A</string>
+      <key>PayloadOrganization</key>
+      <string>Cloudflare Ltd.</string>
+      <key>PayloadType</key>
+      <string>com.cloudflare.warp</string>
+      <key>PayloadUUID</key>
+      <string>CB8B22D4-50E1-48E8-8874-A7594627013A</string>
+      <key>PayloadVersion</key>
+      <integer>1</integer>
+      <key>configs</key>
+      <array>
+        <dict>
+          <key>organization</key>
+          <string>mycompany</string>
+          <key>display_name</key>
+          <string>Production environment</string>
+        </dict>
+        <dict>
+          <key>organization</key>
+          <string>mycompany</string>
+          <key>override_api_endpoint</key>
+          <string>203.0.113.0</string>
+          <key>override_doh_endpoint</key>
+          <string>203.0.113.0</string>
+          <key>override_warp_endpoint</key>
+          <string>203.0.113.0:2408</string>
+          <key>display_name</key>
+          <string>Cloudflare China network</string>
+        </dict>
+        <dict>
+          <key>organization</key>
+          <string>test-org</string>
+          <key>display_name</key>
+          <string>Test environment</string>
+        </dict>
+      </array>
+    </dict>
+  </array>
+  <key>PayloadDisplayName</key>
+  <string>Cloudflare WARP</string>
+  <key>PayloadIdentifier</key>
+  <string>cloudflare_warp</string>
+  <key>PayloadOrganization</key>
+  <string>Cloudflare, Ltd.</string>
+  <key>PayloadRemovalDisallowed</key>
+  <false/>
+  <key>PayloadScope</key>
+  <string>System</string>
+  <key>PayloadType</key>
+  <string>Configuration</string>
+  <key>PayloadUUID</key>
+  <string>2B7763B8-64F6-41EB-AA5E-7761651B8131</string>
+  <key>PayloadVersion</key>
+  <integer>1</integer>
+</dict>
+</plist>

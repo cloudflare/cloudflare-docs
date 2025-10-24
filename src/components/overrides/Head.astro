@@ -1,0 +1,237 @@
+---
+import Default from "@astrojs/starlight/components/Head.astro";
+import { differenceInCalendarDays } from "date-fns";
+import "tippy.js/dist/tippy.css";
+
+import { getEntry, getEntries } from "astro:content";
+import { getOgImage } from "~/util/og";
+import { formatContentType } from "~/util/content-type";
+import type { CollectionEntry } from "astro:content";
+
+const DEFAULT_TITLE_DELIMITER = "|";
+const NOINDEX_PRODUCTS = ["email-security"];
+const CHATBOT_DEPRIORITIZE_PRODUCTS = ["firewall", "style-guide"];
+
+const currentSection = Astro.url.pathname.split("/")[1].replaceAll(".", "");
+
+const { entry, head, lastUpdated } = Astro.locals.starlightRoute;
+const frontmatter = entry.data;
+
+const metaTags = [] as Record<string, string>[];
+
+const shouldNoIndex =
+	NOINDEX_PRODUCTS.includes(currentSection) ||
+	frontmatter.noindex ||
+	frontmatter.external_link;
+
+const shouldChatbotDeprioritize =
+	CHATBOT_DEPRIORITIZE_PRODUCTS.includes(currentSection) ||
+	frontmatter.sidebar.group?.hideIndex ||
+	frontmatter.sidebar.hidden ||
+	frontmatter.chatbot_deprioritize;
+
+// if not a top-level page, add metadata values from src/content/products/ entries
+if (currentSection) {
+	// if entry for product, grab and proceed
+	let product = await getEntry("products", currentSection);
+	// if entry for changelog, grab the first product value (which corresponds to the folder the entry is in) and use as the primary "product"
+	if (currentSection === "changelog") {
+		const products = frontmatter.products;
+		if (products && products.length > 0) {
+			const primaryProduct = products[0];
+			product = await getEntry("products", primaryProduct.id);
+		}
+	}
+
+	if (product) {
+		let productMetaName = product.data.meta.title
+			? product.data.meta.title
+			: "Cloudflare Docs";
+
+		if (currentSection === "changelog") {
+			productMetaName = "Changelog";
+		}
+
+		const titleIdx = head.findIndex((x) => x.tag === "title");
+		let title: string;
+
+		// Prefer the title set via frontmatter.head.title. If not, grab the regular frontmatter title value.
+		const existingTitle = head[titleIdx].content
+			? head[titleIdx].content?.split(` ${DEFAULT_TITLE_DELIMITER} `)[0]
+			: frontmatter.title;
+
+		title = `${existingTitle} · ${productMetaName}`;
+
+		head[titleIdx] = {
+			tag: "title",
+			content: title,
+		};
+
+		metaTags.push({
+			property: "og:title",
+			content: title,
+		});
+
+		if (product.data.product.title) {
+			["pcx_product", "algolia_product_filter"].map((name) => {
+				metaTags.push({
+					name,
+					content: product.data.product.title,
+				});
+			});
+		}
+
+		if (product.data.product.group) {
+			head.push({
+				tag: "meta",
+				attrs: {
+					name: "pcx_content_group",
+					content: product.data.product.group,
+				},
+			});
+		}
+	}
+}
+
+if (shouldNoIndex) {
+	metaTags.push({
+		name: "robots",
+		content: "noindex",
+	});
+}
+
+if (shouldChatbotDeprioritize) {
+	head.push({
+		tag: "meta",
+		attrs: {
+			name: "pcx_chatbot_deprioritize",
+			content: true,
+		},
+	});
+}
+
+if (
+	frontmatter.description &&
+	head.findIndex(
+		({ tag, attrs }) => tag === "meta" && attrs?.name === "description",
+	) === -1
+) {
+	const existingOpenGraphTag = head.findIndex(
+		({ tag, attrs }) => tag === "meta" && attrs?.property === "og:description",
+	);
+
+	if (existingOpenGraphTag !== -1) {
+		head[existingOpenGraphTag].attrs!.content = frontmatter.description;
+	}
+
+	metaTags.push({
+		name: "description",
+		content: frontmatter.description as string,
+	});
+}
+
+if (frontmatter.pcx_content_type) {
+	["pcx_content_type", "algolia_content_type"].map((name) => {
+		const contentType = frontmatter.pcx_content_type;
+		const updatedName = contentType ? formatContentType(contentType) : "";
+		metaTags.push({
+			name,
+			content: updatedName,
+		});
+	});
+}
+
+if (frontmatter.products) {
+	const additionalProducts = await getEntries(frontmatter.products);
+	const additionalProductsNames = additionalProducts.map(
+		(product) => product.data.name,
+	);
+
+	metaTags.push({
+		name: "pcx_additional_products",
+		content: additionalProductsNames.toString(),
+	});
+}
+
+if (frontmatter.tags) {
+	metaTags.push({
+		name: "pcx_tags",
+		content: frontmatter.tags.toString(),
+	});
+}
+
+if (lastUpdated) {
+	const daysBetween = differenceInCalendarDays(new Date(), lastUpdated);
+
+	metaTags.push({
+		name: "pcx_last_modified",
+		content: daysBetween.toString(),
+	});
+}
+
+if (frontmatter.reviewed) {
+	const daysBetween = differenceInCalendarDays(
+		new Date(),
+		frontmatter.reviewed,
+	);
+
+	metaTags.push({
+		name: "pcx_last_reviewed",
+		content: daysBetween.toString(),
+	});
+}
+
+if (frontmatter.external_link) {
+	metaTags.push({
+		content: `0; url=${frontmatter.external_link}`,
+		"http-equiv": "refresh",
+	});
+}
+
+if (frontmatter.pcx_content_type === "changelog") {
+	const href = new URL(entry.id.concat("/index.xml"), Astro.url.origin);
+
+	head.push({
+		tag: "link",
+		attrs: {
+			rel: "alternate",
+			type: "application/rss+xml",
+			href: href.toString(),
+		},
+	});
+}
+
+const ogImagePath = await getOgImage(
+	(Astro.locals.starlightRoute.originalEntry as CollectionEntry<"changelog">) ??
+		Astro.locals.starlightRoute.entry,
+);
+const ogImageUrl = new URL(ogImagePath, Astro.url.origin).toString();
+
+["image", "og:image", "twitter:image"].map((property) => {
+	metaTags.push({
+		property,
+		content: ogImageUrl,
+	});
+});
+
+head.push({
+	tag: "link",
+	attrs: {
+		rel: "alternate",
+		type: "text/markdown",
+		href: Astro.site + Astro.url.pathname.slice(1) + "index.md",
+	},
+});
+
+metaTags.map((attrs) => {
+	head.push({
+		tag: "meta",
+		attrs,
+	});
+});
+---
+
+<script src="src/scripts/footnotes.ts"></script>
+<script src="src/scripts/mermaid.ts"></script>
+<script src="src/scripts/analytics.ts"></script>
+<Default><slot /></Default>

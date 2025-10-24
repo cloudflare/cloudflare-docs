@@ -1,0 +1,12 @@
+---
+{}
+
+---
+
+For Universal certificates, Cloudflare controls the validity periods and certificate authorities (CAs), making sure that renewal always occur.
+
+:::note[Partial setup and DCV]
+If you are on a [partial setup](/ssl/edge-certificates/universal-ssl/enable-universal-ssl/#partial-dns-setup), make sure [Domain control validation (DCV)](/ssl/edge-certificates/changing-dcv-method/) is configured correctly. Refer to [Troubleshooting DCV](/ssl/edge-certificates/changing-dcv-method/troubleshooting/) for further help.
+:::
+
+Universal certificates have a 90-day validity period. The auto renewal period starts 30 days before expiration.

@@ -1,0 +1,233 @@
+---
+pcx_content_type: concept
+title: Pricing
+sidebar:
+  order: 1
+head: []
+description: Workers plans and pricing information.
+---
+
+import { GlossaryTooltip, Render, DashButton } from "~/components";
+
+By default, users have access to the Workers Free plan. The Workers Free plan includes limited usage of Workers, Pages Functions, Workers KV and Hyperdrive. Read more about the [Free plan limits](/workers/platform/limits/#worker-limits).
+
+The Workers Paid plan includes Workers, Pages Functions, Workers KV, Hyperdrive, and Durable Objects usage for a minimum charge of $5 USD per month for an account. The plan includes increased initial usage allotments, with clear charges for usage that exceeds the base plan. There are no additional charges for data transfer (egress) or throughput (bandwidth).
+
+All included usage is on a monthly basis.
+
+:::note[Pages Functions billing]
+
+All [Pages Functions](/pages/functions/) are billed as Workers. All pricing and inclusions in this document apply to Pages Functions. Refer to [Functions Pricing](/pages/functions/pricing/) for more information on Pages Functions pricing.
+
+:::
+
+## Workers
+
+Users on the Workers Paid plan have access to the Standard usage model. Workers Enterprise accounts are billed based on the usage model specified in their contract. To switch to the Standard usage model, contact your Account Manager.
+
+|              | Requests<sup>1, 2</sup>                                            | Duration                        | CPU time                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ------------ | ------------------------------------------------------------------ | ------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Free**     | 100,000 per day                                                    | No charge for duration          | 10 milliseconds of CPU time per invocation                                                                                                                                                                                                                                                                                                                                                                |
+| **Standard** | 10 million included per month <br /> +$0.30 per additional million | No charge or limit for duration | 30 million CPU milliseconds included per month<br /> +$0.02 per additional million CPU milliseconds<br /><br/> Max of [5 minutes of CPU time](/workers/platform/limits/#worker-limits) per invocation (default: 30 seconds)<br /> Max of 15 minutes of CPU time per [Cron Trigger](/workers/configuration/cron-triggers/) or [Queue Consumer](/queues/configuration/javascript-apis/#consumer) invocation |
+
+<sup>1</sup> Inbound requests to your Worker. Cloudflare does not bill for
+[subrequests](/workers/platform/limits/#subrequests) you make from your Worker.
+
+<sup>2</sup> Requests to static assets are free and unlimited.
+
+### Example pricing
+
+#### Example 1
+
+A Worker that serves 15 million requests per month, and uses an average of 7 milliseconds (ms) of CPU time per request, would have the following estimated costs:
+
+|                  | Monthly Costs | Formula                                                                                                   |
+| ---------------- | ------------- | --------------------------------------------------------------------------------------------------------- |
+| **Subscription** | $5.00         |                                                                                                           |
+| **Requests**     | $1.50         | (15,000,000 requests - 10,000,000 included requests) / 1,000,000 \* $0.30                                 |
+| **CPU time**     | $1.50         | ((7 ms of CPU time per request \* 15,000,000 requests) - 30,000,000 included CPU ms) / 1,000,000 \* $0.02 |
+| **Total**        | $8.00         |                                                                                                           |
+
+#### Example 2
+
+A project that serves 15 million requests per month, with 80% (12 million) requests serving [static assets](/workers/static-assets/) and the remaining invoking dynamic Worker code. The Worker uses an average of 7 milliseconds (ms) of time per request.
+
+Requests to static assets are free and unlimited. This project would have the following estimated costs:
+
+|                               | Monthly Costs | Formula |
+| ----------------------------- | ------------- | ------- |
+| **Subscription**              | $5.00         |         |
+| **Requests to static assets** | $0            | -       |
+| **Requests to Worker**        | $0            | -       |
+| **CPU time**                  | $0            | -       |
+| **Total**                     | $5.00         |
+|                               |
+
+#### Example 3
+
+A Worker that runs on a [Cron Trigger](/workers/configuration/cron-triggers/) once an hour to collect data from multiple APIs, process the data and create a report.
+
+- 720 requests/month
+- 3 minutes (180,000ms) of CPU time per request
+
+In this scenario, the estimated monthly cost would be calculated as:
+
+|                  | Monthly Costs | Formula                                                                                                  |
+| ---------------- | ------------- | -------------------------------------------------------------------------------------------------------- |
+| **Subscription** | $5.00         |                                                                                                          |
+| **Requests**     | $0.00         | -                                                                                                        |
+| **CPU time**     | $1.99         | ((180,000 ms of CPU time per request \* 720 requests) - 30,000,000 included CPU ms) / 1,000,000 \* $0.02 |
+| **Total**        | $6.99         |                                                                                                          |
+|                  |               |                                                                                                          |
+
+#### Example 4
+
+A high traffic Worker that serves 100 million requests per month, and uses an average of 7 milliseconds (ms) of CPU time per request, would have the following estimated costs:
+
+|                  | Monthly Costs | Formula                                                                                                    |
+| ---------------- | ------------- | ---------------------------------------------------------------------------------------------------------- |
+| **Subscription** | $5.00         |                                                                                                            |
+| **Requests**     | $27.00        | (100,000,000 requests - 10,000,000 included requests) / 1,000,000 \* $0.30                                 |
+| **CPU time**     | $13.40        | ((7 ms of CPU time per request \* 100,000,000 requests) - 30,000,000 included CPU ms) / 1,000,000 \* $0.02 |
+| **Total**        | $45.40        |                                                                                                            |
+
+:::note[Custom limits]
+
+To prevent accidental runaway bills or denial-of-wallet attacks, configure the maximum amount of CPU time that can be used per invocation by [defining limits in your Worker's Wrangler file](/workers/wrangler/configuration/#limits), or via the Cloudflare dashboard (**Workers & Pages** > Select your Worker > **Settings** > **CPU Limits**).
+
+If you had a Worker on the Bundled usage model prior to the migration to Standard pricing on March 1, 2024, Cloudflare has automatically added a 50 ms CPU limit on your Worker.
+
+:::
+
+### How to switch usage models
+
+:::note
+
+Some Workers Enterprise customers maintain the ability to change usage models.
+
+:::
+
+Users on the Workers Paid plan have access to the Standard usage model. However, some users may still have a legacy usage model configured.
+Legacy usage models include Workers Unbound and Workers Bundled. Users are advised to move to the Workers Standard usage model.
+Changing the usage model only affects billable usage, and has no technical implications.
+
+To change your default account-wide usage model:
+
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+
+2. Find **Usage Model** on the right-side menu > **Change**.
+
+Usage models may be changed at the individual Worker level:
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+
+2. In **Overview**, select your Worker > **Settings** > **Usage Model**.
+
+Existing Workers will not be impacted when changing the default usage model. You may change the usage model for individual Workers without affecting your account-wide default usage model.
+
+## Workers Logs
+
+<Render file="workers_logs_pricing" product="workers" />
+
+:::note[Workers Logs documentation]
+
+For more information and [examples of Workers Logs billing](/workers/observability/logs/workers-logs/#example-pricing), refer to the [Workers Logs documentation](/workers/observability/logs/workers-logs).
+
+:::
+
+## Workers Trace Events Logpush
+
+Workers Logpush is only available on the Workers Paid plan.
+
+|                       | Paid plan                          |
+| --------------------- | ---------------------------------- |
+| Requests <sup>1</sup> | 10 million / month, +$0.05/million |
+
+<sup>1</sup> Workers Logpush charges for request logs that reach your end
+destination after applying filtering or sampling.
+
+## Workers KV
+
+<Render file="kv_pricing" product="workers" />
+
+:::note[KV documentation]
+
+To learn more about KV, refer to the [KV documentation](/kv/).
+
+:::
+
+## Hyperdrive
+
+<Render file="hyperdrive_pricing" product="workers" />
+
+:::note[Hyperdrive documentation]
+
+To learn more about Hyperdrive, refer to the [Hyperdrive documentation](/hyperdrive/).
+
+:::
+
+## Queues
+
+<Render file="queues_pricing" product="workers" />
+
+:::note[Queues billing examples]
+
+To learn more about Queues pricing and review billing examples, refer to [Queues Pricing](/queues/platform/pricing/).
+
+:::
+
+## D1
+
+D1 is available on both the Workers Free and Workers Paid plans.
+
+<Render file="d1-pricing" product="workers" />
+
+:::note[D1 billing]
+
+Refer to [D1 Pricing](/d1/platform/pricing/) to learn more about how D1 is billed.
+
+:::
+
+## Durable Objects
+
+<Render file="do-plans-note" product="durable-objects" />
+
+<Render
+	file="durable-objects-pricing"
+	product="durable-objects"
+	params={{ product: "workers" }}
+/>
+
+:::note[Durable Objects billing examples]
+
+For more information and [examples of Durable Objects billing](/durable-objects/platform/pricing#compute-billing-examples), refer to [Durable Objects Pricing](/durable-objects/platform/pricing/).
+
+:::
+
+## Vectorize
+
+Vectorize is currently only available on the Workers paid plan.
+
+<Render file="vectorize-pricing" product="vectorize" />
+
+## Service bindings
+
+Requests made from your Worker to another worker via a [Service Binding](/workers/runtime-apis/bindings/service-bindings/) do not incur additional request fees. This allows you to split apart functionality into multiple Workers, without incurring additional costs.
+
+For example, if Worker A makes a subrequest to Worker B via a Service Binding, or calls an RPC method provided by Worker B via a Service Binding, this is billed as:
+
+- One request (for the initial invocation of Worker A)
+- The total amount of CPU time used across both Worker A and Worker B
+
+:::note[Only available on Workers Standard pricing]
+If your Worker is on the deprecated Bundled or Unbound pricing plans, incoming requests from Service Bindings are charged the same as requests from the Internet. In the example above, you would be charged for two requests, one to Worker A, and one to Worker B.
+:::
+
+## Fine Print
+
+Workers Paid plan is separate from any other Cloudflare plan (Free, Professional, Business) you may have. If you are an Enterprise customer, reach out to your account team to confirm pricing details.
+
+Only requests that hit a Worker will count against your limits and your bill. Since Cloudflare Workers runs before the Cloudflare cache, the caching of a request still incurs costs. Refer to [Limits](/workers/platform/limits/) to review definitions and behavior after a limit is hit.

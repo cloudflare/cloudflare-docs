@@ -1,0 +1,77 @@
+---
+import { getCollection, getEntry, type CollectionEntry } from "astro:content";
+import { formatDistance } from "date-fns";
+
+import { process } from "~/util/rehype";
+import rehypeExternalLinks from "~/plugins/rehype/external-links";
+
+type DocsEntry = CollectionEntry<"docs">;
+
+const tutorials: Array<DocsEntry> = [];
+
+const currentSection = Astro.params.slug?.split("/")[0];
+const currentProduct = await getEntry("products", currentSection!);
+
+if (!currentProduct) {
+	throw new Error(
+		`[ListTutorials] Unable to find product YAML for ${currentSection}.`,
+	);
+}
+
+const productID = currentProduct.id;
+
+const docs = await getCollection("docs", (entry) => {
+	return (
+		// pcx_content_type: tutorial
+		entry.data.pcx_content_type === "tutorial" &&
+		// /src/content/r2/**/*.mdx
+		(entry.id.startsWith(`${currentSection}/`) ||
+			// products: [R2]
+			entry.data.products?.some((product) => product.id === productID))
+	);
+});
+
+tutorials.push(...docs);
+
+tutorials.sort((a, b) => Number(b.data.reviewed) - Number(a.data.reviewed));
+
+const timeAgo = (date?: Date) => {
+	if (!date) return undefined;
+	return formatDistance(date, new Date(), { addSuffix: true });
+};
+---
+
+<table>
+	<thead>
+		<tr>
+			<td>Name</td>
+			<td>Last Updated</td>
+			<td>Type</td>
+			<td>Difficulty</td>
+		</tr>
+	</thead>
+	<tbody>
+		{
+			tutorials.map(async (tutorial) => {
+				const title = tutorial.data.title;
+
+				const href = `/${tutorial.id}/`;
+
+				const anchor = await process(`<a href=${href}>${title}</a>`, [
+					rehypeExternalLinks,
+				]);
+
+				return (
+					<tr>
+						<td>
+							<Fragment set:html={anchor} />
+						</td>
+						<td>{timeAgo(tutorial.data.reviewed)}</td>
+						<td>📝 Tutorial</td>
+						<td>{tutorial.data.difficulty}</td>
+					</tr>
+				);
+			})
+		}
+	</tbody>
+</table>

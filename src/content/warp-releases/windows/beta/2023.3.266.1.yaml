@@ -1,0 +1,35 @@
+releaseNotes: >-
+  This release contains only bug fixes from the previous beta release.
+   
+  As stated in the previous beta notes, we are now feature complete for the
+  quarter and will begin focusing exclusively on QA and bug fixes only. We
+  encourage customers to test with this version and report issues ASAP.
+    
+  *Major change*
+
+  As a reminder, starting with the previous beta 2023.1.625.1, WARP On Windows
+  now uses a new tunnel architecture that more closely matches our macOS and
+  Linux implementations. WARP will now create a virtual interface that is
+  visible in your network connections and directly modify the routing table to
+  control where traffic flows. Please thoroughly test this release before
+  deploying in your organization.
+    
+  **Notable updates**
+
+  - Fix issue where IPv6 being disabled via the registered wasn't properly
+  detected
+
+  - Fixed issue introduced in previous beta where client would show unable to
+  connect briefly before connecting properly
+
+  - Fixed issue when running in local proxy mode where too many log entries were
+  written
+   
+  **Known issues**
+
+  No known issues
+version: 2023.3.266.1
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2023.3.266.1
+packageSize: 106700800
+releaseDate: 2023-03-22T23:15:28.634Z
+platformName: Windows

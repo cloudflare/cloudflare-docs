@@ -1,0 +1,21 @@
+releaseNotes: >-
+  This release contains no new features and is focused exclusively on squashing
+  a few bugs.
+
+
+  **Notable updates**
+
+  - Fixed an issue that caused high memory usage of the daemon process.
+
+
+  **Known issues**
+
+  - When `Install CA to system certificate store` is enabled, the certificate is
+  not always properly left behind in `/Library/Application
+  Support/Cloudflare/installed_cert.pem`. This issue will be fixed in a future
+  release.
+version: 2024.2.68.0
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2024.2.68.0
+packageSize: 67362170
+releaseDate: 2024-02-14T21:46:30.690Z
+platformName: macOS

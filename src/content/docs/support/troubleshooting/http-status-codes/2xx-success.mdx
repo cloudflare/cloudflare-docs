@@ -1,0 +1,94 @@
+---
+pcx_content_type: troubleshooting
+source: https://support.cloudflare.com/hc/en-us/articles/115003014192-2xx-Success
+title: 2xx Success
+---
+
+2xx status codes indicate success, meaning that the client's request was received, understood, and accepted by the server.
+
+## 200 OK
+
+A 200 response indicates that the request has succeeded.
+
+### Common use cases
+
+A 200 response is commonly used in the following scenarios:
+
+- GET requests: Returns requested resources such as webpages, images, or API data, along with relevant headers.
+- HEAD requests: Retrieves only headers corresponding to the requested resource, such as metadata. For example, file size or last modified date.
+- POST requests: Confirms successful processing of submitted data, such as form submissions, often with details about the result in the response body.
+
+A 200 response should ideally include a payload but is not required. Occasionally, an origin server may return a 200 response with zero content length. However, following RFC standards, a 204 response is recommended in such cases (except for the CONNECT method).
+
+### Cloudflare-specific information
+
+By default, 200 responses are cacheable by proxy servers and browsers. If specific [cache controls](/cache/concepts/customize-cache/) are not defined, [static resources](/cache/concepts/default-cache-behavior/) with a 200 response are cached for two hours at Cloudflare's edge.
+
+## 201 Created
+
+A 201 response indicates the successful creation of one or more new resources. The server typically includes the location of the newly created resource in either the `Location` header or the request URI.
+
+### Common use cases
+
+Creating a new resource in response to a POST request. For example, creating a new user, article, or record.
+
+### Cloudflare-specific information
+
+Cloudflare forwards 201 responses without modification.
+
+For further information, refer to [RFC 7231](https://tools.ietf.org/html/rfc7231#section-7.2) for more details about validator headers, like **ETag** and **Last-Modified** in a 201 response.
+
+## 203 Non-authoritative information
+
+A 203 response indicates that the request was successful, but the response did not come directly from the origin server. The response was instead delivered by a proxy or intermediate server.
+
+### Common use cases
+
+Servers use this response to tell a client that the resource was cached by a proxy server.
+
+### Cloudflare-specific information
+
+Cloudflare does not cache 203 responses. For details about how Cloudflare handles 203 responses, refer to [Cloudflare HTTP headers](/fundamentals/reference/http-headers/).
+
+## 204 No content
+
+A 204 response indicates that the request was successfully processed, but there is no content to return in the response.
+
+### Common use cases
+
+This response is often used by servers to indicate that a document editor's save action to the origin server was completed successfully.
+
+### Cloudflare-specific information
+
+204 responses never contain payloads, as specified by the HTTP standard, and Cloudflare does not cache these responses.
+
+## 205 Reset content
+
+A 205 response tells the client to return to its previous state after a request.
+
+### Common use cases
+
+This response occurs after a user submits a form or other data and they want to tell the client to refresh the page or allow a new submission.
+
+### Cloudflare-specific information
+
+205 responses must not contain any payloads and Cloudflare does not cache these responses.
+
+## 206 Partial content
+
+A 206 response means that the request was partially successful, often used for serving large files in smaller chunks.
+
+### Common use cases
+
+This response is often used to decrease latency when clients are processing larger files that might require split or interrupted downloads. For instance, for streaming video or serving file ranges for progressive loading.
+
+A 206 response includes either:
+
+- Partial payload that contains a `Content-Range` header specifying the requested range and the data provided in the response.
+- Multipart payload that omits the `Content-Range` header at the top level but includes `Content-Type` and `Content-Range` headers for each part of the multipart response body.
+
+For more details, refer to [Section 4.1 of RFC 7233](https://tools.ietf.org/html/rfc7233#page-10).
+
+### Cloudflare-specific information
+
+Cloudflare handles 206 responses for range requests, but caching behavior may vary depending on the file type and origin settings.

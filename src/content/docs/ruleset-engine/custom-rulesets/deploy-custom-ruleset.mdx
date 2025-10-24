@@ -1,0 +1,114 @@
+---
+pcx_content_type: how-to
+title: Deploy a custom ruleset
+sidebar:
+  order: 4
+description: Learn how to deploy a custom ruleset to your Cloudflare account.
+---
+
+import { APIRequest, Render } from "~/components";
+
+To deploy a custom ruleset, add a rule with `execute` action to the list of rules of a phase [entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset) at the account level. The expression of the new rule will define when the custom ruleset will run.
+
+<Render file="custom-rulesets-terraform" product="ruleset-engine" />
+
+<Render file="custom-rulesets-dashboard" product="ruleset-engine" />
+
+## Before you begin
+
+1. Obtain the name of the [phase](/ruleset-engine/reference/phases-list/) where you want to deploy the custom ruleset.
+2. [Create a custom ruleset](/ruleset-engine/custom-rulesets/create-custom-ruleset/) and keep the ID of the new custom ruleset.
+3. [Fetch the rules already present in the phase entry point ruleset](/ruleset-engine/basic-operations/view-rulesets/#view-the-rules-included-in-a-ruleset). You must include in the `PUT` request all existing rules you want to keep.
+
+## Example
+
+The following `PUT` request adds a rule that executes a custom ruleset when the zone name matches `example.com`. The response will include all the rules in the phase entry point ruleset.
+
+<APIRequest
+	path="/accounts/{account_id}/rulesets/phases/{ruleset_phase}/entrypoint"
+	method="PUT"
+	parameters={{
+		ruleset_phase: "http_request_firewall_custom",
+	}}
+	json={{
+		rules: [
+			{
+				action: "execute",
+				description: "Execute custom ruleset",
+				expression: '(cf.zone.name == "example.com") and cf.zone.plan eq "ENT"',
+				action_parameters: {
+					id: "<CUSTOM_RULESET_ID>",
+				},
+			},
+			{
+				id: "<EXISTING_PHASE_RULE_ID_1>",
+			},
+			{
+				id: "<EXISTING_PHASE_RULE_ID_2>",
+			},
+		],
+	}}
+/>
+
+```json output
+{
+	"result": {
+		"id": "<ACCOUNT_PHASE_RULESET_ID>",
+		"name": "http_request_firewall_custom phase entry point ruleset for my account",
+		"description": "Execute several rulesets",
+		"kind": "root",
+		"version": "3",
+		"rules": [
+			{
+				"id": "<PHASE_RULE_ID>",
+				"version": "1",
+				"action": "execute",
+				"description": "Execute custom ruleset",
+				"action_parameters": {
+					"id": "<CUSTOM_RULESET_ID>",
+					"version": "latest"
+				},
+				"expression": "(cf.zone.name == \"example.com\") and cf.zone.plan eq \"ENT\"",
+				"last_updated": "2021-03-18T18:35:14.135697Z",
+				"ref": "<PHASE_RULE_REF>",
+				"enabled": true
+			},
+			{
+				"id": "<EXISTING_PHASE_RULE_ID_1>",
+				"version": "1",
+				"action": "execute",
+				"action_parameters": {
+					"id": "<EXECUTED_RULESET_ID_1>",
+					"version": "latest"
+				},
+				"expression": "(cf.zone.name eq \"example.com\") and cf.zone.plan eq \"ENT\"",
+				"last_updated": "2021-03-16T15:51:49.180378Z",
+				"ref": "<EXISTING_PHASE_RULE_REF_1>",
+				"enabled": true
+			},
+			{
+				"id": "<EXISTING_PHASE_RULE_ID_2>",
+				"version": "1",
+				"action": "execute",
+				"action_parameters": {
+					"id": "<EXECUTED_RULESET_ID_2>",
+					"version": "latest"
+				},
+				"expression": "(cf.zone.name eq \"example.com\") and cf.zone.plan eq \"ENT\"",
+				"last_updated": "2021-03-16T15:50:29.861157Z",
+				"ref": "<EXISTING_PHASE_RULE_REF_2>",
+				"enabled": true
+			}
+		],
+		"last_updated": "2021-03-18T18:35:14.135697Z",
+		"phase": "http_request_firewall_custom"
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
+}
+```
+
+:::caution
+Regarding the expression of the rule deploying the ruleset, you must use parentheses to enclose any custom conditions and end your expression with `and cf.zone.plan eq "ENT"` or else the API operation will fail.
+:::

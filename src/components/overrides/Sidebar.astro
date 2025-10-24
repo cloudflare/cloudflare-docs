@@ -1,0 +1,339 @@
+---
+import Default from "@astrojs/starlight/components/Sidebar.astro";
+
+import { Icon as AstroIcon } from "astro-icon/components";
+import { lookupProductTitle } from "~/util/sidebar";
+
+const [product, module] = Astro.url.pathname.split("/").filter(Boolean);
+---
+
+<a href={"/" + product + "/"} class="flex items-center gap-2 px-1 no-underline">
+	<AstroIcon name={product} size="32px" class="text-cl1-brand-orange" />
+	<span class="text-xl text-black">
+		<strong>
+			{lookupProductTitle(product, module)}
+		</strong>
+	</span>
+</a>
+
+<!-- Search Input -->
+<div class="relative">
+	<input
+		type="text"
+		id="sidebar-search"
+		placeholder="Search sidebar..."
+		class="w-full px-3 py-2 pr-10 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-orange-500 dark:focus:border-orange-500 transition-colors duration-200"
+	/>
+	<div class="sidebar-search-icon"></div>
+</div>
+
+<!-- No Results Message -->
+<div
+	id="sidebar-no-results"
+	class="text-sm text-gray-500 dark:text-gray-400 text-center p-4 hidden"
+>
+	No results found. Try a different search term, or use our <button id="global-search-link" class="text-blue-500 dark:text-orange-500 underline hover:no-underline cursor-pointer bg-transparent border-none p-0 font-inherit">global search</button>.
+</div>
+
+<Default><slot /></Default>
+
+<script>
+	import { track } from "~/util/zaraz";
+	import { openGlobalSearch } from "~/util/search";
+
+	function initSidebarSearch() {
+		const searchInput = document.getElementById('sidebar-search') as HTMLInputElement;
+		const noResultsMessage = document.getElementById('sidebar-no-results') as HTMLElement;
+		const globalSearchLink = document.getElementById('global-search-link') as HTMLButtonElement;
+		const sidebarContent = document.querySelector('.sidebar-content');
+
+		if (!searchInput || !sidebarContent || !noResultsMessage || !globalSearchLink) return;
+
+		const originalState: Map<Element, boolean> = new Map();
+
+		// Store original state of details elements
+		function storeOriginalState() {
+			if (originalState.size === 0) {
+				const detailsElements = sidebarContent!.querySelectorAll('details');
+				detailsElements.forEach(details => {
+					originalState.set(details, details.open);
+				});
+			}
+		}
+
+
+		// Check if text matches all search terms (for multi-word searches)
+		function matchesAllTerms(text: string, searchTerms: string[]): boolean {
+			const lowerText = text.toLowerCase();
+			return searchTerms.every(term => lowerText.includes(term));
+		}
+
+		// Show only direct children of a folder (not recursive)
+		function showDirectChildren(details: HTMLDetailsElement) {
+			details.open = true;
+			const directList = details.querySelector(':scope > ul');
+			if (directList) {
+				const directChildren = directList.querySelectorAll(':scope > li');
+				directChildren.forEach(child => {
+					(child as HTMLElement).style.display = '';
+				});
+			}
+		}
+
+		// Show parent chain for a specific item
+		function showParentChain(element: Element) {
+			let parent = element.parentElement;
+			while (parent && parent !== sidebarContent) {
+				if (parent.tagName === 'LI') {
+					(parent as HTMLElement).style.display = '';
+				}
+				if (parent.tagName === 'DETAILS') {
+					(parent as HTMLDetailsElement).open = true;
+				}
+				parent = parent.parentElement;
+			}
+		}
+
+		// Filter sidebar items based on search query
+		function filterSidebarItems(query: string) {
+			const items = sidebarContent!.querySelectorAll('li');
+			const detailsElements = sidebarContent!.querySelectorAll('details');
+			track("use sidebar search", { query: query });
+
+			if (!query.trim()) {
+				// Reset to original state
+				items.forEach(item => {
+					(item as HTMLElement).style.display = '';
+				});
+
+				// Restore original details state
+				detailsElements.forEach(details => {
+					const originalOpen = originalState.get(details);
+					if (originalOpen !== undefined) {
+						(details as HTMLDetailsElement).open = originalOpen;
+					}
+				});
+
+				// Hide no results message
+				noResultsMessage.classList.add('hidden');
+
+				return;
+			}
+
+			// Split search query into terms for more precise matching
+			const searchTerms = query.toLowerCase().split(/\s+/).filter(term => term.length > 0);
+
+			// First, hide all items and close all details
+			items.forEach(item => {
+				(item as HTMLElement).style.display = 'none';
+			});
+			detailsElements.forEach(details => {
+				(details as HTMLDetailsElement).open = false;
+			});
+
+			// Track what we've matched to avoid duplicates
+			const matchedItems = new Set<Element>();
+
+			// 1. Check for folder/subfolder matches first (highest priority)
+			detailsElements.forEach(details => {
+				const summary = details.querySelector('summary');
+				if (summary) {
+					const summaryText = summary.textContent || '';
+
+					if (matchesAllTerms(summaryText, searchTerms)) {
+						// This is a folder match - show the folder and its direct children
+						const parentLi = details.closest('li');
+						if (parentLi && !matchedItems.has(parentLi)) {
+							(parentLi as HTMLElement).style.display = '';
+							showDirectChildren(details);
+							showParentChain(parentLi);
+							matchedItems.add(parentLi);
+						}
+					}
+				}
+			});
+
+			// 2. Check for specific page matches (show page + parent chain)
+			items.forEach(item => {
+				if (matchedItems.has(item)) return; // Skip if already matched as folder
+
+				const link = item.querySelector('a');
+				const summary = item.querySelector('summary');
+
+				// Skip if this is a folder (has summary) - those are handled above
+				if (summary) return;
+
+				if (link) {
+					const linkText = link.textContent || '';
+
+					if (matchesAllTerms(linkText, searchTerms)) {
+						// This is a specific page match - show page + parent chain
+						(item as HTMLElement).style.display = '';
+						showParentChain(item);
+						matchedItems.add(item);
+					}
+				}
+			});
+
+			// 3. Fallback: if no exact matches, show partial matches (less specific)
+			if (matchedItems.size === 0) {
+				items.forEach(item => {
+					const textContent = item.textContent?.toLowerCase() || '';
+					const link = item.querySelector('a');
+					const linkText = link?.textContent?.toLowerCase() || '';
+					const summary = item.querySelector('summary');
+					const summaryText = summary?.textContent?.toLowerCase() || '';
+
+					// Check if any search term is found (partial matching)
+					const hasPartialMatch = searchTerms.some(term =>
+						textContent.includes(term) || linkText.includes(term) || summaryText.includes(term)
+					);
+
+					if (hasPartialMatch) {
+						(item as HTMLElement).style.display = '';
+
+						// If it's a folder, show direct children only
+						if (summary) {
+							const details = item.querySelector('details');
+							if (details) {
+								showDirectChildren(details);
+							}
+						}
+
+						showParentChain(item);
+						matchedItems.add(item);
+					}
+				});
+			}
+
+			// Show/hide no results message based on matches
+			if (matchedItems.size === 0) {
+				noResultsMessage.classList.remove('hidden');
+			} else {
+				noResultsMessage.classList.add('hidden');
+			}
+		}
+
+		// Event listeners
+		searchInput.addEventListener('input', (e) => {
+			storeOriginalState();
+			const query = (e.target as HTMLInputElement).value;
+			filterSidebarItems(query);
+		});
+
+		// Clear search on Escape key
+		searchInput.addEventListener('keydown', (e) => {
+			if (e.key === 'Escape') {
+				searchInput.value = '';
+				filterSidebarItems('');
+			}
+		});
+
+		// Global search link click handler
+		globalSearchLink.addEventListener('click', () => {
+			const currentQuery = searchInput.value.trim();
+			if (currentQuery) {
+				openGlobalSearch(currentQuery);
+			}
+		});
+
+		document.addEventListener(
+			"keydown",
+			(keyboardEvent) => {
+				const target = keyboardEvent.target;
+
+				const isInput =
+					target instanceof EventTarget &&
+					(("tagName" in target &&
+						(target.tagName === "INPUT" ||
+							target.tagName === "TEXTAREA" ||
+							target.tagName === "SELECT")) ||
+						("isContentEditable" in target && target.isContentEditable));
+
+				if (keyboardEvent.key === "/" && !isInput) {
+					keyboardEvent.preventDefault();
+					keyboardEvent.stopPropagation();
+					searchInput.focus();
+				}
+			},
+			{
+				capture: true,
+			},
+		);
+	}
+
+	// Initialize when DOM is loaded
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', initSidebarSearch);
+	} else {
+		initSidebarSearch();
+	}
+
+	// Re-initialize on navigation (for SPA-like behavior)
+	initSidebarSearch();
+</script>
+
+<style is:global>
+	.sidebar-search-icon {
+		position: absolute;
+		right: 12px;
+		top: 50%;
+		transform: translateY(-50%);
+		width: 1em;
+		height: 1em;
+		-webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M17 2H7a5 5 0 0 0-5 5v10a5 5 0 0 0 5 5h10a5 5 0 0 0 5-5V7a5 5 0 0 0-5-5Zm3 15a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v10Z'%3E%3C/path%3E%3Cpath d='M15.293 6.707a1 1 0 1 1 1.414 1.414l-8.485 8.486a1 1 0 0 1-1.414-1.415l8.485-8.485Z'%3E%3C/path%3E%3C/svg%3E");
+		mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M17 2H7a5 5 0 0 0-5 5v10a5 5 0 0 0 5 5h10a5 5 0 0 0 5-5V7a5 5 0 0 0-5-5Zm3 15a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v10Z'%3E%3C/path%3E%3Cpath d='M15.293 6.707a1 1 0 1 1 1.414 1.414l-8.485 8.486a1 1 0 0 1-1.414-1.415l8.485-8.485Z'%3E%3C/path%3E%3C/svg%3E");
+		-webkit-mask-size: 100%;
+		mask-size: 100%;
+		background-color: currentColor;
+		pointer-events: none;
+	}
+
+	:root {
+		.sidebar-content {
+			--sl-color-hairline-light: #cacaca !important;
+
+			& > * {
+				a {
+					padding: 0.2375em var(--sl-sidebar-item-padding-inline) !important;
+
+					&[aria-current="page"] {
+						background-color: unset !important;
+						border: unset !important;
+						border-color: unset !important;
+						color: var(--sl-color-accent) !important;
+						font-weight: 600 !important;
+					}
+				}
+
+				summary {
+					padding: 0.1375em var(--sl-sidebar-item-padding-inline) !important;
+				}
+
+				.large {
+					color: var(--sl-color-gray-2) !important;
+					font-weight: unset !important;
+					font-size: unset !important;
+
+					@media (min-width: 50rem) {
+						font-size: var(--sl-text-sm) !important;
+					}
+				}
+
+				.caret {
+					font-size: 1rem !important;
+				}
+			}
+		}
+	}
+
+	:root[data-theme="dark"] {
+		.sidebar-content {
+			--sl-color-hairline-light: #444444 !important;
+
+			& > * a[aria-current="page"] {
+				color: var(--sl-color-accent-high) !important;
+			}
+		}
+	}
+</style>

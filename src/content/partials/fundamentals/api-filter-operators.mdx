@@ -1,0 +1,18 @@
+---
+inputParameters: param1;;param2;;param3;;param4
+
+---
+
+
+
+import { Markdown } from "~/components"
+
+| Operator | Name                     | Example           | Description                                                          | URL Encoded |
+| -------- | ------------------------ | ----------------- | -------------------------------------------------------------------- | ----------- |
+| `==`     | Equals                   | <code>{props.one}=={props.two}</code>          | Return results where <code>{props.one}</code> is exactly <code>{props.two}</code>.                           | `%3D%3D`    |
+| `!=`     | Does not equal           | <code>{props.three}!={props.four}</code>         | Return results where <code>{props.three}</code> is different from <code>{props.four}</code>.                    | `!%3D`      |
+| `>`      | Greater than             | `dimension>1000`  | Return results where a dimension is greater than `1000`.             | `%3E`       |
+| `<`      | Less than                | `dimension<1000`  | Return results where a dimension is less than `1000`.                | `%3C`       |
+| `>=`     | Greater than or equal to | `dimension>=1000` | Return results where a dimension is greater than or equal to `1000`. | `%3E%3D`    |
+| `<=`     | Less than or equal to    | `dimension<=1000` | Return results where a dimension is less than or equal to `1000`.    | `%3C%3D`    |
+

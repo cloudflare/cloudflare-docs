@@ -1,8 +1,0 @@
----
-link: "/version-management/changelog/"
-productName: Version Management
-entries:
-- publish_date: '2023-09-20'
-  title: "Support for Bot Management"
-  description: |-
-    - Version Management now supports versioning for [Bot Management](/bots/plans/bm-subscription/).

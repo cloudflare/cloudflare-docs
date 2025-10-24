@@ -1,0 +1,39 @@
+---
+pcx_content_type: how-to
+title: Manage internal zones
+description: Understand how to set up and manage internal DNS zones with Cloudflare. Explore configuration conditions, zone creation, and available API endpoints.
+sidebar:
+  order: 2
+---
+
+import { Example, Render, Tabs, TabItem } from "~/components";
+
+Refer to the following sections to learn how to manage your [internal DNS zones](/dns/internal-dns/internal-zones/).
+
+## Configuration conditions
+
+When setting up internal zones, observe the following conditions:
+
+<Render file="internal-zones-conditions" product="dns" />
+
+## Create an internal zone
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+<Render file="internal-zone-create-dash" product="dns" />
+
+</TabItem>
+<TabItem label="API">
+
+<Render file="internal-zone-create-api" product="dns" />
+
+</TabItem> </Tabs>
+
+## Other API actions
+
+The API endpoints to manage internal zones are the same as for managing public zones. The main difference is that the zone type must be set to `internal`. Refer to the API documentation below for details:
+
+- [Update an internal zone](/api/resources/zones/methods/edit/) (`PATCH`)
+- [Get internal zone details](/api/resources/zones/methods/get/) (`GET`)
+- [List internal zones](/api/resources/zones/methods/list/) (`GET`)
+- [Delete an internal zone](/api/resources/zones/methods/delete/) (`DELETE`)

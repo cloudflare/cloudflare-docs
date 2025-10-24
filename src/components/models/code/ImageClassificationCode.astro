@@ -1,0 +1,52 @@
+---
+import { z } from "astro:schema";
+import { Code } from "@astrojs/starlight/components";
+import Details from "~/components/Details.astro";
+
+type Props = z.infer<typeof props>;
+
+const props = z.object({
+	name: z.string(),
+});
+
+const { name } = props.parse(Astro.props);
+
+const worker = `
+export interface Env {
+  AI: Ai;
+}
+
+export default {
+  async fetch(request, env): Promise<Response> {
+    const res = await fetch("https://cataas.com/cat");
+    const blob = await res.arrayBuffer();
+
+    const inputs = {
+      image: [...new Uint8Array(blob)],
+    };
+
+    const response = await env.AI.run(
+      "${name}",
+      inputs
+    );
+
+    return new Response(JSON.stringify(response));
+  },
+} satisfies ExportedHandler<Env>;
+`;
+
+const curl = `
+curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run/${name}  \\
+    -X POST  \\
+    -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN"  \\
+    --data-binary "@orange-llama.png"
+`;
+---
+
+<Details header="Workers - TypeScript">
+	<Code code={worker} lang="ts" />
+</Details>
+
+<Details header="curl">
+	<Code code={curl} lang="sh" />
+</Details>

@@ -1,0 +1,21 @@
+---
+pcx_content_type: how-to
+title: Rules
+---
+
+import { Render, DashButton } from "~/components";
+
+Use **Rules** to configure whether to track Web Analytics for specific websites or paths. By default, Web Analytics automatically creates a single rule for the zone that injects the JavaScript (JS) snippet for all pages.
+
+Rules are only available for sites proxied through Cloudflare. For more information, refer to [Limits](/web-analytics/limits/).
+
+1. In the Cloudflare dashboard, go to the **Web Analytics** page.
+
+   <DashButton url="/?to=/:account/web-analytics" />
+
+2. Find the site you want to configure and select **Manage site**.
+3. Select **Advanced options** > **Add rule**.
+4. Select the **Action** and fill in the hostname and path(s) you want to add a rule for.
+5. If you want to add additional rules, select **Add rule**. Otherwise select **Update** to save the rule.
+
+<Render file="configuration-rule-wins-over-rum-rule" product="rules" />

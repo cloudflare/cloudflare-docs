@@ -1,0 +1,35 @@
+---
+title: Dashboard
+pcx_content_type: get-started
+sidebar:
+  order: 3
+head:
+  - tag: title
+    content: Get started - Dashboard
+
+---
+
+import { Render, DashButton } from "~/components"
+
+Follow this guide to create a Workers AI application using the Cloudflare dashboard.
+
+## Prerequisites
+
+Sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages) if you have not already.
+
+## Setup
+
+To create a Workers AI application:
+
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+2. Select **Create application**.
+3. Under **Select a template**, select **LLM Chat App**.
+4. Select **Deploy**.
+5. Name your Worker, then select **Create and deploy**.
+5. Preview your Worker at its provided [`workers.dev`](/workers/configuration/routing/workers-dev/) subdomain.
+
+## Development
+
+<Render file="dash-creation-next-steps" product="workers" />

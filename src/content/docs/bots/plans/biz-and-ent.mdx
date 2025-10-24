@@ -1,0 +1,89 @@
+---
+title: Business
+
+pcx_content_type: reference
+hidden: true
+sidebar:
+  order: 3
+head:
+  - tag: title
+    content: Plans — Business and Enterprise
+---
+
+import { Render } from "~/components";
+
+<Render file="plan-intro" product="bots" />
+
+<Render file="buttons-plan-pages" product="bots" />
+
+<table>
+	<thead>
+		<tr>
+			<th width="25%"></th>
+			<th width="30%"></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>
+				<b>Plan name</b>
+			</td>
+			<td>Super Bot Fight Mode</td>
+		</tr>
+		<tr>
+			<td>
+				<b>Availability</b>
+			</td>
+			<td>
+				All Business customers and Enterprise customers without Bot Management[^1]
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<b>Type of bots detected</b>
+			</td>
+			<td>Simple bots, headless browsers, and many sophisticated bots</td>
+		</tr>
+		<tr>
+			<td>
+				<b>Actions</b>
+			</td>
+			<td>Customer chooses whether to allow, block, or challenge</td>
+		</tr>
+		<tr>
+			<td>
+				<b>Analytics</b>
+			</td>
+			<td>
+				Dedicated Bot Analytics tool, available in <b>Security Analytics</b>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<b>Control</b>
+			</td>
+			<td>Applied to all traffic across a domain</td>
+		</tr>
+		<tr>
+			<td>
+				<b>Additional features</b>
+			</td>
+			<td>
+				<a href="/bots/additional-configurations/block-ai-bots/">Block AI bots</a>, <br/>
+				<a href="/bots/additional-configurations/ai-labyrinth/">AI Labyrinth</a>, <br />
+				<a href="/bots/additional-configurations/managed-robots-txt/">Instruct AI bot traffic with <code>robots.txt</code></a>, <br />
+				<a href="/bots/concepts/bot-score/#bot-groupings">Definitely and Likely automated bots</a>, <br />
+				<a href="/bots/concepts/bot/verified-bots/">Verified bots</a>, <br />
+				<a href="/bots/additional-configurations/static-resources/">Static resource protection</a>, <br />
+				<a href="/bots/troubleshooting/wordpress-loopback-issue/">Optimize for WordPress</a>, <br />
+				<a href="/cloudflare-challenges/challenge-types/javascript-detections/">JavaScript Detections</a> 
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+[^1]: When users purchase Bot Management for Enterprise, Cloudflare automatically replaces and disables other bot products to prevent overlap.
+
+## How do I get started?
+
+<Render file="plan-get-started" product="bots" />

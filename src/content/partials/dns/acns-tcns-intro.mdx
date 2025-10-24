@@ -1,0 +1,12 @@
+---
+inputParameters: param1;;param2;;param3;;param4;;param5
+
+---
+
+import { Markdown } from "~/components"
+
+{props.one} custom nameservers ({props.two}CNS) allow you to define {props.three}-level custom nameservers and use them for different {props.four} within a Cloudflare {props.five}.
+
+{props.two}CNS are organized in different sets (`ns_set`) and {props.two}CNS names can be provided by any domain, even if the domain does not exist as a zone in Cloudflare.
+
+For instance, if the {props.two}CNS are `ns1.example.com` and `ns2.vanity.test`, the domains `example.com` and `vanity.test` are not required to be zones in Cloudflare.

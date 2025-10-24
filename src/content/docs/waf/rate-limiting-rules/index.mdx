@@ -1,0 +1,58 @@
+---
+pcx_content_type: concept
+title: Rate limiting rules
+sidebar:
+  order: 6
+tableOfContents: false
+---
+
+import { Render } from "~/components";
+
+Rate limiting rules allow you to define rate limits for requests matching an expression, and the action to perform when those rate limits are reached.
+
+In the [new security dashboard](/security/), rate limiting rules are one of the available types of [security rules](/security/rules/). Security rules perform security-related actions on incoming requests that match specified filters.
+
+Some Enterprise customers can create [rate limiting rulesets](/waf/account/rate-limiting-rulesets/) at the account level that they can deploy to multiple Enterprise zones.
+
+## Rule parameters
+
+Like other rules evaluated by Cloudflare's [Ruleset Engine](/ruleset-engine/), rate limiting rules have the following basic parameters:
+
+<Render file="rate-limiting-rule-parameters" product="waf" />
+
+Refer to [Rate limiting parameters](/waf/rate-limiting-rules/parameters/) for more information on mandatory and optional parameters.
+
+Refer to [How Cloudflare determines the request rate](/waf/rate-limiting-rules/request-rate/) to learn how Cloudflare uses the parameters above when determining the rate of incoming requests.
+
+## Important remarks
+
+- Rate limiting rules are evaluated in order, and some actions like _Block_ will stop the evaluation of other rules. For more details on actions and their behavior, refer to the [actions reference](/ruleset-engine/rules-language/actions/).
+
+- Rate limiting rules are not designed to allow a precise number of requests to reach the origin server. In some situations, there may be a delay (up to a few seconds) between detecting a request and updating internal counters. Due to this delay, excess requests could still reach the origin server before Cloudflare enforces a mitigation action (such as blocking or challenging) in our global network.
+
+- Applying rate limiting rules to verified bots might affect Search Engine Optimization (SEO). For more information, refer to [Improve SEO](/fundamentals/performance/improve-seo/).
+
+---
+
+## Availability
+
+<Render file="rate-limiting-availability-by-plan" product="waf" />
+
+<Render file="non-contract-enablement" product="fundamentals" />
+
+## Next steps
+
+Refer to the following resources:
+
+- [Create a rate limiting rule in the dashboard for a zone](/waf/rate-limiting-rules/create-zone-dashboard/)
+- [Create a rate limiting rule via API for a zone](/waf/rate-limiting-rules/create-api/)
+
+For Terraform examples, refer to [Rate limiting rules configuration using Terraform](/terraform/additional-configurations/rate-limiting-rules/).
+
+---
+
+## Related resources
+
+- [Learning Center: What is rate limiting?](https://www.cloudflare.com/learning/bots/what-is-rate-limiting/)
+
+- [Cloudflare Rate Limiting (previous version, now deprecated)](/waf/reference/legacy/old-rate-limiting/): Documentation for the previous version of rate limiting rules (billed based on usage).

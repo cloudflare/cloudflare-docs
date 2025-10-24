@@ -1,0 +1,13 @@
+---
+import {
+	PackageManagers as PackageManagersComponent,
+	type PackageManagersProps,
+} from "starlight-package-managers";
+
+type Props = PackageManagersProps;
+---
+
+<PackageManagersComponent
+	pkgManagers={["npm", "yarn", "pnpm"]}
+	{...Astro.props}
+/>

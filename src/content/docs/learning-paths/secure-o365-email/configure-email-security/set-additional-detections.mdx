@@ -1,0 +1,61 @@
+---
+title: Set additional detections
+pcx_content_type: how-to
+sidebar:
+  order: 4
+---
+
+Email Security allows you to configure the following additional detections:
+
+- [Domain age](/cloudflare-one/email-security/detection-settings/additional-detections/#configure-domain-age)
+- [Blank email detection](/cloudflare-one/email-security/detection-settings/additional-detections/#configure-blank-email-detection)
+- [Automated Clearing House (ACH)](/cloudflare-one/email-security/detection-settings/additional-detections/#configure-ach-change-from-free-email-detection) change from free email detection.
+- [HTML attachment email detection](/cloudflare-one/email-security/detection-settings/additional-detections/#configure-html-attachment-email-detection)
+
+To configure additional detections:
+
+1. Log in to [Zero Trust](https://one.dash.cloudflare.com/).
+2. Select **Email Security**.
+3. Select **Settings**.
+4. On the Settings page, go to **Detection settings** > **Additional detections**, and select **Edit**.
+
+## Configure domain age
+
+The domain age is the time since the domain has been registered.
+
+To configure a domain age:
+
+1. On the **Edit additional detections** page:
+    - Select **Malicious domain age**: Controls the threshold for a malicious disposition. Maximum of 100 days.
+    - Select **Suspicious domain age**: Controls the threshold for a suspicious disposition. Maximum of 100 days.
+2. Select **Save**.
+
+## Configure blank email detection
+
+Blank email detection detects emails with blank bodies and assigns a default disposition. You can choose between **Malicious** and **Suspicious** as dispositions.
+
+To enable blank email detection:
+
+1. On the **Edit additional detections** page, enable **Blank email detection**.
+2. Choose between **Malicious** and **Suspicious**.
+3. Select **Save**.
+
+## Configure ACH change from free email detection
+
+[Automated Clearing House (ACH)](https://en.wikipedia.org/wiki/Automated_clearing_house) is a banking term related to direct deposits. ACH change from free email detection detects payroll inquiries or change requests from free email domains and assigns a default disposition. You can choose between **Malicious** and **Suspicious** as dispositions.
+
+To enable ACH change from free email detection:
+
+1. On the **Edit additional detections** page, enable **ACH change from free email detection**.
+2. Choose between **Malicious** and **Suspicious**.
+3. Select **Save**.
+
+## Configure HTML Attachment Email Detection
+
+HTML attachment email detection detects HTM and HTML attachments in emails and assigns a default disposition.
+
+To enable HTML attachment email detection:
+
+1. On the **Edit additional detections** page, enable **HTML attachment email detection**.
+2. Choose between **Malicious** and **Suspicious**.
+3. Select **Save**.

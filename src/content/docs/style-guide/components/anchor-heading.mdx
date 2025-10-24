@@ -1,0 +1,33 @@
+---
+title: Anchor heading
+styleGuide:
+  component: AnchorHeading
+---
+
+The `AnchorHeading` component defines headings. Specifically, `AnchorHeading` performs the following:
+
+1. Generates URL fragments corresponding to headings.
+2. Formats URL fragments into compatible syntax. For example, a `&` is replaced with a `-`.
+3. Creates a button to copy the URL at each fragment.
+4. Allows heading fragments to be defined separately from the text of the heading itself.
+
+```mdx live
+import { AnchorHeading } from "~/components";
+
+<AnchorHeading title="How to use AnchorHeading" slug="use-anchorheading" depth={2} />
+```
+
+Markdown files (including partials) have this behavior by default, applied via rehype plugins. Therefore, the `AnchorHeading` component is usually only required when writing headings yourself inside components, or when working on non-markdown files.
+
+To override the ID given to a heading within Markdown, add an MDX comment at the end of the line:
+
+```mdx live
+## foo {/*bar*/}
+{/* HTML: <h2 id="bar">foo</h2> */}
+```
+
+:::note
+
+The `AnchorHeading` component emulates the behavior of the [`rehype-slug`](https://github.com/rehypejs/rehype-slug) and the [`rehype-autolink-headings`](https://github.com/rehypejs/rehype-autolink-headings). It adds an `id` based on the output of [`github-slugger`](https://github.com/Flet/github-slugger/) to the heading, as well as adding a button to copy a link to that particular heading.
+
+:::

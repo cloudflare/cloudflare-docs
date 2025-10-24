@@ -1,0 +1,55 @@
+---
+{}
+
+---
+
+import { TabItem, Tabs } from "~/components";
+
+You can enforce WARP session timeouts on any Gateway Network and HTTP policy that has an Allow action. If you do not specify a session timeout, the WARP session will be unlimited by default.
+
+Session timeouts have no impact on Gateway DNS policies. DNS policies remain active even when a user needs to re-authenticate.
+
+To configure a session timeout for a Gateway policy:
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to either **Gateway** > **Firewall Policies**. Choose either **Network** or **HTTP**.
+2. Add a policy and select the *Allow* action. Alternatively, choose any existing *Allow* policy.
+3. Under **Step 4 - Configure policy settings**, select **Edit** next to **Enforce WARP client session duration**.
+4. Enter a session expiration time in `1h30m0s` format and save.
+5. Save the policy.
+
+</TabItem>
+<TabItem label="Terraform (v5)">
+
+1. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_token):
+	- `Zero Trust Write`
+
+2. Choose a Network (`l4`) or HTTP (`http`) policy with an Allow action.
+
+3. In the policy's [`rule_settings`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_gateway_policy), use the `check_session` argument to enable and configure a session timeout:
+
+	```tf
+	resource "cloudflare_zero_trust_gateway_policy" "network_allow_wiki_IPs" {
+		name        = "Company Wiki Network policy"
+		enabled     = true
+		account_id  = var.cloudflare_account_id
+		description = "Managed by Terraform - Allow employees to access company wiki IPs."
+		precedence  = 103
+		action      = "allow"
+		filters     = ["l4"]
+		traffic     = "net.dst.ip in ${"$"}${cloudflare_zero_trust_list.wiki_IPs.id}"
+		identity    = "identity.email matches \".*@example.com\""
+
+		rule_settings = {
+			check_session = {
+				enforce = true
+				duration = "1h30m0s"
+			}
+		}
+	}
+	```
+</TabItem>
+</Tabs>
+
+Session checks are now enabled for the application protected by this policy. Users can continue to reach applications outside of the policy definition.

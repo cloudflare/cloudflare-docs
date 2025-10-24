@@ -1,0 +1,31 @@
+---
+{}
+---
+
+import { TabItem, Tabs } from "~/components";
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Network**.
+2. In **Firewall**, turn on **TLS decryption**.
+
+</TabItem>
+<TabItem label="Terraform (v5)">
+
+1. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_token):
+	- `Zero Trust Write`
+
+2. Configure the `tls_decrypt` argument in [`cloudflare_zero_trust_gateway_settings`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_gateway_settings):
+
+	```tf
+	resource "cloudflare_zero_trust_gateway_settings" "team_name" {
+		account_id = var.cloudflare_account_id
+		settings = {
+			tls_decrypt = {
+				enabled = true
+			}
+		}
+	}
+	```
+</TabItem>
+</Tabs>

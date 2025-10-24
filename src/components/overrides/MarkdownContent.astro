@@ -1,0 +1,113 @@
+---
+import "@astrojs/starlight/style/markdown.css";
+import ImageZoom from "starlight-image-zoom/components/ImageZoom.astro";
+
+/*
+    MIT License
+
+    Copyright (c) 2022 withastro
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE.
+*/
+---
+
+<ImageZoom />
+<div class="sl-markdown-content">
+	<slot />
+</div>
+
+<style>
+	/* Custom styles for heading anchor links. */
+	.sl-markdown-content :global(.heading-wrapper) {
+		--icon-size: 0.75em;
+		--icon-spacing: 0.25em;
+		line-height: var(--sl-line-height-headings);
+	}
+
+	/* Headings after non-headings have more spacing. */
+	.sl-markdown-content
+		:global(
+			:not(.heading-wrapper) + :is(.heading-wrapper):not(:where(.not-content *))
+		) {
+		margin-top: 1.5em;
+	}
+
+	/* Set font-size on wrapper element, so line-height, margins etc. match heading size. */
+	.sl-markdown-content :global(.level-h2) {
+		font-size: var(--sl-text-h2);
+	}
+	.sl-markdown-content :global(.level-h3) {
+		font-size: var(--sl-text-h3);
+	}
+	.sl-markdown-content :global(.level-h4) {
+		font-size: var(--sl-text-h4);
+	}
+	.sl-markdown-content :global(.level-h5) {
+		font-size: var(--sl-text-h5);
+	}
+
+	.sl-markdown-content :global(.heading-wrapper > :first-child) {
+		margin-inline-end: calc(var(--icon-size) + var(--icon-spacing));
+		display: inline;
+	}
+
+	.sl-markdown-content :global(.anchor-link) {
+		margin-inline-start: calc(-1 * (var(--icon-size)));
+		color: var(--sl-color-gray-3);
+	}
+	.sl-markdown-content :global(.anchor-link:hover),
+	.sl-markdown-content :global(.anchor-link:focus) {
+		color: var(--sl-color-text-accent);
+	}
+	.sl-markdown-content :global(.heading-wrapper svg) {
+		display: inline;
+		width: var(--icon-size);
+	}
+
+	/* Prevent double or triple clicks from potentially selecting the anchor link a11y text. */
+	.sl-markdown-content :global(.anchor-link .sr-only) {
+		-webkit-user-select: none;
+		user-select: none;
+	}
+
+	@media (hover: hover) {
+		.sl-markdown-content :global(.anchor-link) {
+			opacity: 0;
+		}
+	}
+	.sl-markdown-content :global(.heading-wrapper:hover > .anchor-link),
+	.sl-markdown-content :global(.anchor-link:focus) {
+		opacity: 1;
+	}
+
+	/* Float anchor links to the left of headings on larger screens. */
+	@media (min-width: 95em) {
+		.sl-markdown-content :global(.heading-wrapper) {
+			display: flex;
+			flex-direction: row-reverse;
+			justify-content: flex-end;
+			gap: var(--icon-spacing);
+			margin-inline-start: calc(-1 * (var(--icon-size) + var(--icon-spacing)));
+		}
+		.sl-markdown-content :global(.heading-wrapper > :first-child),
+		.sl-markdown-content :global(.anchor-link) {
+			margin: 0;
+		}
+	}
+</style>

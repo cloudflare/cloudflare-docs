@@ -1,0 +1,63 @@
+---
+pcx_content_type: concept
+title: Notes/tips/warnings
+
+---
+
+## Definition
+
+A colored info box or aside with content (text, images, lists, code blocks) that adds relevant notes that do not fit the text or warns users of specific behavior that can break functionality or impact security.
+
+## Used in
+
+[How to](/style-guide/documentation-content-strategy/content-types/how-to/), [Configuration](/style-guide/documentation-content-strategy/content-types/configuration/), [FAQ](/style-guide/documentation-content-strategy/content-types/faq/), [Concept](/style-guide/documentation-content-strategy/content-types/concept/), [Reference](/style-guide/documentation-content-strategy/content-types/reference/), [Tutorial](/style-guide/documentation-content-strategy/content-types/tutorial/)
+
+## Structure
+
+**Type**: note or warning (defines the background color)
+
+**Aside content**
+
+**(optional) Title/Header**
+
+## Templates
+
+Refer to [Asides](/style-guide/components/asides/) to learn how to build Asides.
+
+## Rendered examples
+
+:::note[Header text]
+This is a "note" aside.
+:::
+
+:::caution[Header text]
+This is a "warning" aside.
+:::
+
+:::note
+This is a `note` aside without a header.
+:::
+
+## Additional information
+
+The aside background color depends on the aside type:
+
+* Aside with "note" type — blue
+* Aside with "warning" type — orange
+
+An aside has an optional header displayed at the top (inside the colored box) in **bold**.
+
+The aside can contain a single sentence or additional content (lists, code blocks, images).
+
+## When should I use a note/warning?
+
+Use a note to alert a reader to additional useful information that you cannot integrate into the text.
+
+Use a warning to alert a reader to behavior that could impact the security of a users network or break functionality.
+
+## Recommendations
+
+* **An aside should not contain too much content**, since it breaks the normal text flow. For example, up to 3 paragraphs or bulleted lists up to 3 items. If you need to include more content, consider creating a documentation section "Important notes" or similar.
+* **Use asides sparingly.** Each section should not have more than one aside of the same type. The only exception is a possible availability disclaimer right after the heading.
+* **Asides inside task step instructions should not have a header.** They take too much space and the background color is enough to distinguish the aside content from regular text.
+* **Use a `note` aside to state the restricted availability of a feature** (for example, "Only available for customers on an Enterprise plan.") at the beginning of a page, without a header.

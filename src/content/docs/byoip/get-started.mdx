@@ -1,0 +1,40 @@
+---
+title: Get started
+pcx_content_type: get-started
+sidebar:
+  order: 2
+---
+
+import { GlossaryTooltip } from "~/components";
+
+Work with your account team to understand everything you need to ensure a smooth transition during the onboarding process.
+
+Cloudflare requires a service-specific configuration for your prefixes, as well as some requirements common to all BYOIP customers regardless of service type.
+
+## Requirements
+
+The following requirements are common to all products compatible with BYOIP.
+
+You must verify that your [Internet Routing Registry (IRR)](/byoip/concepts/irr-entries/) records are up to date and contain:
+
+    - `route` or `route6` objects matching the exact prefixes you want to onboard
+    - `origin` matching the correct ASN you want to onboard
+
+:::caution[RPKI validation]
+You are not required to use <GlossaryTooltip term="Resource Public Key Infrastructure (RPKI)">Resource Public Key Infrastructure (RPKI)</GlossaryTooltip>. However, if you do, make sure your <GlossaryTooltip term="Route Origin Authorization (ROA)">ROAs</GlossaryTooltip> are accurate. You can use [Cloudflare's RPKI Portal](https://rpki.cloudflare.com/?view=validator) and a second source such as [Routinator](https://rpki-validator.ripe.net/ui/) to double-check your prefixes.
+:::
+
+## Process overview
+
+Overall, the steps can be summarized as follows:
+
+1. You revise your [IRRs and ROAs](#requirements) (if applicable) to make sure they are correct.
+2. You prepare a [Letter of Agency (LOA)](/byoip/concepts/loa/) containing both the prefix you are authorizing Cloudflare to announce and which ASN they will be announced under. Cloudflare will present this to our transit partners as evidence that we are allowed to announce the route.
+3. You use the [Upload LOA Document](/api/resources/addressing/subresources/loa_documents/methods/create/) API endpoint to submit the letter under your account and the [Add Prefix](/api/resources/addressing/subresources/prefixes/methods/create/) endpoint to create the prefix in your account with the associated `loa_document_id`.
+4. After receiving the LOA, Cloudflare validates the [requirements](#requirements) and provisions the IPs.
+5. (Optional) You can use [prefix delegations](/byoip/concepts/prefix-delegations/) to share all or part of your prefix with another Cloudflare account.
+6. You use [service bindings](/byoip/service-bindings/)[^1] and [address maps](/byoip/address-maps/)[^2] to control how your IPs are used.
+7. You advertise or withdraw the BGP route for a prefix via the [BGP Prefixes API](/api/resources/addressing/subresources/prefixes/subresources/bgp_prefixes/).
+
+[^1]: Mappings that control through which pipeline traffic destined for a given IP address will be routed.
+[^2]: Mappings that specify which IP addresses should be used when Cloudflare responds to DNS queries for proxied hostnames.

@@ -1,0 +1,22 @@
+---
+pcx_content_type: configuration
+title: crypto
+---
+
+import { Render } from "~/components";
+
+<Render file="nodejs-compat-howto" product="workers" />
+
+The [`node:crypto`](https://nodejs.org/docs/latest/api/crypto.html) module provides cryptographic functionality that includes a set of wrappers for OpenSSL's hash, HMAC, cipher, decipher, sign, and verify functions.
+
+All `node:crypto` APIs are fully supported in Workers with the following exceptions:
+
+- The functions [generateKeyPair](https://nodejs.org/api/crypto.html#cryptogeneratekeypairtype-options-callback) and [generateKeyPairSync](https://nodejs.org/api/crypto.html#cryptogeneratekeypairsynctype-options)
+  do not support DSA or DH key pairs.
+- `ed448` and `x448` curves are not supported.
+- It is not possible to manually enable or disable [FIPS mode](https://nodejs.org/docs/latest/api/crypto.html#fips-mode).
+
+The full `node:crypto` API is documented in the [Node.js documentation for `node:crypto`](https://nodejs.org/api/crypto.html).
+
+The [WebCrypto API](/workers/runtime-apis/web-crypto/) is also available within Cloudflare Workers. This does not
+require the `nodejs_compat` compatibility flag.

@@ -1,0 +1,52 @@
+---
+pcx_content_type: example
+summary: Create an origin rule to change the HTTP `Host` header and DNS record.
+products: [origin-rules]
+title: Change the HTTP Host header and DNS record
+description: Create an origin rule to change the HTTP `Host` header and the resolved DNS record.
+---
+
+import { Render, Tabs, TabItem, Example } from "~/components";
+
+The following origin rule overrides the HTTP `Host` header to `hr-server.example.com` for all requests with a URI path starting with `/hr-app/`. It also overrides the DNS record to the same hostname.
+
+The `Host` header override only updates the header value; the DNS record override will handle the rerouting of incoming requests. For more information on these overrides, refer to [Available settings](/rules/origin-rules/features/).
+
+<Tabs syncKey="dashPlusAPI">
+<TabItem label="Dashboard" no-code="true">
+
+<Example>
+
+Expression when using the Expression Builder:
+
+| Field    | Operator    | Value      |
+| -------- | ----------- | ---------- |
+| URI Path | starts with | `/hr-app/` |
+
+Expression when using the Expression Editor:
+
+```txt
+(starts_with(http.request.uri.path, "/hr-app/"))
+```
+
+Value after **Host Header** > **Rewrite to**:
+
+```txt
+hr-server.example.com
+```
+
+Value after **DNS Record** > **Override to**:
+
+```txt
+hr-server.example.com
+```
+
+</Example>
+
+</TabItem>
+<TabItem label="API" no-code="true">
+
+<Render file="origin-rules-api-change-host-header-dns-record" product="rules" />
+
+</TabItem>
+</Tabs>

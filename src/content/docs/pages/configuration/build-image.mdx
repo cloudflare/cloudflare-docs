@@ -1,0 +1,107 @@
+---
+pcx_content_type: concept
+title: Build image
+rss: https://github.com/cloudflare/cloudflare-docs/commits/production/src/content/partials/pages/_platform-language-support-and-tools.atom
+---
+
+import {
+	PagesBuildEnvironment,
+	PagesBuildEnvironmentLanguages,
+	PagesBuildEnvironmentTools,
+	DashButton,
+} from "~/components";
+
+Cloudflare Pages' build environment has broad support for a variety of languages, such as Ruby, Node.js, Python, PHP, and Go.
+
+If you need to use a [specific version](#override-default-versions) of a language, (for example, Node.js or Ruby) you can specify it by providing an associated environment variable in your build configuration, or setting the relevant file in your source code.
+
+## Supported languages and tools
+
+In the following tables, review the preinstalled versions for languages and tools included in the Cloudflare Pages' build image, and the environment variables and/or files available for [overriding the preinstalled version](#override-default-versions):
+
+### Languages and runtime
+
+<PagesBuildEnvironmentLanguages />
+
+:::note[Any version]
+Under Supported versions, "Any version" refers to support for all versions of the language or tool including versions newer than the Default version.
+:::
+
+### Tools
+
+<PagesBuildEnvironmentTools />
+
+:::note[Any version]
+Under Supported versions, "Any version" refers to support for all versions of the language or tool including versions newer than the Default version.
+:::
+
+### Frameworks
+
+To use a specific version of a framework, specify it in the project's package manager configuration file.
+For example, if you use Gatsby, your `package.json` should include the following:
+
+```
+"dependencies": {
+	"gatsby": "^5.13.7",
+}
+```
+
+When your build starts, if not already [cached](/pages/configuration/build-caching/), version 5.13.7 of Gatsby will be installed using `npm install`.
+
+## Advanced Settings
+
+### Override default versions
+
+To override default versions of languages and tools in the build system, you can either set the desired version through environment variables or by adding files to your project.
+
+To set the version using environment variables, you can:
+
+1. Find the environment variable name for the language or tool in [this table](/pages/configuration/build-image/#supported-languages-and-tools).
+2. Add the environment variable on the dashboard by going to **Settings** > **Environment variables** in your Pages project, or [add the environment variable via Wrangler](/workers/configuration/environment-variables/#add-environment-variables-via-wrangler).
+
+Or, to set the version by adding a file to your project, you can:
+
+1. Find the file name for the language or tool in [this table](/pages/configuration/build-image/#supported-languages-and-tools).
+2. Add the specified file name to the root directory of your project, and add the desired version number as the contents of the file.
+
+For example, if you were previously relying on the default version of Node.js in the v1 build system, to migrate to v2, you must specify that you need Node.js `12.18.0` by setting a `NODE_VERSION = 12.18.0` environment variable or by adding a `.node-version` or `.nvmrc` file to your project with `12.18.0` added as the contents to the file.
+
+### Skip dependency install
+
+You can add the following environment variable to disable automatic dependency installation, and run a custom install command instead.
+
+| Build variable            | Value         |
+| ------------------------- | ------------- |
+| `SKIP_DEPENDENCY_INSTALL` | `1` or `true` |
+
+## v3 build system
+
+The v3 build system updates the default tools, libraries and languages to their LTS versions, as of May 2025.
+
+### v2 to v3 Migration
+
+To migrate to this new version, configure your Pages project settings in the dashboard:
+
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+2. Select your Pages project.
+3. Go to **Deployments** > **All deployments** > and select the latest version.
+
+If you were previously relying on the default versions of any languages or tools in the build system, your build may fail when migrating to v3. To fix this, you must specify the version you wish to use by [overriding](/pages/configuration/build-image/#overriding-default-versions) the default versions.
+
+### Limitations
+
+The following features are not currently supported when using the v3 build system:
+
+- Specifying Node.js versions as codenames (for example, `hydrogen` or `lts/hydrogen`).
+- Detecting Yarn version from `yarn.lock` file version.
+- Detecting pnpm version detection based `pnpm-lock.yaml` file version.
+- Detecting Node.js and package managers from `package.json` -> `"engines"`.
+- `pipenv` and `Pipfile` support.
+
+## Build environment
+
+Cloudflare Pages builds are run in a [gVisor](https://gvisor.dev/docs/) container.
+
+<PagesBuildEnvironment />

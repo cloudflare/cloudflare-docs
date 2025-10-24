@@ -1,0 +1,36 @@
+---
+pcx_content_type: overview
+title: Enable
+sidebar:
+  order: 1
+head:
+  - tag: title
+    content: Enable Rocket Loader
+---
+
+import { Render, TabItem, Tabs, DashButton } from "~/components";
+
+To enable or disable Rocket Loader, use the following instructions.
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+To enable or disable **Rocket Loader** in the dashboard:
+
+1. In the Cloudflare dashboard, go to the **Speed** > **Settings** page.
+
+   <DashButton url="/?to=/:account/:zone/speed/optimization" />
+
+2. Go to **Content Optimization**.
+3. For **Rocket Loader**, switch the toggle to **On**.
+
+<Render file="rocket-loader-csp" product="speed" />
+
+</TabItem> <TabItem label="API">
+
+To enable or disable **Rocket Loader** with the API, send a [`PATCH`](/api/resources/zones/subresources/settings/methods/edit/) request with `rocket_loader` as the setting name in the URI path, and the `value` parameter set to `"on"` or `"off"`.
+
+<Render file="rocket-loader-csp" product="speed" />
+
+</TabItem> </Tabs>
+
+<Render file="configuration-rule-promotion" product="rules" />

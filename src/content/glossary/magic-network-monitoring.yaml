@@ -1,0 +1,18 @@
+---
+productName: Magic Network Monitoring
+entries:
+  - term: flow data
+    general_definition: |-
+      represents records of communication between devices. There are a number of flow data protocols, such as NetFlow or sFlow.
+
+  - term: NetFlow
+    general_definition: |-
+      network protocol developed by Cisco to collect and monitor network traffic flow data.
+
+  - term: sampling
+    general_definition: |-
+      in the context of Magic Network Monitoring, sampling is the process of taking samples of packets for a specific period to identify potential attacks.
+
+  - term: sFlow
+    general_definition: |-
+      an industry standard packet sampling protocol to monitor network devices.

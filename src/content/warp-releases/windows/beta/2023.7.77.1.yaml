@@ -1,0 +1,34 @@
+releaseNotes: >-
+  This release contains reliability improvements and general bug fixes. No new
+  features are introduced with this release.
+   
+  **Notable updates**
+
+  - Added support for IPv6 DEX Traceroute tests
+
+  - Improved reliability and efficiency in configuring split tunnel rules. Most
+  `error petting the dog` errors should now be gone and organizations with large
+  split tunnel configuration should see reliability improvements
+
+  - Fixed issue where DEX tests would not properly run immediately after a
+  device came out of sleep
+
+  - Fixed issue where DEX tests will all execute at the same time causing
+  performance issues for accounts with a large number of tests configured
+
+  - Fixed issue where DNS status would flap between Connected / Disconnect in
+  Connectivity panel
+   
+  **Known issues**
+
+  - Customers may experience a DPC_WATCHDOG_VIOLATION Blue Screen when
+  connecting. This error was introduced with the 2023.3 GA release and happens
+  more frequently with larger split tunnel configurations, especially on more
+  resource constrained machines. We are actively working on a fix. Until then we
+  recommend staying on 2022.12 GA release OR reducing your split tunnel
+  configuration if possible.
+version: 2023.7.77.1
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2023.7.77.1
+packageSize: 111443968
+releaseDate: 2023-07-14T23:12:43.705Z
+platformName: Windows

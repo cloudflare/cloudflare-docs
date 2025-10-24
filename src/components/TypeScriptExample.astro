@@ -1,0 +1,62 @@
+---
+import { z } from "astro:content";
+import tsBlankSpace from "ts-blank-space";
+import { format } from "prettier";
+import { parse } from "node-html-parser";
+import { Code, Tabs, TabItem } from "@astrojs/starlight/components";
+import type { ComponentProps } from "astro/types";
+
+type Props = z.input<typeof props>;
+
+const props = z
+	.object({
+		filename: z.string().optional(),
+		playground: z.boolean().default(false),
+		code: z.custom<ComponentProps<typeof Code>>().optional(),
+		omitTabs: z.boolean().default(false),
+	})
+	.strict();
+
+const { filename, playground, code, omitTabs } = props.parse(Astro.props);
+
+const slot = await Astro.slots.render("default");
+
+const html = parse(slot);
+
+const copy = html.querySelector("div.copy > button");
+
+if (!copy) {
+	throw new Error(
+		`[TypeScriptExample] Unable to find copy button in rendered code block HTML.`,
+	);
+}
+
+let raw = copy.attributes["data-code"];
+
+if (!raw) {
+	throw new Error(
+		`[TypeScriptExample] Unable to find data-code attribute on copy button.`,
+	);
+}
+
+raw = raw.replace(/\u007f/g, "\n");
+
+const js = await format(tsBlankSpace(raw), { parser: "babel", useTabs: true });
+
+const Wrapper = omitTabs ? Fragment : Tabs;
+---
+
+<Wrapper syncKey="workersExamples">
+	<TabItem label="JavaScript" icon="seti:javascript">
+		<Code
+			{...code}
+			lang="js"
+			code={js}
+			title={filename?.replace(".ts", ".js")}
+			meta={playground ? "playground" : undefined}
+		/>
+	</TabItem>
+	<TabItem label="TypeScript" icon="seti:typescript">
+		<Code {...code} lang="ts" code={raw} title={filename} />
+	</TabItem>
+</Wrapper>

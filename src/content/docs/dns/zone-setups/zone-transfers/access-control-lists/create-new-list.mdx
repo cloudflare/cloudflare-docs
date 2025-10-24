@@ -1,0 +1,36 @@
+---
+pcx_content_type: how-to
+title: Create ACL
+sidebar:
+  order: 4
+head:
+  - tag: title
+    content: Create a new Access Control List
+---
+
+import { TabItem, Tabs, DashButton } from "~/components";
+
+You need to create an Access Control List (ACL) if Cloudflare is your [secondary DNS provider](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/). The ACL will specify additional NOTIFY IPs that Cloudflare should listen to.
+
+An ACL is configured at the account level, which means that it will apply to every primary and secondary zone in your account.
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+To create a new ACL using the dashboard:
+
+1. In the Cloudflare dashboard, go to the account **Settings** page.
+
+   <DashButton url="/?to=/:account/configurations" />
+
+2. Go to **DNS Settings**.
+3. Under **DNS Zone Transfers**, for **ACL**, select **Create**.
+4. Enter the following information:
+   - **ACL name**: Provide a descriptive name.
+   - **IP range**: Enter a range of IPv4 or IPv6 addresses (limited to a maximum of /24 for IPv4 and /64 for IPv6).
+5. Select **Create**.
+
+</TabItem> <TabItem label="API">
+
+To create a new ACL using the API, send a [POST](/api/resources/dns/subresources/zone_transfers/subresources/acls/methods/create/) request.
+
+</TabItem> </Tabs>

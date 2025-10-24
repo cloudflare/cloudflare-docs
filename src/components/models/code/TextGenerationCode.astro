@@ -1,0 +1,163 @@
+---
+import { z } from "astro:schema";
+import { Aside, Code } from "@astrojs/starlight/components";
+import Details from "~/components/Details.astro";
+
+type Props = z.infer<typeof props>;
+
+const props = z.object({
+	name: z.string(),
+	lora: z.boolean(),
+});
+
+const { name, lora } = props.parse(Astro.props);
+
+const loraWorker = `
+export interface Env {
+  AI: Ai;
+}
+
+export default {
+  async fetch(request, env): Promise<Response> {
+
+    const response = await env.AI.run("${name}", {
+      prompt: "tell me a story",
+      raw: true, //skip applying the default chat template
+      lora: "00000000-0000-0000-0000-000000000", //the finetune id OR name
+    });
+    return Response.json(response);
+  },
+} satisfies ExportedHandler<Env>;
+`;
+
+const loraCurl = `
+curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run/${name} \\
+  -X POST \\
+  -H "Authorization: Bearer $CLOUDFLARE_AUTH_TOKEN" \\
+  -d '{
+    "prompt": "tell me a story",
+    "raw": "true",
+    "lora": "00000000-0000-0000-0000-000000000"
+  }'
+`;
+
+const streamingWorker = `
+export interface Env {
+  AI: Ai;
+}
+
+export default {
+  async fetch(request, env): Promise<Response> {
+
+    const messages = [
+      { role: "system", content: "You are a friendly assistant" },
+      {
+        role: "user",
+        content: "What is the origin of the phrase Hello, World",
+      },
+    ];
+
+    const stream = await env.AI.run("${name}", {
+      messages,
+      stream: true,
+    });
+
+    return new Response(stream, {
+      headers: { "content-type": "text/event-stream" },
+    });
+  },
+} satisfies ExportedHandler<Env>;
+`;
+const worker = `
+export interface Env {
+  AI: Ai;
+}
+
+export default {
+  async fetch(request, env): Promise<Response> {
+
+    const messages = [
+      { role: "system", content: "You are a friendly assistant" },
+      {
+        role: "user",
+        content: "What is the origin of the phrase Hello, World",
+      },
+    ];
+    const response = await env.AI.run("${name}", { messages });
+
+    return Response.json(response);
+  },
+} satisfies ExportedHandler<Env>;
+`;
+
+const python = `
+import os
+import requests
+
+ACCOUNT_ID = "your-account-id"
+AUTH_TOKEN = os.environ.get("CLOUDFLARE_AUTH_TOKEN")
+
+prompt = "Tell me all about PEP-8"
+response = requests.post(
+  f"https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/${name}",
+    headers={"Authorization": f"Bearer {AUTH_TOKEN}"},
+    json={
+      "messages": [
+        {"role": "system", "content": "You are a friendly assistant"},
+        {"role": "user", "content": prompt}
+      ]
+    }
+)
+result = response.json()
+print(result)
+`;
+
+const curl = `
+curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run/${name} \\
+  -X POST \\
+  -H "Authorization: Bearer $CLOUDFLARE_AUTH_TOKEN" \\
+  -d '{ "messages": [{ "role": "system", "content": "You are a friendly assistant" }, { "role": "user", "content": "Why is pizza so good" }]}'
+`;
+---
+
+{
+	lora ? (
+		<>
+			<Details header="Worker">
+				<Code code={loraWorker} lang="ts" />
+			</Details>
+
+			<Details header="cURL">
+				<Code code={loraCurl} lang="sh" />
+			</Details>
+		</>
+	) : (
+		<>
+			<Details header="Worker - Streaming">
+				<Code code={streamingWorker} lang="ts" />
+			</Details>
+
+			<Details header="Worker">
+				<Code code={worker} lang="ts" />
+			</Details>
+
+			<Details header="Python">
+				<Code code={python} lang="py" />
+			</Details>
+
+			<Details header="curl">
+				<Code code={curl} lang="sh" />
+			</Details>
+
+			<Aside type="note" title="OpenAI compatible endpoints">
+				Workers AI also supports OpenAI compatible API endpoints for{" "}
+				<code>/v1/chat/completions</code> and <code>/v1/embeddings</code>. For
+				more details, refer to{" "}
+				<a href="/workers-ai/configuration/open-ai-compatibility/">
+					Configurations
+				</a>
+				.
+			</Aside>
+		</>
+	)
+}

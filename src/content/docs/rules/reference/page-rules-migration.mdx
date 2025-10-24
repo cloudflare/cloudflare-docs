@@ -1,0 +1,1516 @@
+---
+title: Page Rules migration guide
+pcx_content_type: how-to
+sidebar:
+  order: 3
+---
+
+import { Render, TabItem, Tabs, Example, Steps } from "~/components";
+
+Cloudflare is continuously improving its platform to deliver more powerful and scalable tools for managing your configurations. To help you take full advantage of these improvements, we recommend using [modern Rules features](/rules/) for new implementations. These products address the limitations of Page Rules while providing greater flexibility, scalability, and ease of use.
+
+For a quick start, explore the one-click templates available in the Cloudflare dashboard in **Rules** > **Overview**. These templates simplify common configurations like redirects, rewrites and header modifications, making setup faster and easier.
+
+## Page Rules migration
+
+To make the transition seamless, Cloudflare will handle the migration of your existing Page Rules automatically. This process is planned for late 2025 or beyond, with no action required on your part. You will receive advance notification before any changes are made.
+
+If you wish to explore the benefits of modern Rules features sooner, you can begin adopting them today. Doing so allows you to:
+
+- Take advantage of modern features and capabilities sooner.
+- Customize and refine your rules to match your evolving needs.
+
+To assist with this process, we provide you with a comprehensive mapping between Page Rules settings and modern Rules products in this guide.
+
+## Why transition?
+
+Cloudflare Page Rules has several fundamental limitations, such as triggering solely based on URL patterns and being limited to 125 rules per zone for performance reasons. These rules are also complex to debug when multiple page rules apply to the same incoming request.
+
+In 2022, we announced in our blog post [The future of Page Rules](https://blog.cloudflare.com/future-of-page-rules) that Page Rules would be replaced with a suite of dedicated products, each built to be best-of-breed and put more power into the hands of our users. The new Rules products — [Configuration Rules](/rules/configuration-rules/), [Compression Rules](/rules/compression-rules/), [Origin Rules](/rules/origin-rules/), [Redirects](/rules/url-forwarding/), and [Transform Rules](/rules/transform/) — are now generally available (GA) and have already been adopted by tens of thousands of Cloudflare customers.
+
+Improvements in modern Rules features include:
+
+- **New engine**: New Rules features are powered by the [Ruleset Engine](/ruleset-engine/), which offers versatile configuration with a robust language that supports many HTTP request and response fields.
+- **Improved scalability**: Thanks to the improved scalability, Cloudflare plans now have increased quotas.
+- **Easier troubleshooting**: Rule execution is more predictable, since each rule operates independently, simplifying troubleshooting. Additionally, [Cloudflare Trace](/rules/trace-request/) helps understand rule interactions.
+- **Improved consistency**: New Rules features also ensure consistency, with common fields and capabilities shared across products, offering a seamless experience and predictable Terraform configurations.
+
+## Key differences
+
+The evaluation and execution order of Rules features is different from Page Rules:
+
+- **Rule matching logic**: Page Rules apply the first matching rule (first match wins). In contrast, modern Rules are stackable, meaning multiple matching rules can combine and apply to the same request (last match wins). For example, if multiple cache rules match the same URL, the features in those rules will all apply in order.
+- **Action separation**: A Page Rule may include multiple actions for different products that are applied in a sequence selected by the customer within the Page Rule itself. Modern Rules features are evaluated [in a fixed sequence](/rules/origin-rules/#execution-order), with customers defining the rule order within a product [phase](/ruleset-engine/reference/phases-list/).
+- **Precedence**: Modern Rules features take precedence over Page Rules. For instance, if both define caching settings for the same path, Cache Rules will override Page Rules.
+- **Caching behavior**: In Cache Rules, selecting **Eligible for cache** automatically enables **Cache Everything** by default. To maintain the exact behavior of Page Rules, you may need to [adjust your configuration](/cache/how-to/cache-rules/page-rules-migration/).
+- **Interactions with Workers**: Requests handled by Workers will suppress Page Rules actions, but they will not suppress actions from modern Rules features.
+
+## Convert Page Rules URLs to filter expressions
+
+Modern Rules use filter expressions instead of URL patterns. These expressions, built with the Rules language, allow greater precision by leveraging [fields](/ruleset-engine/rules-language/fields/), [functions](/ruleset-engine/rules-language/functions/), and [operators](/ruleset-engine/rules-language/operators/).
+
+The following example demonstrates the use of the [`http.request.full_uri`](/ruleset-engine/rules-language/fields/reference/http.request.full_uri/) field and the `wildcard` operator for [wildcard matching](/ruleset-engine/rules-language/operators/#wildcard-matching):
+
+<Example>
+A **Page Rules URL** like:
+
+`example.com/*/downloads/*.txt`
+
+becomes a **filter expression** such as:
+
+`http.request.full_uri wildcard "http*://example.com/*/downloads/*.txt*"`
+
+</Example>
+
+[Single Redirects](/rules/url-forwarding/single-redirects/create-dashboard/) and [URL Rewrite Rules](/rules/transform/url-rewrite/create-dashboard/) also offer a simplified view called **Wildcard pattern**, allowing you to specify URL patterns (`http*://example.com/*/downloads/*.txt*`) without specifying the full filter expression (`http.request.full_uri wildcard "http*://example.com/*/downloads/*.txt*"`).
+
+### Important considerations
+
+- **Protocol scheme**: Page Rules URL matching does not include the URI scheme (for example, `http://` or `https://`) unless explicitly included in the rule. Filter expressions using `http.request.full_uri` field, however, require matching the full URI, including the protocol scheme. To make your filter expression scheme-agnostic, use `http*://` as a wildcard for both `http://` and `https://`.
+- **Query strings**: Page Rules ignore query strings unless they are part of the rule URL. Filter expressions include the query string automatically, as part of the `http.request.full_uri` field. To ensure query strings do not affect your matching, append a `*` wildcard at the end of your filter expression, such as `.txt*`.
+
+## Feature correspondence table
+
+To help you map existing Page Rules to modern Rules products, this table outlines how Page Rules settings translate to modern Rules and provides examples for common configurations.
+
+Also, to streamline common configurations, the Cloudflare dashboard now includes dozens of one-click templates, available in **Rules** > **Overview**. These templates enable you to deploy commonly used features — such as redirects, rewrites, and header modifications — instantly, with pre-filled filter expressions and actions. Explore these templates in the dashboard for a faster setup.
+
+| Page Rules setting          | New implementation uses...           | Migration/Replacement instructions                                          |
+| --------------------------- | ------------------------------------ | --------------------------------------------------------------------------- |
+| Always Use HTTPS            | Redirect Rules (Single Redirects)    | [Migrate Always Use HTTPS](#migrate-always-use-https)                       |
+| Browser Cache TTL           | Cache Rules                          | [Migrate Browser Cache TTL](#migrate-browser-cache-ttl)                     |
+| Browser Integrity Check     | Configuration Rules                  | [Migrate Browser Integrity Check](#migrate-browser-integrity-check)         |
+| Bypass Cache on Cookie      | Cache Rules                          | [Migrate Bypass Cache on Cookie](#migrate-bypass-cache-on-cookie)           |
+| Cache By Device Type        | Cache Rules                          | [Migrate Cache By Device Type](#migrate-cache-by-device-type)               |
+| Cache Deception Armor       | Cache Rules                          | [Migrate Cache Deception Armor](#migrate-cache-deception-armor)             |
+| Cache Level                 | Cache Rules                          | [Migrate Cache Level](#migrate-cache-level-cache-everything)                |
+| Cache on Cookie             | Cache Rules                          | [Migrate Cache on Cookie](#migrate-cache-on-cookie)                         |
+| Cache TTL by status code    | Cache Rules                          | [Migrate Cache TTL by status code](#migrate-cache-ttl-by-status-code)       |
+| Custom Cache Key            | Cache Rules                          | [Migrate Custom Cache Key](#migrate-custom-cache-key)                       |
+| Disable Apps                | Configuration Rules                  | [Migrate Disable Apps](#migrate-disable-apps)                               |
+| Disable Performance         | N/A (deprecated)                     | [Replace Disable Performance](#replace-disable-performance)                 |
+| Disable Railgun             | N/A (deprecated)                     | N/A                                                                         |
+| Disable Security            | N/A (deprecated)                     | [Replace Disable Security](#replace-disable-security)                       |
+| Disable Zaraz               | Configuration Rules                  | [Migrate Disable Zaraz](#migrate-disable-zaraz)                             |
+| Edge Cache TTL              | Cache Rules                          | [Migrate Edge Cache TTL](#migrate-edge-cache-ttl)                           |
+| Email Obfuscation           | Configuration Rules                  | [Migrate Email Obfuscation](#migrate-email-obfuscation)                     |
+| Forwarding URL              | Redirect Rules (Single Redirects)    | [Migrate Forwarding URL](#migrate-forwarding-url)                           |
+| Host Header Override        | Origin Rules                         | [Migrate Host Header Override](#migrate-host-header-override)               |
+| IP Geolocation Header       | Transform Rules (Managed Transforms) | [Migrate IP Geolocation Header](#migrate-ip-geolocation-header)             |
+| Mirage (deprecated)         | Configuration Rules                  | [Migrate Mirage](#migrate-mirage)                                           |
+| Opportunistic Encryption    | Configuration Rules                  | [Migrate Opportunistic Encryption](#migrate-opportunistic-encryption)       |
+| Origin Cache Control        | Cache Rules                          | [Migrate Origin Cache Control](#migrate-origin-cache-control)               |
+| Origin Error Page Pass-thru | Cache Rules                          | [Migrate Origin Error Page Pass-thru](#migrate-origin-error-page-pass-thru) |
+| Polish                      | Configuration Rules                  | [Migrate Polish](#migrate-polish)                                           |
+| Query String Sort           | Cache Rules                          | [Migrate Query String Sort](#migrate-query-string-sort)                     |
+| Resolve Override            | Origin Rules                         | [Migrate Resolve Override](#migrate-resolve-override)                       |
+| Respect Strong ETags        | Cache Rules                          | [Migrate Respect Strong ETags](#migrate-respect-strong-etags)               |
+| Response Buffering          | N/A (deprecated)                     | N/A                                                                         |
+| Rocket Loader               | Configuration Rules                  | [Migrate Rocket Loader](#migrate-rocket-loader)                             |
+| Security Level              | Configuration Rules                  | [Migrate Security Level](#migrate-security-level)                           |
+| True Client IP Header       | Transform Rules (Managed Transforms) | [Migrate True Client IP Header](#migrate-true-client-ip-header)             |
+| SSL                         | Configuration Rules                  | [Migrate SSL](#migrate-ssl)                                                 |
+| Web Application Firewall    | N/A (deprecated)                     | N/A                                                                         |
+
+### Migrate Always Use HTTPS
+
+<Tabs> <TabItem label="Dashboard">
+
+**Context:**
+
+You configured a Page Rule to perform an automatic redirect from HTTP to HTTPS for all subdomains of `example.com` and the `example.com` domain itself:
+
+- **URL** `*example.com/*`
+- **Setting**: _Always Use HTTPS_
+
+**How to migrate**:
+
+<Steps>
+
+1. [Create a single redirect](/rules/url-forwarding/single-redirects/create-dashboard/) to always redirect HTTP requests to HTTPS. You can select the **Redirect from HTTP to HTTPS** rule template or enter the following rule configuration:
+
+   - **If incoming requests match**: Wildcard pattern
+     - **Request URL**: `http://*`
+   - **Then**:
+     - **Target URL**: `https://${1}`
+     - **Status code**: _301_
+     - **Preserve query string**: Enabled
+
+2. Turn off your existing Page Rule and validate the behavior of the redirect you created.
+
+3. If your tests succeed, delete the existing Page Rule.
+
+</Steps>
+
+</TabItem> <TabItem label="Visual guide">
+
+| Page Rules configuration                                                                                                           | Migrate to a single redirect                                                                                                                                          |
+| ---------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ![Example Page Rule with 'Always Use HTTPS' setting](~/assets/images/rules/reference/page-rules-migration/pr-always-use-https.png) | ![Single redirect matching the 'Always Use HTTPS' setting of the example Page Rule](~/assets/images/rules/reference/page-rules-migration/pr-always-use-https-new.png) |
+
+</TabItem> </Tabs>
+
+### Migrate Automatic HTTPS Rewrites
+
+<Tabs> <TabItem label="Dashboard">
+
+**Context:**
+
+You configured a Page Rule turning on Automatic HTTPS Rewrites for all subdomains of `example.com` and the `example.com` domain itself:
+
+- **URL**: `*example.com/*`
+- **Setting**: _Automatic HTTPS Rewrites_
+- **Value**: On
+
+**How to migrate**:
+
+<Steps>
+
+1. [Create a configuration rule](/rules/configuration-rules/create-dashboard/) to always rewrite HTTP links to HTTPS for any hostname containing `example.com`:
+
+   - **When incoming requests match**: Custom filter expression
+     - Using the Expression Builder:<br/>
+       `Hostname contains "example.com"`
+     - Using the Expression Editor:<br/>
+    `(http.host contains "example.com")`
+   - **Then the settings are**:
+     - **Setting**: Automatic HTTPS Rewrites
+     - **Value**: On
+
+2. Turn off your existing Page Rule and validate the behavior of the configuration rule you created.
+
+3. If your tests succeed, delete the existing Page Rule.
+
+</Steps>
+
+</TabItem> <TabItem label="Visual guide">
+
+| Page Rules configuration                                                                                                                           | Migrate to a configuration rule                                                                                                                                                          |
+| -------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ![Example Page Rule with 'Automatic HTTPS Rewrites' setting](~/assets/images/rules/reference/page-rules-migration/pr-automatic-https-rewrites.png) | ![Configuration rule matching the 'Automatic HTTPS Rewrites' setting of the example Page Rule](~/assets/images/rules/reference/page-rules-migration/pr-automatic-https-rewrites-new.png) |
+
+</TabItem> </Tabs>
+
+### Migrate Browser Cache TTL
+
+<Tabs> <TabItem label="Dashboard">
+
+**Context:**
+
+You configured a Page Rule adjusting browser cache TTL to one day for all subdomains of `example.com` and the `example.com` domain itself:
+
+- **URL**: `*example.com/*`
+- **Setting**: _Browser Cache TTL_
+- **Enter Browser Cache TTL**: _a day_
+
+**How to migrate**:
+
+<Steps>
+
+1. [Create a cache rule](/cache/how-to/cache-rules/create-dashboard/) to adjust browser cache TTL for caching resources in the browser to one day for any hostname containing `example.com`:
+
+   - **When incoming requests match**: Custom filter expression
+     - Using the Expression Builder:<br/>
+       `Hostname contains "example.com"`
+     - Using the Expression Editor:<br/>
+       `(http.host contains "example.com")`
+   - **Then**:
+     - **Cache eligibility**: Eligible for cache
+     - **Browser TTL**: Override origin and use this TTL
+     - **Input time-to-live (TTL)**: _1 day_
+
+   <Render file="page-rules-cache-rules-difference" product="rules" />
+
+2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
+
+3. If your tests succeed, delete the existing Page Rule.
+
+</Steps>
+
+</TabItem> <TabItem label="Visual guide">
+
+| Page Rules configuration                                                                                                             | Migrate to a cache rule                                                                                                                                            |
+| ------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| ![Example Page Rule with 'Browser Cache TTL' setting](~/assets/images/rules/reference/page-rules-migration/pr-browser-cache-ttl.png) | ![Cache rule matching the 'Browser Cache TTL' setting of the example Page Rule](~/assets/images/rules/reference/page-rules-migration/pr-browser-cache-ttl-new.png) |
+
+</TabItem> </Tabs>
+
+### Migrate Browser Integrity Check
+
+<Tabs> <TabItem label="Dashboard">
+
+**Context:**
+
+You configured a Page Rule turning on Browser Integrity Check for all subdomains of `example.com` and the `example.com` domain itself:
+
+- **URL**: `*example.com/*`
+- **Setting**: _Browser Integrity Check_
+- **Value**: On
+
+**How to migrate**:
+
+<Steps>
+
+1. [Create a configuration rule](/rules/configuration-rules/create-dashboard/) to turn on Browser Integrity Check for protecting against bots and threats for any hostname containing `example.com`:
+
+   - **When incoming requests match**: Custom filter expression
+     - Using the Expression Builder:<br/>
+       `Hostname contains "example.com"`
+     - Using the Expression Editor:<br/>
+       `(http.host contains "example.com")`
+   - **Then the settings are**:
+     - **Setting**: Browser Integrity Check
+     - **Value**: On
+
+2. Turn off your existing Page Rule and validate the behavior of the configuration rule you created.
+
+3. If your tests succeed, delete the existing Page Rule.
+
+</Steps>
+
+</TabItem> <TabItem label="Visual guide">
+
+| Page Rules configuration                                                                                                                         | Migrate to a configuration rule                                                                                                                                                        |
+| ------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ![Example Page Rule with 'Browser Integrity Check' setting](~/assets/images/rules/reference/page-rules-migration/pr-browser-integrity-check.png) | ![Configuration rule matching the 'Browser Integrity Check' setting of the example Page Rule](~/assets/images/rules/reference/page-rules-migration/pr-browser-integrity-check-new.png) |
+
+</TabItem> </Tabs>
+
+### Migrate Bypass Cache on Cookie
+
+<Tabs> <TabItem label="Dashboard">
+
+**Context:**
+
+You configured a Page Rule turning on Bypass Cache on Cookie for all subdomains of `example.com` and the `example.com` domain itself:
+
+- **URL**: `*example.com/*`
+- **Setting**: _Bypass Cache on Cookie_
+- **Enter value**: `test_cookie`
+
+**How to migrate**:
+
+<Steps>
+
+1. [Create a cache rule](/cache/how-to/cache-rules/create-dashboard/) to bypass cache for requests containing cookie `test_cookie` for any hostname containing `example.com`:
+
+   - **When incoming requests match**: Custom filter expression
+     - Using the Expression Builder:<br/>
+       `Hostname contains "example.com" AND Cookie contains "test-cookie"`
+     - Using the Expression Editor:<br/>
+       `(http.host contains "example.com" and http.cookie contains "test-cookie")`
+   - **Then**:
+     - **Cache eligibility**: Bypass cache
+
+   <Render file="page-rules-cache-rules-difference" product="rules" />
+
+2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
+
+3. If your tests succeed, delete the existing Page Rule.
+
+</Steps>
+
+</TabItem> <TabItem label="Visual guide">
+
+| Page Rules configuration                                                                                                                       | Migrate to a cache rule                                                                                                                                                      |
+| ---------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ![Example Page Rule with 'Bypass Cache on Cookie' setting](~/assets/images/rules/reference/page-rules-migration/pr-bypass-cache-on-cookie.png) | ![Cache rule matching the 'Bypass Cache on Cookie' setting of the example Page Rule](~/assets/images/rules/reference/page-rules-migration/pr-bypass-cache-on-cookie-new.png) |
+
+</TabItem> </Tabs>
+
+### Migrate Cache By Device Type
+
+<Tabs> <TabItem label="Dashboard">
+
+**Context:**
+
+You configured a Page Rule turning on Cache By Device Type for all subdomains of `example.com` and the `example.com` domain itself:
+
+- **URL**: `*example.com/*`
+- **Setting**: _Cache By Device Type_
+- **Value**: On
+
+**How to migrate**:
+
+<Steps>
+
+1. [Create a cache rule](/cache/how-to/cache-rules/create-dashboard/) to cache content based on user agent or device type for any hostname containing `example.com`:
+
+   - **When incoming requests match**: Custom filter expression
+     - Using the Expression Builder:<br/>
+       `Hostname contains "example.com"`
+     - Using the Expression Editor:<br/>
+       `(http.host contains "example.com")`
+   - **Then**:
+     - **Cache eligibility**: Eligible for cache
+     - **Setting**: Cache key
+       - **Cache by device type**: On
+
+   <Render file="page-rules-cache-rules-difference" product="rules" />
+
+2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
+
+3. If your tests succeed, delete the existing Page Rule.
+
+</Steps>
+
+</TabItem> <TabItem label="Visual guide">
+
+| Page Rules configuration                                                                                                                   | Migrate to a cache rule                                                                                                                                                  |
+| ------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| ![Example Page Rule with 'Cache By Device Type' setting](~/assets/images/rules/reference/page-rules-migration/pr-cache-by-device-type.png) | ![Cache rule matching the 'Cache By Device Type' setting of the example Page Rule](~/assets/images/rules/reference/page-rules-migration/pr-cache-by-device-type-new.png) |
+
+</TabItem> </Tabs>
+
+### Migrate Cache Deception Armor
+
+<Tabs> <TabItem label="Dashboard">
+
+**Context:**
+
+You configured a Page Rule turning on Cache Deception Armor for all subdomains of `example.com` and the `example.com` domain itself:
+
+- **URL**: `*example.com/*`
+- **Setting**: Cache Deception Armor
+
+**How to migrate**:
+
+<Steps>
+
+1. [Create a cache rule](/cache/how-to/cache-rules/create-dashboard/) to protect against cache deception attacks for any hostname containing `example.com`:
+
+   - **When incoming requests match**: Custom filter expression
+     - Using the Expression Builder:<br/>
+       `Hostname contains "example.com"`
+     - Using the Expression Editor:<br/>
+       `(http.host contains "example.com")`
+   - **Then**:
+     - **Cache eligibility**: Eligible for cache
+     - **Setting**: Cache key
+       - **Cache deception armor**: On
+
+   <Render file="page-rules-cache-rules-difference" product="rules" />
+
+2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
+
+3. If your tests succeed, delete the existing Page Rule.
+
+</Steps>
+
+</TabItem> <TabItem label="Visual guide">
+
+| Page Rules configuration                                                                                                                     | Migrate to a cache rule                                                                                                                                                    |
+| -------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ![Example Page Rule with 'Cache Deception Armor' setting](~/assets/images/rules/reference/page-rules-migration/pr-cache-deception-armor.png) | ![Cache rule matching the 'Cache Deception Armor' setting of the example Page Rule](~/assets/images/rules/reference/page-rules-migration/pr-cache-deception-armor-new.png) |
+
+</TabItem> </Tabs>
+
+### Migrate Cache Level (Cache Everything)
+
+<Tabs> <TabItem label="Dashboard">
+
+**Context:**
+
+You configured a Page Rule turning on caching of all assets for all subdomains of `example.com` and the `example.com` domain itself:
+
+- **URL**: `*example.com/*`
+- **Setting**: _Cache Level_
+- **Select Cache Level**: _Cache Everything_
+
+**How to migrate**:
+
+<Steps>
+
+
+1. [Create a cache rule](/cache/how-to/cache-rules/create-dashboard/) to adjust cache level for any hostname containing `example.com`:
+
+   - **When incoming requests match**: Custom filter expression
+     - Using the Expression Builder:<br/>
+       `Hostname contains "example.com"`
+     - Using the Expression Editor:<br/>
+       `(http.host contains "example.com")`
+   - **Then**:
+     - **Cache eligibility**: Eligible for cache
+
+   <Render file="page-rules-cache-rules-difference" product="rules" />
+
+2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
+
+3. If your tests succeed, delete the existing Page Rule.
+
+</Steps>
+
+</TabItem> <TabItem label="Visual guide">
+
+| Page Rules configuration                                                                                                                              | Migrate to a cache rule                                                                                                                                                             |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ![Example Page Rule with 'Cache Level' set to 'Cache Everything'](~/assets/images/rules/reference/page-rules-migration/pr-cache-level-everything.png) | ![Cache rule matching the 'Cache Level: Cache Everything' setting of the example Page Rule](~/assets/images/rules/reference/page-rules-migration/pr-cache-level-everything-new.png) |
+
+</TabItem> </Tabs>
+
+### Migrate Cache on Cookie
+
+<Tabs> <TabItem label="Dashboard">
+
+**Context:**
+
+You configured a Page Rule turning on caching for responses that contained cookie `test-cookie` for all subdomains of `example.com` and the `example.com` domain itself:
+
+- **URL**: `*example.com/*`
+- **Setting**: _Cache on Cookie_
+- **Enter value**: `test-cookie`
+
+**How to migrate**:
+
+<Steps>
+
+1. [Create a cache rule](/cache/how-to/cache-rules/create-dashboard/) to cache responses containing cookie `test_cookie` for any hostname containing `example.com`:
+
+   - **When incoming requests match**: Custom filter expression
+     - Using the Expression Builder:<br/>
+       `Hostname contains "example.com" AND Cookie contains "test-cookie"`
+     - Using the Expression Editor:<br/>
+       `(http.host contains "example.com" and http.cookie contains "test-cookie")`
+   - **Then**:
+     - **Cache eligibility**: Eligible for cache
+
+   <Render file="page-rules-cache-rules-difference" product="rules" />
+
+2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
+
+3. If your tests succeed, delete the existing Page Rule.
+
+</Steps>
+
+</TabItem> <TabItem label="Visual guide">
+
+| Page Rules configuration                                                                                                         | Migrate to a cache rule                                                                                                                                        |
+| -------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ![Example Page Rule with 'Cache on Cookie' setting](~/assets/images/rules/reference/page-rules-migration/pr-cache-on-cookie.png) | ![Cache rule matching the 'Cache on Cookie' setting of the example Page Rule](~/assets/images/rules/reference/page-rules-migration/pr-cache-on-cookie-new.png) |
+
+</TabItem> </Tabs>
+
+### Migrate Cache TTL by status code
+
+<Tabs> <TabItem label="Dashboard">
+
+**Context:**
+
+You configured a Page Rule turning on caching of every response with status code between `200` and `599` for one day, for all subdomains of `example.com` and the `example.com` domain itself:
+
+- **URL**: `*example.com/*`
+- **Setting**: _Cache TTL by status code_
+- **Status code or enter range**: `200-599`
+- **Select option**: _a day_
+
+**How to migrate**:
+
+<Steps>
+
+1. [Create a cache rule](/cache/how-to/cache-rules/create-dashboard/) to cache responses with status code between `200` and `599` for one day for any hostname containing `example.com`:
+
+   - **When incoming requests match**: Custom filter expression
+     - Using the Expression Builder:<br/>
+       `Hostname contains "example.com"`
+     - Using the Expression Editor:<br/>
+       `(http.host contains "example.com")`
+     - **Then**:
+       - **Cache eligibility**: Eligible for cache
+       - **Setting**: Edge TTL
+         - Use cache-control header if present, use default Cloudflare caching behavior if not
+         - **Status code TTL**:
+           - **Scope**: _Range_
+           - **From**: _200_
+           - **To**: _599_
+           - **Duration**: _1 day_
+
+   <Render file="page-rules-cache-rules-difference" product="rules" />
+
+2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
+
+3. If your tests succeed, delete the existing Page Rule.
+
+</Steps>
+
+</TabItem> <TabItem label="Visual guide">
+
+| Page Rules configuration                                                                                                                               | Migrate to a cache rule                                                                                                                                                          |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ![Example Page Rule with the 'Cache TTL by status code' setting](~/assets/images/rules/reference/page-rules-migration/pr-cache-ttl-by-status-code.png) | ![Cache rule matching the 'Cache TTL by status code' setting of the example Page Rule](~/assets/images/rules/reference/page-rules-migration/pr-cache-ttl-by-status-code-new.png) |
+
+</TabItem> </Tabs>
+
+### Migrate Custom Cache Key
+
+<Tabs> <TabItem label="Dashboard">
+
+**Context:**
+
+You configured a Page Rule setting a custom cache key for all query string parameters, for all subdomains of `example.com` and the `example.com` domain itself:
+
+- **URL**: `*example.com/*`
+- **Setting**: _Custom Cache Key_
+  - **Query String**: All query string parameters
+
+**How to migrate**:
+
+<Steps>
+
+1. [Create a cache rule](/cache/how-to/cache-rules/create-dashboard/) to set a custom cache key for all query string parameters, for any hostname containing `example.com`:
+
+   - **When incoming requests match**: Custom filter expression
+     - Using the Expression Builder:<br/>
+       `Hostname contains "example.com"`
+     - Using the Expression Editor:<br/>
+       `(http.host contains "example.com")`
+   - **Then**:
+     - **Cache eligibility**: Eligible for cache
+     - **Setting**: Cache key
+       - **Query string**: All query string parameters
+
+   <Render file="page-rules-cache-rules-difference" product="rules" />
+
+2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
+
+3. If your tests succeed, delete the existing Page Rule.
+
+</Steps>
+
+</TabItem> <TabItem label="Visual guide">
+
+| Page Rules configuration                                                                                                               | Migrate to a cache rule                                                                                                                                          |
+| -------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ![Example Page Rule with the 'Custom Cache Key' setting](~/assets/images/rules/reference/page-rules-migration/pr-custom-cache-key.png) | ![Cache rule matching the 'Custom Cache Key' setting of the example Page Rule](~/assets/images/rules/reference/page-rules-migration/pr-custom-cache-key-new.png) |
+
+</TabItem> </Tabs>
+
+### Migrate Disable Apps
+
+<Tabs> <TabItem label="Dashboard">
+
+**Context:**
+
+You configured a Page Rule turning off Cloudflare Apps (deprecated) for all subdomains of `example.com` and the `example.com` domain itself:
+
+- **URL**: `*example.com/*`
+- **Setting**: _Disable Apps_
+
+**How to migrate**:
+
+<Steps>
+
+1. [Create a configuration rule](/rules/configuration-rules/create-dashboard/) to disable Cloudflare Apps (deprecated) for any hostname containing `example.com`:
+
+   - **When incoming requests match**: Custom filter expression
+     - Using the Expression Builder:<br/>
+       `Hostname contains "example.com"`
+     - Using the Expression Editor:<br/>
+       `(http.host contains "example.com")`
+   - **Then the settings are**:
+     - **Setting**: Disable Apps
+
+2. Turn off your existing Page Rule and validate the behavior of the configuration rule you created.
+
+3. If your tests succeed, delete the existing Page Rule.
+
+</Steps>
+
+</TabItem> <TabItem label="Visual guide">
+
+| Page Rules configuration                                                                                                   | Migrate to a configuration rule                                                                                                                                  |
+| -------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ![Example Page Rule with 'Disable Apps' setting](~/assets/images/rules/reference/page-rules-migration/pr-disable-apps.png) | ![Configuration rule matching the 'Disable Apps' setting of the example Page Rule](~/assets/images/rules/reference/page-rules-migration/pr-disable-apps-new.png) |
+
+</TabItem> </Tabs>
+
+### Replace Disable Performance
+
+:::caution
+The **Disable Performance** setting is deprecated. Any Page Rules with this setting will not be migrated.
+:::
+
+This Page Rules setting turned off Mirage (deprecated), Polish, and Rocket Loader. You can still turn on or off relevant Cloudflare features one by one using Configuration Rules.
+
+<Tabs> <TabItem label="Dashboard">
+
+**Context:**
+
+You configured a Page Rule with **Disable Performance** (deprecated) for all subdomains of `example.com` and the `example.com` domain itself:
+
+- **URL**: `*example.com/*`
+- **Setting**: _Disable Performance_
+
+**How to replace**:
+
+<Steps>
+
+1. [Create a configuration rule](/rules/configuration-rules/create-dashboard/) to disable Mirage, Polish, and Rocket Loader for any hostname containing `example.com`:
+
+   - **When incoming requests match**: Custom filter expression
+     - Using the Expression Builder:<br/>
+       `Hostname contains "example.com"`
+     - Using the Expression Editor:<br/>
+       `(http.host contains "example.com")`
+   - **Then the settings are**:
+     - **Mirage**: Off
+     - **Polish**: _Off_
+     - **Rocket Loader**: Off
+
+2. Turn off your existing Page Rule and validate the behavior of the configuration rule you created.
+
+3. If your tests succeed, delete the existing Page Rule.
+
+</Steps>
+
+</TabItem> <TabItem label="Visual guide">
+
+| Page Rules configuration                                                                                                                 | Migrate to a configuration rule                                                                                                                                                          |
+| ---------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ![Example Page Rule with 'Disable Performance' setting](~/assets/images/rules/reference/page-rules-migration/pr-disable-performance.png) | ![Configuration rule partially matching the 'Disable Performance' setting of the example Page Rule](~/assets/images/rules/reference/page-rules-migration/pr-disable-performance-new.png) |
+
+</TabItem> </Tabs>
+
+### Replace Disable Security
+
+:::caution
+The **Disable Security** setting is deprecated. Any Page Rules with this setting will not be migrated.
+:::
+
+This Page Rules setting turns off Email Obfuscation, Rate Limiting (previous version), Scrape Shield, URL (Zone) Lockdown, and WAF managed rules (previous version). You can still turn on or off relevant Cloudflare features one by one using Configuration Rules and WAF custom rules.
+
+<Tabs> <TabItem label="Dashboard">
+
+**Context:**
+
+You configured a Page Rule with **Disable Security** (deprecated) for all subdomains of `example.com` and the `example.com` domain itself:
+
+- **URL**: `*example.com/*`
+- **Setting**: _Disable Security_
+
+This setting turned off a subset of Cloudflare security features: Email Obfuscation, Rate Limiting (previous version), Scrape Shield, URL (Zone) Lockdown, and WAF managed rules (previous version).
+
+**How to replace**:
+
+<Steps>
+
+1. [Create a configuration rule](/rules/configuration-rules/create-dashboard/) to turn off one or more security features:
+   - Email Obfuscation (part of [Cloudflare Scrape Shield](/waf/tools/scrape-shield/))
+   - Hotlink Protection (part of Cloudflare Scrape Shield)
+
+2. If required, [create a WAF exception](/waf/managed-rules/waf-exceptions/define-dashboard/) to skip one or more rules of WAF managed rulesets for requests coming from IP addresses in an allowlist.
+
+3. Turn off your existing Page Rule and validate the behavior of the rules you created.
+
+4. If your tests succeed, delete the existing Page Rule.
+
+</Steps>
+
+:::caution
+If you are still using [WAF managed rules (previous version)](/waf/reference/legacy/old-waf-managed-rules/) or [Rate Limiting (previous version)](/waf/reference/legacy/old-rate-limiting/), consider upgrading to the new versions of these products. It is not possible to turn off these older products using modern Rules features.
+:::
+
+</TabItem> </Tabs>
+
+### Migrate Disable Zaraz
+
+<Tabs> <TabItem label="Dashboard">
+
+**Context:**
+
+You configured a Page Rule turning off [Zaraz](/zaraz/) for all subdomains of `example.com` and the `example.com` domain itself:
+
+- **URL**: `*example.com/*`
+- **Setting**: _Disable Zaraz_
+
+**How to migrate**:
+
+<Steps>
+
+1. [Create a configuration rule](/rules/configuration-rules/create-dashboard/) to turn off Zaraz for any hostname containing `example.com`:
+
+   - **When incoming requests match**: Custom filter expression
+     - Using the Expression Builder:<br/>
+       `Hostname contains "example.com"`
+     - Using the Expression Editor:<br/>
+       `(http.host contains "example.com")`
+   - **Then the settings are**:
+     - **Setting**: Disable Zaraz
+
+2. Turn off your existing Page Rule and validate the behavior of the configuration rule you created.
+
+3. If your tests succeed, delete the existing Page Rule.
+
+</Steps>
+
+</TabItem> <TabItem label="Visual guide">
+
+| Page Rules configuration                                                                                                     | Migrate to a configuration rule                                                                                                                                    |
+| ---------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| ![Example Page Rule with 'Disable Zaraz' setting](~/assets/images/rules/reference/page-rules-migration/pr-disable-zaraz.png) | ![Configuration rule matching the 'Disable Zaraz' setting of the example Page Rule](~/assets/images/rules/reference/page-rules-migration/pr-disable-zaraz-new.png) |
+
+</TabItem> </Tabs>
+
+### Migrate Edge Cache TTL
+
+<Tabs> <TabItem label="Dashboard">
+
+**Context:**
+
+You configured a Page Rule adjusting Edge Cache TTL for all subdomains of `example.com` and the `example.com` domain itself:
+
+- **URL**: `*example.com/*`
+- **Setting**: _Edge Cache TTL_
+- **Enter Edge Cache TTL**: _a day_
+
+**How to migrate**:
+
+<Steps>
+
+1. [Create a cache rule](/cache/how-to/cache-rules/create-dashboard/) to adjust edge cache TTL for caching resources on Cloudflare edge to one day, for any hostname containing `example.com`:
+
+   - **When incoming requests match**: Custom filter expression
+     - Using the Expression Builder:<br/>
+       `Hostname contains "example.com"`
+     - Using the Expression Editor:<br/>
+       `(http.host contains "example.com")`
+   - **Then**:
+     - **Cache eligibility**: Eligible for cache
+     - **Setting**: Edge TTL
+       - Ignore cache-control header and use this TTL
+       - **Input time-to-live (TTL)**: _1 day_
+
+   <Render file="page-rules-cache-rules-difference" product="rules" />
+
+2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
+
+3. If your tests succeed, delete the existing Page Rule.
+
+</Steps>
+
+</TabItem> <TabItem label="Visual guide">
+
+| Page Rules configuration                                                                                                           | Migrate to a cache rule                                                                                                                                      |
+| ---------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| ![Example Page Rule with the 'Edge Cache TTL' setting](~/assets/images/rules/reference/page-rules-migration/pr-edge-cache-ttl.png) | ![Cache rule matching the 'Edge Cache TTL' setting of the example Page Rule](~/assets/images/rules/reference/page-rules-migration/pr-edge-cache-ttl-new.png) |
+
+</TabItem> </Tabs>
+
+### Migrate Email Obfuscation
+
+<Tabs> <TabItem label="Dashboard">
+
+**Context:**
+
+You configured a Page Rule turning off [Email Obfuscation](/waf/tools/scrape-shield/email-address-obfuscation/) for all subdomains of `example.com` and the `example.com` domain itself:
+
+- **URL**: `*example.com/*`
+- **Setting**: _Email Obfuscation_
+- **Value**: Off
+
+**How to migrate**:
+
+<Steps>
+
+1. [Create a configuration rule](/rules/configuration-rules/create-dashboard/) to turn off Email Obfuscation for any hostname containing `example.com`:
+
+   - **When incoming requests match**: Custom filter expression
+     - Using the Expression Builder:<br/>
+       `Hostname contains "example.com"`
+     - Using the Expression Editor:<br/>
+       `(http.host contains "example.com")`
+   - **Then the settings are**:
+     - **Setting**: Email Obfuscation
+       - **Value**: Off
+
+2. Turn off your existing Page Rule and validate the behavior of the configuration rule you created.
+
+3. If your tests succeed, delete the existing Page Rule.
+
+</Steps>
+
+</TabItem> <TabItem label="Visual guide">
+
+| Page Rules configuration                                                                                                             | Migrate to a configuration rule                                                                                                                                                  |
+| ------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ![Example Page Rule with 'Email Obfuscation' setting](~/assets/images/rules/reference/page-rules-migration/pr-email-obfuscation.png) | ![Configuration rule matching the 'Email Obfuscation > Off' setting of the example Page Rule](~/assets/images/rules/reference/page-rules-migration/pr-email-obfuscation-new.png) |
+
+</TabItem> </Tabs>
+
+### Migrate Forwarding URL
+
+**Example #1: Redirect `www` to root domain**
+
+<Tabs> <TabItem label="Dashboard">
+
+**Context:**
+
+You configured a Page Rule permanently redirecting `www.example.com` to `example.com` on all URI paths:
+
+- **URL**: `www.example.com/*`
+- **Setting**: _Forwarding URL_
+- **Select Status code**: _301 - Permanent Redirect_
+- **Destination URL**: `https://example.com/$1`
+
+**How to migrate**:
+
+<Steps>
+
+1. [Create a single redirect](/rules/url-forwarding/single-redirects/create-dashboard/) to permanently redirect requests from `https://www.example.com` to `https://example.com`. You can select the **Redirect from WWW to Root** rule template or enter the following rule configuration:
+
+   - **If incoming requests match**: Wildcard pattern
+     - **Request URL**: `https://www.example.com/*`
+   - **Then**:
+     - **Target URL**: `https://example.com/${1}`
+     - **Status code**: _301_
+     - **Preserve query string**: Enabled
+
+2. Turn off your existing Page Rule and validate the behavior of the redirect you created.
+
+3. If your tests succeed, delete the existing Page Rule.
+
+</Steps>
+
+<Render
+	file="page-rules-migration-wildcard-notice"
+	product="rules"
+	params={{
+		requestUrl: "http*://www.example.com/*",
+		targetUrl: "https://example.com/${2}",
+	}}
+/>
+
+</TabItem> <TabItem label="Visual guide">
+
+| Page Rules configuration                                                                                                          | Migrate to a single redirect                                                                                                                                         |
+| --------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ![Example Page Rule #1 with 'Forwarding URL' setting](~/assets/images/rules/reference/page-rules-migration/pr-forwarding-url.png) | ![Single redirect matching the 'Forwarding URL' setting of the example Page Rule #1](~/assets/images/rules/reference/page-rules-migration/pr-forwarding-url-new.png) |
+
+</TabItem> </Tabs>
+
+**Example #2: Redirect all pages under old path to new path**
+
+<Tabs> <TabItem label="Dashboard">
+
+**Context:**
+
+You configured a Page Rule permanently redirecting `example.com/old-path` to `example.com/new-path`:
+
+- **URL**: `example.com/old-path/*`
+- **Setting**: _Forwarding URL_
+- **Select Status code**: _301 - Permanent Redirect_
+- **Destination URL**: `https://example.com/new-path/$1`
+
+**How to migrate**:
+
+<Steps>
+
+1. [Create a single redirect](/rules/url-forwarding/single-redirects/create-dashboard/) to permanently redirect requests for `example.com/old-path` to `example.com/new-path`:
+
+   - **If incoming requests match**: Wildcard pattern
+     - **Request URL**: `https://example.com/old-path/*`
+   - **Then**:
+     - **Target URL**: `https://example.com/new-path/${1}`
+     - **Status code**: _301_
+     - **Preserve query string**: Enabled
+
+2. Turn off your existing Page Rule and validate the behavior of the redirect you created.
+
+3. If your tests succeed, delete the existing Page Rule.
+
+</Steps>
+
+<Render
+	file="page-rules-migration-wildcard-notice"
+	product="rules"
+	params={{
+		requestUrl: "http*://example.com/old-path/*",
+		targetUrl: "https://example.com/new-path/${2}",
+	}}
+/>
+
+</TabItem> <TabItem label="Visual guide">
+
+| Page Rules configuration                                                                                                            | Migrate to a single redirect                                                                                                                                           |
+| ----------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ![Example Page Rule #2 with 'Forwarding URL' setting](~/assets/images/rules/reference/page-rules-migration/pr-forwarding-url-2.png) | ![Single redirect matching the 'Forwarding URL' setting of the example Page Rule #2](~/assets/images/rules/reference/page-rules-migration/pr-forwarding-url-2-new.png) |
+
+</TabItem> </Tabs>
+
+### Migrate Host Header Override
+
+<Tabs> <TabItem label="Dashboard">
+
+**Context:**
+
+You configured a Page Rule changing the `Host` HTTP header to `example.saas-provider.com`, for all requests addressed at any subdomain of `example.com` and the `example.com` domain itself:
+
+- **URL**: `*example.com/*`
+- **Setting**: _Host Header Override_
+- **Enter value**: `example.saas-provider.com`
+
+**How to migrate**:
+
+<Steps>
+
+1. [Create an origin rule](/rules/origin-rules/create-dashboard/) changing the `Host` header to `example.saas-provider.com` for any hostname containing `example.com`:
+
+   - **When incoming requests match**: Custom filter expression
+     - Using the Expression Builder:<br/>
+       `Hostname contains "example.com"`
+     - Using the Expression Editor:<br/>
+       `(http.host contains "example.com")`
+   - **Then**:
+     - **Set origin parameters**:
+       - **Host Header** > **Rewrite to**: `example.saas-provider.com`
+
+2. Turn off your existing Page Rule and validate the behavior of the origin rule you created.
+
+3. If your tests succeed, delete the existing Page Rule.
+
+</Steps>
+
+</TabItem> <TabItem label="Visual guide">
+
+| Page Rules configuration                                                                                                                   | Migrate to an origin rule                                                                                                                                                 |
+| ------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ![Example Page Rule with 'Host Header Override' setting](~/assets/images/rules/reference/page-rules-migration/pr-host-header-override.png) | ![Origin rule matching the 'Host Header Override' setting of the example Page Rule](~/assets/images/rules/reference/page-rules-migration/pr-host-header-override-new.png) |
+
+</TabItem> </Tabs>
+
+### Migrate IP Geolocation Header
+
+<Tabs> <TabItem label="Dashboard">
+
+**Context:**
+
+You configured a Page Rule adding a `CF-IPCountry` HTTP header, for all requests addressed at any subdomain of `example.com` and the `example.com` domain itself:
+
+- **URL**: `*example.com/*`
+- **Setting**: _IP Geolocation Header_
+- **Value**: On
+
+**How to migrate**:
+
+<Steps>
+
+1. [Turn on the **Add visitor location headers** Managed Transform](/rules/transform/managed-transforms/configure/) — a Transform Rules feature — to add the `CF-IPCountry` and other location headers to all requests.
+2. Turn off your existing Page Rule and validate the behavior of the Managed Transform.
+3. If your tests succeed, delete the existing Page Rule.
+
+</Steps>
+
+</TabItem> <TabItem label="Visual guide">
+
+| Page Rules configuration                                                                                                                     | Migrate to a Managed Transform                                                                                                                                                                                       |
+| -------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ![Example Page Rule with 'IP Geolocation Header' setting](~/assets/images/rules/reference/page-rules-migration/pr-ip-geolocation-header.png) | ![The 'Add visitor location headers' Managed Transform matching the 'IP Geolocation Header' setting of the example Page Rule](~/assets/images/rules/reference/page-rules-migration/pr-ip-geolocation-header-new.png) |
+
+</TabItem> </Tabs>
+
+### Migrate Mirage (deprecated) {/* migrate-mirage */}
+
+<Tabs> <TabItem label="Dashboard">
+
+**Context:**
+
+You configured a Page Rule turning off Mirage (deprecated) for all subdomains of `example.com` and the `example.com` domain itself:
+
+- **URL**: `*example.com/*`
+- **Setting**: _Mirage_
+- **Value**: Off
+
+**How to migrate**:
+
+<Steps>
+
+1. [Create a configuration rule](/rules/configuration-rules/create-dashboard/) to turn off Mirage for any hostname containing `example.com`:
+
+   - **When incoming requests match**: Custom filter expression
+     - Using the Expression Builder:<br/>
+       `Hostname contains "example.com"`
+     - Using the Expression Editor:<br/>
+       `(http.host contains "example.com")`
+   - **Then the settings are**:
+     - **Setting**: Mirage
+       - **Value**: Off
+
+2. Turn off your existing Page Rule and validate the behavior of the configuration rule you created.
+
+3. If your tests succeed, delete the existing Page Rule.
+
+</Steps>
+
+</TabItem> <TabItem label="Visual guide">
+
+| Page Rules configuration                                                                                       | Migrate to a configuration rule                                                                                                                            |
+| -------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ![Example Page Rule with 'Mirage' setting](~/assets/images/rules/reference/page-rules-migration/pr-mirage.png) | ![Configuration rule matching the 'Mirage > Off' setting of the example Page Rule](~/assets/images/rules/reference/page-rules-migration/pr-mirage-new.png) |
+
+</TabItem> </Tabs>
+
+### Migrate Opportunistic Encryption
+
+<Tabs> <TabItem label="Dashboard">
+
+**Context:**
+
+You configured a Page Rule turning off Opportunistic Encryption for all subdomains of `example.com` and the `example.com` domain itself:
+
+- **URL**: `*example.com/*`
+- **Setting**: _Opportunistic Encryption_
+- **Value**: Off
+
+**How to migrate**:
+
+<Steps>
+
+1. [Create a configuration rule](/rules/configuration-rules/create-dashboard/) to turn off Opportunistic Encryption for any hostname containing `example.com`:
+
+   - **When incoming requests match**: Custom filter expression
+     - Using the Expression Builder:<br/>
+       `Hostname contains "example.com"`
+     - Using the Expression Editor:<br/>
+       `(http.host contains "example.com")`
+   - **Then the settings are**:
+     - **Setting**: Opportunistic Encryption
+       - **Value**: Off
+
+2. Turn off your existing Page Rule and validate the behavior of the configuration rule you created.
+
+3. If your tests succeed, delete the existing Page Rule.
+
+</Steps>
+
+</TabItem> <TabItem label="Visual guide">
+
+| Page Rules configuration                                                                                                                           | Migrate to a configuration rule                                                                                                                                                                |
+| -------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ![Example Page Rule with 'Opportunistic Encryption' setting](~/assets/images/rules/reference/page-rules-migration/pr-opportunistic-encryption.png) | ![Configuration rule matching the 'Opportunistic Encryption > Off' setting of the example Page Rule](~/assets/images/rules/reference/page-rules-migration/pr-opportunistic-encryption-new.png) |
+
+</TabItem> </Tabs>
+
+### Migrate Origin Cache Control
+
+<Tabs> <TabItem label="Dashboard">
+
+**Context:**
+
+You configured a Page Rule turning off Origin Cache Control for all subdomains of `example.com` and the `example.com` domain itself:
+
+- **URL**: `*example.com/*`
+- **Setting**: Origin Cache Control
+- **Value**: Off
+
+**How to migrate**:
+
+<Steps>
+
+1. [Create a cache rule](/cache/how-to/cache-rules/create-dashboard/) to determine edge cache behavior for any hostname containing `example.com`:
+
+   - **When incoming requests match**: Custom filter expression
+     - Using the Expression Builder:<br/>
+       `Hostname contains "example.com"`
+     - Using the Expression Editor:<br/>
+       `(http.host contains "example.com")`
+   - **Then**:
+     - **Cache eligibility**: Eligible for cache
+     - **Setting**: Origin Cache Control
+       - **Enable Origin Cache Control**: Off
+
+   <Render file="page-rules-cache-rules-difference" product="rules" />
+
+2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
+
+3. If your tests succeed, delete the existing Page Rule.
+
+</Steps>
+
+</TabItem> <TabItem label="Visual guide">
+
+| Page Rules configuration                                                                                                                   | Migrate to a cache rule                                                                                                                                                  |
+| ------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| ![Example Page Rule with 'Origin Cache Control' setting](~/assets/images/rules/reference/page-rules-migration/pr-origin-cache-control.png) | ![Cache rule matching the 'Origin Cache Control' setting of the example Page Rule](~/assets/images/rules/reference/page-rules-migration/pr-origin-cache-control-new.png) |
+
+</TabItem> </Tabs>
+
+### Migrate Origin Error Page Pass-thru
+
+<Tabs> <TabItem label="Dashboard">
+
+**Context:**
+
+You configured a Page Rule turning on Origin Error Page Pass-thru for all subdomains of `example.com` and the `example.com` domain itself:
+
+- **URL**: `*example.com/*`
+- **Setting**: _Origin Error Page Pass-thru_
+- **Value**: On
+
+**How to migrate**:
+
+<Steps>
+
+1. [Create a cache rule](/cache/how-to/cache-rules/create-dashboard/) to determine edge cache behavior for any hostname containing `example.com`:
+
+   - **When incoming requests match**: Custom filter expression
+     - Using the Expression Builder:<br/>
+       `Hostname contains "example.com"`
+     - Using the Expression Editor:<br/>
+       `(http.host contains "example.com")`
+   - **Then**:
+     - **Cache eligibility**: Eligible for cache
+     - **Setting**: Origin error page pass-thru
+       - **Use Origin error page pass-thru**: On
+
+   <Render file="page-rules-cache-rules-difference" product="rules" />
+
+2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
+
+3. If your tests succeed, delete the existing Page Rule.
+
+</Steps>
+
+</TabItem> <TabItem label="Visual guide">
+
+| Page Rules configuration                                                                                                                                 | Migrate to a cache rule                                                                                                                                                                     |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ![Example Page Rule with 'Origin Error Page Pass-thru' setting](~/assets/images/rules/reference/page-rules-migration/pr-origin-error-page-pass-thru.png) | ![Cache rule matching the 'Origin Error Page Pass-thru > On' setting of the example Page Rule](~/assets/images/rules/reference/page-rules-migration/pr-origin-error-page-pass-thru-new.png) |
+
+</TabItem> </Tabs>
+
+### Migrate Polish
+
+<Tabs> <TabItem label="Dashboard">
+
+**Context:**
+
+You configured a Page Rule turning off [Polish](/images/polish/) for all subdomains of `example.com` and the `example.com` domain itself:
+
+- **URL**: `*example.com/*`
+- **Setting**: Polish
+- **Value**: Off
+
+**How to migrate**:
+
+<Steps>
+
+1. [Create a configuration rule](/rules/configuration-rules/create-dashboard/) to turn off Polish for any hostname containing `example.com`:
+
+   - **When incoming requests match**: Custom filter expression
+     - Using the Expression Builder:<br/>
+       `Hostname contains "example.com"`
+     - Using the Expression Editor:<br/>
+       `(http.host contains "example.com")`
+   - **Then the settings are**:
+     - **Setting**: Polish
+       - **Select value**: _Off_
+
+2. Turn off your existing Page Rule and validate the behavior of the configuration rule you created.
+
+3. If your tests succeed, delete the existing Page Rule.
+
+</Steps>
+
+</TabItem> <TabItem label="Visual guide">
+
+| Page Rules configuration                                                                                       | Migrate to a configuration rule                                                                                                                            |
+| -------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ![Example Page Rule with 'Polish' setting](~/assets/images/rules/reference/page-rules-migration/pr-polish.png) | ![Configuration rule matching the 'Polish > Off' setting of the example Page Rule](~/assets/images/rules/reference/page-rules-migration/pr-polish-new.png) |
+
+</TabItem> </Tabs>
+
+### Migrate Query String Sort
+
+<Tabs> <TabItem label="Dashboard">
+
+**Context:**
+
+You configured a Page Rule turning on Query String Sort for all subdomains of `example.com` and the `example.com` domain itself:
+
+- **URL**: `*example.com/*`
+- **Setting**: _Query String Sort_
+- **Value**: On
+
+**How to migrate**:
+
+<Steps>
+
+1. [Create a cache rule](/cache/how-to/cache-rules/create-dashboard/) to sort query string parameters for caching purposes, for any hostname containing `example.com`:
+
+   - **When incoming requests match**: Custom filter expression
+     - Using the Expression Builder:<br/>
+       `Hostname contains "example.com"`
+     - Using the Expression Editor:<br/>
+       `(http.host contains "example.com")`
+   - **Then**:
+     - **Cache eligibility**: Eligible for cache
+     - **Setting**: Cache key
+       - **Sort query string**: On
+
+   <Render file="page-rules-cache-rules-difference" product="rules" />
+
+2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
+
+3. If your tests succeed, delete the existing Page Rule.
+
+</Steps>
+
+</TabItem> <TabItem label="Visual guide">
+
+| Page Rules configuration                                                                                                             | Migrate to a cache rule                                                                                                                                                 |
+| ------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ![Example Page Rule with 'Query String Sort' setting](~/assets/images/rules/reference/page-rules-migration/pr-query-string-sort.png) | ![Cache rule matching the 'Query String Sort > On' setting of the example Page Rule](~/assets/images/rules/reference/page-rules-migration/pr-query-string-sort-new.png) |
+
+</TabItem> </Tabs>
+
+### Migrate Resolve Override
+
+<Tabs> <TabItem label="Dashboard">
+
+**Context:**
+
+You configured a Page Rule changing the origin to `example.saas-provider.com`, for all requests addressed at any subdomain of `example.com` and the `example.com` domain itself:
+
+- **URL**: `*example.com/*`
+- **Setting**: _Resolve Override_
+- **Enter value**: `example.saas-provider.com`
+
+**How to migrate**:
+
+<Steps>
+
+1. [Create an origin rule](/rules/origin-rules/create-dashboard/) overriding the origin to `example.saas-provider.com` for any hostname containing `example.com`:
+
+   - **When incoming requests match**: Custom filter expression
+     - Using the Expression Builder:<br/>
+       `Hostname contains "example.com"`
+     - Using the Expression Editor:<br/>
+       `(http.host contains "example.com")`
+   - **Then**:
+     - **DNS Record** > **Override to**: `example.saas-provider.com`
+
+2. Turn off your existing Page Rule and validate the behavior of the origin rule you created.
+
+3. If your tests succeed, delete the existing Page Rule.
+
+</Steps>
+
+</TabItem> <TabItem label="Visual guide">
+
+| Page Rules configuration                                                                                                           | Migrate to an origin rule                                                                                                                                         |
+| ---------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ![Example Page Rule with 'Resolve Override' setting](~/assets/images/rules/reference/page-rules-migration/pr-resolve-override.png) | ![Origin rule matching the 'Resolve Override' setting of the example Page Rule](~/assets/images/rules/reference/page-rules-migration/pr-resolve-override-new.png) |
+
+</TabItem> </Tabs>
+
+### Migrate Respect Strong ETags
+
+<Tabs> <TabItem label="Dashboard">
+
+**Context:**
+
+You configured a Page Rule turning on byte-for-byte equivalency checks for all subdomains of `example.com` and the `example.com` domain itself:
+
+- **URL**: `*example.com/*`
+- **Setting**: _Respect Strong ETags_
+- **Value**: On
+
+**How to migrate**:
+
+<Steps>
+
+1. [Create a cache rule](/cache/how-to/cache-rules/create-dashboard/) to respect strong ETags for any hostname containing `example.com`:
+
+   - **When incoming requests match**: Custom filter expression
+     - Using the Expression Builder:<br/>
+       `Hostname contains "example.com"`
+     - Using the Expression Editor:<br/>
+       `(http.host contains "example.com")`
+   - **Then**:
+     - **Cache eligibility**: Eligible for cache
+     - **Setting**: Respect strong ETags
+       - **Use strong ETag headers**: On
+
+   <Render file="page-rules-cache-rules-difference" product="rules" />
+
+2. Turn off your existing Page Rule and validate the behavior of the cache rule you created.
+
+3. If your tests succeed, delete the existing Page Rule.
+
+</Steps>
+
+</TabItem> <TabItem label="Visual guide">
+
+| Page Rules configuration                                                                                                                   | Migrate to a cache rule                                                                                                                                                       |
+| ------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ![Example Page Rule with 'Respect Strong ETags' setting](~/assets/images/rules/reference/page-rules-migration/pr-respect-strong-etags.png) | ![Cache rule matching the 'Respect Strong ETags > On' setting of the example Page Rule](~/assets/images/rules/reference/page-rules-migration/pr-respect-strong-etags-new.png) |
+
+</TabItem> </Tabs>
+
+### Migrate Rocket Loader
+
+<Tabs> <TabItem label="Dashboard">
+
+**Context:**
+
+You configured a Page Rule turning off Rocket Loader for all subdomains of `example.com` and the `example.com` domain itself:
+
+- **URL**: `*example.com/*`
+- **Setting**: _Rocket Loader_
+- **Value**: Off
+
+**How to migrate**:
+
+<Steps>
+
+1. [Create a configuration rule](/rules/configuration-rules/create-dashboard/) to turn off Rocket Loader for any hostname containing `example.com`:
+
+   - **When incoming requests match**: Custom filter expression
+     - Using the Expression Builder:<br/>
+       `Hostname contains "example.com"`
+     - Using the Expression Editor:<br/>
+       `(http.host contains "example.com")`
+   - **Then the settings are**:
+     - **Setting**: Rocket Loader
+       - **Value**: Off
+
+2. Turn off your existing Page Rule and validate the behavior of the configuration rule you created.
+
+3. If your tests succeed, delete the existing Page Rule.
+
+</Steps>
+
+</TabItem> <TabItem label="Visual guide">
+
+| Page Rules configuration                                                                                                     | Migrate to a configuration rule                                                                                                                                          |
+| ---------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| ![Example Page Rule with 'Rocket Loader' setting](~/assets/images/rules/reference/page-rules-migration/pr-rocket-loader.png) | ![Configuration rule matching the 'Rocket Loader > Off' setting of the example Page Rule](~/assets/images/rules/reference/page-rules-migration/pr-rocket-loader-new.png) |
+
+</TabItem> </Tabs>
+
+### Migrate Security Level
+
+<Tabs> <TabItem label="Dashboard">
+
+**Context:**
+
+You configured a Page Rule setting Security Level to _I'm Under Attack_ for all subdomains of `example.com` and the `example.com` domain itself:
+
+- **URL**: `*example.com/*`
+- **Setting**: _Security Level_
+- **Select Security Level**: _I'm Under Attack_
+
+**How to migrate**:
+
+<Steps>
+
+1. [Create a configuration rule](/rules/configuration-rules/create-dashboard/) to set Security Level to _I'm Under Attack_, for any hostname containing `example.com`:
+
+   - **When incoming requests match**: Custom filter expression
+     - Using the Expression Builder:<br/>
+       `Hostname contains "example.com"`
+     - Using the Expression Editor:<br/>
+       `(http.host contains "example.com")`
+   - **Then the settings are**:
+     - **Setting**: Security Level
+       - **Select Security Level**: _I'm Under Attack_
+
+2. Turn off your existing Page Rule and validate the behavior of the configuration rule you created.
+
+3. If your tests succeed, delete the existing Page Rule.
+
+</Steps>
+
+</TabItem> <TabItem label="Visual guide">
+
+| Page Rules configuration                                                                                                       | Migrate to a configuration rule                                                                                                                                                         |
+| ------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ![Example Page Rule with 'Security Level' setting](~/assets/images/rules/reference/page-rules-migration/pr-security-level.png) | ![Configuration rule matching the "Security Level > I'm Under Attack" setting of the example Page Rule](~/assets/images/rules/reference/page-rules-migration/pr-security-level-new.png) |
+
+</TabItem> </Tabs>
+
+### Migrate True Client IP Header
+
+<Tabs> <TabItem label="Dashboard">
+
+**Context:**
+
+You configured a Page Rule adding a `True-Client-IP` HTTP header for all requests addressed at any subdomain of `example.com` and the `example.com` domain itself:
+
+- **URL**: `*example.com/*`
+- **Setting**: _True Client IP Header_
+- **Value**: On
+
+**How to migrate**:
+
+<Steps>
+
+1. [Turn on the **Add "True-Client-IP" header** Managed Transform](/rules/transform/managed-transforms/configure/) — a Transform Rules feature — to add the `True-Client-IP` header to all requests.
+2. Turn off your existing Page Rule and validate the behavior of the Managed Transform.
+3. If your tests succeed, delete the existing Page Rule.
+
+</Steps>
+
+</TabItem> <TabItem label="Visual guide">
+
+| Page Rules configuration                                                                                                                     | Migrate to a Managed Transform                                                                                                                                                                                      |
+| -------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ![Example Page Rule with 'True Client IP Header' setting](~/assets/images/rules/reference/page-rules-migration/pr-true-client-ip-header.png) | ![The 'Add "True-Client-IP" header' Managed Transform matching the 'True Client IP Header' setting of the example Page Rule](~/assets/images/rules/reference/page-rules-migration/pr-true-client-ip-header-new.png) |
+
+</TabItem> </Tabs>
+
+### Migrate SSL
+
+<Tabs> <TabItem label="Dashboard">
+
+**Context:**
+
+You configured a Page Rule setting SSL to _Strict_ for all subdomains of `example.com` and the `example.com` domain itself:
+
+- **URL**: `*example.com/*`
+- **Setting**: _SSL_
+- **Select SSL/TLS encryption mode**: _Strict_
+
+**How to migrate**:
+
+<Steps>
+
+1. [Create a configuration rule](/rules/configuration-rules/create-dashboard/) to set SSL to _Strict_, for any hostname containing `example.com`:
+
+   - **When incoming requests match**: Custom filter expression
+     - Using the Expression Builder:<br/>
+       `Hostname contains "example.com"`
+     - Using the Expression Editor:<br/>
+       `(http.host contains "example.com")`
+   - **Then the settings are**:
+     - **Setting**: SSL
+       - **Select SSL/TLS encryption mode**: _Strict_
+
+2. Turn off your existing Page Rule and validate the behavior of the configuration rule you created.
+
+3. If your tests succeed, delete the existing Page Rule.
+
+</Steps>
+
+</TabItem> <TabItem label="Visual guide">
+
+| Page Rules configuration                                                                                 | Migrate to a configuration rule                                                                                                                |
+| -------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| ![Example Page Rule with 'SSL' setting](~/assets/images/rules/reference/page-rules-migration/pr-ssl.png) | ![Configuration rule matching the "SSL" setting of the example Page Rule](~/assets/images/rules/reference/page-rules-migration/pr-ssl-new.png) |
+
+</TabItem> </Tabs>
+
+## Settings that will not be migrated
+
+The following Page Rules settings will not be migrated to other types of rules:
+
+- **Disable Performance** (this setting is deprecated)
+- **Disable Railgun** (this setting is deprecated, since Railgun is no longer available)
+- **Disable Security** (this setting is deprecated)
+- **Response Buffering** (this setting is deprecated)
+- **Web Application Firewall** (this setting is deprecated, since the previous version of WAF managed rules is deprecated)
+
+All other Page Rules settings will be migrated during 2025.
+
+## More resources
+
+If you have feedback to share, refer to our [Community thread](https://community.cloudflare.com/t/important-page-rules-deprecation/656021).

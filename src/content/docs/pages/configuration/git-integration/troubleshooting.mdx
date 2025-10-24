@@ -1,0 +1,58 @@
+---
+pcx_content_type: concept
+title: Troubleshooting builds
+---
+
+If your git integration is experiencing issues, you may find the following banners in the Deployment page of your Pages project.
+
+## Project creation
+
+#### `This repository is being used for a Cloudflare Pages project on a different Cloudflare account.`
+
+Using the same GitHub/GitLab repository across separate Cloudflare accounts is disallowed. To use the repository for a Pages project in that Cloudflare account, you should delete any Pages projects using the repository in other Cloudflare accounts.
+
+## Deployments
+
+If you run into any issues related to deployments or failing, check your project dashboard to see if there are any SCM installation warnings listed as shown in the screenshot below.
+
+![Pausing a deployment in the Settings of your Pages project](~/assets/images/pages/platform/git.dashboard-error.png)
+
+To resolve any errors displayed in the Cloudflare Pages dashboard, follow the steps listed below.
+
+#### `This project is disconnected from your Git account, this may cause deployments to fail.`
+
+To resolve this issue, follow the steps provided above in the [Reinstalling a Git installation section](/pages/configuration/git-integration/#reinstall-a-git-installation) for the applicable SCM provider. If the issue persists even after uninstalling and reinstalling, contact support.
+
+#### `Cloudflare Pages is not properly installed on your Git account, this may cause deployments to fail.`
+
+To resolve this issue, follow the steps provided above in the [Reinstalling a Git installation section](/pages/configuration/git-integration/#reinstall-a-git-installation) for the applicable SCM provider. If the issue persists even after uninstalling and reinstalling, contact support.
+
+#### `The Cloudflare Pages installation has been suspended, this may cause deployments to fail.`
+
+Go to your GitHub installation settings:
+
+- `https://github.com/settings/installations` for individual accounts
+- `https://github.com/organizations/<YOUR_ORGANIZATION_NAME>/settings/installations` for organizational accounts
+
+Click **Configure** on the Cloudflare Pages application. Scroll down to the bottom of the page and click **Unsuspend** to allow Cloudflare Pages to make future deployments.
+
+#### `The project is linked to a repository that no longer exists, this may cause deployments to fail.`
+
+You may have deleted or transferred the repository associated with this Cloudflare Pages project. For a deleted repository, you will need to create a new Cloudflare Pages project with a repository that has not been deleted. For a transferred repository, you can either transfer the repository back to the original Git account or you will need to create a new Cloudflare Pages project with the transferred repository.
+
+#### `The repository cannot be accessed, this may cause deployments to fail.`
+
+You may have excluded this repository from your installation's repository access settings. Go to your GitHub installation settings:
+
+- `https://github.com/settings/installations` for individual accounts
+- `https://github.com/organizations/<YOUR_ORGANIZATION_NAME>/settings/installations` for organizational accounts
+
+Click **Configure** on the Cloudflare Pages application. Under **Repository access**, ensure that the repository associated with your Cloudflare Pages project is included in the list.
+
+#### `There is an internal issue with your Cloudflare Pages Git installation.`
+
+This is an internal error in the Cloudflare Pages SCM system. You can attempt to [reinstall your Git installation](/pages/configuration/git-integration/#reinstall-a-git-installation), but if the issue persists, [contact support](/support/contacting-cloudflare-support/).
+
+#### `GitHub/GitLab is having an incident and push events to Cloudflare are operating in a degraded state. Check their status page for more details.`
+
+This indicates that GitHub or GitLab may be experiencing an incident affecting push events to Cloudflare. It is recommended to monitor their status page ([GitHub](https://www.githubstatus.com/), [GitLab](https://status.gitlab.com/)) for updates and try deploying again later.

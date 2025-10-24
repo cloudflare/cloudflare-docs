@@ -1,0 +1,22 @@
+---
+title: Create load balancer on test domain
+pcx_content_type: learning-unit
+sidebar:
+  order: 5
+---
+
+import { Render, TabItem, Tabs } from "~/components";
+
+<Render file="test-domain-setup" product="load-balancing" />
+
+## Create a load balancer
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+<Render file="load-balancer-create" product="load-balancing" />
+
+</TabItem> <TabItem label="API">
+
+<Render file="load-balancer-create-api" product="load-balancing" />
+
+</TabItem> </Tabs>

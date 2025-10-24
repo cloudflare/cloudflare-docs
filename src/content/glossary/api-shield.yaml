@@ -1,0 +1,26 @@
+---
+productName: API Shield
+entries:
+  - term: API call
+    general_definition: |-
+      Also known as an API request. An API call is a message sent to a server asking an API to provide a service or information.
+
+  - term: API endpoint
+    general_definition: |-
+      The API endpoint is the location where API calls or requests are fulfilled. API Shield defines endpoints as a host, method, and path tuple.
+
+  - term: API schema
+    general_definition: |-
+      The API schema defines which API requests are valid based on several request properties like target endpoint, path or query variable format, and HTTP method.
+
+  - term: session identifier
+    general_definition: |-
+      A session identifier is a unique number that a website assigns to identify a specific user for the duration of their visit.
+
+  - term: source endpoint
+    general_definition: |-
+      The source endpoint is the endpoint managed by API Shield in Endpoint Management by its routing feature.
+
+  - term: target endpoint
+    general_definition: |-
+      The target endpoint is the ultimate destination that a request is sent to by API Shield's routing feature.

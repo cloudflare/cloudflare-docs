@@ -1,0 +1,165 @@
+---
+import Default from "@astrojs/starlight/components/PageTitle.astro";
+import { marked } from "marked";
+
+import { Breadcrumbs } from "astro-breadcrumbs";
+import "astro-breadcrumbs/breadcrumbs.css";
+
+import Description from "~/components/Description.astro";
+import SpotlightAuthorDetails from "~/components/SpotlightAuthorDetails.astro";
+import LastReviewed from "~/components/LastReviewed.astro";
+import CopyPageButton from "~/components/CopyPageButton.tsx";
+import ComponentUsage from "~/components/ComponentUsage.astro";
+
+import { getEntry } from "astro:content";
+
+const frontmatter = Astro.locals.starlightRoute.entry.data;
+
+const spotlightDetails = frontmatter.spotlight;
+const reviewed = frontmatter.reviewed;
+const summary = frontmatter.summary;
+const component = frontmatter.styleGuide?.component;
+
+const slug = Astro.locals.starlightRoute.entry.slug;
+
+const breadcrumbProps: Record<string, any> = {
+	crumbs: [
+		{
+			text: "Directory",
+			href: "/directory/",
+		},
+	],
+	truncated: true,
+	id: "breadcrumbs",
+};
+
+const segments = slug.split("/");
+
+for (let i = 0; i < segments.length; i++) {
+	if (i === 0) {
+		const entry = await getEntry("products", segments[0]);
+
+		let title = segments[0];
+		if (entry) {
+			title = entry.data.product.title;
+		}
+
+		breadcrumbProps.crumbs.push({
+			text: title,
+			href: `/${segments[0]}/`,
+		});
+
+		continue;
+	}
+
+	let path = segments.slice(0, i + 1).join("/");
+
+	const entry = await getEntry("docs", path);
+
+	let title = segments[i];
+	if (entry) {
+		title = entry.data.title;
+	} else {
+		continue;
+	}
+
+	breadcrumbProps.crumbs.push({
+		text: title,
+		href: `/${path}/`,
+	});
+}
+
+// Currently the officially sanctioned way to alter behaviour on specific routes
+// https://starlight.astro.build/guides/overriding-components/#only-override-on-specific-pages
+const hideTitle = Astro.locals.starlightRoute.hideTitle;
+const hideBreadcrumbs = Astro.locals.starlightRoute.hideBreadcrumbs;
+---
+
+<div class="flex items-center justify-between">
+	{
+		!hideBreadcrumbs && (
+			<Breadcrumbs {...breadcrumbProps}>
+				<svg
+					slot="separator"
+					xmlns="http://www.w3.org/2000/svg"
+					width="24"
+					height="24"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+				>
+					<polyline points="9 18 15 12 9 6" />
+				</svg>
+			</Breadcrumbs>
+		)
+	}
+
+	{
+		frontmatter.template !== "splash" && (
+			<CopyPageButton client:idle />
+		)
+	}
+</div>
+
+{!hideTitle && <Default />}
+
+{reviewed && <LastReviewed date={reviewed} />}
+
+{
+	spotlightDetails && (
+		<SpotlightAuthorDetails
+			author={spotlightDetails.author}
+			platform={spotlightDetails.author_bio_source}
+			link={spotlightDetails.author_bio_link}
+		/>
+	)
+}
+
+{summary && <Description set:html={marked.parse(summary)} />}
+
+{
+	component && (
+			<div class="sl-markdown-content md-ignore">
+				<ComponentUsage component={component} />
+			</div>
+	)
+}
+
+<style>
+	:root {
+		--color-link-breadcrumbs: var(--sl-color-text-accent);
+
+		.c-breadcrumbs {
+			--spacing-vertical-separator-breadcrumbs: 0.625rem;
+
+			padding: 0.5rem 0;
+
+			.c-breadcrumbs__link {
+				font-size: 0.75rem;
+				line-height: 1.25rem;
+				font-weight: 600;
+			}
+
+			.c-breadcrumbs__separator {
+				color: var(--color-cl1-brand-orange);
+			}
+
+			.c-breadcrumbs__truncated-button {
+				color: var(--color-cl1-brand-orange);
+			}
+		}
+	}
+</style>
+
+{ hideTitle && hideBreadcrumbs &&
+	<style>
+		main {
+			.content-panel:first-of-type {
+				display: none;
+			}
+		}
+	</style>
+}

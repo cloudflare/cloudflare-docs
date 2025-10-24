@@ -1,0 +1,98 @@
+---
+pcx_content_type: how-to
+title: Manage DNS records
+sidebar:
+  order: 2
+---
+
+import { GlossaryTooltip, Render, TabItem, Tabs, Details, DashButton } from "~/components";
+
+Consider the sections below for step-by-step instructions on managing DNS records at Cloudflare.
+
+To better understand what DNS records are, refer to [Overview](/dns/manage-dns-records/). For context around common records you want to review when getting started at Cloudflare, refer to [review DNS records](/dns/zone-setups/full-setup/setup/#review-dns-records).
+
+:::note
+If your domain is added to Cloudflare by a hosting partner, manage your DNS records via the hosting partner.
+:::
+
+## Create DNS records
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+To create a DNS record in the dashboard:
+
+1. In the Cloudflare dashboard, go to the **DNS Records** page.
+
+   <DashButton url="/?to=/:account/:zone/dns/records" />
+
+2. Select **Add record**.
+3. Choose a record [**Type**](/dns/manage-dns-records/reference/dns-record-types/).
+4. Complete the required fields, which vary per record. Particularly important fields (for some records) include:
+   - **Proxy status**: For `A`, `AAAA`, and `CNAME` records, decide whether hostname traffic is <GlossaryTooltip term="proxy status" link="/dns/proxy-status/">proxied through Cloudflare</GlossaryTooltip>.
+   - **TTL**: Short for [_Time to Live_](/dns/manage-dns-records/reference/ttl/), this field controls how long each record is valid and — as a result — how long it takes for record updates to reach your end users.
+   - **Comment** and **Tag**: [Record attributes](/dns/manage-dns-records/reference/record-attributes/) meant for your reference.
+5. Select **Save**.
+
+</TabItem>
+
+<TabItem label="API">
+
+To create records with the API, use a [POST request](/api/resources/dns/subresources/records/methods/create/). For field definitions, select a record type under the request body specification.
+
+For specific API examples, refer to [DNS record types](/dns/manage-dns-records/reference/dns-record-types/).
+
+</TabItem> </Tabs>
+
+---
+
+## Edit DNS records
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+To edit DNS records in the dashboard:
+
+1. In the Cloudflare dashboard, go to the **DNS Records** page.
+
+   <DashButton url="/?to=/:account/:zone/dns/records" />
+
+2. On a specific record, select **Edit**.
+3. Make any necessary changes.
+4. Select **Save**.
+
+</TabItem>
+
+<TabItem label="API">
+
+To update part of a record with the API, use a [PATCH request](/api/resources/dns/subresources/records/methods/edit/). If you want to overwrite the entire existing record, use a [PUT request](/api/resources/dns/subresources/records/methods/update/).
+
+</TabItem> </Tabs>
+
+---
+
+## Delete DNS records
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+To delete DNS records in the dashboard:
+
+1. In the Cloudflare dashboard, go to the **DNS Records** page.
+
+   <DashButton url="/?to=/:account/:zone/dns/records" />
+
+2. On a specific record, select **Edit**.
+3. Select **Delete**.
+4. Select **Delete** again to confirm.
+
+</TabItem>
+
+<TabItem label="API">
+
+To delete records with the API, use a [DELETE request](/api/resources/dns/subresources/records/methods/delete/).
+
+</TabItem> </Tabs>
+
+---
+
+## Batch record changes
+
+For guidance on how to apply several changes to your zone records in just one action, refer to [Batch record changes](/dns/manage-dns-records/how-to/batch-record-changes/).

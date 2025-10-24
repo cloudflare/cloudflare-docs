@@ -1,0 +1,45 @@
+---
+title: Test out code changes before shipping with per-branch preview deployments for Cloudflare Workers
+description: Get shareable preview links for every code change you make to a Cloudflare Worker, making it easier to test and collaborate before going live
+products:
+  - workers
+date: 2025-07-22T01:00:00Z
+---
+
+Now, when you connect your Cloudflare Worker to a git repository on GitHub or GitLab, each branch of your repository has its own stable preview URL, that you can use to preview code changes before merging the pull request and deploying to production.
+
+This works the same way that Cloudflare Pages does — every time you create a pull request, you'll automatically get a shareable preview link where you can see your changes running, without affecting production. The link stays the same, even as you add commits to the same branch.
+These preview URLs are named after your branch and are posted as a comment to each pull request. The URL stays the same with every commit and always points to the latest version of that branch.
+
+![PR comment preview](src/assets/images/changelog/workers/preview-urls-comment.png)
+
+## Preview URL types
+
+Each comment includes **two preview URLs** as shown above:
+
+* **Commit Preview URL**: Unique to the specific version/commit (e.g., `<version-prefix>-<worker-name>.<subdomain>.workers.dev`)
+* **Branch Preview URL**: A stable alias based on the branch name (e.g., `<branch-name>-<worker-name>.<subdomain>.workers.dev`)
+
+## How it works
+
+When you create a pull request:
+
+- **A preview alias is automatically created** based on the Git branch name (e.g., `<branch-name>` becomes `<branch-name>-<worker-name>.<subdomain>.workers.dev`)
+- **No configuration is needed**, the alias is generated for you
+- **The link stays the same** even as you add commits to the same branch
+- **Preview URLs are posted directly to your pull request as comments** (just like they are in Cloudflare Pages)
+
+## Custom alias name
+
+You can also assign a custom preview alias using the [Wrangler CLI](/workers/wrangler/), by passing the `--preview-alias` flag when [uploading a version](/workers/wrangler/commands/#versions-upload) of your Worker:
+
+```bash
+wrangler versions upload --preview-alias staging
+```
+
+## Limitations while in beta
+
+* Only available on the **workers.dev** subdomain (custom domains not yet supported)
+* Requires **Wrangler v4.21.0+**
+* Preview URLs are not generated for Workers that use [Durable Objects](/durable-objects/)
+* Not yet supported for [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/)

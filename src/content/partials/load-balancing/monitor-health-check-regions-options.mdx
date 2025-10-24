@@ -1,0 +1,26 @@
+---
+{}
+
+---
+
+**All Data Centers (Enterprise only)**
+
+Health monitor probes are sent from every single data center in Cloudflare’s network to the endpoints within the associated pool. This allows probes to hit each endpoint during intervals set by the customer.
+
+**All Regions**
+
+Three health monitor probes per region are sent to each endpoint in the associated pool. There are a total of 13 regions, resulting in 39 probes.
+
+**Regional**
+
+Three health monitor probes are sent from each specified region within the pool configuration.
+
+:::caution
+
+
+Because of how Cloudflare checks health from [multiple regions](#health-monitor-regions), adding multiple regions — or choosing to check health from **All Data Centers** — can send a lot of traffic to your endpoint.
+
+The same problem can occur when setting low values for a monitor's **Interval**.
+
+
+:::

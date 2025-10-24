@@ -1,0 +1,429 @@
+---
+title: Operators and grouping symbols
+description: Learn about comparison, logical operators, and grouping symbols in Cloudflare's Rules language. Understand precedence and how to structure expressions.
+pcx_content_type: reference
+
+sidebar:
+  order: 3
+head:
+  - tag: title
+    content: Rule operators and grouping symbols
+---
+
+import { Details } from "~/components";
+
+The Cloudflare Rules language supports comparison and logical operators:
+
+- [Comparison operators](#comparison-operators) specify how values defined in an expression must relate to the actual HTTP request value for the expression to return `true`.
+- [Logical operators](#logical-operators) combine two expressions to form a compound expression and use order of precedence to determine how an expression is evaluated.
+
+[Grouping symbols](#grouping-symbols) allow you to organize expressions, enforce precedence, and nest expressions.
+
+## Comparison operators
+
+Comparison operators return `true` when a value from an HTTP request matches a value defined in an expression.
+
+This is the general pattern for using comparison operators:
+
+```txt
+<field> <comparison_operator> <value>
+```
+
+The Rules language supports these comparison operators:
+
+{/* prettier-ignore */}
+<div style="width: 100%; overflow-x: auto;">
+  <table style="width:100%">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th colSpan="2" style={{ textAlign: 'center' }}>Operator Notation</th>
+        <th colSpan="3" style={{ textAlign: 'center' }}>Supported Data Types</th>
+        <th></th>
+      </tr>
+      <tr>
+        <td></td>
+        <th>English</th>
+        <th>C-like</th>
+        <th>String<sup>1</sup></th>
+        <th>IP</th>
+        <th>Number</th>
+        <th>Example (operator in bold)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Equal</td>
+        <td><code>eq</code></td>
+        <td><code>==</code></td>
+        <td>✅</td>
+        <td>✅</td>
+        <td>✅</td>
+        <td>
+          <code>http.request.uri.path <strong>eq</strong> "/articles/2008/"</code>
+        </td>
+      </tr>
+      <tr>
+        <td>Not equal</td>
+        <td><code>ne</code></td>
+        <td><code>!=</code></td>
+        <td>✅</td>
+        <td>✅</td>
+        <td>✅</td>
+        <td>
+          <code>ip.src <strong>ne</strong> 203.0.113.0</code>
+        </td>
+      </tr>
+      <tr>
+        <td>Less than</td>
+        <td><code>lt</code></td>
+        <td><code>&lt;</code></td>
+        <td>✅</td>
+        <td>❌</td>
+        <td>✅</td>
+        <td>
+          <code>cf.waf.score <strong>lt</strong> 10</code>
+        </td>
+      </tr>
+      <tr>
+        <td>Less than<br />or equal</td>
+        <td><code>le</code></td>
+        <td><code>&lt;=</code></td>
+        <td>✅</td>
+        <td>❌</td>
+        <td>✅</td>
+        <td>
+          <code>cf.waf.score <strong>le</strong> 20</code>
+        </td>
+      </tr>
+      <tr>
+        <td>Greater than</td>
+        <td><code>gt</code></td>
+        <td><code>&gt;</code></td>
+        <td>✅</td>
+        <td>❌</td>
+        <td>✅</td>
+        <td>
+          <code>cf.waf.score <strong>gt</strong> 25</code>
+        </td>
+      </tr>
+      <tr>
+        <td>Greater than<br />or equal</td>
+        <td><code>ge</code></td>
+        <td><code>&gt;=</code></td>
+        <td>✅</td>
+        <td>❌</td>
+        <td>✅</td>
+        <td>
+          <code>cf.waf.score <strong>ge</strong> 60</code>
+        </td>
+      </tr>
+      <tr>
+        <td>Contains</td>
+        <td><code>contains</code></td>
+        <td></td>
+        <td>✅</td>
+        <td>❌</td>
+        <td>❌</td>
+        <td>
+          <code>http.request.uri.path <strong>contains</strong> "/articles/"</code>
+        </td>
+      </tr>
+      <tr>
+        <td><a href="#wildcard-matching">Wildcard</a><br/>(case-insensitive)</td>
+        <td><code>wildcard</code></td>
+        <td></td>
+        <td>✅</td>
+        <td>❌</td>
+        <td>❌</td>
+        <td>
+          <code>http.request.uri.path <strong>wildcard</strong> "/articles/*"</code>
+        </td>
+      </tr>
+      <tr>
+        <td><a href="#wildcard-matching">Strict wildcard</a><br/>(case-sensitive)</td>
+        <td><code>strict wildcard</code></td>
+        <td></td>
+        <td>✅</td>
+        <td>❌</td>
+        <td>❌</td>
+        <td>
+          <code>http.request.uri.path <strong>strict wildcard</strong> "/AdminTeam/*"</code>
+        </td>
+      </tr>
+      <tr>
+        <td><a href="#regular-expression-matching">Matches<br />regex</a><sup>2</sup></td>
+        <td><code>matches</code></td>
+        <td><code>~</code></td>
+        <td>✅</td>
+        <td>❌</td>
+        <td>❌</td>
+        <td>
+          <code>http.request.uri.path <strong>matches</strong> "^/articles/200[7-8]/$"</code>
+        </td>
+      </tr>
+      <tr>
+        <td>Is in set of values / list<sup>3</sup></td>
+        <td><code>in</code></td>
+        <td></td>
+        <td>✅</td>
+        <td>✅</td>
+        <td>✅</td>
+        <td>
+          <code>ip.src <strong>in</strong> {"{ 203.0.113.0 203.0.113.1 }"}</code><br/>
+					<code>ip.src.asnum <strong>in</strong> $&lt;LIST&gt;</code>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+{/* prettier-ignore */}
+<sup>1</sup> All string operators are case-sensitive unless explicitly stated as case-insensitive, such as the `wildcard` operator.<br/>
+<sup>2</sup> Access to the `matches` operator requires a Cloudflare Business or Enterprise plan.<br/>
+<sup>3</sup> Currently, not all Cloudflare products support lists in their expressions. For more information on lists, refer to [Inline lists](/ruleset-engine/rules-language/values/#inline-lists) and [Lists](/waf/tools/lists/).
+
+:::caution
+Comparison operators entered using English notation (such as `eq`, `lt`, and `gt`) must be written in lowercase.
+:::
+
+### Additional operators in the Cloudflare dashboard
+
+The Cloudflare dashboard may show the following additional operators, depending on the exact field and the type of rule:
+
+- _starts with_ (corresponding to the [`starts_with()`](/ruleset-engine/rules-language/functions/#starts_with) function): Returns `true` when a string starts with a given substring, and `false` otherwise.
+
+- _ends with_ (corresponding to the [`ends_with()`](/ruleset-engine/rules-language/functions/#ends_with) function): Returns `true` when a string ends with a given substring, and `false` otherwise.
+
+- _is in list_ (corresponding to `<FIELD> in $<LIST_NAME>`): Returns `true` when the field value is present in the specified [list](/waf/tools/lists/), and `false` otherwise. For more information, refer to [Use lists in expressions](/waf/tools/lists/use-in-expressions/).
+
+- _is not in list_ (corresponding to `not <FIELD> in $<LIST_NAME>`): Returns `true` when the field value is not present in the specified [list](/waf/tools/lists/), and `false` otherwise. For more information, refer to [Use lists in expressions](/waf/tools/lists/use-in-expressions/).
+
+:::note
+
+When writing your own custom expressions, you must use the `starts_with()` and `ends_with()` functions in function calls, not as operators. For example:
+
+```txt
+# Valid function call
+ends_with(http.request.uri.path, ".html")
+
+# Invalid use of ends_with function
+http.request.uri.path ends_with ".html"
+```
+
+:::
+
+### Comparing string values
+
+String comparison in rule expressions is case-sensitive. To account for possible variations of string capitalization in an expression, you can use the [`lower()`](/ruleset-engine/rules-language/functions/#lower) function and compare the result with a lowercased string, like in the following example:
+
+```txt
+lower(http.request.uri.path) contains "/wp-login.php"
+```
+
+[Wildcard matching](#wildcard-matching) is only supported with the `wildcard` and `strict wildcard` operators, and [regular expression matching](#regular-expression-matching) is only supported with the `matches` operator.
+
+### Wildcard matching
+
+The `wildcard` operator performs a case-insensitive match between a field value and a literal string containing zero or more `*` metacharacters. Each `*` metacharacter represents zero or more characters. The `strict wildcard` operator performs a similar match, but is case-sensitive.
+
+When using the `wildcard`/`strict wildcard` operator, the entire field value must match the literal string with wildcards (the literal after the operator).
+
+```txt title="Example A"
+# The following expression:
+http.request.full_uri wildcard "http*://example.com/a/*"
+
+# Would match the following URIs:
+# - https://example.com/a/           (the '*' matches zero characters)
+# - http://example.com/a/
+# - https://example.com/a/page.html
+# - https://example.com/a/sub/folder/?name=value
+
+# Would NOT match the following URIs:
+# - https://example.com/ab/
+# - https://example.com/b/page.html
+# - https://sub.example.com/a/
+```
+
+<Details header="Example B">
+
+```txt
+# The following expression:
+http.request.full_uri wildcard "*.example.com/*/page.html"
+
+# Would match the following URIs:
+# - http://sub.example.com/folder/page.html
+# - https://admin.example.com/team/page.html
+# - https://admin.example.com/team/subteam/page.html
+
+# Would NOT match the following URIs:
+# - https://example.com/ab/page.html                   ('*.example.com' matches only subdomains)
+# - https://sub.example.com/folder2/page.html?s=value  (http.request.full_uri includes the query string and its full value does not match)
+# - https://sub.example.com/a/                         ('page.html' is missing)
+```
+
+Slashes (`/`) have no special meaning in wildcard matches. In this example, the second `*` metacharacter in the expression `http.request.full_uri wildcard "*.example.com/*/page.html"` matched `folder`, `team`, and `team/subteam`.
+
+</Details>
+
+<Details header="Example C">
+
+```txt
+# The following expression:
+http.request.full_uri wildcard "*.example.com/*" or http.request.full_uri wildcard "http*://example.com/*"
+
+# Would match the following URIs:
+# - https://example.com/folder/list.htm
+# - https://admin.example.com/folder/team/app1/
+# - https://admin.example.com/folder/team/app1/?s=foobar
+```
+
+</Details>
+
+The matching algorithm used by the `wildcard` operator is case-insensitive. To perform case-sensitive wildcard matching, use the `strict wildcard` operator.
+
+To enter a literal `*` character in a literal string with wildcards you must escape it using `\*`. Additionally, you must also escape `\` using `\\`. Two unescaped `*` characters in a row (`**`) in a wildcard literal string are considered invalid and cannot be used. If you need to perform character escaping, it is recommended that you use the [raw string syntax](/ruleset-engine/rules-language/values/#raw-string-syntax) to specify a literal string with wildcards.
+
+:::note[Wildcard matching versus regex matching]
+The `wildcard`/`strict wildcard` operators always consider the entire field value (left-side operand) when determining if there is a match. The `matches` operator can match a partial value.
+:::
+
+### Regular expression matching
+
+Customers on Business and Enterprise plans have access to the `matches` operator. Regular expression matching is performed using the Rust regular expression engine.
+
+If you are using a regular expression, you can test it using a tool like [Regular Expressions 101](https://regex101.com/?flavor=rust&regex=) or [Rustexp](https://rustexp.lpil.uk/).
+
+For more information on regular expressions, refer to [String values and regular expressions](/ruleset-engine/rules-language/values/#string-values-and-regular-expressions).
+
+## Logical operators
+
+Logical operators combine two or more expressions into a single compound expression. A compound expression has this general syntax:
+
+```txt
+<expression> <logical_operator> <expression>
+```
+
+### Supported logical operators
+
+Each logical operator has an [order of precedence](#order-of-precedence). The order of precedence (along with [grouping symbols](#grouping-symbols)) determines the order in which Cloudflare evaluates logical operators in an expression. The `not` operator ranks first in order of precedence.
+
+{/* prettier-ignore */}
+<div style={{ width: "100%" }}>
+  <table style={{ width: "100%" }}>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>English<br />Notation</th>
+        <th>C-like<br />Notation</th>
+        <th>Example</th>
+        <th>Order of Precedence</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Logical NOT</td>
+        <td><code>not</code></td>
+        <td><code>!</code></td>
+        <td>
+          <code><strong>not</strong> ( http.host eq "www<span>&#8203;</span>.cloudflare<span>&#8203;</span>.com" and ip.src in {"{203.0.113.0/24}"} )</code>
+        </td>
+        <td>1</td>
+      </tr>
+      <tr>
+        <td>Logical AND</td>
+        <td><code>and</code></td>
+        <td><code>&amp;&amp;</code></td>
+        <td>
+          <code>http.host eq "www<span>&#8203;</span>.cloudflare<span>&#8203;</span>.com" <strong>and</strong> ip.src in {"{203.0.113.0/24}"}</code>
+        </td>
+        <td>2</td>
+      </tr>
+      <tr>
+        <td>Logical XOR<br />(exclusive OR)</td>
+        <td><code>xor</code></td>
+        <td><code>^^</code></td>
+        <td>
+          <code>http.host eq "www<span>&#8203;</span>.cloudflare<span>&#8203;</span>.com" <strong>xor</strong> ip.src in {"{203.0.113.0/24}"}</code>
+        </td>
+        <td>3</td>
+      </tr>
+      <tr>
+        <td>Logical OR</td>
+        <td><code>or</code></td>
+        <td><code>||</code></td>
+        <td>
+          <code>http.host eq "www<span>&#8203;</span>.cloudflare<span>&#8203;</span>.com" <strong>or</strong> ip.src in 203.0.113.0/24</code>
+        </td>
+        <td>4</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+:::caution
+Logical operators entered using English notation (such as `not`, `and`, and `or`) must be written in lowercase.
+:::
+
+### Order of precedence
+
+When writing compound expressions, it is important to be aware of the precedence of logical operators so that your expression is evaluated the way you expect.
+
+For example, consider the following generic expression, which uses `and` and `or` operators:
+
+```java
+Expression1 and Expression2 or Expression3
+```
+
+If these operators had no order of precedence, it would not be clear which of two interpretations is correct:
+
+1. Match when Expression 1 and Expression 2 are both true **or** when Expression 3 is true.
+2. Match when Expression 1 is true **and** either Expression 2 or Expression 3 is true.
+
+Since the logical `and` operator has precedence over logical `or`, the `and` operator must be evaluated first. Interpretation 1 is correct.
+
+To avoid ambiguity when working with logical operators, use grouping symbols so that the order of evaluation is explicit.
+
+## Grouping symbols
+
+The Rules language supports parentheses (`(`,`)`) as grouping symbols. Grouping symbols allow you to organize expressions, enforce precedence, and nest expressions.
+
+Only the [Expression Editor](/ruleset-engine/rules-language/expressions/edit-expressions/#expression-editor) and the [Cloudflare API](/api/) support grouping symbols. The [Expression Builder](/ruleset-engine/rules-language/expressions/edit-expressions/#expression-builder) does not.
+
+### Group expressions
+
+Use parentheses to explicitly group expressions that should be evaluated together. In this example, the parentheses do not alter the evaluation of the expression, but they unambiguously call out which logical operators to evaluate first.
+
+```java
+(Expression1 and Expression2) or Expression3
+```
+
+Because grouping symbols are so explicit, you are less likely to make errors when you use them to write compound expressions.
+
+### Enforce precedence
+
+Grouping symbols are a powerful tool to enforce precedence for grouped elements of a compound expression. In this example, parentheses force the logical `or` operator to be evaluated before the logical `and`:
+
+```java
+Expression1 and (Expression2 or Expression3)
+```
+
+Without parentheses, the logical `and` operator would take precedence.
+
+### Nest expressions
+
+You can nest expressions grouped by parentheses inside other groups to create very precise, sophisticated expressions, such as this example for a rule designed to block access to a domain:
+
+```sql
+(
+ (http.host eq "api.example.com" and http.request.uri.path eq "/api/v2/auth") or
+ (http.host matches "^(www|store|blog)\.example\.com" and http.request.uri.path contains "wp-login.php") or
+ ip.src.country in {"CN" "TH" "US" "ID" "KR" "MY" "IT" "SG" "GB"} or ip.src.asnum in {12345 54321 11111}
+) and not ip.src in {11.22.33.0/24}
+```
+
+Note that when evaluating the precedence of logical operators, parentheses inside strings delimited by quotes are ignored, such as those in the following regular expression, drawn from the example above:
+
+```sql
+"^(www|store|blog)\.example\.com"
+```

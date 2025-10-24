@@ -1,0 +1,78 @@
+---
+pcx_content_type: concept
+title: Transform Rules
+sidebar:
+  order: 5
+---
+
+import { FeatureTable, Render } from "~/components";
+
+Transform Rules allow you to adjust the URI path, query string, and HTTP headers of requests and responses on the Cloudflare global network.
+
+There are several types of Transform Rules:
+
+- [**URL Rewrite Rules**](/rules/transform/url-rewrite/): Rewrite the URL path and query string of an HTTP request.
+- [**Request Header Transform Rules**](/rules/transform/request-header-modification/): Set the value of an HTTP request header or remove a request header.
+- [**Response Header Transform Rules**](/rules/transform/response-header-modification/): Set the value of an HTTP response header or remove a response header.
+- [**Managed Transforms**](/rules/transform/managed-transforms/): Perform common adjustments to HTTP request and response headers with the click of a button.
+
+<Render
+	file="snippets-alternative"
+	product="rules"
+	params={{ suffix: "header modifications and rewrite logic" }}
+/>
+<br />
+
+<Render
+	file="rules-requirements"
+	product="rules"
+	params={{ sentenceIntro: "Transform Rules require" }}
+/>
+
+## Get started
+
+<Render file="rules-templates" product="rules" />
+
+Alternatively, create a transform rule from scratch in the dashboard or via Cloudflare API. Refer to the following sections for detailed instructions:
+
+- [URL Rewrite Rules](/rules/transform/url-rewrite/)
+- [Request Header Transform Rules](/rules/transform/request-header-modification/)
+- [Response Header Transform Rules](/rules/transform/response-header-modification/)
+- [Managed Transforms](/rules/transform/managed-transforms/)
+
+For Terraform examples, refer to [Transform Rules configuration using Terraform](/terraform/additional-configurations/transform-rules/).
+
+Refer to [Rules language](/ruleset-engine/rules-language/) for more information on building expressions for Transform Rules.
+
+## Availability
+
+Cloudflare Transform Rules are available to all customers. Support for regular expressions depends on your Cloudflare plan.
+
+This table outlines the Transform Rules features available with each customer plan:
+
+<FeatureTable id="rules.transform_rules" />
+
+A Cloudflare user must have the [Firewall role](/fundamentals/manage-members/roles/) or one of the Administrator roles to access Transform Rules.
+
+## Transform Rules evaluation
+
+Managed Transforms run before other types of Transform Rules that modify HTTP headers:
+
+- Managed Transforms that adjust HTTP request headers run before Request Header Transform Rules.
+- Managed Transforms that adjust HTTP response headers run before Response Header Transform Rules.
+
+Transform Rules run in order. Rules that appear later in the list of Transform Rules can overwrite changes done by previous rules. You can define the rule order in the dashboard or via API.
+
+Request and response fields are immutable within each [phase](/ruleset-engine/about/phases/) while evaluating Transform Rules for a request/response. For more information, refer to [Field values during rule evaluation](/ruleset-engine/about/rules/#field-values-during-rule-evaluation).
+
+<Render
+	file="challenge-issues"
+	product="rules"
+	params={{ featureName: "Rules features such as Transform Rules" }}
+/>
+
+<Render
+	file="troubleshoot-rules-with-trace"
+	product="rules"
+	params={{ rulesFeatureName: "Transform Rules" }}
+/>

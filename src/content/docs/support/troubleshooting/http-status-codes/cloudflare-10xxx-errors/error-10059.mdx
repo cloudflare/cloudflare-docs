@@ -1,0 +1,17 @@
+---
+pcx_content_type: troubleshooting
+title: Error 10059
+source: null
+---
+
+## Error 10059: Maximum number of repeated URL source paths exceeded
+
+This error indicates that the same URL path is repeated too many times across your Bulk Redirect Lists.
+
+### Common causes
+
+This error occurs when you have more than the maximum number of URL redirects with the same source URL path across all Bulk Redirect Lists in your account, regardless of the URL redirect domain. Possible causes include multiple lists containing the same redirects, overlapping configurations, or mismanagement resulting in duplicated source URL paths.
+
+### Resolution
+
+Review the path of your source URLs so that you do not have more than the maximum number of URL redirects sharing the same URL path in your account, regardless of their domain or the list they belong to. Refer to [URL redirect parameters](/rules/url-forwarding/bulk-redirects/reference/parameters/) for more information on the current limits.

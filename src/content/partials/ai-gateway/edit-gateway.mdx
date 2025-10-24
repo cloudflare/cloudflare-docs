@@ -1,0 +1,20 @@
+---
+{}
+---
+
+import { TabItem, Tabs } from "~/components";
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+To edit an AI Gateway in the dashboard:
+
+1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+2. Go to **AI** > **AI Gateway**.
+3. Select your gateway.
+4. Go to **Settings** and update as needed.
+
+</TabItem> <TabItem label="API">
+
+To edit an AI Gateway, send a [`PUT` request](/api/resources/ai_gateway/methods/update/) to the Cloudflare API.
+
+</TabItem> </Tabs>

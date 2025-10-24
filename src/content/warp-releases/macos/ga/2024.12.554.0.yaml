@@ -1,0 +1,17 @@
+releaseNotes: |
+  This release contains improvements to support custom Gateway certificate installation in addition to the changes and improvements included in version 2024.12.492.0.
+
+  Note: If using macOS Sequoia, Cloudflare recommends the use of macOS 15.2 or later. With macOS 15.2, Apple addressed several issues that may have caused the WARP client to not behave as expected when used with macOS 15.0 and 15.1.
+
+  **Changes and improvements**:
+  - Adds support for installing all available custom Gateway certificates from an account to the system store.
+  - Users can now get a list of installed certificates by running `warp-cli certs`.
+
+  **Known issues:**
+  - macOS Sequoia: Due to changes Apple introduced in macOS 15.0.x, the WARP client may not behave as expected. Cloudflare recommends the use of macOS 15.2 or later.
+
+version: 2024.12.554.0
+releaseDate: 2024-12-19T22:33:11.258Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2024.12.554.0
+packageSize: 86091189
+platformName: macOS

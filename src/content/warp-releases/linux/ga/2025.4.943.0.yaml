@@ -1,0 +1,33 @@
+releaseNotes: |-
+  This release contains a hotfix for [managed networks](/cloudflare-one/team-and-resources/devices/warp/configure-warp/managed-networks/) for the 2025.4.929.0 release.
+
+  **Changes and improvements**
+  - Fixed an issue where it could take up to 3 minutes for the correct device profile to be applied in some circumstances. In the worst case, it should now only take up to 40 seconds. This will be improved further in a future release.
+
+  **Known issues**
+  - Devices using WARP client 2025.4.929.0 and up may experience Local Domain Fallback failures if a fallback server has not been configured. To configure a fallback server, refer to [Route traffic to fallback server](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/local-domains/#route-traffic-to-fallback-server).
+
+version: 2025.4.943.0
+releaseDate: 2025-05-22T19:22:32.439Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/noble-intel/version/2025.4.943.0
+packageSize: 45531930
+platformName: Linux
+linuxPlatforms:
+  bookworm-arm: 44409958
+  bullseye-arm: 44658492
+  bullseye-intel: 45920914
+  jammy-arm: 44424602
+  buster-intel: 46054864
+  centos8-arm: 47304581
+  focal-intel: 45989210
+  focal-arm: 44726006
+  jammy-intel: 45672332
+  noble-intel: 45531930
+  centos8-intel: 48154785
+  fedora35-intel: 48281570
+  fedora34-intel: 48560964
+  fedora34-arm: 47432752
+  bookworm-intel: 45666774
+  noble-arm: 44729258
+  buster-arm: 44717578
+  fedora35-arm: 47074365

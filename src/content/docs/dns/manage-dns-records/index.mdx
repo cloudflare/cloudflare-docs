@@ -1,0 +1,74 @@
+---
+pcx_content_type: navigation
+title: DNS records
+sidebar:
+  order: 6
+
+---
+
+import { DirectoryListing, FeatureTable, GlossaryTooltip, Details, Example, Stream } from "~/components"
+
+DNS records contain information about your domain and are used to make your website or application available to visitors and other web services.
+
+Each DNS record belongs to a different type, and each type serves a different purpose. For background about the different types of DNS records, refer to the [Learning Center](https://www.cloudflare.com/learning/dns/dns-records/). To quickly find reference information about a specific type, refer to [DNS record types](/dns/manage-dns-records/reference/dns-record-types/).
+
+Depending on the providers you used to [get your domain name](/fundamentals/manage-domains/#get-a-domain-name) and [host your website or application](/fundamentals/manage-domains/#host-your-domain), it is expected that DNS records were automatically created on your behalf. According to your [setup](/dns/zone-setups/), you can use Cloudflare to manage your DNS records.
+
+<Stream id="774a5176219001b07953012bc98ebace" title="How DNS and nameservers work" thumbnail="https://pub-d9bf66e086fb4b639107aa52105b49dd.r2.dev/How%20DNS%20and%20%20nameservers%20work.png" />
+
+## DNS records table
+
+When managing your records at Cloudflare, besides the common record fields described below, you may also find an option for [Proxy status](/dns/proxy-status/) and [CNAME flattening](/dns/cname-flattening/). These are specific features offered by Cloudflare.
+
+<Details header="Record fields">
+- **Type**: Defines the purpose of a record. Different types of record require different information in their corresponding `Content` field.
+- **Name**: Identifies the resource that the record resolves to. Depending on the purpose of the record, the value you want to add to this field will also change.
+- **Content**: Contains the core value of a record, depending on the record type.
+- **TTL**: Controls how long each record is cached by DNS resolvers.
+</Details>
+
+<Details header="Example">
+
+<Example>
+DNS management for **example.com**:
+
+| Type | Name    | Content      | Proxy status | TTL    |
+| ---- | ------- | ------------ | ------------ | ------ |
+| A    | `blog`  | `192.0.2.1`  | Proxied      | Auto   |
+
+In this example, an IP address resolution record of type `A` is indicating that the resources that correspond to the subdomain `blog.example.com` can be reached on the IPv4 address `192.0.2.1`.
+
+Also, as this record is <GlossaryTooltip term="proxy status" link="/dns/proxy-status/">proxied</GlossaryTooltip>, Cloudflare automatically defines for how long this information should be cached by DNS resolvers.
+</Example>
+
+</Details>
+
+## DNS records quota
+
+There is a limit to the number of records you can create on a single <GlossaryTooltip term="DNS zone">zone</GlossaryTooltip>.
+
+- Free zones created before `2024-09-01 00:00:00 UTC`: 1,000
+- Free zones created on or after `2024-09-01 00:00:00 UTC`: 200
+- Pro: 3,500
+- Business: 3,500
+- Enterprise: 3,500
+
+:::note[For more DNS records]
+
+If you are an Enterprise customer and require more DNS records, contact your account team. Cloudflare can support millions of DNS records on a single zone.
+
+:::
+
+## Resources
+
+### How to
+
+<DirectoryListing folder="dns/manage-dns-records/how-to" />
+
+### Reference
+
+<DirectoryListing folder="dns/manage-dns-records/reference" />
+
+### Troubleshooting
+
+<DirectoryListing folder="dns/manage-dns-records/troubleshooting" />

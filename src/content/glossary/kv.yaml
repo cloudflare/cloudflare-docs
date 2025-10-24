@@ -1,0 +1,14 @@
+---
+productName: KV
+entries:
+  - term: KV namespace
+    general_definition: |-
+      a KV namespace is a key-value database replicated to Cloudflare’s global network. A KV namespace must require a binding and an id.
+
+  - term: cacheTtl
+    general_definition: |-
+      cacheTtl is a parameter that defines the length of time in seconds that a KV result is cached in the global network location it is accessed from.
+
+  - term: metadata
+    general_definition: |-
+      a metadata is a serializable value you append to each KV entry.

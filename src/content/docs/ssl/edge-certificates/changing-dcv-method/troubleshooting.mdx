@@ -1,0 +1,78 @@
+---
+title: Troubleshooting
+pcx_content_type: troubleshooting
+sidebar:
+  order: 3
+head:
+  - tag: title
+    content: Troubleshooting Domain Control Validation
+---
+
+import { GlossaryTooltip, Render } from "~/components";
+
+Taking into account the [steps involved in DCV](/ssl/edge-certificates/changing-dcv-method/dcv-flow/), some situations may interfere with certificate issuance and renewal.
+
+[Blocked validation URLs](#blocked-validation-url) or [misconfigured DNS settings](#dns-settings-and-records) might interfere with the <GlossaryTooltip term="Certificate Authority (CA)">certificate authority's</GlossaryTooltip> ability to finish the validation process. In these situations, you may need to update your configuration at Cloudflare or at your authoritative DNS provider. Additionally, there can also be [errors on the CA side](#ca-errors).
+
+:::note
+
+If you are using the Cloudflare API, error messages are presented under the `validation_errors` parameter.
+:::
+
+## Blocked validation URL
+
+If you have issues while HTTP DCV is in place, review the following settings:
+
+- **Anything affecting `/.well-known/*`**: Review [WAF custom rules](/waf/custom-rules/), [IP Access Rules](/waf/tools/ip-access-rules/), and other [configuration rules](/rules/configuration-rules/) to make sure that your rules _do not_ enable interactive challenge on the validation URL.
+
+- **Cloudflare Account Settings** and **Page Rules**: Review your [account settings](/fundamentals/reference/under-attack-mode/), [Configuration Rules](/rules/configuration-rules/), and [Page Rules](/rules/page-rules/) to ensure you have not enabled Under Attack mode on the validation URL.
+
+  :::caution
+
+  <Render file="dcv-path-security" product="ssl" />
+
+  :::
+
+## Redirection
+
+Enabling [Always Use HTTPS](/ssl/edge-certificates/additional-options/always-use-https/) does not impact the validation process.
+
+In a [Partial (CNAME) setup](/ssl/edge-certificates/changing-dcv-method/#partial-dns-setup---action-sometimes-required) where you are managing the token on the origin side, please ensure that no redirection from HTTP to HTTPS occurs on the `/.well-known/*` path.
+
+When using [Redirect Rules](/rules/url-forwarding/single-redirects/) the `/.well-known/*` path should be excluded from redirections.
+
+## DNS settings and records
+
+The errors below refer to situations that have to be addressed at the authoritative DNS provider:
+
+- `the Certificate Authority had trouble performing a DNS lookup: dns problem: looking up caa for <hostname>: dnssec: bogus`
+- `Certificate authority encountered a SERVFAIL during DNS lookup, please check your DNS reachability.`
+
+Consider the following when troubleshooting:
+
+- [DNSSEC](https://www.cloudflare.com/learning/dns/dns-security/) must be configured correctly. You can use [DNSViz](https://dnsviz.net/) to understand and troubleshoot the deployment of DNSSEC.
+- Your [CAA records](/ssl/edge-certificates/caa-records/) should allow Cloudflare's partner [certificate authorities (CAs)](/ssl/reference/certificate-authorities/) to issue certificates on your behalf.
+- Your [CAA records](/ssl/edge-certificates/caa-records/) must be resolvable from all locations.
+- The HTTP verification process is done preferably over **IPv6**, so if any AAAA record exists and does not point to the same dual-stack location as the A record, the validation will fail.
+- If an [NS record](/dns/manage-dns-records/reference/dns-record-types/#ns) is present for the hostname or its parent, DNS resolution will be managed externally by the DNS provider defined in the NS target. In this case, you must either add the DCV TXT record at the external DNS provider, or remove the NS record at Cloudflare.
+
+## CA errors
+
+### Rate limiting
+
+<Render file="error-rate-limiting" product="ssl" />
+
+### Multiple perspective CAA check error
+
+The error `Certificate authority encountered a multiple perspective CAA check error, please ensure your DNS is configured to allow CAA queries` means that the CA was not able to resolve the CAA records related to your domain from specific geographic locations.
+
+You can investigate for resolution error using the [ping.pe tool](https://dig.ping.pe/).
+For example, for a [Google Trust Services](/ssl/reference/certificate-authorities/#google-trust-services) certificate encountering this issue, you can check for: `<hostname>:CAA:8.8.8.8`.
+
+Read more from Certificate Authorities specific documentation: [SSL.com](https://www.ssl.com/blogs/multi-perspective-issuance-corroboration-mpic-arrives/), [Let's Encrypt](https://letsencrypt.org/2020/02/19/multi-perspective-validation), and [Google Trust Services](https://pki.goog/faq/#faq-mpic).
+
+### Internal errors
+
+When the certificate authority finds an issue during the CA check portion of the [DCV flow](/ssl/edge-certificates/changing-dcv-method/dcv-flow/), you may see a `Internal error with Certificate Authority` message. In this case, either wait or try a different certificate authority.
+
+When the error states that the `certificate authority will not issue for this domain`, you can try a different certificate authority or contact the CA directly.

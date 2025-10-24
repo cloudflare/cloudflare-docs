@@ -1,0 +1,56 @@
+---
+pcx_content_type: reference
+title: Connection limits
+
+---
+
+import { GlossaryTooltip } from "~/components"
+
+When HTTP/HTTPS traffic is [proxied through Cloudflare](/fundamentals/concepts/how-cloudflare-works/#cloudflare-as-a-reverse-proxy), there are often two established [TCP connections](/fundamentals/reference/tcp-connections/): the first is between the requesting client to Cloudflare and the second is between Cloudflare and the origin server. Each connection has their own set of TCP and HTTP limits, which are documented below.
+
+## Between client and Cloudflare
+
+| Type                           | Limit (seconds) | HTTP status code at limit | Configurable |
+| ------------------------------ | --------------- | ------------------------- | ------------ |
+| Connection Keep-Alive HTTP/1.1 | 400             | TCP connection closed     | No           |
+| Connection Idle HTTP/2         | 400             | TCP connection closed     | No           |
+
+## Between Cloudflare and origin server
+
+:::note
+
+If you are using [Cloudflare tunnels](/cloudflare-one/networks/connectors/cloudflare-tunnel/), refer to [Origin configuration](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cloudflared-parameters/origin-parameters/) to view or modify your connection settings.
+:::
+
+| Type                                                                                      | Limit (seconds) | HTTP status code at limit                                                                                                              | [Configurable](/fundamentals/reference/connection-limits/#configurable-limits) |
+| ----------------------------------------------------------------------------------------- | --------------- | -------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| <GlossaryTooltip term="TCP three-way handshake">Complete TCP Connection</GlossaryTooltip> | 19              | [522](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-522/)                | No                                                                             |
+| <GlossaryTooltip term="ACK (Acknowledge)">TCP ACK</GlossaryTooltip> Timeout               | 90              | [522](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-522/)                | No                                                                             |
+| <GlossaryTooltip term="TCP Keep-Alive">TCP Keep-Alive</GlossaryTooltip> Interval          | 30              | [520](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-520/)                | No                                                                             |
+| <GlossaryTooltip term="idle connection">Proxy Idle</GlossaryTooltip> Timeout              | 900             | [520](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-520/)                | No                                                                             |
+| <GlossaryTooltip term="proxy read timeout">Proxy Read Timeout</GlossaryTooltip>           | 120             | [524](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-524/)                | [Yes](/api/resources/zones/subresources/settings/methods/edit/)                       |
+| <GlossaryTooltip term="proxy write timeout">Proxy Write Timeout</GlossaryTooltip>         | 30              | [524](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-524/)                | No                                                                             |
+| HTTP/2 Pings to Origin                                                                    | Off             | -                                                                                                                                      | Yes                                                                            |
+| <GlossaryTooltip term="idle connection">HTTP/2 Connection Idle</GlossaryTooltip>          | 900             | No                                                                                                                                     | No                                                                             |
+
+## Configurable limits
+
+Some TCP connections can be customized for Enterprise customers. Reach out to your account team for more details.
+
+## Keep-Alives
+
+Cloudflare maintains keep-alive connections to improve performance and reduce cost of recurring TCP connects in the request transaction as Cloudflare proxies customer traffic from its global network to the site's origin server.
+
+Ensure HTTP keep-alive connections are enabled on your origin. Cloudflare reuses open TCP connections up to the `Proxy Idle Timeout` limit after the last HTTP request. Origin web servers close TCP connections if too many are open. HTTP keep-alive helps avoid connection resets for requests proxied by Cloudflare.
+
+## Request limits
+
+URLs have a limit of 16 KB. Request headers have a total limit of 128 KB.
+
+## Response limits
+
+Response headers observe a total limit of 128 KB.
+
+## Cache limits 
+
+Refer to the [Cache documentation](/cache/concepts/default-cache-behavior/#customization-options-and-limits) for more details about the max upload size and the cacheable file size limits.

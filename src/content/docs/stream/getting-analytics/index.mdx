@@ -1,0 +1,23 @@
+---
+pcx_content_type: navigation
+title: Analytics
+sidebar:
+  order: 8
+
+---
+import { DashButton } from "~/components";
+
+Stream provides server-side analytics that can be used to:
+
+* Identify most viewed video content in your app or platform.
+* Identify where content is viewed from and when it is viewed.
+* Understand which creators on your platform are publishing the most viewed content, and analyze trends.
+
+You can access data on either:
+- The Stream **Analytics** page of the Cloudflare dashboard.
+
+   <DashButton url="/?to=/:account/stream/analytics" />
+
+- The [GraphQL Analytics API](/stream/getting-analytics/fetching-bulk-analytics).
+
+Users will need the **Analytics** permission to access analytics via Dash or GraphQL.

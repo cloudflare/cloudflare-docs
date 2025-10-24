@@ -1,0 +1,54 @@
+---
+pcx_content_type: concept
+title: Managed Rules
+sidebar:
+  order: 7
+  group:
+    label: Managed rules
+head:
+  - tag: title
+    content: Managed Rules
+---
+
+import { FeatureTable, Render, RuleID } from "~/components";
+
+<Render file="waf-managed-rules-intro" product="waf" />
+
+## Available managed rulesets
+
+- [**Cloudflare Managed Ruleset**](/waf/managed-rules/reference/cloudflare-managed-ruleset/): Created by the Cloudflare security team, this ruleset provides fast and effective protection for all of your applications. The ruleset is updated frequently to cover new vulnerabilities and reduce false positives.<br/>Ruleset ID: <RuleID id="efb7b8c949ac4650a09736fc376e9aee" />
+
+- [**Cloudflare OWASP Core Ruleset**](/waf/managed-rules/reference/owasp-core-ruleset/): Cloudflare's implementation of the Open Web Application Security Project, or OWASP ModSecurity Core Rule Set. Cloudflare routinely monitors for updates from OWASP based on the latest version available from the official code repository.<br/>Ruleset ID: <RuleID id="4814384a9e5d4991b9815dcfc25d2f1f" />
+
+- [**Cloudflare Exposed Credentials Check**](/waf/managed-rules/reference/exposed-credentials-check/): Deploy an automated credentials check on your end-user authentication endpoints. For any credential pair, the Cloudflare WAF performs a lookup against a public database of stolen credentials. Cloudflare recommends that you use [leaked credentials detection](/waf/detections/leaked-credentials/) instead of this ruleset.<br/>Ruleset ID: <RuleID id="c2e184081120413c86c3ab7e14069605" />
+
+- **Cloudflare Free Managed Ruleset**: Available on all Cloudflare plans. Designed to provide mitigation against high and wide impacting vulnerabilities. The rules are safe to deploy on most applications. If you deployed the Cloudflare Managed Ruleset for your site, you do not need to deploy this managed ruleset.<br/>Ruleset ID: <RuleID id="77454fe2d30c4220b5701f6fdfb893ba" />
+
+The following managed rulesets run in a response phase:
+
+- [**Cloudflare Sensitive Data Detection**](/waf/managed-rules/reference/sensitive-data-detection/): Created by Cloudflare to address common data loss threats. These rules monitor the download of specific sensitive data — for example, financial and personally identifiable information.<br/>Ruleset ID: <RuleID id="e22d83c647c64a3eae91b71b499d988e" />
+
+## Availability
+
+The managed rulesets you can deploy depend on your Cloudflare plan.
+
+<FeatureTable id="security.waf_a_managed_rules" />
+
+<Render
+	file="managed-ruleset-config-options"
+	product="waf"
+	params={{
+		overridesUrl:
+			"/waf/managed-rules/deploy-zone-dashboard/#configure-a-managed-ruleset",
+	}}
+/>
+
+## Zone-level deployment
+
+At the zone level, you can only deploy each managed ruleset once. At the [account level](/waf/account/managed-rulesets/) you can deploy each managed ruleset multiple times.
+
+## Important remarks
+
+Cloudflare analyzes the body of incoming requests up to a certain maximum size that varies according to your Cloudflare plan. For Enterprise customers, the maximum body size is 128 KB, while for other plans the limit is lower. This means that the behavior of specific managed rules that analyze request bodies can vary according to your current Cloudflare plan.
+
+If included in your plan, you can use [request body fields](/ruleset-engine/rules-language/fields/reference/?field-category=Body) such as `http.request.body.truncated` or `http.request.headers.truncated` in [custom rules](/waf/custom-rules/) that apply appropriate actions to requests that have not been fully analyzed by Cloudflare due to the maximum body size.

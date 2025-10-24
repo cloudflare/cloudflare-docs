@@ -1,0 +1,18 @@
+---
+productName: Area 1
+entries:
+  - term: attribute
+    general_definition: |-
+      traffic that flows through Area 1 can receive one or more attributes, which indicate that a specific condition has been met.
+
+  - term: disposition
+    general_definition: |-
+      represents Area 1's evaluation of a specific message. For example, after evaluating an email it may get a disposition of `malicious`. Email messages with this disposition exhibit characteristics typical of malicious emails.
+
+  - term: phishing
+    general_definition: |-
+      the practice of trying to acquire sensitive data through fraudulent emails or other means. Usually, the perpetrators try to pass for a legitimate company when asking for sensitive data.
+
+  - term: SMTP
+    general_definition: |-
+      stands for Simple Mail Transfer Protocol. It is an Internet standard based on TCP/IP to send and receive email.

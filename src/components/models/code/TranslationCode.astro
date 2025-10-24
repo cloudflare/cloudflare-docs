@@ -1,0 +1,73 @@
+---
+import { z } from "astro:schema";
+import { Code } from "@astrojs/starlight/components";
+import Details from "~/components/Details.astro";
+
+type Props = z.infer<typeof props>;
+
+const props = z.object({
+	name: z.string(),
+});
+
+const { name } = props.parse(Astro.props);
+
+const worker = `
+export interface Env {
+  AI: Ai;
+}
+
+export default {
+  async fetch(request, env): Promise<Response> {
+
+    const response = await env.AI.run(
+      "${name}",
+      {
+        text: "I'll have an order of the moule frites",
+        source_lang: "english", // defaults to english
+        target_lang: "french",
+      }
+    );
+
+    return new Response(JSON.stringify(response));
+  },
+} satisfies ExportedHandler<Env>;
+`;
+
+const python = `
+import requests
+
+API_BASE_URL = "https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/"
+headers = {"Authorization": "Bearer {API_TOKEN}"}
+
+def run(model, input):
+    response = requests.post(f"{API_BASE_URL}{model}", headers=headers, json=input)
+    return response.json()
+
+output = run('${name}', {
+  "text": "I'll have an order of the moule frites",
+  "source_lang": "english",
+  "target_lang": "french"
+})
+
+print(output)
+`;
+
+const curl = `
+curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run/${name}  \\
+    -X POST  \\
+    -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN"  \\
+    -d '{ "text": "Ill have an order of the moule frites", "source_lang": "english", "target_lang": "french" }'
+`;
+---
+
+<Details header="Workers - TypeScript">
+	<Code code={worker} lang="ts" />
+</Details>
+
+<Details header="Python">
+	<Code code={python} lang="py" />
+</Details>
+
+<Details header="curl">
+	<Code code={curl} lang="sh" />
+</Details>

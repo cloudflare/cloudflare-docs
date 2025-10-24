@@ -1,0 +1,28 @@
+releaseNotes: >-
+  This releases contains a fairly major refactor of the warp-cli interface.
+  While all existing commands are backwards compatible for at least the next 6
+  months, please take a moment to look through the new warp-cli and let us know
+  what you think
+   
+  **Notable updates**
+
+  - Added ability to run pcaps from warp-cli to make debugging easier
+
+  - Modified warp-cli commands to be more consistent and readable
+
+  - Fixed an issue where tunnel could become unresponsive a few minutes after
+  coming out of sleep or after changing networks
+
+  - Fixed a small timing windows where the app could prompt the user to upgrade
+  to the latest version even when updated were disallowed by policy. This
+  happened because the GUI was able to start faster than the rest of the
+  processes.
+   
+  **Known issues**
+
+  - No known issues
+version: 2023.10.324.1
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2023.10.324.1
+packageSize: 69832601
+releaseDate: 2023-11-14T16:15:48.974Z
+platformName: macOS

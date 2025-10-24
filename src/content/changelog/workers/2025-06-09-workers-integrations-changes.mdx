@@ -1,0 +1,36 @@
+---
+title: Workers native integrations were removed from the Cloudflare dashboard
+description: The Workers native integrations have been removed from the Workers dashboard. Existing integrations continue to work, and new connections should be configured using Wrangler secrets or the dashboard.
+products:
+  - workers
+date: 2025-06-09
+---
+
+Workers native integrations were [originally launched in May 2023](https://blog.cloudflare.com/announcing-database-integrations/) to connect to popular database and observability providers with your Worker in just a few clicks. We are changing how developers connect Workers to these external services. The **Integrations** tab in the dashboard has been removed in favor of a more direct, command-line-based approach using [Wrangler secrets](/workers/wrangler/commands/#secret).
+
+## What's changed
+
+- **Integrations tab removed**: The integrations setup flow is no longer available in the Workers dashboard.
+- **Manual secret configuration**: New connections should be configured by adding credentials as secrets to your Workers using `npx wrangler secret put` commands.
+
+## Impact on existing integrations
+
+**Existing integrations will continue to work without any changes required.** If you have integrations that were previously created through the dashboard, they will remain functional.
+
+## Updating existing integrations
+
+If you'd like to modify your existing integration, you can update the secrets, environment variables, or [Tail Workers](/workers/observability/logs/tail-workers/) that were created from the original integration setup.
+
+- **Update secrets**: Use `npx wrangler secret put <SECRET_NAME>` to update credential values.
+- **Modify environment variables**: Update variables through the dashboard or Wrangler configuration.
+- **Dashboard management**: Access your Worker's settings in the [Cloudflare dashboard](https://dash.cloudflare.com) to modify connections created by our removed native integrations feature.
+
+If you have previously set up an observability integration with [Sentry](https://sentry.io), the following environment variables were set and are still modifiable:
+
+- `BLOCKED_HEADERS`: headers to exclude sending to Sentry
+- `EXCEPTION_SAMPLING_RATE`: number from 0 - 100, where 0 = no events go through to Sentry, and 100 = all events go through to Sentry
+- `STATUS_CODES_TO_SAMPLING_RATES`: a map of status codes -- like 400 or with wildcards like 4xx -- to sampling rates described above
+
+## Setting up new database and observability connections
+
+For new connections, refer to our step-by-step guides on connecting to popular database and observability providers including: [Sentry](/workers/observability/third-party-integrations/sentry), [Turso](/workers/databases/third-party-integrations/turso/), [Neon](/workers/databases/third-party-integrations/neon/), [Supabase](/workers/databases/third-party-integrations/supabase/), [PlanetScale](/workers/databases/third-party-integrations/planetscale/), [Upstash](/workers/databases/third-party-integrations/upstash/), [Xata](/workers/databases/third-party-integrations/xata/).

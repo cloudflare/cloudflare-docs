@@ -1,0 +1,29 @@
+---
+summary: Example of sub 1s latency video playback using RTMPS and ffplay
+tags:
+  - Playback
+pcx_content_type: example
+title: RTMPS playback
+sidebar:
+  order: 8
+description: Example of sub 1s latency video playback using RTMPS and ffplay
+---
+
+import { Render, DashButton } from "~/components";
+
+<Render file="prereqs_first_start_live_streaming" product="stream" />
+
+Copy the RTMPS _playback_ key for your live input from either:
+- The **Live inputs** page of the Cloudflare dashboard.
+
+   <DashButton url="/?to=/:account/stream/inputs" />
+
+- The [Stream API](/stream/stream-live/start-stream-live/#use-the-api)
+
+Paste it into the URL below, replacing `<RTMPS_PLAYBACK_KEY>`:
+
+```sh title="RTMPS playback with ffplay"
+ffplay -analyzeduration 1 -fflags -nobuffer -sync ext 'rtmps://live.cloudflare.com:443/live/<RTMPS_PLAYBACK_KEY>'
+```
+
+For more, refer to [Play live video in native apps with less than one second latency](/stream/viewing-videos/using-own-player/#play-live-video-in-native-apps-with-less-than-1-second-latency).

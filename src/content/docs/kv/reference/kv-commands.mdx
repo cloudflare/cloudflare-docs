@@ -1,0 +1,36 @@
+---
+pcx_content_type: reference
+title: Wrangler KV commands
+sidebar:
+  order: 2
+---
+
+import {Render} from "~/components"
+
+<Render file="wrangler-commands/kv" product="workers"/>
+
+## Deprecations
+
+Below are deprecations to Wrangler commands for Workers KV.
+
+### `kv:...` syntax deprecation
+
+Since version 3.60.0, Wrangler supports the `kv ...` syntax. If you are using versions below 3.60.0, the command follows the `kv:...` syntax.
+
+The `kv:...` syntax is deprecated in versions 3.60.0 and beyond and will be removed in a future major version.
+
+For example, commands using the `kv ...` syntax look as such:
+
+```sh
+wrangler kv namespace list
+wrangler kv key get <KEY>
+wrangler kv bulk put <FILENAME>
+```
+
+The same commands using the `kv:...` syntax look as such:
+
+```sh
+wrangler kv:namespace list
+wrangler kv:key get <KEY>
+wrangler kv:bulk put <FILENAME>
+```

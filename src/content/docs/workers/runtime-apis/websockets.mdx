@@ -1,0 +1,157 @@
+---
+pcx_content_type: configuration
+title: WebSockets
+head: []
+description: Communicate in real time with your Cloudflare Workers.
+
+---
+
+## Background
+
+WebSockets allow you to communicate in real time with your Cloudflare Workers serverless functions. For a complete example, refer to [Using the WebSockets API](/workers/examples/websockets/).
+
+:::note
+
+
+If your application needs to coordinate among multiple WebSocket connections, such as a chat room or game match, you will need clients to send messages to a single-point-of-coordination. Durable Objects provide a single-point-of-coordination for Cloudflare Workers, and are often used in parallel with WebSockets to persist state over multiple clients and connections. In this case, refer to [Durable Objects](/durable-objects/) to get started, and prefer using the Durable Objects' extended [WebSockets API](/durable-objects/best-practices/websockets/).
+
+
+:::
+
+## Constructor
+
+```js
+// { 0: <WebSocket>, 1: <WebSocket> }
+let websocketPair = new WebSocketPair();
+```
+
+The WebSocketPair returned from this constructor is an Object, with two WebSockets at keys `0` and `1`.
+
+These WebSockets are commonly referred to as `client` and `server`. The below example combines `Object.values` and ES6 destructuring to retrieve the WebSockets as `client` and `server`:
+
+```js
+let [client, server] = Object.values(new WebSocketPair());
+```
+
+## Methods
+
+### accept
+
+
+
+* <code>accept()</code>
+
+  * Accepts the WebSocket connection and begins terminating requests for the WebSocket on Cloudflare's global network. This effectively enables the Workers runtime to begin responding to and handling WebSocket requests.
+
+
+
+### addEventListener
+
+
+
+* <code>addEventListener(eventWebSocketEvent, callbackFunctionFunction)</code>
+
+  * Add callback functions to be executed when an event has occurred on the WebSocket.
+
+
+
+#### Parameters
+
+
+
+* `event` WebSocketEvent
+
+  * The WebSocket event (refer to [Events](/workers/runtime-apis/websockets/#events)) to listen to.
+
+* <code>callbackFunction(messageMessage)</code> Function
+
+  * A function to be called when the WebSocket responds to a specific event.
+
+
+
+### close
+
+
+
+* <code>close(codenumber, reasonstring)</code>
+
+  * Close the WebSocket connection.
+
+
+
+#### Parameters
+
+
+
+* <code>codeinteger</code> optional
+
+  * An integer indicating the close code sent by the server. This should match an option from the [list of status codes](https://developer.mozilla.org/en-US/docs/Web/API/CloseEvent#status_codes) provided by the WebSocket spec.
+
+* <code>reasonstring</code> optional
+
+  * A human-readable string indicating why the WebSocket connection was closed.
+
+
+
+### send
+
+
+
+* <code>send(messagestring | ArrayBuffer | ArrayBufferView)</code>
+
+  * Send a message to the other WebSocket in this WebSocket pair.
+
+
+
+#### Parameters
+
+
+
+* <code>messagestring</code>
+
+  * The message to send down the WebSocket connection to the corresponding client. This should be a string or something coercible into a string; for example, strings and numbers will be simply cast into strings, but objects and arrays should be cast to JSON strings using <code>JSON.stringify</code>, and parsed in the client.
+
+
+
+***
+
+## Events
+
+
+
+* <code>close</code>
+  * An event indicating the WebSocket has closed.
+
+* <code>error</code>
+  * An event indicating there was an error with the WebSocket.
+
+* <code>message</code>
+  * An event indicating a new message received from the client, including the data passed by the client.
+
+
+
+:::note
+
+
+WebSocket messages received by a Worker have a size limit of 1 MiB (1048576).  If a larger message is sent, the WebSocket will be automatically closed with a `1009` "Message is too large" response.
+
+
+:::
+
+## Types
+
+### Message
+
+
+
+* `data` any - The data passed back from the other WebSocket in your pair.
+* `type` string - Defaults to `message`.
+
+
+
+***
+
+## Related resources
+
+* [Mozilla Developer Network's (MDN) documentation on the WebSocket class](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket)
+* [Our WebSocket template for building applications on Workers using WebSockets](https://github.com/cloudflare/websocket-template)

@@ -1,0 +1,34 @@
+---
+{}
+
+---
+
+import { Render, Details, GlossaryTooltip } from "~/components"
+
+## Before transferring a domain to Cloudflare
+
+* Create [a Cloudflare account](/fundamentals/account/create-account/).
+* [Add the domain](/fundamentals/manage-domains/add-site/) you are transferring to your Cloudflare account.
+* [Review your DNS records](/dns/zone-setups/full-setup/setup/#review-dns-records) in the Cloudflare dashboard.
+* If needed, plan for [DNSSEC disablement](#disable-dnssec).
+* [Change your DNS nameservers](/dns/zone-setups/full-setup/) to Cloudflare.
+* If initiating multiple transfers, notify your financial institution to prevent them from flagging these charges as fraudulent.
+* Renew your domain if it is within 15 days of expiration.
+* Do not make any changes to the Registrant contact information. Updating the Registrant contact may result in your current registrar locking the domain for 60 days.
+* Make sure your account has a valid credit card on file.
+* If you are transferring a `.us` domain, refer to the [Additional requirements for .US domains](/registrar/top-level-domains/us-domains/) before proceeding.
+
+### Disable DNSSEC
+
+If you are onboarding an existing domain to Cloudflare, make sure DNSSEC **is disabled** at your registrar. Otherwise, your domain will experience connectivity errors when you change your nameservers.
+
+1. Take note of the <GlossaryTooltip term="time-to-live (TTL)">TTL</GlossaryTooltip> value for the DS record at your current registrar.
+2. Remove DS records at your current registrar.
+    <Render file="dnssec-providers" product="dns" />
+3. Wait at least the time corresponding to the DS record TTL. It is usually 24 hours, but refer to the value you got in step 1.
+4. Follow the steps to [transfer your domain](/registrar/get-started/transfer-domain-to-cloudflare/#set-up-a-domain-transfer) to Cloudflare Registrar.
+5. [Enable DNSSEC](/dns/dnssec/#1-activate-dnssec-in-cloudflare) at Cloudflare. This will automatically add your DS to the zone parent via Cloudflare Registrar.
+
+<Details header="Why you have to disable DNSSEC">
+<Render file="why-disable-dnssec" product="dns" />
+</Details>

@@ -1,0 +1,83 @@
+---
+{}
+---
+
+import { Tabs, TabItem } from "~/components";
+
+Specifies how an image should be cropped when used with `fit=cover` and `fit=crop`.
+Available options are `auto`, `face`, a side (`left`, `right`, `top`, `bottom`), and relative coordinates (`XxY` with a valid range of `0.0` to `1.0`):
+
+- `auto`\
+  Selects focal point based on saliency detection (using maximum symmetric surround algorithm).
+- `side`\
+  A side (`"left"`, `"right"`, `"top"`, `"bottom"`) or coordinates specified on a scale from `0.0` (top or left) to `1.0` (bottom or right), `0.5` being the center. The X and Y coordinates are separated by lowercase `x` in the URL format. For example, `0x1` means left and bottom, `0.5x0.5` is the center, `0.5x0.33` is a point in the top third of the image.
+
+  For the Workers integration, use an object `{x, y}` to specify coordinates. It contains focal point coordinates in the original image expressed as fractions ranging from `0.0` (top or left) to `1.0` (bottom or right), with `0.5` being the center. `{fit: "cover", gravity: {x:0.5, y:0.2}}` will crop each side to preserve as much as possible around a point at 20% of the height of the source image.
+
+:::note
+You must subtract the height of the image before you calculate the focal point.
+:::
+
+- `face`\
+	Automatically sets the focal point based on detected faces in an image. This can be combined with the `zoom` parameter to specify how closely the image should be cropped towards the faces.
+
+	The new focal point is determined by a minimum bounding box that surrounds all detected faces. If no faces are found, then the focal point will fall back to the center of the image.
+
+	This feature uses an open-source model called RetinaFace through WorkersAI. Our model pipeline is limited only to facial detection, or identifying the pixels that represent a human face. We do not support facial identification or recognition. Read more about Cloudflare's [approach to responsible AI](https://www.cloudflare.com/trust-hub/responsible-ai/).
+
+<Tabs>
+  <TabItem label="URL format">
+    ```js
+    gravity=auto
+
+    OR
+
+    gravity=left
+
+    OR
+
+    gravity=0x1
+
+    OR
+
+    gravity=face
+    ```
+
+  </TabItem>
+  <TabItem label="URL format alias">
+    ```js
+    g=auto
+
+    OR
+
+    g=left
+
+    OR
+
+    g=0x1
+
+    OR
+
+    g=face
+    ```
+
+  </TabItem>
+  <TabItem label="Workers">
+  ```js
+  cf: {image: {gravity: "auto"}}
+
+OR
+
+cf: {image: {gravity: "right"}}
+
+OR
+
+cf: {image: {gravity: {x:0.5, y:0.2}}}
+
+OR
+
+cf: {image: {gravity: "face"}}
+```
+</TabItem>
+</Tabs>
+```

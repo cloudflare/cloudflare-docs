@@ -1,0 +1,85 @@
+---
+import { getPartialsUsage } from "~/util/components";
+
+import Details from "./Details.astro";
+import UsageList from "./UsageList.astro";
+
+const allPartials = await getPartialsUsage();
+
+const singleUsePartials = Object.fromEntries(
+	Object.entries(allPartials).filter(([, value]) => value.count === 1),
+);
+
+const zeroUsePartials = Object.fromEntries(
+	Object.entries(allPartials).filter(([, value]) => value.count === 0),
+);
+---
+
+<Details
+	header={`All partials (${Object.keys(allPartials).length} files)`}
+	id="partials-container"
+>
+	{
+		[...Object.entries(allPartials)]
+			.sort((a, b) => a[0].localeCompare(b[0]))
+			.map(([name, usage]) => (
+				<Details
+					header={`${name} (${usage.count} uses on ${usage.pages.size} pages)`}
+					id={name}
+				>
+					<UsageList usage={usage} />
+				</Details>
+			))
+	}
+</Details>
+
+<br />
+
+<Details
+	header={`1 use partials (${Object.keys(singleUsePartials).length} files)`}
+	id="one-use-partials-container"
+>
+	{
+		[...Object.entries(singleUsePartials)]
+			.sort((a, b) => a[0].localeCompare(b[0]))
+			.map(([name, usage]) => (
+				<p>{`${name} (${usage.count} uses on ${usage.pages.size} pages)`}</p>
+			))
+	}
+</Details>
+
+<br />
+
+<Details
+	header={`0 use partials (${Object.keys(zeroUsePartials).length} files)`}
+	id="unused-partials-container"
+>
+	{
+		[...Object.entries(zeroUsePartials)]
+			.sort((a, b) => a[0].localeCompare(b[0]))
+			.map(([name, usage]) => (
+				<p>{`${name} (${usage.count} uses on ${usage.pages.size} pages)`}</p>
+			))
+	}
+</Details>
+
+<script>
+	const params = new URLSearchParams(window.location.search);
+	console.log(params);
+	const partial = params.get("partial");
+
+	if (partial) {
+		const container = document.querySelector<HTMLDetailsElement>(
+			"#partials-container",
+		);
+		const details = document.querySelector<HTMLDetailsElement>(
+			`#${CSS.escape(partial)}`,
+		);
+
+		if (container && details) {
+			container.open = true;
+			details.open = true;
+			details.scrollIntoView();
+		}
+	}
+</script>

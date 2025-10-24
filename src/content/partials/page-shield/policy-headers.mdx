@@ -1,0 +1,8 @@
+---
+{}
+---
+
+When you create policies, Cloudflare will generate content security policy (CSP) directives from those policies based on their configuration:
+
+- Log policies will create CSP directives for the `Content-Security-Policy-Report-Only` HTTP header.
+- Allow policies will create CSP directives for the `Content-Security-Policy` HTTP header.

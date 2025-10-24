@@ -1,0 +1,11 @@
+---
+import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
+import { Glossary as GlossaryComponent } from "~/components";
+import { Badge } from "~/components";
+---
+
+<StarlightPage frontmatter={{ title: "Glossary", template: "splash" }}>
+	<Badge text="Beta" variant="caution" size="medium" />
+	<br />
+	<GlossaryComponent />
+</StarlightPage>

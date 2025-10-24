@@ -1,0 +1,140 @@
+---
+pcx_content_type: concept
+title: Glossary entry
+---
+
+import { GlossaryDefinition, GlossaryTooltip } from "~/components";
+
+## Definition
+
+A single term and corresponding definition in the glossary.
+
+## Used in
+
+Glossary, documentation pages, tooltips.
+
+## Structure
+
+### Data
+
+The data underlying our glossary lives with YAML files in the [`/src/content/glossary/*`](https://github.com/cloudflare/cloudflare-docs/tree/production/src/content/glossary) folder.
+
+Each file should be structured similar to the following:
+
+```yaml title="dns.yaml"
+---
+productName: DNS
+entries:
+  - term: active zone
+    general_definition: |-
+      a DNS zone that is active on Cloudflare requires changing its nameservers to Cloudflare's for management.
+    associated_products:
+      - Cloudflare One
+
+  - term: apex domain
+    general_definition: |-
+      apex domain is used to refer to a domain that does not contain a subdomain part, such as `example.com` (without `www.`). It is also known as "root domain" or "naked domain".
+
+  - term: DNS over HTTPS
+    general_definition: |-
+      DNS over HTTPS (DoH) is a standard for encrypting DNS traffic, preventing tracking and spoofing of DNS queries.
+    associated_products:
+      - 1.1.1.1
+      - Cloudflare One
+
+  - term: DNS over TLS
+    general_definition: |-
+      DNS over TLS (DoT) is a standard for encrypting DNS traffic using its own port (853) and TLS encryption.
+    associated_products:
+      - 1.1.1.1
+      - Cloudflare One
+```
+
+Relevant values include the following:
+
+- `productName` string required
+
+  - Core product associated with this file. Should always match the same formatting / styling used in `associated_products`.
+
+- `entries` object required
+
+  - `term` string required
+
+    - The glossary term itself.
+
+  - `general_definition` string required
+
+    - Definition of the term. Should be general enough to apply to multiple products. Should also start with a lowercase letter unless starting with a proper noun.
+
+  - `associated_products` array optional
+
+    - If the term is associated with other products. Any names used should correspond to the `productName` of that associated file.
+
+### Usage
+
+Because of the [structured data](#data) associated with our glossaries, we can pull these terms into multiple places.
+
+#### Product-level glossary
+
+A product-level glossary includes all terms associated with a particular product, which will pull in terms directly in that product's glossary file and any terms that include the product in its `associated_products`.
+
+```mdx title="/src/content/docs/dns/glossary.mdx"
+---
+title: Glossary
+pcx_content_type: glossary
+---
+
+import { Glossary } from "~/components";
+
+Review the definitions for terms used across Cloudflare's DNS documentation.
+
+<Glossary product="dns" />
+```
+
+#### Glossary definition
+
+Pull glossary definitions directly into your Markdown by using the `<GlossaryDefinition>` component.
+
+> <GlossaryDefinition term="active zone" />
+
+Is a quoted definition that comes from:
+
+```mdx
+<GlossaryDefinition term="active zone" prepend="An active zone is " />
+```
+
+Properties are:
+
+- `term` string required
+
+  - Should match a term within an existing glossary YAML file.
+
+- `prepend` string optional
+
+  - Text to add before a definition.
+
+#### Glossary tooltip
+
+Pull component definitions into a focusable tooltip for a specific phrase by using the `<GlossaryTooltip>` component.
+
+Here's a <GlossaryTooltip term="active zone">tooltip</GlossaryTooltip> example.
+
+```mdx
+Here's a <GlossaryTooltip term="active zone">tooltip</GlossaryTooltip> example.
+```
+
+Properties are:
+
+- `term` string required
+
+  - Should match a term within an existing glossary YAML file.
+
+- `prepend` string optional
+
+  - Text to add before a definition.
+
+- `link` string optional
+
+  - Wraps the inner text in a markdown link, similar to normal markdown formatting.
+
+Because of space limitations, the tooltip will always default to the short definition of a term, meaning the definition text before the first line break.

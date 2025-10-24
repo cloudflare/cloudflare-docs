@@ -1,0 +1,49 @@
+---
+title: Mobile implementation
+pcx_content_type: concept
+sidebar:
+  order: 6
+
+---
+
+Turnstile is designed to run in a standard browser environment, which includes mobile devices. On native mobile applications, Turnstile can be used with WebViews. This applies to native web applications for iOS and Android. When implementing Turnstile for mobile, ensure you address the common issues below to avoid integration problems.
+
+Any modifications to the environment, such as the User Agent, [Content Security Policy settings](/turnstile/reference/content-security-policy/), or domain allowlisting, can disrupt the successful completion of Turnstile challenges. To ensure compatibility, it is recommended to start with a default, unmodified environment and gradually introduce changes, validating Turnstile's functionality after each adjustment.
+
+
+## WebView configurations
+
+Turnstile requires specific WebView settings to function properly. For Android implementations, refer to [`setJavaScriptEnabled`](https://developer.android.com/reference/android/webkit/WebSettings#setJavaScriptEnabled(boolean)) to tell the WebView to enable JavaScript execution and [`setDomStorageEnabled`](https://developer.android.com/reference/android/webkit/WebSettings#setDomStorageEnabled(boolean)) to enable the DOM storage API.
+
+These settings ensure that the mobile WebView can properly load and execute the Turnstile challenge. If these configurations are missing, Turnstile may malfunction.
+
+## Update allowed origins
+
+In addition to ensuring proper WebView settings, if you have allowed origins configured, it is essential to update the list to include:
+
+```txt
+
+challenges.cloudflare.com, about:blank, about:srcdoc
+
+```
+
+:::note
+
+Only [React Native](https://github.com/react-native-webview/react-native-webview/blob/master/docs/Reference.md#originwhitelist) contains the allowed origins above by default.
+:::
+
+Without this, Turnstile challenges might fail to load. WebView should also be configured to allow insecure connections (`http` and `https`).
+
+## Maintain a consistent user agent
+
+When implementing Turnstile with WebViews, the user agent must stay consistent as changing the user agent will cause the challenges to fail.
+
+## Use clearance cookies
+
+When using [clearance cookies](/cloudflare-challenges/concepts/clearance/#pre-clearance-support-in-turnstile) with Turnstile, make sure that it is executed in the same environment where the challenges will occur, including the same browser and device configuration. The `cf_clearance` cookie will be only accepted in the same configured domain for Turnstile widget with the corresponding zone. Domains configured with the Turnstile widget must match the Cloudflare zone that issues [challenges](/cloudflare-challenges/).
+
+If pre-clearance is done in a different environment, the clearance cookie may become invalid and lead to more issued challenges.
+
+## Use Flutter with Turnstile
+
+For developers using [Flutter](https://pub.dev/packages/flutter_inappwebview), Turnstile is compatible and tested with Flutter's WebView implementation. Refer to the official Flutter WebView package for more details and usage. 

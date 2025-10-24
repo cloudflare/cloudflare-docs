@@ -1,0 +1,65 @@
+---
+title: Cloudflare Tunnel
+pcx_content_type: get-started
+sidebar:
+  order: 1
+head:
+  - tag: title
+    content: Cloudflare Tunnel setup - Keyless SSL
+---
+
+import { Render } from "~/components";
+
+Through an integration with [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/), you can send traffic to a key server through a secure channel and avoid exposing your key server to the public Internet.
+
+---
+
+<Render file="keyless-prereqs" product="ssl" />
+
+---
+
+## 1. Install `cloudflared` on key server
+
+First, install `cloudflared` on your key server.
+
+<Render file="keyless-tunnel-setup" product="ssl" /> <br />
+
+## 2. Create a Tunnel
+
+Then, create a Cloudflare Tunnel.
+
+<Render file="keyless-tunnel-setup" product="ssl" /> <br />
+
+In these steps, you should choose the option to **Connect a network** and use the private IP address of your key server.
+
+After you create the Tunnel, use the Cloudflare API to [List tunnel routes](/api/resources/zero_trust/subresources/networks/subresources/routes/methods/list/), saving the following values for a future step:
+
+- `"virtual_network_id"`
+- `"network"`
+
+## 3. Upload Keyless SSL Certificates
+
+<Render file="keyless-upload-preamble" product="ssl" />
+
+To upload a Keyless certificate with the API, send a [`POST`](/api/resources/keyless_certificates/methods/create/) request that includes a `"tunnel"` object.
+
+```json
+"tunnel": {
+  "vnet_id": "<VIRTUAL_NETWORK_ID>",
+  "private_ip": "<NETWORK>"
+}
+```
+
+:::note
+
+When you receive the `network` value from the Tunnel route API, it will include a subnet mask, such as `10.0.0.1/32`. Remove the subnet mask and use the IP address (`10.0.0.1`).
+
+:::
+
+## 4. Set up and activate key server
+
+<Render
+	file="keyless-key-server-setup"
+	product="ssl"
+	params={{ one: "keyserver.keyless.example.com" }}
+/>

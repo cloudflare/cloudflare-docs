@@ -1,0 +1,17 @@
+releaseNotes: |
+  This is a release focused on fixes and improvements.
+
+  **Notable updates:**
+  - Fixed a known issue where the certificate was not always properly left behind in `/Library/Application Support/Cloudflare/installed_cert.pem`.
+  - Fixed an issue so that that the reauth notification is cleared from the UI when the user switches configurations.
+  - Fixed an issue by correcting the WARP client setting of macOS firewall rules. This relates to TunnelVision (CVE-2024-3661).
+  - Fixed an issue that could cause the Cloudflare WARP menu bar application to disappear when switching configurations.
+
+  **Known issues:**
+  - If a user has an MDM file configured to support multiple profiles (for the switch configurations feature), and then changes to an MDM file configured for a single profile, the WARP client may not connect. The workaround is to use the 'warp-cli registration delete' command to clear the registration, and then re-register the client.
+
+version: 2024.5.287.1
+releaseDate: 2024-05-21T22:03:52.187Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2024.5.287.1
+packageSize: 74534251
+platformName: macOS

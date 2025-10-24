@@ -1,0 +1,69 @@
+---
+pcx_content_type: concept
+title: Reference architecture diagram
+meta:
+  title: Content type - Reference architecture diagram
+---
+
+import { Render } from "~/components";
+
+## Purpose
+
+To provide a visual reference and explanation of using Cloudflare for a specific solution.
+
+:::note[Disambiguation]
+
+This page describes the content strategy for a reference architecture diagram. For help with Cloudflare products, refer to [Reference archiectures diagrams](/reference-architecture/diagrams/).
+
+:::
+
+## Tone
+
+instructional, straightforward
+
+## content_type
+
+```yaml
+pcx_content_type: reference-architecture-diagram
+```
+
+For more details, refer to [`pcx_content_type`](/style-guide/frontmatter/custom-properties/#pcx_content_type).
+
+## Components
+
+### Most used
+
+- [`PublicStats`](/style-guide/components/public-stats/): <Render file="public-stats-definition" product="style-guide" />
+- [Diagrams](/style-guide/documentation-content-strategy/component-attributes/diagrams/): Particularly helpful for image captions.
+
+### Required
+
+[**Title**](/style-guide/documentation-content-strategy/component-attributes/titles/): Short verb phrase in second-person imperative. Do not use gerund phrases.
+
+[**Reference diagram**](/style-guide/documentation-content-strategy/component-attributes/reference-diagram/): A single diagram that reflects the overall reference architecture.
+
+### Optional
+
+[**Notes/warnings**](/style-guide/documentation-content-strategy/component-attributes/notes-tips-warnings/)
+
+**Screenshots**
+
+[**Related links**](/style-guide/documentation-content-strategy/component-attributes/links/): Bulleted list of links to associated resources.
+
+## Template
+
+```
+# Cloudflare Reference Architecture Diagram
+
+Provide a description as to what the diagram below contains.
+
+![Example reference architecture diagram](/images/reference-architecture/cloudflare-one-reference-architecture-images/cf1-ref-arch-14.svg "The above is an example reference architecture diagram")
+
+1. Call out
+2. Any numbered items
+3. In the diagram
+4. To explain their meaning/use
+
+Provide some context to the diagram. What it relates to and link to any supporting content.
+
+```

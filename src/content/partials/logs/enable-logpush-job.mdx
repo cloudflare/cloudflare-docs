@@ -1,0 +1,16 @@
+---
+{}
+
+---
+
+import { DashButton } from "~/components";
+
+1. In the Cloudflare dashboard, go to the **Logpush** page at the account or or domain (also known as zone) level.
+ 
+   For account: <DashButton url="/?to=/:account/logs" />
+ 
+   For domain (also known as zone): <DashButton url="/?to=/:account/:zone/analytics/logs" />
+
+2. Depending on your choice, you have access to [account-scoped datasets](/logs/logpush/logpush-job/datasets/account/) and [zone-scoped datasets](/logs/logpush/logpush-job/datasets/zone/), respectively.
+
+3. Select **Create a Logpush job**.

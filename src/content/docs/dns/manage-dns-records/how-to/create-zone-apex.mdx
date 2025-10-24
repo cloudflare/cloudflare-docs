@@ -1,0 +1,51 @@
+---
+pcx_content_type: reference
+title: Create zone apex record
+sidebar:
+  order: 3
+---
+
+import { Example, Render } from "~/components";
+
+When you add a domain to Cloudflare, you may also need to create or review the DNS record on your zone apex. Zone apex refers to the domain (`example.com`) or subdomain (`blog.example.com`) that you are [adding to Cloudflare](/dns/concepts/#zone).
+
+Usually, the zone apex record makes your domain accessible by visitors. In this case, the necessary record type ([A, AAAA, or CNAME](/dns/manage-dns-records/reference/dns-record-types/#ip-address-resolution)) and its content will depend on the provider that [hosts](/fundamentals/manage-domains/#host-your-domain) your website or application. If you are using Cloudflare Pages, refer to [Custom domains](/pages/configuration/custom-domains/). If you are using other providers, look for their guidance on how to connect domains managed on external DNS services.
+
+### ANAME or ALIAS
+
+<Render file="aname-alias-callout" product="dns" />
+
+## Zone apex record
+
+To create a zone apex record, use `@` for the record **Name**, as in the following example.
+
+<Example>
+
+| Type | Name | IPv4 address | Proxy status |
+| ---- | ---- | ------------ | ------------ |
+| A    | `@`  | `192.0.2.1`  | Proxied      |
+
+</Example>
+
+<Render
+	file="dns-record-steps"
+	product="dns"
+	params={{
+		name: "your zone apex",
+		example: "@",
+	}}
+/>
+
+## Domain redirects
+
+Once you create a domain, you may want to route that traffic to other places.
+
+For more guidance, refer to [Redirect domain to subdomain](/fundamentals/manage-domains/manage-subdomains/#redirect-the-apex-domain-to-a-subdomain) or [Redirect one domain to another](/fundamentals/manage-domains/redirect-domain/).
+
+## Get free SSL certificates
+
+While DNS is what communicates where your website or application can be reached, SSL/TLS is what enables websites and applications to establish connections in a secure way.
+
+If your domain is not correctly covered by an SSL/TLS certificate, your visitors will find a warning on their browser stating that your website or application is not secure.
+
+Cloudflare offers free, unshared, publicy trusted [Universal SSL certificates](/ssl/edge-certificates/universal-ssl/) to all Cloudflare domains.

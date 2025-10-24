@@ -1,0 +1,23 @@
+---
+pcx_content_type: changelog
+title: Browser Isolation
+head:
+  - tag: title
+    content: Browser Isolation Changelog
+description: Review recent changes to Cloudflare Browser Isolation.
+---
+
+import { ProductChangelog, Render } from "~/components";
+
+{/* <!-- All changelog entries live in src/content/changelogs/browser-isolation/. */}
+
+<ProductChangelog
+	product="browser-isolation"
+	hideEntry="2024-06-16-cloudflare-one"
+/>
+
+## 2024-03-21
+
+**Removed third-party cookie dependencies**
+
+Removed dependency on third-party cookies in the isolated browser, fixing an issue that previously caused intermittent disruptions for users maintaining multi-site, cross-tab sessions in the isolated browser.

@@ -1,0 +1,165 @@
+---
+pcx_content_type: navigation
+title: TypeScript
+sidebar:
+  order: 2
+head:
+  - tag: title
+    content: Write Cloudflare Workers in TypeScript
+---
+
+import { TabItem, Tabs, PackageManagers, Render } from "~/components";
+
+TypeScript is a first-class language on Cloudflare Workers. All APIs provided in Workers are fully typed, and type definitions are generated directly from [workerd](https://github.com/cloudflare/workerd), the open-source Workers runtime.
+
+We recommend you generate types for your Worker by running [`wrangler types`](/workers/wrangler/commands/#types). Cloudflare also publishes type definitions to [GitHub](https://github.com/cloudflare/workers-types) and [npm](https://www.npmjs.com/package/@cloudflare/workers-types) (`npm install -D @cloudflare/workers-types`).
+
+<h3 id="generate-types">
+	Generate types that match your Worker's configuration
+</h3>
+
+Cloudflare continuously improves [workerd](https://github.com/cloudflare/workerd), the open-source Workers runtime.
+Changes in workerd can introduce JavaScript API changes, thus changing the respective TypeScript types.
+
+This means the correct types for your Worker depend on:
+
+1. Your Worker's [compatibility date](/workers/configuration/compatibility-dates/).
+2. Your Worker's [compatibility flags](/workers/configuration/compatibility-flags/).
+3. Your Worker's bindings, which are defined in your [Wrangler configuration file](/workers/wrangler/configuration).
+4. Any [module rules](/workers/wrangler/configuration/#bundling) you have specified in your Wrangler configuration file under `rules`.
+
+For example, the runtime will only allow you to use the [`AsyncLocalStorage`](https://nodejs.org/api/async_context.html#class-asynclocalstorage) class if you have `compatibility_flags = ["nodejs_als"]` in your [Wrangler configuration file](/workers/wrangler/configuration/). This should be reflected in the type definitions.
+
+To ensure that your type definitions always match your Worker's configuration, you can dynamically generate types by running:
+
+<PackageManagers type="exec" pkg="wrangler" args={"types"} />
+
+See [the `wrangler types` command docs](/workers/wrangler/commands/#types) for more details.
+
+:::note
+
+<Render file="wrangler-commands/runtime-types" product="workers" />
+
+:::
+
+This will generate a `d.ts` file and (by default) save it to `worker-configuration.d.ts`. This will include `Env` types based on your Worker bindings _and_ runtime types based on your Worker's compatibility date and flags.
+
+You should then add that file to your `tsconfig.json`'s `compilerOptions.types` array. If you have the `nodejs_compat` compatibility flag, you should also install `@types/node`.
+
+You can commit your types file to git if you wish.
+
+:::note
+
+To ensure that your types are always up-to-date, make sure to run `wrangler types` after any changes to your config file.
+
+:::
+
+<h3 id="migrating">
+	Migrating from `@cloudflare/workers-types` to `wrangler types`
+</h3>
+
+We recommend you use `wrangler types` to generate runtime types, rather than using the `@cloudflare/workers-types` package, as it generates types based on your Worker's [compatibility date](https://github.com/cloudflare/workerd/tree/main/npm/workers-types#compatibility-dates) and `compatibility flags`, ensuring that types match the exact runtime APIs made available to your Worker.
+
+:::note
+
+There are no plans to stop publishing the `@cloudflare/workers-types` package, which will still be the recommended way to type libraries and shared packages in the workers environment.
+
+:::
+
+#### 1. Uninstall `@cloudflare/workers-types`
+
+<PackageManagers type="remove" pkg="@cloudflare/workers-types" />
+
+#### 2. Generate runtime types using Wrangler
+
+<PackageManagers type="exec" pkg="wrangler" args={"types"} />
+
+This will generate a `.d.ts` file, saved to `worker-configuration.d.ts` by default. This will also generate `Env` types. If for some reason you do not want to include those, you can set `--include-env=false`.
+
+You can now remove any imports from `@cloudflare/workers-types` in your Worker code.
+
+:::note
+
+<Render file="wrangler-commands/runtime-types" product="workers" />
+
+:::
+
+#### 3. Make sure your `tsconfig.json` includes the generated types
+
+```json
+{
+	"compilerOptions": {
+		"types": ["./worker-configuration.d.ts"]
+	}
+}
+```
+
+Note that if you have specified a custom path for the runtime types file, you should use that in your `compilerOptions.types` array instead of the default path.
+
+#### 4. Add @types/node if you are using [`nodejs_compat`](/workers/runtime-apis/nodejs/) (Optional)
+
+If you are using the `nodejs_compat` compatibility flag, you should also install `@types/node`.
+
+<PackageManagers type="add" pkg="@types/node" />
+
+Then add this to your `tsconfig.json`.
+
+```json
+{
+	"compilerOptions": {
+		"types": ["./worker-configuration.d.ts", "node"]
+	}
+}
+```
+
+#### 5. Update your scripts and CI pipelines
+
+Regardless of your specific framework or build tools, you should run the `wrangler types` command before any tasks that rely on TypeScript.
+
+Most projects will have existing build and development scripts, as well as some type-checking. In the example below, we're adding the `wrangler types` before the type-checking script in the project:
+
+```json
+{
+	"scripts": {
+		"dev": "existing-dev-command",
+		"build": "existing-build-command",
+		"generate-types": "wrangler types",
+		"type-check": "generate-types && tsc"
+	}
+}
+```
+
+We recommend you commit your generated types file for use in CI. Alternatively, you can run `wrangler types` before other CI commands, as it should not take more than a few seconds. For example:
+
+<Tabs> <TabItem label="npm">
+
+```yaml
+- run: npm run generate-types
+- run: npm run build
+- run: npm test
+```
+
+</TabItem> <TabItem label="yarn">
+
+```yaml
+- run: yarn generate-types
+- run: yarn build
+- run: yarn test
+```
+
+</TabItem> <TabItem label="pnpm">
+
+```yaml
+- run: pnpm run generate-types
+- run: pnpm run build
+- run: pnpm test
+```
+
+</TabItem> </Tabs>
+
+### Resources
+
+- [TypeScript template](https://github.com/cloudflare/workers-sdk/tree/main/packages/create-cloudflare/templates/hello-world/ts)
+- [@cloudflare/workers-types](https://github.com/cloudflare/workers-types)
+- [Runtime APIs](/workers/runtime-apis/)
+- [TypeScript Examples](/workers/examples/?languages=TypeScript)

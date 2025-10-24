@@ -1,0 +1,95 @@
+---
+import { Card, LinkCard } from "@astrojs/starlight/components";
+import Render from "~/components/Render.astro";
+---
+
+<div>
+	<h2>Build with Cloudflare</h2>
+	<div class="sl-flex">
+		<input type="radio" id="section1" name="sections" checked />
+		<input type="radio" id="section2" name="sections" />
+		<input type="radio" id="section3" name="sections" />
+		<input type="radio" id="section4" name="sections" />
+		<input type="radio" id="section5" name="sections" />
+
+		<div class="tryit-sidebar">
+			<Card title="">
+				<div class="*:block *:rounded-sm *:p-2">
+					<label for="section1" id="section1Label">
+						<strong>Return HTML</strong>
+					</label>
+					<label for="section2" id="section2Label">
+						<strong>Return JSON</strong>
+					</label>
+					<label for="section3" id="section3Label">
+						<strong>Fetch HTML</strong>
+					</label>
+					<label for="section4" id="section4Label">
+						<strong>Redirect</strong>
+					</label>
+					<label for="section5" id="section5Label">
+						<strong>Respond with another site</strong>
+					</label>
+				</div>
+			</Card>
+		</div>
+
+		<div class="tryit-code mt-0! ml-8 w-full">
+			<div id="section1Content" class="mt-0! hidden">
+				<Render file="return-html-example-js" product="workers" />
+			</div>
+			<div id="section2Content" class="mt-0! hidden">
+				<Render file="return-json-example-js" product="workers" />
+			</div>
+			<div id="section3Content" class="mt-0! hidden">
+				<Render file="fetch-html-example-js" product="workers" />
+			</div>
+			<div id="section4Content" class="mt-0! hidden">
+				<Render file="redirect-example-js" product="workers" />
+			</div>
+			<div id="section5Content" class="mt-0! hidden">
+				<Render file="respond-another-site-example-js" product="workers" />
+			</div>
+		</div>
+	</div>
+	<LinkCard title="Learn more about Workers" href="/workers/" />
+</div>
+
+<style>
+	input[type="radio"] {
+		display: none;
+	}
+
+	:root {
+		--active-background: rgb(46 105 255);
+		--hover-background: rgb(46 105 255 / 0.5);
+		--active-text-color: white;
+	}
+
+	:root[data-theme="dark"] {
+		--active-background: rgb(246 130 31);
+		--hover-background: rgb(246 130 31 / 0.5);
+		--active-text-color: black;
+	}
+
+	#section1:checked ~ .tryit-code #section1Content,
+	#section2:checked ~ .tryit-code #section2Content,
+	#section3:checked ~ .tryit-code #section3Content,
+	#section4:checked ~ .tryit-code #section4Content,
+	#section5:checked ~ .tryit-code #section5Content {
+		display: block;
+	}
+
+	#section1:checked ~ .tryit-sidebar #section1Label,
+	#section2:checked ~ .tryit-sidebar #section2Label,
+	#section3:checked ~ .tryit-sidebar #section3Label,
+	#section4:checked ~ .tryit-sidebar #section4Label,
+	#section5:checked ~ .tryit-sidebar #section5Label {
+		background-color: var(--active-background);
+		color: var(--active-text-color);
+	}
+
+	.tryit-sidebar label:hover {
+		background-color: var(--hover-background);
+	}
+</style>

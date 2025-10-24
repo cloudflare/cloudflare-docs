@@ -1,0 +1,14 @@
+---
+productName: Turnstile
+entries:
+  - term: CAPTCHA
+    general_definition: |-
+      A CAPTCHA test is designed to determine if an online user is really a human and not a bot. CAPTCHA is an acronym that stands for "Completely Automated Public Turing test to tell Computers and Humans Apart."
+
+  - term: secret key
+    general_definition: |-
+      The secret key allows communication between your application backend and the Cloudflare Turnstile server to validate the widget response.
+
+  - term: sitekey
+    general_definition: |-
+      The sitekey is used to invoke Turnstile on your site.

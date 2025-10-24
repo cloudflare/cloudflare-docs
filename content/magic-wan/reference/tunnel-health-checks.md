@@ -1,8 +1,0 @@
----
-title: Tunnel health checks
-pcx_content_type: concept
-meta:
-    description: Magic WAN uses probes to check for tunnel health. Review information on this page to learn more.
----
-
-{{<render file="_tunnel-health-checks.md" productFolder="magic-transit" withParameters="/magic-wan/how-to/tunnel-health-checks/#update-health-check-frequency;;Magic WAN;;/magic-wan/get-started/configure-static-routes/;;/magic-wan/get-started/configure-tunnels/;;/magic-wan/get-started/configure-tunnels/#add-tunnels">}}

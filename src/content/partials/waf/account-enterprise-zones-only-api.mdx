@@ -1,0 +1,7 @@
+---
+{}
+---
+
+:::caution
+You can only apply rate limiting rulesets to incoming traffic of zones on an Enterprise plan. To enforce this requirement, you must include `cf.zone.plan eq "ENT"` in the expression of the `execute` rule deploying the rate limiting ruleset.
+:::

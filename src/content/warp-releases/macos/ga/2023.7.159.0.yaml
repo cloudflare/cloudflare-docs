@@ -1,0 +1,17 @@
+releaseNotes: >-
+  This update is recommended for all customers and includes an important
+  reliability fix.
+   
+  **Notable updates**
+
+  - Fixed issue where client could take up to 1-2 minutes to recover
+  connectivity instead of 1-2 seconds in the event of a service issue  
+   
+  **Known issues**
+
+  - No known issues
+version: 2023.7.159.0
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2023.7.159.0
+packageSize: 63885141
+releaseDate: 2023-07-21T01:15:03.874Z
+platformName: macOS

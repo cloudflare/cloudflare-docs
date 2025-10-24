@@ -1,0 +1,111 @@
+---
+title: Get started
+pcx_content_type: get-started
+sidebar:
+  order: 2
+  group:
+    badge: beta
+head:
+  - tag: title
+    content: Get started with Cloudflare AI Crawl Control
+description: Learn how to set up AI Crawl Control.
+---
+
+import { Details, Render, Steps, Tabs, TabItem, GlossaryTooltip, DashButton } from "~/components";
+
+This guide instructs you on how to:
+
+- View AI crawlers that are interacting with pages in your domain (a [Cloudflare zone](/fundamentals/concepts/accounts-and-zones/#zones)).
+- Use AI Crawl Control to block individual crawlers from accessing your content.
+
+## Prerequisites
+
+1. Sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up/).
+2. [Connect your domain to Cloudflare](/fundamentals/manage-domains/add-site/).
+3. Make sure your domain is [proxying traffic through Cloudflare](/fundamentals/concepts/how-cloudflare-works/#cloudflare-as-a-reverse-proxy).
+
+## 1. Block specific AI crawlers
+
+<Tabs syncKey="plans">
+<TabItem label="All plans">
+
+To only block specific AI crawlers:
+
+{/* prettier-ignore */}
+<Steps>
+1. Go to **AI Crawl Control**.
+
+   <DashButton url="/?to=/:account/:zone/ai" />
+
+2. From the **Crawlers** tab, go to the list of AI crawlers.
+3. Review the AI crawlers that are accessing your domain.
+4. From the **Block** column, select the option **Block**.
+</Steps>
+
+:::note[Quality of AI crawler detection]
+On the free plan, AI Crawl Control identifies AI crawlers based on their [user agent strings](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/User-Agent). This enables AI Crawl Control to detect well-known, self-identifying AI crawlers.
+
+Upgrade your plan to enable a more thorough detection using Cloudflare's [Bot Management detection ID](/bots/reference/bot-management-variables/#ruleset-engine-fields) field.
+:::
+
+</TabItem> <TabItem label="Paid plans">
+
+To only block specific AI crawlers:
+
+{/* prettier-ignore */}
+<Steps>
+1. Go to **AI Crawl Control**.
+
+   <DashButton url="/?to=/:account/:zone/ai" />
+
+2. From the **Crawlers** tab, go to the list of AI crawlers.
+3. Review key information such as:
+   - Bot operator
+   - Number of requests sent by the AI crawler
+   - Whether the AI crawler is allowed according to your `robots.txt`, or the number of times the AI crawler has violated your `robots.txt`.
+4. From the **Block** column, toggle the switch for AI crawlers you wish to block.
+</Steps>
+
+</TabItem>
+</Tabs>
+
+For more information, refer to [Manage AI crawlers](/ai-crawl-control/features/manage-ai-crawlers/).
+
+You can also create more complex rules when taking action on AI crawlers, using [Cloudflare WAF](/waf/). For more information on creating more specific rules, refer to [Create a custom rule in the dashboard](/waf/custom-rules/create-dashboard/).
+
+## 2. Review detected AI crawlers
+
+<Tabs>
+<TabItem label="All plans">
+
+Review the AI crawlers detected on your site.
+
+<Steps>
+1. Go to **AI Crawl Control**.
+
+   <DashButton url="/?to=/:account/:zone/ai" />
+
+2. From the **Metrics** tab, view key metrics on AI crawlers.
+</Steps>
+</TabItem>
+</Tabs>
+
+Note that on free plans, the **Metrics** tab only displays metrics for the past 24 hours.
+
+## Plan comparison
+
+<Render file="plan-comparison" product="ai-crawl-control" />
+
+## Next steps
+
+- [Manage AI crawlers](/ai-crawl-control/features/manage-ai-crawlers/) with granular allow/block controls.
+- [Analyze AI traffic](/ai-crawl-control/features/analyze-ai-traffic/) to understand crawler patterns and content popularity.
+- [Explore pay per crawl](/ai-crawl-control/features/pay-per-crawl/what-is-pay-per-crawl/) to test content monetization options (private beta).
+
+## Related resources
+
+Refer to the following related resources:
+
+- Cloudflare blog: [Start auditing and controlling the AI models accessing your content](https://blog.cloudflare.com/nl-nl/cloudflare-ai-audit-control-ai-content-crawlers/)
+- Block AI crawlers that do not adhere to recommended guidelines using [Cloudflare AI Labyrinth](/bots/additional-configurations/ai-labyrinth/).
+- [Direct AI crawlers with managed robots.txt](/bots/additional-configurations/managed-robots-txt/).

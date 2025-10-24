@@ -1,0 +1,10 @@
+---
+{}
+
+---
+
+Avoid configuring your [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/local-domains/) or [Resolver Policy](/cloudflare-one/traffic-policies/resolver-policies/) to direct all `*.amazonaws.com` DNS resolution via AWS Route 53 Resolver.
+
+Some AWS endpoints (such as `ssm.us-east-1.amazonaws.com`) are public AWS endpoints that are not resolvable via internal VPC resolution. This can break AWS Console features for users on WARP.
+
+Only route specific Route 53 zones, or VPC Endpoints (such as `vpce.amazonaws.com`), through the internal VPC resolver.

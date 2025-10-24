@@ -1,0 +1,25 @@
+releaseNotes: |
+  This release contains minor fixes and improvements.
+
+  Note: If using macOS Sequoia, Cloudflare recommends the use of macOS 15.2 or later. With macOS 15.2, Apple addressed several issues that may have caused the WARP client to not behave as expected when used with macOS 15.0 and 15.1.
+
+  **Changes and improvements:**
+  - Consumers can now set the tunnel protocol using `warp-cli tunnel protocol set <protocol>`.
+  - Extended diagnostics collection time in `warp-diag` to ensure logs are captured reliably.
+  - Improved captive portal support by disabling the firewall during captive portal login flows.
+  - Improved reliability of connection establishment logic under degraded network conditions.
+  - Improved reconnection speed when a Cloudflare server is in a degraded state.
+  - Improved captive portal detection on certain public networks.
+  - Fixed an issue where admin override displayed an incorrect override end time.
+  - Reduced connectivity interruptions on WireGuard Split Tunnel Include mode configurations.
+  - Fixed connectivity issues switching between managed network profiles with different configured protocols.
+  - QLogs are now disabled by default and can be enabled with `warp-cli debug qlog enable`. The QLog setting from previous releases will no longer be respected.
+
+  **Known issues:**
+  - macOS Sequoia: Due to changes Apple introduced in macOS 15.0, the WARP client may not behave as expected. Cloudflare recommends the use of macOS 15.2 or later.
+
+version: 2024.12.492.0
+releaseDate: 2024-12-19T01:34:27.719Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2024.12.492.0
+packageSize: 84696492
+platformName: macOS

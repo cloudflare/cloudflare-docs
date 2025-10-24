@@ -1,0 +1,51 @@
+---
+import { getCollection } from "astro:content";
+import { z } from "astro:schema";
+
+import { process } from "~/util/rehype";
+import rehypeExternalLinks from "~/plugins/rehype/external-links";
+
+type Props = z.infer<typeof props>;
+
+const props = z.object({
+	type: z.enum(["apps", "videos"]),
+	tags: z.string().array().optional(),
+	products: z.string().array().optional(),
+	cloudflareOnly: z.boolean().default(true),
+});
+
+const { type, tags, products, cloudflareOnly } = props.parse(Astro.props);
+
+const resources = await getCollection(type, (e) => {
+	return (
+		(cloudflareOnly ? e.data.cloudflare : true) &&
+		(tags ? e.data.tags?.some((v: string) => tags.includes(v)) : true) &&
+		(products
+			? e.data.products?.some((v: string) => products.includes(v))
+			: true)
+	);
+});
+
+if (!resources) {
+	throw new Error("Failed to load data");
+}
+
+resources.sort((a, b) => Number(b.data.updated) - Number(a.data.updated));
+---
+
+<ul>
+	{
+		resources.map(async (e) => {
+			const anchor = await process(`<a href=${e.data.link}>${e.id}:</a>`, [
+				rehypeExternalLinks,
+			]);
+
+			return (
+				<li>
+					<Fragment set:html={anchor} />
+					<span>{e.data.description}</span>
+				</li>
+			);
+		})
+	}
+</ul>

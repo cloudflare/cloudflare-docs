@@ -1,0 +1,125 @@
+---
+title: 3 – Configure HTTPS settings
+pcx_content_type: tutorial
+sidebar:
+  order: 4
+head:
+  - tag: title
+    content: Configure HTTPS settings
+description: >-
+  This tutorial shows how to enable TLS 1.3, Automatic HTTPS Rewrites, and Strict SSL mode using the updated v5 provider.
+---
+
+import { Render } from "~/components";
+
+After setting up basic DNS records, you can configure zone settings using Terraform. This tutorial shows how to enable [TLS 1.3](/ssl/edge-certificates/additional-options/tls-13/), [Automatic HTTPS Rewrites](/ssl/edge-certificates/additional-options/automatic-https-rewrites/), and [Strict SSL mode](/ssl/origin-configuration/ssl-modes/full-strict/) using the updated v5 provider.
+
+## Prerequisites
+
+- Completed tutorials [1](/terraform/tutorial/initialize-terraform/) and [2](/terraform/tutorial/track-history/)
+- Valid SSL certificate on your origin server (use the [Cloudflare Origin CA](/ssl/origin-configuration/origin-ca/) to generate one for strict SSL mode)
+
+<Render file="v5-code-snippets" product="terraform" />
+## 1. Create zone setting configuration
+
+Create a new branch and add zone settings:
+
+```bash
+git checkout -b step3-zone-setings
+```
+
+Add the following to your `main.tf` file:
+
+```hcl
+# Enable TLS 1.3
+resource "cloudflare_zone_setting" "tls_1_3" {
+  zone_id    = var.zone_id
+  setting_id = "tls_1_3"
+  value      = "on"
+}
+
+# Enable automatic HTTPS rewrites
+resource "cloudflare_zone_setting" "automatic_https_rewrites" {
+  zone_id    = var.zone_id
+  setting_id = "automatic_https_rewrites"
+  value      = "on"
+}
+
+# Set SSL mode to strict
+resource "cloudflare_zone_setting" "ssl" {
+  zone_id    = var.zone_id
+  setting_id = "ssl"
+  value      = "strict"
+}
+```
+
+## 2. Preview and apply the changes
+
+Review the proposed changes:
+
+```sh
+terraform plan
+```
+
+Expected output
+
+```sh output
+Plan: 3 to add, 0 to change, 0 to destroy.
+
+Terraform will perform the following actions:
+
+  # cloudflare_zone_setting.automatic_https_rewrites will be created
+  + resource "cloudflare_zone_setting" "automatic_https_rewrites" {
+      + setting_id = "automatic_https_rewrites"
+      + value      = "on"
+      + zone_id    = "your-zone-id"
+    }
+
+  # cloudflare_zone_setting.ssl will be created
+  + resource "cloudflare_zone_setting" "ssl" {
+      + setting_id = "ssl"
+      + value      = "strict"
+      + zone_id    = "your-zone-id"
+    }
+
+  # cloudflare_zone_setting.tls_1_3 will be created
+  + resource "cloudflare_zone_setting" "tls_1_3" {
+      + setting_id = "tls_1_3"
+      + value      = "on"
+      + zone_id    = "your-zone-id"
+    }
+```
+
+Commit and merge the changes:
+
+```bash
+git add main.tf
+git commit -m "Step 3 - Enable TLS 1.3, automatic HTTPS rewrites, and strict SSL"
+git checkout main
+git merge step3-zone-settings
+git push
+```
+
+Before applying the changes, try to connect with TLS 1.3. Technically, you should not be able to with default settings. To follow along with this test, you will need to [compile `curl` against BoringSSL](https://everything.curl.dev/source/build/tls/boringssl#build-boringssl).
+
+```sh
+curl -v --tlsv1.3 https://www.example.com 2>&1 | grep "SSL connection\|error"
+```
+
+As shown above, you should receive an error because TLS 1.3 is not yet enabled on your zone. Enable it by running `terraform apply` and try again.
+
+Apply the configuration:
+
+```sh
+terraform apply
+```
+
+Type `yes` when prompted.
+
+## 3. Verify the settings
+
+Try the same command as before. The command will now succeed.
+
+```sh
+curl -v --tlsv1.3 https://www.example.com 2>&1 | grep "SSL connection\|error"
+```

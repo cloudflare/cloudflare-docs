@@ -1,0 +1,31 @@
+---
+import { z } from "astro:schema";
+import { Icon as AstroIcon } from "astro-icon/components";
+
+type Props = z.infer<typeof props>;
+
+const props = z.object({
+	header: z.string(),
+	href: z.string(),
+	product: z.string(),
+});
+
+const { header, href, product } = props.parse(Astro.props);
+---
+
+<div class="grid grid-cols-[32px_auto] items-start gap-x-2">
+	<AstroIcon
+		name={product}
+		class="text-7xl text-[color:var(--orange-accent-200)]"
+	/>
+	<div class="mt-0!">
+		<strong>
+			<a
+				href={href}
+				class="text-black! decoration-[color:var(--orange-accent-200)]"
+				>{header}</a
+			>
+		</strong>
+		<slot />
+	</div>
+</div>

@@ -1,0 +1,49 @@
+---
+pcx_content_type: reference
+source: https://support.cloudflare.com/hc/en-us/articles/200170086-Understanding-the-Cloudflare-Browser-Integrity-Check
+title: Browser Integrity Check
+---
+
+import { Render, Tabs, TabItem, Steps, DashButton } from "~/components";
+
+<Render file="bic-description" product="waf" />
+
+Browser Integrity Check is enabled by default.
+
+## Disable Browser Integrity Check
+
+### Disable globally
+
+To disable BIC globally for your zone:
+
+<Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
+
+<Steps>
+
+1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com).
+2. Select your account and zone.
+3. Go to **Security** > **Settings**.
+4. Turn off **Browser Integrity Check**.
+
+</Steps>
+
+</TabItem> <TabItem label="New dashboard" icon="rocket">
+
+<Steps>
+
+1. In the Cloudflare dashboard, go to the Security **Settings** page.
+
+   <DashButton url="/?to=/:account/:zone/security/settings" />
+
+2. (Optional) Filter by **DDoS attacks**.
+3. Turn off **Browser integrity check**.
+
+</Steps>
+
+</TabItem> </Tabs>
+
+### Disable selectively
+
+To disable BIC selectively, you can skip Browser Integrity Check using a [custom rule with a skip action](/waf/custom-rules/skip/).
+
+Also, use a [configuration rule](/rules/configuration-rules/) to selectively enable or disable this feature for certain sections of your website using a filter expression (such as a matching hostname or request URL path).

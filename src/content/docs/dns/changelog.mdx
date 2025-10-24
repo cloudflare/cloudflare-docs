@@ -1,0 +1,33 @@
+---
+pcx_content_type: changelog
+title: Changelog
+sidebar:
+  order: 25
+---
+
+import { ProductChangelog } from "~/components";
+
+{/* <!-- Actual content lives in /src/content/changelogs/dns/. Update the file there for new entries to appear here. */}
+
+<ProductChangelog product="dns"/>
+
+## 2025-01-27
+
+**Zone IDs and names on individual DNS records**
+
+Records returned by the API will no longer contain the `zone_id` and `zone_name` fields. This change may take up to four weeks to fully roll out. The affected fields were deprecated with an End of Life (EOL) date of November 30, 2024.
+
+## 2024-10-15
+
+**Quote validation for TXT records added via dashboard**
+
+When creating [TXT records](/dns/manage-dns-records/reference/dns-record-types/#txt) via the dashboard you will now find:
+
+* Field validation errors if double quotes `"` are added inconsistently.
+* Automatically quoted TXT content upon save if no quotes exist in the record content field.
+
+## 2024-10-07
+
+**API support for per-record CNAME flattening**
+
+Paid zones now have the option to flatten specific CNAME records. When using the API, specify the setting `cname_flatten` as `true` or `false`. Refer to the [documentation](/dns/cname-flattening/set-up-cname-flattening/#per-record) for details.

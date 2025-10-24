@@ -1,0 +1,14 @@
+---
+pcx_content_type: concept
+title: Connection reuse
+sidebar:
+  order: 4
+---
+
+import { Render } from "~/components";
+
+Smart Shield leverages Cloudflare's optimized infrastructure to package multiple requests from an [upper-tier](/smart-shield/configuration/smart-tiered-cache/) into a single connection to your origin. This means overall connections to your origin are lowered by 30% on average. Refer to the [blog post](https://blog.cloudflare.com/introducing-observatory-and-smart-shield/#protecting-and-accelerating-origins-with-smart-connection-reuse) for details.
+
+## About connection reuse
+
+<Render file="connection-reuse" product="aegis" />

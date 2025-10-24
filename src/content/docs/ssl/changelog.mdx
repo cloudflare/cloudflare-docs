@@ -1,0 +1,24 @@
+---
+pcx_content_type: changelog
+title: Changelog
+sidebar:
+  order: 24
+---
+
+import { ProductChangelog } from "~/components";
+
+{/* <!-- Actual content lives in /src/content/changelog/ssl. Update the file there for new entries to appear here. */}
+
+<ProductChangelog product="ssl" />
+
+## 2024-10-18
+
+**New cloudflare\_branding flag allows hostnames with over 64 characters for all CAs**
+
+To order certificates for hostnames longer than 64 characters, customers can now use the `cloudflare_branding` flag when ordering a certificate via [API](https://developers.cloudflare.com/api/resources/ssl/subresources/certificate_packs/methods/create/). Setting `cloudflare_branding` to `true` will cause `sni.cloudflaressl.com` to be used as the common name, while the long hostname is added as part of the subject alternative name (SAN).
+
+## 2024-09-19
+
+**SSL.com available with ACM and SSL for SaaS**
+
+SSL.com is one of the [certificate authorities](/ssl/reference/certificate-authorities/) that Cloudflare partners with. SSL.com is now available as an option to customers with Advanced Certificate Manager (ACM) or SSL for SaaS. Consider our [reference documentation](/ssl/reference/certificate-authorities/#sslcom) for details.

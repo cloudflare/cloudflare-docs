@@ -1,0 +1,209 @@
+---
+title: Insert vectors
+pcx_content_type: concept
+sidebar:
+  order: 4
+---
+
+import { Render } from "~/components";
+
+Vectorize indexes allow you to insert vectors at any point: Vectorize will optimize the index behind the scenes to ensure that vector search remains efficient, even as new vectors are added or existing vectors updated.
+
+:::note[Insert vs Upsert]
+
+If the same vector id is _inserted_ twice in a Vectorize index, the index would reflect the vector that was added first.
+
+If the same vector id is _upserted_ twice in a Vectorize index, the index would reflect the vector that was added last.
+
+Use the upsert operation if you want to overwrite the vector value for a vector id that already exists in an index.
+
+:::
+
+## Supported vector formats
+
+Vectorize supports the insert/upsert of vectors in three formats:
+
+- An array of floating point numbers (converted into a JavaScript `number[]` array).
+- A [Float32Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float32Array)
+- A [Float64Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float64Array)
+
+In most cases, a `number[]` array is the easiest when dealing with other APIs, and is the return type of most machine-learning APIs.
+
+Vectorize stores and restitutes vector dimensions as Float32; vector dimensions provided as Float64 will be converted to Float32 before being stored.
+
+## Metadata
+
+Metadata is an optional set of key-value pairs that can be attached to a vector on insert or upsert, and allows you to embed or co-locate data about the vector itself.
+
+Metadata keys cannot be empty, contain the dot character (`.`), contain the double-quote character (`"`), or start with the dollar character (`$`).
+
+Metadata can be used to:
+
+- Include the object storage key, database UUID or other identifier to look up the content the vector embedding represents.
+- Store JSON data (up to the [metadata limits](/vectorize/platform/limits/)), which can allow you to skip additional lookups for smaller content.
+- Keep track of dates, timestamps, or other metadata that describes when the vector embedding was generated or how it was generated.
+
+For example, a vector embedding representing an image could include the path to the [R2 object](/r2/) it was generated from, the format, and a category lookup:
+
+```ts
+{ id: '1', values: [32.4, 74.1, 3.2, ...], metadata: { path: 'r2://bucket-name/path/to/image.png', format: 'png', category: 'profile_image' } }
+```
+
+### Performance Tips When Filtering by Metadata
+
+When creating metadata indexes for a large Vectorize index, we encourage users to think ahead and plan how they will query for vectors with filters on this metadata.
+
+Carefully consider the cardinality of metadata values in relation to your queries. Cardinality is the level of uniqueness of data values within a set. Low cardinality means there are only a few unique values: for instance, the number of planets in the Solar System; the number of countries in the world. High cardinality means there are many unique values: UUIv4 strings; timestamps with millisecond precision.
+
+High cardinality is good for the selectiveness of the equal (`$eq`) filter. For example, if you want to find vectors associated with one user's id. But the filter is not going to help if all vectors have the same value. That's an example of extreme low cardinality.
+
+High cardinality can also impact range queries, which searches across multiple unqiue metadata values. For example, an indexed metadata value using millisecond timestamps will see lower performance if the range spans long periods of time in which thousands of vectors with unique timestamps were written.
+
+Behind the scenes, Vectorize uses a reverse index to map values to vector ids. If the number of unique values in a particular range is too high, then that requires reading large portions of the index (a full index scan in the worst case). This would lead to memory issues, so Vectorize will degrade performance and the accuracy of the query in order to finish the request.
+
+One approach for high cardinality data is to somehow create buckets where more vectors get grouped to the same value. Continuing the millisecond timestamp example, let's imagine we typically filter with date ranges that have 5 minute increments of granularity. We could use a timestamp which is rounded down to the last 5 minute point. This "windows" our metadata values into 5 minute increments. And we can still store the original millisecond timestamp as a separate non-indexed field.
+
+## Namespaces
+
+Namespaces provide a way to segment the vectors within your index. For example, by customer, merchant or store ID.
+
+To associate vectors with a namespace, you can optionally provide a `namespace: string` value when performing an insert or upsert operation. When querying, you can pass the namespace to search within as an optional parameter to your query.
+
+A namespace can be up to 64 characters (bytes) in length and you can have up to 1,000 namespaces per index. Refer to the [Limits](/vectorize/platform/limits/) documentation for more details.
+
+When a namespace is specified in a query operation, only vectors within that namespace are used for the search. Namespace filtering is applied before vector search, increasing the precision of the matched results.
+
+To insert vectors with a namespace:
+
+```ts
+// Mock vectors
+// Vectors from a machine-learning model are typically ~100 to 1536 dimensions
+// wide (or wider still).
+const sampleVectors: Array<VectorizeVector> = [
+	{
+		id: "1",
+		values: [32.4, 74.1, 3.2, ...],
+		namespace: "text",
+	},
+	{
+		id: "2",
+		values: [15.1, 19.2, 15.8, ...],
+		namespace: "images",
+	},
+	{
+		id: "3",
+		values: [0.16, 1.2, 3.8, ...],
+		namespace: "pdfs",
+	},
+];
+
+// Insert your vectors, returning a count of the vectors inserted and their vector IDs.
+let inserted = await env.TUTORIAL_INDEX.insert(sampleVectors);
+```
+
+To query vectors within a namespace:
+
+```ts
+// Your queryVector will be searched against vectors within the namespace (only)
+let matches = await env.TUTORIAL_INDEX.query(queryVector, {
+	namespace: "images",
+});
+```
+
+## Improve Write Throughput
+
+One way to reduce the time to make updates visible in queries is to batch more vectors into fewer requests. This is important for write-heavy workloads. To see how many vectors you can write in a single request, please refer to the [Limits](/vectorize/platform/limits/) page.
+
+Vectorize writes changes immeditely to a write ahead log for durability. To make these writes visible for reads, an asynchronous job needs to read the current index files from R2, create an updated index, write the new index files back to R2, and commit the change. To keep the overhead of writes low and improve write throughput, Vectorize will combine multiple changes together into a single batch. It sets the maximum size of a batch to 200,000 total vectors or to 1,000 individual updates, whichever limit it hits first.
+
+For example, let's say we have 250,000 vectors we would like to insert into our index. We decide to insert them one at a time, calling the insert API 250,000 times. Vectorize will only process 1000 vectors in each job, and will need to work through 250 total jobs. This could take at least an hour to do.
+
+The better approach is to batch our updates. For example, we can split our 250,000 vectors into 100 files, where each file has 2,500 vectors. We would call the insert HTTP API 100 times. Vectorize would update the index in only 2 or 3 jobs. All 250,000 vectors will visible in queries within minutes.
+
+## Examples
+
+### Workers API
+
+Use the `insert()` and `upsert()` methods available on an index from within a Cloudflare Worker to insert vectors into the current index.
+
+```ts
+// Mock vectors
+// Vectors from a machine-learning model are typically ~100 to 1536 dimensions
+// wide (or wider still).
+const sampleVectors: Array<VectorizeVector> = [
+	{
+		id: "1",
+		values: [32.4, 74.1, 3.2, ...],
+		metadata: { url: "/products/sku/13913913" },
+	},
+	{
+		id: "2",
+		values: [15.1, 19.2, 15.8, ...],
+		metadata: { url: "/products/sku/10148191" },
+	},
+	{
+		id: "3",
+		values: [0.16, 1.2, 3.8, ...],
+		metadata: { url: "/products/sku/97913813" },
+	},
+];
+
+// Insert your vectors, returning a count of the vectors inserted and their vector IDs.
+let inserted = await env.TUTORIAL_INDEX.insert(sampleVectors);
+```
+
+Refer to [Vectorize API](/vectorize/reference/client-api/) for additional examples.
+
+### wrangler CLI
+
+:::note[Cloudflare API rate limit]
+
+Please use a maximum of 5000 vectors per embeddings.ndjson file to prevent the global [rate limit](/fundamentals/api/reference/limits/) for the Cloudflare API.
+
+:::
+
+You can bulk upload vector embeddings directly:
+
+- The file must be in newline-delimited JSON (NDJSON format): each complete vector must be newline separated, and not within an array or object.
+- Vectors must be complete and include a unique string `id` per vector.
+
+An example NDJSON formatted file:
+
+```json
+{ "id": "4444", "values": [175.1, 167.1, 129.9], "metadata": {"url": "/products/sku/918318313"}}
+{ "id": "5555", "values": [158.8, 116.7, 311.4], "metadata": {"url": "/products/sku/183183183"}}
+{ "id": "6666", "values": [113.2, 67.5, 11.2], "metadata": {"url": "/products/sku/717313811"}}
+```
+
+<Render file="vectorize-wrangler-version" product="vectorize" />
+
+```sh
+wrangler vectorize insert <your-index-name> --file=embeddings.ndjson
+```
+
+### HTTP API
+
+Vectorize also supports inserting vectors via the [REST API](/api/resources/vectorize/subresources/indexes/methods/insert/), which allows you to operate on a Vectorize index from existing machine-learning tooling and languages (including Python).
+
+For example, to insert embeddings in [NDJSON format](#workers-api) directly from a Python script:
+
+```py
+import requests
+
+url = "https://api.cloudflare.com/client/v4/accounts/{}/vectorize/v2/indexes/{}/insert".format("your-account-id", "index-name")
+
+headers = {
+    "Authorization": "Bearer <your-api-token>"
+}
+
+with open('embeddings.ndjson', 'rb') as embeddings:
+    resp = requests.post(url, headers=headers, files=dict(vectors=embeddings))
+    print(resp)
+```
+
+This code would insert the vectors defined in `embeddings.ndjson` into the provided index. Python libraries, including Pandas, also support the NDJSON format via the built-in `read_json` method:
+
+```py
+import pandas as pd
+data = pd.read_json('embeddings.ndjson', lines=True)
+```

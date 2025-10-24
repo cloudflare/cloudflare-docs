@@ -1,0 +1,32 @@
+---
+title: Create monitor
+pcx_content_type: learning-unit
+sidebar:
+  order: 2
+---
+
+import { Render, TabItem, Tabs } from "~/components";
+
+<Render file="test-domain-setup" product="load-balancing" />
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+<strong>Set up the monitor</strong>
+
+<Render file="monitor-create" product="load-balancing" />
+
+<strong>Prepare your servers</strong>
+
+<Render file="monitor-prepare-server" product="load-balancing" /> </TabItem> <TabItem label="API">
+
+<strong>Set up the monitor</strong>
+
+<Render file="monitor-create-api" product="load-balancing" />
+
+<strong>Prepare your servers</strong>
+
+<Render file="monitor-prepare-server" product="load-balancing" />
+
+</TabItem> </Tabs>
+
+<Render file="monitor-example" product="load-balancing" />

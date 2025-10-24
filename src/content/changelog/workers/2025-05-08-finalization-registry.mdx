@@ -1,0 +1,13 @@
+---
+title: Improved memory efficiency for WebAssembly Workers
+description: With the introduction of FinalizationRegistry in Workers Runtime, toolchains like Emscripten and wasm-bindgen can automatically reclaim unused WebAssembly heap and reduce memory leaks.
+products:
+  - workers
+date: 2025-05-08
+---
+
+[FinalizationRegistry](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/FinalizationRegistry) is now available in Workers. You can opt-in using the [`enable_weak_ref`](/workers/configuration/compatibility-flags/#enable-finalizationregistry-and-weakref) compatibility flag.
+
+This can reduce memory leaks when using WebAssembly-based Workers, which includes [Python Workers](/workers/languages/python/) and [Rust Workers](/workers/languages/rust/). The FinalizationRegistry works by enabling toolchains such as [Emscripten](https://emscripten.org/) and [wasm-bindgen](https://rustwasm.github.io/wasm-bindgen/) to automatically free WebAssembly heap allocations. If you are using WASM and seeing Exceeded Memory errors and cannot determine a cause using [memory profiling](/workers/observability/dev-tools/memory-usage/), you may want to enable the FinalizationRegistry.
+
+For more information refer to the [`enable_weak_ref`](/workers/configuration/compatibility-flags/#enable-finalizationregistry-and-weakref) compatibility flag documentation.

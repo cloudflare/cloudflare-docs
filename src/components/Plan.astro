@@ -1,0 +1,42 @@
+---
+import { z } from "astro:schema";
+import { indexPlans } from "~/util/plans";
+import { zodEnumFromObjKeys } from "~/util/helpers";
+
+const mappings = {
+	all: "Available on all plans",
+	paid: "Available on Paid plans",
+	pro: "Pro and above",
+	business: "Business and above",
+	enterprise: "Enterprise-only",
+	"add-on": "Add-on feature",
+	"ent-add-on": "Enterprise-only paid add-on",
+	"workers-all": "Available on Free and Paid plans",
+	"workers-paid": "Available on Workers Paid plan",
+} as const satisfies Record<string, string>;
+
+type Props = z.infer<typeof props>;
+
+const props = z
+	.object({
+		type: zodEnumFromObjKeys(mappings),
+	})
+	.or(
+		z.object({
+			id: z.string(),
+		}),
+	);
+
+const input = props.parse(Astro.props);
+
+let availability;
+if ("type" in input) {
+	availability = mappings[input.type];
+} else {
+	availability = await indexPlans(input.id);
+}
+---
+
+<div class="font-semibold text-blue-700 dark:text-indigo-300">
+	{availability}
+</div>

@@ -1,0 +1,97 @@
+---
+
+summary: Implement a Cloudflare Workflow that processes user-uploaded images, awaits human approval, and performs AI-based image tagging upon approval.
+tags:
+  - Typescript
+pcx_content_type: example
+title: Human-in-the-Loop Image Tagging with waitForEvent
+sidebar:
+  order: 3
+description: Human-in-the-loop Workflow with waitForEvent API
+---
+
+import {  GitHubCode, WranglerConfig } from "~/components"
+
+This example demonstrates how to use the `waitForEvent()` API in Cloudflare Workflows to introduce a human-in-the-loop step. The Workflow is triggered by an image upload, during which metadata is stored in a D1 database. The Workflow then waits for user approval, and upon approval, it uses Workers AI to generate image tags, which are stored in the database. An accompanying Next.js frontend application facilitates the image upload and approval process.
+
+:::note
+The example on this page includes only a subset of the full implementation. For the complete codebase and deployment instructions, please refer to the [GitHub repository](https://github.com/cloudflare/docs-examples/tree/main/workflows/waitForEvent).
+:::
+
+## Overview of the Workflow
+
+In this Workflow, we simulate a scenario where an uploaded image requires human approval before AI-based processing. An image is uploaded to R2, then Workflow performs the following steps:
+
+1. Stores image metadata in a D1 database.
+2. Pauses execution using `waitForEvent()` and waits for an external event sent from the Next.js frontend, indicating approval or rejection.
+3. If approved, the Workflow uses Workers AI to generate image tags and stores the tags in the D1 database.
+4. If rejected, the Workflow ends without further action.
+
+This pattern is useful in scenarios where certain operations should not proceed without explicit human consent, adding an extra layer of control and safety.
+
+## Frontend Integration
+
+This example includes a Next.js frontend application that facilitates the image upload and approval process. The frontend provides an interface for uploading images, reviewing them, and approving or rejecting them. Upon image upload, the application triggers the Cloudflare Workflow, which then manages the subsequent steps, including waiting for user approval and performing AI-based image tagging upon approval.
+
+Refer to the `/nextjs-workflow-frontend` folder in the [GitHub repository](https://github.com/cloudflare/docs-examples/tree/main/workflows/waitForEvent) for the complete frontend implementation and deployment details.
+
+## Workflow index.ts
+
+The `index.ts` file defines the core logic of the Cloudflare Workflow responsible for handling image uploads, awaiting human approval, and performing AI-based image tagging upon approval. It extends the `WorkflowEntrypoint` class and implements the `run()` method.
+
+For the complete implementation of the `index.ts` file, please refer to the [GitHub repository](https://github.com/cloudflare/docs-examples/blob/main/workflows/waitForEvent/workflow/src/index.ts).
+
+<GitHubCode
+  repo="cloudflare/docs-examples"
+  file="workflows/waitForEvent/workflow/src/index.ts"
+  commit="43b2d19fc9f1098d5138871d06d0b47f0f9c6a43"
+  lang="ts"
+	lines="17-57"
+  useTypeScriptExample={true}
+/>
+
+## Workflow wrangler.jsonc
+
+The Workflow configuration is defined in the `wrangler.jsonc` file. This file includes bindings for the R2 bucket, D1 database, Workers AI, and the Workflow itself. Ensure that all necessary bindings and environment variables are correctly set up to match your Cloudflare account and services.
+
+<WranglerConfig>
+
+```json
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "workflows-waitforevent",
+	"main": "src/index.ts",
+	"compatibility_date": "2025-04-14",
+	"observability": {
+		"enabled": true,
+		"head_sampling_rate": 1,
+	},
+	"ai": {
+		"binding": "AI"
+	},
+	"workflows": [
+		{
+			"name": "workflows-starter",
+			"binding": "MY_WORKFLOW",
+			"class_name": "MyWorkflow"
+		}
+	],
+	"r2_buckets": [
+		{
+			"bucket_name": "workflow-demo",
+			"binding": "workflow_demo_bucket"
+		}
+	],
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "workflows-demo-d1",
+			"database_id": "66e4fbe9-06ac-4548-abba-2dc42088e13a"
+		}
+	]
+}
+```
+
+</WranglerConfig>
+
+For access to the codebase, deployment instructions, and reference architecture, please visit the [GitHub repository](https://github.com/cloudflare/docs-examples/tree/main/workflows/waitForEvent). This resource provides all the necessary tools and information to effectively implement the Workflow and Next.js frontend application.

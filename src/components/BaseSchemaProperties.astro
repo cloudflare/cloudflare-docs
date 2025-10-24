@@ -1,0 +1,75 @@
+---
+import { z } from "astro:schema";
+import { baseSchema } from "~/schemas";
+import { marked } from "marked";
+
+import Type from "./Type.astro";
+import MetaInfo from "./MetaInfo.astro";
+import AnchorHeading from "./AnchorHeading.astro";
+import Details from "./Details.astro";
+
+const schema = baseSchema({
+	// @ts-expect-error Normally passed in by Astro but we are using the schema standalone.
+	image: () => z.function(),
+}).shape;
+
+const getInnerType = ({ _def }: z.ZodTypeAny | z.ZodEffects<any>) => {
+	if (_def.innerType) return getInnerType(_def.innerType);
+
+	return _def;
+};
+---
+
+{
+	Object.entries(schema)
+		.sort()
+		.map(([key, outer]) => {
+			const outerType = outer._def.typeName;
+			const outerDescription = outer._def.description;
+
+			const inner = getInnerType(outer);
+			const innerType =
+				key === "preview_image"
+					? "string"
+					: inner.typeName.split("Zod")[1].toLowerCase();
+
+			return (
+				<>
+					<AnchorHeading depth={3} title={key} />
+					<p>
+						<strong>Type: </strong>
+						<Type text={innerType} />
+						{outerType === "ZodOptional" && (
+							<>
+								{" "}
+								<MetaInfo text="optional" />
+							</>
+						)}
+					</p>
+					{outerDescription && (
+						<p>
+							<strong>Description: </strong>
+							<Fragment set:html={marked.parseInline(outerDescription)} />
+						</p>
+					)}
+					{inner.typeName === "ZodUnion" && (
+						<p>
+							<Details header="Allowed values">
+								<ul>
+									{inner.options
+										.filter(
+											(option: any) => option._def.typeName === "ZodLiteral",
+										)
+										.map((option: any) => (
+											<li>
+												<code>{option._def.value}</code>
+											</li>
+										))}
+								</ul>
+							</Details>
+						</p>
+					)}
+				</>
+			);
+		})
+}

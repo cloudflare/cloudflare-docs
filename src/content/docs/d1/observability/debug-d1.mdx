@@ -1,0 +1,115 @@
+---
+title: Debug D1
+pcx_content_type: concept
+sidebar:
+  order: 5
+
+---
+
+import { Example } from "~/components";
+
+D1 allows you to capture exceptions and log errors returned when querying a database. To debug D1, you will use the same tools available when [debugging Workers](/workers/observability/).
+
+D1's [`stmt.`](/d1/worker-api/prepared-statements/) and [`db.`](/d1/worker-api/d1-database/) methods throw an [Error object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error) whenever an error occurs. To capture exceptions, log the `e.message` value.
+
+For example, the code below has a query with an invalid keyword - `INSERTZ` instead of `INSERT`:
+
+```js
+try {
+    // This is an intentional misspelling
+    await db.exec("INSERTZ INTO my_table (name, employees) VALUES ()");
+} catch (e: any) {
+    console.error({
+        message: e.message
+    });
+}
+```
+
+The code above throws the following error message:
+
+```json
+{
+	"message": "D1_EXEC_ERROR: Error in line 1: INSERTZ INTO my_table (name, employees) VALUES (): sql error: near \"INSERTZ\": syntax error in INSERTZ INTO my_table (name, employees) VALUES () at offset 0"
+}
+```
+
+:::note
+Prior to [`wrangler` 3.1.1](https://github.com/cloudflare/workers-sdk/releases/tag/wrangler%403.1.1), D1 JavaScript errors used the [cause property](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/cause) for detailed error messages.
+
+To inspect these errors when using older versions of `wrangler`, you should log `error?.cause?.message`.
+:::
+
+## Error list
+
+D1 returns the following error constants, in addition to the extended (detailed) error message:
+
+| Error message                                                               | Description                                                                                                                                                      | Recommended action                                                                                                                                |
+| --------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `D1_ERROR`                                                                  | Prefix of a specific D1 error.                                                                                                                                   | Refer to "List of D1_ERRORs" below for more detail about your specific error.                                                                     |
+| `D1_EXEC_ERROR`                                                             | Exec error in line x: y error.                                                                                                                                   |                                                                                                                                                   |
+| `D1_TYPE_ERROR`                                                             | Returned when there is a mismatch in the type between a column and a value. A common cause is supplying an `undefined` variable (unsupported) instead of `null`. | Ensure the type of the value and the column match.                                                                                                |
+| `D1_COLUMN_NOTFOUND`                                                        | Column not found.                                                                                                                                                | Ensure you have selected a column which exists in the database.                                                                                   |
+
+The following table lists specific instances of `D1_ERROR`.
+
+<Example title="List of D1_ERRORs">
+
+:::note[Retry operations]
+While some D1 errors can be resolved by retrying the operation, retrying is only safe if your query is idempotent (produces the same result when executed multiple times).
+
+Before retrying any failed operation:
+- Verify your query is idempotent (for example, read-only operations, or queries such as `CREATE TABLE IF NOT EXISTS`).
+- Consider [implementing application-level checks](/d1/best-practices/retry-queries/) to identify if the operation can be retried, and retrying only when it is safe and necessary.
+:::
+
+| `D1_ERROR` type                                                             | Description                                                                                                                                                               | Recommended action                                                                                                                                |
+| --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `No SQL statements detected.`                                               | The input query does not contain any SQL statements.                                                                                                                      | App action: Ensure the query contains at least one valid SQL statement.                                                                           |
+| `Your account has exceeded D1's maximum account storage limit, please contact Cloudflare to raise your limit.`                                   | The total storage across all D1 databases in the account has exceeded the [account storage limit](/d1/platform/limits/).                                                  | App action: Delete unused databases, or upgrade your account to a paid plan.                                                                                     |
+| `Exceeded maximum DB size.`                                                 | The D1 database has exceeded its [storage limit](/d1/platform/limits/).                                                                                                   | App action: Delete data rows from the database, or shard your data into multiple databases.                                                                                              |
+| `D1 DB reset because its code was updated.`                                 | Cloudflare has updated the code for D1 (or the underlying Durable Object), and the Durable Object which contains the D1 database is restarting.                           | Retry the operation.                                                                                                                              |
+| `Internal error while starting up D1 DB storage caused object to be reset.` | The Durable Object containing the D1 database is failing to start.                                                                                                        | Retry the operation.                                                                                                                              |
+| `Network connection lost.`                                                  | A network error.                                                                                                                                                          | Retry the operation. Refer to the "Retry operation" note above.                                                                                   |
+| `Internal error in D1 DB storage caused object to be reset.`                | An error has caused the D1 database to restart.                                                                                                                           | Retry the operation.                                                                                                                              |
+| `Cannot resolve D1 DB due to transient issue on remote node.`               | The query cannot reach the Durable Object containing the D1 database.                                                                                                     | Retry the operation. Refer to the "Retry operation" note above.                                                                                   |
+| `Can't read from request stream because client disconnected.`               | A query request was made (e.g. uploading a SQL query), but the connection was closed during the query was fully executed.                                                 | App action: Retry the operation, and ensure the connection stays open.                                                                            |
+| `D1 DB storage operation exceeded timeout which caused object to be reset.` | A query is trying to write a large amount of information (e.g. GBs), and is taking too long.                                                                              | App action: Optimize the queries (so that each query takes less time), send fewer requests by spreading the load over time, or shard the queries. |
+| `D1 DB is overloaded. Requests queued for too long.`                        | The requests to the D1 database are queued for too long, either because there are too many requests, or the queued requests are taking too long.                          | App action: Optimize the queries (so that each query takes less time), send fewer requests by spreading the load over time, or shard the queries. |
+| `D1 DB is overloaded. Too many requests queued.`                            | The request queue to the D1 database is too long, either because there are too many requests, or the queued requests are taking too long.                                 | App action: Optimize the queries (so that each query takes less time), send fewer requests by spreading the load over time, or shard the queries. |
+| `D1 DB's isolate exceeded its memory limit and was reset.`                  | A query loaded too much into memory, causing the D1 database to crash.                                                                                                    | App action: Optimize the queries (so that each query takes less time), send fewer requests by spreading the load over time, or shard the queries. |
+| `D1 DB exceeded its CPU time limit and was reset.`                          | A query is taking up a lot of CPU time (e.g. scanning over 9 GB table, or attempting a large import/export).                                                              | App action: Split the query into smaller shards.                                                                                                  |
+
+</Example>
+
+## Automatic retries
+
+D1 detects read-only queries and automatically attempts up to two retries to execute those queries in the event of failures with retryable errors.
+
+D1 ensures that any retry attempt does not cause database writes, making the automatic retries safe from side-effects, even if a query causing modifications slips through the read-only detection. D1 achieves this by checking for modifications after every query execution, and if any write occurred due to a retry attempt, the query is rolled back.
+
+:::note
+Only read-only queries (queries containing only the following SQLite keywords: `SELECT`, `EXPLAIN`, `WITH`) are retried. Queries containing any [SQLite keyword](https://sqlite.org/lang_keywords.html) that leads to database writes are not retried.
+:::
+
+## View logs
+
+View a stream of live logs from your Worker by using [`wrangler tail`](/workers/observability/logs/real-time-logs#view-logs-using-wrangler-tail) or via the [Cloudflare dashboard](/workers/observability/logs/real-time-logs#view-logs-from-the-dashboard).
+
+## Report issues
+
+* To report bugs or request features, go to the [Cloudflare Community Forums](https://community.cloudflare.com/c/developers/d1/85).
+* To give feedback, go to the [D1 Discord channel](https://discord.com/invite/cloudflaredev).
+* If you are having issues with Wrangler, report issues in the [Wrangler GitHub repository](https://github.com/cloudflare/workers-sdk/issues/new/choose).
+
+You should include as much of the following in any bug report:
+
+* The ID of your database. Use `wrangler d1 list` to match a database name to its ID.
+* The query (or queries) you ran when you encountered an issue. Ensure you redact any personally identifying information (PII).
+* The Worker code that makes the query, including any calls to `bind()` using the [Workers Binding API](/d1/worker-api/).
+* The full error text, including the content of [`error.cause.message`](#handle-errors).
+
+## Related resources
+
+* Learn [how to debug Workers](/workers/observability/).
+* Understand how to [access logs](/workers/observability/logs/) generated from your Worker and D1.
+* Use [`wrangler dev`](/workers/wrangler/commands/#dev) to run your Worker and D1 locally and [debug issues before deploying](/workers/development-testing/).

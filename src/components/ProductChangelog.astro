@@ -1,0 +1,82 @@
+---
+import { getChangelogs, type GetChangelogsOptions } from "~/util/changelog";
+import { reference } from "astro:content";
+import { z } from "astro:schema";
+import { getCollection, render } from "astro:content";
+import { slug } from "github-slugger";
+import { format } from "date-fns";
+
+import RSSButton from "~/components/RSSButton.astro";
+import AnchorHeading from "~/components/AnchorHeading.astro";
+import ProductPills from "~/components/changelog/ProductPills.astro";
+
+const props = z
+	.object({
+		product: reference("products"),
+	})
+	.or(
+		z.object({
+			area: z.string(),
+		}),
+	)
+	.and(
+		z.object({
+			hideEntry: z.string().optional(),
+			scheduled: z.boolean().default(false),
+		}),
+	);
+
+const input = await props.parseAsync(Astro.props);
+
+let filter: GetChangelogsOptions["filter"];
+let rss: string;
+
+if ("product" in input) {
+	rss = `/changelog/rss/${input.product.id}.xml`;
+
+	filter = (e) => {
+		return (
+			!e.data.hidden &&
+			e.data.products.some(({ id }) => id === input.product.id) &&
+			input.hideEntry !== e.id &&
+			input.scheduled == e.data.scheduled
+		);
+	};
+} else {
+	rss = `/changelog/rss/${slug(input.area)}.xml`;
+
+	const products = await getCollection("products", (e) => {
+		return e.data.product.group === input.area && input.hideEntry !== e.id;
+	});
+
+	filter = (e) => {
+		return e.data.products.some((x) => products.some((y) => x.id === y.id));
+	};
+}
+
+const changelogs = await getChangelogs({ filter });
+---
+
+<RSSButton href={rss} />
+
+{changelogs.length === 0 && <p>There are no scheduled entries at this time.</p>}
+
+{
+	changelogs.map(async (entry) => {
+		const { Content } = await render(entry);
+
+		return (
+			<>
+				<AnchorHeading
+					depth={2}
+					title={format(entry.data.date, "yyyy-MM-dd")}
+				/>
+				{"area" in input && <ProductPills products={entry.data.products} />}
+				<br />
+				<strong>{entry.data.title}</strong>
+				<br />
+				<Content />
+			</>
+		);
+	})
+}

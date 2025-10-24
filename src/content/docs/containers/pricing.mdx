@@ -1,0 +1,46 @@
+---
+pcx_content_type: reference
+title: Pricing
+sidebar:
+  order: 11
+---
+
+import { Render } from "~/components";
+
+## vCPU, Memory and Disk
+
+Containers are billed for every 10ms that they are actively running at the following rates, with included monthly usage as part of the $5 USD per month [Workers Paid plan](/workers/platform/pricing/):
+
+|                  | Memory                                                                  | CPU                                                                | Disk                                                           |
+| ---------------- | ----------------------------------------------------------------------- | ------------------------------------------------------------------ | -------------------------------------------------------------- |
+| **Free**         | N/A                                                                     | N/A                                                                |                                                                |
+| **Workers Paid** | 25 GiB-hours/month included <br/> +$0.0000025 per additional GiB-second | 375 vCPU-minutes/month <br/>+ $0.000020 per additional vCPU-second | 200 GB-hours/month <br/> +$0.00000007 per additional GB-second |
+
+You only pay for what you use — charges start when a request is sent to the container or when it is manually started. Charges stop after the container instance goes to sleep, which can happen automatically after a timeout. This makes it easy to scale to zero, and allows you to get high utilization even with bursty traffic.
+
+#### Instance Types
+
+When you add containers to your Worker, you specify an [instance type](/containers/platform-details/#instance-types). The instance type you select will impact your bill — larger instances include more vCPUs, memory and disk, and therefore incur additional usage costs. The following instance types are currently available, and larger instance types are coming soon:
+
+<Render product="containers" file="instance-types" />
+
+## Network Egress
+
+Egress from Containers is priced at the following rates:
+
+| Region                 | Price per GB | Included Allotment per month |
+| ---------------------- | ------------ | ---------------------------- |
+| North America & Europe | $0.025       | 1 TB                         |
+| Oceania, Korea, Taiwan | $0.05        | 500 GB                       |
+| Everywhere Else        | $0.04        | 500 GB                       |
+
+## Workers and Durable Objects Pricing
+
+When you use Containers, incoming requests to your containers are handled by your [Worker](/workers/platform/pricing/), and each container has its own
+[Durable Object](/durable-objects/platform/pricing/). You are billed for your usage of both Workers and Durable Objects.
+
+## Logs and Observability
+
+Containers are integrated with the [Workers Logs](/workers/observability/logs/workers-logs/) platform, and billed at the same rate. Refer to [Workers Logs pricing](/workers/observability/logs/workers-logs/#pricing) for details.
+
+When you [enable observability for your Worker](/workers/observability/logs/workers-logs/#enable-workers-logs) with a binding to a container, logs from your container will show in both the Containers and Observability sections of the Cloudflare dashboard.

@@ -1,0 +1,60 @@
+---
+pcx_content_type: example
+summary: Create a compression rule to set Brotli as the only supported
+  compression algorithm for a specific URI path.
+products: [compression-rules]
+title: Use only Brotli compression for a specific path
+description: Create a compression rule to set Brotli as the only supported
+  compression algorithm for a specific URI path.
+---
+
+import { Example, TabItem, Tabs, APIRequest, Render } from "~/components";
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+The following example rule will configure only Brotli compression for a specific URI path.
+
+<Example>
+
+**When incoming requests match**
+
+- Custom filter expression:
+  - _URI Path_ _equals_ `/download/assets.tar`
+
+**Then**
+
+- **Compression options**: Custom
+- **Define a custom order for compression types**: `Brotli`
+
+</Example>
+
+Since the rule configuration does not include _Auto_ at the end of the custom algorithms list, the response will be uncompressed if the web visitor does not support Brotli.
+
+</TabItem> <TabItem label="API">
+
+The following example sets the rules of an existing [entry point ruleset](/ruleset-engine/about/rulesets/#entry-point-ruleset) (with ID `{ruleset_id}`) for the `http_response_compression` phase to a single compression rule, using the [Update a zone ruleset](/api/resources/rulesets/methods/update/) operation:
+
+<APIRequest
+	path="/zones/{zone_id}/rulesets/{ruleset_id}"
+	method="PUT"
+	json={{
+		rules: [
+			{
+				ref: "use_only_brotli_for_assets_tar",
+				expression: 'http.request.uri.path eq "/download/assets.tar"',
+				action: "compress_response",
+				action_parameters: {
+					algorithms: [{ name: "brotli" }],
+				},
+			},
+		],
+	}}
+/>
+
+<Render
+	file="terraform-use-ref-field"
+	product="rules"
+	params={{ addDocsLocation: true }}
+/>
+
+</TabItem> </Tabs>

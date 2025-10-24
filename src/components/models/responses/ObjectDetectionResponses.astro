@@ -1,0 +1,18 @@
+---
+import { Code } from "@astrojs/starlight/components";
+
+const json = `[
+  { "label":"cat" ,"score":0.4071170687675476, "box": { "xmin": 0, "ymin": 0, "xmax": 10, "ymax": 10 } },
+  { "label":"face", "score":0.22562485933303833, "box": { "xmin": 15, "ymin": 22, "xmax": 25, "ymax": 35 } },
+  { "label":"car", "score":0.033316344022750854, "box": { "xmin": 72, "ymin": 55, "xmax": 95, "ymax": 72 } }
+]`;
+---
+
+<h2>Response</h2>
+
+<p>
+	This task returns a list of detected objects, each one containing a label, a
+	probability score, and its surrounding box coordinates.
+</p>
+
+<Code code={json} lang="json" />

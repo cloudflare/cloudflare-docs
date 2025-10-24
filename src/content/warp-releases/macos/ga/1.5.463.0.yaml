@@ -1,0 +1,32 @@
+releaseNotes: >-
+  **Notable Updates**
+
+
+  - New posture types for teams admins to check if Firewall Enabled or Disk
+  Encrypted.
+
+  - Added ability for Teams admins to split tunnel based on hostname
+  (example.com, sub.example or *.example.com).
+
+  - General Bug fixes and improvements.
+
+
+  **Known issues**
+
+
+  - You are unable to subscribe to WARP+ via the Desktop apps. You must
+  subscribe first on your mobile device and then copy/paste your license key
+  into the Accounts page on desktop.
+
+  - Localization parity with mobile is coming in a future update.
+
+  - Wired networks via a USB dongle are not excluded properly.
+
+
+  For a complete list of known issues please visit
+  https://developers.cloudflare.com/warpclient/known-issues-and-faq
+version: 1.5.463.0
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/1.5.463.0
+packageSize: 37461224
+releaseDate: 2021-07-22T20:53:13.676Z
+platformName: macOS

@@ -1,0 +1,16 @@
+releaseNotes: >-
+  This update contains no new features.
+   
+  **Notable updates**
+
+  - Fixed issue where DoH requests could take too long to timeout causes DNS
+  reliability issues
+   
+  **Known issues**
+
+  - No known issues
+version: 2023.7.242.1
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2023.7.242.1
+packageSize: 66531557
+releaseDate: 2023-07-27T03:15:47.160Z
+platformName: macOS

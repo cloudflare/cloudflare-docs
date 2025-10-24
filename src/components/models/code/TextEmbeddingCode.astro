@@ -1,0 +1,92 @@
+---
+import { z } from "astro:schema";
+import { Aside, Code } from "@astrojs/starlight/components";
+import Details from "~/components/Details.astro";
+
+type Props = z.infer<typeof props>;
+
+const props = z.object({
+	name: z.string(),
+});
+
+const { name } = props.parse(Astro.props);
+
+const worker = `
+export interface Env {
+  AI: Ai;
+}
+
+export default {
+  async fetch(request, env): Promise<Response> {
+
+    // Can be a string or array of strings]
+    const stories = [
+      "This is a story about an orange cloud",
+      "This is a story about a llama",
+      "This is a story about a hugging emoji",
+    ];
+
+    const embeddings = await env.AI.run(
+      "${name}",
+      {
+        text: stories,
+      }
+    );
+
+    return Response.json(embeddings);
+  },
+} satisfies ExportedHandler<Env>;
+`;
+
+const python = `
+import os
+import requests
+
+
+ACCOUNT_ID = "your-account-id"
+AUTH_TOKEN = os.environ.get("CLOUDFLARE_AUTH_TOKEN")
+
+stories = [
+  'This is a story about an orange cloud',
+  'This is a story about a llama',
+  'This is a story about a hugging emoji'
+]
+
+response = requests.post(
+  f"https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/${name}",
+  headers={"Authorization": f"Bearer {AUTH_TOKEN}"},
+  json={"text": stories}
+)
+
+print(response.json())
+`;
+
+const curl = `
+curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run/${name}  \\
+  -X POST  \\
+  -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN"  \\
+  -d '{ "text": ["This is a story about an orange cloud", "This is a story about a llama", "This is a story about a hugging emoji"] }'
+`;
+---
+
+<Details header="Workers - TypeScript">
+	<Code code={worker} lang="ts" />
+</Details>
+
+<Details header="Python">
+	<Code code={python} lang="py" />
+</Details>
+
+<Details header="curl">
+	<Code code={curl} lang="sh" />
+</Details>
+
+<Aside type="note" title="OpenAI compatible endpoints">
+	Workers AI also supports OpenAI compatible API endpoints for{" "}
+	<code>/v1/chat/completions</code> and <code>/v1/embeddings</code>. For more
+	details, refer to{" "}
+	<a href="/workers-ai/configuration/open-ai-compatibility/">
+		Configurations
+	</a>
+	.
+</Aside>

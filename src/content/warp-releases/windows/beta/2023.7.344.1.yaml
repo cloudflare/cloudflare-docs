@@ -1,0 +1,49 @@
+releaseNotes: >-
+  In addition to general bug fixes this release contains two new exciting
+  features.
+
+
+  The first we hope will improve diagnosing connectivity issues by bubbling up
+  common errors to the GUI so admins no longer have to dig through logs to find
+  a conflicting app or configuration issue.
+
+
+  The second is a new Zero Trust posture support: checking for the presence of a
+  certificate. You can get started today from your dashboard.
+
+
+  **Notable updates**
+
+  - Added connectivity error reasons to the UI
+
+  - Added new posture type: Check for presence of a certificate
+
+  - Fixed an issue with DEX traceroutes tests where not all hops were correctly
+  reported
+
+  - Fixed an issue where the WARP background process could crash under extreme
+  load
+
+  - Fixed an issue where the Windows GUI could spam the Windows System Eventlog
+  with unhelpful error messages
+
+  - Fixed an issue where managed network detection could fail when firewall
+  rules were not correctly removed under certain disconnect scenarios
+
+  - Fixed a timing issue exposed during previous beta where the client could get
+  stuck on Connecting state. This mostly happens coming out of sleep or
+  switching teams 
+   
+  **Known issues**
+
+  - Customers may experience a DPC_WATCHDOG_VIOLATION Blue Screen when
+  connecting. This error was introduced with the 2023.3 GA release and happens
+  more frequently with larger split tunnel configurations, especially on more
+  resource constrained machines. We are actively working on a fix. Until then we
+  recommend staying on 2022.12 GA release OR reducing your split tunnel
+  configuration if possible.
+version: 2023.7.344.1
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2023.7.344.1
+packageSize: 111190016
+releaseDate: 2023-08-08T23:25:54.720Z
+platformName: Windows

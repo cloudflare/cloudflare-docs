@@ -1,0 +1,17 @@
+---
+title: Feature table
+styleGuide:
+  component: FeatureTable
+---
+
+Use when you need all the available information about a specific feature. For the id property, use dot notation to access the specific feature you want to share the information about. This will always be one below the grouped product, so `<PRODUCT>.<FEATURE>`
+
+If the feature information includes an `Availability` row and you would like to skip it, add `skipAvailability="true"` (the default is false, which means "show the availability row"). The availability row, if it exists, will still be displayed in the global Plans page.
+
+This component pulls information from the `index.json` file in `src/content/plans/`.
+
+```mdx live
+import { FeatureTable } from "~/components"
+
+<FeatureTable id="analytics.logpush" />
+```

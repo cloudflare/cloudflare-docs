@@ -1,0 +1,23 @@
+---
+pcx_content_type: configuration
+title: Xata
+---
+
+import { Render, TabItem, Tabs } from "~/components";
+
+[Xata](https://xata.io) is a PostgreSQL database platform designed to help developers operate and scale databases with enhanced productivity and performance. Xata provides features like instant copy-on-write database branches, zero-downtime schema changes, data anonymization, AI-powered performance monitoring, and BYOC.
+
+
+:::note
+
+You can connect to Xata using [Hyperdrive](/hyperdrive), which provides connection pooling and reduces the amount of round trips required to create a secure connection from Workers to your database.
+
+Hyperdrive can provide lower latencies because it performs the database connection setup and connection pooling across Cloudflare's network. Hyperdrive supports native database drivers, libraries, and ORMs, and is included in all [Workers plans](/hyperdrive/platform/pricing/). Learn more about Hyperdrive in [How Hyperdrive Works](/hyperdrive/configuration/how-hyperdrive-works/).
+
+:::
+
+Refer to the full [Xata documentation](https://xata.io/documentation).
+
+To connect to Xata using [Hyperdrive](/hyperdrive), follow these steps:
+
+<Render file="xata-partial" product="hyperdrive" />

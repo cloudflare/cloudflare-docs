@@ -1,0 +1,79 @@
+---
+pcx_content_type: concept
+title: Tutorial
+meta:
+  title: Content type - Tutorial
+---
+
+import { GlossaryDefinition, Render } from "~/components";
+
+<GlossaryDefinition term="tutorial" />
+
+<Render file="howto-vs-tutorial" product="style-guide" />
+
+## Guidelines
+
+**A tutorial is:**
+
+- User-focused
+- Aligned to a user's goal or job-to-be-done
+- Descriptive and guiding
+
+**A tutorial can:**
+
+- Describe how to integrate with a third party
+- Be delivered in the Cloudflare dashboard
+- Describe how to set up multiple products to complete a single job-to-be-done
+
+**A tutorial is not:**
+
+- Product configuration information, how-to (or any of the other content types)
+- How to complete a task in the UI or API
+- A dumping ground for screenshots
+- Content with no end goal or job-to-be-done
+
+### Tone
+
+Guiding, straightforward, educational, authoritative
+
+### content_type
+
+```yaml
+pcx_content_type: tutorial
+```
+
+For more details, refer to [`pcx_content_type`](/style-guide/frontmatter/custom-properties/#pcx_content_type).
+
+### Components
+
+#### Most used
+
+- [`GitHubCode`](/style-guide/components/github-code/)
+- [`LastReviewed`](/style-guide/components/last-reviewed/)
+- [`ListTutorials`](/style-guide/components/list-tutorials/)
+
+#### Required
+
+[**Title**](/style-guide/documentation-content-strategy/component-attributes/titles/): Short verb phrase in second-person imperative.
+
+**Context**: An introductory paragraph on the user's goal or job-to-be-done and how they will accomplish that in the tutorial. Consider including the intended audience for the tutorial. Refer to [Context](/style-guide/documentation-content-strategy/component-attributes/context/) for more information.
+
+**Consider the user story framing**: "As a `___`, I want to `___` so I can `___`."
+
+[**Steps**](/style-guide/documentation-content-strategy/component-attributes/steps-tasks-procedures/): Numbered steps that complete a task.
+
+#### Optional
+
+[**Notes/warnings**](/style-guide/documentation-content-strategy/component-attributes/notes-tips-warnings/)
+
+[**Examples**](/style-guide/documentation-content-strategy/component-attributes/examples/)
+
+**Screenshots**
+
+[**Links**](/style-guide/documentation-content-strategy/component-attributes/links/)
+
+**Boundaries**
+
+## Examples
+
+[Workers Tutorials](/workers/tutorials)

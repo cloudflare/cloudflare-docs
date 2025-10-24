@@ -1,0 +1,33 @@
+releaseNotes: >-
+  This release contains exciting new features. Please take time over the next
+  few weeks to play with the new functionality and let us know what you think on
+  both the community forum and through your account teams.
+
+
+  **Notable updates**
+
+  - Added the ability for administrators to allow their end users to temporarily
+  obtain access to local network resources in the event their home IP space
+  overlaps with traffic normally routed through the WARP tunnel.
+
+  - The last beta added the ability for the client to display Gateway Network
+  and HTTP block notifications to the user. We later added the ability to
+  configure this feature in the dash; the end-to-end solution is now available.
+
+  - Fixed an issue introduced in the previous beta where the organization name
+  was case-sensitive (it should not be)
+
+
+
+
+  **Known issues**
+
+  - The new `display_name` MDM parameter that is part of the multiple
+  configurations feature is not correctly working. For this release, the name
+  visible in the UI will be the organization value. A future beta release will
+  correct this; it is safe to include this parameter in updated MDM files now
+version: 2024.1.7.1
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2024.1.7.1
+packageSize: 113909760
+releaseDate: 2024-01-03T21:27:24.407Z
+platformName: Windows

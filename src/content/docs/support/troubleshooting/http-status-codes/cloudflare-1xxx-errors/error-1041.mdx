@@ -1,0 +1,18 @@
+---
+pcx_content_type: troubleshooting
+title: Error 1041
+source: null
+---
+
+## Error 1041: Invalid request rewrite (invalid header value)
+
+This error indicates that the header value is not valid.
+
+### Common causes
+
+The added/modified header value is too long or it contains characters that are not allowed.
+
+### Resolution
+
+- Use a shorter value or expression to define the header value.
+- Remove the characters that are not allowed. Refet to [Format of HTTP request header names and values](/rules/transform/request-header-modification/reference/header-format/) in Developer Docs for more information on the allowed characters.

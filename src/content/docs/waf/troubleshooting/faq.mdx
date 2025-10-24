@@ -1,0 +1,80 @@
+---
+title: FAQ
+pcx_content_type: faq
+sidebar:
+  order: 10
+---
+
+## General questions
+
+### Why does a security event display a Cloudflare IP address even though other fields match the client details?
+
+This happens when a request goes through a Cloudflare Worker.
+
+In this case, Cloudflare considers the client details, including its IP address, for triggering security settings. However, the IP displayed in [Security Events](/waf/analytics/security-events/) will be a Cloudflare IP address.
+
+### Do I need to escape certain characters in expressions?
+
+Yes, you may have to escape certain characters in expressions. The exact escaping will depend on the string syntax you use:
+
+- If you use the raw string syntax (for example, `r#"this is a string"#`), you will only need to escape characters that have a special meaning in regular expressions.
+- If you use the quoted string syntax (for example, `"this is a string"`), you need to perform additional escaping, such as escaping special characters `"` and `\` using `\"` and `\\`, both in literal strings and in regular expressions.
+
+For more information on string syntaxes and escaping, refer to [String values and regular expressions](/ruleset-engine/rules-language/values/#string-values-and-regular-expressions).
+
+### Why is my regular expression pattern not working?
+
+If you are using a regular expression, it is recommended that you test it with a tool such as [Regular Expressions 101](https://regex101.com/?flavor=rust&regex=) or [Rustexp](https://rustexp.lpil.uk).
+
+### Why are some rules bypassed when I did not create an exception?
+
+If you have [SSL/TLS certificates](/ssl/) managed by Cloudflare, every time a certificate is issued or renewed, a [domain control validation (DCV)](/ssl/edge-certificates/changing-dcv-method/dcv-flow/) must happen. When a certificate is in `pending_validation` state and there are valid DCV tokens in place, some Cloudflare security features such as [custom rules](/waf/custom-rules/) and [Managed Rules](/waf/managed-rules/) will be automatically disabled on specific DCV paths (for example, `/.well-known/pki-validation/` and `/.well-known/acme-challenge/`).
+
+
+### Why have I been blocked?
+
+Cloudflare may block requests when it detects activity that could be unsafe. Common reasons include:
+
+- Security protection against malicious traffic, DDoS attacks, or other threats.
+- Excessive requests in a short time (rate limiting).
+- Bot-like or automated traffic.
+- IP addresses listed on public blocklists, such as [Project Honey Pot](https://projecthoneypot.org/).
+
+If you are a site visitor:
+
+- Contact the site owner, providing details of your actions when the block occurred and the Cloudflare Ray ID displayed at the bottom of the error page.
+- Avoid suspicious inputs or automated scripts.
+- Check your IP reputation through [Project Honey Pot](https://projecthoneypot.org/).
+
+If you are the site owner:
+
+- Adjust security settings to balance protection with accessibility.
+- Monitor blocked requests in your Cloudflare dashboard.
+- Allowlist trusted IPs or fine-tune WAF/bot rules to reduce false positives.
+
+:::note
+ISP-level blocks are distinct from Cloudflare or site-owner security restrictions. For details, refer to [Potential ISP blocking](/support/troubleshooting/general-troubleshooting/potential-isp-blocking/).
+:::
+
+## Bots
+
+### How does the WAF handle traffic from known bots?
+
+#### Caution about potentially blocking bots
+
+When you create a custom rule with a _Block_, _Interactive Challenge_, _JS Challenge_, or _Managed Challenge (Recommended)_ action, you might unintentionally block traffic from known bots. Specifically, this might affect search engine optimization (SEO) and website monitoring when trying to enforce a mitigation action based on URI, path, host, ASN, or country.
+
+Refer to the [Challenges documentation](/cloudflare-challenges/troubleshooting/#allowlist-traffic-from-mitigation-actions) for more information.
+
+#### Bots currently detected
+
+[Cloudflare Radar](https://radar.cloudflare.com/verified-bots) lists a **sample** of known bots that the WAF currently detects. When traffic comes from these bots and others not listed, the `cf.client.bot` field is set to `true`.
+
+To submit a friendly bot to be verified, go to the [**Verified bots**](https://radar.cloudflare.com/traffic/verified-bots) page in Cloudflare Radar and select **Add a bot**.
+
+For more information on verified bots, refer to [Bots](/bots/concepts/bot/).
+
+:::note
+
+There is no functional difference between known and verified bots. However, the known bots field (`cf.client.bot`) is available for all customers, while the verified bots field (`cf.bot_management.verified_bot`) is available for Enterprise customers.
+:::

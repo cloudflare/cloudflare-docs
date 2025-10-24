@@ -1,0 +1,27 @@
+---
+{}
+
+---
+
+import { DashButton } from "~/components";
+
+Security Insights start scans by default. Security Insights will scan your Cloudflare environment and provide you with a list of detected [insights](/security-center/security-insights/). Refer to [How it works](/security-center/security-insights/how-it-works/) to learn more about how Security Insights perform a scan.
+
+The initial scan time depends on the number of IT assets in all the domains of your Cloudflare account. When the scan is complete, the status of the page will change from **Scan in Progress** to **Last scan performed on: `<DATE_TIME>`**.
+
+You can decide to stop a scan, and restart a scan later.
+
+To disable scans:
+
+1. In the Cloudflare dashboard, go to the **Security Insights** page.
+
+   <DashButton url="/?to=/:account/security-center" />
+
+2. Go to **Disable Security Center scans**, select **Disable scans**.
+
+To restart a scan:
+1. In the Cloudflare dashboard, go to the **Security Insights** page.
+
+   <DashButton url="/?to=/:account/security-center" />
+
+2. Select **Scan now**.

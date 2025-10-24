@@ -1,0 +1,43 @@
+---
+{}
+---
+
+import { Details } from "~/components";
+
+| Feature                                     | Free                                                                                                  | Pro                                            | Business                                                                      | Enterprise with app security                                                            | Enterprise with Advanced Rate Limiting                                                                                                                           |
+| ------------------------------------------- | ----------------------------------------------------------------------------------------------------- | ---------------------------------------------- | ----------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Available fields<br/>in rule expression     | Path, [Verified Bot](/ruleset-engine/rules-language/fields/reference/cf.bot_management.verified_bot/) | Host, URI, Path, Full URI, Query, Verified Bot | Host, URI, Path, Full URI, Query, Method, Source IP, User Agent, Verified Bot | General request fields, request header fields, Verified Bot, Bot Management fields[^1]  | General request fields, request header fields, Verified Bot, Bot Management fields[^1], request body fields[^2]                                                  |
+| Counting characteristics                    | IP                                                                                                    | IP                                             | IP, IP with NAT support                                                       | IP, IP with NAT support                                                                 | IP, IP with NAT support, Query, Host, Headers, Cookie, ASN, Country, Path, JA3/JA4 Fingerprint[^1], JSON field value[^2], Body[^2], Form input value[^2], Custom |
+| Custom counting expression                  | No                                                                                                    | No                                             | Yes                                                                           | Yes                                                                                     | Yes                                                                                                                                                              |
+| Available fields<br/>in counting expression | N/A                                                                                                   | N/A                                            | All rule expression fields, Response code, Response headers                   | All rule expression fields, Response code, Response headers                             | All rule expression fields, Response code, Response headers                                                                                                      |
+| Counting model                              | Number of requests                                                                                    | Number of requests                             | Number of requests                                                            | Number of requests                                                                      | Number of requests, [complexity score](/waf/rate-limiting-rules/request-rate/#complexity-based-rate-limiting)                                                    |
+| Rate limiting<br/>action behavior           | Perform action during mitigation period                                                               | Perform action during mitigation period        | Perform action during mitigation period                                       | Perform action during mitigation period, Throttle requests above rate with block action | Perform action during mitigation period, Throttle requests above rate with block action                                                                          |
+| Counting periods                            | 10 s                                                                                                  | All supported values up to 1&nbsp;min[^3]      | All supported values up to 10&nbsp;min[^3]                                    | All supported values up to 65,535&nbsp;s[^3]                                            | All supported values up to 65,535&nbsp;s[^3]                                                                                                                     |
+| Mitigation timeout periods                  | 10 s                                                                                                  | All supported values up to 1&nbsp;h[^3]        | All supported values up to 1&nbsp;day[^3]                                     | All supported values up to 1&nbsp;day[^3]&nbsp;[^4]                                     | All supported values up to 1&nbsp;day[^3]&nbsp;[^4]                                                                                                              |
+| Number of rules                             | 1                                                                                                     | 2                                              | 5                                                                             | 5 or more[^5]                                                                           | 100                                                                                                                                                              |
+
+[^1]: Only available to Enterprise customers who have purchased [Bot Management](/bots/plans/bm-subscription/).
+
+[^2]: Availability depends on your WAF plan.
+
+[^3]: Supported period values in seconds:<br/> 10, 15, 20, 30, 40, 45, 60 (1 min), 90, 120 (2 min), 180 (3 min), 240 (4 min), 300 (5 min), 480, 600 (10 min), 900, 1200 (20 min), 1800, 2400, 3600 (1 h), 65535, 86400 (1 day).
+
+[^4]: Enterprise customers can specify a custom mitigation timeout period via API.
+
+[^5]: Enterprise customers must have application security on their contract to get access to rate limiting rules. The number of rules depends on the exact contract terms.
+
+<Details header = "Footnotes" open={true}>
+
+1: Only available to Enterprise customers who have purchased [Bot Management](/bots/plans/bm-subscription/).
+
+2: Availability depends on your WAF plan.
+
+3: List of supported counting/mitigation period values in seconds:<br/>
+10, 15, 20, 30, 40, 45, 60 (1 min), 90, 120 (2 min), 180 (3 min), 240 (4 min), 300 (5 min), 480, 600 (10 min), 900, 1200 (20 min), 1800, 2400, 3600 (1 h), 65535, 86400 (1 day).<br/>
+Not all values are available on all plans.
+
+4: Enterprise customers can specify a custom mitigation timeout period via API.
+
+5: Enterprise customers must have application security on their contract to get access to rate limiting rules. The number of rules depends on the exact contract terms.
+
+</Details>

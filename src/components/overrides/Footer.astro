@@ -1,0 +1,170 @@
+---
+import Default from "@astrojs/starlight/components/Footer.astro";
+import { Icon } from "@astrojs/starlight/components";
+import type { StarlightIcon } from "@astrojs/starlight/types";
+
+import OneTrust from "../OneTrust.astro";
+import FeedbackPrompt from "../FeedbackPrompt.tsx";
+
+const groups = Object.entries({
+	Resources: [
+		{ text: "API", href: "/api/" },
+		{
+			text: "New to Cloudflare?",
+			href: "/fundamentals/",
+		},
+		{ text: "Directory", href: "/directory/" },
+		{
+			text: "Sponsorships",
+			href: "/sponsorships/",
+		},
+		{ text: "Open Source", href: "https://github.com/cloudflare" },
+	],
+	Support: [
+		{ text: "Help Center", href: "https://support.cloudflare.com/" },
+		{ text: "System Status", href: "https://www.cloudflarestatus.com/" },
+		{
+			text: "Compliance",
+			href: "https://www.cloudflare.com/trust-hub/compliance-resources/",
+		},
+		{ text: "GDPR", href: "https://www.cloudflare.com/trust-hub/gdpr/" },
+	],
+	Company: [
+		{ text: "cloudflare.com", href: "https://www.cloudflare.com/" },
+		{ text: "Our team", href: "https://www.cloudflare.com/people/" },
+		{ text: "Careers", href: "https://www.cloudflare.com/careers/" },
+	],
+	Tools: [
+		{ text: "Cloudflare Radar", href: "https://radar.cloudflare.com/" },
+		{ text: "Speed Test", href: "https://speed.cloudflare.com/" },
+		{ text: "Is BGP Safe Yet?", href: "https://isbgpsafeyet.com/" },
+		{ text: "RPKI Toolkit", href: "https://rpki.cloudflare.com/" },
+		{ text: "Certificate Transparency", href: "https://ct.cloudflare.com/" },
+	],
+	Community: [
+		{ text: "X", href: "https://x.com/cloudflare", icon: "x.com" },
+		{
+			text: "Discord",
+			href: "http://discord.cloudflare.com/",
+			icon: "discord",
+		},
+		{
+			text: "YouTube",
+			href: "https://www.youtube.com/cloudflare",
+			icon: "youtube",
+		},
+		{
+			text: "GitHub",
+			href: "https://github.com/cloudflare/cloudflare-docs",
+			icon: "github",
+		},
+	],
+});
+
+const links = Object.entries({
+	"Privacy Policy": "https://www.cloudflare.com/privacypolicy/",
+	"Terms of Use": "https://www.cloudflare.com/website-terms/",
+	"Report Security Issues": "https://www.cloudflare.com/disclosure/",
+	Trademark: "https://www.cloudflare.com/trademark/",
+});
+
+const homepage = Astro.locals.starlightRoute.entry.id === "";
+const splash = Astro.locals.starlightRoute.entry.data.template === "splash";
+const showFeedback = Astro.locals.starlightRoute.entry.data.feedback;
+
+let isProduction = false;
+
+if (
+	import.meta.env.CF_PAGES_BRANCH === "production" ||
+	import.meta.env.GITHUB_REF_NAME === "production"
+) {
+	isProduction = true;
+}
+---
+
+{
+	!homepage && showFeedback && (
+		<div class="feedback-prompt">
+			<FeedbackPrompt client:idle />
+		</div>
+	)
+}
+{!splash && <Default />}
+<div class="w-full">
+	<div class="grid grid-cols-2 gap-8 pt-6 pb-10 lg:grid-cols-5">
+		{
+			groups.map(([title, items]) => (
+				<ul class="flex w-full list-none flex-col gap-3 pl-0">
+					<li class="text-xs leading-5">
+						<strong>{title}</strong>
+					</li>
+					{items.map((link) => (
+						<li class="text-sm">
+							<a
+								href={link.href}
+								class="flex items-center gap-2 text-black! no-underline"
+							>
+								{"icon" in link && <Icon name={link.icon as StarlightIcon} />}
+								{link.text}
+							</a>
+						</li>
+					))}
+				</ul>
+			))
+		}
+	</div>
+	<div>
+		<ul
+			class="text-cl1-gray-4! dark:text-cl1-gray-7! flex list-inside flex-wrap items-center justify-center gap-3 gap-y-4 pl-0 text-xs"
+		>
+			<li class="list-none">© 2025 Cloudflare, Inc.</li>
+			{
+				links.map(([text, href]) => (
+					<li>
+						<a
+							href={href}
+							class="text-cl1-gray-4! dark:text-cl1-gray-7! no-underline"
+						>
+							{text}
+						</a>
+					</li>
+				))
+			}
+			{
+				isProduction && (
+					<li>
+						<OneTrust />
+					</li>
+				)
+			}
+		</ul>
+	</div>
+</div>
+
+<style>
+	:global(footer) {
+		flex-direction: column-reverse !important;
+
+		.meta {
+			margin-top: 0 !important;
+		}
+	}
+
+	.feedback-prompt {
+		h2 {
+			color: var(--sl-color-white);
+			font-size: var(--sl-text-h5);
+			font-weight: 600;
+			line-height: var(--sl-line-height-headings);
+			margin-bottom: 0.5rem;
+		}
+	}
+
+	@media (min-width: 72rem) {
+		html[data-has-toc] {
+			.feedback-prompt {
+				display: none;
+			}
+		}
+	}
+</style>

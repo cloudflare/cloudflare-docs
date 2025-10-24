@@ -1,0 +1,47 @@
+---
+pcx_content_type: navigation
+title: WARP diagnostic logs
+sidebar:
+  order: 3
+tableOfContents: false
+---
+
+import { Render, Tabs, TabItem, Stream, Card } from "~/components";
+
+<Tabs>
+  <TabItem label="Watch this episode">
+
+In this more advanced episode, we explain how to use warp-diag files to identify and resolve connection issues with the WARP client. You will learn how to locate and interpret three key files: `warp-status`, `warp-settings`, and `daemon.log`. The video also provides troubleshooting tips including specific keyword searches and guidance on how to cross-reference logs to identify a bigger picture of the problem.
+
+    <Card>
+        <Stream
+        id="c29964ab3dcf7c3432ebb2b4e93c3aca"
+        title="WARP diagnostic logs"
+        thumbnail="https://pub-d9bf66e086fb4b639107aa52105b49dd.r2.dev/Warp-diagnostics%20thumbnail.png"
+        showMoreVideos={false}
+        chapters={{
+          "Introduction": "0s",
+          "What are warp-diag files?": "44s",
+          "How to download and navigate warp-diag files": "1m16s",
+          "warp-status.txt": "2m06s",
+          "warp-settings.txt": "2m29s",
+          "daemon.log": "3m37s",
+          "Addition tips": "8m07s",
+          "Conclusion": "8m43s",
+        }}
+      />
+
+      **Related content**
+
+      Explore the following resources on WARP, device profiles, operating modes, and split tunneling:
+
+        - [Introduction to Cloudflare WARP](/cloudflare-one/team-and-resources/devices/warp/)
+        - [WARP troubleshooting guide](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/troubleshooting-guide/)
+    </Card>
+
+  </TabItem>
+
+  <TabItem label="Series overview">
+    <Render file="warp-series-navigation" product="learning-paths" />
+  </TabItem>
+</Tabs>

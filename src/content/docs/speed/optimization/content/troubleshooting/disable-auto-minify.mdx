@@ -1,0 +1,67 @@
+---
+pcx_content_type: troubleshooting
+title: Turn off Auto Minify via API
+sidebar:
+  label: Turn off Auto Minify
+description: Learn how to turn off Auto Minify via API in Cloudflare.
+---
+
+If your site is still using deprecated features for [Auto Minify](/fundamentals/api/reference/deprecations/#2024-08-05), turn off Auto Minify via API.
+
+## Before you begin
+
+You will need an [API token](/fundamentals/api/get-started/create-token/) with the following permissions:
+
+- _Zone_ > _Zone Settings_ > _Edit_
+- _Zone_ > _Zone Settings_ > _Read_
+
+## (Optional) Check zone status
+
+To check your zone's Auto Minify status, send a `GET` request to the `/zones/{zone_id}/settings/minify` endpoint.
+
+```bash
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/settings/minify" \
+--header "Authorization: Bearer <API_TOKEN>"
+```
+
+```json output {4}
+{
+	"result": {
+		"id": "minify",
+		"value": { "css": "off", "html": "off", "js": "off" },
+		"modified_on": null,
+		"editable": true
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
+}
+```
+
+If any of the values in the highlighted line are `"on"`, then you need to turn them off.
+
+## Turn off Auto Minify using the API
+
+To turn off Auto Minify for your zone, send a `PATCH` request to the `/zones/{zone_id}/settings/minify` endpoint. The value for `success` in the response should be `true`.
+
+```bash
+curl --request PATCH \
+"https://api.cloudflare.com/client/v4/zones/{zone_id}/settings/minify" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{ "value": { "css": "off","html": "off","js": "off" } }'
+```
+
+```json output {8}
+{
+	"result": {
+		"id": "minify",
+		"value": { "js": "off", "css": "off", "html": "off" },
+		"modified_on": "2024-11-15T19:32:20.882640Z",
+		"editable": true
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
+}
+```

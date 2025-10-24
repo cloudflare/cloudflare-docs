@@ -1,0 +1,10 @@
+name: DNS Firewall
+
+product:
+  title: DNS Firewall
+  group: Application performance
+  additional_groups: [Application security]
+  url: /dns/dns-firewall/
+
+meta:
+  description: Speed up and protect entire authoritative nameservers

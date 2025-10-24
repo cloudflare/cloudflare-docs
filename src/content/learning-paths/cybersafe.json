@@ -1,0 +1,7 @@
+{
+	"title": "Project Cybersafe Schools",
+	"path": "/learning-paths/cybersafe/concepts/",
+	"description": "Prevent children from accessing obscene or harmful content over the Internet.",
+	"pcx_content_type": "learning-path",
+	"products": ["gateway", "zero-trust-warp", "dns"]
+}

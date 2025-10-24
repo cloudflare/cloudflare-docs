@@ -1,0 +1,45 @@
+---
+{}
+---
+
+import { DashButton, TabItem, Tabs } from "~/components";
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+To edit member permissions using the dashboard:
+
+1. In the Cloudflare dashboard, go to the **Members** page.
+
+		<DashButton url="/?to=/:account/members" />
+
+3. Select a member record, then select **Edit**.
+4. Update the scope and roles of their permissions.
+5. Select **Continue to summary**.
+6. Review the information, then select **Update**.
+
+</TabItem> <TabItem label="API">
+
+To edit member permissions using the API, get a [list of roles](/api/resources/accounts/subresources/roles/methods/list/) available for an account.
+
+Then, send a [`PUT` request](/api/resources/accounts/subresources/members/methods/update/) to edit their permissions.
+
+
+```bash title="Request"
+
+curl --request PUT \
+  --url https://api.cloudflare.com/client/v4/accounts/{account_id}/members/{member_id} \
+  --header 'Authorization: Bearer <API_TOKEN>' \
+  --header 'Content-Type: application/json' \
+  --data '{
+	  "roles": [
+	        {
+	            "id": "<ROLE_ID1>"
+	        },
+	        {
+	            "id": "<ROLE_ID2>"
+	        }
+	  	]
+		}'
+```
+
+</TabItem> </Tabs>

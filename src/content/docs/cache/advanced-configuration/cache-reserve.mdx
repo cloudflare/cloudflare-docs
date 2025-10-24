@@ -1,0 +1,217 @@
+---
+title: Cache Reserve
+pcx_content_type: concept
+---
+
+import { Render, TabItem, Tabs, APIRequest, DashButton } from "~/components";
+
+<Render file="smart-shield-callout" product="smart-shield" />
+
+<Render file="cache-reserve-intro" product="cache" />
+
+![Content served from origin and getting cached in Cache Reserve, and Edge Cache Data Centers (T1=upper-tier, T2=lower-tier) on its way back to the client](~/assets/images/cache/content-being-served.png)
+
+How long content in Cache Reserve will be considered “fresh” is determined by Edge Cache TTL setting or Cache-Control headers at your origin, if [Edge Cache TTL](/cache/how-to/edge-browser-cache-ttl/#edge-cache-ttl) is not set. After freshness expires, Cloudflare will attempt to revalidate the asset when a subsequent request arrives in Cache Reserve for the asset. This is the same behavior as in Cloudflare's regular CDN.
+
+The retention period of an asset is how long we will keep the asset in Cache Reserve before marking it for eviction. Cache Reserve starts with a retention period of 30 days. If an asset is not requested within the retention period, it will be evicted from Cache Reserve. Accessing the asset will refresh the retention period.
+
+Assets must [meet certain criteria](#cache-reserve-asset-eligibility) to use Cache Reserve.
+
+Cache Reserve is a usage-based product and [pricing](#pricing) is detailed below. While Cache Reserve does require a paid plan, users can continue to use Cloudflare’s CDN (without Cache Reserve) for free.
+
+## Enable Cache Reserve
+
+A paid Cache Reserve Plan is required for the enablement.
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. In the Cloudflare dashboard, go to the **Cache Reserve** page.
+
+   <DashButton url="/?to=/:account/:zone/caching/cache-reserve" />
+
+2. Select **Enable storage sync**.
+
+</TabItem> <TabItem label="API">
+
+Refer to the [Change Cache Reserve setting API](/api/resources/cache/subresources/cache_reserve/methods/edit/) for more information.
+
+</TabItem> </Tabs>
+
+:::note[Note]
+You can pause Cache Reserve at any time. Pausing Cache Reserve means that Cloudflare’s network will no longer use Cache Reserve to serve data, but resources will remain in storage until they are purged or expired.
+:::
+
+If you are an Enterprise customer and are interested in Cache Reserve, contact your account team to get help with your configuration.
+
+## Cache Reserve asset eligibility
+
+<Render file="cache-reserve-eligibility" product="cache" />
+
+## Limits
+
+<Render file="cache-reserve-limits" product="cache" />
+
+## Usage
+
+Like the standard CDN, Cache Reserve also uses the `cf-cache-status` header to indicate cache statuses like `MISS`, `HIT`, and `REVALIDATED`. Cache Reserve cache misses and hits are factored into the dashboard's cache hit ratio.
+
+Individual sampled requests that filled or were served by Cache Reserve are viewable via the [CacheReserveUsed](/logs/logpush/logpush-job/datasets/zone/http_requests/) Logpush field.
+
+Cache Reserve monthly operations and storage usage are viewable in the dashboard.
+
+## Pricing
+
+Cache Reserve charges based on the total volume of data stored, along with two classes of operations on that data:
+
+- [Class A operations](/r2/pricing/#class-a-operations) which are more expensive and tend to mutate state.
+- [Class B operations](/r2/pricing/#class-b-operations) which tend to read existing state.
+
+In most cases, a Cache Reserve miss will result in both one class A and one class B operation, and a Cache Reserve hit will result in one class B operation. Assets larger than 1 GB will incur more operations proportional to their size.
+
+### Cache Reserve pricing
+
+<table>
+	<tbody>
+		<th></th>
+		<th>Rates</th>
+		<tr>
+			<td>Storage</td>
+			<td>$0.015 / GB-month</td>
+		</tr>
+		<tr>
+			<td>Class A Operations (writes)</td>
+			<td>$4.50 / million requests</td>
+		</tr>
+		<tr>
+			<td>Class B Operations (reads)</td>
+			<td>$0.36 / million requests</td>
+		</tr>
+	</tbody>
+</table>
+
+<Render file="cache-reserve-billing-note" product="cache" />
+
+### Storage usage
+
+Storage is billed using gigabyte-month (GB-month) as the billing metric. A GB-month is calculated by recording total bytes stored for the duration of the month.
+
+For example:
+
+- Storing 1 GB for 30 days will be charged as 1 GB-month.
+- Storing 2 GB for 15 days will be charged as 1 GB-month.
+
+### Operations
+
+<Render
+  file="cache-reserve-operations"
+  product="cache"
+/>
+
+## Cache Reserve billing examples
+
+#### Example 1
+
+Assuming 1,000 assets (each 1 GB) are written to Cache Reserve at the start of the month and each asset is read 1,000 times, the estimated cost for the month would be:
+
+|                    | Usage                                     | Billable Quantity | Price      |
+| ------------------ | ----------------------------------------- | ----------------- | ---------- |
+| Class B Operations | (1,000 assets) \* (1,000 reads per asset) | 1,000,000         | $0.36      |
+| Class A Operations | (1,000 assets) \* (1 write per asset)     | 1,000             | $4.50      |
+| Storage            | (1,000 assets) \* (1GB per asset)         | 1,000 GB-months   | $15.00     |
+| **TOTAL**          |                                           |                   | **$19.86** |
+|                    |                                           |                   |            |
+
+<Render file="cache-reserve-billing-note" product="cache" />
+
+#### Example 2
+
+Assuming 1,000,000 assets (each 1 MB) are in Cache Reserve, and:
+
+- each asset expires and is rewritten into Cache Reserve 1 time per day
+- each asset is read 2 times per day
+
+the estimated cost for the month would be:
+
+|                    | Usage                                                | Billable Quantity | Price       |
+| ------------------ | ---------------------------------------------------- | ----------------- | ----------- |
+| Class B Operations | (1,000,000 assets) \* (2 reads per day) \* (30 days) | 60,000,000        | $21.60      |
+| Class A Operations | (1,000,000 assets) \* (1 write per day) \* (30 days) | 30,000,000        | $135.00     |
+| Storage            | (1,000,000 assets) \* (1MB per asset)                | 1,000 GB-months   | $15.00      |
+| **TOTAL**          |                                                      |                   | **$171.60** |
+|                    |                                                      |                   |             |
+
+<Render file="cache-reserve-billing-note" product="cache" />
+
+## Tips and best practices
+
+Cache Reserve should be used with [Tiered Cache](/cache/how-to/tiered-cache/) enabled. Cache Reserve is designed for use with Tiered Cache enabled for maximum origin shielding. Using Cache Reserve without Tiered Cache may result in higher storage operation costs. Enabling Cache Reserve via the Cloudflare dashboard will check and provide a warning if you try to use Cache Reserve without Tiered Cache enabled.
+
+## Cache Reserve Analytics
+
+<Render
+  file="cache-reserve-analytics"
+	product="cache"
+	params={{
+		conditional: "dedicated-cache-tile"
+	}}
+/>
+
+## Cache Reserve clear button
+
+You can remove all data stored in Cache Reserve through the dashboard or via API. To clear your cache reserve:
+
+- Cache Reserve must have already been enabled for the zone.
+- Cache Reserve needs to be off.
+
+Be aware that the deletion may take up to 24 hours to complete.
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+
+1. In the Cloudflare dashboard, go to the **Cache Reserve** page.
+
+   <DashButton url="/?to=/:account/:zone/caching/cache-reserve" />
+
+2. In **Delete Cache Reserve Data**, select **Delete Storage**.
+
+</TabItem> <TabItem label="API">
+
+To delete Cache Reserve data via API use the following example requests. For more information, refer to the [API documentation](/api/resources/cache/subresources/cache_reserve/methods/clear/).
+
+**Request 1: Get Cache Reserve status**
+
+<APIRequest path="/zones/{zone_id}/cache/cache_reserve" method="GET" />
+
+```json title="Response"
+{
+	"result": {
+		"editable": true,
+		"id": "cache_reserve",
+		"value": "off"
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
+}
+```
+
+If Cache Reserve is turned off, you can proceed to the Cache Reserve Clear operation.
+
+**Request 2: Start Cache Reserve Clear**
+
+<APIRequest path="/zones/{zone_id}/cache/cache_reserve_clear" method="POST" />
+
+```json title="Response"
+{
+	"result": {
+		"id": "cache_reserve_clear",
+		"start_ts": "2024-06-02T10:00:00.12345Z",
+		"state": "In-progress"
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
+}
+```
+
+</TabItem> </Tabs>

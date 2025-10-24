@@ -1,0 +1,53 @@
+---
+{}
+
+---
+
+import { Render, TabItem, Tabs } from "~/components"
+
+You need to perform the following steps for each custom hostname.
+
+### 1. Plan for validation
+
+Before you create a hostname, you need to plan for:
+
+1. [Certificate validation](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/): Upon successful validation, the certificates are deployed to Cloudflare’s global network.
+2. [Hostname validation](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-validation/): Upon successful validation, Cloudflare proxies traffic for this hostname.
+
+You must complete both these steps for the hostname to work as expected.
+
+:::caution[Important]
+
+
+Depending on which method you select for each of these options, additional steps might be required for you and your customers.
+
+
+:::
+
+### 2. Create custom hostname
+
+After planning for certification and hostname validation, you can create the custom hostname.
+
+To create a custom hostname:
+
+<Tabs> <TabItem label="Dashboard">
+
+<Render file="create-custom-hostname" product="cloudflare-for-platforms" />
+
+<Render file="create-custom-hostname-limitations" product="cloudflare-for-platforms" />
+
+</TabItem> <TabItem label="API">
+
+<Render file="create-custom-hostname-api" product="cloudflare-for-platforms" />
+
+<Render file="create-custom-hostname-limitations" product="cloudflare-for-platforms" />
+
+</TabItem> </Tabs>
+
+:::note
+
+
+<Render file="issue-certs-preamble" product="cloudflare-for-platforms" />
+
+
+:::

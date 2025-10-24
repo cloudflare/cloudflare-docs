@@ -1,0 +1,107 @@
+---
+pcx_content_type: reference
+title: Account limits
+sidebar:
+  order: 15
+---
+
+import { Render } from "~/components";
+
+This page lists the default account limits for rules, applications, fields, and other features. These limits may be increased on Enterprise accounts. To request a limit increase, contact your account team.
+
+## Access
+
+| Feature                     | Limit |
+| --------------------------- | ----- |
+| Applications                | 500   |
+| Audit Logpush jobs          | 5     |
+| Email addresses per rule    | 1,000 |
+| Rule groups                 | 300   |
+| Rules per rule group        | 1,000 |
+| IP addresses per rule       | 1,000 |
+| mTLS root certificates      | 50    |
+| Service tokens              | 50    |
+| Identity providers          | 50    |
+| Reusable policies           | 500   |
+| Rules per application       | 1,000 |
+| Domains per application     | 5     |
+| Infrastructure targets      | 5,000 |
+| MCP portals                 | 20    |
+| MCP servers per portal      | 10    |
+
+## Gateway
+
+| Feature                                   | Limit |
+| ----------------------------------------- | ----- |
+| DNS policies per account                  | 500   |
+| Network policies per account              | 500   |
+| HTTP policies per account                 | 500   |
+| Egress policies per account               | 500   |
+| Resolver policies per account             | 500   |
+| DNS locations                             | 250   |
+| Source IP CIDRs per DNS location          | 1,500 |
+| Concurrent streams for HTTP/2 connections | 256   |
+| Proxy endpoints                           | 500   |
+| Source IP CIDRs per proxy endpoint        | 2,000 |
+| Lists                                     | 100   |
+| Entries per list (Standard users)         | 1,000 |
+| Entries per list (Enterprise users)       | 5,000 |
+| List API requests per minute              | 600   |
+| DNS Logpush jobs                          | 5     |
+| HTTP Logpush jobs                         | 5     |
+
+## Data Loss Prevention (DLP)
+
+| Feature                                  | Limit     |
+| ---------------------------------------- | --------- |
+| Custom entries                           | 25        |
+| Exact Data Match cells per spreadsheet   | 100,000   |
+| Custom Wordlist keywords per spreadsheet | 200       |
+| Custom Wordlist keywords per account     | 1,000     |
+| Dataset cells per account                | 1,000,000 |
+
+## Cloudflare Tunnel
+
+| Feature                                  | Limit |
+| ---------------------------------------- | ----- |
+| `cloudflared` tunnels per account        | 1,000 |
+| WARP Connectors per account              | 10    |
+| Routes per tunnel                        | 1,000 |
+| Active `cloudflared` replicas per tunnel | 25    |
+| Virtual networks per account             | 1,000 |
+
+## Digital Experience Monitoring (DEX)
+
+| Feature                 | Limit                                                                                      |
+| ----------------------- | ------------------------------------------------------------------------------------------ |
+| DEX Tests per account   | Zero Trust Free: 10 <br/> Zero Trust Standard: 30 <br/> Zero Trust Enterprise: 50 <br/>    |
+| Remote captures per day | Zero Trust Free: 100 <br/> Zero Trust Standard: 200 <br/> Zero Trust Enterprise: 800 <br/> |
+
+## Certificates
+
+| Feature                        | Limit |
+| ------------------------------ | ----- |
+| Active certificates            | 10    |
+| Certificates generated per day | 3     |
+| Custom certificates            | 5     |
+
+## Maximum number of characters
+
+| Feature                       | Character limit |
+| ----------------------------- | --------------- |
+| Application name              | 350             |
+| Group name                    | 350             |
+| mTLS certificates name        | 350             |
+| Service token name            | 350             |
+| IdP name                      | 350             |
+| Target name                   | 255             |
+| Application URL               | 63              |
+| Team domain                   | 63              |
+| Gateway API policy expression | 140,000         |
+
+## WARP
+
+| Feature                                                                    | Limit           |
+| -------------------------------------------------------------------------- | --------------- |
+| Characters per device profile expression                                   | 10,000          |
+| Combined Split Tunnel and Local Domain Fallback entries per device profile | 1,000           |

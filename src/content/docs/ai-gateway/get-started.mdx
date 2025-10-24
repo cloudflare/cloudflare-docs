@@ -1,0 +1,98 @@
+---
+pcx_content_type: get-started
+title: Getting started
+reviewed: 2024-06-19
+sidebar:
+  order: 2
+---
+
+import {
+	Details,
+	DirectoryListing,
+	LinkButton,
+	Render,
+	TabItem,
+	Tabs,
+	Badge,
+} from "~/components";
+
+In this guide, you will learn how to create and use your first AI Gateway.
+
+<Render file="create-gateway" product="ai-gateway" />
+
+### Authenticated gateway
+
+When you enable authentication on gateway each request is required to include a valid cloudflare token, adding an extra layer of security. We recommend using an authenticated gateway when storing logs to prevent unauthorized access and protect against invalid requests that can inflate log storage usage and make it harder to find the data you need. [Learn more](/ai-gateway/configuration/authentication/).
+
+## Provider Authentication
+
+Authenticate with your upstream provider using one of the following options:
+
+- **Unified Billing:** Use the AI Gateway billing to pay for and authenticate your inference requests. Refer to [Unified Billing](/ai-gateway/features/unified-billing/).
+- **BYOK (Store Keys):** Store your credentials in Cloudflare, and AI Gateway will include them at runtime. Refer to [BYOK](/ai-gateway/configuration/bring-your-own-keys/).
+- **Request headers:** Include your provider key in the request headers as you normally would (for example, `Authorization: Bearer <PROVIDER_API_KEY>`).
+
+## Integration Options
+
+### Unified API (OpenAI-Compatible) Endpoint
+
+<Badge text="recommended" variant="success" size="small" />
+<br />
+<br />
+
+The easiest way to get started with AI Gateway is through our OpenAI-compatible `/chat/completions` endpoint. This allows you to use existing OpenAI SDKs and tools with minimal code changes while gaining access to multiple AI providers.
+
+```txt
+https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/compat/chat/completions
+```
+
+**Key benefits:**
+
+- Drop-in replacement for OpenAI API
+- Works with existing OpenAI SDKs and other OpenAI compliant clients
+- Switch between providers by changing the `model` parameter
+- Dynamic Routing - Define complex routing scenarios requiring conditional logic, conduct A/B tests, set rate / budget limits, etc
+
+#### Example:
+
+```js
+import OpenAI from "openai";
+
+const client = new OpenAI({
+	apiKey: "YOUR_PROVIDER_API_KEY",
+	baseURL:
+		"https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/compat",
+});
+
+// Use different providers by changing the model parameter
+const response = await client.chat.completions.create({
+	model: "google-ai-studio/gemini-2.5-flash", // or "openai/gpt-5-mini", "anthropic/claude-sonnet-4-5"
+	messages: [{ role: "user", content: "Hello, world!" }],
+});
+```
+
+Refer to [Unified API](/ai-gateway/usage/chat-completion/) to learn more about OpenAI compatibility.
+
+### Provider-specific endpoints
+
+For direct integration with specific AI providers, use dedicated endpoints that maintain the original provider's API schema while adding AI Gateway features.
+
+```txt
+https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/{provider}
+```
+
+**Available providers:**
+
+- [OpenAI](/ai-gateway/usage/providers/openai/) - GPT models and embeddings
+- [Anthropic](/ai-gateway/usage/providers/anthropic/) - Claude models
+- [Google AI Studio](/ai-gateway/usage/providers/google-ai-studio/) - Gemini models
+- [Workers AI](/ai-gateway/usage/providers/workersai/) - Cloudflare's inference platform
+- [AWS Bedrock](/ai-gateway/usage/providers/bedrock/) - Amazon's managed AI service
+- [Azure OpenAI](/ai-gateway/usage/providers/azureopenai/) - Microsoft's OpenAI service
+- [and more...](/ai-gateway/usage/providers/)
+
+## Next steps
+
+- Learn more about [caching](/ai-gateway/features/caching/) for faster requests and cost savings and [rate limiting](/ai-gateway/features/rate-limiting/) to control how your application scales.
+- Explore how to specify model or provider [fallbacks, ratelimits, A/B tests](/ai-gateway/features/dynamic-routing/) for resiliency.
+- Learn how to use low-cost, open source models on [Workers AI](/ai-gateway/usage/providers/workersai/) - our AI inference service.

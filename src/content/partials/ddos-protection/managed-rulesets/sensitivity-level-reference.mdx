@@ -1,0 +1,25 @@
+---
+{}
+
+---
+
+API property name: `"sensitivity_level"`.
+
+Defines how sensitive a rule is. Affects the thresholds used to determine if an attack should be mitigated. A higher sensitivity level means having a lower threshold, while a lower sensitivity level means having a higher threshold.
+
+The available sensitivity levels are:
+
+| UI value          | API value   |
+| ----------------- | ----------- |
+| *High*            | `"default"` |
+| *Medium*          | `"medium"`  |
+| *Low*             | `"low"`     |
+| *Essentially Off* | `"eoff"`    |
+
+The default sensitivity level is *High*.
+
+In most cases, when you select the *Essentially Off* sensitivity level the rule will not trigger for any of the selected actions, including *Log*. However, if the attack is extremely large, Cloudflare's protection systems will still trigger the rule's mitigation action to protect Cloudflare's network.
+
+*Essentially Off* means that we have set an exceptionally low sensitivity level so in most cases traffic will not be mitigated for you. However, attack traffic will be mitigated at exceptional levels to ensure the safety and stability of the Cloudflare network.
+
+**Log** means that requests will not be mitigated but only logged and shown on the dashboard. However, attack traffic will be mitigated at exceptional levels to ensure the safety and stability of the Cloudflare network.

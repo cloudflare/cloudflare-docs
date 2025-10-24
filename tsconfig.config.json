@@ -1,9 +1,0 @@
-{
-  "extends": "@vue/tsconfig/tsconfig.node.json",
-  "include": ["vite.config.*", "bin/**.ts"],
-  "compilerOptions": {
-    "lib": ["esnext"],
-    "composite": true,
-    "types": ["node"]
-  }
-}

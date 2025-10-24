@@ -1,0 +1,50 @@
+---
+title: Infrastructure
+pcx_content_type: reference
+sidebar:
+  order: 3
+---
+
+import { APIRequest } from "~/components";
+
+## China data centers
+
+For up-to-date information, refer to the [Cloudflare China Network](https://www.cloudflare.com/china-network/) page.
+
+### Network IP addresses
+
+Cloudflare publishes a list of IP addresses for JD Cloud data centers, used by Cloudflare when connecting to the origin networks of customers to retrieve assets. These addresses are not the same IP addresses returned to website visitors as part of DNS resolution.
+
+You can obtain the list of JD Cloud data center IP addresses via Cloudflare API. Use the [Cloudflare/JD Cloud IP Details](/api/resources/ips/methods/list/) operation with the `networks=jdcloud` query string parameter:
+
+<APIRequest
+	path="/ips"
+	method="GET"
+	parameters={{
+		networks: "jdcloud",
+	}}
+/>
+
+```json output {9-11}
+{
+	"result": {
+		"ipv4_cidrs": [
+			// (...)
+		],
+		"ipv6_cidrs": [
+			// (...)
+		],
+		"jdcloud_cidrs": [
+			// (...)
+		],
+		"etag": "<ETAG>"
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
+}
+```
+
+The `jdcloud_cidrs` array lists the IP addresses of JD Cloud data centers.
+
+Cloudflare will add new IP addresses to this list 30 days in advance before connecting from those IP addresses to an origin server. If you are using the China Network on JD Cloud, you should update your firewalls to reflect any IP address changes at least once every 30 days.

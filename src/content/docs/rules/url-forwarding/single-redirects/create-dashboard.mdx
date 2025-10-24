@@ -1,0 +1,42 @@
+---
+pcx_content_type: how-to
+title: Create a redirect rule in the dashboard
+sidebar:
+  order: 2
+  label: Create rule in the dashboard
+---
+
+import { Render, Steps, DashButton } from "~/components";
+
+<Steps>
+
+1. In the Cloudflare dashboard, go to the Rules **Overview** page.
+
+   <DashButton url="/?to=/:account/:zone/rules/overview" />
+
+2. Select **Create rule** > **Redirect Rule**.
+3. (Optional) Select one of the rule templates that address common use cases. Then, review and adjust the proposed rule configuration.
+4. Enter a descriptive name for the rule in **Rule name**.
+5. Under **When incoming requests match**, select one of the following options:
+   - **Wildcard pattern**: The rule will only apply to traffic matching the wildcard pattern.
+     - **Request URL**: Enter the [wildcard pattern](/ruleset-engine/rules-language/operators/#wildcard-matching) using the asterisk (`*`) character to match multiple requests. For example, `http*://*.example.com/files/*`.
+     - **Then**: Define the [URL redirect settings](/rules/url-forwarding/single-redirects/settings/) including:
+       - **Target URL**: Enter the target URL, which can be static (for example, `https://example.com`) or dynamic (for example, `https://example.com/${1}/files/${2}`). Use [wildcard replacement](/ruleset-engine/rules-language/functions/#wildcard_replace) such as `${1}` and `${2}` to define dynamic target URLs.
+       - **Status code**: Select the status code for the redirect (for example, `301`).
+       - **Preserve query string**: Choose whether to keep the query string from the original request.
+   - **All incoming requests**: The rule will apply to all traffic.
+     - **Then**: Define the [URL redirect settings](/rules/url-forwarding/single-redirects/settings/) for all incoming requests.
+   - **Custom filter expression**: The rule will only apply to traffic matching a custom expression. Define the [rule expression](/ruleset-engine/rules-language/expressions/edit-expressions/) to configure which requests should be redirected.
+     - **Then**: Define the [URL redirect settings](/rules/url-forwarding/single-redirects/settings/) for requests matching the custom rule expression.
+
+6. To save and deploy your rule, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
+
+   <Render file="rules-creation-dash-dns-popup" product="rules" />
+
+</Steps>
+
+<Render
+	file="url-forwarding/requires-proxied-site"
+	product="rules"
+	params={{ forwardingRuleName: "Single Redirects" }}
+/>

@@ -1,0 +1,48 @@
+---
+title: Cron triggers are now supported in Python Workers
+description: You can now set up scheduled handlers in your Python Workers
+products:
+  - workers
+date: 2025-04-24
+---
+
+import { WranglerConfig } from "~/components";
+
+You can now create Python Workers which are executed via a cron trigger.
+
+This is similar to how it's done in JavaScript Workers, simply define a scheduled event
+listener in your Worker:
+
+```python
+from workers import handler
+
+@handler
+async def on_scheduled(event, env, ctx):
+  print("cron processed")
+```
+
+Define a cron trigger configuration in your Wrangler configuration file:
+
+<WranglerConfig>
+
+```toml
+[triggers]
+# Schedule cron triggers:
+# - At every 3rd minute
+# - At 15:00 (UTC) on first day of the month
+# - At 23:59 (UTC) on the last weekday of the month
+crons = [ "*/3 * * * *", "0 15 1 * *", "59 23 LW * *" ]
+```
+
+</WranglerConfig>
+
+Then test your new handler by using Wrangler with the `--test-scheduled` flag and
+making a request to `/cdn-cgi/handler/scheduled?cron=*+*+*+*+*`:
+
+```sh
+npx wrangler dev --test-scheduled
+
+curl "http://localhost:8787/cdn-cgi/handler/scheduled?cron=*+*+*+*+*"
+```
+
+Consult the [Workers Cron Triggers page](/workers/configuration/cron-triggers/) for full details on cron triggers in Workers.

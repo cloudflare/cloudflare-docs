@@ -1,0 +1,20 @@
+---
+pcx_content_type: troubleshooting
+title: Error 10028
+source: null
+---
+
+## Error 10028: The add list items operation contains duplicate items
+
+This error indicates that the operation to add items to a list contains duplicate entries within the same request.
+
+### Common causes
+
+This error occurs when there are duplicate list items in a single operation to add items to a List (either an IP list or a Bulk Redirect List). This error can happen when you:
+
+- Add a repeated IP address to an IP list
+- Add a repeated source URL to a Bulk Redirect List
+
+### Resolution
+
+You need to remove the duplicate item and try again.

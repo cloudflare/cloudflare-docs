@@ -1,0 +1,156 @@
+---
+title: Create custom error rules
+pcx_content_type: how-to
+sidebar:
+  order: 3
+---
+
+import { APIRequest, Render, Steps, DashButton } from "~/components";
+
+## In the dashboard
+
+### Create a custom error rule {/* create-a-custom-error-rule-dashboard */}
+
+<Steps>
+
+1. In the Cloudflare dashboard, go to the Rules **Overview** page.
+
+   <DashButton url="/?to=/:account/:zone/rules/overview" />
+
+2. Select **Create rule** > **Custom Error Rule**.
+3. Enter a descriptive name for the rule in **Rule name**.
+4. Under **If incoming requests match**, select one of the following options:
+   - **Custom filter expression**: The rule will only apply to traffic matching a custom expression. Define the [rule expression](/ruleset-engine/rules-language/expressions/edit-expressions/) to configure which requests should be rewritten. Use either the Expression Builder or the Expression Editor to define the custom expression. For more information, refer to [Edit expressions in the dashboard](/ruleset-engine/rules-language/expressions/edit-expressions/).
+
+   - **All incoming requests**: The rule will apply to all responses with a `400` status code or above, except for block and challenge actions issued by Cloudflare’s security products.
+
+5. In **Deliver a custom error response**, select the response type (either _Custom error asset_ or one of the available inline responses).
+
+   If you select _Custom error asset_, select an existing custom error asset in **Asset**, or select **Create new asset** to [create a new custom error asset](#create-a-custom-error-asset-dashboard).
+
+   If you select _JSON response_, _HTML response_, _Text response_, or _XML response_, enter the custom error response you want to send to web site visitors in **JSON response**, **HTML response**, **Text response**, or **XML response**, respectively.
+   The response can include [error tokens](/rules/custom-errors/reference/error-tokens/) that Cloudflare will replace with real values before sending the response to the visitor. The maximum response size is 10 KB.
+
+6. (Optional) In **Response code**, enter the HTTP status code of the response (an integer value between `400` and `999`). If provided, this value will override the current response status code.
+
+7. (Optional) Under **Place at**, define where to place the rule in the rules list: first rule in the list, last rule in the list, or in a custom position (after a given rule).
+
+8. To save and deploy your rule, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
+
+</Steps>
+
+### Create a custom error asset {/* create-a-custom-error-asset-dashboard */}
+
+<Steps>
+
+1. In the **Create Custom Error Asset** sidebar, enter a name for the asset in **Asset name**.
+2. (Optional) Enter a description for the asset in **Description**.
+3. In **URL**, enter the URL of the page you want to fetch and store in Cloudflare's global network. Cloudflare will fetch all the page resources and store a minified version of the page you can use in one or more custom error rules.
+4. Select **Save**.
+
+</Steps>
+
+To review existing custom error assets, go to **Rules** > **Settings** > **Custom Error Assets** tab.
+
+## Via API
+
+To configure a custom error rule via API:
+
+<Steps>
+
+1. (Optional) [Create a custom error asset](#create-a-custom-error-asset-api) based on a URL you provide.
+2. [Create a custom error rule](#create-a-custom-error-rule-api) in the `http_custom_errors` phase, using the [Rulesets API](/ruleset-engine/rulesets-api/).
+
+</Steps>
+
+### Create a custom error asset {/* create-a-custom-error-asset-api */}
+
+The following `POST` request creates new a custom error asset in a zone based on the provided URL:
+
+```bash
+curl "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/custom_pages/assets" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--json '{
+  "name": "500_error_template",
+  "description": "Standard 5xx error template page",
+  "url": "https://example.com/errors/500_template.html"
+}'
+```
+
+```json output
+{
+	"result": {
+		"name": "500_error_template",
+		"description": "Standard 5xx error template page",
+		"url": "https://example.com/errors/500_template.html",
+		"last_updated": "2025-02-10T11:36:07.810215Z",
+		"size_bytes": 2048
+	},
+	"success": true
+}
+```
+
+### Create a custom error rule {/* create-a-custom-error-rule-api */}
+
+When creating a custom error rule via API, make sure you:
+
+- Set the rule action to `serve_error`.
+- Define the [rule parameters](/rules/custom-errors/reference/parameters/#custom-error-rules) in the `action_parameters` field according to response type.
+- Deploy the rule to the `http_custom_errors` phase.
+
+The first rule in the `http_custom_errors` phase ruleset that matches will be applied. No other rules in the ruleset will be matched or applied. Additionally, custom error rules defined at the zone level will have priority over rules defined at the account level.
+
+#### General procedure
+
+Follow this workflow to create a custom error rule for a given zone via API:
+
+<Steps>
+
+1. Use the [List zone rulesets](/api/resources/rulesets/methods/list/) operation to check if there is already a ruleset for the `http_custom_errors` phase at the zone level.
+2. If the phase ruleset does not exist, create it using the [Update a zone entry point ruleset](/api/resources/rulesets/subresources/phases/methods/update/) operation, which allows you to create a ruleset if it does not exist and update all the rules in the ruleset. Create the ruleset in the `http_custom_errors` phase.
+
+   If the phase ruleset already exists, use the [Update a zone entry point ruleset](/api/resources/rulesets/subresources/phases/methods/update/) operation to replace all the rules in the ruleset, or the [Add rule to ruleset](/ruleset-engine/rulesets-api/add-rule/) operation to add a rule to the existing rules in the ruleset.
+
+</Steps>
+
+To create a custom error rule at the account level, use the corresponding account-level API endpoints.
+
+#### Example
+
+This example configures a custom error rule returning a [previously created custom error asset](#create-a-custom-error-asset-api) named `500_error_template` for responses with a `500` HTTP status code.
+
+<APIRequest
+	path="/zones/{zone_id}/rulesets/phases/{ruleset_phase}/entrypoint"
+	method="PUT"
+	parameters={{
+		ruleset_phase: "http_custom_errors",
+	}}
+	json={{
+		rules: [
+			{
+				ref: "serve_500_template",
+				action: "serve_error",
+				action_parameters: {
+					asset_name: "500_error_template",
+					content_type: "text/html",
+				},
+				expression: "http.response.code eq 500",
+				enabled: true,
+			},
+		],
+	}}
+/>
+
+<Render
+	file="terraform-use-ref-field"
+	product="rules"
+	params={{ addDocsLocation: true }}
+/>
+
+This `PUT` request, corresponding to the [Update a zone entry point ruleset](/api/resources/rulesets/subresources/phases/methods/update/) operation, replaces any existing rules in the `http_custom_errors` phase entry point ruleset.
+
+### Required API token permissions
+
+The API token used in API requests to manage Custom Error Rules and Custom Error Assets must have at least the following permission:
+
+- _Custom Error Rules_ > _Edit_

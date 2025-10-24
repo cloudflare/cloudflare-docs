@@ -1,0 +1,84 @@
+---
+import { Icon } from "@astrojs/starlight/components";
+
+const blocks = [
+	{
+		title: "Community",
+		text: "Share ideas, answers, code and compare notes with the Cloudflare community.",
+		links: [
+			{
+				text: "Discord",
+				icon: "discord",
+				href: "https://discord.cloudflare.com/",
+			},
+			{
+				text: "Twitter",
+				icon: "x.com",
+				href: "https://x.com/CloudflareDev",
+			},
+			{
+				text: "Community forum",
+				icon: "cloudflare",
+				href: "https://community.cloudflare.com/",
+			},
+		],
+	},
+	{
+		title: "Open source",
+		text: "Cloudflare contributes to the open-source ecosystem in a variety of ways, including:",
+		links: [
+			{
+				text: "GitHub projects",
+				icon: "github",
+				href: "https://github.com/cloudflare",
+			},
+			{
+				text: "Sponsorship projects",
+				icon: "seti:shell",
+				href: "/sponsorships/",
+			},
+			{
+				text: "Style guide",
+				icon: "document",
+				href: "/style-guide/",
+			},
+		],
+	},
+	{
+		title: "Blog",
+		text: "Get the latest news on Cloudflare products, technologies, and culture.",
+		links: [
+			{
+				text: "Read the blog",
+				icon: "open-book",
+				href: "https://blog.cloudflare.com/",
+			},
+		],
+	},
+] as const;
+---
+
+<div class="flex items-start justify-between py-10 *:mt-0!">
+	{
+		blocks.map(({ title, text, links }) => (
+			<div>
+				<strong>{title}</strong>
+				<p class="w-80">{text}</p>
+				<ul class="list-none pl-0">
+					{links.map((link) => (
+						<li class="mt-4! flex">
+							<Icon
+								name={link.icon}
+								size="1.5rem"
+								color="var(--sl-color-white)"
+							/>
+							<a href={link.href} class="pl-2 text-black! no-underline">
+								{link.text}
+							</a>
+						</li>
+					))}
+				</ul>
+			</div>
+		))
+	}
+</div>

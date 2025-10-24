@@ -1,0 +1,216 @@
+---
+import { z } from "astro:schema";
+import { Badge } from "@astrojs/starlight/components";
+import parse from "parse-duration";
+import Details from "./Details.astro";
+import { reference, getEntry } from "astro:content";
+
+type Props = z.input<typeof props>;
+
+const props = z
+	.object({
+		id: z.string(),
+		title: z.string(),
+		thumbnail: z.string().optional(),
+		chapters: z.record(z.string(), z.string()).optional(),
+		showMoreVideos: z.boolean().default(false),
+		expandChapters: z.boolean().default(false),
+	})
+	.strict()
+	.or(
+		z
+			.object({
+				file: reference("stream"),
+				showMoreVideos: z.boolean().default(false),
+				expandChapters: z.boolean().default(false),
+			})
+			.strict(),
+	);
+
+const input = props.parse(Astro.props);
+
+let id;
+let title;
+let thumbnail;
+let chapters;
+const { showMoreVideos, expandChapters } = input;
+
+if ("id" in input) {
+	id = input.id;
+	title = input.title;
+	thumbnail = input.thumbnail;
+	chapters = input.chapters;
+} else {
+	const { file } = input;
+
+	const entry = await getEntry(file);
+
+	if (!entry) {
+		throw new Error(`[Stream] Could not find "${file}"`);
+	}
+
+	id = entry.data.id;
+	title = entry.data.title;
+	chapters = entry.data.chapters;
+
+	if (entry.data.thumbnail) {
+		if ("url" in entry.data.thumbnail) {
+			thumbnail = entry.data.thumbnail.url;
+		} else {
+			thumbnail = entry.data.thumbnail.timestamp;
+		}
+	}
+}
+
+const BASE_URL = `https://customer-1mwganm1ma0xgnmj.cloudflarestream.com/`;
+
+const url = new URL(`${id}/iframe`, BASE_URL);
+const thumbnailUrl = new URL(`${id}/thumbnails/thumbnail.jpg`, BASE_URL);
+
+url.searchParams.set("preload", "true");
+url.searchParams.set("letterboxColor", "transparent");
+
+if (thumbnail) {
+	if (thumbnail.startsWith("http")) {
+		url.searchParams.set("poster", thumbnail);
+	} else {
+		thumbnailUrl.searchParams.set("fit", "crop");
+		thumbnailUrl.searchParams.set("time", thumbnail);
+
+		url.searchParams.set("poster", encodeURI(thumbnailUrl.toString()));
+	}
+}
+---
+
+<div>
+	<stream-player data-id={id} data-title={title}>
+		<div style="position: relative; padding-top: 56.25%">
+			<iframe
+				src={url.toString()}
+				style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;"
+				allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+				allowfullscreen="true"
+				title={title}
+				id={id}></iframe>
+		</div>
+
+		{
+			chapters && (
+				<Details header="Chapters" open={expandChapters}>
+					<p>
+						<ul class="flex list-none gap-4 overflow-x-scroll pb-4 pl-0">
+							{Object.entries(chapters).map(([chapter, time]) => {
+								const totalSeconds = parse(time, "s");
+
+								const thumbnail = new URL(thumbnailUrl);
+								thumbnail.searchParams.set("fit", "crop");
+								thumbnail.searchParams.set("time", `${totalSeconds}s`);
+
+								return (
+									<li class="mt-0!">
+										<button
+											class="flex h-full w-36 cursor-pointer flex-col rounded-sm border border-gray-200 bg-transparent p-4 dark:border-gray-700"
+											data-chapter={chapter}
+											data-time={totalSeconds}
+										>
+											<img
+												src={thumbnail.toString()}
+												alt={chapter}
+												width="120"
+												height="64"
+												class="border-accent bg-accent/10 rounded-sm border"
+											/>
+											<div class="flex h-full flex-col items-center justify-between">
+												<strong class="line-clamp-2 text-xs" title={chapter}>
+													{chapter}
+												</strong>
+												<Badge text={time} variant="tip" class="w-fit" />
+											</div>
+										</button>
+									</li>
+								);
+							})}
+						</ul>
+					</p>
+				</Details>
+			)
+		}
+
+		{
+			showMoreVideos && (
+				<a href="https://www.youtube.com/@CloudflareDevelopers" target="_blank">
+					Watch more videos on our Developer Channel
+				</a>
+			)
+		}
+	</stream-player>
+</div>
+
+<script is:inline src="https://embed.cloudflarestream.com/embed/sdk.latest.js"
+></script>
+
+<script>
+	import { track } from "~/util/zaraz";
+
+	declare function Stream(player: HTMLIFrameElement): HTMLVideoElement;
+
+	class StreamPlayer extends HTMLElement {
+		connectedCallback() {
+			const id = CSS.escape(this.dataset.id as string);
+			const title = this.dataset.title as string;
+
+			const player = this.querySelector(`#${id}`) as HTMLIFrameElement;
+			const stream = Stream(player);
+
+			stream.addEventListener("play", () => {
+				track("play docs video", { title });
+			});
+
+			stream.addEventListener("pause", () => {
+				track("paused docs video", {
+					title,
+					time: stream.currentTime.toFixed(1),
+				});
+			});
+
+			stream.addEventListener("seeked", () => {
+				track("seeked docs video", {
+					title,
+					time: stream.currentTime.toFixed(1),
+				});
+			});
+
+			stream.addEventListener("ended", () => {
+				track("ended docs video", { title });
+			});
+
+			stream.addEventListener("ratechange", () => {
+				if (stream.playbackRate === 0 || stream.playbackRate === 1) return;
+
+				track("changed playback rate docs video", {
+					title,
+					rate: stream.playbackRate,
+				});
+			});
+
+			const buttons =
+				this.querySelectorAll<HTMLButtonElement>("[data-chapter]");
+
+			for (const button of buttons) {
+				button.addEventListener("click", () => {
+					const chapter = button.dataset.chapter as string;
+					const time = Number(button.dataset.time);
+
+					stream.currentTime = time;
+
+					track("clicked chapter docs video", {
+						title,
+						chapter,
+					});
+				});
+			}
+		}
+	}
+
+	customElements.define("stream-player", StreamPlayer);
+</script>

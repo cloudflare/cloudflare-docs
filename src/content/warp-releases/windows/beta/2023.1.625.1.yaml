@@ -1,0 +1,43 @@
+releaseNotes: >-
+  This release contains bug fixes and a major new architecture for how traffic
+  is handled on Windows from the previous beta release. Please read entire
+  release notes.
+   
+  *Major change*
+
+  WARP On Windows will now use a new tunnel architecture that more closely
+  matches our macOS and Linux implementations. WARP will now create a virtual
+  interface that is visible in your network connections and directly modify the
+  routing table to control where traffic flows. Please thoroughly test this
+  release before deploying in your organization. 
+   
+  **Notable updates**
+
+  - Added support for Windows Subsystem for Linux 2 (WSL2).
+
+  - Improved compatibility with apps like Firefox and Zoom that use custom MTU
+  settings.
+
+  - Fixed issue where warp-diag could run traceroutes longer than expected.
+  Traceroute tests will now timeout after 65 seconds.
+
+  - Improved UI states for WARP client.
+
+  - Improved user validation logic during manual ZT login.
+
+  - Fixed issue where the WARP service can crash and lose connectivity.
+
+  - Fixed issue where manually logging into a ZT org could fail if certificate
+  authentication was used.
+   
+
+   
+  **Known issues**
+
+  - If you encounter issues during upgrade/install, please restart your Windows
+  device (this issue will be resolved in a future release).
+version: 2023.1.625.1
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2023.1.625.1
+packageSize: 106024960
+releaseDate: 2023-02-22T20:38:31.340Z
+platformName: Windows

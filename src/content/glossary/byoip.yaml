@@ -1,0 +1,32 @@
+---
+productName: BYOIP
+entries:
+  - term: address map
+    general_definition: |-
+      a data structure enabling customers with BYOIP prefixes or account-level static IPs to specify which IP addresses should be mapped to DNS records when they are proxied through Cloudflare.
+
+  - term: autonomous system numbers (ASNs)
+    general_definition: |-
+      a large network or group of networks that has a unified routing policy. Every computer or device that connects to the Internet is connected to an autonomous system.
+    associated_products:
+      - Magic WAN
+
+  - term: Border Gateway Protocol (BGP)
+    general_definition: |-
+      the routing protocol for the Internet, which is responsible for picking the most efficient routes to deliver Internet traffic.
+
+  - term: Internet Routing Registry (IRR)
+    general_definition: |-
+      a globally distributed database of routing information which contains announced routes and routing policies in a common format. Network operators use this information to configure backbone routers.
+
+  - term: Resource Public Key Infrastructure (RPKI)
+    general_definition: |-
+      a cryptographic method of signing records that associate a route with an originating autonomous system number.
+
+  - term: Route Origin Authorization (ROA)
+    general_definition: |-
+      the RPKI-signed object that states an autonomous system is authorized to originate a particular IP address prefix or set of prefixes.
+
+  - term: Unicast Reverse Path Forwarding (uRPF)
+    general_definition: |-
+      a security feature that can prevent spoofing attacks.
