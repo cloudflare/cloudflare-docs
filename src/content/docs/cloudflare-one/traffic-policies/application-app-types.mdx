@@ -18,7 +18,7 @@ Gateway allows you to create DNS, Network, and HTTP policies based on applicatio
 
 When you choose the _Application_ selector in a Gateway policy builder, the **Value** field will include all supported applications and their respective app types. Alternatively, you can use the [Gateway API](/api/resources/zero_trust/subresources/gateway/subresources/app_types/methods/list/) to fetch a list of applications, app types, and ID numbers.
 
-To manage a consolidated list of applications across Zero Trust, you can use the [Application Library](/cloudflare-one/applications/app-library/).
+To manage a consolidated list of applications across Zero Trust, you can use the [Application Library](/cloudflare-one/team-and-resources/app-library/).
 
 ## App types
 
@@ -58,7 +58,7 @@ Applications categorized by Cloudflare may independently rely on a number of dif
 
 ### Hostnames
 
-Hostnames are domains that are core to the application and not [used by other applications](#overlapping-hostnames). These are the domains that are specifically blocked when you block an application. The App Library surfaces these hostnames in the [Hostnames table](/cloudflare-one/applications/app-library/#overview) for an application.
+Hostnames are domains that are core to the application and not [used by other applications](#overlapping-hostnames). These are the domains that are specifically blocked when you block an application. The App Library surfaces these hostnames in the [Hostnames table](/cloudflare-one/team-and-resources/app-library/#overview) for an application.
 
 ### Support hostnames
 
@@ -86,7 +86,7 @@ To ensure Gateway evaluates traffic with your desired precedence, order your mos
 
 Gateway automatically groups applications incompatible with TLS decryption into the _Do Not Inspect_ app type. As Cloudflare identifies incompatible applications, Gateway will periodically update this app type to add new applications. To ensure Gateway does not intercept any current or future incompatible traffic, you can [create a Do Not Inspect HTTP policy](/cloudflare-one/traffic-policies/http-policies/#do-not-inspect) with the entire _Do Not Inspect_ app type selected.
 
-When managing applications with the [Application Library](/cloudflare-one/applications/app-library/), Do Not Inspect applications will appear under the corresponding application. For example, the App Library will group _Google Drive (Do Not Inspect)_ under **Google Drive**.
+When managing applications with the [Application Library](/cloudflare-one/team-and-resources/app-library/), Do Not Inspect applications will appear under the corresponding application. For example, the App Library will group _Google Drive (Do Not Inspect)_ under **Google Drive**.
 
 :::note[Install Cloudflare certificate manually to allow TLS decryption]
 Instead of creating a Do Not Inspect policy for an application, you may be able to configure the application to [trust a Cloudflare certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/manual-deployment/#add-the-certificate-to-applications). Doing so will allow the application to function without losing visibility into your traffic.
