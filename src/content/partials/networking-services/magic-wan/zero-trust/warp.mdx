@@ -12,6 +12,8 @@ params:
   - warpIngressIpURL
   - mwanConnectorName
   - domainFallbackURL
+  - cloudflareTunnelURL
+  - tracerouteURL
 ---
 
 import { Markdown } from "~/components";
@@ -75,11 +77,11 @@ You must log out and log back in with at least one WARP device to ensure the con
 	file="traceroute"
 	product="networking-services"
 	params={{
-		productName: "Magic WAN",
-		greIpsecURL: "/magic-wan/configuration/manually/how-to/configure-tunnel-endpoints/",
-		warpURL: "/cloudflare-one/connections/connect-devices/warp/",
-		cloudflareTunnelURL: "/cloudflare-one/connections/connect-networks/",
-		tracerouteURL: "/magic-wan/configuration/manually/how-to/traceroute/"
+		productName: props.productName,
+		greIpsecURL: props.greIpsecURL,
+		warpURL: props.warpURL,
+		cloudflareTunnelURL: props.cloudflareTunnelURL,
+		tracerouteURL: props.tracerouteURL
 		}}
 	/>
 
