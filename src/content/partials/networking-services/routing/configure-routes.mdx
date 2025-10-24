@@ -10,9 +10,10 @@ params:
   - productGatewayOrEgress
   - dashButtonPath?
   - cfTunnelURL?
+  - sitesURL?
 ---
 
-import { Aside, APIRequest, Markdown, Render, TabItem, Tabs, DashButton } from "~/components";
+import { AnchorHeading, Aside, APIRequest, DashButton, Markdown, Render, TabItem, Tabs } from "~/components";
 
 Magic Networking uses a routing table to steer your traffic via next-hop from Cloudflare's global network to your connected networks. Entries can be added to the Magic routing table via static route configuration or via routes learned through BGP peering (only available over Direct CNI).
 
@@ -499,3 +500,11 @@ If you already have set up your Cloudflare account ASN, you can skip steps two a
 	- A route to `0.0.0.0/0`, the default route — to attract all Internet-bound traffic if using {props.productGatewayOrEgress}.
 	- A route to `100.96.0.0/12`, the portion of CGNAT space [used by default with WARP clients](/cloudflare-one/connections/connect-networks/private-net/warp-connector/user-to-site/#add-route-to-router).
 9. Select **Save**.
+
+{ props.magicWord !== "Magic Transit" && (
+  <>
+    <AnchorHeading title="Next steps" depth={2} />
+    <p>Now that you have configured your tunnels and routes, the next step is to create a site. <Render file="sites/sites-brief" product="networking-services" params={{ sitesURL: props.sitesURL }} /></p>
+  </>
+)
+}
