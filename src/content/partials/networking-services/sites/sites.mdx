@@ -1,5 +1,6 @@
 ---
 params:
+  - magicWord
   - greIpsecTunnelsURL
   - connectorURL
   - cniURL
@@ -7,7 +8,7 @@ params:
 ---
 
 import { set } from "date-fns";
-import { Render } from "~/components";
+import { Markdown, Render } from "~/components";
 
 Sites represent the local network of a data center, office, or other physical location, and combine all on-ramps available there. Sites also allow you to check, at a glance, the state of your on-ramps and set up health alert settings so that you get notified when there are issues with the site's on-ramps.
 
@@ -20,9 +21,30 @@ When you are finished setting these up, refer to the steps below to learn how to
 
 ## Add a site
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to **Magic WAN** > **Network overview (beta)**.
-3. Select **Add site**.
+{ props.magicWord === "WAN Tunnels" ? (
+	<>
+	<Markdown
+		text={`
+		1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/) and select your account.
+		2. Go to **Insights** > **Network visibility**.
+		3. Select **Add site**.
+		`}
+		inline={false}
+	/>
+	</>
+) : (
+	<>
+	<Markdown
+		text={`
+		1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+		2. Go to **Magic WAN** > **Network overview (beta)**.
+		3. Select **Add site**.
+		`}
+		inline={false}
+	/>
+	</>
+)
+}
 4. Add a name and description for your new site. Optionally, you can also add the geographical coordinates for your site in **Latitude** and **Longitude**. If you add geographical coordinates, once created your site's location will show in the map.
 5. Select **Create and continue**.
 6. Choose one or more on-ramps for your site from the list. Remember to only choose the on-ramps available to that particular site, as the list might show on-ramps available on other locations.
