@@ -18,6 +18,8 @@ By default, Cloudflare **streams** traffic data, meaning that each packet is sen
 
 If your domain sends many small packets, however, it might be faster to **buffer** the file. This approach waits to send the full file until all packets are ready, preventing a client browser from having to re-assemble packets.
 
+Additionally, buffering is expected behavior when other Cloudflare features are enabled that require inspection of the response. Cloudflare must buffer the response to read and potentially change the response body before delivery. Common features that necessitate response buffering include compression rules, HTML modifications (like Email Obfuscation or Rocket Loader), WAF/Rate Limiting rules that inspect response content, etc.
+
 ## Enable Response Buffering
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
