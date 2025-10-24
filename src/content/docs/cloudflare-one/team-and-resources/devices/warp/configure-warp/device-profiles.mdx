@@ -13,8 +13,8 @@ import { Render, TabItem, Tabs, APIRequest } from "~/components";
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client**.
-2. In the **Profile settings** card, select **Create profile**. This will make a copy of the **Default** profile.
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Team & Resources** > **Devices** > **Device profiles**.
+2. In the **Profile** card, select **Create new profile**. This will make a copy of the **Default** profile.
 3. Enter any name for the profile.
 4. Create rules to define the devices that will use this profile. Learn more about the available [Selectors](#selectors), [Operators](/cloudflare-one/traffic-policies/network-policies/#comparison-operators), and [Values](/cloudflare-one/traffic-policies/network-policies/#value).
 5. Configure [WARP settings](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#device-settings) for these devices.
@@ -109,13 +109,13 @@ Send a `POST` request to the [Devices API](/api/resources/zero_trust/subresource
 
 To verify the last active device profile for a specific device:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **My Team** > **Devices**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Team & Resources** > **Devices**.
 2. Under devices, find your device.
 3. Review the device profile under **Last active device profile**.
 
-To verify the last active device profile for a user’s devices:
+To verify the last active device profile for a user's devices:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **My Team** > **Users**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Team & Resources** > **Users**.
 2. Under **User name**, find the user you would like to investigate.
 3. Select **Devices** to see all devices used by the user.
 4. Find the device you want to investigate and verify the last active device profile for that device under the **Device profile** column.

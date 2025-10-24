@@ -81,7 +81,7 @@ To confirm that the VPN is the source of the issue, temporarily uninstall (not d
 #### Solution
 
 1. Disable all DNS enforcement on the VPN. WARP must be the last client to touch the primary and secondary DNS server on the default interface.
-2. In [Zero Trust](https://one.dash.cloudflare.com/), create a [Split Tunnel rule](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/) to exclude the VPN server you are connecting to (for example, `vpnserver.3rdpartyvpn.example.com`).
+2. In [Cloudflare One](https://one.dash.cloudflare.com/), create a [Split Tunnel rule](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/) to exclude the VPN server you are connecting to (for example, `vpnserver.3rdpartyvpn.example.com`).
 3. Configure your VPN to only include routes to your internal resources. Make sure that the VPN routes do not overlap with the routes [included in the WARP tunnel](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/).
 
 For more information, refer to our [guide](/cloudflare-one/team-and-resources/devices/warp/deployment/vpn/) for running VPNs alongside the WARP client.
@@ -186,7 +186,7 @@ Some applications require traffic to flow either all inside or all outside of th
 #### Solution
 
 1. Determine the IP addresses and/or domains required for your application to function. Common Internet search terms include `<app-name> split tunnel list`, `<app-name> allow list`, or `<app-name> firewall ips`.
-2. In [Zero Trust](https://one.dash.cloudflare.com/), go to your [Split Tunnel settings](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/).
+2. In [Cloudflare One](https://one.dash.cloudflare.com/), go to your [Split Tunnel settings](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/).
 3. Depending on the application, either include or exclude all of the necessary IPs and/or domains. For Microsoft applications, we provide a [one-click action](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#directly-route-microsoft-365-traffic) to exclude all Microsoft 365 IPs.
 
 ## Troubleshooting

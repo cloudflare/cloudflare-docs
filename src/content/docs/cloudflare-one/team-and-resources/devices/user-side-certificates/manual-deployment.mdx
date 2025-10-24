@@ -26,10 +26,12 @@ You can only download Cloudflare-generated certificates from the Zero Trust dash
 
 First, [generate](/cloudflare-one/team-and-resources/devices/user-side-certificates/#generate-a-cloudflare-root-certificate) and download a Cloudflare certificate. The certificate is available in both `.pem` and `.crt` file format. Certain applications require the certificate to be in a specific file type, so ensure you download the most appropriate file for your use case.
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Resources**.
-2. In **Certificates**, select **Manage**.
-3. Select the certificate you want to download.
-4. Depending on which format you want, choose **Download .pem** and/or **Download .crt**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Settings** > **Certificates and downloads**.
+2. Select **View**.
+3. In **Cloudflare certificates**, select **Manage**.
+4. Select the certificate you want to download.
+5. Select **More actions**.
+   - Depending on which format you want, choose **Download .pem** and/or **Download .crt**.
 
 Alternatively, you can download and install a certificate [using WARP](/cloudflare-one/team-and-resources/devices/user-side-certificates/automated-deployment/#install-a-certificate-using-warp). WARP will add the certificates to the device's system certificate store in `installed_certs/<certificate_id>.pem`.
 
