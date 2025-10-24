@@ -173,15 +173,13 @@ To configure routes for east-west (branch to branch) connections, refer to the f
 
 ### {props.productName}
 
-1. Go to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to **{props.productName}** > **Configuration**.
-3. From the **Static Routes** tab, select **Create**.
-4. For the first route, ensure the following settings are defined (refer to <a href={props.configureStaticRoutesUrl}>Configure static routes</a> to learn about settings not mentioned here):
+1. Follow the <a href={props.configureStaticRoutesUrl}>Configure static routes</a> instructions to create a static route.
+2. For the first route, ensure the following settings are defined:
 
 - **Prefix**: `192.168.0.0/24`
 - **Tunnel/Next hop**: _FITEL-tunnel-1 / 10.0.0.0_
 
-5. For the second route, ensure the following settings are defined:
+3. For the second route, ensure the following settings are defined:
 
 - **Prefix**: `192.168.1.0/24`
 - **Tunnel/Next hop**: _FITEL-tunnel-2 / 10.0.0.2_
