@@ -60,9 +60,9 @@ If you are setting up the tunnel through the CLI instead ([locally-managed tunne
 
 ## 2. Create and configure Hyperdrive to connect to the Cloudflare Tunnel
 
-To restrict access to the Cloudflare Tunnel to Hyperdrive, a [Cloudflare Access application](/cloudflare-one/applications/) must be configured with a [Policy](/cloudflare-one/traffic-policies/) that requires requests to contain a valid [Service Auth token](/cloudflare-one/access-controls/policies/#service-auth).
+To restrict access to the Cloudflare Tunnel to Hyperdrive, a [Cloudflare Access application](/cloudflare-one/access-controls/applications/http-apps/) must be configured with a [Policy](/cloudflare-one/traffic-policies/) that requires requests to contain a valid [Service Auth token](/cloudflare-one/access-controls/policies/#service-auth).
 
-The Cloudflare dashboard can automatically create and configure the underlying [Cloudflare Access application](/cloudflare-one/applications/), [Service Auth token](/cloudflare-one/access-controls/policies/#service-auth), and [Policy](/cloudflare-one/traffic-policies/) on your behalf. Alternatively, you can manually create the Access application and configure the Policies.
+The Cloudflare dashboard can automatically create and configure the underlying [Cloudflare Access application](/cloudflare-one/access-controls/applications/http-apps/), [Service Auth token](/cloudflare-one/access-controls/policies/#service-auth), and [Policy](/cloudflare-one/traffic-policies/) on your behalf. Alternatively, you can manually create the Access application and configure the Policies.
 
 <Details header="Automatic creation">
 
