@@ -13,6 +13,10 @@ Refer to [Network Analytics](/analytics/network-analytics/) documentation to lea
 
 ## Network traffic data filters
 
+{/* Pass both magicProduct and productName to network-traffic-filters partial:
+    - magicProduct: Used for conditional rendering (checks if === "Magic WAN" or "WAN Tunnels")
+    - productName: Used in text content for product name display
+    Both are passed to ensure the partial works correctly for all products */}
 <Render
 	file="analytics/network-traffic-filters"
 	product="networking-services"

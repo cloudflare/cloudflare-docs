@@ -20,6 +20,10 @@ import { Markdown, GlossaryTooltip } from "~/components";
 
 { (props.magicProduct === "Magic WAN" || props.magicProduct === "WAN Tunnels") && (
   <>
+	{/* Fallback pattern: ${props.productName || props.magicProduct}
+	    - If productName is passed, use it (Magic WAN / WAN Tunnels pages via network-analytics.mdx)
+	    - If productName is undefined, fall back to magicProduct (direct usage or future-proofing)
+	    This ensures the text always displays correctly regardless of how the partial is called */}
 	<Markdown
 	text={`
 	${props.productName || props.magicProduct} customers have increased visibility into the various traffic flows across Cloudflare One products including:
