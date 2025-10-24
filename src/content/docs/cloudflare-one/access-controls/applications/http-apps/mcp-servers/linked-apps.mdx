@@ -147,4 +147,4 @@ The end-to-end authorization flow is as follows:
 
 ## Known limitations
 
-The MCP OAuth feature only works with self-hosted applications that rely on the [Cloudflare Access JWT](/cloudflare-one/identity/authorization-cookie/validating-json/) to authenticate and identify the user. If the application implements its own layer of authentication after Cloudflare Access, then this feature is at best a partial solution. Requests that are successfully authenticated by Access may still be blocked by the application itself, resulting in an HTTP `401` or `403` error.
+The MCP OAuth feature only works with self-hosted applications that rely on the [Cloudflare Access JWT](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/validating-json/) to authenticate and identify the user. If the application implements its own layer of authentication after Cloudflare Access, then this feature is at best a partial solution. Requests that are successfully authenticated by Access may still be blocked by the application itself, resulting in an HTTP `401` or `403` error.

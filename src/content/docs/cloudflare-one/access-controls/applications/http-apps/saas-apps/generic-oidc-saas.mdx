@@ -49,7 +49,7 @@ Some SaaS applications provide the Redirect URL after you [configure the SSO pro
     | Issuer | Base URL for this OIDC integration <br/> `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/sso/oidc/<client-id>` |
     | Token endpoint | Returns the user's ID token <br/> `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/sso/oidc/<client-id>/token` |
     | Authorization endpoint | URL where users authenticate with Access <br/> `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/sso/oidc/<client-id>/authorization` |
-    | Key endpoint | Returns the current public keys used to [verify the Access JWT](/cloudflare-one/identity/authorization-cookie/validating-json/) <br/> `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/sso/oidc/<client-id>/jwks` |
+    | Key endpoint | Returns the current public keys used to [verify the Access JWT](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/validating-json/) <br/> `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/sso/oidc/<client-id>/jwks` |
     | User info endpoint | Returns all user claims in JSON format <br/> `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/sso/oidc/<client-id>/userinfo` |
 
 11. <Render file="access/add-access-policies" product="cloudflare-one" />

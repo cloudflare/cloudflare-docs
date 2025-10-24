@@ -125,7 +125,7 @@ SAML integrations allow you to pass additional headers or claims to applications
 
 ### Sign SAML authentication request
 
-This optional configuration signs the [Access JWT](/cloudflare-one/identity/authorization-cookie/) with the Cloudflare Access public key to ensure that the JWT is coming from a legitimate source. The Cloudflare public key can be obtained at `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/certs`.
+This optional configuration signs the [Access JWT](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/) with the Cloudflare Access public key to ensure that the JWT is coming from a legitimate source. The Cloudflare public key can be obtained at `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/certs`.
 
 ### Email attribute name
 
@@ -146,7 +146,7 @@ Cloudflare Access supports SAML (Security Assertion Markup Language) attributes 
 
 #### SAML attributes
 
-SAML attributes are added to the [Access JWT](/cloudflare-one/identity/authorization-cookie/). These attributes can then be consumed by self-hosted or SaaS applications connected to Access. Any SAML attribute configured in the SAML integration must also be sent from the IdP.
+SAML attributes are added to the [Access JWT](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/). These attributes can then be consumed by self-hosted or SaaS applications connected to Access. Any SAML attribute configured in the SAML integration must also be sent from the IdP.
 
 Example in Okta:
 
