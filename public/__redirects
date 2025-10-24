@@ -2398,6 +2398,9 @@
 /cloudflare-one/identity/authorization-cookie/application-token/ /cloudflare-one/access-controls/applications/http-apps/authorization-cookie/application-token/ 301
 /cloudflare-one/identity/authorization-cookie/cors/ /cloudflare-one/access-controls/applications/http-apps/authorization-cookie/cors/ 301
 /cloudflare-one/identity/service-tokens/ /cloudflare-one/access-controls/service-credentials/service-tokens/ 301
+/cloudflare-one/applications/configure-apps/mcp-servers/mcp-portals/ /cloudflare-one/access-controls/ai-controls/mcp-portals/ 301
+/cloudflare-one/applications/configure-apps/mcp-servers/saas-mcp/ /cloudflare-one/access-controls/ai-controls/saas-mcp/ 031
+/cloudflare-one/applications/configure-apps/mcp-servers/linked-apps/ /cloudflare-one/access-controls/ai-controls/linked-apps/ 301
 /cloudflare-one/connections/connect-devices/* /cloudflare-one/team-and-resources/devices/:splat 301
 /cloudflare-one/connections/connect-networks/* /cloudflare-one/networks/connectors/cloudflare-tunnel/:splat 301
 /cloudflare-one/policies/gateway/* /cloudflare-one/traffic-policies/:splat 301
