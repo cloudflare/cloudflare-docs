@@ -168,7 +168,32 @@ Example:
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. In **Routes**, select **Edit** next to the route you want to modify.
+{/* Dashboard steps for WAN Tunnels (Cloudflare One dashboard) */}
+{ props.magicWord === "WAN Tunnels" && (
+	<>
+	<Markdown
+		text={`
+			1. In **Routes** > **WAN Routes**, select the three dots > **Edit** next to the route you want to modify.
+		`}
+		inline={false}
+	/>
+	</>
+)
+}
+
+{/* Dashboard steps for Magic WAN and Magic Transit (standalone dashboards) */}
+{ props.magicWord !== "WAN Tunnels" && (
+	<>
+	<Markdown
+		text={`
+			1. In **Routes**, select the three dots > **Edit** next to the route you want to modify.
+		`}
+		inline={false}
+	/>
+	</>
+)
+}
+
 2. Enter the updated route information.
 3. (Optional) We highly recommend testing your route before adding it by selecting **Test routes**.
 4. Select **Edit routes** to save the new information when you are done.
