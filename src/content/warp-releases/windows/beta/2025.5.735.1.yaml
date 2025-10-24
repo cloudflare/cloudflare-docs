@@ -8,7 +8,7 @@ releaseNotes: |-
   - The WARP client now applies post-quantum cryptography end-to-end on enabled devices accessing resources behind a Cloudflare Tunnel. This feature can be [enabled by MDM](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/parameters/#enable_post_quantum).
   - Improvement to gracefully handle changes made by MDM while WARP is not running.
   - Improvement for multi-user mode to avoid unnecessary key rotations when transitioning from a pre-login to a logged-in state.
-  - Added a WARP client device posture check for SAN attributes to the [client certificate check](/cloudflare-one/identity/devices/warp-client-checks/client-certificate/).
+  - Added a WARP client device posture check for SAN attributes to the [client certificate check](/cloudflare-one/reusable-components/posture-checks/warp-client-checks/client-certificate/).
   - Fixed an issue affecting Split Tunnel Include mode, where traffic outside the tunnel was blocked when switching between Wi-Fi and Ethernet networks.
   - Added [SCCM VPN boundary support](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#sccm-vpn-boundary-support) to device profile settings. With SCCM VPN boundary support enabled, operating systems will register WARP's local interface IP with the on-premise DNS server when reachable.
 

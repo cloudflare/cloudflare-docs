@@ -1,6 +1,6 @@
 ---
 pcx_content_type: how-to
-title: Device posture
+title: Posture checks
 sidebar:
   order: 4
 ---
@@ -13,9 +13,9 @@ With Cloudflare Zero Trust, you can configure Zero Trust policies that rely on a
 
 Setup instructions and requirements vary depending on the device posture attribute. Refer to the links below to view the setup guide for your provider.
 
-- [WARP client checks](/cloudflare-one/identity/devices/warp-client-checks/) are performed by the Cloudflare WARP client.
+- [WARP client checks](/cloudflare-one/reusable-components/posture-checks/warp-client-checks/) are performed by the Cloudflare WARP client.
 - [Service-to-service checks](/cloudflare-one/integrations/service-providers/) are performed by third-party device posture providers.
-- [Access integration checks](/cloudflare-one/identity/devices/access-integrations/) are only configurable for Access applications. These attributes cannot be used in Gateway policies.
+- [Access integration checks](/cloudflare-one/reusable-components/posture-checks/access-integrations/) are only configurable for Access applications. These attributes cannot be used in Gateway policies.
 
 ## 2. Verify device posture checks
 
@@ -32,12 +32,12 @@ You can now use your device posture check in an [Access policy](/cloudflare-one/
 
 :::caution[Gateway policy limitation]
 
-Gateway does not support device posture checks for the [Tanium Access integration](/cloudflare-one/identity/devices/access-integrations/tanium/).
+Gateway does not support device posture checks for the [Tanium Access integration](/cloudflare-one/reusable-components/posture-checks/access-integrations/tanium/).
 :::
 
 ## 4. Ensure traffic is going through WARP
 
-[WARP client](/cloudflare-one/identity/devices/warp-client-checks/) and [service-to-service](/cloudflare-one/integrations/service-providers/) posture checks rely on traffic going through WARP to detect posture information for a device. In your [Split Tunnel configuration](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/), ensure that the following domains are included in WARP:
+[WARP client](/cloudflare-one/reusable-components/posture-checks/warp-client-checks/) and [service-to-service](/cloudflare-one/integrations/service-providers/) posture checks rely on traffic going through WARP to detect posture information for a device. In your [Split Tunnel configuration](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/), ensure that the following domains are included in WARP:
 
 - The IdP used to authenticate to Cloudflare Zero Trust if posture check is part of an Access policy.
 - `<your-team-name>.cloudflareaccess.com` if posture check is part of an Access policy.

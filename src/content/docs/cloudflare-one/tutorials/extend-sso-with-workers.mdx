@@ -27,7 +27,7 @@ This tutorial will walk you through extending the single-sign-on (SSO) capabilit
 
 ![Standard authentication flow for a request to an Access application](~/assets/images/cloudflare-one/applications/access-standard-flow.png)
 
-You can extend this functionality by using a Cloudflare Worker to insert additional HTTP headers into the request. In this example, we will add the [device posture attributes](/cloudflare-one/identity/devices/#enforce-device-posture) `firewall_activated` and `disk_encrypted`, but you can include any attributes that Cloudflare Access collects from the authentication event.
+You can extend this functionality by using a Cloudflare Worker to insert additional HTTP headers into the request. In this example, we will add the [device posture attributes](/cloudflare-one/reusable-components/posture-checks/#enforce-device-posture) `firewall_activated` and `disk_encrypted`, but you can include any attributes that Cloudflare Access collects from the authentication event.
 
 ![Extended authentication flow uses a Worker to pass additional request headers to the origin](~/assets/images/cloudflare-one/applications/access-extended-flow-serverless.png)
 
@@ -42,7 +42,7 @@ This approach allows you to:
 ## Before you begin
 
 - Add a [self-hosted application](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/) to Cloudflare Access.
-- Enable the [Disk encryption](/cloudflare-one/identity/devices/warp-client-checks/disk-encryption/) and [Firewall](/cloudflare-one/identity/devices/warp-client-checks/firewall/) device posture checks.
+- Enable the [Disk encryption](/cloudflare-one/reusable-components/posture-checks/warp-client-checks/disk-encryption/) and [Firewall](/cloudflare-one/reusable-components/posture-checks/warp-client-checks/firewall/) device posture checks.
 - Install [Wrangler](/workers/wrangler/install-and-update/) on your local machine.
 
 ## 1. Create the Worker

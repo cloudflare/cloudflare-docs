@@ -96,7 +96,7 @@ While designed for authenticating appliances that cannot perform a login, you ca
 Do the following:
 
 1. [Create a client certificate](/ssl/client-certificates/create-a-client-certificate/) and save both the certificate and key to your device.
-2. Import the certificate to your computer’s key storage. With macOS Keychain, you can use the steps listed in [Test in the browser](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/#test-in-the-browser).
+2. Import the certificate to your computer’s key storage. With macOS Keychain, you can use the steps listed in [Test in the browser](/cloudflare-one/reusable-components/posture-checks/access-integrations/mutual-tls-authentication/#test-in-the-browser).
 3. [Enable mTLS](/ssl/client-certificates/enable-mtls/) by adding the correct host.
 4. In **SSL/TLS** > **Client Certificates**, select **Create mTLS Rule**.
 5. Under **When incoming requests match**, enter a value for thr **URI Path** field to narrow the rule scope to the admin section, otherwise you will block your visitors from accessing the public content.

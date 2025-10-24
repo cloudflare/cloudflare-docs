@@ -118,7 +118,7 @@ To block traffic from devices that do not have a valid client certificate:
    | Hostname | equals | `app.mycompany.com` | | |
 5. Select **Deploy**.
 
-Device Information Only mode is now enabled on the device. To start enforcing device posture, set up a [WARP client check](/cloudflare-one/identity/devices/warp-client-checks/) and add a _Require_ device posture rule to your [Access policy](/cloudflare-one/access-controls/policies/). When the device connects to the Access application for the first time, the browser will ask to use the client certificate installed by WARP.
+Device Information Only mode is now enabled on the device. To start enforcing device posture, set up a [WARP client check](/cloudflare-one/reusable-components/posture-checks/warp-client-checks/) and add a _Require_ device posture rule to your [Access policy](/cloudflare-one/access-controls/policies/). When the device connects to the Access application for the first time, the browser will ask to use the client certificate installed by WARP.
 
 <Width size="large">
 	![Browser prompts for client

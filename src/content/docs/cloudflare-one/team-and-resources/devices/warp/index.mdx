@@ -12,7 +12,7 @@ import { Render, Stream } from "~/components"
 
 ## About Cloudflare WARP
 
-The Cloudflare WARP client allows you to protect corporate devices by securely and privately sending traffic from those devices to Cloudflare's global network, where [Cloudflare Gateway](/cloudflare-one/traffic-policies/) can apply advanced web filtering. The WARP client also makes it possible to apply advanced [Zero Trust policies](/cloudflare-one/identity/devices/) that check for a device's health before it connects to corporate applications.
+The Cloudflare WARP client allows you to protect corporate devices by securely and privately sending traffic from those devices to Cloudflare's global network, where [Cloudflare Gateway](/cloudflare-one/traffic-policies/) can apply advanced web filtering. The WARP client also makes it possible to apply advanced [Zero Trust policies](/cloudflare-one/reusable-components/posture-checks/) that check for a device's health before it connects to corporate applications.
 
 ## How WARP works
 
@@ -59,7 +59,7 @@ Deploying the WARP client significantly enhances your organization's security an
 
 - **Application and device-specific insights**: With WARP installed on your corporate devices, you can view detailed application and user-level activity on the [Zero Trust Shadow IT Discovery](/cloudflare-one/insights/analytics/shadow-it-discovery/) page, while also monitoring device and network performance with [Digital Experience Monitoring (DEX)](/cloudflare-one/insights/dex/) to proactively detect and resolve issues.
 
-- **Device posture checks**: The WARP client provides advanced Zero Trust protection by making it possible to check for [device posture](/cloudflare-one/identity/devices/). By setting up device posture checks, you can build Zero Trust policies that check for a device's location, disk encryption status, OS version, and more.
+- **Device posture checks**: The WARP client provides advanced Zero Trust protection by making it possible to check for [device posture](/cloudflare-one/reusable-components/posture-checks/). By setting up device posture checks, you can build Zero Trust policies that check for a device's location, disk encryption status, OS version, and more.
 
 - **Secure private and infrastructure access**: WARP lets devices connect to [private networks](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/) over Cloudflare Tunnel and is required for [Access for Infrastructure](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/), enabling secure SSH with short-lived certificates and detailed logging.
 

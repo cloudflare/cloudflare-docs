@@ -2387,6 +2387,8 @@
 /cloudflare-one/identity/users/session-management/ /cloudflare-one/team-and-resources/users/session-management/ 301
 /cloudflare-one/identity/users/seat-management/ /cloudflare-one/team-and-resources/users/seat-management/ 301
 /cloudflare-one/identity/users/scim/ /cloudflare-one/team-and-resources/users/scim/ 301
+/cloudflare-one/applications/login-page/ /cloudflare-one/reusable-components/custom-pages/access-login-page/ 301
+/cloudflare-one/applications/block-page/ /cloudflare-one/reusable-components/custom-pages/access-block-page/ 301
 /cloudflare-one/connections/connect-devices/* /cloudflare-one/team-and-resources/devices/:splat 301
 /cloudflare-one/connections/connect-networks/* /cloudflare-one/networks/connectors/cloudflare-tunnel/:splat 301
 /cloudflare-one/policies/gateway/* /cloudflare-one/traffic-policies/:splat 301
@@ -2398,6 +2400,7 @@
 /cloudflare-one/identity/devices/service-providers/* /cloudflare-one/integrations/service-providers/:splat 301
 /cloudflare-one/applications/configure-apps/* /cloudflare-one/access-controls/applications/http-apps/:splat 301
 /cloudflare-one/applications/non-http/* /cloudflare-one/access-controls/applications/non-http/:splat 301
+/cloudflare-one/identity/devices/* /cloudflare-one/reusable-components/posture-checks/:splat 301
 /cloudflare-one/applications/casb/casb-integrations/* /cloudflare-one/integrations/cloud-and-saas/:splat 301
 /cloudflare-one/applications/casb/troubleshooting/* /cloudflare-one/integrations/cloud-and-saas/troubleshooting/:splat 301
 /cloudflare-one/applications/casb/ /cloudflare-one/cloud-and-saas-findings/ 301

@@ -15,7 +15,7 @@ This walkthrough uses the example of a device that captures temperature readings
 
 To keep this example simple, the API is implemented as a Cloudflare Worker (borrowing code from the [To-Do List tutorial on building a jamstack app](/workers/tutorials/build-a-jamstack-app/)).
 
-Temperatures are stored in [Workers KV](/kv/concepts/how-kv-works/) using the source IP address as a key, but you can easily use a [value from the client certificate](/cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/), such as the fingerprint.
+Temperatures are stored in [Workers KV](/kv/concepts/how-kv-works/) using the source IP address as a key, but you can easily use a [value from the client certificate](/cloudflare-one/reusable-components/posture-checks/access-integrations/mutual-tls-authentication/), such as the fingerprint.
 
 The example API code below saves a temperature and timestamp into KV when a POST is made and returns the most recent five temperatures when a GET request is made.
 
