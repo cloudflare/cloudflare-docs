@@ -75,6 +75,26 @@ A Cloudflare user must have one of the following [roles](/fundamentals/manage-me
 
 ---
 
+## API 
+
+```sh title="List all report policies for a specific account"
+GET /accounts/{account_id}/reporting/policies
+```
+
+```sh title="Retrieve the details of a single, specific report policy"
+GET /accounts/{account_id}/reporting/policies/{policy_id}
+```
+
+```sh title="List all generated reports for a specific account"
+GET /accounts/{account_id}/reporting/reports
+```
+
+```sh title="Retrieve a single, specific report, including its data and findings"
+GET /accounts/{account_id}/reporting/reports/{report_id}
+```
+
+---
+
 ## Limitations
 
 Application Security reports currently only support US Customer Metadata Boundary (CMB). They do not support the EU CMB yet.
