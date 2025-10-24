@@ -2393,6 +2393,12 @@
 /cloudflare-one/identity/devices/service-providers/* /cloudflare-one/integrations/service-providers/:splat 301
 /cloudflare-one/applications/configure-apps/* /cloudflare-one/access-controls/applications/configure-apps/:splat 301
 /cloudflare-one/applications/non-http/* /cloudflare-one/access-controls/applications/non-http/:splat 301
+/cloudflare-one/email-security/email-monitoring/* /cloudflare-one/email-security/monitoring/:splat 301
+/cloudflare-one/email-security/phish-submissions/ /cloudflare-one/email-security/reclassifications/ 301
+/cloudflare-one/email-security/phish-submissions/* /cloudflare-one/email-security/reclassifications/:splat 301
+/cloudflare-one/email-security/detection-settings/* /cloudflare-one/email-security/settings/detection-settings/:splat 301
+/cloudflare-one/email-security/auto-moves/ /cloudflare-one/email-security/settings/auto-moves/ 301
+/cloudflare-one/email-security/settings/invalid-submissions/ /cloudflare-one/email-security/reclassifications/invalid-submissions/ 301
 
 # Learning paths
 
