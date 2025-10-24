@@ -9,7 +9,7 @@ params:
   - magicWord
 ---
 
-import { GlossaryTooltip, Markdown, Tabs, TabItem } from "~/components";
+import { Aside, GlossaryTooltip, Markdown, Tabs, TabItem } from "~/components";
 
 The Cloudflare dashboard monitors the health of all <GlossaryTooltip term="anycast">anycast</GlossaryTooltip> tunnels on your account that route traffic from Cloudflare to your origin network.
 
@@ -40,9 +40,9 @@ Not all data centers will be relevant to you at all times. You can refer to the 
 ) : (
 	<>
 
-:::note
+<Aside type="note">
 To change between the new dashboard experience and the old one, find the banner at the top of the screen.
-:::
+</Aside>
 
 To check for anycast tunnel health:
 
