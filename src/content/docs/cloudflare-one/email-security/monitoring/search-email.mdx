@@ -141,7 +141,7 @@ User submissions are the emails your users submitted for reclassification. User 
 Any email that is reported as [phish](/cloudflare-one/email-security/phish-submissions/#reclassify-an-email) will be displayed under **User submissions**.
 
 :::note
-[PhishGuard](/cloudflare-one/email-security/phish-guard/) customers can have submissions analyzed when submitting at either user or team level. Any non-PhishGuard customer can still have submissions analyzed by submitting at team level.
+[PhishGuard](src/content/docs/cloudflare-one/email-security/phishguard.mdx) customers can have submissions analyzed when submitting at either user or team level. Any non-PhishGuard customer can still have submissions analyzed by submitting at team level.
 :::
 
 Select among the following filters:
@@ -216,10 +216,10 @@ To view status and actions for each email:
 2. On the **Investigation** page, select the three dots.
 3. Selecting the three dots will show you the following options:
    - If the email is quarantined:
-     - **View details**: Refer to [Email details](/cloudflare-one/email-security/email-monitoring/search-email/#email-details) to learn more.
+     - **View details**: Refer to [Email details](/cloudflare-one/email-security/monitoring/search-email/#email-details) to learn more.
      - **View similar emails**: Find similar emails based on the `value_edf_hash` (Electronic Detection Fingerprint hash).
      - **Release**: Email Security will no longer quarantine your chosen messages.
-     - **Request reclassification**: Choose the dispositions of your messages if they are incorrect. Refer to [Reclassify messages](/cloudflare-one/email-security/email-monitoring/search-email/#reclassify-messages) to learn more.
+     - **Request reclassification**: Choose the dispositions of your messages if they are incorrect. Refer to [Reclassify messages](/cloudflare-one/email-security/monitoring/search-email/#reclassify-messages) to learn more.
 4. If the email is not quarantined:
    - **View details**.
    - **View similar emails**.
@@ -248,7 +248,7 @@ Email Security displays the following details:
    - Autonomous sys number: This number identifies your [autonomous system (AS)](https://www.cloudflare.com/en-gb/learning/network-layer/what-is-an-autonomous-system/).
    - Autonomous sys name: This name identifies your autonomous system (AS).
    - Country
-4. **Links identified**: A list of malicious links identified by Email Security. Refer to [Open links](/cloudflare-one/email-security/email-monitoring/search-email/#open-links) to open links in Security Center, Browser Isolation or an external tool of your choice.
+4. **Links identified**: A list of malicious links identified by Email Security. Refer to [Open links](/cloudflare-one/email-security/monitoring/search-email/#open-links) to open links in Security Center, Browser Isolation or an external tool of your choice.
 5. **Attachments**: If an email has an attachment, the Cloudflare dashboard will display the filename, and the disposition assigned. You can open attachments in [Browser Isolation](/cloudflare-one/remote-browser-isolation/). Only PDF files are currently supported.
 6. **Reasons for disposition**: Description of why the email was deemed as malicious, suspicious, or spam.
 
