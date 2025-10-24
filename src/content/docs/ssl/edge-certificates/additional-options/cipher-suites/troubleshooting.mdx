@@ -20,10 +20,7 @@ Minimum TLS Version can cause issues if you are not supporting TLS 1.2 ciphers o
 
 ### Testing Minimum TLS version with curl
 
-You can use the [--tls-max curl setting](https://curl.se/docs/manpage.html#--tls-max) to force a request to use `TLS 1.0`:
-`curl -svo /dev/null https://<hostname> --insecure --tlsv1.0 --tls-max 1.0`
-
-Please note that local VPN or device security client on your device may prevent unsecure connection using legacy protocol like `TLS 1.0`: you'll need to make sure to disable such network or security client before running the test on your device.
+<Render file="test-tls-version" product="ssl" />
 
 ## Compatibility with certificate encryption
 
