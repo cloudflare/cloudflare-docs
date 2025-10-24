@@ -55,6 +55,7 @@ Refer to <a href={props.trafficSteeringPage}>Traffic Steering</a> for more infor
 	<Markdown
 		text={`
 			1. Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a>, and go to **Networks**.
+			2. Go to **Routes** > **WAN Routes**, and select **Add a static route** to add a new route.
 		`}
 		inline={false}
 	/>
@@ -66,15 +67,22 @@ Refer to <a href={props.trafficSteeringPage}>Traffic Steering</a> for more infor
 { props.magicWord !== "WAN Tunnels" && (
 	<>
 		<Markdown
-			text={`1. In the Cloudflare dashboard, go to ${props.productName}'s **Configuration** page.`}
+			text={`
+			1. In the Cloudflare dashboard, go to ${props.productName}'s **Configuration** page.
+			`}
 			inline={false}
 		/>
 		<DashButton url={props.dashButtonPath} />
+		<Markdown
+			text={`
+			2. From the **Routes** tab, select **Create** to add a new route.
+			`}
+			inline={false}
+		/>
 	</>
 )
 }
 
-2. From the **Routes** tab, select **Create** to add a new route.
 3. Enter a descriptive name for your route in **Description**.
 4. In **Prefix**, enter your range of IP addresses. For example, `10.10.10.100/24`.
 5. In **Tunnel/Next hop** select which tunnel you want your route to go through. Choose from the tunnels you have created in <a href={props.tunnelEndpoints}>Configure tunnel endpoints</a>.
