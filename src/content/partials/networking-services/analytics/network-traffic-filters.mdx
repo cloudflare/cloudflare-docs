@@ -1,6 +1,7 @@
 ---
 params:
   - magicProduct?
+  - productName?
 ---
 
 import { Markdown, GlossaryTooltip } from "~/components";
@@ -17,11 +18,11 @@ import { Markdown, GlossaryTooltip } from "~/components";
   )
 }
 
-{ props.magicProduct === "Magic WAN" && (
+{ (props.magicProduct === "Magic WAN" || props.magicProduct === "WAN Tunnels") && (
   <>
 	<Markdown
 	text={`
-	Magic WAN customers have increased visibility into the various traffic flows across Cloudflare One products including:
+	${props.productName || props.magicProduct} customers have increased visibility into the various traffic flows across Cloudflare One products including:
 
 	- Traffic ingressing to Cloudflare's network via WARP
 	- Traffic egressing Cloudflare's network via WARP
