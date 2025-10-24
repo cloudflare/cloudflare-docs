@@ -452,6 +452,9 @@ If you already have set up your Cloudflare account ASN, you can skip steps two a
 	<Markdown
 		text={`
 			1. Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a>, and go to **Networks**.
+			2. Go to **Routes** > **WAN configuration**.
+			3. In **Account-level virtual network overlay**, select **Edit ASN** and enter your ASN.
+			4. Go to **Networks** > **Interconnects**.
 		`}
 		inline={false}
 	/>
@@ -463,21 +466,28 @@ If you already have set up your Cloudflare account ASN, you can skip steps two a
 { props.magicWord !== "WAN Tunnels" && (
 	<>
 		<Markdown
-			text={`1. In the Cloudflare dashboard, go to ${props.productName}'s **Configuration** page.`}
+			text={`
+			1. In the Cloudflare dashboard, go to ${props.productName}'s **Configuration** page.
+			`}
 			inline={false}
 		/>
 		<DashButton url={props.dashButtonPath} />
+		<Markdown
+			text={`
+			2. Go to **BGP configuration**.
+			3. In **CF Account ASN**, enter Cloudflare's ASN.
+			4. Go to **Interconnects**.
+			`}
+			inline={false}
+		/>
 	</>
 )
 }
 
-2. Go to **BGP configuration**.
-3. In **CF Account ASN**, enter Cloudflare's ASN.
-4. Go to **Interconnects**.
 5. Find the Direct CNI interconnect you want to configure with BGP > select the **three dots** next to it > **Configure BGP**.
 6. In **Customer device ASN**, enter the ASN for your network.
 
-	{ props.magicWord === "Magic WAN" && (
+	{ props.magicWord !== "Magic Transit" && (
 		<>
 		<Aside type="note">Multiple interconnects with the same ASN will not exchange routes if standard BGP loop prevention is enabled. Consider using a different ASN per session, or enabling duplicate ASNs (like Cisco's <code>allowas-in</code> feature) to exchange routes between networks. </Aside>
 		</>
