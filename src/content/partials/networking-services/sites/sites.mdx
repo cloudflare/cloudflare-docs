@@ -67,7 +67,9 @@ Your site is now set up. If you have other sites you need to set up, repeat the 
 	product="networking-services"
 	params={{
 		instructions: "",
+		magicWord: props.magicWord,
 		productName: props.productName,
+		networkOverviewPageName: props.magicWord === "WAN Tunnels" ? "Network visibility" : "Network overview (beta)",
 		magicTunnelHcsURL: "/magic-wan/configuration/common-settings/configure-magic-tunnel-health-alerts/",
 		setGeoCoordinatesURL: "#set-geographic-coordinates"
 		}}
