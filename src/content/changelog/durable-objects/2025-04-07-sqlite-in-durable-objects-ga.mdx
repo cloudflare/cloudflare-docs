@@ -9,7 +9,7 @@ date: 2025-04-07
 
 SQLite in Durable Objects is now generally available (GA) with 10GB SQLite database per Durable Object. Since the [public beta](https://blog.cloudflare.com/sqlite-in-durable-objects/) in September 2024, we've added feature parity and robustness for the SQLite storage backend compared to the preexisting key-value (KV) storage backend for Durable Objects.
 
-SQLite-backed Durable Objects are recommended for all new Durable Object classes, using `new_sqlite_classes` [Wrangler configuration](/durable-objects/best-practices/access-durable-objects-storage/#create-sqlite-backed-durable-object-class). Only SQLite-backed Durable Objects have access to Storage API's [SQL](/durable-objects/api/storage-api/#sql-api) and [point-in-time recovery](/durable-objects/api/storage-api/#pitr-point-in-time-recovery-api) methods, which provide relational data modeling, SQL querying, and better data management.
+SQLite-backed Durable Objects are recommended for all new Durable Object classes, using `new_sqlite_classes` [Wrangler configuration](/durable-objects/best-practices/access-durable-objects-storage/#create-sqlite-backed-durable-object-class). Only SQLite-backed Durable Objects have access to Storage API's [SQL](/durable-objects/api/sqlite-storage-api/#sql-api) and [point-in-time recovery](/durable-objects/api/sqlite-storage-api/#pitr-point-in-time-recovery-api) methods, which provide relational data modeling, SQL querying, and better data management.
 
 ```js
 export class MyDurableObject extends DurableObject {

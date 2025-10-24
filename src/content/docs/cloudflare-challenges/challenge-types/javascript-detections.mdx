@@ -1,13 +1,11 @@
-
 ---
-
 pcx_content_type: reference
 title: JavaScript Detections
 sidebar:
   order: 3
 ---
 
-import { Render, Tabs, TabItem, GlossaryTooltip } from "~/components"
+import { Render, Tabs, TabItem, GlossaryTooltip } from "~/components";
 
 JavaScript Detections is a type of Challenge separate from Cloudflare’s Challenge Pages or Turnstile. Javascript Detections helps Cloudflare's [bot solutions](/bots/) identify automated requests.
 
@@ -46,7 +44,7 @@ For Bot Fight Mode customers, JavaScript Detections is automatically enabled and
 
 For Super Bot Fight Mode and Bot Management for Enterprise customers, JavaScript Detections is optional.
 
-<Render file="javascript-detections-enable" />
+<Render file="javascript-detections-enable" product="cloudflare-challenges" />
 
 For more details on how to set up bot protection, refer to the [Bots documentation](/bots/get-started/).
 
@@ -145,10 +143,9 @@ If you have a <GlossaryTooltip term="content security policy (CSP)">Content Secu
 
 - Ensure that anything under `/cdn-cgi/challenge-platform/` is allowed. Your CSP should allow scripts served from your origin domain (`script-src self`).
 - For `nonce` script tags:
+  - If your CSP uses a `nonce` for script tags, Cloudflare will add these nonces to the scripts it injects by parsing your CSP response header.
 
-    - If your CSP uses a `nonce` for script tags, Cloudflare will add these nonces to the scripts it injects by parsing your CSP response header.
-
-    - If your CSP does not use `nonce` for script tags and **JavaScript Detections** is enabled, you may see a console error such as `Refused to execute inline script because it violates the following Content Security Policy directive: "script-src 'self'". Either the 'unsafe-inline' keyword, a hash ('sha256-b123b8a70+4jEj+d6gWI9U6IilUJIrlnRJbRR/uQl2Jc='), or a nonce ('nonce-...') is required to enable inline execution.` We highly discourage the use of `unsafe-inline` and instead recommend the use CSP `nonces` in script tags which we parse and support in our CDN.
+  - If your CSP does not use `nonce` for script tags and **JavaScript Detections** is enabled, you may see a console error such as `Refused to execute inline script because it violates the following Content Security Policy directive: "script-src 'self'". Either the 'unsafe-inline' keyword, a hash ('sha256-b123b8a70+4jEj+d6gWI9U6IilUJIrlnRJbRR/uQl2Jc='), or a nonce ('nonce-...') is required to enable inline execution.` We highly discourage the use of `unsafe-inline` and instead recommend the use CSP `nonces` in script tags which we parse and support in our CDN.
 
 :::caution[Warning]
 

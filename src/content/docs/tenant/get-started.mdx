@@ -25,15 +25,15 @@ For more details on using the Cloudflare API, refer to our [API overview](/funda
 
 ## Step 1 - Create an account
 
-<Render file="account-preamble" />
+<Render file="account-preamble" product="tenant" />
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-<Render file="create-account-dash" />
+<Render file="create-account-dash" product="tenant" />
 
 </TabItem> <TabItem label="API">
 
-<Render file="create-account-api" />
+<Render file="create-account-api" product="tenant" />
 
 </TabItem> </Tabs>
 
@@ -141,13 +141,13 @@ curl "https://api.cloudflare.com/client/v4/zones" \
 
 Now that you have a zone provisioned for the customer, you can add the appropriate zone plan based on your reseller agreement.
 
-<Render file="create-zone-subscription" />
+<Render file="create-zone-subscription" product="tenant" />
 
 ## Step 5 - Create other subscriptions
 
 Depending on your agreement, you may be allowed to resell other add-on services. These are provisioned as account-level subscriptions.
 
-<Render file="create-account-subscription" />
+<Render file="create-account-subscription" product="tenant" />
 
 ## Step 6 - Configure zone and services
 

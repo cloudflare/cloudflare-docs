@@ -1,137 +1,357 @@
 ---
-title: Getting started
 pcx_content_type: get-started
+title: Getting started
+head: []
 sidebar:
-  order: 1
-head:
-  - tag: title
-    content: Getting started wih Pipelines
+  order: 2
+description: Create your first pipeline to ingest streaming data and write to R2 Data Catalog as an Apache Iceberg table.
 ---
 
-import { Render, PackageManagers, Details } from "~/components";
+import {
+	Render,
+	Steps,
+	Tabs,
+	TabItem,
+	DashButton,
+	LinkCard,
+} from "~/components";
 
-Cloudflare Pipelines allows you to ingest load high volumes of real time streaming data, and load into [R2 Object Storage](/r2/), without managing any infrastructure.
+This guide will instruct you through:
 
-By following this guide, you will:
-1. Setup an R2 bucket.
-2. Create a pipeline, with HTTP as a source, and an R2 bucket as a sink.
-3. Send data to your pipeline's HTTP ingestion endpoint.
-4. Verify the output delivered to R2.
-
-:::note
-
-Pipelines is in **public beta**, and any developer with a [paid Workers plan](/workers/platform/pricing/#workers) can start using Pipelines immediately.
-
-:::
-
-***
+- Creating your first [R2 bucket](/r2/buckets/) and enabling its [data catalog](/r2/data-catalog/).
+- Creating an [API token](/r2/api/tokens/) needed for pipelines to authenticate with your data catalog.
+- Creating your first pipeline with a simple ecommerce schema that writes to an [Apache Iceberg](https://iceberg.apache.org/) table managed by R2 Data Catalog.
+- Sending sample ecommerce data via HTTP endpoint.
+- Validating data in your bucket and querying it with R2 SQL.
 
 ## Prerequisites
 
-To use Pipelines, you will need:
-
 <Render file="prereqs" product="workers" />
 
-## 1. Set up an R2 bucket
+## 1. Create an R2 bucket
 
-Create a bucket by following the [get started guide for R2](/r2/get-started/), or by running the command below:
+<Tabs syncKey='CLIvDash'>
+<TabItem label='Wrangler CLI'>
 
-```sh
-npx wrangler r2 bucket create my-bucket
+<Steps>
+1. If not already logged in, run:
+
+	```
+	npx wrangler login
+	```
+
+2. Create an R2 bucket:
+
+	```
+	npx wrangler r2 bucket create pipelines-tutorial
+	```
+
+</Steps>
+
+</TabItem>
+<TabItem label='Dashboard'>
+
+<Steps>
+1. In the Cloudflare dashboard, go to the **R2 object storage** page.
+   <DashButton url="/?to=/:account/r2/overview" />
+
+2. Select **Create bucket**.
+
+3. Enter the bucket name: pipelines-tutorial
+
+4. Select **Create bucket**.
+</Steps>
+</TabItem>
+</Tabs>
+
+## 2. Enable R2 Data Catalog
+
+<Tabs syncKey='CLIvDash'>
+<TabItem label='Wrangler CLI'>
+
+Enable the catalog on your R2 bucket:
+
+```
+npx wrangler r2 bucket catalog enable pipelines-tutorial
 ```
 
-Save the bucket name for the next step.
+When you run this command, take note of the "Warehouse" and "Catalog URI". You will need these later.
 
-## 2. Create a Pipeline
+</TabItem>
+<TabItem label='Dashboard'>
 
-To create a pipeline using Wrangler, run the following command in a terminal, and specify:
+<Steps>
+1. In the Cloudflare dashboard, go to the **R2 object storage** page.
+   <DashButton url="/?to=/:account/r2/overview" />
 
-- The name of your pipeline
-- The name of the R2 bucket you created in step 1
+2. Select the bucket: pipelines-tutorial.
 
-```sh
-npx wrangler pipelines create my-clickstream-pipeline --r2-bucket my-bucket --batch-max-seconds 5 --compression none
-```
+3. Switch to the **Settings** tab, scroll down to **R2 Data Catalog**, and select **Enable**.
 
-After running this command, you will be prompted to authorize Cloudflare Workers Pipelines to create an R2 API token on your behalf. These tokens used by your pipeline when loading data into your bucket. You can approve the request through the browser link which will open automatically.
+4. Once enabled, note the **Catalog URI** and **Warehouse name**.
+</Steps>
+</TabItem>
+</Tabs>
 
-<details>
-	<summary> Choosing a pipeline name </summary>
-When choosing a name for your pipeline:
+## 3. Create an API token
 
-- Ensure it is descriptive and relevant to the type of events you intend to ingest. You cannot change the name of the pipeline after creating it.
-- The pipeline name must be between 1 and 63 characters long.
-- The name cannot contain special characters outside dashes (`-`).
-- The name must start and end with a letter or a number.
-</details>
+Pipelines must authenticate to R2 Data Catalog with an [R2 API token](/r2/api/tokens/) that has catalog and R2 permissions.
 
-You will notice two optional flags are set while creating the pipeline: `--batch-max-seconds` and `--compression`. These flags are added to make it faster for you to see the output of your first pipeline. For production use cases, we recommend keeping the default settings.
+<Steps>
+1. In the Cloudflare dashboard, go to the **R2 object storage** page.
+   <DashButton url="/?to=/:account/r2/overview" />
 
-Once you create your pipeline, you will receive a summary of your pipeline's configuration, as well as an HTTP endpoint which you can post data to:
+2. Select **Manage API tokens**.
 
-```sh
-🌀 Authorizing R2 bucket "my-bucket"
-🌀 Creating pipeline named "my-clickstream-pipeline"
-✅ Successfully created pipeline my-clickstream-pipeline
+3. Select **Create Account API token**.
 
-Id:    [PIPELINE-ID]
-Name:  my-clickstream-pipeline
-Sources:
-  HTTP:
-    Endpoint:        https://[PIPELINE-ID].pipelines.cloudflare.com/
-    Authentication:  off
-    Format:          JSON
-  Worker:
-    Format:  JSON
-Destination:
-  Type:         R2
-  Bucket:       my-bucket
-  Format:       newline-delimited JSON
-  Compression:  GZIP
-Batch hints:
-  Max bytes:     100 MB
-  Max duration:  300 seconds
-  Max records:   100,000
+4. Give your API token a name.
 
-🎉 You can now send data to your Pipeline!
+5. Under **Permissions**, choose the **Admin Read & Write** permission.
 
-Send data to your Pipeline's HTTP endpoint:
-curl "https://[PIPELINE-ID].pipelines.cloudflare.com/" -d '[{ ...JSON_DATA... }]'
+6. Select **Create Account API Token**.
 
-To send data to your Pipeline from a Worker, add the following configuration to your config file:
+7. Note the **Token value**.
+
+</Steps>
+
+:::note
+This token also includes the R2 SQL Read permission, which allows you to query your data with R2 SQL.
+:::
+
+## 4. Create your first pipeline
+
+<Tabs syncKey='CLIvDash'>
+<TabItem label='Wrangler CLI'>
+
+First, create a schema file that defines your ecommerce data structure:
+
+**Create `schema.json`:**
+```json
 {
-  "pipelines": [
+  "fields": [
     {
-      "pipeline": "my-clickstream-pipeline",
-      "binding": "PIPELINE"
+      "name": "user_id",
+      "type": "string",
+      "required": true
+    },
+    {
+      "name": "event_type",
+      "type": "string",
+      "required": true
+    },
+    {
+      "name": "product_id",
+      "type": "string",
+      "required": false
+    },
+    {
+      "name": "amount",
+      "type": "float64",
+      "required": false
     }
   ]
 }
 ```
 
-## 3. Post data to your pipeline
+Use the interactive setup to create a pipeline that writes to R2 Data Catalog:
 
-Use a curl command in your terminal to post an array of JSON objects to the endpoint you received in step 1.
-
-```sh
-curl -H "Content-Type:application/json" \
-    -d '[{"event":"viewedCart", "timestamp": "2025-04-03T15:42:30Z"},{"event":"cartAbandoned", "timestamp": "2025-04-03T15:42:37Z"}]' \
-    <HTTP-ENDPOINT>
+```bash
+npx wrangler pipelines setup
 ```
 
-Once the pipeline successfully accepts the data, you will receive a success message.
+Follow the prompts:
 
-You can continue posting data to the pipeline. The pipeline will automatically buffer ingested data. Based on the batch settings (`--batch-max-seconds`) specified in step 2, a batch will be generated every 5 seconds, turned into a file, and written out to your R2 bucket.
+1. **Pipeline name**: Enter `ecommerce`
 
-## 4. Verify in R2
+2. **Stream configuration**:
+   - Enable HTTP endpoint: `yes`
+   - Require authentication: `no` (for simplicity)
+   - Configure custom CORS origins: `no`
+   - Schema definition: `Load from file`
+   - Schema file path: `schema.json` (or your file path)
 
-Open the [R2 dashboard](https://dash.cloudflare.com/?to=/:account/r2/overview), and navigate to the R2 bucket you created in step 1. You will see a directory, labeled with today's date (such as `event_date=2025-04-05`). Click on the directory, and you'll see a sub-directory with the current hour (such as `hr=04`). You should see a newline delimited JSON file, containing the data you posted in step 3. Download the file, and open it in a text editor of your choice, to verify that the data posted in step 2 is present.
+3. **Sink configuration**:
+   - Destination type: `Data Catalog Table`
+   - R2 bucket name: `pipelines-tutorial`
+   - Namespace: `default`
+   - Table name: `ecommerce`
+   - Catalog API token: Enter your token from step 3
+   - Compression: `zstd`
+   - Roll file when size reaches (MB): `100`
+   - Roll file when time reaches (seconds): `10` (for faster data visibility in this tutorial)
 
-***
+4. **SQL transformation**: Choose `Use simple ingestion query` to use:
+   ```sql
+   INSERT INTO ecommerce_sink SELECT * FROM ecommerce_stream
+   ```
 
-## Next steps
+After setup completes, note the HTTP endpoint URL displayed in the final output.
 
-* Learn about how to [setup authentication, or CORS settings](/pipelines/build-with-pipelines/sources/http), on your HTTP endpoint.
-* Send data to your Pipeline from a Cloudflare Worker using the [Workers API documentation](/pipelines/build-with-pipelines/sources/workers-apis).
+</TabItem>
+<TabItem label='Dashboard'>
 
-If you have any feature requests or notice any bugs, share your feedback directly with the Cloudflare team by joining the [Cloudflare Developers community on Discord](https://discord.cloudflare.com).
+<Steps>
+1. In the Cloudflare dashboard, go to **Pipelines** > **Pipelines**.
+   <DashButton url="/?to=/:account/pipelines" />
+
+2. Select **Create Pipeline**.
+
+3. **Connect to a Stream**:
+   - Pipeline name: `ecommerce`
+   - Enable HTTP endpoint for sending data: Enabled
+   - HTTP authentication: Disabled (default)
+   - Select **Next**
+
+4. **Define Input Schema**:
+   - Select **JSON editor**
+   - Copy in the schema:
+     ```json
+     {
+       "fields": [
+         {
+           "name": "user_id",
+           "type": "string",
+           "required": true
+         },
+         {
+           "name": "event_type",
+           "type": "string",
+           "required": true
+         },
+         {
+           "name": "product_id",
+           "type": "string",
+           "required": false
+         },
+         {
+           "name": "amount",
+           "type": "f64",
+           "required": false
+         }
+       ]
+     }
+     ```
+   - Select **Next**
+
+5. **Define Sink**:
+   - Select your R2 bucket: `pipelines-tutorial`
+   - Storage type: **R2 Data Catalog**
+   - Namespace: `default`
+   - Table name: `ecommerce`
+   - **Advanced Settings**: Change **Maximum Time Interval** to `10 seconds`
+   - Select **Next**
+
+6. **Credentials**:
+   - Disable **Automatically create an Account API token for your sink**
+   - Enter **Catalog Token** from step 3
+   - Select **Next**
+
+7. **Pipeline Definition**:
+   - Leave the default SQL query:
+     ```sql
+     INSERT INTO ecommerce_sink SELECT * FROM ecommerce_stream;
+     ```
+   - Select **Create Pipeline**
+
+8. After pipeline creation, note the **Stream ID** for the next step.
+</Steps>
+
+</TabItem>
+</Tabs>
+
+## 5. Send sample data
+
+Send ecommerce events to your pipeline's HTTP endpoint:
+
+```bash
+curl -X POST https://{stream-id}.ingest.cloudflare.com \
+  -H "Content-Type: application/json" \
+  -d '[
+    {
+      "user_id": "user_12345",
+      "event_type": "purchase",
+      "product_id": "widget-001",
+      "amount": 29.99
+    },
+    {
+      "user_id": "user_67890",
+      "event_type": "view_product",
+      "product_id": "widget-002"
+    },
+    {
+      "user_id": "user_12345",
+      "event_type": "add_to_cart",
+      "product_id": "widget-003",
+      "amount": 15.50
+    }
+  ]'
+```
+
+Replace `{stream-id}` with your actual stream endpoint from the pipeline setup.
+
+## 6. Validate data in your bucket
+
+<Steps>
+1. In the Cloudflare dashboard, go to the **R2 object storage** page.
+
+2. Select your bucket: `pipelines-tutorial`.
+
+3. You should see Iceberg metadata files and data files created by your pipeline. Note: If you aren't seeing any files in your bucket, try waiting a couple of minutes and trying again.
+
+4. The data is organized in the Apache Iceberg format with metadata tracking table versions.
+</Steps>
+
+## 7. Query your data using R2 SQL
+
+Set up your environment to use R2 SQL:
+
+```bash
+export WRANGLER_R2_SQL_AUTH_TOKEN=YOUR_API_TOKEN
+```
+
+Or create a `.env` file with:
+
+```
+WRANGLER_R2_SQL_AUTH_TOKEN=YOUR_API_TOKEN
+```
+
+Where `YOUR_API_TOKEN` is the token you created in step 3. For more information on setting environment variables, refer to [Wrangler system environment variables](/workers/wrangler/system-environment-variables/).
+
+Query your data:
+
+```bash
+npx wrangler r2 sql query "YOUR_WAREHOUSE_NAME" "
+SELECT
+    user_id,
+    event_type,
+    product_id,
+    amount
+FROM default.ecommerce
+WHERE event_type = 'purchase'
+LIMIT 10"
+```
+
+Replace `YOUR_WAREHOUSE_NAME` with the warehouse name from step 2.
+
+You can also query this table with any engine that supports Apache Iceberg. To learn more about connecting other engines to R2 Data Catalog, refer to [Connect to Iceberg engines](/r2/data-catalog/config-examples/).
+
+## Learn more
+
+<LinkCard
+	title="Streams"
+	href="/pipelines/streams/"
+	description="Learn about configuring streams for data ingestion."
+/>
+
+<LinkCard
+	title="Pipelines"
+	href="/pipelines/pipelines/"
+	description="Understand SQL transformations and pipeline configuration."
+/>
+
+<LinkCard
+	title="Sinks"
+	href="/pipelines/sinks/"
+	description="Configure data destinations and output formats."
+/>

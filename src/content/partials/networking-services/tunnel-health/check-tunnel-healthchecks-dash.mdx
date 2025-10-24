@@ -4,6 +4,8 @@ params:
   - productPath
   - graphQL
   - notificationsPath
+  - packetCaptures
+  - networkAnalytics
 ---
 
 import { GlossaryTooltip, Markdown, Tabs, TabItem } from "~/components";
@@ -43,3 +45,22 @@ To check for anycast tunnel health:
 		5. Alternatively, from the list of tunnels, select the tunnel you want to inspect to access details about it.
 	</TabItem>
 </Tabs>
+
+## Check tunnel health for a specific tunnel
+
+Beyond having a wide view into all connections, you can drill down into a specific tunnel to check its health status and other information. Refer to the blue note above to learn how to access the new dashboard experience, and:
+
+1. Go to <Markdown text={props.productPath} />.
+2. Find and select the tunnel you wish to inspect.
+
+The next screen shows you detailed information about the tunnel, including:
+- Status information
+	- Up: More than 80% of health checks are passing.
+	- Degraded: More than 40% of health checks are passing.
+	- Down: Less than 40% of health checks are passing.
+- Health checks passed in the last hour
+- Traffic volume in the last hour
+
+If you select the three dots in front of the tunnel you want to inspect, you have access to the following tools:
+- Packet captures: Collect <a href={props.packetCaptures}>packet level data for you traffic</a>
+- Network Analytics: Leverage real-time visibility into <a href={props.networkAnalytics}>network analytics</a>.

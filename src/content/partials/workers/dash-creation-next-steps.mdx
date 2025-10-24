@@ -2,7 +2,7 @@
 {}
 ---
 
-import { TabItem, Tabs, PackageManagers } from "~/components";
+import { TabItem, Tabs, PackageManagers, DashButton } from "~/components";
 
 ### Dashboard
 
@@ -10,10 +10,11 @@ Editing in the dashboard is helpful for simpler use cases.
 
 Once you have created your Worker script, you can edit and deploy your Worker using the Cloudflare dashboard:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Select **Workers & Pages**.
-3. Select your application.
-4. Select **Edit Code**.
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+2. Select your application.
+3. Select **Edit Code**.
 
 ![Edit code directly within the Cloudflare dashboard](~/assets/images/workers/workers-edit-code.png)
 

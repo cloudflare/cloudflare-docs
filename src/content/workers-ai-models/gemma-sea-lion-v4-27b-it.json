@@ -1,0 +1,454 @@
+{
+    "id": "41ca173f-72d5-4420-8915-49e835d2676e",
+    "source": 1,
+    "name": "@cf/aisingapore/gemma-sea-lion-v4-27b-it",
+    "description": "SEA-LION stands for Southeast Asian Languages In One Network, which is a collection of Large Language Models (LLMs) which have been pretrained and instruct-tuned for the Southeast Asia (SEA) region.",
+    "task": {
+        "id": "c329a1f9-323d-4e91-b2aa-582dd4188d34",
+        "name": "Text Generation",
+        "description": "Family of generative text models, such as large language models (LLM), that can be adapted for a variety of natural language tasks."
+    },
+    "created_at": "2025-09-23 19:27:30.468",
+    "tags": [],
+    "properties": [
+        {
+            "property_id": "context_window",
+            "value": "128000"
+        },
+        {
+            "property_id": "price",
+            "value": [
+                {
+                    "unit": "per M input tokens",
+                    "price": 0.35,
+                    "currency": "USD"
+                },
+                {
+                    "unit": "per M output tokens",
+                    "price": 0.56,
+                    "currency": "USD"
+                }
+            ]
+        }
+    ],
+    "schema": {
+      "input": {
+        "$id": "http://ai.cloudflare.com/schemas/textGenerationInput",
+        "type": "object",
+        "oneOf": [
+          {
+            "title": "Prompt",
+            "properties": {
+              "$merge": {
+                "source": {
+                  "prompt": {
+                    "$ref": "textGenerationPrompts#/prompt"
+                  },
+                  "lora": {
+                    "$ref": "textGenerationFinetune#/lora"
+                  },
+                  "response_format": {
+                    "$ref": "jsonMode#/response_format"
+                  }
+                },
+                "with": {
+                  "raw": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "If true, a chat template is not applied and you must adhere to the specific model's expected formatting."
+                  },
+                  "stream": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "If true, the response will be streamed back incrementally using SSE, Server Sent Events."
+                  },
+                  "max_tokens": {
+                    "type": "integer",
+                    "default": 2000,
+                    "description": "The maximum number of tokens to generate in the response."
+                  },
+                  "temperature": {
+                    "type": "number",
+                    "default": 0.6,
+                    "minimum": 0,
+                    "maximum": 5,
+                    "description": "Controls the randomness of the output; higher values produce more random results."
+                  },
+                  "top_p": {
+                    "type": "number",
+                    "minimum": 0.001,
+                    "maximum": 1,
+                    "description": "Adjusts the creativity of the AI's responses by controlling how many possible words it considers. Lower values make outputs more predictable; higher values allow for more varied and creative responses."
+                  },
+                  "top_k": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 50,
+                    "description": "Limits the AI to choose from the top 'k' most probable words. Lower values make responses more focused; higher values introduce more variety and potential surprises."
+                  },
+                  "seed": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 9999999999,
+                    "description": "Random seed for reproducibility of the generation."
+                  },
+                  "repetition_penalty": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 2,
+                    "description": "Penalty for repeated tokens; higher values discourage repetition."
+                  },
+                  "frequency_penalty": {
+                    "type": "number",
+                    "minimum": -2,
+                    "maximum": 2,
+                    "description": "Decreases the likelihood of the model repeating the same lines verbatim."
+                  },
+                  "presence_penalty": {
+                    "type": "number",
+                    "minimum": -2,
+                    "maximum": 2,
+                    "description": "Increases the likelihood of the model introducing new topics."
+                  }
+                }
+              }
+            },
+            "required": ["prompt"]
+          },
+          {
+            "title": "Messages",
+            "properties": {
+              "$merge": {
+                "source": {
+                  "messages": {
+                    "$ref": "textGenerationPrompts#/messages"
+                  },
+                  "functions": {
+                    "$ref": "textGenerationTools#/functions"
+                  },
+                  "tools": {
+                    "$ref": "textGenerationTools#/tools"
+                  },
+                  "response_format": {
+                    "$ref": "jsonMode#/response_format"
+                  }
+                },
+                "with": {
+                  "raw": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "If true, a chat template is not applied and you must adhere to the specific model's expected formatting."
+                  },
+                  "stream": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "If true, the response will be streamed back incrementally using SSE, Server Sent Events."
+                  },
+                  "max_tokens": {
+                    "type": "integer",
+                    "default": 2000,
+                    "description": "The maximum number of tokens to generate in the response."
+                  },
+                  "temperature": {
+                    "type": "number",
+                    "default": 0.6,
+                    "minimum": 0,
+                    "maximum": 5,
+                    "description": "Controls the randomness of the output; higher values produce more random results."
+                  },
+                  "top_p": {
+                    "type": "number",
+                    "minimum": 0.001,
+                    "maximum": 1,
+                    "description": "Adjusts the creativity of the AI's responses by controlling how many possible words it considers. Lower values make outputs more predictable; higher values allow for more varied and creative responses."
+                  },
+                  "top_k": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 50,
+                    "description": "Limits the AI to choose from the top 'k' most probable words. Lower values make responses more focused; higher values introduce more variety and potential surprises."
+                  },
+                  "seed": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 9999999999,
+                    "description": "Random seed for reproducibility of the generation."
+                  },
+                  "repetition_penalty": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 2,
+                    "description": "Penalty for repeated tokens; higher values discourage repetition."
+                  },
+                  "frequency_penalty": {
+                    "type": "number",
+                    "minimum": -2,
+                    "maximum": 2,
+                    "description": "Decreases the likelihood of the model repeating the same lines verbatim."
+                  },
+                  "presence_penalty": {
+                    "type": "number",
+                    "minimum": -2,
+                    "maximum": 2,
+                    "description": "Increases the likelihood of the model introducing new topics."
+                  }
+                }
+              }
+            },
+            "required": ["messages"]
+          },
+          {
+            "title": "Async Batch",
+            "type": "object",
+            "properties": {
+              "requests": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "title": "Prompt",
+                      "properties": {
+                        "$merge": {
+                          "source": {
+                            "prompt": {
+                              "$ref": "textGenerationPrompts#/prompt"
+                            },
+                            "lora": {
+                              "$ref": "textGenerationFinetune#/lora"
+                            },
+                            "response_format": {
+                              "$ref": "jsonMode#/response_format"
+                            }
+                          },
+                          "with": {
+                            "$ref": "textGenerationOptions#/common"
+                          }
+                        }
+                      },
+                      "required": ["prompt"]
+                    },
+                    {
+                      "title": "Messages",
+                      "properties": {
+                        "$merge": {
+                          "source": {
+                            "messages": {
+                              "$ref": "textGenerationPrompts#/messages"
+                            },
+                            "functions": {
+                              "$ref": "textGenerationTools#/functions"
+                            },
+                            "tools": {
+                              "$ref": "textGenerationTools#/tools"
+                            },
+                            "response_format": {
+                              "$ref": "jsonMode#/response_format"
+                            }
+                          },
+                          "with": {
+                            "$ref": "textGenerationOptions#/common"
+                          }
+                        }
+                      },
+                      "required": ["messages"]
+                    }
+                  ]
+                }
+              }
+            },
+            "required": ["requests"]
+          }
+        ]
+      },
+      "output": {
+        "oneOf": [
+          {
+            "type": "object",
+            "contentType": "application/json",
+            "title": "Chat Completion Response",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "Unique identifier for the completion"
+              },
+              "object": {
+                "type": "string",
+                "enum": ["chat.completion"],
+                "description": "Object type identifier"
+              },
+              "created": {
+                "type": "number",
+                "description": "Unix timestamp of when the completion was created"
+              },
+              "model": {
+                "type": "string",
+                "description": "Model used for the completion"
+              },
+              "choices": {
+                "type": "array",
+                "description": "List of completion choices",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "index": {
+                      "type": "number",
+                      "description": "Index of the choice in the list"
+                    },
+                    "message": {
+                      "type": "object",
+                      "description": "The message generated by the model",
+                      "properties": {
+                        "role": {
+                          "type": "string",
+                          "description": "Role of the message author"
+                        },
+                        "content": {
+                          "type": "string",
+                          "description": "The content of the message"
+                        },
+                        "reasoning_content": {
+                          "type": "string",
+                          "description": "Internal reasoning content (if available)"
+                        },
+                        "tool_calls": {
+                          "type": "array",
+                          "description": "Tool calls made by the assistant",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "description": "Unique identifier for the tool call"
+                              },
+                              "type": {
+                                "type": "string",
+                                "enum": ["function"],
+                                "description": "Type of tool call"
+                              },
+                              "function": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string",
+                                    "description": "Name of the function to call"
+                                  },
+                                  "arguments": {
+                                    "type": "string",
+                                    "description": "JSON string of arguments for the function"
+                                  }
+                                },
+                                "required": ["name", "arguments"]
+                              }
+                            },
+                            "required": ["id", "type", "function"]
+                          }
+                        }
+                      },
+                      "required": ["role", "content"]
+                    },
+                    "finish_reason": {
+                      "type": "string",
+                      "description": "Reason why the model stopped generating"
+                    },
+                    "stop_reason": {
+                      "type": ["string", "null"],
+                      "description": "Stop reason (may be null)"
+                    },
+                    "logprobs": {
+                      "type": ["object", "null"],
+                      "description": "Log probabilities (if requested)"
+                    }
+                  }
+                }
+              },
+              "usage": {
+                "$ref": "usage#/usage"
+              },
+              "prompt_logprobs": {
+                "type": ["object", "null"],
+                "description": "Log probabilities for the prompt (if requested)"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "contentType": "application/json",
+            "title": "Text Completion Response",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "Unique identifier for the completion"
+              },
+              "object": {
+                "type": "string",
+                "enum": ["text_completion"],
+                "description": "Object type identifier"
+              },
+              "created": {
+                "type": "number",
+                "description": "Unix timestamp of when the completion was created"
+              },
+              "model": {
+                "type": "string",
+                "description": "Model used for the completion"
+              },
+              "choices": {
+                "type": "array",
+                "description": "List of completion choices",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "index": {
+                      "type": "number",
+                      "description": "Index of the choice in the list"
+                    },
+                    "text": {
+                      "type": "string",
+                      "description": "The generated text completion"
+                    },
+                    "finish_reason": {
+                      "type": "string",
+                      "description": "Reason why the model stopped generating"
+                    },
+                    "stop_reason": {
+                      "type": ["string", "null"],
+                      "description": "Stop reason (may be null)"
+                    },
+                    "logprobs": {
+                      "type": ["object", "null"],
+                      "description": "Log probabilities (if requested)"
+                    },
+                    "prompt_logprobs": {
+                      "type": ["object", "null"],
+                      "description": "Log probabilities for the prompt (if requested)"
+                    }
+                  },
+                  "required": ["index", "text", "finish_reason"]
+                }
+              },
+              "usage": {
+                "$ref": "usage#/usage"
+              }
+            }
+          },
+          {
+            "type": "string",
+            "contentType": "text/event-stream",
+            "format": "binary"
+          },
+          {
+            "type": "object",
+            "contentType": "application/json",
+            "title": "Async response",
+            "properties": {
+              "request_id": {
+                "type": "string",
+                "description": "The async request id that can be used to obtain the results."
+              }
+            }
+          }
+        ]
+      }
+    }
+}

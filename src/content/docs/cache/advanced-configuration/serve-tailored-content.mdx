@@ -1,0 +1,268 @@
+---
+title: Serving tailored content with Cloudflare
+pcx_content_type: concept
+sidebar:
+  order: 3
+  label: Serving tailored content
+---
+
+import { DashButton, APIRequest } from "~/components";
+
+Content negotiation is the practice of serving different versions of a resource from a single URL, tailoring the experience to the end user. Common examples include delivering content in a specific language (`Accept-Language`), optimizing for a device (`User-Agent`), or serving modern image formats (`Accept`).
+
+Cloudflare's global network is designed to handle this at scale. For common scenarios such as serving next-generation images, this negotiation is streamlined with a dedicated feature. For more customized logic, Cloudflare provides a toolkit including Transform Rules, Snippets, Custom Cache Keys, and Workers, giving you granular control to ensure the right content is served to every user, every time.
+
+---
+
+## Use query strings
+
+The [Transform Rule](/rules/transform/) method is ideal when you can create a distinct URL, such as serving content based on a visitor's location.
+
+### Geolocation example
+
+In this example, you run an e-commerce site and want to display prices in the local currency based on the visitor's country.
+
+1. In the Cloudflare dashboard, go to the Rules **Overview** page.
+
+   <DashButton url="/?to=/:account/:zone/rules/overview" />
+
+2. Select **Create rule** and select the option **URL Rewrite Rule**.  
+3. Enter a descriptive name, such as `Vary by Country - Canada`.  
+4. In **If incoming requests match...**, select **Custom filter expression**.
+5. Under **When incoming requests match...**, create the following expression:  
+   - **Field:** `Country`  
+   - **Operator:** `equals`  
+   - **Value:** `Canada`  
+6. Under **Then...** 
+    - for **Path**, select **Preserve**.
+    - for **Query**, select **Rewrite to**: **Dynamic** `loc=ca`
+7. Select **Save**.
+
+Now, requests from Canada to `/products/item` will be transformed to `/products/item?loc=ca` before reaching your origin or the cache, creating a distinct cache entry.
+
+:::note[Availability]
+Free, Pro, Business, and Enterprise plans
+:::
+
+---
+
+## Vary for Images
+
+[Vary for Images](/cache/advanced-configuration/vary-for-images/) tells Cloudflare which variants your origin supports. Cloudflare then caches each version separately and serves the correct one to browsers without contacting your origin each time. This feature is managed via the Cloudflare API.
+
+### Enable Vary for Images
+
+To enable this feature, create a _variants rule_ using the API. This rule maps file extensions to the image formats your origin can serve.
+
+For example, the following API call tells Cloudflare that for `.jpeg` and `.jpg` files, your origin can serve `image/webp` and `image/avif` variants:
+
+<APIRequest
+  path="/zones/{zone_id}/cache/variants"
+  method="PATCH"
+  json={{
+    value: {
+      jpeg: ["image/webp", "image/avif"],
+      jpg: ["image/webp", "image/avif"]
+    }
+  }}
+/>
+
+After creating the rule, Cloudflare will create distinct cache entries for each image variant, improving performance for users with modern browsers.
+
+:::note[Availability]
+Pro, Business, and Enterprise plans
+:::
+
+## Use Snippets for programmatic caching
+
+[Snippets](/rules/snippets/) are self-contained JavaScript fetch handlers that run at the edge on your requests through Cloudflare. They allow you to programmatically interact with the cache, providing full control over the cache key and response behavior without changing the user-facing URL.
+
+### Example: A/B testing
+
+In this example, you run an A/B test controlled by a cookie named `ab-test` (with values `group-a` or `group-b`). You want to cache a different version of the page for each group.
+
+1. In the Cloudflare dashboard, go to the **Snippets** page.
+
+   <DashButton url="/?to=/:account/:zone/rules/snippets" />
+
+2. Select **Create new Snippet** and name it `ab-test-caching`.
+3. Paste the following code. It modifies the cache key based on the `ab-test` cookie and caches the response for 30 days.
+
+```JavaScript
+const CACHE_DURATION = 30 * 24 * 60 * 60; // 30 days
+
+export default {
+  async fetch(request) {
+    // Construct a new URL for the cache key based on the A/B cookie
+    const abCookie = request.headers.get('Cookie')?.match(/ab-test=([^;]+)/)?.[1] || 'control';
+    const url = new URL(request.url);
+    url.pathname = `/ab-test/${abCookie}${url.pathname}`;
+
+    const cacheKey = new Request(url, request);
+    const cache = caches.default;
+
+    let response = await cache.match(cacheKey);
+    if (!response) {
+      // If not in cache, fetch from origin
+      response = await fetch(request);
+      response = new Response(response.body, response);
+      response.headers.set("Cache-Control", `s-maxage=${CACHE_DURATION}`);
+      // Put the response into cache with the custom key
+      await cache.put(cacheKey, response.clone());
+    }
+    return response;
+  },
+};
+```
+
+4. Save and deploy the Snippet.
+5. From the Snippets dashboard, select **Attach to routes** to assign the Snippet.
+
+:::note[Availability]
+Pro, Business, and Enterprise plans
+:::
+
+## Custom Cache Keys (Enterprise)
+
+If your account is on an Enterprise plan, the [Custom Cache Keys](/cache/how-to/cache-keys) feature provides a no-code interface to define which request properties are included in the cache key.
+
+Custom Cache Key options:
+
+- Cache by device type
+- Query string option `No query string parameters except`
+- Include headers and values
+- Include cookie names and values
+- User: Device type, Country, Language
+
+### Example: Same URL, different content
+
+If your origin serves different content types (for example, `application/json` vs. `text/html`) at the same URL based on the `Accept` header, use a custom cache key to cache them separately.
+
+1. In the Cloudflare dashboard, go to the **Cache Rules** page.
+
+   <DashButton url="/?to=/:account/:zone/caching/cache-rules" />
+
+2. Select **Create rule**.
+3. Enter  rule name, such as `Vary by Accept Header`.
+4. Set the condition for the rule to apply (for example, a specific hostname or path).
+5. Under **Cache key**, select **Use custom key**.
+6. Select **Add new**. 
+    - **Type**: `Header`
+    - **Name**: `Accept`
+    - **Value**: Add each `value`, or leave empty for all.
+7. Select **Deploy**.
+
+This configuration creates separate cache entries based on the `Accept` header value, respecting your API's content negotiation.
+
+:::note[Availability]
+Enterprise plans only
+:::
+
+## Use Cloudflare Workers for advanced logic
+
+For complex caching scenarios, [Cloudflare Workers](/cache/interaction-cloudflare-products/workers/) provide a full serverless environment ideal for custom logic at scale.
+
+### Example: Device type – Free/Pro/Biz (without Tiered Cache)
+
+This Worker detects whether a visitor is on a mobile or desktop device and creates separate cache entries for each, ensuring the correct version of the site is served and cached.
+
+```JavaScript
+export default {
+  async fetch(request, env, ctx) {
+    const userAgent = request.headers.get('User-Agent') || '';
+    const deviceType = userAgent.includes('Mobile') ? 'mobile' : 'desktop';
+
+    // Create a new URL for the cache key that includes the device type
+    const url = new URL(request.url);
+    url.pathname = `/${deviceType}${url.pathname}`;
+
+    const cacheKey = new Request(url, request);
+    const cache = caches.default;
+
+    let response = await cache.match(cacheKey);
+
+    if (!response) {
+      console.log(`Cache miss for ${deviceType} device. Fetching from origin.`);
+      response = await fetch(request);
+      let responseToCache = response.clone();
+      ctx.waitUntil(cache.put(cacheKey, responseToCache));
+    }
+
+    return response;
+  },
+};
+```
+
+:::note[Availability]
+Free and Paid plans
+:::
+
+### Example: Device type – Enterprise (with Tiered Cache)
+
+This Worker detects if a visitor is on a mobile device or a desktop and creates a separate cache entry for each, ensuring the correct version of the site is served and cached. Uses the Enterprise `cf.customCacheKey` feature.
+
+```JavaScript
+export default {
+  async fetch(request) {
+    // 1. Determine the device type from the User-Agent header
+    const userAgent = request.headers.get('User-Agent') || '';
+    const deviceType = userAgent.includes('Mobile') ? 'mobile' : 'desktop';
+
+    // 2. Create a custom cache key by appending the device type to the URL
+    const customCacheKey = `${request.url}-${deviceType}`;
+
+    // 3. Fetch the response. Cloudflare's cache automatically uses the
+    //    customCacheKey for cache operations (match, put).
+    const response = await fetch(request, {
+      cf: {
+        cacheKey: customCacheKey,
+      },
+    });
+
+    // Optionally, you can modify the response before returning it
+    // For example, add a header to indicate which cache key was used
+    const newResponse = new Response(response.body, response);
+    newResponse.headers.set("X-Cache-Key", customCacheKey);
+    return newResponse;
+  },
+};
+```
+
+:::note[Availability]
+Enterprise only
+:::
+
+## Example: Caching Next.js RSC payloads
+
+A common challenge is caching content from frameworks like Next.js, which uses an `RSC` (React Server Components) request header to differentiate between HTML page loads and RSC data payloads for the same URL. Here are the best ways to handle this.
+
+### Method 1: Transform Rules
+
+The simplest solution is to create a [Transform Rule](/rules/transform/) that checks for the `RSC` header and adds a unique query parameter on the request, creating two distinct cacheable URLs: `/page` (for HTML) and `/page?_rsc=1` (for the RSC payload).
+
+1. In the Cloudflare dashboard, go to the Rules **Overview** page.
+
+   <DashButton url="/?to=/:account/:zone/rules/overview" />
+
+2. Select **Create rule** and select the option **URL Rewrite Rule**.  
+3. Enter a name, such as `Vary by RSC Header`.
+4. In **If incoming requests match...**, select **Custom filter expression**.
+5. Under **When incoming requests match...**, manually edit the expression so that it checks for the presence of the `RSC` header:
+    - `(http.request.headers["rsc"] is not null)`
+
+6. Under `Then...` 
+    - for **Path**, select **Preserve**
+    - for **Query**, select **Rewrite to**, select **Dynamic**: `_rsc=1`
+
+7. Select **Save**.
+
+### Method 2: Snippets or Custom Cache Keys
+
+Alternatively, use [Snippets](/rules/snippets/) or [Custom Cache Keys](/cache/how-to/cache-keys) to add the `RSC` header directly to the cache key without modifying the visible URL. This provides a cleaner URL but requires more advanced configuration.
+
+:::note[Availability]
+- Snippets: Pro, Business, Enterprise
+- Custom Cache Keys: Enterprise only
+:::
+
+

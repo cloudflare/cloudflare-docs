@@ -1,0 +1,51 @@
+---
+{}
+---
+
+import {Type, MetaInfo} from "~/components";
+
+### `get`
+
+- <code>ctx.storage.kv.get(key <Type text="string" />)</code>: <Type text="Any, undefined" />
+  - Retrieves the value associated with the given key. The type of the returned value will be whatever was previously written for the key, or undefined if the key does not exist.
+
+### `put`
+
+- <code>ctx.storage.kv.put(key <Type text="string" />, value <Type text="any" />)</code>: <Type text="void" />
+  - Stores the value and associates it with the given key. The value can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm), which is true of most types.
+
+    For the size of keys and values refer to [SQLite-backed Durable Object limits](/durable-objects/platform/limits/#sqlite-backed-durable-objects-general-limits)
+
+### `delete`
+
+- <code>ctx.storage.kv.delete(key <Type text="string" />)</code>: <Type text="boolean" />
+  - Deletes the key and associated value. Returns `true` if the key existed or `false` if it did not.
+
+### `list`
+
+- <code>ctx.storage.kv.list(options <Type text="Object" /> <MetaInfo text="optional" />)</code>: <Type text="Iterable<string, any>" />
+  - Returns all keys and values associated with the current Durable Object in ascending sorted order based on the keys' UTF-8 encodings.
+  - The type of each returned value in the [`Iterable`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#the_iterable_protocol) will be whatever was previously written for the corresponding key.
+
+  - Be aware of how much data may be stored in your Durable Object before calling this version of `list` without options because all the data will be loaded into the Durable Object's memory, potentially hitting its [limit](/durable-objects/platform/limits/). If that is a concern, pass options to `list` as documented below.
+
+#### Supported options
+
+- `start` <Type text ='string' />
+  - Key at which the list results should start, inclusive.
+
+- `startAfter` <Type text ='string' />
+  - Key after which the list results should start, exclusive. Cannot be used simultaneously with `start`.
+
+- `end` <Type text ='string' />
+  - Key at which the list results should end, exclusive.
+
+- `prefix` <Type text ='string' />
+  - Restricts results to only include key-value pairs whose keys begin with the prefix.
+
+- `reverse` <Type text='boolean' />
+  - If true, return results in descending order instead of the default ascending order.
+  - Enabling `reverse` does not change the meaning of `start`, `startKey`, or `endKey`. `start` still defines the smallest key in lexicographic order that can be returned (inclusive), effectively serving as the endpoint for a reverse-order list. `end` still defines the largest key in lexicographic order that the list should consider (exclusive), effectively serving as the starting point for a reverse-order list.
+
+- `limit` <Type text ='number' />
+  - Maximum number of key-value pairs to return.

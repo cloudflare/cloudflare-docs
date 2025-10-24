@@ -1,0 +1,36 @@
+---
+params:
+  - magicWord?
+  - productNameWAN
+  - connectorURL
+  - productNameConnector
+  - thirdPartyURL
+  - cniURL
+  - cfTunnelURL
+  - warpURL
+---
+
+To on-ramp your network traffic to {props.productNameWAN}, you can use <a href={props.connectorURL}>{props.productNameConnector}</a>, a lightweight software package you can install in corporate network locations to automatically connect, steer, and shape any IP traffic.
+
+{props.magicWord === "Magic WAN" && (
+  <p>
+		You can also use any device that supports <a href={props.thirdPartyURL}>GRE or IPsec</a> tunnels with the supported configuration parameters.
+  </p>
+)}
+
+Additional compatible on-ramps include:
+
+- <a href={props.cniURL}>Cloudflare Network Interconnect (CNI)</a>: Connect your network infrastructure directly with Cloudflare - rather than using the public Internet - for a more reliable and secure experience.
+- <a href={props.cfTunnelURL}>Cloudflare Tunnel</a>: {props.productNameWAN} can be used together with Cloudflare Tunnel for easy access between your networks and applications.
+- <a href={props.warpURL}>WARP</a>: Protect corporate devices by securely and privately sending traffic from those devices to Cloudflare's global network, where Cloudflare Gateway can apply advanced web filtering.
+
+{props.magicWord === "Magic WAN" && (
+  <ul>
+    <li>
+      <a href="/magic-wan/configuration/magic-cloud-networking/">Magic Cloud Networking</a>: Automatically create on-ramps from your cloud networks to Magic WAN.
+    </li>
+		<li>
+			<a href="https://www.cloudflare.com/network-onramp-partners/">Network on-ramp partnerships</a>: Refer to our <a href="/magic-wan/configuration/manually/third-party/">third-party integration tutorials</a> for guidance on configuring the most asked for third-party products.
+		</li>
+  </ul>
+)}

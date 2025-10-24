@@ -22,7 +22,7 @@ Access generates two separate `CF_Authorization` tokens depending on the domain:
 
 ### Multi-domain applications
 
-Cloudflare Access allows you to protect and manage multiple domains in a single [self-hosted application](/cloudflare-one/applications/configure-apps/self-hosted-public-app/). After a user has successfully authenticated to one domain, Access will automatically issue a `CF_Authorization` cookie when they go to another domain in the same Access application. This means that users only need to authenticate once to a multi-domain application.
+Cloudflare Access allows you to protect and manage multiple domains in a single [self-hosted application](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/). After a user has successfully authenticated to one domain, Access will automatically issue a `CF_Authorization` cookie when they go to another domain in the same Access application. This means that users only need to authenticate once to a multi-domain application.
 
 For Access applications with five or less domains, Access will preemptively set the cookie for all domains through a series of redirects. This allows single-page applications (SPAs) to retrieve data from other subdomains, even if the user has not explicitly visited those subdomains. Note that we cannot set cookies up-front for a wildcarded subdomain, because we do not know which concrete subdomain to redirect to (wildcarded paths are allowed).
 
@@ -36,19 +36,19 @@ The following Access cookies are essential to Access functionality. Cookies that
 
 | Details                                                                                                                                                                                                                                                                                          | Expiration                                                                                                                                                                                                                                                                                                                                                          | HttpOnly | SameSite | Required? |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- | -------- | --------- |
-| [JSON web token (JWT)](/cloudflare-one/identity/authorization-cookie/#access-jwts) set on the `cloudflareaccess.com` [team domain](/cloudflare-one/faq/getting-started-faq/#what-is-a-team-domainteam-name) that contains the user's identity and enables Access to perform single sign-on (SSO) | <details><summary>View</summary>If set, adheres to [global session duration](/cloudflare-one/identity/users/session-management/#global-session-duration).<br/><br/>If not, adheres to [application session duration](/cloudflare-one/identity/users/session-management/#application-session-duration).<br/><br/>If neither are set, defaults to 24 hours.</details> | Yes      | None     | Required  |
+| [JSON web token (JWT)](/cloudflare-one/identity/authorization-cookie/#access-jwts) set on the `cloudflareaccess.com` [team domain](/cloudflare-one/faq/getting-started-faq/#what-is-a-team-domainteam-name) that contains the user's identity and enables Access to perform single sign-on (SSO) | <details><summary>View</summary>If set, adheres to [global session duration](/cloudflare-one/team-and-resources/users/session-management/#global-session-duration).<br/><br/>If not, adheres to [application session duration](/cloudflare-one/team-and-resources/users/session-management/#application-session-duration).<br/><br/>If neither are set, defaults to 24 hours.</details> | Yes      | None     | Required  |
 
 ### CF_Authorization (Access application domain)
 
 | Details                                                                                                                                                                                                                           | Expiration                                                                                                                                                                                                                                                                                                                                                          | HttpOnly                     | SameSite                     | Required? |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------- | ---------------------------- | --------- |
-| [JSON web token (JWT)](/cloudflare-one/identity/authorization-cookie/#access-jwts) set on the domain protected by Access that allows Access to confirm that the user has been authenticated and is authorized to reach the origin | <details><summary>View</summary>If set, adheres to [policy session duration](/cloudflare-one/identity/users/session-management/#policy-session-duration).<br/><br/>If not, adheres to [application session duration](/cloudflare-one/identity/users/session-management/#application-session-duration).<br/><br/>If neither are set, defaults to 24 hours.</details> | Admin choice (Default: None) | Admin choice (Default: None) | Required  |
+| [JSON web token (JWT)](/cloudflare-one/identity/authorization-cookie/#access-jwts) set on the domain protected by Access that allows Access to confirm that the user has been authenticated and is authorized to reach the origin | <details><summary>View</summary>If set, adheres to [policy session duration](/cloudflare-one/team-and-resources/users/session-management/#policy-session-duration).<br/><br/>If not, adheres to [application session duration](/cloudflare-one/team-and-resources/users/session-management/#application-session-duration).<br/><br/>If neither are set, defaults to 24 hours.</details> | Admin choice (Default: None) | Admin choice (Default: None) | Required  |
 
 ### CF_Binding
 
 | Details                                                                                  | Expiration                                                                                                                                                                                                                                                                                                                                                          | HttpOnly | SameSite | Required? |
 | ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- | -------- | --------- |
-| Refer to [Binding cookie](/cloudflare-one/identity/authorization-cookie/#binding-cookie) | <details><summary>View</summary>If set, adheres to [policy session duration](/cloudflare-one/identity/users/session-management/#policy-session-duration).<br/><br/>If not, adheres to [application session duration](/cloudflare-one/identity/users/session-management/#application-session-duration).<br/><br/>If neither are set, defaults to 24 hours.</details> | Yes      | None     | Optional  |
+| Refer to [Binding cookie](/cloudflare-one/identity/authorization-cookie/#binding-cookie) | <details><summary>View</summary>If set, adheres to [policy session duration](/cloudflare-one/team-and-resources/users/session-management/#policy-session-duration).<br/><br/>If not, adheres to [application session duration](/cloudflare-one/team-and-resources/users/session-management/#application-session-duration).<br/><br/>If neither are set, defaults to 24 hours.</details> | Yes      | None     | Optional  |
 
 ### CF_Session
 
@@ -66,7 +66,7 @@ The following Access cookies are essential to Access functionality. Cookies that
 
 | Details                                                                                                                             | Expiration | HttpOnly | SameSite | Required? |
 | ----------------------------------------------------------------------------------------------------------------------------------- | ---------- | -------- | -------- | --------- |
-| Cookie used to help prevent abuse of the [Access OTP flow](https://developers.cloudflare.com/cloudflare-one/identity/one-time-pin/) | 30 days    | Yes      | Strict   | Required  |
+| Cookie used to help prevent abuse of the [Access OTP flow](https://developers.cloudflare.com/cloudflare-one/integrations/identity-providers/one-time-pin/) | 30 days    | Yes      | Strict   | Required  |
 
 ## Cookie settings
 
@@ -101,6 +101,12 @@ The selector options are:
 
 Refer to the [Mozilla documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Set-Cookie#samesitesamesite-value) for more information.
 
+:::caution
+
+If you are receiving the `ERR_TOO_MANY_REDIRECTS` errors, make sure your `SameSite` setting is set to None or Lax. Setting the `SameSite` setting to Strict can result in too many redirects.
+
+:::
+
 #### When not to use SameSite
 
 Do not enable `SameSite` restrictions if you have additional sites or applications that rely on a specific application's authorization cookie.
@@ -127,8 +133,8 @@ Binding cookies protect users' `CF_Authorization` cookies from possible maliciou
 Do not enable Binding Cookie if:
 
 - You are using the Access application for non-browser based tools (such as SSH or RDP).
-- You have enabled [incompatible Cloudflare products](/cloudflare-one/applications/configure-apps/self-hosted-public-app/#product-compatibility) on the application domain.
-- You have turned on [WARP authentication identity](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-sessions/) for the application.
+- You have enabled [incompatible Cloudflare products](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/#product-compatibility) on the application domain.
+- You have turned on [WARP authentication identity](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-sessions/) for the application.
 
 ### Cookie Path Attribute
 

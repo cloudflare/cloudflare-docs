@@ -1,0 +1,14 @@
+---
+params:
+  - productNameWAN
+  - magicFirewallPlansURL
+  - productNameFirewall
+  - magicFirewallURL
+  - gatewayURL
+---
+
+{props.productNameWAN} customers have <a href={props.magicFirewallPlansURL}>automatic access to Magic Firewall</a>. {props.productNameFirewall} is Cloudflare's firewall-as-a-service solution that allows you to protect your infrastructure. {props.productNameFirewall} supports layers three and four of the [OSI model](https://www.cloudflare.com/learning/ddos/glossary/open-systems-interconnection-model-osi/), and enables you to allow or block traffic on a variety of packet characteristics.
+
+Refer to <a href={props.magicFirewallURL}>{props.productNameFirewall}</a> for more information about this product.
+
+As a {props.productNameWAN}, you can also use Cloudflare Gateway to set up policies to inspect network and HTTP traffic to the Internet or your private network infrastructure. Refer to <a href={props.gatewayURL}>Connect to Cloudflare Gateway with Magic WAN</a> to learn how to filter Magic WAN traffic with Gateway policies.

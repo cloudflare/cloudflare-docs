@@ -6,11 +6,59 @@ sidebar:
 
 ---
 
-import { Badge } from "~/components";
+import { Badge, FeatureTable, Details, DashButton } from "~/components";
 
 Consider the sections below to learn how to access analytics and logs for your DNS Firewall.
 
 ## Analytics
+
+DNS Firewall analytics allow you to evaluate data about DNS queries to your account.
+
+### Availability and limits
+
+The historical data available covers 62 days and the maximum time interval you can get data for is also 62 days.
+
+### Dashboard
+
+For a quick summary, view your DNS Firewall analytics on the dashboard. The DNS analytics dashboard contains [four main panels](#panels). The filters and time frame that you specify at the top of the page apply to all of them.
+
+1. In the Cloudflare dashboard, go to the **DNS Firewall** page.
+
+   <DashButton url="/?to=/:account/dns-firewall" />
+
+2. Go to **Analytics**.
+
+#### Available dimensions
+
+- Query name
+- Query type (same as DNS record type)
+- Cluster
+- Cluster IP
+- Response code
+- Response reason (refer to [descriptions](#response-reasons) below)
+- Response cached (cached or uncached)
+- Response stale (stale or fresh)
+- Data center
+- Source IP
+- Upstream nameserver IP
+- Protocol (UDP or TCP)
+- IP version (IPv4 or IPv6)
+
+#### Panels
+
+The filters and time frame that you specify at the top of the page apply to all of the available panels.
+
+- **Query summary**: the number of queries and their distribution over time. This information is segmented by each of the [available dimensions](#available-dimensions). You can select the dimensions through the different tabs above the graph and quickly filter for or exclude a certain value from the results by hovering over it and selecting **Filter** or **Exclude**.
+
+- **Query statistics**: an overview of query metrics. Namely, **Total queries**, **Cached queries**, **Uncached queries**, and **Stale cache queries**.
+
+    <Details header="Processing time and response time"> Processing time refers to the total time taken to handle a query within DNS Firewall, meaning cached queries served directly from Cloudflare's servers. For uncached queries, the metric used is response time, which considers the time to get the answers from your upstream nameservers. The processing and response times are displayed in milliseconds.</Details>
+
+		<Details header="90th percentile (p90)"> Aside from the average for both processing and response times, `p90` values show you the maximum time that 90% of queries took to resolve. For example, if the p90 is 1 millisecond, it means 90% of the queries were resolved in 1 millisecond or less.</Details>
+
+- **DNS queries by data center**: a map indicating which Cloudflare data centers have handled DNS queries to your account. You can also find a list of the top ten results and quickly filter for or exclude a certain data center from the results by hovering over it and selecting **Filter** or **Exclude**.
+
+- **Top query statistics**: a breakdown of the top queries grouped by the [available dimensions](#available-dimensions). You can expand each card to list more results and search for specific values.
 
 ### GraphQL
 
@@ -21,16 +69,17 @@ The DNS Firewall analytics has two [schemas](/analytics/graphql-api/getting-star
 * `dnsFirewallAnalyticsAdaptive`: Retrieve information about individual DNS Firewall queries.
 * `dnsFirewallAnalyticsAdaptiveGroups`: Get reports on aggregate information only.
 
-### Cloudflare API <Badge text="Legacy" variant="caution" size="medium" />
+### API <Badge text="Legacy" variant="caution" size="medium" />
 
 You can also use the DNS Firewall API [reports endpoint](/api/resources/dns_firewall/subresources/analytics/subresources/reports/).
 
+---
 
 ## Logs
 
 You can [set up Logpush](/logs/logpush/) to deliver [DNS Firewall logs](/logs/logpush/logpush-job/datasets/account/dns_firewall_logs/) to a storage service, SIEM, or log management provider.
 
-### Response reasons
+## Response reasons
 
 When analyzing why Cloudflare DNS Firewall responded in one way or another to a specific query, consider the `responseReason` log field.
 
@@ -47,3 +96,6 @@ The following table provides a description for each of the values that might be 
 | `chaos_success`           | Response for [Chaos class](https://en.wikipedia.org/wiki/Chaosnet) was successfully served.                                                                    |
 | `attack_mitigation_block` | Query was blocked as part of [random prefix attack mitigation](/dns/dns-firewall/random-prefix-attacks/).                                                      |
 | `unknown`                 | There was an unknown error.                                                                                                                                    |
+
+[^1]: the total time taken to handle a query within DNS Firewall.
+[^2]: the time it takes when an answer is not cached and Cloudflare has to get the answer from your upstream nameservers.

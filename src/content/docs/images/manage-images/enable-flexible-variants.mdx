@@ -5,14 +5,17 @@ sidebar:
   order: 11
 
 ---
+import { DashButton } from "~/components";
 
 Flexible variants allow you to create variants with dynamic resizing which can provide more options than regular variants allow. This option is not enabled by default.
 
 ## Enable flexible variants via the Cloudflare dashboard
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
-2. Select **Images** > **Variants**.
-3. Enable **Flexible variants**.
+1. In the Cloudflare dashboard, go to the **Variants** page. 
+
+   <DashButton url="/?to=/:account/images/variants" />
+
+2. Enable **Flexible variants**.
 
 ## Enable flexible variants via the API
 

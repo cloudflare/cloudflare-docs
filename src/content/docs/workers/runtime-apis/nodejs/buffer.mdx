@@ -1,23 +1,22 @@
 ---
 pcx_content_type: configuration
 title: Buffer
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
-<Render file="nodejs-compat-howto" />
+<Render file="nodejs-compat-howto" product="workers" />
 
 The [`Buffer`](https://nodejs.org/docs/latest/api/buffer.html) API in Node.js is one of the most commonly used Node.js APIs for manipulating binary data. Every `Buffer` instance extends from the standard [`Uint8Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array) class, but adds a range of unique capabilities such as built-in base64 and hex encoding/decoding, byte-order manipulation, and encoding-aware substring searching.
 
 ```js
-import { Buffer } from 'node:buffer';
+import { Buffer } from "node:buffer";
 
-const buf = Buffer.from('hello world', 'utf8');
+const buf = Buffer.from("hello world", "utf8");
 
-console.log(buf.toString('hex'));
+console.log(buf.toString("hex"));
 // Prints: 68656c6c6f20776f726c64
-console.log(buf.toString('base64'));
+console.log(buf.toString("base64"));
 // Prints: aGVsbG8gd29ybGQ=
 ```
 

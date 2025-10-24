@@ -3,11 +3,6 @@ pcx_content_type: how-to
 title: Analog
 head: []
 description: The fullstack Angular meta-framework
-banner:
-  content: We recommend using <strong>Cloudflare Workers</strong> for new projects. For existing Pages projects, see our <a href="/workers/static-assets/migrate-from-pages/">migration guide</a> and <a href="/workers/static-assets/migrate-from-pages/#compatibility-matrix">compatibility matrix</a>.
-  type: note
-  dismissible:
-    id: pages-migrate-to-workers
 ---
 
 import {
@@ -129,11 +124,11 @@ When creating your new project, C3 will give you the option of deploying an init
 npm run deploy
 ```
 
-<Render file="framework-guides/git-integration" />
+<Render file="framework-guides/git-integration" product="pages" />
 
 ### Create a GitHub repository
 
-<Render file="framework-guides/create-gh-repo" />
+<Render file="framework-guides/create-gh-repo" product="pages" />
 
 ```sh
 # Skip the following three commands if you have built your application
@@ -149,7 +144,11 @@ git push -u origin main
 
 ### Create a Pages project
 
-<Render file="deploy-to-pages-steps-with-preset" params={{ name: "Analog" }} />
+<Render
+	file="framework-guides/learn-more"
+	product="pages"
+	params={{ name: "Analog" }}
+/>
 
 <PagesBuildPreset framework="analog" />
 

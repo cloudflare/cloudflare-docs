@@ -1,0 +1,118 @@
+---
+title: SSH proxy and command logs (legacy)
+pcx_content_type: how-to
+sidebar:
+  order: 3
+  label: SSH proxy and command logs (legacy)
+---
+
+import { Render } from "~/components";
+
+:::note
+Not recommended for new deployments. We recommend using [Access for Infrastructure](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/) to manage SSH sessions and log SSH commands.
+:::
+
+Cloudflare Zero Trust supports SSH proxying and command logging using Secure Web Gateway and the WARP client.
+
+You can create network policies to manage and monitor SSH access to your applications. When a device connects to your origin server over SSH, a session log will be generated showing which user connected, the session duration, and optionally a full replay of all commands run during the session.
+
+## Prerequisites
+
+- [Install the WARP client](/cloudflare-one/team-and-resources/devices/warp/set-up-warp/) on end-user devices.
+- [Install the Cloudflare root certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/) on end-user devices.
+
+## 1. Ensure Unix usernames match user SSO identities
+
+Cloudflare Gateway will take the identity from a token and, using short-lived certificates, authorize the user on the target infrastructure.
+
+<Render file="ssh/usernames" product="cloudflare-one" />
+
+## 2. Generate a Gateway SSH proxy CA
+
+Instead of traditional SSH keys, Gateway uses short-lived certificates to authenticate traffic between Cloudflare and your origin.
+
+<Render file="ssh/ssh-proxy-ca-note" product="cloudflare-one" />
+
+To generate a Gateway SSH proxy CA and get its public key:
+
+<Render file="ssh/ssh-proxy-ca" product="cloudflare-one" />
+
+## 3. Save the public key
+
+<Render file="ssh/public-key" product="cloudflare-one" />
+
+## 4. Modify your `sshd_config` file
+
+<Render file="ssh/modify-sshd" product="cloudflare-one" />
+
+## 5. Check your SSH port number
+
+Cloudflare's SSH proxy only works with servers running on the default port 22. Open the `sshd_config` file and verify that no other `Port` values are specified.
+
+```sh
+cat /etc/ssh/sshd_config
+```
+
+## 6. Restart your SSH server
+
+<Render file="ssh/restart-server" product="cloudflare-one" />
+
+## 7. Create an Audit SSH policy
+
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Gateway** > **Firewall policies**.
+
+2. In the **Network** tab, create a new network policy.
+
+3. Name the policy and specify the [Destination IP](/cloudflare-one/traffic-policies/network-policies/#destination-ip) for your origin server.
+
+   You can enter either a public or private IP. To use a private IP, refer to [Connect private networks](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/).
+
+4. Add any other conditions to your policy. If a user does not meet the criteria, they will be blocked by default.
+
+5. In the **Action** dropdown, select _Audit SSH_.
+
+6. (Optional) Enable **SSH Command Logging**. If you have not already uploaded an SSH encryption public key, follow the steps in [Configure SSH Command Logging](#optional-configure-ssh-command-logging).
+
+7. Save the policy.
+
+## 8. Connect as a user
+
+Users can use any SSH client to connect to the target resource, as long as they are logged into the WARP client on their device. Cloudflare Zero Trust will authenticate, proxy, and optionally encrypt and record all SSH traffic through Gateway.
+
+Users must specify their desired username to connect with as part of the SSH command:
+
+```sh
+ssh <username>@<hostname>
+```
+
+:::note
+
+If the target resource is already in a user's `.ssh/known_hosts` file, the user must first remove existing SSH keys before attempting to connect:
+
+```sh
+ssh-keygen -R <targetIP or hostname>
+```
+
+:::
+
+## (Optional) Configure SSH Command Logging
+
+<Render
+	file="ssh/upload-ssh-key"
+	product="cloudflare-one"
+	params={{
+		note: "Note that this a different public key from the `ca.pub` file you used to configure the SSH server.",
+	}}
+/>
+
+## View SSH Logs
+
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Logs** > **Gateway** > **SSH**.
+
+2. If you enabled the **SSH Command Logging** feature, you can **Download** a session's command log.
+
+3. <Render file="ssh/decrypt-ssh-log" product="cloudflare-one" />
+
+## Limitations
+
+SSH Command Logging does not support SFTP since it cannot be inspected and logged.

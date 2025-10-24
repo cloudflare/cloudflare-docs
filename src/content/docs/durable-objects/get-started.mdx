@@ -5,7 +5,15 @@ sidebar:
   order: 2
 ---
 
-import { Render, TabItem, Tabs, PackageManagers, WranglerConfig, TypeScriptExample } from "~/components";
+import {
+	Render,
+	TabItem,
+	Tabs,
+	PackageManagers,
+	WranglerConfig,
+	TypeScriptExample,
+	DashButton
+} from "~/components";
 
 This guide will instruct you through:
 
@@ -81,9 +89,7 @@ To add a Durable Object to an existing Worker, you need to:
 
   export default {
     async fetch(request, env, ctx): Promise<Response> {
-      const id:DurableObjectId = env.MY_DURABLE_OBJECT.idFromName(new URL(request.url).pathname);
-
-      const stub = env.MY_DURABLE_OBJECT.get(id);
+      const stub = env.MY_DURABLE_OBJECT.getByName(new URL(request.url).pathname);
 
       {/* Access your Durable Object methods here */}
 
@@ -146,13 +152,15 @@ export class MyDurableObject extends DurableObject<Env> {
 		super(ctx, env)
 	}
 
-	async sayHello(): Promise<string> {
-		let result = this.ctx.storage.sql
-			.exec("SELECT 'Hello, World!' as greeting")
-			.one();
-		return result.greeting;
-	}
+    async sayHello(): Promise<string> {
+    	let result = this.ctx.storage.sql
+    		.exec("SELECT 'Hello, World!' as greeting")
+    		.one();
+    	return result.greeting;
+    }
+
 }
+
 ```
 </TypeScriptExample>
 
@@ -162,13 +170,10 @@ export class MyDurableObject extends DurableObject<Env> {
 from workers import DurableObject
 
 class MyDurableObject(DurableObject):
-    def __init__(self, ctx, env):
-        super().__init__(ctx, env)
-
     async def say_hello(self):
-        result = self.ctx.storage.sql \
-            .exec("SELECT 'Hello, World!' as greeting") \
-            .one()
+        result = self.ctx.storage.sql.exec(
+            "SELECT 'Hello, World!' as greeting"
+        ).one()
 
         return result.greeting
 ```
@@ -180,7 +185,7 @@ class MyDurableObject(DurableObject):
 In the code above, you have:
 
 1. Defined a RPC method, `sayHello()`, that can be called by a Worker to communicate with a Durable Object.
-2. Accessed a Durable Object's attached storage, which is a private SQLite database only accessible to the object, using [SQL API](/durable-objects/api/storage-api/#exec) methods (`sql.exec()`) available on `ctx.storage` .
+2. Accessed a Durable Object's attached storage, which is a private SQLite database only accessible to the object, using [SQL API](/durable-objects/api/sqlite-storage-api/#exec) methods (`sql.exec()`) available on `ctx.storage` .
 3. Returned an object representing the single row query result using `one()`, which checks that the query result has exactly one row.
 4. Return the `greeting` column from the row object result.
 
@@ -196,22 +201,21 @@ A Worker is used to [access Durable Objects](/durable-objects/best-practices/cre
 
 To communicate with a Durable Object, the Worker's fetch handler should look like the following:
 
-
 <Tabs syncKey="workersExamples">
 
 <TypeScriptExample omitTabs={true}>
 ```ts
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
-		const id:DurableObjectId = env.MY_DURABLE_OBJECT.idFromName(new URL(request.url).pathname);
+    	const stub = env.MY_DURABLE_OBJECT.getByName(new URL(request.url).pathname);
 
-		const stub = env.MY_DURABLE_OBJECT.get(id);
+    	const greeting = await stub.sayHello();
 
-		const greeting = await stub.sayHello();
+    	return new Response(greeting);
+    },
 
-		return new Response(greeting);
-	},
 } satisfies ExportedHandler<Env>;
+
 ```
 </TypeScriptExample>
 
@@ -222,10 +226,9 @@ from workers import handler, Response, WorkerEntrypoint
 from urllib.parse import urlparse
 
 class Default(WorkerEntrypoint):
-    async def fetch(request, env, ctx):
+    async def fetch(request):
         url = urlparse(request.url)
-        id = env.MY_DURABLE_OBJECT.idFromName(url.path)
-        stub = env.MY_DURABLE_OBJECT.get(id)
+        stub = self.env.MY_DURABLE_OBJECT.getByName(url.path)
         greeting = await stub.say_hello()
         return Response(greeting)
 ```
@@ -237,11 +240,10 @@ class Default(WorkerEntrypoint):
 In the code above, you have:
 
 1. Exported your Worker's main event handlers, such as the `fetch()` handler for receiving HTTP requests.
-2. Passed `env` into the `fetch()` handler. Bindings are delivered as a property of the environment object passed as the second parameter when an event handler or class constructor is invoked. By calling the `idFromName()` function on the binding, you use a string-derived object ID. You can also ask the system to [generate random unique IDs](/durable-objects/api/namespace/#newuniqueid). System-generated unique IDs have better performance characteristics, but require you to store the ID somewhere to access the Object again later.
-3. Derived an object ID from the URL path. `MY_DURABLE_OBJECT.idFromName()` always returns the same ID when given the same string as input (and called on the same class), but never the same ID for two different strings (or for different classes). In this case, you are creating a new object for each unique path.
-4. Constructed the stub for the Durable Object using the ID. A stub is a client object used to send messages to the Durable Object.
-5. Called a Durable Object by invoking a RPC method, `sayHello()`, on the Durable Object, which returns a `Hello, World!` string greeting.
-6. Received an HTTP response back to the client by constructing a HTTP Response with `return new Response()`.
+2. Passed `env` into the `fetch()` handler. Bindings are delivered as a property of the environment object passed as the second parameter when an event handler or class constructor is invoked.
+3. Constructed a stub for a Durable Object instance based on the provided name. A stub is a client object used to send messages to the Durable Object.
+4. Called a Durable Object by invoking a RPC method, `sayHello()`, on the Durable Object, which returns a `Hello, World!` string greeting.
+5. Received an HTTP response back to the client by constructing a HTTP Response with `return new Response()`.
 
 Refer to [Access a Durable Object from a Worker](/durable-objects/best-practices/create-durable-object-stubs-and-send-requests/) to learn more about communicating with a Durable Object.
 
@@ -303,14 +305,15 @@ To deploy your Durable Object Worker:
 npx wrangler deploy
 ```
 
-Once deployed, you should be able to see your newly created Durable Object Worker on the [Cloudflare dashboard](https://dash.cloudflare.com/), **Workers & Pages** > **Overview**.
+Once deployed, you should be able to see your newly created Durable Object Worker on the Cloudflare dashboard.
+
+<DashButton url="/?to=/:account/workers-and-pages" />
 
 Preview your Durable Object Worker at `<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev`.
 
 ## Summary and final code
 
 Your final code should look like this:
-
 
 <Tabs syncKey="workersExamples">
 
@@ -323,24 +326,25 @@ export class MyDurableObject extends DurableObject<Env> {
 		super(ctx, env)
 	}
 
-	async sayHello():Promise<string> {
-		let result = this.ctx.storage.sql
-			.exec("SELECT 'Hello, World!' as greeting")
-			.one();
-		return result.greeting;
-	}
+    async sayHello():Promise<string> {
+    	let result = this.ctx.storage.sql
+    		.exec("SELECT 'Hello, World!' as greeting")
+    		.one();
+    	return result.greeting;
+    }
+
 }
 export default {
-	async fetch(request, env, ctx): Promise<Response> {
-		const id:DurableObjectId = env.MY_DURABLE_OBJECT.idFromName(new URL(request.url).pathname);
+async fetch(request, env, ctx): Promise<Response> {
+const stub = env.MY_DURABLE_OBJECT.getByName(new URL(request.url).pathname);
 
-		const stub = env.MY_DURABLE_OBJECT.get(id);
+    	const greeting = await stub.sayHello();
 
-		const greeting = await stub.sayHello();
+    	return new Response(greeting);
+    },
 
-		return new Response(greeting);
-	},
 } satisfies ExportedHandler<Env>;
+
 ```
 </TypeScriptExample>
 
@@ -351,21 +355,17 @@ from workers import DurableObject, handler, Response
 from urllib.parse import urlparse
 
 class MyDurableObject(DurableObject):
-    def __init__(self, ctx, env):
-        super().__init__(ctx, env)
-
     async def say_hello(self):
-        result = self.ctx.storage.sql \
-            .exec("SELECT 'Hello, World!' as greeting") \
-            .one()
+        result = self.ctx.storage.sql.exec(
+            "SELECT 'Hello, World!' as greeting"
+        ).one()
 
         return result.greeting
 
 class Default(WorkerEntrypoint):
-    async def fetch(self, request, env, ctx):
+    async def fetch(self, request):
         url = urlparse(request.url)
-        id = env.MY_DURABLE_OBJECT.idFromName(url.path)
-        stub = env.MY_DURABLE_OBJECT.get(id)
+        stub = self.env.MY_DURABLE_OBJECT.getByName(url.path)
         greeting = await stub.say_hello()
         return Response(greeting)
 ```

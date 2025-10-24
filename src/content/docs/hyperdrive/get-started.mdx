@@ -21,7 +21,7 @@ This guide will instruct you through:
 
 :::note
 
-Hyperdrive currently works with PostgreSQL, MySQL and many compatible databases. This includes CockroachDB and Materialize (which are PostgreSQL-compatible), and Planetscale.
+Hyperdrive currently works with PostgreSQL, MySQL and many compatible databases. This includes CockroachDB and Materialize (which are PostgreSQL-compatible), and PlanetScale.
 
 Learn more about the [databases that Hyperdrive supports](/hyperdrive/reference/supported-databases-and-features).
 
@@ -33,7 +33,10 @@ Before you begin, ensure you have completed the following:
 
 1. Sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages) if you have not already.
 2. Install [`Node.js`](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm). Use a Node version manager like [nvm](https://github.com/nvm-sh/nvm) or [Volta](https://volta.sh/) to avoid permission issues and change Node.js versions. [Wrangler](/workers/wrangler/install-and-update/) requires a Node version of `16.17.0` or later.
-3. Have **a publicly accessible** PostgreSQL/MySQL (or compatible) database.
+3. Have PostgreSQL/MySQL (or compatible) database, accessible in one of the following ways:
+	* **Publicly Accessible**: Your database is directly reachable from the Internet.
+	* **Private Network**: Your database is in a private network (like a VPC) and can be securely connected using [Cloudflare Tunnel](/hyperdrive/configuration/connect-to-private-database/).
+
 
 ## 1. Log in
 
@@ -241,7 +244,7 @@ export default {
 		try {
 			// Connect to the database
 			await sql.connect();
-			
+
 			// Sample query
 			const results = await sql.query(`SELECT * FROM pg_tables`);
 
@@ -340,6 +343,10 @@ Upon receiving a request, the code above does the following:
 
 </TabItem>
 </Tabs>
+
+### Run in development mode (optional)
+
+You can start your project in development mode. If you want to connect to the local database configured in your `wrangler.jsonc` with `localConnectionString` (e.g. `localhost:5432`), you can now run `wrangler dev`. This will connect directly to your database from your local Worker project emulation (Hyperdrive caching will not take effect, and the local database must not require SSL). To develop using a remote database, you can connect to your Hyperdrive configuration by running `wrangler dev --remote`.
 
 ## 6. Deploy your Worker
 

@@ -10,5 +10,8 @@ import { Render } from "~/components";
 <Render
 	file="analytics/traceroutes"
 	product="networking-services"
-	params={{ productName: "Transit" }}
+	params={{
+		productName: "Transit",
+		dashButtonPath: "/?to=/:account/magic-transit/tunnel-healthchecks",
+	}}
 />

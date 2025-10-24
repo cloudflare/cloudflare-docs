@@ -4,15 +4,22 @@ title: GraphQL Analytics API
 sidebar:
   order: 1
 ---
+import { DashButton } from "~/components";
 
-Stream provides analytics about both live video and video uploaded to Stream, via the GraphQL API described below, as well as in the [Stream dashboard](https://dash.cloudflare.com/?to=/:account/stream/analytics).
+Stream provides analytics about both live video and video uploaded to Stream, via the GraphQL API described below, as well as on the Stream **Analytics** page of the Cloudflare dashboard.
+
+<DashButton url="/?to=/:account/stream/analytics" />
 
 The Stream Analytics API uses the Cloudflare GraphQL Analytics API, which can be used across many Cloudflare products. For more about GraphQL, rate limits, filters, and sorting, refer to the [Cloudflare GraphQL Analytics API docs](/analytics/graphql-api).
 
 ## Getting started
 
-1. [Generate a Cloudflare API token](https://dash.cloudflare.com/profile/api-tokens) with the **Account Analytics** permission.
-2. Use a GraphQL client of your choice to make your first query. [Postman](https://www.postman.com/) has a built-in GraphQL client which can help you run your first query and introspect the GraphQL schema to understand what is possible.
+1. In the Cloudflare dashboard, go to the **Account API tokens** page.
+
+   <DashButton url="/?to=/:account/api-tokens" />
+
+2. Generate an API token with the **Account Analytics** permission.
+3. Use a GraphQL client of your choice to make your first query. [Postman](https://www.postman.com/) has a built-in GraphQL client which can help you run your first query and introspect the GraphQL schema to understand what is possible.
 
 Refer to the sections below for available metrics, dimensions, fields, and example queries.
 

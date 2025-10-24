@@ -63,12 +63,12 @@ The payload contains the actual claim and user information to pass to the applic
 | iss            | The Cloudflare Access domain URL for the application.                                                                                                                                                                                                                                           |
 | type           | The type of Access token (`app` for application token or `org` for global session token).                                                                                                                                                                                                       |
 | identity_nonce | A cache key used to get the [user's identity](#user-identity).                                                                                                                                                                                                                                  |
-| sub            | The ID of the user. This value is unique to an email address per account. The user would get a different `sub` if they are [removed](/cloudflare-one/identity/users/seat-management/#remove-a-user) and re-added to your Zero Trust organization, or if they log into a different organization. |
+| sub            | The ID of the user. This value is unique to an email address per account. The user would get a different `sub` if they are [removed](/cloudflare-one/team-and-resources/users/seat-management/#remove-a-user) and re-added to your Zero Trust organization, or if they log into a different organization. |
 | country        | The country where the user authenticated from.                                                                                                                                                                                                                                                  |
 
 #### Custom SAML attributes and OIDC claims
 
-Access allows you to add custom SAML attributes and OIDC claims to your JWT for enhanced verification, if supported by your identity provider. This is configured when you setup your [SAML](/cloudflare-one/identity/idp-integration/generic-saml/) or [OIDC](/cloudflare-one/identity/idp-integration/generic-oidc/) provider.
+Access allows you to add custom SAML attributes and OIDC claims to your JWT for enhanced verification, if supported by your identity provider. This is configured when you setup your [SAML](/cloudflare-one/integrations/identity-providers/generic-saml/) or [OIDC](/cloudflare-one/integrations/identity-providers/generic-oidc/) provider.
 
 #### User identity
 

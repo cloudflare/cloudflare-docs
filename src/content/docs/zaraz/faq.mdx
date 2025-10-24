@@ -6,7 +6,7 @@ sidebar:
   order: 10
 ---
 
-import { GlossaryTooltip } from "~/components";
+import { DashButton, GlossaryTooltip } from "~/components";
 
 Below you will find answers to our most commonly asked questions. If you cannot find the answer you are looking for, refer to the [community page](https://community.cloudflare.com/) or [Discord channel](https://discord.cloudflare.com) to explore additional resources.
 
@@ -72,8 +72,11 @@ To prevent Zaraz from loading on specific pages, refer to [Load Zaraz selectivel
 
 Resetting your Zaraz configuration will erase all of your configuration settings, including any tools, triggers, and variables you've set up. This action will disable Zaraz immediately. If you want to start over with a clean slate, you can always reset your configuration.
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-2. Go to **Zaraz** > **Settings** > **Advanced**.
+1. In the Cloudflare dashboard, go to the **Settings** page.
+
+   <DashButton url="/?to=/:account/tag-management/settings" />
+
+2. Go to **Advanced**.
 3. Click "Reset" and follow the instructions.
 
 ### Zaraz Web API

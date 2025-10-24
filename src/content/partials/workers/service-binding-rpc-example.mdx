@@ -41,7 +41,7 @@ export default class extends WorkerEntrypoint {
 from workers import WorkerEntrypoint, Response
 
 class Default(WorkerEntrypoint):
-    async def fetch(self, request, env, ctx):
+    async def fetch(self, request):
         return Response("Hello from Worker B")
 
     def add(self, a: int, b: int) -> int:
@@ -91,8 +91,8 @@ export default {
 from workers import WorkerEntrypoint, Response
 
 class Default(WorkerEntrypoint):
-    async def fetch(self, request, env, ctx):
-        result = await env.WORKER_B.add(1, 2)
+    async def fetch(self, request):
+        result = await self.env.WORKER_B.add(1, 2)
 		return Response(f"Result: {result}")
 ```
 

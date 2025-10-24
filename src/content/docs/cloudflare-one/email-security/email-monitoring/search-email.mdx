@@ -171,8 +171,6 @@ A submission is invalid when:
 
 - A submission has no EML file attached.
 - A submission has been made with an incorrect file extension.
-- You did not configure the domain you are submitting emails for. 
-- A policy has been enforced that causes an email to be received or blocked.
 - A submission was made to the wrong team or user alias.
 
 To ensure your submission is valid:
@@ -180,6 +178,16 @@ To ensure your submission is valid:
 - Ensure your submission has a file attached with a `.eml` file extension.
 - Ensure you configure the domain you are submitting emails for.
 - Ensure policies are configured correctly.
+
+To view invalid submissions:
+
+1. Log in to [Zero Trust](https://one.dash.cloudflare.com/).
+2. Select **Email Security** > **Reclassifications**.
+3. Select **Invalid submissions**.
+
+You can search by submission ID or submitted email.
+
+You can filter based on **Date Range** and **Submitted by** (which will list emails that made the invalid submissions). Once you have configured your desired filters, select **Apply filters**.
 
 ## Move messages
 
@@ -265,20 +273,20 @@ Email Security displays the following details:
    - Autonomous sys name: This name identifies your autonomous system (AS).
    - Country
 4. **Links identified**: A list of malicious links identified by Email Security. Refer to [Open links](/cloudflare-one/email-security/email-monitoring/search-email/#open-links) to open links in Security Center, Browser Isolation or an external tool of your choice.
-5. **Attachments**: If an email has an attachment, the Cloudflare dashboard will display the filename, and the disposition assigned. You can open attachments in [Browser Isolation](/cloudflare-one/policies/browser-isolation/). Only PDF files are currently supported.
+5. **Attachments**: If an email has an attachment, the Cloudflare dashboard will display the filename, and the disposition assigned. You can open attachments in [Browser Isolation](/cloudflare-one/remote-browser-isolation/). Only PDF files are currently supported.
 6. **Reasons for disposition**: Description of why the email was deemed as malicious, suspicious, or spam.
 
 #### Open links
 
-You can open links in [Security Center](/security-center/) or [Browser Isolation](/cloudflare-one/policies/browser-isolation/), or copy and paste the link so you can investigate content in external tools.
+You can open links in [Security Center](/security-center/) or [Browser Isolation](/cloudflare-one/remote-browser-isolation/), or copy and paste the link so you can investigate content in external tools.
 
 To open links in Security Center:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Email Security** > **Investigation**.
 2. Locate the message you want to open links for, select the three dots, then select **View details**.
-2. Under **Details**, go to **Links identified**. 
+2. Under **Details**, go to **Links identified**.
 3. Locate the link you want to open, and select **Open in Security Center**.
-4. You will be redirected to **Investigate** under **Security Center**.
+4. You will be redirected to **Investigate** in the Cloudflare dashboard.
 5. Select **Scan now**.
 6. The dashboard will generate a report for your link.
 
@@ -286,22 +294,36 @@ To open links in Browser Isolation:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Email Security** > **Investigation**.
 2. Locate the message you want to open links for, select the three dots, then select **View details**.
-2. Under **Details**, go to **Links identified**. 
+2. Under **Details**, go to **Links identified**.
 3. Locate the link you want to open, and select **Open in Browser Isolation**.
 4. The link will open in a separate window where you will be able to browse the content securely.
 
-Alternatively, you can directly [open links in Browser Isolation](/cloudflare-one/policies/browser-isolation/setup/clientless-browser-isolation/#open-links-in-browser-isolation).
+Alternatively, you can directly [open links in Browser Isolation](/cloudflare-one/remote-browser-isolation/setup/clientless-browser-isolation/#open-links-in-browser-isolation).
+
+:::note
+If you purchased [Gateway](/cloudflare-one/traffic-policies/) and [Browser Isolation](/cloudflare-one/remote-browser-isolation/), you can perform more actions when opening links.
+
+When opening links, Email Security will not allow you to:
+
+- [Copy (from remote to client)](/cloudflare-one/remote-browser-isolation/isolation-policies/#copy-from-remote-to-client)
+- [Paste (from client to remote)](/cloudflare-one/remote-browser-isolation/isolation-policies/#paste-from-client-to-remote)
+- Use [keyboard](/cloudflare-one/remote-browser-isolation/isolation-policies/#keyboard)
+- [Print](/cloudflare-one/remote-browser-isolation/isolation-policies/#printing)
+- [Download files](/cloudflare-one/remote-browser-isolation/isolation-policies/#file-downloads)
+- [Uploads files](/cloudflare-one/remote-browser-isolation/isolation-policies/#file-uploads)
+
+:::
 
 To open and investigate a link in an external tool:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Email Security** > **Investigation**.
 2. Locate the message you want to open links for, select the three dots, then select **View details**.
-2. Under **Details**, go to **Links identified**. 
+2. Under **Details**, go to **Links identified**.
 3. Locate the link you want to open, and select **Copy URL**.
 3. Paste the link in your external tool.
 
 :::caution
-You may encounter a `400 Bad Request` error after turning **Clientless Web Isolation** on. 
+You may encounter a `400 Bad Request` error after turning **Clientless Web Isolation** on.
 
 If you encounter this error:
 

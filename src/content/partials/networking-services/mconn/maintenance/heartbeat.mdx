@@ -1,0 +1,24 @@
+---
+params:
+  - productName
+---
+
+import { DashButton } from '~/components';
+
+{props.productName} communicates periodically with Cloudflare via HTTPS. This is also known as a heartbeat, and lets Cloudflare know that the {props.productName} in question is connected to the Internet and reachable.
+
+The heartbeat calls are made to `api.cloudflare.com`. Each {props.productName} has a heartbeat frequency of 10 seconds, independently of the number of WAN interfaces you have running on your device.
+
+There are three symbols for the heartbeat signal that allow you to quickly check the status of {props.productName}:
+
+- **Blue `i`**: {props.productName} is contacting Cloudflare as expected.
+- **Yellow triangle**: {props.productName} has not yet connected to Cloudflare.
+- **Red triangle**: There is a potential problem with {props.productName}.
+
+### Access {props.productName}'s heartbeat
+
+1. In the Cloudflare dashboard, go to the **Configuration* page.
+
+	<DashButton url="/?to=/:account/magic-wan/configuration" />
+
+2. In the **Connectors** tab, find your Connector, and place your cursor over the icon on the **Status** column to check the timestamp. The timestamp shows you the last time Connector successfully contacted Cloudflare.

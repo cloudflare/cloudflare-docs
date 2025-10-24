@@ -6,21 +6,11 @@ sidebar:
   label: Reuse and coalescing
 ---
 
-import { Details } from "~/components";
+import { Render } from "~/components";
 
 Aside from [concurrent connections](/aegis/about/ips-allocation/#connections-to-your-origin)[^1], connection reuse and connection coalescing are also important concepts. They both have impact on latency and are considered when allocating your Aegis IPv4 addresses.
 
-Implemented by HTTP/1.1, connection reuse describes multiple requests passing through one same connection (between one source IP:port and one destination IP:port). It is commonly the case even for simple websites nowadays.
-
-<Details header="Example">
-When a connection is initiated for `shop.example.com`, several embedded subresources may be requested - CSS, image files, advertisement, etc. This can mean hundreds of requests just for the website to load. Instead of having a one to one ratio of request per connection, a single connection is used for multiple requests.
-</Details>
-
-With HTTP/2, requests can use the same connection even if they are for different domains.
-
-<Details header="Example">
-A connection initiated for `shop.example.com` can be used for requests for `blog.example.com` as well - as long as the requests have the same destination IP:port and the server TLS certificate is authoritative for both hostnames.
-</Details>
+<Render file="connection-reuse" product="aegis" />
 
 Refer to the [Cloudflare blog post](https://blog.cloudflare.com/aegis-deep-dive/) for further details.
 

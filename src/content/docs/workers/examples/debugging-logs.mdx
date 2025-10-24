@@ -124,7 +124,7 @@ async def post_log(data):
 	await fetch(log_url, method="POST", body=data)
 
 class Default(WorkerEntrypoint):
-    async def fetch(self, request, _env, ctx):
+    async def fetch(self, request):
         # Service configured to receive logs
         response = await fetch(request)
 
@@ -136,7 +136,7 @@ class Default(WorkerEntrypoint):
         except Exception as e:
             # Without ctx.waitUntil(), your fetch() to Cloudflare's
             # logging service may or may not complete
-            ctx.waitUntil(create_proxy(post_log(str(e))))
+            self.ctx.waitUntil(create_proxy(post_log(str(e))))
             # Copy the response and add to header
             response = Response.new(stack, response)
             response.headers["X-Debug-err"] = str(e)

@@ -277,8 +277,7 @@ export default {
   async fetch(request, env) {
     let url = new URL(request.url);
     let userId = url.searchParams.get("userId") || crypto.randomUUID();
-    let id = env.ALARM_EXAMPLE.idFromName(userId);
-    return await env.ALARM_EXAMPLE.get(id).fetch(request);
+    return await env.ALARM_EXAMPLE.getByName(userId).fetch(request);
   },
 };
 

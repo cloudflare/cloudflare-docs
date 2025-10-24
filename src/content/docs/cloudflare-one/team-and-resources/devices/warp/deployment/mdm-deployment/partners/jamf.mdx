@@ -1,0 +1,127 @@
+---
+pcx_content_type: how-to
+title: Jamf
+sidebar:
+  order: 2
+head: []
+description: Learn how to deploy Cloudflare WARP using Jamf.
+---
+
+import { Render } from "~/components";
+
+## macOS
+
+### Prerequisites
+
+- [Download the `Cloudflare_WARP.pkg` file](/cloudflare-one/team-and-resources/devices/warp/download-warp/#macos)
+
+- [Create a `plist` file](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/#create-plist-file)
+
+### 1. Upload the WARP package
+
+1. Log in to your [Jamf](https://www.jamf.com/) account.
+2. Go to **Computer** > **All Settings** (gear icon).
+3. Select **Computer Management** > **Packages** > **New**.
+4. Upload the `Cloudflare_WARP_<VERSION>.pkg` file.
+   For the Display name, we recommend entering the version number of the package being uploaded.
+5. Select **Save** to complete the upload.
+
+### 2. Create the policy
+
+1. Go to **Computers** > **Policies** > **+ New**.
+2. Enter a Display name such as `Cloudflare WARP Client`.\
+   For **Triggers**, our recommendation is to select _Startup_, _Login_, _Enrollment Complete_ and _Recurring Check-in_, but you can select the value that works best for your organization.
+3. Select **Packages** > **Configure**.
+4. Select **Add** next to the `Cloudflare_WARP_<VERSION>.pkg` file you previously uploaded.
+5. Select **Save**.
+
+### 3. Add a Configuration Profile
+
+1. Go to **Configuration Profiles** > **New**.
+2. Enter a name for your new profile, such as `Cloudflare Zero Trust`.
+3. Scroll through the options list and select **Application & Custom Settings** > **Configure**.
+4. In **Preference Domain**, enter `com.cloudflare.warp`.
+5. Upload your `plist` file and select **Save**.
+6. Go to **Scope** to configure which devices in your organization will receive this profile.
+7. Select **Save**.
+
+Jamf is now configured to deploy the Cloudflare WARP client.
+
+<Render file="warp/connectivity-status-check" product="cloudflare-one" />
+
+## iOS
+
+The Cloudflare One Agent allows for an automated install via Jamf.
+
+### Prerequisites
+
+Create an [XML file](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/#ios) with your custom deployment preferences.
+
+### Configure Jamf for iOS
+
+1. Log in to your [Jamf](https://www.jamf.com/) account.
+2. Go to **Devices** > **Mobile Device Apps** > **+ New**.
+3. Select _App store app or apps purchased in volume_ and select **Next**.
+4. In the search box, enter `Cloudflare One Agent`. Select **Next**.
+5. In the row for _Cloudflare One Agent by Cloudflare Inc._, select **Add**. To verify that it is the correct application, view it in the [App Store](https://apps.apple.com/us/app/cloudflare-one-agent/id6443476492).
+6. Go to **Scope** and specify the devices in your organization that will receive the application.
+7. Go to **App Configuration** and copy/paste your XML file.
+8. Select **Save**.
+
+Jamf is now configured to deploy the Cloudflare One Agent.
+
+<Render file="warp/connectivity-status-check" product="cloudflare-one" />
+
+### Per-app VPN
+
+:::note
+Per-app VPN is supported on Cloudflare One Agent version `1.8` or greater for iOS.
+:::
+
+Before proceeding with per-app VPN configuration, you must make sure [Auto connect](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#auto-connect) is disabled in Zero Trust. To disable Auto connect:
+
+1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **WARP Client**.
+2. Under **Device Settings**, select your device profile and select **Edit**.
+3. Turn off **Auto Connect**.
+
+To configure per-app VPN:
+
+1. Log in to the Jamf dashboard for your organization.
+2. Go to **Devices** > **Configuration Policies** > select **+ New**.
+3. Under **Options**, select **VPN**. Then:
+   - Give the VPN a **Connection Name**.
+   - Select _Per-App VPN_ from the **VPN Type** dropdown menu.
+   - Check the box for **Automatically start Per-App VPN connection**.
+4. Under Per-App VPN Connection Type, set the **Connection Type** to _Custom SSL_ via the dropdown menu. Then, enter `com.cloudflare.cloudflareoneagent` as the **Identifier**, `1.1.1.1` as the **Server**, and `com.cloudflare.cloudflareoneagent.worker` as the **Provider Bundle Identifier**.
+5. Set the **Provider Type** to _Packet-Tunnel_ and select the checkboxes for **Include All Networks** and **Enable VPN on Demand**.
+6. Go to the **Scope** tab and add the devices that will use the Per-App VPN.
+7. Save the Configuration Profile.
+8. Go to **Devices** > **Mobile Device Apps** > select **+ New**.
+9. As the **App Type**, select **App Store app or apps purchased in volume** and select **Next**.
+10. In the search bar, enter the name of the app that you want to use the VPN for and select **Next**.
+
+:::note
+Alternatively, if you already know the **Bundle Identifier** of the app you want to go through the VPN, select **Enter Manually**.
+:::
+
+11. Find the app you are looking for in the search results and select **Add**.
+12. Select your preferred **Distribution Method** and under **Per-App Networking**, select the VPN connection you just configured.
+13. Repeat steps 8-12 for each app you want to use the VPN.
+
+:::note
+
+To support re-authentication, you must include a third-party browser that Cloudflare One can use to re-authenticate the user. The following third-party browsers are supported:
+
+- Google Chrome
+- Firefox
+- Firefox Focus
+- Microsoft Edge
+- Brave
+- Opera
+
+Cloudflare One will continue to use a Safari window for initial authentication per-security best practices.
+:::
+
+:::note
+Cloudflare One cannot apply split tunnel setting for a per app VPN. Included or excluded domains can be added to the Configuration Profile under Safelisted Domains and Blocklisted Domains sections respectively.
+:::
