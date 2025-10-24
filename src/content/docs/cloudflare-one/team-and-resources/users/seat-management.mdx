@@ -11,7 +11,7 @@ The amount of seats available in your Zero Trust account depends on the amount o
 
 ## Authentication events
 
-A user consumes a seat when they perform an authentication event. For Access, this is any Cloudflare Access authentication event, such as a login to the [App Launcher](/cloudflare-one/applications/app-launcher/) or an application. For Gateway, this is when any devices associated with the user connect to Zero Trust within the [specified period](#enable-seat-expiration).
+A user consumes a seat when they perform an authentication event. For Access, this is any Cloudflare Access authentication event, such as a login to the [App Launcher](/cloudflare-one/access-controls/access-settings/app-launcher/) or an application. For Gateway, this is when any devices associated with the user connect to Zero Trust within the [specified period](#enable-seat-expiration).
 
 If either one of these events occurs, that user's identity is added as an Active user to Zero Trust and consumes one seat from your plan. The user will occupy and consume a single seat regardless of the number of applications accessed or login events from their user account. Once the total amount of seats in the subscription has been consumed, additional users who attempt to log in are blocked.
 

@@ -12,7 +12,7 @@ Users can connect to an RDP server without installing an RDP client or the [WARP
 
 There are two ways for users to [reach the RDP server in their browser](#4-connect-as-a-user):
 
-- **App Launcher (recommended)**: Users can log in to the [Access App Launcher](/cloudflare-one/applications/app-launcher/) with their Cloudflare Access credentials and then initiate an RDP connection within the browser to their Windows machine. Users will authenticate to the Windows machine using their pre-configured Windows username and password. Cloudflare does not manage any credentials on the Windows server.
+- **App Launcher (recommended)**: Users can log in to the [Access App Launcher](/cloudflare-one/access-controls/access-settings/app-launcher/) with their Cloudflare Access credentials and then initiate an RDP connection within the browser to their Windows machine. Users will authenticate to the Windows machine using their pre-configured Windows username and password. Cloudflare does not manage any credentials on the Windows server.
 - **Direct URL**: A user may also navigate directly to the Windows server at `https://<app-domain>/rdp/<vnet-id>/<target-ip>/<port>`, where `vnet-id` is the <GlossaryTooltip term="Virtual network">virtual network</GlossaryTooltip> assigned to the Cloudflare Tunnel route. The authentication flow is the same as for the App Launcher; first users must log in to Cloudflare Access and then use their Windows credentials to authenticate to the Windows machine.
 
 Browser-based RDP can be used in conjunction with [routing over WARP](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/rdp/rdp-warp-to-tunnel/) so that there are multiple ways to connect to the server. You can reuse the same Cloudflare Tunnel when configuring each connection method.
@@ -117,10 +117,10 @@ Ensure that only **Allow** or **Block** policies are present. **Bypass** and **S
 
 14. Select **Next**.
 
-15. (Recommended) Turn on **Show application in App Launcher** and configure [App Launcher settings](/cloudflare-one/applications/app-launcher/) for the application. The App Launcher allows users to view the Windows servers that they can access using browser-based RDP. Without the App Launcher, users will need to know each target's direct URL.
+15. (Recommended) Turn on **Show application in App Launcher** and configure [App Launcher settings](/cloudflare-one/access-controls/access-settings/app-launcher/) for the application. The App Launcher allows users to view the Windows servers that they can access using browser-based RDP. Without the App Launcher, users will need to know each target's direct URL.
 
         :::note
-        Ensure that users match an Allow rule in your [App Launcher policies](/cloudflare-one/applications/app-launcher/#enable-the-app-launcher).
+        Ensure that users match an Allow rule in your [App Launcher policies](/cloudflare-one/access-controls/access-settings/app-launcher/#enable-the-app-launcher).
         :::
 
 16. <Render file="access/access-block-page" product="cloudflare-one" />
