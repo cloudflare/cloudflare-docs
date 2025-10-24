@@ -364,9 +364,12 @@ By default, each BGP peering session will use the same Cloudflare-side ASN to re
 {/* Dashboard steps for WAN Tunnels (Cloudflare One dashboard) */}
 { props.magicWord === "WAN Tunnels" && (
 	<>
-	<ol>
-		<li>Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a>, and go to <strong>Networks</strong>.</li>
-	</ol>
+	<Markdown
+		text={`
+			1. Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a>, and go to **Networks**.
+		`}
+		inline={false}
+	/>
 	</>
 )
 }
@@ -374,11 +377,11 @@ By default, each BGP peering session will use the same Cloudflare-side ASN to re
 {/* Dashboard steps for Magic WAN and Magic Transit (standalone dashboards) */}
 { props.magicWord !== "WAN Tunnels" && (
 	<>
-	<ol>
-		<li>In the Cloudflare dashboard, go to {props.productName}'s <strong>Configuration</strong> page.
-			<DashButton url={props.dashButtonPath} />
-		</li>
-	</ol>
+		<Markdown
+			text={`1. In the Cloudflare dashboard, go to ${props.productName}'s **Configuration** page.`}
+			inline={false}
+		/>
+		<DashButton url={props.dashButtonPath} />
 	</>
 )
 }
