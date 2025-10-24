@@ -30,7 +30,7 @@ Refer to <a href={props.trafficSteeringPage}>Traffic Steering</a> for more infor
 
 ## Configure static routes
 
-{ props.magicWord === "Magic WAN" && (
+{ props.magicWord !== "Magic Transit" && (
   <>
 		<p>The following IPv4 address ranges are allowed in the Magic Routing table:</p>
 		<Render
