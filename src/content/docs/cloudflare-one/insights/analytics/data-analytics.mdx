@@ -16,7 +16,7 @@ To view the Data security analytics dashboard:
 To populate this dashboard, you must have:
 
 - [Data Loss Prevention (DLP)](/cloudflare-one/data-loss-prevention/) configured to generate event data from scanned web traffic or SaaS applications.
-- At least one [Cloud Access Security Broker (CASB)](/cloudflare-one/applications/casb/) integration connected to capture findings from your SaaS applications or cloud environments.
+- At least one [Cloud Access Security Broker (CASB)](/cloudflare-one/integrations/cloud-and-saas/) integration connected to capture findings from your SaaS applications or cloud environments.
 
 ## Available insights
 
@@ -32,7 +32,7 @@ The dashboard includes the following panels and metrics:
 
 ### SaaS and Cloud findings by count
 
-The SaaS and Cloud findings by count chart shows a time series view of Posture and Content findings. [Posture](/cloudflare-one/applications/casb/manage-findings/#posture-findings) denotes posture findings which include misconfigurations, unauthorized user activity, and other data security issues. [Content](/cloudflare-one/applications/casb/manage-findings/#content-findings) denotes content findings which include instances of potential data exposure as identified by [DLP](/cloudflare-one/data-loss-prevention/).
+The SaaS and Cloud findings by count chart shows a time series view of Posture and Content findings. [Posture](/cloudflare-one/cloud-and-saas-findings/manage-findings/#posture-findings) denotes posture findings which include misconfigurations, unauthorized user activity, and other data security issues. [Content](/cloudflare-one/cloud-and-saas-findings/manage-findings/#content-findings) denotes content findings which include instances of potential data exposure as identified by [DLP](/cloudflare-one/data-loss-prevention/).
 
 Each bar represents the total number of findings detected within a given time interval. You can use this view to observe patterns or spikes in findings over time. Hover over any bar to view the exact count of Posture and Content findings for that period.
 
@@ -40,7 +40,7 @@ To review findings in detail, log into [Zero Trust](https://one.dash.cloudflare.
 
 ### Posture findings by Severity
 
-The Posture findings by severity chart displays the distribution of CASB findings based on their [severity levels](/cloudflare-one/applications/casb/manage-findings/#severity-levels). Each segment of the circle represents the number of posture issues classified as `Critical`, `High`, `Medium`, or `Low`.
+The Posture findings by severity chart displays the distribution of CASB findings based on their [severity levels](/cloudflare-one/cloud-and-saas-findings/manage-findings/#severity-levels). Each segment of the circle represents the number of posture issues classified as `Critical`, `High`, `Medium`, or `Low`.
 
 To review findings in detail, log into [Zero Trust](https://one.dash.cloudflare.com) and go to **CASB** > **Posture Findings**.
 

@@ -2,7 +2,7 @@
 pcx_content_type: concept
 title: Data loss prevention
 sidebar:
-  order: 10
+  order: 12
 learning_center:
   title: What is DLP (data loss prevention)?
   link: https://www.cloudflare.com/learning/access-management/what-is-dlp/
@@ -30,9 +30,9 @@ To get started, refer to [Scan HTTP traffic with DLP](/cloudflare-one/data-loss-
 
 ## Data at rest
 
-Data Loss Prevention complements [Cloudflare CASB](/cloudflare-one/applications/casb/) to detect sensitive data stored in your SaaS applications. Unlike data in transit scans which read files sent through Cloudflare Gateway, CASB retrieves files directly via the API. Therefore, Gateway and WARP settings (such as [Do Not Inspect](/cloudflare-one/traffic-policies/http-policies/#do-not-inspect) policies and [Split Tunnel](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/) configurations) will not affect data at rest scans.
+Data Loss Prevention complements [Cloudflare CASB](/cloudflare-one/integrations/cloud-and-saas/) to detect sensitive data stored in your SaaS applications. Unlike data in transit scans which read files sent through Cloudflare Gateway, CASB retrieves files directly via the API. Therefore, Gateway and WARP settings (such as [Do Not Inspect](/cloudflare-one/traffic-policies/http-policies/#do-not-inspect) policies and [Split Tunnel](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/) configurations) will not affect data at rest scans.
 
-To get started, refer to [Scan SaaS applications with DLP](/cloudflare-one/applications/casb/casb-dlp/).
+To get started, refer to [Scan SaaS applications with DLP](/cloudflare-one/cloud-and-saas-findings/casb-dlp/).
 
 ## Supported file types
 

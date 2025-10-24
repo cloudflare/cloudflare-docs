@@ -10,7 +10,7 @@ sidebar:
 
 As you decide which AI tools to sanction within your organization, you can develop security controls with the expectation of consistent use.
 
-Cloudflare supports API-based cloud access security broker (CASB) integrations with popular AI services like [OpenAI (ChatGPT)](/cloudflare-one/applications/casb/casb-integrations/openai/), [Anthropic (Claude)](/cloudflare-one/applications/casb/casb-integrations/anthropic/), and [Google Gemini](/cloudflare-one/applications/casb/casb-integrations/google-workspace/gemini/). These integrations allow you to report on AI tool usage and flag sensitive data with Data Loss Prevention (DLP) Profiles.
+Cloudflare supports API-based cloud access security broker (CASB) integrations with popular AI services like [OpenAI (ChatGPT)](/cloudflare-one/integrations/cloud-and-saas/openai/), [Anthropic (Claude)](/cloudflare-one/integrations/cloud-and-saas/anthropic/), and [Google Gemini](/cloudflare-one/integrations/cloud-and-saas/google-workspace/gemini/). These integrations allow you to report on AI tool usage and flag sensitive data with Data Loss Prevention (DLP) Profiles.
 
 Since these integrations are out-of-bound connections to SaaS applications, they do not require inline user traffic to create detections. This means you can immediately gain visibility into how your employees are using sanctioned AI tools without having to install the Cloudflare device client on every user's machine.
 
@@ -18,13 +18,13 @@ Since these integrations are out-of-bound connections to SaaS applications, they
 
 ## Manage findings from your CASB integrations
 
-[CASB](/cloudflare-one/applications/casb/) **Posture Findings** allow you to report on misconfigurations, unauthorized user activity, and other data security issues. You can use it to get insights into issues like:
+[CASB](/cloudflare-one/integrations/cloud-and-saas/) **Posture Findings** allow you to report on misconfigurations, unauthorized user activity, and other data security issues. You can use it to get insights into issues like:
 
 - Misconfigured sharing settings: See who in your organization has access to your tenant.
 - API key management: Ensure you are following best practices.
 - Anomalous and suspicious activity: Detect things like pending invites and file uploads.
 
-By combining this with DLP profiles, you can report on data exposure within an AI tool without capturing and decrypting inline user traffic. For example, you can detect sensitive data or specific patterns (regex) within user prompts. For more information, refer to [Scan for sensitive data](/cloudflare-one/applications/casb/casb-dlp/).
+By combining this with DLP profiles, you can report on data exposure within an AI tool without capturing and decrypting inline user traffic. For example, you can detect sensitive data or specific patterns (regex) within user prompts. For more information, refer to [Scan for sensitive data](/cloudflare-one/cloud-and-saas-findings/casb-dlp/).
 
 ## Secure access to MCP servers for your organization
 

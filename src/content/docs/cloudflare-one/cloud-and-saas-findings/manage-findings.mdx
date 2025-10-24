@@ -14,7 +14,7 @@ Findings are security issues detected within SaaS and cloud applications that in
 
 ## Prerequisites
 
-- You have [added](/cloudflare-one/applications/casb/#add-an-integration) a CASB integration.
+- You have added a [CASB integration](/cloudflare-one/integrations/cloud-and-saas/).
 - Your scan has surfaced at least one security finding.
 
 ## Posture findings
@@ -64,11 +64,11 @@ To view details about the content findings that CASB found:
 
 CASB will display details about your content finding, including the file name, a link to the file, matching DLP profiles, associated integration, and date detected.
 
-AWS users can configure a [compute account](/cloudflare-one/applications/casb/casb-integrations/aws-s3/#compute-account) to scan for data security resources within their S3 resources.
+AWS users can configure a [compute account](/cloudflare-one/integrations/cloud-and-saas/aws-s3/#compute-account) to scan for data security resources within their S3 resources.
 
 ## View shared files
 
-File findings for some integrations (such as [Microsoft 365](/cloudflare-one/applications/casb/casb-integrations/microsoft-365/#file-sharing) and [Box](/cloudflare-one/applications/casb/casb-integrations/box/#file-sharing)) may link to an inaccessible file. To access the actual shared file:
+File findings for some integrations (such as [Microsoft 365](/cloudflare-one/integrations/cloud-and-saas/microsoft-365/#file-sharing) and [Box](/cloudflare-one/integrations/cloud-and-saas/box/#file-sharing)) may link to an inaccessible file. To access the actual shared file:
 
 <Tabs> <TabItem label="Posture finding">
 
@@ -114,7 +114,7 @@ The instance will be moved from **Active** to **Hidden** within the finding. If 
 
 In addition to detecting and surfacing misconfigurations or issues with SaaS and cloud applications, CASB can also remediate findings directly in applications.
 
-CASB supports remediation for findings from the [Microsoft 365 integration](/cloudflare-one/applications/casb/casb-integrations/microsoft-365/):
+CASB supports remediation for findings from the [Microsoft 365 integration](/cloudflare-one/integrations/cloud-and-saas/microsoft-365/):
 
 <Details header="Supported CASB findings for remediation">
 
@@ -127,7 +127,7 @@ CASB supports remediation for findings from the [Microsoft 365 integration](/clo
 
 ### Configure remediation permissions
 
-Before you can remediate findings, [add a new integration](/cloudflare-one/applications/casb/#add-an-integration) and choose _Read-Write mode_ during setup. Alternatively, you can update an existing integration:
+Before you can remediate findings, [add a new integration](/cloudflare-one/integrations/cloud-and-saas/#add-an-integration) and choose _Read-Write mode_ during setup. Alternatively, you can update an existing integration:
 
 1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **CASB** > **Integrations**.
 2. Choose your integration, then select **Configure**.
@@ -170,7 +170,7 @@ CASB will log remediation actions in **Logs** > **Admin**. For more information,
 
 Using the security findings from CASB allows for fine-grained Gateway policies which prevent future unwanted behavior while still allowing usage that aligns to your organization's security policy. You can view a CASB finding, like the use of an unapproved application, then immediately prevent or control access with Gateway.
 
-CASB supports creating a Gateway policy for findings from the [Google Workspace integration](/cloudflare-one/applications/casb/casb-integrations/google-workspace/):
+CASB supports creating a Gateway policy for findings from the [Google Workspace integration](/cloudflare-one/integrations/cloud-and-saas/google-workspace/):
 
 <Details header="Supported CASB findings for Gateway policies">
 
