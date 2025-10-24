@@ -6,7 +6,7 @@ params:
   - notificationsPath
   - packetCaptures
   - networkAnalytics
-  - magicWord
+  - magicWord?
 ---
 
 import { Aside, GlossaryTooltip, Markdown, Tabs, TabItem } from "~/components";
@@ -85,7 +85,7 @@ To check for anycast tunnel health:
 
 Beyond having a wide view into all connections, you can drill down into a specific tunnel to check its health status and other information. Refer to the blue note above to learn how to access the new dashboard experience, and:
 
-1. Go to <Markdown text={props.productPath} />.
+1. Go to **{props.productPath}**.
 2. Find and select the tunnel you wish to inspect.
 
 The next screen shows you detailed information about the tunnel, including:
