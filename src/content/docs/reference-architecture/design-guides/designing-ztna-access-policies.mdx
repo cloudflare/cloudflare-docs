@@ -25,7 +25,7 @@ This document is aimed at administrators who are evaluating or have adopted Clou
 - **Building policies**: The main components of an access policy and how they are combined.
 - **Use cases**: Common use cases and policies that can serve as blueprints for your own policy designs.
 
-This design guide assumes you have a basic understanding of Cloudflare's ZTNA solution, [Cloudflare Access](/cloudflare-one/access-controls/). Therefore, this guide focuses on designing effective access policies and assumes you have already configured [DNS](/cloudflare-one/traffic-policies/initial-setup/dns/), [identity](/cloudflare-one/identity/) and [device posture providers](/cloudflare-one/integrations/service-providers/) as well as [created connectivity](/cloudflare-one/networks/) to self-hosted applications and related networks.
+This design guide assumes you have a basic understanding of Cloudflare's ZTNA solution, [Cloudflare Access](/cloudflare-one/access-controls/). Therefore, this guide focuses on designing effective access policies and assumes you have already configured [DNS](/cloudflare-one/traffic-policies/initial-setup/dns/), [identity](/cloudflare-one/integrations/identity-providers/) and [device posture providers](/cloudflare-one/integrations/service-providers/) as well as [created connectivity](/cloudflare-one/networks/) to self-hosted applications and related networks.
 
 By the end of this guide, you will be equipped to implement granular access policies that enforce Zero Trust principles across various common enterprise scenarios.
 
@@ -66,7 +66,7 @@ Once we have established connectivity to your applications, it is time to facili
 
 ### Identity
 
-A critical part of application access is authenticating a user. Cloudflare has a [built-in authentication](/cloudflare-one/integrations/identity-providers/one-time-pin/) method based on email. But we highly recommend configuring a third-party identity provider. We support both consumer and enterprise [identity providers](/cloudflare-one/identity/), and any SAML or OpenID compliant service can be used. Group membership is one of the most common attributes of defining application access and can be defined manually or imported using the System for Cross-Domain Identity Management ([SCIM](/cloudflare-one/team-and-resources/users/scim/)).
+A critical part of application access is authenticating a user. Cloudflare has a [built-in authentication](/cloudflare-one/integrations/identity-providers/one-time-pin/) method based on email. But we highly recommend configuring a third-party identity provider. We support both consumer and enterprise [identity providers](/cloudflare-one/integrations/identity-providers/), and any SAML or OpenID compliant service can be used. Group membership is one of the most common attributes of defining application access and can be defined manually or imported using the System for Cross-Domain Identity Management ([SCIM](/cloudflare-one/team-and-resources/users/scim/)).
 
 ### Device posture
 
