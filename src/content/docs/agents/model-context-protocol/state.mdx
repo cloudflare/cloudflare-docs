@@ -1,0 +1,23 @@
+---
+pcx_content_type: concept
+title: Stateful vs. Stateless MCP Servers
+tags:
+  - MCP
+sidebar:
+  order: 100
+---
+
+MCP was originally designed as a stateful protocol. The servers would maintain a long lived connection to a client and could maintain state between requests.
+
+However, since many MCP servers have been used as simply remote tools, prompts and resources, which for the most part do not require state, there was a push to make an optionally stateless version of the protocol.
+
+The stateless version of the protocol is the easiest to deploy and covers the majority of use cases. Users can host MCP servers on any platform that supports HTTP and Server-Sent Events (SSE), [including Cloudflare Workers](/agents/guides/build-stateless-mcp-server/), and take advantage of this stateless option.
+
+If you wish to maintain state inside the MCP Server you can migrate to the [McpAgent](/agents/guides/remote-mcp-server/) class which is backed by a Durable Object.
+
+| Feature            | Stateless MCP Servers                                                         | Stateful MCP Servers                             |
+| ------------------ | ----------------------------------------------------------------------------- | ------------------------------------------------ |
+| **Transport**      | `streamable-http`                                                             | `stdio`, `streamable-http` or `sse` (deprecated) |
+| **Connection**     | Request-response per invocation                                               | Long-lived connection                            |
+| **Use cases**      | Remote tools, prompts, and resources                                          | Elicitations, MCP Agents                         |
+| **Implementation** | [`experimental_createMcpHandler`](/agents/guides/build-stateless-mcp-server/) | [`McpAgent`](/agents/guides/remote-mcp-server/)  |

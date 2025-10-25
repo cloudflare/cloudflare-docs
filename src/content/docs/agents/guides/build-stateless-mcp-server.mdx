@@ -9,19 +9,27 @@ sidebar:
 
 import { Details, Render, PackageManagers, WranglerConfig } from "~/components";
 
-This guide will show you how to deploy a stateless MCP server on Cloudflare Workers using `experimental_createMcpHandler`. This is the simplest way to get started with MCP on Cloudflare.
+This guide will show you how to deploy a stateless Model Context Protocol Server with Cloudflare Workers using the `experimental_createMcpHandler`. This is the simplest way to get started with building MCP servers.
 
-Unlike the Durable Object-based approach, stateless MCP servers run as standard Cloudflare Workers, making them simpler to deploy and manage while still providing the majority of MCP functionality.
+Unlike the [`McpAgent`](/agents/guides/remote-mcp-server/) which is backed by a Durable Object, this handler runs MCP servers on standard Cloudflare Workers, making them simpler to deploy and reason about while still providing the majority of MCP functionality.
 
-This handler supports MCP Servers with Tools, Prompts and Resources. For more complex capabilities like Elicitations you will need to use the `McpAgent` class.
+The `experimental_createMcpHandler` handler supports MCP Servers with Tools, Prompts and Resources. For more complex capabilities like Elicitations you will need to use the `McpAgent` class.
 
 You can start by deploying an **unauthenticated server** where anyone can connect and use the capabilities (no login required), or you can deploy an **authenticated server** where users must sign in.
 
+This template includes a basic MCP server implementation that you can customize with your own tools, prompts, and resources. After deploying or creating from the template, you can follow the sections below to understand how to build and customize your stateless MCP server.
+
 ## Unauthenticated Stateless MCP Server
 
-An unauthenticated MCP server is the simplest way to expose MCP tools. This is ideal for public APIs, demonstration purposes, or internal tools that don't require user authentication.
+An unauthenticated MCP server is the simplest way to expose MCP tools. This is ideal for public APIs and demonstration purposes.
 
-### Create your server
+The fastest way to get started is to use the MCP Worker template from the [cloudflare/agents repository](https://github.com/cloudflare/agents/tree/main/examples/mcp-worker).
+
+[![Deploy to Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/agents/tree/main/examples/mcp-worker)
+
+Alternatively you can follow the steps below to create a new MCP server from scratch.
+
+### Create your project
 
 Create a new directory for your MCP server and initialize it with the necessary files:
 
@@ -34,12 +42,9 @@ cd my-stateless-mcp-server
 
 Install the required dependencies:
 
-<PackageManagers
-	type="install"
-	pkg="@modelcontextprotocol/sdk agents zod"
-/>
+<PackageManagers type="install" pkg="@modelcontextprotocol/sdk agents zod" />
 
-### Implement your MCP server
+### MCP Server in a Worker
 
 Create a `src/index.ts` file with your MCP server implementation:
 
@@ -51,31 +56,31 @@ import { z } from "zod";
 type Env = {};
 
 const server = new McpServer({
-  name: "Hello MCP Server",
-  version: "1.0.0"
+	name: "Hello MCP Server",
+	version: "1.0.0",
 });
 
 server.tool(
-  "hello",
-  "Returns a greeting message",
-  { name: z.string().optional() },
-  async ({ name }) => {
-    return {
-      content: [
-        {
-          text: `Hello, ${name ?? "World"}!`,
-          type: "text"
-        }
-      ]
-    };
-  }
+	"hello",
+	"Returns a greeting message",
+	{ name: z.string().optional() },
+	async ({ name }) => {
+		return {
+			content: [
+				{
+					text: `Hello, ${name ?? "World"}!`,
+					type: "text",
+				},
+			],
+		};
+	},
 );
 
 export default {
-  fetch: async (request: Request, env: Env, ctx: ExecutionContext) => {
-    const handler = createMcpHandler(server);
-    return handler(request, env, ctx);
-  }
+	fetch: async (request: Request, env: Env, ctx: ExecutionContext) => {
+		const handler = createMcpHandler(server);
+		return handler(request, env, ctx);
+	},
 };
 ```
 
@@ -107,7 +112,7 @@ Start the development server:
 npx wrangler dev
 ```
 
-Your MCP server is now running on `http://localhost:8787/mcp`. 
+Your MCP server is now running on `http://localhost:8787/mcp`.
 
 In a new terminal, run the [MCP inspector](https://github.com/modelcontextprotocol/inspector).
 
@@ -129,11 +134,15 @@ After deploying, your MCP server will be available at `https://my-stateless-mcp-
 
 You can now test your deployed server using the MCP inspector by entering your Worker's URL.
 
-## Authenticated stateless MCP server
+## Adding Authentication to your MCP Server
 
-An authenticated MCP server adds OAuth-based user authentication, allowing you to control access and identify users. It uses the [Cloudflare Workers OAuth Provider](https://github.com/cloudflare/workers-oauth-provider) to handle the OAuth flow.
+OAuth-based user authentication allows you to control access and identify users. It uses the [Cloudflare Workers OAuth Provider](https://github.com/cloudflare/workers-oauth-provider) to handle the OAuth flow. Get started with the Authenticated MCP Worker template from the [cloudflare/agents repository](https://github.com/cloudflare/agents/tree/main/examples/mcp-worker-authenticated).
 
-### Create your authenticated server
+[![Deploy to Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/agents/tree/main/examples/mcp-worker-authenticated)
+
+Alternatively, you follow the steps below to add authentication to your stateless MCP server.
+
+### Create your project
 
 Create a new directory and initialize it:
 
@@ -153,7 +162,7 @@ Install the required dependencies:
 
 ### Set up KV namespace
 
-Create a KV namespace to store OAuth tokens and client registrations:
+The OAuth provider requires a KV namespace to store OAuth tokens and client registrations:
 
 ```bash
 npx wrangler kv:namespace create OAUTH_KV
@@ -189,31 +198,31 @@ Create a `src/auth-handler.ts` file to handle the OAuth flow:
 
 ```typescript
 import type {
-  AuthRequest,
-  OAuthHelpers
+	AuthRequest,
+	OAuthHelpers,
 } from "@cloudflare/workers-oauth-provider";
 import { Hono } from "hono";
 
 interface Env {
-  OAUTH_PROVIDER: OAuthHelpers;
+	OAUTH_PROVIDER: OAuthHelpers;
 }
 
 const app = new Hono<{ Bindings: Env }>();
 
 app.get("/authorize", async (c) => {
-  const oauthReqInfo: AuthRequest = await c.env.OAUTH_PROVIDER.parseAuthRequest(
-    c.req.raw
-  );
-  const clientInfo = await c.env.OAUTH_PROVIDER.lookupClient(
-    oauthReqInfo.clientId
-  );
+	const oauthReqInfo: AuthRequest = await c.env.OAUTH_PROVIDER.parseAuthRequest(
+		c.req.raw,
+	);
+	const clientInfo = await c.env.OAUTH_PROVIDER.lookupClient(
+		oauthReqInfo.clientId,
+	);
 
-  if (!clientInfo) {
-    return c.text("Invalid client_id", 400);
-  }
+	if (!clientInfo) {
+		return c.text("Invalid client_id", 400);
+	}
 
-  // Show approval page
-  const approvalPage = `
+	// Show approval page
+	const approvalPage = `
     <!DOCTYPE html>
     <html>
       <head>
@@ -230,41 +239,41 @@ app.get("/authorize", async (c) => {
     </html>
   `;
 
-  return c.html(approvalPage);
+	return c.html(approvalPage);
 });
 
 app.post("/authorize", async (c) => {
-  const formData = await c.req.formData();
-  const state = formData.get("state");
+	const formData = await c.req.formData();
+	const state = formData.get("state");
 
-  if (!state || typeof state !== "string") {
-    return c.text("Missing state parameter", 400);
-  }
+	if (!state || typeof state !== "string") {
+		return c.text("Missing state parameter", 400);
+	}
 
-  const oauthReqInfo: AuthRequest = JSON.parse(atob(state));
+	const oauthReqInfo: AuthRequest = JSON.parse(atob(state));
 
-  // Create a user profile
-  const userProfile = {
-    userId: "demo-user",
-    username: "Demo User",
-    email: "demo@example.com"
-  };
+	// Create a user profile
+	const userProfile = {
+		userId: "demo-user",
+		username: "Demo User",
+		email: "demo@example.com",
+	};
 
-  // Complete authorization
-  const { redirectTo } = await c.env.OAUTH_PROVIDER.completeAuthorization({
-    request: oauthReqInfo,
-    userId: userProfile.userId,
-    metadata: {
-      label: "MCP Server Access",
-      clientName:
-        (await c.env.OAUTH_PROVIDER.lookupClient(oauthReqInfo.clientId))
-          ?.clientName || "Unknown Client"
-    },
-    scope: oauthReqInfo.scope,
-    props: userProfile
-  });
+	// Complete authorization
+	const { redirectTo } = await c.env.OAUTH_PROVIDER.completeAuthorization({
+		request: oauthReqInfo,
+		userId: userProfile.userId,
+		metadata: {
+			label: "MCP Server Access",
+			clientName:
+				(await c.env.OAUTH_PROVIDER.lookupClient(oauthReqInfo.clientId))
+					?.clientName || "Unknown Client",
+		},
+		scope: oauthReqInfo.scope,
+		props: userProfile,
+	});
 
-  return c.redirect(redirectTo, 302);
+	return c.redirect(redirectTo, 302);
 });
 
 export { app as AuthHandler };
@@ -276,8 +285,8 @@ Create a `src/index.ts` file:
 
 ```typescript
 import {
-  experimental_createMcpHandler as createMcpHandler,
-  getMcpAuthContext
+	experimental_createMcpHandler as createMcpHandler,
+	getMcpAuthContext,
 } from "agents/mcp";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
@@ -285,44 +294,44 @@ import { OAuthProvider } from "@cloudflare/workers-oauth-provider";
 import { AuthHandler } from "./auth-handler";
 
 const server = new McpServer({
-  name: "Authenticated MCP Server",
-  version: "1.0.0"
+	name: "Authenticated MCP Server",
+	version: "1.0.0",
 });
 
 server.tool(
-  "hello",
-  "Returns a greeting message",
-  { name: z.string().optional() },
-  async ({ name }) => {
-    const auth = getMcpAuthContext();
-    const username = auth?.props?.username as string | undefined;
+	"hello",
+	"Returns a greeting message",
+	{ name: z.string().optional() },
+	async ({ name }) => {
+		const auth = getMcpAuthContext();
+		const username = auth?.props?.username as string | undefined;
 
-    return {
-      content: [
-        {
-          text: `Hello, ${name ?? username ?? "World"}!`,
-          type: "text"
-        }
-      ]
-    };
-  }
+		return {
+			content: [
+				{
+					text: `Hello, ${name ?? username ?? "World"}!`,
+					type: "text",
+				},
+			],
+		};
+	},
 );
 
 // API Handler - handles authenticated MCP requests
 const apiHandler = {
-  async fetch(request: Request, env: unknown, ctx: ExecutionContext) {
-    return createMcpHandler(server)(request, env, ctx);
-  }
+	async fetch(request: Request, env: unknown, ctx: ExecutionContext) {
+		return createMcpHandler(server)(request, env, ctx);
+	},
 };
 
 export default new OAuthProvider({
-  authorizeEndpoint: "/authorize",
-  tokenEndpoint: "/oauth/token",
-  clientRegistrationEndpoint: "/oauth/register",
-  apiRoute: "/mcp",
-  apiHandler: apiHandler,
-  //@ts-expect-error
-  defaultHandler: AuthHandler
+	authorizeEndpoint: "/authorize",
+	tokenEndpoint: "/oauth/token",
+	clientRegistrationEndpoint: "/oauth/register",
+	apiRoute: "/mcp",
+	apiHandler: apiHandler,
+	//@ts-expect-error
+	defaultHandler: AuthHandler,
 });
 ```
 
@@ -332,24 +341,26 @@ Inside your MCP tools, you can access the authenticated user's information using
 
 ```typescript
 server.tool(
-  "my-tool",
-  "A tool that uses authentication",
-  { /* ... */ },
-  async (params) => {
-    const auth = getMcpAuthContext();
+	"my-tool",
+	"A tool that uses authentication",
+	{
+		/* ... */
+	},
+	async (params) => {
+		const auth = getMcpAuthContext();
 
-    if (!auth) {
-      // Handle unauthenticated request
-      return { content: [{ text: "Authentication required", type: "text" }] };
-    }
+		if (!auth) {
+			// Handle unauthenticated request
+			return { content: [{ text: "Authentication required", type: "text" }] };
+		}
 
-    // Access user information set during oauth flow
-    const userId = auth.props?.userId;
-    const username = auth.props?.username;
-    const email = auth.props?.email;
+		// Access user information set during oauth flow
+		const userId = auth.props?.userId;
+		const username = auth.props?.username;
+		const email = auth.props?.email;
 
-    // ...
-  }
+		// ...
+	},
 );
 ```
 
