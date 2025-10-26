@@ -1,4 +1,70 @@
----
+---{
+  "errors": [
+    {
+      "code": 1000,
+      "message": "message",
+      "documentation_url": "documentation_url",
+      "source": {
+        "pointer": "pointer"
+      }
+    }
+  ],
+  "messages": [
+    {
+      "code": 1000,
+      "message": "message",
+      "documentation_url": "documentation_url",
+      "source": {
+        "pointer": "pointer"
+      }
+    }
+  ],
+  "result": {
+    "id": "372e67954025e0ba6aaa6d586b9e0b59",
+    "action": {
+      "mode": "challenge",
+      "response": {
+        "body": "<error>This request has been rate-limited.</error>",
+        "content_type": "text/xml"
+      },
+      "timeout": 86400
+    },
+    "bypass": [
+      {
+        "name": "url",
+        "value": "api.example.com/*"
+      }
+    ],
+    "description": "Prevent multiple login failures to mitigate brute force attacks",
+    "disabled": false,
+    "match": {
+      "headers": [
+        {
+          "name": "Cf-Cache-Status",
+          "op": "ne",
+          "value": "HIT"
+        }
+      ],
+      "request": {
+        "methods": [
+          "GET",
+          "POST"
+        ],
+        "schemes": [
+          "HTTP",
+          "HTTPS"
+        ],
+        "url": "*.example.org/path*"
+      },
+      "response": {
+        "origin_traffic": true
+      }
+    },
+    "period": 900,
+    "threshold": 60
+  },
+  "success": true
+}
 
 pcx_content_type: reference
 title: Network Analytics v1 to Network Analytics v2
