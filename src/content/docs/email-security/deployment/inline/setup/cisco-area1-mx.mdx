@@ -1,5 +1,5 @@
 ---
-title: Cisco - Email Security (formerly Area 1) as MX Record
+title: Cisco - Email security (formerly Area 1) as MX Record
 pcx_content_type: integration-guide
 reviewed: 2022-09-30
 sidebar:
@@ -7,7 +7,7 @@ sidebar:
 head:
   - tag: title
     content:
-      Deploy and configure Cisco IronPort with Email Security (formerly Area
+      Deploy and configure Cisco IronPort with Email security (formerly Area
       1) as MX Record
 ---
 
@@ -15,16 +15,16 @@ import { Render } from "~/components";
 
 <Render file="rename-area1-to-ces" product="email-security" />
 
-![A schematic showing where Email Security security is in the life cycle of an email received](~/assets/images/email-security/deployment/inline-setup/cisco-area1-mx/cisco-area1-mx.png)
+![A schematic showing where Email security security is in the life cycle of an email received](~/assets/images/email-security/deployment/inline-setup/cisco-area1-mx/cisco-area1-mx.png)
 
-In this tutorial, you will learn how to configure Cisco IronPort with Email Security as MX record. This tutorial is broken down into several steps.
+In this tutorial, you will learn how to configure Cisco IronPort with Email security as MX record. This tutorial is broken down into several steps.
 
 <Render
 	file="deployment/mx-deployment-prerequisites"
 	product="email-security"
 />
 
-## 1. Add a Sender Group for Email Security Email Protection IPs
+## 1. Add a Sender Group for Email security Email Protection IPs
 
 To add a new Sender Group:
 
@@ -47,7 +47,7 @@ To add a new Sender Group:
 
 ## 2. Configure Incoming Relays
 
-You need to configure the Incoming Relays section to tell IronPort to ignore upstream hops, since all the connections are now coming from Email Security. This step is needed so the IronPort can retrieve the original IPs to calculate IP reputation. IronPort also uses this information in the Anti-Spam (IPAS) scoring of messages.
+You need to configure the Incoming Relays section to tell IronPort to ignore upstream hops, since all the connections are now coming from Email security. This step is needed so the IronPort can retrieve the original IPs to calculate IP reputation. IronPort also uses this information in the Anti-Spam (IPAS) scoring of messages.
 
 1. To enable the Incoming Relays Feature, select **Network** > **Incoming Relays**.
 2. Select **Enable** and commit your changes.
@@ -59,13 +59,13 @@ You need to configure the Incoming Relays section to tell IronPort to ignore ups
 
 ## 3. Disable SPF checks
 
-Make sure you disable Sender Policy Framework (SPF) checks in IronPort. Because Email Security is acting as the MX record, if you do not disable SPF checks, IronPort will block emails due to an SPF failure.
+Make sure you disable Sender Policy Framework (SPF) checks in IronPort. Because Email security is acting as the MX record, if you do not disable SPF checks, IronPort will block emails due to an SPF failure.
 
 Refer to [Cisco's documentation](https://www.cisco.com/c/en/us/support/docs/security/email-security-appliance/117973-faq-esa-00.html) for more information on how to disable SPF checks.
 
 ## 4. Update your domain MX records
 
-Instructions to update your MX records will depend on the DNS provider you are using. In your domain DNS zone, you need to replace your current MX records with the Email Security hosts. This will have to be done for every domain where Email Security will be the primary MX. For example:
+Instructions to update your MX records will depend on the DNS provider you are using. In your domain DNS zone, you need to replace your current MX records with the Email security hosts. This will have to be done for every domain where Email security will be the primary MX. For example:
 
 <Render file="deployment/mx-deployment-values" product="email-security" />
 <Render file="deployment/mx-geographic-locations" product="email-security" />

@@ -1,5 +1,5 @@
 ---
-title: Migrate to Email Security
+title: Migrate to Email security
 pcx_content_type: how-to
 sidebar:
   order: 9
@@ -7,10 +7,10 @@ sidebar:
 
 import { Render } from "~/components";
 
-This page aims at showing you how to perform Area 1 actions in [Zero Trust Email Security](/cloudflare-one/email-security/), and new terminology introduced in Email Security.
+This page aims at showing you how to perform Area 1 actions in [Zero Trust Email security](/cloudflare-one/email-security/), and new terminology introduced in Email security.
 
 :::note
-Your Area 1 data and configuration settings are available in Email Security.
+Your Area 1 data and configuration settings are available in Email security.
 :::
 
 <Render file="contact-support" product="email-security" />
@@ -22,59 +22,59 @@ In Area 1, you can reach out to support via the following email addresses:
 - support@area1security.com
 - phishguard@area1security.com (for PhishGuard customers only)
 
-In Email Security, you can raise a ticket by contacting [technical support](https://dash.cloudflare.com/?to=/:account/support) on the Cloudflare dashboard:
+In Email security, you can raise a ticket by contacting [technical support](https://dash.cloudflare.com/?to=/:account/support) on the Cloudflare dashboard:
 
 1. Select your account and choose **Technical support**.
 2. In **Solve your issue**, answer the following questions:
    - What type of question do you have? Select **Technical - Other Products**
-   - In what area can we help you? Select **Email Security**
+   - In what area can we help you? Select **Email security**
    - What feature, service or problem is this related to? Choose among **Configuration**, **Detections** or **PhishGuard**.
 
 ## Invite users
 
 In Area 1, you [invite users](/email-security/account-setup/manage-account-members/#add-user) by logging in to the Area 1 portal and inviting members.
 
-To invite users in Zero Trust Email Security:
+To invite users in Zero Trust Email security:
 
 1. Log in to [Zero Trust](https://one.dash.cloudflare.com/).
 2. Go to **Manage Account**.
 3. Select **Members** > **Invite** > [Add account members](/fundamentals/manage-members/manage/#add-account-members).
 
-Once you have added new account members, you will have to assign each member an [Email Security role](/cloudflare-one/roles-permissions/#email-security-roles).
+Once you have added new account members, you will have to assign each member an [Email security role](/cloudflare-one/roles-permissions/#email-security-roles).
 
-| Area 1              | Email Security                                                            | Description                                                                                                                                                                                             |
+| Area 1              | Email security                                                            | Description                                                                                                                                                                                             |
 | ------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| N/A                 | Cloudflare Zero Trust                                                     | Can edit Cloudflare [Zero Trust](/cloudflare-one/). Has administrator access to all Zero Trust products including Access, Gateway, WARP, Tunnel, Browser Isolation, CASB, DLP, DEX, and Email Security. |
-| Super Admin         | Email Security Analyst + Email Security Configuration Admin = Super Admin | Has full access to all admin features in Email Security                                                                                                                                                 |
-| Configuration Admin | Email Security Configuration Admin                                        | Has administrator access. Cannot take actions on emails, or read emails                                                                                                                                 |
-| SOC Analyst         | Email Security Analyst                                                    | Has analyst access. Can take action on emails and read emails.                                                                                                                                          |
-| Viewer              | Email Security Reporting                                                  | Can read metrics                                                                                                                                                                                        |
-| N/A                 | Cloudflare Zero Trust PII                                                 | Can read PII in Zero Trust (this includes Email Security)                                                                                                                                               |
-| N/A                 | Email Security Policy Admin                                               | Can read all settings, but only write allow policies, trusted domains, and blocked senders                                                                                                              |
+| N/A                 | Cloudflare Zero Trust                                                     | Can edit Cloudflare [Zero Trust](/cloudflare-one/). Has administrator access to all Zero Trust products including Access, Gateway, WARP, Tunnel, Browser Isolation, CASB, DLP, DEX, and Email security. |
+| Super Admin         | Email security Analyst + Email security Configuration Admin = Super Admin | Has full access to all admin features in Email security                                                                                                                                                 |
+| Configuration Admin | Email security Configuration Admin                                        | Has administrator access. Cannot take actions on emails, or read emails                                                                                                                                 |
+| SOC Analyst         | Email security Analyst                                                    | Has analyst access. Can take action on emails and read emails.                                                                                                                                          |
+| Viewer              | Email security Reporting                                                  | Can read metrics                                                                                                                                                                                        |
+| N/A                 | Cloudflare Zero Trust PII                                                 | Can read PII in Zero Trust (this includes Email security)                                                                                                                                               |
+| N/A                 | Email security Policy Admin                                               | Can read all settings, but only write allow policies, trusted domains, and blocked senders                                                                                                              |
 
 ## Create webhooks
 
 :::note
-Starting from October 1, 2025, Area 1 webhooks will be visible in Zero Trust Email Security, but non-configurable. Use [Logpush](/cloudflare-one/insights/logs/enable-logs/#enable-user-action-logs) to create new webhooks or configure webhooks.
+Starting from October 1, 2025, Area 1 webhooks will be visible in Zero Trust Email security, but non-configurable. Use [Logpush](/cloudflare-one/insights/logs/enable-logs/#enable-user-action-logs) to create new webhooks or configure webhooks.
 :::
 
 In Area 1, you can [create alert webhooks](/email-security/email-configuration/domains-and-routing/alert-webhooks/#create-an-alert-webhook).
 
-In Zero Trust Email Security, webhooks are instead referred to as logs. You can enable [detection logs](/cloudflare-one/insights/logs/enable-logs/#enable-detection-logs) and/or [user action logs](/cloudflare-one/insights/logs/enable-logs/#enable-user-action-logs). Additionally, you can enable [Outbound Data Loss Prevention](/cloudflare-one/email-security/outbound-dlp/) to protect sensitive information in outbound emails.
+In Zero Trust Email security, webhooks are instead referred to as logs. You can enable [detection logs](/cloudflare-one/insights/logs/enable-logs/#enable-detection-logs) and/or [user action logs](/cloudflare-one/insights/logs/enable-logs/#enable-user-action-logs). Additionally, you can enable [Outbound Data Loss Prevention](/cloudflare-one/email-security/outbound-dlp/) to protect sensitive information in outbound emails.
 
 ## Set up system alerts
 
-You can check the Area 1 and Email Security status in the [Cloudflare System Status](https://www.cloudflarestatus.com/).
+You can check the Area 1 and Email security status in the [Cloudflare System Status](https://www.cloudflarestatus.com/).
 
 To view Area 1 status:
 
-- Search for **Email Security (Area1)** and check that the status is set to **Operational**. This means that emails are being processed.
+- Search for **Email security (Area1)** and check that the status is set to **Operational**. This means that emails are being processed.
 - Search for **Area 1 - Dash** to check the status of the Area 1 dashboard.
 - Search for **Area 1 - API** to check the status of the API endpoints.
 
-To view Email Security status:
+To view Email security status:
 
-- Search for **Email Security (Zero Trust)** and check that the status is set to **Operational**. This means that emails are being processed.
+- Search for **Email security (Zero Trust)** and check that the status is set to **Operational**. This means that emails are being processed.
 - Search for **Zero Trust Dashboard** to check the status of the Zero Trust dashboard.
 - Search for **API** to check the status of the API endpoints.
 
@@ -83,12 +83,12 @@ You can also check the status of APIs through the [Cloudflare Status API](https:
 ## Email reports
 
 :::note
-Starting from October 1, 2025, weekly and daily email reports will no longer be available. Go to [Monitoring](/cloudflare-one/email-security/monitoring/) in Email Security to monitor your inbox.
+Starting from October 1, 2025, weekly and daily email reports will no longer be available. Go to [Monitoring](/cloudflare-one/email-security/monitoring/) in Email security to monitor your inbox.
 :::
 
 In Area 1, you receive daily or weekly updates of the number of emails dispositioned.
 
-In Email Security, you can view [email monitoring](/cloudflare-one/email-security/monitoring/) over the last 90, 30, 7, 3, 1 day(s).
+In Email security, you can view [email monitoring](/cloudflare-one/email-security/monitoring/) over the last 90, 30, 7, 3, 1 day(s).
 
 ## Email alerts for detections
 
@@ -98,13 +98,13 @@ Starting from October 1, 2025, emails alerts for detections will no longer be av
 
 In Area 1, you receive an email when an email is assigned a disposition.
 
-In Email Security, you enable [Logpush](/cloudflare-one/insights/logs/enable-logs/#enable-detection-logs) to enable detection logs.
+In Email security, you enable [Logpush](/cloudflare-one/insights/logs/enable-logs/#enable-detection-logs) to enable detection logs.
 
 ## Search emails
 
 In Area 1, you can perform two types of search: [Fielded Search](/email-security/reporting/search/#fielded-search) and [Freeform Search](/email-security/reporting/search/#freeform-search).
 
-In Email Security, the ability to search emails has been expanded. You can use three different [screen criteria](/cloudflare-one/email-security/monitoring/search-email/#screen-criteria) to search emails:
+In Email security, the ability to search emails has been expanded. You can use three different [screen criteria](/cloudflare-one/email-security/monitoring/search-email/#screen-criteria) to search emails:
 
 - [Advanced screen](/cloudflare-one/email-security/monitoring/search-email/#advanced-screen)
 - [Regular screen](/cloudflare-one/email-security/monitoring/search-email/#regular-screen)
@@ -114,19 +114,19 @@ In Email Security, the ability to search emails has been expanded. You can use t
 
 In Area 1, you can check [statistics](/email-security/reporting/statistics-overview/) in your Home section.
 
-In Email Security, you can check your metrics in the [Monitoring](/cloudflare-one/email-security/monitoring/) section in the dashboard.
+In Email security, you can check your metrics in the [Monitoring](/cloudflare-one/email-security/monitoring/) section in the dashboard.
 
 ## Move messages to a specific folder
 
 Area 1 allows you to set up [message retraction](/email-security/email-configuration/retract-settings/) to move messages to specific folders. This is known as **retraction**.
 
-Moving messages to a specific folder is known as [auto-moves](/cloudflare-one/email-security/settings/auto-moves/) in Zero Trust Email Security.
+Moving messages to a specific folder is known as [auto-moves](/cloudflare-one/email-security/settings/auto-moves/) in Zero Trust Email security.
 
 ## Create policies
 
 This table displays the difference in terminology used when creating policies:
 
-| Area 1                                                                                        | Email Security                                                                                             |
+| Area 1                                                                                        | Email security                                                                                             |
 | --------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
 | [Allowed patterns](/email-security/email-configuration/lists/allowed-patterns/)               | [Allow policies](/cloudflare-one/email-security/settings/detection-settings/allow-policies/)               |
 | [Block lists](/email-security/email-configuration/lists/block-list/)                          | [Blocked senders](/cloudflare-one/email-security/settings/detection-settings/blocked-senders/)             |
@@ -139,7 +139,7 @@ This table displays the difference in terminology used when creating policies:
 
 This table displays the difference in terminology used when finding emails whose disposition is incorrect:
 
-| Area 1                                                                                                                                                                                   | Email Security                                                                                       |
+| Area 1                                                                                                                                                                                   | Email security                                                                                       |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
 | Report [false negative](/email-security/email-configuration/phish-submissions/#false-negatives)/[false positive](/email-security/email-configuration/phish-submissions/#false-positives) | [ Reclassify messages ](/cloudflare-one/email-security/monitoring/search-email/#reclassify-messages) |
 | N/A                                                                                                                                                                                      | Escalate user submissions                                                                            |
@@ -150,20 +150,20 @@ This table displays the difference in terminology used when finding emails whose
 
 In Area 1, you can set up a [Business email compromise (BEC)](/email-security/email-configuration/enhanced-detections/business-email-compromise/) list to protect against attackers who try to impersonate executives.
 
-In Email Security, this feature is known as [impersonation registry](/cloudflare-one/email-security/settings/detection-settings/impersonation-registry/).
+In Email security, this feature is known as [impersonation registry](/cloudflare-one/email-security/settings/detection-settings/impersonation-registry/).
 
 ## Synchronize directories
 
 In Area 1, you can [integrate directories](/email-security/email-configuration/enhanced-detections/business-email-compromise/#integrating-a-directory) in your email provider.
 
-In Email Security, you can add and sync [directories](/cloudflare-one/email-security/directories/).
+In Email security, you can add and sync [directories](/cloudflare-one/email-security/directories/).
 
 ## API
 
 :::note
-Area 1 API endpoints will deprecate on December 18, 2025. Use the [Email Security API](https://developers.cloudflare.com/api/resources/email_security/) endpoints to prevent interruption to your normal operations.
+Area 1 API endpoints will deprecate on December 18, 2025. Use the [Email security API](https://developers.cloudflare.com/api/resources/email_security/) endpoints to prevent interruption to your normal operations.
 :::
 
 To access Area 1 API, go to the [API Documentation](https://developers.cloudflare.com/email-security/static/api_documentation_1.38.1.pdf). You can set up a [service account](https://developers.cloudflare.com/email-security/api/service-accounts/) to configure API tokens.
 
-To access Email Security API, go to [Email Security API](https://developers.cloudflare.com/api/resources/email_security/). You can set up an [API token](/fundamentals/api/get-started/create-token/) to use the Email Security API.
+To access Email security API, go to [Email security API](https://developers.cloudflare.com/api/resources/email_security/). You can set up an [API token](/fundamentals/api/get-started/create-token/) to use the Email security API.

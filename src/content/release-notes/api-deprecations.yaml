@@ -19,7 +19,7 @@ entries:
       * `GET /radar/http/summary/bot_class`
       * `GET /radar/http/timeseries_groups/device_type`
       * `GET /radar/http/timeseries_groups/bot_class`
-      * Other similar summary and timeseries groups endpoints for the following datasets: AI Bots, AI Inference, AS112, DNS, Email Routing, Email Security, HTTP, Layer 3 Attacks, Layer 7 Attacks, Leaked Credential Checks
+      * Other similar summary and timeseries groups endpoints for the following datasets: AI Bots, AI Inference, AS112, DNS, Email Routing, Email security, HTTP, Layer 3 Attacks, Layer 7 Attacks, Leaked Credential Checks
 
       Replacements:
 

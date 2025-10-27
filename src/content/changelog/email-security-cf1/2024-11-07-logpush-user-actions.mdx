@@ -1,24 +1,24 @@
 ---
-title: Use Logpush for Email Security user actions
-description: Send user action logs for Email Security to an endpoint of your choice with Cloudflare Logpush.
+title: Use Logpush for Email security user actions
+description: Send user action logs for Email security to an endpoint of your choice with Cloudflare Logpush.
 date: 2024-11-07T23:22:49Z
 ---
 
-You can now send user action logs for Email Security to an endpoint of your choice with Cloudflare Logpush.
+You can now send user action logs for Email security to an endpoint of your choice with Cloudflare Logpush.
 
-Filter logs matching specific criteria you have set or select from multiple fields you want to send. For all users, we will log the date and time, user ID, IP address, details about the message they accessed, and what actions they took. 
+Filter logs matching specific criteria you have set or select from multiple fields you want to send. For all users, we will log the date and time, user ID, IP address, details about the message they accessed, and what actions they took.
 
-When creating a new Logpush job, remember to select **Audit logs** as the dataset and filter by: 
+When creating a new Logpush job, remember to select **Audit logs** as the dataset and filter by:
 
 - **Field**: `"ResourceType"`
 - **Operator**: `"starts with"`
-- **Value**: `"email_security"`. 
+- **Value**: `"email_security"`.
 
 ![Logpush-user-actions](~/assets/images/changelog/email-security/Logpush-User-Actions.png)
 
-For more information, refer to [Enable user action logs](/cloudflare-one/insights/logs/enable-logs/#enable-user-action-logs). 
+For more information, refer to [Enable user action logs](/cloudflare-one/insights/logs/enable-logs/#enable-user-action-logs).
 
-This feature is available across all Email Security packages: 
+This feature is available across all Email security packages:
 
--  **Enterprise** 
--  **Enterprise + PhishGuard** 
+- **Enterprise**
+- **Enterprise + PhishGuard**

@@ -5,16 +5,16 @@ sidebar:
   order: 2
 ---
 
-With Email Security, you can use different screen criteria to search through your email, reclassify and move a certain volume of messages, find similar emails, and export messages.
+With Email security, you can use different screen criteria to search through your email, reclassify and move a certain volume of messages, find similar emails, and export messages.
 
 ## Screen criteria
 
-Email Security allows you to use popular, regular, and advanced screening criteria to search through your inbox. Advanced screening will give you the most in-depth investigation of your inbox.
+Email security allows you to use popular, regular, and advanced screening criteria to search through your inbox. Advanced screening will give you the most in-depth investigation of your inbox.
 
 To screen through your email traffic:
 
 1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/).
-2. Select **Email Security**.
+2. Select **Email security**.
 3. Select **Investigation**, then **Run new screen**.
 4. Choose between **Popular**, **Regular**, and **Advanced** screen methods. Refer to the explanation below to learn what each method does.
 
@@ -78,7 +78,7 @@ Reclassifying messages allows you to choose the disposition of your messages if 
 
 To reclassify a message:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Email Security** and select **Investigation**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Email security** and select **Investigation**.
 2. On the **Investigation** page, under **Your matching messages**, select the message you want to reclassify.
 3. Select the three dots, then select **Request reclassification**.
 4. Under **New disposition**, select among the following:
@@ -95,7 +95,7 @@ To release messages in bulk, select **Select all messages** > **Action** > **Rel
 
 ### Upload EML files
 
-Email Security classifies certain emails as "Clean". If you disagree with the disposition, you can upload an EML file and reclassify the email.
+Email security classifies certain emails as "Clean". If you disagree with the disposition, you can upload an EML file and reclassify the email.
 
 On the **Investigation** page:
 
@@ -110,7 +110,7 @@ Once you have reclassified your messages, you can access those on **Reclassifica
 To view reclassifications:
 
 1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/).
-2. Select **Email Security** > **Reclassifications**.
+2. Select **Email security** > **Reclassifications**.
 3. Choose **Team submissions** to view emails your security team submitted for reclassification, or **User submissions** to view emails your users submitted for reclassification.
 
 ### Team submissions
@@ -171,7 +171,7 @@ Moving messages allows you to move messages to a specific folder. You can move u
 
 To move messages:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Email Security**, and select **Investigation**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Email security**, and select **Investigation**.
 2. On the **Investigation** page, select all the messages you want to move.
 3. Select the **Action** dropdown, then select **Move**.
 4. Select among one of the following folders:
@@ -186,21 +186,21 @@ To move messages in bulk, select **Select all messages** > **Action** > **Move**
 
 ## Find similar emails
 
-Each detection has an Email Detection Fingerprint (EDF) hash that Email Security sends to the Search API to retrieve similar detections.
+Each detection has an Email Detection Fingerprint (EDF) hash that Email security sends to the Search API to retrieve similar detections.
 
 To find similar detection results:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Email Security**, and select **Investigation**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Email security**, and select **Investigation**.
 2. On the **Investigation** page, under **Your matching messages**, search for the **Similar emails** column.
 3. Select the number of similar emails. Selecting the number will show you a list of similar emails.
 
 ## Export messages
 
-With Email Security, you can export messages to a CSV file.
+With Email security, you can export messages to a CSV file.
 
 To export messages:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Email Security**, and select **Investigation**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Email security**, and select **Investigation**.
 2. On the **Investigation** page, under **Your matching messages**, select **Export to CSV**.
 3. Select **Export messages** on the pop-up message. You can export up to 500 messages from the dashboard. To export up to 1,000 matching messages, use the [API](/api/resources/email_security/subresources/investigate/methods/get/).
 
@@ -208,17 +208,17 @@ To export messages in bulk, select **Select all messages** > **Export to CSV**.
 
 ## Email status
 
-Email Security allows you to review the status and actions of each email.
+Email security allows you to review the status and actions of each email.
 
 To view status and actions for each email:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Email Security**, and select **Investigation**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Email security**, and select **Investigation**.
 2. On the **Investigation** page, select the three dots.
 3. Selecting the three dots will show you the following options:
    - If the email is quarantined:
      - **View details**: Refer to [Email details](/cloudflare-one/email-security/monitoring/search-email/#email-details) to learn more.
      - **View similar emails**: Find similar emails based on the `value_edf_hash` (Electronic Detection Fingerprint hash).
-     - **Release**: Email Security will no longer quarantine your chosen messages.
+     - **Release**: Email security will no longer quarantine your chosen messages.
      - **Request reclassification**: Choose the dispositions of your messages if they are incorrect. Refer to [Reclassify messages](/cloudflare-one/email-security/monitoring/search-email/#reclassify-messages) to learn more.
 4. If the email is not quarantined:
    - **View details**.
@@ -229,7 +229,7 @@ To view status and actions for each email:
 
 ## Email details
 
-Email Security shows you the following email detail information:
+Email security shows you the following email detail information:
 
 - Details
 - Action log
@@ -238,7 +238,7 @@ Email Security shows you the following email detail information:
 
 ### Details
 
-Email Security displays the following details:
+Email security displays the following details:
 
 1. **Threat type**: Threat type of the email, for example, [credential harvester](/cloudflare-one/email-security/reference/how-es-detects-phish/#credential-harvesters), and [IP-based spam](/cloudflare-one/email-security/reference/how-es-detects-phish/#ip-based-spam).
 2. **Validation**: Email validation methods [SPF](https://www.cloudflare.com/learning/dns/dns-records/dns-spf-record/), [DKIM](https://www.cloudflare.com/learning/dns/dns-records/dns-dkim-record/), [DMARC](https://www.cloudflare.com/learning/dns/dns-records/dns-dmarc-record/). The dashboard will display **Pass** if SPF, DKIM and DMARC checks have passed.
@@ -248,7 +248,7 @@ Email Security displays the following details:
    - Autonomous sys number: This number identifies your [autonomous system (AS)](https://www.cloudflare.com/en-gb/learning/network-layer/what-is-an-autonomous-system/).
    - Autonomous sys name: This name identifies your autonomous system (AS).
    - Country
-4. **Links identified**: A list of malicious links identified by Email Security. Refer to [Open links](/cloudflare-one/email-security/monitoring/search-email/#open-links) to open links in Security Center, Browser Isolation or an external tool of your choice.
+4. **Links identified**: A list of malicious links identified by Email security. Refer to [Open links](/cloudflare-one/email-security/monitoring/search-email/#open-links) to open links in Security Center, Browser Isolation or an external tool of your choice.
 5. **Attachments**: If an email has an attachment, the Cloudflare dashboard will display the filename, and the disposition assigned. You can open attachments in [Browser Isolation](/cloudflare-one/remote-browser-isolation/). Only PDF files are currently supported.
 6. **Reasons for disposition**: Description of why the email was deemed as malicious, suspicious, or spam.
 
@@ -258,7 +258,7 @@ You can open links in [Security Center](/security-center/) or [Browser Isolation
 
 To open links in Security Center:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Email Security** > **Investigation**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Email security** > **Investigation**.
 2. Locate the message you want to open links for, select the three dots, then select **View details**.
 3. Under **Details**, go to **Links identified**.
 4. Locate the link you want to open, and select **Open in Security Center**.
@@ -268,7 +268,7 @@ To open links in Security Center:
 
 To open links in Browser Isolation:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Email Security** > **Investigation**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Email security** > **Investigation**.
 2. Locate the message you want to open links for, select the three dots, then select **View details**.
 3. Under **Details**, go to **Links identified**.
 4. Locate the link you want to open, and select **Open in Browser Isolation**.
@@ -279,7 +279,7 @@ Alternatively, you can directly [open links in Browser Isolation](/cloudflare-on
 :::note
 If you purchased [Gateway](/cloudflare-one/traffic-policies/) and [Browser Isolation](/cloudflare-one/remote-browser-isolation/), you can perform more actions when opening links.
 
-When opening links, Email Security will not allow you to:
+When opening links, Email security will not allow you to:
 
 - [Copy (from remote to client)](/cloudflare-one/remote-browser-isolation/isolation-policies/#copy-from-remote-to-client)
 - [Paste (from client to remote)](/cloudflare-one/remote-browser-isolation/isolation-policies/#paste-from-client-to-remote)
@@ -292,7 +292,7 @@ When opening links, Email Security will not allow you to:
 
 To open and investigate a link in an external tool:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Email Security** > **Investigation**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Email security** > **Investigation**.
 2. Locate the message you want to open links for, select the three dots, then select **View details**.
 3. Under **Details**, go to **Links identified**.
 4. Locate the link you want to open, and select **Copy URL**.
