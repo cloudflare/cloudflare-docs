@@ -28,7 +28,7 @@ jobs:
         name: Build
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NODE_OPTIONS: --max-old-space-size=4096
+          NODE_OPTIONS: --max-old-space-size=4192
       - run: npx wrangler deploy
         name: Deploy to Cloudflare Workers
         env:
