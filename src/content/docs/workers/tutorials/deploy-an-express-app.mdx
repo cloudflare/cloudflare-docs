@@ -17,7 +17,7 @@ import {
 	GitHubCode,
 } from "~/components";
 
-In this tutorial, you will learn how to deploy an Express.js application on Cloudflare Workers using the [Cloudflare Workers platform](/workers/) and [D1 database](/d1/). You will build a Members Registry API with basic Create, Read, Update, and Delete (CRUD) operations. You will use D1 as the database for storing and retrieving member data.
+In this tutorial, you will learn how to deploy an [Express.js](https://expressjs.com/) application on Cloudflare Workers using the [Cloudflare Workers platform](/workers/) and [D1 database](/d1/). You will build a Members Registry API with basic Create, Read, Update, and Delete (CRUD) operations. You will use D1 as the database for storing and retrieving member data.
 
 <Render file="tutorials-before-you-start" product="workers" />
 
@@ -81,7 +81,7 @@ You will now create a D1 database to store member information. Use the `wrangler
 npx wrangler d1 create members-db
 ```
 
-The command will create a new D1 database and ask you the following:
+The command will create a new D1 database and ask you the following questions:
 
 - **Would you like Wrangler to add it on your behalf?**: Type `Y`.
 - **What binding name would you like to use?**: Type `DB` and press Enter.
