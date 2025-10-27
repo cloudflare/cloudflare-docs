@@ -16,7 +16,7 @@ This device posture attribute will check for all versions of WARP, including the
 
 :::
 
-Cloudflare Zero Trust enables you to restrict access to your applications to devices running the Cloudflare WARP client. This allows you to flexibly ensure that a user's traffic is secure and encrypted before allowing access to a resource protected behind Cloudflare Zero Trust.
+Cloudflare One enables you to restrict access to your applications to devices running the Cloudflare WARP client. This allows you to flexibly ensure that a user's traffic is secure and encrypted before allowing access to a resource protected behind Cloudflare One.
 
 ## Prerequisites
 
@@ -31,15 +31,15 @@ Cloudflare Zero Trust enables you to restrict access to your applications to dev
 
 ## 1. Enable the WARP check
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Network**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Settings** > **Network**.
 2. Ensure that **Proxy** is enabled.
-3. Go to **Settings** > **WARP Client**.
-4. In **WARP client checks**, select **Add new**.
+3. Go to **Reusable components** > **Posture checks**.
+4. In **WARP client checks**, select **Add a check**.
 5. Select **WARP**, then select **Save**.
 
 ## 2. Add the check to an Access policy
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Access controls** > **Applications**.
 
 2. Locate the application for which you want to require WARP. Select **Configure**.
 

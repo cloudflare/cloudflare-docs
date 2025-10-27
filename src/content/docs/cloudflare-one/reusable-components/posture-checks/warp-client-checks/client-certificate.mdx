@@ -33,7 +33,7 @@ The Client Certificate device posture attribute checks if the device has a valid
 
   :::note[Upload the signing certificate that issued the client certificate]
 
-  When uploading a certificate to use in posture checks, Cloudflare does not differentiate between root and intermediate certificates. You must upload the actual signing certificate – the one that directly signed the client certificate.
+  When uploading a certificate to use in posture checks, Cloudflare does not differentiate between root and intermediate certificates. You must upload the actual signing certificate - the one that directly signed the client certificate.
 
   If you upload a different certificate, even if it exists higher up in the trust chain (for example, the root that issued the signing certificate), the posture check will fail.
 
@@ -58,9 +58,9 @@ To generate a sample root CA for testing, refer to [Generate mTLS certificates](
    	}}
    />
 
-2. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **WARP Client**.
+2. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Reusable components** > **Posture checks**.
 
-3. Scroll down to **WARP client checks** and select **Add new**.
+3. Go to **WARP client checks** and select **Add a check**.
 
 4. Select **Client certificate**.
 
@@ -93,7 +93,7 @@ To generate a sample root CA for testing, refer to [Generate mTLS certificates](
 
 6. Select **Save**.
 
-Next, go to **Logs** > **Posture** and verify that the client certificate check is returning the expected results.
+Next, go to **Insights** > **Logs** > **Posture logs** and verify that the client certificate check is returning the expected results.
 
 ## Troubleshooting
 
