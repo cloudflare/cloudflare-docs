@@ -2435,7 +2435,7 @@
 /cloudflare-one/email-security/detection-settings/trusted-domains/ /cloudflare-one/email-security/settings/trusted-domains/ 301
 /cloudflare-one/email-security/settings/detection-settings/impersonation-registry/* /cloudflare-one/email-security/settings/impersonation-registry/:splat 301
 /cloudflare-one/email-security/detection-settings/* /cloudflare-one/email-security/settings/detection-settings/:splat 301
-
+/cloudflare-one/email-security/reference/domain-information/ /cloudflare-one/email-security/settings/domain-management/domain/ 301
 
 # Learning paths
 
