@@ -16,7 +16,7 @@ import { GlossaryTooltip, Render } from "~/components";
 
 ## Before you begin
 
-{props.productNameManual} is an Enterprise-only product. [Contact Cloudflare](https://www.cloudflare.com/magic-wan/) to acquire Magic WAN. If you plan on using {props.productNameConnector} to automatically onboard your locations to Cloudflare, you will need to purchase Magic WAN first.
+{props.productNameManual} is an Enterprise-only product. [Contact Cloudflare](https://www.cloudflare.com/magic-wan/) to acquire {props.productNameManual}. If you plan on using {props.productNameConnector} to automatically onboard your locations to Cloudflare, you will need to purchase {props.productNameManual} first.
 
 ## Set up method
 
@@ -24,9 +24,9 @@ import { GlossaryTooltip, Render } from "~/components";
 
 ### Automatic set up
 
-Setting up {props.productNameManual} automatically is done through {props.productNameConnector}, and is the preferred method. You can choose between the hardware version and the virtual version of the {props.productNameConnector}. The virtual version can be installed on your own machines.
+Setting up {props.productNameManual} automatically is done through {props.productNameConnector}, and is the preferred method. You can choose between the hardware version and the virtual version of {props.productNameConnector}. The virtual version can be installed on your own machines.
 
-If you plan on using {props.productNameConnector}, you can skip the prerequisites below, and refer to <a href={props.configureConnectorUrl}>Configure with Connector</a> for more information on how to continue.
+If you plan on using {props.productNameConnector}, you can skip the prerequisites below, and refer to <a href={props.configureConnectorUrl}>Configure with {props.productNameConnector}</a> for more information on how to continue.
 
 ### Manual set up
 
@@ -38,12 +38,12 @@ Setting up {props.productNameManual} manually is done through a combination of t
 ## Prerequisites
 
 :::note
-The list of prerequisites below is only for customers planning to connect manually to Cloudflare with a third-party device. If you plan on using {props.productNameConnector}, skip this section and refer to <a href={props.configureConnectorUrl}>Configure with Connector</a>.
+The list of prerequisites below is only for customers planning to connect manually to Cloudflare with a third-party device. If you plan on using {props.productNameConnector}, skip this section and refer to <a href={props.configureConnectorUrl}>Configure with {props.productNameConnector}</a>.
 :::
 
 ### Use compatible tunnel endpoint routers
 
-Magic WAN relies on <a href={props.greReferenceURL}>GRE</a> and <a href={props.ipsecReferenceUrl}>IPsec tunnels</a> to transmit [packets](https://www.cloudflare.com/learning/network-layer/what-is-a-packet/) from Cloudflare's global network to your origin network. To ensure compatibility with Magic WAN, the routers at your tunnel endpoints must:
+{props.productNameManual} relies on <a href={props.greReferenceURL}>GRE</a> and <a href={props.ipsecReferenceUrl}>IPsec tunnels</a> to transmit [packets](https://www.cloudflare.com/learning/network-layer/what-is-a-packet/) from Cloudflare's global network to your origin network. To ensure compatibility with {props.productNameManual}, the routers at your tunnel endpoints must:
 
 - Allow configuration of at least one tunnel per Internet service provider (ISP).
 - Support <GlossaryTooltip term="maximum segment size (MSS)">maximum segment size (MSS)</GlossaryTooltip> clamping.

@@ -47,7 +47,7 @@ Cloudflare recommends creating an [Account API token](/fundamentals/api/get-star
 <Tabs syncKey="dashPlusAPI">
 <TabItem label="Dashboard">
 
-1. Once you have configured an IdP in Zero Trust, go to the **Members** page to manage SSO connectors.
+1. Once you have configured an IdP in Cloudflare One, go to the **Members** page to manage SSO connectors.
 
 <DashButton url="/?to=/:account/members/settings" />
 
@@ -190,7 +190,7 @@ Configure an identity provider (IdP)-initiated single sign-on (SSO) session usin
 
 #### Prerequisites
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Applications** > select your **SSO App**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Access controls** > **Applications** > select your **SSO App**.
 2. Select **Configure** to access the application settings.
 3. In the **Basic Information** section, copy the **SSO Endpoint URL** and **Access Entity ID or Issuer**. You will need these values for your IdP setup.
 
@@ -211,7 +211,7 @@ Configure an identity provider (IdP)-initiated single sign-on (SSO) session usin
 
 If you use only one IdP (for example, Okta) for Cloudflare SSO and want users to skip the identity provider selection prompt:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Applications** > select your **SSO App**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Access controls** > **Applications** > select your **SSO App**.
 2. Go to **Login methods**.
 3. Disable **Accept all available identity providers** and ensure only Okta is selected as the login method.
 4. Enable **Instant Auth** to allow users to skip identity provider selection.
@@ -399,7 +399,7 @@ Cloudflare does not allow you to change your <GlossaryTooltip term="team name">t
 </TabItem>
 </Tabs>
 
-4. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Custom Pages**.
+4. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Reusable components** > **Custom pages**.
 5. Under **Team domain**, select **Edit** to enter the new team name. Select **Save**.
 6. In your identity provider, update your Cloudflare integration with the new team name. For example, if you are using a SAML IdP, you will need to update the Single Sign-on URL and Entity ID to `https://<new-team-name>.cloudflareaccess.com/cdn-cgi/access/callback`.
 7. Recreate any deleted SSO connectors using the steps in [Register your domain with Cloudflare for SSO](/fundamentals/manage-members/dashboard-sso/#2-register-your-domain-with-cloudflare-for-sso).

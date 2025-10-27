@@ -108,20 +108,20 @@ export class WebSocketServer extends DurableObject {
         const connection = this.sessions.get(ws)!;
 
         // Reply back with the same message to the connection
-        ws.send(`[Durable Object] message: ${message}, from: ${connection.id}`);
+        ws.send(`[Durable Object] message: ${message}, from: ${connection.id}, to: the initiating client. Total connections: ${this.sessions.size}`);
 
         // Broadcast the message to all the connections,
         // except the one that sent the message.
-        this.sessions.forEach((k, session) => {
+        this.sessions.forEach((_, session) => {
             if (session !== ws) {
-                session.send(`[Durable Object] message: ${message}, from: ${connection.id}`);
+                session.send(`[Durable Object] message: ${message}, from: ${connection.id}, to: all clients except the initiating client. Total connections: ${this.sessions.size}`);
             }
         });
 
         // Broadcast the message to all the connections,
         // including the one that sent the message.
-        this.sessions.forEach((k, session) => {
-            session.send(`[Durable Object] message: ${message}, from: ${connection.id}`);
+        this.sessions.forEach((_, session) => {
+            session.send(`[Durable Object] message: ${message}, from: ${connection.id}, to: all clients. Total connections: ${this.sessions.size}`);
         });
     }
 

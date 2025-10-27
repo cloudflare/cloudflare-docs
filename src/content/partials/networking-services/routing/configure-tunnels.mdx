@@ -8,16 +8,18 @@ params:
   - antiReplayPagePath
   - cniLink
   - targetPageName
-  - dashButtonPath
+  - dashButtonPath?
   - updateHCFrequencyPage
   - tunnelHealthChecksPage
   - antiReplayPagePath
   - biVsUniHealthCheck
   - tunnelHealthDash
   - biVsUniHealthCheckDefaults
+  - configureRoutesURL?
+  - sitesURL?
 ---
 
-import { APIRequest, CURL, Details, GlossaryTooltip, Render, TabItem, Tabs, DashButton } from "~/components";
+import { AnchorHeading, APIRequest, CURL, DashButton, Details, GlossaryTooltip, Markdown, Render, TabItem, Tabs } from "~/components";
 
 Cloudflare recommends two tunnels for each ISP and network location router combination, one per Cloudflare endpoint. Shortly after your onboarding kickoff call, Cloudflare will assign two Cloudflare endpoint addresses  that you can use as the tunnel destinations on your network location's routers/endpoints.
 
@@ -53,7 +55,7 @@ You can use GRE or IPsec tunnels to onboard your traffic to {props.productName},
 
 #### IPsec supported ciphers
 
-Refer to <a href={props.tunnelsAndEncapsulationPagePath}>Tunnels and encapsulation</a> to learn more about the technical requirements for GRE and IPsec tunnels used in {props.productName}. In this page, you can also find the <a href={props.ciphersPagePath}>supported ciphers for IPsec</a>.
+Refer to <a href={props.tunnelsAndEncapsulationPagePath}>Tunnels and encapsulation</a> to learn more about the technical requirements for GRE and IPsec tunnels used in {props.productName}. In that page, you can also find the <a href={props.ciphersPagePath}>supported ciphers for IPsec</a>.
 
 :::note
 IPsec tunnels only support Internet Key Exchange version 2 (IKEv2).
@@ -82,11 +84,31 @@ Beyond GRE and IPsec tunnels, you can also use Network Interconnect (CNI) to onb
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. In the Cloudflare dashboard, go to {props.productName}'s **{props.targetPageName}** page.
+{/* Dashboard steps for WAN Tunnels (Cloudflare One dashboard) */}
+{ props.magicWord === "WAN Tunnels" && (
+	<>
+	<ol>
+		<li>Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a>, and go to <strong>Networks</strong>.</li>
+		<li>Go to <strong>Connectors</strong> &gt; <strong>WAN Tunnels</strong>, and select <strong>Create a tunnel</strong>.</li>
+		<li>On the <strong>Add Tunnel</strong> page, choose either a <strong>GRE tunnel</strong> or <strong>IPsec tunnel</strong>.</li>
+	</ol>
+	</>
+)
+}
 
-   <DashButton url={props.dashButtonPath} />
-2. From the **Tunnels** tab, select **Create**.
-3. On the **Add tunnels** page, choose either a **GRE tunnel** or **IPsec tunnel**.
+{/* Dashboard steps for Magic WAN and Magic Transit (standalone dashboards) */}
+{ props.magicWord !== "WAN Tunnels" && (
+	<>
+	<ol>
+		<li>In the Cloudflare dashboard, go to {props.productName}'s <strong>{props.targetPageName}</strong> page.
+			<DashButton url={props.dashButtonPath} />
+		</li>
+		<li>From the <strong>Tunnels</strong> tab, select <strong>Create</strong>.</li>
+		<li>On the <strong>Add tunnels</strong> page, choose either a <strong>GRE tunnel</strong> or <strong>IPsec tunnel</strong>.</li>
+	</ol>
+	</>
+)
+}
 
 <Details header="GRE tunnel">
 
@@ -97,7 +119,7 @@ Beyond GRE and IPsec tunnels, you can also use Network Interconnect (CNI) to onb
 8. In **Cloudflare GRE endpoint**, enter the anycast address you received from your account team.
 9. Leave the default values for **TTL** and **MTU**.
 10. _(Optional)_ **Tunnel health checks** are enabled by default. If you disable Tunnel health checks, your tunnels will appear 100% down in your <a href={props.tunnelHealthDash}>tunnel health dashboard</a> even when working. Cloudflare will keep sending traffic through the tunnel, without the means to detect if the tunnel goes down. You will have to set up your own system to detect down tunnels, as Cloudflare will not be able to warn you about down tunnels. Refer to <a href={props.tunnelHealthChecksPage}>Tunnel health checks</a> for more information.
-11. _(Optional)_ If you keep **Tunnel health checks** enabled, choose the <a href={props.updateHCFrequencyPage}>**Health check rate**</a> for your tunnel. Available options are _Low_, _Medium_, and _High_.
+11. _(Optional)_ If you keep **Tunnel health checks** enabled, choose a <a href={props.updateHCFrequencyPage}>health check rate</a> for your tunnel. Available options are _Low_, _Medium_, and _High_.
 12. The **Health check type** defaults to _Reply_ and to creating an ICMP reply. If your firewall drops this type of packet for assuming it is a type of attack, change this option to _Request_ which will create an ICMP request. Refer to <a href={props.tunnelHealthChecksPage}>Tunnel health checks</a> for more information.
 13. The **Health check direction** defaults to **{props.biVsUniHealthCheck}** for {props.productName}. Refer to [Bidirectional vs unidirectional health checks](#bidirectional-vs-unidirectional-health-checks) for more details.
 14. _(Optional)_ **Health check target** is the customer end of the tunnel. This field is only visible when the **Health check direction** is set to _Unidirectional_.
@@ -115,7 +137,7 @@ Beyond GRE and IPsec tunnels, you can also use Network Interconnect (CNI) to onb
 7. In **Customer endpoint**, enter your router's public IP address. This value is only required if your router is using an IKE ID of type `ID_IPV4_ADDR`.
 8. In **Cloudflare endpoint**, enter the anycast address you received from your account team.
 9. _(Optional)_ **Tunnel health checks** are enabled by default. If you disable Tunnel health checks, your tunnels will appear 100% down in your <a href={props.tunnelHealthDash}>tunnel health dashboard</a> even when working. Cloudflare will keep sending traffic through the tunnel, without the means to detect if the tunnel goes down. You will have to set up your own system to detect down tunnels, as Cloudflare will not be able to warn you about down tunnels. Refer to <a href={props.tunnelHealthChecksPage}>Tunnel health checks</a> for more information.
-10. _(Optional)_ If you keep **Tunnel health checks** enabled, choose the <a href={props.updateHCFrequencyPage}>**Health check rate**</a> for your tunnel. Available options are _Low_, _Medium_ and _High_.
+10. _(Optional)_ If you keep **Tunnel health checks** enabled, choose a <a href={props.updateHCFrequencyPage}>health check rate</a> for your tunnel. Available options are _Low_, _Medium_ and _High_.
 11. _(Optional)_ The **Health check type** defaults to _Reply_ and to creating an ICMP reply. If your firewall drops this type of packet for assuming it is a type of attack, change this option to _Request_ which will create an ICMP request. Refer to <a href={props.tunnelHealthChecksPage}>Tunnel health checks</a> for more information.
 12. _(Optional)_ The **Health check direction** defaults to **{props.biVsUniHealthCheck}** for {props.productName}. Refer to [Bidirectional vs unidirectional health checks](#bidirectional-vs-unidirectional-health-checks) for more details.
 13. _(Optional)_ **Health check target** is the customer end of the tunnel. This field is only visible when the **Health check direction** is set to _Unidirectional_.
@@ -396,7 +418,13 @@ You can change this setting via the API with `"bidirectional"` or `"unidirection
 
 To check for tunnel health, Cloudflare sends a <a href={props.tunnelHealthChecksPage}>health check probe</a> consisting of ICMP (Internet Control Message Protocol) reply [packets](https://www.cloudflare.com/learning/network-layer/what-is-a-packet/) to your network. Cloudflare needs to receive these probes to know if your tunnel is healthy.
 
-Cloudflare defaults to bidirectional health checks for Magic WAN, and unidirectional health checks for Magic Transit (direct server return). However, routing unidirectional ICMP reply packets over the Internet to Cloudflare is sometimes subject to drops by intermediate network devices, such as stateful firewalls. Magic Transit customers with egress traffic can modify this setting to bidirectional.
+{/*
+  Conditional logic explanation:
+  - Magic Transit page: "unidirectional health checks for Magic Transit, and bidirectional health checks for Magic WAN"
+  - Magic WAN/WAN Tunnels pages: "bidirectional health checks for [productName], and unidirectional health checks for Magic Transit"
+  This avoids saying "Magic Transit defaults to...Magic Transit" on the Magic Transit page.
+*/}
+Cloudflare defaults to {props.magicWord === "Magic Transit" ? "unidirectional" : "bidirectional"} health checks for {props.magicWord === "Magic Transit" ? "Magic Transit (direct server return)" : props.productName}, and {props.magicWord === "Magic Transit" ? "bidirectional" : "unidirectional"} health checks for {props.magicWord === "Magic Transit" ? "Magic WAN" : "Magic Transit (direct server return)"}. However, routing unidirectional ICMP reply packets over the Internet to Cloudflare is sometimes subject to drops by intermediate network devices, such as stateful firewalls. Magic Transit customers with egress traffic can modify this setting to bidirectional.
 
 { props.magicWord === "Magic Transit" && (
   <>
@@ -411,3 +439,17 @@ For customers using the legacy health check system with a public IP range, Cloud
 
 - Configuring the tunnel health check target IP address to one within the `172.64.240.252/30` prefix range.
 - Applying a policy-based route that matches [packets](https://www.cloudflare.com/learning/network-layer/what-is-a-packet/) with a source IP address equal to the configured tunnel health check target (for example `172.64.240.253/32`), and route them over the tunnel back to Cloudflare.
+
+{ props.magicWord !== "Magic Transit" && (
+  <>
+    <AnchorHeading title="Next steps" depth={2} />
+    <Markdown
+      text={`
+			- Now that you have set up your tunnel endpoints you need to configure routes to route your traffic through Cloudflare. Refer to [Configure routes](${props.configureRoutesURL}) to learn more about static routing and BGP peering (only available through Direct CNI connection).
+			- After configuring either static routes or BGP routing, you will have to [set up a site](${props.sitesURL}).
+      `}
+      inline={false}
+    />
+  </>
+)
+}

@@ -29,7 +29,7 @@ Install a [Cloudflare certificate](/cloudflare-one/team-and-resources/devices/us
 
 ## 1. Generate a proxy endpoint
 
-You can generate a proxy endpoint on the Zero Trust dashboard or through the Cloudflare API.
+You can generate a proxy endpoint in Cloudflare One or through the Cloudflare API.
 
 :::caution
 All devices you add to the proxy endpoint will be able to access your Cloudflare Tunnel applications and services. If you only want to proxy web traffic, you can build a network policy that blocks those source IPs from connecting to your internal resources.
@@ -39,9 +39,9 @@ All devices you add to the proxy endpoint will be able to access your Cloudflare
 
 <TabItem label="Dashboard">
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Gateway** > **Proxy endpoints**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Networks** > **Resolves & Proxies** > **Proxy endpoints**.
 
-2. Select **Create endpoint**.
+2. Select **Create proxy endpoint**.
 
 3. Give your endpoint any name.
 
@@ -116,7 +116,7 @@ https://<SUBDOMAIN>.proxy.cloudflare-gateway.com
 
 ## 2. Test your proxy server
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), create an [HTTP policy](/cloudflare-one/traffic-policies/http-policies/) for testing purposes. For example:
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), create an [HTTP policy](/cloudflare-one/traffic-policies/http-policies/) for testing purposes. For example:
 
    | Selector | Operator | Value         | Action |
    | -------- | -------- | ------------- | ------ |
@@ -206,7 +206,7 @@ To get the domain of a proxy endpoint:
 
 <TabItem label="Dashboard">
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Gateway** > **Proxy endpoints**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Networks** > **Resolves & Proxies** > **Proxy endpoints**.
 2. Choose the proxy endpoint. Select **Edit**.
 3. In **Proxy Endpoint**, copy the domain.
 

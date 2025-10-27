@@ -3,7 +3,7 @@ entries:
     audience: "[Access](/cloudflare-one/access-controls/policies/) customers who want to receive a notification when their service token is about to expire."
     availability: Purchase of Access
     associatedProducts: Cloudflare Access
-    nextSteps: Extend the expiration date of the service token. For more details, refer to [Renew your service token](/cloudflare-one/identity/service-tokens/#renew-service-tokens).
+    nextSteps: Extend the expiration date of the service token. For more details, refer to [Renew your service token](/cloudflare-one/access-controls/service-credentials/service-tokens/#renew-service-tokens).
     otherFilters: None.
 
   - name: Usage Based Billing

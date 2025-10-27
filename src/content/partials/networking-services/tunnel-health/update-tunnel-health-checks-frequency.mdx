@@ -1,6 +1,6 @@
 ---
 params:
-  - magicProduct?
+  - magicWord?
   - productName
   - healthChecksUrl
   - addTunnelsPath
@@ -18,9 +18,9 @@ import {
 
 By default, Cloudflare servers send <GlossaryTooltip term="tunnel health-check" link={props.healthChecksUrl}>health checks</GlossaryTooltip> to each <GlossaryTooltip term="GRE tunnel">GRE</GlossaryTooltip>, CNI, or <GlossaryTooltip term="IPsec tunnel">IPsec</GlossaryTooltip> tunnel endpoint you configure to receive traffic from {props.productName}.
 
-{ props.magicProduct === "Magic WAN" && (
+{ (props.magicWord === "Magic WAN" || props.magicWord === "WAN Tunnels") && (
   <>
-		<p>For Magic WAN Connector, health checks are sent to IPsec tunnel endpoints.</p>
+		<p>For {props.magicWord === "Magic WAN" ? "Magic WAN Connector" : "WAN Tunnels Appliances"}, health checks are sent to IPsec tunnel endpoints.</p>
   </>
   )
 }
@@ -29,14 +29,14 @@ You can configure the health check frequency via the dashboard or [the API](/api
 
 Available options are `low`, `mid`, and `high`.
 
-{ props.magicProduct === "Magic WAN" && (
+{ (props.magicWord === "Magic WAN" || props.magicWord === "WAN Tunnels") && (
   <>
-		<p>To configure health checks frequency in Magic WAN Connector, refer to <a href="#configure-connector">Configure Connector</a></p>
+		<p>To configure health checks frequency in {props.magicWord === "Magic WAN" ? "Magic WAN Connector" : "WAN Tunnels Appliances"}, refer to <a href={props.magicWord === "Magic WAN" ? "#configure-connector" : "#configure-appliances"}>Configure {props.magicWord === "Magic WAN" ? "Connector" : "Appliances"}</a></p>
   </>
   )
 }
 
-{ props.magicProduct === "Magic WAN" && (
+{ (props.magicWord === "Magic WAN" || props.magicWord === "WAN Tunnels") && (
   <>
 		<AnchorHeading depth={2} title="Manual configuration" />
   </>
@@ -68,20 +68,47 @@ Below is an example of how to adjust tunnel health check frequency to `low`. Not
 
 </TabItem> </Tabs>
 
-{ props.magicProduct === "Magic WAN" && (
+{ (props.magicWord === "Magic WAN" || props.magicWord === "WAN Tunnels") && (
 
   <>
-		<AnchorHeading depth={2} title="Configure Connector" />
-  	<ol>
-   		<li><p>In the Cloudflare dashboard, go to the <strong>Sites</strong> page.</p>
-   			<DashButton url="/?to=/:account/magic-wan/sites" />
- 			</li>
+		<AnchorHeading depth={2} title={props.magicWord === "Magic WAN" ? "Configure Connector" : "Configure Appliances"} />
 
-   		<li>Select your site &gt; <strong>Edit</strong>.</li>
-   		<li>In <strong>Network</strong> &gt; <strong>WAN configuration</strong> &gt; select your WAN &gt; <strong>Edit</strong>.</li>
-   		<li>Change the <strong>Health check rate</strong> to your desire rate.</li>
-   		<li>Select <strong>Save</strong>.</li>
-   	</ol>
+		{ props.magicWord === "Magic WAN" ? (
+			<>
+				<Markdown
+				text={`
+1. In the Cloudflare dashboard, go to the **Sites** page.
+				`}
+				inline={false}
+				/>
+
+				<DashButton url="/?to=/:account/magic-wan/sites" />
+
+				<Markdown
+				text={`
+2. Select your site > **Edit**.
+				`}
+				inline={false}
+				/>
+			</>
+		) : (
+			<Markdown
+			text={`
+1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/) > **Insights**.
+2. In **Network overview**, select your site > **Edit**
+			`}
+			inline={false}
+			/>
+		)}
+
+		<Markdown
+		text={`
+3. In **Network** > **WAN configuration** > select your WAN > **Edit**.
+4. Change the **Health check rate** to your desire rate.
+5. Select **Save**.
+		`}
+		inline={false}
+		/>
   </>
 
 	)

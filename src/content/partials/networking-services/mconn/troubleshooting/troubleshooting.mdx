@@ -1,6 +1,7 @@
 ---
 params:
   - productName
+  - wanName
   - activateURL
   - firewallURL
   - heartbeatURL
@@ -19,7 +20,7 @@ Cloudflare customers can inspect metrics for a specific {props.productName} in t
 
 To find the information above and start troubleshooting your {props.productName}:
 
-<Render file="mconn/troubleshooting/troubleshooting-steps"	product="networking-services" />
+<Render file="mconn/troubleshooting/troubleshooting-steps"	product="networking-services" params={{ productName: props.productName, wanName: props.wanName }} />
 
 ### Performance analytics
 
@@ -33,7 +34,7 @@ In Performance analytics you can review your {props.productName}'s performance o
 
 To access performance analytics:
 
-<Render file="mconn/troubleshooting/troubleshooting-steps"	product="networking-services" />
+<Render file="mconn/troubleshooting/troubleshooting-steps"	product="networking-services" params={{ productName: props.productName, wanName: props.wanName }} />
 3. Select **Performance analytics**.
 
 ### Port analytics
@@ -45,7 +46,7 @@ Port analytics gives you access to information related to the packets sent and r
 
 The dashboard provides this information for all active ports in your {props.productName}. To access port analytics:
 
-<Render file="mconn/troubleshooting/troubleshooting-steps"	product="networking-services" />
+<Render file="mconn/troubleshooting/troubleshooting-steps"	product="networking-services" params={{ productName: props.productName, wanName: props.wanName }} />
 3. Select **Port analytics**.
 
 ### Event logs
@@ -71,7 +72,7 @@ Use Event logs to identify general patterns and changes over time. This is usefu
 
 To access event logs:
 
-<Render file="mconn/troubleshooting/troubleshooting-steps"	product="networking-services" />
+<Render file="mconn/troubleshooting/troubleshooting-steps"	product="networking-services" params={{ productName: props.productName, wanName: props.wanName }} />
 3. Select **Events**.
 4. You can filter results by specific events, and by time.
 
@@ -79,7 +80,7 @@ To access event logs:
 
 Refer to the DHCP leasing section to identify DHCP assigned leases and their expiration dates. To access DHCP leasing:
 
-<Render file="mconn/troubleshooting/troubleshooting-steps"	product="networking-services" />
+<Render file="mconn/troubleshooting/troubleshooting-steps"	product="networking-services" params={{ productName: props.productName, wanName: props.wanName }} />
 3. Select **DHCP leasing**.
 
 ## Troubleshooting tips
@@ -88,13 +89,13 @@ If you are experiencing difficulties with your {props.productName}, refer to the
 
 ## I have set up a site, but my {props.productName} is not working
 
-Make sure that you have <a href={props.activateURL}>activated your Connector</a>. Cloudflare ships the {props.productName} deactivated, and the it will only establish a connection to the Cloudflare network when it is activated.
+Make sure that you have <a href={props.activateURL}>activated your {props.productName}</a>. Cloudflare ships the {props.productName} deactivated, and the it will only establish a connection to the Cloudflare network when it is activated.
 
 ## I have tried to activate {props.productName}, but it is still not working
 
 Check if your {props.productName} is connected to the Internet via a port that can serve DHCP. This is required the first time a {props.productName} boots up so that it can reach the Cloudflare global network and download the required configurations that you set up in the Site configuration step. Refer to <a href={props.activateURL}>Activate Connector</a> for more details.
 
-If you have a firewall deployed upstream of the {props.productName}, <a href={props.firewallURL}>check your firewall settings</a>. You might need to configure your firewall to allow traffic in specific ports for the Connector to work properly.
+If you have a firewall deployed upstream of the {props.productName}, <a href={props.firewallURL}>check your firewall settings</a>. You might need to configure your firewall to allow traffic in specific ports for the {props.productName} to work properly.
 
 ## I can access {props.productName}'s health checks, but there is no traffic
 

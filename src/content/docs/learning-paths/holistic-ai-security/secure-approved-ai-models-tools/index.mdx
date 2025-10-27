@@ -42,7 +42,7 @@ This section will discuss the process of consolidating and securing access to yo
 
 The Model Context Protocol supports [OAuth 2.1 for authorization](https://modelcontextprotocol.io/specification/2025-06-18/basic/authorization). You can configure your MCP server to use Cloudflare Access as its OAuth provider. This allows you to secure the MCP server with Access policies, using signals from your existing identity providers (IdPs), device posture providers, and other rules to control who can log in to the server. Once the user is authenticated through Access, Access passes an OAuth ID token to the MCP server. You can then implement server-side access controls based on the user identity attributes included in the token. For example, you may wish to limit access to specific tools based on user emails.
 
-To set up the Cloudflare Access OAuth integration, refer to [Secure MCP servers with Access for SaaS](/cloudflare-one/access-controls/applications/http-apps/mcp-servers/saas-mcp/).
+To set up the Cloudflare Access OAuth integration, refer to [Secure MCP servers with Access for SaaS](/cloudflare-one/access-controls/ai-controls/saas-mcp/).
 
 ### Consolidate MCP servers into a portal
 
@@ -50,4 +50,4 @@ MCP server portals allow you to centralize management of your MCP servers and to
 
 To define user access to your systems, you can configure Access policies for a portal as a whole while maintaining granular access control for the MCP servers that a user sees in their portals. Additionally, you can turn on or off the individual tools available through the portal and only expose the tools relevant for your specific use case. Prompts and responses made using the portal are logged in Cloudflare Access, providing you with visibility into how users are interacting with your MCP servers.
 
-To get started with MCP server portals, refer to [MCP server portals](/cloudflare-one/access-controls/applications/http-apps/mcp-servers/mcp-portals/).
+To get started with MCP server portals, refer to [MCP server portals](/cloudflare-one/access-controls/ai-controls/mcp-portals/).

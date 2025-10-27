@@ -1,0 +1,26 @@
+---
+title: Analytics
+pcx_content_type: reference
+sidebar:
+  order: 10
+head: []
+description: Use WAN Tunnels' different analytic options for an overview of the
+  performance of your sites, or to troubleshoot potential issues.
+
+---
+
+import { Render } from "~/components";
+
+<Render file="analytics/overview"
+	product="networking-services"
+	params={{
+		magicWord: "WAN Tunnels",
+		productName: "WAN Tunnels",
+		analyticsAnchorHeading: "#wan-tunnels-network-analytics",
+		networkAnalyticsURL: "/cloudflare-one/networks/connectors/wan-tunnels/analytics/network-analytics/",
+		traceRoutes: "/cloudflare-one/networks/connectors/wan-tunnels/analytics/traceroutes/",
+		graphQlTunnelBandwidthURL: "/cloudflare-one/networks/connectors/wan-tunnels/analytics/query-bandwidth/",
+		graphQlTunnelHealthURL: "/cloudflare-one/networks/connectors/wan-tunnels/analytics/query-tunnel-health/",
+		siteAnalyticsURL: "/cloudflare-one/networks/connectors/wan-tunnels/analytics/site-analytics/"
+		 }}
+/>

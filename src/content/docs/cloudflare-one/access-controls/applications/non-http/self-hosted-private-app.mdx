@@ -45,7 +45,7 @@ This feature replaces the legacy [private network app type](/cloudflare-one/acce
 
 9.  Select **Next**.
 
-10. (Optional) Configure [App Launcher settings](/cloudflare-one/applications/app-launcher/) for the application.
+10. (Optional) Configure [App Launcher settings](/cloudflare-one/access-controls/access-settings/app-launcher/) for the application.
 
 11. <Render file="access/access-block-page" product="cloudflare-one" />
 
@@ -66,7 +66,7 @@ Users can now connect to your private application after authenticating with Clou
 
 ### HTTPS applications
 
-If [Gateway TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/) is turned on and a user is accessing an HTTPS application on port `443`, Cloudflare Access will present a login page in the browser and issue an [application token](/cloudflare-one/identity/authorization-cookie/application-token/) to your origin. This is the same cookie-based authentication flow used by [self-hosted public apps](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/).
+If [Gateway TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/) is turned on and a user is accessing an HTTPS application on port `443`, Cloudflare Access will present a login page in the browser and issue an [application token](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/application-token/) to your origin. This is the same cookie-based authentication flow used by [self-hosted public apps](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/).
 
 If [Gateway TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/) is turned off, session management is [handled in the WARP client](#non-https-applications) instead of in the browser.
 

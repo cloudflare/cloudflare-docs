@@ -30,7 +30,7 @@ You can allow users to log in to Access applications using their WARP session. W
 
 To configure WARP sessions for Access applications:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **WARP Client**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Team & Resources** > **Devices** > **Management**.
 2. In **Device enrollment permissions**, select **Manage**.
 3. Go to the **Login methods** tab and enable **WARP authentication identity**.
 4. Under **Session duration**, choose a session timeout value. This timeout will apply to all Access applications that have WARP authentication enabled.
@@ -61,7 +61,7 @@ If the user has an active browser session with the IdP, WARP will use the existi
 
 - **Only one user per device** — If a device is already registered with User A, User B will not be able to log in on that device through the re-authentication flow. To switch the device registration to a different user, User A must first log out from Zero Trust (if [Allow device to leave organization](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#allow-device-to-leave-organization) is enabled), or an admin can revoke the registration from **My Team** > **Devices**. User B can then properly [enroll](/cloudflare-one/team-and-resources/devices/warp/deployment/manual-deployment/).
 - **Active connections are not terminated** — Active sessions such as SSH and RDP will remain connected beyond the timeout limit.
-- **Binding Cookie is not supported** - WARP authentication will not work for Access applications that have the [Binding Cookie](/cloudflare-one/identity/authorization-cookie/#binding-cookie) enabled.
+- **Binding Cookie is not supported** - WARP authentication will not work for Access applications that have the [Binding Cookie](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/#binding-cookie) enabled.
 
 ## Related resources
 

@@ -1,11 +1,36 @@
 ---
-{}
+params:
+  - productName
+  - wanName
 ---
 
-import { DashButton } from "~/components";
+import { DashButton, Markdown } from "~/components";
 
-1. In the Cloudflare dashboard, go to the **Configuration** page.
-
-	<DashButton url="/?to=/:account/magic-wan/configuration" />
-
-2. In the **Connectors** tab, select the Connector you want to check metrics for > **View analytics**.
+{ props.wanName === "WAN Tunnels" ? (
+	<>
+		<Markdown
+	text={`
+		1. Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a>, and go to **Networks** > **Connectors**.
+		2. Go to **Appliances** > **Profiles** > **View analytics**.
+	`}
+	inline={false}
+	/>
+	</>
+) : (
+	<>
+		<Markdown
+	text={`
+		1. In the Cloudflare dashboard, go to the **Configuration** page.
+	`}
+	inline={false}
+	/>
+		<DashButton url="/?to=/:account/magic-wan/configuration" />
+		<Markdown
+	text={`
+		2. In the **${props.productName}** tab, select the ${props.productName} > **View analytics**.
+	`}
+	inline={false}
+	/>
+	</>
+)
+}

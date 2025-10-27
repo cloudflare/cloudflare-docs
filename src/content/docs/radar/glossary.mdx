@@ -134,6 +134,17 @@ It is an essential Internet service, and is also used to look up other network-r
 
 The data displayed on Radar for DNS is based on aggregated and anonymized DNS lookups to Cloudflare's [1.1.1.1](/1.1.1.1/) public resolver service.
 
+## DNS magnitude
+
+DNS Magnitude is a metric originally developed by [nic.at](https://www.nic.at/media/files/pdf/dns-magnitude-paper-20200601.pdf) (PDF) to estimate a domain’s overall visibility on the Internet.
+
+Instead of only counting the total number of DNS queries, DNS Magnitude incorporates a sense of how many unique clients send queries to domains within the TLD. This approach gives a more accurate picture of a TLD’s reach, since a small number of sources can generate a large number of queries.
+Our ranking is based on queries observed at Cloudflare’s [1.1.1.1](/1.1.1.1/) public resolver. We aggregate individual client IP addresses into subnets, referred to here as "networks".
+
+The magnitude value ranges from 0 to 10, with higher values (closer to 10) indicating that the TLD is queried by a broader range of networks.
+
+This reflects greater global visibility and, in some cases, a higher likelihood of name collision across different systems. [According to ICANN](https://www.icann.org/resources/pages/name-collision-2013-12-06-en), a name collision occurs when an attempt to resolve a name used in a private name space (such as under a non-delegated Top-Level Domain) results in a query to the public DNS. When the administrative boundaries of private and public namespaces overlap, name resolution may yield unintended or harmful results. For example, if ICANN were to delegate `.home`, that could cause significant issues for hobbyists that use the (currently non-delegated) TLD within their local networks.
+
 ## Domain rankings
 
 Domain Rankings is based on our anonymized and aggregated [1.1.1.1 DNS resolver](/1.1.1.1/) data, complies with our [privacy policy](https://www.cloudflare.com/en-gb/privacypolicy/), and aims to identify the top most popular domains that reflect how people use the Internet globally. Domain Rankings’ popularity metric is best described as the estimated number of unique users that access a domain over some period of time.

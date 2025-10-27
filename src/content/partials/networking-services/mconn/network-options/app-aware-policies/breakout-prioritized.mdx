@@ -12,7 +12,7 @@ import { APIRequest, Aside, AnchorHeading, CURL, Markdown, Render, TabItem, Tabs
 
 { props.magicWord === "breakout" && (
 	<>
-		<p>Breakout traffic allows you to define which applications should bypass Cloudflare's security filtering, and go directly to the Internet. It works via DNS requests inspection. This means that if your network is caching DNS requests, Breakout traffic will only take effect after you cache entries expire and your client issues a new DNS request that the {props.productName} can detect. This can take several minutes.</p>
+		<p>Breakout traffic allows you to define which applications should bypass Cloudflare's security filtering, and go directly to the Internet. It works via DNS requests inspection. This means that if your network is caching DNS requests, Breakout traffic will only take effect after you cache entries expire and your client issues a new DNS request that {props.productName} can detect. This can take several minutes.</p>
 		<Aside type="caution">Breakout traffic will not work for applications that use DNS-over-HTTPS.</Aside>
 	</>
 	)
@@ -47,7 +47,7 @@ import { APIRequest, Aside, AnchorHeading, CURL, Markdown, Render, TabItem, Tabs
 		text={`
 		We recommend [routing](https://www.cloudflare.com/learning/network-layer/what-is-routing/) all traffic through our global network for comprehensive security filtering and access controls. However, there may be specific cases where you want a subset of traffic to bypass Cloudflare's security filtering and route it directly to the Internet. You can scope this breakout traffic to specific applications from the Cloudflare dashboard.
 
-    Refer to <a href={props.trafficSteeringURL}>Traffic steering</a> to learn how Cloudflare routes traffic.
+    Refer to <a href="${props.trafficSteeringURL}">Traffic steering</a> to learn how Cloudflare routes traffic.
 		`}
 		inline={false}
 		/>
@@ -87,7 +87,7 @@ Send a `POST` request to add new apps to your account.
 	}
 	```
 
-You can now add this new app to the {props.featureName} list in your Connector.
+You can now add this new app to the {props.featureName} list in your {props.productName}.
 
 ### Add an application to {props.productName}
 
@@ -95,15 +95,40 @@ You need to configure {props.featureName} applications for each of your existing
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
-2. Select **Magic WAN** > **Connector on-ramps (beta)**.
+{ props.mwanName === "WAN Tunnels" ? (
+	<>
+		<Markdown
+	text={`
+		1. Log in to the <a href="https://one.dash.cloudflare.com/">Cloudflare One dashboard</a>, and go to **Networks**.
+		2. Go to **Connectors** > **Appliances** > **Profiles**.
+	`}
+	inline={false}
+	/>
+	</>
+) : (
+	<>
+		<Markdown
+	text={`
+		1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
+		2. Select **Magic WAN** > **Connector on-ramps (beta)**.
+	`}
+	inline={false}
+	/>
+	</>
+)
+}
+<Markdown
+text={`
 3. Select the Connector you want to configure > **Edit**.
 4. Select **Traffic Steering**.
-5. In **{props.featureName}**, select **Add**.
+5. In **${props.featureName}**, select **Add**.
 6. Select one or more applications that should bypass Cloudflare filtering from the list. You can also use the search box.
 7. Select **Save**.
 
-The traffic for the application you chose {props.whatHappensApp}.
+The traffic for the application you chose ${props.whatHappensApp}.
+`}
+inline={false}
+/>
 
 </TabItem> <TabItem label="API">
 
@@ -164,12 +189,37 @@ The traffic for the application you chose {props.whatHappensApp}.
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
-2. Select **Magic WAN** > **Connector on-ramps (beta)**.
+{ props.mwanName === "WAN Tunnels" ? (
+	<>
+		<Markdown
+	text={`
+		1. Log in to the <a href="https://one.dash.cloudflare.com/">Cloudflare One dashboard</a>, and go to **Networks**.
+		2. Go to **Connectors** > **Appliances** > **Profiles**.
+	`}
+	inline={false}
+	/>
+	</>
+) : (
+	<>
+		<Markdown
+	text={`
+		1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
+		2. Select **Magic WAN** > **Connector on-ramps (beta)**.
+	`}
+	inline={false}
+	/>
+	</>
+)
+}
+<Markdown
+text={`
 3. Select the Connector you want to configure > **Edit**.
 4. Select **Traffic Steering**.
-5. In **{props.featureName}**, find the application you want to delete > select the **three dots** next to it > **Remove**.
+5. In **${props.featureName}**, find the application you want to delete > select the **three dots** next to it > **Remove**.
 6. (Optional) If you have several pages of applications, you can use the search box to quickly find the application you are looking for.
+`}
+inline={false}
+/>
 
 </TabItem> <TabItem label="API">
 

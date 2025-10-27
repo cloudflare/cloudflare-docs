@@ -17,7 +17,7 @@ To create a reusable Access policy:
 2. Select **Add a policy**.
 3. Enter a **Policy name**.
 4. Choose an [**Action**](/cloudflare-one/access-controls/policies/#actions) for the policy.
-5. Choose a [**Session duration**](/cloudflare-one/team-and-resources/users/session-management/) for the policy.
+5. Choose a [**Session duration**](/cloudflare-one/access-controls/access-settings/session-management/) for the policy.
 6. Configure as many [**Rules**](/cloudflare-one/access-controls/policies/#rule-types) as needed.
 7. (Optional) Configure additional settings for users who match this policy:
    - [Isolate application](/cloudflare-one/access-controls/policies/isolate-application/).
@@ -25,7 +25,7 @@ To create a reusable Access policy:
    - [Temporary authentication](/cloudflare-one/access-controls/policies/temporary-auth/)
 8. Select **Save**.
 
-You can now add this policy to an [Access application](/cloudflare-one/applications/).
+You can now add this policy to an [Access application](/cloudflare-one/access-controls/applications/http-apps/).
 
 ## Edit a policy
 
@@ -48,7 +48,7 @@ To delete a reusable Access policy:
 
 ## Test your policies
 
-You can test your Access policies against all existing user identities in your Zero Trust organization.  For the policy tester to work, users must have logged into the [App Launcher](/cloudflare-one/applications/app-launcher/) or any other Access application at some point in time.
+You can test your Access policies against all existing user identities in your Zero Trust organization.  For the policy tester to work, users must have logged into the [App Launcher](/cloudflare-one/access-controls/access-settings/app-launcher/) or any other Access application at some point in time.
 
 Cloudflare will use the most recent device that was authenticated with Access to test your policies.
 

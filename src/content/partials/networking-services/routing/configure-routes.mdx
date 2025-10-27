@@ -8,11 +8,12 @@ params:
   - routePrioritization
   - chooseWeights
   - productGatewayOrEgress
-  - dashButtonPath
+  - dashButtonPath?
   - cfTunnelURL?
+  - sitesURL?
 ---
 
-import { Aside, APIRequest, Markdown, Render, TabItem, Tabs, DashButton } from "~/components";
+import { AnchorHeading, Aside, APIRequest, DashButton, Markdown, Render, TabItem, Tabs } from "~/components";
 
 Magic Networking uses a routing table to steer your traffic via next-hop from Cloudflare's global network to your connected networks. Entries can be added to the Magic routing table via static route configuration or via routes learned through BGP peering (only available over Direct CNI).
 
@@ -30,7 +31,7 @@ Refer to <a href={props.trafficSteeringPage}>Traffic Steering</a> for more infor
 
 ## Configure static routes
 
-{ props.magicWord === "Magic WAN" && (
+{ props.magicWord !== "Magic Transit" && (
   <>
 		<p>The following IPv4 address ranges are allowed in the Magic Routing table:</p>
 		<Render
@@ -49,11 +50,40 @@ Refer to <a href={props.trafficSteeringPage}>Traffic Steering</a> for more infor
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. In the Cloudflare dashboard, go to {props.productName}'s **Configuration** page.
+{/* Dashboard steps for WAN Tunnels (Cloudflare One dashboard) */}
+{ props.magicWord === "WAN Tunnels" && (
+	<>
+	<Markdown
+		text={`
+			1. Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a>, and go to **Networks**.
+			2. Go to **Routes** > **WAN Routes**, and select **Add a static route** to add a new route.
+		`}
+		inline={false}
+	/>
+	</>
+)
+}
 
-	 <DashButton url={props.dashButtonPath} />
+{/* Dashboard steps for Magic WAN and Magic Transit (standalone dashboards) */}
+{ props.magicWord !== "WAN Tunnels" && (
+	<>
+		<Markdown
+			text={`
+			1. In the Cloudflare dashboard, go to ${props.productName}'s **Configuration** page.
+			`}
+			inline={false}
+		/>
+		<DashButton url={props.dashButtonPath} />
+		<Markdown
+			text={`
+			2. From the **Routes** tab, select **Create** to add a new route.
+			`}
+			inline={false}
+		/>
+	</>
+)
+}
 
-2. From the **Routes** tab, select **Create** to add a new route.
 3. Enter a descriptive name for your route in **Description**.
 4. In **Prefix**, enter your range of IP addresses. For example, `10.10.10.100/24`.
 5. In **Tunnel/Next hop** select which tunnel you want your route to go through. Choose from the tunnels you have created in <a href={props.tunnelEndpoints}>Configure tunnel endpoints</a>.
@@ -139,7 +169,32 @@ Example:
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. In **Routes**, select **Edit** next to the route you want to modify.
+{/* Dashboard steps for WAN Tunnels (Cloudflare One dashboard) */}
+{ props.magicWord === "WAN Tunnels" && (
+	<>
+	<Markdown
+		text={`
+			1. In **Routes** > **WAN Routes**, select the three dots > **Edit** next to the route you want to modify.
+		`}
+		inline={false}
+	/>
+	</>
+)
+}
+
+{/* Dashboard steps for Magic WAN and Magic Transit (standalone dashboards) */}
+{ props.magicWord !== "WAN Tunnels" && (
+	<>
+	<Markdown
+		text={`
+			1. In **Routes**, select the three dots > **Edit** next to the route you want to modify.
+		`}
+		inline={false}
+	/>
+	</>
+)
+}
+
 2. Enter the updated route information.
 3. (Optional) We highly recommend testing your route before adding it by selecting **Test routes**.
 4. Select **Edit routes** to save the new information when you are done.
@@ -216,7 +271,32 @@ Example:
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. In **Routes**, locate the static route you want to modify and select **Delete**.
+{/* Dashboard steps for WAN Tunnels (Cloudflare One dashboard) */}
+{ props.magicWord === "WAN Tunnels" && (
+	<>
+	<Markdown
+		text={`
+			1. In **Routes** > **WAN Routes**, locate the static route you want to modify, select the three dots > **Delete**.
+		`}
+		inline={false}
+	/>
+	</>
+)
+}
+
+{/* Dashboard steps for Magic WAN and Magic Transit (standalone dashboards) */}
+{ props.magicWord !== "WAN Tunnels" && (
+	<>
+	<Markdown
+		text={`
+			1. In **Routes**, locate the static route you want to modify, select the three dots > **Delete**.
+		`}
+		inline={false}
+	/>
+	</>
+)
+}
+
 2. Confirm the action by selecting the checkbox and select **Delete**.
 
 </TabItem> <TabItem label="API">
@@ -280,14 +360,46 @@ BGP peering is available when using a [Direct CNI](/network-interconnect/) as an
 
 The Magic routing table is managed by the customer, who can select both the Cloudflare-side ASN and the ASN for their customer device. The customer device ASN can be 2-byte or 4-byte. <Markdown text={props.publicAsnMT} />
 
-By default, each BGP peering session will use the same Cloudflare-side ASN to represent peering with the {props.productName} routing table. This ASN is called the **CF Account ASN** and is set to `13335`. This can be configured to a private 2-byte ASN (for example, any values between `64512` and `65534`). To set this ASN:
+By default, each BGP peering session will use the same Cloudflare-side ASN to represent peering with the {props.productName} routing table. This ASN is called the **CF Account ASN** and is set to `13335`. This can be configured to a private 2-byte ASN (for example, any values between `64512` and `65534`).
 
-1. In the Cloudflare dashboard, go to {props.productName}'s **Configuration** page.
+To set this ASN:
 
-	 <DashButton url={props.dashButtonPath} />
+{/* Dashboard steps for WAN Tunnels (Cloudflare One dashboard) */}
+{ props.magicWord === "WAN Tunnels" && (
+	<>
+	<Markdown
+		text={`
+			1. Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a>, and go to **Networks**.
+			2. Go to **Routes** > **WAN configuration**.
+			3. In **Account-level virtual network overlay**, select **Edit ASN** and enter your ASN.
+		`}
+		inline={false}
+	/>
+	</>
+)
+}
 
-2. Go to **BGP configuration**.
-3. In **CF Account ASN**, enter Cloudflare's ASN.
+{/* Dashboard steps for Magic WAN and Magic Transit (standalone dashboards) */}
+{ props.magicWord !== "WAN Tunnels" && (
+	<>
+		<Markdown
+			text={`
+			1. In the Cloudflare dashboard, go to ${props.productName}'s **Configuration** page.
+			`}
+			inline={false}
+		/>
+		<DashButton url={props.dashButtonPath} />
+		<Markdown
+			text={`
+			2. Go to **BGP configuration**.
+			3. In **CF Account ASN**, enter Cloudflare's ASN.
+			`}
+			inline={false}
+		/>
+	</>
+)
+}
+
 4. Select **Update**.
 
 { props.magicWord === "Magic Transit" && (
@@ -305,15 +417,15 @@ By default, each BGP peering session will use the same Cloudflare-side ASN to re
   )
 }
 
-{ props.magicWord === "Magic WAN" && (
+{ props.magicWord !== "Magic Transit" && (
   <>
 	<Markdown
     text={`
-		Magic WAN customers should also be aware of the following:
+		${props.productName} customers should also be aware of the following:
 		- The customer chooses their device ASN, which must be different to the Cloudflare-side ASN.
 		- The Cloudflare side ASN will be included in the \`AS_PATH\` of announced routes to any BGP enabled interconnect.
-		- The customer-announced \`AS_PATH\` is transitive between interconnects — meaning the origin (customer) ASN is visible in the \`AS_PATH\` of routes received from Cloudflare via BGP. Due to default BGP loop prevention mechanisms, a router will reject any route that contains its own ASN in the \`AS_PATH\`. For example, if two Magic WAN-connected sites both use \`ASN 65000\`, site A will not accept routes from site B, and vice versa, because each site sees its own ASN in the advertised \`AS_PATH\`. <br />
-			To enable routing between private networks over Magic WAN, you should either:
+		- The customer-announced \`AS_PATH\` is transitive between interconnects — meaning the origin (customer) ASN is visible in the \`AS_PATH\` of routes received from Cloudflare via BGP. Due to default BGP loop prevention mechanisms, a router will reject any route that contains its own ASN in the \`AS_PATH\`. For example, if two ${props.productName}-connected sites both use \`ASN 65000\`, site A will not accept routes from site B, and vice versa, because each site sees its own ASN in the advertised \`AS_PATH\`. <br />
+			To enable routing between private networks over ${props.productName}, you should either:
 			- Assign a unique ASN to each site/network, or
 			- Configure your edge CPE to accept BGP routes that include its own ASN in the \`AS_PATH\`.
   `}
@@ -335,17 +447,48 @@ You need to configure two ASNs:
 
 If you already have set up your Cloudflare account ASN, you can skip steps two and three below.
 
-1. In the Cloudflare dashboard, go to {props.productName}'s **Configuration** page.
+{/* Dashboard steps for WAN Tunnels (Cloudflare One dashboard) */}
+{ props.magicWord === "WAN Tunnels" && (
+	<>
+	<Markdown
+		text={`
+			1. Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a>, and go to **Networks**.
+			2. Go to **Routes** > **WAN configuration**.
+			3. In **Account-level virtual network overlay**, select **Edit ASN** and enter your ASN.
+			4. Go to **Networks** > **Interconnects**.
+		`}
+		inline={false}
+	/>
+	</>
+)
+}
 
-	 <DashButton url={props.dashButtonPath} />
+{/* Dashboard steps for Magic WAN and Magic Transit (standalone dashboards) */}
+{ props.magicWord !== "WAN Tunnels" && (
+	<>
+		<Markdown
+			text={`
+			1. In the Cloudflare dashboard, go to ${props.productName}'s **Configuration** page.
+			`}
+			inline={false}
+		/>
+		<DashButton url={props.dashButtonPath} />
+		<Markdown
+			text={`
+			2. Go to **BGP configuration**.
+			3. In **CF Account ASN**, enter Cloudflare's ASN.
+			4. Go to **Interconnects**.
+			`}
+			inline={false}
+		/>
+	</>
+)
+}
 
-2. Go to **BGP configuration**.
-3. In **CF Account ASN**, enter Cloudflare's ASN.
-4. Go to **Interconnects**.
 5. Find the Direct CNI interconnect you want to configure with BGP > select the **three dots** next to it > **Configure BGP**.
 6. In **Customer device ASN**, enter the ASN for your network.
 
-	{ props.magicWord === "Magic WAN" && (
+	{ props.magicWord !== "Magic Transit" && (
 		<>
 		<Aside type="note">Multiple interconnects with the same ASN will not exchange routes if standard BGP loop prevention is enabled. Consider using a different ASN per session, or enabling duplicate ASNs (like Cisco's <code>allowas-in</code> feature) to exchange routes between networks. </Aside>
 		</>
@@ -355,5 +498,13 @@ If you already have set up your Cloudflare account ASN, you can skip steps two a
 7. In **MD5 key**, you can optionally enter the key for your network. Note that this is meant to prevent accidental misconfigurations, and is not a security mechanism.
 8. (Optional) In **Advertised prefix list**, input the additional prefixes automatically assigned by Cloudflare during the creation of the CNI interconnect, to advertise alongside your existing routes. Leave blank if you do not want to advertise extra routes. <br /> Typical prefixes to configure here include:
 	- A route to `0.0.0.0/0`, the default route — to attract all Internet-bound traffic if using {props.productGatewayOrEgress}.
-	- A route to `100.96.0.0/12`, the portion of CGNAT space [used by default with WARP clients](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/user-to-site/#add-route-to-router).
+	- A route to `100.96.0.0/12`, the portion of CGNAT space [used by default with WARP clients](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/user-to-site/#add-ip-route-to-router).
 9. Select **Save**.
+
+{ props.magicWord !== "Magic Transit" && (
+  <>
+    <AnchorHeading title="Next steps" depth={2} />
+    <p>Now that you have configured your tunnels and routes, the next step is to create a site. <Render file="sites/sites-brief" product="networking-services" params={{ sitesURL: props.sitesURL }} /></p>
+  </>
+)
+}

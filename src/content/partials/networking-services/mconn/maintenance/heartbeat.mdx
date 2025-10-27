@@ -1,9 +1,10 @@
 ---
 params:
   - productName
+  - wanName
 ---
 
-import { DashButton } from '~/components';
+import { DashButton, Markdown } from '~/components';
 
 {props.productName} communicates periodically with Cloudflare via HTTPS. This is also known as a heartbeat, and lets Cloudflare know that the {props.productName} in question is connected to the Internet and reachable.
 
@@ -17,8 +18,32 @@ There are three symbols for the heartbeat signal that allow you to quickly check
 
 ### Access {props.productName}'s heartbeat
 
-1. In the Cloudflare dashboard, go to the **Configuration* page.
-
-	<DashButton url="/?to=/:account/magic-wan/configuration" />
-
-2. In the **Connectors** tab, find your Connector, and place your cursor over the icon on the **Status** column to check the timestamp. The timestamp shows you the last time Connector successfully contacted Cloudflare.
+{ props.wanName === "WAN Tunnels" ? (
+	<>
+		<Markdown
+	text={`
+		1. Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a>, and go to **Networks**.
+		2. Go to **Connectors** > **Appliances** > **Profiles**.
+		3. Find your ${props.productName}, and place your cursor over the icon on the **Status** column to check the timestamp. The timestamp shows you the last time ${props.productName} successfully contacted Cloudflare.
+	`}
+	inline={false}
+	/>
+	</>
+) : (
+	<>
+		<Markdown
+	text={`
+		1. In the Cloudflare dashboard, go to the **Configuration** page.
+	`}
+	inline={false}
+	/>
+		<DashButton url="/?to=/:account/magic-wan/configuration" />
+		<Markdown
+	text={`
+		2. In the **${props.productName}** tab, find your ${props.productName}, and place your cursor over the icon on the **Status** column to check the timestamp. The timestamp shows you the last time ${props.productName} successfully contacted Cloudflare.
+	`}
+	inline={false}
+	/>
+	</>
+)
+}

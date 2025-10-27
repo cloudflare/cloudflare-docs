@@ -1,7 +1,9 @@
 ---
 params:
   - instructions?
+  - magicWord
   - productName
+  - networkOverviewPageName
   - magicTunnelHcsURL
   - setGeoCoordinatesURL
 ---
@@ -10,9 +12,9 @@ params:
 
 import { Details, Markdown } from "~/components"
 
-After adding your sites, the Network overview (beta) section of the dashboard provides a summary of the connectivity status and traffic analytics for all your sites. This is a great place to start if you receive a Magic WAN alert, need to begin the troubleshooting process, or are performing routine monitoring. <Markdown text={props.instructions} />
+After adding your sites, the {props.networkOverviewPageName} section of the dashboard provides a summary of the connectivity status and traffic analytics for all your sites. This is a great place to start if you receive a {props.productName} alert, need to begin the troubleshooting process, or are performing routine monitoring. <Markdown text={props.instructions} />
 
-Network overview (beta) has the following data types available:
+{props.networkOverviewPageName} has the following data types available:
 
 <Details header="Geographic map summary">
 	- [Aggregate {props.productName} site health](#site-health)
@@ -36,8 +38,28 @@ Network overview (beta) has the following data types available:
 
 To start using {props.productName} site analytics:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Select **Magic WAN** > **Network overview (beta)**.
+{ props.magicWord === "WAN Tunnels" ? (
+	<>
+	<Markdown
+		text={`
+		1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/).
+		2. Go to **Insights** > **${props.networkOverviewPageName}**.
+		`}
+		inline={false}
+	/>
+	</>
+) : (
+	<>
+	<Markdown
+		text={`
+		1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+		2. Select **Magic WAN** > **${props.networkOverviewPageName}**.
+		`}
+		inline={false}
+	/>
+	</>
+)
+}
 
 You will have access to an overview map with all your active sites, and any alerts for sites that are unhealthy or have no status available to them.
 
@@ -57,7 +79,7 @@ Just below the map, Traffic overview shows a more granular list of your sites an
 
 #### Site health
 
-Sites can be healthy or unhealthy, and Magic WAN uses this information to route traffic. Refer to [Set thresholds for site health](#set-thresholds-for-site-health) to learn more about this topic.
+Sites can be healthy or unhealthy, and {props.productName} uses this information to route traffic. Refer to [Set thresholds for site health](#set-thresholds-for-site-health) to learn more about this topic.
 
 #### No status available
 

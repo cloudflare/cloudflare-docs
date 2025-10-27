@@ -19,13 +19,15 @@ params:
   - gatewayLogsURL
   - tcpMssClampingURL
   - ikeURL
+  - greIpsecURL
+  - tracerouteURL
 ---
 
 import { Render } from "~/components";
 
 <a href={props.gatewayURL}>Cloudflare Gateway</a>, our comprehensive Secure Web Gateway, allows you to set up policies to inspect DNS, network, HTTP, and egress traffic.
 
-You can apply network and HTTP Gateway policies alongside <a href={props.magicFirewallURL}>{props.magicFirewallName}</a> policies (for L3/4 traffic filtering) to Internet-bound traffic or private traffic entering the Cloudflare network via Magic WAN. Additionally, you can configure Gateway to [resolve DNS queries](#dns-filtering) from Magic WAN.
+You can apply network and HTTP Gateway policies alongside <a href={props.magicFirewallURL}>{props.magicFirewallName}</a> policies (for L3/4 traffic filtering) to Internet-bound traffic or private traffic entering the Cloudflare network via {props.magicWANName}. Additionally, you can configure Gateway to [resolve DNS queries](#dns-filtering) from {props.magicWANName}.
 
 ## HTTPS filtering
 
@@ -41,7 +43,7 @@ If you cannot or do not want to install the certificate, you can create <a href=
 | Passed Device Posture Checks | not in   | iOS (OS version)     | Or    | Do Not Inspect |
 | Passed Device Posture Checks | not in   | Android (OS version) |       | Do Not Inspect |
 
-If your organization onboards users to Magic WAN via an <a href={props.mwanOnrampsURL}>on-ramp other than WARP</a>, you can exempt devices from inspection using the IP addresses for your Magic IPsec tunnels:
+If your organization onboards users to {props.magicWANName} via an <a href={props.mwanOnrampsURL}>on-ramp other than WARP</a>, you can exempt devices from inspection using the IP addresses for your Magic IPsec tunnels:
 
 | Selector  | Operator | Value            | Action         |
 | --------- | -------- | ---------------- | -------------- |
@@ -78,13 +80,13 @@ By default, the following traffic routed through {props.magicWANName} tunnels an
 - TCP, UDP, and ICMP traffic sourced from [RFC 1918](https://datatracker.ietf.org/doc/html/rfc1918) IPs or WARP devices.
 - TCP and UDP traffic sourced from [BYO](/byoip/) or [Leased IPs](/magic-transit/cloudflare-ips/) and destined to a well-known port (`0`-`1023`).
 
-Traffic destined to public IPs will be routed over the public Internet, unless explicitly specified otherwise. If you want to configure specific public IP ranges to be routed through your Magic WAN tunnels instead of over the public Internet after filtering, contact your account team.
+Traffic destined to public IPs will be routed over the public Internet, unless explicitly specified otherwise. If you want to configure specific public IP ranges to be routed through your {props.magicWANName} tunnels instead of over the public Internet after filtering, contact your account team.
 
 This traffic will egress from Cloudflare according to the <a href={props.egressPoliciesURL}>egress policies</a> you define in Cloudflare Gateway. By default, it will egress from a shared Cloudflare public IP range.
 
 ## Private traffic
 
-By default, TCP, UDP, and ICMP traffic routed through Magic WAN tunnels and destined to routes behind <a href={props.cloudflareTunnelURL}>Cloudflare Tunnel</a> will be proxied/filtered through Cloudflare Gateway.
+By default, TCP, UDP, and ICMP traffic routed through {props.magicWANName} tunnels and destined to routes behind <a href={props.cloudflareTunnelURL}>Cloudflare Tunnel</a> will be proxied/filtered through Cloudflare Gateway.
 
 Contact your account team to enable Gateway filtering for traffic destined to routes behind {props.magicWANName} tunnels.
 
@@ -106,11 +108,11 @@ Source ports are hard-coded to `1024`-`65535` and may not be overridden.
 	file="traceroute"
 	product="networking-services"
 	params={{
-		productName: "Magic WAN",
-		greIpsecURL: "/magic-wan/configuration/manually/how-to/configure-tunnel-endpoints/",
-		warpURL: "/cloudflare-one/team-and-resources/devices/warp/",
-		cloudflareTunnelURL: "/cloudflare-one/networks/connectors/cloudflare-tunnel/",
-		tracerouteURL: "/magic-wan/configuration/manually/how-to/traceroute/"
+		productName: props.magicWANName,
+		greIpsecURL: props.greIpsecURL,
+		warpURL: props.warpURL,
+		cloudflareTunnelURL: props.cloudflareTunnelURL,
+		tracerouteURL: props.tracerouteURL
 		}}
 	/>
 

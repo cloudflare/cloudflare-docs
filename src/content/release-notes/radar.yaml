@@ -3,6 +3,11 @@ link: "/radar/release-notes/"
 productName: Radar
 productLink: "/radar/"
 entries:
+  - publish_date: "2025-10-27"
+    title: Add TLD insights
+    description: |-
+      * Added new dimensions `tld` and `tld_dns_magnitude` to the [DNS](/api/resources/radar/subresources/dns/) API.
+      * Added new endpoints [`/tlds`](/api/resources/radar/subresources/tlds/methods/list/) and [`/tlds/{tld}`](/api/resources/radar/subresources/tlds/methods/get/).
   - publish_date: "2025-10-09"
     title: Add CT log activity statistics
     description: |-

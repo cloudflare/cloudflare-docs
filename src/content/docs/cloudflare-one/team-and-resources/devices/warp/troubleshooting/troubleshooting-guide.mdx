@@ -10,7 +10,7 @@ import { MetaInfo, Render, Steps, Stream, Tabs, TabItem, Type } from "~/componen
 This guide helps you diagnose and resolve common issues with the Cloudflare WARP client. It covers how to troubleshoot the WARP client on desktop operating systems, including Windows, macOS, and Linux.
 
 1. **Before you start**: [Prerequisites](#prerequisites), permissions, [version control](#check-your-warp-version), and WARP basics.
-2. **Collect logs**: Through the [dashboard](#option-a-collect-logs-via-the-cloudflare-dashboard) (with DEX remote capture) or the [command-line interface](#option-b-collect-logs-via-the-cli) (CLI) (`warp-diag`).
+2. **Collect logs**: Through [Cloudflare One](#option-a-collect-logs-via-the-cloudflare-dashboard) (with DEX remote capture) or the [command-line interface](#option-b-collect-logs-via-the-cli) (CLI) (`warp-diag`).
 3. **Review logs**: [Status](#check-warp-status), [settings](#check-warp-settings), [profile ID](#profile-id), [split tunnel](#exclude-mode-with-hostsips) configuration, and other settings.
 4. **Fix common misconfigurations**: [Profile mismatch](#wrong-profile-id), [split tunnel issues](#wrong-split-tunnel-configuration), [managed network issues](#review-your-managed-network-settings), [user group mismatch](#check-a-users-group-membership).
 5. **File a support ticket**: [How to file a ticket](#5-file-a-support-ticket) after you have exhausted your troubleshooting options.
@@ -19,10 +19,10 @@ This guide helps you diagnose and resolve common issues with the Cloudflare WARP
 
 Cloudflare One includes two free AI helpers to speed up WARP investigations:
 
-[**WARP Diagnostics Analyzer**](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/warp-logs/#warp-diagnostics-analyzer-beta) - Uses AI to parse a device’s WARP diagnostic log and summarizes key events, likely causes, and recommended next steps in a concise summary. This analyzer is available for logs collected via the dashboard.
+[**WARP Diagnostics Analyzer**](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/warp-logs/#warp-diagnostics-analyzer-beta) - Uses AI to parse a device's WARP diagnostic log and summarizes key events, likely causes, and recommended next steps in a concise summary. This analyzer is available for logs collected via the dashboard.
 
 
-[**DEX MCP server**](/cloudflare-one/insights/dex/dex-mcp-server/) — An AI tool that allows customers to ask a question like, "Show me the connectivity and performance metrics for the device used by carly‌@acme.com", and receive an answer that contains data from the DEX API.
+[**DEX MCP server**](/cloudflare-one/insights/dex/dex-mcp-server/) — An AI tool that allows customers to ask a question like, "Show me the connectivity and performance metrics for the device used by carly@acme.com", and receive an answer that contains data from the DEX API.
 
 :::
 
@@ -47,16 +47,16 @@ After updating the WARP client, monitor the issue to see if it recurs. If the is
 3. Select **About WARP**.
 4. Compare your device's version with the [latest version of WARP](/cloudflare-one/team-and-resources/devices/warp/download-warp/).
 
-#### Via the Zero Trust dashboard
+#### Via the Cloudflare One dashboard
 
-1. Log into [Zero Trust](https://one.dash.cloudflare.com/) > go to **My Team** > **Devices**.
+1. Log into [Cloudflare One](https://one.dash.cloudflare.com/) > go to **Team & Resources** > **Devices** > **Your devices**.
 2. Select the device you want to investigate.
 3. Find the device's WARP version under **Client version** in the side menu.
 4. Compare your device's version with the [latest version of WARP](/cloudflare-one/team-and-resources/devices/warp/download-warp/).
 
 ### WARP basics
 
-Understand the WARP client’s architecture, installation paths, and modes to help you diagnose issues with greater accuracy.
+Understand the WARP client's architecture, installation paths, and modes to help you diagnose issues with greater accuracy.
 
 <Stream
         id="31178cc41d0ec56d42ef892160589635"
@@ -93,7 +93,7 @@ You can collect diagnostic logs in two ways: the [Cloudflare dashboard](#option-
 
 ### Option A: Collect logs via the Cloudflare dashboard
 
-Collect WARP diagnostic logs remotely from the Zero Trust dashboard by using Digital Experience Monitoring's (DEX) remote captures.
+Collect WARP diagnostic logs remotely from the Cloudflare One dashboard by using Digital Experience Monitoring's (DEX) remote captures.
 
 :::tip[Best practice]
 
@@ -125,7 +125,7 @@ After you have your diagnostic files, go to [Review key files](/cloudflare-one/t
 
 :::tip[AI-assisted troubleshooting]
 
-The [WARP Diagnostics Analyzer](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/warp-logs/#warp-diagnostics-analyzer-beta) uses AI to parse a device’s WARP diagnostic log and summarizes key events, likely causes, and recommended next steps in a concise summary.
+The [WARP Diagnostics Analyzer](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/warp-logs/#warp-diagnostics-analyzer-beta) uses AI to parse a device's WARP diagnostic log and summarizes key events, likely causes, and recommended next steps in a concise summary.
 
 After you run a [DEX remote capture](#option-a-collect-logs-via-the-cloudflare-dashboard) for WARP diagnostics:
 
@@ -335,17 +335,17 @@ To verify that WARP is configured and working properly, review the following:
 
 ### Wrong profile ID
 
-A profile ID is a unique identifier assigned to each [device profile](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-profiles/) in the Zero Trust dashboard, used to determine which configuration settings apply to a device.
+A profile ID is a unique identifier assigned to each [device profile](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-profiles/) in the Cloudflare One dashboard, used to determine which configuration settings apply to a device.
 
 #### Check the applied device profile
 
 To check that the applied device profile is the intended device profile:
 
-1. Go to [Zero Trust](https://one.dash.cloudflare.com/) > **Settings** > **WARP Client**.
+1. Go to [Cloudflare One](https://one.dash.cloudflare.com/) > **Team & Resources** > **Devices** > **Device profiles**.
 2. Find and select the device profile intended for the device.
 3. Under **Profile details**, compare the displayed **Profile ID** with the `Profile ID` in the `warp-settings.txt` file.
 
-If your organization has multiple device profiles defined in the Zero Trust dashboard, a device may be matched to an unexpected profile because:
+If your organization has multiple device profiles defined in the Cloudflare One dashboard, a device may be matched to an unexpected profile because:
 
 - How [profile precedence](#review-profile-precedence) is configured.
 - [Managed network](#review-your-managed-network-settings) issues (if you are using a managed network.)
@@ -378,8 +378,8 @@ When troubleshooting WARP for managed network issues:
 
 	If you received a returned SHA-256 fingerprint:
 
-	1. Log into [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **WARP Client**.
-	2. Go to **Manage Networks** > **Edit**.
+	1. Log into [Cloudflare One](https://one.dash.cloudflare.com/), and go to **Team & Resources** > **Devices** > **Device profiles**.
+	2. Go to **Managed networks** > **Edit**.
 	3. Compare the TLS Cert SHA-256 in the dashboard with the returned fingerprint in your terminal to ensure they match.
 
 2. Use a single profile for a single location.
@@ -392,7 +392,7 @@ If a user is having issues with a device profile, it may be because they are not
 
 To check that the user belongs to the intended group:
 
-1. Log into [Zero Trust](https://one.dash.cloudflare.com/) > go to **My Team** > **Users**.
+1. Log into [Cloudflare One](https://one.dash.cloudflare.com/) > go to **Team & Resources** > **Users**.
 2. Select the user.
 3. Under **User Registry Identity**, select the user's name.
 4. The **Get-identity endpoint** lists all the groups the user belongs to.
@@ -433,11 +433,11 @@ After downloading the WARP diagnostic logs, review that your configuration is wo
 	`Include mode` means only traffic destined to the IPs or domains you specify will be sent through the WARP tunnel.
 	:::
 
-2. Log into [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **WARP client**.
+2. Log into [Cloudflare One](https://one.dash.cloudflare.com/), go to **Team & Resources** > **Devices** > **Device profiles**.
 3. Find and select the device profile intended for the device.
 4. Select **Edit**.
 5. Find **Split Tunnels** and note the mode you have selected > select **Manage**.
-6. Cross-reference the IPs/hosts you have configured in the Zero Trust dashboard with the IPs/hosts listed in `warp-settings.txt`.
+6. Cross-reference the IPs/hosts you have configured in the Cloudflare One dashboard with the IPs/hosts listed in `warp-settings.txt`.
 
 If your dashboard split tunnel configuration does not match your `warp-settings.txt` file configuration, you may need to force the WARP client to [update its settings](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/troubleshooting-guide/#update-the-warp-clients-settings).
 

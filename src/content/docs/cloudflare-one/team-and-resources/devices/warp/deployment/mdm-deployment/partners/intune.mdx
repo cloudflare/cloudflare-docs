@@ -132,33 +132,37 @@ Deploy configuration profiles (steps 1, 2, and 3) before the WARP application (s
 
 You must deploy a [user-side certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/) so that devices managed by Intune can establish trust with Cloudflare when their traffic is inspected.
 
-1. Log in to [Zero Trust](https://one.dash.cloudflare.com/).
+1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/).
 
-2. Go to **Settings** > **Resources** > under **Certificates**, select **Manage**.
+2. Go to **Settings** > **Certificates & downloads**.
 
-3. Find your [certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/) and select the three dotted icon next to it > select **Download .crt**.
+3. Select **View**.
 
-4. In the [Microsoft Intune admin center](https://intune.microsoft.com), go to **Devices** > select **macOS**.
+4. Under **Certificates**, select **Manage**.
+
+5. Find your [certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/) and select the three dotted icon next to it > select **Download .crt**.
+
+6. In the [Microsoft Intune admin center](https://intune.microsoft.com), go to **Devices** > select **macOS**.
 
 	![Intune admin console where you select macOS before creating a policy](~/assets/images/cloudflare-one/connections/intune/devices-macos.png)
 
-5. Under **Manage devices**, select **Configuration**.
+7. Under **Manage devices**, select **Configuration**.
 
 	![Intune admin console where you will create a new policy](~/assets/images/cloudflare-one/connections/intune/manage-devices-configuration.png)
 
-6. Select **Create** > **New Policy**.
+8. Select **Create** > **New Policy**.
 
-7. For **Profile Type**, select _Templates_ > select **Trusted certificate** as the **Template name** > select **Create**.
+9. For **Profile Type**, select _Templates_ > select **Trusted certificate** as the **Template name** > select **Create**.
 
-8. In **Basics**, input the necessary field(s) and give your policy a name like `Cloudflare certificate` > select **Next**.
+10. In **Basics**, input the necessary field(s) and give your policy a name like `Cloudflare certificate` > select **Next**.
 
-9. For **Deployment Channel**, select **Device Channel**.
+11. For **Deployment Channel**, select **Device Channel**.
 
-10. Upload your file (Intune may request `.cer` format, though `.crt` files are also accepted) > select **Next**.
+12. Upload your file (Intune may request `.cer` format, though `.crt` files are also accepted) > select **Next**.
 
-11. In **Assignments**, select an option (for example, **Add all devices** or **Add all users**) that is valid for your scope. This will be the same scope for all steps. Select **Next**.
+13. In **Assignments**, select an option (for example, **Add all devices** or **Add all users**) that is valid for your scope. This will be the same scope for all steps. Select **Next**.
 
-12. Review your configuration in **Review + create** and select **Create**.
+14. Review your configuration in **Review + create** and select **Create**.
 
 Sharing this certificate with Intune automates the installation of this certificate on your user devices, creating trust between browsers on a user's device and Cloudflare.
 
@@ -294,30 +298,33 @@ By completing this step, you preconfigure WARP with your team settings so it con
 Complete Step 4 at least one hour after steps 1, 2, and 3 so clients have enough time to check in and update their device configurations.
 :::
 
-1. Log in to [Zero Trust](https://one.dash.cloudflare.com/).
+1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/).
 
-2. Go to **Settings** > **Resources** > find macOS under **Download the WARP client** > select **Download release**.
+2. Go to **Settings** > **Certificates and downloads**, and select **View**.
+
+3. Under **Download the WARP client**, find macOS, and select **Download release**.
 
 	You will be taken to the WARP documentation on [stable releases for macOS](/cloudflare-one/team-and-resources/devices/warp/download-warp/#macos) and download a `.pkg` file.
 
 	:::note[Repeat this step to update WARP when a new release is available]
 	Every time WARP releases a new version, you must repeat this process and get a new `.pkg` file for the new WARP version.
 	:::
-3. Log in to the [Microsoft Intune admin center](https://intune.microsoft.com), and go to **Apps** > **macOS**.
 
-4. Select **Create**.
+4. Log in to the [Microsoft Intune admin center](https://intune.microsoft.com), and go to **Apps** > **macOS**.
 
-5. For **App type**, select _macOS app (PKG)_.
+5. Select **Create**.
 
-6. In **App information**, select the `.pkg` file you downloaded and input required details. Enter `Cloudflare` as the Publisher.
+6. For **App type**, select _macOS app (PKG)_.
 
-7. In **Requirements**, refer to the OS versions listed in [stable releases for macOS](/cloudflare-one/team-and-resources/devices/warp/download-warp/#macos) and find what matches for you.
+7. In **App information**, select the `.pkg` file you downloaded and input required details. Enter `Cloudflare` as the Publisher.
 
-8. In **Detection rules**, note that the WARP package will have filled in the App bundle ID and App version.
+8. In **Requirements**, refer to the OS versions listed in [stable releases for macOS](/cloudflare-one/team-and-resources/devices/warp/download-warp/#macos) and find what matches for you.
 
-9. In **Assignments**, select an option (for example, **Add all devices** or **Add all users**) that is valid for your scope. Select **Next**.
+9. In **Detection rules**, note that the WARP package will have filled in the App bundle ID and App version.
 
-10. Review your configuration in **Review + create** and select **Create**.
+10. In **Assignments**, select an option (for example, **Add all devices** or **Add all users**) that is valid for your scope. Select **Next**.
+
+11. Review your configuration in **Review + create** and select **Create**.
 
 By completing this step, you deliver the WARP client to targeted macOS devices, either automatically (assignment scope set as **Required**) or on-demand (assignment scope as **Available**) through your company portal.
 
@@ -335,8 +342,8 @@ Per-app VPN is supported on Cloudflare One Agent version `1.8` or greater for iO
 
 Before proceeding with per-app VPN configuration, you must make sure [Auto connect](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#auto-connect) is disabled in Zero Trust. To disable Auto connect:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **WARP Client**.
-2. Under **Device Settings**, select your device profile and select **Edit**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Team & Resources** > **Devices** > **Device profiles**.
+2. Under **Profiles**, select your device profile and select **Edit**.
 3. Turn off **Auto Connect**.
 
 To configure per-app VPN:

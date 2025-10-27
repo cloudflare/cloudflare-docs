@@ -11,13 +11,13 @@ The amount of seats available in your Zero Trust account depends on the amount o
 
 ## Authentication events
 
-A user consumes a seat when they perform an authentication event. For Access, this is any Cloudflare Access authentication event, such as a login to the [App Launcher](/cloudflare-one/applications/app-launcher/) or an application. For Gateway, this is when any devices associated with the user connect to Zero Trust within the [specified period](#enable-seat-expiration).
+A user consumes a seat when they perform an authentication event. For Access, this is any Cloudflare Access authentication event, such as a login to the [App Launcher](/cloudflare-one/access-controls/access-settings/app-launcher/) or an application. For Gateway, this is when any devices associated with the user connect to Zero Trust within the [specified period](#enable-seat-expiration).
 
 If either one of these events occurs, that user's identity is added as an Active user to Zero Trust and consumes one seat from your plan. The user will occupy and consume a single seat regardless of the number of applications accessed or login events from their user account. Once the total amount of seats in the subscription has been consumed, additional users who attempt to log in are blocked.
 
 A user who authenticates will hold their seat until you [remove the user](#remove-a-user) from your account. By default, inactive users will not be [automatically removed](#enable-seat-expiration) from your account. You can remove a single user or all users at any time, and those users will immediately stop counting against the seat count defined in your subscription.
 
-If you notice a number of accounts greater than the number of your users, you may need to configure an Access [bypass policy](/cloudflare-one/access-controls/policies/#bypass). Alternatively, you can use Access [service tokens](/cloudflare-one/identity/service-tokens/) to allow access to applications without consuming seats.
+If you notice a number of accounts greater than the number of your users, you may need to configure an Access [bypass policy](/cloudflare-one/access-controls/policies/#bypass). Alternatively, you can use Access [service tokens](/cloudflare-one/access-controls/service-credentials/service-tokens/) to allow access to applications without consuming seats.
 
 ## Manage users
 

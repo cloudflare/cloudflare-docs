@@ -1,0 +1,38 @@
+---
+title: Cloudflare Gateway
+pcx_content_type: reference
+head:
+  - tag: title
+    content: Connect to Cloudflare Gateway with WAN Tunnels
+---
+
+import { Render } from "~/components";
+
+<Render
+	file="magic-wan/zero-trust/gateway"
+	product="networking-services"
+	params={{
+		gatewayURL: "/cloudflare-one/policies/gateway/",
+		magicFirewallName: "Magic Firewall",
+		magicFirewallURL: "/magic-firewall/",
+		warpURL: "/cloudflare-one/networks/connectors/wan-tunnels/zero-trust/warp/",
+		cfAutoCertificatesURL: "/cloudflare-one/team-and-resources/devices/user-side-certificates/automated-deployment/",
+		cfManualCertificatesURL: "/cloudflare-one/team-and-resources/devices/user-side-certificates/manual-deployment/",
+		decryptTlsURL: "/cloudflare-one/policies/gateway/http-policies/tls-decryption/",
+		doNotInspectURL: "/cloudflare-one/policies/gateway/http-policies/#do-not-inspect",
+		magicWANName: "WAN Tunnels",
+		warpChecksURL: "/cloudflare-one/identity/devices/warp-client-checks/",
+		osVersionChecks: "/cloudflare-one/identity/devices/warp-client-checks/os-version/",
+		mwanOnrampsURL: "/cloudflare-one/networks/connectors/wan-tunnels/on-ramps/",
+		gatewayResolverPoliciesURL: "/cloudflare-one/policies/gateway/resolver-policies/",
+		gatewayInternalDnsURL: "/cloudflare-one/policies/gateway/resolver-policies/#internal-dns",
+		egressPoliciesURL: "/cloudflare-one/policies/gateway/egress-policies/",
+		cloudflareTunnelURL:"/cloudflare-one/networks/connectors/wan-tunnels/zero-trust/cloudflare-tunnel/",
+		gatewayLogsURL: "/cloudflare-one/insights/logs/gateway-logs/#http-logs",
+		tcpMssClampingURL: "/cloudflare-one/networks/connectors/wan-tunnels/get-started/#set-maximum-segment-size",
+		ikeURL: "/cloudflare-one/networks/connectors/wan-tunnels/reference/gre-ipsec-tunnels/#supported-configuration-parameters",
+		greIpsecURL: "/cloudflare-one/networks/connectors/wan-tunnels/configuration/manually/how-to/configure-tunnel-endpoints/",
+		tracerouteURL: "/cloudflare-one/networks/connectors/wan-tunnels/configuration/manually/how-to/traceroute/"
+
+	}}
+/>

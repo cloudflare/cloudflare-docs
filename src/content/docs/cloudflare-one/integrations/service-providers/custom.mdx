@@ -29,7 +29,7 @@ The custom service provider integration works with any API service that meets th
 
 ### Authentication
 
-The WARP client authenticates to the external API through Cloudflare Access. The external API should [validate the application token](/cloudflare-one/identity/authorization-cookie/validating-json/) issued by Cloudflare Access to ensure that any requests which bypass Access (for example, due to a network misconfiguration) are rejected.
+The WARP client authenticates to the external API through Cloudflare Access. The external API should [validate the application token](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/validating-json/) issued by Cloudflare Access to ensure that any requests which bypass Access (for example, due to a network misconfiguration) are rejected.
 
 ### Data passed to external API
 
@@ -99,7 +99,7 @@ Example response body:
 
 ### 1. Create a service token
 
-WARP uses an Access Client ID and Access Client Secret to securely authenticate to the external API. If you do not already have an Access Client ID and Access Client Secret, [create a new service token](/cloudflare-one/identity/service-tokens/#create-a-service-token).
+WARP uses an Access Client ID and Access Client Secret to securely authenticate to the external API. If you do not already have an Access Client ID and Access Client Secret, [create a new service token](/cloudflare-one/access-controls/service-credentials/service-tokens/#create-a-service-token).
 
 ### 2. Create an Access application
 

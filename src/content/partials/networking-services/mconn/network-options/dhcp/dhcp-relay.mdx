@@ -1,11 +1,12 @@
 ---
 params:
   - productName
+  - wanName
   - cfTunnelURL
   - cfVsCoreDashNamingMwanCni
 ---
 
-import { APIRequest, Render, TabItem, Tabs } from "~/components";
+import { APIRequest, Markdown, Render, TabItem, Tabs } from "~/components";
 
 DHCP Relay provides a way for DHCP clients to communicate with DHCP servers that are not available on the same local subnet/broadcast domain. When you enable DHCP Relay, {props.productName} forwards DHCP discover messages to a predefined DHCP server, and routes the responses back to the original device that sent the discover message.
 
@@ -13,7 +14,7 @@ DHCP Relay provides a way for DHCP clients to communicate with DHCP servers that
 	{`
 		flowchart LR
 		accTitle: An example of Connector in DHCP Relay mode
-				a(${props.productName}) <--> b(Cloudflare/Magic WAN) <--> c(DHCP server)
+				a(${props.productName}) <--> b(Cloudflare/${props.wanName}) <--> c(DHCP server)
 
 				subgraph Site A
 				d[LAN 1] <--> a
@@ -38,15 +39,40 @@ To configure DHCP relay:
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to **Magic WAN** > **Connector on-ramps (beta)**.
-3. Select your Connector > **Edit**.
+{ props.wanName === "WAN Tunnels" ? (
+	<>
+		<Markdown
+	text={`
+		1. Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a>, and go to **Networks**.
+		2. Go to **Connectors** > **Appliances** > **Profiles**.
+	`}
+	inline={false}
+	/>
+	</>
+) : (
+	<>
+		<Markdown
+	text={`
+		1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+		2. Go to **Magic WAN** > **Connector on-ramps (beta)**.
+	`}
+	inline={false}
+	/>
+	</>
+)
+}
+<Markdown
+text={`
+3. Select your ${props.productName} > **Edit**.
 4. Select **Network Configuration**.
 5. In **LAN configuration**, select the LAN where you need to configure DHCP relay.
 6. Select **Edit**.
 7. Select **This is a DHCP Relay**.
 8. In **Upstream DHCP server addresses**, enter the IP address of your DHCP server.
 9. (Optional) If you need to add more DHCP server addresses, select **Add upstream DHCP server address** as many times as needed, and enter the new values.
+`}
+inline={false}
+/>
 
 </TabItem> <TabItem label="API">
 

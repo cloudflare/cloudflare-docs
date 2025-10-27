@@ -17,7 +17,7 @@ Detection is the process Email Security does to identify what threat an email ma
 
 Any traffic that flows through Email Security is given a final disposition, which represents our evaluation of that specific message. Each message will receive only one disposition header, so your organization can take clear and specific actions on different message types.
 
-You can use disposition values when [setting up auto-moves](/cloudflare-one/email-security/auto-moves/).
+You can use disposition values when [setting up auto-moves](/cloudflare-one/email-security/settings/auto-moves/).
 
 ### Available values
 
@@ -55,7 +55,7 @@ Traffic that flows through Email Security can also receive one or more Attribute
 | `NEW_DOMAIN_LINK=<REGISTRATION_DATE>`   | Alerts to mail with links pointing out to a newly registered domain. Formatted as yyyy-MM-dd HH:mm:ss ZZZ.                                                                                                           |
 | `ENCRYPTED`                             | Email message is encrypted.                                                                                                                                                                                          |
 | `EXECUTABLE`                            | Email message contains an executable file.                                                                                                                                                                           |
-| `BEC`                                   | Indicates that an email address was contained in your [impersonation registry](/cloudflare-one/email-security/detection-settings/impersonation-registry/) list. Associated with `MALICIOUS` or `SPOOF` dispositions. |
+| `BEC`                                   | Indicates that an email address was contained in your [impersonation registry](/cloudflare-one/email-security/settings/detection-settings/impersonation-registry/) list. Associated with `MALICIOUS` or `SPOOF` dispositions. |
 
 ### Header structure
 

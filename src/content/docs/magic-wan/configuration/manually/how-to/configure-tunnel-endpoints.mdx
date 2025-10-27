@@ -14,6 +14,7 @@ import { GlossaryTooltip, Render } from "~/components";
 <Render file="routing/configure-tunnels"
 	product="networking-services"
 	params={{
+		magicWord: "Magic WAN",
 		ipRange: "(this address space is also a link-local address)",
 		productName: "Magic WAN",
 		tunnelsAndEncapsulationPagePath: "/magic-wan/reference/gre-ipsec-tunnels/",
@@ -22,18 +23,13 @@ import { GlossaryTooltip, Render } from "~/components";
 		cniLink: "/magic-wan/network-interconnect/",
 		targetPageName: "Configuration",
 		dashButtonPath: "/?to=/:account/magic-wan/configuration",
-		updateHCFrequencyPage: "/magic-wan/configuration/common-settings/tunnel-health-checks-frequency/",
+		updateHCFrequencyPage: "/magic-wan/configuration/common-settings/update-tunnel-health-checks-frequency//",
 		tunnelHealthChecksPage: "/magic-wan/reference/tunnel-health-checks/",
 		antiReplayPagePath: "/magic-wan/reference/anti-replay-protection/",
 		biVsUniHealthCheck: "bidirectional",
 		tunnelHealthDash: "/magic-wan/configuration/common-settings/check-tunnel-health-dashboard/",
-		biVsUniHealthCheckDefaults: "For Magic WAN this option defaults to bidirectional"
+		biVsUniHealthCheckDefaults: "For Magic WAN this option defaults to bidirectional",
+		configureRoutesURL: "/magic-wan/configuration/manually/how-to/configure-routes/",
+		sitesURL: "/magic-wan/configuration/common-settings/sites/"
 	}}
 />
-
-## Next steps
-
-- Now that you have set up your tunnel endpoints you need to configure routes to route your traffic through Cloudflare. Refer to [Configure routes](/magic-wan/configuration/manually/how-to/configure-routes/) to learn more about static routing and BGP peering (only available through Direct CNI connection).
-
-- After configuring either static routes or BGP routing, you will have to [set up a site](/magic-wan/configuration/common-settings/sites/).
-
