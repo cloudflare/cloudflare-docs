@@ -4,7 +4,7 @@ title: Skew Protection
 head: []
 description: Revert to an older version of your Worker.
 ---
-import { DashButton } from "~/components";
+import { Render, WranglerConfig, DashButton } from "~/components";
 
 Skew Protection ensures that client-side JavaScript code continues to communicate with the same version of your Worker that originally served it, preventing version mismatch errors during deployments.
 
@@ -13,69 +13,325 @@ Version skew occurs when a user's browser has loaded JavaScript from one version
 Cloudflare's Skew Protection resolves this problem automatically by ensuring all requests from a client session are routed to the same Worker version that served the initial page load. This works seamlessly with gradual deployments, allowing you to safely roll out new versions without breaking active user sessions.
 
 ### How it works
+Skew Protection keeps multiple versions of your Worker deployed simultaneously. Your application includes version information in each request, and Cloudflare automatically routes those requests to the matching Worker version.
 
-Skew Protection works automatically for all requests without requiring any configuration or code changes. Cloudflare handles version consistency at the platform level for both client-to-server requests and Worker-to-Worker service binding calls.
+When Skew Protection is enabled on a Worker, 
+- **Automatic version routing**: Requests are automatically routed to specific versions using the `Cloudflare-Workers-Version-Overrides` header or `?dpl=` query parameter
+- **Configurable version TTL**: Versions remain routable for a configurable period (default: 2 days) after deployment, ensuring users on older versions can complete their sessions
+- **Version cutoff**: Manually mark a specific version as the cutoff to immediately make all earlier versions unroutable, useful for critical security fixes or breaking changes
+- **Version control**: Disable routing to individual faulty versions without affecting other versions in the TTL window
 
-#### Automatic version tracking for clients
+#### Framework support
+If you're using one of the following frameworks with their official Cloudflare adapters, Skew Protection will be automatically enabled by default during the build process:
+- SvelteKit
+- Remix
+- ...
 
-When a user first loads your application, Cloudflare automatically:
+These adapters automatically configure Skew Protection and implement the routing logic. If you'd like to disable skew protection, you can do so. 
 
-1. Sets a version cookie (`__cf_worker_version`) containing the deployment ID that served the initial page load
-2. Includes this cookie in all subsequent requests from the same browser session
-3. Routes requests to the same Worker version that set the cookie
-4. Maintains old deployments for active sessions during gradual rollouts
+#### Version Identification
 
-#### Skew protection during a gradual rollout
+Cloudflare identifies which version to route requests to using the following mechanisms, in priority order:
 
-1. User visits your site and gets Version A (latest deployment)
-2. Cloudflare sets cookie: `__cf_worker_version=version-id`
-3. You deploy Version B with breaking API changes
-4. You create a gradual deployment: Version B at 20%, Version A at 80%
-5. User's browser makes an API call with the cookie
-6. Cloudflare routes the request to Version A (matching the cookie)
-7. User's session continues working without errors
+1. **Query parameter**: `?dpl=<version-id>` (highest priority)
+   - Best for static assets (images, CSS, JavaScript files), iframes, WebSockets, or any request where custom headers cannot be set
+   - Automatically added by framework adapters to dynamic imports and asset URLs
+   - Example: `<img src="/logo.png?dpl=v870e20d">`
+   - Example: `<script src="/_next/static/chunks/main.js?dpl=v870e20d"></script>`
 
-New users visiting the site have a 20% chance of getting Version B and will consistently use Version B for their session.
+2. **HTTP header**: `Cloudflare-Workers-Version-Overrides: <worker-name>="<version-id>"` (fallback)
+   - Best for API calls, fetch requests, or any request where you can control the HTTP headers
+   - Uses [Dictionary Structured Header](https://www.rfc-editor.org/rfc/rfc8941#name-dictionaries) format to support multiple Workers in service bindings
+   - Automatically added by framework adapters to all fetch() calls
+   - Example: `fetch('/api/data', { headers: { 'Cloudflare-Workers-Version-Overrides': 'my-worker="v870e20d"' } })`
+   - Example for multiple workers: `Cloudflare-Workers-Version-Overrides: worker-a="v123", worker-b="v456"`
 
-### Service bindings and version consistency
+Query parameters take priority over headers when both are present. This ensures maximum compatibility since query parameters work universally for all request types (including static assets loaded by the browser via HTML tags), while headers only work for programmatic requests where you control the fetch call.
 
-When using service bindings to connect multiple Workers, Skew Protection ensures version consistency across the entire chain of Worker calls. 
+:::note
+Cloudflare's Skew Protection does not use cookies for version tracking. Cookies break multi-tab usage: if a user opens your site in two tabs and refreshes one tab to get a new version, the cookie forces the other tab to also switch versions, causing errors. Query parameters and headers avoid this problem by letting each tab maintain its own version independently.
+::: 
 
-#### How version cookies work with service bindings
+#### Request routing
 
-**On the initial page load:**
+When a request includes version routing information:
 
-1. Client requests Worker A
-2. Worker A sets `__cf_worker_version_worker_a` cookie
-3. Worker A calls Worker B
-4. Worker B sets `__cf_worker_version_worker_b` cookie in response
-5. Worker A forwards this cookie to the client
-6. Client now holds both cookies
+1. **Header-based routing**: `Cloudflare-Workers-Version-Overrides: my-worker="v870e20d"`
+2. **Query parameter routing** (for static assets): `https://example.com/style.css?dpl=v870e20d`
 
-**On subsequent requests:**
+Cloudflare will attempt to route the request to the specified version. The routing behavior is:
 
-1. Client sends both `__cf_worker_version_worker_a` and `__cf_worker_version_worker_b` cookies
-2. Worker A reads its own cookie to select the correct version
-3. Worker A extracts Worker B's cookie and includes it when calling Worker B
-4. Worker B reads its cookie to select the correct version
+**If the version is routable** (within TTL, after cutoff, not disabled):
+- Request is routed to the specified version
 
-This ensures that both Worker A and Worker B maintain version consistency with the original deployment that served the client, even when they are deployed independently.
+**If the version is NOT routable** (expired, before cutoff, or manually disabled):
+- Request is **automatically rerouted to the active deployment**
+- No error is returned to the user
+- This ensures graceful degradation when cached version IDs become invalid
 
-### Session expiration and version cleanup
-Sessions naturally expire after 12 hours (or your configured duration):
+### Enable Skew Protection
 
-- When a session expires, the user's next request creates a new session with current versions
-- Old Worker versions remain available as long as there are active sessions using them
-- Once all sessions using an old version have expired, that version can be safely deleted
+You can enable Skew Protection via API, Dashboard, or Wrangler. 
 
-## Setting a version cutoff
+**Configuration Options:**
+- `enabled`: Enable or disable Skew Protection for the Worker
+- `version_ttl_hours`: Number of hours versions remain routable after deployment. Default: 48 hours. 
 
-For critical security fixes, you can set a version cutoff to immediately stop serving older versions.
-```bash
-# Cut off all versions before a specific deployment
-npx wrangler versions cutoff set 
+##### Wrangler configuration
 
-# Or cut off to the latest
-npx wrangler versions cutoff set --latest
+<WranglerConfig>
+
+```toml
+[skew_protection]
+enabled = true
+version_ttl_hours = 48
 ```
-This forces all users to the cutoff version or newer on their next request, even if their session hasn't expired.
+</WranglerConfig>
+
+##### API Configuration
+
+Endpoint: PATCH `/accounts/{account_id}/workers/scripts/{script_name}/settings`
+
+Example request:  
+```
+curl -X PATCH \
+  "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/workers/scripts/$SCRIPT_NAME/settings" \
+  -H "Authorization: Bearer $API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "skew_protection": {
+      "enabled": true,
+      "version_ttl_hours": 48
+    }
+  }'
+  ```
+
+
+### List versions with routable status
+Endpoint: GET `/accounts/{account_id}/workers/scripts/{script_name}/versions`
+
+Query parameter:
+- `routable` (boolean): Filter to only routable (true) or non-routable (false) versions
+
+Example: 
+```
+# Get only routable versions
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/workers/scripts/$SCRIPT_NAME/versions?routable=true" \
+  -H "Authorization: Bearer $API_TOKEN"
+```
+
+### Version cutoff
+
+Mark a specific version as the cutoff point, making all earlier versions unroutable:
+
+Endpoint: `POST /accounts/{account_id}/workers/scripts/{script_name}/versions/{version_id}/cutoff`
+
+Example request: 
+```
+curl -X POST \
+  "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/workers/scripts/$SCRIPT_NAME/versions/va227d9d8/cutoff" \
+  -H "Authorization: Bearer $API_TOKEN" \
+  -H "Content-Type: application/json"
+  ```
+
+Response: 
+```json
+{
+  "success": true,
+  "errors": [],
+  "messages": [],
+  "result": {
+    "version_id": "va227d9d8",
+    "cutoff_applied": true,
+    "cutoff_timestamp": "2025-10-25T12:00:00Z",
+    "unroutable_versions": [
+      {
+        "version_id": "v3f8c2a1",
+        "deployed_at": "2025-10-24T12:00:00Z",
+        "previous_status": "Routable",
+        "new_status": "Not Routable"
+      },
+      {
+        "version_id": "v7ee6df6e",
+        "deployed_at": "2025-10-20T08:00:00Z",
+        "previous_status": "Routable",
+        "new_status": "Not Routable"
+      }
+    ],
+    "total_versions_affected": 2
+  }
+}
+```
+
+The response includes:
+- `cutoff_timestamp`: When the version cutoff was enabled
+- `unroutable_versions`: Array of versions that were previously routable but are now unroutable due to the cutoff
+- Each affected version shows its `previous_status` and `new_status`
+
+:::note
+
+Requests with the `Cloudflare-Workers-Version-Overrides` header or `?dpl= query` parameter targeting versions before the cutoff will be automatically rerouted to the active deployment instead of failing. This ensures that users don't experience errors when their cached version IDs become invalid.
+
+:::
+
+### Disable routing for a specific version
+Endpoint: `Endpoint: PATCH /accounts/{account_id}/workers/scripts/{script_name}/versions/{version_id}`
+
+Example Request: 
+```bash
+curl -X PATCH \
+  "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/workers/scripts/$SCRIPT_NAME/versions/v8ab1748b" \
+  -H "Authorization: Bearer $API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "routable": false
+  }'
+  ```
+
+### Enable routing for a specific version
+Endpoint: `PATCH /accounts/{account_id}/workers/scripts/{script_name}/versions/{version_id}`
+Example request: 
+```bash
+curl -X PATCH \
+  "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/workers/scripts/$SCRIPT_NAME/versions/v8ab1748b" \
+  -H "Authorization: Bearer $API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "routable": true
+  }'
+  ```
+
+## Framework Maintainers
+
+If you maintain a Cloudflare adapter for a framework, you can implement Skew Protection by using the version ID that is exposed in the Worker. 
+
+Skew Protection has two parts that work together:
+- **Server-side:** Your Worker reads its version ID and sends it to the browser
+- **Client-side:** Browser code reads the version ID and includes it in all subsequent requests back to the Worker
+
+### Server-Side Implementation
+
+**Step 1: Expose Worker version information**
+
+Configure the Worker to expose runtime information it needs for skew protection. This will require exposing: 
+- Version ID: This will be exposed through the version metadata binding and will provide access to the Worker's version ID. 
+- Worker name: The name of your Worker. This will be used in the header sent on the client side. 
+
+The version metadata binding will expose the Worker's current version ID at runtime through `env.CF_VERSION_METADATA`. Your adapter should add this to the Wrangler config file during the build process. 
+
+For skew protection, you only need the `id` field.
+
+Additionally, you will need to expose the name of the Worker. You can do this by setting the Worker name as an environment variable. 
+
+<WranglerConfig>
+
+```toml
+# Expose version metadata as CF_VERSION_METADATA binding
+[version_metadata]
+binding = "CF_VERSION_METADATA"
+
+# Set the worker name as an environment variable
+[vars]
+WORKER_NAME = "my-app-worker"
+```
+</WranglerConfig>
+
+**Step 2: Read version ID and Worker name in the Worker**
+
+In your Worker's `fetch` handler, read the version ID and Worker name from the binding, so you can send it to the client. 
+
+```ts
+export default {
+  async fetch(request, env, ctx) {
+    // Read version ID
+    const versionId = env.CF_VERSION_METADATA.id;
+    
+    // Pass it to your framework's render function
+    const html = await framework.render(request, { versionId });
+  }
+};
+```
+**Step 3: Inject Version ID and Worker name Into HTML**
+
+Insert the version ID and Worker name into your HTML response so the client can read it. This should happen After your framework renders the HTML, but before returning the response.
+
+**Example server-side implementation**
+```ts
+export default {
+  async fetch(request, env, ctx) {
+    // Read version ID and worker name
+    const versionId = env.CF_VERSION_METADATA.id;
+    const workerName = env.WORKER_NAME;
+    
+    // Render your framework's application
+    let html = await renderFramework(request);
+    
+    // Inject version ID and worker name into HTML
+    html = html.replace('</head>',
+      `<script>
+        window.__CF_WORKER_VERSION__="${versionId}";
+        window.__CF_WORKER_NAME__="${workerName}";
+      </script></head>`
+    );
+    
+    return new Response(html, {
+      headers: {
+        'Content-Type': 'text/html'
+      }
+    });
+  }
+};
+```
+
+### Client-side implementation
+
+The client side is responsible for reading the version information that the server injected into the HTML and including it in all subsequent requests back to the Worker. This ensures that once a user loads a page, all their API calls and asset requests continue to talk to the same Worker version.
+
+**Understanding what the client needs to do**
+
+When the page loads, the browser needs to:
+1. Read the version ID and worker name that the server injected
+2. Intercept all `fetch()` calls to add the version header
+3. Modify dynamic asset URLs to add the`?dpl=` query parameter
+
+#### Understanding the version header format
+The `Cloudflare-Workers-Version-Overrides header` uses a Dictionary Structured Header as the format. 
+
+```
+Cloudflare-Workers-Version-Overrides: worker-name="version-id"
+Cloudflare-Workers-Version-Overrides: my-app-worker="db7cd8d3-4425-4fe7-8c81-01bf963b6067"
+```
+
+When Cloudflare receives a request with this header:
+1. It parses the worker name and version ID
+2. Checks that it can route the request to this version of the Worker
+3. If the version specified is "unroutable" then the request will be routed to the current deployment
+
+*Handling static assets** 
+The `Cloudflare-Workers-Version-Overrides` header only works for fetch requests. For static assets loaded by HTML tags like `<img>, <link>, and <script>`, browsers don't allow you to add custom headers. Instead, you must add the version as a query parameter: `?dpl=<version-id>`
+
+**Example server-side implementation**
+
+```js
+const versionId = window.__CF_WORKER_VERSION__;
+const workerName = window.__CF_WORKER_NAME__;
+
+if (versionId && workerName) {
+  // Build the version header
+  const versionHeader = `${workerName}="${versionId}"`;
+  
+  // Intercept fetch to add version header
+  const originalFetch = window.fetch;
+  window.fetch = function(url, options = {}) {
+    options.headers = {
+      ...options.headers,
+      'Cloudflare-Workers-Version-Overrides': versionHeader
+    };
+    return originalFetch(url, options);
+  };
+  
+  // Handle static assets
+  // Framework-specific: modify asset URLs to include ?dpl= parameter
+  // Example: /image.png becomes /image.png?dpl=abc123
+}
+```
