@@ -3,11 +3,11 @@ pcx_content_type: how-to
 title: GitHub
 ---
 
-Cloudflare Zero Trust allows your team to connect to your applications using their GitHub login. You do not need to have a GitHub organization to use the integration.
+Cloudflare One allows your team to connect to your applications using their GitHub login. You do not need to have a GitHub organization to use the integration.
 
 ## Set up GitHub Access
 
-To configure GitHub access in both GitHub and Cloudflare Zero Trust:
+To configure GitHub access in both GitHub and Cloudflare One:
 
 1. Log in to [GitHub](https://github.com/).
 
@@ -23,7 +23,7 @@ To configure GitHub access in both GitHub and Cloudflare Zero Trust:
    https://<your-team-name>.cloudflareaccess.com
    ```
 
-   You can find your team name in [Zero Trust](https://one.dash.cloudflare.com) by going to **Settings** > **Custom Pages**.
+   You can find your team name in [Cloudflare One](https://one.dash.cloudflare.com) by going to **Settings** > **Team name**.
 
 6. In the GitHub **Authorization callback URL** field, enter the following URL:
 
@@ -35,9 +35,9 @@ To configure GitHub access in both GitHub and Cloudflare Zero Trust:
 
 8. Find the **Client ID** and **Client Secret**.
 
-9. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Authentication**.
+9. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Integrations** > **Identity providers**.
 
-10. Under **Login methods**, select **Add new**.
+10. Select **Add new identity provider** and select **GitHub**.
 
 11. Choose **GitHub** on the next page.
 
@@ -45,7 +45,7 @@ To configure GitHub access in both GitHub and Cloudflare Zero Trust:
 
 13. Select **Save**.
 
-To test that your connection is working, go to [Zero Trust](https://one.dash.cloudflare.com) > **Authentication** > **Login methods** and select **Test** next to your GitHub login method.
+To test that your connection is working, go to [Cloudflare One](https://one.dash.cloudflare.com) > **Integrations** > **Identity providers** and select **Test** next to your GitHub login method.
 If you have GitHub two-factor authentication enabled, you will need to first login to GitHub directly and return to Access.
 
 ## Example API Configuration

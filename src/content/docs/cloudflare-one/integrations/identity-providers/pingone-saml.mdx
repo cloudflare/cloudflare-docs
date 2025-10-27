@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: PingOne (SAML)
-description: Learn how to integrate PingOne as a SAML identity provider with Cloudflare Zero Trust.
+description: Learn how to integrate PingOne as a SAML identity provider with Cloudflare Cloudflare One.
 ---
 
 import { GlossaryTooltip } from "~/components";
@@ -30,9 +30,9 @@ The PingOne cloud platform from PingIdentity provides SSO identity management. C
    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/saml-metadata
    ```
 
-   where `<your-team-name>` is your Cloudflare Zero Trust <GlossaryTooltip term="team domain">team name</GlossaryTooltip>. 3. Select **Import**. 4. **Save** the configuration.
+   where `<your-team-name>` is your Cloudflare One <GlossaryTooltip term="team domain">team name</GlossaryTooltip>. 3. Select **Import**. 4. **Save** the configuration.
 
-7. In the **Configuration** tab, select **Download metadata** and save the XML metadata file. This file will be used in a later step to add PingOne to Zero Trust.
+7. In the **Configuration** tab, select **Download metadata** and save the XML metadata file. This file will be used in a later step to add PingOne to Cloudflare One.
 
 8. In the **Attribute Mappings** tab, add the following required attributes (case sensitive) and select **Save**.
 
@@ -46,11 +46,11 @@ The PingOne cloud platform from PingIdentity provides SSO identity management. C
 
 9. Set the application to **Active**.
 
-### 2. Add PingOne to Zero Trust
+### 2. Add PingOne to Cloudflare One
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Authentication**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Integrations** > **Identity providers**.
 
-2. Under **Login methods**, select **Add new**.
+2. Under **Your identity providers**, select **Add new identity provider**.
 
 3. Select **SAML**.
 
@@ -62,4 +62,4 @@ The PingOne cloud platform from PingIdentity provides SSO identity management. C
 
 7. Select **Save**.
 
-You can now [test your connection](/cloudflare-one/integrations/identity-providers/#test-idps-in-zero-trust) and create [Access policies](/cloudflare-one/access-controls/policies/) based on the configured login method and SAML attributes.
+You can now [test your connection](/cloudflare-one/integrations/identity-providers/#test-idps-in-cloudflare-one) and create [Access policies](/cloudflare-one/access-controls/policies/) based on the configured login method and SAML attributes.

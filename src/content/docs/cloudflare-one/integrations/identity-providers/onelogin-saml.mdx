@@ -1,10 +1,11 @@
 ---
 pcx_content_type: how-to
 title: OneLogin (SAML)
-description: Integrate OneLogin as a SAML identity provider for Cloudflare Zero Trust.
+description: Integrate OneLogin as a SAML identity provider for Cloudflare One.
 ---
 
 OneLogin provides SSO identity management. Cloudflare Access supports OneLogin as an SAML identity provider.
+
 ## Set up OneLogin as a SAML provider
 
 ## 1. Create an application in OneLogin
@@ -27,7 +28,7 @@ OneLogin provides SSO identity management. Cloudflare Access supports OneLogin a
    https://<your-team-name>.cloudflareaccess.com
    ```
 
-   You can find your team name in Zero Trust under **Settings** > **Custom Pages**.
+   You can find your team name in [Cloudflare One](https://one.dash.cloudflare.com/) under **Settings** > **Team name**.
 
 8. Select the **Parameters** tab, select **Add Parameter** and enter your values for **Cloudflare Access Field**.
 
@@ -47,11 +48,11 @@ OneLogin provides SSO identity management. Cloudflare Access supports OneLogin a
 
     ![OneLogin SAML Application SSO interface with SAML2.0 sign on method, Issuer URL, and X.509 Certificate](~/assets/images/cloudflare-one/identity/onelogin/onelogin-saml-7.png)
 
-### 2. Add OneLogin to Zero Trust
+### 2. Add OneLogin to Cloudflare One
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Authentication**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Integrations** > **Identity providers**.
 
-2. Under **Login methods**, select **Add new**.
+2. Under **Your identity providers**, select **Add new identity provider**.
 
 3. Select **SAML**.
 
@@ -63,7 +64,7 @@ OneLogin provides SSO identity management. Cloudflare Access supports OneLogin a
 
 7. Select **Save**.
 
-To test that your connection is working, go to **Authentication** > **Login methods** and select **Test** next to the login method you want to test.
+To test that your connection is working, go to **Integrations** > **Identity providers** and select **Test** next to the login method you want to test.
 
 ## Download SP metadata (optional)
 

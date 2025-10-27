@@ -34,7 +34,7 @@ The following steps are specific to setting up JumpCloud with Cloudflare Access.
       https://<your-team-name>.cloudflareaccess.com/
       ```
 
-      You can find your team name in Zero Trust under **Settings** > **Custom Pages**.
+      You can find your team name in [Cloudflare One](https://one.dash.cloudflare.com/) under **Settings** > **Team name**.
 
    2. Set both **SP Entity ID** and **ACS URL** to the following callback URL:
 
@@ -50,11 +50,11 @@ The following steps are specific to setting up JumpCloud with Cloudflare Access.
 
 10. Select **Save**.
 
-### 2. Add JumpCloud to Zero Trust
+### 2. Add JumpCloud to Cloudflare One
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Authentication**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Integrations** > **Identity providers**.
 
-2. Under **Login methods**, select **Add new**.
+2. Under **Your identity providers**, select **Add new identity provider**.
 
 3. Select **SAML**.
 
@@ -66,13 +66,13 @@ The following steps are specific to setting up JumpCloud with Cloudflare Access.
 
 7. Select **Save**.
 
-You can now [test your connection](/cloudflare-one/integrations/identity-providers/#test-idps-in-zero-trust) and create [Access policies](/cloudflare-one/access-controls/policies/) based on the configured login method and SAML attributes.
+You can now [test your connection](/cloudflare-one/integrations/identity-providers/#test-idps-in-cloudflare-one) and create [Access policies](/cloudflare-one/access-controls/policies/) based on the configured login method and SAML attributes.
 
 ## Synchronize users and groups
 
 The JumpCloud integration allows you to synchronize user groups and automatically deprovision users using [SCIM](/cloudflare-one/team-and-resources/users/scim/).
 
-### 1. Enable SCIM in Zero Trust
+### 1. Enable SCIM in Cloudflare One
 
 <Render
 	file="access/enable-scim-on-dashboard"
@@ -89,8 +89,8 @@ The JumpCloud integration allows you to synchronize user groups and automaticall
 5. Select the **Identity Management** tab.
 6. Make sure that **Enable management of User Groups and Group Membership in this application** is turned on.
 7. Select **Configure**.
-8. In the **Base URL** field, enter the **SCIM Endpoint** obtained from Zero Trust.
-9. In the **Token Key** field, enter the **SCIM Secret** obtained from Zero Trust.
+8. In the **Base URL** field, enter the **SCIM Endpoint** obtained from Cloudflare One.
+9. In the **Token Key** field, enter the **SCIM Secret** obtained from Cloudflare One.
 10. Select **Activate**. You will receive a confirmation that the Identity Management integration has been successfully verified.
 11. Select **Save**.
 

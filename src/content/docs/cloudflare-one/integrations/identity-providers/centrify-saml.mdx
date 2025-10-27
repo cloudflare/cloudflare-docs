@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Centrify (SAML)
-description: Learn how to integrate Centrify as a SAML identity provider with Cloudflare Zero Trust.
+description: Learn how to integrate Centrify as a SAML identity provider with Cloudflare One.
 ---
 
 Centrify secures access to infrastructure, DevOps, cloud, and other modern enterprise so you can prevent the number one cause of breaches: privileged access abuse.
@@ -35,7 +35,7 @@ Centrify secures access to infrastructure, DevOps, cloud, and other modern enter
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
     ```
 
-    You can find your team name in Zero Trust under **Settings** > **Custom Pages**.
+    You can find your team name in [Cloudflare One](https://one.dash.cloudflare.com) under **Settings** > **Team name**.
 
 11. Select **Save**.
 
@@ -59,11 +59,11 @@ Centrify secures access to infrastructure, DevOps, cloud, and other modern enter
 
 20. Select the **Manual Configuration** option.
 
-### 2. Add Centrify to Zero Trust
+### 2. Add Centrify to Cloudflare One
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Authentication**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Integrations** > **Identity providers**.
 
-2. Under **Login methods**, select **Add new**.
+2. Under **Your identity providers**, select **Add new identity provider**.
 
 3. Select **SAML**.
 
@@ -75,7 +75,7 @@ Centrify secures access to infrastructure, DevOps, cloud, and other modern enter
 
 7. Select **Save**.
 
-To test that your connection is working, go to **Authentication** > **Login methods** and select **Test** next to the login method you want to test.
+To test that your connection is working, go to **Integrations** > **Identity providers** and select **Test** next to the identity provider you want to test.
 
 ## Download SP metadata (optional)
 

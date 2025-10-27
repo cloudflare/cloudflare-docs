@@ -8,27 +8,30 @@ tags:
 import { Render } from "~/components";
 
 
-Cloudflare Zero Trust integrates with your organization's identity provider to apply Zero Trust and Secure Web Gateway policies. If you work with partners, contractors, or other organizations, you can integrate multiple identity providers simultaneously.
+Cloudflare One integrates with your organization's identity provider to apply Cloudflare One and Secure Web Gateway policies. If you work with partners, contractors, or other organizations, you can integrate multiple identity providers simultaneously.
 
-As an alternative to configuring an identity provider, Cloudflare Zero Trust can send a [one-time PIN (OTP)](/cloudflare-one/integrations/identity-providers/one-time-pin/) to approved email addresses. No configuration needed — simply add a user's email address to an [Access policy](/cloudflare-one/access-controls/policies/) and to the group that allows your team to reach the application. You can simultaneously configure an OTP and an identity provider to allow users to use their own authentication method.
+As an alternative to configuring an identity provider, Cloudflare One can send a [one-time PIN (OTP)](/cloudflare-one/integrations/identity-providers/one-time-pin/) to approved email addresses. No configuration needed — simply add a user's email address to an [Access policy](/cloudflare-one/access-controls/policies/) and to the group that allows your team to reach the application. You can simultaneously configure an OTP and an identity provider to allow users to use their own authentication method.
 
-Adding an identity provider as a login method requires configuration both in [Zero Trust](https://one.dash.cloudflare.com) and with the identity provider itself. Consult our IdP-specific documentation to learn more about what you need to set up.
+Adding an identity provider as a login method requires configuration both in [Cloudflare One](https://one.dash.cloudflare.com) and with the identity provider itself. Consult our IdP-specific documentation to learn more about what you need to set up.
 
 :::note
 
-Cloudflare Zero Trust supports social identity providers that do not require administrator accounts, open source providers, and corporate providers. Cloudflare also supports using signed AuthN requests with SAML providers.
+Cloudflare One supports social identity providers that do not require administrator accounts, open source providers, and corporate providers. Cloudflare also supports using signed AuthN requests with SAML providers.
 
 :::
 
-## Set up IdPs in Zero Trust
+## Set up IdPs in Cloudflare One
 
 <Render file="access/idp-integration" product="cloudflare-one" />
 
 Your IdP will now be listed in the **Login methods** card.
 
-## Test IdPs in Zero Trust
+## Test IdPs in Cloudflare One
 
-To test if an IdP is correctly configured, go to **Settings** > **Authentication**. Next, select **Test** next to the IdP you would like to test. This will attempt to connect to the IdP to verify if a valid connection is established.
+To test if an IdP is correctly configured:
+
+1. Go to **Integrations** > **Identity providers**.
+2. Select **Test** next to the IdP you would like to test. This will attempt to connect to the IdP to verify if a valid connection is established.
 
 ### Your provider is connected
 
