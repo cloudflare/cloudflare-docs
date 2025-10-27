@@ -54,7 +54,7 @@
 # Changelogs
 
 /src/content/changelog/ @cloudflare/pm-changelogs @cloudflare/pcx-technical-writing
-/src/content/changelog/waf/ @cloudflare/firewall @vs-mg @cloudflare/pm-changelogs @cloudflare/pcx-technical-writing
+/src/content/changelog/waf/ @cloudflare/firewall @vs-mg @fb1337 @cloudflare/pm-changelogs @cloudflare/pcx-technical-writing
 /src/assets/images/changelog/ @cloudflare/pm-changelogs @cloudflare/pcx-technical-writing
 /src/assets/images/ @cloudflare/pm-changelogs @cloudflare/pcx-technical-writing
 
