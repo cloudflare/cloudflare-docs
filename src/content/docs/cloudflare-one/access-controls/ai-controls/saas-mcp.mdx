@@ -87,25 +87,26 @@ The Worker will be deployed to your `*.workers.dev` subdomain at `mcp-server-cf-
 <Tabs syncKey="dashPlusAPI">
 <TabItem label="Dashboard">
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
-2. Select **SaaS**.
-3. In **Application**, enter a custom name (for example, `MCP server`) and select the textbox that appears below.
-4. Select **OIDC** as the authentication protocol.
-5. Select **Add application**.
-6. In **Redirect URLs**, enter the authorization callback URL for your MCP server. The callback URL for our [example MCP server](#1-deploy-an-example-mcp-server) is
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Access controls** > **Applications**.
+2. Select **Add an application**.
+3. Select **SaaS**.
+4. In **Application**, enter a custom name (for example, `MCP server`) and select the textbox that appears below.
+5. Select **OIDC** as the authentication protocol.
+6. Select **Add application**.
+7. In **Redirect URLs**, enter the authorization callback URL for your MCP server. The callback URL for our [example MCP server](#1-deploy-an-example-mcp-server) is
    `txt
 https://mcp-server-cf-access.<YOUR_SUBDOMAIN>.workers.dev/callback
 `
-7. Copy the following values to input into our example MCP server. Other MCP servers may require different sets of input values.
+8. Copy the following values to input into our example MCP server. Other MCP servers may require different sets of input values.
    - **Client secret**
    - **Client ID**
    - **Token endpoint**
    - **Authorization endpoint**
    - **Key endpoint**
 
-8. (Optional) Under **Advanced settings**, turn on [**Refresh tokens**](/cloudflare-one/access-controls/applications/http-apps/saas-apps/generic-oidc-saas/#advanced-settings) if you want to reduce the number of times a user needs to log in to the identity provider.
-9. Configure [Access policies](/cloudflare-one/access-controls/policies/) to define the users who can access the MCP server.
-10. Save the application.
+9. (Optional) Under **Advanced settings**, turn on [**Refresh tokens**](/cloudflare-one/access-controls/applications/http-apps/saas-apps/generic-oidc-saas/#advanced-settings) if you want to reduce the number of times a user needs to log in to the identity provider.
+10. Configure [Access policies](/cloudflare-one/access-controls/policies/) to define the users who can access the MCP server.
+11. Save the application.
 
 </TabItem>
 <TabItem label="API">

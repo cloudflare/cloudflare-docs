@@ -6,16 +6,16 @@ sidebar:
   order: 28
 ---
 
-This guide covers how to configure [Workday](https://doc.workday.com/admin-guide/en-us/authentication-and-security/authentication/saml/dan1370796470811.html?toc=1.5.1) as a SAML application in Cloudflare Zero Trust.
+This guide covers how to configure [Workday](https://doc.workday.com/admin-guide/en-us/authentication-and-security/authentication/saml/dan1370796470811.html?toc=1.5.1) as a SAML application in Cloudflare One.
 
 ## Prerequisites
 
-- An [identity provider](/cloudflare-one/integrations/identity-providers/) configured in Cloudflare Zero Trust
+- An [identity provider](/cloudflare-one/integrations/identity-providers/) configured in Cloudflare One
 - Admin access to a Workday account
 
-## 1. Add a SaaS application to Cloudflare Zero Trust
+## 1. Add a SaaS application to Cloudflare One
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Access controls** > **Applications**.
 2. Select **Add an application** > **SaaS** > **Select**.
 3. For **Application**, enter `Workday` and select the corresponding textbox that appears.
 4. For the authentication protocol, select **SAML**.
@@ -30,7 +30,7 @@ This guide covers how to configure [Workday](https://doc.workday.com/admin-guide
 
 ## 2. Download the metadata file
 
-1. Paste the SAML Metadata endpoint from application configuration in Cloudflare Zero Trust in a web browser.
+1. Paste the SAML Metadata endpoint from application configuration in Cloudflare One in a web browser.
 2. Follow your browser-specific steps to download the URL's contents as an `.xml` file.
 
 ## 3. Add a SAML SSO provider to Workday
@@ -40,11 +40,11 @@ This guide covers how to configure [Workday](https://doc.workday.com/admin-guide
 3. In the **SAML Identity Providers** table, select **+**.
 4. Fill in the following fields:
    - **Identity Provider Name**: Your desired name for the identity provider (for example, `Cloudflare Access`)
-   - **Issuer**: Access Entity ID or Issuer from application configuration in Cloudflare Zero Trust
-   - **IdP SSO Service URL**: SSO endpoint from application configuration in Cloudflare Zero Trust
+   - **Issuer**: Access Entity ID or Issuer from application configuration in Cloudflare One
+   - **IdP SSO Service URL**: SSO endpoint from application configuration in Cloudflare One
 5. Under **x509 Certificate**, select the menu icon > **Create x509 Public Key**.
 6. Under **Name**, enter a unique name (for example, `access`).
-7. Under **Certificate**, paste the Public key from application configuration in Cloudflare Zero Trust.
+7. Under **Certificate**, paste the Public key from application configuration in Cloudflare One.
 8. Select **OK**.
 9. If you want to enable SP-initiated login (login initiated by going to your Workday URL), fill in the following fields:
    - **SP Initiated**: Turn on.

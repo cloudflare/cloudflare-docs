@@ -6,17 +6,17 @@ sidebar:
   order: 23
 ---
 
-This guide covers how to configure [ServiceNow](https://docs.servicenow.com/bundle/washingtondc-platform-security/page/integrate/single-sign-on/task/create-OIDC-configuration-SSO.html) as an OIDC application in Cloudflare Zero Trust.
+This guide covers how to configure [ServiceNow](https://docs.servicenow.com/bundle/washingtondc-platform-security/page/integrate/single-sign-on/task/create-OIDC-configuration-SSO.html) as an OIDC application in Cloudflare One.
 
 ## Prerequisites
 
-- An [identity provider](/cloudflare-one/integrations/identity-providers/) configured in Cloudflare Zero Trust
+- An [identity provider](/cloudflare-one/integrations/identity-providers/) configured in Cloudflare One
 - Admin access to a ServiceNow account
 
-## 1. Add a SaaS application to Cloudflare Zero Trust
+## 1. Add a SaaS application to Cloudflare One
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
-2. Select **SaaS**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Access controls** > **Applications**.
+2. Select **Add an application** > **SaaS**.
 3. For **Application**, enter `ServiceNow` and select the corresponding textbox that appears.
 4. For the authentication protocol, select **OIDC**.
 5. Select **Add application**.
@@ -43,8 +43,8 @@ This guide covers how to configure [ServiceNow](https://docs.servicenow.com/bund
 3. Select **New** > **OpenID Connect**.
 4. In the pop-up, fill in the following fields:
    - **Name**: Name of the SSO (for example, `Cloudflare Access`). Unless otherwise configured, users will select this name when signing in to ServiceNow.
-   - **Client ID**: **Client ID** from application configuration in Cloudflare Zero Trust.
-   - **Client Secret**: **Client Secret** from application configuration in Cloudflare Zero Trust.
+   - **Client ID**: **Client ID** from application configuration in Cloudflare One.
+   - **Client Secret**: **Client Secret** from application configuration in Cloudflare One.
    - **Well Known Configuration URL**: `https://<TEAM-DOMAIN>.cloudflareaccess.com/cdn-cgi/access/sso/oidc/<CLIENT-ID>/.well-known/openid-configuration`.
 5. Select **Import**.
 6. Ensure **Active** is turned on

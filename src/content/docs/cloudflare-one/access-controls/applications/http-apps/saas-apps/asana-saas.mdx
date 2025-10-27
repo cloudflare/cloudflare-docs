@@ -6,16 +6,16 @@ sidebar:
   order: 4
 ---
 
-This guide covers how to configure [Asana](https://help.asana.com/hc/en-us/articles/14075208738587-Authentication-and-access-management-options-for-paid-plans#gl-saml) as a SAML application in Cloudflare Zero Trust.
+This guide covers how to configure [Asana](https://help.asana.com/hc/en-us/articles/14075208738587-Authentication-and-access-management-options-for-paid-plans#gl-saml) as a SAML application in Cloudflare One.
 
 ## Prerequisites
 
-- An [identity provider](/cloudflare-one/integrations/identity-providers/) configured in Cloudflare Zero Trust
+- An [identity provider](/cloudflare-one/integrations/identity-providers/) configured in Cloudflare One
 - Super admin access to an Asana Enterprise, Enterprise+, or Legacy Enterprise account
 
-## 1. Add a SaaS application to Cloudflare Zero Trust
+## 1. Add a SaaS application to Cloudflare One
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Access controls** > **Applications**.
 2. Select **Add an application** > **SaaS** > **Select**.
 3. For **Application**, select _Asana_.
 4. For the authentication protocol, select **SAML**.
@@ -33,8 +33,8 @@ This guide covers how to configure [Asana](https://help.asana.com/hc/en-us/artic
 1. In Asana, select your profile picture > **Admin console** > **Security** > **SAML authentication**.
 2. Under **SAML options**, select _Optional_.
 3. Fill in the following fields:
-   - Sign-in page URL: SSO endpoint from application configuration in Cloudflare Zero Trust.
-   - X.509 certificate: Public key from application configuration in Cloudflare Zero Trust. Wrap the public key in `-----BEGIN CERTIFICATE-----` and `-----END CERTIFICATE-----`.
+   - Sign-in page URL: SSO endpoint from application configuration in Cloudflare One.
+   - X.509 certificate: Public key from application configuration in Cloudflare One. Wrap the public key in `-----BEGIN CERTIFICATE-----` and `-----END CERTIFICATE-----`.
 4. Select **Save changes**.
 
 ## 3. Test the integration and require SSO
