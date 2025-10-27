@@ -1,6 +1,7 @@
 ---
 params:
   - productName
+  - dashButtonPath
 ---
 
 import { DashButton } from "~/components";
@@ -11,7 +12,7 @@ To run a traceroute from a specific Cloudflare data center to your network:
 
 1. In the Cloudflare dashboard, go to Magic {props.productName}'s **Network health** page.
 
-	 <DashButton url="/?to=/:account/magic-wan/tunnel-healthchecks" />
+	 <DashButton url={props.dashButtonPath} />
 
 2. Expand a Magic Tunnel, and find the Cloudflare data center where the traceroute will be run from.
 3. Select **Traceroute for details**.
