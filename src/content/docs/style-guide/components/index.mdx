@@ -5,17 +5,15 @@ sidebar:
 ---
 import { Details } from "~/components";
 
-Our content is written in [MDX](https://docs.astro.build/en/guides/markdown-content/), an extended version of plain Markdown that lets you use JavaScript expressions and components in your Markdown content. You can use our custom components to add additional formatting to the Cloudflare Docs, such as buttons, tabs, and collapsible sections.
+When you are [contributing to the Cloudflare Docs](/style-guide/contributions/), you can use our custom components to add additional formatting, such as buttons, tabs, and collapsible sections.
 
-This page shows you the basics of importing and adding a component to a page. Refer to each component page in this Style Guide to learn the specific props and requirements for each.
+This guide shows you the basics of importing and adding a component to a page. Refer to each component page in this Style Guide to learn the specific props and requirements for each.
 
-Our components are based on [Astro components](https://docs.astro.build/en/basics/astro-components/).
-
-[Learn more about the Cloudflare Docs framework.](/style-guide/how-we-docs/our-site/#site-framework)
+Our components are based on [Astro components](https://docs.astro.build/en/basics/astro-components/) and are written in [MDX](https://docs.astro.build/en/guides/markdown-content/), an extended version of Markdown. [Learn more about the Cloudflare Docs framework](/style-guide/how-we-docs/our-site/#site-framework).
 
 ## Add a component to a page
 
-To add a component to a page, you need to import it to the page and then add it:
+To add a component to a page:
 
 1. Import the component to the page by adding this text directly below the [frontmatter](/style-guide/frontmatter/):
 
@@ -37,7 +35,7 @@ To add a component to a page, you need to import it to the page and then add it:
    import { DashButton } from "~/components";
    ```
 
-2. Add the component to the page by adding this text wherever on the page you want the component to appear:
+2. Add the component to the page by adding this text anywhere on the page you want the component to appear:
 
    ```mdx
 	 <COMPONENT_NAME PROP_NAME="PROP_VALUE" />
@@ -56,5 +54,3 @@ To add a component to a page, you need to import it to the page and then add it:
   <Details header="This is how this example would display after it is published:">
   ![DashButton component example](~/assets/images/style-guide/ui-elements/dashbutton-example.png)
   </Details>
-
-	 Each component has its own specific props and requirements, explained in each component page in this Style Guide.
