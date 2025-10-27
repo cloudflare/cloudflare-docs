@@ -54,7 +54,7 @@ The components in the diagram include:
 - **Load balancer endpoint**: A pool contains one or more endpoints, where each endpoint is a server behind `cloudflared` that is running the application. If your servers have overlapping IPs, you can assign a distinct [virtual network (VNET)](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/tunnel-virtual-networks/) per tunnel so that Load Balancer can deterministically route requests to the correct endpoint.
 
 :::note
-Load Balancing does not currently support [private hostname routing](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-private-hostname/). Endpoints must be defined using an IP address and virtual network (for example, `10.0.0.1 (VNET-1)`).
+Load Balancing does not currently support [private hostname routing](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-private-hostname/). Load balancing endpoints must be defined using an IP address and virtual network (for example, `10.0.0.1 (VNET-1)`).
 :::
 
 ## Prerequisites

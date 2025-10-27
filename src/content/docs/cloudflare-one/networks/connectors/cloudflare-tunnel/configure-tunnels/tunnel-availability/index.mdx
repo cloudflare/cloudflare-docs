@@ -89,5 +89,5 @@ There are two types of load balancers that you can use with Cloudflare Tunnel en
 - [Private load balancers](/load-balancing/private-network/) steer traffic from WARP clients, Magic WAN, and other <GlossaryTooltip term = "on-ramp">on-ramps</GlossaryTooltip> to an internal IP on your private network. Use this method if your service is connected to Cloudflare Tunnel via a [CIDR route](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-cidr/).
 
 :::note
-[Private hostname routes](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-private-hostname/) are not currently compatible with Load Balancing. Load balancer endpoints must be defined using IP addresses.
+[Private hostname routes](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-private-hostname/) are not currently compatible with Load Balancing. If your service is connected via a hostname route, use `cloudflared` [replicas](/#cloudflared-replicas) for high availability.
 :::
