@@ -17,7 +17,7 @@ Application Security reports provide cyber attack insights and trends for all of
 
 The reports are automatically generated on a monthly basis.
 
-You can access reports by going to the **Security reports** page. You can access reports from previous months by selecting the month from the dropdown. 
+You can access reports by going to the **Security reports** page or via the [API](#api). You can access reports from previous months by selecting the month from the dropdown. 
 
 <DashButton url="/?to=/:account/security-center/reports" />
 
@@ -92,6 +92,27 @@ GET /accounts/{account_id}/reporting/reports
 ```sh title="Retrieve a single, specific report, including its data and findings"
 GET /accounts/{account_id}/reporting/reports/{report_id}
 ```
+
+<Details header="Data returned by the API">
+  - Account ID
+  - Account Name
+  - Account Industry
+  - Time range
+  - Total zones
+  - Total zones analyzed
+  - Industry percentile (nullable float)
+  - Total requests (count, percentage)
+  - Total mitigated requests (count, percentage)
+  - Total served requests (count, percentage)
+  - Top 5 hostnames by mitigated requests (hostname, count)
+  - Top 5 source countries by served requests (country, count)
+  - Top 5 source countries by mitigated requests (country, count)
+  - Top 5 rules by mitigated requests (rule name, rule type, count)
+</Details>
+
+### Cross-account reports
+
+Each report is generated per account. You can use the [API](#api) to retrieve the reports for all of your accounts and aggregate the data.
 
 ---
 
