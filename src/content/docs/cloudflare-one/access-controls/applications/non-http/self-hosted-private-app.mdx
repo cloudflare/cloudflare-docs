@@ -32,7 +32,7 @@ This feature replaces the legacy [private network app type](/cloudflare-one/acce
 6.  Add the private IP and/or private hostname that represents the application. You can use [wildcards](/cloudflare-one/access-controls/policies/app-paths/) with private hostnames to protect multiple parts of an application that share a root path.
 
     :::note
-    Private hostnames explicitly set to `443` (not including port ranges, e.g. 441-44) over HTTPS must have a valid Server Name Indicator (SNI). All other ports do not require a valid SNI value. If you are configuring a private IP on any port other than `443` and plan to use Browser Isolation, note that this [will result in a Gateway block page](/cloudflare-one/remote-browser-isolation/known-limitations/#browser-isolation-is-not-compatible-with-private-ips-on-non-443-ports).
+    Private hostnames explicitly set to `443` (not including port ranges, e.g. 441-44) over HTTPS must have a valid Server Name Indicator (SNI). All other ports do not require a valid SNI value and will be assigned a CGNAT IP address. If you are configuring a private IP on any port other than `443` and plan to use Browser Isolation, note that this [will result in a Gateway block page](/cloudflare-one/remote-browser-isolation/known-limitations/#browser-isolation-is-not-compatible-with-private-ips-on-non-443-ports).
     :::
 
 If using a non-443 private hostname, ensure that the following CGNAT IP addresses are not blocked by any firewalls or excluded from Gateway traffic:
