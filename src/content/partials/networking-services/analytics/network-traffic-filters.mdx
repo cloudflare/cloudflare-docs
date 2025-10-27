@@ -1,12 +1,12 @@
 ---
 params:
-  - magicProduct?
+  - magicWord?
   - productName?
 ---
 
 import { Markdown, GlossaryTooltip } from "~/components";
 
-{ props.magicProduct === "Magic Transit" && (
+{ props.magicWord === "Magic Transit" && (
   <>
 	<Markdown
 	text={`
@@ -18,15 +18,11 @@ import { Markdown, GlossaryTooltip } from "~/components";
   )
 }
 
-{ (props.magicProduct === "Magic WAN" || props.magicProduct === "WAN Tunnels") && (
+{ (props.magicWord === "Magic WAN" || props.magicWord === "WAN Tunnels") && (
   <>
-	{/* Fallback pattern: ${props.productName || props.magicProduct}
-	    - If productName is passed, use it (Magic WAN / WAN Tunnels pages via network-analytics.mdx)
-	    - If productName is undefined, fall back to magicProduct (direct usage or future-proofing)
-	    This ensures the text always displays correctly regardless of how the partial is called */}
 	<Markdown
 	text={`
-	${props.productName || props.magicProduct} customers have increased visibility into the various traffic flows across Cloudflare One products including:
+	${props.productName} customers have increased visibility into the various traffic flows across Cloudflare One products including:
 
 	- Traffic ingressing to Cloudflare's network via WARP
 	- Traffic egressing Cloudflare's network via WARP
