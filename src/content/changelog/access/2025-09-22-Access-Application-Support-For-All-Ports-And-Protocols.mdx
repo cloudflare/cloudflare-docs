@@ -1,0 +1,13 @@
+---
+title: Access Private Hostname Applications now support all ports and protocols
+description: Access private hostname based applications can be defined using any port and protocol.
+date: 2025-10-27
+products:
+  - access
+---
+
+[Access private self-hosted applications](cloudflare-one/access-controls/applications/non-http/self-hosted-private-app/) now support all ports and protocols. 
+
+
+
+This allows for the enforcement of corporate security controls like single sign-on, MFA, device posture, and variable session lengths to be applied to any application. Previously, Access private hostname applications relied on the server name indicator (SNI) and only worked on HTTPS over port 443. Now as long as the application is reachable, Access policy controls can be applied to that application.
