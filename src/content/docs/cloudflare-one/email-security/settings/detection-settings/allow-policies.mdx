@@ -5,7 +5,7 @@ sidebar:
   order: 1
 ---
 
-import { Example, Details } from "~/components"
+import { Example, Details } from "~/components";
 
 Email Security allows you to configure allow policies. An allow policy exempts messages that match certain patterns from normal detection scanning.
 
@@ -25,7 +25,7 @@ Allow policies are used to mitigate false positives. When an email has been mark
 
 ### Accept sender
 
-Allow policies in Email Security give you the option to choose **Accept sender**. 
+Allow policies in Email Security give you the option to choose **Accept sender**.
 
 Accept sender creates exceptions for messages that would otherwise be marked as spam, bulk, or spoof. However, Email Security will continue to scan the message for maliciousness.
 
@@ -33,11 +33,11 @@ It is recommended to choose this option, as it is the safest option to protect y
 
 <Example title="Example of a use case where marketing emails that are legitimate have been blocked">
 
-When a marketing email does not follow the correct template, it may be marked as malicious or spam. It may not be possible to change the template. However, in this scenario, the marketing email is legitimate. 
+When a marketing email does not follow the correct template, it may be marked as malicious or spam. It may not be possible to change the template. However, in this scenario, the marketing email is legitimate.
 
 To make sure that users still receive the marketing email, you will have to select **Accept sender** and add the marketing domain in **Rule Type** > **Domains**.
 
-**Accept sender** and **Domains** combined exempt marketing emails that may not follow the correct template. 
+**Accept sender** and **Domains** combined exempt marketing emails that may not follow the correct template.
 
 </Example>
 
@@ -45,25 +45,25 @@ To make sure that users still receive the marketing email, you will have to sele
 
 To configure allow policies:
 
-1. Log in to [Zero Trust](https://one.dash.cloudflare.com/).
+1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/).
 2. Select **Email Security**.
 3. Select **Settings**, then go to **Detection settings** > **Allow policies**.
 4. On the **Detection settings** page, select **Add a policy**.
 5. On the **Add an allow policy** page, enter the policy information:
    - **Input method**: Choose between **Manual input**, and **Uploading an allow policy**:
-       - **Manual input**:
-           - **Action**: Select one of the following to choose how Email Security will handle messages that match your criteria:
-               - **Trust sender**: Messages will bypass all detections and link following.
-               - **Exempt recipient**: Message to this recipient will bypass all detections.
-               - **Accept sender**: Messages from this sender will be exempted from Spam, Spoof, and Bulk dispositions. Refer to [Allow policy configuration use cases](#use-case-1) for use case examples on how to configure allow policies for accept sender.
-       - **Rule type**: Specify the scope of your policy. Choose one of the following:
-           - **Email addresses**: Must be a valid email. Enter an email address whose emails are going to be exempted.
-           - **IP addresses**: This is the IP address of the email server. Any email address sent from this email server is going to be allowed. The IP address can only be IPv4. IPv6 and CIDR are invalid entries.
-           - **Domains**: Must be a valid domain.
-           - **Regular expressions**: Must be valid Java expressions. Regular expressions are matched with fields related to the sender email address (envelope from, header from, reply-to), the originating IP address, and the server name for the email. For example, you can enter `.*@domain\.com` to exempt any email address that ends with `domain.com`.
+     - **Manual input**:
+       - **Action**: Select one of the following to choose how Email Security will handle messages that match your criteria:
+         - **Trust sender**: Messages will bypass all detections and link following.
+         - **Exempt recipient**: Message to this recipient will bypass all detections.
+         - **Accept sender**: Messages from this sender will be exempted from Spam, Spoof, and Bulk dispositions. Refer to [Allow policy configuration use cases](#use-case-1) for use case examples on how to configure allow policies for accept sender.
+     - **Rule type**: Specify the scope of your policy. Choose one of the following:
+       - **Email addresses**: Must be a valid email. Enter an email address whose emails are going to be exempted.
+       - **IP addresses**: This is the IP address of the email server. Any email address sent from this email server is going to be allowed. The IP address can only be IPv4. IPv6 and CIDR are invalid entries.
+       - **Domains**: Must be a valid domain.
+       - **Regular expressions**: Must be valid Java expressions. Regular expressions are matched with fields related to the sender email address (envelope from, header from, reply-to), the originating IP address, and the server name for the email. For example, you can enter `.*@domain\.com` to exempt any email address that ends with `domain.com`.
      - **(Recommended) Sender verification**: This option enforces DMARC, SPF, or DKIM authentication. If you choose to enable this option, Email Security will only honor policies that pass authentication.
        - **Notes**: Provide additional information about your allow policy.
-   - **Uploading an allow policy**: Upload a file no larger than 150 KB. The file can only contain `Pattern`, `Pattern Type`, `Verify Email`, `Trusted Sender`, `Exempt Recipient`, `Acceptable Sender`, `Notes` fields. The first row must be a header row. Refer to [CSV uploads](/cloudflare-one/email-security/detection-settings/allow-policies/#csv-uploads) for an example file.
+   - **Uploading an allow policy**: Upload a file no larger than 150 KB. The file can only contain `Pattern`, `Pattern Type`, `Verify Email`, `Trusted Sender`, `Exempt Recipient`, `Acceptable Sender`, `Notes` fields. The first row must be a header row. Refer to [CSV uploads](/cloudflare-one/email-security/settings/detection-settings/allow-policies/#csv-uploads) for an example file.
 6. Select **Save**.
 
 <Details header="Allow policy configuration use cases">
@@ -77,41 +77,40 @@ The following use cases show how you could configure allow policies for accept s
 
     To solve this:
 
-    1. Create a [team submission](/cloudflare-one/email-security/email-monitoring/search-email/#team-submissions).
+    1. Create a [team submission](/cloudflare-one/email-security/monitoring/search-email/#team-submissions).
     2. Inform your Cloudflare contact about the escalation.
     3. Do not set up allow policies or blocked senders. In this use case, configuring allow policies will create a security gap. Setting up blocked senders will block legitimate emails from providers such as Shopify, PayPal, and Docusign.
+
 </Example>
 
 ### Use case 2
 
-
 <Example title="Company receives emails via third-party providers that are used internally. These emails are sent from the company's custom domain, but Email Security marks these emails as bulk, spam, or spoof.">
 
-  This use case can cause the emails you want to receive to follow the auto-moves rules you set up. This use case affects emails from internal tools (such as Salesforce, Atlassian, and Figma) that are given an incorrect disposition.
+This use case can cause the emails you want to receive to follow the auto-moves rules you set up. This use case affects emails from internal tools (such as Salesforce, Atlassian, and Figma) that are given an incorrect disposition.
 
-  To solve this, when you add an allow policy in the Zero Trust dashboard:
-  
-  1. Choose **Accept sender**.
-  2. Verify that **Sender verification (recommended)** is turned on.
-  
+To solve this, when you add an allow policy in the Cloudflare One dashboard:
+
+1. Choose **Accept sender**.
+2. Verify that **Sender verification (recommended)** is turned on.
+
 </Example>
-
 
 ### Use case 3
 
 <Example title="Company receives emails via third-party providers that are used internally. These emails are sent from the company's custom domain, but Email Security marks these emails as bulk, spam, or spoof. The custom email domain does not support DMARC, SPF, or DKIM, and would fail Sender Verification.">
 
-  This use case impacts the emails from internal tools (such as Salesforce, Atlassian, and Figma) that are given an incorrect disposition.
+This use case impacts the emails from internal tools (such as Salesforce, Atlassian, and Figma) that are given an incorrect disposition.
 
-  To solve this, when you add an allow policy in the Zero Trust dashboard:
+To solve this, when you add an allow policy in the Cloudflare One dashboard:
 
-  1. Choose **Accept sender** based on the static IP you own.
-  2. Ensure that **Sender verification (recommended)** is turned off.
+1. Choose **Accept sender** based on the static IP you own.
+2. Ensure that **Sender verification (recommended)** is turned off.
 
-  :::caution
-  Do not use email addresses or email domains for this policy as they can be easily spoofed without **Sender Verification (Recommended)** enabled.
-  :::
- 
+:::caution
+Do not use email addresses or email domains for this policy as they can be easily spoofed without **Sender Verification (Recommended)** enabled.
+:::
+
 </Example>
 
 </Details>
@@ -137,7 +136,7 @@ To export all allow policies:
 To export specific allow policies:
 
 1. On the **Detection settings** page, select the allow policies you want to export.
-2. Select **Export to CSV**. 
+2. Select **Export to CSV**.
 
 ## Edit allow policy
 
@@ -160,4 +159,4 @@ To delete multiple allow policies at once:
 
 1. On the **Detection settings** page, select the allow policies you want to delete.
 2. Select **Action**.
-3. Select **Delete**. 
+3. Select **Delete**.

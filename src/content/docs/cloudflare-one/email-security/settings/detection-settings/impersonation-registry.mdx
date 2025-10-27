@@ -16,20 +16,20 @@ For easier tracking, the Email Security team recommends syncing and structuring 
 
 To add a user to the impersonation registry:
 
-1. Log in to [Zero Trust](https://one.dash.cloudflare.com/).
+1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/).
 2. Select **Email Security**.
 3. Select **Settings** > **Impersonation registry**.
 4. Select **Add a user**.
 5. Select **Input method**: Choose between **Manual input**, **Upload manual list**, and **Select from existing directories**:
    - **Manual input**: Enter the following information:
-       - **User info**: enter a valid **Display name**.
-       - **User email**: Enter one of the following:
-         - **Email address**: Enter all known email addresses, separated by a comma.
-         - **Regular expressions**: Must be valid Java expressions.
-   - **Upload manual list**: You can upload a file no larger than 150 KB containing all variables of potential emails. The file must contain `Display_Name` and `Email`, and the first row must be the header row. Refer to [CSV uploads](/cloudflare-one/email-security/detection-settings/impersonation-registry/#csv-uploads) for an example file.
+     - **User info**: enter a valid **Display name**.
+     - **User email**: Enter one of the following:
+       - **Email address**: Enter all known email addresses, separated by a comma.
+       - **Regular expressions**: Must be valid Java expressions.
+   - **Upload manual list**: You can upload a file no larger than 150 KB containing all variables of potential emails. The file must contain `Display_Name` and `Email`, and the first row must be the header row. Refer to [CSV uploads](/cloudflare-one/email-security/settings/detection-settings/impersonation-registry/#csv-uploads) for an example file.
    - **Select from existing directories**:
-       - **Select directory**: Select your directory.
-       - **Add users or groups**: Choose the users or groups you want to register.
+     - **Select directory**: Select your directory.
+     - **Add users or groups**: Choose the users or groups you want to register.
 6. Select **Save**.
 
 ### CSV uploads

@@ -11,30 +11,30 @@ Email Security marks all messages from these senders with a malicious [dispositi
 
 Blocked senders ensures messages from any sender is automatically marked as malicious, preventing them from reaching users' inbox.
 
-Sometimes, the same email, IP address or domain always sends malicious emails to the company. In this case, you can add an email address, IP address or domain as a blocked sender. You can choose to enter a regular expression by turning **Regular expression** on. 
+Sometimes, the same email, IP address or domain always sends malicious emails to the company. In this case, you can add an email address, IP address or domain as a blocked sender. You can choose to enter a regular expression by turning **Regular expression** on.
 
 ## Configure blocked senders
 
 To configure blocked senders:
 
-1. Log in to [Zero Trust](https://one.dash.cloudflare.com/).
+1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/).
 2. Select **Email Security**.
 3. Select **Settings**, go to **Detection settings** > **Blocked senders**.
 4. On the **Detection settings** page, select **Add a sender**.
 5. Select the **Input method**: Choose between **Manual input**, and **Upload blocked sender list**:
-     - **Manual input**:
-        - **Sender type**:
-             - **Email addresses**: Must be a valid email.
-             - **IP addresses**: Can only be IPv4. IPv6 and CIDR are invalid entries.
-             - **Domains**: Must be a valid domain.
-             - **Regular expressions**: Must be valid Java expressions. Regular expressions are matched with fields related to the sender email address (envelope from, header from, reply-to), the originating IP address, and the server name for the email. For example, you can enter `.*@domain\.com` to exempt any email address that ends with `domain.com`.
-         - **Notes**: Provide additional information about the blocked sender policy.
-   - **Upload blocked sender list**: Upload a file no larger than 150 KB. The file cannot can only contain `Blocked_Sender`, `Pattern Type,` and `Notes` fields. The first row must be a header row. Refer to [CSV uploads](/cloudflare-one/email-security/detection-settings/blocked-senders/#csv-uploads) for an example file.
+   - **Manual input**:
+     - **Sender type**:
+       - **Email addresses**: Must be a valid email.
+       - **IP addresses**: Can only be IPv4. IPv6 and CIDR are invalid entries.
+       - **Domains**: Must be a valid domain.
+       - **Regular expressions**: Must be valid Java expressions. Regular expressions are matched with fields related to the sender email address (envelope from, header from, reply-to), the originating IP address, and the server name for the email. For example, you can enter `.*@domain\.com` to exempt any email address that ends with `domain.com`.
+     - **Notes**: Provide additional information about the blocked sender policy.
+   - **Upload blocked sender list**: Upload a file no larger than 150 KB. The file cannot can only contain `Blocked_Sender`, `Pattern Type,` and `Notes` fields. The first row must be a header row. Refer to [CSV uploads](/cloudflare-one/email-security/settings/detection-settings/blocked-senders/#csv-uploads) for an example file.
 6. Select **Save**.
 
 ### CSV uploads
 
-You can upload a file no larger than 150 KB. The file cannot can only contain `Blocked_Sender`, `Pattern Type,` and `Notes` fields. The first row must be a header row. 
+You can upload a file no larger than 150 KB. The file cannot can only contain `Blocked_Sender`, `Pattern Type,` and `Notes` fields. The first row must be a header row.
 
 An example file would look like this:
 

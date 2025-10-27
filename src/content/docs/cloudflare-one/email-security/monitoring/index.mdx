@@ -1,5 +1,5 @@
 ---
-title: Email monitoring
+title: Monitoring
 pcx_content_type: how-to
 sidebar:
   order: 12
@@ -15,7 +15,7 @@ With Email Security, you can enable logs to send detection data to an endpoint o
 
 To monitor your inbox:
 
-1. Log in to [Zero Trust](https://one.dash.cloudflare.com/).
+1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/).
 2. Select **Email Security**.
 3. Under **Email Security**, select **Monitoring**.
 
@@ -24,10 +24,10 @@ The dashboard will display the following metrics:
 - Email activity
 - [Disposition evaluation](/cloudflare-one/email-security/reference/dispositions-and-attributes/)
 - Detection details
-- [Impersonations](/cloudflare-one/email-security/detection-settings/impersonation-registry/)
-- [Phish submissions](/cloudflare-one/email-security/phish-submissions/)
-- [Auto-move events](/cloudflare-one/email-security/auto-moves/)
-- [Detection settings metrics](/cloudflare-one/email-security/detection-settings/)
+- [Impersonations](/cloudflare-one/email-security/settings/detection-settings/impersonation-registry/)
+- [Phish submissions](/cloudflare-one/email-security/settings/phish-submissions/)
+- [Auto-move events](/cloudflare-one/email-security/settings/auto-moves/)
+- [Detection settings metrics](/cloudflare-one/email-security/settings/detection-settings/)
 
 ## Email activity
 
@@ -74,13 +74,13 @@ Impersonations are a form of phishing attack where the actor pretends to be some
 - To view all impersonation emails, select **View all impersonation emails**.
 - To view impersonated users, select **View impersonated users**.
 
-Refer to [Trusted domains](/cloudflare-one/email-security/detection-settings/trusted-domains/) to add a trusted domain, and [Impersonation registry](/cloudflare-one/email-security/detection-settings/impersonation-registry/) to add a user to the impersonation registry.
+Refer to [Trusted domains](/cloudflare-one/email-security/settings/detection-settings/trusted-domains/) to add a trusted domain, and [Impersonation registry](/cloudflare-one/email-security/settings/detection-settings/impersonation-registry/) to add a user to the impersonation registry.
 
 ## Phish submissions
 
 Phishing is a type of attack that involves stealing sensitive information with the aim of using and selling the information.
 
-A phish submission happens when a user or an administrator reports a phishing attack. Refer to [Phish submissions](/cloudflare-one/email-security/phish-submissions/) to learn how to submit a phish.
+A phish submission happens when a user or an administrator reports a phishing attack. Refer to [Phish submissions](/cloudflare-one/email-security/settings/phish-submissions/) to learn how to submit a phish.
 
 Phish submissions displays the following information:
 
@@ -96,7 +96,7 @@ Auto-move events are emails moved to different inboxes based on the disposition 
 
 This panel shows you the total number of auto-moves and the source folder from which these retractions are originating from.
 
-Refer to [Auto-moves](/cloudflare-one/email-security/auto-moves/) to configure auto-move events.
+Refer to [Auto-moves](/cloudflare-one/email-security/settings/auto-moves/) to configure auto-move events.
 
 ## Detection settings metrics
 
@@ -106,4 +106,4 @@ Detection settings metric displays information about:
 - **Blocked traffic**: Traffic that Email Security automatically blocks from senders. Blocked traffic shows metrics on emails that were blocked from user inboxes.
 - **Domain age**: The number of days since domain registration.
 
-Select **Configure** to configure policy and rules for [allowed traffic](/cloudflare-one/email-security/detection-settings/allow-policies/), [blocked traffic](/cloudflare-one/email-security/detection-settings/blocked-senders/) and [domain age](/cloudflare-one/email-security/detection-settings/additional-detections/).
+Select **Configure** to configure policy and rules for [allowed traffic](/cloudflare-one/email-security/settings/detection-settings/allow-policies/), [blocked traffic](/cloudflare-one/email-security/settings/detection-settings/blocked-senders/) and [domain age](/cloudflare-one/email-security/settings/detection-settings/additional-detections/).

@@ -1,0 +1,280 @@
+---
+title: Search email
+pcx_content_type: how-to
+sidebar:
+  order: 1
+---
+
+With Email Security, you can use different screen criteria to search through your email, reclassify and move a certain volume of messages, find similar emails, and export messages.
+
+## Screen criteria
+
+Email Security allows you to use popular, regular, and advanced screening criteria to search through your inbox. Advanced screening will give you the most in-depth investigation of your inbox.
+
+To screen through your email traffic:
+
+1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/).
+2. Select **Email Security**.
+3. Select **Investigation**, then **Run new screen**.
+4. Choose between **Popular**, **Regular**, and **Advanced** screen methods. Refer to the explanation below to learn what each method does.
+
+The results will be displayed on a table. The table allows you to review and take action on the messages that match your chosen screening criteria.
+
+### Popular screen
+
+A popular screen allows you to view messages based on common pre-defined criteria.
+
+To use a popular screen criteria:
+
+1. Under **Method**, select **Popular screens**.
+2. Select one of the following criteria:
+   - **Moved emails**: View emails automatically or manually moved within the last seven days.
+   - **Reclassified emails**: Emails that had their disposition reclassified within the last seven days.
+   - **Malicious emails**: Emails assigned the malicious disposition within the last seven days.
+   - **Spoof emails**: Emails assigned the spoof disposition within the last seven days.
+   - **Suspicious emails**: Emails assigned the suspicious disposition within the last seven days.
+   - **Spam emails**: Emails assigned to the spam disposition within the last seven days.
+3. Select **Run screen**.
+
+To modify your screening criteria, under **Active screen criteria**, select **Modify**.
+
+### Regular screen
+
+A regular screen allows you to investigate your inbox by inserting a term to screen across all criteria.
+
+To use a regular screen criteria:
+
+1. Under **Method**, select **Regular screen**.
+2. Select a **Date range**.
+3. Enter a keyword.
+4. Select **Run screen**.
+
+To include all emails as part of the search, enable **Include all mail**.
+
+To modify your screening criteria, under **Active screen criteria**, select **Modify**.
+
+To reset your screening criteria, select **Reset**.
+
+### Advanced screen
+
+The advanced screen criteria gives you the option to narrow message results based on specific criteria. The advanced screen has several options (such as keywords, subject keywords, sender domain, and more) to scan your inbox.
+
+To use advanced screen criteria:
+
+1. Under **Method**, select **Advanced screen**.
+2. (Required) Select a date range.
+3. (Optional) Fill in the other fields. All fields, except for Subject, must be filled with one value only.
+4. Select **Run screen**.
+
+To include all emails as part of the search, enable **Include all mail**.
+
+To modify your screening criteria, under **Active screen criteria**, select **Modify**.
+
+To reset your screening criteria, select **Reset**.
+
+## Reclassify messages
+
+Reclassifying messages allows you to choose the disposition of your messages if the disposition is incorrect.
+
+To reclassify a message:
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Email Security** and select **Investigation**.
+2. On the Investigation page, under **Your matching messages**, select the message you want to reclassify.
+3. Select the three dots, then select **Request reclassification**.
+4. Under **New disposition**, select among the following:
+   - **Malicious**: Traffic invoked multiple phishing verdict triggers, met thresholds for bad behavior, and is associated with active campaigns.
+   - **Spoof**: Traffic associated with phishing campaigns that is either non-compliant with your email authentication policies (SPF, DKIM, DMARC) or has mismatching Envelope From and Header From values.
+   - **Spam**: Traffic associated with non-malicious, commercial campaigns.
+   - **Bulk**: Traffic associated with [Graymail](https://en.wikipedia.org/wiki/Graymail_%28email%29), that falls in between the definitions of SPAM and SUSPICIOUS. For example, a marketing email that intentionally obscures its unsubscribe link.
+   - **Clean**: Traffic not associated with any phishing campaigns.
+5. Select **Save**.
+
+To reclassify messages in bulk, select **Select all messages** > **Action** > **Request reclassification**.
+
+To release messages in bulk, select **Select all messages** > **Action** > **Release**.
+
+### Upload EML files
+
+Email Security classifies certain emails as "Clean". If you disagree with the disposition, you can upload an EML file and reclassify the email.
+
+On the **Investigation** page:
+
+1. Go to the email marked as Clean.
+2. Select the three dots > **Request reclassification**.
+3. Upload the EML file.
+4. Select a new disposition.
+5. Select **Save**.
+
+Once you have reclassified your messages, you can access those on Reclassifications.
+
+To view reclassifications:
+
+1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/).
+2. Select **Email Security** > **Reclassifications**.
+3. Choose **Team submissions** to view emails your security team submitted for reclassification, or **User submissions** to view emails your users submitted for reclassification.
+
+## Move messages
+
+Moving messages allows you to move messages to a specific folder. You can move up to 1,000 messages at a time.
+
+To move messages:
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Email Security**, and select **Investigation**.
+2. On the Investigation page, select all the messages you want to move.
+3. Select the **Action** dropdown, then select **Move**.
+4. Select among one of the following folders:
+   - **Inbox**: Move messages to the primary email folder.
+   - **Junk email**: Move messages to the junk or spam folder.
+   - **Trash**: Move messages to the trash or deleted items email folder.
+   - **Soft delete (user recoverable)**: Move messages to the user's Deleted Items folder. This option is for Microsoft 365 only.
+   - **Hard delete (admin recoverable)**: Delete messages from a user's inbox.
+5. Select **Save**.
+
+To move messages in bulk, select **Select all messages** > **Action** > **Move**.
+
+## Find similar emails
+
+Each detection has an Email Detection Fingerprint (EDF) hash that Email Security sends to the Search API to retrieve similar detections.
+
+To find similar detection results:
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Email Security**, and select **Investigation**.
+2. On the Investigation page, under **Your matching messages**, search for the **Similar emails** column.
+3. Select the number of similar emails. Selecting the number will show you a list of similar emails.
+
+## Export messages
+
+With Email Security, you can export messages to a CSV file.
+
+To export messages:
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Email Security**, and select **Investigation**.
+2. On the Investigation page, under **Your matching messages**, select **Export to CSV**.
+3. Select **Export messages** on the pop-up message. You can export up to 500 messages from the dashboard. To export up to 1,000 matching messages, use the [API](/api/resources/email_security/subresources/investigate/methods/get/).
+
+To export messages in bulk, select **Select all messages** > **Export to CSV**.
+
+## Email status
+
+Email Security allows you to review the status and actions of each email.
+
+To view status and actions for each email:
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Email Security**, and select **Investigation**.
+2. On the Investigation page, select the three dots.
+3. Selecting the three dots will show you the following options:
+
+- If the email is quarantined:
+  - **View details**: Refer to [Email details](#email-details) to learn more.
+  - **View similar emails**: Find similar emails based on the `value_edf_hash` (Electronic Detection Fingerprint hash).
+  - **Release**: Email Security will no longer quarantine your chosen messages.
+  - **Request reclassification**: Choose the dispositions of your messages if they are incorrect. Refer to [Reclassify messages](#reclassify-messages) to learn more.
+
+- If the email is not quarantined:
+  - **View details**.
+  - **View similar emails**.
+  - **View submission detail**.
+  - **[Move](/cloudflare-one/email-security/settings/auto-moves/)** (only available if you authorized moves).
+  - **[Request reclassification](#reclassify-messages)**.
+
+## Email details
+
+Email Security shows you the following email detail information:
+
+- Details
+- Action log
+- Raw message
+- Mail trace
+
+### Details
+
+Email Security displays the following details:
+
+1. **Threat type**: Threat type of the email, for example, [credential harvester](/cloudflare-one/email-security/reference/how-es-detects-phish/), and [IP-based spam](/cloudflare-one/email-security/reference/how-es-detects-phish/).
+2. **Validation**: Email validation methods [SPF](https://www.cloudflare.com/learning/dns/dns-records/dns-spf-record/), [DKIM](https://www.cloudflare.com/learning/dns/dns-records/dns-dkim-record/), [DMARC](https://www.cloudflare.com/learning/dns/dns-records/dns-dmarc-record/). The dashboard will display Pass if SPF, DKIM and DMARC checks have passed.
+3. **Sender details**: Information include:
+   - IP address
+   - Registered domain
+   - Autonomous sys number: This number identifies your [autonomous system (AS)](https://www.cloudflare.com/en-gb/learning/network-layer/what-is-an-autonomous-system/).
+   - Autonomous sys name: This name identifies your autonomous system (AS).
+   - Country
+4. **Links identified**: A list of malicious links identified by Email Security. Refer to [Open links](#open-links) to open links in Security Center, Browser Isolation or an external tool of your choice.
+5. **Attachments**: If an email has an attachment, the Cloudflare dashboard will display the filename, and the disposition assigned. You can open attachments in [Browser Isolation](/cloudflare-one/remote-browser-isolation/). Only PDF files are currently supported.
+6. **Reasons for disposition**: Description of why the email was deemed as malicious, suspicious, or spam.
+
+#### Open links
+
+You can open links in Security Center or [Browser Isolation](/cloudflare-one/remote-browser-isolation/), or copy and paste the link so you can investigate content in external tools.
+
+To open links in Security Center:
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Email Security** > **Investigation**.
+2. Locate the message you want to open links for, select the three dots, then select **View details**.
+3. Under **Details**, go to **Links identified**.
+4. Locate the link you want to open, and select **Open in Security Center**.
+5. You will be redirected to Investigate in the Cloudflare dashboard.
+6. Select **Scan now**.
+7. The dashboard will generate a report for your link.
+
+To open links in Browser Isolation:
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Email Security** > **Investigation**.
+2. Locate the message you want to open links for, select the three dots, then select **View details**.
+3. Under **Details**, go to **Links identified**.
+4. Locate the link you want to open, and select **Open in Browser Isolation**.
+5. The link will open in a separate window where you will be able to browse the content securely.
+
+Alternatively, you can directly [open links in Browser Isolation](/cloudflare-one/remote-browser-isolation/setup/clientless-browser-isolation/).
+
+:::note
+If you purchased Gateway and [Browser Isolation](/cloudflare-one/remote-browser-isolation/), you can perform more actions when opening links.
+:::
+
+When opening links, Email Security will not allow you to:
+
+- [Copy (from remote to client)](/cloudflare-one/remote-browser-isolation/isolation-policies/)
+- [Paste (from client to remote)](/cloudflare-one/remote-browser-isolation/isolation-policies/)
+- Use [keyboard](/cloudflare-one/remote-browser-isolation/isolation-policies/)
+- [Print](/cloudflare-one/remote-browser-isolation/isolation-policies/)
+- [Download files](/cloudflare-one/remote-browser-isolation/isolation-policies/)
+- [Uploads files](/cloudflare-one/remote-browser-isolation/isolation-policies/)
+
+To open and investigate a link in an external tool:
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Email Security** > **Investigation**.
+2. Locate the message you want to open links for, select the three dots, then select **View details**.
+3. Under **Details**, go to **Links identified**.
+4. Locate the link you want to open, and select **Copy URL**.
+5. Paste the link in your external tool.
+
+:::caution[Warning]
+You may encounter a `400 Bad Request` error after turning Clientless Web Isolation on.
+:::
+
+If you encounter this error:
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Settings** > **Resources**.
+2. Select **Generate certificate**.
+3. Choose the **Expiration** (5 years is recommended), then select **Generate certificate**. Your certificate is now generated, and the dashboard will display its Deployment Status as INACTIVE.
+4. Select the three dots, and then select **Activate** to activate your certificate.
+5. Select the three dots, and then select **Mark as in-use**.
+6. Your certificate deployment status should display AVAILABLE IN-USE.
+
+### Action log
+
+Action log allows you to review post-delivery actions performed on your selected message. The action log displays:
+
+- **Date**: Date when the post-delivery action was performed.
+- **Activity**: The activity taken on an email. For example, moving the email to the trash folder, releasing a quarantined email, and more.
+
+### Raw message
+
+Raw message allows you to view the raw details of the message. You can also choose to download the email message. To download the message, select **Download .EML**.
+
+### Mail trace
+
+Mail trace allows you to track the path your selected message took from the sender to the recipient. Mail trace displays:
+
+- **Date**: The date and time when the mail was tracked.
+- **Type**: An email can be inbound (email sent to you from another email), or outbound (emails sent from your email address).
+- **Activity**: The activity taken on an email. For example, moving the email to the trash folder, releasing a quarantined email, and more.

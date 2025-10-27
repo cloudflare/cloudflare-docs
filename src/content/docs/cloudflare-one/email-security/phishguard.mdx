@@ -2,26 +2,26 @@
 title: PhishGuard
 pcx_content_type: how-to
 sidebar:
-  order: 18
+  order: 17
 ---
 
 PhishGuard is a team of analysts that routinely inspects your email environment and responds to threats that come through your email inbox.
 
 While Email Security uses advanced technologies to protect your email inbox, PhishGuard offers an additional human component to protect your email environment against impersonation events, suspicious items, false negatives/false positives, and any new event that automated intelligent systems may miss due to a lack of context (for example, a compromised account activity).
 
-PhishGuard only works on a post-delivery environment (only emails that have already landed in your email inbox are reviewed). As a result, PhishGuard analysts may perform a [reclassification](/cloudflare-one/email-security/email-monitoring/search-email/#reclassify-messages) or [auto-move](/cloudflare-one/email-security/auto-moves/) based on their findings.
+PhishGuard only works on a post-delivery environment (only emails that have already landed in your email inbox are reviewed). As a result, PhishGuard analysts may perform a [reclassification](/cloudflare-one/email-security/investigation/search-email/#reclassify-messages) or [auto-move](/cloudflare-one/email-security/settings/auto-moves/) based on their findings.
 
 PhishGuard coordinates with the email detections team, allowing you to directly request immediate detection for specific items and implement custom detections unique to your needs. An example of this is requesting to block all PayPal traffic if you do not use PayPal for invoicing. This capability allows you to take ownership over the rules governing your email environment through PhishGuard's human intervention.
 
 Additionally, PhishGuard analysts:
 
 - Use real-time threat data to identify malicious activity. Email-based threats are responded to rapidly, and immediately reported and documented. 
-- Review every [user](/cloudflare-one/email-security/email-monitoring/search-email/#user-submissions) and [team](/cloudflare-one/email-security/email-monitoring/search-email/#team-submissions) submission so your security team can focus on more critical activites.
+- Review every [user](/cloudflare-one/email-security/investigation/search-email/#user-submissions) and [team](/cloudflare-one/email-security/investigation/search-email/#team-submissions) submission so your security team can focus on more critical activites.
 - Help you detect and mitigate threats faster, reducing the time attacks have access to your network. This also helps reducing business impact, because it prevents data breaches, financial loss, and reputational damage.
 
 To use PhishGuard:
 
-1. Log in to [Zero Trust](https://one.dash.cloudflare.com/).
+1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/).
 2. Select **Email security**.
 3. Select **PhishGuard**.
 
@@ -55,7 +55,7 @@ Insider threat defense on the dashboard displays **Insider leads** and **Insider
 
 PhishGuard reviews suspicious and highly malicious activity in your email environment.
 
-On the Zero Trust dashboard, email threat hunting displays previously unknown phishing attacks.
+On the Cloudflare One dashboard, email threat hunting displays previously unknown phishing attacks.
 
 Email threat hunting also gives you information on **Threat leads generated** and **Total reposts generated**.
 
@@ -67,7 +67,7 @@ Email threat hunting also gives you information on **Threat leads generated** an
 
 API Status allows you to monitor and configure the current status of API message auto-moves and directory integrations.
 
-Select **Message moves** to [configure auto-moves](/cloudflare-one/email-security/auto-moves/). Select **Directory integration** to [configure directories](/cloudflare-one/email-security/directories/).
+Select **Message moves** to [configure auto-moves](/cloudflare-one/email-security/settings/auto-moves/). Select **Directory integration** to [configure directories](/cloudflare-one/email-security/directories/).
 
 ## Managed email security operations
 
@@ -75,7 +75,7 @@ Managed email security operations allows you to review the results of phish subm
 
 It displays the following:
 
-- Total [phish submissions](/cloudflare-one/email-security/phish-submissions/)
+- Total [phish submissions](/cloudflare-one/email-security/settings/phish-submissions/)
 - Tracked incidents
 - Median time to resolve
 - Resolved track incidents
@@ -92,4 +92,4 @@ If you select the three dots, you can:
   - **Details**: Displays information such as delivery disposition, current disposition, ES Alert ID, Message-ID, Timestamp, Subject, and Attempted Fraudulent Amount.
   - **Indicators of compromise (IOC)**: [Indicators of compromise (IOC)](https://www.cloudflare.com/en-gb/learning/security/what-are-indicators-of-compromise/) are information about a specific security breach that can help security teams determine if an attack has taken place.
 - Preview email.
-- [Move email](/cloudflare-one/email-security/auto-moves/).
+- [Move email](/cloudflare-one/email-security/settings/auto-moves/).

@@ -9,13 +9,13 @@ Email Security allows you to exempt known partner and internal domains from typi
 
 ## How trusted domains work
 
-Trusted domains are not for the email message itself, but for entire domains. 
+Trusted domains are not for the email message itself, but for entire domains.
 
 By default, Email Security automatically detects lookalike domains. Lookalike domains can be something like this: `thisisdomain.com` and `thisisadomain.com`. Both domains almost look identical.
 
-If an email is received from a domain that looks like a configured domain, this will trigger a detection. Trusted domain is configured to ignore this detection. 
+If an email is received from a domain that looks like a configured domain, this will trigger a detection. Trusted domain is configured to ignore this detection.
 
-In [Additional detections](/cloudflare-one/email-security/detection-settings/additional-detections/), you can configure malicious domain and suspicious [domain age](/cloudflare-one/email-security/detection-settings/additional-detections/).
+In [Additional detections](/cloudflare-one/email-security/settings/detection-settings/additional-detections/), you can configure malicious domain and suspicious [domain age](/cloudflare-one/email-security/settings/detection-settings/additional-detections/).
 
 Malicious domain age means that someone may create a domain today, similar to a target, and start sending emails with that domain. This is usually how many phish campaigns start. In this case, the domain is usually marked as Malicious. Malicious domain age is usually set to 7 days.
 
@@ -23,17 +23,17 @@ Suspicious domain age means that after 7 days (this number corresponds to the Ma
 
 To view whether a domain is malicious or suspicious:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Investigation**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Investigation**.
 2. Run a screen. For example, select **Run screen** for **Malicious emails**, then select **Run screen**.
 3. Under **Your matching messages**, if any message displays **Domain Age** under **Threat types**, that means that the domain age is too low, and therefore the disposition assigned is Malicious. If the domain is legitimate, you can add it as a trusted domain:
-    - Go to **Settings** > **Trusted Domains**.
-    - Under **Domain Info**, add the domain, and select **New Domain**. This will mark the domain whose age is low as a trusted domain.
+   - Go to **Settings** > **Trusted Domains**.
+   - Under **Domain Info**, add the domain, and select **New Domain**. This will mark the domain whose age is low as a trusted domain.
 
 ## Configure trusted domains
 
 To configure a trusted domain:
 
-1. Log in to [Zero Trust](https://one.dash.cloudflare.com/).
+1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/).
 2. Select **Email Security**.
 3. Select **Settings**, go to **Detection settings** > **Trusted domains**.
 4. On the **Detection settings** page, select **Add a domain**.
@@ -41,10 +41,10 @@ To configure a trusted domain:
    - **Manual input**:
      - **Domain info**: Enter a valid domain name.
      - **Domain type**: Select one or both options:
-       * **Proximity domain**: Domains with similar spelling to your existing domain.
-       * **Recent domain**: Domains created recently.
+       - **Proximity domain**: Domains with similar spelling to your existing domain.
+       - **Recent domain**: Domains created recently.
      * **Notes**: Provide additional information about the trusted domain list.
-   - **Upload trusted domain list**: You can upload a file no larger than 150 KB of multiple trusted domains. The file can only contain `Domain`, `Proximity`, `New` and `Notes` fields. The first row must be a header row. Refer to [CSV uploads](/cloudflare-one/email-security/detection-settings/trusted-domains/#csv-uploads) for an example file.
+   - **Upload trusted domain list**: You can upload a file no larger than 150 KB of multiple trusted domains. The file can only contain `Domain`, `Proximity`, `New` and `Notes` fields. The first row must be a header row. Refer to [CSV uploads](/cloudflare-one/email-security/settings/detection-settings/trusted-domains/#csv-uploads) for an example file.
 6. Select **Save**.
 
 ### CSV uploads

@@ -13,7 +13,7 @@ Email Security allows you to use popular, regular, and advanced screening criter
 
 To screen through your email traffic:
 
-1. Log in to [Zero Trust](https://one.dash.cloudflare.com/).
+1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/).
 2. Select **Email Security**.
 3. Select **Investigation**, then **Run new screen**.
 4. Choose between **Popular**, **Regular**, and **Advanced** screen methods. Refer to the explanation below to learn what each method does.
@@ -28,12 +28,12 @@ To use a popular screen criteria:
 
 1. Under **Method**, select **Popular screens**.
 2. Select one of the following criteria:
-   * **Moved emails**: View emails automatically or manually moved within the last seven days.
-   * **Reclassified emails**: Emails that had their disposition reclassified within the last seven days.
-   * **Malicious emails**: Emails assigned the malicious disposition within the last seven days.
-   * **Spoof emails**: Emails assigned the spoof disposition within the last seven days.
-   * **Suspicious emails**: Emails assigned the suspicious disposition within the last seven days.
-   * **Spam emails**: Emails assigned to the spam disposition within the last seven days.
+   - **Moved emails**: View emails automatically or manually moved within the last seven days.
+   - **Reclassified emails**: Emails that had their disposition reclassified within the last seven days.
+   - **Malicious emails**: Emails assigned the malicious disposition within the last seven days.
+   - **Spoof emails**: Emails assigned the spoof disposition within the last seven days.
+   - **Suspicious emails**: Emails assigned the suspicious disposition within the last seven days.
+   - **Spam emails**: Emails assigned to the spam disposition within the last seven days.
 3. Select **Run screen**.
 
 To modify your screening criteria, under **Active screen criteria**, select **Modify**.
@@ -78,7 +78,7 @@ Reclassifying messages allows you to choose the disposition of your messages if 
 
 To reclassify a message:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Email Security** and select **Investigation**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Email Security** and select **Investigation**.
 2. On the **Investigation** page, under **Your matching messages**, select the message you want to reclassify.
 3. Select the three dots, then select **Request reclassification**.
 4. Under **New disposition**, select among the following:
@@ -109,7 +109,7 @@ Once you have reclassified your messages, you can access those on **Reclassifica
 
 To view reclassifications:
 
-1. Log in to [Zero Trust](https://one.dash.cloudflare.com/).
+1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/).
 2. Select **Email Security** > **Reclassifications**.
 3. Choose **Team submissions** to view emails your security team submitted for reclassification, or **User submissions** to view emails your users submitted for reclassification.
 
@@ -138,10 +138,10 @@ To gain more details on a specific reclassification:
 
 User submissions are the emails your users submitted for reclassification. User submissions help enhance our detection model, but can be escalated for human review.
 
-Any email that is reported as [phish](/cloudflare-one/email-security/phish-submissions/#reclassify-an-email) will be displayed under **User submissions**.
+Any email that is reported as [phish](/cloudflare-one/email-security/settings/phish-submissions/#reclassify-an-email) will be displayed under **User submissions**.
 
 :::note
-[PhishGuard](/cloudflare-one/email-security/phish-guard/) customers can have submissions analyzed when submitting at either user or team level. Any non-PhishGuard customer can still have submissions analyzed by submitting at team level.
+[PhishGuard](/cloudflare-one/email-security/phishguard/) customers can have submissions analyzed when submitting at either user or team level. Any non-PhishGuard customer can still have submissions analyzed by submitting at team level.
 :::
 
 Select among the following filters:
@@ -165,37 +165,13 @@ To escalate a reclassification:
 2. Select the three dots > select **Escalate**.
 3. The dashboard will display a message to authorize escalation. Select **Escalate**.
 
-### Invalid submissions
-
-A submission is invalid when:
-
-- A submission has no EML file attached.
-- A submission has been made with an incorrect file extension.
-- A submission was made to the wrong team or user alias.
-
-To ensure your submission is valid:
-
-- Ensure your submission has a file attached with a `.eml` file extension.
-- Ensure you configure the domain you are submitting emails for.
-- Ensure policies are configured correctly.
-
-To view invalid submissions:
-
-1. Log in to [Zero Trust](https://one.dash.cloudflare.com/).
-2. Select **Email Security** > **Reclassifications**.
-3. Select **Invalid submissions**.
-
-You can search by submission ID or submitted email.
-
-You can filter based on **Date Range** and **Submitted by** (which will list emails that made the invalid submissions). Once you have configured your desired filters, select **Apply filters**.
-
 ## Move messages
 
 Moving messages allows you to move messages to a specific folder. You can move up to 1,000 messages at a time.
 
 To move messages:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Email Security**, and select **Investigation**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Email Security**, and select **Investigation**.
 2. On the **Investigation** page, select all the messages you want to move.
 3. Select the **Action** dropdown, then select **Move**.
 4. Select among one of the following folders:
@@ -214,7 +190,7 @@ Each detection has an Email Detection Fingerprint (EDF) hash that Email Security
 
 To find similar detection results:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Email Security**, and select **Investigation**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Email Security**, and select **Investigation**.
 2. On the **Investigation** page, under **Your matching messages**, search for the **Similar emails** column.
 3. Select the number of similar emails. Selecting the number will show you a list of similar emails.
 
@@ -224,7 +200,7 @@ With Email Security, you can export messages to a CSV file.
 
 To export messages:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Email Security**, and select **Investigation**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Email Security**, and select **Investigation**.
 2. On the **Investigation** page, under **Your matching messages**, select **Export to CSV**.
 3. Select **Export messages** on the pop-up message. You can export up to 500 messages from the dashboard. To export up to 1,000 matching messages, use the [API](/api/resources/email_security/subresources/investigate/methods/get/).
 
@@ -236,20 +212,20 @@ Email Security allows you to review the status and actions of each email.
 
 To view status and actions for each email:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Email Security**, and select **Investigation**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Email Security**, and select **Investigation**.
 2. On the **Investigation** page, select the three dots.
 3. Selecting the three dots will show you the following options:
    - If the email is quarantined:
-      - **View details**: Refer to [Email details](/cloudflare-one/email-security/email-monitoring/search-email/#email-details) to learn more.
-      - **View similar emails**: Find similar emails based on the `value_edf_hash` (Electronic Detection Fingerprint hash).
-      - **Release**: Email Security will no longer quarantine your chosen messages.
-      - **Request reclassification**: Choose the dispositions of your messages if they are incorrect. Refer to [Reclassify messages](/cloudflare-one/email-security/email-monitoring/search-email/#reclassify-messages) to learn more.
+     - **View details**: Refer to [Email details](/cloudflare-one/email-security/monitoring/search-email/#email-details) to learn more.
+     - **View similar emails**: Find similar emails based on the `value_edf_hash` (Electronic Detection Fingerprint hash).
+     - **Release**: Email Security will no longer quarantine your chosen messages.
+     - **Request reclassification**: Choose the dispositions of your messages if they are incorrect. Refer to [Reclassify messages](/cloudflare-one/email-security/monitoring/search-email/#reclassify-messages) to learn more.
 4. If the email is not quarantined:
    - **View details**.
    - **View similar emails**.
    - **View submission detail**.
-   - [Move](/cloudflare-one/email-security/auto-moves/) (only available if you authorized moves).
-   - [Request reclassification](/cloudflare-one/email-security/email-monitoring/search-email/#reclassify-messages).
+   - [Move](/cloudflare-one/email-security/settings/auto-moves/) (only available if you authorized moves).
+   - [Request reclassification](/cloudflare-one/email-security/investigation/search-email/#reclassify-messages).
 
 ## Email details
 
@@ -272,7 +248,7 @@ Email Security displays the following details:
    - Autonomous sys number: This number identifies your [autonomous system (AS)](https://www.cloudflare.com/en-gb/learning/network-layer/what-is-an-autonomous-system/).
    - Autonomous sys name: This name identifies your autonomous system (AS).
    - Country
-4. **Links identified**: A list of malicious links identified by Email Security. Refer to [Open links](/cloudflare-one/email-security/email-monitoring/search-email/#open-links) to open links in Security Center, Browser Isolation or an external tool of your choice.
+4. **Links identified**: A list of malicious links identified by Email Security. Refer to [Open links](/cloudflare-one/email-security/monitoring/search-email/#open-links) to open links in Security Center, Browser Isolation or an external tool of your choice.
 5. **Attachments**: If an email has an attachment, the Cloudflare dashboard will display the filename, and the disposition assigned. You can open attachments in [Browser Isolation](/cloudflare-one/remote-browser-isolation/). Only PDF files are currently supported.
 6. **Reasons for disposition**: Description of why the email was deemed as malicious, suspicious, or spam.
 
@@ -282,21 +258,21 @@ You can open links in [Security Center](/security-center/) or [Browser Isolation
 
 To open links in Security Center:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Email Security** > **Investigation**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Email Security** > **Investigation**.
 2. Locate the message you want to open links for, select the three dots, then select **View details**.
-2. Under **Details**, go to **Links identified**.
-3. Locate the link you want to open, and select **Open in Security Center**.
-4. You will be redirected to **Investigate** in the Cloudflare dashboard.
-5. Select **Scan now**.
-6. The dashboard will generate a report for your link.
+3. Under **Details**, go to **Links identified**.
+4. Locate the link you want to open, and select **Open in Security Center**.
+5. You will be redirected to **Investigate** in the Cloudflare dashboard.
+6. Select **Scan now**.
+7. The dashboard will generate a report for your link.
 
 To open links in Browser Isolation:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Email Security** > **Investigation**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Email Security** > **Investigation**.
 2. Locate the message you want to open links for, select the three dots, then select **View details**.
-2. Under **Details**, go to **Links identified**.
-3. Locate the link you want to open, and select **Open in Browser Isolation**.
-4. The link will open in a separate window where you will be able to browse the content securely.
+3. Under **Details**, go to **Links identified**.
+4. Locate the link you want to open, and select **Open in Browser Isolation**.
+5. The link will open in a separate window where you will be able to browse the content securely.
 
 Alternatively, you can directly [open links in Browser Isolation](/cloudflare-one/remote-browser-isolation/setup/clientless-browser-isolation/#open-links-in-browser-isolation).
 
@@ -316,24 +292,24 @@ When opening links, Email Security will not allow you to:
 
 To open and investigate a link in an external tool:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Email Security** > **Investigation**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Email Security** > **Investigation**.
 2. Locate the message you want to open links for, select the three dots, then select **View details**.
-2. Under **Details**, go to **Links identified**.
-3. Locate the link you want to open, and select **Copy URL**.
-3. Paste the link in your external tool.
+3. Under **Details**, go to **Links identified**.
+4. Locate the link you want to open, and select **Copy URL**.
+5. Paste the link in your external tool.
 
 :::caution
 You may encounter a `400 Bad Request` error after turning **Clientless Web Isolation** on.
 
 If you encounter this error:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Resources**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Settings** > **Resources**.
 2. Select **Generate certificate**.
 3. Choose the **Expiration** (5 years is recommended), then select **Generate certificate**. Your certificate is now generated, and the dashboard will display its **Deployment Status** as **INACTIVE**.
 4. Select the three dots, and then select **Activate** to activate your certificate.
 5. Select the three dots, and then select **Mark as in-use**.
 6. Your certificate deployment status should display **AVAILABLE IN-USE**.
-:::
+   :::
 
 ### Action log
 
