@@ -3,7 +3,7 @@
 		"title": "Account options",
 		"single_sign_on": {
 			"title": "Cloudflare dashboard single sign-on",
-			"link": "/cloudflare-one/applications/configure-apps/dash-sso-apps/",
+			"link": "/fundamentals/manage-members/dashboard-sso/",
 			"properties": {
 				"availability": {
 					"title": "Availability",

@@ -12,7 +12,7 @@ Sessions are bash shell execution contexts within a sandbox. Think of them like 
 
 ## Default session
 
-Every sandbox has a default session that maintains shell state across commands:
+Every sandbox has a default session that maintains shell state between commands while the container is active:
 
 ```typescript
 const sandbox = getSandbox(env.Sandbox, 'my-sandbox');
@@ -25,7 +25,7 @@ await sandbox.exec("export MY_VAR=hello");
 await sandbox.exec("echo $MY_VAR");  // Output: hello
 ```
 
-Shell state persists: working directory, environment variables, exported variables all carry over between commands.
+Working directory, environment variables, and exported variables carry over between commands. This state resets if the container restarts due to inactivity.
 
 ## Creating sessions
 

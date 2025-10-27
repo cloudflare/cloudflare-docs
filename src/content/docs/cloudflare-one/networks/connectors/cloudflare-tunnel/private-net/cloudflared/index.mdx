@@ -1,0 +1,17 @@
+---
+pcx_content_type: concept
+title: Connect with cloudflared
+hidden: false
+sidebar:
+  order: 1
+---
+
+`cloudflared` is a daemon service that can run on nearly any host machine in your private network and proxies local traffic once validated from the Cloudflare network. The Cloudflare Tunnel created by `cloudflared` is outbound-only, meaning that it will only proxy requests initiated from a user to your private network. Requests made by a service or application running behind the tunnel will use the server's default routing table.
+
+On the client side, end users connect to Cloudflare's global network using the Cloudflare WARP client. The WARP client can be rolled out to your entire organization in just a few minutes using your in-house MDM tooling. When users connect to an IP address or hostname made available through Cloudflare Tunnel, WARP sends their connection through Cloudflare's network and down the corresponding tunnel to the internal service. Traffic to services behind the tunnel will carry the local source IP address of the host machine running the `cloudflared` daemon.
+
+![Diagram displaying connections between a device, Cloudflare, and a private network.](~/assets/images/cloudflare-one/connections/private-ips-diagram.png)
+
+To enable remote access to your private network, refer to the following guides:
+- [**Connect a private hostname**](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-private-hostname/): Route network traffic to an internal application using its hostname.
+- [**Connect an IP/CIDR**](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-cidr/): Route traffic to an internal IP address or CIDR range.

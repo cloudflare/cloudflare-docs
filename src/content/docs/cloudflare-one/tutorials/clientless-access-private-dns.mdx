@@ -15,8 +15,8 @@ With Cloudflare Browser Isolation and resolver policies, users can connect to pr
 
 Make sure you have:
 
-- [Cloudflare Browser Isolation](/cloudflare-one/policies/browser-isolation/) enabled on your account
-- [Resolver policies](/cloudflare-one/policies/gateway/resolver-policies/) enabled on your account
+- [Cloudflare Browser Isolation](/cloudflare-one/remote-browser-isolation/) enabled on your account
+- [Resolver policies](/cloudflare-one/traffic-policies/resolver-policies/) enabled on your account
 - An HTTP or HTTPS application that users access through a browser
 
 ## Create a Cloudflare Tunnel
@@ -57,7 +57,7 @@ To test, open a browser and go to `https://<team-name>.cloudflareaccess.com/brow
 
 2. Select **Add a policy**.
 
-3. Create an expression to match against the private [domain](/cloudflare-one/policies/gateway/resolver-policies/#domain) or [hostname](/cloudflare-one/policies/gateway/resolver-policies/#host) of the application:
+3. Create an expression to match against the private [domain](/cloudflare-one/traffic-policies/resolver-policies/#domain) or [hostname](/cloudflare-one/traffic-policies/resolver-policies/#host) of the application:
 
    | Selector | Operator | Value                |
    | -------- | -------- | -------------------- |
@@ -79,7 +79,7 @@ To test, open a browser and go to `https://<team-name>.cloudflareaccess.com/brow
 
 1. Go to **Gateway** > **Firewall policies** > **Network**.
 
-2. Add a [network policy](/cloudflare-one/policies/gateway/network-policies/) that targets the private IP address of your application. You can optionally include any ports or protocols relevant for application access. For example,
+2. Add a [network policy](/cloudflare-one/traffic-policies/network-policies/) that targets the private IP address of your application. You can optionally include any ports or protocols relevant for application access. For example,
 
    | Selector         | Operator      | Value           | Logic | Action |
    | ---------------- | ------------- | --------------- | ----- | ------ |
@@ -101,4 +101,4 @@ Users can now access the application at the following URL:
 
 `https://<team-name>.cloudflareaccess.com/browser/https://internalrecord.com`
 
-The application will load in an isolated browser. You can optionally [configure remote browser controls](/cloudflare-one/policies/browser-isolation/isolation-policies/#policy-settings) such as disabling copy/paste, printing, or keyboard input.
+The application will load in an isolated browser. You can optionally [configure remote browser controls](/cloudflare-one/remote-browser-isolation/isolation-policies/#policy-settings) such as disabling copy/paste, printing, or keyboard input.

@@ -7,10 +7,10 @@ hidden: false
 date: 2025-07-24
 ---
 
-[Gateway](/cloudflare-one/policies/gateway/) can now apply [HTTP filtering](/cloudflare-one/policies/gateway/http-policies/) to all proxied HTTP requests, not just traffic on standard HTTP (`80`) and HTTPS (`443`) ports. This means all requests can now be filtered by [A/V scanning](/cloudflare-one/policies/gateway/http-policies/antivirus-scanning/), [file sandboxing](/cloudflare-one/policies/gateway/http-policies/file-sandboxing/), [Data Loss Prevention (DLP)](/cloudflare-one/policies/data-loss-prevention/#data-in-transit), and more. 
+[Gateway](/cloudflare-one/traffic-policies/) can now apply [HTTP filtering](/cloudflare-one/traffic-policies/http-policies/) to all proxied HTTP requests, not just traffic on standard HTTP (`80`) and HTTPS (`443`) ports. This means all requests can now be filtered by [A/V scanning](/cloudflare-one/traffic-policies/http-policies/antivirus-scanning/), [file sandboxing](/cloudflare-one/traffic-policies/http-policies/file-sandboxing/), [Data Loss Prevention (DLP)](/cloudflare-one/data-loss-prevention/#data-in-transit), and more. 
 
-You can turn this [setting](/cloudflare-one/policies/gateway/network-policies/protocol-detection/#inspect-on-all-ports) on by going to **Settings** > **Network** > **Firewall** and choosing  _Inspect on all ports_.
+You can turn this [setting](/cloudflare-one/traffic-policies/network-policies/protocol-detection/#inspect-on-all-ports) on by going to **Settings** > **Network** > **Firewall** and choosing  _Inspect on all ports_.
 
 ![HTTP Inspection on all ports setting](~/assets/images/gateway/Gateway-Inspection-all-ports.png)
 
-To learn more, refer to [Inspect on all ports (Beta)](/cloudflare-one/policies/gateway/network-policies/protocol-detection/#inspect-on-all-ports).
+To learn more, refer to [Inspect on all ports (Beta)](/cloudflare-one/traffic-policies/network-policies/protocol-detection/#inspect-on-all-ports).

@@ -1969,6 +1969,7 @@
 /workers/frameworks/framework-guides/nuxt/ /workers/framework-guides/web-apps/more-web-frameworks/nuxt/ 301
 /workers/frameworks/framework-guides/qwik/ /workers/framework-guides/web-apps/more-web-frameworks/qwik/ 301
 /workers/frameworks/framework-guides/solid/ /workers/framework-guides/web-apps/more-web-frameworks/solid/ 301
+/workers/framework-guides/web-apps/tanstack/ /workers/framework-guides/web-apps/tanstack-start/ 301
 
 /workers/testing/unit-testing/ /workers/testing/vitest-integration/write-your-first-test/ 301
 /workers/testing/integration-testing/ /workers/testing/ 301
@@ -2318,7 +2319,7 @@
 /changelog-next/* /changelog/:splat 301
 /browser-rendering/quick-actions-rest-api/* /browser-rendering/rest-api/:splat 301
 /*/sitemap.xml /sitemap-index.xml 301
-/access/configuring-identity-providers/* /cloudflare-one/identity/idp-integration/:splat 301
+/access/configuring-identity-providers/* /cloudflare-one/integrations/identity-providers/:splat 301
 /api-security/* /api-shield/:splat 301
 /api-shield/products/* /api-shield/security/:splat 301
 /distributed-web/* /web3/:splat 301
@@ -2379,6 +2380,46 @@
 /cloudflare-one/policies/filtering/http-policies/data-loss-prevention/* /cloudflare-one/policies/data-loss-prevention/ 301
 /cloudflare-one/policies/data-loss-prevention/configuration-guides/* /cloudflare-one/policies/data-loss-prevention/dlp-policies/common-policies/ 301
 /cloudflare-one/policies/data-loss-prevention/datasets/* /cloudflare-one/policies/data-loss-prevention/detection-entries/:splat 301
+
+# Cloudflare One nav revamp
+/cloudflare-one/connections/ /cloudflare-one/ 301
+/cloudflare-one/identity/users/ /cloudflare-one/team-and-resources/users/ 301
+/cloudflare-one/identity/users/session-management/ /cloudflare-one/access-controls/access-settings/session-management/ 301
+/cloudflare-one/identity/users/seat-management/ /cloudflare-one/team-and-resources/users/seat-management/ 301
+/cloudflare-one/identity/users/scim/ /cloudflare-one/team-and-resources/users/scim/ 301
+/cloudflare-one/applications/login-page/ /cloudflare-one/reusable-components/custom-pages/access-login-page/ 301
+/cloudflare-one/applications/block-page/ /cloudflare-one/reusable-components/custom-pages/access-block-page/ 301
+/cloudflare-one/applications/app-library/ /cloudflare-one/team-and-resources/app-library/ 301
+/cloudflare-one/applications/bookmarks/ /cloudflare-one/access-controls/applications/bookmarks/ 301
+/cloudflare-one/applications/app-launcher/ /cloudflare-one/access-controls/access-settings/app-launcher/ 301
+/cloudflare-one/applications/ /cloudflare-one/access-controls/applications/http-apps/ 301
+/cloudflare-one/identity/ /cloudflare-one/integrations/identity-providers/ 301
+/cloudflare-one/identity/authorization-cookie/ /cloudflare-one/access-controls/applications/http-apps/authorization-cookie/ 301
+/cloudflare-one/identity/authorization-cookie/validating-json/ /cloudflare-one/access-controls/applications/http-apps/authorization-cookie/validating-json/ 301
+/cloudflare-one/identity/authorization-cookie/application-token/ /cloudflare-one/access-controls/applications/http-apps/authorization-cookie/application-token/ 301
+/cloudflare-one/identity/authorization-cookie/cors/ /cloudflare-one/access-controls/applications/http-apps/authorization-cookie/cors/ 301
+/cloudflare-one/identity/service-tokens/ /cloudflare-one/access-controls/service-credentials/service-tokens/ 301
+/cloudflare-one/applications/configure-apps/mcp-servers/mcp-portals/ /cloudflare-one/access-controls/ai-controls/mcp-portals/ 301
+/cloudflare-one/applications/configure-apps/mcp-servers/saas-mcp/ /cloudflare-one/access-controls/ai-controls/saas-mcp/ 031
+/cloudflare-one/applications/configure-apps/mcp-servers/linked-apps/ /cloudflare-one/access-controls/ai-controls/linked-apps/ 301
+/cloudflare-one/connections/connect-devices/* /cloudflare-one/team-and-resources/devices/:splat 301
+/cloudflare-one/connections/connect-networks/* /cloudflare-one/networks/connectors/cloudflare-tunnel/:splat 301
+/cloudflare-one/policies/gateway/* /cloudflare-one/traffic-policies/:splat 301
+/cloudflare-one/policies/browser-isolation/* /cloudflare-one/remote-browser-isolation/:splat 301
+/cloudflare-one/policies/data-loss-prevention/* /cloudflare-one/data-loss-prevention/:splat 301
+/cloudflare-one/policies/access/* /cloudflare-one/access-controls/policies/:splat 301
+/cloudflare-one/identity/one-time-pin/ /cloudflare-one/integrations/identity-providers/one-time-pin/ 301
+/cloudflare-one/identity/idp-integration/* /cloudflare-one/integrations/identity-providers/:splat 301
+/cloudflare-one/identity/devices/service-providers/* /cloudflare-one/integrations/service-providers/:splat 301
+/cloudflare-one/applications/configure-apps/* /cloudflare-one/access-controls/applications/http-apps/:splat 301
+/cloudflare-one/applications/non-http/* /cloudflare-one/access-controls/applications/non-http/:splat 301
+/cloudflare-one/identity/devices/* /cloudflare-one/reusable-components/posture-checks/:splat 301
+/cloudflare-one/traffic-policies/lists/ /cloudflare-one/reusable-components/lists/ 301
+/cloudflare-one/applications/casb/casb-integrations/* /cloudflare-one/integrations/cloud-and-saas/:splat 301
+/cloudflare-one/applications/casb/troubleshooting/* /cloudflare-one/integrations/cloud-and-saas/troubleshooting/:splat 301
+/cloudflare-one/applications/casb/ /cloudflare-one/cloud-and-saas-findings/ 301
+/cloudflare-one/applications/casb/manage-findings/ /cloudflare-one/cloud-and-saas-findings/manage-findings/ 301
+/cloudflare-one/applications/casb/casb-dlp/ /cloudflare-one/cloud-and-saas-findings/casb-dlp/ 301
 
 # Learning paths
 

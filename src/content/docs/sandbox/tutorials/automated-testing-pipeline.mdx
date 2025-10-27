@@ -3,6 +3,7 @@ title: Automated testing pipeline
 pcx_content_type: tutorial
 sidebar:
   order: 4
+description: Build a testing pipeline that clones Git repositories, installs dependencies, runs tests, and reports results.
 ---
 
 import { Render, PackageManagers } from "~/components";
@@ -34,7 +35,7 @@ cd test-pipeline
 Replace `src/index.ts`:
 
 ```typescript
-import { getSandbox, proxyToSandbox, type Sandbox } from '@cloudflare/sandbox';
+import { getSandbox, proxyToSandbox, parseSSEStream, type Sandbox, type ExecEvent } from '@cloudflare/sandbox';
 
 export { Sandbox } from '@cloudflare/sandbox';
 
@@ -53,7 +54,7 @@ export default {
 		}
 
 		try {
-			const { repoUrl, branch = 'main' } = await request.json();
+			const { repoUrl, branch } = await request.json();
 
 			if (!repoUrl) {
 				return Response.json({ error: 'repoUrl required' }, { status: 400 });
@@ -63,39 +64,69 @@ export default {
 
 			try {
 				// Clone repository
+				console.log('Cloning repository...');
 				let cloneUrl = repoUrl;
-				if (env.GITHUB_TOKEN && repoUrl.includes('github.com')) {
-					cloneUrl = repoUrl.replace('https://', `https://${env.GITHUB_TOKEN}@`);
+				
+				if (env.GITHUB_TOKEN && cloneUrl.includes('github.com')) {
+					cloneUrl = cloneUrl.replace('https://', `https://${env.GITHUB_TOKEN}@`);
 				}
 
-				await sandbox.exec(`git clone --depth=1 --branch=${branch} ${cloneUrl} /workspace/repo`);
+				await sandbox.gitCheckout(cloneUrl, {
+					...(branch && { branch }),
+					depth: 1,
+					targetDir: 'repo'
+				});
+				console.log('Repository cloned');
 
 				// Detect project type
 				const projectType = await detectProjectType(sandbox);
+				console.log(`Detected ${projectType} project`);
 
 				// Install dependencies
 				const installCmd = getInstallCommand(projectType);
 				if (installCmd) {
-					const installResult = await sandbox.exec(`cd /workspace/repo && ${installCmd}`);
-					if (!installResult.success) {
+					console.log('Installing dependencies...');
+					const installStream = await sandbox.execStream(`cd /workspace/repo && ${installCmd}`);
+					
+					let installExitCode = 0;
+					for await (const event of parseSSEStream<ExecEvent>(installStream)) {
+						if (event.type === 'stdout' || event.type === 'stderr') {
+							console.log(event.data);
+						} else if (event.type === 'complete') {
+							installExitCode = event.exitCode;
+						}
+					}
+					
+					if (installExitCode !== 0) {
 						return Response.json({
 							success: false,
 							error: 'Install failed',
-							output: installResult.stderr
+							exitCode: installExitCode
 						});
 					}
+					console.log('Dependencies installed');
 				}
 
 				// Run tests
+				console.log('Running tests...');
 				const testCmd = getTestCommand(projectType);
-				const testResult = await sandbox.exec(`cd /workspace/repo && ${testCmd}`);
+				const testStream = await sandbox.execStream(`cd /workspace/repo && ${testCmd}`);
+				
+				let testExitCode = 0;
+				for await (const event of parseSSEStream<ExecEvent>(testStream)) {
+					if (event.type === 'stdout' || event.type === 'stderr') {
+						console.log(event.data);
+					} else if (event.type === 'complete') {
+						testExitCode = event.exitCode;
+					}
+				}
+				console.log(`Tests completed with exit code ${testExitCode}`);
 
 				return Response.json({
-					success: testResult.exitCode === 0,
-					exitCode: testResult.exitCode,
-					output: testResult.stdout,
-					errors: testResult.stderr,
-					projectType
+					success: testExitCode === 0,
+					exitCode: testExitCode,
+					projectType,
+					message: testExitCode === 0 ? 'All tests passed' : 'Tests failed'
 				});
 
 			} finally {
@@ -160,19 +191,18 @@ Test with a repository:
 curl -X POST http://localhost:8787 \
   -H "Content-Type: application/json" \
   -d '{
-    "repoUrl": "https://github.com/sindresorhus/is-promise",
-    "branch": "main"
+    "repoUrl": "https://github.com/cloudflare/sandbox-sdk"
   }'
 ```
 
-Response:
+You will see progress logs in the wrangler console, and receive a JSON response:
 
 ```json
 {
   "success": true,
   "exitCode": 0,
-  "output": "...test output...",
-  "projectType": "nodejs"
+  "projectType": "nodejs",
+  "message": "All tests passed"
 }
 ```
 

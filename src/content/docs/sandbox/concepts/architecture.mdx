@@ -5,39 +5,37 @@ sidebar:
   order: 1
 ---
 
-The Sandbox SDK provides isolated code execution environments on Cloudflare's edge network. It combines three Cloudflare technologies:
+Sandbox SDK lets you execute untrusted code safely from your Workers. It combines three Cloudflare technologies to provide secure, stateful, and isolated execution:
 
-- **Workers** - JavaScript runtime at the edge
-- **Durable Objects** - Stateful compute with persistent storage
-- **Containers** - Isolated execution environments with full Linux capabilities
+- **Workers** - Your application logic that calls the Sandbox SDK
+- **Durable Objects** - Persistent sandbox instances with unique identities
+- **Containers** - Isolated Linux environments where code actually runs
 
-## Three-layer architecture
+## Architecture overview
 
-```
-┌─────────────────────────────────────────────────────────┐
-│                     Your Application                    │
-│                    (Cloudflare Worker)                  │
-└───────────────────────────┬─────────────────────────────┘
-                            ├─ getSandbox()
-                            ├─ exec()
-                            ├─ writeFile()
-                            │
-           ┌────────────────▼──────────────────┐
-           │ Container-enabled Durable Object  │
-           │ (SDK methods via RPC from Worker) │
-           └───────────────────────────────────┘
-                            │ HTTP/JSON
-                            │
-                    ┌───────▼───────┐
-                    │ Durable Object │ Layer 2: State Management
-                    │  (Persistent)  │
-                    └───────┬───────┘
-                            │ Container Protocol
-                            │
-                    ┌───────▼───────┐
-                    │   Container   │ Layer 3: Isolated Execution
-                    │  (Linux + Bun) │
-                    └───────────────┘
+```mermaid
+flowchart TB
+    accTitle: Sandbox SDK Architecture
+    accDescr: Three-layer architecture showing how Cloudflare Sandbox SDK combines Workers, Durable Objects, and Containers for secure code execution
+
+    subgraph UserSpace["<b>Your Worker</b>"]
+        Worker["Application code using the methods exposed by the Sandbox SDK"]
+    end
+
+    subgraph SDKSpace["<b>Sandbox SDK Implementation</b>"]
+        DO["Sandbox Durable Object routes requests & maintains state"]
+        Container["Isolated Ubuntu container executes untrusted code safely"]
+
+        DO -->|HTTP API| Container
+    end
+
+    Worker -->|RPC call via the Durable Object stub returned by `getSandbox`| DO
+
+    style UserSpace fill:#fff8f0,stroke:#f6821f,stroke-width:2px
+    style SDKSpace fill:#f5f5f5,stroke:#666,stroke-width:2px,stroke-dasharray: 5 5
+    style Worker fill:#ffe8d1,stroke:#f6821f,stroke-width:2px
+    style DO fill:#dce9f7,stroke:#1d8cf8,stroke-width:2px
+    style Container fill:#d4f4e2,stroke:#17b26a,stroke-width:2px
 ```
 
 ### Layer 1: Client SDK
@@ -70,7 +68,7 @@ export class Sandbox extends DurableObject<Env> {
 **Why Durable Objects**:
 
 - **Persistent identity** - Same sandbox ID always routes to same instance
-- **State management** - Filesystem and processes persist between requests
+- **Container management** - Durable Object owns and manages the container lifecycle
 - **Geographic distribution** - Sandboxes run close to users
 - **Automatic scaling** - Cloudflare manages provisioning
 
@@ -82,9 +80,8 @@ Executes code in isolation with full Linux capabilities.
 
 **Why containers**:
 
-- **True isolation** - Process-level isolation with namespaces
-- **Full environment** - Real Linux with Python, Node.js, Git, etc.
-- **Resource limits** - CPU, memory, disk constraints
+- **VM-based isolation** - Each sandbox runs in its own VM
+- **Full environment** - Ubuntu Linux with Python, Node.js, Git, etc.
 
 ## Request flow
 
@@ -98,32 +95,6 @@ await sandbox.exec("python script.py");
 2. **Durable Object** authenticates and routes to container runtime
 3. **Container Runtime** validates inputs, executes command, captures output
 4. **Response flows back** through all layers with proper error transformation
-
-## State persistence
-
-Sandboxes maintain state across requests:
-
-**Filesystem**:
-
-```typescript
-// Request 1
-await sandbox.writeFile("/workspace/data.txt", "hello");
-
-// Request 2 (minutes later)
-const file = await sandbox.readFile("/workspace/data.txt");
-// Returns 'hello' - file persisted
-```
-
-**Processes**:
-
-```typescript
-// Request 1
-await sandbox.startProcess("node server.js");
-
-// Request 2 (minutes later)
-const processes = await sandbox.listProcesses();
-// Server still running
-```
 
 ## Related resources
 

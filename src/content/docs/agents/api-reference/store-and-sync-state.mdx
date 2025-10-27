@@ -189,7 +189,7 @@ export class MyAgent extends Agent<Env> {
 
 		// 'users' is just an example here: you can create arbitrary tables and define your own schemas
 		// within each Agent's database using SQL (SQLite syntax).
-		let user = await this.sql`SELECT * FROM users WHERE id = ${userId}`
+		let [user] = this.sql`SELECT * FROM users WHERE id = ${userId}`
 		return Response.json(user)
 	}
 }
@@ -211,7 +211,7 @@ export class MyAgent extends Agent<Env> {
 		let userId = new URL(request.url).searchParams.get('userId');
 		// Supply the type parameter to the query when calling this.sql
 		// This assumes the results returns one or more User rows with "id", "name", and "email" columns
-		const user = await this.sql<User>`SELECT * FROM users WHERE id = ${userId}`;
+		const [user] = this.sql<User>`SELECT * FROM users WHERE id = ${userId}`;
 		return Response.json(user)
 	}
 }
@@ -242,7 +242,7 @@ export class ReasoningAgent extends Agent<Env> {
 	async callReasoningModel(prompt: Prompt) {
 		let result = this.sql<History>`SELECT * FROM history WHERE user = ${prompt.userId} ORDER BY timestamp DESC LIMIT 1000`;
 		let context = [];
-		for await (const row of result) {
+		for (const row of result) {
 			context.push(row.entry);
 		}
 

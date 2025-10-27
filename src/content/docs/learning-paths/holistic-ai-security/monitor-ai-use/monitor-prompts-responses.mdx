@@ -6,11 +6,11 @@ sidebar:
   order: 4
 ---
 
-When you enable [TLS decryption](/cloudflare-one/policies/gateway/http-policies/tls-decryption/#turn-on-tls-decryption), you can review the prompts and responses for supported AI applications. This allows you to understand three key things about AI application usage:
+When you enable [TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/#turn-on-tls-decryption), you can review the prompts and responses for supported AI applications. This allows you to understand three key things about AI application usage:
 - The sanctioned and unsanctioned AI tools your users are engaging with.
 - How they are interacting with them.
 - What information they are sharing.
 
 ![Log entry for a prompt detected using AI prompt protection.](~/assets/images/learning-paths/holistic-ai-security/gateway-prompt-log.png)
 
-You can use this in conjunction with [DLP profiles](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/) to detect sensitive data potentially being used in prompts, with or without explicitly blocking the action. You can use DLP to log AI prompt topics by turning on [Capture generative AI prompt content in logs](/cloudflare-one/policies/data-loss-prevention/dlp-policies/logging-options/#turn-on-ai-prompt-content-logging-for-a-dlp-policy) for the policy.
+You can use this in conjunction with [DLP profiles](/cloudflare-one/data-loss-prevention/dlp-profiles/) to detect sensitive data potentially being used in prompts, with or without explicitly blocking the action. You can use DLP to log AI prompt topics by turning on [Capture generative AI prompt content in logs](/cloudflare-one/data-loss-prevention/dlp-policies/logging-options/#turn-on-ai-prompt-content-logging-for-a-dlp-policy) for the policy.

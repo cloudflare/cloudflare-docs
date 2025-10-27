@@ -1,0 +1,16 @@
+---
+pcx_content_type: reference
+title: Cipher suites
+---
+
+Cloudflare Tunnel connections use the cipher suites supported by `cloudflared`, which relies on the Go TLS library for its TLS implementation. When establishing a TLS connection to your origin, `cloudflared` will negotiate the most secure cipher suite supported by both sides.
+
+The following table lists the cipher suites supported by cloudflared:
+
+| Protocol support | Cipher suites |
+|------------------|----------------|
+| TLS 1.3 only | `TLS_AES_128_GCM_SHA256`<br />`TLS_AES_256_GCM_SHA384`<br />`TLS_CHACHA20_POLY1305_SHA256` |
+| TLS 1.2 only | `TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256`<br />`TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384`<br />`TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256`<br />`TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384`<br />`TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256`<br />`TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256` |
+| Up to and including TLS 1.2 | `TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA`<br />`TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA`<br />`TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA`<br />`TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA` |
+
+

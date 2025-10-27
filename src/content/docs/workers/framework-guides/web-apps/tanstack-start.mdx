@@ -1,0 +1,102 @@
+---
+pcx_content_type: how-to
+title: TanStack Start
+sidebar:
+  order: 7
+head: []
+tags: ["full-stack"]
+description: Create a TanStack Start application and deploy it to Cloudflare Workers.
+---
+
+import {
+	Badge,
+	Description,
+	InlineBadge,
+	Render,
+	PackageManagers,
+} from "~/components";
+
+In this guide, you will create a new [TanStack Start](https://tanstack.com/start) application and deploy it to Cloudflare Workers.
+
+## 1. Set up a new project
+
+Use the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) CLI (C3) to set up a new project. C3 will create a new project directory, initiate TanStack Start's official setup tool, and provide the option to deploy instantly.
+
+To use `create-cloudflare` to create a new TanStack Start project with Workers Assets, run the following command:
+
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args="my-tanstack-start-app --framework=tanstack-start"
+/>
+
+After setting up your project, change your directory by running the following command:
+
+```sh
+cd my-tanstack-start-app
+```
+
+## 2. Develop locally
+
+After you have created your project, run the following command in the project directory to start a local development server. This will allow you to preview your project locally during development.
+
+<PackageManagers type="run" args="dev" />
+
+## 3. Deploy your Project
+
+You can deploy your project to a `*.workers.dev` subdomain or a [Custom Domain](/workers/configuration/routing/custom-domains/) from your own machine or from any CI/CD system, including Cloudflare's own [Workers Builds](/workers/ci-cd/builds/).
+
+The following command will build and deploy your project. If you are using CI, ensure you update your [**Deploy command**](/workers/ci-cd/builds/configuration/#build-settings) configuration appropriately.
+
+<PackageManagers type="run" args={"deploy"} />
+
+:::note
+
+Before deploying your application, you can also run the `preview` script to preview the built output locally before deploying it.
+This can help you making sure that your application will work as intended once it's been deployed to the Cloudflare network:
+
+<PackageManagers type="run" args="preview" />
+
+:::
+
+---
+
+## Bindings
+
+Your TanStack Start application can be fully integrated with the Cloudflare Developer Platform, in both local development and in production, by using bindings.
+
+You can use bindings simply by [importing the `env` object](https://developers.cloudflare.com/workers/runtime-apis/bindings/#importing-env-as-a-global) and accessing it in your server
+side code.
+
+For example in the following way:
+
+```tsx
+import { createFileRoute } from "@tanstack/react-router";
+import { createServerFn } from "@tanstack/react-start";
+import { env } from "cloudflare:workers";
+
+export const Route = createFileRoute("/")({
+	loader: () => getData(),
+	component: RouteComponent,
+});
+
+const getData = createServerFn().handler(() => {
+	// Use env here
+});
+
+function RouteComponent() {
+	// ...
+}
+```
+
+:::note
+
+Running the `cf-typegen` script:
+
+<PackageManagers type="run" args="cf-typegen" />
+
+Will populate the `env` object with the various bindings based on your configuration.
+
+:::
+
+<Render file="frameworks-bindings" product="workers" />

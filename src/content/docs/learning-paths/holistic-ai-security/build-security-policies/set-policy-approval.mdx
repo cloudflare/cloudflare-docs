@@ -22,7 +22,7 @@ If you use specific AI tools within your organization, you may want to create po
 5. For **Action**, select **Allow**.
 6. Select **Create policy**.
 
-For more information, refer to [Block unauthorized applications](/cloudflare-one/policies/gateway/http-policies/common-policies/#block-unauthorized-applications).
+For more information, refer to [Block unauthorized applications](/cloudflare-one/traffic-policies/http-policies/common-policies/#block-unauthorized-applications).
 
 ## Create a Gateway policy to redirect users towards approved AI tools
 
@@ -53,7 +53,7 @@ Cloudflare Workers are an easy method to stand up custom user coaching pages. Th
      2. Enter the URL to the approved application you want to redirect the user to use instead.
 7. Select **Create policy**.
 
-For more information, refer to [Configure policy block behavior](/cloudflare-one/policies/gateway/block-page/#configure-policy-block-behavior).
+For more information, refer to [Configure policy block behavior](/cloudflare-one/traffic-policies/block-page/#configure-policy-block-behavior).
 
 ## Capture prompts to prevent data loss
 
@@ -79,7 +79,7 @@ You can build policies that enable Prompt Capture for AI applications in specifi
 
 ## Configure Gateway to use ChatGPT workspace header
 
-If your organization uses [ChatGPT Business](https://chatgpt.com/business/), you can configure a Gateway policy to enforce the use of your organization's workspace ID, ensuring all traffic to ChatGPT is correctly associated with your account. This will implement Gateway [tenant control](/cloudflare-one/policies/gateway/http-policies/tenant-control/), which lets you manage how users interact with specific applications.
+If your organization uses [ChatGPT Business](https://chatgpt.com/business/), you can configure a Gateway policy to enforce the use of your organization's workspace ID, ensuring all traffic to ChatGPT is correctly associated with your account. This will implement Gateway [tenant control](/cloudflare-one/traffic-policies/http-policies/tenant-control/), which lets you manage how users interact with specific applications.
 
 To create this policy, you will add a custom HTTP header to your Gateway policy. This header, `Chatgpt-Allowed-Workspace-Id`, ensures that only requests with your organization's unique workspace ID are permitted.
 

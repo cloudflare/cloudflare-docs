@@ -3,6 +3,11 @@ link: "/browser-rendering/changelog/"
 productName: Browser Rendering
 productLink: "/browser-rendering/"
 entries:
+  - publish_date: "2025-10-21"
+    title: Added guidance on REST API timeouts and custom fonts
+    description: |-
+      * Added [REST API timeouts](/browser-rendering/reference/timeouts/) page explaining how Browser Rendering uses independent timers (for page load, selectors, and actions) and how to configure them.
+      * Updated [Supported fonts](/browser-rendering/reference/supported-fonts/) guide with instructions on using your own custom fonts via `addStyleTag()` in [Playwright](/browser-rendering/platform/playwright/) or [Puppeteer](/browser-rendering/platform/puppeteer/).
   - publish_date: "2025-09-25"
     title: Updates to Playwright, new support for Stagehand, and increased limits
     description: |-

@@ -69,7 +69,7 @@ Cloudflare Tunnel was previously named Warp during the beta phase. As Warp was a
 
 ## Is it possible to restore a deleted tunnel?
 
-No. You cannot undo a tunnel deletion. If the tunnel was locally-managed, its [`config.yaml` file](/cloudflare-one/connections/connect-networks/get-started/tunnel-useful-terms/#configuration-file) will still be present and you can create a new tunnel with the same configuration. If the tunnel was remotely-managed, both the tunnel and its configuration are permanently deleted.
+No. You cannot undo a tunnel deletion. If the tunnel was locally-managed, its [`config.yaml` file](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/tunnel-useful-terms/#configuration-file) will still be present and you can create a new tunnel with the same configuration. If the tunnel was remotely-managed, both the tunnel and its configuration are permanently deleted.
 
 ## How do I contact support?
 
@@ -81,6 +81,6 @@ Before contacting the Cloudflare support team:
 
 3. Gather any relevant error/access logs from your server.
 
-4. (Locally-managed tunnels only) Set [`--loglevel`](/cloudflare-one/connections/connect-networks/configure-tunnels/cloudflared-parameters/run-parameters/#loglevel) to `debug`, so the Cloudflare support team can get more info from the `cloudflared.log` file.
+4. (Locally-managed tunnels only) Set [`--loglevel`](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/cloudflared-parameters/run-parameters/#loglevel) to `debug`, so the Cloudflare support team can get more info from the `cloudflared.log` file.
 
-5. Include your [Cloudflare Tunnel diagnostic logs](/cloudflare-one/connections/connect-networks/troubleshoot-tunnels/diag-logs/) (`cloudflared-diag-YYYY-MM-DDThh-mm-ss.zip`).
+5. Include your [Cloudflare Tunnel diagnostic logs](/cloudflare-one/networks/connectors/cloudflare-tunnel/troubleshoot-tunnels/diag-logs/) (`cloudflared-diag-YYYY-MM-DDThh-mm-ss.zip`).

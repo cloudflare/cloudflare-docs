@@ -3,6 +3,7 @@ title: Run background processes
 pcx_content_type: how-to
 sidebar:
   order: 3
+description: Start and manage long-running services and applications.
 ---
 
 import { TypeScriptExample } from "~/components";
@@ -19,10 +20,9 @@ Use `startProcess()` instead of `exec()` when:
 - **Continuous monitoring** - Log watchers, health checkers
 - **Parallel execution** - Multiple services running simultaneously
 
-Use `exec()` for:
-
-- **One-time commands** - Installations, builds, data processing
-- **Quick scripts** - Simple operations that complete and exit
+:::note
+For **one-time commands, builds, or scripts that complete and exit**, use `exec()` instead. See the [Execute commands guide](/sandbox/guides/execute-commands/).
+:::
 
 ## Start a background process
 

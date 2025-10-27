@@ -18,7 +18,7 @@ To use Email Security, you will need to have:
 
 ## Enable Gmail BCC integration:
 
-1. Log in to [Zero Trust](https://one.dash.cloudflare.com/).
+1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/).
 2. Select **Email Security**.
 3. Select **Overview**. Select one of the following options:
 
@@ -55,7 +55,7 @@ On the [Google Cloud Console](https://console.cloud.google.com/welcome/new):
 
 ### 3. Upload JSON Key
 
-On the [Zero Trust dashboard](https://one.dash.cloudflare.com/), upload the `.json` file downloaded on step 3.
+On the [Cloudflare One dashboard](https://one.dash.cloudflare.com/), upload the `.json` file downloaded on step 3.
 
 ### 4. Enable Necessary Google Workspace APIs in GCP
 
@@ -72,7 +72,7 @@ Log in to Google Workspace Admin Console: Enter your password and log in to the 
 
 ### 6. Create a Domain-Wide Delegation API Client
 
-1. Copy the **Client ID** and **Scopes** displayed on the Zero Trust dashboard.
+1. Copy the **Client ID** and **Scopes** displayed on the Cloudflare One dashboard.
 2. On Google Admin, go to **Security** > **Access and data control** > **API controls**.
 3. Select **MANAGE DOMAIN WIDE DELEGATION** > **Add new**.
 4. Use the Client ID and copy the scopes to create a new API client. Refer to [Delegate domain-wide authority to your service account](https://cloud.google.com/chronicle/docs/soar/marketplace-integrations/google-alert-center?_gl=1*skktsb*_ga*MTMxODg5NDExMy4xNzI5NjA1MzYy*_ga_WH2QY8WWF5*MTcyOTc3MDg2Ny40LjEuMTcyOTc3MDg5OC4yOS4wLjA.#delegate_domain-wide_authority_to_your_service_account). Then, select **Next**.
@@ -91,14 +91,13 @@ Enter the email associated with the Google Workspace Administrator account. Your
 
 To verify that the integration has been successful:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Email Security**.
-2. Go to **Settings** (the gear icon) > **SaaS integrations**.
-3. Go to your integration, and ensure that the integration displays **CASB+EMAIL** under **Type**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Integrations**.
+2. Under **Your integrations**, locate your integration, and ensure that the integration displays **CASB+EMAIL** under **Type**.
 
 :::note
 If you do not reach the step to complete the Email Security set up:
 
-1. Go to **Settings** (the gear icon) > **SaaS Integrations**.
+1. Go to **Integrations** > **Cloud & SaaS Integrations** > **Integrations**.
 2. Delete the integration, if present. Locate your integration, select **Configure**, then select **Delete**.
 3. Follow the steps from the beginning to [enable Gmail BCC integration](/cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/bcc-setup/gmail-bcc-setup/enable-gmail-integration/#enable-gmail-bcc-integration).
    :::

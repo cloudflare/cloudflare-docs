@@ -3,7 +3,6 @@ pcx_content_type: reference
 title: Glossary
 sidebar:
   order: 6
-
 ---
 
 This page provides a list of terms and concepts to help you understand Radar and the information shown.
@@ -37,16 +36,16 @@ On Cloudflare Radar, we provide time series charts for both the volume of BGP me
 [BGP route leaks](https://www.rfc-editor.org/rfc/rfc7908.html) are defined as the propagation of routing announcements beyond their intended scope.
 In Cloudflare Radar, you can inspect the detected route leak events on the corresponding autonomous system number (ASN) pages. The columns in the table are defined as follows:
 
-* `From`: The autonomous system (AS) from which the routes are learned from.
-* `By`: The AS that leaked the routes, or the leaker.
-* `To`: The AS that received and propagated the leaked routes.
-* `Start` and `End`: The starting and ending time of a route leak event.
-* `BGP Msgs.`: The number of BGP announcements that contain leaked routes.
-* `Prefixes`: The number of IP prefixes a route leak event affects.
-* `Origins`: The number of origin ASes a route leak event affects.
-* `Vantage Points`: The number of route collectors that observed a route leak event.
+- `From`: The autonomous system (AS) from which the routes are learned from.
+- `By`: The AS that leaked the routes, or the leaker.
+- `To`: The AS that received and propagated the leaked routes.
+- `Start` and `End`: The starting and ending time of a route leak event.
+- `BGP Msgs.`: The number of BGP announcements that contain leaked routes.
+- `Prefixes`: The number of IP prefixes a route leak event affects.
+- `Origins`: The number of origin ASes a route leak event affects.
+- `Vantage Points`: The number of route collectors that observed a route leak event.
 
-Learn more about our route leak detection system design and usages  in [How we detect route leaks and our new Cloudflare Radar route leak service](https://blog.cloudflare.com/route-leak-detection-with-cloudflare-radar/) blog post.
+Learn more about our route leak detection system design and usages in [How we detect route leaks and our new Cloudflare Radar route leak service](https://blog.cloudflare.com/route-leak-detection-with-cloudflare-radar/) blog post.
 
 ## BGP origin hijacks
 
@@ -57,14 +56,14 @@ legitimate destination, causing data loss with potential leak of private/confide
 In Cloudflare Radar, you can inspect the detected BGP origin hijack events in the "BGP Origin Hijacks" table. The columns
 of the table are defined as follows:
 
-* `ID`: Event ID, clickable and navigates to the event details page.
-* `Detected Origin`: The AS that originated the prefixes at the time of detection, potentially being a BGP hijacker.
-* `Expected Origin(s)`: The AS(es) that are expected to originate the corresponding prefixes based on various evidences.
-* `Start Time (UTC)` and `Duration`: The detected timestamp in UTC with a human-readable time duration for how long the event lasted. Ongoing events will not have a duration value, indicated by the `--` sign.
-* `BGP Messages`: The number of BGP messages that contain the detected anomaly.
-* `Prefixes`: The prefixes hijacked during the event, showing only one full prefix due to table space limitation.
-* `Confidence`: The level of confidence that we have on the event being a true hijacks. Values can be `High`, `Medium`, or `Low`.
-* `Tags`: The relevant evidence presented as short tags, presenting key facts we compiled using additional data sources, such as RPKI validation results or network relationship.
+- `ID`: Event ID, clickable and navigates to the event details page.
+- `Detected Origin`: The AS that originated the prefixes at the time of detection, potentially being a BGP hijacker.
+- `Expected Origin(s)`: The AS(es) that are expected to originate the corresponding prefixes based on various evidences.
+- `Start Time (UTC)` and `Duration`: The detected timestamp in UTC with a human-readable time duration for how long the event lasted. Ongoing events will not have a duration value, indicated by the `--` sign.
+- `BGP Messages`: The number of BGP messages that contain the detected anomaly.
+- `Prefixes`: The prefixes hijacked during the event, showing only one full prefix due to table space limitation.
+- `Confidence`: The level of confidence that we have on the event being a true hijacks. Values can be `High`, `Medium`, or `Low`.
+- `Tags`: The relevant evidence presented as short tags, presenting key facts we compiled using additional data sources, such as RPKI validation results or network relationship.
 
 You can also access the detection result programmatically via our [public API](/api/resources/radar/subresources/bgp/subresources/hijacks/subresources/events/methods/list/) ([CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/) license).
 
@@ -102,6 +101,7 @@ CT helps detect misissued or malicious certificates by requiring CAs to publicly
 These logs are monitored by various entities, including browsers and security researchers, to ensure transparency and trust in the certificate ecosystem.
 
 Key entities in CT include:
+
 - **CAs:** Organizations that issue certificates.
 - **CT Logs:** Public, append-only logs where issued certificates are recorded.
 - **Monitors:** Parties that check logs for correctness.
@@ -123,7 +123,7 @@ Cloudflare Speed Test measures latency multiple times over the course of the tes
 
 ## Content categories
 
-Cloudflare uses a variety of data sources to categorize domains. Using Cloudflare Radar, you can view the content categories associated with a given domain. Cloudflare customers using [Cloudflare Gateway](/cloudflare-one/policies/gateway/domain-categories/) or [1.1.1.1 for Families](/1.1.1.1/setup/#1111-for-families) can decide to block certain categories, like "Adult Content", in addition to security threats like malware and phishing.
+Cloudflare uses a variety of data sources to categorize domains. Using Cloudflare Radar, you can view the content categories associated with a given domain. Cloudflare customers using [Cloudflare Gateway](/cloudflare-one/traffic-policies/domain-categories/) or [1.1.1.1 for Families](/1.1.1.1/setup/#1111-for-families) can decide to block certain categories, like "Adult Content", in addition to security threats like malware and phishing.
 
 In some cases, a domain may be miscategorized. For example, a social media site might be categorized as "Shopping & Auctions". If you believe a domain is miscategorized, or a domain has not yet been categorized, please provide your suggested category using [this form](https://radar.cloudflare.com/domains/feedback) to bring it to our attention.
 
@@ -180,7 +180,7 @@ The IQI methodology requires a minimum number of measurements to generate estima
 
 ## IRR AS-SETs
 
-An IRR AS-SET is a named collection of Autonomous System Numbers (ASNs) within the Internet Routing Registry (IRR) used to define and manage BGP routing policies. By grouping related networks, such as customers and downstream peers, under a single identifier, network operators can automate the creation of BGP filters, which are essential for preventing the propagation of BGP route leaks. AS-SETs can be hierarchical, meaning they can include other AS-SETs as members, creating a scalable but complex structure. To quantify this complexity, the "AS Cone" measures the total number of unique ASNs in a fully expanded set (its downstream footprint), while "Upstreams" measures how many other AS-SETs include it directly or indirectly, providing insight into its role in the global routing system. 
+An IRR AS-SET is a named collection of Autonomous System Numbers (ASNs) within the Internet Routing Registry (IRR) used to define and manage BGP routing policies. By grouping related networks, such as customers and downstream peers, under a single identifier, network operators can automate the creation of BGP filters, which are essential for preventing the propagation of BGP route leaks. AS-SETs can be hierarchical, meaning they can include other AS-SETs as members, creating a scalable but complex structure. To quantify this complexity, the "AS Cone" measures the total number of unique ASNs in a fully expanded set (its downstream footprint), while "Upstreams" measures how many other AS-SETs include it directly or indirectly, providing insight into its role in the global routing system.
 
 An AS-SET does not inherently includes its owner networks. Cloudflare Radar infers the owner by matching the AS-SET name on [PeeringDB](https://www.peeringdb.com/) or by the name itself. When an AS-SET's owner can be inferred via both methods, we prefer the PeeringDB information.
 
@@ -218,23 +218,23 @@ Currently, we only include AI-focused user agents listed in the [ai.robots.txt](
 
 ## TCP resets and timeouts
 
-In the Transmission Control Protocol (TCP), client-initiated connection resets (via the RST flag, TCP's "panic button") are atypical, and indicate to the server that *something went wrong* requiring the connection to be closed immediately. Similarly, connection timeouts (where the server closes a connection due to an unresponsive client) should not happen in conventional data exchanges. For comparison, a typical TCP connection consists of a 3-way handshake initiated by a client with a SYN packet to the server, then a data exchange moderated with ACK and PSH flags in the data packets, and finally a graceful close initiated from either side with a FIN packet. A FIN close is considered graceful because it ensures both sides complete their data transfer before closing the connection. In contrast, a timeout or RST flag triggers a hard stop, even if data is waiting to be sent or acknowledged. See [RFC 9293](https://datatracker.ietf.org/doc/html/rfc9293) for more details on the TCP protocol.
+In the Transmission Control Protocol (TCP), client-initiated connection resets (via the RST flag, TCP's "panic button") are atypical, and indicate to the server that _something went wrong_ requiring the connection to be closed immediately. Similarly, connection timeouts (where the server closes a connection due to an unresponsive client) should not happen in conventional data exchanges. For comparison, a typical TCP connection consists of a 3-way handshake initiated by a client with a SYN packet to the server, then a data exchange moderated with ACK and PSH flags in the data packets, and finally a graceful close initiated from either side with a FIN packet. A FIN close is considered graceful because it ensures both sides complete their data transfer before closing the connection. In contrast, a timeout or RST flag triggers a hard stop, even if data is waiting to be sent or acknowledged. See [RFC 9293](https://datatracker.ietf.org/doc/html/rfc9293) for more details on the TCP protocol.
 
 A TCP server may see timed-out or reset connections for a variety of reasons. Some are benign, such as client applications that lose connectivity or abruptly shut down (e.g., browsers cleaning up closed tabs or port scanners). Others are more concerning, such as [DoS attacks](https://www.cloudflare.com/learning/ddos/syn-flood-ddos-attack/) or third-party interference. In some cases, a close examination of the packets in a connection can help to shed light on the reason for termination. For example, [Global, Passive Detection of Connection Tampering](https://research.cloudflare.com/publications/SundaraRaman2023/) finds that certain packet patterns can be linked to middlebox connection tampering.
 
 On Cloudflare Radar’s [Security & Attacks page](https://radar.cloudflare.com/security-and-attacks), you can view statistics on resets and timeouts from a sample of TCP connections to Cloudflare’s servers, broken down by how far the connection progressed before termination. The plot lines are defined as follows:
 
-* **Post-SYN (mid-handshake)**: Connection resets or timeouts after the server received only a single SYN packet.
-* **Post-ACK (immediately post-handshake)**: Connection resets or timeouts after the server received both a SYN packet and an ACK packet, meaning the connection was successfully established.
-* **Post-PSH (after first data packet)**: Connection resets or timeouts after the server received a packet with PSH flag set, following connection establishment. The PSH flag indicates that the TCP packet contains data (such as a TLS Client Hello message) ready to deliver to the application.
-* **Later (after multiple data packets)**: Connection resets within the first 10 packets from the client, but after the server has received multiple data packets.
-* **None**: All other connections.
+- **Post-SYN (mid-handshake)**: Connection resets or timeouts after the server received only a single SYN packet.
+- **Post-ACK (immediately post-handshake)**: Connection resets or timeouts after the server received both a SYN packet and an ACK packet, meaning the connection was successfully established.
+- **Post-PSH (after first data packet)**: Connection resets or timeouts after the server received a packet with PSH flag set, following connection establishment. The PSH flag indicates that the TCP packet contains data (such as a TLS Client Hello message) ready to deliver to the application.
+- **Later (after multiple data packets)**: Connection resets within the first 10 packets from the client, but after the server has received multiple data packets.
+- **None**: All other connections.
 
 Learn more about the TCP resets and timeouts dataset in our [blog post](https://blog.cloudflare.com/tcp-resets-timeouts).
 
 ## Threat categories
 
-Attackers use multiple types of techniques when carrying out email-based attacks, including links or attachments leading to malware; identity deception, where the message appears to be coming from a trusted contact; and brand impersonation, where the message appears to be coming from a trusted brand. Categories are assigned to the various types of threats found during the analysis of a malicious email message, and a single message can have multiple categories. These categories are aggregated into “Link”, “Attachment”, “Impersonation”, and “Other” groupings. “Link” groups individual threat types where the attacker is trying to get the user to click on something, “Attachment” groups individual threat types where  the attacker has attached a file to the email message, and “Impersonation” groups individual threat types where the attacker is impersonating a trusted brand or contact. The “Other” grouping includes other threat types not covered by the previous three. The percentages represent the share of malicious email messages where the given threat categories have been found. Data for this metric comes from Cloudflare’s cloud email security service.
+Attackers use multiple types of techniques when carrying out email-based attacks, including links or attachments leading to malware; identity deception, where the message appears to be coming from a trusted contact; and brand impersonation, where the message appears to be coming from a trusted brand. Categories are assigned to the various types of threats found during the analysis of a malicious email message, and a single message can have multiple categories. These categories are aggregated into “Link”, “Attachment”, “Impersonation”, and “Other” groupings. “Link” groups individual threat types where the attacker is trying to get the user to click on something, “Attachment” groups individual threat types where the attacker has attached a file to the email message, and “Impersonation” groups individual threat types where the attacker is impersonating a trusted brand or contact. The “Other” grouping includes other threat types not covered by the previous three. The percentages represent the share of malicious email messages where the given threat categories have been found. Data for this metric comes from Cloudflare’s cloud email security service.
 
 ## Threat classification
 
@@ -242,11 +242,11 @@ Malicious email messages may be part of a phishing campaign, where recipients ar
 
 ## Traffic type filter
 
-* **Human Only Traffic**: Traffic that our algorithms determine as being generated by human activity.
+- **Human Only Traffic**: Traffic that our algorithms determine as being generated by human activity.
 
-* **Automated Only Traffic**: Traffic that our algorithms determine as being generated by bot or automated script activity.
+- **Automated Only Traffic**: Traffic that our algorithms determine as being generated by bot or automated script activity.
 
-* **All Traffic**: Use all traffic, which includes both human activity and automated activity.
+- **All Traffic**: Use all traffic, which includes both human activity and automated activity.
 
 ## Trends
 

@@ -9,9 +9,25 @@ import { Tabs, TabItem, Render } from "~/components";
 
 The `/screenshot` endpoint renders the webpage by processing its HTML and JavaScript, then captures a screenshot of the fully rendered page.
 
+## Endpoint
+
+```txt
+https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/screenshot
+```
+
+## Required fields
+You must provide either `url` or `html`:
+-  `url` (string)
+-  `html` (string)
+
+## Common use cases
+
+-  Generate previews for websites, dashboards, or reports
+-  Capture screenshots for automated testing, QA, or visual regression
+
 ## Basic usage
 
-### Capture a screenshot from HTML
+### Take a screenshot from custom HTML
 
 <Tabs syncKey="workersExamples"> <TabItem label="curl">
 
@@ -52,7 +68,7 @@ console.log(screenshot.status);
 
 </TabItem> </Tabs>
 
-### Capture a screenshot from a URL
+### Take a screenshot from a URL
 
 <Render
   file="example-screenshot-from-url"
@@ -94,10 +110,9 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
   --output "authenticated-screenshot.png"
 ```
 
-
 ### Navigate and capture a full-page screenshot
 
-Navigate to `https://cloudflare.com/`, changing the page size (`viewport`) and waiting until there are no active network connections (`waitUntil`) or up to a maximum of `4500ms` (`timeout`). Then take a `fullPage` screenshot.
+Navigate to `https://cloudflare.com/`, change the page size (`viewport`) and wait until there are no active network connections (`waitUntil`) or up to a maximum of `4500ms` (`timeout`) before capturing a `fullPage` screenshot.
 
 ```bash
 curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/screenshot' \
@@ -144,7 +159,9 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-
   }' \
   --output "screenshot.png"
 ```
+
 ### Capture a specific element using the selector option
+
 To capture a screenshot of a specific element on a webpage, use the `selector` option with a valid CSS selector. You can also configure the `viewport` to control the page dimensions during rendering.
 
 ```bash

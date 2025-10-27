@@ -9,15 +9,26 @@ import { Tabs, TabItem, Render } from "~/components";
 
 The `/markdown` endpoint retrieves a webpage's content and converts it into Markdown format. You can specify a URL and optional parameters to refine the extraction process.
 
+## Endpoint
+
+```txt
+https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/markdown
+```
+
+## Required fields
+You must provide either `url` or `html`:
+-  `url` (string)
+-  `html` (string)
+
 ## Common use cases
 
-- **Content extraction:** Convert a blog post or article into Markdown format for storage or further processing.
-- **Static site generation:** Retrieve structured Markdown content for use in static site generators like Jekyll or Hugo.
-- **Automated summarization:** Extract key content from web pages while ignoring CSS, scripts, or unnecessary elements.
+-  Normalize content for downstream processing (summaries, diffs, embeddings)
+-  Save articles or docs for editing or storage
+-  Strip styling/scripts and keep readable content + links
 
 ## Basic usage
 
-### Using a URL
+### Convert a URL to Markdown
 
 <Tabs syncKey="workersExamples"> <TabItem label="curl">
 
@@ -58,7 +69,7 @@ console.log(markdown);
 
 </TabItem> </Tabs>
 
-### Use raw HTML
+### Convert raw HTML to Markdown
 
 Instead of fetching the content by specifying the URL, you can provide raw HTML content directly.
 
@@ -82,7 +93,9 @@ curl -X 'POST' 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browse
 
 :::note[Looking for more parameters?]
 Visit the [Browser Rendering PDF API reference](/api/resources/browser_rendering/subresources/markdown/methods/create/) for all available parameters, such as setting HTTP credentials using `authenticate`, setting `cookies`, and customizing load behavior using `gotoOptions`.
-:::
+:::  
+  
+### Exclude unwanted requests (for example, CSS)
 
 You can refine the Markdown extraction by using the `rejectRequestPattern` parameter. In this example, requests matching the given regex pattern (such as CSS files) are excluded.
 

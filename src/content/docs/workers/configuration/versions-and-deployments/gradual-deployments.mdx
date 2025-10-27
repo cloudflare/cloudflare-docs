@@ -46,7 +46,7 @@ Answer `yes` or `no` to using TypeScript. Answer `yes` to deploying your applica
 
 #### 2. Create a new version of the Worker
 
-To create a new version of the Worker, edit the Worker code by changing the `Response` content to your desired text and upload the Worker by using the [`wrangler versions upload`](/workers/wrangler/commands/#upload) command.
+To create a new version of the Worker, edit the Worker code by changing the `Response` content to your desired text and upload the Worker by using the [`wrangler versions upload`](/workers/wrangler/commands/#versions-upload) command.
 
 ```sh
 npx wrangler versions upload
@@ -56,7 +56,7 @@ This will create a new version of the Worker that is not automatically deployed.
 
 #### 3. Create a new deployment
 
-Use the [`wrangler versions deploy`](/workers/wrangler/commands/#deploy-2) command to
+Use the [`wrangler versions deploy`](/workers/wrangler/commands/#versions-deploy) command to
 create a new deployment that splits traffic between two versions of the Worker. Follow the interactive prompts to create a deployment with the versions uploaded in [step #1](/workers/configuration/versions-and-deployments/gradual-deployments/#1-create-and-deploy-a-new-worker) and [step #2](/workers/configuration/versions-and-deployments/gradual-deployments/#2-create-a-new-version-of-the-worker). Select your desired percentages for each version.
 
 ```sh
@@ -190,7 +190,7 @@ In this example, your deployment is initially configured to route all traffic to
 | :----------------------------------: | :--------: |
 | db7cd8d3-4425-4fe7-8c81-01bf963b6067 |    100%    |
 
-Create a new deployment using [`wrangler versions deploy`](/workers/wrangler/commands/#deploy-2) and specify 0% for the new version whilst keeping the previous version at 100%.
+Create a new deployment using [`wrangler versions deploy`](/workers/wrangler/commands/#versions-deploy) and specify 0% for the new version whilst keeping the previous version at 100%.
 
 |              Version ID              | Percentage |
 | :----------------------------------: | :--------: |

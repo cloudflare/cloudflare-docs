@@ -28,13 +28,13 @@ After enabling DLP, you can create policies to define how sensitive data should 
    - **Policy ID**: Enter a unique name for this policy (e.g., "Block-PII-Requests")
    - **DLP Profiles**: Select the DLP profiles to check against. AI requests/responses will be checked against each of the selected profiles. Available profiles include:
      - **Financial Information** - Credit cards, bank accounts, routing numbers
-     - **Personal Identifiable Information (PII)** - Names, addresses, phone numbers  
+     - **Personal Identifiable Information (PII)** - Names, addresses, phone numbers
      - **Government Identifiers** - SSNs, passport numbers, driver's licenses
      - **Healthcare Information** - Medical record numbers, patient data
      - **Custom Profiles** - Organization-specific data patterns
-     
+
      :::note
-     DLP profiles can be created and managed in the [Zero Trust DLP dashboard](/cloudflare-one/policies/data-loss-prevention/dlp-profiles/).
+     DLP profiles can be created and managed in the [Zero Trust DLP dashboard](/cloudflare-one/data-loss-prevention/dlp-profiles/).
      :::
 
    - **Action**: Choose the action to take when any of the selected profiles match:
@@ -89,7 +89,6 @@ To view only DLP-related requests:
    - **FLAG** - Show only requests where sensitive data was flagged
    - **BLOCK** - Show only requests that were blocked due to DLP policies
 
-
 ## Error handling
 
 When DLP policies are triggered, your application will receive additional information through response headers and error codes.
@@ -121,18 +120,21 @@ When a request matches DLP policies (whether flagged or blocked), an additional 
 
 ```json
 {
-  "findings": [
-    {
-      "profile": {
-        "context": {},
-        "entry_ids": ["a1b2c3d4-e5f6-7890-abcd-ef1234567890", "f7e8d9c0-b1a2-3456-789a-bcdef0123456"],
-        "profile_id": "12345678-90ab-cdef-1234-567890abcdef"
-      },
-      "policy_ids": ["block_financial_data"],
-      "check": "REQUEST"
-    }
-  ],
-  "action": "BLOCK"
+	"findings": [
+		{
+			"profile": {
+				"context": {},
+				"entry_ids": [
+					"a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+					"f7e8d9c0-b1a2-3456-789a-bcdef0123456"
+				],
+				"profile_id": "12345678-90ab-cdef-1234-567890abcdef"
+			},
+			"policy_ids": ["block_financial_data"],
+			"check": "REQUEST"
+		}
+	],
+	"action": "BLOCK"
 }
 ```
 
@@ -194,4 +196,4 @@ try {
 - Test with different sample data to understand detection patterns
 - Adjust profile selections if needed
 
-For additional support with DLP configuration, refer to the [Cloudflare Data Loss Prevention documentation](/cloudflare-one/policies/data-loss-prevention/) or contact your Cloudflare support team.
+For additional support with DLP configuration, refer to the [Cloudflare Data Loss Prevention documentation](/cloudflare-one/data-loss-prevention/) or contact your Cloudflare support team.
