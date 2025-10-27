@@ -2,20 +2,46 @@
 params:
   - productName
   - dashButtonPath
+  - magicWord
 ---
 
-import { DashButton } from "~/components";
+import { DashButton, Markdown } from "~/components";
 
-Magic {props.productName} customers can run traceroutes to understand the hop by hop Internet path and latencies from Cloudflare's network to their own network.
+{props.productName} customers can run traceroutes to understand the hop by hop Internet path and latencies from Cloudflare's network to their own network.
 
-To run a traceroute from a specific Cloudflare data center to your network:
+{ props.magicWord === "wan-tunnels" && (
+  <>
+    <Markdown
+      text={`
+## To run a traceroute from a specific Cloudflare data center to your network:
 
-1. In the Cloudflare dashboard, go to Magic {props.productName}'s **Network health** page.
+1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/) > **Insights**.
+2. Go to **Network visibility** > **WAN connector health**.
+3. Select the tunnel you want to run the traceroute on.
+4. Select the three dots > **Traceroute details**.
+      `}
+    />
+  </>
+)}
 
-	 <DashButton url={props.dashButtonPath} />
+{ props.magicWord !== "wan-tunnels" && (
+  <>
+    <Markdown
+      text={`
+## To run a traceroute from a specific Cloudflare data center to your network:
 
+1. In the Cloudflare dashboard, go to ${props.productName}'s **Network health** page.
+      `}
+    />
+    <DashButton url={props.dashButtonPath} />
+    <Markdown
+      text={`
 2. Expand a Magic Tunnel, and find the Cloudflare data center where the traceroute will be run from.
 3. Select **Traceroute for details**.
+      `}
+    />
+  </>
+)}
 
 You can access detailed data from the traceroute, including:
 
