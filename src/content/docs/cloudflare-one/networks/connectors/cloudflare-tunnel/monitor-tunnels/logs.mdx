@@ -30,7 +30,7 @@ You can view real-time logs for a Cloudflare Tunnel via the dashboard or from an
 
 Dashboard log streams are only available for remotely-managed tunnels. To view logs from the dashboard:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Networks** > **Tunnels** and select a remotely-managed tunnel.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Networks** > **Connectors** > **Cloudflare Tunnels** and select a remotely-managed tunnel.
 2. In the sidebar, select the **Connector ID** for the `cloudflared` instance you want to view.
 3. Select **Begin log stream**.
 
@@ -40,7 +40,7 @@ The `cloudflared` daemon can stream logs from any tunnel in your account to the 
 
 #### View logs
 
-1. On your local machine, authenticate `cloudflared` to your Zero Trust account:
+1. On your local machine, authenticate `cloudflared` to your Cloudflare One account:
 
    ```sh
    cloudflared tunnel login
@@ -77,7 +77,7 @@ cloudflared tail --level debug <UUID>
 
 If you are running multiple `cloudflared` instances for the same tunnel (also known as [replicas](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-availability/)), you must specify an individual instance to stream logs from:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Networks** > **Tunnels** and select your tunnel.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Networks** > **Connectors** > **Cloudflare Tunnels** and select your tunnel.
 2. Find the **Connector ID** for the `cloudflared` instance you want to view.
 3. Specify the Connector ID in `cloudflared tail`:
    ```sh
@@ -86,5 +86,5 @@ If you are running multiple `cloudflared` instances for the same tunnel (also kn
 
 ### Performance considerations
 
-- The logging session will only be held open for one hour. All logging systems introduce some level of performance overhead, and this limit helps prevent longterm impact to your tunnel's end-to-end latencies.
+- The logging session will only be held open for one hour. All logging systems introduce some level of performance overhead, and this limit helps prevent long term impact to your tunnel's end-to-end latencies.
 - When streaming logs for a high throughput tunnel, Cloudflare intentionally prioritizes service stability over log delivery. To reduce the number of dropped logs, try [requesting fewer logs](#filter-logs). To ensure that you are seeing all logs, [view logs on the server](/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/logs/#view-logs-on-the-server) instead of streaming the logs remotely.

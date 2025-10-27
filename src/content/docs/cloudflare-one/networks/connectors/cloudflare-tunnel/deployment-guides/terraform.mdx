@@ -439,7 +439,7 @@ If you would prefer to manually install the tunnel, refer to [Install and run th
 
 <Render file="terraform/deploy-terraform" product="cloudflare-one" />
 
-It may take several minutes for the GCP instance and tunnel to come online. You can view your new tunnel, Access application, and Access policy in [Zero Trust](https://one.dash.cloudflare.com). The new DNS records are available in the [Cloudflare dashboard](/dns/manage-dns-records/how-to/create-dns-records/).
+It may take several minutes for the GCP instance and tunnel to come online. You can view your new tunnel, Access application, and Access policy in [Cloudflare One](https://one.dash.cloudflare.com). The new DNS records are available in the [Cloudflare dashboard](/dns/manage-dns-records/how-to/create-dns-records/).
 
 :::note[Remove Terraform resources]
 
@@ -448,9 +448,9 @@ If you need to roll back the configuration, run `terraform destroy` to delete ev
 
 ## 7. Test the connection
 
-1. In **Networks** > **Tunnels**, verify that your tunnel is active.
+1. In **Networks** > **Connectors** > **Cloudflare Tunnels**, verify that your tunnel is active.
 
-2. In **Access** > **Applications**, verify that your Cloudflare email is allowed by the Access policy.
+2. In **Access controls** > **Applications**, verify that your Cloudflare email is allowed by the Access policy.
 
 3. From any device, open a browser and go to `http_app.<CLOUDFLARE_ZONE>` (for example, `http_app.example.com`).
 
