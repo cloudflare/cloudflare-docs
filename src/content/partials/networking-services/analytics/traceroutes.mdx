@@ -13,12 +13,12 @@ import { Aside, DashButton, Markdown, Tabs, TabItem } from "~/components";
   <>
     <Markdown
       text={`
-To run a traceroute from a specific Cloudflare data center to your network:
+			To run a traceroute from a specific Cloudflare data center to your network:
 
-1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/) > **Insights**.
-2. Go to **Network visibility** > **WAN connector health**.
-3. Select the tunnel you want to run the traceroute on.
-4. Select the three dots > **Traceroute details**.
+			1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/) > **Insights**.
+			2. Go to **Network visibility** > **WAN connector health**.
+			3. Select the tunnel you want to run the traceroute on.
+			4. Select the three dots > **Traceroute details**.
       `}
 		inline={false}
     />
@@ -57,9 +57,10 @@ To run a traceroute from a specific Cloudflare data center to your network:
 				<Markdown
 					text={`
 					1. In the Cloudflare dashboard, go to ${props.productName}'s **Network health** page.
-				`}
-				inline={false}
+					`}
+					inline={false}
 				/>
+
 				<DashButton url={props.dashButtonPath} />
 
 				<Markdown
@@ -67,7 +68,7 @@ To run a traceroute from a specific Cloudflare data center to your network:
 					2. Select the tunnel you want to run the traceroute on.
 					3. Select the three dots > **Traceroute details**.
 					`}
-				inline={false}
+					inline={false}
 				/>
       </TabItem>
     </Tabs>
