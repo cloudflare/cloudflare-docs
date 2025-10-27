@@ -5,7 +5,7 @@ sidebar:
   order: 3
 ---
 
-Email Security allows you to exempt known partner and internal domains from typical detection scanning. Adding trusted domains helps to reduce false positives on [malicious, suspicious, and spoof dispositions](/cloudflare-one/email-security/reference/dispositions-and-attributes/). Email Security only checks the date when the domain is created.
+Email Security allows you to exempt known partner and internal domains from typical detection scanning. Adding trusted domains helps to reduce false positives on malicious, suspicious, and spoof [dispositions](/cloudflare-one/email-security/reference/dispositions-and-attributes/). Email Security only checks the date when the domain is created.
 
 ## How trusted domains work
 
@@ -15,7 +15,7 @@ By default, Email Security automatically detects lookalike domains. Lookalike do
 
 If an email is received from a domain that looks like a configured domain, this will trigger a detection. Trusted domain is configured to ignore this detection.
 
-In [Additional detections](/cloudflare-one/email-security/settings/detection-settings/additional-detections/), you can configure malicious domain and suspicious [domain age](/cloudflare-one/email-security/settings/detection-settings/additional-detections/).
+In [Additional detections](/cloudflare-one/email-security/settings/detection-settings/additional-detections/), you can configure malicious domain and suspicious [domain age](/cloudflare-one/email-security/settings/detection-settings/additional-detections/#configure-domain-age).
 
 Malicious domain age means that someone may create a domain today, similar to a target, and start sending emails with that domain. This is usually how many phish campaigns start. In this case, the domain is usually marked as Malicious. Malicious domain age is usually set to 7 days.
 
