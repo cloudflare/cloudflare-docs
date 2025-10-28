@@ -84,6 +84,48 @@ for (const port of ports) {
 ```
 </TypeScriptExample>
 
+### `connect()`
+
+Route incoming WebSocket upgrade requests to WebSocket servers running in the sandbox.
+
+```ts
+import { connect } from '@cloudflare/sandbox';
+
+const response = await connect(sandbox: Sandbox, request: Request, port: number): Promise<Response>
+```
+
+**Parameters**:
+- `sandbox` - Sandbox instance containing the WebSocket server
+- `request` - Incoming WebSocket upgrade request
+- `port` - Port number (1024-65535, excluding 3000)
+
+**Returns**: `Promise<Response>` - WebSocket response establishing the connection
+
+<TypeScriptExample>
+```
+import { getSandbox, connect } from '@cloudflare/sandbox';
+
+export default {
+  async fetch(request: Request, env: Env): Promise<Response> {
+    const sandbox = getSandbox(env.Sandbox, 'my-sandbox');
+
+    // Start WebSocket echo server
+    await sandbox.writeFile('/workspace/server.js', \`
+      Bun.serve({
+        port: 8080,
+        fetch(req, server) { if (server.upgrade(req)) return; },
+        websocket: { message(ws, msg) { ws.send(\\\`Echo: \${msg}\\\`); } }
+      });
+    \`);
+    await sandbox.startProcess('bun /workspace/server.js');
+
+    // Route WebSocket connections
+    return await connect(sandbox, request, 8080);
+  }
+};
+```
+</TypeScriptExample>
+
 ## Related resources
 
 - [Preview URLs concept](/sandbox/concepts/preview-urls/) - How preview URLs work

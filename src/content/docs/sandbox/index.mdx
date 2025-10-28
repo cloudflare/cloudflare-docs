@@ -112,6 +112,30 @@ df['sales'].sum()  # Last expression is automatically returned
     	};
     	```
     </TabItem>
+    <TabItem label="WebSocket Connections">
+    	```typescript
+    	import { getSandbox, connect } from '@cloudflare/sandbox';
+
+    	export default {
+    		async fetch(request: Request, env: Env): Promise<Response> {
+    			const sandbox = getSandbox(env.Sandbox, 'user-123');
+
+    			// Start a WebSocket echo server
+    			await sandbox.writeFile('/workspace/server.js', \`
+    				Bun.serve({
+    					port: 8080,
+    					fetch(req, server) { if (server.upgrade(req)) return; },
+    					websocket: { message(ws, msg) { ws.send(\\\`Echo: \${msg}\\\`); } }
+    				});
+    			\`);
+    			await sandbox.startProcess('bun /workspace/server.js');
+
+    			// Route WebSocket connections to the server
+    			return await connect(sandbox, request, 8080);
+    		}
+    	};
+    	```
+    </TabItem>
 
 </Tabs>
 
