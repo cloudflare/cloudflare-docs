@@ -16,7 +16,8 @@ To view the AI security report dashboard:
 To populate the AI security report dashboard, you must have:
 
 * [Cloudflare Gateway](/cloudflare-one/policies/gateway/) enabled to inspect outbound HTTP and DNS traffic.
-* AI apps?
+* User traffic to SaaS AI applications (for example, ChatGPT or Gemini) sent through Cloudflare Gateway.
+* MCP servers behind Cloudflare Access policies.
 
 ## Available insights
 
@@ -37,7 +38,7 @@ Use this chart to monitor adoption trends and detect new or unauthorized AI tool
 
 ### Statuses applied to AI applications by application count
 
-Shows the total number of AI applications identified and their review statuses.  
+Reports the total number of AI applications identified and their review statuses.  
 Statuses include:
 
 * Unreviewed — Applications not yet evaluated by administrators.  
@@ -48,7 +49,7 @@ Statuses include:
 ### Data uploaded to Artificial Intelligence applications by status
 
 Reports the amount of data transferred to AI tools, broken down by review status (Unreviewed, In Review, Unapproved, Approved).  
-This view helps administrators understand whether sensitive data is being sent to unapproved or unreviewed AI applications.
+Use this report to understand whether sensitive data is being sent to unapproved or unreviewed AI applications.
 
 ### MCP servers behind Access over time
 
@@ -57,6 +58,6 @@ Use this panel to
 
 ### Access login events to MCP servers
 
-Shows the number of login attempts to MCP servers protected by Access.  
+Displays the number of login attempts to MCP servers protected by Access.  
 You can use this panel to review login activity to your MCP servers.
 
