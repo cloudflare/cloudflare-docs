@@ -110,13 +110,14 @@ export default {
     const sandbox = getSandbox(env.Sandbox, 'my-sandbox');
 
     // Start WebSocket echo server
-    await sandbox.writeFile('/workspace/server.js', \`
+    const serverCode = `
       Bun.serve({
         port: 8080,
         fetch(req, server) { if (server.upgrade(req)) return; },
-        websocket: { message(ws, msg) { ws.send(\\\`Echo: \${msg}\\\`); } }
+        websocket: { message(ws, msg) { ws.send(\`Echo: \${msg}\`); } }
       });
-    \`);
+    `;
+    await sandbox.writeFile('/workspace/server.js', serverCode);
     await sandbox.startProcess('bun /workspace/server.js');
 
     // Route WebSocket connections
