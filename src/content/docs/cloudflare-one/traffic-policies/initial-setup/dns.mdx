@@ -39,7 +39,7 @@ To filter DNS requests from an individual device such as a laptop or phone:
 
 To filter DNS requests from a location such as an office or data center:
 
-1. [Add the location](/cloudflare-one/team-and-resources/devices/agentless/dns/locations/) to your Zero Trust settings.
+1. [Add the location](/cloudflare-one/team-and-resources/devices/agentless/dns/locations/) to your Cloudflare One settings.
 2. On your router, browser, or OS, forward DNS queries to the address shown in the location setup UI.
 
 :::note
@@ -52,7 +52,7 @@ Gateway identifies locations differently depending on the DNS query protocol:
 
 ## 2. Verify device connectivity
 
-To verify your device is connected to Zero Trust:
+To verify your device is connected to Cloudflare One:
 
 <Render
 	file="gateway/verify-connectivity"
@@ -66,7 +66,7 @@ To create a new DNS policy:
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Gateway** > **Firewall policies**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Traffic policies** > **Firewall policies**.
 2. In the **DNS** tab, select **Add a policy**.
 3. Name the policy.
 4. Under **Traffic**, build a logical expression that defines the traffic you want to allow or block.

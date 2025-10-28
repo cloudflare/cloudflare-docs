@@ -18,7 +18,7 @@ Gateway allows you to create DNS, Network, and HTTP policies based on applicatio
 
 When you choose the _Application_ selector in a Gateway policy builder, the **Value** field will include all supported applications and their respective app types. Alternatively, you can use the [Gateway API](/api/resources/zero_trust/subresources/gateway/subresources/app_types/methods/list/) to fetch a list of applications, app types, and ID numbers.
 
-To manage a consolidated list of applications across Zero Trust, you can use the [Application Library](/cloudflare-one/team-and-resources/app-library/).
+To manage a consolidated list of applications across Cloudflare One, you can use the [Application Library](/cloudflare-one/team-and-resources/app-library/).
 
 ## App types
 
@@ -54,7 +54,7 @@ Gateway sorts applications into the following app type groups:
 
 ## Application hostnames
 
-Applications categorized by Cloudflare may independently rely on a number of different internal and external resources to provide functionality. To enable effective behavior of Allow and Block Gateway policies, Zero Trust separates application definitions into [hostnames](#hostnames) and [support hostnames](#support-hostnames).
+Applications categorized by Cloudflare may independently rely on a number of different internal and external resources to provide functionality. To enable effective behavior of Allow and Block Gateway policies, Cloudflare One separates application definitions into [hostnames](#hostnames) and [support hostnames](#support-hostnames).
 
 ### Hostnames
 
@@ -64,7 +64,7 @@ Hostnames are domains that are core to the application and not [used by other ap
 
 Support hostnames are shared resources which applications may call in order to function. Applications can use support hostnames for content delivery, application behavior, or third-party system integrations. Blocking these hostnames may result in unexpected behavior for other policies. In addition, not taking a specific action on one of these hostnames may affect the application's behavior, even if the application hostnames are allowed. For example, assume that `file-sharing-service.com` relies on `content-delivery.com`. If you allow access to `file-sharing-service.com` and its associated subdomains but not `content-delivery.com`, some of the functionality of `file-sharing-service.com` may break when Gateway matches the traffic.
 
-To ensure effective application behavior, Gateway only uses support hostnames in Allow policies. Cloudflare explicitly allows support hostname connections in these policies but will not block the connections in Block policies. For example, many Google applications use `accounts.google.com` for authentication. In a Zero Trust environment with highly restrictive policies, `accounts.google.com` must be allowed for many applications to function correctly. If you use an application with `accounts.google.com` in its support hostnames in an Allow policy, Gateway will allow both `accounts.google.com` and the application's domains.
+To ensure effective application behavior, Gateway only uses support hostnames in Allow policies. Cloudflare explicitly allows support hostname connections in these policies but will not block the connections in Block policies. For example, many Google applications use `accounts.google.com` for authentication. In a Cloudflare One environment with highly restrictive policies, `accounts.google.com` must be allowed for many applications to function correctly. If you use an application with `accounts.google.com` in its support hostnames in an Allow policy, Gateway will allow both `accounts.google.com` and the application's domains.
 
 ## Application controls
 
@@ -109,7 +109,7 @@ To optimize performance for Microsoft 365 applications and services, you can byp
 
 To turn on the Microsoft 365 integration:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Network** > **Integrated experiences**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Traffic policies** > **Traffic settings** > **Policy settings**.
 2. In **Bypass decryption of Microsoft 365 traffic**, select **Create policy**.
 3. To verify the policy was created, select **View policy**. Alternatively, go to **Gateway** > **Firewall policies** > **HTTP**. A policy named Microsoft 365 Auto Generated will be enabled in your list.
 

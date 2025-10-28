@@ -19,9 +19,10 @@ To generate a public/private key pair in the command line, refer to [these instr
 
 ### Upload the public key to Cloudflare
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Network**.
-2. In the **DLP Payload Encryption public key** field, paste your public key.
-3. Select **Save**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Traffic policies** > **Traffic settings**.
+2. In the **Set a DLP payload and prompt encryption public key** field, select **Edit**.
+3. Paste your public key.
+4. Select **Save**.
 
 :::note
 The matching private key is required to view logs. If you lose your private key, you will need to [generate](#1-generate-a-key-pair) and [upload](#2-upload-the-public-key-to-cloudflare) a new public key. The payload of new requests will be encrypted with the new public key.
@@ -35,7 +36,7 @@ DLP can log the payload of matched HTTP requests in your Cloudflare logs.
 
 You can enable payload logging for any Allow or Block HTTP policy that uses the [_DLP Profile_](/cloudflare-one/traffic-policies/http-policies/#dlp-profile) selector.
 
-1. Go to **Gateway** > **Firewall policies** > **HTTP**.
+1. Go to **Traffic policies** > **Firewall policies** > **HTTP**.
 2. Edit an existing Allow or Block DLP policy, or [create a new policy](/cloudflare-one/data-loss-prevention/dlp-policies/#2-create-a-dlp-policy).
 3. In the policy builder, scroll down to **Configure policy settings** and turn on **Log the payload of matched rules**.
 4. Select **Save**.
@@ -46,7 +47,7 @@ Data Loss Prevention will now store a portion of the payload for HTTP requests t
 
 To view DLP payload logs:
 
-1. Go to **Logs** > **Gateway** > **HTTP**.
+1. Go to **Insights** > **Logs** > **HTTP request logs**.
 2. Go to the DLP log you are interested in reviewing and expand the row.
 3. Select **Decrypt payload log**.
 4. Enter your private key and select **Decrypt**.
@@ -85,7 +86,7 @@ DLP can detect and log the prompt topic sent to an AI tool.
 
 You can enable payload logging for any Allow or Block HTTP policy that uses the [_Application_](/cloudflare-one/traffic-policies/http-policies/#application) selector with a supported [Application Granular Controls](/cloudflare-one/traffic-policies/http-policies/#application-granular-controls) application.
 
-1. Go to **Gateway** > **Firewall policies** > **HTTP**.
+1. Go to **Traffic policies** > **Firewall policies** > **HTTP**.
 2. Edit an existing Allow or Block DLP policy, or [create a new policy](/cloudflare-one/data-loss-prevention/dlp-policies/#2-create-a-dlp-policy).
 3. In the policy builder, scroll down to **Configure policy settings** and turn on **Capture generative AI prompt content in logs**.
 4. Select **Save**.
@@ -96,7 +97,7 @@ Data Loss Prevention will now store the user prompt and AI model response for re
 
 To view generative AI prompt log details:
 
-1. Go to **Logs** > **Gateway** > **HTTP**.
+1. Go to **Insights** > **Logs** > **HTTP request logs**.
 2. Go to the DLP log you are interested in reviewing and expand the row.
 3. Select **Decrypt payload log**.
 4. Enter your private key and select **Decrypt**.
@@ -114,16 +115,15 @@ Gateway allows you to send copies of entire HTTP requests matched in HTTP Allow 
 
 To set up the DLP Forensic Copy Logpush job:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Logs** > **Logpush**.
-2. If this is your first Logpush job, select **Add a Logpush job**. Otherwise, select **Go to logpush configurations**.
-3. In Logpush, select **Create a Logpush job**.
-4. Choose a [Logpush destination](/logs/logpush/logpush-job/enable-destinations/).
-5. In **Configure logpush job**, choose the _DLP forensic copies_ dataset. Select **Create Logpush job**.
-6. Return to Zero Trust and go to **Gateway** > **Firewall policies** > **HTTP**.
-7. Edit an existing Allow or Block policy, or [create a new policy](/cloudflare-one/data-loss-prevention/dlp-policies/#2-create-a-dlp-policy). Your policy does not need to include a DLP profile.
-8. In the policy builder, scroll down to **Configure policy settings** and turn on **Send DLP forensic copies to storage**.
-9. Select a storage destination. Gateway will list any configured Logpush jobs or integrations that can receive HTTP requests.
-10. Select **Save policy**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Insights** >**Logs**, and select **Manage Logpush**.
+2. In Logpush, select **Create a Logpush job**.
+3. Choose a [Logpush destination](/logs/logpush/logpush-job/enable-destinations/).
+4. In **Configure logpush job**, choose the _DLP forensic copies_ dataset. Select **Create Logpush job**.
+5. Return to Cloudflare One and go to **Traffic policies** > **Firewall policies** > **HTTP**.
+6. Edit an existing Allow or Block policy, or [create a new policy](/cloudflare-one/data-loss-prevention/dlp-policies/#2-create-a-dlp-policy). Your policy does not need to include a DLP profile.
+7. In the policy builder, scroll down to **Configure policy settings** and turn on **Send DLP forensic copies to storage**.
+8. Select a storage destination. Gateway will list any configured Logpush jobs or integrations that can receive HTTP requests.
+9. Select **Save policy**.
 
 DLP will now send a copy of HTTP requests that match this policy to your Logpush destination.
 

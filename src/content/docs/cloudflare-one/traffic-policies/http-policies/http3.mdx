@@ -15,8 +15,8 @@ Gateway applies HTTP policies to HTTP/3 traffic last. For more information, refe
 
 To enable HTTP/3 inspection, turn on the [Gateway proxy](/cloudflare-one/traffic-policies/proxy/) for UDP:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Network**.
-2. In **Firewall**, turn on **Proxy**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Traffic policies** > **Traffic settings**.
+2. In **Proxy and inspection**, turn on **Allow Secure Web Gateway to proxy traffic**.
 3. Select **TCP** and **UDP**.
 4. Turn on **TLS decryption**.
 
@@ -24,7 +24,7 @@ To enable HTTP/3 inspection, turn on the [Gateway proxy](/cloudflare-one/traffic
 
 Gateway can inspect HTTP/3 traffic from Mozilla Firefox and Microsoft Edge by establishing an HTTP/3 proxy connection. Gateway will then terminate the HTTP/3 connection, decrypt and inspect the traffic, and connect to the destination server over HTTP/2. Gateway can also inspect other HTTP applications, such as cURL.
 
-If the UDP proxy is turned on in Zero Trust, Google Chrome will cancel all HTTP/3 connections and retry them with HTTP/2, allowing you to enforce your HTTP policies. If the UDP proxy is turned off, HTTP/3 traffic from Chrome will bypass inspection.
+If the UDP proxy is turned on in Cloudflare One, Google Chrome will cancel all HTTP/3 connections and retry them with HTTP/2, allowing you to enforce your HTTP policies. If the UDP proxy is turned off, HTTP/3 traffic from Chrome will bypass inspection.
 
 ## Exempt HTTP/3 traffic from inspection
 
