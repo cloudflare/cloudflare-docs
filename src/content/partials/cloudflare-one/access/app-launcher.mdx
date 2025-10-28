@@ -18,25 +18,25 @@ By default, the App Launcher is disabled. To enable it, you must configure a pol
 
 To enable the App Launcher:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Authentication**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Access controls** > **Access settings**.
 
-2. Under the **App Launcher** card, select **Manage**.
+2. Under the **Manage your App Launcher** card, select **Manage**.
 
-3. On the **Rules** tab, [build a rule](/cloudflare-one/access-controls/policies/) to define who can access your App Launcher portal. These rules do not impact permissions for the applications secured behind Access.
+3. On the **Policies** tab, [build a policy](/cloudflare-one/access-controls/policies/) to define who can access your App Launcher portal. These rules do not impact permissions for the applications secured behind Access.
 
 4. On the **Authentication** tab, choose the identity providers users can authenticate with.
 
 5. Select **Save**.
 
-The App Launcher is now available at `<your-team-name>.cloudflareaccess.com`. You can always edit your App Launcher rules by going to **Settings** > **Authentication**.
+The App Launcher is now available at `<your-team-name>.cloudflareaccess.com`. You can always edit your App Launcher rules by going to **Access controls** > **Access settings**.
 
 ## Add a tile to the App Launcher
 
-Tiles have a one-to-one relationship with each application you create in Access. The tile names displayed in the Access App Launcher portal correspond to the application names listed under **Access** > **Applications**. For example, if you create one application for general access to your Jira deployment and a separate application that restricts requests to a particular Jira path, a user authorized for both will see separate tiles for each. If you add multiple hostnames to a single application, the user will only see the domain selected in the application's **App Launcher** settings.
+Tiles have a one-to-one relationship with each application you create in Access. The tile names displayed in the Access App Launcher portal correspond to the application names listed under **Access controls** > **Applications**. For example, if you create one application for general access to your Jira deployment and a separate application that restricts requests to a particular Jira path, a user authorized for both will see separate tiles for each. If you add multiple hostnames to a single application, the user will only see the domain selected in the application's **App Launcher** settings.
 
 To show an Access application in the App Launcher:
 
-1.  In [Zero Trust](https://one.dash.cloudflare.com/), go to **Access** > **Applications**.
+1.  In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Access controls** > **Applications**.
 2.  Select an application and select **Configure**.
 3.  Go to **Experience settings**.
 4.  Select **Show application in App Launcher**. The App Launcher link will only appear for users who are allowed by your Access policies. Blocked users will not see the app in their App Launcher.
@@ -67,7 +67,7 @@ You can display your own branding, messages, and links to users when they open t
 
 To customize the App Launcher appearance:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Custom Pages**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Reusable components** > **Custom Pages**.
 2. Find the **Customize App Launcher** setting and select **Customize**.
 3. Give the App Launcher the look and feel of your organization by adding:
    - Your organization's name
