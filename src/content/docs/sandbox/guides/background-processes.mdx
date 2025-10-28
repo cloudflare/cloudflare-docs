@@ -41,7 +41,6 @@ console.log('PID:', server.pid);
 console.log('Status:', server.status); // 'running'
 
 // Process runs in background - your code continues
-
 ```
 </TypeScriptExample>
 
@@ -51,19 +50,17 @@ Set working directory and environment variables:
 
 <TypeScriptExample>
 ```
-
 const process = await sandbox.startProcess('node server.js', {
-cwd: '/workspace/api',
-env: {
-NODE_ENV: 'production',
-PORT: '8080',
-API_KEY: env.API_KEY,
-DATABASE_URL: env.DATABASE_URL
-}
+  cwd: '/workspace/api',
+  env: {
+    NODE_ENV: 'production',
+    PORT: '8080',
+    API_KEY: env.API_KEY,
+    DATABASE_URL: env.DATABASE_URL
+  }
 });
 
 console.log('API server started');
-
 ```
 </TypeScriptExample>
 
@@ -73,18 +70,16 @@ List and check running processes:
 
 <TypeScriptExample>
 ```
-
 const processes = await sandbox.listProcesses();
 
 console.log(`Running ${processes.length} processes:`);
 
 for (const proc of processes) {
-console.log(`${proc.id}: ${proc.command} (${proc.status})`);
+  console.log(`${proc.id}: ${proc.command} (${proc.status})`);
 }
 
 // Check if specific process is running
 const isRunning = processes.some(p => p.id === processId && p.status === 'running');
-
 ```
 </TypeScriptExample>
 
@@ -94,7 +89,6 @@ Stream logs in real-time to detect when a service is ready:
 
 <TypeScriptExample>
 ```
-
 import { parseSSEStream, type LogEvent } from '@cloudflare/sandbox';
 
 const server = await sandbox.startProcess('node server.js');
@@ -103,14 +97,13 @@ const server = await sandbox.startProcess('node server.js');
 const logStream = await sandbox.streamProcessLogs(server.id);
 
 for await (const log of parseSSEStream<LogEvent>(logStream)) {
-console.log(log.data);
+  console.log(log.data);
 
-if (log.data.includes('Server listening')) {
-console.log('Server is ready!');
-break;
+  if (log.data.includes('Server listening')) {
+    console.log('Server is ready!');
+    break;
+  }
 }
-}
-
 ```
 </TypeScriptExample>
 
@@ -118,10 +111,8 @@ Or get accumulated logs:
 
 <TypeScriptExample>
 ```
-
 const logs = await sandbox.getProcessLogs(server.id);
 console.log('Logs:', logs);
-
 ```
 </TypeScriptExample>
 
@@ -129,7 +120,6 @@ console.log('Logs:', logs);
 
 <TypeScriptExample>
 ```
-
 // Stop specific process
 await sandbox.killProcess(server.id);
 
@@ -138,7 +128,6 @@ await sandbox.killProcess(server.id, 'SIGKILL');
 
 // Stop all processes
 await sandbox.killAllProcesses();
-
 ```
 </TypeScriptExample>
 
@@ -148,7 +137,6 @@ Start services in sequence, waiting for dependencies:
 
 <TypeScriptExample>
 ```
-
 import { parseSSEStream, type LogEvent } from '@cloudflare/sandbox';
 
 // Start database first
@@ -157,28 +145,26 @@ const db = await sandbox.startProcess('redis-server');
 // Wait for database to be ready
 const dbLogs = await sandbox.streamProcessLogs(db.id);
 for await (const log of parseSSEStream<LogEvent>(dbLogs)) {
-if (log.data.includes('Ready to accept connections')) {
-break;
-}
+  if (log.data.includes('Ready to accept connections')) {
+    break;
+  }
 }
 
 // Now start API server (depends on database)
 const api = await sandbox.startProcess('node api-server.js', {
-env: { DATABASE_URL: 'redis://localhost:6379' }
+  env: { DATABASE_URL: 'redis://localhost:6379' }
 });
 
 console.log('All services running');
-
 ```
 </TypeScriptExample>
 
 ## Keep containers alive for long-running processes
 
-By default, containers automatically shut down after 10 minutes of inactivity. For long-running processes that may have idle periods (like CI/CD pipelines, batch jobs, or monitoring tasks), use the `keepAlive` option:
+By default, containers automatically shut down after 10 minutes of inactivity. For long-running processes that may have idle periods (like CI/CD pipelines, batch jobs, or monitoring tasks), use the [`keepAlive` option](/sandbox/configuration/sandbox-options/#keepalive):
 
 <TypeScriptExample>
 ```
-
 import { getSandbox, parseSSEStream, type LogEvent } from '@cloudflare/sandbox';
 
 export default {
@@ -208,15 +194,13 @@ export default {
       // Important: Must explicitly destroy when done
       await sandbox.destroy();
     }
-
-}
+  }
 };
-
 ```
 </TypeScriptExample>
 
 :::caution[Always destroy with keepAlive]
-When using `keepAlive: true`, containers will not automatically timeout. You **must** call `sandbox.destroy()` when finished to prevent resource leaks and avoid counting containers toward your account limits indefinitely.
+When using `keepAlive: true`, containers will not automatically timeout. You **must** call `sandbox.destroy()` when finished to prevent containers running indefinitely and counting toward your account limits.
 :::
 
 ## Best practices
@@ -235,16 +219,14 @@ Check logs to see why:
 
 <TypeScriptExample>
 ```
-
 const process = await sandbox.startProcess('node server.js');
 await new Promise(resolve => setTimeout(resolve, 1000));
 
 const processes = await sandbox.listProcesses();
 if (!processes.find(p => p.id === process.id)) {
-const logs = await sandbox.getProcessLogs(process.id);
-console.error('Process exited:', logs);
+  const logs = await sandbox.getProcessLogs(process.id);
+  console.error('Process exited:', logs);
 }
-
 ```
 </TypeScriptExample>
 
@@ -254,18 +236,16 @@ Kill existing processes before starting:
 
 <TypeScriptExample>
 ```
-
 await sandbox.killAllProcesses();
 const server = await sandbox.startProcess('node server.js');
-
 ```
 </TypeScriptExample>
 
 ## Related resources
 
 - [Commands API reference](/sandbox/api/commands/) - Complete process management API
-- [Sessions API reference](/sandbox/api/sessions/) - Container lifecycle and keepAlive option
+- [Sandbox options configuration](/sandbox/configuration/sandbox-options/) - Configure keepAlive and other options
+- [Sessions API reference](/sandbox/api/sessions/) - Container lifecycle management
 - [Execute commands guide](/sandbox/guides/execute-commands/) - One-time command execution
 - [Expose services guide](/sandbox/guides/expose-services/) - Make processes accessible
 - [Streaming output guide](/sandbox/guides/streaming-output/) - Monitor process output
-```
