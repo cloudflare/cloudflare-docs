@@ -1,0 +1,41 @@
+---
+title: Write up to 250 datapoints to Workers Analytics Engine per Workers invocation
+description: You can now write up to 250 datapoints (previously 25) to Workers Analytics Engine per Workers invocation (request)
+
+products:
+  - workers
+  - analytics-engine
+date: 2025-10-30
+---
+
+You can now write up to 250 [datapoints](/analytics/analytics-engine/get-started/#2-write-data-points-from-your-worker) (previously 25) to [Workers Analytics Engine](analytics/analytics-engine/) per Workers invocation (request)
+
+Workers Analytics Engine provides unlimited-cardinality analytics at scale, via a built-in API to write data points from Workers, and a SQL API to query that data.
+
+You can write data from your Worker:
+
+```ts
+async fetch(request, env) {
+  env.WEATHER.writeDataPoint({
+    'blobs': ["Seattle", "USA", "pro_sensor_9000"], // City, State
+    'doubles': [25, 0.5],
+    'indexes': ["a3cd45"]
+  });
+  return new Response("OK!");
+}
+```
+
+And then query it via a [SQL API](/analytics/analytics-engine/sql-reference/statements/)
+
+```sql
+SELECT
+  blob1 AS city,
+  SUM(_sample_interval * double2) / SUM(_sample_interval) AS avg_humidity
+FROM WEATHER
+WHERE double1 > 0
+GROUP BY city
+ORDER BY avg_humidity DESC
+LIMIT 10
+```
+
+Head over to the [Workers Analytics Engine documentation](/analytics/analytics-engine/) to learn more about Analytics Engine.
