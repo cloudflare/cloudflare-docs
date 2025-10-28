@@ -49,8 +49,8 @@ flowchart TD
 
 To begin quarantining downloaded files, turn on file sandboxing:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Network**.
-2. In **Firewall**, turn on **File sandboxing**.
+1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Traffic policies** > **Traffic settings**.
+2. Turn on **File sandboxing**.
 3. (Optional) To block requests containing [non-scannable files](#non-scannable-files), select **Block requests for files that cannot be scanned**.
 
 You can now create [Quarantine HTTP policies](/cloudflare-one/traffic-policies/http-policies/#quarantine) to determine what files to scan in the sandbox.
