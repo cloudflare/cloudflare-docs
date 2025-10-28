@@ -9,7 +9,7 @@ description: Cloudflare mTLS now supports client certificates that have not been
   Cloudflare mTLS.
 ---
 
-import { Render, APIRequest, Tabs, TabItem } from "~/components";
+import { APIRequest, Render, TabItem, Tabs, DashButton } from "~/components";
 
 This page explains how you can manage client certificates that have not been issued by Cloudflare CA. For a broader overview, refer to the [mTLS at Cloudflare learning path](/learning-paths/mtls/concepts/).
 
@@ -85,11 +85,13 @@ If you wish to remove the association from the Cloudflare-managed certificate an
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and domain.
-2. Go to **SSL/TLS** > **Client Certificates**.
-3. On the **Hosts** section of the **Client Certificates** card, select **Edit**.
-4. Select the cross next to the hostname you want to remove. The list of hostname associations will be updated.
-5. Select **Save** to confirm.
+1. In the Cloudflare dashboard, go to the **Client Certificates** page.
+
+   <DashButton url="/?to=/:account/:zone/ssl-tls/client-certificates" />
+
+2. On the **Hosts** section of the **Client Certificates** card, select **Edit**.
+3. Select the cross next to the hostname you want to remove. The list of hostname associations will be updated.
+4. Select **Save** to confirm.
 
 </TabItem> <TabItem label="API">
 
