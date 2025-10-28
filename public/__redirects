@@ -2380,6 +2380,7 @@
 /cloudflare-one/policies/filtering/http-policies/data-loss-prevention/* /cloudflare-one/policies/data-loss-prevention/ 301
 /cloudflare-one/policies/data-loss-prevention/configuration-guides/* /cloudflare-one/policies/data-loss-prevention/dlp-policies/common-policies/ 301
 /cloudflare-one/policies/data-loss-prevention/datasets/* /cloudflare-one/policies/data-loss-prevention/detection-entries/:splat 301
+/cloudflare-one/connections/connect-devices/warp/user-side-certificates/* /cloudflare-one/team-and-resources/devices/user-side-certificates/:splat 301
 
 # Cloudflare One nav revamp
 /cloudflare-one/connections/ /cloudflare-one/ 301
@@ -2420,6 +2421,7 @@
 /cloudflare-one/applications/casb/ /cloudflare-one/cloud-and-saas-findings/ 301
 /cloudflare-one/applications/casb/manage-findings/ /cloudflare-one/cloud-and-saas-findings/manage-findings/ 301
 /cloudflare-one/applications/casb/casb-dlp/ /cloudflare-one/cloud-and-saas-findings/casb-dlp/ 301
+/cloudflare-one/access-controls/applications/http-apps/mcp-servers/mcp-portals	/cloudflare-one/access-controls/ai-controls/mcp-portals/ 301
 
 # Email Security new revamp
 /cloudflare-one/email-security/email-monitoring/download-report/ /cloudflare-one/email-security/monitoring/download-report/ 301
@@ -2436,6 +2438,16 @@
 /cloudflare-one/email-security/settings/detection-settings/impersonation-registry/* /cloudflare-one/email-security/settings/impersonation-registry/:splat 301
 /cloudflare-one/email-security/detection-settings/* /cloudflare-one/email-security/settings/detection-settings/:splat 301
 /cloudflare-one/email-security/reference/domain-information/ /cloudflare-one/email-security/settings/domain-management/domain/ 301
+/cloudflare-one/email-security/settings/allow-policies/ /cloudflare-one/email-security/settings/detection-settings/allow-policies/ 301
+/cloudflare-one/email-security/settings/trusted-domains/ /cloudflare-one/email-security/settings/detection-settings/trusted-domains/ 301
+/cloudflare-one/email-security/detection-settings/blocked-senders/ /cloudflare-one/email-security/settings/detection-settings/blocked-senders/ 301
+/cloudflare-one/email-security/detection-settings/impersonation-registry/ /cloudflare-one/email-security/settings/detection-settings/impersonation-registry/ 301
+/cloudflare-one/email-security/settings/additional-detections/ /cloudflare-one/email-security/settings/detection-settings/additional-detections/ 301
+/cloudflare-one/email-security/settings/configure-link-actions/ /cloudflare-one/email-security/settings/detection-settings/configure-link-actions/ 301
+/cloudflare-one/email-security/settings/configure-text-add-ons/ /cloudflare-one/email-security/settings/detection-settings/configure-text-add-ons/ 301
+/cloudflare-one/insights/email-monitoring/phish-submissions/#phishnet-o365 /cloudflare-one/email-security/settings/phish-submissions/phishnet-365/ 301
+/cloudflare-one/insights/email-monitoring/phish-submissions/#submission-addresses /cloudflare-one/email-security/settings/phish-submissions/submission-addresses/ 301
+/cloudflare-one/email-security/settings/phish-submissions/submission-addresses/	/cloudflare-one/email-security/phishguard/ 301
 
 # Learning paths
 
