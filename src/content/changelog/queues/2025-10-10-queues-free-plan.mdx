@@ -1,0 +1,49 @@
+---
+title: Cloudflare Queues now available on Workers Free plan
+description: Cloudflare Queues now available on Workers Free plan, including unlimited read & delete operations, 100,000k write operatins, and 10,000 queues per account.
+products:
+  - queues
+date: 2025-10-10 12:00:00 UTC
+---
+
+[Queues](/queues) now includes a free tier, offering guaranteed message delivery across up to **10,000 queues** with no charges for egerss bandwidth. Every Cloudflare account now includes **100,000 writes per day** with **unlimited read & delete operations. For more details on how each operation is defined, refer to [Queues pricing](https://developers.cloudflare.com/workers/platform/pricing/#queues).
+
+All features of the existing Queues functionality are available on the free tier, including unlimited [event subscriptions](/queues/event-subscriptions/). Note that the maximum retention period, however, on the free tier is 24 hours rather than 14 days. 
+
+You can view metrics for your message operations in aggregate on the [Cloudflare dashboard](https://dash.cloudflare.com/) under **Storage & Databases** -> **Queues** -> **Metrics** -> **Billable Operations** or [programmatically via GraphQL](https://developers.cloudflare.com/queues/observability/metrics/#message-operations). 
+
+For example, get write operations by minute:
+
+```
+query QueueWriteOperationsByMinute(
+  $accountTag: string!
+  $queueId: string!
+  $datetimeStart: Date!
+  $datetimeEnd: Date!
+) {
+  viewer {
+    accounts(filter: { accountTag: $accountTag }) {
+      queueWriteOperationsAdaptiveGroups(
+        limit: 10000
+        filter: {
+          queueId: $queueId
+          datetime_geq: $datetimeStart
+          datetime_leq: $datetimeEnd
+          actionType: $WriteMessage
+        }
+        orderBy: [datetimeMinute_DESC]
+      ) {
+        count
+        sum {
+          bytes
+        }
+        dimensions {
+          datetimeMinute
+        }
+      }
+    }
+  }
+}```
+
+If you are new to Cloudflare Queues, follow [this guide](https://developers.cloudflare.com/queues/get-started/) or try one of our [tutorials](/queues/tutorials/) to get started.
+
