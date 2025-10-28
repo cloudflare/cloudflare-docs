@@ -7,9 +7,9 @@ sidebar:
 
 import { Render, GlossaryTooltip } from "~/components";
 
-The Application Library allows users to manage their SaaS applications in Cloudflare Zero Trust by consolidating views across all relevant products: [Gateway](/cloudflare-one/traffic-policies/), [Access](/cloudflare-one/access-controls/policies/), and [Cloud Access Security Broker (CASB)](/cloudflare-one/integrations/cloud-and-saas/). The App Library provides visibility and control for available applications, as well as the ability to view categorized hostnames and manage configuration for Access for SaaS and Gateway policies. For example, you can use the App Library to review how Gateway uses specific hostnames to match against application traffic.
+The Application Library allows users to manage their SaaS applications in Cloudflare One by consolidating views across all relevant products: [Gateway](/cloudflare-one/traffic-policies/), [Access](/cloudflare-one/access-controls/policies/), and [Cloud Access Security Broker (CASB)](/cloudflare-one/integrations/cloud-and-saas/). The App Library provides visibility and control for available applications, as well as the ability to view categorized hostnames and manage configuration for Access for SaaS and Gateway policies. For example, you can use the App Library to review how Gateway uses specific hostnames to match against application traffic.
 
-To access the App Library in [Zero Trust](https://one.dash.cloudflare.com/), go to **My team** > **App Library**. Each application card will list the number of hostnames associated with the application, the supported Zero Trust product usage, and the [app type](/cloudflare-one/traffic-policies/application-app-types/#app-types).
+To access the App Library in [Cloudflare One](https://one.dash.cloudflare.com/), go to **Team & Resources** > **Application library**. Each application card will list the number of hostnames associated with the application, the supported Cloudflare One product usage, and the [app type](/cloudflare-one/traffic-policies/application-app-types/#app-types).
 
 The App Library groups [Do Not Inspect applications](/cloudflare-one/traffic-policies/application-app-types/#do-not-inspect-applications) within the corresponding application. For example, the App Library will group _Google Drive (Do Not Inspect)_ under **Google Drive**. Traffic that does not match a known application will not be included in the App Library.
 
@@ -25,7 +25,7 @@ The **Overview** tab shows details about an application, including:
 - Shadow IT [review status](#review-applications)
 - Number of hostnames
 - [App type](/cloudflare-one/traffic-policies/application-app-types/#app-types)
-- Supported Zero Trust applications
+- Supported Cloudflare One applications
 - Application ID for use with the API and Terraform
 
 ### Findings
@@ -40,7 +40,7 @@ The **Policies** tab shows any [Gateway](/cloudflare-one/traffic-policies/) and 
 
 The **Usage** tab shows any logs for [Gateway traffic requests](/cloudflare-one/insights/logs/gateway-logs/), [Access authentication events](/cloudflare-one/insights/logs/audit-logs/#authentication-logs), [Shadow IT Discovery user sessions](/cloudflare-one/insights/analytics/shadow-it-discovery/), and [generative AI prompt logs](/cloudflare-one/data-loss-prevention/dlp-policies/logging-options/#view-prompt-logs) sent to the selected application. This section requires logs to be turned on for each feature.
 
-The Shadow IT Discovery dashboard will provide more details for discovered applications. To access Shadow IT Discovery in [Zero Trust](https://one.dash.cloudflare.com/), go to **Analytics**, then select **Shadow IT Discovery**.
+The Shadow IT Discovery dashboard will provide more details for discovered applications. To access Shadow IT Discovery in [Cloudflare One](https://one.dash.cloudflare.com/), go to **Insights** > **Dashboards**, then select **Shadow IT: SaaS analytics** or **Shadow IT: Private Network analytics**.
 
 ## Review applications
 
@@ -56,7 +56,7 @@ The scoring system evaluates applications across multiple security, compliance, 
 
 To view an application's confidence scorecard:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **My team** > **App Library**
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Team & Resources** > **Application library**
 2. Find the application you would like to review or search it by name.
 3. Review the Application Posture Score and the Generative AI Posture Score which are generated on the application card.
 
