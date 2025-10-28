@@ -47,12 +47,16 @@ const answer = await env.AI.autorag("my-autorag").aiSearch({
 });
 ```
 
-### Configure via Dashboard
-The system prompt for your AI Search can be set after it has been created by:
+import { DashButton } from "~/components";
 
-1. Navigating to the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/ai/autorag), and go to AI > AI Search
-2. Select your AI Search
-3. Go to Settings page and find the System prompt setting for either Query rewrite or Generation
+### Configure via Dashboard
+The system prompt for your AI Search can be set after it has been created:
+
+1. Go to **AI Search** in the Cloudflare dashboard.
+   <DashButton url="/?to=/:account/ai/ai-search" />
+2. Select an existing AI Search instance.
+3. Go to the **Settings** tab.
+4. Go to **Query rewrite** or **Generation**, and edit the **System prompt**.
 
 ## Query rewriting system prompt
 
