@@ -2429,13 +2429,10 @@
 /cloudflare-one/email-security/auto-moves/ /cloudflare-one/email-security/settings/auto-moves/ 301
 /cloudflare-one/email-security/detection-settings/additional-detections/ /cloudflare-one/email-security/settings/additional-detections/ 301
 /cloudflare-one/email-security/detection-settings/allow-policies/ /cloudflare-one/email-security/settings/allow-policies/ 301
-/cloudflare-one/email-security/detection-settings/blocked-senders/ /cloudflare-one/email-security/settings/blocked-senders/ 301
 /cloudflare-one/email-security/detection-settings/configure-link-actions/ /cloudflare-one/email-security/settings/configure-link-actions/ 301
 /cloudflare-one/email-security/detection-settings/detection-settings/ /cloudflare-one/email-security/settings/detection-settings/ 301
 /cloudflare-one/email-security/detection-settings/configure-text-add-ons/ /cloudflare-one/email-security/settings/configure-text-add-ons/ 301
-/cloudflare-one/email-security/settings/detection-settings/impersonation-registry/ /cloudflare-one/email-security/settings/impersonation-registry/ 301
 /cloudflare-one/email-security/detection-settings/trusted-domains/ /cloudflare-one/email-security/settings/trusted-domains/ 301
-/cloudflare-one/email-security/settings/detection-settings/impersonation-registry/* /cloudflare-one/email-security/settings/impersonation-registry/:splat 301
 /cloudflare-one/email-security/detection-settings/* /cloudflare-one/email-security/settings/detection-settings/:splat 301
 /cloudflare-one/email-security/reference/domain-information/ /cloudflare-one/email-security/settings/domain-management/domain/ 301
 /cloudflare-one/email-security/settings/allow-policies/ /cloudflare-one/email-security/settings/detection-settings/allow-policies/ 301
