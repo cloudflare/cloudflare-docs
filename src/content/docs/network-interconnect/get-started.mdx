@@ -26,15 +26,24 @@ Eligibility for CNI and port availability is determined in coordination with you
 
 ### Technical specifications
 
-- **Supported port types (Direct CNI):** 10G-LR (single-mode fiber) and 100G-LR4 (single-mode fiber).
+- **Supported port types (Direct CNI):
+	- **Dataplane v1 & v1.1**: 10GBASE-LR (single-mode fiber) and 100GBASE-LR (single-mode fiber).
+	- **Dataplane v2**: 10GBASE-LR (single-mode fiber) and 100GBASE-LR4 (single-mode fiber) optics are supported.
 - **Distance limitations:** Cloudflare does not support optical links longer than 10 km. For longer distances, you must use intermediate hardware or a third-party provider to extend the connection.
-- **IP addressing:** All CNI connections use a `/31` subnet for point-to-point IP connectivity between your router and Cloudflare's.
-- **VLAN support:** CNI ports may be assigned a single 802.1Q VLAN tag.
+- **IP addressing:** All Direct and Partner CNI connections use a `/31` subnet for point-to-point IP connectivity between your router and Cloudflare.
+- **VLAN support:**
+	- **Dataplane v1 & v1.1**: CNI ports may be assigned a single 802.1Q VLAN tag.
+	- **Dataplane v2**: VLAN tagging (802.1Q) and QinQ is not yet supported.
 - **MTU considerations:**
-  - **Dataplane 1.0:** Requires GRE tunneling for Magic Transit / WAN traffic, limiting the MTU to 1,476 bytes.
-  - **Dataplane 1.1:** Supports a native 1,500-byte MTU for traffic from Cloudflare to you (ingress), but still requires a 1,476-byte MTU for traffic from you to Cloudflare (egress).
-- **Bidirectional Forwarding Detection (BFD):** BFD provides fast failure detection for BGP sessions and is supported on direct connections. To enable BFD, contact your account team. Note that BFD on a CNI does not impact the failover time for Magic Transit / WAN tunnels, which rely on separate health checks.
-- **Link Aggregation Control Protocol (LACP)**: To increase bandwidth and provide link resiliency, Cloudflare supports combining multiple physical CNI ports into a single logical channel using LACP. You can bundle multiple connections to increase total throughput and add redundancy to your private connection with Cloudflare.
+  - **Dataplane v1:** Requires GRE tunneling for Magic Transit / WAN traffic, limiting the MTU to 1,476 bytes.
+  - **Dataplane v1.1:** Supports a native 1,500-byte MTU for traffic from Cloudflare to you (ingress), but still requires a 1,476-byte MTU for traffic from you to Cloudflare (egress).
+	- **Dataplane v2**: Supports a maximum MTU of 1500 bytes bidirectionally with no GRE requirement.
+- **Bidirectional Forwarding Detection (BFD):**
+	- **Dataplane v1 & v1.1**: BFD provides fast failure detection for BGP sessions and is supported on direct connections. To enable BFD, contact your account team. Note that BFD on a CNI does not impact the failover time for Magic Transit / WAN tunnels, which rely on separate health checks.
+	- **Dataplane v2**: Not yet supported.
+- **Link Aggregation Control Protocol (LACP)**:
+	- **Dataplane v1 & v1.1**: To increase bandwidth and provide link resiliency, Cloudflare supports combining multiple physical CNI ports into a single logical channel using Link Aggregation Control Protocol (LACP). You can bundle multiple connections to increase total throughput and add redundancy to your private connection with Cloudflare.
+	- **Dataplane v2**: Not yet supported. Use ECMP instead.
 
 ### Performance characteristics
 
