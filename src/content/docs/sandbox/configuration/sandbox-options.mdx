@@ -25,7 +25,7 @@ const sandbox = getSandbox(binding, sandboxId, options?: SandboxOptions);
 Keep the container alive indefinitely by preventing automatic shutdown. When `true`, the container will never auto-timeout and must be explicitly destroyed using `destroy()`.
 
 <TypeScriptExample>
-```
+```ts
 // For long-running processes that need the container to stay alive
 const sandbox = getSandbox(env.Sandbox, 'user-123', {
   keepAlive: true
@@ -44,7 +44,7 @@ try {
 </TypeScriptExample>
 
 :::caution[Resource management with keepAlive]
-When `keepAlive: true` is set, containers will not automatically timeout and must be explicitly destroyed using `destroy()` to prevent containers running indefinitely and counting toward your account limits.
+When `keepAlive: true` is set, containers will not automatically timeout. They must be explicitly destroyed using `destroy()` to prevent containers running indefinitely and counting toward your account limits.
 :::
 
 ## When to use keepAlive
@@ -60,6 +60,6 @@ By default, containers automatically shut down after 10 minutes of inactivity. T
 
 ## Related resources
 
-- [Background processes guide](/sandbox/guides/background-processes/) - Using keepAlive with long-running processes
+- [Background processes guide](/sandbox/guides/background-processes/) - Using `keepAlive` with long-running processes
 - [Sessions API reference](/sandbox/api/sessions/) - Container lifecycle management
 - [Sandboxes concept](/sandbox/concepts/sandboxes/) - Understanding sandbox lifecycle

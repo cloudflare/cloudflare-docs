@@ -164,7 +164,7 @@ console.log('All services running');
 By default, containers automatically shut down after 10 minutes of inactivity. For long-running processes that may have idle periods (like CI/CD pipelines, batch jobs, or monitoring tasks), use the [`keepAlive` option](/sandbox/configuration/sandbox-options/#keepalive):
 
 <TypeScriptExample>
-```
+```ts
 import { getSandbox, parseSSEStream, type LogEvent } from '@cloudflare/sandbox';
 
 export default {
@@ -209,7 +209,7 @@ When using `keepAlive: true`, containers will not automatically timeout. You **m
 - **Clean up** - Always stop processes when done
 - **Handle failures** - Monitor logs for errors and restart if needed
 - **Use try/finally** - Ensure cleanup happens even on errors
-- **Use keepAlive for long-running tasks** - Prevent container shutdown during processes with idle periods
+- **Use `keepAlive` for long-running tasks** - Prevent container shutdown during processes with idle periods
 
 ## Troubleshooting
 
@@ -244,7 +244,7 @@ const server = await sandbox.startProcess('node server.js');
 ## Related resources
 
 - [Commands API reference](/sandbox/api/commands/) - Complete process management API
-- [Sandbox options configuration](/sandbox/configuration/sandbox-options/) - Configure keepAlive and other options
+- [Sandbox options configuration](/sandbox/configuration/sandbox-options/) - Configure `keepAlive` and other options
 - [Sessions API reference](/sandbox/api/sessions/) - Container lifecycle management
 - [Execute commands guide](/sandbox/guides/execute-commands/) - One-time command execution
 - [Expose services guide](/sandbox/guides/expose-services/) - Make processes accessible
