@@ -37,7 +37,7 @@ You can configure notifications for upcoming CNI maintenance events using the No
 
 1. In the Cloudflare dashboard, go to the **Notifications** page.
 
-<DashButton url="/?to=/:account/notifications" />
+	<DashButton url="/?to=/:account/notifications" />
 
 2. Select **Add**.
 3. From the product drop-down menu, select **Cloudflare Network Interconnect**.
@@ -48,19 +48,24 @@ You can configure notifications for upcoming CNI maintenance events using the No
 
 ### Enable Cloudflare Status Maintenance Notification
 
-1. First, identify the PoP code for your CNI circuit:
-   - In the Cloudflare dashboard, go to the **Configuration** page in Magic Transit or Magic WAN.
-	   - For Magic Transit: <DashButton url="/?to=/:account/magic-transit/configuration" />
-		 - For Magic WAN: <DashButton url="/?to=/:account/magic-wan/configuration" />
-   - Select the **Interconnects** tab.
-   - Select the CNI you want to enable notifications for.
-   - In the menu that appears, note the Data Center code (for example, `gru-b`).
-2. Now, configure the alert:
-   - Go to **Notifications** and select **Add**.
-   - From the product drop-down menu, select **Cloudflare Status**.
-   - Select **Maintenance Notification**.
-   - Give your notification a name and choose your notification method.
-   - Select **Next**.
-   - Optionally, use the **Filter on Event Type** to select only the event types you want to be alerted for (Scheduled, Changed, Canceled).
-   - In **Filter on Points of Presence**, enter the three-letter code for your PoP (for example, for `gru-b`, enter `gru`). You can add multiple PoPs, separated by commas.
-   - Select **Create**.
+First, identify the PoP code for your CNI circuit:
+1. In the Cloudflare dashboard, go to the **Configuration** page in Magic Transit or Magic WAN.
+
+	- For Magic Transit: <DashButton url="/?to=/:account/magic-transit/configuration" />
+
+	- For Magic WAN: <DashButton url="/?to=/:account/magic-wan/configuration" />
+
+2. Select the **Interconnects** tab.
+3. Select the CNI you want to enable notifications for.
+4. In the menu that appears, note the Data Center code (for example, `gru-b`).
+
+Now, configure the alert:
+
+1. Go to **Notifications** and select **Add**.
+2. From the product drop-down menu, select **Cloudflare Status**.
+3. Select **Maintenance Notification**.
+4. Give your notification a name and choose your notification method.
+5. Select **Next**.
+6. Optionally, use the **Filter on Event Type** to select only the event types you want to be alerted for (Scheduled, Changed, Canceled).
+7. In **Filter on Points of Presence**, enter the three-letter code for your PoP (for example, for `gru-b`, enter `gru`). You can add multiple PoPs, separated by commas.
+8. Select **Create**.
