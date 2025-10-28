@@ -52,7 +52,13 @@ To view more details, apply filters, analyze the data, and generate ad-hoc repor
 
 ### Industry benchmarks
 
-Industry benchmarks are calculated globally from the percentage of mitigated traffic on your account. This is based on the number of mitigated traffic relative to the total amount of traffic on your account. Cloudflare analyzes where you are in the percentile to determine how you compare to other companies in your industry. 
+Industry benchmarks provide additional context for your mitigated traffic by comparing your organization's attack activity against others in the same industry. These benchmarks help you understand whether the volume and frequency of attacks you experience are typical, higher, or lower than your peers—offering a clear sense of where your organization stands within its threat landscape.
+
+Beyond providing context, benchmarks can also help demonstrate value to stakeholders by quantifying the scale of threats your organization faces and how effectively Cloudflare mitigates them. This information can be useful when communicating your security posture internally or when prioritizing future security investments.
+
+To ensure fairness and accuracy, Cloudflare normalizes your data before comparison. For each month, we calculate the percentage of mitigated requests relative to the total requests across your account and eligible zones. This normalization ensures that benchmarks are based on relative attack intensity rather than total traffic volume so larger or smaller organizations can be compared meaningfully.
+
+The result helps you interpret your mitigated traffic data in context. For example, you may see a statement such as "_You are in the top 25% most attacked companies in the Cosmetics industry._" This insight enables you to better understand your threat exposure, communicate results to stakeholders, and understand value of the protection Cloudflare provides.
 
 If your account is not assigned an industry or if the shown industry is incorrect, use the link within the report to select the correct industry. 
 
