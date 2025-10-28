@@ -71,24 +71,24 @@ Consider the following service levels when planning your deployment:
 
 Direct connections are available at any Cloudflare data center where you are also located. Make sure to check whether the location of interest has the right dataplane version and diversity requirements for your use case. Refer to [available locations](/network-interconnect/static/cni-locations-04-08-2025.pdf) (PDF) for details.
 
-### Connectivity Partners
+### Connectivity partners
 
 Cloudflare partners with leading global providers, including: Console Connect, CoreSite, Digital Realty, Equinix Fabric, Megaport, PacketFabric, and Zayo.
 
-## End-to-End Implementation Workflow
+## End-to-end implementation workflow
 
 The process of provisioning a CNI typically takes two to four weeks, depending on the complexity of implementation and third-party provider timelines. The most common delays occur during the physical connection phase, which is outside of Cloudflare's direct control.
 
-1. **Submit Request**: Work with your account team to create a CNI request ticket, providing your desired CNI type, location, use case, and technical details. An Implementation Manager will be assigned to guide the process.
-2. **Review Configuration**: The Implementation Manager will provide a detailed configuration document covering IP addressing, VLANs, and other technical specifications. You must review and approve this document.
-3. **Order Connection**:
-   - For a Direct Interconnect, you will receive a Letter of Authorization (LOA) from Cloudflare to order the physical cross-connect from the data center facility operator.
-   - For a Partner Interconnect, you will use the provided details to order a virtual circuit from the partner's portal.
-4. **Configure Network**: Both Cloudflare and your network team will configure the respective network devices according to the approved document.
-5. **Test and Verify**: Once the connection is physically established, teams will perform basic connectivity tests (for example, ping) and verify that the BGP session can be established.
-6. **Activate Services**: Configure your Cloudflare products (for example, Magic Transit) to route traffic over the new CNI. The Implementation Manager will verify end-to-end traffic flow before marking the deployment as complete.
+1. **Submit request**: Work with your account team to create a CNI request ticket, providing your desired CNI type, location, use case, and technical details. An Implementation Manager will be assigned to guide the process.
+2. **Review configuration**: For the v1 dataplane, The Implementation Manager will provide a detailed configuration document covering IP addressing, VLANs, and other technical specifications. You must review and approve this document. For the v2 dataplane, this step is not necessary.
+3. **Order connection**:
+	- For a **Direct Interconnect**, you will receive a Letter of Authorization (LOA) from Cloudflare to order the physical cross-connect from the data center facility operator.
+	- For a **Partner Interconnect**, you will use the provided details to order a virtual circuit from the partner's portal.
+4. **Configure network**: Both Cloudflare and your network team will configure the respective network devices according to the approved document.
+5. **Test and verify**: Once the connection is physically established, teams will perform basic connectivity tests (for example, ping) and, if applicable, verify that the BGP session can be established.
+6. Enable tunnel health checks for [Magic Transit](/magic-transit/how-to/configure-tunnel-endpoints/#add-tunnels) and / or [Magic WAN](/magic-wan/configuration/manually/how-to/configure-tunnel-endpoints/#add-tunnels).
+7. **Activate services**: Configure your Cloudflare products (for example, Magic Transit) to route traffic over the new CNI. The Implementation Manager will verify end-to-end traffic flow before marking the deployment as complete.
 7. [Add maintenance notifications](/network-interconnect/monitoring-and-alerts/#enable-cloudflare-status-maintenance-notification).
-8. Enable tunnel health checks for Magic [Transit](/magic-transit/how-to/configure-tunnel-endpoints/#add-tunnels) / [WAN](/magic-wan/configuration/manually/how-to/configure-tunnel-endpoints/#add-tunnels).
 
 ## How-To guides
 
