@@ -16,6 +16,6 @@ Earlier this year, we launched our serverless durable execution engine, Workflow
 
 Consider a practical example: your application offers a two-week free trial. When users sign up, you can trigger a Workflow to track their trial period and send timely reminders before it expires. This means running one Workflow per user, which previously meant hitting our hard limit at just 4,500 concurrent users in the onboarding flow.
 
-With the new concurrency limit of 10,000 Workflow instances, you can support up to 10,000 customers simultaneously moving through onboarding. We've also increased throughput tenfold: you can now create 100 new Workflow instances per second, up from the previous limit of 100 per 10 seconds. 
+With the new concurrency limit of 10,000 Workflow instances, you can support up to 10,000 customers simultaneously moving through onboarding. We've also increased throughput tenfold: you can now intake 100 new customers (creating 100 new instances) per second, up from the previous limit of 100 per 10 seconds. 
 
 If your application requires a higher limit, fill out the [Limit Increase Request Form](/workers/platform/limits/) or contact your account team. Please refer to [Workflows pricing](/workflows/reference/pricing/) for more information.
