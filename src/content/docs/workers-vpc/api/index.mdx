@@ -26,12 +26,12 @@ A VPC Service binding is accessed via the `env` parameter in your Worker's fetch
 Makes an HTTP request to the private service through the configured tunnel.
 
 ```js
-const response = await env.VPC_SERVICE_BINDING.fetch(url, options);
+const response = await env.VPC_SERVICE_BINDING.fetch(resource, options);
 ```
 
 ### Parameters
 
-- `url` (string | URL | Request) - The URL to fetch. This must be an absolute URL including protocol, host, and path (for example, `http://internal-api:8080/api/users`)
+- `resource` (string | URL | Request) - The URL to fetch. This must be an absolute URL including protocol, host, and path (for example, `http://internal-api:8080/api/users`)
 - `options` (optional RequestInit) - Standard fetch options including:
   - `method` - HTTP method (GET, POST, PUT, DELETE, etc.)
   - `headers` - Request headers
@@ -44,7 +44,7 @@ VPC Service fetch requests must use absolute URLs including the protocol (http/h
 
 ### Return value
 
-Returns a `Promise<Response>` that resolves to a standard Fetch API Response object.
+Returns a `Promise<Response>` that resolves to a [standard Fetch API Response object](https://developer.mozilla.org/en-US/docs/Web/API/Response).
 
 ### Examples
 

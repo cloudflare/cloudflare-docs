@@ -28,7 +28,7 @@ Securely connect your private cloud to Cloudflare to build cross-cloud apps.
 
 Workers VPC allows you to connect your Workers to your private APIs and services in external clouds (AWS, Azure, GCP, on-premise, etc.) that are not accessible from the public Internet.
 
-With Workers VPC, you can configure a [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) to establish secure, private connections from your private networks to Cloudflare. Then, you can configure a [VPC Service](/workers-vpc/configuration/vpc-services/) for each service in the external private network you need to connect to, and using [VPC Service bindings](/workers-vpc/api/) to connect from Workers.
+With Workers VPC, you can configure a [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/) to establish secure, private connections from your private networks to Cloudflare. Then, you can configure a [VPC Service](/workers-vpc/configuration/vpc-services/) for each service in the external private network you need to connect to, and use [VPC Service bindings](/workers-vpc/api/) to connect from Workers.
 
 :::note
 
@@ -46,17 +46,16 @@ export default {
 			"http://internal-api.company.local/data",
 		);
 
-    	// Process the response from your private network
-    	const data = await response.json();
+		// Process the response from your private network
+		const data = await response.json();
 
-    	return new Response(JSON.stringify(data), {
-    		headers: { "content-type": "application/json" },
-    	});
-    },
-
+		return new Response(JSON.stringify(data), {
+			headers: { "content-type": "application/json" },
+		});
+	},
 };
 
-```
+````
 
     </TabItem>
     <TabItem label="wrangler.jsonc">
@@ -74,20 +73,20 @@ export default {
 			}
 		]
 	}
-```
+````
 
 </TabItem>
 </Tabs>
 
 ## Use cases
 
-### Applications on Workers with access to private APIs
+### Access private APIs from Workers applications
 
 Deploy APIs or full-stack applications to Workers that connect to private authentication services, CMS systems, internals APIs, and more. Your Workers applications run globally with optimized access to the backend services of your private network.
 
 ### API gateway
 
-Route requests to internal microservices in your private network based on URL paths. Centralize access control and load balancing for multiple private services.
+Route requests to internal microservices in your private network based on URL paths. Centralize access control and load balancing for multiple private services on Workers.
 
 ### Internal tooling, agents, dashboards
 

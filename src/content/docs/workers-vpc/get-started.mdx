@@ -62,7 +62,7 @@ cd workers-vpc-app
 
 ## 2. Set up Cloudflare Tunnel
 
-A Cloudflare Tunnel creates a secure connection from your private network to Cloudflare. This tunnel will allow Workers to securely access your private resources.
+A Cloudflare Tunnel creates a secure connection from your private network to Cloudflare. This tunnel will allow Workers to securely access your private resources. You can create the tunnel on a virtual machine or container in your external cloud, or even on your local desktop for the sake of this tutorial.
 
 <Steps>
 
@@ -159,7 +159,7 @@ main = "src/index.ts"
 compatibility_date = "2024-01-01"
 
 [[vpc_services]]
-binding = "PRIVATE_API"
+binding = "VPC_SERVICE"
 service_id = "<YOUR_SERVICE_ID>"
 
 ````
