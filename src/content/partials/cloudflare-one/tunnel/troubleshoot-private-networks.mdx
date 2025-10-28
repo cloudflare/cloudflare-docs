@@ -22,15 +22,15 @@ If WARP is stuck in the `Disconnected` state or frequently changes between `Conn
 
 This step is only needed if users access your application via a private hostname (for example, `wiki.internal.local`).
 
-- If you are using [custom resolver policies](/cloudflare-one/traffic-policies/resolver-policies/) to handle private DNS, go to your Gateway DNS logs (**Logs** > **Gateway** > **DNS**) and search for DNS queries to the hostname.
+- If you are using [custom resolver policies](/cloudflare-one/traffic-policies/resolver-policies/) to handle private DNS, go to your Gateway DNS logs (**Insights** > **Logs** > **DNS query logs**) and search for DNS queries to the hostname.
 
-- If you are using [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/local-domains/) to handle private DNS, go to your Gateway Network logs (**Logs** > **Gateway** > **Network**) and search for port `53` traffic to your DNS server IP.
+- If you are using [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/local-domains/) to handle private DNS, go to your Gateway Network logs (**Insights** > **Logs** > **Network logs**) and search for port `53` traffic to your DNS server IP.
 
 If there are no relevant Gateway logs, it means that WARP was unable to forward the query to your private DNS server. Check your resolver policies or Local Domain Fallback configuration and refer to [How WARP handles DNS requests](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/#how-the-warp-client-handles-dns-requests).
 
 ## 3. Is network traffic to the application going through WARP?
 
-Next, check if your Gateway Network logs (**Logs** > **Gateway** > **Network**) show any traffic to the destination IP.
+Next, check if your Gateway Network logs (**Insights** > **Logs** > **Network logs**) show any traffic to the destination IP.
 
 If WARP is connected but there are no network logs, it means that your private network IPs are not routing through WARP. You can confirm this by [searching the routing table](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/warp-architecture/#routing-table) on the device for the IP address of your application. Traffic to your application should route through the Cloudflare WARP interface. If another interface is used, [check your Split Tunnel configuration](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/#3-route-private-network-ips-through-warp).
 
@@ -38,7 +38,7 @@ If WARP is connected but there are no network logs, it means that your private n
 
 To check if a Gateway block event occurred:
 
-1. Go to **Logs** > **Gateway** and select the **DNS**, **Network**, or **HTTP** tab.
+1. Go to **Insights** > **Logs** and select the **DNS query logs**, **Network logs**, or **HTTP request logs**.
 2. Apply the following filters:
    - **Email**: User's email address
    - **Event**: _Blocked_
@@ -49,13 +49,13 @@ To check if a Gateway block event occurred:
 Determine whether the user is matching any policy, or if they are matching a policy that has a higher priority than the expected policy.
 
 1. To determine the actual policy that was applied:
-   1. Go to **Logs** > **Gateway** and select the **DNS**, **Network**, or **HTTP** tab.
+   1. Go to **Insights** > **Logs** and select the **DNS query logs**, **Network logs**, or **HTTP request logs**.
    2. Apply the following filters:
       - **Email**: User's email address
       - **Date Time Range**: Time period when the user accessed the application
    3. In the search box, filter by the destination IP or FQDN.
    4. In the results, select a log and note its **Policy Name** value.
-2. Go to **Gateway** > **Firewall Policies** and compare the [order of enforcement](/cloudflare-one/traffic-policies/order-of-enforcement/) of the matched policy versus the expected policy.
+2. Go to **Traffic policies** > **Firewall policies** and compare the [order of enforcement](/cloudflare-one/traffic-policies/order-of-enforcement/) of the matched policy versus the expected policy.
 3. Compare the Gateway log values with the expected policy criteria.
 
    - If the mismatched value is related to identity, [check the user registry](/cloudflare-one/insights/logs/users/) and verify the values that are passed to Gateway from your IdP. Cloudflare updates the registry when the user enrolls in the WARP client. If the user's identity is outdated, ask the user to re-authenticate WARP (**Preferences** > **Account** > **Re-Authenticate Session**).

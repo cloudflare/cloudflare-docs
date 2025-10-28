@@ -7,23 +7,23 @@ sidebar:
 
 import { DirectoryListing, Render } from "~/components";
 
-This section covers a few common use cases with the API and Terraform to manage Cloudflare Zero Trust. For more information, refer to our [API documentation](/api/) and [Terraform reference guide](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs).
+This section covers a few common use cases with the API and Terraform to manage Cloudflare One. For more information, refer to our [API documentation](/api/) and [Terraform reference guide](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs).
 
 <DirectoryListing />
 
 ## Set dashboard to read-only
 
-Super Administrators can lock all settings as read-only in Zero Trust. Read-only mode ensures that all updates for the account are made through the API or Terraform.
+Super Administrators can lock all settings as read-only in Cloudflare One. Read-only mode ensures that all updates for the account are made through the API or Terraform.
 
 To enable read-only mode:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Account**.
-2. Enable **API/Terraform read-only mode**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Settings** > **Admin controls**.
+2. Enable **Set dashboard to read-only**.
 
 All users, regardless of [user permissions](/cloudflare-one/roles-permissions/), will be prevented from making configuration changes through the UI.
 
 ## Scoped API tokens
 
-The administrators managing policies and groups in Cloudflare Zero Trust might be different from those responsible for configuring WAF custom rules or other Cloudflare settings. You can configure scoped API tokens so that team members and automated systems can manage Zero Trust settings without having permission to modify other configurations in Cloudflare.
+The administrators managing policies and groups in Cloudflare One might be different from those responsible for configuring WAF custom rules or other Cloudflare settings. You can configure scoped API tokens so that team members and automated systems can manage Cloudflare One settings without having permission to modify other configurations in Cloudflare.
 
 You can create a scoped API token [via the dashboard](/fundamentals/api/get-started/create-token/) or [via the API](/fundamentals/api/how-to/create-via-api/). For a list of available token permissions, refer to [API token permissions](/fundamentals/api/reference/permissions/).
