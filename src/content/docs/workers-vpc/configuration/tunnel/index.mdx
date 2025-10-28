@@ -59,6 +59,10 @@ For platform-specific tunnel deployment instructions for production workloads:
 
 Refer to the full Cloudflare Tunnel documentation on [how to setup Tunnels for high availability and failover with replicas](/cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-availability/).
 
+:::note
+We do not recommend using `cloudflared` in autoscaling setups because downscaling (removing replicas) will break existing user connections to that replica. Additionally, `cloudflared` does not load balance across replicas; replicas are strictly for high availability and requests are routed to the nearest replica.
+:::
+
 ## Next steps
 
 - Configure [VPC Services](/workers-vpc/configuration/vpc-services/) to connect your tunnels to Workers

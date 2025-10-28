@@ -29,6 +29,12 @@ Makes an HTTP request to the private service through the configured tunnel.
 const response = await env.VPC_SERVICE_BINDING.fetch(resource, options);
 ```
 
+:::note
+The [VPC Service configurations](/workers-vpc/configuration/vpc-services/#vpc-service-configuration) will always be used to connect and route requests to your services in external networks, even if a different URL or host is present in the actual `fetch()` operation of the Worker code.
+
+The information provided in the `fetch()` operation is not used to route requests, and instead only populates the `Host` field for a HTTP request that can be parsed by the server and used for Server Name Indication (SNI).
+:::
+
 ### Parameters
 
 - `resource` (string | URL | Request) - The URL to fetch. This must be an absolute URL including protocol, host, and path (for example, `http://internal-api:8080/api/users`)
@@ -39,7 +45,7 @@ const response = await env.VPC_SERVICE_BINDING.fetch(resource, options);
   - `signal` - AbortSignal for request cancellation
 
 :::note[Absolute URLs Required]
-VPC Service fetch requests must use absolute URLs including the protocol (http/https), host, and path. Relative paths are not supported.
+VPC Service fetch requests must use absolute URLs including the protocol (`http`/`https`), host, and path. Relative paths are not supported.
 :::
 
 ### Return value

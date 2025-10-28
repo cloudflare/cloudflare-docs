@@ -35,6 +35,12 @@ A VPC Service consists of:
 - **Hostname or IPv4/IPv6 addresses**: The hostname, or IPv4 and/or IPv6 addresses to use to route to your service from the tunnel in your private network
 - **Ports**: HTTP and/or HTTPS port configuration (optional, defaults to 80/443)
 
+:::note
+The [VPC Service configurations](/workers-vpc/configuration/vpc-services/#vpc-service-configuration) will always be used to connect and route requests to your services in external networks, even if a different URL or host is present in the actual `fetch()` operation of the Worker code.
+
+The information provided in the `fetch()` operation is not used to route requests, and instead only populates the `Host` field for a HTTP request that can be parsed by the server and used for Server Name Indication (SNI).
+:::
+
 ## Configuration example
 
 The following is an example of a VPC Service for a service using custom HTTP and HTTPS ports, and both IPv4 and IPv6 addresses. These configurations represent the expected contract of the [REST API for creating a VPC Service](https://developers.cloudflare.com/api/resources/zero_trust/subresources/connectivity/subresources/directory/subresources/services/), a type of service within the broader connectivity directory.
@@ -95,7 +101,7 @@ binding = "PRIVATE_API"
 service_id = "5634563546"
 remote = true
 
-```
+````
 </WranglerConfig>
 
 You can have multiple service bindings:
@@ -117,7 +123,7 @@ binding = "INTERNAL_CACHE"
 service_id = "3412345678"
 remote = true
 
-```
+````
 
 </WranglerConfig>
 
