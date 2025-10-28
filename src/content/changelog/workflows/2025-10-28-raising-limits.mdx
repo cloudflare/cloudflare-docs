@@ -12,6 +12,10 @@ We're excited to announce increases to the [Cloudflare Workflows](/workflows/) s
 * We have **more than doubled** the concurrency limit per Cloudflare account, from 4,500 to 10,000 Workflow instances. Note that each unique invocation of a Workflow is an **instance** of that Workflow.
 * You can now also create up to 100 Workflow instances per second, raised from the previous limit of 100 Workflow instances per 10 seconds.
 
-Earlier this year, we launched our serverless durable execution engine, Workflows, into GA to help developers build long-running, multi-step applications on Workers. With Workflows, you can automate a sequence of idempotent steps in your application with built-in error handling and retry behavior. For example, imagine your application has a two week free trial. When a user signs up, you might want to kick off a Workflow to track their trial and remind them to subscribe before it ends. That means one Workflow per user -- so if you had more than 4,500 users in the onboarding flow at one time, you would hit a hard limit. With the new concurrency limit of 10,000 Workflow instances, you can support this flow for up to 10,000 new customers at a time.
+Earlier this year, we launched our serverless durable execution engine, Workflows, into GA to help developers build long-running, multi-step applications on Workers. With Workflows, you can automate a sequence of idempotent steps in your application with built-in error handling and retry behavior. 
+
+Consider a practical example: your application offers a two-week free trial. When users sign up, you can trigger a Workflow to track their trial period and send timely reminders before it expires. This means running one Workflow per user, which previously meant hitting our hard limit at just 4,500 concurrent users in the onboarding flow.
+
+With the new concurrency limit of 10,000 Workflow instances, you can support up to 10,000 customers simultaneously moving through onboarding. We've also increased throughput tenfold: you can now create 100 new Workflow instances per second, up from the previous limit of 100 per 10 seconds.
 
 Refer to [Workflows pricing](/workflows/reference/pricing/) for more information.
