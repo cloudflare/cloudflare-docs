@@ -2389,6 +2389,7 @@
 /cloudflare-one/identity/users/scim/ /cloudflare-one/team-and-resources/users/scim/ 301
 /cloudflare-one/applications/login-page/ /cloudflare-one/reusable-components/custom-pages/access-login-page/ 301
 /cloudflare-one/applications/block-page/ /cloudflare-one/reusable-components/custom-pages/access-block-page/ 301
+/cloudflare-one/policies/gateway/block-page/ /cloudflare-one/reusable-components/custom-pages/gateway-block-page/ 301
 /cloudflare-one/applications/app-library/ /cloudflare-one/team-and-resources/app-library/ 301
 /cloudflare-one/applications/bookmarks/ /cloudflare-one/access-controls/applications/bookmarks/ 301
 /cloudflare-one/applications/app-launcher/ /cloudflare-one/access-controls/access-settings/app-launcher/ 301
