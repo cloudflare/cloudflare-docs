@@ -11,7 +11,7 @@ To view the Application Access Report dashboard:
 2. Go to **Analytics** > **Dashboards**.
 3. Select **Application Access Report**.
 
-The Application Access Report offers a summary of overall Access activity, while [Access event analytics](/cloudflare-one/insights/analytics/access/) provides a view of login events.
+The Application Access Report offers a summary of overall Access activity, while [Access event analytics](/cloudflare-one/insights/analytics/access/) provides a view of login events. You can export the Application Access Report to a PDF to share with stakeholders or for record-keeping.
 
 ## Prerequisites
 
@@ -34,20 +34,20 @@ The Application Access Report dashboard includes the following panels and metric
 
 ### Summary of Access activity
 
-
+The Summary of Access activity section shows a time series of Access login events over a selected period and a summary of login events. You can filter a time period in the upper right corner of the dashboard.
 
 ### Access events
 
-Shows a time series of Access login events over a selected period. Each bar represents 
-You can use this view to track user authentication activity and detect unusual login spikes.
+Shows a time series of Access login events over a selected period. Each bar represents the number of login events in the x-axis time interval.
+You can use this graph to review user authentication activity and detect unusual login spikes.
 
 ### Access decisions by event count
 
-Displays the total number of Access decisions made, grouped by outcome (for example, **Granted** or ).  
+Displays the total number of Access decisions made, grouped by outcome (for example, **Granted** or **Denied**).  
 
 ### Access applications by event count
 
-Shows a breakdown of authentication events by application type (for example, **Self-hosted**, **SaaS**, **Private network**, or **Infrastructure**).  
+Shows a breakdown of authentication events by application type (for example, **Self-hosted**, **SaaS**, **Private network**, **Infrastructure** or **MCP Portal**).  
 Use this view to determine which application types users most frequently access.
 
 ### Access events by type
@@ -71,7 +71,7 @@ These insights help administrators identify usage patterns and trends.
 
 Provides a summary of Access configurations made by admin in your organization, including:
 
-* Applications configured — Total number of Access-protected applications, broken down by type (for example, Self-hosted, SaaS, RDP, SSH, Private network, and Dash SSO).
-* Policies configured — Total number of Access policies, grouped by policy type (for example, Allow, Block, Bypass, or Service Auth).
+* Applications configured — Total number of Access-protected applications, broken down by type (for example, Self-hosted, SaaS, RDP, SSH, Private network, and Dash SSO.)
+* Policies configured — Total number of Access policies, grouped by policy type (for example, Allow, Block, Bypass, or Service Auth.)
 
 This section helps administrators audit their Access setup and verify that expected resources and policies are in place.
