@@ -20,11 +20,9 @@ A sandbox is an isolated execution environment where your code runs. Each sandbo
 A sandbox is created the first time you reference its ID:
 
 ```typescript
-const sandbox = getSandbox(env.Sandbox, 'user-123');
+const sandbox = getSandbox(env.Sandbox, "user-123");
 await sandbox.exec('echo "Hello"'); // First request creates sandbox
 ```
-
-**Duration**: 100-300ms (cold start) or \<10ms (if warm)
 
 ### Active
 
@@ -32,7 +30,7 @@ The sandbox container is running and processing requests. All state remains avai
 
 ### Idle
 
-After a period of inactivity, the container stops to free resources. When the next request arrives, a fresh container starts. All previous state is lost and the environment resets to its initial state.
+After a period of inactivity (10 minutes by default), the container stops to free resources. When the next request arrives, a fresh container starts. All previous state is lost and the environment resets to its initial state.
 
 ### Destruction
 
@@ -48,12 +46,14 @@ await sandbox.destroy();
 Sandbox state exists only while the container is active. Understanding this is critical for building reliable applications.
 
 **While the container is active** (typically minutes to hours of activity):
+
 - Files written to `/workspace`, `/tmp`, `/home` remain available
 - Background processes continue running
 - Shell sessions maintain their working directory and environment
 - Code interpreter contexts retain variables and imports
 
 **When the container stops** (due to inactivity or explicit destruction):
+
 - All files are deleted
 - All processes terminate
 - All shell state resets
@@ -95,6 +95,7 @@ Idempotent operations with clear task-to-sandbox mapping. Good for builds, pipel
 The first request to a sandbox determines its geographic location. Subsequent requests route to the same location.
 
 **For global apps**:
+
 - Option 1: Multiple sandboxes per user with region suffix (`user-123-us`, `user-123-eu`)
 - Option 2: Single sandbox per user (simpler, but some users see higher latency)
 
@@ -104,10 +105,10 @@ The first request to a sandbox determines its geographic location. Subsequent re
 
 ```typescript
 try {
-  const sandbox = getSandbox(env.Sandbox, sessionId);
-  await sandbox.exec('npm run build');
+	const sandbox = getSandbox(env.Sandbox, sessionId);
+	await sandbox.exec("npm run build");
 } finally {
-  await sandbox.destroy(); // Clean up temporary sandboxes
+	await sandbox.destroy(); // Clean up temporary sandboxes
 }
 ```
 
@@ -121,13 +122,13 @@ Containers restart after inactivity or failures. Design your application to hand
 
 ```typescript
 // Check if required files exist before using them
-const files = await sandbox.listFiles('/workspace');
-if (!files.includes('data.json')) {
-  // Reinitialize: container restarted and lost previous state
-  await sandbox.writeFile('/workspace/data.json', initialData);
+const files = await sandbox.listFiles("/workspace");
+if (!files.includes("data.json")) {
+	// Reinitialize: container restarted and lost previous state
+	await sandbox.writeFile("/workspace/data.json", initialData);
 }
 
-await sandbox.exec('python process.py');
+await sandbox.exec("python process.py");
 ```
 
 ## Best practices

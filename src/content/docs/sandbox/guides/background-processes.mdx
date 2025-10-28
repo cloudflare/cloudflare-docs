@@ -159,12 +159,57 @@ console.log('All services running');
 ```
 </TypeScriptExample>
 
+## Keep containers alive for long-running processes
+
+By default, containers automatically shut down after 3 minutes of inactivity. For long-running processes that may have idle periods (like CI/CD pipelines, batch jobs, or monitoring tasks), use the `keepAlive` option:
+
+<TypeScriptExample>
+```
+import { getSandbox, parseSSEStream, type LogEvent } from '@cloudflare/sandbox';
+
+export default {
+  async fetch(request: Request, env: Env): Promise<Response> {
+    // Enable keepAlive for long-running processes
+    const sandbox = getSandbox(env.Sandbox, 'build-job-123', {
+      keepAlive: true
+    });
+
+    try {
+      // Start a long-running build process
+      const build = await sandbox.startProcess('npm run build:production');
+
+      // Monitor progress
+      const logs = await sandbox.streamProcessLogs(build.id);
+
+      // Process can run indefinitely without container shutdown
+      for await (const log of parseSSEStream<LogEvent>(logs)) {
+        console.log(log.data);
+        if (log.data.includes('Build complete')) {
+          break;
+        }
+      }
+
+      return new Response('Build completed');
+    } finally {
+      // Important: Must explicitly destroy when done
+      await sandbox.destroy();
+    }
+  }
+};
+```
+</TypeScriptExample>
+
+:::caution[Always destroy with keepAlive]
+When using `keepAlive: true`, containers will not automatically timeout. You **must** call `sandbox.destroy()` when finished to prevent resource leaks and avoid counting containers toward your account limits indefinitely.
+:::
+
 ## Best practices
 
 - **Wait for readiness** - Stream logs to detect when services are ready
 - **Clean up** - Always stop processes when done
 - **Handle failures** - Monitor logs for errors and restart if needed
 - **Use try/finally** - Ensure cleanup happens even on errors
+- **Use keepAlive for long-running tasks** - Prevent container shutdown during processes with idle periods
 
 ## Troubleshooting
 
@@ -199,6 +244,7 @@ const server = await sandbox.startProcess('node server.js');
 ## Related resources
 
 - [Commands API reference](/sandbox/api/commands/) - Complete process management API
+- [Sessions API reference](/sandbox/api/sessions/) - Container lifecycle and keepAlive option
 - [Execute commands guide](/sandbox/guides/execute-commands/) - One-time command execution
 - [Expose services guide](/sandbox/guides/expose-services/) - Make processes accessible
 - [Streaming output guide](/sandbox/guides/streaming-output/) - Monitor process output

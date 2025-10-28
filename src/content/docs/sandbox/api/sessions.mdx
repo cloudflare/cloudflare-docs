@@ -13,6 +13,44 @@ Create isolated execution contexts within a sandbox. Each session maintains its 
 Every sandbox has a default session that automatically maintains shell state. Create additional sessions when you need isolated shell contexts for different environments or parallel workflows.
 :::
 
+## Sandbox options
+
+When creating a sandbox with `getSandbox()`, you can configure its lifecycle behavior:
+
+```ts
+import { getSandbox } from '@cloudflare/sandbox';
+
+const sandbox = getSandbox(binding, sandboxId, options?: SandboxOptions);
+```
+
+**Available options**:
+
+- `keepAlive` (boolean) - Keep the container alive indefinitely by preventing automatic shutdown. When `true`, the container will never auto-timeout and must be explicitly destroyed using `destroy()`. Default: `false`
+
+<TypeScriptExample>
+```
+// For long-running processes that need the container to stay alive
+const sandbox = getSandbox(env.Sandbox, 'user-123', {
+  keepAlive: true
+});
+
+// Run your long-running process
+await sandbox.startProcess('python long_running_script.py');
+
+// Important: Must explicitly destroy when done
+try {
+// Your work here
+} finally {
+await sandbox.destroy(); // Required to prevent resource leaks
+}
+
+````
+</TypeScriptExample>
+
+:::caution[Resource management with keepAlive]
+When `keepAlive: true` is set, containers will not automatically timeout and must be explicitly destroyed using `destroy()` to prevent resource leaks and avoid counting toward account limits indefinitely.
+:::
+
 ## Methods
 
 ### `createSession()`
@@ -41,15 +79,15 @@ const prodSession = await sandbox.createSession({
 });
 
 const testSession = await sandbox.createSession({
-  id: 'test',
-  env: { NODE_ENV: 'test', API_URL: 'http://localhost:3000' },
-  cwd: '/workspace/test'
+id: 'test',
+env: { NODE_ENV: 'test', API_URL: 'http://localhost:3000' },
+cwd: '/workspace/test'
 });
 
 // Run in parallel
 const [prodResult, testResult] = await Promise.all([
-  prodSession.exec('npm run build'),
-  testSession.exec('npm run build')
+prodSession.exec('npm run build'),
+testSession.exec('npm run build')
 ]);
 ```
 </TypeScriptExample>
@@ -101,9 +139,9 @@ const sandbox = getSandbox(env.Sandbox, 'user-123');
 
 // Set environment variables first
 await sandbox.setEnvVars({
-  API_KEY: env.OPENAI_API_KEY,
-  DATABASE_URL: env.DATABASE_URL,
-  NODE_ENV: 'production'
+API_KEY: env.OPENAI_API_KEY,
+DATABASE_URL: env.DATABASE_URL,
+NODE_ENV: 'production'
 });
 
 // Now commands can access these variables
@@ -120,7 +158,9 @@ await sandbox.destroy(): Promise<void>
 ```
 
 :::note
-Containers automatically sleep after 3 minutes of inactivity, but still count toward account limits. Use `destroy()` to immediately free up resources.
+Containers automatically sleep after 10 minutes of inactivity, but still count toward account limits. Use `destroy()` to immediately free up resources.
+
+**Important**: When using `keepAlive: true`, containers will not automatically timeout, so calling `destroy()` is **required** to prevent resource leaks.
 :::
 
 <TypeScriptExample>
@@ -128,13 +168,13 @@ Containers automatically sleep after 3 minutes of inactivity, but still count to
 async function executeCode(code: string): Promise<string> {
   const sandbox = getSandbox(env.Sandbox, `temp-${Date.now()}`);
 
-  try {
-    await sandbox.writeFile('/tmp/code.py', code);
-    const result = await sandbox.exec('python /tmp/code.py');
-    return result.stdout;
-  } finally {
-    await sandbox.destroy();
-  }
+try {
+await sandbox.writeFile('/tmp/code.py', code);
+const result = await sandbox.exec('python /tmp/code.py');
+return result.stdout;
+} finally {
+await sandbox.destroy();
+}
 }
 ```
 </TypeScriptExample>
@@ -143,13 +183,15 @@ async function executeCode(code: string): Promise<string> {
 
 The `ExecutionSession` object has all sandbox methods bound to the specific session:
 
-**Commands**: [`exec()`](/sandbox/api/commands/#exec), [`execStream()`](/sandbox/api/commands/#execstream)  
-**Processes**: [`startProcess()`](/sandbox/api/commands/#startprocess), [`listProcesses()`](/sandbox/api/commands/#listprocesses), [`killProcess()`](/sandbox/api/commands/#killprocess), [`killAllProcesses()`](/sandbox/api/commands/#killallprocesses), [`getProcessLogs()`](/sandbox/api/commands/#getprocesslogs), [`streamProcessLogs()`](/sandbox/api/commands/#streamprocesslogs)  
-**Files**: [`writeFile()`](/sandbox/api/files/#writefile), [`readFile()`](/sandbox/api/files/#readfile), [`mkdir()`](/sandbox/api/files/#mkdir), [`deleteFile()`](/sandbox/api/files/#deletefile), [`renameFile()`](/sandbox/api/files/#renamefile), [`moveFile()`](/sandbox/api/files/#movefile), [`gitCheckout()`](/sandbox/api/files/#gitcheckout)  
-**Environment**: [`setEnvVars()`](/sandbox/api/sessions/#setenvvars)  
+**Commands**: [`exec()`](/sandbox/api/commands/#exec), [`execStream()`](/sandbox/api/commands/#execstream)
+**Processes**: [`startProcess()`](/sandbox/api/commands/#startprocess), [`listProcesses()`](/sandbox/api/commands/#listprocesses), [`killProcess()`](/sandbox/api/commands/#killprocess), [`killAllProcesses()`](/sandbox/api/commands/#killallprocesses), [`getProcessLogs()`](/sandbox/api/commands/#getprocesslogs), [`streamProcessLogs()`](/sandbox/api/commands/#streamprocesslogs)
+**Files**: [`writeFile()`](/sandbox/api/files/#writefile), [`readFile()`](/sandbox/api/files/#readfile), [`mkdir()`](/sandbox/api/files/#mkdir), [`deleteFile()`](/sandbox/api/files/#deletefile), [`renameFile()`](/sandbox/api/files/#renamefile), [`moveFile()`](/sandbox/api/files/#movefile), [`gitCheckout()`](/sandbox/api/files/#gitcheckout)
+**Environment**: [`setEnvVars()`](/sandbox/api/sessions/#setenvvars)
 **Code Interpreter**: [`createCodeContext()`](/sandbox/api/interpreter/#createcodecontext), [`runCode()`](/sandbox/api/interpreter/#runcode), [`listCodeContexts()`](/sandbox/api/interpreter/#listcodecontexts), [`deleteCodeContext()`](/sandbox/api/interpreter/#deletecodecontext)
 
 ## Related resources
 
 - [Session management concept](/sandbox/concepts/sessions/) - How sessions work
 - [Commands API](/sandbox/api/commands/) - Execute commands
+```
+````
