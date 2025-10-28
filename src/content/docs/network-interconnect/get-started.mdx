@@ -55,7 +55,7 @@ The following are the maximum throughput rates supported by the CNI connection. 
 | From Customer to Cloudflare (peering use case) | Up to 10 Gbps | Up to 100 Gbps |
 | From Customer to Cloudflare (Magic Transit/WAN) | &#x2022; **v1 & v1.1**: Up to 1 Gbps per GRE tunnel over the CNI <br /> &#x2022; **v2**: Up to 1 Gbps per CNI connection | &#x2022; **v1 & v1.1**: Up to 1 Gbps per GRE tunnel over the CNI <br /> &#x2022; **v2**: Up to 1 Gbps per CNI connection  |
 
-### Service Expectations
+### Service expectations
 
 Consider the following service levels when planning your deployment:
 - **No Formal SLA**:
@@ -65,9 +65,9 @@ Consider the following service levels when planning your deployment:
 - **Availability**: While network-resilient locations are designed to maintain connectivity during maintenance, single-homed locations can experience full service disruption.
 - **Backup Connectivity**: You are required to maintain alternative Internet connectivity as a backup for all CNI implementations.
 
-## Location Alignment
+## Location alignment
 
-### Available Locations
+### Available locations
 
 Direct connections are available at any Cloudflare data center where you are also located. Make sure to check whether the location of interest has the right dataplane version and diversity requirements for your use case. Refer to [available locations](/network-interconnect/static/cni-locations-04-08-2025.pdf) (PDF) for details.
 
