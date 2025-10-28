@@ -18,7 +18,14 @@ params:
   - hcConfigsURL
   - finalInstructions
   - ipsecTunnelsRefURL
-  - staticRoutesRefURL
+  - trafficSteeringURL
+  - vlanIdURL
+  - healthCheckFrequencyURL
+  - routedSubnetsURL
+  - interruptWindowURL
+  - tunnelHealthChecksURL
+  - wanSettingsURL
+  - sitesURL
   - networkOptionsURL
   - maintenanceURL
   - referenceInformationURL
@@ -40,20 +47,20 @@ import {
 
 { props.magicWord === "virtual" && (
 	<>
-		<p>{props.productNameVirtual} is a virtual appliance alternative to the hardware based {props.productName}. These two versions of Connector are identical otherwise.</p> <p>Currently, you can set up {props.productNameVirtual} on VMWare ESXi and Proxmox Virtual Environment. Support for Proxmox is in beta.</p>
+		<p>{props.productNameVirtual} is a virtual device alternative to the hardware based {props.productName}. These two versions of {props.productName} are identical otherwise.</p> <p>Currently, you can set up {props.productNameVirtual} on VMWare ESXi and Proxmox Virtual Environment. Support for Proxmox is in beta.</p>
 	</>
 	)
 }
 
-In this page you will find instructions on how to configure {props.productName}. This guide provides a step-by-step guide for {props.productName} initial setup. You can either return here after setting up your Connector, or refer to the <a href={props.maintenanceURL}>Maintenance</a> section where you will find instructions on how to update your settings.
+In this page you will find instructions on how to configure {props.productName}. This guide provides a step-by-step guide for {props.productName} initial setup. You can either return here after setting up your {props.productName}, or refer to the <a href={props.maintenanceURL}>Maintenance</a> section where you will find instructions on how to update your settings.
 
 ## Prerequisites
 
 { props.magicWord === "hardware" && (
   <>
-		<p>You need to purchase <a href="https://www.cloudflare.com/magic-wan">{props.productOriginalName}</a> before you can purchase and use the {props.productName}. The {props.productName} can function as your primary edge device for your network, or be deployed in-line with existing network gear.</p>
+		<p>You need to purchase <a href="https://www.cloudflare.com/magic-wan">{props.productOriginalName}</a> before you can purchase and use {props.productName}. {props.productName} can function as your primary edge device for your network, or be deployed in-line with existing network gear.</p>
 
-		<p>You also need to purchase a {props.productName} before you can start configuring your settings in the Cloudflare dashboard. Contact your account representative to learn more about purchasing options for the Magic WAN Connector device.</p>
+		<p>You also need to purchase {props.productName} before you can start configuring your settings in the Cloudflare dashboard. Contact your account representative to learn more about purchasing options for {props.productName}.</p>
 
   </>
   )
@@ -63,7 +70,7 @@ In this page you will find instructions on how to configure {props.productName}.
   <>
 		<Markdown
 		text={`
-		Before you can install ${props.productNameVirtual}, you need an Enterprise account with ${props.productOriginalName}. Additionally, you need to have a VMware or Proxmox host with sufficient compute, memory, and storage to run the virtual machine with Virtual Connector. This includes:
+		Before you can install ${props.productNameVirtual}, you need an Enterprise account with ${props.productOriginalName}. Additionally, you need to have a VMware or Proxmox host with sufficient compute, memory, and storage to run the virtual machine with ${props.productNameVirtual}. This includes:
     - Intel x86 CPU architecture
     - ESXi hypervisor 7.0U1 or higher
     - 4 virtual CPUs per virtual connector (We recommend deployment with a 1:1 virtual CPU to physical core allocation to avoid CPU over contention which will cause packet loss.)
@@ -91,17 +98,17 @@ There are a couple of decisions you need to make when installing your { props.ma
 
 ### Determine the need for a high availability configuration
 
-You can install up to two { props.magicWord === "virtual" ? props.productNameVirtual : props.productName }s for redundancy at each of your sites. If one of your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName }s fails, traffic will fail over to the other { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } ensuring that you never lose connectivity to that site.
+You can install up to two instances of { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } for redundancy at each of your sites. If one of your devices fails, traffic will fail over to the other, ensuring that you never lose connectivity to that site.
 
 In this type of high availability (HA) configuration, you will choose a reliable LAN interface as the HA link which will be used to monitor the health of the peer connector. HA links can be dedicated links or can be shared with other LAN traffic.
 
-You must decide the type of configuration you want for your site from the beginning: no redundancy or with redundancy. You cannot add redundancy after finishing the configuration of your dashboard settings. If, at a later stage, you decide to enable redundancy, you will need to delete your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } on-ramp in the Cloudflare dashboard, and start again.
+You must decide the type of configuration you want for your site from the beginning: no redundancy or with redundancy. You cannot add redundancy after finishing the configuration of your dashboard settings. If, at a later stage, you decide to enable redundancy, you will need to delete your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } device in the Cloudflare dashboard, and start again.
 
 <Card title="Do you need a high availability configuration?" icon="information">
 
 - If you need a high availability configuration for your premises, refer to
   [About high availability configurations](#about-high-availability-configurations) for more information
-  and learn how to configure your Connector in this mode.
+  and learn how to configure your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } device in this mode.
 
 - If you do not need a high availability configuration for you premises, check if you need a [DHCP or a static IP setup](#decide-on-dhcp-vs-static-ip-connections) before proceeding to [Set up Cloudflare dashboard](#set-up-cloudflare-dashboard).
 
@@ -116,7 +123,7 @@ You cannot enable high availability for an existing { props.magicWord === "virtu
 
 { props.magicWord === "hardware" && (
   <>
-    <p>You can use {props.productName} in both DHCP networks and networks that require a static IP configuration. At first boot, however, {props.productName} needs to reach out to Cloudflare to download your settings and go through the activation process. If any of the networks plugged into your Connector are DHCP enabled, does not use a VLAN, and have an Internet connection, that process is handled automatically. However, if all of the networks require more information to utilize, (such as a network with static IPs, or tagged VLAN networks) your {props.productName} might need some more information to proceed.</p>
+    <p>You can use {props.productName} in both DHCP networks and networks that require a static IP configuration. At first boot, however, {props.productName} needs to reach out to Cloudflare to download your settings and go through the activation process. If any of the networks plugged into your {props.productName} device are DHCP enabled, do not use a VLAN, and have an Internet connection, that process is handled automatically. However, if all of the networks require more information to utilize, (such as a network with static IPs, or tagged VLAN networks) your {props.productName} might need some more information to proceed.</p>
 
 		<p>There are couple of ways to provide this information. Choose the one that fits your workflow: </p>
 
@@ -125,7 +132,7 @@ You cannot enable high availability for an existing { props.magicWord === "virtu
 		<Markdown
 		text={`
 		1. Connect ${props.productName} to a DHCP port with access to the Internet.
-		2. Go through the [setup flow](#set-up-cloudflare-dashboard) below and activate your Connector.
+		2. Go through the [setup flow](#set-up-cloudflare-dashboard) below and activate your ${props.productName} device.
 		3. Refer to [WAN with a static IP address](#wan-with-a-static-ip-address).
 		`}
 		inline={false}
@@ -145,7 +152,7 @@ You cannot enable high availability for an existing { props.magicWord === "virtu
 		<Markdown
 		text={`
     1. Connect the machine with your ${props.productNameVirtual} VM to a DHCP port with access to the Internet.
-		2. Go through the [setup flow](#set-up-cloudflare-dashboard) below and activate your Connector.
+		2. Go through the [setup flow](#set-up-cloudflare-dashboard) below and activate your ${props.productNameVirtual} device.
 		3. Refer to [WAN with a static IP address](#wan-with-a-static-ip-address).
 		`}
 		inline={false}
@@ -322,46 +329,67 @@ You cannot enable high availability for an existing { props.magicWord === "virtu
 			file="mconn/maintenance/register-hardware-appliance"
 			product="networking-services"
 			params={{
-				productName: "Magic WAN Connector"
+				magicWord: props.productOriginalName,
+				productName: props.productName
 				}} />
   </>
   )
 }
 
-### Add a Connector on-ramp
+{/* WAN Tunnels section */}
+{ props.productOriginalName === "WAN Tunnels" && (
+	<>
+		<AnchorHeading title="Create a new profile" depth={3} />
+		<p>You need to create a profile for your appliance before connecting it to the Internet.</p>
+		<p>To create a profile:</p>
+		<ol>
+			<li>Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a>, and go to <strong>Networks</strong>.</li>
+			<li>Go to <strong>Connectors</strong> &gt; <strong>Appliances</strong>.</li>
+			<li>Select <strong>Create a new profile</strong>.</li>
+		</ol>
+	</>
+)
+}
 
-You need to add your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } to your Cloudflare dashboard and configure its settings before connecting it to the Internet.
-
-To add a { props.magicWord === "virtual" ? props.productNameVirtual : props.productName }:
-
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to **Magic WAN** > **Connector on-ramps (beta)**.
-3. Select **Add**.
-4. In **Name**, enter a descriptive name for your Connector. Optionally, you can also add a description for it.
-5. You need to decide if you want to turn on high availability for the Connector. Refer to [About high availability configurations](#about-high-availability-configurations) for more information.
+{/* Magic WAN section */}
+{ props.productOriginalName !== "WAN Tunnels" && (
+	<>
+		<AnchorHeading title="Add a Connector on-ramp" depth={3} />
+		<p>You need to add your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } to your Cloudflare dashboard and configure its settings before connecting it to the Internet.</p>
+		<p>To add a { props.magicWord === "virtual" ? props.productNameVirtual : props.productName }:</p>
+		<ol>
+			<li>Log in to the <a href="https://dash.cloudflare.com/">Cloudflare dashboard</a> and select your account.</li>
+			<li>Go to <strong>Magic WAN</strong> &gt; <strong>Connector on-ramps (beta)</strong>.</li>
+			<li>Select <strong>Add</strong>.</li>
+		</ol>
+	</>
+)
+}
+4. In **Name**, enter a descriptive name for your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName }. Optionally, you can also add a description for it.
+5. You need to decide if you want to turn on high availability for the { props.magicWord === "virtual" ? props.productNameVirtual : props.productName }. Refer to [About high availability configurations](#about-high-availability-configurations) for more information.
 6. Select **Create and continue**.
-7. Select **Add Connector**. This will show you a list of { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } devices associated with your account. <Markdown text={props.noConnectorShows} />
-8. If you have more than one Connector, choose the one that corresponds to the on-ramp you are creating. Connectors are identified by a serial number, also known as a service tag. Use this information to choose the right Connector. Select **Select Connector** when you are ready to proceed.
-9. The Connector will be added to your account with an **Interrupt window** defined. The interrupt window is the time period when the { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } software can update, which may result in interruption to existing connections. You can change this later. Refer to [Interrupt window](/magic-wan/configuration/connector/maintenance/interrupt-service-window/) for more details on how to define when the Connector can update its systems.
+7. Select **Add { props.magicWord === "virtual" ? props.productNameVirtual : props.productName }**. This will show you a list of devices associated with your account. <Markdown text={props.noConnectorShows} />
+8. If you have more than one { props.magicWord === "virtual" ? props.productNameVirtual : props.productName }, choose the one that corresponds to the on-ramp you are creating. { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } devices are identified by a serial number, also known as a service tag. Use this information to choose the right { props.magicWord === "virtual" ? props.productNameVirtual : props.productName }. <br /> Select **Select { props.magicWord === "virtual" ? props.productNameVirtual : props.productName }** when you are ready to proceed.
+9. { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } will be added to your account with an **Interrupt window** defined. The interrupt window is the time period when the { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } software can update, which may result in interruption to existing connections. You can change this later. Refer to <a href={props.interruptWindowURL}>Interrupt window</a> for more details on how to define when the { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } can update its systems.
 10. Select **Continue** to proceed to creating your WAN and LAN networks.
 
 ### Create a WAN
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-<Render file="mconn/wan-two-tunnels" product="networking-services" params={{ productName: props.productName }} />
+<Render file="mconn/wan-two-tunnels" product="networking-services" params={{ productName: props.magicWord === "virtual" ? props.productNameVirtual : props.productName, productOriginalName: props.productOriginalName }} />
 
-1. In **WAN configuration**, select **Create**. You can create one or more [wide area networks (WANs)](https://www.cloudflare.com/learning/network-layer/what-is-a-wan/). Configuring multiple WANs will create multiple <GlossaryTooltip term="IPsec tunnel">IPsec</GlossaryTooltip> tunnels (one IPsec tunnel per WAN port). This allows { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } to load balance traffic over WANs of equal priority. It also allows Connector to failover between circuits according to their <GlossaryTooltip term="tunnel health-check" link="/magic-wan/reference/tunnel-health-checks/">health</GlossaryTooltip>. Refer to [WAN settings](/magic-wan/configuration/connector/reference/#wan-settings) for more details.
+1. In **WAN configuration**, select **Create**. You can create one or more [wide area networks (WANs)](https://www.cloudflare.com/learning/network-layer/what-is-a-wan/). Configuring multiple WANs will create multiple <GlossaryTooltip term="IPsec tunnel">IPsec</GlossaryTooltip> tunnels (one IPsec tunnel per WAN port). This allows { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } to load balance traffic over WANs of equal priority. It also allows { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } to failover between circuits according to their <GlossaryTooltip term="tunnel health-check" link={props.tunnelHealthChecksURL}>health</GlossaryTooltip>. Refer to <a href={props.wanSettingsURL}>WAN settings</a> for more details.
 		:::note
-		This is not the same as a high availability (HA) configuration. HA configurations need two Connectors to work. Refer to [About high availability configurations](#about-high-availability-configurations) for more information.
+		This is not the same as a high availability (HA) configuration. HA configurations need two { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } devices to work. Refer to [About high availability configurations](#about-high-availability-configurations) for more information.
 		:::
 2. In **Interface name**, enter a descriptive name for your WAN.
 3. **Interface number** <Markdown text={props.wan} />
-4. In **VLAN ID**, enter a number between `0` and `4094` to specify a [VLAN ID](/magic-wan/configuration/connector/reference/#vlan-id).
-5. In **Priority**, choose the priority for your WAN. Lower numbers have higher priority. Refer to <GlossaryTooltip term="traffic steering" link="/magic-wan/reference/traffic-steering/">Traffic steering</GlossaryTooltip> to learn more about how Cloudflare calculates priorities.
-6. In **Health check rate** configure the health check frequency for your site. Options are `low`, `mid`, and `high`. Refer to [Update tunnel health checks frequency](/magic-wan/configuration/common-settings/update-tunnel-health-checks-frequency/) for more information.
-7. **Addressing**: Select **DHCP**. This is needed the first time you set up your Connector to successfully download all settings to the machine and activate it. If you need a static IP address in your network environment:
-	1. Continue the set up flow below to activate your Connector.
+4. In **VLAN ID**, enter a number between `0` and `4094` to specify a <a href={props.vlanIdURL}>VLAN ID</a>.
+5. In **Priority**, choose the priority for your WAN. Lower numbers have higher priority. Refer to <a href={props.trafficSteeringURL}>Traffic steering</a> to learn more about how Cloudflare calculates priorities.
+6. In **Health check rate** configure the health check frequency for your site. Options are `low`, `mid`, and `high`. Refer to <a href={props.healthCheckFrequencyURL}>Update tunnel health checks frequency</a> for more information.
+7. **Addressing**: Select **DHCP**. This is needed the first time you set up your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } to successfully download all settings to the machine and activate it. If you need a static IP address in your network environment:
+	1. Continue the set up flow below to activate your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName }.
 	2. Refer to [WAN with a static IP address](#wan-with-a-static-ip-address). If you choose a static IP, you also need to specify the static IP and gateway addresses.
 8. Select **Save** when you are finished.
 
@@ -397,15 +425,15 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{sit
 1. In **LAN configuration**, select **Create**.
 2. Enter a descriptive name for your LAN in **Interface name**.
 3. **Interface number** <Markdown text={props.lan} />
-4. In **VLAN ID**, specify a [VLAN ID](/magic-wan/configuration/connector/reference/#vlan-id) to create virtual LANs.
-5. In **Static addressing** > **Static address** give your Connector's LAN interface its IP address. You can also enable the following options if they suit your use case:
-   - **This is a DHCP server**: If your Connector is a [DHCP server](/magic-wan/configuration/connector/network-options/dhcp/dhcp-server/).
-   - **This is a DHCP relay**: If your Connector is a [DHCP relay](/magic-wan/configuration/connector/network-options/dhcp/dhcp-relay/).
+4. In **VLAN ID**, specify a <a href={props.vlanIdURL}>VLAN ID</a> to create virtual LANs.
+5. In **Static addressing** > **Static address** give your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName }'s LAN interface its IP address. You can also enable the following options if they suit your use case:
+   - **This is a DHCP server**: If your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } is a <a href={props.dhcpServerURL}>DHCP server</a>.
+   - **This is a DHCP relay**: If your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } is a <a href={props.dhcpRelayURL}>DHCP relay</a>.
 6. (Optional) In **Directly attached subnet** > **Static NAT prefix**, enter a CIDR prefix to enable NAT (network address translation). The prefix you enter here should be the same size as the prefix entered in **Static addressing**. For example, both networks have a subnet mask of `/24`: `192.168.100.0/24` and `10.10.100.0/24`.
 7. (Optional) If your LAN contains additional subnets behind a layer 3 router, select **Add routed subnet** under **Routed subnets** to add them:
    - **Prefix**: The CIDR prefix for the subnet behind the L3 router.
-   - **Next hop**: The address of the L3 router to which the Connector should forward packets for this subnet.
-   - **Static NAT prefix**: Optional setting. If you want to enable NAT for a routed subnet, supply an "external" prefix for the overlay-facing side of the NAT to use. It must be the same size as **Prefix**. <br /> Refer to [Routed subnets](/magic-wan/configuration/connector/network-options/routed-subnets/) for more information.
+   - **Next hop**: The address of the L3 router to which the { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } should forward packets for this subnet.
+   - **Static NAT prefix**: Optional setting. If you want to enable NAT for a routed subnet, supply an "external" prefix for the overlay-facing side of the NAT to use. It must be the same size as **Prefix**. <br /> Refer to <a href={props.routedSubnetsURL}>Routed subnets</a> for more information.
 8. Select **Save**.
 9. Select **Done** to finish your configuration. Tunnels and <GlossaryTooltip term="static route">static routes</GlossaryTooltip> will be automatically created for your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName }, once it boots up.
 
@@ -440,16 +468,16 @@ After setting up your LANs, you can configure your { props.magicWord === "virtua
 
 #### DHCP options
 
-{ props.magicWord === "virtual" ? props.productNameVirtual : props.productName } supports different types of DHCP configurations. Connector can:
+{ props.magicWord === "virtual" ? props.productNameVirtual : props.productName } supports different types of DHCP configurations. { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } can:
 
 - Connect to a DHCP server or use a static IP address instead of connecting to a DHCP server.
 - Act as a <a href={props.dhcpServerURL}>DHCP server</a>.
 - Use <a href={props.dhcpRelayURL}>DHCP relay</a> to connect to a DHCP server outside the location your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } is in.
 - <a href={props.reserveIpAddressesURL}>Reserve IP addresses</a> for specific devices on your network.
 
-### Add your Connector to a site
+### Add your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } to a site
 
-After finishing your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } configuration, you need to add it to a site. <Render file="sites/sites-brief" product="networking-services" />
+After finishing your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } configuration, you need to add it to a site. <Render file="sites/sites-brief" product="networking-services" params={{ sitesURL: props.sitesURL }} />
 
 { props.magicWord === "hardware" && (
   <>
@@ -473,7 +501,7 @@ After finishing your { props.magicWord === "virtual" ? props.productNameVirtual 
     class a,c orange`}
 		</pre>
 
-		<p>In the example below, the {props.productName} sits behind the WAN router in your site, and on-ramps only some of the existing LANs to Cloudflare.</p>
+		<p>In the example below, the {props.productName} device sits behind the WAN router in your site, and on-ramps only some of the existing LANs to Cloudflare.</p>
 
 		<pre class="mermaid">
 		{`flowchart LR
@@ -494,17 +522,17 @@ After finishing your { props.magicWord === "virtual" ? props.productNameVirtual 
 		<p>Refer to <a href="/reference-architecture/diagrams/sase/magic-wan-connector-deployment/">{props.productName} deployment options</a> for a high-level explanation of the deployment options that make sense to most environments, as well as a few advanced use cases.</p>
 
 		<AnchorHeading title="Firewall settings required" depth={4} />
-		<p>If there is a firewall deployed upstream of the {props.productName}, configure the firewall to allow the following traffic:</p>
+		<p>If there is a firewall deployed upstream of {props.productName}, configure the firewall to allow the following traffic:</p>
 
 		<Markdown
 			text={`
 	| Protocol/port | Destination IP/URL | Purpose |
 	| --- | --- |--- |
 	| \`UDP/53\` | DNS destination IP \`1.1.1.1\` | Needed to allow DNS traffic to Cloudflare DNS servers. Cloudflare uses this port for DNS lookups of control plane API. |
-	| \`TCP/443\` | - | The ${props.productName} will open outbound HTTPS connections over this port for control plane operations. |
-	| \`UDP/4500\` | Destination IP \`162.159.64.1\` | Needed for ${props.productName}'s initialization and discovery traffic through outbound connections. |
+	| \`TCP/443\` | - | ${props.productName} will open outbound HTTPS connections over this port for control plane operations. |
+	| \`UDP/4500\` | Destination IP \`162.159.64.1\` | Needed for ${props.productName} initialization and discovery through outbound connections. |
 	| \`UDP/4500\` | Destination IP - Cloudflare anycast IPs | Needed for the Cloudflare anycast IPs assigned to your account for tunnel outbound connections. This traffic is tunnel traffic. |
-	| \`TCP/7844\`, \`UDP/7844\` | Outbound connections | This is for debugging facilities in the Connector. |
+	| \`TCP/7844\`, \`UDP/7844\` | Outbound connections | Used to support debugging features in ${props.productName}. |
 	| \`UDP/123\` | \`http://time.cloudflare.com/\` | Needed for ${props.productName} to periodically contact Cloudflare's Time Services. |
 	`}
 		inline={false}
@@ -514,7 +542,7 @@ After finishing your { props.magicWord === "virtual" ? props.productNameVirtual 
   )
 }
 
-## Activate Connector
+## Activate appliance
 
 {props.shippedLanguage}, and will only establish a connection to the Cloudflare network when it is activated. Cloudflare recommends leaving it deactivated until you finish [setting it up in the dashboard](#set-up-cloudflare-dashboard).
 
@@ -523,7 +551,7 @@ After finishing your { props.magicWord === "virtual" ? props.productNameVirtual 
 		<p>When {props.productName} is first activated, you need to have Internet connection. If you chose to set up your {props.productName} with DHCP you will need to have one of the {props.productName} ports connected to the Internet through a device that supports DHCP. This is required so that the {props.productName} can reach the Cloudflare global network and download the required configurations that you <a href="#set-up-cloudflare-dashboard">set up</a>.</p>
 		<p> If you set up your {props.productName} with a static IP through the bootstrap method, you do not need a DHCP port. Refer to <a href="#decide-on-dhcp-vs-static-ip-connections"> DHCP vs static IP connections</a> for more information.</p>
 
-		<Aside type="caution">Remember that if you chose the DHCP method you have to connect {props.productName} through a route that supports DHCP for its first connection to the Internet. Otherwise, the {props.productName} will not work.</Aside>
+		<Aside type="caution">Remember that if you chose the DHCP method you have to connect {props.productName} through a route that supports DHCP for its first connection to the Internet. Otherwise, {props.productName} will not work.</Aside>
   </>
   )
 }
@@ -532,7 +560,7 @@ After finishing your { props.magicWord === "virtual" ? props.productNameVirtual 
   <>
 		<p>When the {props.productNameVirtual} is first activated, one of the ports must be connected to the Internet through a device that supports DHCP. This is required so that the {props.productNameVirtual} can reach the Cloudflare global network and download the required configurations that you <a href="#set-up-cloudflare-dashboard">set up</a>.</p>
 
-		<Aside type="caution">Remember to connect {props.productNameVirtual} through a route that supports DHCP for its first connection to the Internet. Otherwise, the Connector will not work.</Aside>
+		<Aside type="caution">Remember to connect {props.productNameVirtual} through a route that supports DHCP for its first connection to the Internet. Otherwise, {props.productNameVirtual} will not work.</Aside>
 
   </>
   )
@@ -540,30 +568,49 @@ After finishing your { props.magicWord === "virtual" ? props.productNameVirtual 
 
 When you are ready to connect your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } to the Cloudflare network:
 
-1. In the Cloudflare dashboard, go to Magic WAN's **Configuration** page.
+{/* Instructions for WAN Tunnels */}
+{ props.productOriginalName === "WAN Tunnels" ? (
+	<>
+		<Markdown
+	text={`
+		1. Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a>, and go to **Networks**.
+		2. Go to **Connectors** > **Appliances**.
+		3. Find the Appliances you want to activate, select the three dots next to it > **Edit**. Make sure you verify the serial number to choose the right Appliances you want to activate.
+		4. In the new window, the **Status** dropdown will show as **Deactivated**. Select it to change the status to **Activated**.
+		5. The **Interrupt window** is the time period when the ${ props.magicWord === "virtual" ? props.productNameVirtual : props.productName } software can update, which may result in interruption to existing connections. Choose a time period to minimize disruption to your sites. Refer to <a href="${ props.interruptWindowURL }">Interrupt window</a> for more details on how to define when the Appliances can update its systems.
+		6. Select **Update**.
+	`}
+	inline={false}
+	/>
+	</>
+) : (
+	<>
+		{/* Instructions for Magic WAN */}
+		<Markdown
+	text={`
+		1. In the Cloudflare dashboard, go to Magic WAN's **Configuration** page.`}
+	inline={false}
+	/>
 
    <DashButton url="/?to=/:account/magic-wan/configuration" />
 
-2. Go to **Connectors**.
-3. Find the Connector you want to activate, select the three dots next to it > **Edit**. Make sure you verify the serial number to choose the right connector you want to activate.
-4. In the new window, the **Status** dropdown will show as **Deactivated**. Select it to change the status to **Activated**.
-5. The **Interrupt window** is the time period when the { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } software can update, which may result in interruption to existing connections. Choose a time period to minimize disruption to your sites. Refer to [Interrupt window](/magic-wan/configuration/connector/maintenance/interrupt-service-window/) for more details on how to define when the Connector can update its systems.
-6. Select **Update**.
+		<Markdown
+	text={`
+		2. Go to **Connectors**.
+		3. Find the ${ props.magicWord === "virtual" ? props.productNameVirtual : props.productName } you want to activate, select the three dots next to it > **Edit**. Make sure you verify the serial number to choose the right ${ props.magicWord === "virtual" ? props.productNameVirtual : props.productName } you want to activate.
+		4. In the new window, the **Status** dropdown will show as **Deactivated**. Select it to change the status to **Activated**.
+		5. The **Interrupt window** is the time period when the ${ props.magicWord === "virtual" ? props.productNameVirtual : props.productName } software can update, which may result in interruption to existing connections. Choose a time period to minimize disruption to your sites. Refer to <a href="${ props.interruptWindowURL }">Interrupt window</a> for more details on how to define when the ${ props.magicWord === "virtual" ? props.productNameVirtual : props.productName } can update its systems.
+		6. Select **Update**.
+	`}
+	inline={false}
+	/>
+	</>
+)
+}
 
 { props.magicWord === "virtual" && (
   <>
 		<AnchorHeading title="Boot your Virtual Connector" depth={2} />
-
-		<Markdown
-		text={`
-		1. Boot up Virtual Connector's VM in your virtual machine.
-		2. The Virtual Connector will make a request to Cloudflare. This is the step where Virtual Connector registers your provided license key and downloads the [configuration you provided](#set-up-cloudflare-dashboard).
-		3. The Virtual Connector will set up the LAN and WAN connections according to the configuration downloaded from the site you created on the Cloudflare dashboard. The Virtual Connector will also establish IPsec tunnels.
-		4. If successful, the [tunnel health checks](/magic-wan/configuration/common-settings/check-tunnel-health-dashboard/) will show as healthy.
-		5. If you do not see a [healthy heartbeat](/magic-wan/configuration/connector/maintenance/heartbeat/) on the Cloudflare dashboard, reboot the Virtual Connector's VM in VMware.
-		`}
-		inline={false}
-		/>
 
 		<AnchorHeading title="Default password to access Virtual Connector" depth={2} />
 
@@ -585,16 +632,16 @@ When you are ready to connect your { props.magicWord === "virtual" ? props.produ
 
 { props.magicWord === "hardware" && (
   <>
-    <p>After activating your {props.productName}, you can use it in a network configuration with the WAN interface set to a static IP address — that is, an Internet configuration that is not automatically set by DHCP. To use your Connector on a network configuration with a static IP, follow the steps below.</p>
+    <p>After activating your device, you can use it in a network configuration with the WAN interface set to a static IP address — that is, an Internet configuration that is not automatically set by DHCP. To use your {props.productName} on a network configuration with a static IP, follow the steps below.</p>
 
 		<Aside type="caution">Make sure you complete the setup workflow and activate your {props.productName} before changing the WAN settings to a static IP.</Aside>
 
 		<Markdown
 		text={`
 		1. Connect ${props.productName} to a DHCP port with access to the Internet.
-		2. [Add a Connector on-ramp](#add-a-connector-on-ramp) in the Cloudflare dashboard.
+		2. ${props.productOriginalName === "WAN Tunnels" ? "[Create a new profile](#create-a-new-profile)" : "[Add a Connector on-ramp](#add-a-connector-on-ramp)"} in the Cloudflare dashboard.
 		3. Create a [DHCP WAN](#create-a-wan).
-		4. [Activate](#activate-connector) and power on your ${props.productName}.
+		4. [Activate](#activate-appliance) and power on your ${props.productName}.
 		5. Wait 60 seconds.
 		6. Make changes to the [WAN settings](#create-a-wan) in the Cloudflare dashboard to a static IP set up.
 		7. Wait 60 seconds again.
@@ -610,20 +657,20 @@ When you are ready to connect your { props.magicWord === "virtual" ? props.produ
 
 { props.magicWord === "virtual" && (
   <>
-		<p>After activating your {props.productNameVirtual}, you can use it in a network configuration with the WAN interface set to a static IP address - that is, an Internet configuration that is not automatically set by DHCP. To use your {props.productNameVirtual} on a network configuration with a static IP, follow the steps below.</p>
+		<p>After activating your device, you can use it in a network configuration with the WAN interface set to a static IP address - that is, an Internet configuration that is not automatically set by DHCP. To use your {props.productNameVirtual} on a network configuration with a static IP, follow the steps below.</p>
 
 		<Aside type="caution">Make sure you complete the setup workflow and activate your {props.productNameVirtual} before changing the WAN settings to a static IP.</Aside>
 
 		<Markdown
 		text={`
 		1. Connect the machine where you installed the VM with ${props.productNameVirtual} to a DHCP port with access to the Internet.
-		2. [Add a Connector on-ramp](#add-a-connector-on-ramp) in the Cloudflare dashboard.
+		2. ${props.productOriginalName === "WAN Tunnels" ? "[Create a new profile](#create-a-new-profile)" : "[Add a Connector on-ramp](#add-a-connector-on-ramp)"} in the Cloudflare dashboard.
 		3. Create a [DHCP WAN](#create-a-wan).
-		4. [Activate](#activate-connector) and boot your ${props.productNameVirtual}.
+		4. [Activate](#activate-appliance) and boot your ${props.productNameVirtual}.
 		5. Wait 60 seconds.
 		6. Make changes to the [WAN settings](#create-a-wan) in the Cloudflare dashboard to a static IP set up.
 		7. Wait 60 seconds again.
-		8. Modify your [Port Groups](#deploy-the-virtual-connector-on-vmware) as needed to change the source from which the WAN port obtains its IP address.
+		8. Modify your [Port Groups](#configure-a-virtual-machine) as needed to change the source from which the WAN port obtains its IP address.
 		9. Reboot your virtual machine.
 		`}
 		inline={false}
@@ -635,7 +682,7 @@ When you are ready to connect your { props.magicWord === "virtual" ? props.produ
 { props.magicWord === "hardware" && (
   <>
 		<AnchorHeading title="Bootstrap via Serial Console" depth={2} />
-		<p>Advanced users can locally configure their {props.productName} to work in a static IP configuration. This local method does not require having access to a DHCP Internet connection. However, it does require being comfortable with using tools to access the serial port on {props.productName} as well as using a serial terminal client to access the {props.productName}'s environment.</p>
+		<p>Advanced users can locally configure their {props.productName} to work in a static IP configuration. This local method does not require having access to a DHCP Internet connection. However, it does require being comfortable with using tools to access the serial port on {props.productName} as well as using a serial terminal client to access the environment in your {props.productName}.</p>
 		<p>Below is a detailed description of how to use the serial port to configure your {props.productName} locally.</p>
 
 		<Aside type="note">The <code>reset device</code> option in your {props.productName} clears most of the configuration that is locally cached, resets the password to the default, and reboots.</Aside>
@@ -646,9 +693,9 @@ When you are ready to connect your { props.magicWord === "virtual" ? props.produ
 		text={`
 		To access the serial port on ${props.productName} you will need the following equipment:
 
-		- The ${props.productName} appliance
+		- The ${props.productName} device
 		- A Phillips-head screwdriver
-		- A micro-USB to USB-A cable (there should be one included in the packaging of your ${props.productName})
+		- A micro-USB to USB-A cable (there should be one included in the packaging of your ${props.productName} device)
 		- A computer with an available USB port
 		- A serial terminal client
 		- Optional: if needed, a USB-A to USB-C converter dongle if your computer requires it
@@ -663,16 +710,16 @@ When you are ready to connect your { props.magicWord === "virtual" ? props.produ
 		text={`
 		1. Using the Phillips screwdriver, loosen the screw covering the serial console panel on the back of the ${props.productName} and turn the panel out of the way.
 			- Pictures and more instructions can be found on [Dell's Technical Documents](https://www.dell.com/support/kbdoc/en-us/000134440/how-to-access-console-port-of-dell-emc-networking-virtual-edge-platform-1405-series).
-		2. Connect your computer to the Magic WAN Connector using the USB cable.
+		2. Connect your computer to your ${props.productName} device using the USB cable.
 		`}
 		inline={false}
 		/>
 
 		<AnchorHeading title="Default password" depth={4} />
-		<p>Your {props.productName}'s default password is the serial number (also known as a Service Tag for Dell devices), all uppercase followed by an <code>!</code> (for example, <code>A1B2C3D!</code>)</p>
+		<p>The default password for your {props.productName} device is the serial number (also known as a Service Tag for Dell devices), all uppercase followed by an <code>!</code> (for example, <code>A1B2C3D!</code>)</p>
 
 		<AnchorHeading title="2. Install a serial terminal client" depth={3} />
-		<p>To access ${props.productName}'s environment you need a serial terminal client. Follow the instructions below to install one, based on your operating system.</p>
+		<p>To access the {props.productName} device environment you need a serial terminal client. Follow the instructions below to install one, based on your operating system.</p>
 
 		<AnchorHeading title="Windows" depth={4} />
 
@@ -729,7 +776,7 @@ When you are ready to connect your { props.magicWord === "virtual" ? props.produ
 
 		<Markdown
 		text={`
-		1. Log into the ${props.productName}. You will be prompted to change your password if you attempt to log in with the default password.
+		1. Log into your ${props.productName} device. You will be prompted to change your password if you attempt to log in with the default password.
 		2. From the menu, go to **Bootstrap** with the arrow keys and select it with the Enter key.
 		3. Select the jack (physical port) you want to configure for the initialization of the connector.
 		4. Enter the VLAN tag (if applicable) of the network. Leave it blank if untagged.
@@ -738,14 +785,14 @@ When you are ready to connect your { props.magicWord === "virtual" ? props.produ
 		inline={false}
 		/>
 
-		<Aside>The main reason to use the bootstrapper is if every network the {props.productName} is plugged into is either static, behind a VLAN, or both. If you find yourself here and configuring a network with DHCP and no VLAN, you are probably not in the right place. See the section on configuring your {props.productName} <a href="#set-up-cloudflare-dashboard">via the dashboard</a>.</Aside>
+		<Aside>The main reason to use the bootstrapper is if every network your {props.productName} device is plugged into is either static, behind a VLAN, or both. If you find yourself here and configuring a network with DHCP and no VLAN, you are probably not in the right place. See the section on configuring your {props.productName} <a href="#set-up-cloudflare-dashboard">via the dashboard</a>.</Aside>
 
 		<Markdown
 		text={`
 		6. Enter the IP address you would like the connector to have in CIDR form (for example, <code>10.0.0.2/24</code>).
 		7. Enter the IP address of the Internet gateway (this must be in the same subnet as the previous IP address you entered and must not be the same address).
 		8. Select **Save** and confirm that you want to use the new settings.
-		9. The ${props.productName} will download the rest of the settings from Cloudflare. The last heartbeat of the Connector should update once it has made contact with Cloudflare.
+		9. The ${props.productName} will download the rest of the settings from Cloudflare. The last heartbeat of the ${props.productName} should update once it has made contact with Cloudflare.
 		`}
 		inline={false}
 		/>
@@ -757,17 +804,17 @@ When you are ready to connect your { props.magicWord === "virtual" ? props.produ
 
 ## About high availability configurations
 
-{props.hardSoftConn} When you set up a site in high availability, the WANs and LANs in your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } have the same configuration but are replicated on two nodes. In case of failure of a { props.magicWord === "virtual" ? props.productNameVirtual : props.productName }, the other { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } becomes the active node, taking over configuration of the LAN gateway IP and allowing traffic to continue without disruption.
+{props.hardSoftConn} When you set up a site in high availability, the WANs and LANs in your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } have the same configuration but are replicated on two nodes. In case of failure of one of the devices, the other device becomes the active node, taking over the configuration of the LAN gateway IP and allowing traffic to continue without disruption.
 
 Because { props.magicWord === "virtual" ? props.productNameVirtual : props.productName }s in high availability configurations share a single site, you need to set up:
 
 - **Static address**: The IP for the primary node in your site.
 - **Secondary static address**: The IP for the secondary node in your site.
-- **Virtual static address**: The IP that the LAN south of the { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } will forward traffic to, which is the LAN's gateway IP.
+- **Virtual static address**: The IP that the LAN south of the { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } device will forward traffic to, which is the LAN's gateway IP.
 
 Make sure all IPs are part of the same subnet.
 
-For detailed information about the expected behavior of high availability configurations, refer to <a href={props.hcConfigsURL}>High availability configurations</a>.
+For detailed information about the expected behavior of high availability configurations, refer to the <a href={props.hcConfigsURL}>High availability configurations</a> reference page.
 
 ### Create a high availability configuration
 
@@ -775,18 +822,23 @@ You cannot enable high availability for an existing site. To add high availabili
 
 To set up a high availability configuration:
 
-1. Follow the steps in [Add a Connector on-ramp](#add-a-connector-on-ramp) up until step 4.
+<Markdown
+text={`
+1. Follow the steps in ${props.productOriginalName === "WAN Tunnels" ? "[Create a new profile](#create-a-new-profile)" : "[Add a Connector on-ramp](#add-a-connector-on-ramp)"} up until step 4.
+`}
+inline={false}
+/>
 2. After naming your site, select **Turn on high availability**.
 3. Select **Create and continue**.
-4. Select **Add Connector**.
-5. From the list, choose your first Connector > **Add Connector**.
-6. Back on the previous screen, select **Add secondary Connector**.
-7. From the list, choose your second Connector > **Add Connector**.
-8. Select **Continue** to [Create a WAN](#create-a-wan). If you are configuring a static IP, configure the IP for the primary node as the static address, and the IP for the secondary node as the secondary static address.
+4. Select **Add { props.magicWord === "virtual" ? props.productNameVirtual : props.productName }**.
+5. From the list, choose your first { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } > **Add { props.magicWord === "virtual" ? props.productNameVirtual : props.productName }**.
+6. Back on the previous screen, select **Add secondary { props.magicWord === "virtual" ? props.productNameVirtual : props.productName }**.
+7. From the list, choose your second { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } > **Add { props.magicWord === "virtual" ? props.productNameVirtual : props.productName }**.
+8. Select **Continue** to create a WAN. If you are configuring a static IP, configure the IP for the primary node as the static address, and the IP for the secondary node as the secondary static address.
 9. To create a LAN, follow the steps mentioned above in [Create a LAN](#create-a-lan) up until step 4.
 10. In **Static address**, enter the IP for the primary node in your site. For example, `192.168.10.1/24`.
 11. In **Secondary static address**, enter the IP for the secondary node in your site. For example, `192.168.10.2/24`.
-12. In **Virtual static address**, enter the IP that the LAN south of the Connector will forward traffic to. For example, `192.168.10.3/24`.
+12. In **Virtual static address**, enter the IP that the LAN south of the { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } device will forward traffic to. For example, `192.168.10.3/24`.
 13. Select **Save**.
 14. From the **High availability probing link** drop-down menu, select the port that should be used to monitor the node's health. Cloudflare recommends you choose a reliable interface as the HA probing link. The primary and secondary node's probing link should be connected over a switch, and cannot be a direct connection.
 15. <Markdown text={props.finalInstructions} />
@@ -795,17 +847,39 @@ To set up a high availability configuration:
 
 ## IPsec tunnels and static routes
 
-{ props.magicWord === "virtual" ? props.productNameVirtual : props.productName } automatically creates <a href={props.ipsecTunnelsRefURL}>IPsec tunnels</a> and <a href={props.staticRoutesRefURL}>static routes</a> for you. You cannot configure these manually.
+{ props.magicWord === "virtual" ? props.productNameVirtual : props.productName } automatically creates <a href={props.ipsecTunnelsRefURL}>IPsec tunnels</a> and <a href={props.trafficSteeringURL}>static routes</a> for you. You cannot configure these manually.
 
 To check the IPsec tunnels and static routes created by your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName }:
 
-1. In the Cloudflare dashboard, go to the **Sites** page.
+{ props.productOriginalName === "WAN Tunnels" ? (
+	<>
+		<Markdown
+	text={`
+		1. Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a>, and go to **Insights** > **Network visibility**.
+	`}
+	inline={false}
+	/>
+	</>
+) : (
+	<>
+		<Markdown
+	text={`
+		1. In the Cloudflare dashboard, go to the **Sites** page.`}
+	inline={false}
+	/>
 
    <DashButton url="/?to=/:account/magic-wan/sites" />
 
-2. Select the name of the site for which you want to check the Connector's IPsec tunnels and static routes, and select **Edit**.
-
+	</>
+)
+}
+<Markdown
+text={`
+2. Select the name of the site for which you want to check the ${ props.magicWord === "virtual" ? props.productNameVirtual : props.productName }'s IPsec tunnels and static routes, and select **Edit**.
 3. Select **Tunnels** to check IPsec tunnels, and **Routes** for the static routes.
+`}
+inline={false}
+/>
 
 ---
 

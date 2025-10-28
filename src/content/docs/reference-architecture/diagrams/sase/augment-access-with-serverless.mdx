@@ -45,7 +45,7 @@ This document outlines how to combine both solutions to enhance Cloudflare Acces
 ## Use-cases
 
 - **Custom authorization logic**: Access External evaluation using Workers as a backend (for example, using your own implementation of [Open Policy Agent aka OPA](https://www.openpolicyagent.org/integrations/cloudflare-worker/)])
-- **Augmented [JSON Web Token (JWT)](/cloudflare-one/identity/authorization-cookie/validating-json/)**: Using Cloudflare's own authentication JWT material, for example, adding posture details as part of an incoming request.
+- **Augmented [JSON Web Token (JWT)](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/validating-json/)**: Using Cloudflare's own authentication JWT material, for example, adding posture details as part of an incoming request.
 - **Serverless augmented apps protected with Zero-trust**: Allowing anyone building serverless applications to benefit from native ZTNA features
 
 ![Figure 1: Showing a request to a private resource and where  Access can be customized for AuthZ and AuthN](~/assets/images/reference-architecture/augment-access-with-serverless/diagram1.svg "Figure 1: Showing a request to a private resource and where  Access can be customized for AuthZ and AuthN")
@@ -68,7 +68,7 @@ The code typically makes calls to either a [database](/d1/) or another API to ev
 
 ### 2. Analyze and validate the authentication material (JWT)
 
-When a user successfully authenticates and is authorized to access a protected application, Cloudflare inserts a [JSON Web Token (JWT)](/cloudflare-one/identity/authorization-cookie/validating-json/) into the HTTP traffic sent to the origin. This token serves as a valuable asset for expanding custom business logic through secure processing. The format for that JWT is deterministic and rather lightweight to avoid overloading the requests towards origin unnecessarily.
+When a user successfully authenticates and is authorized to access a protected application, Cloudflare inserts a [JSON Web Token (JWT)](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/validating-json/) into the HTTP traffic sent to the origin. This token serves as a valuable asset for expanding custom business logic through secure processing. The format for that JWT is deterministic and rather lightweight to avoid overloading the requests towards origin unnecessarily.
 
 Here is an example of a JWT sent to an origin (use [JWT.io](http://jwt.io) to read the contents of a JWT)
 
@@ -88,14 +88,14 @@ Here is an example of a JWT sent to an origin (use [JWT.io](http://jwt.io) to re
 }
 ```
 
-Cloudflare exposes a specific [endpoint](/cloudflare-one/identity/authorization-cookie/validating-json/#_top) to allow anyone to validate and expand a Cloudflare signed JWT.
+Cloudflare exposes a specific [endpoint](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/validating-json/#_top) to allow anyone to validate and expand a Cloudflare signed JWT.
 
 Cloudflare's Workers are a great candidate for interacting with incoming JSON Web Tokens (JWTs), enabling additional processing directly within the serverless platform without introducing any added latency.
 
 <LinkCard
 	title="Learn more"
 	description="How to validate and visualize Cloudflare Access JWTs"
-	href="/cloudflare-one/identity/authorization-cookie/application-token/#user-identity"
+	href="/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/application-token/#user-identity"
 />
 
 ### 3. Augment the authentication material (JWT) with extra authentication details

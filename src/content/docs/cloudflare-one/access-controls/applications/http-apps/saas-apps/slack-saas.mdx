@@ -8,16 +8,16 @@ sidebar:
 
 import { TabItem, Tabs } from "~/components";
 
-This guide covers how to configure [Slack](https://slack.com/help/articles/203772216-SAML-single-sign-on) as a SAML application in Cloudflare Zero Trust.
+This guide covers how to configure [Slack](https://slack.com/help/articles/203772216-SAML-single-sign-on) as a SAML application in Cloudflare One.
 
 ## Prerequisites
 
-- An [identity provider](/cloudflare-one/integrations/identity-providers/) configured in Cloudflare Zero Trust
+- An [identity provider](/cloudflare-one/integrations/identity-providers/) configured in Cloudflare One
 - Admin access to a Slack Business+ or Enterprise Grid plan account
 
-## 1. Add a SaaS application to Cloudflare Zero Trust
+## 1. Add a SaaS application to Cloudflare One
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Access controls** > **Applications**.
 2. Select **Add an application** > **SaaS**.
 3. For **Application**, select _Slack_.
 4. For the authentication protocol, select **SAML**.
@@ -44,8 +44,8 @@ This guide covers how to configure [Slack](https://slack.com/help/articles/20377
 3. Turn on **Test**. Configuration changes will not apply until **Configure** is turned on.
 4. Fill in the following fields:
    - **Service Provider Issuer URL**: Ensure set to `https://slack.com`.
-   - **SAML SSO URL**: SSO endpoint from application configuration in Cloudflare Zero Trust.
-   - **Identity Provider Issuer**: Access Entity ID or Issuer from application configuration in Cloudflare Zero Trust.
+   - **SAML SSO URL**: SSO endpoint from application configuration in Cloudflare One.
+   - **Identity Provider Issuer**: Access Entity ID or Issuer from application configuration in Cloudflare One.
    - **Public Certificate**: Paste the entire x.509 certificate from step [2. Create a x.509 certificate](#2-create-a-x509-certificate).
 5. Under **Advanced Options**, select **Expand**.
 6. For **AuthnContextClassRef**, ensure _urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport_ is selected.
@@ -62,8 +62,8 @@ This guide covers how to configure [Slack](https://slack.com/help/articles/20377
 1. In Slack, go to **Settings & administration** > **Organization settings** > **Security** > **SSO Settings**.
 2. For **SSO name**, enter your desired name.
 3. Fill in the following fields:
-   - **SAML 2.0 Endpoint URL**: SSO endpoint from application configuration in Cloudflare Zero Trust.
-   - **Identity Provider Issuer URL**: Access Entity ID or Issuer from application configuration in Cloudflare Zero Trust.
+   - **SAML 2.0 Endpoint URL**: SSO endpoint from application configuration in Cloudflare One.
+   - **Identity Provider Issuer URL**: Access Entity ID or Issuer from application configuration in Cloudflare One.
    - **Service Provider Issuer URL**: Ensure set to `https://slack.com`.
    - **x.509 Certificate**: Paste the entire x.509 certificate from step [2. Create a x.509 certificate](#2-create-a-x509-certificate).
 4. For **AuthnContextClassRef**, ensure _urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport_ is selected.

@@ -1,0 +1,43 @@
+---
+pcx_content_type: how-to
+title: Configure Virtual Appliances
+description: Learn how to configure WAN Tunnels Virtual Appliances on VMWare ESXi or Proxmox Virtual Environment
+sidebar:
+  order: 4
+---
+
+import { Render } from "~/components";
+
+<Render file="mconn/configure-connectors"
+	product="networking-services"
+	params={{
+	magicWord: "virtual",
+	productName: "Appliances",
+	productNameVirtual: "Virtual Appliance",
+	maintenanceURL: "/cloudflare-one/networks/connectors/wan-tunnels/configuration/appliances/maintenance/",
+	productOriginalName: "WAN Tunnels",
+	wan: "needs to correspond to the virtual network interface on the Virtual Appliances instance you have set up in VMware. Following our example from the previous steps, you need to choose port `1` since that is what corresponds to the `eno1` port we set up in VMware.",
+	lan: "needs to correspond to the virtual LAN interface on the Virtual Appliances instance you have set up in VMware. Following our example from the previous steps, you need to choose port `2` since that is what corresponds to the `eno2` port we set up in VMware.",
+	noConnectorShows: "For a Virtual Appliance to show up you need to: <br /><ul><li><strong>VMWare:</strong> Have already obtained your OVA package and license keys if you are installing on VMWare.</li><li><strong>Proxmox:</strong> Have already obtained your Virtual Appliance Script and license keys if you are installing on Proxmox.</li></ul>\nFor more information, refer to [Configure a virtual machine](#configure-a-virtual-machine) and select the appropriate tab.\n",
+	networkSegmentationURL: "/cloudflare-one/networks/connectors/wan-tunnels/configuration/appliances/network-options/network-segmentation/",
+	dhcpServerURL: "/cloudflare-one/networks/connectors/wan-tunnels/configuration/appliances/network-options/dhcp/dhcp-server/",
+  dhcpRelayURL: "/cloudflare-one/networks/connectors/wan-tunnels/configuration/appliances/network-options/dhcp/dhcp-relay/",
+  reserveIpAddressesURL: "/cloudflare-one/networks/connectors/wan-tunnels/configuration/appliances/network-options/dhcp/dhcp-static-address-reservation/",
+	shippedLanguage: "Virtual Appliance is deactivated after you install it",
+	hardSoftConn: "You need to install two Virtual Appliances before you can set up a site in high availability.",
+	hcConfigsURL: "/cloudflare-one/networks/connectors/wan-tunnels/configuration/appliances/reference/#high-availability-configurations",
+	finalInstructions:  "Follow the instructions in [Activate appliance](#activate-appliance) to finish setting up your Appliances.",
+	ipsecTunnelsRefURL: "/cloudflare-one/networks/connectors/wan-tunnels/reference/gre-ipsec-tunnels/#ipsec-tunnels",
+	trafficSteeringURL: "/cloudflare-one/networks/connectors/wan-tunnels/reference/traffic-steering/",
+	vlanIdURL: "/cloudflare-one/networks/connectors/wan-tunnels/configuration/appliances/reference/#vlan-id",
+	healthCheckFrequencyURL: "/cloudflare-one/networks/connectors/wan-tunnels/configuration/common-settings/update-tunnel-health-checks-frequency/",
+	routedSubnetsURL: "/cloudflare-one/networks/connectors/wan-tunnels/configuration/appliances/network-options/routed-subnets/",
+	interruptWindowURL: "/cloudflare-one/networks/connectors/wan-tunnels/configuration/appliances/maintenance/interrupt-service-window/",
+	tunnelHealthChecksURL: "/cloudflare-one/networks/connectors/wan-tunnels/reference/tunnel-health-checks/",
+	wanSettingsURL: "/cloudflare-one/networks/connectors/wan-tunnels/configuration/appliances/reference/#wan-settings",
+	sitesURL: "/cloudflare-one/networks/connectors/wan-tunnels/configuration/common-settings/sites/",
+	networkOptionsURL: "/cloudflare-one/networks/connectors/wan-tunnels/configuration/appliances/network-options/",
+  maintenanceURL: "/cloudflare-one/networks/connectors/wan-tunnels/configuration/appliances/maintenance/",
+  referenceInformationURL: "/cloudflare-one/networks/connectors/wan-tunnels/configuration/appliances/reference/",
+  troubleshootingURL: "/cloudflare-one/networks/connectors/wan-tunnels/configuration/appliances/troubleshooting/"
+	}} />

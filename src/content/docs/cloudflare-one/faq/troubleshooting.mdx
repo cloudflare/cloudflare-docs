@@ -27,7 +27,7 @@ If you believe a domain has been incorrectly blocked, you can use [this form](ht
 
 ## I see an error saying `No Access-Control-Allow-Origin header is present on the requested resource`.
 
-Cloudflare Access requires that the credentials: `same-origin parameter` be added to JavaScript when using the Fetch API (to include cookies). AJAX requests fail without this parameter present. For more information, refer to our documentation about [CORS settings](/cloudflare-one/identity/authorization-cookie/cors/).
+Cloudflare Access requires that the credentials: `same-origin parameter` be added to JavaScript when using the Fetch API (to include cookies). AJAX requests fail without this parameter present. For more information, refer to our documentation about [CORS settings](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/cors/).
 
 ## I see untrusted certificate warnings for every page and I am unable to browse the Internet.
 
@@ -371,7 +371,7 @@ Get-ChildItem -Path "HKLM:\SOFTWARE\Microsoft\NET Framework Setup\NDP" -Recurse 
 
 ## I get an `Invalid session. Please try logging in again.` error from Access when trying to log in to the Cloudflare dashboard via SSO.
 
-Cloudflare Access uses a [`CF_Session` cookie](/cloudflare-one/identity/authorization-cookie/#access-cookies) to validate that the same browser both initiated and completed your sign-in. The `Invalid session` error means Access was unable to validate this cookie. Ensure that there is no software or firewall on your device or network that may be interfering with requests to Access.
+Cloudflare Access uses a [`CF_Session` cookie](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/#access-cookies) to validate that the same browser both initiated and completed your sign-in. The `Invalid session` error means Access was unable to validate this cookie. Ensure that there is no software or firewall on your device or network that may be interfering with requests to Access.
 
 ## Long-lived SSH sessions frequently disconnect.
 

@@ -1,9 +1,33 @@
 ---
-{}
+params:
+  - productName
+  - wanName
 ---
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to **Magic WAN** > **Connector on-ramps (beta)**.
+import { Markdown } from "~/components";
+
+{ props.wanName === "WAN Tunnels" ? (
+	<>
+		<Markdown
+	text={`
+		1. Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a>, and go to **Networks**.
+		2. Go to **Connectors** > **Appliances**.
+	`}
+	inline={false}
+	/>
+	</>
+) : (
+	<>
+		<Markdown
+	text={`
+		1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+		2. Go to **Magic WAN** > **Connector on-ramps (beta)**.
+	`}
+	inline={false}
+	/>
+	</>
+)
+}
 3. Find the on-ramp that you want to edit > select the three dots next to it > **Edit**.
 4. Go to **Network configuration** > **WAN configuration** or **LAN configuration**.
 5. Find the WAN/LAN you want to edit > select the three dots next to it > **Edit**.

@@ -12,9 +12,9 @@ params:
   - warpIngressIpURL
   - mwanConnectorName
   - domainFallbackURL
+  - cloudflareTunnelURL
+  - tracerouteURL
 ---
-
-import { Markdown } from "~/components";
 
 :::note
 By default, direct WARP-to-WARP connections are not supported for devices located behind {props.productName} with WARP enabled. This is due to issues caused by double encapsulation and asymmetric routing.
@@ -44,7 +44,7 @@ When connecting a WARP device to {props.productName}, you will have virtual IP a
 
 Route packets back to WARP devices from services behind an anycast GRE or other type tunnel. You need to do this before actually installing WARP. Otherwise, your infrastructure will not route packets correctly to Cloudflare global network and connectivity will fail.
 
-Cloudflare will assign IP addresses from the WARP virtual IP (VIP) space to your WARP devices. To view your virtual IP address, open the [Cloudflare Zero Trust dashboard](https://one.dash.cloudflare.com/), and select <Markdown text={props.ztDashPath} />.
+Cloudflare will assign IP addresses from the WARP virtual IP (VIP) space to your WARP devices. To view your virtual IP address, go to [Cloudflare One](https://one.dash.cloudflare.com/), and select **{props.ztDashPath}**.
 
 All packets with a destination IP in the VIP space need to be routed back through the tunnel. For example, with a single GRE tunnel named `gre1`, in Linux, the following command would add a routing rule that would route such packets:
 
@@ -75,11 +75,11 @@ You must log out and log back in with at least one WARP device to ensure the con
 	file="traceroute"
 	product="networking-services"
 	params={{
-		productName: "Magic WAN",
-		greIpsecURL: "/magic-wan/configuration/manually/how-to/configure-tunnel-endpoints/",
-		warpURL: "/cloudflare-one/team-and-resources/devices/warp/",
-		cloudflareTunnelURL: "/cloudflare-one/networks/connectors/cloudflare-tunnel/",
-		tracerouteURL: "/magic-wan/configuration/manually/how-to/traceroute/"
+		productName: props.productName,
+		greIpsecURL: props.greIpsecURL,
+		warpURL: props.warpURL,
+		cloudflareTunnelURL: props.cloudflareTunnelURL,
+		tracerouteURL: props.tracerouteURL
 		}}
 	/>
 

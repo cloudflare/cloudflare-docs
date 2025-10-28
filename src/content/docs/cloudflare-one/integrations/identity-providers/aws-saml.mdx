@@ -25,9 +25,9 @@ To set up SAML with AWS IAM as your identity provider:
 
 6. Select **Next**.
 
-7. Enter a **Display name** for the application (for example, `Cloudflare Zero Trust`).
+7. Enter a **Display name** for the application (for example, `Cloudflare One`).
 
-8. Download the **IAM Identity Center SAML metadata file**. You will need this file later when configuring the identity provider in Zero Trust.
+8. Download the **IAM Identity Center SAML metadata file**. You will need this file later when configuring the identity provider in Cloudflare One.
 
 9. Under **Application metadata**, select **Manually type your metadata values**.
 
@@ -37,7 +37,7 @@ To set up SAML with AWS IAM as your identity provider:
 https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
 ```
 
-You can find your team name in Zero Trust under **Settings** > **Custom Pages**.
+You can find your team name in [Cloudflare One](https://one.dash.cloudflare.com) under **Settings** > **Team name**.
 
 11. Select **Submit**.
 
@@ -57,11 +57,11 @@ You can find your team name in Zero Trust under **Settings** > **Custom Pages**.
 
 15. Select **Save changes**.
 
-16. Under **Assign users and groups**, add individuals and/or groups that should be allowed to login to Zero Trust.
+16. Under **Assign users and groups**, add individuals and/or groups that should be allowed to login to Cloudflare One.
 
-17. In [Zero Trust](https://one.dash.cloudflare.com), go to **Settings** > **Authentication**.
+17. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Integrations** > **Identity providers**.
 
-18. Under **Login Methods**, select **Add new**.
+18. Under **Your identity providers**, select **Add new identity provider**.
 
 19. Select **SAML**.
 
@@ -73,7 +73,7 @@ You can find your team name in Zero Trust under **Settings** > **Custom Pages**.
 
 23. Select **Save**.
 
-To [test](/cloudflare-one/integrations/identity-providers/#test-idps-in-zero-trust) that your connection is working, select **Test**.
+To [test](/cloudflare-one/integrations/identity-providers/#test-idps-in-cloudflare-one) that your connection is working, select **Test**.
 
 ## Example API configuration
 

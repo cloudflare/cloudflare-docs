@@ -9,14 +9,14 @@ import { Badge, Render } from "~/components";
 
 Gateway supports the detection, logging, and filtering of network protocols using packet attributes.
 
-Protocol detection only applies to devices connected to Zero Trust via the WARP client in [Gateway with WARP](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#gateway-with-warp-default) mode.
+Protocol detection only applies to devices connected to Cloudflare One via the WARP client in [Gateway with WARP](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-modes/#gateway-with-warp-default) mode.
 
 ## Turn on protocol detection
 
 To turn on protocol detection:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Network** > **Firewall**.
-2. Turn on **Protocol Detection**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Traffic policies** > **Traffic settings** > **Proxy and inspection settings**.
+2. Turn on **Allow protocol detection**.
 
 You can now use _Detected Protocol_ as a selector in a [Network policy](/cloudflare-one/traffic-policies/network-policies/#detected-protocol).
 

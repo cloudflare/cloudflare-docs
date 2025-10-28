@@ -1,0 +1,34 @@
+---
+title: Configure tunnel endpoints
+pcx_content_type: how-to
+sidebar:
+  order: 1
+head: []
+description: Cloudflare recommends two tunnels for each ISP and network location
+  router combination, one per Cloudflare endpoint. Learn how to configure IPsec
+  or GRE tunnels.
+---
+
+import { GlossaryTooltip, Render } from "~/components";
+
+<Render file="routing/configure-tunnels"
+	product="networking-services"
+	params={{
+		magicWord: "WAN Tunnels",
+		ipRange: "(this address space is also a link-local address)",
+		productName: "WAN Tunnels",
+		tunnelsAndEncapsulationPagePath: "/cloudflare-one/networks/connectors/wan-tunnels/reference/gre-ipsec-tunnels/",
+		ciphersPagePath: "/cloudflare-one/networks/connectors/wan-tunnels/reference/gre-ipsec-tunnels/#supported-configuration-parameters",
+		antiReplayPagePath: "/cloudflare-one/networks/connectors/wan-tunnels/reference/anti-replay-protection/",
+		cniLink: "/cloudflare-one/networks/connectors/wan-tunnels/network-interconnect/",
+		targetPageName: "Configuration",
+		updateHCFrequencyPage: "/cloudflare-one/networks/connectors/wan-tunnels/configuration/common-settings/update-tunnel-health-checks-frequency/",
+		tunnelHealthChecksPage: "/cloudflare-one/networks/connectors/wan-tunnels/reference/tunnel-health-checks/",
+		antiReplayPagePath: "/cloudflare-one/networks/connectors/wan-tunnels/reference/anti-replay-protection/",
+		biVsUniHealthCheck: "bidirectional",
+		tunnelHealthDash: "/cloudflare-one/networks/connectors/wan-tunnels/configuration/common-settings/check-tunnel-health-dashboard/",
+		biVsUniHealthCheckDefaults: "For WAN Tunnels this option defaults to bidirectional",
+		configureRoutesURL: "/cloudflare-one/networks/connectors/wan-tunnels/configuration/manually/how-to/configure-routes/",
+		sitesURL: "/cloudflare-one/networks/connectors/wan-tunnels/configuration/common-settings/sites/"
+	}}
+/>

@@ -14,7 +14,7 @@ You can integrate a Google Workspace (formerly G Suite) account with Cloudflare 
 
 Once integrated, users will log in with their Google Workspace credentials to reach resources protected by Cloudflare Access or to enroll their device into Cloudflare Gateway.
 
-You do not need to be a Google Cloud Platform user to integrate Google Workspace as an identity provider with Cloudflare Zero Trust. You will only need to open the Google Cloud Platform to configure IdP integration settings.
+You do not need to be a Google Cloud Platform user to integrate Google Workspace as an identity provider with Cloudflare One. You will only need to open the Google Cloud Platform to configure IdP integration settings.
 
 ## Set up Google Workspace as an identity provider
 
@@ -57,7 +57,7 @@ You do not need to be a Google Cloud Platform user to integrate Google Workspace
     https://<your-team-name>.cloudflareaccess.com
     ```
 
-    You can find your team name in [Zero Trust](https://one.dash.cloudflare.com/) under **Settings** > **Custom Pages**.
+    You can find your team name in [Cloudflare One](https://one.dash.cloudflare.com/) under **Settings** > **Team name**.
 
 12. Under **Authorized redirect URIs**, in the **URIs** field, enter the following URL:
 
@@ -75,11 +75,11 @@ You do not need to be a Google Cloud Platform user to integrate Google Workspace
 
     ![Location to trust internal apps in the Google Cloud Platform console.](~/assets/images/cloudflare-one/identity/gsuite/trust-internal-apps.png)
 
-### 2. Add Google Workspace to Zero Trust
+### 2. Add Google Workspace to Cloudflare One
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Authentication**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Integrations** > **Identity providers**.
 
-2. Under **Login methods**, select **Add new** and choose **Google Workspace**.
+2. Select **Add new identity provider** and select **Google Workspace**.
 
 3. Input the Client ID (**App ID** in the Cloudflare dashboard) and Client Secret fields generated previously. Additionally, enter the domain of your Google Workspace account.
 
@@ -91,14 +91,14 @@ You do not need to be a Google Cloud Platform user to integrate Google Workspace
 
 7. The generated link will prompt you to log in to your Google admin account and to authorize Cloudflare Access to view group information. After allowing permissions, you will see a success page from Cloudflare Access.
 
-To test that your connection is working, go to **Authentication** > **Login methods** and select **Test** next to Google Workspace. Your user identity and group membership should return.
+To test that your connection is working, go to **Integrations** > **Identity providers** and select **Test** next to Google Workspace. Your user identity and group membership should return.
 
 :::caution[SCIM Provisioning (Beta)]
 The direct SCIM provisioning integration with Google Workspace is not currently supported. Cloudflare is working with Google to complete the final approval process required to enable this feature. In the meantime, the SCIM endpoint will accept inbound SCIM events from any SCIM compliant service.
 
 To generate the SCIM endpoint, you must:
 
-1. Save your Google Workspace login method in Zero Trust (step 6 above) and select **Back to Authentication** or return to **Settings** > **Authentication** in Zero Trust.
+1. Save your Google Workspace login method in Cloudflare One (step 6 above) and select **Back to Authentication** or return to **Integrations** > **Identity providers** in Cloudflare One.
 2. Find the Google Workspace login method you created > select **Edit**.
 3. Enable the **Enable SCIM** toggle.
 4. Select **Regenerate Secret**.

@@ -1,6 +1,7 @@
 ---
 params:
   - productName
+  - productOriginalName
   - virtualProductName
   - gatewayURL
   - hardConnectorURL
@@ -21,7 +22,7 @@ params:
 
 import { GlossaryTooltip, Render } from "~/components"
 
-{props.productName} software is certified for use on the [Dell Networking Virtual Edge Platform](https://www.dell.com/support/home/en-us/product-support/product/dell-emc-networking-vep1445-vep1485/docs). It can be purchased with software pre-installed through our partner network for plug-and-play connectivity to Cloudflare One.
+The {props.productName} software is certified for use on the [Dell Networking Virtual Edge Platform](https://www.dell.com/support/home/en-us/product-support/product/dell-emc-networking-vep1445-vep1485/docs). It can be purchased with software pre-installed through our partner network for plug-and-play connectivity to Cloudflare One.
 
 ## Security and other information
 
@@ -55,7 +56,7 @@ You can setup VLAN IDs both for WAN and LAN. Refer to <a href={props.hardConnect
 
 ### High availability
 
-A site set up in high availability (HA) mode has two {props.productName}s with the same configuration but replicated in two nodes. In case of failure of a {props.productName}, the other {props.productName} becomes the active node, taking over configuration of the LAN gateway IP and allowing traffic to continue without disruption.
+A site set up in high availability (HA) mode has two {props.productName}s with the same configuration but replicated in two nodes. In case of failure of one {props.productName}, the other {props.productName} becomes the active node, taking over configuration of the LAN gateway IP and allowing traffic to continue without disruption.
 
 ### Active/Standby Election
 
@@ -67,13 +68,13 @@ The HA pair is configured in non-preemptive mode, meaning that once a node becom
 
 ### Configuration
 
-The two Connectors of a high availability (HA) pair are part of a single site. You designate the connectors <a href={props.haSetupURL}>as primary and secondary</a> in the Cloudflare dashboard.
+The two {props.productName}s of a high availability (HA) pair are part of a single site. You designate the {props.productName} <a href={props.haSetupURL}>as primary and secondary</a> in the Cloudflare dashboard.
 
 :::note
 The HA link cannot be connected back-to-back. It has to be connected over a switch. This is because, in a direct connection, if the link is unplugged on one end, the other end also detects a link failure. Since we have configured the system to enter a `FAULT` state when the HA link goes down, the affected node will be unable to function as the active node.
 :::
 
-### Failure Detection and Failover
+### Failure detection and failover
 
 The {props.productName}'s health can be in one of three states:
 
@@ -86,7 +87,7 @@ The {props.productName}'s health can be in one of three states:
   - All LAN interfaces are disconnected
   - {props.productName}'s software is not healthy
 
-A failover happens when the active node's health declines to a level lower than that of the standby node. For example, from `GOOD` to `DEGRADED`, or from `DEGRADED` to `DOWN`. In the case of a failover where a {props.productName} is acting as a DHCP server, DHCP leases will be synchronized.
+A failover happens when the active node's health declines to a level lower than that of the standby node. For example, from `GOOD` to `DEGRADED`, or from `DEGRADED` to `DOWN`. In the case of a failover where one {props.productName} is acting as a DHCP server, DHCP leases will be synchronized.
 
 When a failover occurs, traffic is moved to the new active node. It could take up to 30 seconds for traffic to be fully restored over the new active node.
 
@@ -94,7 +95,7 @@ When a failover occurs, traffic is moved to the new active node. It could take u
 
 This is where you add and configure your WAN connections. Each configured WAN will create one IPsec tunnel, unless you have more than one anycast IP configured in your account.
 
-<Render file="mconn/wan-two-tunnels" product="networking-services" params={{ productName: props.productName }} />
+<Render file="mconn/wan-two-tunnels" product="networking-services" params={{ productName: props.productName, productOriginalName: props.productOriginalName }} />
 
 When you have multiple WANs you can attribute different priorities to each one. Lower values mean a higher priority. This translates in {props.productName} routing traffic through the higher priority WANs or, more precisely, over the IPsec tunnels established over that interface. On the other hand, if you configure multiple WANs of equal priority, traffic will be distributed over those links through <a href={props.ecmpRoutingURL}>Equal-Cost Multi-Path (ECMP routing)</a>.
 
@@ -111,7 +112,7 @@ If you do not have more than one anycast IP configured in your account, and you 
 
 ### WAN settings
 
-- **Interface number:** When using the hardware version of {props.productName}, this refers to the Ethernet port that you are using for your WAN. If you need a throughput higher than 1 Gbps, you can use one of the SFP+ ports. Refer to <a href={props.sfpURL}>SFP+ port information</a> for more information on the hardware supported. <br />  If you are using {props.virtualProductName}, this needs to correspond to the virtual network interface on the {props.virtualProductName} instance you have set up in VMware.
+- **Interface number:** When using the hardware version of {props.productName}, this refers to the Ethernet port that you are using for your WAN. If you need a throughput higher than 1 Gbps, you can use one of the SFP+ ports. Refer to <a href={props.sfpURL}>SFP+ port information</a> for more information on the hardware supported. <br />  If you are using {props.virtualProductName}, this needs to correspond to the virtual network interface on the {props.virtualProductName} instance you have set up in your virtual machine.
 - **VLAN ID**: Allows you to have multiple virtual WANs configured over the same port on your {props.productName}. Refer to <a href={props.vlanIdURL}>VLAN ID</a> for more information.
 - **Priority**: Assigns a priority to the WAN interface. Lower numbers have higher priority. Refer to <a href={props.trafficSteeringURL}>Traffic steering</a> to learn more about how Cloudflare calculates priorities.
 - **Health check rate:** Configures the health check frequency for your WAN. Options are low, mid, and high. Refer to <a href={props.hcFrequencyURL}>Update tunnel health checks frequency</a> for more information.
@@ -119,7 +120,7 @@ If you do not have more than one anycast IP configured in your account, and you 
 
 ## LAN settings
 
-- **Interface number:** When using the hardware version of {props.productName}, this refers to the Ethernet port that you are using for your LAN. If you need a throughput higher than 1 Gbps, you can use one of the SFP+ ports. Refer to <a href={props.sfpURL}>SFP+ port information</a> for more information on the hardware supported. <br />  If you are using the {props.virtualProductName}, this needs to correspond to the virtual LAN interface on the {props.virtualProductName} instance you have set up in VMware.
+- **Interface number:** When using the hardware version of {props.productName}, this refers to the Ethernet port that you are using for your LAN. If you need a throughput higher than 1 Gbps, you can use one of the SFP+ ports. Refer to <a href={props.sfpURL}>SFP+ port information</a> for more information on the hardware supported. <br />  If you are using the {props.virtualProductName}, this needs to correspond to the virtual LAN interface on the {props.virtualProductName} instance you have set up in your virtual machine.
 - **VLAN ID**: Allows you to have multiple virtual LANs configured over the same port on your {props.productName}. Refer to <a href={props.vlanIdURL}>VLAN ID</a> for more information.
 - **Static addressing:** Configures the type of IP addressing for your Connector. Depending on your use case, this is where you configure your LAN interface IP address, or enable  DHCP server or DHCP relay. Refer to <a href={props.dhcpURL}>DHCP options</a> to learn more.
 - **Static NAT prefix**: Enable NAT (network address translation). This is an optional setting.
@@ -127,6 +128,6 @@ If you do not have more than one anycast IP configured in your account, and you 
 
 ### Restrict traffic to your premises
 
-Depending on your use case, you can define policies in your connector to either allow traffic to flow between your LANs without it leaving your local premises or to forward it via the Cloudflare network where you can add additional security features. The default behavior is to drop all LAN-to-LAN traffic. These policies can be created for specific subnets, and link two LANs.
+Depending on your use case, you can define policies in your {props.productName} to either allow traffic to flow between your LANs without it leaving your local premises or to forward it via the Cloudflare network where you can add additional security features. The default behavior is to drop all LAN-to-LAN traffic. These policies can be created for specific subnets, and link two LANs.
 
 Refer to <a href={props.networkSegmentationURL}>Network segmentation</a> for more information.

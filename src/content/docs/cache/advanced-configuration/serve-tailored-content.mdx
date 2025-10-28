@@ -88,7 +88,7 @@ In this example, you run an A/B test controlled by a cookie named `ab-test` (wit
 2. Select **Create new Snippet** and name it `ab-test-caching`.
 3. Paste the following code. It modifies the cache key based on the `ab-test` cookie and caches the response for 30 days.
 
-```JavaScript
+```js
 const CACHE_DURATION = 30 * 24 * 60 * 60; // 30 days
 
 export default {
@@ -166,7 +166,7 @@ For complex caching scenarios, [Cloudflare Workers](/cache/interaction-cloudflar
 
 This Worker detects whether a visitor is on a mobile or desktop device and creates separate cache entries for each, ensuring the correct version of the site is served and cached.
 
-```JavaScript
+```js
 export default {
   async fetch(request, env, ctx) {
     const userAgent = request.headers.get('User-Agent') || '';
@@ -201,7 +201,7 @@ Free and Paid plans
 
 This Worker detects if a visitor is on a mobile device or a desktop and creates a separate cache entry for each, ensuring the correct version of the site is served and cached. Uses the Enterprise `cf.customCacheKey` feature.
 
-```JavaScript
+```js
 export default {
   async fetch(request) {
     // 1. Determine the device type from the User-Agent header

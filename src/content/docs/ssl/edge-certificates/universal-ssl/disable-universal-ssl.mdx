@@ -5,7 +5,7 @@ sidebar:
   order: 3
 ---
 
-import { TabItem, Tabs } from "~/components";
+import { TabItem, Tabs, DashButton } from "~/components";
 
 Some customers may need to manage their own SSL certificates or rely on specific Certificate Authorities.
 
@@ -36,12 +36,13 @@ Before you disable Universal SSL/TLS, make sure you have [uploaded a custom cert
 
 To disable Universal SSL in the dashboard:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
-2. Select your domain.
-3. Go to **SSL/TLS** > **Edge Certificates**.
-4. For **Disable Universal SSL**, select **Disable Universal SSL**.
-5. Read the warnings in the **Acknowledgement**.
-6. Select **I Understand** and select **Confirm**.
+1. In the Cloudflare dashboard, go to the **Edge Certificates** page.
+
+   <DashButton url="/?to=/:account/:zone/ssl-tls/edge-certificates" />
+
+2. For **Disable Universal SSL**, select **Disable Universal SSL**.
+3. Read the warnings in the **Acknowledgement**.
+4. Select **I Understand** and select **Confirm**.
 
 </TabItem> <TabItem label="API">
 
@@ -55,10 +56,11 @@ To disable Universal SSL with the Cloudflare API, send a [`PATCH`](/api/resource
 
 To re-enable Universal SSL in the dashboard:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
-2. Select your domain.
-3. Go to **SSL/TLS** > **Edge Certificates**.
-4. For **Disable Universal SSL**, select **Enable Universal SSL**.
+1. In the Cloudflare dashboard, go to the **Edge Certificates** page.
+
+   <DashButton url="/?to=/:account/:zone/ssl-tls/edge-certificates" />
+
+2. For **Disable Universal SSL**, select **Enable Universal SSL**.
 
 </TabItem> <TabItem label="API">
 

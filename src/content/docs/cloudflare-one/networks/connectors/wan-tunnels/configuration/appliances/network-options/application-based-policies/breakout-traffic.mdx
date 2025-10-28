@@ -1,0 +1,20 @@
+---
+pcx_content_type: how-to
+title: Breakout traffic
+head: []
+description: Breakout traffic allows you to define which applications should
+  bypass Cloudflare's security filtering.
+---
+
+import { Render } from "~/components";
+
+<Render file="mconn/network-options/app-aware-policies/breakout-prioritized"
+	product="networking-services"
+	params={{
+	magicWord: "breakout",
+	productName: "Appliances",
+	featureName: "Breakout traffic",
+	trafficSteeringURL: "/cloudflare-one/networks/connectors/wan-tunnels/reference/traffic-steering/",
+	whatHappensApp: "will now go directly to the Internet and bypass Cloudflare's filtering",
+	mwanName: "WAN Tunnels"
+	}} />

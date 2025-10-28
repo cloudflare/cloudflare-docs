@@ -6,17 +6,17 @@ sidebar:
   order: 12
 ---
 
-This guide covers how to configure [GitHub Enterprise Cloud](https://docs.github.com/en/enterprise-cloud@latest/admin/managing-iam/using-saml-for-enterprise-iam/configuring-saml-single-sign-on-for-your-enterprise) as a SAML application in Cloudflare Zero Trust.
+This guide covers how to configure [GitHub Enterprise Cloud](https://docs.github.com/en/enterprise-cloud@latest/admin/managing-iam/using-saml-for-enterprise-iam/configuring-saml-single-sign-on-for-your-enterprise) as a SAML application in Cloudflare One.
 
 ## Prerequisites
 
-- An [identity provider](/cloudflare-one/integrations/identity-providers/) configured in Cloudflare Zero Trust
+- An [identity provider](/cloudflare-one/integrations/identity-providers/) configured in Cloudflare One
 - A GitHub Enterprise Cloud subscription
 - Access to a GitHub account as an organization owner
 
-## 1. Add a SaaS application to Cloudflare Zero Trust
+## 1. Add a SaaS application to Cloudflare One
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Access controls** > **Applications**.
 2. Select **Add an application** > **SaaS** > **Select**.
 3. For **Application**, select _GitHub_.
 4. For the authentication protocol, select **SAML**.
@@ -39,8 +39,8 @@ This guide covers how to configure [GitHub Enterprise Cloud](https://docs.github
 1. In your GitHub organization page, go to **Settings** > **Authentication security**.
 2. Under **SAML single sign-on**, turn on **Enable SAML authentication**.
 3. Fill in the following fields:
-   - **Sign on URL**: SSO endpoint from application configuration in Cloudflare Zero Trust.
-   - **Issuer**: Access Entity ID or Issuer from application configuration in Cloudflare Zero Trust.
+   - **Sign on URL**: SSO endpoint from application configuration in Cloudflare One.
+   - **Issuer**: Access Entity ID or Issuer from application configuration in Cloudflare One.
    - **Public certificate**: Paste the entire x.509 certificate from step [2. Create a x.509 certificate](#2-create-a-x509-certificate).
 
 ## 4. Test the integration

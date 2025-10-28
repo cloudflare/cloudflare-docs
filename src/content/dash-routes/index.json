@@ -593,7 +593,7 @@
 		"parent": ["Email"]
 	},
 	{
-		"name": "Email Security",
+		"name": "Email security",
 		"deeplink": "/?to=/:account/:zone/email/security",
 		"parent": ["Email"]
 	},

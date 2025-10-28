@@ -12,7 +12,7 @@ import { Render } from "~/components";
 Not recommended for new deployments. We recommend using [Access for Infrastructure](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/) to manage SSH sessions and log SSH commands.
 :::
 
-Cloudflare Zero Trust supports SSH proxying and command logging using Secure Web Gateway and the WARP client.
+Cloudflare One supports SSH proxying and command logging using Secure Web Gateway and the WARP client.
 
 You can create network policies to manage and monitor SSH access to your applications. When a device connects to your origin server over SSH, a session log will be generated showing which user connected, the session duration, and optionally a full replay of all commands run during the session.
 
@@ -59,7 +59,7 @@ cat /etc/ssh/sshd_config
 
 ## 7. Create an Audit SSH policy
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Gateway** > **Firewall policies**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Traffic policies** > **Network** > **Firewall policies**.
 
 2. In the **Network** tab, create a new network policy.
 
@@ -77,7 +77,7 @@ cat /etc/ssh/sshd_config
 
 ## 8. Connect as a user
 
-Users can use any SSH client to connect to the target resource, as long as they are logged into the WARP client on their device. Cloudflare Zero Trust will authenticate, proxy, and optionally encrypt and record all SSH traffic through Gateway.
+Users can use any SSH client to connect to the target resource, as long as they are logged into the WARP client on their device. Cloudflare One will authenticate, proxy, and optionally encrypt and record all SSH traffic through Gateway.
 
 Users must specify their desired username to connect with as part of the SSH command:
 
@@ -107,7 +107,7 @@ ssh-keygen -R <targetIP or hostname>
 
 ## View SSH Logs
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Logs** > **Gateway** > **SSH**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Insights** >**Logs** > **SSH command logs**.
 
 2. If you enabled the **SSH Command Logging** feature, you can **Download** a session's command log.
 

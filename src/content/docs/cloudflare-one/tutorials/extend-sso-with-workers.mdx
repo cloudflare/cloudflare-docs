@@ -23,7 +23,7 @@ This tutorial will walk you through extending the single-sign-on (SSO) capabilit
 
 ## Authentication flow
 
-[Cloudflare Access](/cloudflare-one/access-controls/policies/) is an authentication proxy in charge of validating a user's identity before they connect to your application. As shown in the diagram below, Access inserts a [JWT](/cloudflare-one/identity/authorization-cookie/application-token/) into the request, which can then be [verified](/cloudflare-one/identity/authorization-cookie/validating-json/#validate-jwts) by the origin server.
+[Cloudflare Access](/cloudflare-one/access-controls/policies/) is an authentication proxy in charge of validating a user's identity before they connect to your application. As shown in the diagram below, Access inserts a [JWT](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/application-token/) into the request, which can then be [verified](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/validating-json/#validate-jwts) by the origin server.
 
 ![Standard authentication flow for a request to an Access application](~/assets/images/cloudflare-one/applications/access-standard-flow.png)
 
@@ -122,7 +122,7 @@ This approach allows you to:
 
 ## 2. View the user's identity
 
-The script in `index.js` uses the [`get-identity`](/cloudflare-one/identity/authorization-cookie/application-token/#user-identity) endpoint to fetch a user's complete identity from a Cloudflare Access authentication event. To view a list of available data fields, log in to your Access application and append `/cdn-cgi/access/get-identity` to the URL. For example, if `www.example.com` is behind Access, go to `https://www.example.com/cdn-cgi/access/get-identity`.
+The script in `index.js` uses the [`get-identity`](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/application-token/#user-identity) endpoint to fetch a user's complete identity from a Cloudflare Access authentication event. To view a list of available data fields, log in to your Access application and append `/cdn-cgi/access/get-identity` to the URL. For example, if `www.example.com` is behind Access, go to `https://www.example.com/cdn-cgi/access/get-identity`.
 
 Below is an example of a user identity that includes the `disk_encryption` and `firewall` posture checks. The Worker inserts the posture check results into the request headers **Cf-Access-Firewall-Activated** and **Cf-Access-Disk-Encrypted**.
 

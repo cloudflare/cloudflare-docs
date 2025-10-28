@@ -1,9 +1,33 @@
 ---
-{}
+params:
+  - wanName
 ---
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to **Magic WAN** > **Network overview (beta)**.
-3. Find the site you want to make changes on > select the three dots next to it > **Edit**.
+import { Markdown } from "~/components";
+
+{ props.wanName === "WAN Tunnels" ? (
+	<>
+		<Markdown
+	text={`
+		1. Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a> > **Insights**.
+		2. Go to **Network visibility** > **Traffic overview**, and find the site you want to make changes on.
+		3. Select the three dots next to it > **Edit**.
+	`}
+	inline={false}
+	/>
+	</>
+) : (
+	<>
+		<Markdown
+	text={`
+		1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+		2. Go to **Magic WAN** > **Network overview (beta)**.
+		3. Find the site you want to make changes on > select the three dots next to it > **Edit**.
+	`}
+	inline={false}
+	/>
+	</>
+)
+}
 4. In **Basic information**, make changes to the site's name, description, and geographic coordinates.
 5. In **On-ramps**, add new on-ramps to your site. You can also remove existing ones.

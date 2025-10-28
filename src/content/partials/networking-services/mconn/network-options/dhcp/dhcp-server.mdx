@@ -1,24 +1,45 @@
 ---
 params:
   - productName
+  - wanName
 ---
 
-import { APIRequest, Render, TabItem, Tabs, DashButton } from "~/components";
+import { APIRequest, Markdown, Render, TabItem, Tabs, DashButton } from "~/components";
 
 When you use a static IP address, {props.productName} can also act as a DHCP server in your network. To enable this feature:
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to **Magic WAN** > **Connector on-ramps (beta)**.
-3. Select the Connector you want to configure > **Edit**.
-4. Select **Network Configuration**, and scroll down to **LAN configuration**.
-5. In **LAN configuration**, select the LAN where you want to enable DHCP server.
-6. Select **Edit**.
-7. Under **Static addressing**, select **This is a DHCP Server**. You also have to specify:
-	- The DNS server address. You can have more than one IP address. Select **Add DNS Server** for each server you want to add.
-	- The DHCP pool start
-	- The DHCP pool end
+{ props.wanName === "WAN Tunnels" ? (
+	<>
+		<Markdown
+	text={`
+		1. Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a>, and go to **Networks**.
+		2. Go to **Connectors** > **Appliances** > **Profiles**.
+	`}
+	inline={false}
+	/>
+	</>
+) : (
+	<>
+		<Markdown
+	text={`
+		1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+		2. Go to **Magic WAN** > **Connector on-ramps (beta)**.
+	`}
+	inline={false}
+	/>
+	</>
+)
+}
+{/* Command needed so list starts on number 3 since steps 1, 2 are inside conditional render */}
+<ol start="3">
+<li>Select your {props.productName} you want to configure &gt; <strong>Edit</strong>.</li>
+<li>Select <strong>Network Configuration</strong>, and scroll down to <strong>LAN configuration</strong>.</li>
+<li>In <strong>LAN configuration</strong>, select the LAN where you want to enable DHCP server.</li>
+<li>Select <strong>Edit</strong>.</li>
+<li>Under <strong>Static addressing</strong>, select <strong>This is a DHCP Server</strong>. You also have to specify:<ul><li>The DNS server address. You can have more than one IP address. Select <strong>Add DNS Server</strong> for each server you want to add.</li><li>The DHCP pool start</li><li>The DHCP pool end</li></ul></li>
+</ol>
 
 </TabItem> <TabItem label="API">
 

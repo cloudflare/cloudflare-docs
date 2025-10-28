@@ -1,0 +1,28 @@
+---
+title: Configure routes
+pcx_content_type: how-to
+sidebar:
+  order: 2
+head: []
+description: WAN Tunnels uses a static configuration to route your traffic through anycast tunnels from Cloudflare's global network to your locations. If you are connected through Direct CNI you also have access to BGP peering.  Learn how to configure routing.
+
+---
+
+import { Render } from "~/components"
+
+<Render
+	file="routing/configure-routes"
+	product="networking-services"
+	params={{
+		magicWord: "WAN Tunnels",
+		trafficSteeringPage: "/cloudflare-one/networks/connectors/wan-tunnels/reference/traffic-steering/",
+		productName: "WAN Tunnels",
+		tunnelEndpoints: "/cloudflare-one/networks/connectors/wan-tunnels/configuration/manually/how-to/configure-tunnel-endpoints/",
+		routePrioritization: "/cloudflare-one/networks/connectors/wan-tunnels/reference/traffic-steering/#route-prioritization",
+		chooseWeights: "/cloudflare-one/networks/connectors/wan-tunnels/reference/traffic-steering/#set-priority-and-weights-for-static-routes",
+		publicAsnMT: " ",
+		productGatewayOrEgress: "WAN Tunnels with Gateway",
+		cfTunnelURL: "/cloudflare-one/networks/connectors/wan-tunnels/zero-trust/cloudflare-tunnel/",
+		sitesURL: "/cloudflare-one/networks/connectors/wan-tunnels/configuration/common-settings/sites/"
+	}}
+/>

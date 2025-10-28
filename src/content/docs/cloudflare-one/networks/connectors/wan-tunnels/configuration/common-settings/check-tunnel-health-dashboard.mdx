@@ -1,0 +1,43 @@
+---
+pcx_content_type: how-to
+title: Check tunnel health in the dashboard
+sidebar:
+  order: 2
+---
+
+import { Render } from "~/components";
+
+<Render
+	file="tunnel-health/check-tunnel-healthchecks-dash"
+	product="networking-services"
+	params={{
+		dashInfo:
+			"The dashboard shows the view of tunnel health as measured from each Cloudflare location where your traffic is likely to land.",
+		productPath: "Insights > Network visibility > WAN connector health",
+		graphQL: "/cloudflare-one/networks/connectors/wan-tunnels/analytics/query-tunnel-health/",
+		notificationsPath:
+			"[notifications wizard](/cloudflare-one/networks/connectors/wan-tunnels/configuration/common-settings/configure-magic-tunnel-health-alerts/)",
+		packetCaptures: "/magic-firewall/packet-captures/",
+		networkAnalytics: "/cloudflare-one/networks/connectors/wan-tunnels/analytics/network-analytics/",
+		magicWord: "WAN Tunnels"
+	}}
+/>
+
+<Render
+	file="tunnel-health/health-checks-compatible-cmb-eu"
+	product="networking-services"
+	params={{
+		productName: "WAN Tunnels",
+	}}
+/>
+
+## Appliances
+
+<Render
+	file="tunnel-health/mconn-heartbeat-health"
+	product="networking-services"
+	params={{
+		productName: "Appliances",
+		heartbeatURL: "/cloudflare-one/networks/connectors/wan-tunnels/configuration/appliances/maintenance/heartbeat/"
+	}}
+/>

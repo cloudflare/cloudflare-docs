@@ -1,11 +1,35 @@
 ---
-{}
+params:
+  - productName
+  - wanName
 ---
+
+import { Markdown } from "~/components";
 
 You can only add or remove applications to Breakout traffic and Prioritized traffic. To add or remove applications:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
-2. Go to **Magic WAN** > **Connector on-ramps (beta)**.
+{ props.wanName === "WAN Tunnels" ? (
+	<>
+		<Markdown
+	text={`
+		1. Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a>, and go to **Networks**.
+		2. Go to **Connectors** > **Appliances**.
+	`}
+	inline={false}
+	/>
+	</>
+) : (
+	<>
+		<Markdown
+	text={`
+		1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
+		2. Go to **Magic WAN** > **Connector on-ramps (beta)**.
+	`}
+	inline={false}
+	/>
+	</>
+)
+}
 3. Find the on-ramp that you want to edit > select the three dots next to it > **Edit**.
 4. Go to **Traffic steering** > **Breakout traffic** or **Prioritized traffic**.
 5. Select **Add** to add a new application.

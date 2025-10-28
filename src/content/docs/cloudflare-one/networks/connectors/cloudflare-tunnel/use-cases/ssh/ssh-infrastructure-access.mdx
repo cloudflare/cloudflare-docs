@@ -159,11 +159,12 @@ SSH command logs are not visible from the dashboard itself and must be exported 
 
 To manually retrieve logs:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Logs** > **Access**.
-2. Filter the logs using the name of your [SSH application](#5-add-an-infrastructure-application).
-3. Select the SSH session for which you want to export command logs.
-4. In the side panel, scroll down to **SSH logs** and select **Download**.
-5. <Render file="ssh/decrypt-ssh-log" product="cloudflare-one" />
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Insights** > **Logs**.
+2. Select **SSH command logs**.
+3. Filter the logs using the name of your [SSH application](#5-add-an-infrastructure-application).
+4. Select the SSH session for which you want to export command logs.
+5. In the side panel, scroll down to **SSH logs** and select **Download**.
+6. <Render file="ssh/decrypt-ssh-log" product="cloudflare-one" />
 
 ### Export SSH logs with Logpush
 
@@ -220,7 +221,7 @@ As an end user, run [`warp-cli target list`](/cloudflare-one/access-controls/app
 
 - If the target appears in the list, confirm that the username you are attempting to connect with is shown in the output. If the username is not shown, an administrator must find the Access policy associated with the target and add that username to the Access policy. An administrator should have created an Access policy in [substep 9 of step 5: Add an infrastructure application](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/#5-add-an-infrastructure-application). If the username is shown, that means the Access policy should be granting access and you should ensure that the tunnel is healthy in [step 2](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/#2-check-target-machine-connection).
 
-- If the target does not appear in the list, an administrator must audit the Access policies for the target in the Zero Trust dashboard for potential misconfiguration that may be blocking connection.
+- If the target does not appear in the list, an administrator must audit the Access policies for the target in Cloudflare One for potential misconfiguration that may be blocking connection.
 
 #### Administrators
 
@@ -232,21 +233,23 @@ You will need Cloudflare dashboard access and log view [permissions](/cloudflare
 
 :::
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Logs** > **Access**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Insights** > **Logs**.
 
-2. Select the application you are testing or filter _Infrastructure_ as the App Type.
+2. Select **Access authentication logs**.
 
-3. Review the **Decision**. If the **Decision** is `Access denied`, select the application and copy the name under App.
+3. Select the application you are testing or filter _Infrastructure_ as the App Type.
+
+4. Review the **Decision**. If the **Decision** is `Access denied`, select the application and copy the name under App.
 
    If the decision is `Access granted`, Access policies are not interfering with your connection attempts and your connection issue is due to the Cloudflare Tunnel ([step 2](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/#2-check-target-machine-connection)), the SSH server ([step 3](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/#3-confirm-user-existence-on-the-target-server)), or the `sshd_config` file ([step 4](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/#4-debug-sshd_config-file-misconfiguration)).
 
-4. Go to **Access** > **Applications**.
+5. Go to **Access controls** > **Applications**.
 
-5. Input the app name in the search bar and select the application.
+6. Input the app name in the search bar and select the application.
 
-6. Select **Configure**.
+7. Select **Configure**.
 
-7. Go to [**Policies**](/cloudflare-one/access-controls/policies/policy-management/#test-your-policies) to review what criteria may be blocking the user.
+8. Go to [**Policies**](/cloudflare-one/access-controls/policies/policy-management/#test-your-policies) to review what criteria may be blocking the user.
 
 By adding an Access [policy](/cloudflare-one/access-controls/policies/) to allow the user, the connection issue should be resolved. After saving your policy changes, attempt to connect to the server.
 
@@ -258,13 +261,13 @@ If the end user cannot connect to the target, the tunnel you set up in [step 1: 
 
 To check the status of your tunnel:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Networks** > **Routes**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Networks** > **Routes**.
 2. Search your IP to find the tunnel associated with the IP.
 
    This IP will be visible in the `warp-cli target list` output in [the previous step](#1-review-access-policies). If you are an admin, you can also go to **Networks** > **Targets** and find the IP next to your Hostname.
 
 3. Copy the tunnel name.
-4. Go to **Networks** > **Tunnels** and search by your tunnel name.
+4. Go to **Networks** > **Connectors** > **Cloudflare Tunnels** and search by your tunnel name.
 5. Review that the [Tunnel status](/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/notifications/#available-notifications) says `Active`, and not `Down`, `Degraded`, or `Inactive`.
 
 <Render file="tunnel/tunnel-status" product="cloudflare-one" />

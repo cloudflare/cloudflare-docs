@@ -3,7 +3,7 @@ pcx_content_type: how-to
 title: Amazon Cognito
 ---
 
-Amazon Cognito provides SSO identity management for end users of web and mobile apps. You can integrate Amazon Cognito as an OIDC identity provider for Cloudflare Zero Trust.
+Amazon Cognito provides SSO identity management for end users of web and mobile apps. You can integrate Amazon Cognito as an OIDC identity provider for Cloudflare One.
 
 ## Prerequisites
 
@@ -53,7 +53,7 @@ To retrieve those values:
        https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
        ```
 
-       You can find your team name in Zero Trust under **Settings** > **Custom Pages**.
+       You can find your team name in [Cloudflare One](https://one.dash.cloudflare.com) under **Settings** > **Team name**.
 
     2. Select **Identity providers** to use with this app client. At minimum, enable **Cognito user pool** as a provider.
 
@@ -69,9 +69,9 @@ To retrieve those values:
 
 ### 2. Add Amazon Cognito as an identity provider
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Settings** > **Authentication**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Integrations** > **Identity providers**.
 
-2. Under **Login methods**, select **Add new**.
+2. Under **Your identity providers**, select **Add new identity provider**.
 
 3. Select **OpenID Connect**.
 
@@ -83,7 +83,7 @@ To retrieve those values:
 
 7. Select **Save**.
 
-To [test](/cloudflare-one/integrations/identity-providers/#test-idps-in-zero-trust) that your connection is working, select **Test**.
+To [test](/cloudflare-one/integrations/identity-providers/#test-idps-in-cloudflare-one) that your connection is working, select **Test**.
 
 ## Example API Configuration
 

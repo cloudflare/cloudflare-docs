@@ -4,13 +4,17 @@ params:
   - tunnelURL
   - gatewayURL
   - privateRoutesURL
+  - greIpsecURL
+  - warpURL
+  - cloudflareTunnelURL
+  - tracerouteURL
 ---
 
 import { Render } from "~/components"
 
 {props.productName} can be used together with <a href={props.tunnelURL}>Cloudflare Tunnel</a> for easy access between your networks and applications.
 
-By default, TCP, UDP, and ICMP traffic routed through Magic WAN tunnels and destined to routes behind Cloudflare Tunnel will be proxied/filtered through <a href={props.gatewayURL}>Cloudflare Gateway</a>.
+By default, TCP, UDP, and ICMP traffic routed through {props.productName} tunnels and destined to routes behind Cloudflare Tunnel will be proxied/filtered through <a href={props.gatewayURL}>Cloudflare Gateway</a>.
 
 ## Cloudflare Tunnel and Magic Networking Route interactions
 
@@ -32,10 +36,10 @@ For more information, refer to <a href={props.privateRoutesURL}>Connect private 
 	file="traceroute"
 	product="networking-services"
 	params={{
-		productName: "Magic WAN",
-		greIpsecURL: "/magic-wan/configuration/manually/how-to/configure-tunnel-endpoints/",
-		warpURL: "/cloudflare-one/team-and-resources/devices/warp/",
-		cloudflareTunnelURL: "/cloudflare-one/networks/connectors/cloudflare-tunnel/",
-		tracerouteURL: "/magic-wan/configuration/manually/how-to/traceroute/"
+		productName: props.productName,
+		greIpsecURL: props.greIpsecURL,
+		warpURL: props.warpURL,
+		cloudflareTunnelURL: props.cloudflareTunnelURL,
+		tracerouteURL: props.tracerouteURL
 		}}
 	/>

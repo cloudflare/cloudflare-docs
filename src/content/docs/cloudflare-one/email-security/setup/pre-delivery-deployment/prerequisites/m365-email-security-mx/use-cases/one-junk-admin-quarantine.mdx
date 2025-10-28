@@ -1,17 +1,17 @@
 ---
-title: 1 - Junk email and Email Security Admin Quarantine
+title: 1 - Junk email and Email security Admin Quarantine
 pcx_content_type: integration-guide
 sidebar:
   order: 1
 head:
   - tag: title
-    content: Junk email and Email Security Admin Quarantine -
+    content: Junk email and Email security Admin Quarantine -
       Microsoft 365
 ---
 
 import { Render } from "~/components";
 
-In this tutorial, you will learn how to deliver emails to the Microsoft 365 junk email folder and the Admin Quarantine in Email Security.
+In this tutorial, you will learn how to deliver emails to the Microsoft 365 junk email folder and the Admin Quarantine in Email security.
 
 ## Create quarantine policies
 
@@ -41,7 +41,7 @@ In this tutorial, you will learn how to deliver emails to the Microsoft 365 junk
 
 ## Create transport rules
 
-To create the transport rules that will send emails with certain dispositions to Email Security:
+To create the transport rules that will send emails with certain dispositions to Email security:
 
 1. Open the new [Exchange admin center](https://admin.exchange.microsoft.com/#/homepage).
 
@@ -50,7 +50,7 @@ To create the transport rules that will send emails with certain dispositions to
 3. Select **Add a Rule** > **Create a new rule**.
 
 4. Set the following rule conditions:
-   - **Name**: `Email Security Deliver to Junk Email folder`.
+   - **Name**: `Email security Deliver to Junk Email folder`.
    - **Apply this rule if**: _The message headers_ > _includes any of these words_.
      - **Enter text**: `X-CFEmailSecurity-Disposition` > **Save**.
      - **Enter words**: `BULK` > **Add** > **Save**.
@@ -64,4 +64,4 @@ To create the transport rules that will send emails with certain dispositions to
 
 7. Review your settings and select **Finish** > **Done**.
 
-8. Select the rule `Email Security Deliver to Junk Email folder` you have just created, and select **Enable**.
+8. Select the rule `Email security Deliver to Junk Email folder` you have just created, and select **Enable**.

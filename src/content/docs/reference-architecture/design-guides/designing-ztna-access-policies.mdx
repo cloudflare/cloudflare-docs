@@ -25,7 +25,7 @@ This document is aimed at administrators who are evaluating or have adopted Clou
 - **Building policies**: The main components of an access policy and how they are combined.
 - **Use cases**: Common use cases and policies that can serve as blueprints for your own policy designs.
 
-This design guide assumes you have a basic understanding of Cloudflare's ZTNA solution, [Cloudflare Access](/cloudflare-one/access-controls/). Therefore, this guide focuses on designing effective access policies and assumes you have already configured [DNS](/cloudflare-one/traffic-policies/initial-setup/dns/), [identity](/cloudflare-one/identity/) and [device posture providers](/cloudflare-one/integrations/service-providers/) as well as [created connectivity](/cloudflare-one/networks/) to self-hosted applications and related networks.
+This design guide assumes you have a basic understanding of Cloudflare's ZTNA solution, [Cloudflare Access](/cloudflare-one/access-controls/). Therefore, this guide focuses on designing effective access policies and assumes you have already configured [DNS](/cloudflare-one/traffic-policies/initial-setup/dns/), [identity](/cloudflare-one/integrations/identity-providers/) and [device posture providers](/cloudflare-one/integrations/service-providers/) as well as [created connectivity](/cloudflare-one/networks/) to self-hosted applications and related networks.
 
 By the end of this guide, you will be equipped to implement granular access policies that enforce Zero Trust principles across various common enterprise scenarios.
 
@@ -66,7 +66,7 @@ Once we have established connectivity to your applications, it is time to facili
 
 ### Identity
 
-A critical part of application access is authenticating a user. Cloudflare has a [built-in authentication](/cloudflare-one/integrations/identity-providers/one-time-pin/) method based on email. But we highly recommend configuring a third-party identity provider. We support both consumer and enterprise [identity providers](/cloudflare-one/identity/), and any SAML or OpenID compliant service can be used. Group membership is one of the most common attributes of defining application access and can be defined manually or imported using the System for Cross-Domain Identity Management ([SCIM](/cloudflare-one/team-and-resources/users/scim/)).
+A critical part of application access is authenticating a user. Cloudflare has a [built-in authentication](/cloudflare-one/integrations/identity-providers/one-time-pin/) method based on email. But we highly recommend configuring a third-party identity provider. We support both consumer and enterprise [identity providers](/cloudflare-one/integrations/identity-providers/), and any SAML or OpenID compliant service can be used. Group membership is one of the most common attributes of defining application access and can be defined manually or imported using the System for Cross-Domain Identity Management ([SCIM](/cloudflare-one/team-and-resources/users/scim/)).
 
 ### Device posture
 
@@ -134,7 +134,7 @@ The Action field in a policy determines what happens when a user or service matc
 - **Allow** grants access to the application. A login page will be presented to a user on initial access request.
 - **Block** denies access to the application. This is generally not required because Access is denied by default. The only reason users should implement a block policy is for testing a specific policy condition or short-circuiting policy evaluation. If a block policy has higher precedent than an Allow, and a user matches the block policy, all other policy evaluation ceases.
 - **Bypass** allows users or services to disable any enforcement for traffic before accessing the application. For example, a specific endpoint in an application may need to be broadly accessible over the Internet.
-- **Service Auth** allows you to authenticate requests from other services or applications using [mTLS](/ssl/client-certificates/enable-mtls/) or [service tokens](/cloudflare-one/identity/service-tokens/). No login page will be presented to the user or service if they meet this policy criteria. This is designed so that non-user requests, such as those from other applications, can access secured resources.
+- **Service Auth** allows you to authenticate requests from other services or applications using [mTLS](/ssl/client-certificates/enable-mtls/) or [service tokens](/cloudflare-one/access-controls/service-credentials/service-tokens/). No login page will be presented to the user or service if they meet this policy criteria. This is designed so that non-user requests, such as those from other applications, can access secured resources.
 
 :::note[]
 Cloudflare Access is a deny by default service, which means if a request does not match any policy action, the default action is "Block."

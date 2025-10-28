@@ -171,9 +171,9 @@ The timeout after which a TCP keepalive packet is sent on a connection between C
 | ------- | ------------------- |
 | `""`    | Protect with Access |
 
-Requires `cloudflared` to validate the [Cloudflare Access JWT](/cloudflare-one/identity/authorization-cookie/validating-json/) prior to proxying traffic to your origin. You can enforce this check on public hostname services that are protected by an Access application. For all L7 requests to these hostnames, Access will send the JWT to `cloudflared` as a `Cf-Access-Jwt-Assertion` request header.
+Requires `cloudflared` to validate the [Cloudflare Access JWT](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/validating-json/) prior to proxying traffic to your origin. You can enforce this check on public hostname services that are protected by an Access application. For all L7 requests to these hostnames, Access will send the JWT to `cloudflared` as a `Cf-Access-Jwt-Assertion` request header.
 
-To enable this security control in a [configuration file](/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/local-management/configuration-file/#origin-configuration), [get the AUD tag](/cloudflare-one/identity/authorization-cookie/validating-json/#get-your-aud-tag) for your Access application and add the following rule to `originRequest`:
+To enable this security control in a [configuration file](/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/local-management/configuration-file/#origin-configuration), [get the AUD tag](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/validating-json/#get-your-aud-tag) for your Access application and add the following rule to `originRequest`:
 
 ```yml
 access:

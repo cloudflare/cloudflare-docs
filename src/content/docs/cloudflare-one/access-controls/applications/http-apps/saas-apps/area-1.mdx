@@ -10,17 +10,17 @@ import { Render } from "~/components";
 
 <Render file="contact-support" product="email-security" />
 
-[Cloudflare Area 1](https://www.cloudflare.com/products/zero-trust/email-security/) is an email security platform that protects your organization's inbox from phishing, spam, and other malicious messages. This guide covers how to configure Area 1 as a SAML application in Cloudflare Zero Trust.
+[Cloudflare Area 1](https://www.cloudflare.com/products/zero-trust/email-security/) is an email security platform that protects your organization's inbox from phishing, spam, and other malicious messages. This guide covers how to configure Area 1 as a SAML application in Cloudflare One.
 
 ## Prerequisites
 
-- An [identity provider](/cloudflare-one/integrations/identity-providers/) configured in Cloudflare Zero Trust
+- An [identity provider](/cloudflare-one/integrations/identity-providers/) configured in Cloudflare One
 - Admin access to your Area 1 account
-- Your user's email in Area 1 matches their email in Zero Trust
+- Your user's email in Area 1 matches their email in Cloudflare One
 
-## 1. Add Area 1 to Zero Trust
+## 1. Add Area 1 to Cloudflare One
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Access** > **Applications**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Access controls** > **Applications**.
 
 2. Select **Add an application**.
 
@@ -52,9 +52,9 @@ Finally, you will need to configure Area 1 to allow users to log in through Clou
 4. In **SAML SSO Domain**, enter `<your-team-name>.cloudflareaccess.com`.
 
 5. Get your Metadata XML file:
-   1. In Zero Trust, copy the **SSO Endpoint** for your application.
+   1. In Cloudflare One, copy the **SSO Endpoint** for your application.
 
-      ![Copy SSO settings for a SaaS application from Zero Trust](~/assets/images/cloudflare-one/applications/saas-sso-endpoint.png)
+      ![Copy SSO settings for a SaaS application from Cloudflare One](~/assets/images/cloudflare-one/applications/saas-sso-endpoint.png)
 
    2. In a new browser tab, paste the **SSO Endpoint** and append `/saml-metadata` to the end of the URL. For example, `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/sso/saml/<app-id>/saml-metadata`.
 
