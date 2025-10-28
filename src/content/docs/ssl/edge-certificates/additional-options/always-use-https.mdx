@@ -36,12 +36,13 @@ If only some parts of your application can support HTTPS traffic, do not enable 
 
 To enable **Always Use HTTPS** in the dashboard:
 
-1. Make sure that your [SSL/TLS encryption mode](/ssl/origin-configuration/ssl-modes/off/) **is not** set to **Off** (check on the [**SSL/TLS Overview**](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls) page). When you set your encryption mode to **Off**, the **Always Use HTTPS** option will not be visible in your Cloudflare dashboard.
-2. In the Cloudflare dashboard, go to the **Edge Certificates** page.
+1. In the Cloudflare dashboard, go to the **SSL/TLS Overview** page for the respective application.
 
-   <DashButton url="/?to=/:account/:zone/ssl-tls/edge-certificates" />
+   <DashButton url="/?to=/:account/:zone/ssl-tls" />
 
-3. For **Always Use HTTPS**, switch the toggle to **On**.
+2. Make sure that your [SSL/TLS encryption mode](/ssl/origin-configuration/ssl-modes/off/) is not set to **Off**. When you set your encryption mode to **Off**, the **Always Use HTTPS** option will not be visible in your Cloudflare dashboard.
+3. Go to the [**Edge Certificates**](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/edge-certificates) page.
+4. Turn on **Always Use HTTPS**.
 
 </TabItem> <TabItem label="API">
 
