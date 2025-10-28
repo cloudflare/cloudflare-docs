@@ -8,6 +8,8 @@ sidebar:
 
 ---
 
+import { DashButton } from "~/components";
+
 ECH stands for [Encrypted Client Hello](https://datatracker.ietf.org/doc/draft-ietf-tls-esni/16/). It is a protocol extension in the context of Transport Layer Security (TLS). ECH encrypts part of the handshake and masks the Server Name Indication (SNI) that is used to negotiate a TLS session. This means that whenever a user visits a website on Cloudflare that has ECH enabled, intermediaries will be able to see that you are visiting a website on Cloudflare, but they will not be able to determine which one.
 
 ## What ECH does
@@ -47,10 +49,11 @@ For more details about ECH protocol technology, refer to our [introductory blog]
 
 ECH is enabled by default on Free zones. Other plans can turn it on or off following the steps below.
 
-1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com).
-2. Select your account and zone.
-3. Go to **SSL** > **Edge Certificates**.
-4. For **Encrypted ClientHello (ECH)**, change the setting to **Enabled**.
+1. In the Cloudflare dashboard, go to the **Edge Certificates** page.
+
+   <DashButton url="/?to=/:account/:zone/ssl-tls/edge-certificates" />
+
+2. For **Encrypted ClientHello (ECH)**, change the setting to **Enabled**.
 
 ## Enterprise network applicability
 
