@@ -2423,6 +2423,8 @@
 /cloudflare-one/applications/casb/ /cloudflare-one/cloud-and-saas-findings/ 301
 /cloudflare-one/applications/casb/manage-findings/ /cloudflare-one/cloud-and-saas-findings/manage-findings/ 301
 /cloudflare-one/applications/casb/casb-dlp/ /cloudflare-one/cloud-and-saas-findings/casb-dlp/ 301
+/cloudflare-one/insights/analytics/analytics-overview/ /cloudflare-one/insights/analytics-overview/ 301
+
 
 # Email Security new revamp
 /cloudflare-one/email-security/email-monitoring/download-report/ /cloudflare-one/email-security/monitoring/download-report/ 301
