@@ -1,5 +1,5 @@
 ---
-title: TanStack Start framework support
+title: Build TanStack Start apps with the Cloudflare Vite plugin
 description: TanStack Start can now be used with the Cloudflare Vite plugin
 products:
   - workers
@@ -8,11 +8,12 @@ date: 2025-10-24
 
 import { PackageManagers, WranglerConfig } from "~/components";
 
-[TanStack Start](https://tanstack.com/start/) can now be used with the [Cloudflare Vite plugin](/workers/vite-plugin/).
+The [Cloudflare Vite plugin](/workers/vite-plugin/) now supports [TanStack Start](https://tanstack.com/start/) apps.
+Get started with new or existing projects.
 
-## Create a new project
+## New projects
 
-You can create a new project using the `create-cloudflare` CLI:
+Create a new TanStack Start project that uses the Cloudflare Vite plugin via the `create-cloudflare` CLI:
 
 <PackageManagers
 	type="create"
@@ -20,9 +21,9 @@ You can create a new project using the `create-cloudflare` CLI:
 	args="my-tanstack-start-app --framework=tanstack-start"
 />
 
-## Migrate an existing project
+## Existing projects
 
-Migrating an exiting project is also straightforward.
+Migrate an existing TanStack Start project to use the Cloudflare Vite plugin:
 
 1. Install `@cloudflare/vite-plugin` and `wrangler`
 
@@ -60,7 +61,7 @@ main = "@tanstack/react-start/server-entry"
 
 4. Modify the scripts in your `package.json`
 
-```json title="package.json"  del={5} ins={6-8}
+```json title="package.json" del={5} ins={6-8}
 {
 	"scripts": {
 		"dev": "vite dev",
