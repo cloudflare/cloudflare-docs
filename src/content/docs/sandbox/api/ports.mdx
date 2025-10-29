@@ -45,8 +45,7 @@ const api = await sandbox.exposePort(3000, { name: 'api' });
 
 await sandbox.startProcess('npm run dev');
 const frontend = await sandbox.exposePort(5173, { name: 'frontend' });
-
-````
+```
 </TypeScriptExample>
 
 ### `unexposePort()`
@@ -55,7 +54,7 @@ Remove an exposed port and close its preview URL.
 
 ```ts
 await sandbox.unexposePort(port: number): Promise<void>
-````
+```
 
 **Parameters**:
 
@@ -80,8 +79,7 @@ const { ports } = await sandbox.getExposedPorts();
 for (const port of ports) {
 console.log(`${port.name || port.port}: ${port.exposedAt}`);
 }
-
-````
+```
 </TypeScriptExample>
 
 ### `connect()`
@@ -92,7 +90,7 @@ Route incoming WebSocket upgrade requests to WebSocket servers running in the sa
 import { connect } from '@cloudflare/sandbox';
 
 const response = await connect(sandbox: Sandbox, request: Request, port: number): Promise<Response>
-````
+```
 
 **Parameters**:
 
