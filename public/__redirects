@@ -2448,8 +2448,6 @@
 /cloudflare-one/email-security/detection-settings/additional-detections/ /cloudflare-one/email-security/settings/detection-settings/additional-detections/ 301
 /cloudflare-one/email-security/settings/configure-text-add-ons/ /cloudflare-one/email-security/settings/detection-settings/configure-text-add-ons/ 301
 
-
-
 # Learning paths
 
 /learning-paths/modules/get-started/onboarding/* /learning-paths/get-started-free/onboarding/:splat 301
