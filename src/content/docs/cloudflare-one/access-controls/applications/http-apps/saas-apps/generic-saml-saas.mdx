@@ -105,7 +105,7 @@ To send additional SAML attributes to your SaaS application, configure the follo
 
 ### JSONata transforms
 
-In **Advanced settings** > **Transformation**, you can enter a [JSONata](https://jsonata.org/) script that modifies a copy of the [User Registry identity](/cloudflare-one/insights/logs/users/). This is useful for setting default values, excluding email addresses, or ensuring usernames meet arbitrary criteria. Access will send the modified user identity to the SaaS application as SAML attributes.
+In **Advanced settings** > **Transformation**, you can enter a [JSONata](https://jsonata.org/) script that modifies a copy of the [User Registry identity](/cloudflare-one/team-and-resources/users/users/). This is useful for setting default values, excluding email addresses, or ensuring usernames meet arbitrary criteria. Access will send the modified user identity to the SaaS application as SAML attributes.
 
 :::note
 JSONata transformations are not compatible with [SAML attribute statements](#saml-attribute-statements). JSONata transformations will override any specified SAML attributes.
