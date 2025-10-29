@@ -10,7 +10,7 @@ import { Markdown } from "~/components";
 2. Select **Add a policy** to create a new policy, or choose the policy you want to customize and select **Edit**. You can only edit the block page for policies with a Block action.
 3. Under **Configure policy settings**, {props.blockBehaviorAction} **Modify Gateway block behavior**.
 4. Choose your block behavior:
-   - **Use account-level block setting**: Use the global block page setting configured in your account settings. The global setting can be the default Gateway block page, an [HTTP redirect](/cloudflare-one/traffic-policies/block-page/#redirect-to-a-block-page), or a [custom Gateway block page](/cloudflare-one/traffic-policies/block-page/#customize-the-block-page).
+   - **Use account-level block setting**: Use the global block page setting configured in your account settings. The global setting can be the default Gateway block page, an [HTTP redirect](/cloudflare-one/reusable-components/custom-pages/gateway-block-page/#redirect-to-a-block-page), or a [custom Gateway block page](/cloudflare-one/reusable-components/custom-pages/gateway-block-page/#customize-the-block-page).
    - **Override account setting with URL redirect**: Redirect users with a `307` HTTP redirect to a URL you specify on a policy level.
 5. (Optional) If your account-level block page setting uses a custom Gateway block page, you can turn on **Add an additional message to your custom block page when traffic matches this policy** to add a custom message to your custom block page when traffic is blocked by this policy. This option will replace the **Message** field.
 6. Select **Save policy**.

@@ -3,11 +3,11 @@ productName: Cloudflare One
 entries:
   - term: App Launcher
     general_definition: |-
-      the App Launcher portal provides end users with a single dashboard to open applications secured by Cloudflare Zero Trust.
+      the App Launcher portal provides end users with a single dashboard to open applications secured by Cloudflare One.
 
   - term: application
     general_definition: |-
-      the resource protected by Cloudflare Zero Trust, which can be a subdomain, a path, or a SaaS application.
+      the resource protected by Cloudflare One, which can be a subdomain, a path, or a SaaS application.
 
   - term: application token
     general_definition: |-
@@ -19,7 +19,7 @@ entries:
 
   - term: CGNAT IP
     general_definition: |-
-      a unique, virtual IP address assigned to each WARP device from the `100.96.0.0/12` range. You can view the CGNAT IP for a device in **My Team** > **Devices** > **Virtual IPv4/IPv6**.
+      a unique, virtual IP address assigned to each WARP device from the `100.96.0.0/12` range. You can view the CGNAT IP for a device in **Team & Resources** > **Devices** > **Virtual IPv4/IPv6**.
 
   - term: cloudflared
     general_definition: |-
@@ -47,7 +47,7 @@ entries:
 
   - term: Cloudflare DEX
     general_definition: |-
-      Cloudflare Digital Experience Monitoring (DEX) provides visibility into device, network, and application performance across your Zero Trust organization.
+      Cloudflare Digital Experience Monitoring (DEX) provides visibility into device, network, and application performance across your Cloudflare One organization.
 
   - term: Cloudflare Gateway
     general_definition: |-
@@ -91,7 +91,7 @@ entries:
 
   - term: DoH subdomain
     general_definition: |-
-      a unique DoH subdomain for each DNS location in Cloudflare Zero Trust used in WARP client settings.
+      a unique DoH subdomain for each DNS location in Cloudflare One used in WARP client settings.
 
   - term: DNS location
     general_definition: |-
@@ -101,7 +101,7 @@ entries:
 
   - term: fleet
     general_definition: |-
-      a fleet is a collection of user devices. All devices in a fleet have WARP installed and are connected to a [Cloudflare Zero Trust organization](/cloudflare-one/setup/#create-a-zero-trust-organization).
+      a fleet is a collection of user devices. All devices in a fleet have WARP installed and are connected to a [Cloudflare One organization](/cloudflare-one/setup/#create-a-cloudflare-one-organization).
 
   - term: identity provider
     general_definition: |-
@@ -133,7 +133,7 @@ entries:
 
   - term: MCP server portal
     general_definition: |-
-      a web application in Cloudflare Zero Trust that serves as a gateway to multiple MCP servers.
+      a web application in Cloudflare One that serves as a gateway to multiple MCP servers.
 
   - term: MCP server tool
     general_definition: |-
@@ -169,7 +169,7 @@ entries:
 
   - term: remotely-managed tunnel
     general_definition: |-
-      a Cloudflare Tunnel that was created in Zero Trust under **Networks** > **Tunnels**. Tunnel configuration is stored in Cloudflare, which allows you to manage the tunnel from the dashboard or using the API.
+      a Cloudflare Tunnel whose configuration is stored on Cloudflare rather than on your local machine. You can manage the tunnel in the dashboard under **Networks** > **Connectors** or by using the API.
 
   - term: RDP
     general_definition: |-
@@ -241,11 +241,11 @@ entries:
 
   - term: team domain
     general_definition: |-
-      a unique subdomain assigned to your Cloudflare account (for example, `<your-team-name>.cloudflareaccess.com`), where users will find the apps you have secured behind Cloudflare Zero Trust.
+      a unique subdomain assigned to your Cloudflare account (for example, `<your-team-name>.cloudflareaccess.com`), where users will find the apps you have secured behind Cloudflare One.
 
   - term: team name
     general_definition: |-
-      the customizable portion of your team domain (`<your-team-name>.cloudflareaccess.com`). You can view your team name in Zero Trust under **Settings** > **Custom Pages**.
+      the customizable portion of your team domain (`<your-team-name>.cloudflareaccess.com`). You can view your team name in Cloudflare One under **Settings**.
 
   - term: Terraform
     general_definition: |-
@@ -259,11 +259,11 @@ entries:
 
   - term: User risk score
     general_definition: |-
-      Cloudflare Zero Trust user risk score ranks the likelihood of a user to introduce risk to your organization's systems and data based on the detection of security risk behaviors. Risk scores add user and entity behavior analytics (UEBA) to the Zero Trust platform.
+      ranks the likelihood of a user to introduce risk to your organization's systems and data based on the detection of security risk behaviors. Risk scores add user and entity behavior analytics (UEBA) to the Cloudflare One platform.
 
   - term: User risk score level
     general_definition: |-
-      Cloudflare Zero Trust assigns a risk score of Low, Medium or High based on detections of users' activities, posture, and settings. A user's risk score is equal to the highest-level risk behavior they trigger.
+      Cloudflare One assigns a risk score of Low, Medium or High based on detections of users' activities, posture, and settings. A user's risk score is equal to the highest-level risk behavior they trigger.
 
   - term: Virtual network
     general_definition: |-
