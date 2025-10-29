@@ -9,7 +9,7 @@ sidebar:
 
 Workers tracing is currently in open beta. This page documents current limitations and any upcoming features on our roadmap.
 
-To provide more feedback and send feature requests, head to the [Workers tracing GitHub discussion](https://github.com/cloudflare/workers-sdk/discussions/TODO-GET-THE-LINK).
+To provide more feedback and send feature requests, head to the [Workers tracing GitHub discussion](https://github.com/cloudflare/workers-sdk/discussions/11062).
 
 ### Non-I/O operations may report time of 0 ms
 
