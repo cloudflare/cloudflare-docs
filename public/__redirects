@@ -2431,22 +2431,22 @@
 /cloudflare-one/policies/gateway/* /cloudflare-one/traffic-policies/:splat 301
 
 # Email Security new revamp
-/cloudflare-one/email-security/email-monitoring/download-report/ /cloudflare-one/email-security/monitoring/download-report/ 301
-/cloudflare-one/email-security/email-monitoring/* /cloudflare-one/email-security/monitoring/:splat 301
 /cloudflare-one/email-security/auto-moves/ /cloudflare-one/email-security/settings/auto-moves/ 301
-/cloudflare-one/email-security/detection-settings/detection-settings/* /cloudflare-one/email-security/settings/detection-settings/:splat 301
+/cloudflare-one/email-security/detection-settings/additional-detections/ /cloudflare-one/email-security/settings/detection-settings/additional-detections/ 301
 /cloudflare-one/email-security/detection-settings/allow-policies/ /cloudflare-one/email-security/settings/detection-settings/allow-policies/ 301
 /cloudflare-one/email-security/detection-settings/blocked-senders/ /cloudflare-one/email-security/settings/detection-settings/blocked-senders/ 301
-/cloudflare-one/email-security/detection-settings/trusted-domains/ /cloudflare-one/email-security/settings/detection-settings/trusted-domains/ 301
-/cloudflare-one/email-security/detection-settings/impersonation-registry/* /cloudflare-one/email-security/settings/detection-settings/impersonation-registry/:splat 301
 /cloudflare-one/email-security/detection-settings/configure-link-actions/ /cloudflare-one/email-security/settings/detection-settings/configure-link-actions/ 301
 /cloudflare-one/email-security/detection-settings/configure-text-add-ons/ /cloudflare-one/email-security/settings/detection-settings/configure-text-add-ons/ 301
+/cloudflare-one/email-security/detection-settings/trusted-domains/ /cloudflare-one/email-security/settings/detection-settings/trusted-domains/ 301
+/cloudflare-one/email-security/email-monitoring/download-report/ /cloudflare-one/email-security/monitoring/download-report/ 301
 /cloudflare-one/email-security/reference/domain-information/ /cloudflare-one/email-security/settings/domain-management/domain/ 301
-/cloudflare-one/insights/email-monitoring/phish-submissions/* /cloudflare-one/email-security/settings/phish-submissions/:splat 301
-/cloudflare-one/email-security/phish-guard/* /cloudflare-one/email-security/phishguard/:splat 301
-/cloudflare-one/email-security/settings/trusted-domains/ /cloudflare-one/email-security/settings/detection-settings/trusted-domains/ 301
-/cloudflare-one/email-security/detection-settings/additional-detections/ /cloudflare-one/email-security/settings/detection-settings/additional-detections/ 301
 /cloudflare-one/email-security/settings/configure-text-add-ons/ /cloudflare-one/email-security/settings/detection-settings/configure-text-add-ons/ 301
+/cloudflare-one/email-security/settings/trusted-domains/ /cloudflare-one/email-security/settings/detection-settings/trusted-domains/ 301
+/cloudflare-one/email-security/detection-settings/detection-settings/* /cloudflare-one/email-security/settings/detection-settings/:splat 301
+/cloudflare-one/email-security/detection-settings/impersonation-registry/* /cloudflare-one/email-security/settings/detection-settings/impersonation-registry/:splat 301
+/cloudflare-one/email-security/email-monitoring/* /cloudflare-one/email-security/monitoring/:splat 301
+/cloudflare-one/email-security/phish-guard/* /cloudflare-one/email-security/phishguard/:splat 301
+/cloudflare-one/insights/email-monitoring/phish-submissions/* /cloudflare-one/email-security/settings/phish-submissions/:splat 301
 
 # Learning paths
 
