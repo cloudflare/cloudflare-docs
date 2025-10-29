@@ -114,29 +114,55 @@ df['sales'].sum()  # Last expression is automatically returned
     </TabItem>
     <TabItem label="WebSocket Connections">
     	```typescript
-    	import { getSandbox, connect } from '@cloudflare/sandbox';
+    	import { getSandbox, connect, type Sandbox } from "@cloudflare/sandbox";
 
-    	export default {
-    		async fetch(request: Request, env: Env): Promise<Response> {
-    			const sandbox = getSandbox(env.Sandbox, 'user-123');
+export { Sandbox } from "@cloudflare/sandbox";
 
-    			// Start a WebSocket echo server
-    			const serverCode = `
-    				Bun.serve({
-    					port: 8080,
-    					fetch(req, server) { if (server.upgrade(req)) return; },
-    					websocket: { message(ws, msg) { ws.send(\`Echo: \${msg}\`); } }
-    				});
-    			`;
-    			await sandbox.writeFile('/workspace/server.js', serverCode);
-    			await sandbox.startProcess('bun /workspace/server.js');
+type Env = {
+Sandbox: DurableObjectNamespace<Sandbox>;
+};
 
-    			// Route WebSocket connections to the server
-    			return await connect(sandbox, request, 8080);
-    		}
-    	};
-    	```
-    </TabItem>
+const initialized = new Set<string>();
+
+export default {
+  async fetch(request: Request, env: Env): Promise<Response> {
+    const sandboxId = "my-sandbox";
+    const sandbox = getSandbox(env.Sandbox, sandboxId);
+
+    if (request.headers.get('Upgrade')?.toLowerCase() === 'websocket') {
+      // Initialize WebSocket server on first connection
+      if (!initialized.has(sandboxId)) {
+        const serverCode = `
+
+Bun.serve({
+port: 8080,
+fetch(req, server) {
+if (server.upgrade(req)) return;
+return new Response('WebSocket server', { status: 200 });
+},
+websocket: {
+message(ws, msg) {
+ws.send(\`Echo: \${msg}\`);
+}
+}
+});
+`;
+await sandbox.writeFile('/workspace/server.js', serverCode);
+await sandbox.startProcess('bun /workspace/server.js');
+await new Promise(resolve => setTimeout(resolve, 1000));
+initialized.add(sandboxId);
+}
+
+      return await connect(sandbox, request, 8080);
+    }
+
+    return new Response('WebSocket endpoint. Connect using ws:// protocol.', { status: 200 });
+
+},
+};
+
+```
+</TabItem>
 
 </Tabs>
 
@@ -294,3 +320,4 @@ Stateful coordination layer that enables Sandbox to maintain persistent environm
 </LinkTitleCard>
 
 </CardGrid>
+```
