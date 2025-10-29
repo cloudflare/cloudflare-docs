@@ -60,7 +60,11 @@ await sandbox.unexposePort(port: number): Promise<void>
 
 - `port` - Port number to unexpose
 
-<TypeScriptExample>``` await sandbox.unexposePort(8000); ```</TypeScriptExample>
+<TypeScriptExample>
+```ts
+await sandbox.unexposePort(8000);
+```
+</TypeScriptExample>
 
 ### `getExposedPorts()`
 
@@ -156,4 +160,3 @@ initialized.add(sandboxId);
 
 - [Preview URLs concept](/sandbox/concepts/preview-urls/) - How preview URLs work
 - [Commands API](/sandbox/api/commands/) - Start background processes
-```
