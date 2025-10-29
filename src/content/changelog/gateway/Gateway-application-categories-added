@@ -4,8 +4,7 @@ description: Manage outbound traffic with more granular application categories
 date: 2025-10-28
 ---
 
-This update significantly improves your control over HTTP traffic by introducing new, more granular application categories in the Gateway product. 
-This change is part of our continuous effort to give you more targeted action and flexible policy creation against unwanted outbound traffic.
+To give you precision and flexibility while creating policies to block unwanted traffic, we are introducing new, more granular application categories in the Gateway product. 
 
 We've added the following categories to provide more precise organization and allow for finer-grained policy creation, designed around how users interact with different types of applications:
 - Business
@@ -18,11 +17,6 @@ We've added the following categories to provide more precise organization and al
 - Photography & Graphic Design
 - Travel
 
-With this update, you can:
-- Create more flexible and powerful HTTP policies by targeting precise application categories.
-- Achieve more accurate traffic management and policy enforcement.
-- Improve your organization's security posture with greater control over application-level traffic.
-
 The new categories are live now, but we are providing a transition period for existing applications to be fully remapped to these new categories. 
 The full remapping will be completed by January 30, 2026.
 
@@ -30,4 +24,4 @@ We encourage you to use this time to:
 - Review the new category structure.
 - Identify and adjust any existing HTTP policies that reference older categories to ensure a smooth transition.
 
-For more information on creating DNS policies, see our [DNS policy documentation](/cloudflare-one/traffic-policies/dns-policies/).
+For more information on creating HTTP policies, see our [applications type documentation](/cloudflare-one/traffic-policies/application-app-types/).
