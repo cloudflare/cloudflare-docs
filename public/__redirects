@@ -2146,7 +2146,7 @@
 /cloudflare-one/analytics/private-network-discovery/ /cloudflare-one/insights/analytics/shadow-it-discovery/#private-network-origins 301
 /cloudflare-one/analytics/access/ /cloudflare-one/insights/analytics/access/ 301
 /cloudflare-one/analytics/gateway/ /cloudflare-one/insights/analytics/gateway/ 301
-/cloudflare-one/analytics/users/ /cloudflare-one/insights/logs/users/ 301
+/cloudflare-one/analytics/users/ /cloudflare-one/team-and-resources/users/users/ 301
 /cloudflare-one/api-terraform/access-api-examples/azure-group/ /cloudflare-one/api-terraform/access-api-examples/entra-group/ 301
 /cloudflare-one/api-terraform/gateway-api-examples/ /cloudflare-one/policies/gateway/ 301
 /cloudflare-one/api-terraform/gateway-api-examples/dns-policy/ /cloudflare-one/policies/gateway/dns-policies/common-policies/ 301
@@ -2252,7 +2252,7 @@
 /cloudflare-one/identity/idp-integration/ping-saml/ /cloudflare-one/identity/idp-integration/pingfederate-saml/ 301
 /cloudflare-one/identity/idp-integration/saml-okta/ /cloudflare-one/identity/idp-integration/okta-saml/ 301
 /cloudflare-one/identity/login-page/ /cloudflare-one/applications/login-page/ 301
-/cloudflare-one/insights/analytics/ /cloudflare-one/insights/analytics/analytics-overview/ 301
+/cloudflare-one/insights/analytics/ /cloudflare-one/insights/analytics-overview/ 301
 /cloudflare-one/insights/dex/fleet-status/ /cloudflare-one/insights/dex/monitoring/ 301
 /cloudflare-one/insights/logs/logpush/rdata/ /cloudflare-one/insights/logs/logpush/#parse-logpush-logs 301
 /cloudflare-one/applications/custom-pages/ /cloudflare-one/applications/ 301
@@ -2424,7 +2424,8 @@
 /cloudflare-one/applications/casb/manage-findings/ /cloudflare-one/cloud-and-saas-findings/manage-findings/ 301
 /cloudflare-one/applications/casb/casb-dlp/ /cloudflare-one/cloud-and-saas-findings/casb-dlp/ 301
 /cloudflare-one/insights/analytics/analytics-overview/ /cloudflare-one/insights/analytics-overview/ 301
-
+/cloudflare-one/insights/risk-score/ /cloudflare-one/team-and-resources/users/risk-score/ 301
+/cloudflare-one/insights/logs/users/ /cloudflare-one/team-and-resources/users/users/ 301
 
 # Email Security new revamp
 /cloudflare-one/email-security/email-monitoring/download-report/ /cloudflare-one/email-security/monitoring/download-report/ 301
