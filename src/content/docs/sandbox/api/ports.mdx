@@ -86,19 +86,22 @@ console.log(`${port.name || port.port}: ${port.exposedAt}`);
 ```
 </TypeScriptExample>
 
-### `connect()`
+### `wsConnect()`
 
-Route incoming WebSocket upgrade requests to WebSocket servers running in the sandbox.
+Connect to WebSocket servers running in the sandbox. Use this when your Worker needs to establish WebSocket connections with services in the sandbox.
+
+**Common use cases:**
+- Route incoming WebSocket upgrade requests with custom authentication or authorization
+- Connect from your Worker to get real-time data from sandbox services
+
+For exposing WebSocket services via public preview URLs, use `exposePort()` with `proxyToSandbox()` instead. See [WebSocket Connections guide](/sandbox/guides/websocket-connections/) for examples.
 
 ```ts
-import { connect } from '@cloudflare/sandbox';
-
-const response = await connect(sandbox: Sandbox, request: Request, port: number): Promise<Response>
+const response = await sandbox.wsConnect(request: Request, port: number): Promise<Response>
 ```
 
 **Parameters**:
 
-- `sandbox` - Sandbox instance containing the WebSocket server
 - `request` - Incoming WebSocket upgrade request
 - `port` - Port number (1024-65535, excluding 3000)
 
@@ -106,53 +109,18 @@ const response = await connect(sandbox: Sandbox, request: Request, port: number)
 
 <TypeScriptExample>
 ```ts
-import { getSandbox, connect, type Sandbox } from "@cloudflare/sandbox";
-
-export { Sandbox } from "@cloudflare/sandbox";
-
-type Env = {
-Sandbox: DurableObjectNamespace<Sandbox>;
-};
-
-const initialized = new Set<string>();
+import { getSandbox } from "@cloudflare/sandbox";
 
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
-    const sandboxId = "my-sandbox";
-    const sandbox = getSandbox(env.Sandbox, sandboxId);
-
     if (request.headers.get('Upgrade')?.toLowerCase() === 'websocket') {
-      // Initialize WebSocket server on first connection
-      if (!initialized.has(sandboxId)) {
-        const serverCode = `
-
-Bun.serve({
-port: 8080,
-fetch(req, server) {
-if (server.upgrade(req)) return;
-return new Response('WebSocket server', { status: 200 });
-},
-websocket: {
-message(ws, msg) {
-ws.send(\`Echo: \${msg}\`);
-}
-}
-});
-`;
-await sandbox.writeFile('/workspace/server.js', serverCode);
-await sandbox.startProcess('bun /workspace/server.js');
-await new Promise(resolve => setTimeout(resolve, 1000));
-initialized.add(sandboxId);
-}
-
-      return await connect(sandbox, request, 8080);
+      const sandbox = getSandbox(env.Sandbox, 'my-sandbox');
+      return await sandbox.wsConnect(request, 8080);
     }
 
-    return new Response('WebSocket endpoint. Connect using ws:// protocol.', { status: 200 });
-
-},
+    return new Response('WebSocket endpoint', { status: 200 });
+  }
 };
-
 ```
 </TypeScriptExample>
 
