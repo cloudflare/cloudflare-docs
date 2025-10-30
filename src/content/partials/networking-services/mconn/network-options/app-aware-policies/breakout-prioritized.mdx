@@ -123,13 +123,40 @@ text={`
 4. Select **Traffic Steering**.
 5. In **${props.featureName}**, select **Assign application traffic**.
 6. Select one or more applications that should bypass Cloudflare filtering from the list. You can also use the search box.
-7. (Optional) You can also pin an application to a WAN port. In Preferred breakout port, select the WAN you want to assign your applications to. Refer to Designate WAN ports for breakout apps for more information.
-8. Select **Save**.
-
-The traffic for the application you chose ${props.whatHappensApp}.
 `}
 inline={false}
 />
+
+{ props.magicWord === "breakout" && (
+	<Markdown
+	text={`
+7. (Optional) You can also pin an application to a WAN port. In Preferred breakout port, select the WAN you want to assign your applications to. Refer to Designate WAN ports for breakout apps for more information.
+	`}
+	inline={false}
+	/>
+)
+}
+
+{ props.magicWord === "breakout" ? (
+	<Markdown
+	text={`
+8. Select **Save**.
+
+The traffic for the application you chose ${props.whatHappensApp}.
+	`}
+	inline={false}
+	/>
+) : (
+	<Markdown
+	text={`
+7. Select **Save**.
+
+The traffic for the application you chose ${props.whatHappensApp}.
+	`}
+	inline={false}
+	/>
+)
+}
 
 </TabItem> <TabItem label="API">
 
