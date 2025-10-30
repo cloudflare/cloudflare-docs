@@ -890,7 +890,7 @@ entries:
     example_value: |-
       "TLSv1.2"
 
-    - name: cf.edge.client_tcp
+  - name: cf.edge.client_tcp
     data_type: Boolean
     categories: [Request]
     keywords: [request, tcp, network, client]
@@ -902,7 +902,7 @@ entries:
     data_type: Number
     categories: [Request]
     keywords: [request, timing, tcp, rtt, performance, latency]
-    summary: The smoothed TCP round trip time from client to Cloudflare in milliseconds.
+    summary: The smoothed TCP round-trip time from client to Cloudflare in milliseconds.
     example_value: |-
       20
 
