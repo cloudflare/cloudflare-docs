@@ -7,16 +7,16 @@ sidebar:
 
 import { Render, Markdown, GlossaryTooltip } from "~/components";
 
-![A schematic showing where Email Security is in the life cycle of an email received](src/assets/email-security/Email_Security_O365_MXInline.png)
+![A schematic showing where Email security is in the life cycle of an email received](src/assets/email-security/Email_Security_O365_MXInline.png)
 
-In this tutorial, you will learn how to configure Microsoft 365 with Email Security as its MX record.
+In this tutorial, you will learn how to configure Microsoft 365 with Email security as its MX record.
 
 <Render
 	file="email-security/deployment/mx-deployment-prereq"
 	product="cloudflare-one"
 />
 
-## 1. Add Email Security IP addresses to Allow List
+## 1. Add Email security IP addresses to Allow List
 
 1. Go to the [Anti-spam policies page](https://security.microsoft.com/antispam) > Select **Edit connection filter policy**.
 2. In **Always allow messages from the following IP addresses or address range**, add IP addresses and CIDR blocks mentioned in the [Egress IPs](/cloudflare-one/email-security/setup/pre-delivery-deployment/egress-ips/) page.
@@ -34,7 +34,7 @@ In this tutorial, you will learn how to configure Microsoft 365 with Email Secur
 1. [Set up a connector](https://learn.microsoft.com/en-us/exchange/mail-flow-best-practices/use-connectors-to-configure-mail-flow/set-up-connectors-to-route-mail#1-set-up-a-connector-from-your-email-server-to-microsoft-365-or-office-365).
 2. Select **Partner organization** under **Connection from**.
    - Provide a name for the connector:
-     - **Name**: `Email Security Inbound Connector`
+     - **Name**: `Email security Inbound Connector`
      - **Description**: `Inbound connector for Enhanced Filtering`
 3. In **Authenticating sent email**, select **By verifying that the IP address of the sending server matches one of the following IP addresses, which belongs to your partner organization.**
 4. Enter all of the egress IPs in the [Egress IPs](/cloudflare-one/email-security/setup/pre-delivery-deployment/egress-ips/) page.
@@ -67,14 +67,14 @@ To configure anti-spam policies:
   - **Select quarantine policy**: _AdminOnlyAccessPolicy_.
 - **High confidence phishing**: _Quarantine message_.
   - **Select quarantine policy**: _AdminOnlyAccessPolicy_.
-- **Retain spam in quarantine for this many days**: Default is 15 days. Email Security recommends 15-30 days.
+- **Retain spam in quarantine for this many days**: Default is 15 days. Email security recommends 15-30 days.
   - Select the spam actions in the above step:
 
 8. Select **Save**.
 
 ## 4. Create transport rules
 
-To create the transport rules that will send emails with certain [dispositions](/cloudflare-one/email-security/reference/dispositions-and-attributes/#dispositions) to Email Security:
+To create the transport rules that will send emails with certain [dispositions](/cloudflare-one/email-security/reference/dispositions-and-attributes/#dispositions) to Email security:
 
 1. Open the new [Exchange admin center](https://admin.exchange.microsoft.com/#/homepage).
 2. Go to **Mail flow** > **Rules**.
@@ -91,10 +91,10 @@ To create the transport rules that will send emails with certain [dispositions](
 5. Select **Next**.
 6. You can use the default values on this screen. Select **Next**.
 7. Review your settings and select **Finish** > **Done**.
-8. Select the rule **Email Security Deliver to Junk Email folder** you have just created, and **Enable**.
+8. Select the rule **Email security Deliver to Junk Email folder** you have just created, and **Enable**.
 9. Select **Add a Rule** > **Create a new rule**.
 10. Set the following rule conditions:
-    - **Name**: `Email Security Deliver to Junk Email folder`.
+    - **Name**: `Email security Deliver to Junk Email folder`.
     - **Apply this rule if**: _The message headers_ > _includes any of these words_.
       - **Enter text**: `X-CFEmailSecurity-Disposition` > **Save**.
       - **Enter words**: `MALICIOUS`, `UCE`, `SPOOF` > **Add** > **Save**.
@@ -116,10 +116,10 @@ To create the transport rules that will send emails with certain [dispositions](
 
 ## 6. (Recommended) Secure Microsoft 365 from MX records bypass
 
-One method of a DNS attack is to search for old MX records and send <GlossaryTooltip term="phishing">phishing</GlossaryTooltip> emails directly to the mail server. To secure the email flow, you should enforce an email flow where inbound messages are accepted by Microsoft 365 only when they originate from Email Security. This can be done by adding a connector to only allow email from Email Security with TLS encryption. This step is optional but recommended.
+One method of a DNS attack is to search for old MX records and send <GlossaryTooltip term="phishing">phishing</GlossaryTooltip> emails directly to the mail server. To secure the email flow, you should enforce an email flow where inbound messages are accepted by Microsoft 365 only when they originate from Email security. This can be done by adding a connector to only allow email from Email security with TLS encryption. This step is optional but recommended.
 
 :::caution[Important]
-This step should not be performed until 72 hours after all domains in your Microsoft 365 organization have been onboarded to Email Security, and Email Security is their MX record. If a domain has not been onboarded or DNS is still propagating, you will impact production email flow for that domain.
+This step should not be performed until 72 hours after all domains in your Microsoft 365 organization have been onboarded to Email security, and Email security is their MX record. If a domain has not been onboarded or DNS is still propagating, you will impact production email flow for that domain.
 :::
 
 #### Create Connector
@@ -136,7 +136,7 @@ This step should not be performed until 72 hours after all domains in your Micro
 
 6. Set the following options:
    - **Name** - `Secure M365 Inbound`
-   - **Description** - `Only accept inbound email from Email Security`
+   - **Description** - `Only accept inbound email from Email security`
 
 7. Select **Next**.
 

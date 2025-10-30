@@ -1,18 +1,42 @@
 ---
 params:
   - productName
+  - wanName
 ---
 
-import { DashButton } from '~/components';
+import { DashButton, Markdown } from '~/components';
 
 The Interrupt window defines when {props.productName} can update its systems. When {props.productName} is updating, this may result in an interruption to existing connections. Set up a time window that minimizes disruption to your sites.
 
-1. In the Cloudflare dashboard, go to the **Configuration* page.
-
-<DashButton url="/?to=/:account/magic-wan/configuration" />
-
-2. In the **Connectors** tab, select the Connector for which you want to set up the update window > **Edit**.
-3. In **Interrupt window**, select the most appropriate time for the Connector to update its systems:
-   - **Timezone**: Select the time zone for the Connector to update.
-   - **Start time**: Choose an hour for the Connector to start updating. Cloudflare recommends you choose an hour when there is minimal activity in your network, to avoid potential disruptions.
-   - **Duration**: Duration indicates the time window during which the Connector is scheduled to update. For example, if you configure your Connector to update at `22:00` and specify a **Duration** of `4 hours`, the Connector will attempt to update within the four-hour period following `22:00`.
+{ props.wanName === "WAN Tunnels" ? (
+	<>
+		<Markdown
+	text={`
+		1. Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a>, and go to **Networks** > **Connectors**.
+		2. In  **Appliances** > **Profiles**, select the ${props.productName} for which you want to set up the update window > **Edit**.
+	`}
+	inline={false}
+	/>
+	</>
+) : (
+	<>
+		<Markdown
+	text={`
+		1. In the Cloudflare dashboard, go to the **Configuration** page.
+	`}
+	inline={false}
+	/>
+		<DashButton url="/?to=/:account/magic-wan/configuration" />
+		<Markdown
+	text={`
+		2. In the **${props.productName}** tab, select the ${props.productName} for which you want to set up the update window > **Edit**.
+	`}
+	inline={false}
+	/>
+	</>
+)
+}
+3. In **Interrupt window**, select the most appropriate time for the {props.productName} to update its systems:
+   - **Timezone**: Select the time zone for the {props.productName} to update.
+   - **Start time**: Choose an hour for the {props.productName} to start updating. Cloudflare recommends you choose an hour when there is minimal activity in your network, to avoid potential disruptions.
+   - **Duration**: Duration indicates the time window during which the {props.productName} is scheduled to update. For example, if you configure your {props.productName} to update at `22:00` and specify a **Duration** of `4 hours`, the {props.productName} will attempt to update within the four-hour period following `22:00`.

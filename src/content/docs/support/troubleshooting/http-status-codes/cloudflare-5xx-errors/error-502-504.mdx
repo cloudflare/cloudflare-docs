@@ -53,6 +53,6 @@ If you need further assistance from our Support team, provide the following deta
 
 ### Known Cloudflare issues leading to HTTP Error 502 or 504
 
-- Using [Gateway](/cloudflare-one/policies/gateway/) can lead to an HTTP Error `502` if the origin only partially supports HTTP/2. Refer to [Gateway FAQ](/cloudflare-one/faq/troubleshooting/#i-see-error-504-when-browsing-to-a-website) for more details and resolution.
+- Using [Gateway](/cloudflare-one/traffic-policies/) can lead to an HTTP Error `502` if the origin only partially supports HTTP/2. Refer to [Gateway FAQ](/cloudflare-one/faq/troubleshooting/#i-see-error-504-when-browsing-to-a-website) for more details and resolution.
 
 - You may see an influx of HTTP Error `504` with the `RequestSource` of `earlyHintsCache` in Cloudflare Logs when Early Hints is enabled, which is expected and benign. Refer to [the Early Hints article](/cache/advanced-configuration/early-hints/#emit-early-hints) for more details and resolution.

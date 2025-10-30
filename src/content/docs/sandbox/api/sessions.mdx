@@ -13,6 +13,10 @@ Create isolated execution contexts within a sandbox. Each session maintains its 
 Every sandbox has a default session that automatically maintains shell state. Create additional sessions when you need isolated shell contexts for different environments or parallel workflows.
 :::
 
+:::note
+For sandbox-level configuration options like `keepAlive`, refer to the [Sandbox options configuration](/sandbox/configuration/sandbox-options/).
+:::
+
 ## Methods
 
 ### `createSession()`
@@ -120,7 +124,9 @@ await sandbox.destroy(): Promise<void>
 ```
 
 :::note
-Containers automatically sleep after 3 minutes of inactivity, but still count toward account limits. Use `destroy()` to immediately free up resources.
+Containers automatically sleep after 10 minutes of inactivity, but still count toward account limits. Use `destroy()` to immediately free up resources.
+
+**Important**: When using [`keepAlive: true`](/sandbox/configuration/sandbox-options/#keepalive), containers will not automatically timeout, so calling `destroy()` is **required** to prevent containers running indefinitely.
 :::
 
 <TypeScriptExample>
@@ -143,10 +149,10 @@ async function executeCode(code: string): Promise<string> {
 
 The `ExecutionSession` object has all sandbox methods bound to the specific session:
 
-**Commands**: [`exec()`](/sandbox/api/commands/#exec), [`execStream()`](/sandbox/api/commands/#execstream)  
-**Processes**: [`startProcess()`](/sandbox/api/commands/#startprocess), [`listProcesses()`](/sandbox/api/commands/#listprocesses), [`killProcess()`](/sandbox/api/commands/#killprocess), [`killAllProcesses()`](/sandbox/api/commands/#killallprocesses), [`getProcessLogs()`](/sandbox/api/commands/#getprocesslogs), [`streamProcessLogs()`](/sandbox/api/commands/#streamprocesslogs)  
-**Files**: [`writeFile()`](/sandbox/api/files/#writefile), [`readFile()`](/sandbox/api/files/#readfile), [`mkdir()`](/sandbox/api/files/#mkdir), [`deleteFile()`](/sandbox/api/files/#deletefile), [`renameFile()`](/sandbox/api/files/#renamefile), [`moveFile()`](/sandbox/api/files/#movefile), [`gitCheckout()`](/sandbox/api/files/#gitcheckout)  
-**Environment**: [`setEnvVars()`](/sandbox/api/sessions/#setenvvars)  
+**Commands**: [`exec()`](/sandbox/api/commands/#exec), [`execStream()`](/sandbox/api/commands/#execstream)
+**Processes**: [`startProcess()`](/sandbox/api/commands/#startprocess), [`listProcesses()`](/sandbox/api/commands/#listprocesses), [`killProcess()`](/sandbox/api/commands/#killprocess), [`killAllProcesses()`](/sandbox/api/commands/#killallprocesses), [`getProcessLogs()`](/sandbox/api/commands/#getprocesslogs), [`streamProcessLogs()`](/sandbox/api/commands/#streamprocesslogs)
+**Files**: [`writeFile()`](/sandbox/api/files/#writefile), [`readFile()`](/sandbox/api/files/#readfile), [`mkdir()`](/sandbox/api/files/#mkdir), [`deleteFile()`](/sandbox/api/files/#deletefile), [`renameFile()`](/sandbox/api/files/#renamefile), [`moveFile()`](/sandbox/api/files/#movefile), [`gitCheckout()`](/sandbox/api/files/#gitcheckout)
+**Environment**: [`setEnvVars()`](/sandbox/api/sessions/#setenvvars)
 **Code Interpreter**: [`createCodeContext()`](/sandbox/api/interpreter/#createcodecontext), [`runCode()`](/sandbox/api/interpreter/#runcode), [`listCodeContexts()`](/sandbox/api/interpreter/#listcodecontexts), [`deleteCodeContext()`](/sandbox/api/interpreter/#deletecodecontext)
 
 ## Related resources

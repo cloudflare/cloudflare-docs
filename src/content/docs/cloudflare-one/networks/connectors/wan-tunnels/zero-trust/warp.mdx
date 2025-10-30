@@ -1,0 +1,33 @@
+---
+title: WARP
+pcx_content_type: tutorial
+head:
+  - tag: title
+    content: Use WARP as an on-ramp
+description: >-
+  Use WARP as an on-ramp to WAN Tunnels and route traffic from user devices with WARP installed to any network connected with Cloudflare Tunnel or IP-layer tunnels (anycast GRE, IPsec, or CNI).
+---
+
+import { Render } from "~/components";
+
+<Render
+	file="magic-wan/zero-trust/warp"
+	product="networking-services"
+	params={{
+		productName: "WAN Tunnels",
+		warpURL: "/cloudflare-one/team-and-resources/devices/warp/",
+		greIpsecURL: "/cloudflare-one/networks/connectors/wan-tunnels/configuration/manually/how-to/configure-tunnel-endpoints/#add-tunnels",
+		magicFirewallName: "Magic Firewall",
+		magicFirewallURL: "/magic-firewall/",
+		setupZeroTrustAccountURL: "/cloudflare-one/setup/#create-a-zero-trust-organization",
+		ztDashPath: "My Team > Devices",
+		splitTunnelsURL: "/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/",
+		warpDeploymentURL: "/cloudflare-one/team-and-resources/devices/warp/deployment/",
+		warpIngressIpURL: "/cloudflare-one/team-and-resources/devices/warp/deployment/firewall/#warp-ingress-ip",
+		mwanConnectorName: "Appliances",
+		domainFallbackURL: "/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/local-domains/#add-a-domain",
+		cloudflareTunnelURL: "/cloudflare-one/networks/connectors/cloudflare-tunnel/",
+		tracerouteURL: "/cloudflare-one/networks/connectors/wan-tunnels/configuration/manually/how-to/traceroute/"
+
+	}}
+/>

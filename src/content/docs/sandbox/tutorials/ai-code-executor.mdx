@@ -3,6 +3,7 @@ title: Build an AI code executor
 pcx_content_type: tutorial
 sidebar:
   order: 1
+description: Use Claude to generate Python code from natural language and execute it securely in sandboxes.
 ---
 
 import { Render, PackageManagers } from "~/components";
@@ -97,9 +98,15 @@ Return ONLY the code, no explanations.`
 				return Response.json({ error: 'Failed to generate code' }, { status: 500 });
 			}
 
+			// Strip markdown code fences if present
+			const cleanCode = generatedCode
+				.replace(/^```python?\n?/, '')
+				.replace(/\n?```\s*$/, '')
+				.trim();
+
 			// Execute the code in a sandbox
 			const sandbox = getSandbox(env.Sandbox, 'demo-user');
-			await sandbox.writeFile('/tmp/code.py', generatedCode);
+			await sandbox.writeFile('/tmp/code.py', cleanCode);
 			const result = await sandbox.exec('python /tmp/code.py');
 
 			return Response.json({
@@ -127,15 +134,19 @@ Return ONLY the code, no explanations.`
 4. Executes with `sandbox.exec('python /tmp/code.py')`
 5. Returns both the code and execution results
 
-## 4. Set your Anthropic API key
+## 4. Set up local environment variables
 
-Store your Anthropic API key as a secret:
+Create a `.dev.vars` file in your project root for local development:
 
 ```sh
-npx wrangler secret put ANTHROPIC_API_KEY
+echo "ANTHROPIC_API_KEY=your_api_key_here" > .dev.vars
 ```
 
-Paste your API key from the [Anthropic Console](https://console.anthropic.com/) when prompted.
+Replace `your_api_key_here` with your actual API key from the [Anthropic Console](https://console.anthropic.com/).
+
+:::note
+The `.dev.vars` file is automatically gitignored and only used during local development with `npm run dev`.
+:::
 
 ## 5. Test locally
 
@@ -176,6 +187,14 @@ Deploy your Worker:
 ```sh
 npx wrangler deploy
 ```
+
+Then set your Anthropic API key as a production secret:
+
+```sh
+npx wrangler secret put ANTHROPIC_API_KEY
+```
+
+Paste your API key from the [Anthropic Console](https://console.anthropic.com/) when prompted.
 
 :::caution
 After first deployment, wait 2-3 minutes for container provisioning. Check status with `npx wrangler containers list`.

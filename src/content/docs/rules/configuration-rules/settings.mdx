@@ -296,27 +296,3 @@ API values: `"off"`, `"flexible"`, `"full"`, `"strict"`, `"origin_pull"`.
 <Render file="configuration-rule-link-to-examples" product="rules" />
 
 </Details>
-
-## SXG
-
-[Signed Exchanges (SXG)](/speed/optimization/other/signed-exchanges/) is an open standard that makes it possible to cryptographically authenticate the origin of a resource independently of how it is delivered.
-
-Use this setting to turn on or off signed exchanges for matching requests.
-
-<Details header="API information">
-
-API configuration property name: `"sxg"` (boolean).
-
-```json title="API configuration example"
-"action_parameters": {
-  "sxg": false
-}
-```
-
-<Render file="configuration-rule-link-to-examples" product="rules" />
-
-</Details>
-
-:::caution[Deprecation notice]
-Signed exchanges is being deprecated and will be removed on October 20, 2025.
-:::

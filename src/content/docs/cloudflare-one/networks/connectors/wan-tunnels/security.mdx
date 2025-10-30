@@ -1,0 +1,23 @@
+---
+title: Security filters
+pcx_content_type: concept
+sidebar:
+  order: 6
+head:
+  - tag: title
+    content: Enable security filters
+
+---
+
+import { Render } from "~/components"
+
+<Render file="magic-wan/security-filters"
+	product="networking-services"
+	params={{
+		productNameWAN: "WAN Tunnels",
+		magicFirewallPlansURL: "/magic-firewall/plans/",
+		productNameFirewall: "Magic Firewall",
+		magicFirewallURL: "/magic-firewall/",
+		gatewayURL: "/cloudflare-one/networks/connectors/wan-tunnels/zero-trust/cloudflare-gateway/"
+		}}
+/>

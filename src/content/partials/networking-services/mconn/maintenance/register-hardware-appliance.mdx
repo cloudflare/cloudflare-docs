@@ -1,18 +1,38 @@
 ---
 params:
+  - magicWord?
   - productName
 ---
 
 import { DashButton } from "~/components";
 
+To set up and use the hardware version of {props.productName}, you first need to register it with your account. This is not applicable to Virtual {props.productName}.
 
-1. In the Cloudflare dashboard, go to Magic WAN's **Configuration** page.
+{/* Dashboard steps for WAN Tunnels (Cloudflare One dashboard) */}
+{ props.magicWord === "WAN Tunnels" && (
+	<>
+	<ol>
+		<li>Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a>, and go to <strong>Networks</strong>.</li>
+		<li>Go to <strong>Connectors</strong> &gt; <strong>Appliances</strong>, and select <strong>Register an appliance</strong>.</li>
+	</ol>
+	</>
+)
+}
 
-   <DashButton url="/?to=/:account/magic-wan/configuration" />
-
-2. Under **Connectors**, select **Register your appliance**.
+{/* Dashboard steps for Magic WAN (standalone dashboard) */}
+{ props.magicWord !== "WAN Tunnels" && (
+	<>
+	<ol>
+		<li>In the Cloudflare dashboard, go to Magic WAN's <strong>Configuration</strong> page.
+			<DashButton url="/?to=/:account/magic-wan/configuration" />
+		</li>
+		<li>Under <strong>Connectors</strong>, select <strong>Register your appliance</strong>.</li>
+	</ol>
+	</>
+)
+}
 3. In **Appliance details** > **Serial number**, insert the serial number for your device. You can optionally add notes about the {props.productName} you are adding to the dashboard.
 4. (Optional) Select **Add** below **Serial number** to add multiple {props.productName}s  at once to your account.
 5. Select **Register appliance**.
 
-Your device is now registered with your account. Select **Add on-ramps** to continue with the setup process, or **Return to connections** to check your newly added Connector.
+Your device is now registered with your account.

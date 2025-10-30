@@ -9,7 +9,26 @@ import { Tabs, TabItem, Render } from "~/components";
 
 The `/snapshot` endpoint captures both the HTML content and a screenshot of the webpage in one request. It returns the HTML as a text string and the screenshot as a Base64-encoded image.
 
+## Endpoint
+
+```txt
+https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/snapshot
+```
+
+## Required fields
+You must provide either `url` or `html`:
+-  `url` (string)
+-  `html` (string)
+
+## Common use cases
+
+-  Capture both the rendered HTML and a visual screenshot in a single API call
+-  Archive pages with visual and structural data together
+-  Build monitoring tools that compare visual and DOM differences over time
+
 ## Basic usage
+
+### Capture a snapshot from a URL
 
 <Tabs syncKey="workersExamples"> <TabItem label="curl">
 
@@ -67,6 +86,8 @@ console.log(snapshot.content);
 :::note[Looking for more parameters?]
 Visit the [Browser Rendering PDF API reference](/api/resources/browser_rendering/subresources/snapshot/methods/create/) for all available parameters, such as setting HTTP credentials using `authenticate`, setting `cookies`, and customizing load behavior using `gotoOptions`.
 :::
+  
+### Create a snapshot from custom HTML
 
 The `html` property in the JSON payload, it sets the html to `<html><body>Advanced Snapshot</body></html>` then does the following steps:
 

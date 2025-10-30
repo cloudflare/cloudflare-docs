@@ -8,7 +8,7 @@ head:
     content: Enable Total TLS
 ---
 
-import { Render, TabItem, Tabs } from "~/components";
+import { Render, TabItem, Tabs, DashButton } from "~/components";
 
 To enable [Total TLS](/ssl/edge-certificates/additional-options/total-tls/) - which issues individual certificates for your proxied hostnames - follow these instructions:
 
@@ -16,10 +16,11 @@ To enable [Total TLS](/ssl/edge-certificates/additional-options/total-tls/) - wh
 
 To enable Total TLS in the dashboard:
 
-1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com).
-2. Choose your account and domain.
-3. Go to **SSL/TLS** > **Edge Certificates**.
-4. For **Total TLS**, switch the toggle to **On** and - if desired - choose an issuing **Certificate Authority**.
+1. In the Cloudflare dashboard, go to the **Edge Certificates** page.
+
+   <DashButton url="/?to=/:account/:zone/ssl-tls/edge-certificates" />
+
+2. For **Total TLS**, switch the toggle to **On** and - if desired - choose an issuing **Certificate Authority**.
 
 </TabItem> <TabItem label="API">
 

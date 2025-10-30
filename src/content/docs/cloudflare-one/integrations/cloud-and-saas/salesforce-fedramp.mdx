@@ -1,0 +1,30 @@
+---
+pcx_content_type: reference
+title: Salesforce (FedRAMP)
+rss: file
+head:
+  - tag: title
+    content: Salesforce (FedRAMP) - CASB
+sidebar:
+  order: 14
+---
+
+import { Render } from "~/components";
+
+<Render
+	file="casb/fedramp-availability"
+	product="cloudflare-one"
+	params={{
+		integrationName: "Salesforce (FedRAMP)",
+	}}
+/>
+
+<Render
+	file="casb/salesforce-integration"
+	product="cloudflare-one"
+	params={{
+		integrationName: "Salesforce (FedRAMP)",
+		environmentName: "FedRAMP-compliant Salesforce environment",
+		slugifiedName: "salesforce-fedramp",
+	}}
+/>

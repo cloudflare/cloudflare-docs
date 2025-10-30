@@ -6,17 +6,17 @@ params:
 import { Markdown, Details, Tabs, TabItem} from "~/components";
 import SubtractIPCalculator from "~/components/SubtractIPCalculator.tsx";
 
-By default, WARP excludes traffic bound for [RFC 1918 space](https://datatracker.ietf.org/doc/html/rfc1918), which are IP addresses typically used in private networks and not reachable from the Internet. In order for WARP to send traffic to your <Markdown text={props.one}/>, you must configure [Split Tunnels](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/) so that the IP/CIDR of your <Markdown text={props.one}/> routes through WARP.
+By default, WARP excludes traffic bound for [RFC 1918 space](https://datatracker.ietf.org/doc/html/rfc1918), which are IP addresses typically used in private networks and not reachable from the Internet. In order for WARP to send traffic to your <Markdown text={props.one}/>, you must configure [Split Tunnels](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/) so that the IP/CIDR of your <Markdown text={props.one}/> routes through WARP.
 
-1. First, check whether your [Split Tunnels mode](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#change-split-tunnels-mode) is set to **Exclude** or **Include** mode.
+1. First, check whether your [Split Tunnels mode](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/#change-split-tunnels-mode) is set to **Exclude** or **Include** mode.
 2. Edit your Split Tunnel routes depending on the mode:
   	<Tabs> <TabItem label="Exclude IPs and domains">
 
 		If you are using **Exclude** mode:
 
-		a. [Delete the route](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#remove-a-route) containing your <Markdown text={props.one}/>'s IP/CIDR range. For example, if your network uses the default AWS range of `172.31.0.0/16`, delete `172.16.0.0/12`.
+		a. [Delete the route](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/#remove-a-route) containing your <Markdown text={props.one}/>'s IP/CIDR range. For example, if your network uses the default AWS range of `172.31.0.0/16`, delete `172.16.0.0/12`.
 
-		b. [Re-add IP/CIDR ranges](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#add-a-route) that are not explicitly used by your <Markdown text={props.one}/>. For the AWS example above, you would add new entries for `172.16.0.0/13`, `172.24.0.0/14`, `172.28.0.0/15`, and `172.30.0.0/16`. This ensures that only traffic to `172.31.0.0/16` routes through WARP.
+		b. [Re-add IP/CIDR ranges](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/#add-a-route) that are not explicitly used by your <Markdown text={props.one}/>. For the AWS example above, you would add new entries for `172.16.0.0/13`, `172.24.0.0/14`, `172.28.0.0/15`, and `172.30.0.0/16`. This ensures that only traffic to `172.31.0.0/16` routes through WARP.
 
 		You can use the following calculator to determine which IP addresses to re-add:
 
@@ -33,12 +33,12 @@ By default, WARP excludes traffic bound for [RFC 1918 space](https://datatracker
 		3. Re-add the calculator results to your Split Tunnel Exclude mode list.
 		</Details>
 
-		By tightening the private IP range included in WARP, you reduce the risk of breaking a user's [access to local resources](/cloudflare-one/connections/connect-devices/warp/configure-warp/warp-settings/#allow-users-to-enable-local-network-exclusion).
+		By tightening the private IP range included in WARP, you reduce the risk of breaking a user's [access to local resources](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#allow-users-to-enable-local-network-exclusion).
 
 
    </TabItem> <TabItem label="Include IPs and domains">
 		If you are using **Include** mode:
-		1. Add the required [Zero Trust domains](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#cloudflare-zero-trust-domains) or [IP addresses](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#cloudflare-zero-trust-ip-addresses) to your Split Tunnel include list.
-		2. [Add a route](/cloudflare-one/connections/connect-devices/warp/configure-warp/route-traffic/split-tunnels/#add-a-route) to include your <Markdown text={props.one}/>'s IP/CIDR range.
+		1. Add the required [Zero Trust domains](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/#cloudflare-zero-trust-domains) or [IP addresses](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/#cloudflare-zero-trust-ip-addresses) to your Split Tunnel include list.
+		2. [Add a route](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/#add-a-route) to include your <Markdown text={props.one}/>'s IP/CIDR range.
 
    </TabItem> </Tabs>

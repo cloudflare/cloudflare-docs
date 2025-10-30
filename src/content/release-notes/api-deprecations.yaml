@@ -19,7 +19,7 @@ entries:
       * `GET /radar/http/summary/bot_class`
       * `GET /radar/http/timeseries_groups/device_type`
       * `GET /radar/http/timeseries_groups/bot_class`
-      * Other similar summary and timeseries groups endpoints for the following datasets: AI Bots, AI Inference, AS112, DNS, Email Routing, Email Security, HTTP, Layer 3 Attacks, Layer 7 Attacks, Leaked Credential Checks
+      * Other similar summary and timeseries groups endpoints for the following datasets: AI Bots, AI Inference, AS112, DNS, Email Routing, Email security, HTTP, Layer 3 Attacks, Layer 7 Attacks, Leaked Credential Checks
 
       Replacements:
 
@@ -61,7 +61,7 @@ entries:
 
       As a result multiple fields are moving from Devices to Registrations and we are deprecating the endpoints listed below.
 
-      The deprecated endpoints are not supported on accounts with [multi-user mode](/cloudflare-one/connections/connect-devices/warp/deployment/mdm-deployment/windows-multiuser/) enabled.
+      The deprecated endpoints are not supported on accounts with [multi-user mode](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/windows-multiuser/) enabled.
 
       Deprecated API:
 

@@ -2,15 +2,17 @@
 {}
 ---
 
-import { Steps } from "~/components";
+import { Steps, DashButton } from "~/components";
 
 <Steps>
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com), and select your account and domain.
+1. In the Cloudflare dashboard, go to the **Security rules** page.
 
-2. Go to **Security** > **Security rules**.
+   <DashButton url="/?to=/:account/:zone/security/security-rules" />
 
-3. In the rules table, search for the managed ruleset you want to configure/browse. Look for a rule with an _Execute_ action. At the top of the page, you can filter the rules to show **Managed rules** only.
+2. (Optional) Filter by **Managed rules**.
+
+3. Search for the managed ruleset you want to configure/browse. Look for a rule with an _Execute_ action.
 
 4. Select the rule name (containing the name of the managed ruleset), and then select **Browse rules**.
 

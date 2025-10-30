@@ -1,5 +1,6 @@
 ---
 params:
+  - productName
   - greIpsecURL
   - warpURL
   - cfTunnelURL
@@ -7,7 +8,7 @@ params:
 
 import { GlossaryTooltip } from "~/components";
 
-If you have a Magic WAN client connected through <a href={props.greIpsecURL}>GRE</a>, <a href={props.greIpsecURL}>IPsec</a>, [CNI](/network-interconnect/) or <a href={props.warpURL}>WARP</a> and want to perform a `traceroute` to an endpoint behind a <a href={props.cfTunnelURL}>Cloudflare Tunnel</a>, the following settings must be applied for the command to return useful information.
+If you have a {props.productName} client connected through <a href={props.greIpsecURL}>GRE</a>, <a href={props.greIpsecURL}>IPsec</a>, [CNI](/network-interconnect/) or <a href={props.warpURL}>WARP</a> and want to perform a `traceroute` to an endpoint behind a <a href={props.cfTunnelURL}>Cloudflare Tunnel</a>, the following settings must be applied for the command to return useful information.
 
 ## Inherited TTL value
 

@@ -1,0 +1,37 @@
+---
+pcx_content_type: concept
+title: Cloudflare Tunnel
+sidebar:
+  order: 1
+---
+
+import { Render, Stream } from "~/components";
+
+Cloudflare Tunnel provides you with a secure way to connect your resources to Cloudflare without a publicly routable IP address. With Tunnel, you do not send traffic to an external IP — instead, a lightweight daemon in your infrastructure (`cloudflared`) creates [outbound-only connections](/cloudflare-one/networks/connectors/cloudflare-tunnel/#outbound-only-connection) to Cloudflare's global network. Cloudflare Tunnel can connect HTTP web servers, [SSH servers](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/), [remote desktops](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/rdp/), and other protocols safely to Cloudflare. This way, your origins can serve traffic through Cloudflare without being vulnerable to attacks that bypass Cloudflare.
+
+Refer to our [reference architecture](/reference-architecture/architectures/sase/) for details on how to implement Cloudflare Tunnel into your existing infrastructure.
+
+<Stream
+	id="0410c73fe3fdd36142ec08bac77e8f97"
+	title="SASE - Stop hosting your VPN service"
+	thumbnail="https://pub-d9bf66e086fb4b639107aa52105b49dd.r2.dev/Video-2-Stop-hosting-your-own-VPN-service.jpg"
+/>
+
+## How it works
+
+Cloudflared establishes [outbound connections](/cloudflare-one/networks/connectors/cloudflare-tunnel/#outbound-only-connection) (tunnels) between your resources and Cloudflare's global network. Tunnels are persistent objects that route traffic to DNS records. Within the same tunnel, you can run as many 'cloudflared' processes (connectors) as needed. These processes will establish connections to Cloudflare and send traffic to the nearest Cloudflare data center.
+
+![How an HTTP request reaches a private application connected with Cloudflare Tunnel](~/assets/images/cloudflare-one/connections/connect-apps/handshake.jpg)
+
+## Outbound-only connection
+
+Cloudflare Tunnel uses an outbound-only connection model to enable bidirectional communication. When you install and run `cloudflared`, `cloudflared` initiates an outbound connection through your firewall from the origin to the Cloudflare global network.
+
+Once the connection is established, traffic flows in both directions over the tunnel between your origin and Cloudflare. Most firewalls allow outbound traffic by default. `cloudflared` takes advantage of this standard by connecting out to the Cloudflare network from the server you installed `cloudflared` on. You can then configure your firewall to allow only these outbound connections and block all inbound traffic, effectively blocking access to your origin from anything other than Cloudflare. This setup ensures that all traffic to your origin is securely routed through the tunnel.
+
+## Next steps
+
+- Create a tunnel using the [Cloudflare dashboard](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/create-remote-tunnel/) or [API](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/create-remote-tunnel-api/).
+- Learn more about [`cloudflared`](/cloudflare-one/networks/connectors/cloudflare-tunnel/downloads/), the server-side daemon that connects your infrastructure to Cloudflare.
+- Review useful [Tunnel terms](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/tunnel-useful-terms/) to familiarize yourself with the concepts used in Tunnel documentation.
+- [Troubleshoot](/cloudflare-one/networks/connectors/cloudflare-tunnel/troubleshoot-tunnels/) your Tunnel by reviewing available logs and common errors.

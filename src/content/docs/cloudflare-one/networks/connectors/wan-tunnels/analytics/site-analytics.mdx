@@ -1,0 +1,36 @@
+---
+title: Site analytics
+pcx_content_type: how-to
+sidebar:
+  order: 1
+head:
+  - tag: title
+    content: WAN Tunnels site analytics
+
+---
+
+import { Render } from "~/components"
+
+<Render
+	file="analytics/site-analytics"
+	product="networking-services"
+	params={{
+		instructions: "Refer to [Set up a site](/cloudflare-one/networks/connectors/wan-tunnels/configuration/common-settings/sites/) for more information on how to set up a site.",
+		magicWord: "WAN Tunnels",
+		productName: "WAN Tunnels",
+		networkOverviewPageName: "Network visibility",
+		magicTunnelHcsURL: "/cloudflare-one/networks/connectors/wan-tunnels/configuration/common-settings/configure-magic-tunnel-health-alerts/",
+		setGeoCoordinatesURL: "/cloudflare-one/networks/connectors/wan-tunnels/configuration/common-settings/sites/#set-geographic-coordinates"
+		}}
+/>
+
+### Set thresholds for site health
+
+<Render
+	file="analytics/set-thresholds-site-health"
+	product="networking-services"
+	params={{
+		productName: "WAN Tunnels",
+		magicTunnelHcsURL: "/cloudflare-one/networks/connectors/wan-tunnels/configuration/common-settings/configure-magic-tunnel-health-alerts/"
+	}}
+/>
