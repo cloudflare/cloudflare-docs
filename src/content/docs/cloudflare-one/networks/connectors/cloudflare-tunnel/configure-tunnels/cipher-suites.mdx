@@ -3,9 +3,9 @@ pcx_content_type: reference
 title: Cipher suites
 ---
 
-Cloudflare Tunnel connections use the cipher suites supported by `cloudflared`, which relies on the Go TLS library for its TLS implementation. When establishing a TLS connection to your origin, `cloudflared` will negotiate the most secure cipher suite supported by both sides.
+Cloudflare Tunnel connections use the cipher suites supported by `cloudflared`, which relies on the Go TLS library for its TLS implementation. These cipher suites apply to both the TLS connection between Cloudflare's network and `cloudflared`, and the HTTPS connection between `cloudflared` and your origin. In both cases, `cloudflared` negotiates the most secure cipher suite supported by both sides.
 
-The following table lists the cipher suites supported by cloudflared:
+The following table lists the cipher suites supported by `cloudflared`:
 
 | Protocol support | Cipher suites |
 |------------------|----------------|

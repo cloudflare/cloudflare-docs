@@ -40,7 +40,7 @@ While TLS 1.3 is the most recent and secure version, it is not supported by some
 
 ### Scope
 
-Minimum TLS version exists both as a [zone-level setting](/ssl/edge-certificates/additional-options/minimum-tls/) (under **Edge certificates** > **Minimum TLS Version**) and as a custom hostname setting. What this implies is:
+Minimum TLS version exists both as a [zone-level setting](/ssl/edge-certificates/additional-options/minimum-tls/) (on the [**Edge Certificates**](https://dash.cloudflare.com/?to=/:account/:zone/ssl-tls/edge-certificates) page under **Minimum TLS Version**) and as a custom hostname setting. What this implies is:
 
 - For custom hostnames created via API, it is possible not to explicitly define a value for `min_tls_version`. When that is the case, whatever value is defined as your zone's minimum TLS version will be applied. To confirm whether a given custom hostname has a specific minimum TLS version set, use the following API call.
 
