@@ -20,7 +20,7 @@ By default, Cloudflare servers send <GlossaryTooltip term="tunnel health-check" 
 
 { (props.magicWord === "Magic WAN" || props.magicWord === "WAN Tunnels") && (
   <>
-		<p>For {props.magicWord === "Magic WAN" ? "Magic WAN Connector" : "WAN Tunnels Appliances"}, health checks are sent to IPsec tunnel endpoints.</p>
+		<p>For {props.magicWord === "Magic WAN" ? "Magic WAN Connector" : "Magic WAN Connector"}, health checks are sent to IPsec tunnel endpoints.</p>
   </>
   )
 }
@@ -71,7 +71,7 @@ Below is an example of how to adjust tunnel health check frequency to `low`. Not
 { (props.magicWord === "Magic WAN" || props.magicWord === "WAN Tunnels") && (
 
   <>
-		<AnchorHeading depth={2} title={props.magicWord === "Magic WAN" ? "Configure Connector" : "Configure Appliances"} />
+		<AnchorHeading depth={2} title={props.magicWord === "Magic WAN" ? "Configure Connector" : "Configure Connector"} />
 
 		{ props.magicWord === "Magic WAN" ? (
 			<>
