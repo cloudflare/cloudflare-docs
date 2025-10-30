@@ -26,5 +26,5 @@ jobs:
           close-pr-message: "Hey there, this pull request has been automatically closed due to 45 days of inactivity. If needed, please reopen or comment and we can reevaluate your request."
           # Time thresholds (adjust to your policy)
           days-before-stale: 35
-          days-before-close: 10
+          days-before-close: 15
           operations-per-run: 100
