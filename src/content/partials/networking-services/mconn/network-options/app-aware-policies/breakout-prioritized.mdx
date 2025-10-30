@@ -110,7 +110,7 @@ You need to configure {props.featureName} applications for each of your existing
 		<Markdown
 	text={`
 		1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
-		2. Select **Magic WAN** > **Connector on-ramps (beta)**.
+		2. Select **Networking** > **Magic WAN** > **Connector on-ramps (beta)**.
 	`}
 	inline={false}
 	/>
@@ -119,7 +119,7 @@ You need to configure {props.featureName} applications for each of your existing
 }
 <Markdown
 text={`
-3. Select the Connector you want to configure > **Edit**.
+3. Select the ${props.productName} you want to configure > **Edit**.
 4. Select **Traffic Steering**.
 5. In **${props.featureName}**, select **Add**.
 6. Select one or more applications that should bypass Cloudflare filtering from the list. You can also use the search box.
@@ -204,7 +204,7 @@ inline={false}
 		<Markdown
 	text={`
 		1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
-		2. Select **Magic WAN** > **Connector on-ramps (beta)**.
+		2. Select **Networking** > **Magic WAN** > **Connector on-ramps (beta)**.
 	`}
 	inline={false}
 	/>
@@ -272,6 +272,48 @@ You need to delete {props.featureName} applications for each of your existing si
 
 </TabItem> </Tabs>
 
+## Designate WAN ports for breakout apps
+
+You can pin applications to a specific WAN port in {props.productName} when you need control over which WAN port your applications egress from the device. In case your preferred WAN port goes down, {props.productName} automatically fails over to a standard configured WAN port priority.
+
+With this preferred breakout port, customers have direct control over their local Internet breakout traffic. You can designate a specific WAN uplink as the primary path for your critical applications configured to bypass the Cloudflare network. This provides the predictability and control needed for performance-sensitive applications, ensuring your critical traffic always takes the path you choose.
+
+To pin applications to a WAN port:
+
+{ props.mwanName === "WAN Tunnels" ? (
+	<>
+		<Markdown
+	text={`
+		1. Log in to the <a href="https://one.dash.cloudflare.com/">Cloudflare One dashboard</a>, and go to **Networks**.
+		2. Go to **Connectors** > **Appliances** > **Profiles**.
+		3. Under **Profiles**, select your appliance > **Edit**.
+	`}
+	inline={false}
+	/>
+	</>
+) : (
+	<>
+		<Markdown
+	text={`
+		1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
+		2. Select **Networking** > **Magic WAN** > **Connector on-ramps (beta)**.
+		3. Select your Connector > **Edit**.
+	`}
+	inline={false}
+	/>
+	</>
+)
+}
+<Markdown
+text={`
+4. In **Traffic steering** > **Breakout Traffic** find the application you want to pin to a WAN port.
+5. Select the three dots next to it > **Edit application traffic**.
+6. From the **Preferred breakout port** dropdown, select the WAN port you want to assign to the applications.
+7. Select **Save**.
+`}
+inline={false}
+/>
+
 { props.magicWord === "breakout" && (
 	<>
 	<AnchorHeading title="WARP traffic" depth={2} />
@@ -287,4 +329,3 @@ You need to delete {props.featureName} applications for each of your existing si
 	</>
 	)
 }
-
