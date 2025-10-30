@@ -47,7 +47,7 @@ entries:
 
   - term: Cloudflare DEX
     general_definition: |-
-      Cloudflare Digital Experience Monitoring (DEX) provides visibility into device, network, and application performance across your Cloudflare One organization.
+      Cloudflare Digital Experience Monitoring (DEX) provides visibility into device, network, and application performance across your Zero Trust Organization.
 
   - term: Cloudflare Gateway
     general_definition: |-
@@ -101,7 +101,7 @@ entries:
 
   - term: fleet
     general_definition: |-
-      a fleet is a collection of user devices. All devices in a fleet have WARP installed and are connected to a [Cloudflare One organization](/cloudflare-one/setup/#create-a-cloudflare-one-organization).
+      a fleet is a collection of user devices. All devices in a fleet have WARP installed and are connected to a [Zero Trust Organization](/cloudflare-one/setup/#create-a-zero-trust-organization).
 
   - term: identity provider
     general_definition: |-
