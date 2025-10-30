@@ -27,4 +27,4 @@ jobs:
           # Time thresholds (adjust to your policy)
           days-before-stale: 35
           days-before-close: 10
-          operations-per-run: 25
+          operations-per-run: 100
