@@ -130,7 +130,7 @@ inline={false}
 { props.magicWord === "breakout" && (
 	<Markdown
 	text={`
-7. (Optional) You can also pin an application to a WAN port. In Preferred breakout port, select the WAN you want to assign your applications to. Refer to Designate WAN ports for breakout apps for more information.
+7. (Optional) You can also pin an application to a WAN port. In Preferred breakout port, select the WAN you want to assign your applications to. Refer to [Designate WAN ports for breakout apps](#designate-wan-ports-for-breakout-apps) for more information.
 	`}
 	inline={false}
 	/>
@@ -304,11 +304,16 @@ You need to delete {props.featureName} applications for each of your existing si
 	<>
 		<AnchorHeading title="Designate WAN ports for breakout apps" depth={2} />
 
-		You can pin applications to a specific WAN port in {props.productName} when you need control over which WAN port your applications egress from the device. In case your preferred WAN port goes down, {props.productName} automatically fails over to a standard configured WAN port priority.
+		<Markdown
+		text={`
+You can pin applications to a specific WAN port in ${props.productName} when you need control over which WAN port your applications egress from the device. In case your preferred WAN port goes down, ${props.productName} automatically fails over to a standard configured WAN port priority.
 
-		With this preferred breakout port, customers have direct control over their local Internet breakout traffic. You can designate a specific WAN uplink as the primary path for your critical applications configured to bypass the Cloudflare network. This provides the predictability and control needed for performance-sensitive applications, ensuring your critical traffic always takes the path you choose.
+With this preferred breakout port, customers have direct control over their local Internet breakout traffic. You can designate a specific WAN uplink as the primary path for your critical applications configured to bypass the Cloudflare network. This provides the predictability and control needed for performance-sensitive applications, ensuring your critical traffic always takes the path you choose.
 
-		To pin applications to a WAN port:
+To pin applications to a WAN port:
+		`}
+		inline={false}
+		/>
 
 		{ props.mwanName === "WAN Tunnels" ? (
 			<>
@@ -316,7 +321,7 @@ You need to delete {props.featureName} applications for each of your existing si
 			text={`
 				1. Log in to the <a href="https://one.dash.cloudflare.com/">Cloudflare One dashboard</a>, and go to **Networks**.
 				2. Go to **Connectors** > **Appliances** > **Profiles**.
-				3. Under **Profiles**, select your appliance > **Edit**.
+				3. Select the Appliance you want to configure> **Edit**.
 			`}
 			inline={false}
 			/>
