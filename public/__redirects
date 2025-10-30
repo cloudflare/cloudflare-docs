@@ -2264,6 +2264,7 @@
 
 # Cloudflare One nav revamp (statics)
 /cloudflare-one/access-controls/applications/http-apps/mcp-servers/mcp-portals/ /cloudflare-one/access-controls/ai-controls/mcp-portals/ 301
+/cloudflare-one/api-terraform/access-with-terraform/ /learning-paths/clientless-access/terraform/publish-apps-with-terraform/ 301
 /cloudflare-one/applications/ /cloudflare-one/access-controls/applications/http-apps/ 301
 /cloudflare-one/applications/app-launcher/ /cloudflare-one/access-controls/access-settings/app-launcher/ 301
 /cloudflare-one/applications/app-library/ /cloudflare-one/team-and-resources/app-library/ 301
@@ -2407,6 +2408,7 @@
 /cloudflare-one/policies/browser-isolation/* /cloudflare-one/remote-browser-isolation/:splat 301
 /cloudflare-one/policies/data-loss-prevention/* /cloudflare-one/data-loss-prevention/:splat 301
 /cloudflare-one/policies/gateway/* /cloudflare-one/traffic-policies/:splat 301
+/cloudflare-one/api-terraform/access-api-examples/* /api/resources/zero_trust/subresources/access/subresources/policies/ 301
 
 # Email Security new revamp (dynamics)
 /cloudflare-one/email-security/detection-settings/detection-settings/* /cloudflare-one/email-security/settings/detection-settings/:splat 301
