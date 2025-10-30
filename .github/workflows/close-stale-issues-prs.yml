@@ -1,0 +1,30 @@
+# Close stale issues and pull requests (uses actions/stale@v4 with GITHUB_TOKEN)
+on:
+  schedule:
+    - cron: '0 0 * * 1'   # weekly run: every Monday at 00:00 UTC
+  workflow_dispatch:
+
+permissions:
+  issues: write
+  pull-requests: write
+
+name: Close stale issues and PRs
+
+jobs:
+  stale:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run stale action
+        uses: actions/stale@v4
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          # Messages for issues (mention the issue author)
+          stale-issue-message: 'Hello @{{author}}, this issue has been automatically marked as stale because it has not had recent activity. It will be auto-closed after and additional 10 days of inactivity. Please feel free to add a comment and we would be happy to continue working on it.'
+          close-issue-message: 'Hello @{{author}}, this issue has been automatically closed due to 45 days of inactivity. If needed, please reopen or comment and we can reevaluate your request.'
+          # Messages for pull requests (mention the PR author)
+          stale-pr-message: 'Hello @{{author}}, this pull request has been automatically marked as stale because it has not had recent activity. It will be auto-closed after and additional 10 days of inactivity. Please feel free to add a comment and we would be happy to continue working on it.'
+          close-pr-message: 'Hello @{{author}}, this pull request has been automatically closed due to 45 days of inactivity. If needed, please reopen or comment and we can reevaluate your request.'
+          # Time thresholds (adjust to your policy)
+          days-before-stale: 35
+          days-before-close: 10
+          operations-per-run: 5
