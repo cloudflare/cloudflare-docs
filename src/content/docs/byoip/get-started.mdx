@@ -46,17 +46,15 @@ The process described on this page does not support onboarding IP prefixes for u
 
 Use the [Add Prefix endpoint](/api/resources/addressing/subresources/prefixes/methods/create/) to create a prefix in the Cloudflare account that should own the BYOIP prefix.
 
-```bash
-curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/addressing/prefixes \
--H 'Content-Type: application/json' \
--H "X-Auth-Email: $CLOUDFLARE_EMAIL" \
--H "X-Auth-Key: $CLOUDFLARE_API_KEY" \
--X POST \
--d '{"cidr": "203.0.113.0/24",
-      "asn": 13335,
-      "delegate_loa_creation": true
-    }
-```
+<APIRequest
+ path="/accounts/{account_id}/addressing/prefixes"
+ method="POST"
+ json={{
+   "cidr": "203.0.113.0/24",
+   "asn": 13335,
+   "delegate_loa_creation": true
+ }}
+/>
 
 ```json title="Response" {15-19} ""id": "72823e95d6c64d48a8111fec81179816""
 

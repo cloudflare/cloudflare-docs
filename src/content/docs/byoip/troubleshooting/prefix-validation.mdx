@@ -45,8 +45,7 @@ import { APIRequest, GlossaryTooltip } from "~/components";
 
 3. After applying the necessary changes, use the Validate Prefix endpoint to re-trigger the validation checks.
 
-```bash
-curl https://api.cloudflare.com/accounts/{account_id}/addressing/prefixes/{prefix_id}/validate \
---header "X-Auth-Email: <EMAIL>" \
---header "X-Auth-Key: <API_KEY>"
-```
+<APIRequest
+ path="/accounts/{account_id}/addressing/prefixes/{prefix_id}/validate"
+ method="POST"
+/>
