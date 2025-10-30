@@ -6,6 +6,7 @@ params:
   - trafficSteeringURL?
   - whatHappensApp
   - mwanName
+  - dashName
 ---
 
 import { APIRequest, Aside, AnchorHeading, CURL, Markdown, Render, TabItem, Tabs } from "~/components";
@@ -95,7 +96,7 @@ You need to configure {props.featureName} applications for each of your existing
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-{ props.mwanName === "WAN Tunnels" ? (
+{ props.dashName === "WAN Tunnels" ? (
 	<>
 		<Markdown
 	text={`
@@ -217,7 +218,7 @@ The traffic for the application you chose ${props.whatHappensApp}.
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-{ props.mwanName === "WAN Tunnels" ? (
+{ props.dashName === "WAN Tunnels" ? (
 	<>
 		<Markdown
 	text={`
@@ -315,7 +316,7 @@ To pin applications to a WAN port:
 		inline={false}
 		/>
 
-		{ props.mwanName === "WAN Tunnels" ? (
+		{ props.dashName === "WAN Tunnels" ? (
 			<>
 				<Markdown
 			text={`
