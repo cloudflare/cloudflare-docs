@@ -2444,6 +2444,9 @@
 /cloudflare-one/email-security/reference/domain-information/ /cloudflare-one/email-security/settings/domain-management/domain/ 301
 /cloudflare-one/insights/email-monitoring/phish-submissions/* /cloudflare-one/email-security/settings/phish-submissions/:splat 301
 /cloudflare-one/email-security/phish-guard/* /cloudflare-one/email-security/phishguard/:splat 301
+/cloudflare-one/email-security/settings/trusted-domains/ /cloudflare-one/email-security/settings/detection-settings/trusted-domains/ 301
+/cloudflare-one/email-security/detection-settings/additional-detections/ /cloudflare-one/email-security/settings/detection-settings/additional-detections/ 301
+/cloudflare-one/email-security/settings/configure-text-add-ons/ /cloudflare-one/email-security/settings/detection-settings/configure-text-add-ons/ 301
 
 # Learning paths
 
