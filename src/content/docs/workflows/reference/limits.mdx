@@ -16,7 +16,7 @@ Many limits are inherited from those applied to Workers scripts and as documente
 | ----------------------------------------- | ----------------------- | --------------------- |
 | Workflow class definitions per script     | 3MB max script size per [Worker size limits](/workers/platform/limits/#account-plan-limits) | 10MB max script size per [Worker size limits](/workers/platform/limits/#account-plan-limits)
 | Total scripts per account                 | 100 | 500 (shared with [Worker script limits](/workers/platform/limits/#account-plan-limits) |
-| Compute time per step [^3]                | 10 seconds | 30 seconds (default) / configurable to 5 minutes of [active CPU time](/workers/platform/limits/#cpu-time) |
+| Compute time per step [^3]                | 10 ms | 30 seconds (default) / configurable to 5 minutes of [active CPU time](/workers/platform/limits/#cpu-time) |
 | Duration (wall clock) per step [^3]       | Unlimited | Unlimited - for example, waiting on network I/O calls or querying a database |
 | Maximum persisted state per step          | 1MiB (2^20 bytes) | 1MiB (2^20 bytes) |
 | Maximum event [payload size](/workflows/build/events-and-parameters/) | 1MiB (2^20 bytes) | 1MiB (2^20 bytes) |
