@@ -245,7 +245,9 @@ async function main() {
 			try {
 				await fs.access(productPath);
 			} catch (error) {
-				console.error(`Product directory not found: ${productPath}`);
+				console.error(
+					`Product directory not found: ${productPath} -- ${error}`,
+				);
 				process.exit(1);
 			}
 
