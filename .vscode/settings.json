@@ -10,5 +10,6 @@
 	},
 	"[astro]": {
 		"editor.defaultFormatter": "astro-build.astro-vscode"
-	}
+	},
+	"vscode-corda.isCordaProject": false
 }
