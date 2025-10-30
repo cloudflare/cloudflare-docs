@@ -2263,7 +2263,7 @@
 /cloudflare-one/applications/configure-apps/dash-sso-apps/ /fundamentals/account/account-security/dashboard-sso/ 301
 
 # Cloudflare One nav revamp (statics)
-/cloudflare-one/access-controls/applications/http-apps/mcp-servers/mcp-portals /cloudflare-one/access-controls/ai-controls/mcp-portals/ 301
+/cloudflare-one/access-controls/applications/http-apps/mcp-servers/mcp-portals/ /cloudflare-one/access-controls/ai-controls/mcp-portals/ 301
 /cloudflare-one/applications/ /cloudflare-one/access-controls/applications/http-apps/ 301
 /cloudflare-one/applications/app-launcher/ /cloudflare-one/access-controls/access-settings/app-launcher/ 301
 /cloudflare-one/applications/app-library/ /cloudflare-one/team-and-resources/app-library/ 301
