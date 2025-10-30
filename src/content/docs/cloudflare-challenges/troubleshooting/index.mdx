@@ -22,9 +22,13 @@ Challenges are not supported by Microsoft Internet Explorer. If you are currentl
 
 ### Referer header
 
-When a request is sent with a referer header, the user will receive a Challenge Page as a response. Upon solving the Challenge Page, the request with the referer is sent to the origin, and the response to the request is served to the user. The JavaScript on the response page may read the value of `document.referer`, but it will be inaccurate. This affects tools such as Google Analytics, which reads the referer from JavaScript.
+Your visitor's HTTP request contains a referer header set to the search engine that they came from. When they encounter and solve a Challenge Page, the request with the referer is sent to the origin, and the response to the request is served to the user. The JavaScript on the response page may read the value of `document.referer`, but it will not be accurate. 
 
-You can add tracking scripts to Challenge Pages to capture the correct referer header on the initial request.
+For example, a visitor to your website who is coming from a given search engine is challenged by a WAF rule via an interstitial Challenge Page served by challenges.cloudflare.com. Once the visitor loads the website’s home page, the `document.referer` value is no longer the search engine but challenges.cloudflare.com. 
+
+This affects tools like Google Analytics, which reads the referer from JavaScript, since it replaces the previous site that visitors came from.
+
+You can add tracking scripts, such as the Google Tag Manager Javascript, within the Challenge Pages to capture the correct referer header on the initial request. 
 
 ### Cross-origin resource sharing (CORS) preflight requests
 
