@@ -9,7 +9,7 @@ import { Aside, DashButton, Markdown, Tabs, TabItem } from "~/components";
 
 {props.productName} customers can run traceroutes to understand the hop by hop Internet path and latencies from Cloudflare's network to their own network.
 
-{ props.magicWord === "wan-tunnels" && (
+{ props.magicWord === "WAN Tunnels" && (
   <>
     <Markdown
       text={`
@@ -25,7 +25,7 @@ To run a traceroute from a specific Cloudflare data center to your network:
   </>
 )}
 
-{ props.magicWord !== "wan-tunnels" && (
+{ props.magicWord !== "WAN Tunnels" && (
   <>
     <Aside type="note">
       To change between the new dashboard experience and the old one, find the banner at the top of the screen.
