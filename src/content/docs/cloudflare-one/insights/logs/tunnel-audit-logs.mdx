@@ -6,7 +6,13 @@ sidebar:
 
 ---
 
-Audit logs for Tunnel are available in the [account section of the Cloudflare dashboard](https://dash.cloudflare.com/?account=audit-log) which you can find by selecting your name or email in the upper right-hand corner of the dashboard. The following actions are logged:
+import { DashButton } from "~/components";
+
+Audit logs for Tunnel are available in the **Manage account** section of the Cloudflare dashboard.
+
+<DashButton url="/?to=/:account/audit-log" />
+
+The following actions are logged:
 
 | Action       | Description                                                                                         |
 | ------------ | --------------------------------------------------------------------------------------------------- |
