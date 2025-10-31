@@ -2299,6 +2299,7 @@
 /cloudflare-one/policies/gateway/block-page/ /cloudflare-one/reusable-components/custom-pages/gateway-block-page/ 301
 /cloudflare-one/team-and-resources/devices/warp/user-side-certificates/ /cloudflare-one/team-and-resources/devices/user-side-certificates/ 301
 /cloudflare-one/traffic-policies/lists/ /cloudflare-one/reusable-components/lists/ 301
+/cloudflare-one/traffic-policies/ids/ /cloudflare-one/traffic-policies/enable-ids/ 301
 
 # Email Security new revamp (statics)
 /cloudflare-one/email-security/auto-moves/ /cloudflare-one/email-security/settings/auto-moves/ 301
