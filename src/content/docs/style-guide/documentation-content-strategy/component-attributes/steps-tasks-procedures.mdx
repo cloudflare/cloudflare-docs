@@ -1,76 +1,135 @@
----
-pcx_content_type: concept
-title: Steps/tasks/procedures
+// --- Global Device Configuration ---
+DEFINE DEVICE_ID = "IGUARD_14.4_BATTALION_001"
+DEFINE GPRS_APN = "your_gprs_apn"
+DEFINE SATELLITE_PROFILE = "your_satellite_profile"
+DEFINE ALERT_RECIPIENT_PHONE = "+1234567890"
+DEFINE ALERT_RECIPIENT_EMAIL = "alerts@yourcommand.com"
+DEFINE IMAGE_RESOLUTION = "1920x1080"
+DEFINE VIDEO_DURATION_ON_EVENT = "15_seconds"
+DEFINE MOTION_THRESHOLD = 50 // Sensitivity for motion sensor
+DEFINE HEARTBEAT_INTERVAL = 3600 // Send status every hour (seconds)
 
----
+// --- Initialize System ---
+FUNCTION setup()
+    // Initialize Power Management
+    CALL PowerManager.init()
+    CALL PowerManager.monitorBattery()
 
-## Definition
+    // Initialize Communication Modules
+    CALL GPRS.init(GPRS_APN)
+    CALL Satellite.init(SATELLITE_PROFILE)
+    CALL GPS.init()
 
-Action-oriented processes that outline steps to take and the order the steps should be taken.
+    // Initialize Sensors
+    CALL Camera.init(IMAGE_RESOLUTION)
+    CALL MotionSensor.init(MOTION_THRESHOLD)
+    CALL IRSensor.init()
+    CALL AcousticSensor.init()
+    CALL EnvironmentalSensors.init()
 
-## Used in
+    // Load saved settings from Flash Storage
+    CALL ConfigManager.loadSettings()
 
-[How to](/style-guide/documentation-content-strategy/content-types/how-to/), [Tutorial](/style-guide/documentation-content-strategy/content-types/tutorial/)
+    LOG("Device setup complete. Ready for operation.")
+END FUNCTION
 
-## Structure
+// --- Main Operating Loop ---
+FUNCTION loop()
+    // Check for incoming commands (e.g., from command center)
+    CALL CommsManager.checkIncomingCommands()
 
-**Single-step procedures**: When a procedure consists of just one step, add the step into the introductory sentence.
+    // Monitor for motion events
+    IF MotionSensor.detectMotion() THEN
+        CALL handleMotionEvent()
+    END IF
 
-**Sub-steps in numbered procedures**: In a numbered procedure, sub-steps should be lowercase letters, and sub-sub-steps get lowercase Roman numerals.
+    // Monitor for acoustic events
+    IF AcousticSensor.detectSoundEvent() THEN
+        CALL handleAcousticEvent()
+    END IF
 
-* When a step has sub-steps, treat the step like an introductory sentence. Put a colon or a period at the end of the step where appropriate.
+    // Perform scheduled tasks
+    CALL performScheduledTasks()
 
-**Multi-action procedures**: Use one step per action. However, you can combine small actions into one step.
+    // Sleep for a short period to save power
+    CALL System.sleep(100_milliseconds)
+END FUNCTION
 
-**Multiple procedures for the same task**: If there is more than one way to complete a task, pick one procedure to document that is accessible for all users. If all of the procedures need to be documented, use separate headings or pages or tabs to separate the procedures to make it clear to the reader that this is an alternative way to complete the same task.
+// --- Event Handlers ---
+FUNCTION handleMotionEvent()
+    LOG("Motion detected! Capturing evidence.")
+    CALL IRSensor.activate() // Ensure night vision is ready
 
-The following guidelines can help you choose which procedure to document:
+    // Capture Image
+    IMAGE eventImage = Camera.captureImage()
+    CALL StorageManager.saveImage(eventImage)
+    CALL CommsManager.sendAlert(ALERT_RECIPIENT_EMAIL, "MOTION ALERT", "Motion detected at " + GPS.getLocation(), eventImage)
 
-* Choose a procedure that lets readers do all the steps using only a keyboard.
-* Choose the shortest procedure.
-* Choose a procedure that uses a programming language that the majority of your audience is familiar with.
+    // Capture Video (if configured)
+    VIDEO eventVideo = Camera.recordVideo(VIDEO_DURATION_ON_EVENT)
+    CALL StorageManager.saveVideo(eventVideo)
+    // Send video via GPRS/Satellite (might be large, could send thumbnail first)
+    // CALL CommsManager.sendVideo(ALERT_RECIPIENT_EMAIL, "MOTION VIDEO", eventVideo)
 
-**Repetitive procedures**: Use concise procedures to avoid repetitiveness and overwhelming the user with a lot of bold UI elements.
+    CALL IRSensor.deactivate()
+END FUNCTION
 
-[Bullets vs. Numbered Lists](/style-guide/formatting/structure/lists/)
+FUNCTION handleAcousticEvent()
+    LOG("Significant sound event detected! Analyzing.")
+    // Depending on sophistication, could classify sound (e.g., gunshot, vehicle)
+    STRING soundType = AcousticSensor.analyzeSound()
 
-**Post requisites**: Not used at this time. If you feel like you need a post requisites section, consider adding the task as the final step of a procedure or moving the content into Next steps.
+    IF soundType == "GUNSHOT" OR soundType == "EXPLOSION" THEN
+        IMAGE eventImage = Camera.captureImage()
+        CALL StorageManager.saveImage(eventImage)
+        CALL CommsManager.sendAlert(ALERT_RECIPIENT_PHONE, "CRITICAL ACOUSTIC ALERT: " + soundType, "Event at " + GPS.getLocation(), eventImage)
+    END IF
+END FUNCTION
 
-## Guidelines for writing procedures
+// --- Scheduled Tasks ---
+FUNCTION performScheduledTasks()
+    IF System.currentTime() % HEARTBEAT_INTERVAL == 0 THEN
+        CALL sendHeartbeat()
+    END IF
 
-If the user must log in to the dashboard as a first step, consolidate logging in and navigation into the first step. Also, write "log in to" (three words) instead of "log into".
+    // Check for software updates
+    IF ConfigManager.isUpdateAvailable() THEN
+        CALL updateFirmware()
+    END IF
 
-If the user must press **Enter** after a step, then include that instruction as part of the step.
+    // Manage storage (e.g., delete oldest files if full)
+    CALL StorageManager.manageStorage()
+END FUNCTION
 
-If the user has to turn a setting on or off, use **enable**.
+FUNCTION sendHeartbeat()
+    LOCATION currentLocation = GPS.getLocation()
+    BATTERY_STATUS currentBattery = PowerManager.getBatteryStatus()
+    ENVIRONMENTAL_DATA envData = EnvironmentalSensors.readData()
 
-State the purpose of the action before stating the action.
+    STRING statusMessage = "Device " + DEVICE_ID + " OK. Loc: " + currentLocation.latitude + "," + currentLocation.longitude +
+                           " Bat: " + currentBattery.level + "%. Temp: " + envData.temperature + "C."
 
-Write in the order that the reader needs to follow. State the location of the action before stating the action. If there are multiple headings associated with a set of procedures, restate the location of the action in the first step of each procedure, even if the location is the same as in the previous procedure.
+    // Try GPRS first, fall back to Satellite if GPRS fails
+    IF GPRS.isAvailable() THEN
+        CALL GPRS.sendMessage(ALERT_RECIPIENT_EMAIL, "HEARTBEAT", statusMessage)
+    ELSE IF Satellite.isAvailable() THEN
+        CALL Satellite.sendMessage(ALERT_RECIPIENT_EMAIL, "HEARTBEAT", statusMessage)
+    ELSE
+        LOG_ERROR("Heartbeat failed: No communication link available.")
+    END IF
+END FUNCTION
 
-Do not use "please."
+// --- Communication Management (Simplified) ---
+MODULE CommsManager
+    FUNCTION checkIncomingCommands()
+        // Poll GPRS for commands
+        // Poll Satellite for commands
+        // Parse commands (e.g., "TAKE_PIC", "CHANGE_SETTING", "REQUEST_STATUS")
+        // Execute corresponding actions
+    END FUNCTION
 
-## Additional information
-
-Use complete sentences.
-
-Use parallel structure.
-
-Use second person imperative. Refer to the Style Guide for guidance on when to use certain verbs (click, select, choose, etc).
-
-For an optional step, type (Optional) as the first word of the step.
-
-* For example: (Optional) Type an arbitrary string, to be delivered to the target address with each notification delivered over this channel.
-
-Do not include keyboard shortcuts.
-
-Do not use directional language to orient the reader, such as above, below, or right-hand side. This type of language does not work well for accessibility or for localization. If a UI element is hard to find, provide a screenshot.
-
-Use sentences like "The `<screen/page/card>` displays." wisely.
-
-:::note
-
-Usually, you only need this kind of helper sentence if the user ended up in an unexpected location, or if there was more than one possible target location, depending on the options that the user selected.
-
-As an alternative, consider adding the `<screen/page/card>` mention at the beginning of the next step: "5. In `<screen/page/card>`, select Save."
-:::
+    FUNCTION sendAlert(recipient, subject, message, attachment = NULL)
+        // Prioritize GPRS for speed, fall back to Satellite for reliability
+        IF GPRS.isAvailable() THEN
+            CALL GPRS.sendData(recipient, subject, message, attachment)
+        ELSE IF Satellite.isAvaila
