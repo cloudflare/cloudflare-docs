@@ -520,13 +520,14 @@
 /ddos-protection/managed-rulesets/adjust-rules/ /ddos-protection/managed-rulesets/http/http-overrides/override-examples/ 301
 
 # developer spotlight
-/developer-spotlight/tutorials/ /developer-spotlight/ 301
-/developer-spotlight/tutorials/create-sitemap-from-sanity-cms/ /developer-spotlight/ 301
-/developer-spotlight/tutorials/creating-a-recommendation-api/ /developer-spotlight/ 301
-/developer-spotlight/tutorials/custom-access-control-for-files/ /developer-spotlight/ 301
-/developer-spotlight/tutorials/fullstack-authentication-with-next-js-and-cloudflare-d1/ /developer-spotlight/ 301
-/developer-spotlight/tutorials/handle-form-submission-with-astro-resend/ /developer-spotlight/ 301
-/developer-spotlight/application-guide/ /developer-spotlight/ 301
+/developer-spotlight/tutorials/ /resources/ 301
+/developer-spotlight/tutorials/create-sitemap-from-sanity-cms/ /resources/ 301
+/developer-spotlight/tutorials/creating-a-recommendation-api/ /resources/ 301
+/developer-spotlight/tutorials/custom-access-control-for-files/ /resources/ 301
+/developer-spotlight/tutorials/fullstack-authentication-with-next-js-and-cloudflare-d1/ /resources/ 301
+/developer-spotlight/tutorials/handle-form-submission-with-astro-resend/ /resources/ 301
+/developer-spotlight/application-guide/ /resources/ 301
+/developer-spotlight/ /resources/ 301
 
 # dns
 /dns/additional-options/cname-flattening/ /dns/cname-flattening/ 301
@@ -1907,8 +1908,8 @@
 /workers/configuration/bindings/about-service-bindings/ /workers/runtime-apis/bindings/service-bindings/ 301
 /workers/tutorials/localize-a-website/ /pages/tutorials/localize-a-website/ 301
 /workers/tutorials/manage-projects-with-lerna/ /pages/configuration/monorepos/#monorepo-management-tools 301
-/workers/tutorials/create-sitemap-from-sanity-cms/ /developer-spotlight/ 301
-/workers/tutorials/custom-access-control-for-files-in-r2-using-d1-and-workers/ /developer-spotlight/ 301
+/workers/tutorials/create-sitemap-from-sanity-cms/ /resources/ 301
+/workers/tutorials/custom-access-control-for-files-in-r2-using-d1-and-workers/ /resources/ 301
 /workers/tutorials/generate-dynamic-og-images-using-workers/ /workers/tutorials/ 302
 /workers/static-assets/migrate-from-pages/ /workers/static-assets/migration-guides/migrate-from-pages/ 301
 /workers/static-assets/compatibility-matrix/ /workers/static-assets/migration-guides/migrate-from-pages/ 301
@@ -1941,8 +1942,8 @@
 /workers/testing/miniflare/get-started/migrating/ /workers/testing/miniflare/migrations/from-v2/ 301
 /workers/databases/native-integrations/fauna/ /workers/databases/native-integrations/ 301
 /workers/tutorials/store-data-with-fauna/ https://fauna.com/blog/the-future-of-fauna 301
-/workers/tutorials/live-cursors-with-nextjs-rpc-do/ /developer-spotlight/ 301
-/workers/tutorials/automated-analytics-reporting/ /developer-spotlight/ 301
+/workers/tutorials/live-cursors-with-nextjs-rpc-do/ /resources/ 301
+/workers/tutorials/automated-analytics-reporting/ /resources/ 301
 
 # workers ai
 /workers-ai/models/llm/ /workers-ai/models/#text-generation 301
@@ -1959,11 +1960,11 @@
 /workers-ai/configuration/function-calling/ /workers-ai/features/function-calling/ 301
 /workers-ai/platform/storage-options/ /workers/platform/storage-options/ 301
 /workers-ai/configuration/workers-ai-sdk/ /workers-ai/configuration/bindings/ 301
-/workers-ai/tutorials/creating-a-recommendation-api/ /developer-spotlight/ 301
+/workers-ai/tutorials/creating-a-recommendation-api/ /resources/ 301
 /workers/observability/baselime-integration/ /workers/observability/integrations/baselime-integration/ 301
 /workers-ai/tutorials/image-generator-flux/ /workers-ai/tutorials/image-generation-playground/ 301
-/workers-ai/guides/tutorials/build-a-voice-notes-app-with-auto-transcription/ /developer-spotlight/ 301
-/workers-ai/tutorials/build-ai-interview-practice-tool/ /developer-spotlight/ 301
+/workers-ai/guides/tutorials/build-a-voice-notes-app-with-auto-transcription/ /resources/ 301
+/workers-ai/tutorials/build-ai-interview-practice-tool/ /resources/ 301
 
 # Function calling
 /workers-ai/function-calling/ /workers-ai/features/function-calling/ 301
