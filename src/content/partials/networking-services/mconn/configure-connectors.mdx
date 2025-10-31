@@ -4,7 +4,7 @@ params:
   - productName
   - productNameVirtual?
   - maintenanceURL
-  - productOriginalName
+  - dashName
   - mwanName
   - sfpURL?
   - wan
@@ -330,7 +330,7 @@ You cannot enable high availability for an existing { props.magicWord === "virtu
 			file="mconn/maintenance/register-hardware-appliance"
 			product="networking-services"
 			params={{
-				magicWord: props.productOriginalName,
+				magicWord: props.dashName,
 				productName: props.productName
 				}} />
   </>
@@ -338,7 +338,7 @@ You cannot enable high availability for an existing { props.magicWord === "virtu
 }
 
 {/* WAN Tunnels section */}
-{ props.productOriginalName === "WAN Tunnels" && (
+{ props.dashName === "WAN Tunnels" && (
 	<>
 		<AnchorHeading title="Create a new profile" depth={3} />
 		<p>You need to create a profile for your appliance before connecting it to the Internet.</p>
@@ -353,7 +353,7 @@ You cannot enable high availability for an existing { props.magicWord === "virtu
 }
 
 {/* Magic WAN section */}
-{ props.productOriginalName !== "WAN Tunnels" && (
+{ props.dashName !== "WAN Tunnels" && (
 	<>
 		<AnchorHeading title="Add a Connector on-ramp" depth={3} />
 		<p>You need to add your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } to your Cloudflare dashboard and configure its settings before connecting it to the Internet.</p>
@@ -378,7 +378,7 @@ You cannot enable high availability for an existing { props.magicWord === "virtu
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-<Render file="mconn/wan-two-tunnels" product="networking-services" params={{ productName: props.magicWord === "virtual" ? props.productNameVirtual : props.productName, productOriginalName: props.productOriginalName }} />
+<Render file="mconn/wan-two-tunnels" product="networking-services" params={{ productName: props.magicWord === "virtual" ? props.productNameVirtual : props.productName, dashName: props.dashName, mwanName: props.mwanName }} />
 
 1. In **WAN configuration**, select **Create**. You can create one or more [wide area networks (WANs)](https://www.cloudflare.com/learning/network-layer/what-is-a-wan/). Configuring multiple WANs will create multiple <GlossaryTooltip term="IPsec tunnel">IPsec</GlossaryTooltip> tunnels (one IPsec tunnel per WAN port). This allows { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } to load balance traffic over WANs of equal priority. It also allows { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } to failover between circuits according to their <GlossaryTooltip term="tunnel health-check" link={props.tunnelHealthChecksURL}>health</GlossaryTooltip>. Refer to <a href={props.wanSettingsURL}>WAN settings</a> for more details.
 		:::note
@@ -570,7 +570,7 @@ After finishing your { props.magicWord === "virtual" ? props.productNameVirtual 
 When you are ready to connect your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } to the Cloudflare network:
 
 {/* Instructions for WAN Tunnels */}
-{ props.productOriginalName === "WAN Tunnels" ? (
+{ props.dashName === "WAN Tunnels" ? (
 	<>
 		<Markdown
 	text={`
@@ -640,7 +640,7 @@ When you are ready to connect your { props.magicWord === "virtual" ? props.produ
 		<Markdown
 		text={`
 		1. Connect ${props.productName} to a DHCP port with access to the Internet.
-		2. ${props.productOriginalName === "WAN Tunnels" ? "[Create a new profile](#create-a-new-profile)" : "[Add a Connector on-ramp](#add-a-connector-on-ramp)"} in the Cloudflare dashboard.
+		2. ${props.dashName === "WAN Tunnels" ? "[Create a new profile](#create-a-new-profile)" : "[Add a Connector on-ramp](#add-a-connector-on-ramp)"} in the Cloudflare dashboard.
 		3. Create a [DHCP WAN](#create-a-wan).
 		4. [Activate](#activate-appliance) and power on your ${props.productName}.
 		5. Wait 60 seconds.
@@ -665,7 +665,7 @@ When you are ready to connect your { props.magicWord === "virtual" ? props.produ
 		<Markdown
 		text={`
 		1. Connect the machine where you installed the VM with ${props.productNameVirtual} to a DHCP port with access to the Internet.
-		2. ${props.productOriginalName === "WAN Tunnels" ? "[Create a new profile](#create-a-new-profile)" : "[Add a Connector on-ramp](#add-a-connector-on-ramp)"} in the Cloudflare dashboard.
+		2. ${props.dashName === "WAN Tunnels" ? "[Create a new profile](#create-a-new-profile)" : "[Add a Connector on-ramp](#add-a-connector-on-ramp)"} in the Cloudflare dashboard.
 		3. Create a [DHCP WAN](#create-a-wan).
 		4. [Activate](#activate-appliance) and boot your ${props.productNameVirtual}.
 		5. Wait 60 seconds.
@@ -825,7 +825,7 @@ To set up a high availability configuration:
 
 <Markdown
 text={`
-1. Follow the steps in ${props.productOriginalName === "WAN Tunnels" ? "[Create a new profile](#create-a-new-profile)" : "[Add a Connector on-ramp](#add-a-connector-on-ramp)"} up until step 4.
+1. Follow the steps in ${props.dashName === "WAN Tunnels" ? "[Create a new profile](#create-a-new-profile)" : "[Add a Connector on-ramp](#add-a-connector-on-ramp)"} up until step 4.
 `}
 inline={false}
 />
@@ -852,7 +852,7 @@ inline={false}
 
 To check the IPsec tunnels and static routes created by your { props.magicWord === "virtual" ? props.productNameVirtual : props.productName }:
 
-{ props.productOriginalName === "WAN Tunnels" ? (
+{ props.dashName === "WAN Tunnels" ? (
 	<>
 		<Markdown
 	text={`
