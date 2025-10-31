@@ -21,7 +21,7 @@ The [HTTP Event Collector (HEC)](https://dev.splunk.com/enterprise/docs/devtools
 5. Enter or select the following destination information:
    - **Splunk HEC URL**
    - **Channel ID** - This is a random GUID that you can generate using [guidgenerator.com](https://guidgenerator.com/).
-   - **Auth Token** - Event Collector token.
+   - **Auth Token** - Event Collector token prefixed with the word `Splunk`. For example: `Splunk 1234EXAMPLEKEY`.
    - **Source Type** - For example, `cloudflare:json`. If you are using the [Cloudflare App for Splunk](https://splunkbase.splunk.com/app/4501), refer to the appropriate source type for the corresponding datasets under the **Details** section. For instance, for Zero Trust Access requests logs, the source type is `cloudflare:access`.
    - **Use insecure skip verify option** (not recommended).
 
