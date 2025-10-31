@@ -2,6 +2,7 @@
 params:
   - productName
   - wanName
+  - dashName
   - cfTunnelURL
   - cfVsCoreDashNamingMwanCni
 ---
@@ -39,7 +40,7 @@ To configure DHCP relay:
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-{ props.wanName === "WAN Tunnels" ? (
+{ props.dashName === "WAN Tunnels" ? (
 	<>
 		<Markdown
 	text={`

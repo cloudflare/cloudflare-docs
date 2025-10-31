@@ -5,6 +5,7 @@ params:
   - productNameVirtual?
   - maintenanceURL
   - productOriginalName
+  - mwanName
   - sfpURL?
   - wan
   - lan
@@ -58,7 +59,7 @@ In this page you will find instructions on how to configure {props.productName}.
 
 { props.magicWord === "hardware" && (
   <>
-		<p>You need to purchase <a href="https://www.cloudflare.com/magic-wan">{props.productOriginalName}</a> before you can purchase and use {props.productName}. {props.productName} can function as your primary edge device for your network, or be deployed in-line with existing network gear.</p>
+		<p>You need to purchase <a href="https://www.cloudflare.com/magic-wan">{props.mwanName}</a> before you can purchase and use {props.productName}. {props.productName} can function as your primary edge device for your network, or be deployed in-line with existing network gear.</p>
 
 		<p>You also need to purchase {props.productName} before you can start configuring your settings in the Cloudflare dashboard. Contact your account representative to learn more about purchasing options for {props.productName}.</p>
 
@@ -70,7 +71,7 @@ In this page you will find instructions on how to configure {props.productName}.
   <>
 		<Markdown
 		text={`
-		Before you can install ${props.productNameVirtual}, you need an Enterprise account with ${props.productOriginalName}. Additionally, you need to have a VMware or Proxmox host with sufficient compute, memory, and storage to run the virtual machine with ${props.productNameVirtual}. This includes:
+		Before you can install ${props.productNameVirtual}, you need an Enterprise account with ${props.mwanName}. Additionally, you need to have a VMware or Proxmox host with sufficient compute, memory, and storage to run the virtual machine with ${props.productNameVirtual}. This includes:
     - Intel x86 CPU architecture
     - ESXi hypervisor 7.0U1 or higher
     - 4 virtual CPUs per virtual connector (We recommend deployment with a 1:1 virtual CPU to physical core allocation to avoid CPU over contention which will cause packet loss.)
@@ -324,7 +325,7 @@ You cannot enable high availability for an existing { props.magicWord === "virtu
 { props.magicWord === "hardware" && (
   <>
 		<AnchorHeading title="Register your Connector" depth={3} />
-		<p>To set up and use {props.productOriginalName}, you first need to register it with your account.</p>
+		<p>To set up and use {props.mwanName}, you first need to register it with your account.</p>
 		<Render
 			file="mconn/maintenance/register-hardware-appliance"
 			product="networking-services"

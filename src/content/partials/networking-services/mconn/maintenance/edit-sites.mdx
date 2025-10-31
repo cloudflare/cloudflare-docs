@@ -1,11 +1,12 @@
 ---
 params:
   - wanName
+  - dashName
 ---
 
 import { Markdown } from "~/components";
 
-{ props.wanName === "WAN Tunnels" ? (
+{ props.dashName === "WAN Tunnels" ? (
 	<>
 		<Markdown
 	text={`
