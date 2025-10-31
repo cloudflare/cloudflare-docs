@@ -5,7 +5,6 @@ params:
   - productNameVirtual?
   - maintenanceURL
   - dashName
-  - mwanName
   - sfpURL?
   - wan
   - lan
@@ -59,7 +58,7 @@ In this page you will find instructions on how to configure {props.productName}.
 
 { props.magicWord === "hardware" && (
   <>
-		<p>You need to purchase <a href="https://www.cloudflare.com/magic-wan">{props.mwanName}</a> before you can purchase and use {props.productName}. {props.productName} can function as your primary edge device for your network, or be deployed in-line with existing network gear.</p>
+		<p>You need to purchase <a href="https://www.cloudflare.com/magic-wan">Magic WAN</a> before you can purchase and use {props.productName}. {props.productName} can function as your primary edge device for your network, or be deployed in-line with existing network gear.</p>
 
 		<p>You also need to purchase {props.productName} before you can start configuring your settings in the Cloudflare dashboard. Contact your account representative to learn more about purchasing options for {props.productName}.</p>
 
@@ -71,7 +70,7 @@ In this page you will find instructions on how to configure {props.productName}.
   <>
 		<Markdown
 		text={`
-		Before you can install ${props.productNameVirtual}, you need an Enterprise account with ${props.mwanName}. Additionally, you need to have a VMware or Proxmox host with sufficient compute, memory, and storage to run the virtual machine with ${props.productNameVirtual}. This includes:
+		Before you can install ${props.productNameVirtual}, you need an Enterprise account with Magic WAN. Additionally, you need to have a VMware or Proxmox host with sufficient compute, memory, and storage to run the virtual machine with ${props.productNameVirtual}. This includes:
     - Intel x86 CPU architecture
     - ESXi hypervisor 7.0U1 or higher
     - 4 virtual CPUs per virtual connector (We recommend deployment with a 1:1 virtual CPU to physical core allocation to avoid CPU over contention which will cause packet loss.)
@@ -325,7 +324,7 @@ You cannot enable high availability for an existing { props.magicWord === "virtu
 { props.magicWord === "hardware" && (
   <>
 		<AnchorHeading title="Register your Connector" depth={3} />
-		<p>To set up and use {props.mwanName}, you first need to register it with your account.</p>
+		<p>To set up and use Magic WAN, you first need to register it with your account.</p>
 		<Render
 			file="mconn/maintenance/register-hardware-appliance"
 			product="networking-services"
@@ -378,7 +377,7 @@ You cannot enable high availability for an existing { props.magicWord === "virtu
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-<Render file="mconn/wan-two-tunnels" product="networking-services" params={{ productName: props.magicWord === "virtual" ? props.productNameVirtual : props.productName, dashName: props.dashName, mwanName: props.mwanName }} />
+<Render file="mconn/wan-two-tunnels" product="networking-services" params={{ productName: props.magicWord === "virtual" ? props.productNameVirtual : props.productName, dashName: props.dashName }} />
 
 1. In **WAN configuration**, select **Create**. You can create one or more [wide area networks (WANs)](https://www.cloudflare.com/learning/network-layer/what-is-a-wan/). Configuring multiple WANs will create multiple <GlossaryTooltip term="IPsec tunnel">IPsec</GlossaryTooltip> tunnels (one IPsec tunnel per WAN port). This allows { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } to load balance traffic over WANs of equal priority. It also allows { props.magicWord === "virtual" ? props.productNameVirtual : props.productName } to failover between circuits according to their <GlossaryTooltip term="tunnel health-check" link={props.tunnelHealthChecksURL}>health</GlossaryTooltip>. Refer to <a href={props.wanSettingsURL}>WAN settings</a> for more details.
 		:::note
