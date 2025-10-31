@@ -54,31 +54,6 @@ There is no fixed limit on the number of requests per browser session. A single 
 
 This error typically occurs because your Puppeteer launch is not receiving the Browser binding. To resolve: Pass your Browser binding into `puppeteer.launch`.
 
-### Why can't I use an XPath selector when using Browser Rendering with Puppeteer?
-
-Currently it is not possible to use Xpath to select elements since this poses a security risk to Workers.
-
-As an alternative, try to use a css selector or `page.evaluate`. For example:
-
-```ts
-const innerHtml = await page.evaluate(() => {
-	return (
-		// @ts-ignore this runs on browser context
-		new XPathEvaluator()
-			.createExpression("/html/body/div/h1")
-			// @ts-ignore this runs on browser context
-			.evaluate(document, XPathResult.FIRST_ORDERED_NODE_TYPE).singleNodeValue
-			.innerHTML
-	);
-});
-```
-
-:::note
-
-Keep in mind that `page.evaluate` can only return primitive types like strings, numbers, etc. Returning an `HTMLElement` will not work.
-
-:::
-
 ### Why is my screenshot blurry?
 
 It may be because you increased the height and width of the viewport. To fix this, increase the value of the `deviceScaleFactor` (default is 1).
