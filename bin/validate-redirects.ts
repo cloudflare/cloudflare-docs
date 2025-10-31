@@ -8,7 +8,7 @@ async function main() {
 	let numDuplicateRedirects = 0;
 	let numNonSlashedRedirects = 0;
 
-	const validEndings = ["/", "*", ".xml", ".md", ".json", ".html"];
+	const validEndings = ["/", "*", ".xml", ".md", ".json", ".html", ".pdf"];
 
 	const redirectSourceUrls: string[] = [];
 
