@@ -15,6 +15,7 @@ import {
 	Render,
 	PackageManagers,
 	Steps,
+	WranglerConfig,
 } from "~/components";
 
 [TanStack Start](https://tanstack.com/start) is a full-stack framework for building web applications. It comes with features like server-side rendering, streaming, server functions, bundling, and more. In this guide, you learn to deploy a TanStack Start application to Cloudflare Workers.
@@ -47,19 +48,16 @@ If you have an existing TanStack Start application, you can configure it to run 
 
 <Steps>
 1. Add the `wrangler.jsonc` configuration file to the root of your project with the following content:
-
-    ```jsonc
-    {
-    	"$schema": "node_modules/wrangler/config-schema.json",
-    	"name": "<YOUR_PROJECT_NAME>",
-    	"compatibility_date": "2025-09-02",
-    	"compatibility_flags": ["nodejs_compat"],
-    	"main": "@tanstack/react-start/server-entry",
-    	"observability": {
-    		"enabled": true,
-    	},
-    }
+		<WranglerConfig>
+    ```toml
+    	name = "<YOUR_PROJECT_NAME>"
+    	compatibility_date = "2025-09-02"
+    	compatibility_flags = ["nodejs_compat"]
+    	main = "@tanstack/react-start/server-entry"
+    	[observability]
+    	enabled = true
     ```
+		</WranglerConfig>
 
 2. Install `wrangler` as a development dependency:
 
