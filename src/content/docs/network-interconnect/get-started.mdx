@@ -37,7 +37,7 @@ Eligibility for CNI and port availability is determined in coordination with you
 - **MTU considerations:**
   - **Dataplane v1**: Requires GRE tunneling for Magic Transit / WAN traffic, limiting the MTU to 1,476 bytes.
   - **Dataplane v1.1**: Supports a native 1,500-byte MTU for traffic from Cloudflare to you (ingress), but still requires a 1,476-byte MTU for traffic from you to Cloudflare (egress).
-	- **Dataplane v2 (beta)**: Supports a maximum MTU of 1500 bytes bidirectionally with no GRE requirement.
+	- **Dataplane v2 (beta)**: Supports a maximum MTU of 1,500 bytes bidirectionally with no GRE requirement.
 - **Bidirectional Forwarding Detection (BFD):**
 	- **Dataplane v1 & v1.1**: BFD provides fast failure detection for BGP sessions and is supported on direct connections. To enable BFD, contact your account team. Note that BFD on a CNI does not impact the failover time for Magic Transit / WAN tunnels, which rely on separate health checks.
 	- **Dataplane v2 (beta)**: Not yet supported.
