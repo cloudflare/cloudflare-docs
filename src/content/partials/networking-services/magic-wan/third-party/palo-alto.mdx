@@ -1,6 +1,5 @@
 ---
 params:
-  - productName
   - configureTwoIpsecTunnelsUrl
   - configureBidirectionalHealthChecksUrl
   - addTunnelsUrl
@@ -8,7 +7,7 @@ params:
   - equalcostMultipathEcmpRoutingUrl
 ---
 
-This tutorial includes the steps required to configure IPsec tunnels to connect a Palo Alto Networks Next-Generation Firewall (NGFW) to Cloudflare {props.productName} through a Layer 3 deployment.
+This tutorial includes the steps required to configure IPsec tunnels to connect a Palo Alto Networks Next-Generation Firewall (NGFW) to Cloudflare Magic WAN through a Layer 3 deployment.
 
 ## Software version tested
 
@@ -16,8 +15,8 @@ This tutorial includes the steps required to configure IPsec tunnels to connect 
 
 ## Use Cases
 
-- **{props.productName}**: Connecting two or more locations with [RFC-1918](https://datatracker.ietf.org/doc/html/rfc1918) private non-routable address space.
-- **{props.productName} with Cloudflare Zero Trust (Gateway egress)**: Same as {props.productName}, with the addition of outbound Internet access from {props.productName} protected sites egressing the Cloudflare edge network.
+- **Magic WAN**: Connecting two or more locations with [RFC-1918](https://datatracker.ietf.org/doc/html/rfc1918) private non-routable address space.
+- **Magic WAN with Cloudflare Zero Trust (Gateway egress)**: Same as Magic WAN, with the addition of outbound Internet access from Magic WAN protected sites egressing the Cloudflare edge network.
 
 ## Prerequisites
 
@@ -39,13 +38,13 @@ The following IP addresses are used throughout this tutorial. Any legally routab
 | Local trust subnet (LAN)          | `10.1.100.0/24`                    |                              |
 | NGFW tunnel interface 01          | `10.252.2.26/31` (Cloudflare side) | `10.252.2.27/31` (NGFW side) |
 | NGFW tunnel interface 02          | `10.252.2.28/31` (Cloudflare side) | `10.252.2.29/31` (NGFW side) |
-| {props.productName} anycast IP              | `162.159.66.164`                   | `172.64.242.164`             |
-| {props.productName} health check anycast IP | `172.64.240.253`                   | `172.64.240.254`             |
-| VLAN0010 - remote {props.productName} site  | `10.1.10.0/24`                     |                              |
-| VLAN0020 - remote {props.productName} site  | `10.1.20.0/24`                     |                              |
+| Magic WAN anycast IP              | `162.159.66.164`                   | `172.64.242.164`             |
+| Magic WAN health check anycast IP | `172.64.240.253`                   | `172.64.240.254`             |
+| VLAN0010 - remote Magic WAN site  | `10.1.10.0/24`                     |                              |
+| VLAN0020 - remote Magic WAN site  | `10.1.20.0/24`                     |                              |
 
 
-## Cloudflare {props.productName}
+## Cloudflare Magic WAN
 
 ### Magic IPsec Tunnels
 
@@ -57,7 +56,7 @@ These are the target IP addresses for bidirectional tunnel health checks:
 - `172.64.240.254`: Use with the secondary IPsec tunnel.
 
 :::caution
-You need to <a href={props.configureBidirectionalHealthChecksUrl}>configure bidirectional health checks</a> with {props.productName}. The settings must include custom target IP addresses for each tunnel. Additionally, Cloudflare recommends that you lower the rate at which health check probes are sent.
+You need to <a href={props.configureBidirectionalHealthChecksUrl}>configure bidirectional health checks</a> with Magic WAN. The settings must include custom target IP addresses for each tunnel. Additionally, Cloudflare recommends that you lower the rate at which health check probes are sent.
 :::
 
 #### Add IPsec tunnels
@@ -380,7 +379,7 @@ set network interface ethernet ethernet1/2 layer3 adjust-tcp-mss ipv4-mss-adjust
 
 ### Tunnel interfaces
 
-Establishing IPsec Tunnels to Cloudflare {props.productName} requires two tunnel interfaces - one to each of the two Cloudflare anycast IP addresses. You also have to ensure that `Allow_Ping` is bound to both tunnel adapters in **Advanced** > **Managementt Profile**.
+Establishing IPsec Tunnels to Cloudflare Magic WAN requires two tunnel interfaces - one to each of the two Cloudflare anycast IP addresses. You also have to ensure that `Allow_Ping` is bound to both tunnel adapters in **Advanced** > **Managementt Profile**.
 
 Review the images below for more information.
 
@@ -450,7 +449,7 @@ The Palo Alto Networks Next-Generation Firewall (NGFW) used to create this tutor
 The tunnel interfaces are placed in a separate zone to facilitate the configuration of more granular security policies. The use of any other zone for the tunnel interfaces will require adapting the configuration accordingly.
 
 :::note
-Any {props.productName} protected networks that are not local should be considered part of the `Cloudflare_L3_Zone`.
+Any Magic WAN protected networks that are not local should be considered part of the `Cloudflare_L3_Zone`.
 :::
 
 #### Set up via dashboard
@@ -655,9 +654,9 @@ With the IKE Gateways defined, the next step is to configure two IPsec Tunnels -
 
 There are a few prerequisites you should be aware of before continuing:
 
-- Do not configure Proxy IDs. {props.productName} IPsec tunnels are based on the route-based VPN model. Proxy IDs are used with policy-based VPNs.
+- Do not configure Proxy IDs. Magic WAN IPsec tunnels are based on the route-based VPN model. Proxy IDs are used with policy-based VPNs.
 - Disable Replay Protection, under the Advanced Options.
-- Disable Tunnel Monitor. It can cause undesirable results. Tunnel Monitor is a Palo Alto Networks proprietary feature that assumes there are Palo Alto Networks Next-Generation Firewall devices on both sides of the IPsec tunnel. Also, Tunnel Monitor is intended for use with IPsec tunnels based on IKEv1 ({props.productName} IPsec tunnels are based on IKEv2).
+- Disable Tunnel Monitor. It can cause undesirable results. Tunnel Monitor is a Palo Alto Networks proprietary feature that assumes there are Palo Alto Networks Next-Generation Firewall devices on both sides of the IPsec tunnel. Also, Tunnel Monitor is intended for use with IPsec tunnels based on IKEv1 (Magic WAN IPsec tunnels are based on IKEv2).
 
 #### Set up via dashboard
 
@@ -787,7 +786,7 @@ Show IKEv2 SA: Total 2 gateways found. 1 ike sa found.
 
 #### Troubleshooting IKE Phase 1 Communications
 
-{props.productName} IPsec tunnels expect the customer device will initiate the IPsec tunnels. The tunnels may not establish if there is no traffic that would traverse the tunnel under normal conditions. In this case, it may be necessary to force IKE Phase 1.
+Magic WAN IPsec tunnels expect the customer device will initiate the IPsec tunnels. The tunnels may not establish if there is no traffic that would traverse the tunnel under normal conditions. In this case, it may be necessary to force IKE Phase 1.
 
 ##### Syntax
 
@@ -855,7 +854,7 @@ Show IPsec SA: Total 1 tunnels found. 1 ipsec sa found.
 
 #### Troubleshooting IPsec Phase 2 Communications
 
-{props.productName} IPsec tunnels expect the customer device will initiate the IPsec tunnels. The tunnels may not establish if there is no traffic that would traverse the tunnel under normal conditions. In this case, it may be necessary to force IPsec Phase 2. This is typically unnecessary as once IKE Phase 1 negotiates successfully, IPsec Phase 2 automatically establishes the tunnel. The test is still worth performing.
+Magic WAN IPsec tunnels expect the customer device will initiate the IPsec tunnels. The tunnels may not establish if there is no traffic that would traverse the tunnel under normal conditions. In this case, it may be necessary to force IPsec Phase 2. This is typically unnecessary as once IKE Phase 1 negotiates successfully, IPsec Phase 2 automatically establishes the tunnel. The test is still worth performing.
 
 ##### Syntax
 
@@ -931,7 +930,7 @@ rtt min/avg/max/mdev = 1.765/2.141/2.900/0.446 ms
 
 While we will leverage policy-based forwarding to implement policy-based routing, it is still a good idea to configure routing on the Virtual Router.
 
-Cloudflare {props.productName} implements <a href={props.equalcostMultipathEcmpRoutingUrl}>equal-cost multi-path (ECMP) routing</a> to steer traffic across IPsec tunnels. The default behavior is to load balance traffic equally across both tunnels.
+Cloudflare Magic WAN implements <a href={props.equalcostMultipathEcmpRoutingUrl}>equal-cost multi-path (ECMP) routing</a> to steer traffic across IPsec tunnels. The default behavior is to load balance traffic equally across both tunnels.
 
 :::note
 ECMP is disabled on the Palo Alto Networks Next-Generation Firewall by default. Enabling ECMP will force the Virtual Router to restart. While a restart of the Virtual Router is much faster than restarting the entire firewall, it is still recommended that you make this change during a scheduled maintenance window.
@@ -945,7 +944,7 @@ First, ensure the General tab displays both the Ethernet and tunnel interfaces. 
 
 1. Open the **Router settings** for the default Virtual Router and select the **ECMP** tab.
 2. Select the checkboxes next to **Enable**, **Symmetric Return**, and **Strict Source Path** (all three checkboxes should be selected).
-3. Under **Load Balance**, change the **Method** from _IP Modulo_ to _Weighted Round Robin_ and add both tunnel interfaces. Ensure the weights match the weights defined in {props.productName} Static Routes (reference the Cloudflare Dashboard).
+3. Under **Load Balance**, change the **Method** from _IP Modulo_ to _Weighted Round Robin_ and add both tunnel interfaces. Ensure the weights match the weights defined in Magic WAN Static Routes (reference the Cloudflare Dashboard).
 
 ![Make sure all checkboxes are selected](~/assets/images/magic-wan/third-party/palo-alto/panw_virtual_router/02_virtual_router_ecmp.png)
 
@@ -961,13 +960,13 @@ set network virtual-router default ecmp strict-source-path yes
 
 #### Add static routes
 
-Add two static routes for each {props.productName} Protected Network - one for each of the two tunnel interfaces.
+Add two static routes for each Magic WAN Protected Network - one for each of the two tunnel interfaces.
 
 :::note
 Palo Alto Networks Next-Generation Firewall will not allow for configuring two routes to the same destination with equal metrics - even if they reference different interfaces and ECMP is enabled. The examples provided here use Metric 10 for the route via interface tunnel.1 and Metric 11 for the route via interface tunnel.2.
 :::
 
-The environment used for this tutorial assumes two {props.productName} Protected Networks:
+The environment used for this tutorial assumes two Magic WAN Protected Networks:
 
 - **VLAN0010**: `10.1.10.0/24`
 - **VLAN0020**: `10.1.20.0/24`
@@ -1072,7 +1071,7 @@ Cloudflare crafts ICMP probes which are sent through the IPsec tunnels from rand
 The construct of the security policies may seem counter-intuitive - this is due to the use of ICMP reply probes. As long as you adhere to the recommended policies in this documentation, the bi-directional health checks will work as expected.
 :::
 
-Cloudflare {props.productName} customers must configure IPsec tunnels to use custom anycast IP addresses for the health check endpoints:
+Cloudflare Magic WAN customers must configure IPsec tunnels to use custom anycast IP addresses for the health check endpoints:
 
 - **CF_Health_Check_Anycast_01**: `172.64.240.253`
 - **CF_Health_Check_Anycast_02**: `172.64.240.254`
@@ -1261,18 +1260,18 @@ If the traffic is not ingressing/egressing the same interface, you likely have a
 
 As mentioned earlier, this tutorial includes examples for two different use-cases:
 
-- **{props.productName}**: permit traffic between two or more locations with [RFC-1918](https://datatracker.ietf.org/doc/html/rfc1918) private non-routable address space.
-- **{props.productName} with Cloudflare Zero Trust (Gateway egress)**: same as {props.productName} with the addition of outbound Internet access from {props.productName} protected sites egressing the Cloudflare edge network.
+- **Magic WAN**: permit traffic between two or more locations with [RFC-1918](https://datatracker.ietf.org/doc/html/rfc1918) private non-routable address space.
+- **Magic WAN with Cloudflare Zero Trust (Gateway egress)**: same as Magic WAN with the addition of outbound Internet access from Magic WAN protected sites egressing the Cloudflare edge network.
 
-#### {props.productName} only
+#### Magic WAN only
 
-Rules must be defined to facilitate traffic from the trust network to the {props.productName} protected sites. While it may be possible to define one rule for traffic in both directions, this example includes two rules:
+Rules must be defined to facilitate traffic from the trust network to the Magic WAN protected sites. While it may be possible to define one rule for traffic in both directions, this example includes two rules:
 
-- From Trust to {props.productName} protected sites.
+- From Trust to Magic WAN protected sites.
 
-- From {props.productName} protected sites to Trust.
+- From Magic WAN protected sites to Trust.
 
-##### Trust to {props.productName} dashboard
+##### Trust to Magic WAN dashboard
 
 | Name                                  | Option              | Value                                                         |
 | ------------------------------------- | ------------------- | ------------------------------------------------------------- |
@@ -1288,14 +1287,14 @@ Rules must be defined to facilitate traffic from the trust network to the {props
 |                                       | Schedule            | _None_                                                        |
 |                                       | QoS Marking         | _None_                                                        |
 
-![Trust to {props.productName} - General](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/07_trust_to_mwan_general.png)
-![Trust to {props.productName} - Source](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/08_trust_to_mwan_source.png)
-![Trust to {props.productName} - Destination](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/09_trust_to_mwan_dest.png)
-![Trust to {props.productName} - Applications](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/10_trust_to_mwan_apps.png)
-![Trust to {props.productName} - Services/URL Categories](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/11_trust_to_mwan_service-url.png)
-![Trust to {props.productName} - Action](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/12_trust_to_mwan_action.png)
+![Trust to Magic WAN - General](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/07_trust_to_mwan_general.png)
+![Trust to Magic WAN - Source](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/08_trust_to_mwan_source.png)
+![Trust to Magic WAN - Destination](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/09_trust_to_mwan_dest.png)
+![Trust to Magic WAN - Applications](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/10_trust_to_mwan_apps.png)
+![Trust to Magic WAN - Services/URL Categories](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/11_trust_to_mwan_service-url.png)
+![Trust to Magic WAN - Action](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/12_trust_to_mwan_action.png)
 
-##### Trust to {props.productName} command line
+##### Trust to Magic WAN command line
 
 ```bash
 set rulebase security rules Trust_to_Cloudflare_Magic_WAN_Allow to Cloudflare_L3_Zone
@@ -1311,7 +1310,7 @@ set rulebase security rules Trust_to_Cloudflare_Magic_WAN_Allow action allow
 set rulebase security rules Trust_to_Cloudflare_Magic_WAN_Allow rule-type universal
 ```
 
-##### {props.productName} to Trust dashboard
+##### Magic WAN to Trust dashboard
 
 | Name                                  | Option              | Value                                                         |
 | ------------------------------------- | ------------------- | ------------------------------------------------------------- |
@@ -1327,14 +1326,14 @@ set rulebase security rules Trust_to_Cloudflare_Magic_WAN_Allow rule-type univer
 |                                       | Schedule            | _None_                                                        |
 |                                       | QoS Marking         | _None_                                                        |
 
-![{props.productName} to Trust - General](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/13_mwan_to_trust_general.png)
-![{props.productName} to Trust - Source](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/14_mwan_to_trust_source.png)
-![{props.productName} to Trust - Destination](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/15_mwan_to_trust_dest.png)
-![{props.productName} to Trust - Applications](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/16_mwan_to_trust_apps.png)
-![{props.productName} to Trust - Services/URL Categories](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/17_mwan_to_trust_service-url.png)
-![{props.productName} to Trust - Action](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/18_mwan_to_trust_action.png)
+![Magic WAN to Trust - General](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/13_mwan_to_trust_general.png)
+![Magic WAN to Trust - Source](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/14_mwan_to_trust_source.png)
+![Magic WAN to Trust - Destination](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/15_mwan_to_trust_dest.png)
+![Magic WAN to Trust - Applications](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/16_mwan_to_trust_apps.png)
+![Magic WAN to Trust - Services/URL Categories](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/17_mwan_to_trust_service-url.png)
+![Magic WAN to Trust - Action](~/assets/images/magic-wan/third-party/palo-alto/panw_security_rules/18_mwan_to_trust_action.png)
 
-##### {props.productName} to Trust command line
+##### Magic WAN to Trust command line
 
 ```bash
 set rulebase security rules Cloudflare_Magic_WAN_to_Trust_Allow to Trust_L3_Zone
@@ -1356,13 +1355,13 @@ Whether traffic ingresses or egresses Palo Alto Networks Next-Generation Firewal
 
 Policy-based forwarding rules are only required for egress traffic.
 
-Any traffic destined for {props.productName} protected sites or {props.productName} protected sites with Gateway egress must be routed across the IPsec tunnels.
+Any traffic destined for Magic WAN protected sites or Magic WAN protected sites with Gateway egress must be routed across the IPsec tunnels.
 
 :::note
 Security rules match traffic flows based on source and destination zone. Policy-based forwarding rules are applied per interface. Therefore, two policy-based forwarding rules are required for every one security rule - one for tunnel.1 and one for tunnel.2.
 :::
 
-#### Dashboard policy-based forwarding - {props.productName} production traffic via tunnel.1
+#### Dashboard policy-based forwarding - Magic WAN production traffic via tunnel.1
 
 | Name                                    | Option              | Value                                                         |
 | --------------------------------------- | ------------------- | ------------------------------------------------------------- |
@@ -1376,12 +1375,12 @@ Security rules match traffic flows based on source and destination zone. Policy-
 |                                         | Next hop            | _IP Address_                                                  |
 |                                         |                     | _CF_MWAN_IPsec_VTI_01_Remote_                            |
 
-![PBF: Trust to {props.productName} via tunnel.1 - General](~/assets/images/magic-wan/third-party/palo-alto/panw_pbf/09_pbf_mwan_sites_tun01_general.png)
-![PBF: Trust to {props.productName} via tunnel.1 - Source](~/assets/images/magic-wan/third-party/palo-alto/panw_pbf/10_pbf_mwan_sites_tun01_source.png)
-![PBF: Trust to {props.productName} via tunnel.1 - Destinations](~/assets/images/magic-wan/third-party/palo-alto/panw_pbf/11_pbf_mwan_sites_tun01_dest-app-service.png)
-![PBF: Trust to {props.productName} via tunnel.1 - Forwarding](~/assets/images/magic-wan/third-party/palo-alto/panw_pbf/12_pbf_mwan_sites_tun01_forwarding.png)
+![PBF: Trust to Magic WAN via tunnel.1 - General](~/assets/images/magic-wan/third-party/palo-alto/panw_pbf/09_pbf_mwan_sites_tun01_general.png)
+![PBF: Trust to Magic WAN via tunnel.1 - Source](~/assets/images/magic-wan/third-party/palo-alto/panw_pbf/10_pbf_mwan_sites_tun01_source.png)
+![PBF: Trust to Magic WAN via tunnel.1 - Destinations](~/assets/images/magic-wan/third-party/palo-alto/panw_pbf/11_pbf_mwan_sites_tun01_dest-app-service.png)
+![PBF: Trust to Magic WAN via tunnel.1 - Forwarding](~/assets/images/magic-wan/third-party/palo-alto/panw_pbf/12_pbf_mwan_sites_tun01_forwarding.png)
 
-#### Command line policy-based forwarding - {props.productName} production traffic via tunnel.1
+#### Command line policy-based forwarding - Magic WAN production traffic via tunnel.1
 
 ```bash
 set rulebase pbf rules PBF_Magic_WAN_Sites_01 action forward nexthop ip-address CF_MWAN_IPsec_VTI_01_Remote
@@ -1397,7 +1396,7 @@ set rulebase pbf rules PBF_Magic_WAN_Sites_01 disabled no
 set rulebase pbf rules PBF_Magic_WAN_Sites_01 negate-destination no
 ```
 
-#### Dashboard policy-based forwarding - {props.productName} production traffic via tunnel.2
+#### Dashboard policy-based forwarding - Magic WAN production traffic via tunnel.2
 
 | Name                                    | Option              | Value                                                         |
 | --------------------------------------- | ------------------- | ------------------------------------------------------------- |
@@ -1411,10 +1410,10 @@ set rulebase pbf rules PBF_Magic_WAN_Sites_01 negate-destination no
 |                                         | Next hop            | _IP Address_                                                  |
 |                                         |                     | _CF_MWAN_IPsec_VTI_02_Remote_                            |
 
-![PBF: Trust to {props.productName} via tunnel.2 - General](~/assets/images/magic-wan/third-party/palo-alto/panw_pbf/13_pbf_mwan_sites_tun02_general.png)
-![PBF: Trust to {props.productName} via tunnel.2 - Source](~/assets/images/magic-wan/third-party/palo-alto/panw_pbf/14_pbf_mwan_sites_tun02_source.png)
-![PBF: Trust to {props.productName} via tunnel.2 - Destinations](~/assets/images/magic-wan/third-party/palo-alto/panw_pbf/15_pbf_mwan_sites_tun02_dest-app-service.png)
-![PBF: Trust to {props.productName} via tunnel.2 - Forwarding](~/assets/images/magic-wan/third-party/palo-alto/panw_pbf/16_pbf_mwan_sites_tun02_forwarding.png)
+![PBF: Trust to Magic WAN via tunnel.2 - General](~/assets/images/magic-wan/third-party/palo-alto/panw_pbf/13_pbf_mwan_sites_tun02_general.png)
+![PBF: Trust to Magic WAN via tunnel.2 - Source](~/assets/images/magic-wan/third-party/palo-alto/panw_pbf/14_pbf_mwan_sites_tun02_source.png)
+![PBF: Trust to Magic WAN via tunnel.2 - Destinations](~/assets/images/magic-wan/third-party/palo-alto/panw_pbf/15_pbf_mwan_sites_tun02_dest-app-service.png)
+![PBF: Trust to Magic WAN via tunnel.2 - Forwarding](~/assets/images/magic-wan/third-party/palo-alto/panw_pbf/16_pbf_mwan_sites_tun02_forwarding.png)
 
 #### Command line policy-based forwarding - tunnel.2
 
@@ -1432,7 +1431,7 @@ set rulebase pbf rules PBF_Magic_WAN_Sites_02 disabled no
 set rulebase pbf rules PBF_Magic_WAN_Sites_02 negate-destination no
 ```
 
-## {props.productName} with Cloudflare Zero Trust (Gateway egress)
+## Magic WAN with Cloudflare Zero Trust (Gateway egress)
 
 This section covers adding in support for the use of Cloudflare Gateway. Adding Cloudflare Gateway allows you to set up policies to inspect outbound traffic to the Internet through DNS, network, HTTP and egress filtering.
 
@@ -1443,8 +1442,8 @@ This use case can be supported in one of two ways:
   - **Policy-Based Forwarding**: Extend the scope of `PBF_Magic_WAN_Sites_01` and `PBF_Magic_WAN_Sites_02` to allow any destination address.
 
 - **Option 2**
-  - **Security Rule**: Add a new rule below `Trust_to_Cloudflare_Magic_WAN_Allow` called `Trust_to_MWAN_Gateway_Egress_Allow` to allow traffic to any destination address except for the {props.productName} Protected Sites (using the Negate option).
-  - **Policy-Based Forwarding**: Add a new rule below `PBF_Magic_WAN_Sites_01` and `PBF_Magic_WAN_Sites_02` to allow any destination address except for the {props.productName} Protected Sites (using the Negate option).
+  - **Security Rule**: Add a new rule below `Trust_to_Cloudflare_Magic_WAN_Allow` called `Trust_to_MWAN_Gateway_Egress_Allow` to allow traffic to any destination address except for the Magic WAN Protected Sites (using the Negate option).
+  - **Policy-Based Forwarding**: Add a new rule below `PBF_Magic_WAN_Sites_01` and `PBF_Magic_WAN_Sites_02` to allow any destination address except for the Magic WAN Protected Sites (using the Negate option).
 
 The following examples are based on Option 2.
 
@@ -1510,10 +1509,10 @@ set rulebase security rules Trust_to_MWAN_Gateway_Egress_Allow negate-destinatio
 |                                         | Next Hop            | _IP Address_                                                                   |
 |                                         |                     | _CF_MWAN_IPsec_VTI_01_Remote_                                             |
 
-![PBF: Trust to {props.productName} Egress via tunnel.1 - General](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/07_pbf_trust_mwan_egress_tun01_general.png)
-![PBF: Trust to {props.productName} via tunnel.1 - Source](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/02_trust_mwan_egress_source.png)
-![PBF: Trust to {props.productName} via tunnel.1 - Destinations](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/09_pbf_trust_mwan_egress_tun01_dest.png)
-![PBF: Trust to {props.productName} via tunnel.1 - Forwarding](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/10_pbf_trust_mwan_egress_tun01_forward.png)
+![PBF: Trust to Magic WAN Egress via tunnel.1 - General](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/07_pbf_trust_mwan_egress_tun01_general.png)
+![PBF: Trust to Magic WAN via tunnel.1 - Source](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/02_trust_mwan_egress_source.png)
+![PBF: Trust to Magic WAN via tunnel.1 - Destinations](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/09_pbf_trust_mwan_egress_tun01_dest.png)
+![PBF: Trust to Magic WAN via tunnel.1 - Forwarding](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/10_pbf_trust_mwan_egress_tun01_forward.png)
 
 #### Command line
 
@@ -1546,10 +1545,10 @@ set rulebase pbf rules PBF_MWAN_Egress_01 negate-destination yes
 |                                         | Next Hop            | _IP Address_                                                                   |
 |                                         |                     | _CF_MWAN_IPsec_VTI_02_Remote_                                             |
 
-![PBF: Trust to {props.productName} Egress via tunnel.2 - General](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/11_pbf_trust_mwan_egress_tun02_general.png)
-![PBF: Trust to {props.productName} via tunnel.2 - Source](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/12_pbf_trust_mwan_egress_tun02_source.png)
-![PBF: Trust to {props.productName} via tunnel.2 - Destinations](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/13_pbf_trust_mwan_egress_tun02_dest.png)
-![PBF: Trust to {props.productName} via tunnel.2 - Forwarding](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/14_pbf_trust_mwan_egress_tun02_forward.png)
+![PBF: Trust to Magic WAN Egress via tunnel.2 - General](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/11_pbf_trust_mwan_egress_tun02_general.png)
+![PBF: Trust to Magic WAN via tunnel.2 - Source](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/12_pbf_trust_mwan_egress_tun02_source.png)
+![PBF: Trust to Magic WAN via tunnel.2 - Destinations](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/13_pbf_trust_mwan_egress_tun02_dest.png)
+![PBF: Trust to Magic WAN via tunnel.2 - Forwarding](~/assets/images/magic-wan/third-party/palo-alto/panw_mwan_egress/14_pbf_trust_mwan_egress_tun02_forward.png)
 
 #### Command line
 

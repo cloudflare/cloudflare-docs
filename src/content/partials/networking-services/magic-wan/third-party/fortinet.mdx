@@ -1,6 +1,5 @@
 ---
 params:
-  - productName
   - bidirectionalHealthChecksUrl
   - addTunnelsUrl
   - equalCostMultipathRoutingEcmpUrl
@@ -10,9 +9,9 @@ params:
 
 import { Render } from "~/components";
 
-This tutorial provides information and examples of how to configure Cloudflare {props.productName} with IPsec tunnels in conjunction with Fortinet FortiGate firewalls.
+This tutorial provides information and examples of how to configure Cloudflare Magic WAN with IPsec tunnels in conjunction with Fortinet FortiGate firewalls.
 
-The FortiGate configuration settings presented here support <a href={props.bidirectionalHealthChecksUrl}>bidirectional health checks</a> as required by Cloudflare {props.productName}. However, they do not factor in any other traffic flows outside of the tunnel health checks. The configuration may need to be adjusted based on your current FortiGate configuration.
+The FortiGate configuration settings presented here support <a href={props.bidirectionalHealthChecksUrl}>bidirectional health checks</a> as required by Cloudflare Magic WAN. However, they do not factor in any other traffic flows outside of the tunnel health checks. The configuration may need to be adjusted based on your current FortiGate configuration.
 
 ## Testing Environment
 
@@ -21,9 +20,9 @@ The FortiGate configuration was tested on two different FortiGate firewalls:
 - FortiGate Virtual Appliance version 7.0.8, running on VMware ESXi 6.5
 - FortiGate FG80F, version 7.0.12
 
-## {props.productName} configuration
+## Magic WAN configuration
 
-The first step to setting up {props.productName} is to add IPsec tunnels and Magic static routes to your Cloudflare account via the dashboard or API.
+The first step to setting up Magic WAN is to add IPsec tunnels and Magic static routes to your Cloudflare account via the dashboard or API.
 
 Before proceeding, ensure that you have the anycast IPs associated with your account. Check with your Cloudflare account team if you do not yet have them.
 
@@ -56,7 +55,7 @@ By default, the Magic static routes are defined with the priority set to `100`. 
 
 ### Enable asymmetric routing
 
-To ensure health checks work as expected, enable asymmetric routing for ICMP. This option is required. Otherwise, the tunnel health checks which are critical for proper {props.productName} functionality will not work as designed.
+To ensure health checks work as expected, enable asymmetric routing for ICMP. This option is required. Otherwise, the tunnel health checks which are critical for proper Magic WAN functionality will not work as designed.
 
 Note that enabling asymmetric routing will affect FortiGate behavior. To learn more, refer to [How FortiGate behaves when asymmetric routing is enabled](https://community.fortinet.com/t5/FortiGate/Technical-Note-How-the-FortiGate-behaves-when-asymmetric-routing/ta-p/198575).
 
@@ -105,7 +104,7 @@ Magic IPsec tunnels leverage a route-based site-to-site VPN model. This model re
 Configure two IPsec tunnels using the `phase1-interface` and `phase2-interface` objects.
 
 :::note
-Refer to the Cloudflare {props.productName} dashboard to obtain the FQDN ID value when specifying the `localid` attribute/value pair in the `phase1-interface` configuration. To find this value, go to the [Cloudflare dashboard](https://dash.cloudflare.com/) > **{props.productName}** > **Manage {props.productName} configuration** > **Tunnels**. Then, find your IPsec tunnel and expand it to reveal all the information associated to it.
+Refer to the Cloudflare Magic WAN dashboard to obtain the FQDN ID value when specifying the `localid` attribute/value pair in the `phase1-interface` configuration. To find this value, go to the [Cloudflare dashboard](https://dash.cloudflare.com/) > **Magic WAN** > **Manage Magic WAN configuration** > **Tunnels**. Then, find your IPsec tunnel and expand it to reveal all the information associated to it.
 :::
 
 The following examples assume `wan1` is the external/egress interface of the FortiGate firewall.
