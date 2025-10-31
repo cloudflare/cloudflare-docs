@@ -8,13 +8,13 @@ head:
     content: Enable DNSSEC - subdomain setup
 ---
 
+import { GlossaryTooltip } from "~/components";
+
 As opposed to the [normal process](/dns/dnssec/) for enabling DNSSEC, DNSSEC with a subdomain setup requires a few additional steps.
 
 ## Requirements
 
-To use DNSSEC for a subdomain setup, DNSSEC must be enabled on the parent zone.
-
-Ideally, you should also wait 12 to 24 hours after enabling DNSSEC on the parent zone to ensure DNS resolvers provide the same DNS query responses.
+To use DNSSEC for a subdomain setup, DNSSEC must be enabled on the parent zone. After enabling DNSSEC on the parent zone, you should wait the minimum <GlossaryTooltip term="time-to-live (TTL)">TTL</GlossaryTooltip> value (specified in the [SOA record](https://www.cloudflare.com/learning/dns/dns-records/dns-soa-record/) of the parent zone) to ensure DNS resolvers provide the same DNS query responses.
 
 ## Setup
 

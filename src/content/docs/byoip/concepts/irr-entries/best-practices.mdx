@@ -1,34 +1,19 @@
 ---
-title: Best practices
+title: Manage IRR entries
 pcx_content_type: reference
 sidebar:
   order: 7
-head:
-  - tag: title
-    content: IRR entry updates best practices
-
 ---
 
-import { GlossaryTooltip } from "~/components"
+import { GlossaryTooltip } from "~/components";
 
-An Internet Routing Registry (IRR) record is what notifies internet service providers (ISPs) of how you are allowing your resources to be used. It is necessary to keep your IRR entries up to date so that it is public information that Cloudflare has permission to advertise your prefix or prefixes and to ensure that your traffic can be properly routed on the internet.
-
-The American Registry for Internet Numbers (ARIN) maintains an IRR that allows registrants of AS numbers and IP addresses to publish that information so that ISPs can make appropriate routing decisions. This helps ensure ISPs will recognize your routes as legitimate and enables them to ignore unauthorized routes published by someone else.
+You must keep your <GlossaryTooltip term="Internet Routing Registry (IRR)" link="/byoip/concepts/irr-entries/">Internet Routing Registry (IRR)</GlossaryTooltip> entries up to date so that it is public information that Cloudflare has permission to advertise your prefix or prefixes, and to ensure that your traffic can be properly routed on the internet.
 
 ## Configure an IRR entry
 
-You can add or update an IRR entry by following the directions within any of the recommended internet registries listed in the [Internet Routing Registry](https://www.irr.net/index.html).
+You can add or update an IRR entry by following the directions of your routing registry. Each routing registry has its own set of instructions to configure an IRR entry.
 
-If you own your own subnet, use the RIPE and APNIC routing registries. These registries allow you to verify subnet ownership.
-
-If you lease your subnet, follow these guidelines:
-
-* When you do not need ownership verification, use the AFRINIC or NTT routing registry.
-* When you submit a route object via email, use the ARIN registry. Address blocks owned by others do not appear in the ARIN interface.
-
-The recommended registries are AFRINIC, APNIC, ARIN, NTT, RADB, and RIPE.
-
-Each routing registry has its own set of instructions to configure an IRR entry. Refer to the table below for more information.
+The recommended registries are AFRINIC, APNIC, ARIN, LACNIC, and RIPE. Refer to the table below for more information.
 
 <table>
 <thead>
@@ -50,13 +35,9 @@ Each routing registry has its own set of instructions to configure an IRR entry.
       <td>ARIN</td>
       <td><a href="https://www.arin.net/resources/manage/irr/quickstart/">https://www.arin.net/resources/manage/irr/quickstart/</a></td>
     </tr>
-    <tr>
-      <td>NTT</td>
-      <td><a href="https://www.gin.ntt.net/support-center/policies-procedures/routing-registry/">https://www.gin.ntt.net/support-center/policies-procedures/routing-registry/</a></td>
-    </tr>
-    <tr>
-      <td>RADB</td>
-      <td><a href="https://www.radb.net/support/">https://www.radb.net/support/</a></td>
+		    <tr>
+      <td>LACNIC</td>
+      <td><a href="https://lacnic.zendesk.com/hc/articles/360038667154-What-are-a-route-and-a-route-6-objects">https://lacnic.zendesk.com/hc/articles/360038667154-What-are-a-route-and-a-route-6-objects</a></td>
     </tr>
     <tr>
       <td>RIPE</td>
@@ -72,8 +53,8 @@ Verify your Internet Routing Registry (IRR) entries to ensure that the IP prefix
 Each IRR entry record must include the following information:
 
 * **Route**: Each IP prefix Cloudflare advertises for you.
-* **Origin ASN**: Your ASN, or if you do not have your own ASN, the Cloudflare ASN (AS13335).
-* **Source**: The name of the routing registry, for example, AFRINIC, APNIC, ARIN, RADB, RIPE, or NTT.
+* **Origin ASN**: The Cloudflare ASN (AS13335) or your own ASN.
+* **Source**: The name of the routing registry (for example, ARIN).
 
 Add or update IRR entries when they meet any of these criteria:
 

@@ -1,25 +1,33 @@
 ---
 import { z } from "astro:schema";
 import { LinkButton } from "@astrojs/starlight/components";
-import Routes from "~/content/dash-routes/index.json";
+import CoreRoutes from "~/content/dash-routes/core.json";
+import ZeroTrustRoutes from "~/content/dash-routes/zero-trust.json";
 
 const props = z
 	.object({
 		url: z.string(),
+		zeroTrust: z.boolean().optional().default(false),
+		buttonName: z.string().optional(),
 	})
 	.strict();
 
-const { url } = props.parse(Astro.props);
+const { url, zeroTrust, buttonName } = props.parse(Astro.props);
 
-const route = Routes.find((route) => route.deeplink === url);
+const routes = zeroTrust ? ZeroTrustRoutes : CoreRoutes;
+
+const route = routes.find((route) => route.deeplink === url);
 
 if (!route) {
 	throw new Error(`[DashButton] No route found for ${url}`);
 }
 
-const { name } = route;
+const name = buttonName ?? route.name;
+const baseUrl = zeroTrust
+	? "https://one.dash.cloudflare.com"
+	: "https://dash.cloudflare.com";
 
-const { href } = new URL(route.deeplink, "https://dash.cloudflare.com");
+let { href } = new URL(route.deeplink, baseUrl);
 ---
 
 <LinkButton href={href} icon="external" target="_blank"

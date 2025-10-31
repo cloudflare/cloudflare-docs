@@ -1,7 +1,7 @@
 ---
 params:
   - productName
-  - wanName
+  - dashName
 ---
 
 import { DashButton, Markdown } from '~/components';
@@ -18,7 +18,7 @@ There are three symbols for the heartbeat signal that allow you to quickly check
 
 ### Access {props.productName}'s heartbeat
 
-{ props.wanName === "WAN Tunnels" ? (
+{ props.dashName === "WAN Tunnels" ? (
 	<>
 		<Markdown
 	text={`

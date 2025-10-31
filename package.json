@@ -4,7 +4,7 @@
 	"type": "module",
 	"scripts": {
 		"astro": "npx astro",
-		"build": "npx astro build",
+		"build": "export NODE_OPTIONS='--max-old-space-size=6192' || set NODE_OPTIONS='--max-old-space-size=6192'&& npx astro build",
 		"typegen:worker": "npx wrangler types ./worker/worker-configuration.d.ts",
 		"check": "npm run check:astro && npm run check:worker",
 		"check:astro": "npx astro check",

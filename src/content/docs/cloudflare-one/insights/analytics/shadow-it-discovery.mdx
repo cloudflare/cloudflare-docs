@@ -7,7 +7,7 @@ sidebar:
 
 import { Render } from "~/components";
 
-Shadow IT SaaS analytics provides visibility into the SaaS applications your users are visiting. This information allows you to create identity and device-driven Zero Trust policies to secure your users and data.
+Shadow IT SaaS analytics provides visibility into the SaaS applications your users are visiting. This information allows you to create identity and device-driven Cloudflare One policies to secure your users and data.
 
 To access Shadow IT SaaS analytics:
 
@@ -34,7 +34,7 @@ Review the Shadow IT SaaS analytics dashboard for application usage. Filter the 
     | Field            | Description                                                                                                                  |
     | ---------------- | ---------------------------------------------------------------------------------------------------------------------------- |
     | Application      | SaaS application's name and logo.                                                                                            |
-    | Application type | [Application type](/cloudflare-one/traffic-policies/application-app-types/#app-types) assigned by Cloudflare Zero Trust.     |
+    | Application type | [Application type](/cloudflare-one/traffic-policies/application-app-types/#app-types) assigned by Cloudflare Cloudflare One.     |
     | Status           | Application's approval status.                                                                           |
     | Secured          | Whether the application is currently secured behind Cloudflare Access.                                                       |
     | Users            | Number of users who connected to the application over the period of time specified on the Shadow IT Discovery overview page. |
@@ -51,9 +51,10 @@ After marking applications, you can create [HTTP policies](/cloudflare-one/traff
 
 To create an HTTP status policy directly from Shadow IT Discovery:
 
-1. In [Zero Trust](https://one.dash.cloudflare.com), go to **Analytics** > **Dashboards**, then select **Shadow IT: SaaS analytics**.
-2. Select **Set application statuses**.
-3. Select **Manage HTTP status policies**, then choose an application status and select **Create policy**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Insights**.
+2. Select **Dashboards** > **Shadow IT: SaaS analytics**.
+3. Select **Set application statuses**.
+4. Select **Manage HTTP status policies**, then choose an application status and select **Create policy**.
 
 ## Available insights
 

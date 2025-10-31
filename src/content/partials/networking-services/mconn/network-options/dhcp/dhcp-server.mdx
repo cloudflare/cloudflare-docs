@@ -1,7 +1,7 @@
 ---
 params:
   - productName
-  - wanName
+  - dashName
 ---
 
 import { APIRequest, Markdown, Render, TabItem, Tabs, DashButton } from "~/components";
@@ -10,7 +10,7 @@ When you use a static IP address, {props.productName} can also act as a DHCP ser
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-{ props.wanName === "WAN Tunnels" ? (
+{ props.dashName === "WAN Tunnels" ? (
 	<>
 		<Markdown
 	text={`

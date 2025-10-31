@@ -1,14 +1,14 @@
 ---
 params:
   - productName
-  - wanName
+  - dashName
 ---
 
 import { Markdown } from "~/components";
 
 To add a new {props.productName} you first need to remove the one associated with the on-ramps. You can only have more than one {props.productName} if you initially enabled high availability on your on-ramp.
 
-{ props.wanName === "WAN Tunnels" ? (
+{ props.dashName === "WAN Tunnels" ? (
 	<>
 		<Markdown
 	text={`

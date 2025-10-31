@@ -1,7 +1,7 @@
 ---
 params:
   - productName
-  - wanName
+  - dashName
   - hardConnectorURL
   - virtualConnectorURL
   - configHardProductName
@@ -51,7 +51,7 @@ The following guide assumes you have already created a site and configured your 
 
 Follow the steps below to create a new LAN policy to segment your network. Only the fields marked **required** are mandatory.
 
-{ props.wanName === "WAN Tunnels" ? (
+{ props.dashName === "WAN Tunnels" ? (
 	<>
 		<Markdown
 	text={`
@@ -195,7 +195,7 @@ The new policy will ensure that traffic between the specified LANs flows locally
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-{ props.wanName === "WAN Tunnels" ? (
+{ props.dashName === "WAN Tunnels" ? (
 	<>
 		<Markdown
 	text={`
@@ -300,7 +300,7 @@ Example:
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-{ props.wanName === "WAN Tunnels" ? (
+{ props.dashName === "WAN Tunnels" ? (
 	<>
 		<Markdown
 	text={`

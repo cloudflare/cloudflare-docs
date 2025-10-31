@@ -16,33 +16,35 @@ Connect your network infrastructure directly to Cloudflare
 
 <Plan type="enterprise" />
 
-Cloudflare Network Interconnect (CNI) allows you to connect your network infrastructure directly to Cloudflare — rather than using the public Internet — for a more reliable and secure experience. With CNI, you can bring Cloudflare's full suite of network functions to your physical network edge.
+Cloudflare Network Interconnect (CNI) allows you to connect your network infrastructure directly to Cloudflare — rather than using the public Internet — for a more performant and secure experience. With CNI, you can bring Cloudflare's full suite of network functions to your network edge.
 
-## Why Use CNI? Key Benefits
+## Why Use CNI? Key benefits
 
 Enterprises use CNI to achieve:
 - **Enhanced Performance**: Gain lower latency and more consistent network throughput.
 - **Increased Security**: Reduce your network's attack surface by connecting privately and avoiding the public Internet.
 
-## Connection Types
+## Connection types
 
 Choose the model that best fits your infrastructure and operational needs.
 
-| | Direct Interconnect | Partner Interconnect |
-| - | - | - |
-| **Port type** | A dedicated physical fiber connection between your network equipment and Cloudflare's hardware in a shared data center. | A virtual connection to Cloudflare established through one of our global connectivity partners. |
-| **Operations** | You are responsible for procuring and managing the physical cross-connect to Cloudflare's equipment. | Your partner manages the connection logistics, often through a software-defined networking portal. |
-| **Ideal use case** | For customers collocated with Cloudflare who require maximum control, performance, and reliability. | For customers who are not in the same data center as Cloudflare or prefer a managed connectivity solution. |
+| | Direct Interconnect | Partner Interconnect | Cloud Interconnect |
+| --- | --- | --- | --- |
+| **Port type** | A dedicated physical fiber connection between your network equipment and Cloudflare's hardware in a shared data center. | A virtual connection to Cloudflare established through one of our global connectivity partners. | A private connection between a customer's cloud environments (for example, AWS, Google Cloud) and Cloudflare |
+| **Operations** | You are responsible for procuring and managing the physical cross-connect to Cloudflare's equipment. | Your partner manages the connection logistics, often through a software-defined networking portal. | Cloudflare connects to cloud providers' dedicated services, and customers establish private virtual circuits from their virtual private clouds. |
+| **Ideal use case** | For customers collocated with Cloudflare who require maximum control, performance, and reliability. | For customers who are not in the same data center as Cloudflare or prefer a managed connectivity solution. | For customers with workloads in public clouds who need secure, reliable connectivity to Cloudflare services. |
 
 ## Dataplane
 
 Cloudflare's data centers may support one or more interconnect dataplanes. The dataplane is the type of equipment that terminates your direct connection:
-- **Dataplane v1.0**: A peering connection to a Cloudflare edge data center that supports GRE tunnels for connecting with the Magic Networking overlay.
-- **Dataplane v1.1**: An enhanced version of the 1.0 dataplane that supports GRE-less delivery for Magic Transit Direct Server Return.
+- **Dataplane v1**: A peering connection to a Cloudflare edge data center that supports GRE tunnels for connecting with the Magic Networking overlay.
+- **Dataplane v1.1**: An enhanced version of the v1 dataplane that supports GRE-less delivery for Magic Transit Direct Server Return.
+- **Dataplane v2 (beta)**: Is based on the Customer Connectivity Router (CCR), which is specifically designed for customer connectivity. It provides simplified routing without GRE tunneling and supports a 1,500-byte MTU bidirectionally.
 
-When you review the [available locations](/network-interconnect/static/cni-locations-04-08-2025.pdf) (PDF), you can see which dataplane version(s) are available.
 
-## Product Use Cases
+When you review the [available locations](/network-interconnect/static/cni-locations-30-10-2025.pdf) (PDF), you can see which dataplane version(s) are available.
+
+## Product use cases
 
 <Render file="cni-product-use-cases" product="networking-services" />
 
@@ -63,3 +65,4 @@ Magic Transit is a network security and performance solution that offers DDoS pr
 <RelatedProduct header="Magic WAN" href="/magic-wan/" product="magic-wan">
 Improve security and performance for your entire corporate network, reducing cost and operation complexity.
 </RelatedProduct>
+

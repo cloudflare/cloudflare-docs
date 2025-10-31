@@ -7,7 +7,7 @@ sidebar:
     text: Deprecated
 ---
 
-import { FeatureTable, Render, TabItem, Tabs } from "~/components";
+import { FeatureTable, Render, TabItem, Tabs, DashButton } from "~/components";
 
 The SSL/TLS Recommender helps you choose which [Encryption mode](/ssl/origin-configuration/ssl-modes/) is best for your application.
 
@@ -33,9 +33,11 @@ Then, you can enable the SSL/TLS recommender.
 
 To enable SSL/TLS recommendations in the dashboard:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account and application.
-2. Go to **SSL/TLS**.
-3. For **SSL/TLS Recommender**, switch the toggle to **On**.
+1. In the Cloudflare dashboard, go to the **SSL/TLS Overview** page.
+
+   <DashButton url="/?to=/:account/:zone/ssl-tls" />
+
+2. For **SSL/TLS Recommender**, switch the toggle to **On**.
 
 </TabItem> <TabItem label="API">
 

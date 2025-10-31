@@ -1,14 +1,14 @@
 ---
 params:
   - productName
-  - wanName
+  - dashName
 ---
 
 import { DashButton, Markdown } from '~/components';
 
 The Interrupt window defines when {props.productName} can update its systems. When {props.productName} is updating, this may result in an interruption to existing connections. Set up a time window that minimizes disruption to your sites.
 
-{ props.wanName === "WAN Tunnels" ? (
+{ props.dashName === "WAN Tunnels" ? (
 	<>
 		<Markdown
 	text={`

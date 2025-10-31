@@ -1,7 +1,7 @@
 ---
 params:
   - productName
-  - productOriginalName
+  - dashName
   - virtualProductName
   - gatewayURL
   - hardConnectorURL
@@ -95,7 +95,7 @@ When a failover occurs, traffic is moved to the new active node. It could take u
 
 This is where you add and configure your WAN connections. Each configured WAN will create one IPsec tunnel, unless you have more than one anycast IP configured in your account.
 
-<Render file="mconn/wan-two-tunnels" product="networking-services" params={{ productName: props.productName, productOriginalName: props.productOriginalName }} />
+<Render file="mconn/wan-two-tunnels" product="networking-services" params={{ productName: props.productName, dashName: props.dashName }} />
 
 When you have multiple WANs you can attribute different priorities to each one. Lower values mean a higher priority. This translates in {props.productName} routing traffic through the higher priority WANs or, more precisely, over the IPsec tunnels established over that interface. On the other hand, if you configure multiple WANs of equal priority, traffic will be distributed over those links through <a href={props.ecmpRoutingURL}>Equal-Cost Multi-Path (ECMP routing)</a>.
 

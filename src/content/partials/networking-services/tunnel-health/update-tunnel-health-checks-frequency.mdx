@@ -20,7 +20,7 @@ By default, Cloudflare servers send <GlossaryTooltip term="tunnel health-check" 
 
 { (props.magicWord === "Magic WAN" || props.magicWord === "WAN Tunnels") && (
   <>
-		<p>For {props.magicWord === "Magic WAN" ? "Magic WAN Connector" : "WAN Tunnels Appliances"}, health checks are sent to IPsec tunnel endpoints.</p>
+		<p>For Magic WAN Connector, health checks are sent to IPsec tunnel endpoints.</p>
   </>
   )
 }
@@ -31,7 +31,7 @@ Available options are `low`, `mid`, and `high`.
 
 { (props.magicWord === "Magic WAN" || props.magicWord === "WAN Tunnels") && (
   <>
-		<p>To configure health checks frequency in {props.magicWord === "Magic WAN" ? "Magic WAN Connector" : "WAN Tunnels Appliances"}, refer to <a href={props.magicWord === "Magic WAN" ? "#configure-connector" : "#configure-appliances"}>Configure {props.magicWord === "Magic WAN" ? "Connector" : "Appliances"}</a></p>
+		<p>To configure health checks frequency in Magic WAN Connector, refer to <a href="#configure-connector">Configure Connector</a></p>
   </>
   )
 }
@@ -71,7 +71,7 @@ Below is an example of how to adjust tunnel health check frequency to `low`. Not
 { (props.magicWord === "Magic WAN" || props.magicWord === "WAN Tunnels") && (
 
   <>
-		<AnchorHeading depth={2} title={props.magicWord === "Magic WAN" ? "Configure Connector" : "Configure Appliances"} />
+		<AnchorHeading depth={2} title="Configure Connector" />
 
 		{ props.magicWord === "Magic WAN" ? (
 			<>

@@ -1,7 +1,7 @@
 ---
 params:
   - productName
-  - wanName
+  - dashName
   - cfTunnelURL
   - cfVsCoreDashNamingMwanCni
 ---
@@ -14,7 +14,7 @@ DHCP Relay provides a way for DHCP clients to communicate with DHCP servers that
 	{`
 		flowchart LR
 		accTitle: An example of Connector in DHCP Relay mode
-				a(${props.productName}) <--> b(Cloudflare/${props.wanName}) <--> c(DHCP server)
+				a(${props.productName}) <--> b(Cloudflare/Magic WAN) <--> c(DHCP server)
 
 				subgraph Site A
 				d[LAN 1] <--> a
@@ -39,7 +39,7 @@ To configure DHCP relay:
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-{ props.wanName === "WAN Tunnels" ? (
+{ props.dashName === "WAN Tunnels" ? (
 	<>
 		<Markdown
 	text={`

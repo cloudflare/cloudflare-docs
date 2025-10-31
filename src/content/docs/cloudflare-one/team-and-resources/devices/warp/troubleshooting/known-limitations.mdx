@@ -159,6 +159,21 @@ Name:   connectivity-check.warp-svc
 Address: 127.0.2.3
 ```
 
+## Windows App connection issue with WARP
+
+When the WARP client is active on a local machine, users may be unable to connect to a Windows 365 PC using the [Windows App](https://aka.ms/WindowsApp). This issue does not affect browser-based connections to Windows 365.
+
+To resolve this, exclude the networks specified below from any relevant WARP [device profiles](/cloudflare-one/team-and-resources/devices/warp/configure-warp/device-profiles/). The required networks are listed under the `WindowsVirtualDesktop` service tag in the [Azure IP Ranges and Service Tags – Public Cloud](https://www.microsoft.com/en-us/download/details.aspx?id=56519) resource (search for `"name": "WindowsVirtualDesktop"`).
+
+Microsoft previously provided a [PowerShell script](https://github.com/microsoft/Windows365-PSScripts/tree/main/Windows%20365%20Gateway%20IP%20Lookup) to retrieve these networks, but it has since been deprecated. The relevant networks are now consolidated to the following subnets and should be excluded from any relevant WARP device profiles:
+
+```
+40.64.144.0/20
+51.5.0.0/16
+2603:1061:2010::/48
+2603:1061:2011::/48
+```
+
 ## Windows 10 in Microsoft 365 Cloud PC is not supported
 
 Use of the WARP client in a Microsoft 365 Windows 10 Cloud PC is not supported. To work around this limitation, use Windows 11.

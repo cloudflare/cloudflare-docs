@@ -890,6 +890,22 @@ entries:
     example_value: |-
       "TLSv1.2"
 
+  - name: cf.edge.client_tcp
+    data_type: Boolean
+    categories: [Request]
+    keywords: [request, tcp, network, client]
+    summary: Indicates if the request was made over TCP.
+    example_value: |-
+      true
+
+  - name: cf.timings.client_tcp_rtt_msec
+    data_type: Number
+    categories: [Request]
+    keywords: [request, timing, tcp, rtt, performance, latency]
+    summary: The smoothed TCP round-trip time from client to Cloudflare in milliseconds.
+    example_value: |-
+      20
+
   - name: cf.waf.content_scan.has_obj
     data_type: Boolean
     categories: [Request]

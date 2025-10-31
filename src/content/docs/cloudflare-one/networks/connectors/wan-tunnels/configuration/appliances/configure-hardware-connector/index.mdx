@@ -1,9 +1,9 @@
 ---
 pcx_content_type: how-to
-title: Configure hardware Appliances
+title: Configure hardware Connector
 sidebar:
   order: 3
-  label: Configure hardware Appliances
+  label: Configure hardware Connector
 ---
 
 import { Render } from "~/components";
@@ -12,21 +12,21 @@ import { Render } from "~/components";
 	product="networking-services"
 	params={{
 	magicWord: "hardware",
-	productName: "Appliances",
+	productName: "Magic WAN Connector",
 	maintenanceURL: "/cloudflare-one/networks/connectors/wan-tunnels/configuration/appliances/maintenance/",
-	productOriginalName: "WAN Tunnels",
+	dashName: "WAN Tunnels",
 	sfpURL: "/cloudflare-one/networks/connectors/wan-tunnels/configuration/appliances/configure-hardware-connector/sfp-port-information/",
-	wan: "refers to the physical Appliances Ethernet port that you are using for your WAN. The ports are labeled `GE1`, `GE2`, `GE3`, `GE4`, `GE5`, and `GE6`. Choose the number corresponding to the port that you are using in Appliance. <br/> If you need a throughput higher than 1 Gbps, you can use one of the SFP+ ports. Refer to [SFP+ port information](/cloudflare-one/networks/connectors/wan-tunnels/configuration/appliances/configure-hardware-connector/sfp-port-information/) for more information on the hardware supported.",
-	lan: "refers to the physical Appliances Ethernet port that you are using for your WAN. The ports are labeled `GE1`, `GE2`, `GE3`, `GE4`, `GE5`, and `GE6`. Choose a number corresponding to the port that you are using in Appliance. <br/> If you need a throughput higher than 1 Gbps, you can use one of the SFP+ ports. Refer to [SFP+ port information](/cloudflare-one/networks/connectors/wan-tunnels/configuration/appliances/configure-hardware-connector/sfp-port-information/) for more information on the hardware supported.",
-	noConnectorShows: "You need to have bought an Appliance already for it to show up here. Refer to [Prerequisites](#prerequisites) if no Appliance shows up in this list.",
+	wan: "refers to the physical Connector Ethernet port that you are using for your WAN. The ports are labeled `GE1`, `GE2`, `GE3`, `GE4`, `GE5`, and `GE6`. Choose the number corresponding to the port that you are using in Connector. <br/> If you need a throughput higher than 1 Gbps, you can use one of the SFP+ ports. Refer to [SFP+ port information](/cloudflare-one/networks/connectors/wan-tunnels/configuration/appliances/configure-hardware-connector/sfp-port-information/) for more information on the hardware supported.",
+	lan: "refers to the physical Connector Ethernet port that you are using for your WAN. The ports are labeled `GE1`, `GE2`, `GE3`, `GE4`, `GE5`, and `GE6`. Choose a number corresponding to the port that you are using in Connector. <br/> If you need a throughput higher than 1 Gbps, you can use one of the SFP+ ports. Refer to [SFP+ port information](/cloudflare-one/networks/connectors/wan-tunnels/configuration/appliances/configure-hardware-connector/sfp-port-information/) for more information on the hardware supported.",
+	noConnectorShows: "You need to have bought a Connector already for it to show up here. Refer to [Prerequisites](#prerequisites) if no Connector shows up in this list.",
 	networkSegmentationURL: "/cloudflare-one/networks/connectors/wan-tunnels/configuration/appliances/network-options/network-segmentation/",
 	dhcpServerURL: "/cloudflare-one/networks/connectors/wan-tunnels/configuration/appliances/network-options/dhcp/dhcp-server/",
   dhcpRelayURL: "/cloudflare-one/networks/connectors/wan-tunnels/configuration/appliances/network-options/dhcp/dhcp-relay/",
   reserveIpAddressesURL: "/cloudflare-one/networks/connectors/wan-tunnels/configuration/appliances/network-options/dhcp/dhcp-static-address-reservation/",
-	shippedLanguage: "The Appliances is shipped to you deactivated",
-	hardSoftConn: "You need to deploy two Appliances in your premises before you can set up a site in high availability.",
+	shippedLanguage: "The Connector is shipped to you deactivated",
+	hardSoftConn: "You need to deploy two Connectors in your premises before you can set up a site in high availability.",
 	hcConfigsURL: "/cloudflare-one/networks/connectors/wan-tunnels/configuration/appliances/reference/#high-availability-configurations",
-	finalInstructions: "Follow the instructions in [Set up your Appliances](#set-up-your-appliances) and [Activate appliance](#activate-appliance) to finish setting up your Appliances.",
+	finalInstructions: "Follow the instructions in [Set up your Connector](#set-up-your-connector) and [Activate Connector](#activate-connector) to finish setting up your Connector.",
 	ipsecTunnelsRefURL: "/cloudflare-one/networks/connectors/wan-tunnels/reference/gre-ipsec-tunnels/#ipsec-tunnels",
 	trafficSteeringURL: "/cloudflare-one/networks/connectors/wan-tunnels/reference/traffic-steering/",
 	vlanIdURL: "/cloudflare-one/networks/connectors/wan-tunnels/configuration/appliances/reference/#vlan-id",
