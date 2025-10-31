@@ -5,7 +5,6 @@ params:
   - featureName
   - trafficSteeringURL?
   - whatHappensApp
-  - mwanName
   - dashName
 ---
 
@@ -360,8 +359,6 @@ To pin applications to a WAN port:
 			file="mconn/network-options/app-aware-policies/warp-traffic"
 			product="networking-services"
 			params={{
-				connectorName: props.productName,
-				mwanName: props.mwanName,
 				warpFirewallURL: "/cloudflare-one/team-and-resources/devices/warp/deployment/firewall/"
 			}}
 			/>
