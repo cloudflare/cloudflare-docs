@@ -7,9 +7,9 @@ sidebar:
 
 import { Render } from "~/components";
 
-The `/crawl` endpoint automates the process of scraping content from webpages starting with a single URL and crawling to a specified depth of links. The response can be returned in either HTML, Markdown, or JSON.
+The `/crawl` endpoint automates the process of scraping content from webpages starting with a single URL and crawling to a specified number or depth of links. The response can be returned in either HTML, Markdown, or JSON.
 
-The `/crawl` endpoint respects the directives of `robots.txt` files, such as `crawl-delay` and [`content-signal`](https://contentsignals.org/). All URLs that `/crawl` is directed not to crawl are listed in the response with `"status": "disallowed"`.
+The `/crawl` endpoint respects the directives of `robots.txt` files, including `crawl-delay` and [`content-signal`](https://contentsignals.org/). All URLs that `/crawl` is directed not to crawl are listed in the response with `"status": "disallowed"`.
 
 ## Endpoint
 
@@ -24,11 +24,11 @@ You must provide `url`:
 ## Common use cases
 
 - Scraping online content to build a knowledge base of up-to-date information
-- Converting online content into LLM-friendly formats to train Retrieval-Augmented Generation (RAG) applications and other AI systems
+- Converting online content into LLM-friendly formats to train [Retrieval-Augmented Generation (RAG) applications](/reference-architecture/diagrams/ai/ai-rag/) and other AI systems
 
 ## Basic usage
 
-Since the `/crawl` endpoint takes some time to process there are two separate steps:
+There are two separate steps to the `/crawl` endpoint:
 1. [Initiate the crawl job](/browser-rendering/rest-api/crawl-endpoint/#initiate-the-crawl-job) — A `POST` request where you initiate the crawl and receive a response with a job `id`.
 2. [Request results of the crawl job](browser-rendering/rest-api/crawl-endpoint/#request-results-of-the-crawl-job) — A `GET` request where you request the status or results of the crawl.
 
@@ -38,7 +38,9 @@ If you are on a Workers Free plan, your crawl may fail if it hits the [limit of 
 
 ### Initiate the crawl job
 
-Here is an example of how to initiate a crawl job with `url`, `limit`, `depth`, and `formats` parameters. See the [advanced usage section below](/browser-rendering/rest-api/crawl-endpoint/#initiate-the-crawl-job) for additional parameters:
+Here is an example of how to initiate a crawl job with `url`, `limit`, `depth`, and `formats` parameters. The API will respond immediately with a job `id` you will use to retriece the status and results of the crawl job. 
+
+See the [advanced usage section below](/browser-rendering/rest-api/crawl-endpoint/#initiate-the-crawl-job) for additional parameters:
 
 ```bash
 curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-rendering/crawl' \
@@ -120,7 +122,7 @@ Here is an example response:
 
 ### Cancel a crawl job
 
-Here is an example of how to cancel a crawl job with the job `id` you were provided:
+If you need to cancel a job that is currently in progress, here is an example of how to cancel a crawl job with the job `id` you were provided:
 
 ```bash
 curl -X DELETE 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-rendering/crawl/result/c7f8s2d9-a8e7-4b6e-8e4d-3d4a1b2c3f4e' \
@@ -131,7 +133,9 @@ A successful cancellation will return a `200 OK` status code. The job status wil
 
 ## Advanced usage
 
-The `/crawl` endpoint has many parameters you can use to customize your crawl. Here is an example that uses the additional parameters that are currently available, in addition to the [basic parameters shown in the example above](/browser-rendering/rest-api/crawl-endpoint/#initiate-the-crawl-job) and the [render parameter below](/browser-rendering/rest-api/crawl-endpoint/#render-a-simple-html-fetch):
+The `/crawl` endpoint has many parameters you can use to customize your crawl. For the full list, check the [API docs[(https://developers.cloudflare.com/api/resources/browser_rendering/). 
+
+Here is an example that uses the additional parameters that are currently available, in addition to the [basic parameters shown in the example above](/browser-rendering/rest-api/crawl-endpoint/#initiate-the-crawl-job) and the [render parameter below](/browser-rendering/rest-api/crawl-endpoint/#render-a-simple-html-fetch):
 
 ```bash
 curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-rendering/crawl' \
@@ -165,9 +169,13 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser
     }
 ```
 
-### Render a simple HTML fetch
+### Choose when to render JavaScript
 
-With the `render` parameter, you have the option to use the `/crawl` endpoint do a simple HTML fetch crawl. This is best for crawls that you want completed quickly, when spinning up a full headless browser instance is not necessary. Crawls with the `render` parameter set as `false` are only charged according to [Workers pricing](/workers/platform/pricing/) and not Browser Rendering pricing.
+Use the `render` parameter to control whether the `crawl` endpoint spins up a headless browser and executes page JavaScript. The default is `render: true`. Set `render: false` to do a fast HTML fetch without executing JavaScript.
+
+Use `render: true` when the page builds content in the browser. Use `render: false` when the content you need is already in the initial HTML response.
+
+Crawls with the `render: false` are billed under [Workers pricing](/workers/platform/pricing/), Crawls with `render: true` use a headless browser and are billed under typical Browser Rendering pricing.
 
 Here is an example of a request that uses the `render` parameter:
 
