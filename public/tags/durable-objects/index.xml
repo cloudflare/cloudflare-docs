@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Durable Objects on Cloudflare Docs</title>
+    <link>https://developers.cloudflare.com/tags/durable-objects/</link>
+    <description>Recent content in Durable Objects on Cloudflare Docs</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <atom:link href="https://developers.cloudflare.com/tags/durable-objects/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Build a rate limiter</title>
+      <link>https://developers.cloudflare.com/durable-objects/examples/build-a-rate-limiter/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://developers.cloudflare.com/durable-objects/examples/build-a-rate-limiter/</guid>
+      <description>Build a rate limiter using Durable Objects and Workers.</description>
+    </item>
+    <item>
+      <title>Build a counter</title>
+      <link>https://developers.cloudflare.com/durable-objects/examples/build-a-counter/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://developers.cloudflare.com/durable-objects/examples/build-a-counter/</guid>
+      <description>Build a counter using Durable Objects and Workers with RPC methods.</description>
+    </item>
+    <item>
+      <title>Build a WebSocket server</title>
+      <link>https://developers.cloudflare.com/durable-objects/examples/websocket-server/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://developers.cloudflare.com/durable-objects/examples/websocket-server/</guid>
+      <description>Build a WebSocket server using Durable Objects and Workers.</description>
+    </item>
+    <item>
+      <title>Build a WebSocket server with WebSocket Hibernation</title>
+      <link>https://developers.cloudflare.com/durable-objects/examples/websocket-hibernation-server/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://developers.cloudflare.com/durable-objects/examples/websocket-hibernation-server/</guid>
+      <description>Build a WebSocket server using WebSocket Hibernation on Durable Objects and Workers.</description>
+    </item>
+    <item>
+      <title>Durable Object in-memory state</title>
+      <link>https://developers.cloudflare.com/durable-objects/examples/durable-object-in-memory-state/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://developers.cloudflare.com/durable-objects/examples/durable-object-in-memory-state/</guid>
+      <description>Create a Durable Object that stores the last location it was accessed from in-memory.</description>
+    </item>
+    <item>
+      <title>Testing with Durable Objects</title>
+      <link>https://developers.cloudflare.com/durable-objects/examples/testing-with-durable-objects/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://developers.cloudflare.com/durable-objects/examples/testing-with-durable-objects/</guid>
+      <description>Write tests for Durable Objects.</description>
+    </item>
+    <item>
+      <title>Use the Alarms API</title>
+      <link>https://developers.cloudflare.com/durable-objects/examples/alarms-api/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://developers.cloudflare.com/durable-objects/examples/alarms-api/</guid>
+      <description>Use the Durable Objects Alarms API to batch requests to a Durable Object.</description>
+    </item>
+  </channel>
+</rss>

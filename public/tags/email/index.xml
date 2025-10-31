@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Email on Cloudflare Docs</title>
+    <link>https://developers.cloudflare.com/tags/email/</link>
+    <description>Recent content in Email on Cloudflare Docs</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <atom:link href="https://developers.cloudflare.com/tags/email/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Email</title>
+      <link>https://developers.cloudflare.com/cloudflare-one/api-terraform/access-api-examples/email/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://developers.cloudflare.com/cloudflare-one/api-terraform/access-api-examples/email/</guid>
+      <description>Allow a specific email address.</description>
+    </item>
+    <item>
+      <title>Send Emails With Postmark</title>
+      <link>https://developers.cloudflare.com/workers/tutorials/send-emails-with-postmark/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://developers.cloudflare.com/workers/tutorials/send-emails-with-postmark/</guid>
+      <description>Send Emails With Postmark Last reviewed: May 2, 2024 In this tutorial, you will learn how to send transactional emails from Workers using Postmark External link icon Open external link .</description>
+    </item>
+    <item>
+      <title>Send Emails With Resend</title>
+      <link>https://developers.cloudflare.com/workers/tutorials/send-emails-with-resend/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://developers.cloudflare.com/workers/tutorials/send-emails-with-resend/</guid>
+      <description>Send Emails With Resend Last reviewed: April 26, 2024 In this tutorial, you will learn how to send transactional emails from Workers using Resend External link icon Open external link .</description>
+    </item>
+  </channel>
+</rss>

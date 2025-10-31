@@ -1,0 +1,513 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Changelog · Radar</title>
+    <link>https://developers.cloudflare.com/radar/changelog/</link>
+    <description>Updates to Radar</description>
+    <language>en-us</language>
+    <atom:link href="https://developers.cloudflare.com/radar/changelog/index.xml" rel="self" />
+    <lastBuildDate>Mon, 27 Nov 2023 08:00:00 EST</lastBuildDate>
+    <item>
+    <title>Add more meta information&#39;s</title>
+    <link>https://developers.cloudflare.com/radar/changelog/#add-more-meta-informations</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Added meta.lastUpdated to all summaries and top endpoints (timeseries and timeseriesGroups already had this).&lt;/li&gt;
+&lt;li&gt;Fix meta.dateRange to return date ranges for all requested series.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Mon, 27 Nov 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Add new Layer 3 endpoints and Layer 7 dimensions</title>
+    <link>https://developers.cloudflare.com/radar/changelog/#add-new-layer-3-endpoints-and-layer-7-dimensions</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Added Layer 3 &lt;a href=&#34;https://developers.cloudflare.com/api/operations/radar-get-attacks-layer3-top-origin-locations&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;top origin locations&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-api-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; xmlns:xlink=&#34;http://www.w3.org/1999/xlink&#34; width=&#34;23px&#34; height=&#34;12px&#34; viewBox=&#34;0 0 23 12&#34; version=&#34;1.1&#34;&gt;
+    &lt;title&gt;API link label&lt;/title&gt;
+    &lt;g id=&#34;Page-1&#34; stroke=&#34;none&#34; stroke-width=&#34;1&#34; fill=&#34;none&#34; fill-rule=&#34;evenodd&#34;&gt;
+        &lt;g id=&#34;Group&#34;&gt;
+            &lt;rect id=&#34;Rectangle&#34; fill=&#34;#e06d10&#34; x=&#34;0&#34; y=&#34;0&#34; width=&#34;23&#34; height=&#34;12&#34; rx=&#34;2&#34;/&gt;
+            &lt;path d=&#34;M8.12890625,10 L9.58984375,10 L6.83984375,2.24951172 L5.27685547,2.24951172 L2.52685547,10 L3.95556641,10 L4.61621094,7.99658203 L7.46826172,7.99658203 L8.12890625,10 Z M6.0234375,3.61914062 L6.06103516,3.61914062 L7.140625,6.92773438 L4.93847656,6.92773438 L6.0234375,3.61914062 Z M10.9169922,2.24951172 L10.9169922,10 L12.3027344,10 L12.3027344,7.43798828 L13.8710938,7.43798828 C15.4394531,7.43798828 16.5405273,6.390625 16.5405273,4.84375 C16.5405273,3.296875 15.4716797,2.24951172 13.9301758,2.24951172 L10.9169922,2.24951172 Z M12.3027344,3.3828125 L13.5649414,3.3828125 C14.5585938,3.3828125 15.1333008,3.91455078 15.1333008,4.84375 C15.1333008,5.78369141 14.5532227,6.32080078 13.5595703,6.32080078 L12.3027344,6.32080078 L12.3027344,3.3828125 Z M19.4360352,10 L18.050293,10 L18.050293,2.24951172 L19.4360352,2.24951172 L19.4360352,10 Z&#34; id=&#34;API&#34; fill=&#34;#FFFFFF&#34; fill-rule=&#34;nonzero&#34;/&gt;
+        &lt;/g&gt;
+    &lt;/g&gt;
+&lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;Open API docs link&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt;
+and &lt;a href=&#34;https://developers.cloudflare.com/api/operations/radar-get-attacks-layer3-top-target-locations&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;top target location&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-api-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; xmlns:xlink=&#34;http://www.w3.org/1999/xlink&#34; width=&#34;23px&#34; height=&#34;12px&#34; viewBox=&#34;0 0 23 12&#34; version=&#34;1.1&#34;&gt;
+    &lt;title&gt;API link label&lt;/title&gt;
+    &lt;g id=&#34;Page-1&#34; stroke=&#34;none&#34; stroke-width=&#34;1&#34; fill=&#34;none&#34; fill-rule=&#34;evenodd&#34;&gt;
+        &lt;g id=&#34;Group&#34;&gt;
+            &lt;rect id=&#34;Rectangle&#34; fill=&#34;#e06d10&#34; x=&#34;0&#34; y=&#34;0&#34; width=&#34;23&#34; height=&#34;12&#34; rx=&#34;2&#34;/&gt;
+            &lt;path d=&#34;M8.12890625,10 L9.58984375,10 L6.83984375,2.24951172 L5.27685547,2.24951172 L2.52685547,10 L3.95556641,10 L4.61621094,7.99658203 L7.46826172,7.99658203 L8.12890625,10 Z M6.0234375,3.61914062 L6.06103516,3.61914062 L7.140625,6.92773438 L4.93847656,6.92773438 L6.0234375,3.61914062 Z M10.9169922,2.24951172 L10.9169922,10 L12.3027344,10 L12.3027344,7.43798828 L13.8710938,7.43798828 C15.4394531,7.43798828 16.5405273,6.390625 16.5405273,4.84375 C16.5405273,3.296875 15.4716797,2.24951172 13.9301758,2.24951172 L10.9169922,2.24951172 Z M12.3027344,3.3828125 L13.5649414,3.3828125 C14.5585938,3.3828125 15.1333008,3.91455078 15.1333008,4.84375 C15.1333008,5.78369141 14.5532227,6.32080078 13.5595703,6.32080078 L12.3027344,6.32080078 L12.3027344,3.3828125 Z M19.4360352,10 L18.050293,10 L18.050293,2.24951172 L19.4360352,2.24951172 L19.4360352,10 Z&#34; id=&#34;API&#34; fill=&#34;#FFFFFF&#34; fill-rule=&#34;nonzero&#34;/&gt;
+        &lt;/g&gt;
+    &lt;/g&gt;
+&lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;Open API docs link&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Added Layer 7 Summaries by &lt;code&gt;http_method&lt;/code&gt;, &lt;code&gt;http_version&lt;/code&gt;, &lt;code&gt;ip_version&lt;/code&gt;, &lt;code&gt;managed_rules&lt;/code&gt;, &lt;code&gt;mitigation_product&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Added Layer 7 Timeseries Groups by &lt;code&gt;http_method&lt;/code&gt;, &lt;code&gt;http_version&lt;/code&gt;, &lt;code&gt;ip_version&lt;/code&gt;, &lt;code&gt;managed_rules&lt;/code&gt;, &lt;code&gt;mitigation_product&lt;/code&gt;, &lt;code&gt;industry&lt;/code&gt;, &lt;code&gt;vertical&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Added Layer 7 Top by &lt;code&gt;industry&lt;/code&gt;, &lt;code&gt;vertical&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Deprecated Layer 7 &lt;a href=&#34;https://developers.cloudflare.com/api/operations/radar-get-attacks-layer7-timeseries-group&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;timeseries groups without dimension&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-api-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; xmlns:xlink=&#34;http://www.w3.org/1999/xlink&#34; width=&#34;23px&#34; height=&#34;12px&#34; viewBox=&#34;0 0 23 12&#34; version=&#34;1.1&#34;&gt;
+    &lt;title&gt;API link label&lt;/title&gt;
+    &lt;g id=&#34;Page-1&#34; stroke=&#34;none&#34; stroke-width=&#34;1&#34; fill=&#34;none&#34; fill-rule=&#34;evenodd&#34;&gt;
+        &lt;g id=&#34;Group&#34;&gt;
+            &lt;rect id=&#34;Rectangle&#34; fill=&#34;#e06d10&#34; x=&#34;0&#34; y=&#34;0&#34; width=&#34;23&#34; height=&#34;12&#34; rx=&#34;2&#34;/&gt;
+            &lt;path d=&#34;M8.12890625,10 L9.58984375,10 L6.83984375,2.24951172 L5.27685547,2.24951172 L2.52685547,10 L3.95556641,10 L4.61621094,7.99658203 L7.46826172,7.99658203 L8.12890625,10 Z M6.0234375,3.61914062 L6.06103516,3.61914062 L7.140625,6.92773438 L4.93847656,6.92773438 L6.0234375,3.61914062 Z M10.9169922,2.24951172 L10.9169922,10 L12.3027344,10 L12.3027344,7.43798828 L13.8710938,7.43798828 C15.4394531,7.43798828 16.5405273,6.390625 16.5405273,4.84375 C16.5405273,3.296875 15.4716797,2.24951172 13.9301758,2.24951172 L10.9169922,2.24951172 Z M12.3027344,3.3828125 L13.5649414,3.3828125 C14.5585938,3.3828125 15.1333008,3.91455078 15.1333008,4.84375 C15.1333008,5.78369141 14.5532227,6.32080078 13.5595703,6.32080078 L12.3027344,6.32080078 L12.3027344,3.3828125 Z M19.4360352,10 L18.050293,10 L18.050293,2.24951172 L19.4360352,2.24951172 L19.4360352,10 Z&#34; id=&#34;API&#34; fill=&#34;#FFFFFF&#34; fill-rule=&#34;nonzero&#34;/&gt;
+        &lt;/g&gt;
+    &lt;/g&gt;
+&lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;Open API docs link&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt;.
+&lt;ul&gt;
+&lt;li&gt;To continue getting this data, switch to the new
+&lt;a href=&#34;https://developers.cloudflare.com/api/operations/radar-get-attacks-layer7-timeseries-group-by-mitigation-product&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;timeseries group by mitigation_product&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-api-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; xmlns:xlink=&#34;http://www.w3.org/1999/xlink&#34; width=&#34;23px&#34; height=&#34;12px&#34; viewBox=&#34;0 0 23 12&#34; version=&#34;1.1&#34;&gt;
+    &lt;title&gt;API link label&lt;/title&gt;
+    &lt;g id=&#34;Page-1&#34; stroke=&#34;none&#34; stroke-width=&#34;1&#34; fill=&#34;none&#34; fill-rule=&#34;evenodd&#34;&gt;
+        &lt;g id=&#34;Group&#34;&gt;
+            &lt;rect id=&#34;Rectangle&#34; fill=&#34;#e06d10&#34; x=&#34;0&#34; y=&#34;0&#34; width=&#34;23&#34; height=&#34;12&#34; rx=&#34;2&#34;/&gt;
+            &lt;path d=&#34;M8.12890625,10 L9.58984375,10 L6.83984375,2.24951172 L5.27685547,2.24951172 L2.52685547,10 L3.95556641,10 L4.61621094,7.99658203 L7.46826172,7.99658203 L8.12890625,10 Z M6.0234375,3.61914062 L6.06103516,3.61914062 L7.140625,6.92773438 L4.93847656,6.92773438 L6.0234375,3.61914062 Z M10.9169922,2.24951172 L10.9169922,10 L12.3027344,10 L12.3027344,7.43798828 L13.8710938,7.43798828 C15.4394531,7.43798828 16.5405273,6.390625 16.5405273,4.84375 C16.5405273,3.296875 15.4716797,2.24951172 13.9301758,2.24951172 L10.9169922,2.24951172 Z M12.3027344,3.3828125 L13.5649414,3.3828125 C14.5585938,3.3828125 15.1333008,3.91455078 15.1333008,4.84375 C15.1333008,5.78369141 14.5532227,6.32080078 13.5595703,6.32080078 L12.3027344,6.32080078 L12.3027344,3.3828125 Z M19.4360352,10 L18.050293,10 L18.050293,2.24951172 L19.4360352,2.24951172 L19.4360352,10 Z&#34; id=&#34;API&#34; fill=&#34;#FFFFFF&#34; fill-rule=&#34;nonzero&#34;/&gt;
+        &lt;/g&gt;
+    &lt;/g&gt;
+&lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;Open API docs link&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt;
+endpoint.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Deprecated Layer 7 &lt;a href=&#34;https://developers.cloudflare.com/api/operations/radar-get-attacks-layer7-summary&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;summary without dimension)&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-api-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; xmlns:xlink=&#34;http://www.w3.org/1999/xlink&#34; width=&#34;23px&#34; height=&#34;12px&#34; viewBox=&#34;0 0 23 12&#34; version=&#34;1.1&#34;&gt;
+    &lt;title&gt;API link label&lt;/title&gt;
+    &lt;g id=&#34;Page-1&#34; stroke=&#34;none&#34; stroke-width=&#34;1&#34; fill=&#34;none&#34; fill-rule=&#34;evenodd&#34;&gt;
+        &lt;g id=&#34;Group&#34;&gt;
+            &lt;rect id=&#34;Rectangle&#34; fill=&#34;#e06d10&#34; x=&#34;0&#34; y=&#34;0&#34; width=&#34;23&#34; height=&#34;12&#34; rx=&#34;2&#34;/&gt;
+            &lt;path d=&#34;M8.12890625,10 L9.58984375,10 L6.83984375,2.24951172 L5.27685547,2.24951172 L2.52685547,10 L3.95556641,10 L4.61621094,7.99658203 L7.46826172,7.99658203 L8.12890625,10 Z M6.0234375,3.61914062 L6.06103516,3.61914062 L7.140625,6.92773438 L4.93847656,6.92773438 L6.0234375,3.61914062 Z M10.9169922,2.24951172 L10.9169922,10 L12.3027344,10 L12.3027344,7.43798828 L13.8710938,7.43798828 C15.4394531,7.43798828 16.5405273,6.390625 16.5405273,4.84375 C16.5405273,3.296875 15.4716797,2.24951172 13.9301758,2.24951172 L10.9169922,2.24951172 Z M12.3027344,3.3828125 L13.5649414,3.3828125 C14.5585938,3.3828125 15.1333008,3.91455078 15.1333008,4.84375 C15.1333008,5.78369141 14.5532227,6.32080078 13.5595703,6.32080078 L12.3027344,6.32080078 L12.3027344,3.3828125 Z M19.4360352,10 L18.050293,10 L18.050293,2.24951172 L19.4360352,2.24951172 L19.4360352,10 Z&#34; id=&#34;API&#34; fill=&#34;#FFFFFF&#34; fill-rule=&#34;nonzero&#34;/&gt;
+        &lt;/g&gt;
+    &lt;/g&gt;
+&lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;Open API docs link&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt;.
+&lt;ul&gt;
+&lt;li&gt;To continue getting this data, switch to the new
+&lt;a href=&#34;https://developers.cloudflare.com/api/operations/radar-get-attacks-layer7-summary-by-mitigation-product&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;summary by mitigation_product&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-api-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; xmlns:xlink=&#34;http://www.w3.org/1999/xlink&#34; width=&#34;23px&#34; height=&#34;12px&#34; viewBox=&#34;0 0 23 12&#34; version=&#34;1.1&#34;&gt;
+    &lt;title&gt;API link label&lt;/title&gt;
+    &lt;g id=&#34;Page-1&#34; stroke=&#34;none&#34; stroke-width=&#34;1&#34; fill=&#34;none&#34; fill-rule=&#34;evenodd&#34;&gt;
+        &lt;g id=&#34;Group&#34;&gt;
+            &lt;rect id=&#34;Rectangle&#34; fill=&#34;#e06d10&#34; x=&#34;0&#34; y=&#34;0&#34; width=&#34;23&#34; height=&#34;12&#34; rx=&#34;2&#34;/&gt;
+            &lt;path d=&#34;M8.12890625,10 L9.58984375,10 L6.83984375,2.24951172 L5.27685547,2.24951172 L2.52685547,10 L3.95556641,10 L4.61621094,7.99658203 L7.46826172,7.99658203 L8.12890625,10 Z M6.0234375,3.61914062 L6.06103516,3.61914062 L7.140625,6.92773438 L4.93847656,6.92773438 L6.0234375,3.61914062 Z M10.9169922,2.24951172 L10.9169922,10 L12.3027344,10 L12.3027344,7.43798828 L13.8710938,7.43798828 C15.4394531,7.43798828 16.5405273,6.390625 16.5405273,4.84375 C16.5405273,3.296875 15.4716797,2.24951172 13.9301758,2.24951172 L10.9169922,2.24951172 Z M12.3027344,3.3828125 L13.5649414,3.3828125 C14.5585938,3.3828125 15.1333008,3.91455078 15.1333008,4.84375 C15.1333008,5.78369141 14.5532227,6.32080078 13.5595703,6.32080078 L12.3027344,6.32080078 L12.3027344,3.3828125 Z M19.4360352,10 L18.050293,10 L18.050293,2.24951172 L19.4360352,2.24951172 L19.4360352,10 Z&#34; id=&#34;API&#34; fill=&#34;#FFFFFF&#34; fill-rule=&#34;nonzero&#34;/&gt;
+        &lt;/g&gt;
+    &lt;/g&gt;
+&lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;Open API docs link&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt;
+endpoint.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Added new &lt;a href=https://developers.cloudflare.com/radar/get-started/error-codes/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;Error codes&lt;/span&gt;&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Thu, 16 Nov 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Add new Layer 3 direction parameter</title>
+    <link>https://developers.cloudflare.com/radar/changelog/#add-new-layer-3-direction-parameter</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Added a &lt;code&gt;direction&lt;/code&gt; parameter to all Layer 3 endpoints. Use together with &lt;code&gt;location&lt;/code&gt; parameter to filter by origin or
+target location &lt;a href=&#34;https://developers.cloudflare.com/api/operations/radar-get-attacks-layer3-timeseries-group-by-vector&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;timeseries groups&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-api-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; xmlns:xlink=&#34;http://www.w3.org/1999/xlink&#34; width=&#34;23px&#34; height=&#34;12px&#34; viewBox=&#34;0 0 23 12&#34; version=&#34;1.1&#34;&gt;
+    &lt;title&gt;API link label&lt;/title&gt;
+    &lt;g id=&#34;Page-1&#34; stroke=&#34;none&#34; stroke-width=&#34;1&#34; fill=&#34;none&#34; fill-rule=&#34;evenodd&#34;&gt;
+        &lt;g id=&#34;Group&#34;&gt;
+            &lt;rect id=&#34;Rectangle&#34; fill=&#34;#e06d10&#34; x=&#34;0&#34; y=&#34;0&#34; width=&#34;23&#34; height=&#34;12&#34; rx=&#34;2&#34;/&gt;
+            &lt;path d=&#34;M8.12890625,10 L9.58984375,10 L6.83984375,2.24951172 L5.27685547,2.24951172 L2.52685547,10 L3.95556641,10 L4.61621094,7.99658203 L7.46826172,7.99658203 L8.12890625,10 Z M6.0234375,3.61914062 L6.06103516,3.61914062 L7.140625,6.92773438 L4.93847656,6.92773438 L6.0234375,3.61914062 Z M10.9169922,2.24951172 L10.9169922,10 L12.3027344,10 L12.3027344,7.43798828 L13.8710938,7.43798828 C15.4394531,7.43798828 16.5405273,6.390625 16.5405273,4.84375 C16.5405273,3.296875 15.4716797,2.24951172 13.9301758,2.24951172 L10.9169922,2.24951172 Z M12.3027344,3.3828125 L13.5649414,3.3828125 C14.5585938,3.3828125 15.1333008,3.91455078 15.1333008,4.84375 C15.1333008,5.78369141 14.5532227,6.32080078 13.5595703,6.32080078 L12.3027344,6.32080078 L12.3027344,3.3828125 Z M19.4360352,10 L18.050293,10 L18.050293,2.24951172 L19.4360352,2.24951172 L19.4360352,10 Z&#34; id=&#34;API&#34; fill=&#34;#FFFFFF&#34; fill-rule=&#34;nonzero&#34;/&gt;
+        &lt;/g&gt;
+    &lt;/g&gt;
+&lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;Open API docs link&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Tue, 31 Oct 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Add Connection Tampering endpoints</title>
+    <link>https://developers.cloudflare.com/radar/changelog/#add-connection-tampering-endpoints</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Added Connection Tampering &lt;a href=&#34;https://developers.cloudflare.com/api/operations/radar-get-connection-tampering-summary&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;summary&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-api-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; xmlns:xlink=&#34;http://www.w3.org/1999/xlink&#34; width=&#34;23px&#34; height=&#34;12px&#34; viewBox=&#34;0 0 23 12&#34; version=&#34;1.1&#34;&gt;
+    &lt;title&gt;API link label&lt;/title&gt;
+    &lt;g id=&#34;Page-1&#34; stroke=&#34;none&#34; stroke-width=&#34;1&#34; fill=&#34;none&#34; fill-rule=&#34;evenodd&#34;&gt;
+        &lt;g id=&#34;Group&#34;&gt;
+            &lt;rect id=&#34;Rectangle&#34; fill=&#34;#e06d10&#34; x=&#34;0&#34; y=&#34;0&#34; width=&#34;23&#34; height=&#34;12&#34; rx=&#34;2&#34;/&gt;
+            &lt;path d=&#34;M8.12890625,10 L9.58984375,10 L6.83984375,2.24951172 L5.27685547,2.24951172 L2.52685547,10 L3.95556641,10 L4.61621094,7.99658203 L7.46826172,7.99658203 L8.12890625,10 Z M6.0234375,3.61914062 L6.06103516,3.61914062 L7.140625,6.92773438 L4.93847656,6.92773438 L6.0234375,3.61914062 Z M10.9169922,2.24951172 L10.9169922,10 L12.3027344,10 L12.3027344,7.43798828 L13.8710938,7.43798828 C15.4394531,7.43798828 16.5405273,6.390625 16.5405273,4.84375 C16.5405273,3.296875 15.4716797,2.24951172 13.9301758,2.24951172 L10.9169922,2.24951172 Z M12.3027344,3.3828125 L13.5649414,3.3828125 C14.5585938,3.3828125 15.1333008,3.91455078 15.1333008,4.84375 C15.1333008,5.78369141 14.5532227,6.32080078 13.5595703,6.32080078 L12.3027344,6.32080078 L12.3027344,3.3828125 Z M19.4360352,10 L18.050293,10 L18.050293,2.24951172 L19.4360352,2.24951172 L19.4360352,10 Z&#34; id=&#34;API&#34; fill=&#34;#FFFFFF&#34; fill-rule=&#34;nonzero&#34;/&gt;
+        &lt;/g&gt;
+    &lt;/g&gt;
+&lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;Open API docs link&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt;
+and &lt;a href=&#34;https://developers.cloudflare.com/api/operations/radar-get-connection-tampering-timeseries-group&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;timeseries&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-api-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; xmlns:xlink=&#34;http://www.w3.org/1999/xlink&#34; width=&#34;23px&#34; height=&#34;12px&#34; viewBox=&#34;0 0 23 12&#34; version=&#34;1.1&#34;&gt;
+    &lt;title&gt;API link label&lt;/title&gt;
+    &lt;g id=&#34;Page-1&#34; stroke=&#34;none&#34; stroke-width=&#34;1&#34; fill=&#34;none&#34; fill-rule=&#34;evenodd&#34;&gt;
+        &lt;g id=&#34;Group&#34;&gt;
+            &lt;rect id=&#34;Rectangle&#34; fill=&#34;#e06d10&#34; x=&#34;0&#34; y=&#34;0&#34; width=&#34;23&#34; height=&#34;12&#34; rx=&#34;2&#34;/&gt;
+            &lt;path d=&#34;M8.12890625,10 L9.58984375,10 L6.83984375,2.24951172 L5.27685547,2.24951172 L2.52685547,10 L3.95556641,10 L4.61621094,7.99658203 L7.46826172,7.99658203 L8.12890625,10 Z M6.0234375,3.61914062 L6.06103516,3.61914062 L7.140625,6.92773438 L4.93847656,6.92773438 L6.0234375,3.61914062 Z M10.9169922,2.24951172 L10.9169922,10 L12.3027344,10 L12.3027344,7.43798828 L13.8710938,7.43798828 C15.4394531,7.43798828 16.5405273,6.390625 16.5405273,4.84375 C16.5405273,3.296875 15.4716797,2.24951172 13.9301758,2.24951172 L10.9169922,2.24951172 Z M12.3027344,3.3828125 L13.5649414,3.3828125 C14.5585938,3.3828125 15.1333008,3.91455078 15.1333008,4.84375 C15.1333008,5.78369141 14.5532227,6.32080078 13.5595703,6.32080078 L12.3027344,6.32080078 L12.3027344,3.3828125 Z M19.4360352,10 L18.050293,10 L18.050293,2.24951172 L19.4360352,2.24951172 L19.4360352,10 Z&#34; id=&#34;API&#34; fill=&#34;#FFFFFF&#34; fill-rule=&#34;nonzero&#34;/&gt;
+        &lt;/g&gt;
+    &lt;/g&gt;
+&lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;Open API docs link&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt; endpoints.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Fri, 08 Sep 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Deprecate old layer 3 dataset</title>
+    <link>https://developers.cloudflare.com/radar/changelog/#deprecate-old-layer-3-dataset</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Added Regional Internet Registry (see field &lt;code&gt;source&lt;/code&gt; in response)
+to &lt;a href=&#34;https://developers.cloudflare.com/api/operations/radar-get-entities-asn-by-id&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;get asn by id&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-api-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; xmlns:xlink=&#34;http://www.w3.org/1999/xlink&#34; width=&#34;23px&#34; height=&#34;12px&#34; viewBox=&#34;0 0 23 12&#34; version=&#34;1.1&#34;&gt;
+    &lt;title&gt;API link label&lt;/title&gt;
+    &lt;g id=&#34;Page-1&#34; stroke=&#34;none&#34; stroke-width=&#34;1&#34; fill=&#34;none&#34; fill-rule=&#34;evenodd&#34;&gt;
+        &lt;g id=&#34;Group&#34;&gt;
+            &lt;rect id=&#34;Rectangle&#34; fill=&#34;#e06d10&#34; x=&#34;0&#34; y=&#34;0&#34; width=&#34;23&#34; height=&#34;12&#34; rx=&#34;2&#34;/&gt;
+            &lt;path d=&#34;M8.12890625,10 L9.58984375,10 L6.83984375,2.24951172 L5.27685547,2.24951172 L2.52685547,10 L3.95556641,10 L4.61621094,7.99658203 L7.46826172,7.99658203 L8.12890625,10 Z M6.0234375,3.61914062 L6.06103516,3.61914062 L7.140625,6.92773438 L4.93847656,6.92773438 L6.0234375,3.61914062 Z M10.9169922,2.24951172 L10.9169922,10 L12.3027344,10 L12.3027344,7.43798828 L13.8710938,7.43798828 C15.4394531,7.43798828 16.5405273,6.390625 16.5405273,4.84375 C16.5405273,3.296875 15.4716797,2.24951172 13.9301758,2.24951172 L10.9169922,2.24951172 Z M12.3027344,3.3828125 L13.5649414,3.3828125 C14.5585938,3.3828125 15.1333008,3.91455078 15.1333008,4.84375 C15.1333008,5.78369141 14.5532227,6.32080078 13.5595703,6.32080078 L12.3027344,6.32080078 L12.3027344,3.3828125 Z M19.4360352,10 L18.050293,10 L18.050293,2.24951172 L19.4360352,2.24951172 L19.4360352,10 Z&#34; id=&#34;API&#34; fill=&#34;#FFFFFF&#34; fill-rule=&#34;nonzero&#34;/&gt;
+        &lt;/g&gt;
+    &lt;/g&gt;
+&lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;Open API docs link&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt;
+and &lt;a href=&#34;https://developers.cloudflare.com/api/operations/radar-get-entities-asn-by-ip&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;get asn by ip&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-api-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; xmlns:xlink=&#34;http://www.w3.org/1999/xlink&#34; width=&#34;23px&#34; height=&#34;12px&#34; viewBox=&#34;0 0 23 12&#34; version=&#34;1.1&#34;&gt;
+    &lt;title&gt;API link label&lt;/title&gt;
+    &lt;g id=&#34;Page-1&#34; stroke=&#34;none&#34; stroke-width=&#34;1&#34; fill=&#34;none&#34; fill-rule=&#34;evenodd&#34;&gt;
+        &lt;g id=&#34;Group&#34;&gt;
+            &lt;rect id=&#34;Rectangle&#34; fill=&#34;#e06d10&#34; x=&#34;0&#34; y=&#34;0&#34; width=&#34;23&#34; height=&#34;12&#34; rx=&#34;2&#34;/&gt;
+            &lt;path d=&#34;M8.12890625,10 L9.58984375,10 L6.83984375,2.24951172 L5.27685547,2.24951172 L2.52685547,10 L3.95556641,10 L4.61621094,7.99658203 L7.46826172,7.99658203 L8.12890625,10 Z M6.0234375,3.61914062 L6.06103516,3.61914062 L7.140625,6.92773438 L4.93847656,6.92773438 L6.0234375,3.61914062 Z M10.9169922,2.24951172 L10.9169922,10 L12.3027344,10 L12.3027344,7.43798828 L13.8710938,7.43798828 C15.4394531,7.43798828 16.5405273,6.390625 16.5405273,4.84375 C16.5405273,3.296875 15.4716797,2.24951172 13.9301758,2.24951172 L10.9169922,2.24951172 Z M12.3027344,3.3828125 L13.5649414,3.3828125 C14.5585938,3.3828125 15.1333008,3.91455078 15.1333008,4.84375 C15.1333008,5.78369141 14.5532227,6.32080078 13.5595703,6.32080078 L12.3027344,6.32080078 L12.3027344,3.3828125 Z M19.4360352,10 L18.050293,10 L18.050293,2.24951172 L19.4360352,2.24951172 L19.4360352,10 Z&#34; id=&#34;API&#34; fill=&#34;#FFFFFF&#34; fill-rule=&#34;nonzero&#34;/&gt;
+        &lt;/g&gt;
+    &lt;/g&gt;
+&lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;Open API docs link&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt; endpoints.&lt;/li&gt;
+&lt;li&gt;Stopped collecting data in the old Layer 3 data source.&lt;/li&gt;
+&lt;li&gt;Updated Layer 3
+&lt;a href=&#34;https://developers.cloudflare.com/api/operations/radar-get-attacks-layer3-timeseries-by-bytes&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;timeseries&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-api-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; xmlns:xlink=&#34;http://www.w3.org/1999/xlink&#34; width=&#34;23px&#34; height=&#34;12px&#34; viewBox=&#34;0 0 23 12&#34; version=&#34;1.1&#34;&gt;
+    &lt;title&gt;API link label&lt;/title&gt;
+    &lt;g id=&#34;Page-1&#34; stroke=&#34;none&#34; stroke-width=&#34;1&#34; fill=&#34;none&#34; fill-rule=&#34;evenodd&#34;&gt;
+        &lt;g id=&#34;Group&#34;&gt;
+            &lt;rect id=&#34;Rectangle&#34; fill=&#34;#e06d10&#34; x=&#34;0&#34; y=&#34;0&#34; width=&#34;23&#34; height=&#34;12&#34; rx=&#34;2&#34;/&gt;
+            &lt;path d=&#34;M8.12890625,10 L9.58984375,10 L6.83984375,2.24951172 L5.27685547,2.24951172 L2.52685547,10 L3.95556641,10 L4.61621094,7.99658203 L7.46826172,7.99658203 L8.12890625,10 Z M6.0234375,3.61914062 L6.06103516,3.61914062 L7.140625,6.92773438 L4.93847656,6.92773438 L6.0234375,3.61914062 Z M10.9169922,2.24951172 L10.9169922,10 L12.3027344,10 L12.3027344,7.43798828 L13.8710938,7.43798828 C15.4394531,7.43798828 16.5405273,6.390625 16.5405273,4.84375 C16.5405273,3.296875 15.4716797,2.24951172 13.9301758,2.24951172 L10.9169922,2.24951172 Z M12.3027344,3.3828125 L13.5649414,3.3828125 C14.5585938,3.3828125 15.1333008,3.91455078 15.1333008,4.84375 C15.1333008,5.78369141 14.5532227,6.32080078 13.5595703,6.32080078 L12.3027344,6.32080078 L12.3027344,3.3828125 Z M19.4360352,10 L18.050293,10 L18.050293,2.24951172 L19.4360352,2.24951172 L19.4360352,10 Z&#34; id=&#34;API&#34; fill=&#34;#FFFFFF&#34; fill-rule=&#34;nonzero&#34;/&gt;
+        &lt;/g&gt;
+    &lt;/g&gt;
+&lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;Open API docs link&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt; endpoint
+to start using the new Layer 3 data source by default, fetching the old data source now requires sending the parameter
+&lt;code&gt;metric=bytes_old&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Deprecated Layer 3
+&lt;a href=&#34;https://developers.cloudflare.com/api/operations/radar-get-attacks-layer3-summary&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;summary&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-api-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; xmlns:xlink=&#34;http://www.w3.org/1999/xlink&#34; width=&#34;23px&#34; height=&#34;12px&#34; viewBox=&#34;0 0 23 12&#34; version=&#34;1.1&#34;&gt;
+    &lt;title&gt;API link label&lt;/title&gt;
+    &lt;g id=&#34;Page-1&#34; stroke=&#34;none&#34; stroke-width=&#34;1&#34; fill=&#34;none&#34; fill-rule=&#34;evenodd&#34;&gt;
+        &lt;g id=&#34;Group&#34;&gt;
+            &lt;rect id=&#34;Rectangle&#34; fill=&#34;#e06d10&#34; x=&#34;0&#34; y=&#34;0&#34; width=&#34;23&#34; height=&#34;12&#34; rx=&#34;2&#34;/&gt;
+            &lt;path d=&#34;M8.12890625,10 L9.58984375,10 L6.83984375,2.24951172 L5.27685547,2.24951172 L2.52685547,10 L3.95556641,10 L4.61621094,7.99658203 L7.46826172,7.99658203 L8.12890625,10 Z M6.0234375,3.61914062 L6.06103516,3.61914062 L7.140625,6.92773438 L4.93847656,6.92773438 L6.0234375,3.61914062 Z M10.9169922,2.24951172 L10.9169922,10 L12.3027344,10 L12.3027344,7.43798828 L13.8710938,7.43798828 C15.4394531,7.43798828 16.5405273,6.390625 16.5405273,4.84375 C16.5405273,3.296875 15.4716797,2.24951172 13.9301758,2.24951172 L10.9169922,2.24951172 Z M12.3027344,3.3828125 L13.5649414,3.3828125 C14.5585938,3.3828125 15.1333008,3.91455078 15.1333008,4.84375 C15.1333008,5.78369141 14.5532227,6.32080078 13.5595703,6.32080078 L12.3027344,6.32080078 L12.3027344,3.3828125 Z M19.4360352,10 L18.050293,10 L18.050293,2.24951172 L19.4360352,2.24951172 L19.4360352,10 Z&#34; id=&#34;API&#34; fill=&#34;#FFFFFF&#34; fill-rule=&#34;nonzero&#34;/&gt;
+        &lt;/g&gt;
+    &lt;/g&gt;
+&lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;Open API docs link&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt; endpoint, this will stop
+receiving data after 2023-08-14.
+&lt;ul&gt;
+&lt;li&gt;To continue getting this data, switch to the
+new &lt;a href=&#34;https://developers.cloudflare.com/api/operations/radar-get-attacks-layer3-summary-by-protocol&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;timeseries group protocol&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-api-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; xmlns:xlink=&#34;http://www.w3.org/1999/xlink&#34; width=&#34;23px&#34; height=&#34;12px&#34; viewBox=&#34;0 0 23 12&#34; version=&#34;1.1&#34;&gt;
+    &lt;title&gt;API link label&lt;/title&gt;
+    &lt;g id=&#34;Page-1&#34; stroke=&#34;none&#34; stroke-width=&#34;1&#34; fill=&#34;none&#34; fill-rule=&#34;evenodd&#34;&gt;
+        &lt;g id=&#34;Group&#34;&gt;
+            &lt;rect id=&#34;Rectangle&#34; fill=&#34;#e06d10&#34; x=&#34;0&#34; y=&#34;0&#34; width=&#34;23&#34; height=&#34;12&#34; rx=&#34;2&#34;/&gt;
+            &lt;path d=&#34;M8.12890625,10 L9.58984375,10 L6.83984375,2.24951172 L5.27685547,2.24951172 L2.52685547,10 L3.95556641,10 L4.61621094,7.99658203 L7.46826172,7.99658203 L8.12890625,10 Z M6.0234375,3.61914062 L6.06103516,3.61914062 L7.140625,6.92773438 L4.93847656,6.92773438 L6.0234375,3.61914062 Z M10.9169922,2.24951172 L10.9169922,10 L12.3027344,10 L12.3027344,7.43798828 L13.8710938,7.43798828 C15.4394531,7.43798828 16.5405273,6.390625 16.5405273,4.84375 C16.5405273,3.296875 15.4716797,2.24951172 13.9301758,2.24951172 L10.9169922,2.24951172 Z M12.3027344,3.3828125 L13.5649414,3.3828125 C14.5585938,3.3828125 15.1333008,3.91455078 15.1333008,4.84375 C15.1333008,5.78369141 14.5532227,6.32080078 13.5595703,6.32080078 L12.3027344,6.32080078 L12.3027344,3.3828125 Z M19.4360352,10 L18.050293,10 L18.050293,2.24951172 L19.4360352,2.24951172 L19.4360352,10 Z&#34; id=&#34;API&#34; fill=&#34;#FFFFFF&#34; fill-rule=&#34;nonzero&#34;/&gt;
+        &lt;/g&gt;
+    &lt;/g&gt;
+&lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;Open API docs link&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt;
+endpoint.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Deprecated Layer 3
+&lt;a href=&#34;https://developers.cloudflare.com/api/operations/radar-get-attacks-layer3-timeseries-groups&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;timeseries groups&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-api-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; xmlns:xlink=&#34;http://www.w3.org/1999/xlink&#34; width=&#34;23px&#34; height=&#34;12px&#34; viewBox=&#34;0 0 23 12&#34; version=&#34;1.1&#34;&gt;
+    &lt;title&gt;API link label&lt;/title&gt;
+    &lt;g id=&#34;Page-1&#34; stroke=&#34;none&#34; stroke-width=&#34;1&#34; fill=&#34;none&#34; fill-rule=&#34;evenodd&#34;&gt;
+        &lt;g id=&#34;Group&#34;&gt;
+            &lt;rect id=&#34;Rectangle&#34; fill=&#34;#e06d10&#34; x=&#34;0&#34; y=&#34;0&#34; width=&#34;23&#34; height=&#34;12&#34; rx=&#34;2&#34;/&gt;
+            &lt;path d=&#34;M8.12890625,10 L9.58984375,10 L6.83984375,2.24951172 L5.27685547,2.24951172 L2.52685547,10 L3.95556641,10 L4.61621094,7.99658203 L7.46826172,7.99658203 L8.12890625,10 Z M6.0234375,3.61914062 L6.06103516,3.61914062 L7.140625,6.92773438 L4.93847656,6.92773438 L6.0234375,3.61914062 Z M10.9169922,2.24951172 L10.9169922,10 L12.3027344,10 L12.3027344,7.43798828 L13.8710938,7.43798828 C15.4394531,7.43798828 16.5405273,6.390625 16.5405273,4.84375 C16.5405273,3.296875 15.4716797,2.24951172 13.9301758,2.24951172 L10.9169922,2.24951172 Z M12.3027344,3.3828125 L13.5649414,3.3828125 C14.5585938,3.3828125 15.1333008,3.91455078 15.1333008,4.84375 C15.1333008,5.78369141 14.5532227,6.32080078 13.5595703,6.32080078 L12.3027344,6.32080078 L12.3027344,3.3828125 Z M19.4360352,10 L18.050293,10 L18.050293,2.24951172 L19.4360352,2.24951172 L19.4360352,10 Z&#34; id=&#34;API&#34; fill=&#34;#FFFFFF&#34; fill-rule=&#34;nonzero&#34;/&gt;
+        &lt;/g&gt;
+    &lt;/g&gt;
+&lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;Open API docs link&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt;
+endpoint, this will stop receiving data after 2023-08-14.
+&lt;ul&gt;
+&lt;li&gt;To continue getting this data, switch to the
+new &lt;a href=&#34;https://developers.cloudflare.com/api/operations/radar-get-attacks-layer3-timeseries-group-by-protocol&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;timeseries group protocol&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-api-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; xmlns:xlink=&#34;http://www.w3.org/1999/xlink&#34; width=&#34;23px&#34; height=&#34;12px&#34; viewBox=&#34;0 0 23 12&#34; version=&#34;1.1&#34;&gt;
+    &lt;title&gt;API link label&lt;/title&gt;
+    &lt;g id=&#34;Page-1&#34; stroke=&#34;none&#34; stroke-width=&#34;1&#34; fill=&#34;none&#34; fill-rule=&#34;evenodd&#34;&gt;
+        &lt;g id=&#34;Group&#34;&gt;
+            &lt;rect id=&#34;Rectangle&#34; fill=&#34;#e06d10&#34; x=&#34;0&#34; y=&#34;0&#34; width=&#34;23&#34; height=&#34;12&#34; rx=&#34;2&#34;/&gt;
+            &lt;path d=&#34;M8.12890625,10 L9.58984375,10 L6.83984375,2.24951172 L5.27685547,2.24951172 L2.52685547,10 L3.95556641,10 L4.61621094,7.99658203 L7.46826172,7.99658203 L8.12890625,10 Z M6.0234375,3.61914062 L6.06103516,3.61914062 L7.140625,6.92773438 L4.93847656,6.92773438 L6.0234375,3.61914062 Z M10.9169922,2.24951172 L10.9169922,10 L12.3027344,10 L12.3027344,7.43798828 L13.8710938,7.43798828 C15.4394531,7.43798828 16.5405273,6.390625 16.5405273,4.84375 C16.5405273,3.296875 15.4716797,2.24951172 13.9301758,2.24951172 L10.9169922,2.24951172 Z M12.3027344,3.3828125 L13.5649414,3.3828125 C14.5585938,3.3828125 15.1333008,3.91455078 15.1333008,4.84375 C15.1333008,5.78369141 14.5532227,6.32080078 13.5595703,6.32080078 L12.3027344,6.32080078 L12.3027344,3.3828125 Z M19.4360352,10 L18.050293,10 L18.050293,2.24951172 L19.4360352,2.24951172 L19.4360352,10 Z&#34; id=&#34;API&#34; fill=&#34;#FFFFFF&#34; fill-rule=&#34;nonzero&#34;/&gt;
+        &lt;/g&gt;
+    &lt;/g&gt;
+&lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;Open API docs link&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt;
+endpoint.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Mon, 14 Aug 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Fix HTTP timeseries endpoint urls</title>
+    <link>https://developers.cloudflare.com/radar/changelog/#fix-http-timeseries-endpoint-urls</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Updated HTTP &lt;code&gt;timeseries&lt;/code&gt; endpoints urls
+to &lt;code&gt;timeseries_groups&lt;/code&gt; (&lt;a href=&#34;https://developers.cloudflare.com/api/operations/radar-get-http-timeseries-group-by-browser-families&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;example&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-api-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; xmlns:xlink=&#34;http://www.w3.org/1999/xlink&#34; width=&#34;23px&#34; height=&#34;12px&#34; viewBox=&#34;0 0 23 12&#34; version=&#34;1.1&#34;&gt;
+    &lt;title&gt;API link label&lt;/title&gt;
+    &lt;g id=&#34;Page-1&#34; stroke=&#34;none&#34; stroke-width=&#34;1&#34; fill=&#34;none&#34; fill-rule=&#34;evenodd&#34;&gt;
+        &lt;g id=&#34;Group&#34;&gt;
+            &lt;rect id=&#34;Rectangle&#34; fill=&#34;#e06d10&#34; x=&#34;0&#34; y=&#34;0&#34; width=&#34;23&#34; height=&#34;12&#34; rx=&#34;2&#34;/&gt;
+            &lt;path d=&#34;M8.12890625,10 L9.58984375,10 L6.83984375,2.24951172 L5.27685547,2.24951172 L2.52685547,10 L3.95556641,10 L4.61621094,7.99658203 L7.46826172,7.99658203 L8.12890625,10 Z M6.0234375,3.61914062 L6.06103516,3.61914062 L7.140625,6.92773438 L4.93847656,6.92773438 L6.0234375,3.61914062 Z M10.9169922,2.24951172 L10.9169922,10 L12.3027344,10 L12.3027344,7.43798828 L13.8710938,7.43798828 C15.4394531,7.43798828 16.5405273,6.390625 16.5405273,4.84375 C16.5405273,3.296875 15.4716797,2.24951172 13.9301758,2.24951172 L10.9169922,2.24951172 Z M12.3027344,3.3828125 L13.5649414,3.3828125 C14.5585938,3.3828125 15.1333008,3.91455078 15.1333008,4.84375 C15.1333008,5.78369141 14.5532227,6.32080078 13.5595703,6.32080078 L12.3027344,6.32080078 L12.3027344,3.3828125 Z M19.4360352,10 L18.050293,10 L18.050293,2.24951172 L19.4360352,2.24951172 L19.4360352,10 Z&#34; id=&#34;API&#34; fill=&#34;#FFFFFF&#34; fill-rule=&#34;nonzero&#34;/&gt;
+        &lt;/g&gt;
+    &lt;/g&gt;
+&lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;Open API docs link&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt;)
+due to consistency. Old timeseries endpoints are still available, but will soon be removed.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Mon, 31 Jul 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Add URL Scanner endpoints</title>
+    <link>https://developers.cloudflare.com/radar/changelog/#add-url-scanner-endpoints</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Added &lt;a href=&#34;https://developers.cloudflare.com/api/operations/urlscanner-search-scans&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;urlscanner endpoints&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-api-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; xmlns:xlink=&#34;http://www.w3.org/1999/xlink&#34; width=&#34;23px&#34; height=&#34;12px&#34; viewBox=&#34;0 0 23 12&#34; version=&#34;1.1&#34;&gt;
+    &lt;title&gt;API link label&lt;/title&gt;
+    &lt;g id=&#34;Page-1&#34; stroke=&#34;none&#34; stroke-width=&#34;1&#34; fill=&#34;none&#34; fill-rule=&#34;evenodd&#34;&gt;
+        &lt;g id=&#34;Group&#34;&gt;
+            &lt;rect id=&#34;Rectangle&#34; fill=&#34;#e06d10&#34; x=&#34;0&#34; y=&#34;0&#34; width=&#34;23&#34; height=&#34;12&#34; rx=&#34;2&#34;/&gt;
+            &lt;path d=&#34;M8.12890625,10 L9.58984375,10 L6.83984375,2.24951172 L5.27685547,2.24951172 L2.52685547,10 L3.95556641,10 L4.61621094,7.99658203 L7.46826172,7.99658203 L8.12890625,10 Z M6.0234375,3.61914062 L6.06103516,3.61914062 L7.140625,6.92773438 L4.93847656,6.92773438 L6.0234375,3.61914062 Z M10.9169922,2.24951172 L10.9169922,10 L12.3027344,10 L12.3027344,7.43798828 L13.8710938,7.43798828 C15.4394531,7.43798828 16.5405273,6.390625 16.5405273,4.84375 C16.5405273,3.296875 15.4716797,2.24951172 13.9301758,2.24951172 L10.9169922,2.24951172 Z M12.3027344,3.3828125 L13.5649414,3.3828125 C14.5585938,3.3828125 15.1333008,3.91455078 15.1333008,4.84375 C15.1333008,5.78369141 14.5532227,6.32080078 13.5595703,6.32080078 L12.3027344,6.32080078 L12.3027344,3.3828125 Z M19.4360352,10 L18.050293,10 L18.050293,2.24951172 L19.4360352,2.24951172 L19.4360352,10 Z&#34; id=&#34;API&#34; fill=&#34;#FFFFFF&#34; fill-rule=&#34;nonzero&#34;/&gt;
+        &lt;/g&gt;
+    &lt;/g&gt;
+&lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;Open API docs link&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt;, read
+more &lt;a href=https://developers.cloudflare.com/radar/investigate/url-scanner/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;here&lt;/span&gt;&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Thu, 20 Jul 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Add Quality endpoints</title>
+    <link>https://developers.cloudflare.com/radar/changelog/#add-quality-endpoints</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Added &lt;a href=&#34;https://developers.cloudflare.com/api/operations/radar-get-quality-index-summary&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;quality endpoints&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-api-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; xmlns:xlink=&#34;http://www.w3.org/1999/xlink&#34; width=&#34;23px&#34; height=&#34;12px&#34; viewBox=&#34;0 0 23 12&#34; version=&#34;1.1&#34;&gt;
+    &lt;title&gt;API link label&lt;/title&gt;
+    &lt;g id=&#34;Page-1&#34; stroke=&#34;none&#34; stroke-width=&#34;1&#34; fill=&#34;none&#34; fill-rule=&#34;evenodd&#34;&gt;
+        &lt;g id=&#34;Group&#34;&gt;
+            &lt;rect id=&#34;Rectangle&#34; fill=&#34;#e06d10&#34; x=&#34;0&#34; y=&#34;0&#34; width=&#34;23&#34; height=&#34;12&#34; rx=&#34;2&#34;/&gt;
+            &lt;path d=&#34;M8.12890625,10 L9.58984375,10 L6.83984375,2.24951172 L5.27685547,2.24951172 L2.52685547,10 L3.95556641,10 L4.61621094,7.99658203 L7.46826172,7.99658203 L8.12890625,10 Z M6.0234375,3.61914062 L6.06103516,3.61914062 L7.140625,6.92773438 L4.93847656,6.92773438 L6.0234375,3.61914062 Z M10.9169922,2.24951172 L10.9169922,10 L12.3027344,10 L12.3027344,7.43798828 L13.8710938,7.43798828 C15.4394531,7.43798828 16.5405273,6.390625 16.5405273,4.84375 C16.5405273,3.296875 15.4716797,2.24951172 13.9301758,2.24951172 L10.9169922,2.24951172 Z M12.3027344,3.3828125 L13.5649414,3.3828125 C14.5585938,3.3828125 15.1333008,3.91455078 15.1333008,4.84375 C15.1333008,5.78369141 14.5532227,6.32080078 13.5595703,6.32080078 L12.3027344,6.32080078 L12.3027344,3.3828125 Z M19.4360352,10 L18.050293,10 L18.050293,2.24951172 L19.4360352,2.24951172 L19.4360352,10 Z&#34; id=&#34;API&#34; fill=&#34;#FFFFFF&#34; fill-rule=&#34;nonzero&#34;/&gt;
+        &lt;/g&gt;
+    &lt;/g&gt;
+&lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;Open API docs link&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Tue, 20 Jun 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Add BGP stats, pfx2as and moas endpoint</title>
+    <link>https://developers.cloudflare.com/radar/changelog/#add-bgp-stats-pfx2as-and-moas-endpoint</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Added BGP &lt;a href=&#34;https://developers.cloudflare.com/api/operations/radar-get-bgp-routes-stats&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;stats&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-api-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; xmlns:xlink=&#34;http://www.w3.org/1999/xlink&#34; width=&#34;23px&#34; height=&#34;12px&#34; viewBox=&#34;0 0 23 12&#34; version=&#34;1.1&#34;&gt;
+    &lt;title&gt;API link label&lt;/title&gt;
+    &lt;g id=&#34;Page-1&#34; stroke=&#34;none&#34; stroke-width=&#34;1&#34; fill=&#34;none&#34; fill-rule=&#34;evenodd&#34;&gt;
+        &lt;g id=&#34;Group&#34;&gt;
+            &lt;rect id=&#34;Rectangle&#34; fill=&#34;#e06d10&#34; x=&#34;0&#34; y=&#34;0&#34; width=&#34;23&#34; height=&#34;12&#34; rx=&#34;2&#34;/&gt;
+            &lt;path d=&#34;M8.12890625,10 L9.58984375,10 L6.83984375,2.24951172 L5.27685547,2.24951172 L2.52685547,10 L3.95556641,10 L4.61621094,7.99658203 L7.46826172,7.99658203 L8.12890625,10 Z M6.0234375,3.61914062 L6.06103516,3.61914062 L7.140625,6.92773438 L4.93847656,6.92773438 L6.0234375,3.61914062 Z M10.9169922,2.24951172 L10.9169922,10 L12.3027344,10 L12.3027344,7.43798828 L13.8710938,7.43798828 C15.4394531,7.43798828 16.5405273,6.390625 16.5405273,4.84375 C16.5405273,3.296875 15.4716797,2.24951172 13.9301758,2.24951172 L10.9169922,2.24951172 Z M12.3027344,3.3828125 L13.5649414,3.3828125 C14.5585938,3.3828125 15.1333008,3.91455078 15.1333008,4.84375 C15.1333008,5.78369141 14.5532227,6.32080078 13.5595703,6.32080078 L12.3027344,6.32080078 L12.3027344,3.3828125 Z M19.4360352,10 L18.050293,10 L18.050293,2.24951172 L19.4360352,2.24951172 L19.4360352,10 Z&#34; id=&#34;API&#34; fill=&#34;#FFFFFF&#34; fill-rule=&#34;nonzero&#34;/&gt;
+        &lt;/g&gt;
+    &lt;/g&gt;
+&lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;Open API docs link&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt;,
+&lt;a href=&#34;https://developers.cloudflare.com/api/operations/radar-get-bgp-pfx2as&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;pfx2as&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-api-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; xmlns:xlink=&#34;http://www.w3.org/1999/xlink&#34; width=&#34;23px&#34; height=&#34;12px&#34; viewBox=&#34;0 0 23 12&#34; version=&#34;1.1&#34;&gt;
+    &lt;title&gt;API link label&lt;/title&gt;
+    &lt;g id=&#34;Page-1&#34; stroke=&#34;none&#34; stroke-width=&#34;1&#34; fill=&#34;none&#34; fill-rule=&#34;evenodd&#34;&gt;
+        &lt;g id=&#34;Group&#34;&gt;
+            &lt;rect id=&#34;Rectangle&#34; fill=&#34;#e06d10&#34; x=&#34;0&#34; y=&#34;0&#34; width=&#34;23&#34; height=&#34;12&#34; rx=&#34;2&#34;/&gt;
+            &lt;path d=&#34;M8.12890625,10 L9.58984375,10 L6.83984375,2.24951172 L5.27685547,2.24951172 L2.52685547,10 L3.95556641,10 L4.61621094,7.99658203 L7.46826172,7.99658203 L8.12890625,10 Z M6.0234375,3.61914062 L6.06103516,3.61914062 L7.140625,6.92773438 L4.93847656,6.92773438 L6.0234375,3.61914062 Z M10.9169922,2.24951172 L10.9169922,10 L12.3027344,10 L12.3027344,7.43798828 L13.8710938,7.43798828 C15.4394531,7.43798828 16.5405273,6.390625 16.5405273,4.84375 C16.5405273,3.296875 15.4716797,2.24951172 13.9301758,2.24951172 L10.9169922,2.24951172 Z M12.3027344,3.3828125 L13.5649414,3.3828125 C14.5585938,3.3828125 15.1333008,3.91455078 15.1333008,4.84375 C15.1333008,5.78369141 14.5532227,6.32080078 13.5595703,6.32080078 L12.3027344,6.32080078 L12.3027344,3.3828125 Z M19.4360352,10 L18.050293,10 L18.050293,2.24951172 L19.4360352,2.24951172 L19.4360352,10 Z&#34; id=&#34;API&#34; fill=&#34;#FFFFFF&#34; fill-rule=&#34;nonzero&#34;/&gt;
+        &lt;/g&gt;
+    &lt;/g&gt;
+&lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;Open API docs link&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt;
+and &lt;a href=&#34;https://developers.cloudflare.com/api/operations/radar-get-bgp-pfx2as-moas&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;moas&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-api-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; xmlns:xlink=&#34;http://www.w3.org/1999/xlink&#34; width=&#34;23px&#34; height=&#34;12px&#34; viewBox=&#34;0 0 23 12&#34; version=&#34;1.1&#34;&gt;
+    &lt;title&gt;API link label&lt;/title&gt;
+    &lt;g id=&#34;Page-1&#34; stroke=&#34;none&#34; stroke-width=&#34;1&#34; fill=&#34;none&#34; fill-rule=&#34;evenodd&#34;&gt;
+        &lt;g id=&#34;Group&#34;&gt;
+            &lt;rect id=&#34;Rectangle&#34; fill=&#34;#e06d10&#34; x=&#34;0&#34; y=&#34;0&#34; width=&#34;23&#34; height=&#34;12&#34; rx=&#34;2&#34;/&gt;
+            &lt;path d=&#34;M8.12890625,10 L9.58984375,10 L6.83984375,2.24951172 L5.27685547,2.24951172 L2.52685547,10 L3.95556641,10 L4.61621094,7.99658203 L7.46826172,7.99658203 L8.12890625,10 Z M6.0234375,3.61914062 L6.06103516,3.61914062 L7.140625,6.92773438 L4.93847656,6.92773438 L6.0234375,3.61914062 Z M10.9169922,2.24951172 L10.9169922,10 L12.3027344,10 L12.3027344,7.43798828 L13.8710938,7.43798828 C15.4394531,7.43798828 16.5405273,6.390625 16.5405273,4.84375 C16.5405273,3.296875 15.4716797,2.24951172 13.9301758,2.24951172 L10.9169922,2.24951172 Z M12.3027344,3.3828125 L13.5649414,3.3828125 C14.5585938,3.3828125 15.1333008,3.91455078 15.1333008,4.84375 C15.1333008,5.78369141 14.5532227,6.32080078 13.5595703,6.32080078 L12.3027344,6.32080078 L12.3027344,3.3828125 Z M19.4360352,10 L18.050293,10 L18.050293,2.24951172 L19.4360352,2.24951172 L19.4360352,10 Z&#34; id=&#34;API&#34; fill=&#34;#FFFFFF&#34; fill-rule=&#34;nonzero&#34;/&gt;
+        &lt;/g&gt;
+    &lt;/g&gt;
+&lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;Open API docs link&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt; endpoints.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Wed, 07 Jun 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Added `IOS` as an option for the OS parameter in all HTTP</title>
+    <link>https://developers.cloudflare.com/radar/changelog/#added-ios-as-an-option-for-the-os-parameter-in-all-http</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Added &lt;code&gt;IOS&lt;/code&gt; as an option for the OS parameter in all HTTP
+endpoints (&lt;a href=&#34;https://developers.cloudflare.com/api/operations/radar-get-http-summary-by-bot-class&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;example&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-api-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; xmlns:xlink=&#34;http://www.w3.org/1999/xlink&#34; width=&#34;23px&#34; height=&#34;12px&#34; viewBox=&#34;0 0 23 12&#34; version=&#34;1.1&#34;&gt;
+    &lt;title&gt;API link label&lt;/title&gt;
+    &lt;g id=&#34;Page-1&#34; stroke=&#34;none&#34; stroke-width=&#34;1&#34; fill=&#34;none&#34; fill-rule=&#34;evenodd&#34;&gt;
+        &lt;g id=&#34;Group&#34;&gt;
+            &lt;rect id=&#34;Rectangle&#34; fill=&#34;#e06d10&#34; x=&#34;0&#34; y=&#34;0&#34; width=&#34;23&#34; height=&#34;12&#34; rx=&#34;2&#34;/&gt;
+            &lt;path d=&#34;M8.12890625,10 L9.58984375,10 L6.83984375,2.24951172 L5.27685547,2.24951172 L2.52685547,10 L3.95556641,10 L4.61621094,7.99658203 L7.46826172,7.99658203 L8.12890625,10 Z M6.0234375,3.61914062 L6.06103516,3.61914062 L7.140625,6.92773438 L4.93847656,6.92773438 L6.0234375,3.61914062 Z M10.9169922,2.24951172 L10.9169922,10 L12.3027344,10 L12.3027344,7.43798828 L13.8710938,7.43798828 C15.4394531,7.43798828 16.5405273,6.390625 16.5405273,4.84375 C16.5405273,3.296875 15.4716797,2.24951172 13.9301758,2.24951172 L10.9169922,2.24951172 Z M12.3027344,3.3828125 L13.5649414,3.3828125 C14.5585938,3.3828125 15.1333008,3.91455078 15.1333008,4.84375 C15.1333008,5.78369141 14.5532227,6.32080078 13.5595703,6.32080078 L12.3027344,6.32080078 L12.3027344,3.3828125 Z M19.4360352,10 L18.050293,10 L18.050293,2.24951172 L19.4360352,2.24951172 L19.4360352,10 Z&#34; id=&#34;API&#34; fill=&#34;#FFFFFF&#34; fill-rule=&#34;nonzero&#34;/&gt;
+        &lt;/g&gt;
+    &lt;/g&gt;
+&lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;Open API docs link&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt;).&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Wed, 10 May 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Add AS112 and email endpoints</title>
+    <link>https://developers.cloudflare.com/radar/changelog/#add-as112-and-email-endpoints</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Added &lt;a href=&#34;https://developers.cloudflare.com/api/operations/radar-get-dns-as112-timeseries-by-dnssec&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;AS112 endpoints&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-api-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; xmlns:xlink=&#34;http://www.w3.org/1999/xlink&#34; width=&#34;23px&#34; height=&#34;12px&#34; viewBox=&#34;0 0 23 12&#34; version=&#34;1.1&#34;&gt;
+    &lt;title&gt;API link label&lt;/title&gt;
+    &lt;g id=&#34;Page-1&#34; stroke=&#34;none&#34; stroke-width=&#34;1&#34; fill=&#34;none&#34; fill-rule=&#34;evenodd&#34;&gt;
+        &lt;g id=&#34;Group&#34;&gt;
+            &lt;rect id=&#34;Rectangle&#34; fill=&#34;#e06d10&#34; x=&#34;0&#34; y=&#34;0&#34; width=&#34;23&#34; height=&#34;12&#34; rx=&#34;2&#34;/&gt;
+            &lt;path d=&#34;M8.12890625,10 L9.58984375,10 L6.83984375,2.24951172 L5.27685547,2.24951172 L2.52685547,10 L3.95556641,10 L4.61621094,7.99658203 L7.46826172,7.99658203 L8.12890625,10 Z M6.0234375,3.61914062 L6.06103516,3.61914062 L7.140625,6.92773438 L4.93847656,6.92773438 L6.0234375,3.61914062 Z M10.9169922,2.24951172 L10.9169922,10 L12.3027344,10 L12.3027344,7.43798828 L13.8710938,7.43798828 C15.4394531,7.43798828 16.5405273,6.390625 16.5405273,4.84375 C16.5405273,3.296875 15.4716797,2.24951172 13.9301758,2.24951172 L10.9169922,2.24951172 Z M12.3027344,3.3828125 L13.5649414,3.3828125 C14.5585938,3.3828125 15.1333008,3.91455078 15.1333008,4.84375 C15.1333008,5.78369141 14.5532227,6.32080078 13.5595703,6.32080078 L12.3027344,6.32080078 L12.3027344,3.3828125 Z M19.4360352,10 L18.050293,10 L18.050293,2.24951172 L19.4360352,2.24951172 L19.4360352,10 Z&#34; id=&#34;API&#34; fill=&#34;#FFFFFF&#34; fill-rule=&#34;nonzero&#34;/&gt;
+        &lt;/g&gt;
+    &lt;/g&gt;
+&lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;Open API docs link&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Added &lt;a href=&#34;https://developers.cloudflare.com/api/operations/radar-get-email-security-summary-by-arc&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;email endpoints&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-api-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; xmlns:xlink=&#34;http://www.w3.org/1999/xlink&#34; width=&#34;23px&#34; height=&#34;12px&#34; viewBox=&#34;0 0 23 12&#34; version=&#34;1.1&#34;&gt;
+    &lt;title&gt;API link label&lt;/title&gt;
+    &lt;g id=&#34;Page-1&#34; stroke=&#34;none&#34; stroke-width=&#34;1&#34; fill=&#34;none&#34; fill-rule=&#34;evenodd&#34;&gt;
+        &lt;g id=&#34;Group&#34;&gt;
+            &lt;rect id=&#34;Rectangle&#34; fill=&#34;#e06d10&#34; x=&#34;0&#34; y=&#34;0&#34; width=&#34;23&#34; height=&#34;12&#34; rx=&#34;2&#34;/&gt;
+            &lt;path d=&#34;M8.12890625,10 L9.58984375,10 L6.83984375,2.24951172 L5.27685547,2.24951172 L2.52685547,10 L3.95556641,10 L4.61621094,7.99658203 L7.46826172,7.99658203 L8.12890625,10 Z M6.0234375,3.61914062 L6.06103516,3.61914062 L7.140625,6.92773438 L4.93847656,6.92773438 L6.0234375,3.61914062 Z M10.9169922,2.24951172 L10.9169922,10 L12.3027344,10 L12.3027344,7.43798828 L13.8710938,7.43798828 C15.4394531,7.43798828 16.5405273,6.390625 16.5405273,4.84375 C16.5405273,3.296875 15.4716797,2.24951172 13.9301758,2.24951172 L10.9169922,2.24951172 Z M12.3027344,3.3828125 L13.5649414,3.3828125 C14.5585938,3.3828125 15.1333008,3.91455078 15.1333008,4.84375 C15.1333008,5.78369141 14.5532227,6.32080078 13.5595703,6.32080078 L12.3027344,6.32080078 L12.3027344,3.3828125 Z M19.4360352,10 L18.050293,10 L18.050293,2.24951172 L19.4360352,2.24951172 L19.4360352,10 Z&#34; id=&#34;API&#34; fill=&#34;#FFFFFF&#34; fill-rule=&#34;nonzero&#34;/&gt;
+        &lt;/g&gt;
+    &lt;/g&gt;
+&lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;Open API docs link&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Mon, 20 Mar 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Updated IPv6 calculation method</title>
+    <link>https://developers.cloudflare.com/radar/changelog/#updated-ipv6-calculation-method</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;IPv6 percentage started to be calculated as (IPv6 requests / requests for dual-stacked content), where as before it
+was calculated as (IPv6 requests / IPv4&#43;IPv6 requests).&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Mon, 23 Jan 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Add new layer 3 dataset</title>
+    <link>https://developers.cloudflare.com/radar/changelog/#add-new-layer-3-dataset</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Added new Layer 3 data source and related endpoints.&lt;/li&gt;
+&lt;li&gt;Updated Layer 3
+&lt;a href=&#34;https://developers.cloudflare.com/api/operations/radar-get-attacks-layer3-timeseries-by-bytes&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;timeseries&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-api-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; xmlns:xlink=&#34;http://www.w3.org/1999/xlink&#34; width=&#34;23px&#34; height=&#34;12px&#34; viewBox=&#34;0 0 23 12&#34; version=&#34;1.1&#34;&gt;
+    &lt;title&gt;API link label&lt;/title&gt;
+    &lt;g id=&#34;Page-1&#34; stroke=&#34;none&#34; stroke-width=&#34;1&#34; fill=&#34;none&#34; fill-rule=&#34;evenodd&#34;&gt;
+        &lt;g id=&#34;Group&#34;&gt;
+            &lt;rect id=&#34;Rectangle&#34; fill=&#34;#e06d10&#34; x=&#34;0&#34; y=&#34;0&#34; width=&#34;23&#34; height=&#34;12&#34; rx=&#34;2&#34;/&gt;
+            &lt;path d=&#34;M8.12890625,10 L9.58984375,10 L6.83984375,2.24951172 L5.27685547,2.24951172 L2.52685547,10 L3.95556641,10 L4.61621094,7.99658203 L7.46826172,7.99658203 L8.12890625,10 Z M6.0234375,3.61914062 L6.06103516,3.61914062 L7.140625,6.92773438 L4.93847656,6.92773438 L6.0234375,3.61914062 Z M10.9169922,2.24951172 L10.9169922,10 L12.3027344,10 L12.3027344,7.43798828 L13.8710938,7.43798828 C15.4394531,7.43798828 16.5405273,6.390625 16.5405273,4.84375 C16.5405273,3.296875 15.4716797,2.24951172 13.9301758,2.24951172 L10.9169922,2.24951172 Z M12.3027344,3.3828125 L13.5649414,3.3828125 C14.5585938,3.3828125 15.1333008,3.91455078 15.1333008,4.84375 C15.1333008,5.78369141 14.5532227,6.32080078 13.5595703,6.32080078 L12.3027344,6.32080078 L12.3027344,3.3828125 Z M19.4360352,10 L18.050293,10 L18.050293,2.24951172 L19.4360352,2.24951172 L19.4360352,10 Z&#34; id=&#34;API&#34; fill=&#34;#FFFFFF&#34; fill-rule=&#34;nonzero&#34;/&gt;
+        &lt;/g&gt;
+    &lt;/g&gt;
+&lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;Open API docs link&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt; endpoint
+to support fetching both current and new data sources. For retro-compatibility
+reasons, fetching the new data source requires sending the parameter &lt;code&gt;metric=bytes&lt;/code&gt; else the current data
+source will be returned.&lt;/li&gt;
+&lt;li&gt;Deprecated old Layer 3 endpoints
+&lt;a href=&#34;https://developers.cloudflare.com/api/operations/radar-get-attacks-layer3-timeseries-groups&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;TimeseriesGroups&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-api-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; xmlns:xlink=&#34;http://www.w3.org/1999/xlink&#34; width=&#34;23px&#34; height=&#34;12px&#34; viewBox=&#34;0 0 23 12&#34; version=&#34;1.1&#34;&gt;
+    &lt;title&gt;API link label&lt;/title&gt;
+    &lt;g id=&#34;Page-1&#34; stroke=&#34;none&#34; stroke-width=&#34;1&#34; fill=&#34;none&#34; fill-rule=&#34;evenodd&#34;&gt;
+        &lt;g id=&#34;Group&#34;&gt;
+            &lt;rect id=&#34;Rectangle&#34; fill=&#34;#e06d10&#34; x=&#34;0&#34; y=&#34;0&#34; width=&#34;23&#34; height=&#34;12&#34; rx=&#34;2&#34;/&gt;
+            &lt;path d=&#34;M8.12890625,10 L9.58984375,10 L6.83984375,2.24951172 L5.27685547,2.24951172 L2.52685547,10 L3.95556641,10 L4.61621094,7.99658203 L7.46826172,7.99658203 L8.12890625,10 Z M6.0234375,3.61914062 L6.06103516,3.61914062 L7.140625,6.92773438 L4.93847656,6.92773438 L6.0234375,3.61914062 Z M10.9169922,2.24951172 L10.9169922,10 L12.3027344,10 L12.3027344,7.43798828 L13.8710938,7.43798828 C15.4394531,7.43798828 16.5405273,6.390625 16.5405273,4.84375 C16.5405273,3.296875 15.4716797,2.24951172 13.9301758,2.24951172 L10.9169922,2.24951172 Z M12.3027344,3.3828125 L13.5649414,3.3828125 C14.5585938,3.3828125 15.1333008,3.91455078 15.1333008,4.84375 C15.1333008,5.78369141 14.5532227,6.32080078 13.5595703,6.32080078 L12.3027344,6.32080078 L12.3027344,3.3828125 Z M19.4360352,10 L18.050293,10 L18.050293,2.24951172 L19.4360352,2.24951172 L19.4360352,10 Z&#34; id=&#34;API&#34; fill=&#34;#FFFFFF&#34; fill-rule=&#34;nonzero&#34;/&gt;
+        &lt;/g&gt;
+    &lt;/g&gt;
+&lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;Open API docs link&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt; and
+&lt;a href=&#34;https://developers.cloudflare.com/api/operations/radar-get-attacks-layer3-summary&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;Summary&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-api-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg xmlns=&#34;http://www.w3.org/2000/svg&#34; xmlns:xlink=&#34;http://www.w3.org/1999/xlink&#34; width=&#34;23px&#34; height=&#34;12px&#34; viewBox=&#34;0 0 23 12&#34; version=&#34;1.1&#34;&gt;
+    &lt;title&gt;API link label&lt;/title&gt;
+    &lt;g id=&#34;Page-1&#34; stroke=&#34;none&#34; stroke-width=&#34;1&#34; fill=&#34;none&#34; fill-rule=&#34;evenodd&#34;&gt;
+        &lt;g id=&#34;Group&#34;&gt;
+            &lt;rect id=&#34;Rectangle&#34; fill=&#34;#e06d10&#34; x=&#34;0&#34; y=&#34;0&#34; width=&#34;23&#34; height=&#34;12&#34; rx=&#34;2&#34;/&gt;
+            &lt;path d=&#34;M8.12890625,10 L9.58984375,10 L6.83984375,2.24951172 L5.27685547,2.24951172 L2.52685547,10 L3.95556641,10 L4.61621094,7.99658203 L7.46826172,7.99658203 L8.12890625,10 Z M6.0234375,3.61914062 L6.06103516,3.61914062 L7.140625,6.92773438 L4.93847656,6.92773438 L6.0234375,3.61914062 Z M10.9169922,2.24951172 L10.9169922,10 L12.3027344,10 L12.3027344,7.43798828 L13.8710938,7.43798828 C15.4394531,7.43798828 16.5405273,6.390625 16.5405273,4.84375 C16.5405273,3.296875 15.4716797,2.24951172 13.9301758,2.24951172 L10.9169922,2.24951172 Z M12.3027344,3.3828125 L13.5649414,3.3828125 C14.5585938,3.3828125 15.1333008,3.91455078 15.1333008,4.84375 C15.1333008,5.78369141 14.5532227,6.32080078 13.5595703,6.32080078 L12.3027344,6.32080078 L12.3027344,3.3828125 Z M19.4360352,10 L18.050293,10 L18.050293,2.24951172 L19.4360352,2.24951172 L19.4360352,10 Z&#34; id=&#34;API&#34; fill=&#34;#FFFFFF&#34; fill-rule=&#34;nonzero&#34;/&gt;
+        &lt;/g&gt;
+    &lt;/g&gt;
+&lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;Open API docs link&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt;.
+Users should upgrade to newer endpoints.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Wed, 11 Jan 2023 08:00:00 EST</pubDate></item></channel>
+</rss>

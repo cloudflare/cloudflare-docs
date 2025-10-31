@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Security on Cloudflare Docs</title>
+    <link>https://developers.cloudflare.com/tags/security/</link>
+    <description>Recent content in Security on Cloudflare Docs</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <atom:link href="https://developers.cloudflare.com/tags/security/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Block on TLS</title>
+      <link>https://developers.cloudflare.com/workers/examples/block-on-tls/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://developers.cloudflare.com/workers/examples/block-on-tls/</guid>
+      <description>Inspects the incoming request&amp;rsquo;s TLS version and blocks if under TLSv1.2.</description>
+    </item>
+    <item>
+      <title>CORS header proxy</title>
+      <link>https://developers.cloudflare.com/workers/examples/cors-header-proxy/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://developers.cloudflare.com/workers/examples/cors-header-proxy/</guid>
+      <description>Add the necessary CORS headers to a third party API response.</description>
+    </item>
+    <item>
+      <title>Data loss prevention</title>
+      <link>https://developers.cloudflare.com/workers/examples/data-loss-prevention/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://developers.cloudflare.com/workers/examples/data-loss-prevention/</guid>
+      <description>Protect sensitive data to prevent data loss, and send alerts to a webhooks server in the event of a data breach.</description>
+    </item>
+    <item>
+      <title>Hot-link protection</title>
+      <link>https://developers.cloudflare.com/workers/examples/hot-link-protection/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://developers.cloudflare.com/workers/examples/hot-link-protection/</guid>
+      <description>Block other websites from linking to your content. This is useful for protecting images.</description>
+    </item>
+    <item>
+      <title>HTTP Basic Authentication</title>
+      <link>https://developers.cloudflare.com/workers/examples/basic-auth/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://developers.cloudflare.com/workers/examples/basic-auth/</guid>
+      <description>Shows how to restrict access using the HTTP Basic schema.</description>
+    </item>
+    <item>
+      <title>Set security headers</title>
+      <link>https://developers.cloudflare.com/workers/examples/security-headers/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://developers.cloudflare.com/workers/examples/security-headers/</guid>
+      <description>Set common security headers (X-XSS-Protection, X-Frame-Options, X-Content-Type-Options, Permissions-Policy, Referrer-Policy, Strict-Transport-Security, Content-Security-Policy).</description>
+    </item>
+    <item>
+      <title>Sign requests</title>
+      <link>https://developers.cloudflare.com/workers/examples/signing-requests/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://developers.cloudflare.com/workers/examples/signing-requests/</guid>
+      <description>Verify a signed request using the HMAC and SHA-256 algorithms or return a 403.</description>
+    </item>
+    <item>
+      <title>Using timingSafeEqual</title>
+      <link>https://developers.cloudflare.com/workers/examples/protect-against-timing-attacks/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://developers.cloudflare.com/workers/examples/protect-against-timing-attacks/</guid>
+      <description>Protect against timing attacks by safely comparing values using &lt;code&gt;timingSafeEqual&lt;/code&gt;.</description>
+    </item>
+  </channel>
+</rss>

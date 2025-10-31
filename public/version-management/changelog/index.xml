@@ -1,0 +1,25 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Changelog · Version Management</title>
+    <link>https://developers.cloudflare.com/version-management/changelog/</link>
+    <description>Updates to Version Management</description>
+    <language>en-us</language>
+    <atom:link href="https://developers.cloudflare.com/version-management/changelog/index.xml" rel="self" />
+    <lastBuildDate>Mon, 26 Feb 2024 08:00:00 EST</lastBuildDate>
+    <item>
+    <title>Support for API Shield</title>
+    <link>https://developers.cloudflare.com/version-management/changelog/#support-for-api-shield</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;&lt;a href=https://developers.cloudflare.com/api-shield/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;API Shield&lt;/span&gt;&lt;/a&gt; no longer prevents Version Management enablement and zone settings configurations.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Mon, 26 Feb 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Support for Bot Management</title>
+    <link>https://developers.cloudflare.com/version-management/changelog/#support-for-bot-management</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Version Management now supports versioning for &lt;a href=https://developers.cloudflare.com/bots/plans/bm-subscription/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;Bot Management&lt;/span&gt;&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Wed, 20 Sep 2023 08:00:00 EST</pubDate></item></channel>
+</rss>

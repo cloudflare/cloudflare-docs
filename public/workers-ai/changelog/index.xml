@@ -1,0 +1,50 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Changelog · Workers AI</title>
+    <link>https://developers.cloudflare.com/workers-ai/changelog/</link>
+    <description>Updates to Workers AI</description>
+    <language>en-us</language>
+    <atom:link href="https://developers.cloudflare.com/workers-ai/changelog/index.xml" rel="self" />
+    <lastBuildDate>Tue, 18 Jun 2024 08:00:00 EST</lastBuildDate>
+    <item>
+    <title>Native support for AI Gateways</title>
+    <link>https://developers.cloudflare.com/workers-ai/changelog/#native-support-for-ai-gateways</link>
+    <description>Workers AI now natively supports &lt;a href=https://developers.cloudflare.com/ai-gateway/providers/workersai/#worker class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;AI Gateway&lt;/span&gt;&lt;/a&gt;.</description>
+    <pubDate>Tue, 18 Jun 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Deprecation announcement for `@cf/meta/llama-2-7b-chat-int8`</title>
+    <link>https://developers.cloudflare.com/workers-ai/changelog/#deprecation-announcement-for-cfmetallama-2-7b-chat-int8</link>
+    <description>&lt;p&gt;We will be deprecating &lt;code&gt;@cf/meta/llama-2-7b-chat-int8&lt;/code&gt; on 2024-06-30.&lt;/p&gt;
+&lt;p&gt;Replace the model ID in your code with a new model of your choice:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=https://developers.cloudflare.com/workers-ai/models/llama-3-8b-instruct/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;&lt;code&gt;@cf/meta/llama-3-8b-instruct&lt;/code&gt;&lt;/span&gt;&lt;/a&gt; is the newest model in the Llama family (and is currently free for a limited time on Workers AI).&lt;/li&gt;
+&lt;li&gt;&lt;a href=https://developers.cloudflare.com/workers-ai/models/llama-3-8b-instruct-awq/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;&lt;code&gt;@cf/meta/llama-3-8b-instruct-awq&lt;/code&gt;&lt;/span&gt;&lt;/a&gt; is the new Llama 3 in a similar precision to your currently selected model. This model is also currently free for a limited time.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;If you do not switch to a different model by June 30th, we will automatically start returning inference from &lt;code&gt;@cf/meta/llama-3-8b-instruct-awq&lt;/code&gt;.&lt;/p&gt;
+</description>
+    <pubDate>Tue, 11 Jun 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Add new public LoRAs and note on LoRA routing</title>
+    <link>https://developers.cloudflare.com/workers-ai/changelog/#add-new-public-loras-and-note-on-lora-routing</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Added documentation on &lt;a href=https://developers.cloudflare.com/workers-ai/fine-tunes/public-loras/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;new public LoRAs&lt;/span&gt;&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Noted that you can now run LoRA inference with the base model rather than explicitly calling the &lt;code&gt;-lora&lt;/code&gt; version&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Wed, 29 May 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Add OpenAI compatible API endpoints</title>
+    <link>https://developers.cloudflare.com/workers-ai/changelog/#add-openai-compatible-api-endpoints</link>
+    <description>Added OpenAI compatible API endpoints for &lt;code&gt;/v1/chat/completions&lt;/code&gt; and &lt;code&gt;/v1/embeddings&lt;/code&gt;. For more details, refer to &lt;a href=https://developers.cloudflare.com/workers-ai/configuration/open-ai-compatibility/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;Configurations&lt;/span&gt;&lt;/a&gt;.</description>
+    <pubDate>Fri, 17 May 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Add AI native binding</title>
+    <link>https://developers.cloudflare.com/workers-ai/changelog/#add-ai-native-binding</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Added new AI native binding, you can now run models with &lt;code&gt;const resp = await env.AI.run(modelName, inputs)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Deprecated &lt;code&gt;@cloudflare/ai&lt;/code&gt; npm package. While existing solutions using the @cloudflare/ai package will continue to work, no new Workers AI features will be supported.
+Moving to native AI bindings is highly recommended&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Thu, 11 Apr 2024 08:00:00 EST</pubDate></item></channel>
+</rss>

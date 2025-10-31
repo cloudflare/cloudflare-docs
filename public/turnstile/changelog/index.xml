@@ -1,0 +1,142 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Changelog · Turnstile</title>
+    <link>https://developers.cloudflare.com/turnstile/changelog/</link>
+    <description>Updates to Turnstile</description>
+    <language>en-us</language>
+    <atom:link href="https://developers.cloudflare.com/turnstile/changelog/index.xml" rel="self" />
+    <lastBuildDate>Wed, 10 Apr 2024 08:00:00 EST</lastBuildDate>
+    <item>
+    <title>Turnstile - 2024-04-10</title>
+    <link>https://developers.cloudflare.com/turnstile/changelog/#2024-04-10</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Added &lt;a href=https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/#refresh-a-timed-out-widget class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;&lt;code&gt;[refresh-timeout]&lt;/code&gt;&lt;/span&gt;&lt;/a&gt; and document new automatic interactive timeout-refresh.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Wed, 10 Apr 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Turnstile - 2024-03-25</title>
+    <link>https://developers.cloudflare.com/turnstile/changelog/#2024-03-25</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Added more &lt;a href=https://developers.cloudflare.com/turnstile/reference/supported-languages class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;supported languages&lt;/span&gt;&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Mon, 25 Mar 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Turnstile - 2023-12-18</title>
+    <link>https://developers.cloudflare.com/turnstile/changelog/#2023-12-18</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Added &lt;a href=https://developers.cloudflare.com/turnstile/concepts/pre-clearance-support/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;Pre-Clearance mode&lt;/span&gt;&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Mon, 18 Dec 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Turnstile - 2023-08-24</title>
+    <link>https://developers.cloudflare.com/turnstile/changelog/#2023-08-24</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Added &lt;a href=https://developers.cloudflare.com/turnstile/troubleshooting/client-side-errors/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;Client-side errors&lt;/span&gt;&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Thu, 24 Aug 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Turnstile - 2023-07-31</title>
+    <link>https://developers.cloudflare.com/turnstile/changelog/#2023-07-31</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Added &lt;a href=https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/#access-a-widgets-state class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;&lt;code&gt;[turnstile.isExpired]&lt;/code&gt;&lt;/span&gt;&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Added &lt;code&gt;uk&lt;/code&gt; language.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Mon, 31 Jul 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Turnstile - 2023-05-25</title>
+    <link>https://developers.cloudflare.com/turnstile/changelog/#2023-05-25</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Added idempotency support for &lt;code&gt;POST /siteverify&lt;/code&gt; requests via the &lt;code&gt;idempotency_key&lt;/code&gt; parameter.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Thu, 25 May 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Turnstile - 2023-04-17</title>
+    <link>https://developers.cloudflare.com/turnstile/changelog/#2023-04-17</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Added references to Turnstile Public API.&lt;/li&gt;
+&lt;li&gt;Added references for &lt;a href=https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/#explicitly-render-the-turnstile-widget class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;&lt;code&gt;[after-interactive-callback]&lt;/code&gt;&lt;/span&gt;&lt;/a&gt;, &lt;a href=https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/#explicitly-render-the-turnstile-widget class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;&lt;code&gt;[before-interactive-callback]&lt;/code&gt;&lt;/span&gt;&lt;/a&gt;, and &lt;a href=https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/#explicitly-render-the-turnstile-widget class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;&lt;code&gt;[unsupported-callback]&lt;/code&gt;&lt;/span&gt;&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Mon, 17 Apr 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Turnstile - 2023-03-06</title>
+    <link>https://developers.cloudflare.com/turnstile/changelog/#2023-03-06</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Added &lt;a href=https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/#explicitly-render-the-turnstile-widget class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;&lt;code&gt;[execution]&lt;/code&gt;&lt;/span&gt;&lt;/a&gt; and &lt;a href=https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/#explicitly-render-the-turnstile-widget class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;&lt;code&gt;[appearance]&lt;/code&gt;&lt;/span&gt;&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Mon, 06 Mar 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Turnstile - 2023-02-15</title>
+    <link>https://developers.cloudflare.com/turnstile/changelog/#2023-02-15</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Added the &lt;a href=https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/#explicitly-render-the-turnstile-widget class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;&lt;code&gt;[turnstile.ready]&lt;/code&gt;&lt;/span&gt;&lt;/a&gt; callback.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Wed, 15 Feb 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Turnstile - 2023-02-01</title>
+    <link>https://developers.cloudflare.com/turnstile/changelog/#2023-02-01</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Added the &lt;a href=https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/#configurations class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;&lt;code&gt;[data-]language&lt;/code&gt;&lt;/span&gt;&lt;/a&gt; parameter.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Wed, 01 Feb 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Turnstile - 2022-12-12</title>
+    <link>https://developers.cloudflare.com/turnstile/changelog/#2022-12-12</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;&lt;a href=https://developers.cloudflare.com/turnstile/get-started/server-side-validation/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;&lt;code&gt;POST /siteverify&lt;/code&gt;&lt;/span&gt;&lt;/a&gt; supports JSON requests now.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Mon, 12 Dec 2022 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Turnstile - 2022-11-11</title>
+    <link>https://developers.cloudflare.com/turnstile/changelog/#2022-11-11</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Added &lt;a href=https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/#configurations class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;&lt;code&gt;retry&lt;/code&gt; and &lt;code&gt;retry-interval&lt;/code&gt;&lt;/span&gt;&lt;/a&gt; for controlling retry behavior.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Fri, 11 Nov 2022 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Turnstile - 2022-10-28</title>
+    <link>https://developers.cloudflare.com/turnstile/changelog/#2022-10-28</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Renamed the &lt;code&gt;[data-]expired-callback&lt;/code&gt; callback to &lt;a href=https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/#configurations class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;&lt;code&gt;[data-]timeout-callback&lt;/code&gt;&lt;/span&gt;&lt;/a&gt; (called when the challenge times out).&lt;/li&gt;
+&lt;li&gt;Added the &lt;a href=https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/#configurations class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;&lt;code&gt;[data-]expired-callback&lt;/code&gt;&lt;/span&gt;&lt;/a&gt; callback (called when the token expires).&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Fri, 28 Oct 2022 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Turnstile - 2022-10-24</title>
+    <link>https://developers.cloudflare.com/turnstile/changelog/#2022-10-24</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Added &lt;a href=https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/#configurations class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;&lt;code&gt;response-field&lt;/code&gt; and &lt;code&gt;response-field-name&lt;/code&gt;&lt;/span&gt;&lt;/a&gt; for controlling the input element created by Turnstile.&lt;/li&gt;
+&lt;li&gt;Added option for changing the &lt;a href=https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/#widget-size class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;size of the Turnstile widget&lt;/span&gt;&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Mon, 24 Oct 2022 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Turnstile - 2022-10-13</title>
+    <link>https://developers.cloudflare.com/turnstile/changelog/#2022-10-13</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Added validation for action: &lt;code&gt;/^[a-z0-9_-]{0,32}$/i&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Added validation for cData: &lt;code&gt;/^[a-z0-9_-]{0,255}$/i&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Thu, 13 Oct 2022 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Turnstile - 2022-10-11</title>
+    <link>https://developers.cloudflare.com/turnstile/changelog/#2022-10-11</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Added &lt;a href=https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/#remove-a-widget class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;&lt;code&gt;turnstile.remove&lt;/code&gt;&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Tue, 11 Oct 2022 08:00:00 EST</pubDate></item></channel>
+</rss>

@@ -1,0 +1,103 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Changelog · Core platform</title>
+    <link>https://developers.cloudflare.com/fundamentals/reference/changelog/platform/index.xml</link>
+    <description>Updates to Core platform</description>
+    <language>en-us</language>
+    <atom:link href="https://developers.cloudflare.com/fundamentals/reference/changelog/platform/index.xml" rel="self" />
+    <lastBuildDate>Mon, 15 Apr 2024 08:00:00 EST</lastBuildDate>
+    <item>
+    <title>Trace - Cloudflare Trace now supports Workers</title>
+    <link>https://developers.cloudflare.com/fundamentals/basic-tasks/trace-request/changelog/#cloudflare-trace-now-supports-workers</link>
+    <description>Starting today, customers can use Cloudflare Trace to confirm if a request to a specific URL within their zone is routed through a &lt;a href=https://developers.cloudflare.com/workers/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;Workers script&lt;/span&gt;&lt;/a&gt;.</description>
+    <pubDate>Mon, 15 Apr 2024 08:00:00 EST</pubDate><product>Trace</product></item>
+    <item>
+    <title>Trace - Cloudflare Trace now supports BYOIP zones</title>
+    <link>https://developers.cloudflare.com/fundamentals/basic-tasks/trace-request/changelog/#cloudflare-trace-now-supports-byoip-zones</link>
+    <description>Customers can now use Cloudflare Trace to trace HTTP/S requests through their &lt;a href=https://developers.cloudflare.com/byoip/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;BYOIP&lt;/span&gt;&lt;/a&gt; zones.</description>
+    <pubDate>Mon, 18 Mar 2024 08:00:00 EST</pubDate><product>Trace</product></item>
+    <item>
+    <title>Trace - Cloudflare Trace now supports grey-clouded hostnames</title>
+    <link>https://developers.cloudflare.com/fundamentals/basic-tasks/trace-request/changelog/#cloudflare-trace-now-supports-grey-clouded-hostnames</link>
+    <description>Even if the hostname is &lt;a href=https://developers.cloudflare.com/dns/manage-dns-records/reference/proxied-dns-records/#dns-only-records class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;not proxied by Cloudflare&lt;/span&gt;&lt;/a&gt;, Cloudflare Trace will now return all the configurations that Cloudflare would have applied to the request.</description>
+    <pubDate>Tue, 12 Mar 2024 08:00:00 EST</pubDate><product>Trace</product></item>
+    <item>
+    <title>Version Management - Support for API Shield</title>
+    <link>https://developers.cloudflare.com/version-management/changelog/#support-for-api-shield</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;&lt;a href=https://developers.cloudflare.com/api-shield/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;API Shield&lt;/span&gt;&lt;/a&gt; no longer prevents Version Management enablement and zone settings configurations.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Mon, 26 Feb 2024 08:00:00 EST</pubDate><product>Version Management</product></item>
+    <item>
+    <title>Tenant - New Tenant Admin UI</title>
+    <link>https://developers.cloudflare.com/tenant/changelog/#new-tenant-admin-ui</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Partners can now create and view accounts through the Cloudflare dashboard by going to &lt;strong&gt;Tenants&lt;/strong&gt; &gt; &lt;strong&gt;Managed Accounts&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Tue, 10 Oct 2023 08:00:00 EST</pubDate><product>Tenant</product></item>
+    <item>
+    <title>Notifications - Core platform - 2023-10-06</title>
+    <link>https://developers.cloudflare.com/notifications/changelog/#2023-10-06</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Added &lt;strong&gt;Traffic Anomalies Alerts&lt;/strong&gt; to notify customers when traffic to their domain has an unexpected spike or drop.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Fri, 06 Oct 2023 08:00:00 EST</pubDate><product>Notifications</product></item>
+    <item>
+    <title>Notifications - Core platform - 2023-09-28</title>
+    <link>https://developers.cloudflare.com/notifications/changelog/#2023-09-28</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Added &lt;strong&gt;&lt;a href=&#34;https://blog.cloudflare.com/incident-alerts/&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;Incident Alerts&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-external-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;1.5&#34; width=&#34;23px&#34; height=&#34;12px&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; viewBox=&#34;0 0 16 16&#34; role=&#34;img&#34; aria-labelledby=&#34;title-4744738674102027&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+    &lt;title id=&#34;title-4744738674102027&#34;&gt;External link icon&lt;/title&gt;
+    &lt;path d=&#34;M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5&#34;&gt;&lt;/path&gt;
+  &lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt;&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Thu, 28 Sep 2023 08:00:00 EST</pubDate><product>Notifications</product></item>
+    <item>
+    <title>Version Management - Support for Bot Management</title>
+    <link>https://developers.cloudflare.com/version-management/changelog/#support-for-bot-management</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Version Management now supports versioning for &lt;a href=https://developers.cloudflare.com/bots/plans/bm-subscription/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;Bot Management&lt;/span&gt;&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Wed, 20 Sep 2023 08:00:00 EST</pubDate><product>Version Management</product></item>
+    <item>
+    <title>Notifications - Core platform - 2023-08-23</title>
+    <link>https://developers.cloudflare.com/notifications/changelog/#2023-08-23</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Added &lt;strong&gt;Logo Match Alert&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Wed, 23 Aug 2023 08:00:00 EST</pubDate><product>Notifications</product></item>
+    <item>
+    <title>Notifications - Core platform - 2023-04-19</title>
+    <link>https://developers.cloudflare.com/notifications/changelog/#2023-04-19</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Added &lt;strong&gt;Maintenance Notification Alerts&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Wed, 19 Apr 2023 08:00:00 EST</pubDate><product>Notifications</product></item>
+    <item>
+    <title>Notifications - Core platform - 2023-03-13</title>
+    <link>https://developers.cloudflare.com/notifications/changelog/#2023-03-13</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Added &lt;strong&gt;Pages Alerts&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Mon, 13 Mar 2023 08:00:00 EST</pubDate><product>Notifications</product></item>
+    <item>
+    <title>Notifications - Core platform - 2023-03-02</title>
+    <link>https://developers.cloudflare.com/notifications/changelog/#2023-03-02</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Added &lt;strong&gt;Brand Protection Alerts&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Thu, 02 Mar 2023 08:00:00 EST</pubDate><product>Notifications</product></item></channel>
+</rss>

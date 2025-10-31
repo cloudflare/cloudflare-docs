@@ -1,0 +1,17 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Changelog · Tenant</title>
+    <link>https://developers.cloudflare.com/tenant/changelog/</link>
+    <description>Updates to Tenant</description>
+    <language>en-us</language>
+    <atom:link href="https://developers.cloudflare.com/tenant/changelog/index.xml" rel="self" />
+    <lastBuildDate>Tue, 10 Oct 2023 08:00:00 EST</lastBuildDate>
+    <item>
+    <title>New Tenant Admin UI</title>
+    <link>https://developers.cloudflare.com/tenant/changelog/#new-tenant-admin-ui</link>
+    <description>&lt;ul&gt;
+&lt;li&gt;Partners can now create and view accounts through the Cloudflare dashboard by going to &lt;strong&gt;Tenants&lt;/strong&gt; &gt; &lt;strong&gt;Managed Accounts&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    <pubDate>Tue, 10 Oct 2023 08:00:00 EST</pubDate></item></channel>
+</rss>

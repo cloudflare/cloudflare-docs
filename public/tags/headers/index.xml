@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Headers on Cloudflare Docs</title>
+    <link>https://developers.cloudflare.com/tags/headers/</link>
+    <description>Recent content in Headers on Cloudflare Docs</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <atom:link href="https://developers.cloudflare.com/tags/headers/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>103 Early Hints</title>
+      <link>https://developers.cloudflare.com/workers/examples/103-early-hints/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://developers.cloudflare.com/workers/examples/103-early-hints/</guid>
+      <description>Allow a client to request static assets while waiting for the HTML response.</description>
+    </item>
+    <item>
+      <title>Alter headers</title>
+      <link>https://developers.cloudflare.com/workers/examples/alter-headers/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://developers.cloudflare.com/workers/examples/alter-headers/</guid>
+      <description>Example of how to add, change, or delete headers sent in a request or returned in a response.</description>
+    </item>
+    <item>
+      <title>Cookie parsing</title>
+      <link>https://developers.cloudflare.com/workers/examples/extract-cookie-value/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://developers.cloudflare.com/workers/examples/extract-cookie-value/</guid>
+      <description>Given the cookie name, get the value of a cookie. You can also use cookies for A/B testing.</description>
+    </item>
+    <item>
+      <title>CORS header proxy</title>
+      <link>https://developers.cloudflare.com/workers/examples/cors-header-proxy/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://developers.cloudflare.com/workers/examples/cors-header-proxy/</guid>
+      <description>Add the necessary CORS headers to a third party API response.</description>
+    </item>
+    <item>
+      <title>Hot-link protection</title>
+      <link>https://developers.cloudflare.com/workers/examples/hot-link-protection/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://developers.cloudflare.com/workers/examples/hot-link-protection/</guid>
+      <description>Block other websites from linking to your content. This is useful for protecting images.</description>
+    </item>
+    <item>
+      <title>Logging headers to console</title>
+      <link>https://developers.cloudflare.com/workers/examples/logging-headers/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://developers.cloudflare.com/workers/examples/logging-headers/</guid>
+      <description>Examine the contents of a Headers object by logging to console with a Map.</description>
+    </item>
+    <item>
+      <title>Modify request property</title>
+      <link>https://developers.cloudflare.com/workers/examples/modify-request-property/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://developers.cloudflare.com/workers/examples/modify-request-property/</guid>
+      <description>Create a modified request with edited properties based off of an incoming request.</description>
+    </item>
+    <item>
+      <title>Modify response</title>
+      <link>https://developers.cloudflare.com/workers/examples/modify-response/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://developers.cloudflare.com/workers/examples/modify-response/</guid>
+      <description>Fetch and modify response properties which are immutable by creating a copy first.</description>
+    </item>
+  </channel>
+</rss>

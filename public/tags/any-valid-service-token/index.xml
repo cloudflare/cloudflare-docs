@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Any Valid Service Token on Cloudflare Docs</title>
+    <link>https://developers.cloudflare.com/tags/any-valid-service-token/</link>
+    <description>Recent content in Any Valid Service Token on Cloudflare Docs</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <atom:link href="https://developers.cloudflare.com/tags/any-valid-service-token/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Any valid service token</title>
+      <link>https://developers.cloudflare.com/cloudflare-one/api-terraform/access-api-examples/any-service-token/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://developers.cloudflare.com/cloudflare-one/api-terraform/access-api-examples/any-service-token/</guid>
+      <description>The request will need to present the headers for any service token created for this account.</description>
+    </item>
+  </channel>
+</rss>

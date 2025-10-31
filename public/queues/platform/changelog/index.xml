@@ -1,0 +1,94 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Changelog · Queues</title>
+    <link>https://developers.cloudflare.com/queues/platform/changelog/</link>
+    <description>Updates to Queues</description>
+    <language>en-us</language>
+    <atom:link href="https://developers.cloudflare.com/queues/platform/changelog/index.xml" rel="self" />
+    <lastBuildDate>Tue, 26 Mar 2024 08:00:00 EST</lastBuildDate>
+    <item>
+    <title>Delay messages published to a queue</title>
+    <link>https://developers.cloudflare.com/queues/platform/changelog/#delay-messages-published-to-a-queue</link>
+    <description>&lt;p&gt;Messages published to a queue and/or marked for retry from a queue consumer can now be explicitly delayed. Delaying messages allows you to defer tasks until later, and/or respond to backpressure when consuming from a queue.&lt;/p&gt;
+&lt;p&gt;Refer to &lt;a href=https://developers.cloudflare.com/queues/configuration/batching-retries/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;Batching and Retries&lt;/span&gt;&lt;/a&gt; to learn how to delay messages written to a queue.&lt;/p&gt;
+</description>
+    <pubDate>Tue, 26 Mar 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Support for pull-based consumers</title>
+    <link>https://developers.cloudflare.com/queues/platform/changelog/#support-for-pull-based-consumers</link>
+    <description>&lt;p&gt;Queues now supports &lt;a href=https://developers.cloudflare.com/queues/configuration/pull-consumers/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;pull-based consumers&lt;/span&gt;&lt;/a&gt;. A pull-based consumer allows you to pull from a queue over HTTP from any environment and/or programming language outside of Cloudflare Workers. A pull-based consumer can be useful when your message consumption rate is limited by upstream infrastructure or long-running tasks.&lt;/p&gt;
+&lt;p&gt;Review the &lt;a href=https://developers.cloudflare.com/queues/configuration/pull-consumers/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;documentation on pull-based consumers&lt;/span&gt;&lt;/a&gt; to configure HTTP-based pull.&lt;/p&gt;
+</description>
+    <pubDate>Mon, 25 Mar 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Default content type now set to JSON</title>
+    <link>https://developers.cloudflare.com/queues/platform/changelog/#default-content-type-now-set-to-json</link>
+    <description>&lt;p&gt;The default &lt;a href=https://developers.cloudflare.com/queues/configuration/javascript-apis/#queuescontenttype class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;content type&lt;/span&gt;&lt;/a&gt; for messages published to a queue is now &lt;code&gt;json&lt;/code&gt;, which improves compatibility with the upcoming pull-based queues.&lt;/p&gt;
+&lt;p&gt;Any Workers created on or after the &lt;a href=https://developers.cloudflare.com/workers/configuration/compatibility-dates/#queues-send-messages-in-json-format class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;compatibility date&lt;/span&gt;&lt;/a&gt; of &lt;code&gt;2024-03-18&lt;/code&gt;, or that explicitly set the &lt;code&gt;queues_json_messages&lt;/code&gt; compatibility flag, will use the new default behaviour. Existing Workers with a compatibility date prior will continue to use &lt;code&gt;v8&lt;/code&gt; as the default content type for published messages.&lt;/p&gt;
+</description>
+    <pubDate>Mon, 18 Mar 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Explicit retries no longer impact consumer concurrency/scaling.</title>
+    <link>https://developers.cloudflare.com/queues/platform/changelog/#explicit-retries-no-longer-impact-consumer-concurrencyscaling</link>
+    <description>&lt;p&gt;Calling &lt;code&gt;retry()&lt;/code&gt; or &lt;code&gt;retryAll()&lt;/code&gt; on a message or message batch will no longer have an impact on how Queues scales &lt;a href=https://developers.cloudflare.com/queues/configuration/consumer-concurrency/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;consumer concurrency&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Previously, using &lt;a href=https://developers.cloudflare.com/queues/configuration/batching-retries/#explicit-acknowledgement-and-retries class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;explicit retries&lt;/span&gt;&lt;/a&gt; via &lt;code&gt;retry()&lt;/code&gt; or &lt;code&gt;retryAll()&lt;/code&gt; would count as an error and could result in Queues scaling down the number of concurrent consumers.&lt;/p&gt;
+</description>
+    <pubDate>Sat, 24 Feb 2024 08:00:00 EST</pubDate></item>
+    <item>
+    <title>More queues per account - up to 10,000</title>
+    <link>https://developers.cloudflare.com/queues/platform/changelog/#more-queues-per-account---up-to-10000</link>
+    <description>&lt;p&gt;Developers building on Queues can now create up to 10,000 queues per account, enabling easier per-user, per-job and sharding use-cases.&lt;/p&gt;
+&lt;p&gt;Refer to &lt;a href=https://developers.cloudflare.com/queues/platform/limits class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;Limits&lt;/span&gt;&lt;/a&gt; to learn more about Queues’ current limits.&lt;/p&gt;
+</description>
+    <pubDate>Sat, 07 Oct 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Higher consumer concurrency limits</title>
+    <link>https://developers.cloudflare.com/queues/platform/changelog/#higher-consumer-concurrency-limits</link>
+    <description>&lt;p&gt;&lt;a href=https://developers.cloudflare.com/queues/configuration/consumer-concurrency/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;Queue consumers&lt;/span&gt;&lt;/a&gt; can now scale to 20 concurrent invocations (per queue), up from 10. This allows you to scale out and process higher throughput queues more quickly.&lt;/p&gt;
+&lt;p&gt;Queues with &lt;a href=https://developers.cloudflare.com/queues/configuration/consumer-concurrency/#limit-concurrency class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;no explicit limit specified&lt;/span&gt;&lt;/a&gt; will automatically scale to the new maximum.&lt;/p&gt;
+&lt;p&gt;This limit will continue to grow during the Queues beta.&lt;/p&gt;
+</description>
+    <pubDate>Thu, 05 Oct 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Consumer concurrency (enabled)</title>
+    <link>https://developers.cloudflare.com/queues/platform/changelog/#consumer-concurrency-enabled</link>
+    <description>Queue consumers will now &lt;a href=https://developers.cloudflare.com/queues/configuration/consumer-concurrency/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;automatically scale up&lt;/span&gt;&lt;/a&gt; based on the number of messages being written to the queue. To control or limit concurrency, you can explicitly define a &lt;a href=https://developers.cloudflare.com/queues/configuration/configure-queues/#consumer class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;&lt;code&gt;max_concurrency&lt;/code&gt;&lt;/span&gt;&lt;/a&gt; for your consumer.</description>
+    <pubDate>Tue, 28 Mar 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Consumer concurrency (upcoming)</title>
+    <link>https://developers.cloudflare.com/queues/platform/changelog/#consumer-concurrency-upcoming</link>
+    <description>&lt;p&gt;Queue consumers will soon automatically scale up concurrently as a queues’ backlog grows in order to keep overall message processing latency down. Concurrency will be enabled on all existing queues by 2023-03-28.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;To opt-out, or to configure a fixed maximum concurrency&lt;/strong&gt;, set &lt;code&gt;max_concurrency = 1&lt;/code&gt; in your &lt;code&gt;wrangler.toml&lt;/code&gt; file or via &lt;a href=&#34;https://dash.cloudflare.com/?to=/:account/queues&#34; class=&#34;DocsMarkdown--link&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;
+  &lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;the queues dashboard&lt;/span&gt;&lt;span class=&#34;DocsMarkdown--link-external-icon&#34; aria-hidden=&#34;true&#34;&gt;
+  &lt;svg fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-width=&#34;1.5&#34; width=&#34;23px&#34; height=&#34;12px&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; viewBox=&#34;0 0 16 16&#34; role=&#34;img&#34; aria-labelledby=&#34;title-4744738674102027&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;
+    &lt;title id=&#34;title-4744738674102027&#34;&gt;External link icon&lt;/title&gt;
+    &lt;path d=&#34;M6.75,1.75h-5v12.5h12.5v-5m0,-4v-3.5h-3.5M8,8l5.5-5.5&#34;&gt;&lt;/path&gt;
+  &lt;/svg&gt;
+  &lt;span is-visually-hidden&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;To opt-in, you do not need to take any action&lt;/strong&gt;: your consumer will begin to scale out as needed to keep up with your message backlog. It will scale back down as the backlog shrinks, and/or if a consumer starts to generate a higher rate of errors. To learn more about how consumers scale, refer to the &lt;a href=https://developers.cloudflare.com/queues/configuration/consumer-concurrency/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;consumer concurrency&lt;/span&gt;&lt;/a&gt; documentation.&lt;/p&gt;
+</description>
+    <pubDate>Wed, 15 Mar 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Explicit acknowledgement (new feature)</title>
+    <link>https://developers.cloudflare.com/queues/platform/changelog/#explicit-acknowledgement-new-feature</link>
+    <description>&lt;p&gt;You can now &lt;a href=https://developers.cloudflare.com/queues/configuration/batching-retries/#explicit-acknowledgement-and-retries class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;acknowledge individual messages with a batch&lt;/span&gt;&lt;/a&gt; by calling &lt;code&gt;.ack()&lt;/code&gt; on a message.&lt;/p&gt;
+&lt;p&gt;This allows you to mark a message as delivered as you process it within a batch, and avoids the entire batch from being redelivered if your consumer throws an error during batch processing. This can be particularly useful when you are calling external APIs, writing messages to a database, or otherwise performing non-idempotent actions on individual messages within a batch.&lt;/p&gt;
+</description>
+    <pubDate>Thu, 02 Mar 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Higher per-queue throughput</title>
+    <link>https://developers.cloudflare.com/queues/platform/changelog/#higher-per-queue-throughput</link>
+    <description>The per-queue throughput limit has now been &lt;a href=https://developers.cloudflare.com/queues/platform/limits/ class=&#34;DocsMarkdown--link&#34;&gt;&lt;span class=&#34;DocsMarkdown--link-content&#34;&gt;raised to 400 messages per second&lt;/span&gt;&lt;/a&gt;.</description>
+    <pubDate>Wed, 01 Mar 2023 08:00:00 EST</pubDate></item>
+    <item>
+    <title>sendBatch support</title>
+    <link>https://developers.cloudflare.com/queues/platform/changelog/#sendbatch-support</link>
+    <description>The JavaScript API for Queue producers now includes a &lt;code&gt;sendBatch&lt;/code&gt; method which supports sending up to 100 messages at a time.</description>
+    <pubDate>Tue, 13 Dec 2022 08:00:00 EST</pubDate></item>
+    <item>
+    <title>Increased per-account limits</title>
+    <link>https://developers.cloudflare.com/queues/platform/changelog/#increased-per-account-limits</link>
+    <description>Queues now allows developers to create up to 100 queues per account, up from the initial beta limit of 10 per account. This limit will continue to increase over time.</description>
+    <pubDate>Mon, 12 Dec 2022 08:00:00 EST</pubDate></item></channel>
+</rss>
