@@ -1,6 +1,6 @@
 ---
 params:
-  - magicWord?
+  - dashName
   - productName
 ---
 
@@ -9,7 +9,7 @@ import { DashButton } from "~/components";
 To set up and use the hardware version of {props.productName}, you first need to register it with your account. This is not applicable to Virtual {props.productName}.
 
 {/* Dashboard steps for WAN Tunnels (Cloudflare One dashboard) */}
-{ props.magicWord === "WAN Tunnels" && (
+{ props.dashName === "WAN Tunnels" && (
 	<>
 	<ol>
 		<li>Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a>, and go to <strong>Networks</strong>.</li>
@@ -20,7 +20,7 @@ To set up and use the hardware version of {props.productName}, you first need to
 }
 
 {/* Dashboard steps for Magic WAN (standalone dashboard) */}
-{ props.magicWord !== "WAN Tunnels" && (
+{ props.dashName !== "WAN Tunnels" && (
 	<>
 	<ol>
 		<li>In the Cloudflare dashboard, go to Magic WAN's <strong>Configuration</strong> page.
