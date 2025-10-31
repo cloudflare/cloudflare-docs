@@ -21,15 +21,19 @@ Therefore, only make manual changes to this file if both of the following are tr
 
 - The link is already live in the dashboard.
 - The name-change is confirmed, and there's no (or little) chance of rollback.
-:::
+  :::
 
 ## Import
 
 ```mdx live
 import { DashButton } from "~/components";
+
+;
 ```
 
 ## Usage
+
+### Core dashboard
 
 ```mdx live
 import { DashButton } from "~/components";
@@ -41,6 +45,18 @@ import { DashButton } from "~/components";
 2. ...
 ```
 
+### Zero Trust dashboard
+
+```mdx live
+import { DashButton } from "~/components";
+
+1. In the Zero Trust dashboard, go to the **AI controls** page.
+
+   <DashButton url="/?to=/:account/access/ai-controls" zeroTrust />
+
+2. ...
+```
+
 ## `<DashButton>` Props
 
 ### `url`
@@ -48,6 +64,22 @@ import { DashButton } from "~/components";
 **type:** `string`
 
 The Cloudflare dashboard deeplink to navigate to. See the below list for available routes.
+
+### `buttonName`
+
+**type:** `string`
+
+**default:** The name of the route.
+
+Additional name to override the default name of the route.
+
+### `zeroTrust`
+
+**type:** `boolean`
+
+**default:** `false`
+
+Set to `true` to use the [Zero Trust dashboard routes](/style-guide/components/dash-button/#zero-trust-routes) instead of the [Cloudflare dashboard routes](/style-guide/components/dash-button/#core-routes).
 
 ## Available routes
 
