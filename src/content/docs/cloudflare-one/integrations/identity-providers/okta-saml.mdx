@@ -4,6 +4,8 @@ title: Okta (SAML)
 description: Integrate Okta as a SAML identity provider with Cloudflare One.
 ---
 
+import { DashButton } from "~/components";
+
 Cloudflare One can integrate SAML with Okta as an identity provider.
 
 ## Set up Okta as a SAML provider
@@ -26,7 +28,9 @@ To set up SAML with Okta as your identity provider:
    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
    ```
 
-   You can find your team name in [Cloudflare One](https://one.dash.cloudflare.com/) under **Settings** > **Team name**.
+   To find your team name in Cloudflare One, go to **Settings** > **Team name**.
+
+      <DashButton url="/?to=/:account/settings" zeroTrust/>
 
 6. In the **Attribute Statements** section, enter the following information:
 
@@ -57,7 +61,9 @@ To set up SAML with Okta as your identity provider:
 
 ![Retrieving SAML provider information in Okta](~/assets/images/cloudflare-one/identity/okta-saml/okta-saml-5.png)
 
-13. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Integrations** > **Identity provider**.
+13. In Cloudflare One, go to **Integrations** > **Identity provider**.
+
+    <DashButton url="/?to=/:account/integrations/identity-providers" zeroTrust/>
 
 14. Under **Your identity providers**, select **Add new identity provider**, and select _SAML_.
 
@@ -76,7 +82,15 @@ To set up SAML with Okta as your identity provider:
 
 18. Select **Save**.
 
-To test that your connection is working, go to **Integrations** > **Identity providers** and select **Test** next to Okta. A success response should return the configured SAML attributes.
+To test that your connection is working:
+
+- Go to **Integrations** > **Identity providers**.
+
+  <DashButton url="/?to=/:account/integrations/identity-providers" zeroTrust/>
+
+- Select **Test** next to Okta.
+
+A success response should return the configured SAML attributes.
 
 :::caution
 

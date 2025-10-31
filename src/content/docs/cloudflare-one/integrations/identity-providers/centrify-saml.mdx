@@ -4,6 +4,8 @@ title: Centrify (SAML)
 description: Learn how to integrate Centrify as a SAML identity provider with Cloudflare One.
 ---
 
+import { DashButton } from "~/components";
+
 Centrify secures access to infrastructure, DevOps, cloud, and other modern enterprise so you can prevent the number one cause of breaches: privileged access abuse.
 ## Set up Centrify as a SAML provider
 
@@ -61,7 +63,9 @@ Centrify secures access to infrastructure, DevOps, cloud, and other modern enter
 
 ### 2. Add Centrify to Cloudflare One
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Integrations** > **Identity providers**.
+1. In Cloudflare One, go to **Integrations** > **Identity providers**.
+
+   <DashButton url="/?to=/:account/integrations/identity-providers" zeroTrust />
 
 2. Under **Your identity providers**, select **Add new identity provider**.
 
@@ -75,7 +79,7 @@ Centrify secures access to infrastructure, DevOps, cloud, and other modern enter
 
 7. Select **Save**.
 
-To test that your connection is working, go to **Integrations** > **Identity providers** and select **Test** next to the identity provider you want to test.
+To test that your connection is working: go to **Integrations** > **Identity providers** and select **Test** next to the identity provider you want to test.
 
 ## Download SP metadata (optional)
 

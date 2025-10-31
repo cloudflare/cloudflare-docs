@@ -3,7 +3,7 @@ pcx_content_type: how-to
 title: Microsoft Entra ID
 ---
 
-import { Render, Tabs, TabItem, APIRequest } from "~/components";
+import { Render, Tabs, TabItem, APIRequest, DashButton } from "~/components";
 
 You can integrate Microsoft Entra ID (formerly Azure Active Directory) with Cloudflare One and build policies based on user identity and group membership. Users will authenticate to Cloudflare One using their Entra ID credentials.
 
@@ -35,7 +35,9 @@ To retrieve those values:
     https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
     ```
 
-    In [Cloudflare One](https://one.dash.cloudflare.com), go to **Settings** > **Team name** to find your team name.
+    To find your team name in Cloudflare One, go to **Settings** > **Team name**.
+
+    <DashButton url="/?to=/:account/settings" zeroTrust/>
 
     ![Registering an application in Azure](~/assets/images/cloudflare-one/identity/azure/name-app.png)
 
@@ -90,7 +92,9 @@ More narrow permissions may be used, however this is the set of permissions that
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Integrations** > **Identity providers**.
+1. In Cloudflare One, go to **Integrations** > **Identity providers**.
+
+   <DashButton url="/?to=/:account/integrations/identity-providers" zeroTrust />
 
 2. Under **Your identity providers**, select **Add new identity provider**.
 
@@ -161,9 +165,10 @@ To receive an email claim in the `id_token` from Microsoft Entra, you must:
 
 3. If you gave your email claim another name than `email`, you must update your configuration in Cloudflare One:
 
-		a. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Integrations** > **Identity providers** > **Azure AD** > **Edit**.
-
-		b. Under **Optional configurations** > **Email claim**, enter the name of the claim representing your organization's email addresses.
+   1. In Cloudflare One, go to **Integrations** > **Identity providers**.
+      <DashButton url="/?to=/:account/integrations/identity-providers" zeroTrust />
+   2. Go to **Azure AD** > **Edit**.
+   3. Under **Optional configurations** > **Email claim**, enter the name of the claim representing your organization's email addresses.
 
 #### Object ID
 
@@ -225,7 +230,13 @@ To check which users and groups were synchronized, select **Provisioning logs**.
 
 <Render file="access/verify-scim-provisioning" product="cloudflare-one" />
 
-To monitor the exchange of identity details between Cloudflare Access and Microsoft Entra ID, go to [Cloudflare One](https://one.dash.cloudflare.com) > **Insights** > **Logs** > **SCIM provisioning logs** and view the [SCIM activity logs](/cloudflare-one/insights/logs/scim-logs/).
+To monitor the exchange of identity details between Cloudflare Access and Microsoft Entra ID:
+
+1. Go to Cloudflare One > **Insights** > **Logs** > **SCIM provisioning logs**
+
+   <DashButton url="/?to=/:account/logs/scim" zeroTrust/>
+
+2. View the [SCIM activity logs](/cloudflare-one/insights/logs/scim-logs/).
 
 ### Provisioning attributes
 

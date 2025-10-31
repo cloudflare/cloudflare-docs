@@ -3,7 +3,7 @@ pcx_content_type: how-to
 title: Google Workspace
 ---
 
-import { GlossaryTooltip, Render } from "~/components";
+import { GlossaryTooltip, Render, DashButton } from "~/components";
 
 :::note
 
@@ -77,7 +77,9 @@ You do not need to be a Google Cloud Platform user to integrate Google Workspace
 
 ### 2. Add Google Workspace to Cloudflare One
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Integrations** > **Identity providers**.
+1. In Cloudflare One, go to **Integrations** > **Identity providers**.
+
+   <DashButton url="/?to=/:account/integrations/identity-providers" zeroTrust/>
 
 2. Select **Add new identity provider** and select **Google Workspace**.
 
@@ -91,7 +93,13 @@ You do not need to be a Google Cloud Platform user to integrate Google Workspace
 
 7. The generated link will prompt you to log in to your Google admin account and to authorize Cloudflare Access to view group information. After allowing permissions, you will see a success page from Cloudflare Access.
 
-To test that your connection is working, go to **Integrations** > **Identity providers** and select **Test** next to Google Workspace. Your user identity and group membership should return.
+To test that your connection is working:
+
+- Go to **Integrations** > **Identity providers**.
+
+   <DashButton url="/?to=/:account/integrations/identity-providers" zeroTrust/>
+
+- Select **Test** next to Google Workspace. Your user identity and group membership should return.
 
 :::caution[SCIM Provisioning (Beta)]
 The direct SCIM provisioning integration with Google Workspace is not currently supported. Cloudflare is working with Google to complete the final approval process required to enable this feature. In the meantime, the SCIM endpoint will accept inbound SCIM events from any SCIM compliant service.

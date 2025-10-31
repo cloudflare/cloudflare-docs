@@ -5,7 +5,7 @@ tags:
   - SSO
 ---
 
-import { Render } from "~/components";
+import { Render, DashButton } from "~/components";
 
 
 Cloudflare One integrates with your organization's identity provider to apply Cloudflare One and Secure Web Gateway policies. If you work with partners, contractors, or other organizations, you can integrate multiple identity providers simultaneously.
@@ -31,6 +31,9 @@ Your IdP will now be listed in the **Login methods** card.
 To test if an IdP is correctly configured:
 
 1. Go to **Integrations** > **Identity providers**.
+
+   <DashButton url="/?to=/:account/integrations/identity-providers" zeroTrust />
+
 2. Select **Test** next to the IdP you would like to test. This will attempt to connect to the IdP to verify if a valid connection is established.
 
 ### Your provider is connected

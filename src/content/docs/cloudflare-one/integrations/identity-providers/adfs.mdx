@@ -4,7 +4,7 @@ title: Active Directory (SAML)
 description: Integrate Active Directory with Cloudflare One for secure identity management.
 ---
 
-import { GlossaryTooltip } from "~/components";
+import { GlossaryTooltip, DashButton } from "~/components";
 
 :::caution
 Microsoft recommends migrating your Active Directory Federation Service (AD FS) SSO to Microsoft Entra ID. For more information, refer to [Microsoft Learn](https://learn.microsoft.com/windows-server/identity/ad-fs/ad-fs-overview).
@@ -174,7 +174,9 @@ Set-ADFSRelyingPartyTrust -TargetName "Name of RPT Display Name" -SamlResponseSi
 
 To enable Cloudflare One to accept the claims and assertions sent from AD FS, follow these steps:
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Integrations** > **Identity providers**.
+1. In Cloudflare One, go to **Integrations** > **Identity providers**.
+
+   <DashButton url="/?to=/:account/integrations/identity-providers" zeroTrust />
 
 2. Under **Your identity providers**, select **Add new identity provider**.
 

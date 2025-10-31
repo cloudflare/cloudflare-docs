@@ -3,7 +3,7 @@ pcx_content_type: how-to
 title: JumpCloud (SAML)
 ---
 
-import { Render } from "~/components";
+import { Render, DashButton } from "~/components";
 
 [JumpCloud](https://jumpcloud.com/#platform) provides SSO identity management. Cloudflare Access integrates with JumpCloud as a SAML identity provider.
 
@@ -34,7 +34,9 @@ The following steps are specific to setting up JumpCloud with Cloudflare Access.
       https://<your-team-name>.cloudflareaccess.com/
       ```
 
-      You can find your team name in [Cloudflare One](https://one.dash.cloudflare.com/) under **Settings** > **Team name**.
+      To find your team name in Cloudflare One, go to **Settings** > **Team name**.
+
+      <DashButton url="/?to=/:account/settings" zeroTrust/>
 
    2. Set both **SP Entity ID** and **ACS URL** to the following callback URL:
 
@@ -52,7 +54,9 @@ The following steps are specific to setting up JumpCloud with Cloudflare Access.
 
 ### 2. Add JumpCloud to Cloudflare One
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Integrations** > **Identity providers**.
+1. In Cloudflare One, go to **Integrations** > **Identity providers**.
+
+   <DashButton url="/?to=/:account/integrations/identity-providers" zeroTrust/>
 
 2. Under **Your identity providers**, select **Add new identity provider**.
 

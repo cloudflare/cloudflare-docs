@@ -4,7 +4,7 @@ title: Okta
 description: Integrate Okta as an identity provider for Cloudflare One.
 ---
 
-import { Render } from "~/components";
+import { Render, DashButton } from "~/components";
 
 Okta provides cloud software that helps companies manage and secure user authentication to modern applications, and helps developers build identity controls into applications, website web services, and devices. You can integrate Okta with Cloudflare One and build rules based on user identity and group membership. Cloudflare One supports Okta integrations using either the OIDC (default) or [SAML](/cloudflare-one/integrations/identity-providers/okta-saml/) protocol.
 
@@ -36,7 +36,9 @@ To set up the Okta integration using the Okta Integration Network (OIN) App Cata
    <your-team-name>.cloudflareaccess.com
    ```
 
-   You can find your team domain in Cloudflare One under **Settings** > **Team name**.
+   To find your team name in Cloudflare One, go to **Settings** > **Team name**.
+
+      <DashButton url="/?to=/:account/settings" zeroTrust/>
 
 8. In the **Sign On** tab, copy the **Client ID** and **Client secret**.
 9. Scroll down to **OpenID ConnectID Token** and select **Edit**.
@@ -65,7 +67,9 @@ To set up the Okta integration using the Okta Integration Network (OIN) App Cata
    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
    ```
 
-   You can find your team name in [Cloudflare One](https://one.dash.cloudflare.com/) under **Settings** > **Team name**.
+   To find your team name in Cloudflare One, go to **Settings** > **Team name**.
+
+      <DashButton url="/?to=/:account/settings" zeroTrust/>
 
 6. Choose the desired **Assignment** option and select **Save**.
 

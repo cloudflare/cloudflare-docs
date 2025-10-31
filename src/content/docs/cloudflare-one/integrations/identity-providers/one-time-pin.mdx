@@ -5,7 +5,7 @@ sidebar:
   order: 1
 ---
 
-import { Tabs, TabItem, Render, APIRequest } from "~/components";
+import { Tabs, TabItem, Render, APIRequest, DashButton } from "~/components";
 
 Cloudflare Access can send a one-time PIN (OTP) to approved email addresses as an alternative to integrating an identity provider. You can simultaneously configure OTP login and the identity provider of your choice to allow users to select their own authentication method.
 
@@ -17,7 +17,10 @@ For example, if your team uses Okta but you are collaborating with someone outsi
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Integrations** > **Identity providers**.
+1. In Cloudflare One, go to **Integrations** > **Identity providers**.
+
+   <DashButton url="/?to=/:account/integrations/identity-providers" zeroTrust/>
+
 2. Under **Your identity providers**, select **Add new identity provider**.
 3. Select **One-time PIN**.
 

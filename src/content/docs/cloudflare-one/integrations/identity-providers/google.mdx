@@ -3,7 +3,7 @@ pcx_content_type: how-to
 title: Google
 ---
 
-import { GlossaryTooltip, Render } from "~/components";
+import { GlossaryTooltip, Render, DashButton } from "~/components";
 
 You can integrate Google authentication with Cloudflare Access without a Google Workspace account. The integration allows any user with a Google account to log in (if the [Access policy](/cloudflare-one/access-controls/policies/) allows them to reach the resource). Unlike the instructions for [Google Workspace](/cloudflare-one/integrations/identity-providers/google-workspace/), the steps below will not allow you to pull group membership information from a Google Workspace account.
 
@@ -39,7 +39,9 @@ You do not need to be a Google Cloud Platform user to integrate Google as an ide
    https://<your-team-name>.cloudflareaccess.com
    ```
 
-   You can find your team name in [Cloudflare One](https://one.dash.cloudflare.com/) under **Settings** > **Team name**.
+   To find your team name in Cloudflare One, go to **Settings** > **Team name**.
+
+    <DashButton url="/?to=/:account/settings" zeroTrust/>
 
 8. Under **Authorized redirect URIs**, in the **URIs** field, enter the following URL:
 
@@ -61,7 +63,13 @@ You do not need to be a Google Cloud Platform user to integrate Google as an ide
 
 ## Test your connection
 
-To test that your connection is working, go to **Integrations** > **Identity providers** and select **Test** next to Google.
+To test that your connection is working:
+
+- Go to **Integrations** > **Identity providers**.
+
+   <DashButton url="/?to=/:account/integrations/identity-providers" zeroTrust/>
+
+- Select **Test** next to Google.
 
 ## Example API Config
 

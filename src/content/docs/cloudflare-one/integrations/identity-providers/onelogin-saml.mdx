@@ -4,6 +4,8 @@ title: OneLogin (SAML)
 description: Integrate OneLogin as a SAML identity provider for Cloudflare One.
 ---
 
+import { DashButton } from "~/components";
+
 OneLogin provides SSO identity management. Cloudflare Access supports OneLogin as an SAML identity provider.
 
 ## Set up OneLogin as a SAML provider
@@ -28,7 +30,9 @@ OneLogin provides SSO identity management. Cloudflare Access supports OneLogin a
    https://<your-team-name>.cloudflareaccess.com
    ```
 
-   You can find your team name in [Cloudflare One](https://one.dash.cloudflare.com/) under **Settings** > **Team name**.
+   To find your team name in Cloudflare One, go to **Settings** > **Team name**.
+
+      <DashButton url="/?to=/:account/settings" zeroTrust/>
 
 8. Select the **Parameters** tab, select **Add Parameter** and enter your values for **Cloudflare Access Field**.
 
@@ -50,7 +54,9 @@ OneLogin provides SSO identity management. Cloudflare Access supports OneLogin a
 
 ### 2. Add OneLogin to Cloudflare One
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Integrations** > **Identity providers**.
+1. In Cloudflare One, go to **Integrations** > **Identity providers**.
+
+   <DashButton url="/?to=/:account/integrations/identity-providers" zeroTrust/>
 
 2. Under **Your identity providers**, select **Add new identity provider**.
 
@@ -64,7 +70,13 @@ OneLogin provides SSO identity management. Cloudflare Access supports OneLogin a
 
 7. Select **Save**.
 
-To test that your connection is working, go to **Integrations** > **Identity providers** and select **Test** next to the login method you want to test.
+To test that your connection is working:
+
+- Go to **Integrations** > **Identity providers**.
+
+  <DashButton url="/?to=/:account/integrations/identity-providers" zeroTrust/>
+
+- Select **Test** next to the login method you want to test.
 
 ## Download SP metadata (optional)
 

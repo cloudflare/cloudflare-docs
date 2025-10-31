@@ -3,6 +3,8 @@ pcx_content_type: how-to
 title: Amazon Cognito
 ---
 
+import { DashButton } from "~/components";
+
 Amazon Cognito provides SSO identity management for end users of web and mobile apps. You can integrate Amazon Cognito as an OIDC identity provider for Cloudflare One.
 
 ## Prerequisites
@@ -69,7 +71,9 @@ To retrieve those values:
 
 ### 2. Add Amazon Cognito as an identity provider
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Integrations** > **Identity providers**.
+1. In Cloudflare One, go to **Integrations** > **Identity providers**.
+
+   <DashButton url="/?to=/:account/integrations/identity-providers" zeroTrust />
 
 2. Under **Your identity providers**, select **Add new identity provider**.
 

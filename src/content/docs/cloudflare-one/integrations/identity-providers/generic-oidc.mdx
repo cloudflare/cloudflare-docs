@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import { Tabs, TabItem, Render, APIRequest } from "~/components";
+import { Tabs, TabItem, Render, APIRequest, DashButton } from "~/components";
 
 Cloudflare Access has a generic OpenID Connect (OIDC) connector to help you integrate IdPs not already set in Access.
 
@@ -19,7 +19,9 @@ Cloudflare Access has a generic OpenID Connect (OIDC) connector to help you inte
    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
    ```
 
-   You can find your team name in [Cloudflare One](https://one.dash.cloudflare.com) under **Settings** > **Team name**.
+   To find your team name in Cloudflare One, go to **Settings** > **Team name**.
+
+   <DashButton url="/?to=/:account/settings" zeroTrust/>
 
 3. Copy the content of these fields:
    - Client ID
@@ -34,7 +36,9 @@ Cloudflare Access has a generic OpenID Connect (OIDC) connector to help you inte
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Integrations** > **Identity providers**.
+1. In Cloudflare One, go to **Integrations** > **Identity providers**.
+
+   <DashButton url="/?to=/:account/integrations/identity-providers" zeroTrust/>
 
 2. Under **Your identity providers**, select **Add new identity provider**.
 
@@ -104,7 +108,7 @@ Make a `POST` request to the [Identity Providers](/api/resources/zero_trust/subr
 
 ## 3. Test the connection
 
-To test that your connection is working, go to **Authentication** > **Login methods** and select **Test** next to the login method you want to test. On success, a confirmation screen displays.
+To test that your connection is working, select **Test** next to the login method you want to test. On success, a confirmation screen displays.
 
 ## Synchronize users and groups
 
@@ -146,7 +150,10 @@ All OIDC IdP integrations support the use of custom OIDC claims. Once configured
 To add a custom OIDC claim to an IdP integration:
 
 1.  In your identity provider, ensure that the custom claim is included in your OIDC ID token.
-2.  In [Cloudflare One](https://one.dash.cloudflare.com), go to **Integrations** > **Identity providers**.
+2.  In Cloudflare One, go to **Integrations** > **Identity providers**.
+
+    <DashButton url="/?to=/:account/integrations/identity-providers" zeroTrust/>
+
 3.  Under **Your identity providers**, find your identity provider and select **Edit**.
 4.  Under **OIDC Claims**, enter the name of your custom claim (for example, `oid`).
 5.  Select **Save**.

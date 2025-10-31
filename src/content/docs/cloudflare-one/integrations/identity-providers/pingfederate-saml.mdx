@@ -3,6 +3,8 @@ pcx_content_type: how-to
 title: PingFederate
 ---
 
+import { DashButton } from "~/components";
+
 The PingFederate offering from PingIdentity provides SSO identity management. Cloudflare Access supports PingFederate as a SAML identity provider.
 
 ## Set up PingFederate as an identity provider
@@ -23,23 +25,25 @@ These can be any value. A prompt displays to select a signing certificate to use
 
 7. Add the matching certificate that you upload into the Cloudflare SAML configuration for Ping. Select **Include the certificate in the signature `<KEYINFO>` element**.
 
-:::note
-There is an additional setting for PingFederate prior to 9.0.
-:::
+   :::note
+   There is an additional setting for PingFederate prior to 9.0.
+   :::
 
 8. In the **Signature Policy** tab, disable the option to **Always Sign Assertion**.
 
 9. Leave the option enabled for **Sign Response As Required**.
 
-This ensures that SAML destination headers are sent during the integration.
+   This ensures that SAML destination headers are sent during the integration.
 
-In versions 9.0 above, you can leave both of these options enabled.
+   In versions 9.0 above, you can leave both of these options enabled.
 
 10. A prompt displays to download the SAML metadata from Ping.
 
-This file shares several fields with Cloudflare Access so you do not have to input this data.
+    This file shares several fields with Cloudflare Access so you do not have to input this data.
 
-11. In [Cloudflare One](https://one.dash.cloudflare.com), go to **Integrations** > **Identity providers**.
+11. In Cloudflare One, go to **Integrations** > **Identity providers**.
+
+    <DashButton url="/?to=/:account/integrations/identity-providers" zeroTrust/>
 
 12. Under **Your identity providers**, select **Add new identity provider**.
 
@@ -47,17 +51,19 @@ This file shares several fields with Cloudflare Access so you do not have to inp
 
 14. In the **IdP Entity ID** field, enter the following URL:
 
-```txt
-https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
-```
+    ```txt
+    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
+    ```
 
-You can find your team name in [Cloudflare One](https://one.dash.cloudflare.com/) under **Settings** > **Team name**.
+    To find your team name in Cloudflare One, go to **Settings** > **Team name**.
+
+    <DashButton url="/?to=/:account/settings" zeroTrust/>
 
 15. Fill the other fields with values from your Ping dashboard.
 
 16. Select **Save**.
 
-To test that your connection is working, go to **Authentication** > **Login methods** and select **Test** next to the login method you want to test.
+To test that your connection is working, select **Test** next to the login method you want to test.
 
 ## Example API configuration
 
