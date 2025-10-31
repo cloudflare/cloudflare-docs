@@ -575,9 +575,9 @@ When you are ready to connect your { props.magicWord === "virtual" ? props.produ
 	text={`
 		1. Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a>, and go to **Networks**.
 		2. Go to **Connectors** > **Appliances**.
-		3. Find the Appliances you want to activate, select the three dots next to it > **Edit**. Make sure you verify the serial number to choose the right Appliances you want to activate.
+		3. Find the ${ props.magicWord === "virtual" ? props.productNameVirtual : props.productName } you want to activate, select the three dots next to it > **Edit**. Make sure you verify the serial number to choose the right ${ props.magicWord === "virtual" ? props.productNameVirtual : props.productName } you want to activate.
 		4. In the new window, the **Status** dropdown will show as **Deactivated**. Select it to change the status to **Activated**.
-		5. The **Interrupt window** is the time period when the ${ props.magicWord === "virtual" ? props.productNameVirtual : props.productName } software can update, which may result in interruption to existing connections. Choose a time period to minimize disruption to your sites. Refer to <a href="${ props.interruptWindowURL }">Interrupt window</a> for more details on how to define when the Appliances can update its systems.
+		5. The **Interrupt window** is the time period when the ${ props.magicWord === "virtual" ? props.productNameVirtual : props.productName } software can update, which may result in interruption to existing connections. Choose a time period to minimize disruption to your sites. Refer to <a href="${ props.interruptWindowURL }">Interrupt window</a> for more details on how to define when the ${ props.magicWord === "virtual" ? props.productNameVirtual : props.productName } can update its systems.
 		6. Select **Update**.
 	`}
 	inline={false}
