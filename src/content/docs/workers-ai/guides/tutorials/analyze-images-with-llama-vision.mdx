@@ -1,0 +1,212 @@
+---
+reviewed: 2025-11-01
+difficulty: Beginner
+pcx_content_type: tutorial
+title: Build a cat breed detector with Llama 3.2 Vision
+products:
+  - Workers AI
+tags:
+  - AI
+  - Vision Models
+  - JSON Schema
+sidebar:
+  order: 5
+description: Learn how to use Meta's Llama 3.2 11B Vision Instruct model to analyze images and return structured JSON responses at the edge.
+---
+
+import { PackageManagers } from "~/components";
+
+In this tutorial, you will build a cat breed detector using Meta's Llama 3.2 11B Vision Instruct model on Cloudflare Workers AI.
+
+The Llama 3.2 11B model strikes an optimal balance between accuracy and performance for focused vision tasks. For applications like breed identification where speed and predictable pricing matter more than handling complex multi-step reasoning, smaller specialized models deployed at the edge often outperform their larger counterparts in real-world scenarios.
+
+By the end of this tutorial, you will learn how to:
+
+- Set up a Cloudflare Worker with Workers AI bindings
+- Process images with vision models using the Messages API format
+- Implement JSON Schema mode for structured outputs
+- Handle large images efficiently to avoid memory issues
+- Deploy your vision AI application to Cloudflare's edge network
+
+## Prerequisites
+
+Before you begin, make sure you have:
+
+1. **A Cloudflare account**  If you do not have one already, sign up at [cloudflare.com](https://cloudflare.com).
+2. **Workers AI access**  Accept the Workers AI Terms of Service in your Cloudflare dashboard.
+3. **Llama 3.2 Vision model access**  Accept the terms of service for the `@cf/meta/llama-3.2-11b-vision-instruct` model in the Workers AI catalog.
+4. **Node.js installed**  Download from [nodejs.org](https://nodejs.org). The LTS version is recommended.
+
+## 1. Create a new Worker project
+
+Create a new Worker project named `cat-breed-detector` by running:
+
+<PackageManagers pkg="wrangler@latest" subcommand="init cat-breed-detector" />
+
+When prompted:
+
+- Select **Hello World Example** for the template
+- Choose **Worker only** for the deployment target
+- Select **TypeScript** for the language
+
+This will create a new directory with a basic Worker project structure.
+
+## 2. Configure the AI binding
+
+To use Workers AI in your Worker, you need to add an AI binding to your `wrangler.jsonc` configuration file.
+
+Open `wrangler.jsonc` and add the following binding below the `observability` section:
+
+```jsonc
+"ai": {
+  "binding": "AI"
+}
+```
+
+This binding allows your Worker to access the Workers AI runtime through the `env.AI` object.
+
+Next, generate TypeScript types for your Worker bindings:
+
+```sh
+npx wrangler types
+```
+
+This command creates a `worker-configuration.d.ts` file with type definitions for your environment bindings.
+
+## 3. Install dependencies and start development server
+
+Navigate to your project directory and start the development server:
+
+```sh
+cd cat-breed-detector
+npm run start
+```
+
+Open the localhost URL shown in your terminal (typically `http://localhost:8787`). You should see "Hello World!" displayed in your browser.
+
+## 4. Implement the cat breed detector
+
+Now you will implement the core functionality. Replace the contents of `src/index.ts` with the following code:
+
+```typescript
+export interface Env {
+	AI: Ai;
+}
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const res = await fetch('https://cataas.com/cat');
+		const blob = await res.arrayBuffer();
+
+		// Convert array buffer to base64 data URL (in chunks to avoid stack overflow)
+		const uint8Array = new Uint8Array(blob);
+		let binaryString = '';
+		const chunkSize = 8192;
+		for (let i = 0; i < uint8Array.length; i += chunkSize) {
+			const chunk = uint8Array.slice(i, i + chunkSize);
+			binaryString += String.fromCharCode(...chunk);
+		}
+		const base64 = btoa(binaryString);
+		const dataUrl = `data:image/jpeg;base64,${base64}`;
+
+		const messages = [
+			{
+				role: 'system',
+				content: 'You are a cat breed expert assistant. You must respond with valid JSON only, matching the provided schema exactly.',
+			},
+			{
+				role: 'user',
+				content: [
+					{
+						type: 'text',
+						text: 'Analyze this image and identify the cat breed. Respond with a JSON object containing: breed (string), confidence (one of: high, medium, low), and description (string with brief description of the cat).',
+					},
+					{ type: 'image_url', image_url: { url: dataUrl } },
+				],
+			},
+		];
+
+		const response = await env.AI.run('@cf/meta/llama-3.2-11b-vision-instruct', {
+			messages,
+			max_tokens: 512,
+			response_format: {
+				type: 'json_schema',
+				json_schema: {
+					name: 'cat_breed_analysis',
+					strict: true,
+					schema: {
+						type: 'object',
+						properties: {
+							breed: {
+								type: 'string',
+								description: 'The cat breed identified in the image',
+							},
+							confidence: {
+								type: 'string',
+								enum: ['high', 'medium', 'low'],
+								description: 'Confidence level of the breed identification',
+							},
+							description: {
+								type: 'string',
+								description: 'A brief description of the cat in the image',
+							},
+						},
+						required: ['breed', 'confidence', 'description'],
+						additionalProperties: false,
+					},
+				},
+			},
+		});
+
+		return Response.json(response);
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+### Understanding the code
+
+This Worker implementation has several key components:
+
+**Image fetching and processing**: The Worker fetches a random cat image from `cataas.com/cat` and converts it to a base64-encoded data URL. The conversion happens in chunks of 8192 bytes to avoid stack overflow errors that can occur when processing large images.
+
+**Messages API format**: The Llama 3.2 Vision model uses a chat-based Messages API format, similar to other modern LLMs. The `messages` array includes:
+- A `system` message that sets the model's behavior
+- A `user` message containing both text and image content
+
+**JSON Schema mode**: The `response_format` parameter enforces structured output using JSON Schema. This ensures the model returns data in a predictable format with:
+- `name`: An identifier for the schema
+- `strict: true`: Enables strict schema validation
+- `schema`: The actual JSON Schema definition with properties, types, and constraints
+
+**Structured output**: By defining `breed`, `confidence`, and `description` fields with specific types and constraints, you guarantee the response will always match your expected format.
+
+## 5. Test your Worker locally
+
+Save the file and refresh your browser. You should see a JSON response similar to:
+
+```json
+{
+	"breed": "Domestic Shorthair",
+	"confidence": "medium",
+	"description": "An orange tabby cat with distinctive striped markings"
+}
+```
+
+Each time you refresh, you will get a different cat image analyzed.
+
+## 6. Deploy to Cloudflare
+
+Once you have tested your Worker locally, deploy it to Cloudflare's global network:
+
+```sh
+npx wrangler deploy
+```
+
+After deployment, Wrangler will provide a URL where your Worker is live (for example, `https://cat-breed-detector.your-subdomain.workers.dev`).
+
+## Related resources
+
+- [Workers AI documentation](/workers-ai/)
+- [Llama 3.2 Vision model reference](/workers-ai/models/llama-3.2-11b-vision-instruct/)
+- [JSON Mode documentation](/workers-ai/features/json-mode/)
+- [Messages API format](/workers-ai/configuration/open-ai-compatibility/)
