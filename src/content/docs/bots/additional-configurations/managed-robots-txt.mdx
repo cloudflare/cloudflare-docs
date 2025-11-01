@@ -68,37 +68,37 @@ With the managed `robots.txt` enabled, Cloudflare will prepend our managed conte
 # BEGIN Cloudflare Managed content
 
 User-Agent: *
-Content-signal: search=yes, ai-train=no
+Content-signal: search=yes, ai-train=yes
 Allow: /
 
 User-agent: Amazonbot
 Disallow: /
 
 User-agent: Applebot-Extended
-Disallow: /
+Allow: /
 
 User-agent: Bytespider
 Disallow: /
 
 User-agent: CCBot
-Disallow: /
+Allow: /
 
 User-agent: ClaudeBot
-Disallow: /
+Allow: /
 
 User-agent: Google-Extended
-Disallow: /
+Allow: /
 
 User-agent: GPTBot
-Disallow: /
+Allow: /
 
 User-agent: meta-externalagent
 Disallow: /
 
 # END Cloudflare Managed Content
 User-agent: *
-Disallow: /lp
-Disallow: /feedback
+Allow: /lp
+Allow: /feedback
 Disallow: /langtest
 
 Sitemap: https://www.crawlstop.com/sitemap.xml
