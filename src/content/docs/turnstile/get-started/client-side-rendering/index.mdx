@@ -57,7 +57,15 @@ Add the Turnstile JavaScript API to your HTML.
 The `api.js` file must be fetched from the exact URL shown above. Proxying or caching this file will cause Turnstile to fail when future updates are released.
 :::
 
-#### 2. Add widget elements
+#### 2. (Optional) Optimize performance with resource hints
+
+Add resource hints to improve loading performance by establishing early connections to Cloudflare servers. Place this `<link>` tag in your HTML `<head>` section before the Turnstile script.
+
+```html wrap
+<link rel="preconnect" href="https://challenges.cloudflare.com">
+```
+
+#### 3. Add widget elements
 
 Add widget containers where you want the challenges to appear on your website.
 

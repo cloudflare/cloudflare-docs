@@ -102,11 +102,13 @@ To configure your Zero Trust organization to use Host selectors with Egress poli
 			- `100.82.0.0/15`
 			- `100.84.0.0/14`
 			- `100.88.0.0/13`
-			- `100.96.0.0/11`
+			- `100.112.0.0/12`
+			
+			And remove `100.64.0.0/10` IP address.
 
     </TabItem> <TabItem label="Include IPs and domains">
 		1.  Add the required [Zero Trust domains](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/#cloudflare-zero-trust-domains) or [IP addresses](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/#cloudflare-zero-trust-ip-addresses) to your Split Tunnel include list.
-		2.  [Add a route](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/#add-a-route) to include the IP address `100.80.0.0/16`.
+		2.  [Add a route](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/#add-a-route) to include `100.80.0.0/16` and `100.96.0.0/12` IP addresses.
 
     </TabItem> </Tabs>
 

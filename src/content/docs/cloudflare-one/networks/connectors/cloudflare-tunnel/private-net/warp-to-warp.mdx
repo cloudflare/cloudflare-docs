@@ -34,8 +34,16 @@ This guide covers how to:
 3. Enable **Allow WARP to WARP connection**. This allows Cloudflare to route traffic to the <GlossaryTooltip term="CGNAT IP">CGNAT IP</GlossaryTooltip> space.
 4. In your [Split Tunnel configuration](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/), ensure that traffic to `100.96.0.0/12` is going through WARP:
 
-- If using **Exclude** mode, delete `100.64.0.0/10` from the list and re-add `100.64.0.0/11` and `100.112.0.0/12`.
-- If using **Include** mode, add `100.96.0.0/12` to your list.
+- If using **Exclude** mode, delete `100.64.0.0/10` from the list and add the following IP addresses:
+  
+  - `100.64.0.0/12`
+  - `100.81.0.0/16`
+  - `100.82.0.0/15`
+  - `100.84.0.0/14`
+  - `100.88.0.0/13`
+  - `100.112.0.0/12`
+
+- If using **Include** mode, add `100.96.0.0/12` and `100.80.0.0/16` to your list.
 
 This will instruct WARP to begin proxying any traffic destined for a `100.96.0.0/12` IP address to Cloudflare for routing and policy enforcement.
 
