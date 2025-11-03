@@ -15,7 +15,6 @@ params:
   - gatewayResolverPoliciesURL
   - gatewayInternalDnsURL
   - egressPoliciesURL
-  - cloudflareTunnelURL
   - gatewayLogsURL
   - tcpMssClampingURL
   - ikeURL
@@ -86,7 +85,7 @@ This traffic will egress from Cloudflare according to the <a href={props.egressP
 
 ## Private traffic
 
-By default, TCP, UDP, and ICMP traffic routed through {props.magicWANName} tunnels and destined to routes behind <a href={props.cloudflareTunnelURL}>Cloudflare Tunnel</a> will be proxied/filtered through Cloudflare Gateway.
+By default, TCP, UDP, and ICMP traffic routed through {props.magicWANName} tunnels and destined to routes behind <a href="/cloudflare-one/networks/connectors/cloudflare-tunnel/">Cloudflare Tunnel</a> will be proxied/filtered through Cloudflare Gateway.
 
 Contact your account team to enable Gateway filtering for traffic destined to routes behind {props.magicWANName} tunnels.
 
@@ -111,7 +110,6 @@ Source ports are hard-coded to `1024`-`65535` and may not be overridden.
 		productName: props.magicWANName,
 		greIpsecURL: props.greIpsecURL,
 		warpURL: props.warpURL,
-		cloudflareTunnelURL: props.cloudflareTunnelURL,
 		tracerouteURL: props.tracerouteURL
 		}}
 	/>
