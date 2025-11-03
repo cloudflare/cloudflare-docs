@@ -2,8 +2,6 @@
 params:
   - warpURL
   - greIpsecURL
-  - magicFirewallName
-  - magicFirewallURL
   - setupZeroTrustAccountURL
   - ztDashPath
   - splitTunnelsURL
@@ -24,7 +22,7 @@ If you do want to use WARP on a device behind Magic WAN and connect to its WARP 
 
 import { GlossaryTooltip, Render } from "~/components";
 
-Use <a href={props.warpURL}>WARP</a> as an <GlossaryTooltip term="on-ramp">on-ramp</GlossaryTooltip> to Magic WAN and route traffic from user devices with WARP installed to any network connected with Cloudflare Tunnel or Magic IP-layer tunnels (<GlossaryTooltip term="anycast">anycast</GlossaryTooltip> <a href={props.greIpsecURL}>GRE, IPsec</a>, or [CNI](/network-interconnect/)). Take advantage of the integration between Magic WAN and <a href={props.magicFirewallURL}>{props.magicFirewallName}</a> and enforce policies at Cloudflare's global network.
+Use <a href={props.warpURL}>WARP</a> as an <GlossaryTooltip term="on-ramp">on-ramp</GlossaryTooltip> to Magic WAN and route traffic from user devices with WARP installed to any network connected with Cloudflare Tunnel or Magic IP-layer tunnels (<GlossaryTooltip term="anycast">anycast</GlossaryTooltip> <a href={props.greIpsecURL}>GRE, IPsec</a>, or [CNI](/network-interconnect/)). Take advantage of the integration between Magic WAN and <a href="/magic-firewall/">Magic Firewall</a> and enforce policies at Cloudflare's global network.
 
 ## Prerequisites
 

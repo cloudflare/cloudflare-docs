@@ -1,8 +1,6 @@
 ---
 params:
   - gatewayURL
-  - magicFirewallName
-  - magicFirewallURL
   - warpURL
   - cfAutoCertificatesURL
   - cfManualCertificatesURL
@@ -25,7 +23,7 @@ import { Render } from "~/components";
 
 <a href={props.gatewayURL}>Cloudflare Gateway</a>, our comprehensive Secure Web Gateway, allows you to set up policies to inspect DNS, network, HTTP, and egress traffic.
 
-You can apply network and HTTP Gateway policies alongside <a href={props.magicFirewallURL}>{props.magicFirewallName}</a> policies (for L3/4 traffic filtering) to Internet-bound traffic or private traffic entering the Cloudflare network via Magic WAN. Additionally, you can configure Gateway to [resolve DNS queries](#dns-filtering) from Magic WAN.
+You can apply network and HTTP Gateway policies alongside <a href="/magic-firewall/">Magic Firewall</a> policies (for L3/4 traffic filtering) to Internet-bound traffic or private traffic entering the Cloudflare network via Magic WAN. Additionally, you can configure Gateway to [resolve DNS queries](#dns-filtering) from Magic WAN.
 
 ## HTTPS filtering
 
