@@ -26,8 +26,8 @@ graph LR
 		subgraph D2[Data center 2]
 			cf2@{ shape: processes, label: "cloudflared" }
 			subgraph F[Pool 2]
-					S3["Endpoint <br> server3.internal.local <br> 10.0.0.1 (VNET-2)"]
-					S4["Endpoint <br> server4.internal.local <br> 10.0.0.2 (VNET-2)"]
+					S3["Endpoint <br> 10.0.0.1 (VNET-2)"]
+					S4["Endpoint <br> 10.0.0.2 (VNET-2)"]
 			end
 			cf2-->S3
 			cf2-->S4
@@ -35,8 +35,8 @@ graph LR
 		subgraph D1[Data center 1]
 			cf1@{ shape: processes, label: "cloudflared" }
 			subgraph E[Pool 1]
-					S1["Endpoint <br> server1.internal.local <br> 10.0.0.1 (VNET-1)"]
-					S2["Endpoint <br> server2.internal.local <br> 10.0.0.2 (VNET-1)"]
+					S1["Endpoint <br> 10.0.0.1 (VNET-1)"]
+					S2["Endpoint <br> 10.0.0.2 (VNET-1)"]
 			end
 			cf1-->S1
 			cf1-->S2
@@ -51,11 +51,15 @@ The components in the diagram include:
 - **cloudflared**: Each data center is connected to Cloudflare with its own Cloudflare Tunnel. `cloudflared` installs on one or [more](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-availability/#cloudflared-replicas) host machines in the network.
 - **Private load balancer IP**: End users connect to the application using the load balancer's IP address. This can either be a Cloudflare-assigned CGNAT IP (`100.64.0.0/10`) or a custom [RFC 1918](https://datatracker.ietf.org/doc/html/rfc1918) IP.
 - **Load balancer pool**: The load balancer is configured with one [pool](/load-balancing/understand-basics/load-balancing-components/#pools) per tunnel.
-- **Load balancer endpoint**: A pool contains one or more endpoints, where each endpoint is a server behind `cloudflared` that is running the application. If you prefer to manage endpoints using IPs, you can assign a distinct [virtual network (VNET)](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/tunnel-virtual-networks/) per tunnel so that Load Balancer can deterministically route requests to the correct endpoint.
+- **Load balancer endpoint**: A pool contains one or more endpoints, where each endpoint is a server behind `cloudflared` that is running the application. If your servers have overlapping IPs, you can assign a distinct [virtual network (VNET)](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/tunnel-virtual-networks/) per tunnel so that Load Balancer can deterministically route requests to the correct endpoint.
+
+:::note
+Load Balancing does not currently support [private hostname routing](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-private-hostname/). Load balancing endpoints must be defined using an IP address and virtual network (for example, `10.0.0.1 (VNET-1)`).
+:::
 
 ## Prerequisites
 
-- Your private hostname or IP routes through Cloudflare Tunnel. To learn how to connect your private network, refer to [Connect a private hostname](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-private-hostname/) or [Connect an IP/CIDR](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-cidr/).
+- Your endpoint IP addresses route through Cloudflare Tunnel. To learn how to connect your private network, refer to [Connect an IP/CIDR](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-cidr/).
 
 ## 1. Create load balancer pools
 
@@ -71,9 +75,9 @@ To create a pool using the dashboard, refer to the [Create a pool](/load-balanci
 
 :::note[Endpoint IP address limitations]
 
-- All endpoints with private IPs must have a virtual network (VNET) specified.
-- A pool cannot have multiple endpoints with the same IP address, even when using different virtual networks. You can assign endpoints with overlapping IPs to different pools, as shown in the [example diagram](#_top). Alternatively, add endpoints using their [private hostnames](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-private-hostname/) instead of IPs.
-  :::
+- All endpoints with private IPs must have a [virtual network (VNET)](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/tunnel-virtual-networks/) specified. If you did not select a VNET when adding a Cloudflare Tunnel route, the endpoint will be assigned to the `default` VNET.
+- A pool cannot have multiple endpoints with the same IP address, even when using different virtual networks. You can assign endpoints with overlapping IPs to different pools, as shown in the [example diagram](#_top).
+:::
 
 </TabItem>
 
