@@ -1,6 +1,5 @@
 ---
 params:
-  - productName
   - dashName
   - cfTunnelURL
   - cfVsCoreDashNamingMwanCni
@@ -8,13 +7,13 @@ params:
 
 import { APIRequest, Markdown, Render, TabItem, Tabs } from "~/components";
 
-DHCP Relay provides a way for DHCP clients to communicate with DHCP servers that are not available on the same local subnet/broadcast domain. When you enable DHCP Relay, {props.productName} forwards DHCP discover messages to a predefined DHCP server, and routes the responses back to the original device that sent the discover message.
+DHCP Relay provides a way for DHCP clients to communicate with DHCP servers that are not available on the same local subnet/broadcast domain. When you enable DHCP Relay, Magic WAN Connector forwards DHCP discover messages to a predefined DHCP server, and routes the responses back to the original device that sent the discover message.
 
 <pre class="mermaid">
 	{`
 		flowchart LR
 		accTitle: An example of Connector in DHCP Relay mode
-				a(${props.productName}) <--> b(Cloudflare/Magic WAN) <--> c(DHCP server)
+				a(Magic WAN Connector) <--> b(Cloudflare/Magic WAN) <--> c(DHCP server)
 
 				subgraph Site A
 				d[LAN 1] <--> a
@@ -29,7 +28,7 @@ DHCP Relay provides a way for DHCP clients to communicate with DHCP servers that
 	`}
 </pre>
 
-_The above graph shows {props.productName} sending DHCP discover messages to a DHCP server offsite._
+_The above graph shows Magic WAN Connector sending DHCP discover messages to a DHCP server offsite._
 
 :::caution
 DHCP relay will not work if your DHCP server is behind a <a href={props.cfTunnelURL}>Cloudflare Tunnel</a>. To enable DHCP relay functionality, use either a {props.cfVsCoreDashNamingMwanCni}.
@@ -63,7 +62,7 @@ To configure DHCP relay:
 }
 <Markdown
 text={`
-3. Select your ${props.productName} > **Edit**.
+3. Select your Magic WAN Connector > **Edit**.
 4. Select **Network Configuration**.
 5. In **LAN configuration**, select the LAN where you need to configure DHCP relay.
 6. Select **Edit**.
