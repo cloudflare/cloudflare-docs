@@ -44,6 +44,7 @@ import {
 	DashButton,
 } from "~/components";
 
+{/* Virtual Connector */}
 { props.magicWord === "virtual" && (
 	<>
 		<p>{props.productNameVirtual} is a virtual device alternative to the hardware based {props.productName}. These two versions of {props.productName} are identical otherwise.</p> <p>Currently, you can set up {props.productNameVirtual} on VMWare ESXi and Proxmox Virtual Environment. Support for Proxmox is in beta.</p>
@@ -65,6 +66,7 @@ In this page you will find instructions on how to configure {props.productName}.
   )
 }
 
+{/* Virtual Connector */}
 { props.magicWord === "virtual" && (
   <>
 		<Markdown
@@ -144,6 +146,7 @@ You cannot enable high availability for an existing { props.magicWord === "virtu
   )
 }
 
+{/* Virtual Connector */}
 { props.magicWord === "virtual" && (
   <>
     <p>{props.productNameVirtual} uses a DHCP connection at first boot to download your settings and go through the activation process. However, if you need to use a static IP in your {props.productNameVirtual}, and this is a fresh install:</p>
@@ -177,6 +180,7 @@ You cannot enable high availability for an existing { props.magicWord === "virtu
   )
 }
 
+{/* Virtual Connector */}
 { props.magicWord === "virtual" && (
   <>
 		<AnchorHeading title="Configure a virtual machine" depth={2} />
