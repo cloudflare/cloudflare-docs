@@ -21,6 +21,14 @@ Tail Workers are available to all customers on the Workers Paid and Enterprise t
 
 A Tail Worker is automatically invoked after the invocation of a producer Worker (the Worker the Tail Worker will track) that contains the application logic. It captures events after the producer has finished executing. Events throughout the request lifecycle, including potential sub-requests via [Service Bindings](/workers/runtime-apis/bindings/service-bindings/) and [Dynamic Dispatch](/cloudflare-for-platforms/workers-for-platforms/get-started/configuration/), will be included. You can filter, change the format of the data, and send events to any HTTP endpoint. For quick debugging, Tail Workers can be used to send logs to [KV](/kv/api/) or any database.
 
+:::note[Export batches of logs and traces to Sentry, Grafana, Honeycomb and more]
+If you are using Tail Workers to export logs and errors to observability tools like Sentry, Grafana, Honeycomb and more — you may not need to use Tail Workers.
+
+Instead, you can configure your Worker to [export OpenTelemetry (OTEL) format logs and traces](/workers/observability/exporting-opentelemetry-data/) to these tools. Unlike Tail Workers, when you configure an OTEL destination, logs and traces are sent in batches to your destination, rather than sent after each invocation of the Worker.
+
+You should think of Tail Workers as the advanced-mode option, for when you need to do something custom that is not built into the Workers observability platform.
+:::
+
 ## Configure Tail Workers
 
 To configure a Tail Worker:
