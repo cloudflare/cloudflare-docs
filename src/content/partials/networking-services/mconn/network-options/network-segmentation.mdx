@@ -89,15 +89,15 @@ Follow the steps below to create a new LAN policy to segment your network. Only 
 	<li>In <strong>Protocols</strong>, select the type of traffic you want to allow. You can choose <strong>TCP</strong>, <strong>UDP</strong>, and <strong>ICMP</strong>. You can also select <strong>Any</strong> to choose all types of traffic.</li>
 	<li>
 		In <strong>Traffic direction</strong> you can choose between bidirectional traffic (the default) and unidirectional traffic. What you can choose depends on the protocol that you chose for the policy:
-		<ol>
+		<ul>
 			<li><strong>Any</strong>: If <strong>Any</strong> is selected and you choose <strong>Unidirectional</strong>, the system will alert you that this will break TCP traffic.</li>
 			<li><strong>TCP</strong>: You can only select <strong>Bidirectional</strong>.</li>
 			<li><strong>UDP</strong>: The system defaults to <strong>Bidirectional</strong> but you can choose <strong>Unidirectional</strong>.</li>
 			<li><strong>ICMP</strong>: The system defaults to <strong>Bidirectional</strong> but you can choose <strong>Unidirectional</strong>.</li>
-		</ol>
+		</ul>
 	</li>
 	<li>In <strong>Traffic path</strong>, select <strong>Forwarded via Cloudflare</strong> if you want traffic to be forwarded to Cloudflare to be processed. If you do not select this option, traffic will flow locally, in your premises without passing through Cloudflare.</li>
-	<li>Select <strong>Create policy</strong>.</li>
+	<li>Select <strong>Save</strong>.</li>
 </ol>
 
 </TabItem> <TabItem label="API">
