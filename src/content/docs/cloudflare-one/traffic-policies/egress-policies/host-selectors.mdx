@@ -96,7 +96,7 @@ To configure your Zero Trust organization to use Host selectors with Egress poli
 
     <Tabs> <TabItem label="Exclude IPs and domains">
 		1. [Remove the route](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/split-tunnels/#remove-a-route) to the IP address `100.64.0.0/10` from your Split Tunnel exclude list.
-		2. We recommend [adding back the IPs](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-cidr/#3-route-private-network-ips-through-warp) that are not being used for Zero Trust services. For example, if you are using Gateway host selectors alongside [WARP-to-WARP connectivity](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-to-warp/) (`100.96.0.0/12`), add routes to exclude the following IP addresses:
+		2. We recommend [adding back the IPs](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-cidr/#3-route-private-network-ips-through-warp) that are not being used for Zero Trust services. For example, if you are using Gateway host selectors alongside [WARP-to-WARP connectivity](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-to-warp/) add routes to exclude the following IP addresses:
 			- `100.64.0.0/12`
 			- `100.81.0.0/16`
 			- `100.82.0.0/15`
