@@ -1,0 +1,472 @@
+---
+title: Resumable uploads with TUS protocol
+pcx_content_type: example
+
+---
+
+import { Tabs, TabItem } from "~/components"
+
+Implement resumable file uploads to R2 using the [TUS protocol](https://tus.io) with Durable Objects and Cloudflare Workers. This approach enables reliable large file uploads that can resume if interrupted, making it ideal for applications that need to handle uploads over unreliable network connections.
+
+## Overview
+
+The TUS protocol provides a standardized way to handle resumable uploads. By combining TUS with Cloudflare's R2 storage and Durable Objects, you can:
+
+- Resume uploads after network failures or interruptions
+- Handle large files (up to 100MB in this example)
+- Track upload progress and state across requests
+- Use R2's multipart upload API for efficient large file handling
+- Validate checksums to ensure data integrity
+
+This example is based on the [hono-r2-tus-uploader](https://github.com/Cap-go/hono-r2-tus-uploader) implementation by [Capgo](https://capgo.app).
+
+## Architecture
+
+The implementation uses:
+
+- **Cloudflare Workers** - Handle HTTP requests and route them to Durable Objects
+- **Durable Objects** - Maintain upload state and coordinate multipart uploads
+- **R2 Storage** - Store uploaded files and temporary upload chunks
+- **Hono Framework** - Lightweight web framework for routing and middleware
+
+Each unique upload gets its own Durable Object instance, ensuring consistent state management across resumable upload sessions.
+
+## Setup
+
+### 1. Install dependencies
+
+```bash
+npm install hono @cloudflare/workers-types
+```
+
+### 2. Configure `wrangler.toml`
+
+Add the Durable Object binding and R2 bucket configuration:
+
+```toml
+name = "r2-tus-uploader"
+compatibility_date = "2024-09-23"
+main = "./index.ts"
+compatibility_flags = ["nodejs_compat_v2"]
+
+# Durable Object binding for upload state management
+durable_objects.bindings = [
+  { name = "UPLOAD_HANDLER", class_name = "UploadHandler" }
+]
+
+# R2 bucket for storing uploaded files
+r2_buckets = [
+  { binding = "UPLOAD_BUCKET", bucket_name = "uploads", preview_bucket_name = "uploads" }
+]
+
+# Durable Object migrations
+[[migrations]]
+tag = "v1"
+new_classes = ["UploadHandler"]
+
+[placement]
+mode = "smart"
+```
+
+### 3. Create the Durable Object handler
+
+Create a file `tus/uploadHandler.ts` that implements the TUS protocol:
+
+```typescript
+import { Hono } from 'hono'
+import type { DurableObjectState, R2Bucket } from '@cloudflare/workers-types'
+
+export const TUS_VERSION = '1.0.0'
+export const MAX_UPLOAD_LENGTH_BYTES = 1024 * 1024 * 100 // 100MB
+const BUFFER_SIZE = 1024 * 1024 * 5 // 5MB chunks
+
+export class UploadHandler {
+  state: DurableObjectState
+  env: { UPLOAD_BUCKET: R2Bucket }
+  router: Hono
+
+  constructor(state: DurableObjectState, env: any) {
+    this.state = state
+    this.env = env
+    this.router = new Hono()
+
+    // TUS protocol endpoints
+    this.router.post('/files/:bucket', this.create.bind(this))
+    this.router.patch('/files/:bucket/:id', this.patch.bind(this))
+    this.router.head('/files/:bucket/:id', this.head.bind(this))
+    this.router.options('*', this.options.bind(this))
+  }
+
+  fetch(request: Request) {
+    return this.router.fetch(request)
+  }
+
+  // Create new upload
+  async create(c: any) {
+    const uploadLength = parseInt(c.req.header('Upload-Length') || '0')
+    const metadata = this.parseMetadata(c.req.header('Upload-Metadata'))
+
+    if (uploadLength > MAX_UPLOAD_LENGTH_BYTES) {
+      return c.text('Upload too large', 413)
+    }
+
+    const uploadId = crypto.randomUUID()
+    await this.state.storage.put('upload-info', {
+      uploadLength,
+      uploadOffset: 0,
+      filename: metadata.filename,
+      createdAt: Date.now()
+    })
+
+    return c.json({ uploadId }, 201, {
+      'Location': `/files/uploads/${uploadId}`,
+      'Tus-Resumable': TUS_VERSION,
+      'Upload-Offset': '0'
+    })
+  }
+
+  // Resume upload at current offset
+  async head(c: any) {
+    const info = await this.state.storage.get('upload-info')
+    if (!info) {
+      return c.text('Not Found', 404)
+    }
+
+    return c.text('', 200, {
+      'Upload-Offset': info.uploadOffset.toString(),
+      'Upload-Length': info.uploadLength.toString(),
+      'Tus-Resumable': TUS_VERSION
+    })
+  }
+
+  // Upload chunk
+  async patch(c: any) {
+    const info = await this.state.storage.get('upload-info')
+    if (!info) {
+      return c.text('Not Found', 404)
+    }
+
+    const uploadOffset = parseInt(c.req.header('Upload-Offset') || '0')
+    if (uploadOffset !== info.uploadOffset) {
+      return c.text('Offset mismatch', 409)
+    }
+
+    const body = await c.req.arrayBuffer()
+    const newOffset = uploadOffset + body.byteLength
+
+    // Use R2 multipart upload for large files
+    if (!info.multipartUploadId && newOffset > BUFFER_SIZE) {
+      const multipart = await this.env.UPLOAD_BUCKET.createMultipartUpload(info.filename)
+      info.multipartUploadId = multipart.uploadId
+    }
+
+    // Store chunk
+    if (info.multipartUploadId) {
+      const partNumber = Math.floor(uploadOffset / BUFFER_SIZE) + 1
+      const part = await this.env.UPLOAD_BUCKET.uploadPart(
+        info.filename,
+        info.multipartUploadId,
+        partNumber,
+        body
+      )
+      info.parts = info.parts || []
+      info.parts.push(part)
+    }
+
+    info.uploadOffset = newOffset
+
+    // Complete upload if finished
+    if (newOffset >= info.uploadLength) {
+      if (info.multipartUploadId) {
+        await this.env.UPLOAD_BUCKET.completeMultipartUpload(
+          info.filename,
+          info.multipartUploadId,
+          info.parts
+        )
+      } else {
+        await this.env.UPLOAD_BUCKET.put(info.filename, body)
+      }
+      await this.state.storage.deleteAll()
+    } else {
+      await this.state.storage.put('upload-info', info)
+    }
+
+    return c.text('', 204, {
+      'Upload-Offset': newOffset.toString(),
+      'Tus-Resumable': TUS_VERSION
+    })
+  }
+
+  // Handle OPTIONS for CORS
+  options(c: any) {
+    return c.text('', 204, {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'POST, PATCH, HEAD, OPTIONS',
+      'Access-Control-Allow-Headers': 'Upload-Length, Upload-Offset, Tus-Resumable, Upload-Metadata, Content-Type',
+      'Tus-Resumable': TUS_VERSION,
+      'Tus-Version': TUS_VERSION,
+      'Tus-Max-Size': MAX_UPLOAD_LENGTH_BYTES.toString()
+    })
+  }
+
+  parseMetadata(header: string | undefined): Record<string, string> {
+    if (!header) return {}
+    return Object.fromEntries(
+      header.split(',').map(pair => {
+        const [key, value] = pair.trim().split(' ')
+        return [key, atob(value)]
+      })
+    )
+  }
+}
+```
+
+### 4. Create the main Worker
+
+Create `index.ts` to handle routing:
+
+```typescript
+import { Hono } from 'hono'
+import type { DurableObjectNamespace } from '@cloudflare/workers-types'
+
+export { UploadHandler } from './tus/uploadHandler'
+
+const app = new Hono()
+
+// Create new upload
+app.post('/uploads', async (c) => {
+  const metadata = c.req.header('Upload-Metadata')
+  const filename = parseFilename(metadata)
+
+  const durableObjectNs: DurableObjectNamespace = c.env.UPLOAD_HANDLER
+  const id = durableObjectNs.idFromName(filename)
+  const stub = durableObjectNs.get(id)
+
+  return stub.fetch(c.req.raw)
+})
+
+// Resume or check upload status
+app.all('/uploads/:filename', async (c) => {
+  const filename = c.req.param('filename')
+
+  const durableObjectNs: DurableObjectNamespace = c.env.UPLOAD_HANDLER
+  const id = durableObjectNs.idFromName(filename)
+  const stub = durableObjectNs.get(id)
+
+  return stub.fetch(c.req.raw)
+})
+
+// Download uploaded file
+app.get('/files/:filename', async (c) => {
+  const filename = c.req.param('filename')
+  const object = await c.env.UPLOAD_BUCKET.get(filename)
+
+  if (!object) {
+    return c.text('Not Found', 404)
+  }
+
+  return new Response(object.body, {
+    headers: {
+      'Content-Type': object.httpMetadata?.contentType || 'application/octet-stream',
+      'Content-Length': object.size.toString()
+    }
+  })
+})
+
+function parseFilename(metadata: string | undefined): string {
+  if (!metadata) return crypto.randomUUID()
+
+  const pairs = metadata.split(',')
+  for (const pair of pairs) {
+    const [key, value] = pair.trim().split(' ')
+    if (key === 'filename') {
+      return atob(value)
+    }
+  }
+  return crypto.randomUUID()
+}
+
+export default {
+  fetch: app.fetch
+}
+```
+
+## Client-side implementation
+
+Use a TUS client library to upload files:
+
+<Tabs>
+<TabItem label="JavaScript">
+
+```javascript
+import * as tus from 'tus-js-client'
+
+function uploadFile(file) {
+  const upload = new tus.Upload(file, {
+    endpoint: 'https://your-worker.workers.dev/uploads',
+    metadata: {
+      filename: file.name,
+      filetype: file.type
+    },
+    onError: (error) => {
+      console.error('Upload failed:', error)
+    },
+    onProgress: (bytesUploaded, bytesTotal) => {
+      const percentage = ((bytesUploaded / bytesTotal) * 100).toFixed(2)
+      console.log(`Upload progress: ${percentage}%`)
+    },
+    onSuccess: () => {
+      console.log('Upload completed!')
+    }
+  })
+
+  // Start upload
+  upload.start()
+}
+
+// Usage
+const fileInput = document.querySelector('input[type="file"]')
+fileInput.addEventListener('change', (e) => {
+  const file = e.target.files[0]
+  if (file) {
+    uploadFile(file)
+  }
+})
+```
+
+</TabItem>
+<TabItem label="React">
+
+```jsx
+import { useState } from 'react'
+import * as tus from 'tus-js-client'
+
+function FileUploader() {
+  const [progress, setProgress] = useState(0)
+  const [status, setStatus] = useState('idle')
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0]
+    if (!file) return
+
+    setStatus('uploading')
+    const upload = new tus.Upload(file, {
+      endpoint: 'https://your-worker.workers.dev/uploads',
+      metadata: {
+        filename: file.name,
+        filetype: file.type
+      },
+      onError: (error) => {
+        console.error('Upload failed:', error)
+        setStatus('error')
+      },
+      onProgress: (bytesUploaded, bytesTotal) => {
+        const percentage = (bytesUploaded / bytesTotal) * 100
+        setProgress(percentage)
+      },
+      onSuccess: () => {
+        console.log('Upload completed!')
+        setStatus('completed')
+      }
+    })
+
+    upload.start()
+  }
+
+  return (
+    <div>
+      <input type="file" onChange={handleFileChange} />
+      {status === 'uploading' && (
+        <div>
+          <progress value={progress} max="100" />
+          <span>{progress.toFixed(2)}%</span>
+        </div>
+      )}
+      {status === 'completed' && <p>Upload successful!</p>}
+      {status === 'error' && <p>Upload failed. Please try again.</p>}
+    </div>
+  )
+}
+```
+
+</TabItem>
+</Tabs>
+
+## Key features
+
+### Resumable uploads
+
+If a network connection is lost, the client can resume from the last uploaded byte:
+
+```javascript
+const upload = new tus.Upload(file, {
+  endpoint: 'https://your-worker.workers.dev/uploads',
+  // Enable resume functionality
+  resume: true,
+  // Store upload URL in localStorage for resuming later
+  fingerprint: (file) => {
+    return `tus-${file.name}-${file.size}-${file.lastModified}`
+  }
+})
+```
+
+### Automatic chunk handling
+
+The implementation automatically uses R2's multipart upload API for files larger than 5MB, breaking them into efficient chunks.
+
+### Upload expiration
+
+Incomplete uploads are automatically cleaned up after 7 days to prevent storage bloat:
+
+```typescript
+const UPLOAD_EXPIRATION_MS = 7 * 24 * 60 * 60 * 1000
+
+async create(c: any) {
+  const expiration = new Date(Date.now() + UPLOAD_EXPIRATION_MS)
+  await this.state.storage.setAlarm(expiration)
+  // ...
+}
+
+async alarm() {
+  // Clean up expired upload
+  await this.cleanup()
+}
+```
+
+## Authentication
+
+Add authentication middleware to protect your upload endpoint:
+
+```typescript
+async function authenticate(c: Context, next: Next) {
+  const authHeader = c.req.header('Authorization')
+
+  // Verify token (example using Bearer token)
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return c.json({ error: 'Unauthorized' }, 401)
+  }
+
+  const token = authHeader.substring(7)
+  // Validate token against your auth service
+  const isValid = await validateToken(token)
+
+  if (!isValid) {
+    return c.json({ error: 'Invalid token' }, 401)
+  }
+
+  await next()
+}
+
+// Apply to routes
+app.post('/uploads', authenticate, async (c) => {
+  // Upload logic
+})
+```
+
+## Related resources
+
+- [TUS Protocol Specification](https://tus.io/protocols/resumable-upload)
+- [hono-r2-tus-uploader repository](https://github.com/Cap-go/hono-r2-tus-uploader) - Full implementation by [Capgo](https://capgo.app)
+- [R2 Multipart Upload](/r2/objects/multipart-objects/)
+- [Durable Objects](/durable-objects/)
+- [Workers R2 API](/r2/api/workers/workers-api-reference/)

@@ -75,4 +75,10 @@ Wrangler's `object put` command only allows you to upload one object at a time.
 Use rclone if you wish to upload multiple objects to R2.
 :::
 
+## Resumable uploads with TUS protocol
+
+For large files or unreliable network connections, consider using the TUS protocol for resumable uploads. This allows uploads to resume from where they left off if interrupted.
+
+Refer to the [Resumable uploads with TUS protocol](/r2/examples/resumable-uploads-tus/) example to learn how to implement resumable uploads using Durable Objects and R2.
+
 <Render file="link-to-workers-r2-api" product="r2"/>
