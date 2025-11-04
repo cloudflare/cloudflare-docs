@@ -111,7 +111,7 @@ export default {
 ```js
 export default {
 	async fetch(request, env) {
-		const privateRequest = new Request("https://10.0.1.50:8443/api/data");
+		const privateRequest = new Request("https://10.0.1.50/api/data");
 		const response = await env.VPC_SERVICE_BINDING.fetch(privateRequest);
 
 		return response;
