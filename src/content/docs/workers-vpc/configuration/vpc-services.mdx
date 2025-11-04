@@ -38,7 +38,9 @@ A VPC Service consists of:
 :::note
 The [VPC Service configurations](/workers-vpc/configuration/vpc-services/#vpc-service-configuration) will always be used to connect and route requests to your services in external networks, even if a different URL or host is present in the actual `fetch()` operation of the Worker code.
 
-The information provided in the `fetch()` operation is not used to route requests, and instead only populates the `Host` field for a HTTP request that can be parsed by the server and used for Server Name Indication (SNI).
+The host provided in the `fetch()` operation is not used to route requests, and instead only populates the `Host` field for a HTTP request that can be parsed by the server and used for Server Name Indication (SNI), when the `https` scheme is specified.
+
+The port provided in the `fetch()` operation is ignored — the port specified in the VPC Service configuration will be used.
 :::
 
 ## Configuration example
