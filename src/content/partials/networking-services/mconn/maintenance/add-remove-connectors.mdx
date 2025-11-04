@@ -13,7 +13,7 @@ To add a new {props.productName} you first need to remove the one associated wit
 		<Markdown
 	text={`
 		1. Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a>, and go to **Networks**.
-		2. Go to **Connectors** > **Appliances** > **Appliances**.
+		2. Go to **Connectors** > **Appliances** > **Profiles**.
 	`}
 	inline={false}
 	/>
@@ -31,6 +31,6 @@ To add a new {props.productName} you first need to remove the one associated wit
 )
 }
 3. Find the {props.productName} that you want to edit > select the three dots next to it > **Edit**.
-4. In **{props.productName}**, remove the {props.productName} associated with the on-ramp.
-5. Select **Add {props.productName}** to add a different {props.productName} to your on-ramp.
+4. In **{props.dashName === "WAN Tunnels" ? "Appliances" : "Connectors"}**, remove the {props.productName} associated with the on-ramp.
+5. Select **{props.dashName === "WAN Tunnels" ? "Add appliance" : "Add Connector"}** to add a different {props.productName} to your on-ramp.
 6. Select **Save**.
