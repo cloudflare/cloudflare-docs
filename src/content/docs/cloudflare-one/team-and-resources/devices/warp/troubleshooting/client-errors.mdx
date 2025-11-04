@@ -274,6 +274,76 @@ The device is not authenticated to a Zero Trust organization because:
 4. Complete the authentication steps required by your organization.
 5. If this does not resolve the error, select **Logout from Cloudflare Zero Trust** and then log back in. Logging out is only possible if [Allow device to leave organization](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#allow-device-to-leave-organization) is enabled for your device.
 
+### CF\_REGISTRATION\_MISSING (Compliance EnvironmentMismatch)
+
+#### Cause
+
+Your device's registration is invalid.
+
+#### Resolution
+
+Contact your administrator or open the WARP GUI on your device and go to **Settings** > **Preferences** > **Account** to make sure you are logged in to the correct account.
+
+### CF\_REGISTRATION\_MISSING (ServiceTokenMismatch)
+
+#### Cause
+
+Your device's authentication method changed.
+
+#### Resolution
+
+Contact your administrator or open the WARP GUI on your device and go to **Settings** > **Preferences** > **Account** to try re-authenticating your session.
+
+### CF\_REGISTRATION\_MISSING (AuthMethodMismatch)
+
+#### Cause
+
+Your device's registration is out of date.
+
+#### Resolution
+
+Open the WARP GUI on your device and go to **Settings** > **Preferences** > **Account** to try re-authenticating your session.
+
+### CF\_REGISTRATION\_MISSING (ApiMismatch)
+
+#### Cause
+
+The device is not enrolled in the Zero Trust organization of your company or team.
+
+#### Resolution
+
+Contact your administrator or open the WARP GUI on your device and go to **Settings** > **Preferences** > **Account** to make sure you are logged in to the correct account.
+
+### CF\_REGISTRATION\_MISSING (AccountMismatch)
+
+#### Cause
+
+Your device's organization changed.
+
+#### Resolution
+
+Contact your administrator or open the WARP GUI on your device and go to **Settings** > **Preferences** > **Account** to make sure you are logged in to the correct account.
+
+### CF\_REGISTRATION\_MISSING (Revoked)
+
+#### Cause
+
+The device is not enrolled in the Zero Trust organization of your company or team. Your device was unenrolled by an administrator on your account.
+
+#### Resolution
+
+Contact your company or team administrator for assistance.
+
+### CF\_REGISTRATION\_MISSING (ManualDeletion)
+
+#### Cause
+
+The device is not enrolled in the Zero Trust organization of your company or team. The device was unenrolled on your machine.
+
+#### Resolution
+
+Contact your company or team administrator for assistance.
+
 ## CF\_TLS\_INTERCEPTION\_BLOCKING\_DOH
 
 ### Symptoms
