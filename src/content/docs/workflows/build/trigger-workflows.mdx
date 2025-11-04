@@ -155,12 +155,6 @@ Once stopped/terminated, the Workflow instance *cannot* be resumed.
 
 ### Restart a Workflow
 
-:::caution
-
-**Known issue**: Restarting a Workflow via the `restart()` method is not currently supported and will throw an exception (error).
-
-:::
-
 ```ts
 let instance = await env.MY_WORKFLOW.get("abc-123")
 await instance.restart() // Returns Promise<void>
