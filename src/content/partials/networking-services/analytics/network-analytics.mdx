@@ -1,0 +1,40 @@
+---
+params:
+  - magicWord
+---
+
+import { GlossaryTooltip, Markdown, Render } from "~/components"
+
+{ props.magicWord === "Magic Transit" && (
+  <>
+    <Markdown
+      text="[Network Analytics](/analytics/network-analytics/) gives you real-time visibility into Magic Transit traffic entering and leaving Cloudflare's network through GRE or IPsec tunnels."
+      inline={false}
+    />
+  </>
+)}
+
+{ (props.magicWord === "Magic WAN" || props.magicWord === "WAN Tunnels") && (
+  <>
+    <Markdown
+      text="Magic WAN customers can view their real-time and historical network data in Network Analytics. Customers can see their network data in a time series that shows Magic WAN traffic (in packets or bytes) over time, and can filter the time series data by different types of [packet](https://www.cloudflare.com/learning/network-layer/what-is-a-packet/) characteristics."
+      inline={false}
+    />
+  </>
+)}
+
+<Render file="analytics/network-analytics-data-averages" product="networking-services" />
+
+Refer to [Network Analytics](/analytics/network-analytics/) documentation to learn more.
+
+## Network traffic data filters
+
+<Render
+	file="analytics/network-traffic-filters"
+	product="networking-services"
+	params={{ magicWord: props.magicWord }}
+/>
+
+## Access Magic Tunnel traffic analytics
+
+<Render file="analytics/magic-tunnel-traffic-analytics" product="networking-services" />
