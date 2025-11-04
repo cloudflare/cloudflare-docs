@@ -20,9 +20,9 @@ To have control over what nameservers are assigned for different zones within an
 
 ### Nameserver consistency
 
-The level of consistency you can expect when adding new zones depends on the nameserver type configured. For standard nameservers, assignment is a best-effort approach, and there is no guarantee that all new zones will receive the same set if a conflict is detected.
+The level of consistency you can expect when adding new zones depends on the nameserver type configured. For [standard nameservers](/dns/nameservers/#standard-nameservers), assignment is a best effort approach, and there is no guarantee that all new zones will receive the same set if a conflict is detected.
 
-For Account Custom Nameservers (and Tenant Custom Nameservers) and Foundation DNS advanced nameservers, the likelihood of consistent assignment across new zones is significantly higher. The only common reason for an inconsistent set is an internal conflict, such as a parent and child zone ($example.com$ and $[www.example.com](https://www.example.com)$) needing different nameserver sets to prevent delegation issues.
+For [account custom nameservers](/dns/nameservers/custom-nameservers/account-custom-nameservers/), [tenant custom nameservers](/dns/nameservers/custom-nameservers/tenant-custom-nameservers/), and [Foundation DNS advanced nameservers](/dns/foundation-dns/advanced-nameservers/#nameservers-hosting-and-assignment), the likelihood of consistent assignment across new zones is significantly higher. The only common reason for an inconsistent set is an internal conflict, such as a parent and child zone (`example.com` and `www.example.com`) needing different nameserver sets to prevent delegation issues.
 
 ### DNS zone defaults
 
