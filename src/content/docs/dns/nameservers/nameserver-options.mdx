@@ -12,11 +12,17 @@ Refer to the sections below to learn about different nameserver options.
 
 ## Assignment method
 
-When you add a domain on a full or secondary setup, Cloudflare automatically assigns your nameservers. The default assignment method is to use standard nameservers and favor consistent nameserver names across all zones within an account. Nonetheless, in case there are conflicts — for example, if someone else has already added the same zone to a different account — you may get different nameserver names. To have control over what nameservers are assigned for different zones within an account, you can use account custom nameservers
+When you add a domain on a full or secondary setup, Cloudflare automatically assigns your nameservers.
 
-## Nameserver Assignment Consistency
+The [default assignment method](/dns/zone-setups/reference/nameserver-assignment/) is to use standard nameservers and favor consistent nameserver names across all zones within an account. Nonetheless, in case there are conflicts — for example, if someone else has already added the same zone to a different account — you may get different nameserver names.
 
-The level of consistency you can expect when adding new zones depends on the nameserver type configured. For Standard nameservers, assignment is a best-effort approach, and there is no guarantee that all new zones will receive the same set if a conflict is detected. For Account Custom Nameservers (and Tenant Custom Nameservers) and Foundation DNS advanced nameservers, the likelihood of consistent assignment across new zones is significantly higher. The only common reason for an inconsistent set is an internal conflict, such as a parent and child zone ($example.com$ and $[www.example.com](https://www.example.com)$) needing different nameserver sets to prevent delegation issues.
+To have control over what nameservers are assigned for different zones within an account, you can use [account custom nameservers](/dns/nameservers/custom-nameservers/account-custom-nameservers/).
+
+### Nameserver consistency
+
+The level of consistency you can expect when adding new zones depends on the nameserver type configured. For standard nameservers, assignment is a best-effort approach, and there is no guarantee that all new zones will receive the same set if a conflict is detected.
+
+For Account Custom Nameservers (and Tenant Custom Nameservers) and Foundation DNS advanced nameservers, the likelihood of consistent assignment across new zones is significantly higher. The only common reason for an inconsistent set is an internal conflict, such as a parent and child zone ($example.com$ and $[www.example.com](https://www.example.com)$) needing different nameserver sets to prevent delegation issues.
 
 ### DNS zone defaults
 
