@@ -38,26 +38,29 @@ If you are on a Workers Free plan, your crawl may fail if it hits the [limit of 
 
 ### Initiate the crawl job
 
-Here is an example of how to initiate a crawl job with `url`, `limit`, `depth`, and `formats` parameters. The API will respond immediately with a job `id` you will use to retrieve the status and results of the crawl job. 
+Here are the basic parameters you can use to initiate your crawl job:
+- `url` — (Required) Starts crawling from this URL
+- `limit` — (Optional) Maximum number of pages to crawl (default is 10, maximum is 100,000)
+- `depth` — (Optional) Maximum link depth to crawl from the starting URL
+- `formats` — (Optional) Response format (default is HTML, other options are Markdown and JSON)
 
-See the [advanced usage section below](/browser-rendering/rest-api/crawl-endpoint/#initiate-the-crawl-job) for additional parameters:
+The API will respond immediately with a job `id` you will use to retrieve the status and results of the crawl job.
 
+See the [advanced usage section below](/browser-rendering/rest-api/crawl-endpoint/#initiate-the-crawl-job) for additional parameters.
+
+Here is an example that uses the basic parameters:
 ```bash
 curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser-rendering/crawl' \
   -H 'Authorization: Bearer <apiToken>' \
   -H 'Content-Type: application/json' \
   -d '{
 
-		// Required: Starts crawling from this URL
     "url": "https://developers.cloudflare.com/workers/",
 
-		// Optional: Maximum number of pages to crawl (default is 10, maximum is 100,000)
     "limit": 50,
 
-		// Optional: Maximum link depth to crawl from the starting URL
     "depth": 2,
 
-		// Optional: Response format (default is HTML, other options are Markdown and JSON)
     "formats": ["markdown"]
   }'
 ```
@@ -134,7 +137,7 @@ A successful cancellation will return a `200 OK` status code. The job status wil
 
 ## Advanced usage
 
-The `/crawl` endpoint has many parameters you can use to customize your crawl. For the full list, check the [API docs[(https://developers.cloudflare.com/api/resources/browser_rendering/). 
+The `/crawl` endpoint has many parameters you can use to customize your crawl. For the full list, check the [API docs[(https://developers.cloudflare.com/api/resources/browser_rendering/).
 
 Here is an example that uses the additional parameters that are currently available, in addition to the [basic parameters shown in the example above](/browser-rendering/rest-api/crawl-endpoint/#initiate-the-crawl-job) and the [render parameter below](/browser-rendering/rest-api/crawl-endpoint/#render-a-simple-html-fetch):
 
