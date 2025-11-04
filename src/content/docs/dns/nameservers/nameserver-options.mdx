@@ -20,9 +20,11 @@ To have control over what nameservers are assigned for different zones within an
 
 ### Nameserver consistency
 
-The level of consistency you can expect when adding new zones depends on the nameserver type configured. For [standard nameservers](/dns/nameservers/#standard-nameservers), assignment is a best effort approach, and there is no guarantee that all new zones will receive the same set if a conflict is detected.
+The level of consistency you can expect when adding new zones depends on the nameserver type configured.
 
-For [account custom nameservers](/dns/nameservers/custom-nameservers/account-custom-nameservers/), [tenant custom nameservers](/dns/nameservers/custom-nameservers/tenant-custom-nameservers/), and [Foundation DNS advanced nameservers](/dns/foundation-dns/advanced-nameservers/#nameservers-hosting-and-assignment), the likelihood of consistent assignment across new zones is significantly higher. The only common reason for an inconsistent set is an internal conflict, such as a parent and child zone (`example.com` and `www.example.com`) needing different nameserver sets to prevent delegation issues.
+For [standard nameservers](/dns/nameservers/#standard-nameservers), since a conflict can be caused by anyone adding the same zone to any other Cloudflare account, the likelihood of your new zone being assigned different nameserver names than your previously existing ones is way higher.
+
+For [account custom nameservers](/dns/nameservers/custom-nameservers/account-custom-nameservers/), [tenant custom nameservers](/dns/nameservers/custom-nameservers/tenant-custom-nameservers/), and [Foundation DNS advanced nameservers](/dns/foundation-dns/advanced-nameservers/#nameservers-hosting-and-assignment), the only conflict would be between a parent and a child zone, which makes consistent assignment across new zones more likely.
 
 ### DNS zone defaults
 
