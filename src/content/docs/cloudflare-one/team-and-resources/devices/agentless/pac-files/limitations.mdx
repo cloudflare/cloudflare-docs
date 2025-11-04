@@ -1,0 +1,16 @@
+---
+pcx_content_type: how-to
+title: Limitations
+sidebar:
+  order: 3
+---
+
+## Traffic limitations
+
+The agentless HTTP proxy does not support [identity-based policies](/cloudflare-one/traffic-policies/identity-selectors/) or mTLS authentication.
+
+To enforce HTTP policies for UDP traffic, you must turn on the [Gateway proxy for UDP](/cloudflare-one/traffic-policies/http-policies/http3/#enable-http3-inspection).
+
+## Gateway DNS and resolver policies
+
+Gateway DNS and resolver policies will always apply to traffic proxied via PAC files, regardless of device configuration.

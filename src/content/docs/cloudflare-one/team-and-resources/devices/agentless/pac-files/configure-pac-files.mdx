@@ -1,8 +1,8 @@
 ---
 pcx_content_type: how-to
-title: PAC files
+title: Configure PAC files
 sidebar:
-  order: 1
+  order: 2
 ---
 
 import {
@@ -61,6 +61,19 @@ Your Cloudflare proxy server domain is of the form:
 https://<SUBDOMAIN>.proxy.cloudflare-gateway.com
 ```
 
+Once you create an endpoint, the dashboard will display an option to add additional endpoints:
+
+1. Go to **Networks** > **Resolves & Proxies** > **Proxy endpoints**.
+2. Select **Add an endpoint**.
+3. Select the type of proxy endpoint you want to create. Choose between **Authorization** for an authorization endpoint, or **Source IP address**.
+
+If you select **Authorization**:
+
+1. Enter your basic information.
+2. Add an existing policy, or [create a new policy](/cloudflare-one/access-controls/policies/).
+3. Add your login method.
+4. Once you filled all the information, select **Save**.
+
 </TabItem>
 
 <TabItem label="API">
@@ -114,6 +127,19 @@ https://<SUBDOMAIN>.proxy.cloudflare-gateway.com
 
 </Tabs>
 
+### Edit an existing proxy endpoint
+
+To edit an existing proxy endpoint:
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Networks** > **Resolvers & Proxies** > **Proxy endpoints**.
+2. Select **Proxy endpoints**, then select the three dots.
+3. Select **Configure**, and choose the information you want to edit:
+    - **Basic info**: Enter your basic info, then select **Save**.
+    - **Access policies**: Here, you can:
+        - Select existing policies or create a new policy.
+        - Select the three dots that allow you to 
+    - **Login methods**:
+
 ## 2. Test your proxy server
 
 1. In [Cloudflare One](https://one.dash.cloudflare.com/), create an [HTTP policy](/cloudflare-one/traffic-policies/http-policies/) for testing purposes. For example:
@@ -163,6 +189,29 @@ function FindProxyForURL(url, host) {
 - You must use a PAC file instead of configuring the endpoint directly in the proxy configuration of the browser. This is because modern browsers still do not support HTTPS proxies without PAC files.
 - Use a proper text editor such as VS Code to avoid added characters.
   :::
+
+## Add additional PAC files
+
+To add additional PAC files:
+
+1. Go to **Networks** > **Resolves & Proxies** > **Proxy endpoints**.
+2. Select **Add PAC files**.
+3. Here, you can add **PAC file details** and **Setup instructions**. 
+    In **PAC files details:**
+        - Enter the **Basic Information**.
+        - Enter the **PAC file configuration** > Select **Browse PAC file configuration templates** and choose a pre-configured template to customize. The only available outputs are Okta and Azure. Once you select the template, the **PAC file JavaScript** is going to be populated with a template.
+    In **Setup instructions:**
+        - Choose a browser and follow the instructions.
+4. Select **Create**.
+
+### Edit your PAC files
+
+To edit your PAC files:
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Networks** > **Resolvers & Proxies** > **Proxy endpoints** > **PAC files**.
+2. Locate the PAC file you want to edit, select the three dots, then select **Configure**.
+3. Edit **PAC files details** and/or **Setup instructions**.
+4. Select **Save**.
 
 ## 4. Configure your devices
 
@@ -307,15 +356,3 @@ Using your proxy endpoint's domain, you can get the IP addresses assigned to the
 </Tabs>
 
 To ensure responses are allowed through your firewall, add an inbound rule to allow the static IPv4 address for Cloudflare proxy endpoints, `162.159.193.21`.
-
-## Limitations
-
-### Traffic limitations
-
-The agentless HTTP proxy does not support [identity-based policies](/cloudflare-one/traffic-policies/identity-selectors/) or mTLS authentication.
-
-To enforce HTTP policies for UDP traffic, you must turn on the [Gateway proxy for UDP](/cloudflare-one/traffic-policies/http-policies/http3/#enable-http3-inspection).
-
-### Gateway DNS and resolver policies
-
-Gateway DNS and resolver policies will always apply to traffic proxied via PAC files, regardless of device configuration.
