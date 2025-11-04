@@ -16,17 +16,16 @@ import { Details, Render } from "~/components";
 
 | System   | Availability | Minimum WARP version |
 | -------- | ------------ | -------------------- |
-| Windows  | ✅           | 2025.6.1400.0       |
-| macOS    | ✅           |                      |
-| Linux    | ✅           |                      |
+| Windows  | ✅           | 2025.9.173.1         |
+| macOS    | ✅           | 2025.9.173.1         |
+| Linux    | ✅           | 2025.9.173.1         |
 | iOS      | ❌           |                      |
 | Android  | ❌           |                      |
 | ChromeOS | ❌           |                      |
 
 </Details>
 
-The [Maximum Transmission Unit (MTU)](/learning/network-layer/what-is-mtu/) is the largest data packet size that a device can send over a network without fragmentation. When you connect to services through WARP, your data is encapsulated, which adds extra headers and increases the overall packet size.
-On some networks, especially cellular or guest Wi-Fi networks, the network's MTU may be smaller than WARP's [default packet size](#default-warp-mtu). This mismatch forces packets to be fragmented or dropped entirely, leading to connection instability or complete connection failures.
+The [Maximum Transmission Unit (MTU)](https://www.cloudflare.com/learning/network-layer/what-is-mtu/) is the largest data packet size that a device can send over a network without fragmentation. When you connect to services through WARP, your data is encapsulated, which adds extra headers and increases the overall packet size. On some networks, especially cellular or guest Wi-Fi networks, the network's MTU may be smaller than WARP's [default packet size](#default-warp-mtu). This mismatch forces packets to be fragmented or dropped entirely, leading to connection instability or complete connection failures.
 
 WARP's Path MTU Discovery (PMTUD) feature solves this problem by actively probing for the minimum MTU along the entire network path between the device and Cloudflare. WARP will then dynamically adjust its [tunnel interface](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/warp-architecture/#virtual-interface) MTU based on the probe results. This allows WARP to maintain a stable connection on low MTU networks and take advantage of higher MTUs when available.
 
