@@ -61,7 +61,10 @@ export class ObservabilityAgent extends Agent<Env, never> {
 
 Your user is automatically redirected to the provider's OAuth page to authorize access.
 
-**Alternative approaches**: Instead of automatic redirect, you can present the `authUrl` to your user as:
+### Alternative approaches
+
+Instead of an automatic redirect, you can also present the `authUrl` to your user as a:
+
 - **Popup window**: `window.open(authUrl, '_blank', 'width=600,height=700')` (for dashboard-style apps)
 - **Clickable link**: Display as a button or link (for API documentation or multi-step flows)
 - **Deep link**: Use custom URL schemes for mobile apps
@@ -217,7 +220,7 @@ export class MyAgent extends Agent<Env, never> {
 
 </TypeScriptExample>
 
-Connection states: `authenticating` (needs OAuth) → `connecting` (completing setup) → `ready` (available for use)
+Connection states: `authenticating` (needs OAuth) > `connecting` (completing setup) > `ready` (available for use)
 
 ## Handle authentication failures
 

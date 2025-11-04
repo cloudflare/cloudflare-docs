@@ -48,7 +48,7 @@ Connections persist in the Agent's [SQL storage](/agents/api-reference/store-and
 
 ## Agent MCP Client Methods
 
-### addMcpServer()
+### `addMcpServer()`
 
 Add a connection to an MCP server and make its tools available to your Agent.
 
@@ -121,7 +121,7 @@ If the MCP server requires OAuth authentication, `authUrl` will be returned for 
 - [Transport options](/agents/model-context-protocol/transport)
 - [removeMcpServer()](#removemcpserver)
 
-### removeMcpServer()
+### `removeMcpServer()`
 
 Disconnect from an MCP server and clean up its resources.
 
@@ -160,7 +160,7 @@ export class MyAgent extends Agent<Env, never> {
 
 Disconnects from the MCP server, removes all related resources, and deletes the server record from storage.
 
-### getMcpServers()
+### `getMcpServers()`
 
 Get the current state of all MCP server connections.
 
