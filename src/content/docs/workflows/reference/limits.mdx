@@ -42,7 +42,7 @@ Many limits are inherited from those applied to Workers scripts and as documente
 
 [^6]: Workflows will return a HTTP 429 rate limited error if you exceed the rate of new Workflow instance creation.
 
-[^7]: Only instances with a `running` state count towards the concurrency limits. If an instance is in a `waiting` state it does not count these limits.
+[^7]: Only instances with a `running` state count towards the concurrency limits. Instances in the `waiting` state are excluded from these limits.
 
 <Render file="limits_increase" product="workers" />
 
@@ -50,7 +50,7 @@ Many limits are inherited from those applied to Workers scripts and as documente
 
 Instances that are on a `waiting` state - either sleeping, waiting for a retry or waiting for an event - do **not** count towards concurrency limits. It means that other `queued` instances will be scheduled when an instance goes from a `running` state to a `waiting` one, usually the oldest instance queued, in a best-effort basis. This state transition - `running` to `waiting` - might not happen if the duration of the wait is too short.
 
-As an example, let's say we have a workflow that does some work, waits 30 days, and continues other work:
+For example, consider a Workflow that does some work, waits for 30 days, and then continues with more work:
 
 ```ts title="src/index.ts"
 import { WorkflowEntrypoint, WorkflowStep, WorkflowEvent } from 'cloudflare:workers';
@@ -99,7 +99,7 @@ export class MyWorkflow extends WorkflowEntrypoint<Env, Params> {
 }
 ```
 
-While a given Workflow instance is waiting for 30 days to pass, it will go to a `waiting` state, allowing other `queued` instances to run - if concurrency limits are exhausted.
+While a given Workflow instance is waiting for 30 days, it will transition to the `waiting` state, allowing other `queued` instances to run if concurrency limits are reached.
 
 ### Increasing Workflow CPU limits
 
