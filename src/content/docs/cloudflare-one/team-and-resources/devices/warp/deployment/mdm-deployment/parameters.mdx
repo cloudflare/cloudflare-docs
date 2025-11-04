@@ -101,6 +101,17 @@ Identifies a Zero Trust organization in the WARP GUI when WARP is deployed with 
 
 **Value:** Organization nickname shown to users in the WARP GUI (for example, `Test environment`).
 
+### `enable_pmtud`
+
+[Path MTU Discovery (PMTUD)](/cloudflare-one/team-and-resources/devices/warp/deployment/mdm-deployment/path-mtu-discovery/) allows WARP to discover the largest packet size that can be sent over the current network and optimize connection performance.
+
+**Value Type:** `boolean`
+
+**Value:**
+
+* `false` — (default) Disables PMTUD.
+* `true` — Enables PMTUD on the WARP tunnel interface.
+
 ### `enable_post_quantum`
 
 <Details header="Feature availability">
