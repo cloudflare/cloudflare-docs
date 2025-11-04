@@ -16,7 +16,7 @@ const events = eventSchemas[product as ProductKey];
 <div class="event-schemas">
 	{events.map((event) => (
 		<section id={event.event.replace('.', '-')}>
-			<h4>{event.event}</h4>
+			<h4><code class="event-name">{event.event}</code></h4>
 			<p>{event.description}</p>
 			{showFullSchema && (
 				<>
@@ -36,7 +36,14 @@ const events = eventSchemas[product as ProductKey];
 	.event-schemas h4 {
 		margin-top: 1.5rem;
 		margin-bottom: 0.5rem;
+	}
+
+	.event-schemas .event-name {
+		background-color: var(--sl-color-gray-6);
+		padding: 0.2em 0.4em;
+		border-radius: 0.25rem;
 		font-family: var(--sl-font-mono);
+		font-size: 0.9em;
 	}
 
 	.event-schemas pre {
