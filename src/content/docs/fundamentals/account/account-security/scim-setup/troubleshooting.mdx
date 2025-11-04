@@ -9,7 +9,7 @@ sidebar:
 
 If you have removed all Super Administrators mistakenly, you can restore the role to account member(s) using the Account API Token you created for SCIM provisioning.
 
-First, fetch a list of account members and find the member ID for the user you want to restore Super Admin to via [list members](https://developers.cloudflare.com/api/resources/accounts/subresources/members/methods/list/)
+First, fetch a list of account members and find the member ID for the user you want to restore Super Admin to via [list members].(/api/resources/accounts/subresources/members/methods/list/)
 
 ```curl
 curl -X GET "https://api.cloudflare.com/client/v4/accounts/{account_id}/members" \
@@ -17,7 +17,7 @@ curl -X GET "https://api.cloudflare.com/client/v4/accounts/{account_id}/members"
   -H "Content-Type: application/json"
 ```
 
-Then restore the Super Admin role to that member via [update member](https://developers.cloudflare.com/api/resources/accounts/subresources/members/methods/update/)
+Then restore the Super Admin role to that member via [update member](/api/resources/accounts/subresources/members/methods/update/)
 
 ```curl
 curl -X PUT "https://api.cloudflare.com/client/v4/accounts/{account_id}/members/{member_id}" \
