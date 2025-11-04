@@ -9,7 +9,7 @@ sidebar:
 
 import { Render, TypeScriptExample, PackageManagers } from "~/components";
 
-When you build an Agent that connects to OAuth-protected MCP servers (like GitHub, Slack, or Notion), your end users will need to authenticate before the Agent can access their data. This guide shows you how to implement OAuth flows so your users can authorize access seamlessly.
+When you build an Agent that connects to OAuth-protected MCP servers (like Slack or Notion), your end users will need to authenticate before the Agent can access their data. This guide shows you how to implement OAuth flows so your users can authorize access seamlessly.
 
 ## Understanding the OAuth flow
 
@@ -18,26 +18,26 @@ When your Agent connects to an OAuth-protected MCP server, here's what happens:
 1. **Your code calls** `addMcpServer()` with the server URL
 2. **If OAuth is required**, it returns an `authUrl` instead of immediately connecting
 3. **Your application presents** the `authUrl` to your user
-4. **Your user authenticates** on the provider's site (GitHub, Slack, etc.)
+4. **Your user authenticates** on the provider's site (Slack, etc.)
 5. **The provider redirects** back to your Agent's callback URL with an authorization code
 6. **Your Agent completes** the connection automatically
 
 ## Connect and initiate OAuth
 
-When you connect to an OAuth-protected server (like GitHub), check if `authUrl` is returned. If present, automatically redirect your user to complete authorization:
+When you connect to an OAuth-protected server (like Cloudflare Observability), check if `authUrl` is returned. If present, automatically redirect your user to complete authorization:
 
 <TypeScriptExample>
 
 ```ts title="src/index.ts"
-export class GitHubAgent extends Agent<Env, never> {
+export class ObservabilityAgent extends Agent<Env, never> {
 	async onRequest(request: Request): Promise<Response> {
 		const url = new URL(request.url);
 
-		if (url.pathname.endsWith("connect-github") && request.method === "POST") {
-			// Attempt to connect to GitHub's MCP server
+		if (url.pathname.endsWith("connect-observability") && request.method === "POST") {
+			// Attempt to connect to Cloudflare Observability MCP server
 			const { id, authUrl } = await this.addMcpServer(
-				"GitHub",
-				"https://api.githubcopilot.com/mcp/",
+				"Cloudflare Observability",
+				"https://observability.mcp.cloudflare.com/mcp",
 			);
 
 			if (authUrl) {
@@ -59,7 +59,7 @@ export class GitHubAgent extends Agent<Env, never> {
 
 </TypeScriptExample>
 
-Your user is automatically redirected to GitHub (or whichever provider) to authorize access.
+Your user is automatically redirected to the provider's OAuth page to authorize access.
 
 **Alternative approaches**: Instead of automatic redirect, you can present the `authUrl` to your user as:
 - **Popup window**: `window.open(authUrl, '_blank', 'width=600,height=700')` (for dashboard-style apps)
@@ -253,7 +253,7 @@ function App() {
 		});
 
 		// Retry connection
-		const response = await fetch(`/agents/my-agent/session-id/connect-github`, {
+		const response = await fetch(`/agents/my-agent/session-id/connect-observability`, {
 			method: "POST",
 			body: JSON.stringify({ serverUrl, name }),
 		});
@@ -287,7 +287,7 @@ function App() {
 Common failure reasons:
 
 - **User canceled**: Closed OAuth window before completing authorization
-- **Invalid credentials**: GitHub/Slack credentials were incorrect
+- **Invalid credentials**: Slack credentials were incorrect
 - **Permission denied**: User lacks required permissions (e.g., not a workspace admin)
 - **Expired session**: OAuth session timed out
 
@@ -295,7 +295,7 @@ Failed connections remain in state until you remove them with `removeMcpServer(s
 
 ## Complete example
 
-This example demonstrates a complete GitHub OAuth integration. Users click "Connect GitHub", authorize in a popup window, and the connection becomes available. The Agent provides endpoints to connect, check status, and disconnect.
+This example demonstrates a complete Cloudflare Observability OAuth integration. Users connect to Cloudflare Observability, authorize in a popup window, and the connection becomes available. The Agent provides endpoints to connect, check status, and disconnect.
 
 :::note
 
@@ -310,10 +310,10 @@ import { Agent, type AgentNamespace, routeAgentRequest } from "agents";
 import type { MCPClientOAuthResult } from "agents/mcp";
 
 type Env = {
-	GitHubAgent: AgentNamespace<GitHubAgent>;
+	ObservabilityAgent: AgentNamespace<ObservabilityAgent>;
 };
 
-export class GitHubAgent extends Agent<Env, never> {
+export class ObservabilityAgent extends Agent<Env, never> {
 	onStart() {
 		// Configure OAuth callback to close popup window
 		this.mcp.configureOAuthCallback({
@@ -324,7 +324,7 @@ export class GitHubAgent extends Agent<Env, never> {
 					});
 				} else {
 					return new Response(
-						`<script>alert('GitHub authorization failed: ${result.authError}'); window.close();</script>`,
+						`<script>alert('Authorization failed: ${result.authError}'); window.close();</script>`,
 						{ headers: { "content-type": "text/html" } },
 					);
 				}
@@ -335,11 +335,11 @@ export class GitHubAgent extends Agent<Env, never> {
 	async onRequest(request: Request): Promise<Response> {
 		const url = new URL(request.url);
 
-		// Endpoint: Connect to GitHub MCP server
-		if (url.pathname.endsWith("connect-github") && request.method === "POST") {
+		// Endpoint: Connect to Cloudflare Observability MCP server
+		if (url.pathname.endsWith("connect-observability") && request.method === "POST") {
 			const { id, authUrl } = await this.addMcpServer(
-				"GitHub",
-				"https://api.githubcopilot.com/mcp/",
+				"Cloudflare Observability",
+				"https://observability.mcp.cloudflare.com/mcp",
 			);
 
 			if (authUrl) {
@@ -347,7 +347,7 @@ export class GitHubAgent extends Agent<Env, never> {
 					JSON.stringify({
 						serverId: id,
 						authUrl: authUrl,
-						message: "Please authorize GitHub access",
+						message: "Please authorize Cloudflare Observability access",
 					}),
 					{ headers: { "Content-Type": "application/json" } },
 				);
@@ -379,13 +379,13 @@ export class GitHubAgent extends Agent<Env, never> {
 			});
 		}
 
-		// Endpoint: Disconnect from GitHub
+		// Endpoint: Disconnect from Cloudflare Observability
 		if (url.pathname.endsWith("disconnect") && request.method === "POST") {
 			const { serverId } = (await request.json()) as { serverId: string };
 			await this.removeMcpServer(serverId);
 
 			return new Response(
-				JSON.stringify({ message: "Disconnected from GitHub" }),
+				JSON.stringify({ message: "Disconnected from Cloudflare Observability" }),
 				{ headers: { "Content-Type": "application/json" } },
 			);
 		}
