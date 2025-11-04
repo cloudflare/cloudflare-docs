@@ -7,15 +7,14 @@ sidebar:
     text: Beta
 ---
 
-
 Workflow entrypoints can be declared using Python. To achieve this, you can export a `WorkflowEntrypoint` that runs on the Cloudflare Workers platform.
 Refer to [Python Workers](/workers/languages/python) for more information about Python on the Workers runtime.
 
 :::caution[Python Workflows are in beta, as well as the underlying platform.]
 
-You must add both `python_workflows` and `python_workers` compatibility flags to your `wrangler.toml` file.
+You must add both `python_workflows` and `python_workers` compatibility flags to your Wrangler config file.
 
-Also, Python Workflows requires `compatibility_date = "2025-08-01"`, or lower, to be set in your `wrangler.toml` file.
+Also, Python Workflows require `compatibility_date = "2025-08-01"`, or later, to be set in your Wrangler config file.
 
 Join the #python-workers channel in the [Cloudflare Developers Discord](https://discord.cloudflare.com/) and let us know what you'd like to see next.
 :::
