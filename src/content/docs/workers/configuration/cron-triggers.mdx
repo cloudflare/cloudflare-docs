@@ -5,7 +5,13 @@ head: []
 description: Enable your Worker to be executed on a schedule.
 ---
 
-import { Render, WranglerConfig, TabItem, Tabs, DashButton } from "~/components";
+import {
+	Render,
+	WranglerConfig,
+	TabItem,
+	Tabs,
+	DashButton,
+} from "~/components";
 
 ## Background
 
@@ -55,11 +61,11 @@ export default {
 </TabItem> <TabItem label="Python" icon="seti:python">
 
 ```python
-from workers import handler
+from workers import WorkerEntrypoint, Response
 
-@handler
-async def on_scheduled(controller, env, ctx):
-  print("cron processed")
+class Default(WorkerEntrypoint):
+    async def scheduled(self, controller, env, ctx):
+  			print("cron processed")
 ```
 
 </TabItem></Tabs>
@@ -143,31 +149,24 @@ To avoid ambiguity you may prefer to use the three-letter abbreviations (e.g. `S
 Some common time intervals that may be useful for setting up your Cron Trigger:
 
 - `* * * * *`
-
   - At every minute
 
 - `*/30 * * * *`
-
   - At every 30th minute
 
 - `45 * * * *`
-
   - On the 45th minute of every hour
 
 - `0 17 * * sun` or `0 17 * * 1`
-
   - 17:00 (UTC) on Sunday
 
 - `10 7 * * mon-fri` or `10 7 * * 2-6`
-
   - 07:10 (UTC) on weekdays
 
 - `0 15 1 * *`
-
   - 15:00 (UTC) on first day of the month
 
 - `0 18 * * 6L` or `0 18 * * friL`
-
   - 18:00 (UTC) on the last Friday of the month
 
 - `59 23 LW * *`

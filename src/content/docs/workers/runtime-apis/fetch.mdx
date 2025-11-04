@@ -62,17 +62,17 @@ async function eventHandler(event) {
 </TabItem> <TabItem label="Python Worker" icon="seti:python">
 
 ```python
-from workers import fetch, handler
+from workers import WorkerEntrypoint, Response, fetch
 
-@handler
-async def on_scheduled(controller, env, ctx):
-  return await fetch("https://example.com", headers={"X-Source": "Cloudflare-Workers"})
+class Default(WorkerEntrypoint):
+    async def scheduled(self, controller, env, ctx):
+  			return await fetch("https://example.com", headers={"X-Source": "Cloudflare-Workers"})
 ```
 
 </TabItem></Tabs>
 
 - <code>fetch(resource, options optional)</code> : Promise`<Response>`
-  - Fetch returns a promise to a Response.
+- Fetch returns a promise to a Response.
 
 ### Parameters
 
