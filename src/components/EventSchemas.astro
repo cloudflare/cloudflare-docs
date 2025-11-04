@@ -1,0 +1,50 @@
+---
+import { z } from "astro:schema";
+import { eventSchemas, type ProductKey } from "./EventSubscriptionsData";
+
+type Props = z.infer<typeof props>;
+
+const props = z.object({
+	product: z.enum(["r2", "superSlurper", "vectorize", "workersAi", "workersBuilds", "kv", "workflows"]),
+	showFullSchema: z.boolean().default(true),
+});
+
+const { product, showFullSchema } = props.parse(Astro.props);
+const events = eventSchemas[product as ProductKey];
+---
+
+<div class="event-schemas">
+	{events.map((event) => (
+		<section id={event.event.replace('.', '-')}>
+			<h4>{event.event}</h4>
+			<p>{event.description}</p>
+			{showFullSchema && (
+				<>
+					<p><strong>Example:</strong></p>
+					<pre><code class="language-json">{JSON.stringify(event.example, null, 2)}</code></pre>
+				</>
+			)}
+		</section>
+	))}
+</div>
+
+<style>
+	.event-schemas section {
+		margin-bottom: 2rem;
+	}
+
+	.event-schemas h4 {
+		margin-top: 1.5rem;
+		margin-bottom: 0.5rem;
+		font-family: var(--sl-font-mono);
+	}
+
+	.event-schemas pre {
+		margin-top: 0.5rem;
+		overflow-x: auto;
+	}
+
+	.event-schemas code {
+		font-size: 0.9em;
+	}
+</style>
