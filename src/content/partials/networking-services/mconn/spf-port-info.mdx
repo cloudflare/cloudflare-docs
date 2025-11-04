@@ -1,13 +1,11 @@
 ---
-params:
-  - productName
-  - productNameVirtual
+{}
 ---
 
-The hardware version of {props.productName} includes two [SFP+ ports](https://en.wikipedia.org/wiki/Small_Form-factor_Pluggable) that support 10G throughput. These ports can be configured as either a WAN or a LAN port, like all of the 1G RJ45 ports in the machine. Because a 10G WAN uplink will often be bottlenecked by IPsec tunnel speeds, the SFP+ ports are most useful for configuring high speed LANs, and for using fiber connections.
+The hardware version of Magic WAN Connector includes two [SFP+ ports](https://en.wikipedia.org/wiki/Small_Form-factor_Pluggable) that support 10G throughput. These ports can be configured as either a WAN or a LAN port, like all of the 1G RJ45 ports in the machine. Because a 10G WAN uplink will often be bottlenecked by IPsec tunnel speeds, the SFP+ ports are most useful for configuring high speed LANs, and for using fiber connections.
 
-:::note[{props.productNameVirtual} and SFP+ ports]
-Since you decide and set up the hardware where {props.productNameVirtual} runs, you can ignore the information on this page.
+:::note[Virtual Connector and SFP+ ports]
+Since you decide and set up the hardware where Virtual Connector runs, you can ignore the information on this page.
 :::
 
 ## Port configuration
@@ -23,7 +21,7 @@ _The left port, SFP+ 1, is port 7. The right port, SFP+ 2, is port 8._
 
 ## SFP+ module compatibility
 
-{props.productName} only supports 10Gbps SFP+ modules, including RJ45, DAC, and fiber, among others. Many 1 Gbps modules are incompatible with the Intel driver used internally, and thus are not supported.
+Magic WAN Connector only supports 10Gbps SFP+ modules, including RJ45, DAC, and fiber, among others. Many 1 Gbps modules are incompatible with the Intel driver used internally, and thus are not supported.
 
 Cloudflare supports the following SFP+ inputs:
 
@@ -40,8 +38,8 @@ Keep in mind that SFP+ modules/cables have to be compatible at both ends, that i
 
 ## Recover from unsupported SFP+ inputs
 
-SFP+ modules should be installed and tested prior to deploying {props.productName} into production usage.
+SFP+ modules should be installed and tested prior to deploying Magic WAN Connector into production usage.
 
-An unsupported SFP+ input is indicated by the interface failing to come up (that is, the {props.productName} has no status lights), and also by the port (7 or 8) going offline until the hardware is rebooted.
+An unsupported SFP+ input is indicated by the interface failing to come up (that is, the Magic WAN Connector has no status lights), and also by the port (7 or 8) going offline until the hardware is rebooted.
 
-When an unsupported module is plugged, the module should be removed and then {props.productName} rebooted by removing power for five seconds. The module should not remain plugged during reboot, or {props.productName} will have to be rebooted again after the module is removed.
+When an unsupported module is plugged, the module should be removed and then Magic WAN Connector rebooted by removing power for five seconds. The module should not remain plugged during reboot, or Magic WAN Connector will have to be rebooted again after the module is removed.

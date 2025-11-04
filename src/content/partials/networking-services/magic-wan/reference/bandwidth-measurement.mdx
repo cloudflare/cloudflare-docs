@@ -1,12 +1,10 @@
 ---
 params:
-  - productName
   - cloudflareTunnelURL
-  - warpURL
 ---
 
-Cloudflare measures {props.productName} usage based on the 95th percentile of bandwidth utilized by the customer's configured network.
+Cloudflare measures Magic WAN usage based on the 95th percentile of bandwidth utilized by the customer's configured network.
 
-Configured {props.productName} network's bandwidth refers to the sum of traffic routed in and out of Magic WAN network namespace by measuring and summing each active customer's configured [GRE](https://www.cloudflare.com/learning/network-layer/what-is-gre-tunneling/), [IPSEC](https://www.cloudflare.com/learning/network-layer/what-is-ipsec/), <a href={props.cloudflareTunnelURL}>Cloudflare Tunnel</a> and [Cloudflare Network Interconnect](/network-interconnect/) tunnel's highest P95th percentile (ingress or egress traffic). The usage measurement excludes <a href={props.warpURL}>WARP</a> traffic.
+Configured Magic WAN network's bandwidth refers to the sum of traffic routed in and out of Magic WAN network namespace by measuring and summing each active customer's configured [GRE](https://www.cloudflare.com/learning/network-layer/what-is-gre-tunneling/), [IPSEC](https://www.cloudflare.com/learning/network-layer/what-is-ipsec/), <a href={props.cloudflareTunnelURL}>Cloudflare Tunnel</a> and [Cloudflare Network Interconnect](/network-interconnect/) tunnel's highest P95th percentile (ingress or egress traffic). The usage measurement excludes [WARP](/cloudflare-one/team-and-resources/devices/warp/) traffic.
 
 To measure 95th percentile bandwidth at each tunnel, Cloudflare records bandwidth incoming and leaving our global network at five minute intervals, sorts these measurements in descending order, and discards the top 5% of recorded measurements. The highest remaining value constitutes the 95th percentile bandwidth measurement for that time period.

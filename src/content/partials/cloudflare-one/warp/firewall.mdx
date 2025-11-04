@@ -1,6 +1,0 @@
----
-params:
-  - domain
----
-
-If your firewall allows traffic only by domain, you may need to explicitly allow <code>{props.domain}</code>. Even though <code>{props.domain}</code> may resolve to different IP addresses, WARP overrides the resolved IPs with the IPs listed above. To avoid connectivity issues, ensure that the above IPs are permitted through your firewall.

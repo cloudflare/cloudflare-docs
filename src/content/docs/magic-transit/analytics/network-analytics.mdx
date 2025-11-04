@@ -9,22 +9,11 @@ head:
 
 ---
 
-import { GlossaryTooltip, Render } from "~/components"
+import { Render } from "~/components";
 
-[Network Analytics](/analytics/network-analytics/) gives you real-time visibility into Magic Transit traffic entering and leaving Cloudflare's network through <GlossaryTooltip term="GRE tunnel">GRE</GlossaryTooltip> or <GlossaryTooltip term="IPsec tunnel">IPsec</GlossaryTooltip> tunnels.
-
-<Render file="analytics/network-analytics-data-averages" product="networking-services" />
-
-Refer to [Network Analytics](/analytics/network-analytics/) documentation to learn more.
-
-## Network traffic data filters
-
-<Render
-	file="analytics/network-traffic-filters"
+<Render file="analytics/network-analytics"
 	product="networking-services"
-	params={{ magicWord: "Magic Transit" }}
+	params={{
+		magicWord: "Magic Transit"
+	}}
 />
-
-## Access Magic Tunnel traffic analytics
-
-<Render file="analytics/magic-tunnel-traffic-analytics" product="networking-services" />

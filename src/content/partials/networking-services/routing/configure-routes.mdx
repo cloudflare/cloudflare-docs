@@ -56,7 +56,7 @@ Refer to <a href={props.trafficSteeringPage}>Traffic Steering</a> for more infor
 	<Markdown
 		text={`
 			1. Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a>, and go to **Networks**.
-			2. Go to **Routes** > **WAN Routes**, and select **Add a static route** to add a new route.
+			2. Go to **Routes** > **WAN Routes**, and select **Create** to add a new route.
 		`}
 		inline={false}
 	/>
@@ -174,7 +174,8 @@ Example:
 	<>
 	<Markdown
 		text={`
-			1. In **Routes** > **WAN Routes**, select the three dots > **Edit** next to the route you want to modify.
+			1. In **Routes** > **WAN Routes** find the route you want to modify.
+			2. Select the three dots next to it > **Edit**.
 		`}
 		inline={false}
 	/>
@@ -187,7 +188,8 @@ Example:
 	<>
 	<Markdown
 		text={`
-			1. In **Routes**, select the three dots > **Edit** next to the route you want to modify.
+			1. In **Routes** find the route you want to modify.
+			2. Select the three dots next to it > **Edit**.
 		`}
 		inline={false}
 	/>
@@ -195,9 +197,9 @@ Example:
 )
 }
 
-2. Enter the updated route information.
-3. (Optional) We highly recommend testing your route before adding it by selecting **Test routes**.
-4. Select **Edit routes** to save the new information when you are done.
+3. Enter the updated route information.
+4. (Optional) We highly recommend testing your route before adding it by selecting **Test routes**.
+5. Select **Edit routes** to save the new information when you are done.
 
 </TabItem> <TabItem label="API">
 
@@ -276,7 +278,8 @@ Example:
 	<>
 	<Markdown
 		text={`
-			1. In **Routes** > **WAN Routes**, locate the static route you want to modify, select the three dots > **Delete**.
+			1. In **Routes** > **WAN Routes**, locate the static route you want to modify.
+			2. Select the three dots next to it > **Delete**.
 		`}
 		inline={false}
 	/>
@@ -289,7 +292,8 @@ Example:
 	<>
 	<Markdown
 		text={`
-			1. In **Routes**, locate the static route you want to modify, select the three dots > **Delete**.
+			1. In **Routes**, locate the static route you want to modify.
+			2. Select the three dots next to it > **Delete**.
 		`}
 		inline={false}
 	/>
@@ -297,7 +301,7 @@ Example:
 )
 }
 
-2. Confirm the action by selecting the checkbox and select **Delete**.
+3. Confirm the action by selecting the checkbox and select **Delete**.
 
 </TabItem> <TabItem label="API">
 
@@ -371,7 +375,8 @@ To set this ASN:
 		text={`
 			1. Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a>, and go to **Networks**.
 			2. Go to **Routes** > **WAN configuration**.
-			3. In **Account-level virtual network overlay**, select **Edit ASN** and enter your ASN.
+			3. In **Border Gateway Protocol (BGP) configuration**, select **Edit** and enter your ASN.
+			4. Select **Save**.
 		`}
 		inline={false}
 	/>
@@ -393,14 +398,13 @@ To set this ASN:
 			text={`
 			2. Go to **BGP configuration**.
 			3. In **CF Account ASN**, enter Cloudflare's ASN.
+			4. Select **Update**.
 			`}
 			inline={false}
 		/>
 	</>
 )
 }
-
-4. Select **Update**.
 
 { props.magicWord === "Magic Transit" && (
   <>
@@ -454,8 +458,8 @@ If you already have set up your Cloudflare account ASN, you can skip steps two a
 		text={`
 			1. Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a>, and go to **Networks**.
 			2. Go to **Routes** > **WAN configuration**.
-			3. In **Account-level virtual network overlay**, select **Edit ASN** and enter your ASN.
-			4. Go to **Networks** > **Interconnects**.
+			3. In **Border Gateway Protocol (BGP) configuration**, select **Edit ASN** and enter your ASN.
+			4. Go to **Networks** > **Connectors** > **Interconnects**.
 		`}
 		inline={false}
 	/>

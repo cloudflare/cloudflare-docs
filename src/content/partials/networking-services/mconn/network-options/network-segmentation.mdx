@@ -1,23 +1,20 @@
 ---
 params:
-  - productName
   - dashName
   - hardConnectorURL
   - virtualConnectorURL
-  - configHardProductName
-  - configVirtualProductName
 ---
 
 
 import { APIRequest, Markdown, Render, TabItem, Tabs } from "~/components";
 
-You can define policies in your {props.productName} to either allow traffic to flow between your LANs without it leaving your local premises or to forward it via the Cloudflare network where you can add additional security features. The default behavior is to drop all LAN-to-LAN traffic. These policies can be created for specific subnets, and link two LANs.
+You can define policies in your Magic WAN Connector to either allow traffic to flow between your LANs without it leaving your local premises or to forward it via the Cloudflare network where you can add additional security features. The default behavior is to drop all LAN-to-LAN traffic. These policies can be created for specific subnets, and link two LANs.
 
 <pre class="mermaid">
 	{`
 		flowchart LR
 		accTitle: In this example, there are LANs where traffic flows between each other, instead of going to Cloudflare first.
-				a(${props.productName}) <---> b(Internet) <---> c(Cloudflare)
+				a(Magic WAN Connector) <---> b(Internet) <---> c(Cloudflare)
 
 				subgraph Customer site
 				d[LAN 1] <---> a
@@ -43,7 +40,7 @@ If you enable LAN to LAN traffic flows, communications can only be initiated fro
 
 Unidirectional communication can be enabled for UDP and ICMP, but it is not available for TCP, as it would break that protocol.
 
-The following guide assumes you have already created a site and configured your {props.productName}. To learn how to create a site and configure your {props.productName}, refer to <a href={props.hardConnectorURL}>{props.configHardProductName}</a> or <a href={props.virtualConnectorURL}>{props.configVirtualProductName}</a>, depending on the type of {props.productName} you have on your premises.
+The following guide assumes you have already created a site and configured your Magic WAN Connector. To learn how to create a site and configure your Magic WAN Connector, refer to <a href={props.hardConnectorURL}>Configure hardware Connector</a> or <a href={props.virtualConnectorURL}>Configure Virtual Connector</a>, depending on the type of Magic WAN Connector you have on your premises.
 
 ## Create a policy
 
@@ -73,22 +70,35 @@ Follow the steps below to create a new LAN policy to segment your network. Only 
 	</>
 )
 }
-3. Select the {props.productName} you want to configure > **Edit**.
-4. Go to **Network Configuration**, and scroll down to **LAN configuration**.
-5. Select **LAN policies** > **Create Policy**.
-6. In **Policy name**, enter a descriptive name for the policy you are creating.
-7. From the drop-down menu **Origin (required)**, select your origin LAN.
-8. Specify a subnet for your first LAN in **Subnets**.
-9. In **Ports** specify the TCP/UDP ports you want to use. Valid ports range from `1` to `65535`. Zero (`0`) is not a valid port number. Add a comma to separate each of the ports or add a port range. For example, \`2,5,6,9-14\`.
-10. In **Destination (required)**, select the destination LAN and repeat the above process to configure it.
-11. In **Protocols**, select the type of traffic you want to allow. You can choose **TCP**, **UDP**, and **ICMP**. You can also select **Any** to choose all types of traffic.
-12. In **Traffic direction** you can choose between bidirectional traffic (the default) and unidirectional traffic. What you can choose depends on the protocol that you chose for the policy:
-	1. **Any**: If **Any** is selected and you choose **Unidirectional**, the system will alert you that this will break TCP traffic.
-	2. **TCP**: You can only select **Bidirectional**.
-	3. **UDP**: The system defaults to **Bidirectional** but you can choose **Unidirectional**.
-	4. **ICMP**: The system defaults to **Bidirectional** but you can choose **Unidirectional**.
-13. In **Traffic path**, select **Forwarded via Cloudflare** if you want traffic to be forwarded to Cloudflare to be processed. If you do not select this option, traffic will flow locally, in your premises without passing through Cloudflare.
-14. Select **Create policy**.
+{/* Command needed so list starts on number 3 since steps 1, 2 are inside conditional render */}
+<ol start="3">
+	<li>Select the Magic WAN Connector you want to configure &gt; <strong>Edit</strong>.</li>
+	{ props.dashName === "Magic WAN" && (
+		<li>Go to <strong>Network Configuration</strong>, and scroll down to <strong>LAN configuration</strong>.</li>
+	)
+	}
+</ol>
+{/* Command needed so list continues with correct number depending on product */}
+<ol start={props.dashName === "Magic WAN" ? "5" : "4"}>
+	<li>Select <strong>LAN policies</strong> &gt; <strong>{props.dashName === "Magic WAN" ? "Create Policy" : "Create"}</strong>.</li>
+	<li>In <strong>Policy name</strong>, enter a descriptive name for the policy you are creating.</li>
+	<li>From the drop-down menu <strong>Origin (required)</strong>, select your origin LAN.</li>
+	<li>Specify a subnet for your first LAN in <strong>Subnets</strong>.</li>
+	<li>In <strong>Ports</strong> specify the TCP/UDP ports you want to use. Valid ports range from <code>1</code> to <code>65535</code>. Zero (<code>0</code>) is not a valid port number. Add a comma to separate each of the ports or add a port range. For example, <code>2,5,6,9-14</code>.</li>
+	<li>In <strong>Destination (required)</strong>, select the destination LAN and repeat the above process to configure it.</li>
+	<li>In <strong>Protocols</strong>, select the type of traffic you want to allow. You can choose <strong>TCP</strong>, <strong>UDP</strong>, and <strong>ICMP</strong>. You can also select <strong>Any</strong> to choose all types of traffic.</li>
+	<li>
+		In <strong>Traffic direction</strong> you can choose between bidirectional traffic (the default) and unidirectional traffic. What you can choose depends on the protocol that you chose for the policy:
+		<ul>
+			<li><strong>Any</strong>: If <strong>Any</strong> is selected and you choose <strong>Unidirectional</strong>, the system will alert you that this will break TCP traffic.</li>
+			<li><strong>TCP</strong>: You can only select <strong>Bidirectional</strong>.</li>
+			<li><strong>UDP</strong>: The system defaults to <strong>Bidirectional</strong> but you can choose <strong>Unidirectional</strong>.</li>
+			<li><strong>ICMP</strong>: The system defaults to <strong>Bidirectional</strong> but you can choose <strong>Unidirectional</strong>.</li>
+		</ul>
+	</li>
+	<li>In <strong>Traffic path</strong>, select <strong>Forwarded via Cloudflare</strong> if you want traffic to be forwarded to Cloudflare to be processed. If you do not select this option, traffic will flow locally, in your premises without passing through Cloudflare.</li>
+	<li>Select <strong>Save</strong>.</li>
+</ol>
 
 </TabItem> <TabItem label="API">
 
@@ -217,11 +227,20 @@ The new policy will ensure that traffic between the specified LANs flows locally
 	</>
 )
 }
-3. Select the {props.productName} you want to configure > **Edit**.
-4. Go to **Network Configuration**, and scroll down to **LAN configuration**.
-5. Select **LAN policies**.
-6. Select the policy you need to edit > **Edit**.
-7. Make your changes, and select **Update policy**.
+{/* Command needed so list starts on number 3 since steps 1, 2 are inside conditional render */}
+<ol start="3">
+	<li>Select the Magic WAN Connector you want to configure &gt; <strong>Edit</strong>.</li>
+	{ props.dashName === "Magic WAN" && (
+		<li>Go to <strong>Network Configuration</strong>, and scroll down to <strong>LAN configuration</strong>.</li>
+	)
+	}
+</ol>
+{/* Command needed so list continues with correct number depending on product */}
+<ol start={props.dashName === "Magic WAN" ? "5" : "4"}>
+	<li>Select <strong>LAN policies</strong>.</li>
+	<li>Select the policy you need to edit &gt; <strong>Edit</strong>.</li>
+	<li>Make your changes, and select <strong>Update policy</strong>.</li>
+</ol>
 
 </TabItem> <TabItem label="API">
 
@@ -322,12 +341,21 @@ Example:
 	</>
 )
 }
-3. Select the {props.productName} you want to configure > **Edit**.
-4. Go to **Network Configuration**, and scroll down to **LAN configuration**.
-5. Select **LAN policies**.
-6. Select the policy you need to edit > **Edit**.
-7. Select **Delete**.
-8. Select **I understand that deleting a policy is permanent** in the dialog box > **Delete**.
+{/* Command needed so list starts on number 3 since steps 1, 2 are inside conditional render */}
+<ol start="3">
+	<li>Select the Magic WAN Connector you want to configure &gt; <strong>Edit</strong>.</li>
+	{ props.dashName === "Magic WAN" && (
+		<li>Go to <strong>Network Configuration</strong>, and scroll down to <strong>LAN configuration</strong>.</li>
+	)
+	}
+</ol>
+{/* Command needed so list continues with correct number depending on product */}
+<ol start={props.dashName === "Magic WAN" ? "5" : "4"}>
+	<li>Select <strong>LAN policies</strong>.</li>
+	<li>Select the policy you need to edit &gt; <strong>Edit</strong>.</li>
+	<li>Select <strong>Delete</strong>.</li>
+	<li>Select <strong>I understand that deleting a policy is permanent</strong> in the dialog box &gt; <strong>Delete</strong>.</li>
+</ol>
 
 </TabItem> <TabItem label="API">
 

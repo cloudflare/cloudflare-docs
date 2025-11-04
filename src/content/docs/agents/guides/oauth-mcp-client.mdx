@@ -1,0 +1,415 @@
+---
+title: Handle OAuth with MCP servers
+pcx_content_type: how-to
+tags:
+  - MCP
+sidebar:
+  order: 8
+---
+
+import { Render, TypeScriptExample, PackageManagers } from "~/components";
+
+When you build an Agent that connects to OAuth-protected MCP servers (like Slack or Notion), your end users will need to authenticate before the Agent can access their data. This guide shows you how to implement OAuth flows so your users can authorize access seamlessly.
+
+## Understanding the OAuth flow
+
+When your Agent connects to an OAuth-protected MCP server, here's what happens:
+
+1. **Your code calls** `addMcpServer()` with the server URL
+2. **If OAuth is required**, it returns an `authUrl` instead of immediately connecting
+3. **Your application presents** the `authUrl` to your user
+4. **Your user authenticates** on the provider's site (Slack, etc.)
+5. **The provider redirects** back to your Agent's callback URL with an authorization code
+6. **Your Agent completes** the connection automatically
+
+## Connect and initiate OAuth
+
+When you connect to an OAuth-protected server (like Cloudflare Observability), check if `authUrl` is returned. If present, automatically redirect your user to complete authorization:
+
+<TypeScriptExample>
+
+```ts title="src/index.ts"
+export class ObservabilityAgent extends Agent<Env, never> {
+	async onRequest(request: Request): Promise<Response> {
+		const url = new URL(request.url);
+
+		if (url.pathname.endsWith("connect-observability") && request.method === "POST") {
+			// Attempt to connect to Cloudflare Observability MCP server
+			const { id, authUrl } = await this.addMcpServer(
+				"Cloudflare Observability",
+				"https://observability.mcp.cloudflare.com/mcp",
+			);
+
+			if (authUrl) {
+				// OAuth required - redirect user to authorize
+				return Response.redirect(authUrl, 302);
+			}
+
+			// No OAuth needed - connection complete
+			return new Response(
+				JSON.stringify({ serverId: id, status: "connected" }),
+				{ headers: { "Content-Type": "application/json" } },
+			);
+		}
+
+		return new Response("Not found", { status: 404 });
+	}
+}
+```
+
+</TypeScriptExample>
+
+Your user is automatically redirected to the provider's OAuth page to authorize access.
+
+### Alternative approaches
+
+Instead of an automatic redirect, you can also present the `authUrl` to your user as a:
+
+- **Popup window**: `window.open(authUrl, '_blank', 'width=600,height=700')` (for dashboard-style apps)
+- **Clickable link**: Display as a button or link (for API documentation or multi-step flows)
+- **Deep link**: Use custom URL schemes for mobile apps
+
+## Configure callback behavior
+
+After your user completes OAuth, the provider redirects back to your Agent's callback URL. Configure what happens next.
+
+### Redirect to your application (recommended)
+
+For the automatic redirect approach, redirect users back to your application after OAuth completes:
+
+<TypeScriptExample>
+
+```ts title="src/index.ts"
+export class MyAgent extends Agent<Env, never> {
+	onStart() {
+		this.mcp.configureOAuthCallback({
+			successRedirect: "/dashboard",
+			errorRedirect: "/auth-error",
+		});
+	}
+}
+```
+
+</TypeScriptExample>
+
+Users return to `/dashboard` on success or `/auth-error?error=<message>` on failure, maintaining a smooth flow.
+
+### Close popup window
+
+If you used `window.open()` to open OAuth in a popup:
+
+<TypeScriptExample>
+
+```ts title="src/index.ts"
+import { Agent } from "agents";
+import type { MCPClientOAuthResult } from "agents/mcp";
+
+export class MyAgent extends Agent<Env, never> {
+	onStart() {
+		this.mcp.configureOAuthCallback({
+			customHandler: (result: MCPClientOAuthResult) => {
+				if (result.authSuccess) {
+					// Success - close the popup
+					return new Response("<script>window.close();</script>", {
+						headers: { "content-type": "text/html" },
+					});
+				} else {
+					// Error - show message, then close
+					return new Response(
+						`<script>alert('Authorization failed: ${result.authError}'); window.close();</script>`,
+						{ headers: { "content-type": "text/html" } },
+					);
+				}
+			},
+		});
+	}
+}
+```
+
+</TypeScriptExample>
+
+The popup closes automatically, and your main application can detect this and refresh the connection status.
+
+## Monitor connection status
+
+### For React applications (recommended)
+
+Use the `useAgent` hook for automatic state updates:
+
+<TypeScriptExample>
+
+```tsx title="src/App.tsx"
+import { useAgent } from "agents/react";
+import type { MCPServersState } from "agents";
+
+function App() {
+	const [mcpState, setMcpState] = useState<MCPServersState>({
+		prompts: [],
+		resources: [],
+		servers: {},
+		tools: [],
+	});
+
+	const agent = useAgent({
+		agent: "my-agent",
+		name: "session-id",
+		onMcpUpdate: (mcpServers: MCPServersState) => {
+			// Automatically called when MCP state changes!
+			setMcpState(mcpServers);
+		},
+	});
+
+	return (
+		<div>
+			{Object.entries(mcpState.servers).map(([id, server]) => (
+				<div key={id}>
+					<strong>{server.name}</strong>: {server.state}
+					{server.state === "authenticating" && server.auth_url && (
+						<button onClick={() => window.open(server.auth_url, "_blank")}>
+							Authorize
+						</button>
+					)}
+				</div>
+			))}
+		</div>
+	);
+}
+```
+
+</TypeScriptExample>
+
+The `onMcpUpdate` callback receives real-time updates via WebSocket. No polling needed!
+
+### For other applications
+
+If you're not using React, poll the connection status:
+
+<TypeScriptExample>
+
+```ts title="src/index.ts"
+export class MyAgent extends Agent<Env, never> {
+	async onRequest(request: Request): Promise<Response> {
+		const url = new URL(request.url);
+
+		if (
+			url.pathname.endsWith("connection-status") &&
+			request.method === "GET"
+		) {
+			const mcpState = this.getMcpServers();
+
+			const connections = Object.entries(mcpState.servers).map(
+				([id, server]) => ({
+					serverId: id,
+					name: server.name,
+					state: server.state, // "authenticating" | "connecting" | "ready" | "failed"
+					isReady: server.state === "ready",
+					needsAuth: server.state === "authenticating",
+					authUrl: server.auth_url,
+				}),
+			);
+
+			return new Response(JSON.stringify(connections, null, 2), {
+				headers: { "Content-Type": "application/json" },
+			});
+		}
+
+		return new Response("Not found", { status: 404 });
+	}
+}
+```
+
+</TypeScriptExample>
+
+Connection states: `authenticating` (needs OAuth) > `connecting` (completing setup) > `ready` (available for use)
+
+## Handle authentication failures
+
+When OAuth fails, the connection `state` becomes `"failed"`. Detect this in your UI and allow users to retry or clean up:
+
+<TypeScriptExample>
+
+```tsx title="src/App.tsx"
+import { useAgent } from "agents/react";
+import type { MCPServersState } from "agents";
+
+function App() {
+	const [mcpState, setMcpState] = useState<MCPServersState>({
+		prompts: [],
+		resources: [],
+		servers: {},
+		tools: [],
+	});
+
+	const agent = useAgent({
+		agent: "my-agent",
+		name: "session-id",
+		onMcpUpdate: (mcpServers: MCPServersState) => {
+			setMcpState(mcpServers);
+		},
+	});
+
+	const handleRetry = async (serverId: string, serverUrl: string, name: string) => {
+		// Remove failed connection
+		await fetch(`/agents/my-agent/session-id/disconnect`, {
+			method: "POST",
+			body: JSON.stringify({ serverId }),
+		});
+
+		// Retry connection
+		const response = await fetch(`/agents/my-agent/session-id/connect-observability`, {
+			method: "POST",
+			body: JSON.stringify({ serverUrl, name }),
+		});
+		const { authUrl } = await response.json();
+		if (authUrl) window.open(authUrl, "_blank");
+	};
+
+	return (
+		<div>
+			{Object.entries(mcpState.servers).map(([id, server]) => (
+				<div key={id}>
+					<strong>{server.name}</strong>: {server.state}
+
+					{server.state === "failed" && (
+						<div>
+							<p>Connection failed. Please try again.</p>
+							<button onClick={() => handleRetry(id, server.server_url, server.name)}>
+								Retry Connection
+							</button>
+						</div>
+					)}
+				</div>
+			))}
+		</div>
+	);
+}
+```
+
+</TypeScriptExample>
+
+Common failure reasons:
+
+- **User canceled**: Closed OAuth window before completing authorization
+- **Invalid credentials**: Slack credentials were incorrect
+- **Permission denied**: User lacks required permissions (e.g., not a workspace admin)
+- **Expired session**: OAuth session timed out
+
+Failed connections remain in state until you remove them with `removeMcpServer(serverId)`.
+
+## Complete example
+
+This example demonstrates a complete Cloudflare Observability OAuth integration. Users connect to Cloudflare Observability, authorize in a popup window, and the connection becomes available. The Agent provides endpoints to connect, check status, and disconnect.
+
+:::note
+
+For React applications: Replace the `/status` polling endpoint with the `useAgent` hook's `onMcpUpdate` callback for automatic state updates via WebSocket.
+
+:::
+
+<TypeScriptExample>
+
+```ts title="src/index.ts"
+import { Agent, type AgentNamespace, routeAgentRequest } from "agents";
+import type { MCPClientOAuthResult } from "agents/mcp";
+
+type Env = {
+	ObservabilityAgent: AgentNamespace<ObservabilityAgent>;
+};
+
+export class ObservabilityAgent extends Agent<Env, never> {
+	onStart() {
+		// Configure OAuth callback to close popup window
+		this.mcp.configureOAuthCallback({
+			customHandler: (result: MCPClientOAuthResult) => {
+				if (result.authSuccess) {
+					return new Response("<script>window.close();</script>", {
+						headers: { "content-type": "text/html" },
+					});
+				} else {
+					return new Response(
+						`<script>alert('Authorization failed: ${result.authError}'); window.close();</script>`,
+						{ headers: { "content-type": "text/html" } },
+					);
+				}
+			},
+		});
+	}
+
+	async onRequest(request: Request): Promise<Response> {
+		const url = new URL(request.url);
+
+		// Endpoint: Connect to Cloudflare Observability MCP server
+		if (url.pathname.endsWith("connect-observability") && request.method === "POST") {
+			const { id, authUrl } = await this.addMcpServer(
+				"Cloudflare Observability",
+				"https://observability.mcp.cloudflare.com/mcp",
+			);
+
+			if (authUrl) {
+				return new Response(
+					JSON.stringify({
+						serverId: id,
+						authUrl: authUrl,
+						message: "Please authorize Cloudflare Observability access",
+					}),
+					{ headers: { "Content-Type": "application/json" } },
+				);
+			}
+
+			return new Response(
+				JSON.stringify({ serverId: id, status: "connected" }),
+				{ headers: { "Content-Type": "application/json" } },
+			);
+		}
+
+		// Endpoint: Check connection status
+		if (url.pathname.endsWith("status") && request.method === "GET") {
+			const mcpState = this.getMcpServers();
+
+			const connections = Object.entries(mcpState.servers).map(
+				([id, server]) => ({
+					serverId: id,
+					name: server.name,
+					state: server.state,
+					isReady: server.state === "ready",
+					needsAuth: server.state === "authenticating",
+					authUrl: server.auth_url,
+				}),
+			);
+
+			return new Response(JSON.stringify(connections, null, 2), {
+				headers: { "Content-Type": "application/json" },
+			});
+		}
+
+		// Endpoint: Disconnect from Cloudflare Observability
+		if (url.pathname.endsWith("disconnect") && request.method === "POST") {
+			const { serverId } = (await request.json()) as { serverId: string };
+			await this.removeMcpServer(serverId);
+
+			return new Response(
+				JSON.stringify({ message: "Disconnected from Cloudflare Observability" }),
+				{ headers: { "Content-Type": "application/json" } },
+			);
+		}
+
+		return new Response("Not found", { status: 404 });
+	}
+}
+
+export default {
+	async fetch(request: Request, env: Env) {
+		return (
+			(await routeAgentRequest(request, env, { cors: true })) ||
+			new Response("Not found", { status: 404 })
+		);
+	},
+};
+```
+
+</TypeScriptExample>
+
+## Related
+
+- [Connect to an MCP server](/agents/guides/connect-mcp-client) — Get started tutorial (no OAuth)
+- [McpClient — API reference](/agents/model-context-protocol/mcp-client-api/) — Complete API documentation
