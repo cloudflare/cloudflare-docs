@@ -375,7 +375,8 @@ To set this ASN:
 		text={`
 			1. Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a>, and go to **Networks**.
 			2. Go to **Routes** > **WAN configuration**.
-			3. In **Account-level virtual network overlay**, select **Edit ASN** and enter your ASN.
+			3. In **Border Gateway Protocol (BGP) configuration**, select **Edit** and enter your ASN.
+			4. Select **Save**.
 		`}
 		inline={false}
 	/>
@@ -397,14 +398,13 @@ To set this ASN:
 			text={`
 			2. Go to **BGP configuration**.
 			3. In **CF Account ASN**, enter Cloudflare's ASN.
+			4. Select **Update**.
 			`}
 			inline={false}
 		/>
 	</>
 )
 }
-
-4. Select **Update**.
 
 { props.magicWord === "Magic Transit" && (
   <>
