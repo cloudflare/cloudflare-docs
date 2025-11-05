@@ -1,0 +1,102 @@
+---
+title: MCP client transport deprecation - Use standard MCP SDK transports
+description: The custom SSEEdgeClientTransport and StreamableHTTPEdgeClientTransport classes are now deprecated. Migrate to the standard SSEClientTransport and StreamableHTTPClientTransport classes from the MCP SDK, which now support Cloudflare Workers natively.
+products:
+  - agents
+  - workers
+date: 2025-11-05
+---
+
+The Agents SDK previously provided custom `SSEEdgeClientTransport` and `StreamableHTTPEdgeClientTransport` classes to work around limitations in Cloudflare Workers. Since the MCP SDK now natively supports the `duplex` parameter in workerd, these custom transports are no longer necessary.
+
+## What's Changed
+
+The custom edge transport classes (`SSEEdgeClientTransport` and `StreamableHTTPEdgeClientTransport`) are now deprecated and will be removed in the next major version. They have been replaced with thin wrapper classes that emit deprecation warnings and delegate to the standard MCP SDK transports.
+
+**Internal changes:**
+- The Agents SDK now uses the standard `SSEClientTransport` and `StreamableHTTPClientTransport` from `@modelcontextprotocol/sdk` internally
+- Custom fetch overrides and auth header handling have been removed
+- Deprecated wrapper classes are provided for backward compatibility
+
+## Migration Guide
+
+If you're using the edge transport classes directly in your code, update your imports:
+
+### Before (Deprecated)
+
+```ts
+import { SSEEdgeClientTransport } from "agents/mcp";
+import { StreamableHTTPEdgeClientTransport } from "agents/mcp";
+
+const transport = new SSEEdgeClientTransport(
+  new URL("https://mcp-server.example.com/sse"),
+  options
+);
+
+// or
+
+const transport = new StreamableHTTPEdgeClientTransport(
+  new URL("https://mcp-server.example.com/mcp"),
+  options
+);
+```
+
+### After (Recommended)
+
+```ts
+import { SSEClientTransport } from "@modelcontextprotocol/sdk/client/sse.js";
+import { StreamableHTTPClientTransport } from "@modelcontextprotocol/sdk/client/streamableHttp.js";
+
+const transport = new SSEClientTransport(
+  new URL("https://mcp-server.example.com/sse"),
+  options
+);
+
+// or
+
+const transport = new StreamableHTTPClientTransport(
+  new URL("https://mcp-server.example.com/mcp"),
+  options
+);
+```
+
+## High-level MCP client API (No changes required)
+
+If you're using the high-level `Agent.addMcpServer()` API, no changes are required. The SDK automatically uses the correct transports internally:
+
+```ts
+// This continues to work without any changes
+await this.addMcpServer(
+  "Weather API",
+  "https://weather-mcp.example.com/mcp"
+);
+```
+
+The high-level API already uses the standard MCP SDK transports and will continue to work seamlessly.
+
+## Timeline
+
+- **Now**: Deprecated classes emit console warnings when instantiated
+- **Next major version**: Deprecated classes will be removed entirely
+
+## Why This Change?
+
+The custom edge transports were originally created to work around limitations in Cloudflare Workers' fetch implementation. Since workerd now supports the `duplex` parameter that the standard MCP SDK requires, these workarounds are no longer necessary. Using the standard MCP SDK transports:
+
+- Reduces maintenance burden
+- Ensures better compatibility with future MCP SDK updates
+- Simplifies the codebase
+- Follows standard MCP patterns
+
+## Resources
+
+- [MCP Transport Documentation](/agents/model-context-protocol/transport)
+- [MCP Client API Reference](/agents/model-context-protocol/mcp-client-api)
+- [Model Context Protocol Specification](https://spec.modelcontextprotocol.io/)
+
+## Need Help?
+
+If you have questions or encounter issues during migration:
+
+- [GitHub Issues](https://github.com/cloudflare/agents/issues) - Report bugs or ask questions
+- [GitHub Discussions](https://github.com/cloudflare/agents/discussions) - Community support
