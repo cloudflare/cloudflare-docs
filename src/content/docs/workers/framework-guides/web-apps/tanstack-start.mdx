@@ -18,7 +18,7 @@ import {
 	WranglerConfig,
 } from "~/components";
 
-[TanStack Start](https://tanstack.com/start) is a full-stack framework for building web applications. It comes with features like server-side rendering, streaming, server functions, bundling, and more. In this guide, you learn to deploy a TanStack Start application to Cloudflare Workers.
+[TanStack Start](https://tanstack.com/start) is a full-stack framework for building web applications. It comes with features like server-side rendering, streaming, server functions, bundling, and more. In this guide, you learn to deploy a TanStack (**React**) Start application to Cloudflare Workers. If you would like to deploy a TanStack Start application with **Solid** instead, you can take a look at TanStack's official [example](https://tanstack.com/start/latest/docs/framework/solid/examples/start-basic-cloudflare).
 
 ## 1. Set up a TanStack Start project
 
@@ -117,6 +117,25 @@ This can help you making sure that your application will work as intended once i
 :::
 
 ---
+
+## Custom Worker-Entrypoint
+
+If you need to export additional declarations from your worker file, for example class definitions for [Durable Objects](https://developers.cloudflare.com/durable-objects/get-started/#2-write-a-durable-object-class-using-sql-api), you can specify a different file for the `main` property inside the `wrangler.jsonc`:
+
+<WranglerConfig>
+```toml 
+main = "worker-entry.ts"
+```
+</WranglerConfig>
+
+Export `@tanstack/react-start/server-entry` from the specified file manually. This is also the place where you can export anything else you want:
+```ts title="worker-entry.ts"
+export { default } from '@tanstack/react-start/server-entry'
+
+export class MyDurableObject extends DurableObject<Env> {
+    // ...
+}
+```
 
 ## Bindings
 
