@@ -55,6 +55,21 @@ Once you have [onboarded your domain](/fundamentals/manage-domains/add-site/) to
 
 Save the relevant endpoint receiving LLM-related traffic to [Endpoint Management](/api-shield/management-and-monitoring/endpoint-management/) once it has been discovered, or add the endpoint manually.
 
+<Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
+
+<Steps>
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
+2. Go to **Security** > **API Shield**.
+3. Go to the **Discovery** tab.
+4. Find the endpoint receiving requests with LLM prompts in the list and select **Save** next to the endpoint.
+
+</Steps>
+
+</TabItem> <TabItem label="New dashboard" icon="rocket">
+
+<Steps>
+
 1. In the Cloudflare dashboard, go to the **Web assets** page.
 
    <DashButton url="/?to=/:account/:zone/security/web-assets" />
@@ -62,12 +77,35 @@ Save the relevant endpoint receiving LLM-related traffic to [Endpoint Management
 2. Go to the **Discovery** tab.
 3. Find the endpoint receiving requests with LLM prompts in the list and select **Save** next to the endpoint.
 
+</Steps>
+
+</TabItem> </Tabs>
+
 If you did not find the endpoint in the **Discovery** tab, you can add it manually:
+
+<Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
+
+<Steps>
+
+1. Go to the **Endpoint Management** tab.
+2. Select **Add endpoints** > **Manually add**.
+3. Choose the method from the dropdown menu and add the path and hostname for the endpoint.
+4. Select **Add endpoints**.
+
+</Steps>
+
+</TabItem> <TabItem label="New dashboard" icon="rocket">
+
+<Steps>
 
 1. Go to the **Endpoints** tab.
 2. Select **Add endpoints** > **Manually add**.
 3. Choose the method from the dropdown menu and add the path and hostname for the endpoint.
 4. Select **Add endpoints**.
+
+</Steps>
+
+</TabItem> </Tabs>
 
 In the context of this guide, consider an example endpoint with the following properties:
 
@@ -81,17 +119,37 @@ You must [label endpoints](/api-shield/management-and-monitoring/endpoint-labels
 
 Add the `cf-llm` label to the endpoint you added:
 
+<Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
+
+<Steps>
+
+<Render
+	file="labels-add-old-nav"
+	product="api-shield"
+	params={{ labelName: "cf-llm" }}
+/>
+
+</Steps>
+
+</TabItem> <TabItem label="New dashboard" icon="rocket">
+
+<Steps>
+
 <Render
 	file="labels-add"
 	product="api-shield"
 	params={{ labelName: "cf-llm" }}
 />
 
+</Steps>
+
+</TabItem> </Tabs>
+
 Once you add a label to the endpoint, Cloudflare will start labeling incoming traffic for the endpoint with the label you selected.
 
 ## 4. (Optional) Generate API traffic
 
-You may need to issue some `POST` requests to the endpoint so that there is some labeled traffic to analyze in this step.
+You may need to issue some `POST` requests to the endpoint so that there is some labeled traffic to review in the following step.
 
 For example, send a `POST` request to the API endpoint you previously added (`/v1/messages` in this example) in your zone with an LLM prompt requesting PII:
 
@@ -106,6 +164,8 @@ The PII category for this request would be `EMAIL_ADDRESS`.
 ## 5. Review labeled traffic and detection behavior
 
 Use [Security Analytics](/waf/analytics/security-analytics/) in the new application security dashboard to validate that the WAF is correctly labeling traffic for the endpoint.
+
+<Steps>
 
 1. In the Cloudflare dashboard, go to the **Analytics** page.
 
@@ -127,6 +187,8 @@ Use [Security Analytics](/waf/analytics/security-analytics/) in the new applicat
    | Has PII in LLM prompt  | equals   | Yes      |     |
 
    The displayed logs now refer to incoming requests where personally identifiable information (PII) was detected in an LLM prompt.
+
+</Steps>
 
 Alternatively, you can also create a custom rule with a _Log_ action (only available on Enterprise plans) to check for potentially harmful traffic related to LLM prompts. This rule will generate [security events](/waf/analytics/security-events/) that will allow you to validate your Firewall For AI configuration.
 
