@@ -5,7 +5,7 @@ sidebar:
   order: 11
 ---
 
-import { Render } from "~/components";
+import { Type, MetaInfo, Render } from "~/components";
 
 The `/crawl` endpoint automates the process of scraping content from webpages starting with a single URL and crawling to a specified number or depth of links. The response can be returned in either HTML, Markdown, or JSON.
 
@@ -39,14 +39,14 @@ If you are on a Workers Free plan, your crawl may fail if it hits the [limit of 
 ### Initiate the crawl job
 
 Here are the basic parameters you can use to initiate your crawl job:
-- `url` — (Required) Starts crawling from this URL
-- `limit` — (Optional) Maximum number of pages to crawl (default is 10, maximum is 100,000)
-- `depth` — (Optional) Maximum link depth to crawl from the starting URL
-- `formats` — (Optional) Response format (default is HTML, other options are Markdown and JSON)
-
-The API will respond immediately with a job `id` you will use to retrieve the status and results of the crawl job.
-
-See the [advanced usage section below](/browser-rendering/rest-api/crawl-endpoint/#initiate-the-crawl-job) for additional parameters.
+- `url` <Type text="String" /> <MetaInfo text="Required" />
+  - Starts crawling from this URL
+- `limit` <Type text="Number" /> <MetaInfo text="Optional" />
+  - Maximum number of pages to crawl (default is 10, maximum is 100,000)
+- `depth` <Type text="Number" /> <MetaInfo text="Optional" />
+  - Maximum link depth to crawl from the starting URL
+- `formats` <Type text="Array of strings" /> <MetaInfo text="Optional" />
+  - Response format (default is HTML, other options are Markdown and JSON)
 
 Here is an example that uses the basic parameters:
 ```bash
@@ -65,6 +65,8 @@ curl -X POST 'https://api.cloudflare.com/client/v4/accounts/{account_id}/browser
   }'
 ```
 
+The API will respond immediately with a job `id` you will use to retrieve the status and results of the crawl job.
+
 Here is an example of the response, which includes a job `id`:
 
 ```json output
@@ -75,6 +77,7 @@ Here is an example of the response, which includes a job `id`:
   "success": true
 }
 ```
+See the [advanced usage section below](/browser-rendering/rest-api/crawl-endpoint/#initiate-the-crawl-job) for additional parameters.
 
 ### Request results of the crawl job
 
