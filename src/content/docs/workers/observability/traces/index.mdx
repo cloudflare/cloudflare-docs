@@ -32,21 +32,7 @@ For a full list of instrumented operations , see the [spans and attributes docum
 
 ### How to enable tracing
 
-If you have already set `observability.enabled = true` in your [wrangler configuration file](/workers/wrangler/configuration/#observability), tracing **and** logs will be automatically enabled.
-
-<WranglerConfig>
-
-```json
-{
-	"observability": {
-		"enabled": true
-	}
-}
-```
-
-</WranglerConfig>
-
-You can also configure tracing independently by setting `observability.traces.enabled = true` in your [wrangler configuration file](/workers/wrangler/configuration/#observability).
+You can configure tracing by setting `observability.traces.enabled = true` in your [wrangler configuration file](/workers/wrangler/configuration/#observability).
 
 <WranglerConfig>
 
@@ -58,6 +44,20 @@ You can also configure tracing independently by setting `observability.traces.en
 			// optional sampling rate (recommended for high-traffic workloads)
 			"head_sampling_rate": 0.05
 		}
+	}
+}
+```
+
+</WranglerConfig>
+
+Starting with the [compatibility date of 2025-11-19](/workers/configuration/compatibility-flags/#automatic-tracing), the following will also enable tracing **in addition to** logs. 
+
+<WranglerConfig>
+
+```json
+{
+	"observability": {
+		"enabled": true
 	}
 }
 ```
