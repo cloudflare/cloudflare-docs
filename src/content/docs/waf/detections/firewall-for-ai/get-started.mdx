@@ -151,7 +151,7 @@ Once you add a label to the endpoint, Cloudflare will start labeling incoming tr
 
 You may need to issue some `POST` requests to the endpoint so that there is some labeled traffic to review in the following step.
 
-For example, send a `POST` request to the API endpoint you previously added (`/v1/messages` in this example) in your zone with an LLM prompt requesting PII:
+For example, the following command sends a `POST` request to the API endpoint you previously added (`/v1/messages` in this example) in your zone with an LLM prompt requesting PII:
 
 ```sh
 curl "https://<YOUR_HOSTNAME>/v1/messages" \
@@ -163,7 +163,7 @@ The PII category for this request would be `EMAIL_ADDRESS`.
 
 ## 5. Review labeled traffic and detection behavior
 
-Use [Security Analytics](/waf/analytics/security-analytics/) in the new application security dashboard to validate that the WAF is correctly labeling traffic for the endpoint.
+Use [Security Analytics](/waf/analytics/security-analytics/) in the new application security dashboard to validate that Cloudflare is correctly labeling traffic for the endpoint.
 
 <Steps>
 
@@ -190,7 +190,7 @@ Use [Security Analytics](/waf/analytics/security-analytics/) in the new applicat
 
 </Steps>
 
-Alternatively, you can also create a custom rule with a _Log_ action (only available on Enterprise plans) to check for potentially harmful traffic related to LLM prompts. This rule will generate [security events](/waf/analytics/security-events/) that will allow you to validate your Firewall For AI configuration.
+Alternatively, you can also create a custom rule with a _Log_ action (only available on Enterprise plans) to check for potentially harmful traffic related to LLM prompts. This rule will generate [security events](/waf/analytics/security-events/) that will allow you to validate your Firewall for AI configuration.
 
 ## 6. Mitigate harmful requests
 
