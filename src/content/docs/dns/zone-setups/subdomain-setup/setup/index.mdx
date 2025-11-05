@@ -68,12 +68,6 @@ Although the how-to guides in this documentation are focused on both parent doma
 
 ## SSL/TLS certificates
 
-:::note[Certificate Precedence]
-If the **parent zone's** SSL/TLS certificate explicitly lists the delegated subdomain (e.g., `docs.example.com` on the `example.com` certificate) and is provisioned *after* the subdomain's own certificate, the **parent zone's certificate will take precedence**. This means visitors to the delegated subdomain might incorrectly see the parent domain's certificate.
-
-To ensure the child zone's certificate is always used, **do not include the delegated subdomain hostname** in any certificate covering the parent zone.
-:::
-
 ### Troubleshooting Certificate Validation
 
 This section addresses common issues where Edge Certificate provisioning appears to be stuck or failing. In the context of Subdomain Setup, these failures are often **expected behaviors** due to conflicts in domain hierarchy and delegation.
