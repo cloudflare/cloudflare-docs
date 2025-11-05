@@ -15,36 +15,13 @@ You can add or update an IRR entry by following the directions of your routing r
 
 The recommended registries are AFRINIC, APNIC, ARIN, LACNIC, and RIPE. Refer to the table below for more information.
 
-<table>
-<thead>
-    <tr>
-      <th>Route registry</th>
-      <th>URL</th>
-     </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>AFRINIC</td>
-      <td><a href="https://afrinic.net/internet-routing-registry#guide">https://afrinic.net/internet-routing-registry#guide</a></td>
-    </tr>
-    <tr>
-      <td>APNIC</td>
-      <td><a href="https://www.apnic.net/manage-ip/apnic-services/routing-registry/">https://www.apnic.net/manage-ip/apnic-services/routing-registry/</a></td>
-    </tr>
-    <tr>
-      <td>ARIN</td>
-      <td><a href="https://www.arin.net/resources/manage/irr/quickstart/">https://www.arin.net/resources/manage/irr/quickstart/</a></td>
-    </tr>
-		    <tr>
-      <td>LACNIC</td>
-      <td><a href="https://lacnic.zendesk.com/hc/articles/360038667154-What-are-a-route-and-a-route-6-objects">https://lacnic.zendesk.com/hc/articles/360038667154-What-are-a-route-and-a-route-6-objects</a></td>
-    </tr>
-    <tr>
-      <td>RIPE</td>
-      <td><a href="https://www.ripe.net/manage-ips-and-asns/db/support/managing-route-objects-in-the-irr">https://www.ripe.net/manage-ips-and-asns/db/support/managing-route-objects-in-the-irr</a></td>
-    </tr>
-  </tbody>
-</table>
+| Route registry | URL |
+| -------------- | --- |
+| AFRINIC | [https://afrinic.net/internet-routing-registry#guide](https://afrinic.net/internet-routing-registry#guide) |
+| APNIC | [https://www.apnic.net/manage-ip/apnic-services/routing-registry/](https://www.apnic.net/manage-ip/apnic-services/routing-registry/) |
+| ARIN | [https://www.arin.net/resources/manage/irr/quickstart/](https://www.arin.net/resources/manage/irr/quickstart/) |
+| LACNIC | [https://lacnic.zendesk.com/hc/articles/360038667154-What-are-a-route-and-a-route-6-objects](https://lacnic.zendesk.com/hc/articles/360038667154-What-are-a-route-and-a-route-6-objects) |
+| RIPE | [https://www.ripe.net/manage-ips-and-asns/db/support/managing-route-objects-in-the-irr](https://www.ripe.net/manage-ips-and-asns/db/support/managing-route-objects-in-the-irr) |
 
 ## Verify an IRR entry
 
@@ -82,13 +59,11 @@ Use [IRR Explorer](https://irrexplorer.nlnog.net) to verify which prefixes are a
 
 Use WHOIS lookup to verify your origin ASN and routing data.
 
-**Method:** In a terminal, use this `whois` command, substituting your network prefix for *network-prefix*:
+**Method:** In a terminal, use the following `whois` command, replacing `<NETWORK_PREFIX>` with your network prefix. The host `rr.ntt.net` is the primary server for the Global IP network.
 
 ```sh
-whois -h rr.ntt.net network-prefix
+whois -h rr.ntt.net <NETWORK_PREFIX>
 ```
-
-The host `rr.ntt.net` is the primary server for the Global IP network.
 
 **Output:** IRR route, origin, and source information.
 
