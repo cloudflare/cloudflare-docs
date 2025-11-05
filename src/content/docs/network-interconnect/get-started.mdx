@@ -16,7 +16,7 @@ Eligibility for CNI and port availability is determined in coordination with you
 - CNI ports are currently offered at no charge to Enterprise customers.
 	- Non-Enterprise customers (and any third party) may peer with Cloudflare via Internet Exchange according to our [open peering policy](https://www.cloudflare.com/peering-policy/).
 - CNI is available at select Cloudflare data centers:
-  - The type of dataplane offered in that location (v1) will determine specifications of the supported connection, such as the MTU.
+  - The type of dataplane offered in that location will determine specifications of the supported connection, such as the MTU.
   - The diversity offered in the location will vary.
 - Customers must have a BGP session established for CNI v1 to be operational.
 
@@ -35,7 +35,7 @@ Eligibility for CNI and port availability is determined in coordination with you
 	- **Dataplane v1**: CNI ports may be assigned a single 802.1Q VLAN tag.
 	- **Dataplane v2 (beta)**: VLAN tagging (802.1Q) and QinQ are not yet supported.
 - **MTU considerations:**
-  - **Dataplane v1**: Supports a native 1,500-byte MTU for traffic from Cloudflare to you (ingress), but still requires a 1,476-byte MTU for traffic from you to Cloudflare (egress).
+	- **Dataplane v1**: Supports a native 1,500-byte MTU for traffic from Cloudflare to you (ingress), but still requires a 1,476-byte MTU for traffic from you to Cloudflare (egress).
 	- **Dataplane v2 (beta)**: Supports a maximum MTU of 1,500 bytes bidirectionally with no GRE requirement.
 - **Bidirectional Forwarding Detection (BFD):**
 	- **Dataplane v1**: BFD provides fast failure detection for BGP sessions and is supported on direct connections. To enable BFD, contact your account team. Note that BFD on a CNI does not impact the failover time for Magic Transit / WAN tunnels, which rely on separate health checks.
