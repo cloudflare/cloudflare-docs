@@ -131,7 +131,7 @@ Identifies a Zero Trust organization in the WARP GUI when WARP is deployed with 
 
 </Details>
 
-WARP uses [post-quantum cryptography](/ssl/post-quantum-cryptography/) to secure connections from the device to Cloudflare's network. Post-quantum cryptography requires the [MASQUE protocol](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#device-tunnel-protocol) and is enabled by default on all devices using MASQUE.
+WARP uses [post-quantum cryptography](/ssl/post-quantum-cryptography/) to secure connections from the device to Cloudflare's network. Post-quantum cryptography requires the [MASQUE protocol](#warp_tunnel_protocol) and is enabled by default on all devices using MASQUE.
 
 **Value Type:** `boolean`
 
@@ -255,6 +255,17 @@ Assigns a unique identifier to the device for the [device UUID posture check](/c
 **Value Type:** `string`
 
 **Value:** UUID for the device (for example, `496c6124-db89-4735-bc4e-7f759109a6f1`).
+
+### `warp_tunnel_protocol`
+
+Configures the protocol used to route IP traffic from the device to Cloudflare Gateway. For more information, refer to [Device tunnel protocol](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#device-tunnel-protocol).
+
+**Value Type:** `string`
+
+**Value:**
+
+* `masque` — (default) [MASQUE](https://datatracker.ietf.org/wg/masque/about/) protocol
+* `wireguard` — [WireGuard](https://www.wireguard.com/) protocol
 
 ## Top-level parameters
 
