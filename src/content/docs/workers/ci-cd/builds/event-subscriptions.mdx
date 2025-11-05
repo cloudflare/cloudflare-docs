@@ -8,12 +8,10 @@ head:
     content: Workers Builds event subscriptions
 ---
 
-import EventSchemas from "~/components/EventSchemas.astro";
+import { Render } from "~/components";
 
-[Event subscriptions](/queues/event-subscriptions/) allow you to receive messages when events occur across your Cloudflare account. Cloudflare products (e.g., [KV](/kv/), [Workers AI](/workers-ai/), [Workers](/workers/)) can publish structured events to a queue, which you can then consume with Workers or [HTTP pull consumers](/queues/configuration/pull-consumers/) to build custom workflows, integrations, or logic.
-
-For more information on [Event Subscriptions](/queues/event-subscriptions/), refer to the [management guide](/queues/event-subscriptions/manage-event-subscriptions/).
+<Render file="event-subscriptions/intro" product="queues" />
 
 ## Available Workers Builds events
 
-<EventSchemas product="workersBuilds" />
+<Render file="event-subscriptions/workers-builds-events" product="queues" />

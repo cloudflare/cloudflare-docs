@@ -8,7 +8,7 @@ head:
     content: Events & schemas
 ---
 
-import EventSchemas from "~/components/EventSchemas.astro";
+import { Render } from "~/components";
 
 This page provides a comprehensive reference of available event sources and their corresponding events with schemas for [event subscriptions](/queues/event-subscriptions/). All events include common metadata fields and follow a consistent structure.
 
@@ -16,31 +16,31 @@ This page provides a comprehensive reference of available event sources and thei
 
 ### R2
 
-<EventSchemas product="r2" />
+<Render file="event-subscriptions/r2-events" product="queues" />
 
 ### Super Slurper
 
-<EventSchemas product="superSlurper" />
+<Render file="event-subscriptions/super-slurper-events" product="queues" />
 
 ### Vectorize
 
-<EventSchemas product="vectorize" />
+<Render file="event-subscriptions/vectorize-events" product="queues" />
 
 ### Workers AI
 
-<EventSchemas product="workersAi" />
+<Render file="event-subscriptions/workers-ai-events" product="queues" />
 
 ### Workers Builds
 
-<EventSchemas product="workersBuilds" />
+<Render file="event-subscriptions/workers-builds-events" product="queues" />
 
 ### Workers KV
 
-<EventSchemas product="kv" />
+<Render file="event-subscriptions/kv-events" product="queues" />
 
 ### Workflows
 
-<EventSchemas product="workflows" />
+<Render file="event-subscriptions/workflows-events" product="queues" />
 
 ## Common schema fields
 
