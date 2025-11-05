@@ -120,14 +120,14 @@ Identifies a Zero Trust organization in the WARP GUI when WARP is deployed with 
 
 </Details>
 
-Use [post-quantum cryptography](/ssl/post-quantum-cryptography/) to secure connections from the device to Cloudflare's network.
+WARP uses [post-quantum cryptography](/ssl/post-quantum-cryptography/) to secure connections from the device to Cloudflare's network. Post-quantum cryptography requires the [MASQUE protocol](/cloudflare-one/team-and-resources/devices/warp/configure-warp/warp-settings/#device-tunnel-protocol) and is enabled by default on all devices using MASQUE.
 
 **Value Type:** `boolean`
 
 **Value:**
 
-* `false` — (default) Disables post-quantum key agreement.
-* `true` — Enables post-quantum key agreement for all traffic through the WARP tunnel.
+* `false` — Disables post-quantum key agreement.
+* `true` —  Enables post-quantum key agreement for all traffic through the WARP tunnel.
 
 ### `onboarding`
 
