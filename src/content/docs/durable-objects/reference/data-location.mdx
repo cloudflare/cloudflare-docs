@@ -64,6 +64,12 @@ Note that it is also possible to specify a jurisdiction by creating an individua
 
 Durable Objects, as with any stateful API, will often add response latency as requests must be forwarded to the data center where the Durable Object, or state, is located.
 
+:::note[Compatibility with Jurisdictions]
+
+Location hints will be ignored if a jurisdiction is present.
+
+:::
+
 Durable Objects do not currently change locations after they are created<sup>1</sup>. By default, a Durable Object is instantiated in a data center close to where the initial `get()` request is made. This may not be in the same data center that the `get()` request is made from, but in most cases, it will be in close proximity.
 
 :::caution[Initial requests to Durable Objects]
