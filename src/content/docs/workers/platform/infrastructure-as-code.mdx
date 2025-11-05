@@ -417,3 +417,113 @@ resource "cloudflare_workers_deployment" "my_worker_deployment" {
 ```
 
 To make this succeed, you first have to comment out the `durable_object` binding block, apply the plan, uncomment it, comment out the `migrations` block, then apply again. This time the plan will succeed. This also applies to the API or SDKs. This is an example where it makes sense to just manage the `cloudflare_worker` and/or `cloudflare_workers_deployment` resources while using Wrangler for build and Version management.
+
+## Considerations with Secrets
+
+[Secrets](/workers/configuration/secrets/) are not managed as standalone resources in Terraform or the API. Instead, they must be included as bindings on your Worker script or version.
+
+### Secret Text Binding
+
+When using Terraform or the API, use a `secret_text` binding to attach encrypted secrets to your Worker:
+
+<Tabs syncKey="terraform-worker-resource">
+<TabItem label="cloudflare_workers_script">
+
+```tf
+variable "account_id" {
+  type = string
+}
+
+variable "api_key" {
+  type      = string
+  sensitive = true
+}
+
+resource "cloudflare_workers_script" "example_script" {
+  account_id  = var.account_id
+  name        = "my-script"
+  content     = file("worker.js")
+  
+  bindings = [{
+    type = "secret_text"
+    name = "API_KEY"
+    text = var.api_key
+  }]
+}
+```
+
+</TabItem>
+<TabItem label="cloudflare_worker_version">
+
+```tf
+variable "account_id" {
+  type = string
+}
+
+variable "api_key" {
+  type      = string
+  sensitive = true
+}
+
+resource "cloudflare_worker" "example" {
+  account_id = var.account_id
+  name       = "my-worker"
+}
+
+resource "cloudflare_worker_version" "example_version" {
+  account_id         = var.account_id
+  worker_id          = cloudflare_worker.example.id
+  compatibility_date = "2025-08-06"
+  main_module        = "worker.js"
+  
+  modules = [{
+    name         = "worker.js"
+    content_type = "application/javascript+module"
+    content_file = "worker.js"
+  }]
+  
+  bindings = [{
+    type = "secret_text"
+    name = "API_KEY"
+    text = var.api_key
+  }]
+}
+```
+
+</TabItem>
+</Tabs>
+
+The secret will be encrypted and accessible in your Worker via `env.API_KEY`.
+
+### Secrets Store
+
+For centralized secrets management across multiple Workers, [Secrets Store](/secrets-store/) (beta) provides account-level secrets. While Secrets Store can currently be accessed from Workers using `secrets_store_secret` bindings, a dedicated Terraform resource for managing Secrets Store is planned for GA, tentatively targeting Q1 2026.
+
+In the meantime, you can reference an existing Secrets Store managed outside of Terraform:
+
+```tf
+variable "store_id" {
+  type        = string
+  description = "ID of your Secrets Store resource"
+}
+
+resource "cloudflare_worker_version" "example_version" {
+  account_id         = var.account_id
+  worker_id          = cloudflare_worker.example.id
+  compatibility_date = "2025-08-06"
+  main_module        = "worker.js"
+  
+  modules = [{
+    name         = "worker.js"
+    content_type = "application/javascript+module"
+    content_file = "worker.js"
+  }]
+  
+  bindings = [{
+    type        = "secrets_store_secret"
+    name        = "MY_SECRET"
+    secret_name = "my-secret"
+    store_id    = var.store_id
+  }]
+}
+```
