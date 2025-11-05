@@ -351,6 +351,14 @@ To pin applications to a WAN port:
 )
 }
 
+
+{props.magicWord === "breakout" && (
+	<>
+		<Render	file="mconn/network-options/app-aware-policies/netflow" product="networking-services" />
+	</>
+	)
+}
+
 { props.magicWord === "breakout" && (
 	<>
 	<AnchorHeading title="WARP traffic" depth={2} />

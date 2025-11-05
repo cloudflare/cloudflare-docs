@@ -2,11 +2,15 @@
 {}
 ---
 
+import { CURL } from "~/components";
+
+## NetFlow exports from Magic WAN Connector to Magic Network Monitoring
+
 You can configure your Magic WAN Connector to export Netflow statistics for local breakout traffic to [Magic Network Monitoring](/magic-network-monitoring). This provides visibility into traffic that leaves your site directly without being sent over the Cloudflare network.
 
 The Magic WAN Connector appliance uses NetFlow v9 to export flow data for breakout traffic only. You can enable and configure this export by setting the Netflow configuration for the associated site via the Cloudflare API.
 
-## Enable NetFlow exports
+### Enable NetFlow exports
 
 :::note
 To export NetFlow statistics, you will need your [account ID](/fundamentals/account/find-account-and-zone-ids/) and [API token](/fundamentals/api/get-started/account-owned-tokens/), as well as the `site_id` associated with your Magic WAN Connector.
@@ -17,8 +21,8 @@ To export NetFlow statistics, you will need your [account ID](/fundamentals/acco
 
 Minimal configuration example:
 
-<APIRequest
-	path="/accounts/{account_id}/magic/sites/{site_id}/netflow_config"
+<CURL
+	url="https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/netflow_config"
 	method="PUT"
 	json={{
 		"collector_ip": "162.159.65.1"
@@ -33,8 +37,8 @@ Minimal configuration example:
 
 Full configuration example:
 
-<APIRequest
-	path="/accounts/{account_id}/magic/sites/{site_id}/netflow_config"
+<CURL
+	url="https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/netflow_config"
 	method="PUT"
 	json={{
 		"collector_ip": "162.159.65.1",
