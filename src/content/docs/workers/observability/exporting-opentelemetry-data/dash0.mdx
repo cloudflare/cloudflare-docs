@@ -1,0 +1,102 @@
+---
+pcx_content_type: how-to
+title: Export to Dash0
+sidebar:
+  order: 6
+---
+
+import {WranglerConfig} from "~/components";
+
+Dash0 is an OpenTelemetry-native observability platform built on open standards that simplifies system monitoring and troubleshooting. With observability in minutes, not months, Dash0 helps teams unify logs, metrics, and distributed traces in a single interface. By exporting your Cloudflare Workers application telemetry to Dash0, you can:
+- Correlate logs, metrics, and distributed traces across your entire system
+- Instantly search and filter across high-cardinality attributes
+- Troubleshoot issues faster with unified observability
+
+This guide will walk you through configuring your Cloudflare Worker application to export OpenTelemetry-compliant traces and logs to Dash0.
+
+## Prerequisites
+
+Before you begin, ensure you have:
+
+- An active [Dash0 account](https://dash0.com/) (free 14-day trial available)
+- A deployed Worker that you want to monitor
+
+## Step 1: Get your Dash0 authorization token and endpoint
+
+1. Log in to your [Dash0 account](https://app.dash0.com/)
+2. Navigate to **Organization Settings**
+3. In the **Endpoints** section, find your ingestion endpoints:
+   - **Traces endpoint**: (e.g., `https://ingress.eu-west-1.aws.dash0.com/v1/traces`)
+   - **Logs endpoint**: (e.g., `https://ingress.eu-west-1.aws.dash0.com/v1/logs`)
+4. Create or copy your **Authorization Token** from the same section
+5. **Important**: Copy the authorization token and store it securely
+
+The authorization token will look something like: `auth_hxZyXotVvAzhhweQJ6egeSEUsgUifw2B`
+
+## Step 2: Configure Cloudflare destinations
+
+Now you'll create destinations in the Cloudflare dashboard that point to Dash0.
+
+### Configure trace destination
+
+1. Navigate to your Cloudflare account's [Workers Observability](https://dash.cloudflare.com/?to=/:account/workers-and-pages/observability/pipelines) section
+2. Click **Add destination**
+3. Configure your trace destination:
+   - **Destination Name**: `dash0-traces` (or any descriptive name)
+   - **Destination Type**: Select **Traces**
+   - **OTLP Endpoint**: Your Dash0 traces endpoint (e.g., `https://ingress.eu-west-1.aws.dash0.com/v1/traces`)
+   - **Custom Headers**: Add the authentication header:
+     - Header name: `Authorization`
+     - Header value: `Bearer <your-auth-token>` (e.g., `Bearer auth_hxZyXotVvAzhhweQJ6egeSEUsgUifw2B`)
+   - **Optional - Dataset Header**: If you want to send data to a specific dataset:
+     - Header name: `Dash0-Dataset`
+     - Header value: Your dataset name (e.g., `default`)
+4. Click **Save**
+
+### Configure logs destination
+
+Repeat the process for logs:
+
+1. Click **Add destination** again
+2. Configure your logs destination:
+   - **Destination Name**: `dash0-logs` (or any descriptive name)
+   - **Destination Type**: Select **Logs**
+   - **OTLP Endpoint**: Your Dash0 logs endpoint (e.g., `https://ingress.eu-west-1.aws.dash0.com/v1/logs`)
+   - **Custom Headers**: Add the authentication header:
+     - Header name: `Authorization`
+     - Header value: `Bearer <your-auth-token>` (same as above)
+   - **Optional - Dataset Header**: If you want to send data to a specific dataset:
+     - Header name: `Dash0-Dataset`
+     - Header value: Your dataset name (e.g., `default`)
+3. Click **Save**
+
+## Step 3: Configure your Worker
+
+With your destinations created in the Cloudflare dashboard, update your Worker's configuration to enable telemetry export.
+
+<WranglerConfig>
+
+```json
+{
+  "observability": {
+    "traces": {
+      "enabled": true,
+      // Must match the destination name in the dashboard
+      "destinations": ["dash0-traces"]
+    },
+    "logs": {
+      "enabled": true,
+      // Must match the destination name in the dashboard
+      "destinations": ["dash0-logs"]
+    }
+  }
+}
+```
+
+</WranglerConfig>
+
+After updating your configuration, deploy your Worker for the changes to take effect.
+
+:::note
+It may take a few minutes after deployment for data to appear in Dash0.
+:::
