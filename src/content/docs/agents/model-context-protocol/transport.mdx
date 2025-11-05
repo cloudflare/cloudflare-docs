@@ -109,3 +109,38 @@ With these few changes, your MCP server will support both transport methods, mak
 While most MCP clients have not yet adopted the new Streamable HTTP transport, you can start testing it today using [`mcp-remote`](https://www.npmjs.com/package/mcp-remote), an adapter that lets MCP clients that otherwise only support local connections work with remote MCP servers.
 
 Follow [this guide](/agents/guides/test-remote-mcp-server/) for instructions on how to connect to your remote MCP server from Claude Desktop, Cursor, Windsurf, and other local MCP clients, using the [`mcp-remote` local proxy](https://www.npmjs.com/package/mcp-remote).
+
+## Advanced: Using transport classes directly
+
+:::note[Deprecated transport classes]
+The `SSEEdgeClientTransport` and `StreamableHTTPEdgeClientTransport` classes previously exported from the Agents SDK have been deprecated. If you were using these classes directly, update your imports to use the transport classes from the MCP TypeScript SDK instead.
+:::
+
+In most cases, you don't need to work with transport classes directly — the `McpAgent` class and the [`addMcpServer()` method](/agents/model-context-protocol/mcp-client-api#addmcpserver) handle transport configuration automatically.
+
+However, if you're building custom MCP client connections outside of the standard Agent patterns, you should use the transport classes from the official MCP TypeScript SDK:
+
+<Tabs syncKey="transportExamples">
+<TabItem label="Before (deprecated)" icon="seti:javascript">
+
+```ts
+// Deprecated - these classes will be removed in the next major version
+import {
+  SSEEdgeClientTransport,
+  StreamableHTTPEdgeClientTransport
+} from "agents/mcp";
+```
+
+</TabItem>
+<TabItem label="After (recommended)" icon="seti:typescript">
+
+```ts
+// Use the official MCP SDK transport classes instead
+import { SSEClientTransport } from "@modelcontextprotocol/sdk/client/sse.js";
+import { StreamableHTTPClientTransport } from "@modelcontextprotocol/sdk/client/streamableHttp.js";
+```
+
+</TabItem>
+</Tabs>
+
+The official SDK transport classes have been updated to work natively with Cloudflare Workers since summer 2024, eliminating the need for the custom edge transport wrappers. The behavior and API are identical — only the import path changes.
