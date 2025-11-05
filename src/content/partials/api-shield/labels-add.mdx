@@ -3,15 +3,14 @@ params:
   - labelName?
 ---
 
-import { DashButton, Markdown } from "~/components";
+import { DashButton } from "~/components";
 
 {/* prettier-ignore-start */}
 
 1. In the Cloudflare dashboard, go to the **Web assets** page.
 
    <DashButton url="/?to=/:account/:zone/security/web-assets" />
-2. Go to the **Endpoints** tab.
-3. Choose the endpoint that you want to label.
+2. In the **Endpoints** tab, choose the endpoint that you want to label.
 4. Select **Edit endpoint labels**.
 5. { props.labelName ? (
 	   <>
