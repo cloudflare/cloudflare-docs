@@ -2,7 +2,6 @@
 params:
   - instructions?
   - magicWord
-  - productName
   - networkOverviewPageName
   - magicTunnelHcsURL
   - setGeoCoordinatesURL
@@ -12,17 +11,17 @@ params:
 
 import { Details, Markdown } from "~/components"
 
-After adding your sites, the {props.networkOverviewPageName} section of the dashboard provides a summary of the connectivity status and traffic analytics for all your sites. This is a great place to start if you receive a {props.productName} alert, need to begin the troubleshooting process, or are performing routine monitoring. <Markdown text={props.instructions} />
+After adding your sites, the {props.networkOverviewPageName} section of the dashboard provides a summary of the connectivity status and traffic analytics for all your sites. This is a great place to start if you receive a Magic WAN alert, need to begin the troubleshooting process, or are performing routine monitoring. <Markdown text={props.instructions} />
 
 {props.networkOverviewPageName} has the following data types available:
 
 <Details header="Geographic map summary">
-	- [Aggregate {props.productName} site health](#site-health)
-	- [{props.productName} availability status for sites](#no-status-available)
-	- [{props.productName} site geographic location](#no-location-set)
+	- [Aggregate Magic WAN site health](#site-health)
+	- [Magic WAN availability status for sites](#no-status-available)
+	- [Magic WAN site geographic location](#no-location-set)
 </Details>
 
-<Details header={`${props.productName} site data table`}>
+<Details header="Magic WAN site data table">
 	- Site Name
 	- Site Health
 	- Site Tunnel Names
@@ -31,12 +30,12 @@ After adding your sites, the {props.networkOverviewPageName} section of the dash
 	- Site Traffic Received
 </Details>
 
-<Details header={`${props.productName} site data`}>
+<Details header="Magic WAN site data">
 	- Traffic Sent by Tunnel
 	- Traffic Received by Tunnel
 </Details>
 
-To start using {props.productName} site analytics:
+To start using Magic WAN site analytics:
 
 { props.magicWord === "WAN Tunnels" ? (
 	<>
@@ -67,7 +66,7 @@ Review the topics below to learn more about the options available to you.
 
 ### Network map and traffic overview
 
-The network map section shows all the sites configured with {props.productName}. At a glance, you can check:
+The network map section shows all the sites configured with Magic WAN. At a glance, you can check:
 
 - How many active sites you have
 - Location for sites in a map (if you set up their geographic location)
@@ -79,7 +78,7 @@ Just below the map, Traffic overview shows a more granular list of your sites an
 
 #### Site health
 
-Sites can be healthy or unhealthy, and {props.productName} uses this information to route traffic. Refer to [Set thresholds for site health](#set-thresholds-for-site-health) to learn more about this topic.
+Sites can be healthy or unhealthy, and Magic WAN uses this information to route traffic. Refer to [Set thresholds for site health](#set-thresholds-for-site-health) to learn more about this topic.
 
 #### No status available
 
@@ -92,7 +91,7 @@ The dashboard shows you the number of sites with no location set, meaning sites 
 
 ### Traffic overview
 
-Traffic overview aggregates all {props.productName} sites configured in your account. Here, you can check at-a-glance information about each site like:
+Traffic overview aggregates all Magic WAN sites configured in your account. Here, you can check at-a-glance information about each site like:
 
 - Site status
 - Traffic sent and received

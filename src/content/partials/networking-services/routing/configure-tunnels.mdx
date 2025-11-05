@@ -1,13 +1,12 @@
 ---
 params:
-  - magicWord?
+  - magicWord
   - ipRange?
   - productName
   - tunnelsAndEncapsulationPagePath
   - ciphersPagePath
   - antiReplayPagePath
   - cniLink
-  - targetPageName
   - dashButtonPath?
   - updateHCFrequencyPage
   - tunnelHealthChecksPage
@@ -86,11 +85,14 @@ Beyond GRE and IPsec tunnels, you can also use Network Interconnect (CNI) to onb
 {/* Dashboard steps for WAN Tunnels (Cloudflare One dashboard) */}
 { props.magicWord === "WAN Tunnels" && (
 	<>
-	<ol>
-		<li>Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a>, and go to <strong>Networks</strong>.</li>
-		<li>Go to <strong>Connectors</strong> &gt; <strong>WAN Tunnels</strong>, and select <strong>Create a tunnel</strong>.</li>
-		<li>On the <strong>Add Tunnel</strong> page, choose either a <strong>GRE tunnel</strong> or <strong>IPsec tunnel</strong>.</li>
-	</ol>
+	<Markdown
+	text={`
+	1. Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a>, and go to **Networks**.
+	2. Go to **Connectors** > **WAN Tunnels**, and select **Create**.
+	3. On the **Add Tunnel** page, choose either a **GRE tunnel** or **IPsec tunnel**.
+	`}
+	inline={false}
+	/>
 	</>
 )
 }
@@ -98,13 +100,20 @@ Beyond GRE and IPsec tunnels, you can also use Network Interconnect (CNI) to onb
 {/* Dashboard steps for Magic WAN and Magic Transit (standalone dashboards) */}
 { props.magicWord !== "WAN Tunnels" && (
 	<>
-	<ol>
-		<li>In the Cloudflare dashboard, go to {props.productName}'s <strong>{props.targetPageName}</strong> page.
-			<DashButton url={props.dashButtonPath} />
-		</li>
-		<li>From the <strong>Tunnels</strong> tab, select <strong>Create</strong>.</li>
-		<li>On the <strong>Add tunnels</strong> page, choose either a <strong>GRE tunnel</strong> or <strong>IPsec tunnel</strong>.</li>
-	</ol>
+	<Markdown
+	text={`
+	1. In the Cloudflare dashboard, go to ${props.productName}'s **Configuration** page.
+	`}
+	inline={false}
+	/>
+	<DashButton url={props.dashButtonPath} />
+	<Markdown
+	text={`
+	2. From the **Tunnels** tab, select **Create**.
+	3. On the **Add tunnels** page, choose either a **GRE tunnel** or **IPsec tunnel**.
+	`}
+	inline={false}
+	/>
 	</>
 )
 }

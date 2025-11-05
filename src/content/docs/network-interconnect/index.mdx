@@ -37,10 +37,8 @@ Choose the model that best fits your infrastructure and operational needs.
 ## Dataplane
 
 Cloudflare's data centers may support one or more interconnect dataplanes. The dataplane is the type of equipment that terminates your direct connection:
-- **Dataplane v1**: A peering connection to a Cloudflare edge data center that supports GRE tunnels for connecting with the Magic Networking overlay.
-- **Dataplane v1.1**: An enhanced version of the v1 dataplane that supports GRE-less delivery for Magic Transit Direct Server Return.
+- **Dataplane v1**: A peering connection to a Cloudflare edge data center that supports GRE tunnels for connecting with the Magic Networking overlay, with optional GRE-less delivery for Magic Transit Direct Server Return.
 - **Dataplane v2 (beta)**: Is based on the Customer Connectivity Router (CCR), which is specifically designed for customer connectivity. It provides simplified routing without GRE tunneling and supports a 1,500-byte MTU bidirectionally.
-
 
 When you review the [available locations](/network-interconnect/static/cni-locations-30-10-2025.pdf) (PDF), you can see which dataplane version(s) are available.
 

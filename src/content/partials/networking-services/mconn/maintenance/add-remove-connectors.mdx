@@ -1,19 +1,18 @@
 ---
 params:
-  - productName
   - dashName
 ---
 
 import { Markdown } from "~/components";
 
-To add a new {props.productName} you first need to remove the one associated with the on-ramps. You can only have more than one {props.productName} if you initially enabled high availability on your on-ramp.
+To add a new Magic WAN Connector you first need to remove the one associated with the on-ramps. You can only have more than one Magic WAN Connector if you initially enabled high availability on your on-ramp.
 
 { props.dashName === "WAN Tunnels" ? (
 	<>
 		<Markdown
 	text={`
 		1. Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a>, and go to **Networks**.
-		2. Go to **Connectors** > **Appliances**.
+		2. Go to **Connectors** > **Appliances** > **Profiles**.
 	`}
 	inline={false}
 	/>
@@ -30,7 +29,7 @@ To add a new {props.productName} you first need to remove the one associated wit
 	</>
 )
 }
-3. Find the {props.productName} that you want to edit > select the three dots next to it > **Edit**.
-4. In **{props.productName}**, remove the {props.productName} associated with the on-ramp.
-5. Select **Add {props.productName}** to add a different {props.productName} to your on-ramp.
+3. Find the Magic WAN Connector that you want to edit > select the three dots next to it > **Edit**.
+4. In **{props.dashName === "WAN Tunnels" ? "Appliances" : "Connectors"}**, remove the Magic WAN Connector associated with the on-ramp.
+5. Select **{props.dashName === "WAN Tunnels" ? "Add appliance" : "Add Connector"}** to add a different Magic WAN Connector to your on-ramp.
 6. Select **Save**.

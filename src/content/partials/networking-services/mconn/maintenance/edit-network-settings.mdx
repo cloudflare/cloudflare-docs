@@ -1,6 +1,5 @@
 ---
 params:
-  - productName
   - dashName
 ---
 
@@ -11,7 +10,7 @@ import { Markdown } from "~/components";
 		<Markdown
 	text={`
 		1. Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a>, and go to **Networks**.
-		2. Go to **Connectors** > **Appliances**.
+		2. Go to **Connectors** > **Appliances** > **Profiles**.
 	`}
 	inline={false}
 	/>
@@ -28,7 +27,7 @@ import { Markdown } from "~/components";
 	</>
 )
 }
-3. Find the on-ramp that you want to edit > select the three dots next to it > **Edit**.
+3. Find the Connector that you want to edit > select the three dots next to it > **Edit**.
 4. Go to **Network configuration** > **WAN configuration** or **LAN configuration**.
 5. Find the WAN/LAN you want to edit > select the three dots next to it > **Edit**.
 6. Make the necessary changes.

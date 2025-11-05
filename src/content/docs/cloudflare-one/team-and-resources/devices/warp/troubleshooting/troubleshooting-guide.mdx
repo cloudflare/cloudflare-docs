@@ -471,48 +471,6 @@ To reset the encryption keys on an end user's desktop:
 
 Resetting the encryption keys forces the WARP client to reestablish its tunnel and retrieve the latest configuration.
 
-## 5. File a support ticket
+## 5. Get help
 
-Effective troubleshooting depends on clear, detailed support tickets. The more context you provide, the faster support can identify and resolve the issue.
-
-To ensure efficient resolution when [contacting support](/support/contacting-cloudflare-support/), include as much relevant detail as possible in your ticket:
-
-<ul>
-  <li>
-    <label>
-      <input type="checkbox" /> Context: Briefly describe the scenario or use case (for example, where the user was, what they were trying to do).
-    </label>
-  </li>
-	  <li>
-    <label>
-      <input type="checkbox" /> Reproduction steps: Describe the steps you took to reproduce the issue during troubleshhooting.
-    </label>
-  </li>
-  <li>
-    <label>
-      <input type="checkbox" /> Timestamps: Be specific and include the exact time and time zone when the issue occurred.
-    </label>
-  </li>
-	  <li>
-    <label>
-      <input type="checkbox" /> Troubleshooting attempts: Outline any troubleshooting steps or changes already attempted to resolve the issue.
-    </label>
-  </li>
-	<li>
-    <label>
-      <input type="checkbox" /> WARP diagnostics logs: Include the WARP diag you downloaded from the dashboard or through the CLI.
-    </label>
-  </li>
-</ul>
-
-:::danger[Avoid vague ticket descriptions]
-Refer to the following example of a vague ticket description:
-
-Ken was on the train and had captive portal issues. `warp-diag` is attached.
-:::
-
-:::tip[Include scenario, timestamps, and steps taken to troubleshoot the issue]
-Refer to the following example of an ideal ticket description:
-
-Karen was on a train on July 17, 2025, at approximately 1:00 PM Central Time. She attempted to connect to a captive portal but received the following error message in Chrome: `ERR_CONNECTION_RESET`. A warp diag was collected immediately after and is attached.
-:::
+<Render file="warp/support-ticket-best-practices" product="cloudflare-one" />

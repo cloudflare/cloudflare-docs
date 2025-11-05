@@ -27,7 +27,7 @@ To increase this limit, go to the **Compute (Workers) > Workers plans** page in 
 | Browser timeout                        | 60 seconds |
 | Total requests per min (REST API only) | 6 per minute  [^1]  |
 
-[^1]: Rate limits are enforced with a fixed **per-second fill rate**. For example, a limit of 60 requests per minute translates to **1 request per second**. This means you cannot send all 60 requests at once; the API expects them to be spread evenly over the minute. If your account has a custom higher limit, it will also be enforced as a per-second rate.
+[^1]: Rate limits are enforced with a fixed **per-second fill rate**. For example, a limit of 6 requests per minute translates to **1 request every 10 seconds**. This means you cannot send all 6 requests at once; the API expects them to be spread evenly over the minute. If your account has a custom higher limit, it will also be enforced as a per-second rate.
 
 :::note[Note on browser timeout]
 By default, a browser will time out if it does not get any [devtools](https://chromedevtools.github.io/devtools-protocol/) command for 60 seconds, freeing one instance. Users can optionally increase this by using the [`keep_alive` option](/browser-rendering/platform/puppeteer/#keep-alive). `browser.close()` releases the browser instance.
@@ -46,7 +46,7 @@ The limits for Browser Rendering will continue to be raised over time. In the me
 | Browser timeout                        | 60 seconds |
 | Total requests per min (REST API only) | 180 per minute [^1] [^2]       |
 
-[^1]: Rate limits are enforced with a fixed **per-second fill rate**. For example, a limit of 60 requests per minute translates to **1 request per second**. This means you cannot send all 60 requests at once; the API expects them to be spread evenly over the minute. If your account has a custom higher limit, it will also be enforced as a per-second rate.
+[^1]: Rate limits are enforced with a fixed **per-second fill rate**. For example, a limit of 180 requests per minute translates to **3 requests per second**. This means you cannot send all 180 requests at once; the API expects them to be spread evenly over the minute. If your account has a custom higher limit, it will also be enforced as a per-second rate.
 [^2]: Contact our team to request increases to this limit.
 
 :::note[Note on browser timeout]

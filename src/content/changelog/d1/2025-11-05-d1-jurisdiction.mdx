@@ -1,0 +1,25 @@
+---
+title: D1 can restrict data localization with jurisdictions
+description: A D1 database can set a jurisdiction at creation, which limits the location to run and store the database.
+products:
+  - d1
+  - workers
+date: 2025-11-05
+---
+
+You can now set a [jurisdiction](/d1/configuration/data-location/) when creating a D1 database to guarantee where your database runs and stores data. Jurisdictions can help you comply with data localization regulations such as GDPR. Supported jurisdictions include `eu` and `fedramp`.
+
+A jurisdiction can only be set at database creation time via wrangler, REST API or the UI and cannot be added/updated after the database already exists.
+
+```sh
+npx wrangler@latest d1 create db-with-jurisdiction --jurisdiction eu
+```
+
+```
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/<account_id>/d1/database" \
+     -H "Authorization: Bearer $TOKEN" \
+     -H "Content-Type: application/json" \
+     --data '{"name": "db-wth-jurisdiction", "jurisdiction": "eu" }'
+```
+
+To learn more, visit D1's data location [documentation](/d1/configuration/data-location/).

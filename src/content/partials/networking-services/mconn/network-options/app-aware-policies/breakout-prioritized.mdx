@@ -1,7 +1,6 @@
 ---
 params:
   - magicWord
-  - productName
   - featureName
   - trafficSteeringURL?
   - whatHappensApp
@@ -12,7 +11,7 @@ import { APIRequest, Aside, AnchorHeading, CURL, Markdown, Render, TabItem, Tabs
 
 { props.magicWord === "breakout" && (
 	<>
-		<p>Breakout traffic allows you to define which applications should bypass Cloudflare's security filtering, and go directly to the Internet. It works via DNS requests inspection. This means that if your network is caching DNS requests, Breakout traffic will only take effect after you cache entries expire and your client issues a new DNS request that {props.productName} can detect. This can take several minutes.</p>
+		<p>Breakout traffic allows you to define which applications should bypass Cloudflare's security filtering, and go directly to the Internet. It works via DNS requests inspection. This means that if your network is caching DNS requests, Breakout traffic will only take effect after you cache entries expire and your client issues a new DNS request that Magic WAN Connector can detect. This can take several minutes.</p>
 		<Aside type="caution">Breakout traffic will not work for applications that use DNS-over-HTTPS.</Aside>
 	</>
 	)
@@ -20,7 +19,7 @@ import { APIRequest, Aside, AnchorHeading, CURL, Markdown, Render, TabItem, Tabs
 
 { props.magicWord === "prioritized" && (
 	<>
-		<p>Prioritized traffic allows you to define which applications {props.productName} should process first. Applications not in the list will be queued behind prioritized traffic.</p>
+		<p>Prioritized traffic allows you to define which applications Magic WAN Connector should process first. Applications not in the list will be queued behind prioritized traffic.</p>
 		<p>Similarly to breakout traffic, prioritized traffic also works via DNS requests inspection.</p>
 		<Aside type="caution">Prioritized traffic will not work for applications that use DNS-over-HTTPS.</Aside>
 	</>
@@ -33,7 +32,7 @@ import { APIRequest, Aside, AnchorHeading, CURL, Markdown, Render, TabItem, Tabs
 			{`
 			flowchart LR
 			accTitle: In this example, the applications go directly to the Internet, skipping Cloudflare's security. filtering
-			a(${props.productName}) --> b(Cloudflare) -->|Filtered traffic|c(Internet)
+			a(Magic WAN Connector) --> b(Cloudflare) -->|Filtered traffic|c(Internet)
 
 			a-- Breakout traffic ---d(Application1) & e(Application2) --> c
 
@@ -58,7 +57,7 @@ import { APIRequest, Aside, AnchorHeading, CURL, Markdown, Render, TabItem, Tabs
 
 ## Add an application to your account
 
-Before you can add or remove {props.featureName} applications to your {props.productName}, you need to create an account-level list with the applications that you want to configure. Currently, adding to or modifying this list is only possible via API, through the [`managed_app_id`](/api/resources/magic_transit/subresources/apps/methods/create/) endpoint.
+Before you can add or remove {props.featureName} applications to your Magic WAN Connector, you need to create an account-level list with the applications that you want to configure. Currently, adding to or modifying this list is only possible via API, through the [`managed_app_id`](/api/resources/magic_transit/subresources/apps/methods/create/) endpoint.
 
 To add applications to your account:
 
@@ -87,9 +86,9 @@ Send a `POST` request to add new apps to your account.
 	}
 	```
 
-You can now add this new app to the {props.featureName} list in your {props.productName}.
+You can now add this new app to the {props.featureName} list in your Magic WAN Connector.
 
-### Add an application to {props.productName}
+### Add an application to Magic WAN Connector
 
 You need to configure {props.featureName} applications for each of your existing sites, as this is a per-site configuration.
 
@@ -119,9 +118,9 @@ You need to configure {props.featureName} applications for each of your existing
 }
 <Markdown
 text={`
-3. Select the ${props.productName} you want to configure > **Edit**.
+3. Select the Magic WAN Connector you want to configure > **Edit**.
 4. Select **Traffic Steering**.
-5. In **${props.featureName}**, select **Assign application traffic**.
+5. In **${props.featureName}**, select **${props.dashName === "WAN Tunnels" ? "Create" : "Assign application traffic"}**.
 6. Select one or more applications that should bypass Cloudflare filtering from the list. You can also use the search box.
 `}
 inline={false}
@@ -213,7 +212,7 @@ The traffic for the application you chose ${props.whatHappensApp}.
 
 </TabItem> </Tabs>
 
-### Delete an application from {props.productName}
+### Delete an application from Magic WAN Connector
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -243,7 +242,7 @@ The traffic for the application you chose ${props.whatHappensApp}.
 text={`
 3. Select the Connector you want to configure > **Edit**.
 4. Select **Traffic Steering**.
-5. In **${props.featureName}**, find the application you want to delete > select the **three dots** next to it > **Remove**.
+5. In **${props.featureName}**, find the application you want to delete > select the **three dots** next to it > **Remove application traffic**.
 6. (Optional) If you have several pages of applications, you can use the search box to quickly find the application you are looking for.
 `}
 inline={false}
@@ -306,7 +305,7 @@ You need to delete {props.featureName} applications for each of your existing si
 
 		<Markdown
 		text={`
-You can pin applications to a specific WAN port in ${props.productName} when you need control over which WAN port your applications egress from the device. In case your preferred WAN port goes down, ${props.productName} automatically fails over to a standard configured WAN port priority.
+You can pin applications to a specific WAN port in Magic WAN Connector when you need control over which WAN port your applications egress from the device. In case your preferred WAN port goes down, Magic WAN Connector automatically fails over to a standard configured WAN port priority.
 
 With this preferred breakout port, customers have direct control over their local Internet breakout traffic. You can designate a specific WAN uplink as the primary path for your critical applications configured to bypass the Cloudflare network. This provides the predictability and control needed for performance-sensitive applications, ensuring your critical traffic always takes the path you choose.
 
@@ -321,7 +320,7 @@ To pin applications to a WAN port:
 			text={`
 				1. Log in to the <a href="https://one.dash.cloudflare.com/">Cloudflare One dashboard</a>, and go to **Networks**.
 				2. Go to **Connectors** > **Appliances** > **Profiles**.
-				3. Select the ${props.productName} you want to configure> **Edit**.
+				3. Select the Magic WAN Connector you want to configure> **Edit**.
 			`}
 			inline={false}
 			/>
