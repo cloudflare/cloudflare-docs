@@ -67,6 +67,48 @@ Calling other Agents uses the same APIs as calling into an Agent directly.
 
 :::
 
+### Monitoring Agent status
+
+You can check if an Agent instance is currently active and has connected clients using the `getAgentStatus` helper function:
+
+<TypeScriptExample>
+
+```ts
+import { Agent, AgentNamespace, getAgentByName, getAgentStatus } from 'agents';
+
+interface Env {
+	MyAgent: AgentNamespace<MyAgent>;
+}
+
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		const agent = await getAgentByName<Env, MyAgent>(env.MyAgent, 'user-123');
+
+		// Check the agent's connection status
+		const status = getAgentStatus(agent);
+
+		return Response.json({
+			connectionCount: status.connectionCount,
+			isActive: status.isActive,
+			agentId: status.agentId
+		});
+	},
+} satisfies ExportedHandler<Env>;
+
+export class MyAgent extends Agent<Env> {
+	// Your Agent implementation
+}
+```
+
+</TypeScriptExample>
+
+The `getAgentStatus` function returns:
+- `connectionCount`: Number of active WebSocket connections to the agent
+- `isActive`: Boolean indicating if the agent has any active connections
+- `agentId`: The unique identifier of the agent instance (or `undefined` if not available)
+
+This is useful for monitoring agent activity, implementing health checks, or determining if an agent should be kept alive or allowed to hibernate.
+
 ### Calling methods on Agents
 
 When using `getAgentByName`, you can pass both requests (including WebSocket) connections and call methods defined directly on the Agent itself using the native [JavaScript RPC](/workers/runtime-apis/rpc/) (JSRPC) API.
