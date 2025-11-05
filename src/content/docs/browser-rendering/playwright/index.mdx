@@ -34,7 +34,7 @@ If you want to skip the steps and get started quickly, select **Deploy to Cloudf
 
 [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/playwright/tree/main/packages/playwright-cloudflare/examples/todomvc)
 
-Make sure you have the [browser binding](/browser-rendering/platform/wrangler/#bindings) configured in your `wrangler.toml` file:
+Make sure you have the [browser binding](/browser-rendering/reference/wrangler/#bindings) configured in your `wrangler.toml` file:
 
 :::note
 To use the latest version of `@cloudflare/playwright`, your Worker configuration must include the `nodejs_compat` compatibility flag and a `compatibility_date` of 2025-09-15 or later. This change is necessary because the library's functionality requires the native `node.fs` API.
@@ -340,7 +340,7 @@ Notice that the session `478f4d7d-e943-40f6-a414-837d3736a1dc` has an active wor
 ]
 ```
 
-Session `2be00a21-9fb6-4bb2-9861-8cd48e40e771` was closed explicitly with `browser.close()` by the client, while session `478f4d7d-e943-40f6-a414-837d3736a1dc` was closed due to reaching the maximum idle time (check [limits](/browser-rendering/platform/limits/)).
+Session `2be00a21-9fb6-4bb2-9861-8cd48e40e771` was closed explicitly with `browser.close()` by the client, while session `478f4d7d-e943-40f6-a414-837d3736a1dc` was closed due to reaching the maximum idle time (check [limits](/browser-rendering/limits/)).
 
 You should also be able to access this information in the dashboard, albeit with a slight delay.
 
@@ -362,7 +362,7 @@ You should also be able to access this information in the dashboard, albeit with
 
 - `activeSessions` lists the IDs of the current open sessions
 - `maxConcurrentSessions` defines how many browsers can be open at the same time
-- `allowedBrowserAcquisitions` specifies if a new browser session can be opened according to the rate [limits](/browser-rendering/platform/limits/) in place
+- `allowedBrowserAcquisitions` specifies if a new browser session can be opened according to the rate [limits](/browser-rendering/limits/) in place
 - `timeUntilNextAllowedBrowserAcquisition` defines the waiting period before a new browser can be launched.
 
 ## Playwright API

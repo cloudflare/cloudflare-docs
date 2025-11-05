@@ -35,7 +35,7 @@ Create a new Worker project named `browser-worker` by running:
 
 ## 2. Install Puppeteer
 
-In your `browser-worker` directory, install Cloudflare's [fork of Puppeteer](/browser-rendering/platform/puppeteer/):
+In your `browser-worker` directory, install Cloudflare's [fork of Puppeteer](/browser-rendering/puppeteer/):
 
 <PackageManagers pkg="@cloudflare/puppeteer" dev />
 
@@ -59,7 +59,7 @@ browser = { binding = "MYBROWSER" }
 
 The script below starts by fetching the current running sessions. If there are any that don't already have a worker connection, it picks a random session ID and attempts to connect (`puppeteer.connect(..)`) to it. If that fails or there were no running sessions to start with, it launches a new browser session (`puppeteer.launch(..)`). Then, it goes to the website and fetches the dom. Once that's done, it disconnects (`browser.disconnect()`), making the connection available to other workers.
 
-Take into account that if the browser is idle, i.e. does not get any command, for more than the current [limit](/browser-rendering/platform/limits/), it will close automatically, so you must have enough requests per minute to keep it alive.
+Take into account that if the browser is idle, i.e. does not get any command, for more than the current [limit](/browser-rendering/limits/), it will close automatically, so you must have enough requests per minute to keep it alive.
 
 <TypeScriptExample>
 
@@ -140,7 +140,7 @@ export default {
 
 </TypeScriptExample>
 
-Besides `puppeteer.sessions()`, we have added other methods to facilitate [Session Management](/browser-rendering/platform/puppeteer/#session-management).
+Besides `puppeteer.sessions()`, we have added other methods to facilitate [Session Management](/browser-rendering/puppeteer/#session-management).
 
 ## 5. Test
 

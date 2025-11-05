@@ -20,7 +20,7 @@ Our version is open sourced and can be found in [Cloudflare's fork of Puppeteer]
 
 ## Use Puppeteer in a Worker
 
-Once the [browser binding](/browser-rendering/platform/wrangler/#bindings) is configured and the `@cloudflare/puppeteer` library is installed, Puppeteer can be used in a Worker:
+Once the [browser binding](/browser-rendering/reference/wrangler/#bindings) is configured and the `@cloudflare/puppeteer` library is installed, Puppeteer can be used in a Worker:
 
 <TypeScriptExample>
 
@@ -119,7 +119,7 @@ Notice that the session `478f4d7d-e943-40f6-a414-837d3736a1dc` has an active wor
 ]
 ```
 
-Session `2be00a21-9fb6-4bb2-9861-8cd48e40e771` was closed explicitly with `browser.close()` by the client, while session `478f4d7d-e943-40f6-a414-837d3736a1dc` was closed due to reaching the maximum idle time (check [limits](/browser-rendering/platform/limits/)).
+Session `2be00a21-9fb6-4bb2-9861-8cd48e40e771` was closed explicitly with `browser.close()` by the client, while session `478f4d7d-e943-40f6-a414-837d3736a1dc` was closed due to reaching the maximum idle time (check [limits](/browser-rendering/limits/)).
 
 You should also be able to access this information in the dashboard, albeit with a slight delay.
 
@@ -141,7 +141,7 @@ You should also be able to access this information in the dashboard, albeit with
 
 - `activeSessions` lists the IDs of the current open sessions
 - `maxConcurrentSessions` defines how many browsers can be open at the same time
-- `allowedBrowserAcquisitions` specifies if a new browser session can be opened according to the rate [limits](/browser-rendering/platform/limits/) in place
+- `allowedBrowserAcquisitions` specifies if a new browser session can be opened according to the rate [limits](/browser-rendering/limits/) in place
 - `timeUntilNextAllowedBrowserAcquisition` defines the waiting period before a new browser can be launched.
 
 ## Puppeteer API
