@@ -89,4 +89,33 @@ If PMTUD is enabled and the MTU is less than 1333 bytes, then WARP will automati
 To send WebRTC traffic through WARP, the network path must support an MTU of at least 1333 bytes. Below 1333 bytes, WebRTC connections will experience progressively degraded performance. This minimum MTU impacts [Cloudflare Browser Isolation](/cloudflare-one/remote-browser-isolation/) and any other website that uses WebRTC (such as video conferencing and media streaming services).
 
 
+## Check your MTU
+
+You can check your current network path MTU by collecting [WARP diagnostic logs](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/warp-logs/).
+
+1. Run the `warp-diag` command on the device or [collect logs via the the dashboard](/cloudflare-one/team-and-resources/devices/warp/troubleshooting/warp-logs/#collect-logs-via-the-dashboard).
+2. Open the resulting `warp-debugging-info-<date>-<time>.zip` file.
+3. Open `connectivity.txt` and search for `PMTU`. For example, the following diagnostic log shows an MTU of 1500 bytes which meets the [default MTU requirements](#default-warp-mtu) for WARP.
+
+
+```txt title="connectivity.txt" {16-17}
+====================================================================
+H3 Quic Connect
+====================================================================
+
+Testing H3 QUIC connectivity to 'https://cloudflare-quic.com/cdn-cgi/l4-stats' result: Successful
+IPv4:
+"
+Headers:
+	server address=104.18.26.14:443
+	...
+
+Body:
+	transport=TCP
+	...
+
+PMTU:
+	1500 bytes
+"
+```
 
