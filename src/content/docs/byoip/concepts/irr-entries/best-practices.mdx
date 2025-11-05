@@ -5,7 +5,7 @@ sidebar:
   order: 7
 ---
 
-import { GlossaryTooltip } from "~/components";
+import { Details, GlossaryTooltip } from "~/components";
 
 You must keep your <GlossaryTooltip term="Internet Routing Registry (IRR)" link="/byoip/concepts/irr-entries/">Internet Routing Registry (IRR)</GlossaryTooltip> entries up to date so that it is public information that Cloudflare has permission to advertise your prefix or prefixes, and to ensure that your traffic can be properly routed on the internet.
 
@@ -15,36 +15,13 @@ You can add or update an IRR entry by following the directions of your routing r
 
 The recommended registries are AFRINIC, APNIC, ARIN, LACNIC, and RIPE. Refer to the table below for more information.
 
-<table>
-<thead>
-    <tr>
-      <th>Route registry</th>
-      <th>URL</th>
-     </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>AFRINIC</td>
-      <td><a href="https://afrinic.net/internet-routing-registry#guide">https://afrinic.net/internet-routing-registry#guide</a></td>
-    </tr>
-    <tr>
-      <td>APNIC</td>
-      <td><a href="https://www.apnic.net/manage-ip/apnic-services/routing-registry/">https://www.apnic.net/manage-ip/apnic-services/routing-registry/</a></td>
-    </tr>
-    <tr>
-      <td>ARIN</td>
-      <td><a href="https://www.arin.net/resources/manage/irr/quickstart/">https://www.arin.net/resources/manage/irr/quickstart/</a></td>
-    </tr>
-		    <tr>
-      <td>LACNIC</td>
-      <td><a href="https://lacnic.zendesk.com/hc/articles/360038667154-What-are-a-route-and-a-route-6-objects">https://lacnic.zendesk.com/hc/articles/360038667154-What-are-a-route-and-a-route-6-objects</a></td>
-    </tr>
-    <tr>
-      <td>RIPE</td>
-      <td><a href="https://www.ripe.net/manage-ips-and-asns/db/support/managing-route-objects-in-the-irr">https://www.ripe.net/manage-ips-and-asns/db/support/managing-route-objects-in-the-irr</a></td>
-    </tr>
-  </tbody>
-</table>
+| Route registry | URL |
+| -------------- | --- |
+| AFRINIC | [https://afrinic.net/internet-routing-registry#guide](https://afrinic.net/internet-routing-registry#guide) |
+| APNIC | [https://www.apnic.net/manage-ip/apnic-services/routing-registry/](https://www.apnic.net/manage-ip/apnic-services/routing-registry/) |
+| ARIN | [https://www.arin.net/resources/manage/irr/quickstart/](https://www.arin.net/resources/manage/irr/quickstart/) |
+| LACNIC | [https://lacnic.zendesk.com/hc/articles/360038667154-What-are-a-route-and-a-route-6-objects](https://lacnic.zendesk.com/hc/articles/360038667154-What-are-a-route-and-a-route-6-objects) |
+| RIPE | [https://www.ripe.net/manage-ips-and-asns/db/support/managing-route-objects-in-the-irr](https://www.ripe.net/manage-ips-and-asns/db/support/managing-route-objects-in-the-irr) |
 
 ## Verify an IRR entry
 
@@ -62,47 +39,35 @@ Add or update IRR entries when they meet any of these criteria:
 * The entry is incomplete or inaccurate — for example, when the route object does not show the correct origin.
 * The entry is complete but requires updating — for example, when they correspond to supernets but need to correspond to subnets used in Magic Transit.
 
-### IRR entry verification methods
+### Subnet prefix verification
 
-To verify your prefix and ASN route, use the tools and methods outlined on the table below:
+Use [IRR Explorer](https://irrexplorer.nlnog.net) to verify which ASN is associated with a subnet prefix.
 
-<table>
+**Method:** Search for the subnet prefix IP, for example, `162.211.156.0/24`.
 
-  <thead>
-    <tr>
-      <th>Data to verify</th>
-      <th>Tool</th>
-      <th>Method</th>
-      <th>Output</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Subnet prefix IP<br/>for the ASN</td>
-      <td><a href=" https://irrexplorer.nlnog.net">IRR Explorer</a></td>
-      <td>Search for the subnet prefix IP, for example, <code>162.211.156.0/24</code>.</td>
-      <td>List of ASN numbers, source (route registry), and any associated errors.</td>
-    </tr>
-    <tr>
-      <td>ASN for the<br/>subnet prefix</td>
-      <td><span style="white-space: nowrap"><a href=" https://irrexplorer.nlnog.net">IRR Explorer</a></span></td>
-      <td><span style="white-space: nowrap">Search for the ASN, for example <code>AS13335</code>.</span></td>
-      <td><span style="white-space: nowrap">List of prefixes, source, and any associated errors.</span></td>
-    </tr>
-    <tr>
-      <td>Your origin ASN<br/>and routing data</td>
-      <td>WHOIS lookup</td>
-      <td>
-        <p>In a terminal, use this `whois` command, substituting your network prefix for <em>network-prefix</em>:</p>
-        <p>`whois -h rr.ntt.net network-prefix`</p>
-        <p>The host `rr.ntt.net` is the primary server for the Global IP network.</p>
-      </td>
-      <td>IRR route, origin, and source information.</td>
-    </tr>
-  </tbody>
-</table>
+**Output:** List of ASN numbers, source (route registry), and any associated errors.
 
-#### WHOIS output
+### ASN verification
+
+Use [IRR Explorer](https://irrexplorer.nlnog.net) to verify which prefixes are associated with an ASN.
+
+**Method:** Search for the ASN, for example `AS13335`.
+
+**Output:** List of prefixes, source, and any associated errors.
+
+### WHOIS lookup
+
+Use WHOIS lookup to verify your origin ASN and routing data.
+
+**Method:** In a terminal, use the following `whois` command, replacing `<NETWORK_PREFIX>` with your network prefix. The host `rr.ntt.net` is the primary server for the Global IP network.
+
+```sh
+whois -h rr.ntt.net <NETWORK_PREFIX>
+```
+
+**Output:** IRR route, origin, and source information.
+
+<Details header="WHOIS output example">
 
 The `<IRR entry section>` in the WHOIS output shows the correct IRR entry information for the specified network. In this example, the network prefix is `1.1.1.0/24`, and the output includes the route, origin ASN, and route registry, which in this example is APNIC:
 
@@ -129,6 +94,8 @@ mnt-by:         MAINT-AU-APNIC-GM85-AP
 last-modified:  2018-03-16T16:58:06Z
 source:         APNIC
 ```
+
+</Details>
 
 :::note
 
