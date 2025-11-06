@@ -1,12 +1,9 @@
 ---
 pcx_content_type: how-to
 title: Debugging Pages
-banner:
-  content: We recommend using <strong>Cloudflare Workers</strong> for new projects. For existing Pages projects, see our <a href="/workers/static-assets/migrate-from-pages/">migration guide</a> and <a href="/workers/static-assets/migrate-from-pages/#compatibility-matrix">compatibility matrix</a>.
-  type: note
-  dismissible:
-    id: pages-migrate-to-workers
 ---
+
+import { DashButton } from "~/components";
 
 When setting up your Pages project, you may encounter various errors that prevent you from successfully deploying your site. This guide gives an overview of some common errors and solutions.
 
@@ -14,9 +11,12 @@ When setting up your Pages project, you may encounter various errors that preven
 
 You can review build errors in your Pages build log. To access your build log:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com).
-2. In **Account Home**, go to **Workers & Pages**.
-3. In **Overview**, select your Pages project > **View build**.
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+
+2. Select your Pages project.
+3. Go to **Deployments** > **View details** > **Build log**.
 
 ![After logging in to the Cloudflare dashboard, access the build log by following the instructions above](~/assets/images/pages/platform/pages-build-log.png)
 
@@ -99,7 +99,7 @@ If your [custom domain](/pages/configuration/custom-domains/) has not moved from
 
 ### Blocked HTTP validation
 
-Pages uses HTTP validation and needs to hit an HTTP endpoint during validation. If another Cloudflare product is in the way (such as [Access](/cloudflare-one/policies/access/), [a redirect](/rules/url-forwarding/), [a Worker](/workers/), etc.), validation cannot be completed.
+Pages uses HTTP validation and needs to hit an HTTP endpoint during validation. If another Cloudflare product is in the way (such as [Access](/cloudflare-one/access-controls/policies/), [a redirect](/rules/url-forwarding/), [a Worker](/workers/), etc.), validation cannot be completed.
 
 To check this, run a `curl` command against your domain hitting `/.well-known/acme-challenge/randomstring`. For example:
 
@@ -180,6 +180,12 @@ Once the custom domain has been successfully completed, you may [reinstate the z
 If you have done the steps above and your domain is still verifying after 15 minutes, join our [Discord](https://discord.cloudflare.com) for support or contact our support team through the [Support Portal](https://dash.cloudflare.com/?to=/:account/support).
 
 :::
+
+### Missing `index.html` on the root `pages.dev` URL
+
+If you see a `404` error on the root `pages.dev` URL (`example.pages.dev`), you are likely missing an `index.html` file in your project.
+
+Upload an `index.html` file to resolve this issue.
 
 ## Resources
 

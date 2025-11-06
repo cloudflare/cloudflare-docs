@@ -13,17 +13,17 @@ import { GlossaryTooltip } from "~/components"
 You need to enable DMARC Management to allow Cloudflare to process DMARC reports on your behalf. DMARC Management only works with <GlossaryTooltip term="apex domain">apex domains</GlossaryTooltip> and not domains in [subdomain setups](/dns/zone-setups/subdomain-setup/).
 
 :::caution[A warning on DMARC Management and SPF records]
-
 DMARC Management does not support modifications to SPF records when a CNAME record in your zone points to an external domain. Any changes to the SPF record could invalidate your DMARC policy, as Cloudflare cannot update the associated external DNS records. We recommend managing SPF updates directly through the external domain's DNS provider.
-
 :::
+
+To enable DMARC Management:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
 2. Go to **Email** > **DMARC Management**.
 3. Select **Enable DMARC Management**.
-4. DMARC Management will scan your zone for DMARC records.
+4. DMARC Management will scan your zone for DMARC records, and will present you with two outcomes:
 
-   1. If no record is found, Cloudflare will automatically invite you to add one that you can edit later. Select **Add** to continue.
-   2. If there is a DMARC record in your zone, Cloudflare will add another `rua` entry to it. This additional `rua` tag has a Cloudflare email address and is needed for Cloudflare to be able to start processing DMARC reports on your behalf. Select **Next** to continue.
+   - If no DMARC record is found, Cloudflare will automatically invite you to add one that you can edit later. Select **Add** to continue.
+   - If a DMARC record is found in your zone, Cloudflare will add another `rua` entry to it. This additional `rua` tag has a Cloudflare email address and is needed for Cloudflare to be able to start processing DMARC reports on your behalf. Select **Next** to continue.
 
 DMARC Management (beta) is now active. However, it may take up to 24 hours to receive your first DMARC report and to display this information in DMARC Management.

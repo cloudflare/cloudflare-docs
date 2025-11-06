@@ -1,0 +1,44 @@
+---
+title: "WAF Release - 2025-10-24 - Emergency"
+description: Cloudflare WAF managed rulesets 2025-10-24 emergency release
+date: 2025-10-24
+---
+
+import { RuleID } from "~/components";
+
+This week’s release introduces a new detection signature that enhances coverage for a critical vulnerability in Windows Server Update Services (WSUS), tracked as CVE-2025-59287.
+
+**Key Findings**
+
+The vulnerability allows unauthenticated attackers to potentially achieve remote code execution. The updated detection logic strengthens defenses by improving resilience against exploitation attempts targeting this flaw.
+
+**Impact**
+
+Successful exploitation of CVE-2025-59287 could enable attackers to hijack sessions, execute arbitrary commands, exfiltrate sensitive data, and disrupt storefront operations. These actions pose significant confidentiality and integrity risks to affected environments. Administrators should apply vendor patches immediately to mitigate exposure.
+
+<table style="width: 100%">
+  <thead>
+    <tr>
+      <th>Ruleset</th>
+      <th>Rule ID</th>
+      <th>Legacy Rule ID</th>
+      <th>Description</th>
+      <th>Previous Action</th>
+      <th>New Action</th>
+      <th>Comments</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Cloudflare Managed Ruleset</td>
+      <td>
+        <RuleID id="5eaeb5ea6e5a4bce867eb3ffbd72ba08" />
+      </td>
+      <td>N/A</td>
+      <td>Windows Server - Deserialization - CVE:CVE-2025-59287</td>
+      <td>N/A</td>
+      <td>Block</td>
+      <td>This is a New Detection</td>
+    </tr>
+  </tbody>
+</table>

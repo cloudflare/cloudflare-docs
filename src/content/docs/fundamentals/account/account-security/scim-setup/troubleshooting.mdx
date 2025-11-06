@@ -1,0 +1,33 @@
+---
+pcx_content_type: how-to
+title: SCIM troubleshooting
+sidebar:
+  label: Troubleshooting
+---
+
+## Restore Super Administrator after group misconfiguration
+
+If you have removed all Super Administrators mistakenly, you can restore the role to account member(s) using the Account API Token you created for SCIM provisioning.
+
+First, fetch a list of account members and find the member ID for the user you want to restore Super Admin to via [list members].(/api/resources/accounts/subresources/members/methods/list/)
+
+```curl
+curl -X GET "https://api.cloudflare.com/client/v4/accounts/{account_id}/members" \
+  -H "Authorization: Bearer YOUR_SCIM_AOT" \
+  -H "Content-Type: application/json"
+```
+
+Then restore the Super Admin role to that member via [update member](/api/resources/accounts/subresources/members/methods/update/)
+
+```curl
+curl -X PUT "https://api.cloudflare.com/client/v4/accounts/{account_id}/members/{member_id}" \
+  -H "Authorization: Bearer YOUR_SCIM_AOT" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "roles": ["33666b9c79b9a5273fc7344ff42f953d"]
+  }'
+```
+
+:::note
+33666b9c79b9a5273fc7344ff42f953d is the Super Administrator role ID
+:::

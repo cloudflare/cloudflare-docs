@@ -1,0 +1,30 @@
+---
+title: Cloudflare Smart Shield
+pcx_content_type: overview
+description: Use Smart Shield to protect your origin server, improve content availability, and reduce network latency.
+head:
+  - tag: title
+    content: Overview
+---
+
+import { Description, Plan, RelatedProduct } from "~/components";
+
+<Description>
+Safeguard your origin with just a few clicks.
+</Description>
+
+Smart Shield acts as an intermediate caching layer between Cloudflare's content delivery network and your origin server, consolidating multiple requests from various locations into a single request. Combined with [connection reuse](/smart-shield/concepts/connection-reuse/), this approach significantly reduces origin load while improving website and application performance.
+
+Learn how to [get started](/smart-shield/get-started/).
+
+***
+
+## Related products
+
+<RelatedProduct header="Aegis" href="/aegis/" product="aegis">
+Cloudflare Aegis provides dedicated egress IPs (from Cloudflare to your origin) for your layer 7 WAF and CDN services, as well as Spectrum.
+</RelatedProduct>
+
+<RelatedProduct header="Cache" href="/cache/" product="cache">
+Cache stores copies of frequently accessed content (such as images, videos, or webpages) in geographically distributed data centers that are located closer to end users than origin servers, improving website performance.
+</RelatedProduct>

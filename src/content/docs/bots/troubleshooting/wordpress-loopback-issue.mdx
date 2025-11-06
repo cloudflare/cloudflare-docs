@@ -6,7 +6,7 @@ sidebar:
 
 ---
 
-import { Tabs, TabItem, Steps, Render } from '~/components';
+import { Tabs, TabItem, Steps, Render, DashButton } from '~/components';
 
 When users attempt to run diagnostics in the Site Status page for WordPress installations, loopback issues arise when our bot detection services block them.
 
@@ -30,10 +30,11 @@ Loopback requests may also be blocked by [I’m Under Attack mode](/fundamentals
   </TabItem> 
   <TabItem label="New dashboard" icon="rocket">
     <Steps>
-      1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account and domain.
-      2. Go to **Security** > **Settings**.
-      3. Filter by **Bot traffic**.
-      4. Go to **Super Bot Fight Mode**.
+      1. In the Cloudflare dashboard, go to the **Security Settings** page.
+
+          <DashButton url="/?to=/:account/:zone/security/settings" />
+      2. Filter by **Bot traffic**.
+      3. Go to **Super Bot Fight Mode**.
       4. Under **Configurations**, select the edit icon for **Optimize for WordPress** and turn it on.
     </Steps>
   </TabItem>

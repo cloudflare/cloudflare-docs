@@ -1,0 +1,58 @@
+---
+title: Terraform v5.8.4 now available
+description: Terraform v5.8.4 stablizes a number of resources and known issues
+products:
+  - fundamentals
+date: 2025-08-15
+---
+
+Earlier this year, we announced the launch of the new [Terraform v5 Provider](/changelog/2025-02-03-terraform-v5-provider/). We are aware of the high number of [issues](https://github.com/cloudflare/terraform-provider-cloudflare) reported by the Cloudflare Community related to the v5 release. We have committed to releasing improvements on a two week cadence to ensure stability and reliability. 
+
+One key change we adopted in recent weeks is a pivot to more comprehensive, test-driven development. We are still evaluating individual issues, but are also investing in much deeper testing to drive our stabilization efforts. We will subsequently be investing in comprehensive migration scripts. As a result, you will see several of the highest traffic APIs have been stabilized in the most recent release, and are supported by comprehensive acceptance tests. 
+
+Thank you for continuing to raise issues. We triage them weekly and they help make our products stronger.
+
+### Changes
+- Resources stabilized:
+  - `cloudflare_argo_smart_routing`
+  - `cloudflare_bot_management`
+  - `cloudflare_list`
+  - `cloudflare_list_item`
+  - `cloudflare_load_balancer`
+  - `cloudflare_load_balancer_monitor`
+  - `cloudflare_load_balancer_pool`
+  - `cloudflare_spectrum_application`
+  - `cloudflare_managed_transforms`
+  - `cloudflare_url_normalization_settings`
+  - `cloudflare_snippet`
+  - `cloudflare_snippet_rules`
+  - `cloudflare_zero_trust_access_application`
+  - `cloudflare_zero_trust_access_group`
+  - `cloudflare_zero_trust_access_identity_provider`
+  - `cloudflare_zero_trust_access_mtls_certificate`
+  - `cloudflare_zero_trust_access_mtls_hostname_settings`
+  - `cloudflare_zero_trust_access_policy`
+  - `cloudflare_zone`
+- Multipart handling restored for `cloudflare_snippet`
+- `cloudflare_bot_management` diff issues resolves when running `terraform plan` and `terraform apply`
+- Other bug fixes
+
+For a more detailed look at all of the changes, refer to the [changelog](https://github.com/cloudflare/terraform-provider-cloudflare/releases/tag/v5.8.4) in GitHub.
+
+### Issues Closed
+- [#5017: 'Uncaught Error: No such module' using cloudflare_snippets](https://github.com/cloudflare/terraform-provider-cloudflare/issues/5017)
+- [#5701: cloudflare_workers_script migrations for Durable Objects not recorded in tfstate; cannot be upgraded between versions](https://github.com/cloudflare/terraform-provider-cloudflare/issues/5701)
+- [#5640: cloudflare_argo_smart_routing importing doesn't read the actual value](https://github.com/cloudflare/terraform-provider-cloudflare/issues/5640)
+
+If you have an unaddressed issue with the provider, we encourage you to check the [open issues](https://github.com/cloudflare/terraform-provider-cloudflare/issues) and open a new one if one does not already exist for what you are experiencing.
+
+### Upgrading
+
+We suggest holding off on migration to v5 while we work on stablization. This help will you avoid any blocking issues while the Terraform resources are actively being stablized.
+
+If you'd like more information on migrating to v5, please make use of the [migration guide](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/guides/version-5-upgrade). We have provided automated migration scripts using Grit which simplify the transition. These migration scripts do not support implementations which use Terraform modules, so customers making use of modules need to migrate manually. Please make use of `terraform plan` to test your changes before applying, and let us know if you encounter any additional issues by reporting to our [GitHub repository](https://github.com/cloudflare/terraform-provider-cloudflare).
+
+### For more info
+
+- [Terraform provider](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs)
+- [Documentation on using Terraform with Cloudflare](/terraform/)

@@ -74,11 +74,11 @@ async def on_scheduled(controller, env, ctx):
 
 - `controller.type` string
 
-  - The type of event. This will always return `"scheduled"`.
+  - The type of controller. This will always return `"scheduled"`.
 
 - `controller.scheduledTime` number
 
-  - The time the `ScheduledEvent` was scheduled to be executed in milliseconds since January 1, 1970, UTC. It can be parsed as <code>new Date(event.scheduledTime)</code>.
+  - The time the `ScheduledEvent` was scheduled to be executed in milliseconds since January 1, 1970, UTC. It can be parsed as <code>new Date(controller.scheduledTime)</code>.
 
 - `env` object
 

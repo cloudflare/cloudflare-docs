@@ -23,11 +23,11 @@ entries:
 
   - term: cf-aig-cache-key
     general_definition: |-
-      The [cf-aig-cache-key-aig-cache-key](/ai-gateway/configuration/caching/#custom-cache-key-cf-aig-cache-key) let you override the default cache key in order to precisely set the cacheability setting for any resource.
+      The [cf-aig-cache-key-aig-cache-key](/ai-gateway/features/caching/#custom-cache-key-cf-aig-cache-key) let you override the default cache key in order to precisely set the cacheability setting for any resource.
 
   - term: cf-aig-cache-status
     general_definition: |-
-      [Status indicator for caching](/ai-gateway/configuration/caching/#default-configuration), showing if a request was served from cache.
+      [Status indicator for caching](/ai-gateway/features/caching/#default-configuration), showing if a request was served from cache.
 
   - term: cf-aig-metadata
     general_definition: |-
@@ -35,11 +35,11 @@ entries:
 
   - term: cf-aig-cache-ttl
     general_definition: |-
-      Specifies the [cache time-to-live for responses](/ai-gateway/configuration/caching/#cache-ttl-cf-aig-cache-ttl).
+      Specifies the [cache time-to-live for responses](/ai-gateway/features/caching/#cache-ttl-cf-aig-cache-ttl).
 
   - term: cf-aig-skip-cache
     general_definition: |-
-      Header to [bypass caching for a specific request](/ai-gateway/configuration/caching/#skip-cache-cf-aig-skip-cache).
+      Header to [bypass caching for a specific request](/ai-gateway/features/caching/#skip-cache-cf-aig-skip-cache).
 
   - term: cf-aig-request-timeout
     general_definition: |-

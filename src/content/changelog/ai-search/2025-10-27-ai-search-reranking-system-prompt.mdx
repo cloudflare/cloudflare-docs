@@ -1,0 +1,54 @@
+---
+title: Reranking and API-based system prompt configuration in AI Search
+description: Improve result accuracy with reranking and dynamically control AI Search responses by setting system prompts in API requests.
+products:
+  - ai-search
+date: 2025-10-28
+---
+
+[AI Search](/ai-search/) now supports reranking for improved retrieval quality and allows you to set the system prompt directly in your API requests.
+
+## Rerank for more relevant results
+
+You can now enable [reranking](/ai-search/configuration/reranking/) to reorder retrieved documents based on their semantic relevance to the user’s query. Reranking helps improve accuracy, especially for large or noisy datasets where vector similarity alone may not produce the optimal ordering.
+
+You can enable and configure reranking in the dashboard or directly in your API requests:
+
+```javascript
+const answer = await env.AI.autorag("my-autorag").aiSearch({
+  query: "How do I train a llama to deliver coffee?",
+  model: "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
+  reranking: {
+    enabled: true,
+    model: "@cf/baai/bge-reranker-base"
+  }
+});
+```
+
+## Set system prompts in API
+
+Previously, [system prompts](/ai-search/configuration/system-prompt/) could only be configured in the dashboard. You can now define them directly in your API requests, giving you per-query control over behavior. For example:
+
+```javascript
+// Dynamically set query and system prompt in AI Search
+async function getAnswer(query, tone) {
+  const systemPrompt = `You are a ${tone} assistant.`;
+
+  const response = await env.AI.autorag("my-autorag").aiSearch({
+    query: query,
+    system_prompt: systemPrompt
+  });
+
+  return response;
+}
+
+// Example usage
+const query = "What is Cloudflare?";
+const tone = "friendly";
+
+const answer = await getAnswer(query, tone);
+console.log(answer);
+```
+
+Learn more about [Reranking](/ai-search/configuration/reranking/) and [System Prompt](/ai-search/configuration/system-prompt/) in AI Search.
+

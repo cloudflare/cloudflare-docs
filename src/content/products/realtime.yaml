@@ -8,5 +8,5 @@ product:
 
 meta:
   title: Cloudflare Realtime docs
-  description: Infrastructure for real-time serverless video, audio, and data applications
+  description: RealtimeKit, SFU and TURN
   author: "@cloudflare"

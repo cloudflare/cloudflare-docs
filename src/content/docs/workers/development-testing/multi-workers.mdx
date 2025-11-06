@@ -82,7 +82,7 @@ You can also run each Worker in a separate dev commands, each with its own termi
 These Workers run in different dev commands but can still communicate with each other via service bindings or tail consumers **regardless of whether they are started with `wrangler dev` or `vite dev`**.
 
 :::note
-You can also combine both approaches — for example, run a group of Workers together through `vite dev` using `auxiliaryWorkers`, while running another Worker separately with `wrangler dev`. This allows you to keep tightly coupled Workers running under a single dev command, while keeping independent or shared Workers in separate ones. However, running `wrangler dev` with multiple configuration files (e.g. `wrangler dev -c ./app/wrangler.jsonc -c ./api/wrangler.jsonc`) does **not** support cross-process bindings at the moment.
+You can also combine both approaches — for example, run a group of Workers together through `vite dev` using `auxiliaryWorkers`, while running another Worker separately with `wrangler dev`. This allows you to keep tightly coupled Workers running under a single dev command, while keeping independent or shared Workers in separate ones.
 :::
 
 **Use this approach when:**

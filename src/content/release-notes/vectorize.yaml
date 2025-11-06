@@ -3,6 +3,11 @@ link: "/vectorize/platform/changelog/"
 productName: Vectorize
 productLink: "/vectorize/"
 entries:
+  - publish_date: "2025-08-25"
+    title: Added support for the list-vectors operation
+    description: |-
+      Vectorize now supports iteration through all the vector identifiers in an index in a paginated manner using the list-vectors operation.
+
   - publish_date: "2024-12-20"
     title: Added support for index name reuse
     description: |-

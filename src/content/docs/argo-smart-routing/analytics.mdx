@@ -6,13 +6,15 @@ sidebar:
 
 ---
 
+import { Render } from "~/components";
+
 Cloudflare provides analytics to show the performance benefits of Argo Smart Routing.
 
 You can access Argo analytics for your domain in the [Cloudflare dashboard](https://dash.cloudflare.com/) at **Analytics** > **Performance**. For information on all analytics in the dashboard, refer to [Analytics](/analytics/).
 
 ## How it works
 
-Analytics collects data based on the time-to-first-byte (TTFB) from your origin to the Cloudflare network. TTFB is the delay between when Cloudflare sends a request to your server and when it receives the first byte in response. Argo Smart Routing optimizes your server's network transit time to minimize this delay.
+<Render file="argo-analytics" product="smart-shield" />
 
 :::note
 

@@ -1,0 +1,139 @@
+---
+title: OpenAI
+pcx_content_type: get-started
+---
+
+[OpenAI](https://openai.com/about/) helps you build with ChatGPT.
+
+## Endpoint
+
+```txt
+https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai
+```
+
+### Chat completions endpoint
+
+```txt
+https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/chat/completions \
+```
+
+### Responses endpoint
+
+```txt
+https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/responses \
+```
+
+## URL structure
+
+When making requests to OpenAI, replace `https://api.openai.com/v1` in the URL you are currently using with `https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai`.
+
+## Prerequisites
+
+When making requests to OpenAI, ensure you have the following:
+
+- Your AI Gateway Account ID.
+- Your AI Gateway gateway name.
+- An active OpenAI API token.
+- The name of the OpenAI model you want to use.
+
+## Chat completions endpoint
+
+### cURL example
+
+```bash
+curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/chat/completions \
+--header 'Authorization: Bearer {openai_token}' \
+--header 'Content-Type: application/json' \
+--data '{
+  "model": "gpt-4o-mini",
+  "messages": [
+    {
+      "role": "user",
+      "content": "What is Cloudflare?"
+    }
+  ]
+}'
+```
+
+### JavaScript SDK example
+
+```js
+import OpenAI from "openai";
+
+const apiKey = "my api key"; // or process.env["OPENAI_API_KEY"]
+const accountId = "{account_id}";
+const gatewayId = "{gateway_id}";
+const baseURL = `https://gateway.ai.cloudflare.com/v1/${accountId}/${gatewayId}/openai`;
+
+const openai = new OpenAI({
+	apiKey,
+	baseURL,
+});
+
+try {
+	const model = "gpt-5-mini";
+	const messages = [{ role: "user", content: "What is a neuron?" }];
+	const maxTokens = 100;
+	const chatCompletion = await openai.chat.completions.create({
+		model,
+		messages,
+		max_tokens: maxTokens,
+	});
+	const response = chatCompletion.choices[0].message;
+	console.log(response);
+} catch (e) {
+	console.error(e);
+}
+```
+
+## OpenAI Responses endpoint
+
+### cURL example
+
+```bash
+curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/responses \
+--header 'Authorization: Bearer {openai_token}' \
+--header 'Content-Type: application/json' \
+--data '{
+  "model": "gpt-4.1",
+  "input": [
+    {
+      "role": "user",
+      "content": "Write a one-sentence bedtime story about a unicorn."
+    }
+  ]
+}'
+```
+
+### JavaScript SDK example
+
+```js
+import OpenAI from "openai";
+
+const apiKey = "my api key"; // or process.env["OPENAI_API_KEY"]
+const accountId = "{account_id}";
+const gatewayId = "{gateway_id}";
+const baseURL = `https://gateway.ai.cloudflare.com/v1/${accountId}/${gatewayId}/openai`;
+
+const openai = new OpenAI({
+	apiKey,
+	baseURL,
+});
+
+try {
+	const model = "gpt-4.1";
+	const input = [
+		{
+			role: "user",
+			content: "Write a one-sentence bedtime story about a unicorn.",
+		},
+	];
+	const response = await openai.responses.create({
+		model,
+		input,
+	});
+	console.log(response.output_text);
+} catch (e) {
+	console.error(e);
+}
+```

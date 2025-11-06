@@ -11,7 +11,7 @@ async function compressGql(gql) {
 }
 
 /**
- * See CONTRIBUTING.md for instructions on how to use this plugin.
+ * See https://developers.cloudflare.com/style-guide/contributions/ for instructions on how to use this plugin.
  * @param {string} query
  */
 function autoPopulateGraphQLVariables(query) {

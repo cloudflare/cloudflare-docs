@@ -9,6 +9,7 @@ A Durable Object incurs duration charges as long as the JavaScript object has to
 Once an object has been evicted from memory, the next time it is needed, it will be recreated (calling the constructor again).
 
 There are several factors that contribute in keeping the Durable Object in memory and keeping it from hibernating or being inactive.
+
 Find more information in [Lifecycle of a Durable Object](/durable-objects/concepts/durable-object-lifecycle/).
 
 ### Does an empty table / SQLite database contribute to my storage?
@@ -19,4 +20,4 @@ Yes, although minimal. Empty tables can consume at least a few kilobytes, based 
 
 All writes to a SQLite-backed Durable Object stores nominal amounts of metadata in internal tables in the Durable Object, which counts towards your billable storage.
 
-The metadata remains in the Durable Object until you call [`deleteAll()`](/durable-objects/api/storage-api/#deleteall).
+The metadata remains in the Durable Object until you call [`deleteAll()`](/durable-objects/api/sqlite-storage-api/#deleteall).
