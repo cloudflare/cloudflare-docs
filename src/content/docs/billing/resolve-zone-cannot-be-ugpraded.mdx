@@ -1,0 +1,38 @@
+---
+title: Resolve the zone cannot be upgraded error
+pcx_content_type: overview
+sidebar:
+  order: 14
+---
+
+When trying to upgrade a domain or purchase a subscription, you may see an error that contains one of the following phrases:
+
+* "this zone cannot be upgraded"
+* "there is a problem with your billing profile"
+* "The zone you are trying to open a subscription for is banned"
+
+## Causes
+* Your account may have an outstanding unpaid balance
+* Another account previously associated with the domain / zone your purchase relates to has an outstanding unpaid balance
+
+## Solution
+This message appears when the account or domain involved has an outstanding unpaid balance. In the case of a domain, this may also be triggered by a previous account that owned the domain. To resolve this you will need to:
+
+1. Check each Cloudflare account you have access to for an outstanding balance. Refer to [Email address and password](/fundamentals/user-profiles/change-password-or-email/) if you have forgotten these details.
+2. Refer to [Pay an overdue balance](/billing/pay-invoices-overdue-balances/#pay-an-overdue-balance) to pay this balance
+3. Wait 24 hours after paying this balance
+4. Attempt to upgrade again
+
+As a reference, the full error messages you may see are:
+
+* "Refer to https://cfl.re/3VUQyyL for assistance. The zone cannot be upgraded at this time."
+* "failed to lookup account in db: Refer to https://cfl.re/3VUQyyL for assistance. For security reasons, there is a problem with your billing profile."
+* "could not run legacy post zone sub request against new zone products: failed to update user subscription: failed to load account from db: Refer to https://cfl.re/3VUQyyL for assistance. For security reasons, there is a problem with your billing profile."
+* "failed to load account from db: Refer to https://cfl.re/3VUQyyL for assistance. For security reasons, there is a problem with your billing profile."
+* "failed in ActionAppendSubscription: failed to update user subscription: failed to load account from db: Refer to https://cfl.re/3VUQyyL for assistance. For security reasons, there is a problem with your billing profile.
+* "failed in ActionAppendSubscription: failed to update user subscription: failed to apply object products: Refer to https://cfl.re/3VUQyyL for assistance. The zone you are trying to open a subscription for is banned."
+* "could not run a legacy post user sub request: failed to update user subscription: failed to load account from db: Refer to https://cfl.re/3VUQyyL for assistance. For security reasons, there is a problem with your billing profile."
+* "could not run legacy post zone sub request against new zone products: failed to update user subscription: failed to apply object products: Refer to https://cfl.re/3VUQyyL for assistance. The zone you are trying to open a subscription for is banned."
+* "failed to load account: Refer to https://cfl.re/3VUQyyL for assistance. For security reasons, there is a problem with your billing profile."
+* "could not run legacy post zone sub request against new zone products: failed to get account type: failed to load account from db: Refer to https://cfl.re/3VUQyyL for assistance. For security reasons, there is a problem with your billing profile."
+* "failed in ActionAppendSubscription: failed to get account type: failed to load account from db: Refer to https://cfl.re/3VUQyyL for assistance. For security reasons, there is a problem with your billing profile."

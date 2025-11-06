@@ -1,0 +1,11 @@
+:root[data-theme="dark"] {
+	button#scroll-to-top-button {
+		background-color: var(--color-cl1-brand-orange);
+		border: 1px solid var(--color-cl1-brand-orange);
+	}
+	button#scroll-to-top-button:hover {
+		background-color: var(--sl-color-accent-low);
+		border: 1px solid var(--sl-color-accent-low);
+		color: var(--color-cl1-brand-orange);
+	}
+}

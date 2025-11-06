@@ -23,11 +23,19 @@ The applicable scope of user permissions is `com.cloudflare.api.user`.
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-<Render file="user-permissions-table" params={{ one: "Edit" }} />
+<Render
+	file="user-permissions-table"
+	product="fundamentals"
+	params={{ one: "Edit" }}
+/>
 
 </TabItem> <TabItem label="API">
 
-<Render file="user-permissions-table" params={{ one: "Write" }} />
+<Render
+	file="user-permissions-table"
+	product="fundamentals"
+	params={{ one: "Write" }}
+/>
 
 </TabItem> </Tabs>
 
@@ -39,6 +47,7 @@ The applicable scope of account permissions is `com.cloudflare.api.account`.
 
 <Render
 	file="account-permissions-table"
+	product="fundamentals"
 	params={{
 		editWord: "Edit",
 		src: "dash",
@@ -49,6 +58,7 @@ The applicable scope of account permissions is `com.cloudflare.api.account`.
 
 <Render
 	file="account-permissions-table"
+	product="fundamentals"
 	params={{
 		editWord: "Write",
 		src: "api",
@@ -65,6 +75,7 @@ The applicable scope of zone permissions is `com.cloudflare.api.account.zone`.
 
 <Render
 	file="zone-permissions-table"
+	product="fundamentals"
 	params={{ editWord: "Edit", src: "dash" }}
 />
 
@@ -72,6 +83,7 @@ The applicable scope of zone permissions is `com.cloudflare.api.account.zone`.
 
 <Render
 	file="zone-permissions-table"
+	product="fundamentals"
 	params={{ editWord: "Write", src: "api" }}
 />
 

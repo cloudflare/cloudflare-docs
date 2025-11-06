@@ -6,6 +6,8 @@ sidebar:
 
 ---
 
+import { DashButton } from "~/components";
+
 ## Submit reports
 
 Visit [Submit an abuse report](https://abuse.cloudflare.com/) to submit a report.
@@ -14,9 +16,11 @@ Visit [Submit an abuse report](https://abuse.cloudflare.com/) to submit a report
 
 Users with Admin, Super Admin, or Trust & Safety roles can view any abuse reports submitted and accepted against the content associated with their account.
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login).
-2. Select **Manage Account** > **Abuse Reports**.
-3. Optionally, filter the reports based on date, report status, report type, and domain.
+1. In the Cloudflare dashboard, go to the **Abuse reports** page.
+
+    <DashButton url="/?to=/:account/abuse-reports" />
+
+2. Optionally, filter the reports based on date, report status, report type, and domain.
 
 ## Receive notifications
 

@@ -1,11 +1,6 @@
 ---
 pcx_content_type: how-to
 title: Elder.js
-banner:
-  content: We recommend using <strong>Cloudflare Workers</strong> for new projects. For existing Pages projects, see our <a href="/workers/static-assets/migrate-from-pages/">migration guide</a> and <a href="/workers/static-assets/migrate-from-pages/#compatibility-matrix">compatibility matrix</a>.
-  type: note
-  dismissible:
-    id: pages-migrate-to-workers
 ---
 
 import { PagesBuildPreset, Render } from "~/components";
@@ -25,14 +20,15 @@ cd elderjs-app
 
 The Elder.js template includes a number of pages and examples showing how to build your static site, but by simply generating the project, it is already ready to be deployed to Cloudflare Pages.
 
-<Render file="tutorials-before-you-start" />
+<Render file="tutorials-before-you-start" product="pages" />
 
-<Render file="framework-guides/create-github-repository" />
+<Render file="framework-guides/create-github-repository" product="pages" />
 
 ## Deploy with Cloudflare Pages
 
 <Render
 	file="deploy-to-pages-steps-with-preset"
+	product="pages"
 	params={{ name: "Elder.js" }}
 />
 
@@ -56,4 +52,8 @@ For the complete guide to deploying your first site to Cloudflare Pages, refer t
 
 :::
 
-<Render file="framework-guides/learn-more" params={{ one: "Elder.js" }} />
+<Render
+	file="framework-guides/learn-more"
+	product="pages"
+	params={{ one: "Elder.js" }}
+/>

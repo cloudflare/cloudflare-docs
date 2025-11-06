@@ -5,7 +5,7 @@ pcx_content_type: example
 
 import { Render } from "~/components";
 
-<Render file="keys" />
+<Render file="keys" product="r2" />
 <br />
 
 This example uses the [aws-sdk-s3](https://crates.io/crates/aws-sdk-s3) crate from the [AWS SDK for Rust](https://github.com/awslabs/aws-sdk-rust). You must pass in the R2 configuration credentials when instantiating your `S3` client:

@@ -13,7 +13,6 @@ import {
 	Render,
 	PackageManagers,
 	FileTree,
-	Aside,
 } from "~/components";
 
 Whether you are using Wrangler or the [Cloudflare Vite plugin](https://developers.cloudflare.com/workers/vite-plugin/), your workflow for **accessing** data during local development remains the same. However, you can only [populate local resources with data](/workers/development-testing/local-data/#populating-local-resources-with-data) via the Wrangler CLI.
@@ -28,11 +27,9 @@ When you first start developing, your local resources will be empty. You'll need
 
 ### KV namespaces
 
-<Aside type="caution" title="Syntax note">
-
+:::caution[Syntax note]
 Since version 3.60.0, Wrangler supports the `kv ...` syntax. If you are using versions below 3.60.0, the command follows the `kv:...` syntax. Learn more in the [Wrangler commands for KV page](/kv/reference/kv-commands/).
-
-</Aside>
+:::
 
 #### [Add a single key-value pair](/workers/wrangler/commands/#kv-key)
 

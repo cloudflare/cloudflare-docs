@@ -5,7 +5,7 @@ title: timers
 
 import { Render, TypeScriptExample } from "~/components";
 
-<Render file="nodejs-compat-howto" />
+<Render file="nodejs-compat-howto" product="workers" />
 
 Use [`node:timers`](https://nodejs.org/api/timers.html) APIs to schedule functions to be executed later.
 
@@ -17,14 +17,26 @@ and [`setImmediate`](https://nodejs.org/api/timers.html#setimmediatecallback-arg
 ```ts
 import timers from "node:timers";
 
-console.log("first");
-timers.setTimeout(() => {
-  console.log("last");
-}, 10);
+export default {
+  async fetch(): Promise<Response> {
+    console.log("first");
+    const { promise: promise1, resolve: resolve1 } = Promise.withResolvers<void>();
+    const { promise: promise2, resolve: resolve2 } = Promise.withResolvers<void>();
+    timers.setTimeout(() => {
+      console.log("last");
+      resolve1();
+    }, 10);
 
-timers.setTimeout(() => {
-  console.log("next");
-});
+    timers.setTimeout(() => {
+      console.log("next");
+      resolve2();
+    });
+
+    await Promise.all([promise1, promise2]);
+
+    return new Response("ok");
+  }
+} satisfies ExportedHandler<Env>;
 ```
 </TypeScriptExample>
 

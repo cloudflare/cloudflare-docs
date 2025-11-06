@@ -43,4 +43,9 @@ export default {
 			},
 		};
 	},
+	// @ts-expect-error Will be fixed with the next release of @docsearch/js
+	keyboardShortcuts: {
+		"Ctrl/Cmd+K": true,
+		"/": false,
+	},
 } satisfies DocSearchClientOptions;

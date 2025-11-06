@@ -57,7 +57,6 @@ If you are an Enterprise customer and require more DNS records, contact your acc
 
 :::
 
-
 ---
 
 ## Which record types can Cloudflare proxy?
@@ -68,7 +67,7 @@ Only `A`, `AAAA`, and `CNAME` records can be proxied. Cloudflare will not proxy 
 
 ## How do I add ANAME records on Cloudflare?
 
-<Render file="aname-alias-callout" />
+<Render file="aname-alias-callout" product="dns" />
 
 ---
 
@@ -82,7 +81,7 @@ Redirecting non-Cloudflare sites via `CNAME` records would cause a DNS resolutio
 
 ## Does Cloudflare support wildcard DNS entries?
 
-Cloudflare supports wildcard '*' DNS records, both proxied and unproxied, on all plans.
+Cloudflare supports wildcard '\*' DNS records, both proxied and unproxied, on all plans.
 
 ---
 
@@ -120,7 +119,7 @@ Read [Deprecating the DNS ANY meta-query type](https://blog.cloudflare.com/depr
 
 ## Why do I have to remove my `DS` record when signing up for Cloudflare?
 
-<Render file="dnssec-providers" />
+<Render file="dnssec-providers" product="dns" />
 
 For more help, refer to [Enabling DNSSEC in Cloudflare](/dns/dnssec/).
 
@@ -224,25 +223,28 @@ For domains where Cloudflare hosts the DNS, Cloudflare continuously checks wheth
 
 This is important because, if a domain is in a _Moved_ state for a [long enough period of time](/dns/zone-setups/reference/domain-status/), it will be deleted from Cloudflare.
 
-<Render file="recover-deleted-domain" />
-
----
-
-## How to configure records on local DNS servers?
-
-You can create CNAME records pointing to `cdn.cloudflare.net` in your local DNS to locally resolve hostnames through Cloudflare.
-For example, if you need to resolve `example.com` through Cloudflare in your local DNS server, you need to create a CNAME record such as:
-
-```txt
-example.com CNAME example.com.cdn.cloudflare.net
-```
+<Render file="recover-deleted-domain" product="dns" />
 
 ---
 
 ## Why am I getting a warning for hostname not covered even if I have a custom certificate?
 
 If the [custom certificate](/ssl/edge-certificates/custom-certificates/) has been in place before our new certificate management pipeline, the following warning is displayed but can be discarded.
-
 `This hostname is not covered by a certificate.`
 
 The warning will be gone when you upload a new custom certificate, or start using another type of certificate for this hostname.
+
+
+---
+
+## I've updated my CNAME to a new SaaS provider, but I still see content from the old provider
+
+When a SaaS provider is leveraging our [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/) solution, they create a [Custom Hostname](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/) on their Cloudflare zone.
+Then a [CNAME record needs to be created](/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/how-it-works/) on the client zone, to point to the SaaS provider service.
+When changing SaaS providers, if the old SaaS provider provisioned a specific custom hostname for the record (`mystore.example.com`) and the new SaaS provider provisioned a wildcard custom hostname (`*.example.com`), the old custom hostname will still take precedence.
+This is expected as per the [Certificate and hostname priority](https://developers.cloudflare.com/ssl/reference/certificate-and-hostname-priority/#hostname-priority).
+
+In this case there are 2 ways forward:
+- (*Recommended*) Ask the new SaaS provider to provision a specific custom hostname for you instead of the wildcard (`mystore.example.com` instead of `*.example.com`).
+- Ask the Super Administrator of your account to contact [Cloudflare Support](/support/contacting-cloudflare-support/) to request an update of the SaaS configuration.
+

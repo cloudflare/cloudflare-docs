@@ -8,5 +8,5 @@ product:
 
 meta:
   title: Cloudflare Workers KV docs
-  description: Global, low-latency, key-value data store.
+  description: Global, low-latency, key-value data storage
   author: "@cloudflare"

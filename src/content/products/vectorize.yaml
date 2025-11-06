@@ -9,5 +9,5 @@ product:
 
 meta:
   title: Cloudflare Vectorize docs
-  description: Documentation for Vectorize, Cloudflare's vector database
+  description: Store, query, and manage high-dimensional vector databases
   author: "@cloudflare"

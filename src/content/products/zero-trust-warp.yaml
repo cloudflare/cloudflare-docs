@@ -3,8 +3,8 @@ name: Zero Trust WARP Client
 product:
   title: Zero Trust WARP Client
   group: Cloudflare One
-  url: /cloudflare-one/connections/connect-devices/warp/
+  url: /cloudflare-one/team-and-resources/devices/warp/
   wrap: true
 
 meta:
-  description: The Cloudflare WARP client allows you to protect corporate devices by securely and privately sending traffic from those devices to Cloudflare’s global network, where Cloudflare Gateway can apply advanced web filtering.
+  description: Connect corporate devices to your Zero Trust organization

@@ -6,7 +6,7 @@ sidebar:
   order: 2
 ---
 
-import { WranglerConfig, Aside, TypeScriptExample, Render } from "~/components";
+import { WranglerConfig, TypeScriptExample, Render } from "~/components";
 
 Single Page Applications (SPAs) are web applications which are client-side rendered (CSR). They are often built with a framework such as [React](/workers/framework-guides/web-apps/react/), [Vue](/workers/framework-guides/web-apps/vue/) or [Svelte](/workers/framework-guides/web-apps/svelte/). The build process of these frameworks will produce a single `/index.html` file and accompanying client-side resources (e.g. JavaScript bundles, CSS stylesheets, images, fonts, etc.). Typically, data is fetched by the client from an API with client-side requests.
 
@@ -33,18 +33,18 @@ In order to deploy a Single Page Application to Workers, you must configure the 
 
 Configuring `assets.not_found_handling` to `single-page-application` overrides the default serving behavior of Workers for static assets. When an incoming request does not match a file in the `assets.directory`, Workers will serve the contents of the `/index.html` file with a `200 OK` status.
 
-<Render file="navigation_requests" />
+<Render file="navigation_requests" product="workers" />
 
 ## Advanced routing control
 
 For more explicit control over SPA routing behavior, you can use `run_worker_first` with an array of route patterns. This approach disables the automatic `Sec-Fetch-Mode: navigate` detection and gives you explicit control over which requests should be handled by your Worker script vs served as static assets.
 
-<Aside type="note">
-	Advanced routing control is supported in:
-    - [Wrangler](/workers/wrangler/install-and-update/) v4.20.0 and above
-    - [Cloudflare Vite plugin](/workers/vite-plugin/get-started/) v1.7.0 and above
+:::note
+Advanced routing control is supported in:
 
-</Aside>
+- [Wrangler](/workers/wrangler/install-and-update/) v4.20.0 and above
+- [Cloudflare Vite plugin](/workers/vite-plugin/get-started/) v1.7.0 and above
+  :::
 
 <WranglerConfig>
 
@@ -85,6 +85,7 @@ export default {
 	},
 } satisfies ExportedHandler;
 ```
+
 </TypeScriptExample>
 
 ## Local Development
@@ -93,5 +94,6 @@ If you are using a Vite-powered SPA framework, you might be interested in using 
 
 <Render
 	file="static_asset_routing_reference"
+	product="workers"
 	params={{ not_found_handling: "single-page-application" }}
 />

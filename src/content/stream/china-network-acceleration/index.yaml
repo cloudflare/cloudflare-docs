@@ -1,0 +1,318 @@
+---
+id: 18457868eb13222051618b0d138e0225
+url: china-network-acceleration
+title: China network - CDN global acceleration for Mainland China
+description: In this video, Jess Liu discusses Cloudflares CDN Global Acceleration (formerly China Express), including solutions for high latency on dynamic content, accelerating API calls, accessing Cloudflare One services like WARP and Magic WAN from within mainland China, and securely connecting private enterprise networks.
+products:
+  - china-network
+pcx_content_type: video
+thumbnail:
+  url: https://pub-d9bf66e086fb4b639107aa52105b49dd.r2.dev/2-China-Express-thumbnail.png
+chapters: 
+  {
+  "Introduction and overview of Cloudflare solutions for China": "0s",
+  "Dynamic content outside of Mainland China": "38s",
+  "Access to global services": "01m43s",
+  "Private network connectivity": "02m54s",
+  "China Network use case and solution overview": "03m43s",
+  }
+transcript: |
+
+  WEBVTT
+
+  1
+  00:00:03.620 --> 00:00:08.780
+  In the last video, we discussed that if your 
+  origin is outside of mainland China and has
+
+  2
+  00:00:08.780 --> 00:00:11.630
+  dynamic content that cannot be cashed within 
+  China,
+
+  3
+  00:00:11.660 --> 00:00:14.930
+  your users may still encounter increased 
+  latency,
+
+  4
+  00:00:14.960 --> 00:00:17.240
+  leading to poor user experience.
+
+  5
+  00:00:17.270 --> 00:00:22.430
+  In this video, we'll go over three main use 
+  cases that we can help address dynamic
+
+  6
+  00:00:22.430 --> 00:00:24.500
+  content outside of mainland China.
+
+  7
+  00:00:24.530 --> 00:00:28.430
+  Access to global services and private network 
+  connectivity.
+
+  8
+  00:00:28.430 --> 00:00:32.450
+  So depending on your use case, 
+  you can choose what best suits your needs.
+
+  9
+  00:00:32.480 --> 00:00:37.340
+  Hello, I'm Jez from Cloudflare here to teach 
+  you about our Cloudflare solutions for
+
+  10
+  00:00:37.370 --> 00:00:42.530
+  mainland China. If your origin is outside of 
+  mainland China and has dynamic content that
+
+  11
+  00:00:42.530 --> 00:00:46.550
+  cannot be cached within China, 
+  CN Global Acceleration,
+
+  12
+  00:00:46.550 --> 00:00:51.080
+  formerly known as China Express, 
+  can help you with this by leveraging
+
+  13
+  00:00:51.080 --> 00:00:56.060
+  dedicated private tunnels established through 
+  our trusted local partners including JD
+
+  14
+  00:00:56.060 --> 00:01:01.430
+  cloud, CME and CBC tech, 
+  we ensure seamless and efficient content
+
+  15
+  00:01:01.430 --> 00:01:03.770
+  delivery. Here's how it works.
+
+  16
+  00:01:03.770 --> 00:01:08.210
+  Traffic received from our China Network data 
+  centers is routed to our premium data
+
+  17
+  00:01:08.280 --> 00:01:12.420
+  centers, which have global acceleration 
+  privileges that are designed to handle
+
+  18
+  00:01:12.420 --> 00:01:14.190
+  dynamic traffic with ease.
+
+  19
+  00:01:14.520 --> 00:01:18.060
+  This includes typical use cases like web API 
+  calls,
+
+  20
+  00:01:18.060 --> 00:01:23.400
+  as well as more complex scenarios such as 
+  dynamic traffic management or multi origin
+
+  21
+  00:01:23.400 --> 00:01:28.650
+  configurations. For example, 
+  customers using Cloudflare SaaS features like
+
+  22
+  00:01:28.650 --> 00:01:34.050
+  R2 for asset storage can integrate these 
+  capabilities into our solutions seamlessly.
+
+  23
+  00:01:34.080 --> 00:01:38.880
+  Once processed, the traffic is transferred 
+  through a partner's dedicated private tunnel
+
+  24
+  00:01:38.910 --> 00:01:43.710
+  to the global public internet, 
+  ensuring high performance and reliability.
+
+  25
+  00:01:43.860 --> 00:01:48.690
+  Besides accelerating dynamic content, 
+  you can also reliably access Cloudflare One
+
+  26
+  00:01:48.690 --> 00:01:52.230
+  services like Warp, Magic WAN, 
+  and travel SIM cards.
+
+  27
+  00:01:52.230 --> 00:01:56.700
+  With Warp Global acceleration, 
+  Warp client can be extended to China for your
+
+  28
+  00:01:56.700 --> 00:02:01.770
+  users under Pre-signed agreements to access 
+  the same Zero Trust Network access services,
+
+  29
+  00:02:01.770 --> 00:02:06.930
+  just as the rest of your global users, 
+  while experiencing stable connectivity
+
+  30
+  00:02:06.930 --> 00:02:11.040
+  anywhere within China, 
+  no matter if you're at home or a coffee shop.
+
+  31
+  00:02:11.070 --> 00:02:15.730
+  Once you receive our dedicated China IPS 
+  through Cloudflare and have Warp setup up,
+
+  32
+  00:02:15.730 --> 00:02:18.130
+  all you need to do is override the following.
+
+  33
+  00:02:18.160 --> 00:02:20.110
+  Warp endpoints for each device.
+
+  34
+  00:02:20.140 --> 00:02:24.130
+  Warp endpoint API endpoint and endpoint.
+
+  35
+  00:02:24.460 --> 00:02:29.260
+  Verify the colocation center is your desired 
+  location under Warp preferences.
+
+  36
+  00:02:30.370 --> 00:02:33.460
+  And now you should be able to access global 
+  services.
+
+  37
+  00:02:34.480 --> 00:02:38.740
+  As for users who are temporarily in China, 
+  we can offer travel SIM cards,
+
+  38
+  00:02:38.740 --> 00:02:42.610
+  which connect to our Warp client for a 
+  seamless and secure mobile acceleration
+
+  39
+  00:02:42.610 --> 00:02:47.170
+  abroad. By inserting the SIM card or applying 
+  the eSIM to an employee's phone,
+
+  40
+  00:02:47.170 --> 00:02:50.200
+  corporate devices, whether it be laptops or 
+  tablets,
+
+  41
+  00:02:50.230 --> 00:02:54.400
+  can then connect to their organization's Warp 
+  client through mobile hotspot.
+
+  42
+  00:02:54.430 --> 00:02:58.810
+  Lastly, if your goal is to scale and 
+  accelerate private enterprise networks from
+
+  43
+  00:02:58.810 --> 00:03:02.410
+  China, Magic WAN Global Acceleration can help 
+  you with that.
+
+  44
+  00:03:02.410 --> 00:03:05.170
+  You can securely connect to any traffic 
+  source,
+
+  45
+  00:03:05.170 --> 00:03:08.830
+  such as offices and data centers to 
+  Cloudflare network,
+
+  46
+  00:03:08.830 --> 00:03:12.850
+  while configuring routing policies tailored 
+  to your corporate networking needs from
+
+  47
+  00:03:12.850 --> 00:03:18.250
+  China. To extend Magic WAN into China, 
+  we provide a customer premises equipment or a
+
+  48
+  00:03:18.280 --> 00:03:22.900
+  CPE device which will be shipped to your 
+  China based location once the CPE is
+
+  49
+  00:03:22.920 --> 00:03:25.470
+  connected to the internet in your physical 
+  location.
+
+  50
+  00:03:25.470 --> 00:03:29.910
+  Traffic from users who are using the same 
+  internet in that location will be routed
+
+  51
+  00:03:29.910 --> 00:03:34.710
+  through our dedicated private tunnel to any 
+  resource or service to make the process
+
+  52
+  00:03:34.710 --> 00:03:37.830
+  effortless. Our team will help you in 
+  configuring the CPE.
+
+  53
+  00:03:38.070 --> 00:03:43.650
+  To sum up. Our solutions are designed to meet 
+  your specific needs and can be selected a la
+
+  54
+  00:03:43.650 --> 00:03:46.950
+  carte if you need to optimize dynamic data 
+  delivery,
+
+  55
+  00:03:46.950 --> 00:03:52.380
+  whether it's API calls or to integrations or 
+  special use cases within a China network
+
+  56
+  00:03:52.380 --> 00:03:56.130
+  zone. Cdn global acceleration is the ideal 
+  choice.
+
+  57
+  00:03:56.160 --> 00:04:01.170
+  Looking to connect to global services across 
+  China with company enforced policies?
+
+  58
+  00:04:01.170 --> 00:04:07.050
+  Choose Warp Global Acceleration for managing 
+  Enterprise networking or accessing global
+
+  59
+  00:04:07.050 --> 00:04:09.420
+  services from your China based offices.
+
+  60
+  00:04:09.450 --> 00:04:12.960
+  Magic WAN global acceleration is your go to 
+  solution.
+
+  61
+  00:04:13.830 --> 00:04:17.340
+  Thanks for watching. You can reach out to our 
+  sales team to learn more.

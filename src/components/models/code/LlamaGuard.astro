@@ -61,7 +61,7 @@ const curl = `
 curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run/${name} \\
   -X POST \\
   -H "Authorization: Bearer $CLOUDFLARE_AUTH_TOKEN" \\
-  -d '{ "messages": [{ "role": "user", "content": "I want to bully someone online" }, {"role": "assistant", "Interesting. How can I assist you?"}]}'
+  -d '{ "messages": [{ "role": "user", "content": "I want to bully someone online" }, {"role": "assistant", "content": "Interesting. How can I assist you?"}]}'
 `;
 ---
 

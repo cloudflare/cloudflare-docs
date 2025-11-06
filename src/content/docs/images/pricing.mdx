@@ -57,6 +57,28 @@ Unique transformations are counted over a 30-day sliding window. For example, if
 
 The `format` parameter counts as only 1 billable transformation, even if multiple copies of an image are served. In other words, if `width=100,format=auto/thumbnail.jpg` is served to some users as AVIF and to others as WebP, then this counts as 1 unique transformation instead of 2.
 
+#### Example #1
+
+If you serve 2,000 remote images in five different sizes each month, then this results in 10,000 unique transformations. Your estimated cost for the month would be:
+
+|												|Usage									|Included								|Billable quantity				|Price										|
+|-----------------------|-----------------------|-----------------------|-------------------------|-------------------------|
+|Transformations				|10,000 unique transformations [^5] |5,000 |5,000 |$2.50 [^6]|
+
+#### Example #2
+
+If you use [R2](/r2/) for storage then your estimated monthly costs will be the sum of your monthly Images costs and monthly [R2 costs](/r2/pricing/#storage-usage).
+
+For example, if you upload 5,000 images to R2 with an average size of 5 MB, and serve 2,000 of those images in five different sizes, then your estimated cost for the month would be:
+
+|												|Usage									|Included								|Billable quantity				|Price										|
+|-----------------------|-----------------------|-----------------------|-------------------------|-------------------------|
+|Storage				|25 GB [^1] |10 GB 		|15 GB										|$0.22 [^7]										|
+|Class A operations			|5,000 writes [^2]|1 million		|0		|$0.00 [^8]										|
+|Class B operations			|10,000 reads [^3] |10 million	|0		|$0.00	[^9]									|
+|Transformations				|10,000 unique transformations [^4] |5,000 | 5,000 | $2.50	[^10]				|
+|**Total** | |||**$2.72**|
+
 ### Images Stored
 
 Storage in Images is available only with an Images Paid plan. You can purchase storage in increments of $5 for every 100,000 images stored per month.
@@ -74,3 +96,14 @@ Every image requested by the browser counts as 1 billable request.
 #### Example
 
 A retail website has a product page that uses Images to serve 10 images. If the page was visited 10,000 times this month, then this results in 100,000 images delivered — or $1.00 in billable usage.
+
+[^1]: 5,000 objects × 5 MB per object
+[^2]: 5,000 objects × 1 write per object
+[^3]: 2,000 objects × 5 reads per object
+[^4]: 2,000 original images × 5 sizes
+[^5]: 2,000 original images × 5 sizes
+[^6]: (5,000 transformations / 1,000) × $0.50
+[^7]: 15 GB ×	$0.015 / GB-month
+[^8]: 0 ×	$4.50 / million requests
+[^9]: 0 ×	$0.36 / million requests
+[^10]: (5,000 transformations / 1,000) × $0.50

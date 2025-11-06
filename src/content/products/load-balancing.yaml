@@ -4,10 +4,10 @@ product:
   title: Load Balancing
   url: /load-balancing/
   group: Application performance
+  additional_groups: [Cloudflare One]
   preview_tryout: true
 
 meta:
   title: Cloudflare Load Balancing docs
-  description: Balance traffic loads, manage failovers, monitor server and pool
-    health, and apply geographic control with Cloudflare Load Balancing
+  description: Maximize application performance and availability
   author: "@cloudflare"

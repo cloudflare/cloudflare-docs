@@ -1,0 +1,35 @@
+---
+title: Hardware requirements
+pcx_content_type: concept
+sidebar:
+  order: 3
+---
+
+import { TunnelCalculator } from "~/components";
+
+## Recommendations
+
+For production use cases, we recommend the following baseline configuration:
+
+- Run a cloudflared replica on two dedicated host machines per network location. Using two hosts enables server-side redundancy. See [tunnel availability and replicas](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-availability/) for setup instructions.
+- Size each host with minimum 4GB of RAM and 4 CPU cores.
+
+This setup is usually sufficient to handle traffic from small-medium sized applications. The actual amount of resources used by cloudflared will depend on many variables, including the number of requests per second, bandwidth, network path, and hardware. If usage increases beyond your existing tunnel capacity, you can scale your tunnel by increasing the hardware allocated to the cloudflared hosts.
+
+## Capacity calculator
+
+To estimate tunnel capacity requirements for your deployment, refer to the [tunnel capacity calculator in the Zero Trust documentation](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-availability/system-requirements/).
+
+## Scaling considerations
+
+Monitor tunnel performance and scale accordingly:
+
+- **CPU utilization**: Keep below 70% average usage
+- **Memory usage**: Maintain headroom for traffic spikes
+- **Network bandwidth**: Ensure adequate throughput for peak loads
+- **Connection count**: Scale cloudflared vertically when approaching capacity limits
+
+## Next steps
+
+- Configure [tunnel deployment](/workers-vpc/configuration/tunnel/)
+- Set up [high availability](/workers-vpc/configuration/tunnel/) with multiple replicas

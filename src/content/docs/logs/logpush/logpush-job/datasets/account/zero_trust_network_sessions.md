@@ -129,6 +129,12 @@ Type: `string`
 
 The name of the Cloudflare data center to which traffic ingressed.
 
+## InitialOriginIP
+
+Type: `string`
+
+The IP used to correlate existing FQDN matching policy between Gateway DNS and Gateway proxy.
+
 ## Offramp
 
 Type: `string`
@@ -188,6 +194,12 @@ Network protocol used for this network session. <br />Possible values are <em>TC
 Type: `string`
 
 Identifier of the client registration which initiated the network session, if applicable (for example, WARP Registration ID).
+
+## ResolvedFQDN
+
+Type: `string`
+
+The fully qualified domain name of the destination.
 
 ## RuleEvaluationDurationMs
 

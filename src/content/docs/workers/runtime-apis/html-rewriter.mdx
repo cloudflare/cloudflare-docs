@@ -30,11 +30,9 @@ new HTMLRewriter()
 Throughout the `HTMLRewriter` API, there are a few consistent types that many properties and methods use:
 
 - `Content` string | Response | ReadableStream
-
   - Content inserted in the output stream should be a string, [`Response`](/workers/runtime-apis/response/), or [`ReadableStream`](/workers/runtime-apis/streams/readablestream/).
 
 - `ContentOptions` Object
-
   - `{ html: Boolean }` Controls the way the HTMLRewriter treats inserted content. If the `html` boolean is set to true, content is treated as raw HTML. If the `html` boolean is set to false or not provided, content will be treated as text and proper HTML escaping will be applied to it.
 
 ---
@@ -124,15 +122,12 @@ The `element` argument, used only in element handlers, is a representation of a 
 #### Properties
 
 - `tagName` string
-
   - The name of the tag, such as `"h1"` or `"div"`. This property can be assigned different values, to modify an element’s tag.
 
 - `attributes` Iterator read-only
-
   - A `[name, value]` pair of the tag’s attributes.
 
 - `removed` boolean
-
   - Indicates whether the element has been removed or replaced by one of the previous handlers.
 
 - `namespaceURI` String
@@ -141,63 +136,52 @@ The `element` argument, used only in element handlers, is a representation of a 
 #### Methods
 
 - <code>getAttribute(namestring)</code> : string | null
-
   - Returns the value for a given attribute name on the element, or `null` if it is not found.
 
 - <code>hasAttribute(namestring)</code> : boolean
-
   - Returns a boolean indicating whether an attribute exists on the element.
 
 - <code>setAttribute(namestring, valuestring)</code> : Element
-
   - Sets an attribute to a provided value, creating the attribute if it does not exist.
 
 - <code>removeAttribute(namestring)</code> : Element
-
   - Removes the attribute.
 
 - <code>before(contentContent, contentOptionsContentOptionsoptional)</code> :
   Element
-
   - Inserts content before the element.
 
-  <Render file="content_and_contentoptions" />
+  <Render file="content_and_contentoptions" product="workers" />
 
 - <code>after(contentContent, contentOptionsContentOptionsoptional)</code> :
   Element
-
   - Inserts content right after the element.
 
 - <code>prepend(contentContent, contentOptionsContentOptionsoptional)</code> :
   Element
-
   - Inserts content right after the start tag of the element.
 
 - <code>append(contentContent, contentOptionsContentOptionsoptional)</code> :
   Element
-
   - Inserts content right before the end tag of the element.
 
 - <code>replace(contentContent, contentOptionsContentOptionsoptional)</code> :
   Element
-
   - Removes the element and inserts content in place of it.
 
-- <code>setInnerContent(contentContent, contentOptionsContentOptionsoptional)</code> :
-	Element
-
+- <code>
+  	setInnerContent(contentContent, contentOptionsContentOptionsoptional)
+  </code>
+  : Element
   - Replaces content of the element.
 
 - <code>remove()</code> : Element
-
   - Removes the element with all its content.
 
 - <code>removeAndKeepContent()</code> : Element
-
   - Removes the start tag and end tag of the element but keeps its inner content intact.
 
 - `onEndTag(handlerFunction<void>)` : void
-
   - Registers a handler that is invoked when the end tag of the element is reached.
 
 ### EndTag
@@ -207,25 +191,21 @@ The `endTag` argument, used only in handlers registered with `element.onEndTag`,
 #### Properties
 
 - `name` string
-
   - The name of the tag, such as `"h1"` or `"div"`. This property can be assigned different values, to modify an element's tag.
 
 #### Methods
 
 - <code>before(contentContent, contentOptionsContentOptionsoptional)</code> :
   EndTag
-
   - Inserts content right before the end tag.
 
 - <code>after(contentContent, contentOptionsContentOptionsoptional)</code> :
   EndTag
-
   - Inserts content right after the end tag.
 
-  <Render file="content_and_contentoptions" />
+  <Render file="content_and_contentoptions" product="workers" />
 
 - <code>remove()</code> : EndTag
-
   - Removes the element with all its content.
 
 ### Text chunks
@@ -237,11 +217,9 @@ Consider the following markup: `<div>Hey. How are you?</div>`. It is possible th
 #### Properties
 
 - `removed` boolean
-
   - Indicates whether the element has been removed or replaced by one of the previous handlers.
 
 - `text` string read-only
-
   - The text content of the chunk. Could be empty if the chunk is the last chunk of the text node.
 
 - `lastInTextNode` boolean read-only
@@ -251,23 +229,19 @@ Consider the following markup: `<div>Hey. How are you?</div>`. It is possible th
 
 - <code>before(contentContent, contentOptionsContentOptionsoptional)</code> :
   Element
-
   - Inserts content before the element.
 
-  <Render file="content_and_contentoptions" />
+  <Render file="content_and_contentoptions" product="workers" />
 
 - <code>after(contentContent, contentOptionsContentOptionsoptional)</code> :
   Element
-
   - Inserts content right after the element.
 
 - <code>replace(contentContent, contentOptionsContentOptionsoptional)</code> :
   Element
-
   - Removes the element and inserts content in place of it.
 
 - <code>remove()</code> : Element
-
   - Removes the element with all its content.
 
 ### Comments
@@ -285,7 +259,6 @@ class ElementHandler {
 #### Properties
 
 - `comment.removed` boolean
-
   - Indicates whether the element has been removed or replaced by one of the previous handlers.
 
 - `comment.text` string
@@ -295,23 +268,19 @@ class ElementHandler {
 
 - <code>before(contentContent, contentOptionsContentOptionsoptional)</code> :
   Element
-
   - Inserts content before the element.
 
-  <Render file="content_and_contentoptions" />
+  <Render file="content_and_contentoptions" product="workers" />
 
 - <code>after(contentContent, contentOptionsContentOptionsoptional)</code> :
   Element
-
   - Inserts content right after the element.
 
 - <code>replace(contentContent, contentOptionsContentOptionsoptional)</code> :
   Element
-
   - Removes the element and inserts content in place of it.
 
 - <code>remove()</code> : Element
-
   - Removes the element with all its content.
 
 ### Doctype
@@ -330,11 +299,9 @@ class DocumentHandler {
 #### Properties
 
 - `doctype.name` string | null read-only
-
   - The doctype name.
 
 - `doctype.publicId` string | null read-only
-
   - The quoted string in the doctype after the PUBLIC atom.
 
 - `doctype.systemId` string | null read-only
@@ -356,10 +323,9 @@ class DocumentHandler {
 
 - <code>append(contentContent, contentOptionsContentOptionsoptional)</code> :
   DocumentEnd
-
   - Inserts content after the end of the document.
 
-  <Render file="content_and_contentoptions" />
+  <Render file="content_and_contentoptions" product="workers" />
 
 ---
 
@@ -368,79 +334,60 @@ class DocumentHandler {
 This is what selectors are and what they are used for.
 
 - `*`
-
   - Any element.
 
 - `E`
-
   - Any element of type E.
 
 - `E:nth-child(n)`
-
   - An E element, the n-th child of its parent.
 
 - `E:first-child`
-
   - An E element, first child of its parent.
 
 - `E:nth-of-type(n)`
-
   - An E element, the n-th sibling of its type.
 
 - `E:first-of-type`
-
   - An E element, first sibling of its type.
 
 - `E:not(s)`
-
   - An E element that does not match either compound selectors.
 
 - `E.warning`
-
   - An E element belonging to the class warning.
 
 - `E#myid`
-
   - An E element with ID equal to myid.
 
 - `E[foo]`
-
   - An E element with a foo attribute.
 
 - `E[foo="bar"]`
-
   - An E element whose foo attribute value is exactly equal to bar.
 
 - `E[foo="bar" i]`
-
   - An E element whose foo attribute value is exactly equal to any (ASCII-range) case-permutation of bar.
 
 - `E[foo="bar" s]`
-
   - An E element whose foo attribute value is exactly and case-sensitively equal to bar.
 
 - `E[foo~="bar"]`
-
   - An E element whose foo attribute value is a list of whitespace-separated values, one of which is exactly equal to bar.
 
 - `E[foo^="bar"]`
-
   - An E element whose foo attribute value begins exactly with the string bar.
 
 - `E[foo$="bar"]`
-
   - An E element whose foo attribute value ends exactly with the string bar.
 
 - `E[foo*="bar"]`
-
   - An E element whose foo attribute value contains the substring bar.
 
 - `E[foo|="en"]`
-
   - An E element whose foo attribute value is a hyphen-separated list of values beginning with en.
 
 - `E F`
-
   - An F element descendant of an E element.
 
 - `E > F`

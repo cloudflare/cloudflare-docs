@@ -1,0 +1,19 @@
+---
+pcx_content_type: reference
+title: Google Calendar
+rss: file
+sidebar:
+  order: 3
+---
+
+import { Render } from "~/components";
+
+<Render
+	file="casb/google/integrations/google-calendar"
+	product="cloudflare-one"
+	params={{
+		integrationName: "Google Calendar",
+		environmentName: "Google Workspace account",
+		slugifiedName: "google-workspace/google-calendar",
+	}}
+/>
