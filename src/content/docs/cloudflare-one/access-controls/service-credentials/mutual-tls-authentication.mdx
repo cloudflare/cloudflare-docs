@@ -7,10 +7,6 @@ sidebar:
 
 import { AvailableNotifications, Render, Example } from "~/components";
 
-:::note
-Only available on Enterprise plans.
-:::
-
 [Mutual TLS (mTLS) authentication](https://www.cloudflare.com/learning/access-management/what-is-mutual-tls/) ensures that traffic is both secure and trusted in both directions between a client and server. It allows requests that do not log in with an identity provider (like IoT devices) to demonstrate that they can reach a given resource. Client certificate authentication is also a second layer of security for team members who both log in with an identity provider (IdP) and present a valid client certificate.
 
 With a root certificate authority (CA) in place, Access only allows requests from devices with a corresponding client certificate. When a request reaches the application, Access responds with a request for the client to present a certificate. If the device fails to present the certificate, the request is not allowed to proceed. If the client does have a certificate, Access completes a key exchange to verify.
@@ -365,13 +361,12 @@ mTLS does not currently work for:
 - Cloudflare Pages site served on a [custom domain](/pages/configuration/custom-domains/)
 - Cloudflare R2 public bucket served on a [custom domain](/r2/buckets/public-buckets/#connect-a-bucket-to-a-custom-domain)
 
-## Set up alerts for mutual TLS certificates
+## Notifications for mutual TLS certificates
 
-You can configure alerts to receive notifications before your mutual TLS certificates expire.
+Cloudflare will send the following [notifications](/notifications/) before your mutual TLS certificates expire:
 
 <AvailableNotifications
 	product="SSL/TLS"
 	notificationFilter="Access mTLS Certificate Expiration Alert"
 />
 
-<Render file="get-started" product="notifications" />
