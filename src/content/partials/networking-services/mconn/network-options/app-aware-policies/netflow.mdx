@@ -2,7 +2,7 @@
 {}
 ---
 
-import { CURL } from "~/components";
+import { CURL, Render } from "~/components";
 
 ## NetFlow exports from Magic WAN Connector to Magic Network Monitoring
 
@@ -12,9 +12,7 @@ The Magic WAN Connector appliance uses NetFlow v9 to export flow data for breako
 
 ### Enable NetFlow exports
 
-:::note
-To export NetFlow statistics, you will need your [account ID](/fundamentals/account/find-account-and-zone-ids/), your [API token](/fundamentals/api/get-started/account-owned-tokens/), and the `site_id` associated with your Magic WAN Connector.
-:::
+<Render file="account-id-api-key" product="networking-services" params={{ showSiteId: true }} />
 
 1. Create a `PUT` request to the Netflow configuration endpoint for your site.
 2. In the JSON body request, you must include the `collector_ip`. To export traffic statistics to Magic Network Monitoring, use the IP address `162.159.65.1`. This is the only field required to enable the feature.
