@@ -21,8 +21,8 @@ When making requests to Replicate, ensure you have the following:
 
 - Your AI Gateway Account ID.
 - Your AI Gateway gateway name.
-- An active Replicate API token.
-- The name of the Replicate model you want to use.
+- An active Replicate API token. You can create one at [replicate.com/settings/api-tokens](https://replicate.com/settings/api-tokens)
+- The name of the Replicate model you want to use, like `anthropic/claude-4.5-haiku` or `google/nano-banana`.
 
 ## Example
 
@@ -30,12 +30,13 @@ When making requests to Replicate, ensure you have the following:
 
 ```bash title="Request"
 curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/replicate/predictions \
-  --header 'Authorization: Token {replicate_api_token}' \
+  --header 'Authorization: Bearer {replicate_api_token}' \
   --header 'Content-Type: application/json' \
   --data '{
+    "version": "anthropic/claude-4.5-haiku",
     "input":
       {
-        "prompt": "What is Cloudflare?"
+        "prompt": "Write a haiku about Cloudflare"
       }
     }'
 ```

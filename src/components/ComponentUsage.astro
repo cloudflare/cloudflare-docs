@@ -18,10 +18,10 @@ const usage = await getComponentsUsage(component);
 
 <>
 	<p>
-		<code>{component}</code> is used <code>{usage.count}</code> times on{" "}
+		The <code>{component}</code> component is used <code>{usage.count}</code> times on{" "}
 		<code>{usage.pages.size}</code> pages.
 	</p>
-	<Details header={`Pages which use ${component}`}>
+	<Details header={`See all examples of pages that use ${component}`}>
 		<UsageList usage={usage} />
 	</Details>
 </>

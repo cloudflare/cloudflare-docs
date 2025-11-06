@@ -12,7 +12,7 @@ DLP can now natively detect and inspect user prompts submitted to popular AI app
 
 2. **Prompt Analysis and Topic Classification**
 
-Our DLP engine performs deep analysis on each prompt, applying [topic classification](/cloudflare-one/policies/data-loss-prevention/detection-entries/#ai-prompt-topics). These topics are grouped into two evaluation categories:
+Our DLP engine performs deep analysis on each prompt, applying [topic classification](/cloudflare-one/data-loss-prevention/detection-entries/#ai-prompt-topics). These topics are grouped into two evaluation categories:
 
         - **Content:** PII, Source Code, Credentials and Secrets, Financial Information, and Customer Data.
 
@@ -24,14 +24,14 @@ To help you apply these topics quickly, we have also released five new predefine
 
 3. **Granular Guardrails**
 
-    You can now build guardrails using Gateway HTTP policies with [application granular controls](/cloudflare-one/policies/gateway/http-policies/#application-granular-controls). Apply a DLP profile containing an [AI prompt topic detection](/cloudflare-one/policies/data-loss-prevention/detection-entries/#ai-prompt-topics) to individual AI applications (for example, ```ChatGPT```) and specific user actions (for example, ```SendPrompt```) to block sensitive prompts.
+    You can now build guardrails using Gateway HTTP policies with [application granular controls](/cloudflare-one/traffic-policies/http-policies/#application-granular-controls). Apply a DLP profile containing an [AI prompt topic detection](/cloudflare-one/data-loss-prevention/detection-entries/#ai-prompt-topics) to individual AI applications (for example, ```ChatGPT```) and specific user actions (for example, ```SendPrompt```) to block sensitive prompts.
 
     ![DLP](~/assets/images/changelog/dlp/ai-prompt-policy.png)
 
  4. **Full Prompt Logging**
    
-    To aid in incident investigation, an optional setting in your Gateway policy allows you to [capture prompt logs](/cloudflare-one/policies/data-loss-prevention/dlp-policies/logging-options/#log-generative-ai-prompt-content) to store the full interaction of prompts that trigger a policy match. To make investigations easier, logs can be filtered by ```conversation_id```, allowing you to reconstruct the full context of an interaction that led to a policy violation.
+    To aid in incident investigation, an optional setting in your Gateway policy allows you to [capture prompt logs](/cloudflare-one/data-loss-prevention/dlp-policies/logging-options/#log-generative-ai-prompt-content) to store the full interaction of prompts that trigger a policy match. To make investigations easier, logs can be filtered by ```conversation_id```, allowing you to reconstruct the full context of an interaction that led to a policy violation.
 
     ![DLP](~/assets/images/changelog/dlp/ai-prompt-log.png)
 
-AI prompt protection is now available in open beta. To learn more about it, read the [blog](https://blog.cloudflare.com/ai-prompt-protection/#closing-the-loop-logging) or refer to [AI prompt topics](/cloudflare-one/policies/data-loss-prevention/detection-entries/#ai-prompt-topics).
+AI prompt protection is now available in open beta. To learn more about it, read the [blog](https://blog.cloudflare.com/ai-prompt-protection/#closing-the-loop-logging) or refer to [AI prompt topics](/cloudflare-one/data-loss-prevention/detection-entries/#ai-prompt-topics).

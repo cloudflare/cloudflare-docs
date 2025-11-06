@@ -44,6 +44,9 @@ The Cloudflare network will take the following actions, depending on the visitor
 | `br`                                      | GZIP                                       | Decompress GZIP and return uncompressed response to visitor with weak ETag header: `etag: W/"foobar"`.   |
 | `gzip`                                    | Brotli                                     | Decompress Brotli and return uncompressed response to visitor with weak ETag header: `etag: W/"foobar"`. |
 | `gzip`                                    | (none)                                     | Return uncompressed response to visitor with strong ETag header: `etag: "foobar"`.                       |
+| `gzip, br, zstd`                                    | Zstandard                                     | Return zstd-compressed response to visitor with strong ETag header: `etag: "foobar"`.    
+| `gzip, br`                                    | Zstandard                                     | Decompress zstd and return br response to visitor with weak ETag header: `etag: W/"foobar"`.    
+| `zstd`                                    | Brotli/GZIP                                     | Decompress zstd and return zstd response to visitor with weak ETag header: `etag: W/"foobar"`.                       |
 
 </table-wrap>
 
@@ -74,8 +77,13 @@ The Cloudflare network will take the following actions, depending on the visitor
 | `br`                                      | GZIP                                       | Decompress GZIP and return Brotli-compressed response to visitor with weak ETag header: `etag: W/"foobar"`.                                       |
 | `gzip`                                    | Brotli                                     | Decompress Brotli and return GZIP-compressed response to visitor with weak ETag header: `etag: W/"foobar"`.                                       |
 | `gzip`                                    | (none)                                     | Compress origin response using GZIP and return it to visitor with weak ETag header: `etag: W/"foobar"`.                                           |
+| `gzip, br, zstd`                                   | Zstandard                                    | Return zstd-compressed response to visitor with strong ETag header: `etag: "foobar"`.                                           |
+| `gzip, br`                                   | Zstandard                                    | Decompress zstd and return uncompressed response to visitor with weak ETag header: `etag: W/"foobar"`.                                          |
+| `zstd`                                   | Brotli                                    | Decompress zstd and return uncompressed response to visitor with weak ETag header: `etag: W/"foobar"`.                                         |
 
 </table-wrap>
+
+Refer to [Content compression](/speed/optimization/content/compression/) for more information.
 
 ## Important remarks
 

@@ -44,3 +44,13 @@ With a JavaScript (JS) Challenge, Cloudflare makes the determination on whether 
 The visitor must wait until their browser finishes processing the JavaScript, which typically takes less than five seconds.
 
 If the visitor passes the Challenge, the original request continues to the destination URL. If the Challenge fails or cannot be completed, the visitor is presented with another Interstitial Challenge Page.
+
+## Compatibility limitations
+
+Challenge Pages interrupt the request flow by returning a full HTML page for the user's browser to render and solve. This mechanism fails when the browser expects a non-HTML response, such as an AJAX or XHR (fetch) request.
+
+To ensure your API calls are protected without breaking single-page applications (SPAs) or API integrations, Cloudflare recommends using Turnstile Pre-clearance.
+
+By enabling Pre-clearance, the Turnstile widget issues a persistent clearance cookie (`cf_clearance`) upon successful human verification on an initial HTML page. This cookie pre-clears the visitor to interact with sensitive API endpoints secured by WAF rules, allowing you to deploy granular security without forcing a disruptive Challenge Page response.
+
+For implementation details, refer to the [guidance on Pre-clearance for Turnstile](/cloudflare-challenges/concepts/clearance/#pre-clearance-support-in-turnstile).

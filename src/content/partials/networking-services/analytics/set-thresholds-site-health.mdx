@@ -1,10 +1,12 @@
 ---
-{}
+params:
+  - productName
+  - magicTunnelHcsURL
 ---
 
-When you set up an alert for your site, you will be notified when there is an issue with one or more on-ramps. These alerts are sent when the percentage of successful health checks for a Magic WAN on-ramp drops below the selected service-level objective (SLO). Setting health alerts will also show unhealthy tunnels in the Network map and in the Traffic overview sections.
+When you set up an alert for your site, you will be notified when there is an issue with one or more on-ramps. These alerts are sent when the percentage of successful health checks for a {props.productName} on-ramp drops below the selected service-level objective (SLO). Setting health alerts will also show unhealthy tunnels in the Network map and in the Traffic overview sections.
 
 To set up health alerts:
 
-1. Configure [Magic Tunnel health alerts](/magic-wan/configuration/common-settings/configure-magic-tunnel-health-alerts/) across all of the Magic Tunnels associated with each Magic WAN site.
-2. After configuring Magic Tunnel health alerts, any Magic WAN site with a Magic Tunnel (on-ramp) that is outside of its SLO threshold will be labeled unhealthy in Network map and Traffic overview.
+1. Configure <a href={props.magicTunnelHcsURL}>Magic Tunnel health alerts</a> across all of the Magic Tunnels associated with each {props.productName} site.
+2. After configuring Magic Tunnel health alerts, any {props.productName} site with a Magic Tunnel (on-ramp) that is outside of its SLO threshold will be labeled unhealthy in Network map and Traffic overview.

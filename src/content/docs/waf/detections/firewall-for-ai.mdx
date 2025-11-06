@@ -17,6 +17,7 @@ import {
 	Details,
 	Steps,
 	Type,
+	DashButton,
 } from "~/components";
 
 Firewall for AI is a detection that can help protect your services powered by <GlossaryTooltip term="LLM">large language models</GlossaryTooltip> (LLMs) against abuse. This model-agnostic detection currently helps you do the following:
@@ -25,7 +26,7 @@ Firewall for AI is a detection that can help protect your services powered by <G
 - Detect and moderate unsafe or harmful prompts – for example, prompts potentially related to violent crimes.
 - Detect prompts intentionally designed to subvert the intended behavior of the LLM as specified by the developer – for example, <GlossaryTooltip term="prompt injection">prompt injection</GlossaryTooltip> attacks.
 
-When enabled, the detection runs on incoming traffic, searching for any LLM prompts attempting to exploit the model.
+When enabled, the detection runs on incoming traffic, searching for any LLM prompts attempting to exploit the model. Currently, the detection only handles requests with a JSON content type (`application/json`).
 
 Cloudflare will populate the existing [Firewall for AI fields](#firewall-for-ai-fields) based on the scan results. You can check these results in the [Security Analytics](/waf/analytics/security-analytics/) dashboard by filtering on the `cf-llm` [managed endpoint label](/api-shield/management-and-monitoring/endpoint-labels/) and reviewing the detection results on your traffic. Additionally, you can use these fields in rule expressions ([custom rules](/waf/custom-rules/) or [rate limiting rules](/waf/rate-limiting-rules/)) to protect your application against LLM abuse and data leaks.
 
@@ -45,8 +46,11 @@ Firewall for AI is only available in the new [application security dashboard](/s
 
 <Steps>
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
-2. Go to **Security** > **Settings** and filter by **Detections**.
+1. In the Cloudflare dashboard, go to the Security **Settings** page.
+
+   <DashButton url="/?to=/:account/:zone/security/settings" />
+
+2. (Optional) Filter by **Detection tools**.
 3. Turn on **Firewall for AI**.
 
 </Steps>
@@ -84,7 +88,7 @@ Alternatively, create a custom rule like the one described in the next step usin
 
 [Create a custom rule](/waf/custom-rules/create-dashboard/) that blocks requests where Cloudflare detected personally identifiable information (PII) in the incoming request (as part of an LLM prompt), returning a custom JSON body:
 
-- **If incoming requests match**:
+- **When incoming requests match**:
 
   | Field            | Operator | Value |
   | ---------------- | -------- | ----- |
@@ -151,7 +155,7 @@ When enabled, Firewall for AI populates the following fields:
 
 The following example [custom rule](/waf/custom-rules/create-dashboard/) will block requests with an LLM prompt that tries to obtain PII of a specific [category](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.pii_categories/):
 
-- **If incoming requests match**:
+- **When incoming requests match**:
 
   | Field              | Operator | Value         |
   | ------------------ | -------- | ------------- |
@@ -166,7 +170,7 @@ The following example [custom rule](/waf/custom-rules/create-dashboard/) will bl
 
 The following example [custom rule](/waf/custom-rules/create-dashboard/) will block requests with an LLM prompt containing unsafe content of specific [categories](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.unsafe_topic_categories/):
 
-- **If incoming requests match**:
+- **When incoming requests match**:
 
   | Field                       | Operator | Value                            |
   | --------------------------- | -------- | -------------------------------- |
@@ -181,7 +185,7 @@ The following example [custom rule](/waf/custom-rules/create-dashboard/) will bl
 
 The following example [custom rule](/waf/custom-rules/create-dashboard/) will block requests with an [injection score](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.injection_score/) below `20`. Using a low injection score value in the rule helps avoid false positives.
 
-- **If incoming requests match**:
+- **When incoming requests match**:
 
   | Field               | Operator  | Value |
   | ------------------- | --------- | ----- |

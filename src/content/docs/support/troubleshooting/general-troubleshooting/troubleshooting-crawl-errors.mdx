@@ -1,13 +1,10 @@
 ---
 pcx_content_type: troubleshooting
 source: https://support.cloudflare.com/hc/en-us/articles/200169806-Troubleshooting-crawl-errors
-title: Troubleshooting crawl errors
-
+title: Troubleshoot crawl errors
 ---
 
-## Overview
-
-Cloudflare allows search engine crawlers and bots. If you observe crawl issues or Cloudflare challenges presented to the search engine crawler or bot, [contact Cloudflare support](/support/contacting-cloudflare-support/) with the information you gather when troubleshooting the crawl errors via the methods outlined in this guide.
+Cloudflare allows search engine crawlers and bots. If you observe crawl issues or Cloudflare challenges presented to the search engine crawler or bot, [contact Cloudflare support](/support/contacting-cloudflare-support/) with the information you gather when troubleshooting the crawl errors via the methods outlined in this guide.
 
 ***
 
@@ -38,25 +35,26 @@ Review the following recommendations to prevent crawler errors:
   * [Monitor.Us](http://www.monitor.us/)
   * [Updown](https://updown.io/)
 
-* Do not block Google crawler IP addresses via **custom rules** or **IP Access rules** within the **Security** app. If you are using [rate limiting rules](/waf/rate-limiting-rules/), make sure they do not apply to the Google crawler.
+* Do not block Google crawler IP addresses via [custom rules](/waf/custom-rules/) or [IP Access rules](/waf/tools/ip-access-rules/). If you are using [rate limiting rules](/waf/rate-limiting-rules/), make sure they do not apply to the Google crawler.
 
-Confirm an IP address belongs to Google by consulting Google’s documentation on [verifying googlebot IP addresses](https://support.google.com/webmasters/bin/answer.py?answer=80553).
+  Confirm an IP address belongs to Google by consulting Google’s documentation on [verifying googlebot IP addresses](https://support.google.com/webmasters/bin/answer.py?answer=80553).
 
-* Do not block the United States via **custom rules** or **IP Access rules** within the **Security** app.
-* Do not block or User-Agents in your .htaccess, server configuration, [robots.txt](http://support.google.com/webmasters/bin/answer.py?answer=35303), or web application.
+* Do not block the United States via [custom rules](/waf/custom-rules/) or [IP Access rules](/waf/tools/ip-access-rules/).
 
-Google uses a [variety of User-Agents](https://support.google.com/webmasters/answer/1061943) to crawl your website. You can [test your robots.txt via Google](https://support.google.com/webmasters/answer/6062598?hl=en).
+* Do not block Google User-Agents in your `.htaccess` file, server configuration, [`robots.txt`](http://support.google.com/webmasters/bin/answer.py?answer=35303), or web application.
 
-* Do not allow crawling of files in the /cdn-cgi/ directory. This path is used internally by Cloudflare and Google encounters errors when crawling it. Disallow crawls of cdn-cgi via robots.txt:
+Google uses a [variety of User-Agents](https://developers.google.com/search/docs/crawling-indexing/overview-google-crawlers) to crawl your website. You can [test your `robots.txt` via Google](https://support.google.com/webmasters/answer/6062598?hl=en).
+
+* Do not allow crawling of files in the `/cdn-cgi/` directory. This path is used internally by Cloudflare and Google encounters errors when crawling it. Disallow crawls of `cdn-cgi` via `robots.txt`:
 
 `Disallow: /cdn-cgi/`
 
 :::note
 
-Errors for cdn-cgi do not impact site rankings.
+Errors for `cdn-cgi` do not impact site rankings.
 :::
 
-* Ensure your [robots.txt file allows the AdSense crawler](http://support.google.com/webmasters/bin/answer.py?hl=en\&answer=1061943).
+* Ensure your [`robots.txt` file allows the AdSense crawler](http://support.google.com/webmasters/bin/answer.py?hl=en\&answer=1061943).
 * [Restore original visitor IP addresses](/support/troubleshooting/restoring-visitor-ips/restoring-original-visitor-ips/) in your server logs.
 
 ***
@@ -67,7 +65,7 @@ Troubleshooting steps for the most commonly reported crawl errors are mentioned 
 
 ### HTTP 4XX Errors
 
-[HTTP 4XX errors](/support/troubleshooting/http-status-codes/4xx-client-error/) are the most common type of crawl error. Cloudflare delivers these errors from your web server to Google. These errors are caused for various reasons such as a missing page on your web server or a malformed link in your HTML. The solution depends upon the problem encountered.
+[HTTP 4XX errors](/support/troubleshooting/http-status-codes/4xx-client-error/) are the most common type of crawl error. Cloudflare delivers these errors from your web server to Google. These errors are caused for various reasons such as a missing page on your web server or a malformed link in your HTML. The solution depends upon the problem encountered.
 
 ### HTTP 5XX Errors
 
@@ -75,7 +73,7 @@ Troubleshooting steps for the most commonly reported crawl errors are mentioned 
 
 ### DNS Errors
 
-Troubleshooting steps vary depending on whether your domain is on Cloudflare via a Full or CNAME setup. To verify which setup your domain uses, open a terminal and execute the following command (replace `www.example.com` with your Cloudflare domain):
+Troubleshooting steps vary depending on whether your domain is on Cloudflare via a Full or CNAME setup. To verify which setup your domain uses, open a terminal and execute the following command (replace `www.example.com` with your Cloudflare domain):
 
 `dig +short SOA` `www.example.com`
 
@@ -91,20 +89,20 @@ Once you’ve confirmed how your domain was setup with Cloudflare, proceed with 
 
 **CNAME**
 
-Contact your hosting provider to investigate DNS errors and provide the date Google encountered DNS errors. Additionally, review the [Cloudflare System Status](http://www.cloudflare.com/system-status) page for any network outages on the date the errors were encountered by Google.
+Contact your hosting provider to investigate DNS errors and provide the date Google encountered DNS errors. Additionally, review the [Cloudflare System Status](http://www.cloudflare.com/system-status) page for any network outages on the date the errors were encountered by Google.
 
 **Full**
 
-[Contact Cloudflare support](/support/contacting-cloudflare-support/) and provide the date and time that Google observed the errors.
+[Contact Cloudflare support](/support/contacting-cloudflare-support/) and provide the date and time that Google observed the errors.
 
 ### Requesting troubleshooting assistance
 
-If the above troubleshooting steps do not resolve your crawl errors, follow the steps below to export crawler errors as a .csv file from your Google Webmaster Tools Dashboard. Include this .csv file when [contacting Cloudflare Support](/support/contacting-cloudflare-support/).
+If the above troubleshooting steps do not resolve your crawl errors, follow the steps below to export crawler errors as a `.csv` file from your Google Webmaster Tools Dashboard. Include this `.csv` file when [contacting Cloudflare Support](/support/contacting-cloudflare-support/).
 
 1. Log in to your Google Webmaster Tools account and navigate to the **Health** section of the affected domain.
 2. Click **Crawl Errors** in the left hand navigation.
-3. Click **Download** to export the list of errors as a .csv file.
-4. Provide the downloaded .csv file to Cloudflare support.
+3. Click **Download** to export the list of errors as a `.csv` file.
+4. Provide the downloaded `.csv` file to Cloudflare support.
 
 ***
 

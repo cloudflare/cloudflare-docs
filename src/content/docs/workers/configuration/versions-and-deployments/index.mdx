@@ -58,9 +58,9 @@ Wrangler versions before 3.73.0 require you to specify a `--x-versions` flag.
 
 :::
 
-To create a new version of your Worker that is not deployed immediately, use the [`wrangler versions upload`](/workers/wrangler/commands/#upload) command or create a new version via the Cloudflare dashboard using the **Save** button. You can find the **Save** option under the down arrow beside the "Deploy" button.
+To create a new version of your Worker that is not deployed immediately, use the [`wrangler versions upload`](/workers/wrangler/commands/#versions-upload) command or create a new version via the Cloudflare dashboard using the **Save** button. You can find the **Save** option under the down arrow beside the "Deploy" button.
 
-Versions created in this way can then be deployed all at once or gradually deployed using the [`wrangler versions deploy`](/workers/wrangler/commands/#deploy-2) command or via the Cloudflare dashboard under the **Deployments** tab.
+Versions created in this way can then be deployed all at once or gradually deployed using the [`wrangler versions deploy`](/workers/wrangler/commands/#versions-deploy) command or via the Cloudflare dashboard under the **Deployments** tab.
 
 :::note
 When using [Wrangler](/workers/wrangler/), changes made to a Worker's triggers [routes, domains](/workers/configuration/routing/) or [cron triggers](/workers/configuration/cron-triggers/) need to be applied with the command [`wrangler triggers deploy`](/workers/wrangler/commands/#triggers).
@@ -94,11 +94,11 @@ To view your deployments in the Cloudflare dashboard:
 
 ### First upload
 
-You must use [C3](/workers/get-started/guide/#1-create-a-new-worker-project) or [`wrangler deploy`](/workers/wrangler/commands/#deploy) the first time you create a new Workers project. Using [`wrangler versions upload`](/workers/wrangler/commands/#upload) the first time you upload a Worker will fail.
+You must use [C3](/workers/get-started/guide/#1-create-a-new-worker-project) or [`wrangler deploy`](/workers/wrangler/commands/#deploy) the first time you create a new Workers project. Using [`wrangler versions upload`](/workers/wrangler/commands/#versions-upload) the first time you upload a Worker will fail.
 
 ### Service worker syntax
 
-Service worker syntax is not supported for versions that are uploaded through [`wrangler versions upload`](/workers/wrangler/commands/#upload). You must use ES modules format.
+Service worker syntax is not supported for versions that are uploaded through [`wrangler versions upload`](/workers/wrangler/commands/#versions-upload). You must use ES modules format.
 
 Refer to [Migrate from Service Workers to ES modules](/workers/reference/migrate-to-module-workers/#advantages-of-migrating) to learn how to migrate your Workers from the service worker format to the ES modules format.
 

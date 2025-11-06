@@ -8,7 +8,7 @@ head:
     content: Enable Logpush to Splunk
 ---
 
-import { Render, APIRequest } from "~/components";
+import { Render, APIRequest, Tabs, TabItem, DashButton } from "~/components";
 
 The [HTTP Event Collector (HEC)](https://dev.splunk.com/enterprise/docs/devtools/httpeventcollector/) is a reliable method to receive data from Splunk Enterprise or Splunk Cloud Platform. Cloudflare Logpush supports pushing logs directly to Splunk HEC via the Cloudflare dashboard or API.
 
@@ -16,30 +16,30 @@ The [HTTP Event Collector (HEC)](https://dev.splunk.com/enterprise/docs/devtools
 
 <Render file="enable-logpush-job" product="logs" />
 
-5. In **Select a destination**, choose **Splunk**.
+4. In **Select a destination**, choose **Splunk**.
 
-6. Enter or select the following destination information:
+5. Enter or select the following destination information:
    - **Splunk HEC URL**
    - **Channel ID** - This is a random GUID that you can generate using [guidgenerator.com](https://guidgenerator.com/).
-   - **Auth Token** - Event Collector token.
+   - **Auth Token** - Event Collector token prefixed with the word `Splunk`. For example: `Splunk 1234EXAMPLEKEY`.
    - **Source Type** - For example, `cloudflare:json`. If you are using the [Cloudflare App for Splunk](https://splunkbase.splunk.com/app/4501), refer to the appropriate source type for the corresponding datasets under the **Details** section. For instance, for Zero Trust Access requests logs, the source type is `cloudflare:access`.
    - **Use insecure skip verify option** (not recommended).
 
 When you are done entering the destination details, select **Continue**.
 
-7. Select the dataset to push to the storage service.
+6. Select the dataset to push to the storage service.
 
-8. In the next step, you need to configure your logpush job:
+7. In the next step, you need to configure your logpush job:
    - Enter the **Job name**.
    - Under **If logs match**, you can select the events to include and/or remove from your logs. Refer to [Filters](/logs/logpush/logpush-job/filters/) for more information. Not all datasets have this option available.
    - In **Send the following fields**, you can choose to either push all logs to your storage destination or selectively choose which logs you want to push.
 
-9. In **Advanced Options**, you can:
+8. In **Advanced Options**, you can:
    - Choose the format of timestamp fields in your logs (`RFC3339`(default),`Unix`, or `UnixNano`).
    - Select a [sampling rate](/logs/logpush/logpush-job/api-configuration/#sampling-rate) for your logs or push a randomly-sampled percentage of logs.
    - Enable redaction for `CVE-2021-44228`. This option will replace every occurrence of `${` with `x{`.
 
-10. Select **Submit** once you are done configuring your logpush job.
+9. Select **Submit** once you are done configuring your logpush job.
 
 ## Manage via API
 
@@ -69,12 +69,12 @@ To create a job, make a `POST` request to the Logpush jobs endpoint with the fol
     - Using the command line. For example: `python -c 'import uuid; print(uuid.uuid4())'`.
   - **\<INSECURE_SKIP_VERIFY>**: Boolean value. Cloudflare recommends setting this value to `false`. Setting this value to `true` is equivalent to using the `-k` option with `curl` as shown in Splunk examples and is **not** recommended. Only set this value to `true` when HEC uses a self-signed certificate.
 
-:::note
-Cloudflare highly recommends setting this value to <code class="InlineCode">false</code>. Refer to the [Logpush FAQ](/logs/faq/logpush/) for more information.
-:::
+  :::note
+  Cloudflare highly recommends setting this value to `false`. Refer to the [Logpush FAQ](/logs/faq/logpush/) for more information.
+  :::
 
-- `<SOURCE_TYPE>`: The Splunk source type. For example: `cloudflare:json`.
-- `<SPLUNK_AUTH_TOKEN>`: The Splunk authorization token that is URL-encoded. For example: `Splunk%20e6d94e8c-5792-4ad1-be3c-29bcaee0197d`.
+  - **\<SOURCE_TYPE>**: The Splunk source type. For example: `cloudflare:json`.
+  - **\<SPLUNK_AUTH_TOKEN>**: The Splunk authorization token that is URL-encoded and must be prefixed with the word `Splunk`. For example: `Splunk e6d94e8c-5792-4ad1-be3c-29bcaee0197d`.
 
 ```bash
 "splunk://<SPLUNK_ENDPOINT_URL>?channel=<SPLUNK_CHANNEL_ID>&insecure-skip-verify=<INSECURE_SKIP_VERIFY>&sourcetype=<SOURCE_TYPE>&header_Authorization=<SPLUNK_AUTH_TOKEN>"
@@ -177,30 +177,65 @@ Refer to the [Logpush FAQ](/logs/faq/logpush/) for troubleshooting information.
 
 ### 3. Create WAF custom rule for Splunk HEC endpoint (optional)
 
-If your logpush destination hostname is proxied through Cloudflare, and you have the Cloudflare Web Application Firewall (WAF) turned on, you may be challenged or blocked when Cloudflare makes a request to Splunk HTTP Event Collector (HEC). To make sure this does not happen, you have to create a WAF custom rule that allows Cloudflare to bypass the HEC endpoint.
+If your logpush destination hostname is proxied through Cloudflare, and you have the Cloudflare Web Application Firewall (WAF) turned on, you may be challenged or blocked when Cloudflare makes a request to Splunk HTTP Event Collector (HEC). To make sure this does not happen, you have to create a [custom rule](/waf/custom-rules/) that allows Cloudflare to bypass the HEC endpoint.
+
+<Tabs syncKey="dashNewNav"> <TabItem label="Old dashboard">
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account. Go to **Security** > **WAF** > **Custom rules**.
 2. Select **Create rule** and enter a descriptive name for it (for example, `Splunk`).
-3. Under **If incoming requests match**, use the **Field**, **Operator**, and **Value** dropdowns to create a rule. After finishing each row, select **And** to create the next row of rules. Refer to the table below for the values you should input:
+3. Under **When incoming requests match**, use the **Field**, **Operator**, and **Value** dropdowns to create a rule. After finishing each row, select **And** to create the next row of rules. Refer to the table below for the values you should input:
 
-| Field            | Operator   | Value                                                                 |
-| ---------------- | ---------- | --------------------------------------------------------------------- |
-| Request Method   | `equals`   | `POST`                                                                |
-| Hostname         | `equals`   | Your Splunk endpoint hostname. For example: `splunk.cf-analytics.com` |
-| URI Path         | `equals`   | `/services/collector/raw`                                             |
-| URI Query String | `contains` | `channel`                                                             |
-| AS Num           | `equals`   | `132892`                                                              |
-| User Agent       | `equals`   | `Go-http-client/2.0`                                                  |
+   | Field            | Operator   | Value                                                                 |
+   | ---------------- | ---------- | --------------------------------------------------------------------- |
+   | Request Method   | `equals`   | `POST`                                                                |
+   | Hostname         | `equals`   | Your Splunk endpoint hostname. For example: `splunk.cf-analytics.com` |
+   | URI Path         | `equals`   | `/services/collector/raw`                                             |
+   | URI Query String | `contains` | `channel`                                                             |
+   | AS Num           | `equals`   | `132892`                                                              |
+   | User Agent       | `equals`   | `Go-http-client/2.0`                                                  |
 
 4. After inputting the values as shown in the table, you should have an Expression Preview with the values you added for your specific rule. The example below reflects the hostname `splunk.cf-analytics.com`.
 
-```txt
-(http.request.method eq "POST" and http.host eq "splunk.cf-analytics.com" and http.request.uri.path eq "/services/collector/raw" and http.request.uri.query contains "channel" and ip.src.asnum eq 132892 and http.user_agent eq "Go-http-client/2.0")
-```
+   ```txt
+   (http.request.method eq "POST" and http.host eq "splunk.cf-analytics.com" and http.request.uri.path eq "/services/collector/raw" and http.request.uri.query contains "channel" and ip.src.asnum eq 132892 and http.user_agent eq "Go-http-client/2.0")
+   ```
 
 5. Under the **Then** > **Choose an action** dropdown, select _Skip_.
 6. Under **WAF components to skip**, select _All managed rules_.
 7. Select **Deploy**.
+
+</TabItem> <TabItem label="New dashboard" icon="rocket">
+
+1. In the Cloudflare dashboard, go to the **Security rules** page.
+
+   <DashButton url="/?to=/:account/:zone/security/security-rules" />
+
+2. Select **Create rule** > **Custom rules**.
+
+3. Enter a descriptive name for the rule (for example, `Splunk`).
+
+4. Under **When incoming requests match**, use the **Field**, **Operator**, and **Value** dropdowns to create a rule. After finishing each row, select **And** to create the next row of rules. Refer to the table below for the values you should input:
+
+   | Field            | Operator   | Value                                                                 |
+   | ---------------- | ---------- | --------------------------------------------------------------------- |
+   | Request Method   | `equals`   | `POST`                                                                |
+   | Hostname         | `equals`   | Your Splunk endpoint hostname. For example: `splunk.cf-analytics.com` |
+   | URI Path         | `equals`   | `/services/collector/raw`                                             |
+   | URI Query String | `contains` | `channel`                                                             |
+   | AS Num           | `equals`   | `132892`                                                              |
+   | User Agent       | `equals`   | `Go-http-client/2.0`                                                  |
+
+5. After inputting the values as shown in the table, you should have an Expression Preview with the values you added for your specific rule. The example below reflects the hostname `splunk.cf-analytics.com`.
+
+   ```txt
+   (http.request.method eq "POST" and http.host eq "splunk.cf-analytics.com" and http.request.uri.path eq "/services/collector/raw" and http.request.uri.query contains "channel" and ip.src.asnum eq 132892 and http.user_agent eq "Go-http-client/2.0")
+   ```
+
+6. Under the **Then** > **Choose an action** dropdown, select _Skip_.
+7. Under **WAF components to skip**, select _All managed rules_.
+8. Select **Deploy**.
+
+</TabItem> </Tabs>
 
 The WAF should now ignore requests made to Splunk HEC by Cloudflare.
 

@@ -2,7 +2,7 @@
 pcx_content_type: reference
 title: Account limits
 sidebar:
-  order: 12
+  order: 15
 ---
 
 import { Render } from "~/components";
@@ -66,8 +66,9 @@ This page lists the default account limits for rules, applications, fields, and 
 | ---------------------------------------- | ----- |
 | `cloudflared` tunnels per account        | 1,000 |
 | WARP Connectors per account              | 10    |
-| Routes per tunnel                       | 1,000 |
+| Routes per tunnel                        | 1,000 |
 | Active `cloudflared` replicas per tunnel | 25    |
+| Virtual networks per account             | 1,000 |
 
 ## Digital Experience Monitoring (DEX)
 
@@ -100,7 +101,7 @@ This page lists the default account limits for rules, applications, fields, and 
 
 ## WARP
 
-| Feature                                                                    | Character limit |
+| Feature                                                                    | Limit           |
 | -------------------------------------------------------------------------- | --------------- |
-| Device profile expression                                                  | 10,000          |
+| Characters per device profile expression                                   | 10,000          |
 | Combined Split Tunnel and Local Domain Fallback entries per device profile | 1,000           |

@@ -25,6 +25,14 @@ Accounts with an Enterprise subscription but not the [Bot Management add-on](/bo
 
 <Render file="about-plan-considerations" product="bots" />
 
+### WAF custom rules 
+
+[WAF custom rules](/waf/custom-rules/) are executed before Super Bot Fight Mode.
+
+This order has a critical impact on traffic processing. If a WAF custom rule performs a terminating action (such as _Block_, _Managed Challenge_, or _JS Challenge_), the request will not be processed further, and the Super Bot Fight Mode configuration will not be evaluated.
+
+To configure exceptions to Super Bot Fight Mode, you should use the [_Skip_ action in your WAF custom rules](/waf/custom-rules/skip/). The _Skip_ action allows the request to bypass the Super Bot Fight Mode phase without terminating the request, enabling it to continue through the rest of the security stack.
+
 ## Enable Super Bot Fight Mode
 
 <Render file="sbfm-upgrade" product="bots" />
@@ -39,7 +47,7 @@ To start using Super Bot Fight Mode:
       3. Select **Configure Super Bot Fight Mode**.
       4. Choose how your domain should respond to various types of traffic:
 
-          - For more details on verified bots, refer to [Verified Bots](/bots/concepts/bot/#verified-bots).
+          - For more details on verified bots, refer to [Verified Bots](/bots/concepts/bot/verified-bots/).
           - For more details on supported file types, refer to [Static resource protection](/bots/additional-configurations/static-resources/).
           - For more details on invisible code injection, refer to [JavaScript detections](/bots/additional-configurations/javascript-detections/).
     </Steps>
@@ -54,7 +62,7 @@ To start using Super Bot Fight Mode:
       4. Turn **Super Bot Fight Mode** on.
       5. Choose how your domain should respond to various types of traffic by selecting the associated edit icon:
 
-          - For more details on verified bots, refer to [Verified Bots](/bots/concepts/bot/#verified-bots).
+          - For more details on verified bots, refer to [Verified Bots](/bots/concepts/bot/verified-bots/).
           - For more details on supported file types, refer to [Static resource protection](/bots/additional-configurations/static-resources/).
           - For more details on invisible code injection, refer to [JavaScript detections](/bots/additional-configurations/javascript-detections/).
           - For more details on WordPress optimization, refer to [Super Bot Fight Mode for WordPress](/bots/troubleshooting/wordpress-loopback-issue/).
@@ -65,7 +73,7 @@ To start using Super Bot Fight Mode:
 
 :::caution[Warning]
 
-If your organization also uses [Cloudflare Tunnel](/cloudflare-one/connections/connect-networks/), keep **Definitely Automated** set to **Allow**. Otherwise, tunnels might fail with a `websocket: bad handshake` error.
+If your organization also uses [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/), keep **Definitely Automated** set to **Allow**. Otherwise, tunnels might fail with a `websocket: bad handshake` error.
 :::
 
 <Render file="flexible-sbfm" product="bots" />

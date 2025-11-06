@@ -1,0 +1,31 @@
+---
+params:
+  - productName
+  - getStartedURL
+---
+
+import { DashButton } from "~/components";
+
+The free version of {props.productName} is generally available to everyone with a Cloudflare account by default.
+
+All free customers are encouraged to join [Cloudflare's Discord server](https://discord.com/invite/cloudflaredev) to discuss the use cases, configuration, and troubleshooting of {props.productName}. Free customers are always welcome to provide product feedback and discuss feature requests. The product and engineering team that works on {props.productName} regularly engages with the Discord community.
+
+You can find the channel by joining the Cloudflare Developers Discord server. Then scroll down in the side bar navigation to the **Cloudflare One** category and select **magic-network-monitoring**.
+
+## Access the free version of MNM
+
+The free version includes all the features of the enterprise version, but has network flow volume and configuration limitations. These limits are detailed below.
+
+1. In the Cloudflare dashboard, go to the **Magic Monitoring** page.
+
+<DashButton url="/?to=/:account/network-monitoring" />
+
+2. Complete the onboarding wizard to configure {props.productName}. Refer to <a href={props.getStartedURL}>Get started</a> for more information.
+
+## Limitations
+
+| Limitation Type                      | Value |
+| ------------------------------------ | ----- |
+| Number of registered routers         | 10    |
+| Number of rules                      | 25    |
+| Network flows per second per account | 250   |

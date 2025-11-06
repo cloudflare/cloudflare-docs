@@ -68,7 +68,32 @@ await page.setUserAgent(
 ```
 
 :::note
-The `userAgent` parameter does not bypass bot protection. Requests from Browser Rendering will always be identified as a bot. 
+The `userAgent` parameter does not bypass bot protection. Requests from Browser Rendering will always be identified as a bot.
+:::
+
+## Element selection
+
+Puppeteer provides multiple methods for selecting elements on a page. While CSS selectors work as expected, XPath selectors are not supported due to security constraints in the Workers runtime.
+
+Instead of using Xpath selectors, you can use CSS selectors or `page.evaluate()` to run XPath queries in the browser context:
+
+```ts
+const innerHtml = await page.evaluate(() => {
+	return (
+		// @ts-ignore this runs on browser context
+		new XPathEvaluator()
+			.createExpression("/html/body/div/h1")
+			// @ts-ignore this runs on browser context
+			.evaluate(document, XPathResult.FIRST_ORDERED_NODE_TYPE).singleNodeValue
+			.innerHTML
+	);
+});
+```
+
+:::note
+
+`page.evaluate()` can only return primitive types like strings, numbers, and booleans. Returning complex objects like `HTMLElement` will not work.
+
 :::
 
 ## Session management

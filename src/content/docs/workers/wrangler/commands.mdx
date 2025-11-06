@@ -1271,8 +1271,8 @@ If you are using `CLOUDFLARE_API_TOKEN` instead of OAuth, and you can logout by 
 
    <DashButton url="/?to=/:account/api-tokens" />
 
-3. Select the three-dot menu on your Wrangler token.
-4. Select **Delete**.
+2. Select the three-dot menu on your Wrangler token.
+3. Select **Delete**.
 
 ---
 
@@ -1387,7 +1387,7 @@ The minimum required wrangler version to use these commands is 3.40.0. For versi
 
 ### `deploy`
 
-Apply changes to triggers ([Routes or domains](/workers/configuration/routing/) and [Cron Triggers](/workers/configuration/cron-triggers/)) when using [`wrangler versions upload`](/workers/wrangler/commands/#upload).
+Apply changes to triggers ([Routes or domains](/workers/configuration/routing/) and [Cron Triggers](/workers/configuration/cron-triggers/)) when using [`wrangler versions upload`](/workers/wrangler/commands/#versions-upload).
 
 ```txt
 wrangler triggers deploy [OPTIONS]
@@ -1848,6 +1848,14 @@ wrangler telemetry status
 Generate a CPU profile of your Worker's startup phase.
 
 After you run `wrangler check startup`, you can import the profile into Chrome DevTools or open it directly in VSCode to view a flamegraph of your Worker's startup phase. Additionally, when a Worker deployment fails with a startup time error Wrangler will automatically generate a CPU profile for easy investigation.
+
+:::note
+
+This command measures performance of your Worker locally, on your own machine — which has a different CPU than when your Worker runs on Cloudflare. This means results can vary widely.
+
+You should use the CPU profile that `wrangler check startup` generates in order to understand where time is spent at startup, but you should not expect the overall startup time in the profile to match exactly what your Worker's startup time will be when deploying to Cloudflare.
+
+:::
 
 ```sh
 wrangler check startup

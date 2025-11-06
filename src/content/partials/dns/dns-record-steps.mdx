@@ -4,12 +4,15 @@ params:
   - example
 ---
 
-import { Tabs, TabItem, Render, GlossaryTooltip } from "~/components";
+import { Tabs, TabItem, Render, GlossaryTooltip, DashButton } from "~/components";
 
 <Tabs syncKey="dashPlusAPI">
 <TabItem label="Dashboard">
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account and zone.
-2. Go to **DNS** > **Records** and select **Add record**.
+1. In the Cloudflare dashboard, go to the **DNS Records** page.
+
+      <DashButton url="/?to=/:account/:zone/dns/records" />
+
+2. Select **Add record**.
 3. Select `A`, `AAAA`, or `CNAME` as the record **Type**, according to your needs:
     - To point to an IPv4 address, select `A`, use {props.name} (<code>{props.example}</code>) for the record **Name**, and insert the IPv4 address in the respective field.
     - To point to an IPv6 address, select `AAAA`, use {props.name} (<code>{props.example}</code>) for the record **Name**, and insert the IPv6 address in the respective field.

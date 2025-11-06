@@ -1,0 +1,65 @@
+---
+title: Sandbox options
+pcx_content_type: configuration
+sidebar:
+  order: 4
+---
+
+import { TypeScriptExample } from "~/components";
+
+Configure sandbox behavior by passing options when creating a sandbox instance with `getSandbox()`.
+
+## Available options
+
+```ts
+import { getSandbox } from '@cloudflare/sandbox';
+
+const sandbox = getSandbox(binding, sandboxId, options?: SandboxOptions);
+```
+
+### keepAlive
+
+**Type**: `boolean`
+**Default**: `false`
+
+Keep the container alive indefinitely by preventing automatic shutdown. When `true`, the container will never auto-timeout and must be explicitly destroyed using `destroy()`.
+
+<TypeScriptExample>
+```ts
+// For long-running processes that need the container to stay alive
+const sandbox = getSandbox(env.Sandbox, 'user-123', {
+  keepAlive: true
+});
+
+// Run your long-running process
+await sandbox.startProcess('python long_running_script.py');
+
+// Important: Must explicitly destroy when done
+try {
+  // Your work here
+} finally {
+  await sandbox.destroy(); // Required to prevent containers running indefinitely
+}
+```
+</TypeScriptExample>
+
+:::caution[Resource management with keepAlive]
+When `keepAlive: true` is set, containers will not automatically timeout. They must be explicitly destroyed using `destroy()` to prevent containers running indefinitely and counting toward your account limits.
+:::
+
+## When to use keepAlive
+
+Use `keepAlive: true` for:
+
+- **Long-running builds** - CI/CD pipelines that may have idle periods between steps
+- **Batch processing** - Jobs that process data in waves with gaps between batches
+- **Monitoring tasks** - Processes that periodically check external services
+- **Interactive sessions** - User-driven workflows where the container should remain available
+
+By default, containers automatically shut down after 10 minutes of inactivity. The `keepAlive` option prevents this automatic shutdown.
+
+## Related resources
+
+- [Background processes guide](/sandbox/guides/background-processes/) - Using `keepAlive` with long-running processes
+- [Sessions API reference](/sandbox/api/sessions/) - Container lifecycle management
+- [Sandboxes concept](/sandbox/concepts/sandboxes/) - Understanding sandbox lifecycle
