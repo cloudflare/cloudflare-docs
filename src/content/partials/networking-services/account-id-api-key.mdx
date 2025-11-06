@@ -3,12 +3,14 @@
 
 ---
 
+import { Markdown } from "~/components";
+
 :::note
 
 {props.showSiteId ? (
-  <>To export NetFlow statistics, you will need your [account ID](/fundamentals/account/find-account-and-zone-ids/) and [API token](/fundamentals/api/get-started/account-owned-tokens/), as well as the `site_id` associated with your Magic WAN Connector.</>
+  <Markdown text={`To export NetFlow statistics, you will need your [account ID](/fundamentals/account/find-account-and-zone-ids/) and [API token](/fundamentals/api/get-started/account-owned-tokens/), as well as the \`site_id\` associated with your Magic WAN Connector.`} />
 ) : (
-  <>You will need your [account ID](/fundamentals/account/find-account-and-zone-ids/) and [API token](/fundamentals/api/get-started/account-owned-tokens/).</>
+  <Markdown text={`You will need your [account ID](/fundamentals/account/find-account-and-zone-ids/) and [API token](/fundamentals/api/get-started/account-owned-tokens/).`} />
 )}
 
 :::
