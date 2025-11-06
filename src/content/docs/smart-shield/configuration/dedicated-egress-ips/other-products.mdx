@@ -12,13 +12,9 @@ Use Dedicated CDN Egress IPs in combination with different Cloudflare products.
 
 You can use Dedicated CDN Egress IPs combined with [Cloudflare Network Interconnect (CNI)](/network-interconnect/) to secure your applications with [Cloudflare Access](/cloudflare-one/access-controls/policies/) without installing software or customizing code on your server.
 
-While Access allows you to enforce policies at the hostname level, other solutions are usually necessary to protect against origin IP bypass — when an attacker knows your origin server IP and uses it to directly interact with the target application.
-
-With Dedicated CDN Egress IPs, you only allow a small number of IPs (that are not publicly listed) through your network firewall. And with Cloudflare Network Interconnect, you can use a completely private path between Cloudflare and your application server, without exposure to the public Internet.
+While Access allows you to enforce policies at the hostname level, other solutions are usually necessary to protect against origin IP bypass [^1]. With Dedicated CDN Egress IPs, you only allow a small number of IPs (that are not publicly listed) through your network firewall and, with Cloudflare Network Interconnect, you can use a completely private path between Cloudflare and your application server, without exposure to the public Internet. For details and background, refer to the [Cloudflare blog](https://blog.cloudflare.com/access-aegis-cni).
 
 Dedicated CDN Egress IPs are included within [BGP advertisement over CNI](/network-interconnect/).
-
-For details and background, refer to the [Cloudflare blog](https://blog.cloudflare.com/access-aegis-cni).
 
 ## Data Localization Suite
 
@@ -59,3 +55,5 @@ Workers subrequests — requests from one Worker to another — are expected to 
 ### `connect`
 
 For [`connect()` requests](/workers/runtime-apis/tcp-sockets/) - which create outbound TCP connections from Workers - Dedicated CDN Egress IPs are **not** used.
+
+[^1]: When an attacker knows your origin server IP and uses it to directly interact with the target application.
