@@ -59,7 +59,7 @@ async function autogenStyles() {
 const sidebar = await autogenSections();
 const customCss = await autogenStyles();
 
-const runLinkCheck =
+const RUN_LINK_CHECK =
 	process.env.RUN_LINK_CHECK?.toLowerCase() === "true" || false;
 const ENABLE_LAST_MOD_IN_SITEMAP =
 	process.env.ENABLE_LAST_MOD_IN_SITEMAP?.toLowerCase() === "true";
@@ -195,7 +195,7 @@ export default defineConfig({
 			customCss,
 			pagination: false,
 			plugins: [
-				...(runLinkCheck
+				...(RUN_LINK_CHECK
 					? [
 							starlightLinksValidator({
 								errorOnInvalidHashes: false,
