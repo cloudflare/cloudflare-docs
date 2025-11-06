@@ -1,0 +1,1046 @@
+---
+pcx_content_type: configuration
+title: Environments
+sidebar:
+  order: 10
+head: []
+description: You can add environment variables, which are a type of binding, to attach text strings or JSON values to your Worker.
+---
+
+import {
+	Details,
+	LinkCard,
+	Render,
+	PackageManagers,
+	WranglerConfig,
+	InlineBadge,
+	CardGrid,
+	Card,
+	Type,
+	TypeScriptExample,
+	Tabs,
+	TabItem,
+} from "~/components";
+
+Every Worker application has three default environments: **development**, **preview**, and **production**. Each environment defines the **[resource bindings](/workers/runtime-apis/bindings/)** (like [KV namespaces](/kv/), [R2 buckets](/r2/)) and **configuration** (like [environment variables](/workers/configuration/environment-variables/) and [secrets](/workers/configuration/secrets/)) that your Worker uses in that context.
+
+- **[Development](#development-environment)** - For developing on your local machine, using the [Wrangler CLI](/workers/wrangler/) or [Cloudflare Vite plugin](/workers/vite-plugin/).
+
+- **[Preview](#preview-environment)** - For testing changes in isolated [preview deployments](#preview-deployments) before merging to production. Each pull request gets its own unique preview deployment with a dedicated URL, using your [preview environment](#preview-environment) settings.
+
+- **[Production](#production-environment)** - For serving real user traffic. Your [production deployment](#production-deployments) runs on your **[production domain](/workers/configuration/routing/)** and uses production [bindings](/workers/runtime-apis/bindings/), [environment variables](/workers/configuration/environment-variables/), and [secrets](/workers/configuration/secrets/).
+
+**Start from CLI** - scaffold a full-stack app with a React SPA, Cloudflare Workers API, and the [Cloudflare Vite plugin](/workers/vite-plugin/) and configure environments:
+
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args="my-react-app --framework=react"
+/>
+---
+
+**Or just deploy** - create a full-stack app using React, Hono API and Vite, with CI/CD and preview deployments set up for you.
+
+[![Deploy to Workers](https://deploy.workers.cloudflare.com/button)](https://dash.cloudflare.com/?to=/:account/workers-and-pages/create/deploy-to-workers&repository=https://github.com/cloudflare/templates/tree/main/vite-react-template)
+
+## Environment configuration
+
+You define all three environments in your [Wrangler configuration file](/workers/wrangler/configuration/).
+
+<WranglerConfig>
+```jsonc title="wrangler.jsonc"
+{
+  "name": "my-worker",
+  "compatibility_date": "$today",
+  "development": {
+    "kv_namespaces": [
+      {
+        "binding": "MY_KV"
+      }
+    ]
+  },
+  "preview": {
+    "vars": {
+      "ENVIRONMENT": "preview"
+    },
+    "kv_namespaces": [
+      {
+        "binding": "MY_KV",
+        "id": "abc123preview"
+      }
+    ]
+  },
+  "production": {
+    "vars": {
+      "ENVIRONMENT": "production"
+    },
+    "kv_namespaces": [
+      {
+        "binding": "MY_KV",
+        "id": "xyz789production"
+      }
+    ]
+  }
+}
+```
+</WranglerConfig>
+
+## Required environment configuration
+
+- **Bindings:** For each environment, you need to declare the **[bindings](/workers/runtime-apis/bindings/)** your Worker code will interact with (for example, calling `env.MY_KV`). This makes sure your Worker code has everything it needs to work at runtime.
+
+- **Environment variables:** For your **[preview](#preview-environment)** and **[production](#production-environment)** environments, you also need to define the **[environment variables](/workers/configuration/environment-variables/)** (`vars`) your Worker needs at runtime. This isn't required for your **[development](#development-environment)** environment, as you can provide environment variables and secrets via a `.env` file (or pull down your **development** settings from the dashboard with `wrangler env pull`).
+
+- **Resource IDs or names:** For your **[preview](#preview-environment)** and **[production](#production-environment)** environments, you need to specify which deployed resources on your Cloudflare account should be used. For your **[development](#development-environment)** environment, you only need to define the binding types without any real IDs or names. [Miniflare](https://miniflare.dev/) will create local simulations for all resources, or you can specify an ID/name of a deployed resource to connect to it remotely during local development.
+
+- **Secrets:** [Secrets](/workers/configuration/secrets/) should never be defined in Wrangler configuration. You can provide secrets for your **[development](#development-environment)** environment with a `.env` file (or pulling them down from the dashboard with `wrangler env pull`). To add secrets to your **[production](#production-environment)** and **[preview](#preview-environment)** environments, you can add them in the dashboard or with `wrangler secret put` (for **production** secrets) and `wrangler secret put --preview` (for **preview** secrets).
+
+## Development environment
+
+Your **development** environment is a collection of settings that your Worker application uses when you run [`wrangler dev`](/workers/wrangler/commands/#dev) or `vite dev.` These settings include:
+
+- What [bindings](/workers/runtime-apis/bindings/) your Worker code needs to interact with (such as making calls to `env.MY_KV`).
+- What [environment variables](/workers/configuration/environment-variables/) and [secrets](/workers/configuration/secrets/) your Worker code needs during local development.
+
+#### Development bindings
+
+You need to define all **[bindings](/workers/runtime-apis/bindings/)** in your [Wrangler configuration file](/workers/wrangler/configuration/) under the `development` block.
+
+<WranglerConfig>
+```jsonc title="wrangler.jsonc"
+{
+  "development": {
+    "kv_namespaces": [
+      {
+        "binding": "MY_KV"
+      }
+    ]
+  }
+}
+```
+</WranglerConfig>
+
+**Local bindings:** When you start your development environment, [Miniflare](https://miniflare.dev/) looks at this configuration block and creates **local** simulations of all resources so that you can develop offline and without incurring costs.
+
+**Remote bindings:** You can also connect to a deployed resource during local development, making it easier to get started quickly without seeding a local database. You just provide a deployed resource's ID or name for that [binding](/workers/runtime-apis/bindings/):
+
+<WranglerConfig>
+```jsonc title="wrangler.jsonc"
+{
+  "development": {
+    "kv_namespaces": [
+      {
+        "binding": "MY_KV",
+        "id": "abc123preview"
+      }
+    ]
+  }
+}
+```
+</WranglerConfig>
+
+#### Development environment variables & secrets
+
+You can provide your development environment's environment variables and secrets by placing them in a `.env` or `.env.local` file in your project root:
+
+```ini title=".env"
+API_KEY=your-dev-api-key
+DATABASE_URL=http://localhost:5432
+```
+
+#### `wrangler env pull`
+
+To make it easier to get started and share a local development setup as a team, you can run:
+
+<PackageManagers type="exec" pkg="wrangler" args="env pull" />
+
+This command pulls down your **development** environment variables and secrets from the dashboard, and places them in a `.env.local` file. If you want your `.env.local` file to be populated with values from your **preview** or **production** environment, just specify the environment name:
+
+**Pull down preview environment variables and secrets**
+
+<PackageManagers type="exec" pkg="wrangler" args="env pull --preview" />
+
+**Pull down production environment variables and secrets**
+
+<PackageManagers type="exec" pkg="wrangler" args="env pull --production" />
+
+## Preview environment
+
+Your **preview** environment defines the default settings that all [preview deployments](#preview-deployments) share, including:
+
+- The [bindings](/workers/runtime-apis/bindings/) and resources your preview deployments connect to (like [KV namespaces](/kv/), [R2 buckets](/r2/), [D1 databases](/d1/)).
+- The [environment variables](/workers/configuration/environment-variables/) and [secrets](/workers/configuration/secrets/) preview deployments use.
+
+You have one **preview environment** (the shared settings), but many **preview deployments** (one running deployment per
+branch). Each preview deployment uses the preview environment's settings by default, but you can [override values for a specific branch](#override-preview-environment-defaults-for-specific-branches).
+
+### Preview deployments
+
+A **preview deployment** is a live, running copy of your Worker application with its own unique URL. Think of it like a sandbox or staging server, but automatically created for each pull request. You can have multiple preview deployments running at the same time - one for each feature branch you're working on.
+
+Cloudflare automatically creates a new preview deployment each time:
+
+- You push a commit to a branch that's not your production branch (which defaults to `main`). You need to [connect your Git repository](/workers/ci-cd/git-integration/) to Cloudflare for automated preview deployments. If that branch has an open pull request, Cloudflare will post a comment on your PR with your preview deployment's unique URL.
+- You run [`wrangler deploy --preview`](/workers/wrangler/commands/#deploy) with the [Wrangler CLI](/workers/wrangler/).
+
+With preview deployments, you get all the same features that production deployments get, like [Observability](/workers/observability/). Each preview deployment has its own [version history](/workers/configuration/versions-and-deployments/), so you can track changes on a branch over time.
+
+#### Preview environment bindings & variables
+
+You need to define all preview **[bindings](/workers/runtime-apis/bindings/)**, the real **resource IDs or names** those bindings connect to, and **[environment variables](/workers/configuration/environment-variables/)** (`vars`) in your [Wrangler configuration file](/workers/wrangler/configuration/) under the `preview` block.
+
+<WranglerConfig>
+```jsonc title="wrangler.jsonc"
+{
+  "preview": {
+    "vars": {
+      "ENVIRONMENT": "preview"
+    },
+    "kv_namespaces": [
+      {
+        "binding": "MY_KV",
+        "id": "abc123preview"
+      }
+    ]
+  }
+}
+```
+</WranglerConfig>
+
+<details>
+<summary>Why do I need to define `vars` in my Wrangler configuration file?</summary>
+
+You need to define vars in your [Wrangler configuration file](/workers/wrangler/configuration/) because Workers uses a different runtime (called [workerd](https://github.com/cloudflare/workerd)) than traditional platforms.
+
+In traditional platforms like Node.js on a server, the runtime can read environment variables directly from the operating system through something like `process.env` - they're just "there" in the process environment. But the [Workers runtime](/workers/runtime-apis/) doesn't have access to OS-level environment variables. Instead, it only knows about what you explicitly tell it about through [bindings](/workers/runtime-apis/bindings/) in your Wrangler configuration file.
+
+When you deploy, [Wrangler](/workers/wrangler/) takes everything you've defined in your config file (vars, [KV namespaces](/kv/), [R2 buckets](/r2/), etc.) and packages them up as bindings that get injected into your Worker's execution context. So `vars` aren't "already there" - they have to be explicitly declared and passed into the runtime.
+
+</details>
+
+#### Preview environment secrets
+
+You can set the secrets for your preview environment using the Wrangler CLI or dashboard:
+
+**CLI**
+
+<PackageManagers type="exec" pkg="wrangler" args="secret put --preview" />
+
+**Dashboard**
+
+Go to **Settings** > **Environments** > **Secrets**
+
+By default, all preview deployments share the same secrets.
+
+### Override preview environment defaults for specific branches
+
+If a specific branch needs different environment variables or secrets than what's supplied by the shared preview environment, you can override the defaults for that branch.
+
+#### How branch overrides work
+
+When you override settings for a branch:
+
+1. The first time you push to a branch, it automatically deploys using default preview settings.
+2. You then set branch-specific overrides using the the dashboard.
+3. Cloudflare redeploys your unique preview deployment with the new settings.
+4. All future commits to that branch automatically use your overrides.
+5. When the branch is deleted, the overrides are cleaned up.
+
+#### How to override environment variables or secrets
+
+1. Go to Workers & Pages > select your Worker application
+2. Go to **Deployments** > find your **preview deployment**
+3. Click Settings > Variables & secrets > Toggle the "Override" button.
+4. Add or modify the values you want to override.
+5. Click Save - this triggers a new deployment with your overrides.
+
+## Production environment
+
+Your **production** environment is for deploying your Worker to a **production domain** so it can serve real users. A **production domain** is the URL that real users access to reach your Worker application - like example.com or my-worker.my-account.workers.dev.
+
+Your production environment defines the settings your Worker uses when serving production traffic, including:
+
+- The [bindings](/workers/runtime-apis/bindings/) and resources it connects to (like [KV namespaces](/kv/), [R2 buckets](/r2/), [D1 databases](/d1/)).
+- The [environment variables](/workers/configuration/environment-variables/) and [secrets](/workers/configuration/secrets/) it uses.
+
+### Production deployments
+
+A **production deployment** is your live, running Worker application serving real user traffic. Your production deployment is available on your [`*.workers.dev` subdomain](/workers/configuration/routing/workers-dev/), [custom domain](/workers/configuration/routing/custom-domains/), or [route](/workers/configuration/routing/routes/).
+
+Cloudflare automatically deploys to production each time:
+
+- You push a commit to your production branch (which defaults to `main`). You need to [connect your Git repository](/workers/ci-cd/git-integration/) to Cloudflare for automated production deployments.
+- You run [`wrangler deploy`](/workers/wrangler/commands/#deploy) with the [Wrangler CLI](/workers/wrangler/).
+
+#### Production environment bindings & variables
+
+You need to define all production **[bindings](/workers/runtime-apis/bindings/)**, the real **resource IDs or names** those bindings connect to, and **[environment variables](/workers/configuration/environment-variables/)** (`vars`) in your [Wrangler configuration file](/workers/wrangler/configuration/) under the `production` block.
+
+<WranglerConfig>
+```jsonc title="wrangler.jsonc"
+{
+  "production": {
+    "vars": {
+      "ENVIRONMENT": "production"
+    },
+    "kv_namespaces": [
+      {
+        "binding": "MY_KV",
+        "id": "xyz789production"
+      }
+    ]
+  }
+}
+```
+</WranglerConfig>
+
+#### Production environment secrets
+
+You can set the secrets for your production environment using the Wrangler CLI or dashboard:
+
+**CLI**
+
+<PackageManagers type="exec" pkg="wrangler" args="secret put API_SECRET" />
+
+**Dashboard**
+
+Go to **Settings** > **Environments** > **Production** > **Secrets**
+
+## Guides
+
+This guide will walk you through setting up default environments for your Worker application from scratch. For a quickstart that creates an application with environments already configured, use [this template](needs a template)
+
+<Tabs syncKey="createMethod">
+<TabItem label="CLI">
+
+You can create a new Worker application using the `create-cloudflare` package:
+
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args="my-app -- --framework=react --lang=ts"
+/>
+
+Move into your directory and build your application:
+
+```sh
+cd my-app && npm run build
+```
+
+#### Review configuration
+
+Next, let's look at our [Wrangler configuration file](/workers/wrangler/configuration/). It should look like this:
+
+<WranglerConfig>
+
+```jsonc title="wrangler.jsonc"
+{
+	"name": "my-worker",
+	"compatibility_date": "$today",
+	"assets": {
+		"not_found_handling": "single-page-application",
+	},
+	"development": {},
+	"preview": {},
+	"production": {},
+}
+```
+
+</WranglerConfig>
+
+As you'll see, there are configuration blocks for each **default environment**: [`development`](#development-environment), [`preview`](#preview-environment), and [`production`](#production-environment). Each block will hold the [bindings](/workers/runtime-apis/bindings/) and configuration specific to that environment.
+
+#### Add bindings and environment variables
+
+From here, you can add **[bindings](/workers/runtime-apis/bindings/)** and **[environment variables](/workers/configuration/environment-variables/)** to each environment block.
+
+<WranglerConfig>
+```jsonc title="wrangler.jsonc"
+{
+  "name": "my-worker",
+  "compatibility_date": "$today",
+  "assets": {
+    "not_found_handling": "single-page-application"
+  },
+  "development": {
+    "kv_namespaces": [
+      {
+        "binding": "MY_KV"
+      }
+    ]
+  },
+  "preview": {
+    "vars": {
+      "ENVIRONMENT": "preview"
+    },
+    "kv_namespaces": [
+      {
+        "binding": "MY_KV"
+      }
+    ]
+  },
+  "production": {
+    "vars": {
+      "ENVIRONMENT": "production"
+    },
+    "kv_namespaces": [
+      {
+        "binding": "MY_KV"
+      }
+    ]
+  }
+}
+```
+
+</WranglerConfig>
+
+In this example, we've added:
+
+- **[Bindings](/workers/runtime-apis/bindings/):** Within the [`development`](#development-environment), [`preview`](#preview-environment), and [`production`](#production-environment) blocks, we've added a [KV namespace](/kv/) binding `MY_KV`. This allows us to call `env.MY_KV` within our Worker code, but the resources that `env.MY_KV` interacts with will change depending on the environment context. In the next step, Cloudflare will automatically provision **separate KV namespaces** for our preview and production environments upon deployment.
+
+- **[Environment variables](/workers/configuration/environment-variables/):** We've added `vars` blocks to our [`preview`](#preview-environment) and [`production`](#production-environment) environments, allowing us to use different environment variable values for each environment. For the **[development](#development-environment)** environment, you can place all environment variables (and [secrets](/workers/configuration/secrets/)) in a `.env` file.
+
+#### Deploy
+
+Now, let's deploy our Worker application:
+
+<PackageManagers type="exec" pkg="wrangler" args="deploy" />
+
+Because there aren't any existing [KV namespaces](/kv/) for `MY_KV` to connect to, [Wrangler](/workers/wrangler/) automatically provisions separate **[preview](#preview-environment)** and **[production](#production-environment)** KV namespaces.
+
+If you look again at your `wrangler.jsonc` file, you'll see that separate KV namespaces have been added to the **[preview](#preview-environment)** and **[production](#production-environment)** environments:
+
+<WranglerConfig>
+```jsonc title="wrangler.jsonc"
+{
+  "name": "my-worker",
+  "compatibility_date": "$today",
+  "assets": {
+    "not_found_handling": "single-page-application"
+  },
+  "development": {
+    "kv_namespaces": [
+      {
+        "binding": "MY_KV"
+      }
+    ]
+  },
+  "preview": {
+    "kv_namespaces": [
+      {
+        "binding": "MY_KV",
+        "id": "<preview-kv-namespace-id>"
+      }
+    ]
+  },
+  "production": {
+    "kv_namespaces": [
+      {
+        "binding": "MY_KV",
+        "id": "<production-kv-namespace-id>"
+      }
+    ]
+  }
+}
+```
+
+</WranglerConfig>
+
+And you're done! In the [Cloudflare dashboard](https://dash.cloudflare.com), you should now see in the **Overview** tab your **[production](#production-environment)** deployment, made immediately available on your [`workers.dev` domain](/workers/configuration/routing/workers-dev/).
+
+You can automate production and preview deployments by [connecting your Git repository](/workers/ci-cd/git-integration/) to Cloudflare, making it easy to setup [preview deployments](#preview-deployments) with separate resources and configuration for your pull requests.
+
+
+</TabItem>
+<TabItem label="Dashboard">
+
+1. Go to **Workers & Pages** in the [Cloudflare dashboard](https://dash.cloudflare.com).
+2. Select **Create application**.
+3. Choose from:
+   - Gallery of production-ready templates
+   - Import an existing Git repository
+   - Clone a public repository
+4. Connect your Git provider and configure your project.
+5. Select **Deploy**.
+
+Your Worker will be immediately deployed with all three default environments setup. You can see what [bindings](/workers/runtime-apis/bindings/) each environment uses in the **Bindings** tab, as well as the [environment variables](/workers/configuration/environment-variables/) and other settings for each environment in **Settings** > **Environments**.
+
+#### Pull down your development environment
+
+First, clone your repository locally:
+
+```bash
+git clone <git repo URL>
+cd <directory>
+```
+
+Then, run `wrangler env pull` to pull down your **[development](#development-environment)** environment settings.
+
+<PackageManagers type="exec" pkg="wrangler" args="env pull" />
+
+By default, `wrangler env pull` pulls down any settings stored in the dashboard (including [environment variables](/workers/configuration/environment-variables/) and [secrets](/workers/configuration/secrets/)) for your **[development](#development-environment)** environment, and populates an `env.local` file with those values. You can pull down another environment's configuration by running `wrangler env pull --preview` or `wrangler env pull --production.` When you run [`wrangler dev`](/workers/wrangler/commands/#dev) (or `vite dev` if using the [Cloudflare Vite plugin](/workers/vite-plugin/)), the development server will look for this file to use for your **[development](#development-environment)** environment's configuration.
+
+#### Test changes with a preview deployment
+
+Now let's make a change and create a [preview deployment](#preview-deployments) to test it:
+
+1. Create a new branch for your changes:
+
+```bash
+git checkout -b feature/my-new-feature
+```
+
+2. Make changes to your Worker code and test locally with [`wrangler dev`](/workers/wrangler/commands/#dev).
+
+3. Commit and push your changes to the new branch:
+
+```bash
+git add .
+git commit -m "Add new feature"
+git push origin feature/my-new-feature
+```
+
+4. Create a pull request in your Git repository (GitHub, GitLab, etc.).
+
+5. Cloudflare automatically creates a **[preview deployment](#preview-deployments)** using your **[preview environment](#preview-environment)** settings. Within moments, you'll see a comment on your pull request with a unique URL to your preview deployment.
+
+Your preview deployment uses the [bindings](/workers/runtime-apis/bindings/), [environment variables](/workers/configuration/environment-variables/), and [secrets](/workers/configuration/secrets/) defined in your [preview environment](#preview-environment), allowing you to test your changes with isolated resources before merging to production.
+
+</TabItem>
+<TabItem label="API">
+
+This guide shows how to deploy to both your [production](#production-environment) and [preview](#preview-environment) environments using the Cloudflare API.
+
+#### Deploy to production
+
+Deploy to production by creating a new version and deployment for your production Worker:
+
+```bash
+# Set your credentials
+ACCOUNT_ID="your_account_id"
+API_TOKEN="your_api_token"
+PROD_WORKER_NAME="my-app-production"
+PROD_WORKER_ID="your_production_worker_id"
+
+# Prepare your script
+PROD_SCRIPT_BASE64=$(cat ./dist/production.mjs | base64)
+
+# Create a new version
+VERSION_RESPONSE=$(curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/workers/workers/$PROD_WORKER_ID/versions" \
+  -X POST \
+  -H "Authorization: Bearer $API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "compatibility_date": "$today",
+    "main_module": "production.mjs",
+    "modules": [
+      {
+        "name": "production.mjs",
+        "content_type": "application/javascript+module",
+        "content_base64": "'$PROD_SCRIPT_BASE64'"
+      }
+    ]
+  }')
+
+VERSION_ID=$(echo "$VERSION_RESPONSE" | jq -r '.result.id')
+
+# Deploy the new version (send 100% of traffic to it)
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/workers/scripts/$PROD_WORKER_NAME/deployments" \
+  -X POST \
+  -H "Authorization: Bearer $API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "strategy": "percentage",
+    "versions": [
+      {
+        "percentage": 100,
+        "version_id": "'$VERSION_ID'"
+      }
+    ]
+  }'
+```
+
+#### Deploy a preview for a feature branch
+
+Create a [preview deployment](#preview-deployments) by posting your script to the Application's `/previews` endpoint. The API automatically creates a new temporary Worker, copies the settings from your [preview environment](#preview-environment), and deploys your script:
+
+```bash
+# Set your credentials
+ACCOUNT_ID="your_account_id"
+API_TOKEN="your_api_token"
+APP_ID="your_application_id"
+BRANCH_NAME="feature-xyz-123"
+
+# Prepare your script
+FEATURE_SCRIPT_BASE64=$(cat ./dist/feature.mjs | base64)
+
+# Deploy the feature branch
+PREVIEW_RESPONSE=$(curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/workers/applications/$APP_ID/previews" \
+  -X POST \
+  -H "Authorization: Bearer $API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "annotations": {
+      "workers/branch": "'$BRANCH_NAME'"
+    },
+    "compatibility_date": "$today",
+    "main_module": "feature.mjs",
+    "modules": [
+      {
+        "name": "feature.mjs",
+        "content_type": "application/javascript+module",
+        "content_base64": "'$FEATURE_SCRIPT_BASE64'"
+      }
+    ]
+  }')
+
+# Get the new Worker's ID for cleanup later
+EPHEMERAL_WORKER_ID=$(echo "$PREVIEW_RESPONSE" | jq -r '.result.worker_id')
+
+echo "Feature branch deployed to temporary worker: $EPHEMERAL_WORKER_ID"
+```
+
+#### Clean up preview deployments
+
+When your pull request is merged or closed, delete the temporary Worker:
+
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/workers/workers/$EPHEMERAL_WORKER_ID" \
+  -X DELETE \
+  -H "Authorization: Bearer $API_TOKEN"
+```
+
+</TabItem>
+<TabItem label="TypeScript SDK">
+
+This guide shows how to deploy to both your [production](#production-environment) and [preview](#preview-environment) environments using the [Cloudflare TypeScript SDK](https://github.com/cloudflare/cloudflare-typescript).
+
+Install the SDK:
+
+```bash
+npm install cloudflare
+```
+
+#### Deploy to production
+
+Deploy to production by creating a new version and deployment for your production Worker:
+
+```typescript
+import Cloudflare from "cloudflare";
+import fs from "fs";
+
+const ACCOUNT_ID = process.env.CLOUDFLARE_ACCOUNT_ID;
+const API_TOKEN = process.env.CLOUDFLARE_API_TOKEN;
+const PROD_WORKER_NAME = "my-app-production";
+const PROD_WORKER_ID = "your_prod_worker_id";
+
+const client = new Cloudflare({ apiToken: API_TOKEN });
+
+async function deployToProduction() {
+  const scriptContent = fs.readFileSync("./dist/production.mjs", "utf8");
+  const scriptBase64 = Buffer.from(scriptContent).toString("base64");
+
+  // Create a new version
+  const version = await client.workers.beta.workers.versions.create(
+    PROD_WORKER_ID,
+    {
+      account_id: ACCOUNT_ID,
+      main_module: "production.mjs",
+      compatibility_date: "$today",
+      modules: [
+        {
+          name: "production.mjs",
+          content_type: "application/javascript+module",
+          content_base64: scriptBase64,
+        },
+      ],
+    }
+  );
+
+  // Deploy the new version
+  await client.workers.scripts.deployments.create(PROD_WORKER_NAME, {
+    account_id: ACCOUNT_ID,
+    strategy: "percentage",
+    versions: [
+      {
+        percentage: 100,
+        version_id: version.id,
+      },
+    ],
+  });
+
+  console.log(`Successfully deployed version ${version.id} to production.`);
+}
+
+deployToProduction();
+```
+
+#### Deploy a preview for a feature branch
+
+Create a [preview deployment](#preview-deployments) by calling `applications.previews.create`. This automatically creates a temporary Worker and deploys your code:
+
+```typescript
+import Cloudflare from "cloudflare";
+import fs from "fs";
+
+const ACCOUNT_ID = process.env.CLOUDFLARE_ACCOUNT_ID;
+const API_TOKEN = process.env.CLOUDFLARE_API_TOKEN;
+const APP_ID = process.env.CLOUDFLARE_APP_ID;
+const BRANCH_NAME = process.env.GIT_BRANCH_NAME;
+
+const client = new Cloudflare({ apiToken: API_TOKEN });
+
+async function deployFeatureBranch() {
+  const scriptContent = fs.readFileSync("./dist/feature.mjs", "utf8");
+  const scriptBase64 = Buffer.from(scriptContent).toString("base64");
+
+  // Deploy the feature branch
+  const featureDeployment = await client.workers.beta.applications.previews.create(
+    APP_ID,
+    {
+      account_id: ACCOUNT_ID,
+      main_module: "feature.mjs",
+      compatibility_date: "$today",
+      annotations: {
+        "workers/branch": BRANCH_NAME,
+      },
+      modules: [
+        {
+          name: "feature.mjs",
+          content_type: "application/javascript+module",
+          content_base64: scriptBase64,
+        },
+      ],
+    }
+  );
+
+  console.log(
+    `Feature deployed to temporary worker: ${featureDeployment.worker_name}`
+  );
+
+  // Store the worker_id for cleanup when the PR is merged/closed
+  return featureDeployment.worker_id;
+}
+
+async function cleanupFeatureBranch(ephemeralWorkerId: string) {
+  // Delete the temporary Worker when the PR is merged/closed
+  await client.workers.beta.workers.delete(
+    ephemeralWorkerId,
+    {
+      account_id: ACCOUNT_ID,
+    }
+  );
+  console.log(`Cleaned up temporary worker: ${ephemeralWorkerId}`);
+}
+
+// Example usage in your CI/CD pipeline
+// const workerId = await deployFeatureBranch();
+// await cleanupFeatureBranch(workerId);
+```
+
+</TabItem>
+<TabItem label="Terraform">
+
+This guide shows how to define your infrastructure using the [Cloudflare Terraform provider](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs). This file is the source of truth for your application's permanent state.
+
+Install [Terraform](https://www.terraform.io/downloads).
+
+Create a `main.tf` file:
+
+```hcl
+variable "account_id" {
+  description = "Your Cloudflare account ID"
+}
+
+# Define the production Worker resource
+resource "cloudflare_worker" "my_app_production_worker" {
+  account_id = var.account_id
+  name       = "my-app-production"
+  observability = {
+    enabled = true
+  }
+}
+
+# Define the preview Worker resource
+# This Worker's settings are used as the template for all feature-branch deployments
+resource "cloudflare_worker" "my_app_preview_worker" {
+  account_id = var.account_id
+  name       = "my-app-preview"
+  # Configure preview-specific settings like test bindings here
+}
+
+# Define the Application to link production and preview Workers
+resource "cloudflare_worker_application" "my_app" {
+  account_id = var.account_id
+  name       = "my-app"
+
+  production_worker_id = cloudflare_worker.my_app_production_worker.id
+  preview_worker_id    = cloudflare_worker.my_app_preview_worker.id
+}
+
+# (Optional) Define the production deployment
+# You can manage production deployments in Terraform or via CI/CD
+resource "cloudflare_worker_version" "my_app_production_version" {
+  account_id = var.account_id
+  worker_id  = cloudflare_worker.my_app_production_worker.id
+
+  compatibility_date = "$today"
+  main_module        = "prod-script.mjs"
+  modules = [
+    {
+      name         = "prod-script.mjs"
+      content_type = "application/javascript+module"
+      content_file = "path/to/prod-script.mjs"
+    }
+  ]
+}
+
+resource "cloudflare_workers_deployment" "my_app_production_deployment" {
+  account_id  = var.account_id
+  script_name = cloudflare_worker.my_app_production_worker.name
+  strategy    = "percentage"
+  versions = [{
+    percentage = 100
+    version_id = cloudflare_worker_version.my_app_production_version.id
+  }]
+}
+```
+
+Deploy your infrastructure:
+
+```bash
+terraform init
+terraform apply
+```
+
+**Note:** Temporary Workers created by [preview deployments](#preview-deployments) for feature branches should not be managed in this file. They are automatically created and cleaned up by your CI/CD pipeline.
+
+</TabItem>
+</Tabs>
+
+## Using default environments with already deployed Workers
+
+If you have a Worker that was deployed before default environments were introduced, we recommend migrating your configuration to use the [`development`](#development-environment), [`preview`](#preview-environment), and [`production`](#production-environment) blocks.
+
+### Migrate your existing configuration
+
+To migrate your existing Worker to use default environments:
+
+1. Move your existing configuration into the `production` block in your [Wrangler configuration file](/workers/wrangler/configuration/).
+2. Add `development` and `preview` blocks with the appropriate [bindings](/workers/runtime-apis/bindings/).
+3. If you don't want to create separate resources for your [preview environment](#preview-environment), you can copy the resource names and IDs from your [production environment](#production-environment).
+
+**Before (existing configuration):**
+
+<WranglerConfig>
+```jsonc title="wrangler.jsonc"
+{
+  "name": "my-worker",
+  "compatibility_date": "$today",
+  "vars": {
+    "ENVIRONMENT": "production"
+  },
+  "kv_namespaces": [
+    {
+      "binding": "MY_KV",
+      "id": "abc123"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "MY_BUCKET",
+      "bucket_name": "my-bucket"
+    }
+  ]
+}
+```
+</WranglerConfig>
+
+**After (with default environments):**
+
+<WranglerConfig>
+```jsonc title="wrangler.jsonc"
+{
+  "name": "my-worker",
+  "compatibility_date": "$today",
+  "development": {
+    "kv_namespaces": [
+      {
+        "binding": "MY_KV"
+      }
+    ],
+    "r2_buckets": [
+      {
+        "binding": "MY_BUCKET"
+      }
+    ]
+  },
+  "preview": {
+    "vars": {
+      "ENVIRONMENT": "preview"
+    },
+    "kv_namespaces": [
+      {
+        "binding": "MY_KV",
+        "id": "abc123"
+      }
+    ],
+    "r2_buckets": [
+      {
+        "binding": "MY_BUCKET",
+        "bucket_name": "my-bucket"
+      }
+    ]
+  },
+  "production": {
+    "vars": {
+      "ENVIRONMENT": "production"
+    },
+    "kv_namespaces": [
+      {
+        "binding": "MY_KV",
+        "id": "abc123"
+      }
+    ],
+    "r2_buckets": [
+      {
+        "binding": "MY_BUCKET",
+        "bucket_name": "my-bucket"
+      }
+    ]
+  }
+}
+```
+</WranglerConfig>
+
+In this example:
+
+- **[Development environment](#development-environment):** Only defines binding types. [Miniflare](https://miniflare.dev/) will create local simulations when you run [`wrangler dev`](/workers/wrangler/commands/#dev).
+- **[Preview environment](#preview-environment):** Uses the same resource IDs as production. All [preview deployments](#preview-deployments) will share these resources with your production deployment.
+- **[Production environment](#production-environment):** Contains your original configuration with all resource IDs and [environment variables](/workers/configuration/environment-variables/).
+
+### Using separate resources for preview
+
+If you want to use separate resources for your [preview environment](#preview-environment), you can create new resources and specify their IDs:
+
+<WranglerConfig>
+```jsonc title="wrangler.jsonc"
+{
+  "preview": {
+    "vars": {
+      "ENVIRONMENT": "preview"
+    },
+    "kv_namespaces": [
+      {
+        "binding": "MY_KV",
+        "id": "preview-kv-id"
+      }
+    ],
+    "r2_buckets": [
+      {
+        "binding": "MY_BUCKET",
+        "bucket_name": "my-preview-bucket"
+      }
+    ]
+  }
+}
+```
+</WranglerConfig>
+
+You can create these resources using:
+
+- The [Cloudflare dashboard](https://dash.cloudflare.com)
+- The [Wrangler CLI](/workers/wrangler/) (e.g., [`wrangler kv namespace create`](/kv/api/))
+- Letting [Wrangler](/workers/wrangler/) auto-provision them on your first [`wrangler deploy`](/workers/wrangler/commands/#deploy)
+
+## Using default environments with Wrangler environments
+
+We recommend using the default environments ([`development`](#development-environment), [`preview`](#preview-environment), and [`production`](#production-environment)) instead of [Wrangler environments](/workers/wrangler/configuration/#environments). However, if you're already using Wrangler environments, you can use both together.
+
+[Wrangler environments](/workers/wrangler/configuration/#environments) act as a template to create entirely separate copies of your Worker application as a long-lived environment. Each Wrangler environment creates a **separate Worker**, which means that each Wrangler environment Worker can have its own default environment settings.
+
+To use default environments with Wrangler environments, you nest [`development`](#development-environment), [`preview`](#preview-environment), and [`production`](#production-environment) configuration blocks within each Wrangler `env` block:
+
+<WranglerConfig>
+```jsonc title="wrangler.jsonc"
+{
+  "name": "my-worker",
+  "compatibility_date": "$today",
+  "env": {
+    "staging": {
+      "development": {
+        "kv_namespaces": [
+          {
+            "binding": "MY_KV"
+          }
+        ]
+      },
+      "preview": {
+        "vars": {
+          "ENVIRONMENT": "staging-preview"
+        },
+        "kv_namespaces": [
+          {
+            "binding": "MY_KV",
+            "id": "staging-preview-kv-id"
+          }
+        ]
+      },
+      "production": {
+        "vars": {
+          "ENVIRONMENT": "staging-production"
+        },
+        "kv_namespaces": [
+          {
+            "binding": "MY_KV",
+            "id": "staging-production-kv-id"
+          }
+        ]
+      }
+    },
+    "production": {
+      "development": {
+        "kv_namespaces": [
+          {
+            "binding": "MY_KV"
+          }
+        ]
+      },
+      "preview": {
+        "vars": {
+          "ENVIRONMENT": "production-preview"
+        },
+        "kv_namespaces": [
+          {
+            "binding": "MY_KV",
+            "id": "production-preview-kv-id"
+          }
+        ]
+      },
+      "production": {
+        "vars": {
+          "ENVIRONMENT": "production-production"
+        },
+        "kv_namespaces": [
+          {
+            "binding": "MY_KV",
+            "id": "production-production-kv-id"
+          }
+        ]
+      }
+    }
+  }
+}
+```
+</WranglerConfig>
+
+In this example:
+
+- **`staging` Wrangler environment:** Creates a separate Worker with its own [development](#development-environment), [preview](#preview-environment), and [production](#production-environment) settings. Deploy with `wrangler deploy --env staging`.
+- **`production` Wrangler environment:** Creates another separate Worker with different default environment settings. Deploy with `wrangler deploy --env production`.
+
+Each Wrangler environment Worker operates independently with its own:
+
+- [Development environment](#development-environment) for local testing
+- [Preview deployments](#preview-deployments) for testing branches
+- [Production deployments](#production-deployments) for serving users
