@@ -28,6 +28,7 @@ jobs:
         name: Build
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ENABLE_LAST_MOD_IN_SITEMAP: true
       - run: npx wrangler deploy
         name: Deploy to Cloudflare Workers
         env:
