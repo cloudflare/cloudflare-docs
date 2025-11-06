@@ -6,4 +6,5 @@ product:
   url: /cache/advanced-configuration/cache-reserve/
 
 meta:
-  description: Cache Reserve is a large, persistent data store implemented on top of R2.
+  description: Cache your website content on a persistent data store
+  author: "@cloudflare"

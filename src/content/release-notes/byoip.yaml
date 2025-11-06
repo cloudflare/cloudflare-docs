@@ -2,8 +2,6 @@
 link: "/byoip/changelog/"
 productName: BYOIP
 productLink: "/byoip/"
-productArea: Core platform
-productAreaLink: /fundamentals/reference/changelog/performance/
 entries:
   - publish_date: "2024-07-02"
     title: Address Maps for BYOIP and Static IPs

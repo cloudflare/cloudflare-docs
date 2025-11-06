@@ -1,11 +1,6 @@
 ---
 pcx_content_type: how-to
 title: Sphinx
-banner:
-  content: We recommend using <strong>Cloudflare Workers</strong> for new projects. For existing Pages projects, see our <a href="/workers/static-assets/migrate-from-pages/">migration guide</a> and <a href="/workers/static-assets/migrate-from-pages/#compatibility-matrix">compatibility matrix</a>.
-  type: note
-  dismissible:
-    id: pages-migrate-to-workers
 ---
 
 import { Render } from "~/components";
@@ -192,7 +187,7 @@ my-wonderful-new-sphinx-project
 
 You now have everything you need to start deploying your site to Cloudflare Pages. For learning how to create documentation with Sphinx, refer to the official [Sphinx documentation](https://www.sphinx-doc.org/en/master/usage/quickstart.html).
 
-<Render file="tutorials-before-you-start" />
+<Render file="tutorials-before-you-start" product="pages" />
 
 ## Creating a GitHub repository
 
@@ -228,7 +223,7 @@ git push -u origin main
 
 ## Deploy with Cloudflare Pages
 
-<Render file="deploy-to-pages-steps-no-preset" />
+<Render file="deploy-to-pages-steps-no-preset" product="pages" />
 
 <div>
 
@@ -264,4 +259,8 @@ After deploying your site, you will receive a unique subdomain for your project 
 
 You will also get access to [preview deployments](/pages/configuration/preview-deployments/) on new pull requests, so you can preview how changes look to your site before deploying them to production.
 
-<Render file="framework-guides/learn-more" params={{ one: "Sphinx" }} />
+<Render
+	file="framework-guides/learn-more"
+	product="pages"
+	params={{ one: "Sphinx" }}
+/>

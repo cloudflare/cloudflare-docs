@@ -5,7 +5,7 @@ sidebar:
   order: 1
 ---
 
-import { Render, PackageManagers, WranglerConfig } from "~/components";
+import { DashButton, Render, PackageManagers, WranglerConfig } from "~/components";
 
 ## Prerequisites:
 
@@ -13,7 +13,10 @@ import { Render, PackageManagers, WranglerConfig } from "~/components";
 
 To enable Workers for Platforms, you will need to purchase the [Workers for Platforms Paid plan](/cloudflare-for-platforms/workers-for-platforms/platform/pricing/).
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers-for-platforms), and select your account.
+1. In the Cloudflare dashboard, go to the **Workers for Platforms** page and select your account.
+
+		<DashButton url="/?to=/:account/workers-for-platforms" />
+
 2. Complete the payment process for the Workers for Platforms Paid plan.
 
 If you are an Enterprise customer, contact your Cloudflare account team to enable Workers for Platforms.

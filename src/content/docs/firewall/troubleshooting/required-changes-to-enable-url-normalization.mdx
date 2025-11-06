@@ -6,7 +6,7 @@ title: Required firewall rule changes to enable URL normalization
 
 import { Render } from "~/components";
 
-<Render file="deprecation-notice" />
+<Render file="deprecation-notice" product="firewall" />
 
 On 2021-04-08, Cloudflare announced [URL normalization](/rules/normalization/), a feature that protects zones by normalizing HTTP request URI paths.
 
@@ -48,7 +48,6 @@ Before enabling URL normalization, you should review the affected firewall rules
 - Edit these firewall rules to remove the parts which will no longer trigger once normalized — for example, any rules that look for `//` or `../` in URL paths. Administrators previously created these rules to perform a limited URL normalization, and these rules can now be safely disabled and then deleted.
 
 - If you wish to identify visitors with non-normalized URI paths with these firewall rules, you should update them to use the original (or raw) non-normalized fields. These fields are the following:
-
   - `raw.http.request.uri.path`
   - `raw.http.request.full_uri`
   - `raw.http.request.uri`

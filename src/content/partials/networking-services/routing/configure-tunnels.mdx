@@ -1,22 +1,23 @@
 ---
 params:
-  - magicWord?
+  - magicWord
   - ipRange?
   - productName
   - tunnelsAndEncapsulationPagePath
   - ciphersPagePath
   - antiReplayPagePath
   - cniLink
-  - productPathDash
+  - dashButtonPath?
   - updateHCFrequencyPage
   - tunnelHealthChecksPage
-  - antiReplayPagePath
   - biVsUniHealthCheck
   - tunnelHealthDash
   - biVsUniHealthCheckDefaults
+  - configureRoutesURL?
+  - sitesURL?
 ---
 
-import { APIRequest, CURL, Details, GlossaryTooltip, Render, TabItem, Tabs } from "~/components";
+import { AnchorHeading, APIRequest, CURL, DashButton, Details, GlossaryTooltip, Markdown, Render, TabItem, Tabs } from "~/components";
 
 Cloudflare recommends two tunnels for each ISP and network location router combination, one per Cloudflare endpoint. Shortly after your onboarding kickoff call, Cloudflare will assign two Cloudflare endpoint addresses  that you can use as the tunnel destinations on your network location's routers/endpoints.
 
@@ -43,13 +44,20 @@ To configure the tunnels between Cloudflare and your locations, you must provide
 
 You can use GRE or IPsec tunnels to onboard your traffic to {props.productName}, and set them up via the Cloudflare dashboard or the API. However, if you want to use the API, be sure to have your [account ID](/fundamentals/account/find-account-and-zone-ids/) and [API key](/fundamentals/api/get-started/keys/#view-your-global-api-key) ready before you begin.
 
-:::note
-IPsec tunnels only support Internet Key Exchange version 2 (IKEv2).
-:::
+{ props.magicWord === "Magic Transit" && (
+  <>
+		<Render file="routing/anycast-warning" product="networking-services" />
+	</>
+)
+}
 
 #### IPsec supported ciphers
 
-Refer to <a href={props.tunnelsAndEncapsulationPagePath}>Tunnels and encapsulation</a> to learn more about the technical requirements for GRE and IPsec tunnels used in {props.productName}. In this page, you can also find the <a href={props.ciphersPagePath}>supported ciphers for IPsec</a>.
+Refer to <a href={props.tunnelsAndEncapsulationPagePath}>Tunnels and encapsulation</a> to learn more about the technical requirements for GRE and IPsec tunnels used in {props.productName}. In that page, you can also find the <a href={props.ciphersPagePath}>supported ciphers for IPsec</a>.
+
+:::note
+IPsec tunnels only support Internet Key Exchange version 2 (IKEv2).
+:::
 
 #### Anti-replay protection
 
@@ -63,52 +71,90 @@ Beyond GRE and IPsec tunnels, you can also use Network Interconnect (CNI) to onb
 
 ## Add tunnels
 
-<Render file="icmp-mfirewall" product="networking-services" />
+<Render
+	file="icmp-mfirewall"
+	product="networking-services"
+	params={{
+		mFirewallName: "Magic Firewall rules",
+		mFirewallURL: "/magic-firewall/about/ruleset-logic/#magic-firewall-rules-and-magic-transit-endpoint-health-checks"
+	}}
+	/>
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login), and select your account.
-2. Select **{props.productPathDash}**.
-3. From the **Tunnels** tab, select **Create**.
-4. On the **Add tunnels** page, choose either a **GRE tunnel** or **IPsec tunnel**.
+{/* Dashboard steps for WAN Tunnels (Cloudflare One dashboard) */}
+{ props.magicWord === "WAN Tunnels" && (
+	<>
+	<Markdown
+	text={`
+	1. Log in to <a href="https://one.dash.cloudflare.com/">Cloudflare One</a>, and go to **Networks**.
+	2. Go to **Connectors** > **WAN Tunnels**, and select **Create**.
+	3. On the **Add Tunnel** page, choose either a **GRE tunnel** or **IPsec tunnel**.
+	`}
+	inline={false}
+	/>
+	</>
+)
+}
+
+{/* Dashboard steps for Magic WAN and Magic Transit (standalone dashboards) */}
+{ props.magicWord !== "WAN Tunnels" && (
+	<>
+	<Markdown
+	text={`
+	1. In the Cloudflare dashboard, go to ${props.productName}'s **Configuration** page.
+	`}
+	inline={false}
+	/>
+	<DashButton url={props.dashButtonPath} />
+	<Markdown
+	text={`
+	2. From the **Tunnels** tab, select **Create**.
+	3. On the **Add tunnels** page, choose either a **GRE tunnel** or **IPsec tunnel**.
+	`}
+	inline={false}
+	/>
+	</>
+)
+}
 
 <Details header="GRE tunnel">
 
-5. In **Name**, give your tunnel a descriptive name. This name must be unique, must not contain spaces or special characters, and must be 15 or fewer characters. Hover the mouse over `i` in the dashboard for more information.
-6. Give your tunnel a description in **Description**. You do not have character restrictions here.
-7. In **IPv4 Interface address**, enter the internal IP address for your tunnel along with the interface's prefix length (either `/31` or `/30`). This is used to route traffic through the tunnel on the Cloudflare side. We recommend using an RFC1918 address scheme with a `/31` netmask, as it provides the most efficient use of IP address space.
-8. In **Customer GRE endpoint**, enter your router's public IP address. This value is not needed if you intend to use a physical or virtual connection like Cloudflare Network Interconnect because Cloudflare will provide it.
-9. In **Cloudflare GRE endpoint**, enter the anycast address you received from your account team.
-10. Leave the default values for **TTL** and **MTU**.
-11. _(Optional)_ **Tunnel health checks** are enabled by default. If you disable Tunnel health checks, your tunnels will appear 100% down in your <a href={props.tunnelHealthDash}>tunnel health dashboard</a> even when working. Cloudflare will keep sending traffic through the tunnel, without the means to detect if the tunnel goes down. You will have to set up your own system to detect down tunnels, as Cloudflare will not be able to warn you about down tunnels. Refer to <a href={props.tunnelHealthChecksPage}>Tunnel health checks</a> for more information.
-12. _(Optional)_ If you keep **Tunnel health checks** enabled, choose the <a href={props.updateHCFrequencyPage}>**Health check rate**</a> for your tunnel. Available options are _Low_, _Medium_, and _High_.
-13. The **Health check type** defaults to _Reply_ and to creating an ICMP reply. If your firewall drops this type of packet for assuming it is a type of attack, change this option to _Request_ which will create an ICMP request. Refer to <a href={props.tunnelHealthChecksPage}>Tunnel health checks</a> for more information.
-14. The **Health check direction** defaults to **{props.biVsUniHealthCheck}** for {props.productName}. Refer to [Bidirectional vs unidirectional health checks](#bidirectional-vs-unidirectional-health-checks) for more details.
-15. _(Optional)_ **Health check target** is the customer end of the tunnel. This field is only visible when the **Health check direction** is set to _Unidirectional_.
-16. _(Optional)_ We recommend you test your tunnel before officially adding it. To test the tunnel, select **Test tunnels**.
-17. To add multiple tunnels, select **Add GRE tunnel** for each new tunnel.
-18. After adding your tunnel information, select **Add tunnels** to save your changes.
+4. In **Name**, give your tunnel a descriptive name. This name must be unique, must not contain spaces or special characters, and must be 15 or fewer characters. Hover the mouse over `i` in the dashboard for more information.
+5. Give your tunnel a description in **Description**. You do not have character restrictions here.
+6. In **IPv4 Interface address**, enter the internal IP address for your tunnel along with the interface's prefix length (either `/31` or `/30`). This is used to route traffic through the tunnel on the Cloudflare side. We recommend using an RFC1918 address scheme with a `/31` netmask, as it provides the most efficient use of IP address space.
+7. In **Customer GRE endpoint**, enter your router's public IP address. This value is not needed if you intend to use a physical or virtual connection like Cloudflare Network Interconnect because Cloudflare will provide it.
+8. In **Cloudflare GRE endpoint**, enter the anycast address you received from your account team.
+9. Leave the default values for **TTL** and **MTU**.
+10. _(Optional)_ **Tunnel health checks** are enabled by default. If you disable Tunnel health checks, your tunnels will appear 100% down in your <a href={props.tunnelHealthDash}>tunnel health dashboard</a> even when working. Cloudflare will keep sending traffic through the tunnel, without the means to detect if the tunnel goes down. You will have to set up your own system to detect down tunnels, as Cloudflare will not be able to warn you about down tunnels. Refer to <a href={props.tunnelHealthChecksPage}>Tunnel health checks</a> for more information.
+11. _(Optional)_ If you keep **Tunnel health checks** enabled, choose a <a href={props.updateHCFrequencyPage}>health check rate</a> for your tunnel. Available options are _Low_, _Medium_, and _High_.
+12. The **Health check type** defaults to _Reply_ and to creating an ICMP reply. If your firewall drops this type of packet for assuming it is a type of attack, change this option to _Request_ which will create an ICMP request. Refer to <a href={props.tunnelHealthChecksPage}>Tunnel health checks</a> for more information.
+13. The **Health check direction** defaults to **{props.biVsUniHealthCheck}** for {props.productName}. Refer to [Bidirectional vs unidirectional health checks](#bidirectional-vs-unidirectional-health-checks) for more details.
+14. _(Optional)_ **Health check target** is the customer end of the tunnel. This field is only visible when the **Health check direction** is set to _Unidirectional_.
+15. _(Optional)_ We recommend you test your tunnel before officially adding it. To test the tunnel, select **Test tunnels**.
+16. To add multiple tunnels, select **Add GRE tunnel** for each new tunnel.
+17. After adding your tunnel information, select **Add tunnels** to save your changes.
 
 </Details>
 
 <Details header="IPsec tunnel">
 
-5. In **Name**, give your tunnel a descriptive name. This name must be unique, must not contain spaces or special characters, and must be 15 or fewer characters. Hover the mouse over `i` in the dashboard for more information.
-6. Give your tunnel a description in **Description**. You do not have character restrictions here.
-7. In **IPv4 Interface address**, enter the internal IP address for your tunnel along with the interface's prefix length (either `/31` or `/30`). This is used to route traffic through the tunnel on the Cloudflare side. We recommend using an RFC1918 address scheme with a `/31` netmask, as it provides the most efficient use of IP address space.
-8. In **Customer endpoint**, enter your router's public IP address. This value is only required if your router is using an IKE ID of type `ID_IPV4_ADDR`.
-9. In **Cloudflare endpoint**, enter the anycast address you received from your account team.
-10. _(Optional)_ **Tunnel health checks** are enabled by default. If you disable Tunnel health checks, your tunnels will appear 100% down in your <a href={props.tunnelHealthDash}>tunnel health dashboard</a> even when working. Cloudflare will keep sending traffic through the tunnel, without the means to detect if the tunnel goes down. You will have to set up your own system to detect down tunnels, as Cloudflare will not be able to warn you about down tunnels. Refer to <a href={props.tunnelHealthChecksPage}>Tunnel health checks</a> for more information.
-11. _(Optional)_ If you keep **Tunnel health checks** enabled, choose the <a href={props.updateHCFrequencyPage}>**Health check rate**</a> for your tunnel. Available options are _Low_, _Medium_ and _High_.
-12. _(Optional)_ The **Health check type** defaults to _Reply_ and to creating an ICMP reply. If your firewall drops this type of packet for assuming it is a type of attack, change this option to _Request_ which will create an ICMP request. Refer to <a href={props.tunnelHealthChecksPage}>Tunnel health checks</a> for more information.
-13. _(Optional)_ The **Health check direction** defaults to **{props.biVsUniHealthCheck}** for {props.productName}. Refer to [Bidirectional vs unidirectional health checks](#bidirectional-vs-unidirectional-health-checks) for more details.
-14. _(Optional)_ **Health check target** is the customer end of the tunnel. This field is only visible when the **Health check direction** is set to _Unidirectional_.
+4. In **Name**, give your tunnel a descriptive name. This name must be unique, must not contain spaces or special characters, and must be 15 or fewer characters. Hover the mouse over `i` in the dashboard for more information.
+5. Give your tunnel a description in **Description**. You do not have character restrictions here.
+6. In **IPv4 Interface address**, enter the internal IP address for your tunnel along with the interface's prefix length (either `/31` or `/30`). This is used to route traffic through the tunnel on the Cloudflare side. We recommend using an RFC1918 address scheme with a `/31` netmask, as it provides the most efficient use of IP address space.
+7. In **Customer endpoint**, enter your router's public IP address. This value is only required if your router is using an IKE ID of type `ID_IPV4_ADDR`.
+8. In **Cloudflare endpoint**, enter the anycast address you received from your account team.
+9. _(Optional)_ **Tunnel health checks** are enabled by default. If you disable Tunnel health checks, your tunnels will appear 100% down in your <a href={props.tunnelHealthDash}>tunnel health dashboard</a> even when working. Cloudflare will keep sending traffic through the tunnel, without the means to detect if the tunnel goes down. You will have to set up your own system to detect down tunnels, as Cloudflare will not be able to warn you about down tunnels. Refer to <a href={props.tunnelHealthChecksPage}>Tunnel health checks</a> for more information.
+10. _(Optional)_ If you keep **Tunnel health checks** enabled, choose a <a href={props.updateHCFrequencyPage}>health check rate</a> for your tunnel. Available options are _Low_, _Medium_ and _High_.
+11. _(Optional)_ The **Health check type** defaults to _Reply_ and to creating an ICMP reply. If your firewall drops this type of packet for assuming it is a type of attack, change this option to _Request_ which will create an ICMP request. Refer to <a href={props.tunnelHealthChecksPage}>Tunnel health checks</a> for more information.
+12. _(Optional)_ The **Health check direction** defaults to **{props.biVsUniHealthCheck}** for {props.productName}. Refer to [Bidirectional vs unidirectional health checks](#bidirectional-vs-unidirectional-health-checks) for more details.
+13. _(Optional)_ **Health check target** is the customer end of the tunnel. This field is only visible when the **Health check direction** is set to _Unidirectional_.
 
     :::note
     IPsec tunnels will not function without a pre-shared key (PSK).
     :::
 
-15. If you do not have a pre-shared key yet:
+14. If you do not have a pre-shared key yet:
 
     1. Select **Add pre-shared key later**.
     2. _(Optional)_ We recommend you test your tunnel configuration before officially adding it. To test the tunnel, select **Test tunnels**.
@@ -116,14 +162,14 @@ Beyond GRE and IPsec tunnels, you can also use Network Interconnect (CNI) to onb
     4. The Cloudflare dashboard will load the list of tunnels you have configured. The IPsec tunnel you have just created will be listed with a warning in the form of a triangle to let you know it is not yet functional. Select **Edit**.
     5. Choose **Generate a new pre-shared key** > **Update and generate a pre-shared key**. Save the key to a safe place, and select **Done**.
 
-16. If you already have a pre-shared key:
+15. If you already have a pre-shared key:
 
     1. Select **Use my own pre-shared key**.
     2. Paste your key in **Your pre-shared key**.
     3. _(Optional)_ We recommend you test your tunnel before officially adding it. To test the tunnel, select **Test tunnels**.
     4. Select **Add tunnels**.
 
-17. (Optional) Enable **Replay protection** if you have devices that do not support disabling it. Refer to <a href={props.antiReplayPagePath}>Anti-replay protection</a> for more information.
+16. (Optional) Enable **Replay protection** if you have devices that do not support disabling it. Refer to <a href={props.antiReplayPagePath}>Anti-replay protection</a> for more information.
 
 </Details>
 
@@ -380,7 +426,13 @@ You can change this setting via the API with `"bidirectional"` or `"unidirection
 
 To check for tunnel health, Cloudflare sends a <a href={props.tunnelHealthChecksPage}>health check probe</a> consisting of ICMP (Internet Control Message Protocol) reply [packets](https://www.cloudflare.com/learning/network-layer/what-is-a-packet/) to your network. Cloudflare needs to receive these probes to know if your tunnel is healthy.
 
-Cloudflare defaults to bidirectional health checks for Magic WAN, and unidirectional health checks for Magic Transit (direct server return). However, routing unidirectional ICMP reply packets over the Internet to Cloudflare is sometimes subject to drops by intermediate network devices, such as stateful firewalls. Magic Transit customers with egress traffic can modify this setting to bidirectional.
+{/*
+  Conditional logic explanation:
+  - Magic Transit page: "unidirectional health checks for Magic Transit, and bidirectional health checks for Magic WAN"
+  - Magic WAN/WAN Tunnels pages: "bidirectional health checks for [productName], and unidirectional health checks for Magic Transit"
+  This avoids saying "Magic Transit defaults to...Magic Transit" on the Magic Transit page.
+*/}
+Cloudflare defaults to {props.magicWord === "Magic Transit" ? "unidirectional" : "bidirectional"} health checks for {props.magicWord === "Magic Transit" ? "Magic Transit (direct server return)" : props.productName}, and {props.magicWord === "Magic Transit" ? "bidirectional" : "unidirectional"} health checks for {props.magicWord === "Magic Transit" ? "Magic WAN" : "Magic Transit (direct server return)"}. However, routing unidirectional ICMP reply packets over the Internet to Cloudflare is sometimes subject to drops by intermediate network devices, such as stateful firewalls. Magic Transit customers with egress traffic can modify this setting to bidirectional.
 
 { props.magicWord === "Magic Transit" && (
   <>
@@ -395,3 +447,17 @@ For customers using the legacy health check system with a public IP range, Cloud
 
 - Configuring the tunnel health check target IP address to one within the `172.64.240.252/30` prefix range.
 - Applying a policy-based route that matches [packets](https://www.cloudflare.com/learning/network-layer/what-is-a-packet/) with a source IP address equal to the configured tunnel health check target (for example `172.64.240.253/32`), and route them over the tunnel back to Cloudflare.
+
+{ props.magicWord !== "Magic Transit" && (
+  <>
+    <AnchorHeading title="Next steps" depth={2} />
+    <Markdown
+      text={`
+			- Now that you have set up your tunnel endpoints you need to configure routes to route your traffic through Cloudflare. Refer to [Configure routes](${props.configureRoutesURL}) to learn more about static routing and BGP peering (only available through Direct CNI connection).
+			- After configuring either static routes or BGP routing, you will have to [set up a site](${props.sitesURL}).
+      `}
+      inline={false}
+    />
+  </>
+)
+}

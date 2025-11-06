@@ -9,8 +9,8 @@ date: 2025-04-09
 You can now observe and investigate the CPU time and Wall time for every Workers Invocations.
 
 - For [Workers Logs](/workers/observability/logs/workers-logs), CPU time and Wall time are surfaced in the [Invocation Log](/workers/observability/logs/workers-logs/#invocation-logs)..
-- For [Tail Workers](/workers/observability/logs/tail-workers), CPU time and Wall time are surfaced at the top level of the [Workers Trace Events object](/logs/reference/log-fields/account/workers_trace_events).
-- For [Workers Logpush](/workers/observability/logs/logpush), CPU and Wall time are surfaced at the top level of the [Workers Trace Events object](/logs/reference/log-fields/account/workers_trace_events). All new jobs will have these new fields included by default. Existing jobs need to be updated to include CPU time and Wall time.
+- For [Tail Workers](/workers/observability/logs/tail-workers), CPU time and Wall time are surfaced at the top level of the [Workers Trace Events object](/logs/logpush/logpush-job/datasets/account/workers_trace_events).
+- For [Workers Logpush](/workers/observability/logs/logpush), CPU and Wall time are surfaced at the top level of the [Workers Trace Events object](/logs/logpush/logpush-job/datasets/account/workers_trace_events). All new jobs will have these new fields included by default. Existing jobs need to be updated to include CPU time and Wall time.
 
 You can use a Workers Logs filter to search for logs where Wall time exceeds 100ms.
 

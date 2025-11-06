@@ -6,6 +6,8 @@ sidebar:
   label: How it works
 ---
 
+import { Steps } from "~/components";
+
 URL normalization modifies separators, encoded elements, and literal bytes in incoming URLs so that they conform to a consistent formatting standard.
 
 For example, consider a WAF custom rule that blocks requests whose URLs match `www.example.com/hello`. The rule would not block a request containing an encoded element — `www.example.com/%68ello`. Normalizing incoming URLs on the Cloudflare global network helps simplify rules expressions containing URLs.
@@ -36,6 +38,10 @@ The URL normalization performed according to [RFC 3986](https://www.ietf.org/rfc
 
 When using the Cloudflare URL normalization, some extra normalization techniques will be applied to URLs of incoming requests, in the following order:
 
+<Steps>
+
 1. Normalize back slashes (`\`) into forward slashes (`/`).
 2. Merge successive forward slashes (for example, `//` will be normalized to `/`).
 3. Perform [RFC 3986 normalization](#rfc-3986-normalization) of the resulting URL.
+
+</Steps>

@@ -14,6 +14,7 @@ Add redirect rules to the entry point ruleset of the `http_request_dynamic_redir
 
 <Render
 	file="url-forwarding/requires-proxied-site"
+	product="rules"
 	params={{ forwardingRuleName: "Single Redirects" }}
 />
 
@@ -97,7 +98,11 @@ The following request of the [Create a zone ruleset](/api/resources/rulesets/met
 
 </Details>
 
-<Render file="terraform-use-ref-field" params={{ addDocsLocation: true }} />
+<Render
+	file="terraform-use-ref-field"
+	product="rules"
+	params={{ addDocsLocation: true }}
+/>
 
 If there is already a phase entry point ruleset for the `http_request_dynamic_redirect` phase, use the [Update a zone ruleset](/api/resources/rulesets/methods/update/) operation instead, like in the following example:
 

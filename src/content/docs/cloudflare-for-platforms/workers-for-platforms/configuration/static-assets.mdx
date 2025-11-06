@@ -4,7 +4,7 @@ title: Static assets
 description: Host static assets on Cloudflare's global network and deliver faster load times worldwide with Workers for Platforms.
 ---
 
-import { Aside } from "@astrojs/starlight/components";
+
 
 Workers for Platforms lets you deploy front-end applications at scale. By hosting static assets on Cloudflare's global network, you can deliver faster load times worldwide and eliminate the need for external infrastructure. You can also combine these static assets with dynamic logic in Cloudflare Workers, providing a full-stack experience for your customers.
 
@@ -57,12 +57,11 @@ Before sending any file data, you need to tell Cloudflare which files you intend
 - A hash (32-hex characters) representing the file contents
 - The file size in bytes
 
-<Aside type="note" title="Asset Isolation Considerations">
+:::note[Asset Isolation Considerations]
 Static assets uploaded to Workers for Platforms are associated with the namespace rather than with individual User Worker. If multiple User Workers exist under the same namespace, assets with identical hashes may be shared across them. **JWTs should therefore only be shared with trusted platform services and should never be distributed to end-users.**
 
 If strict isolation of assets is required, we recommend either salting with a random value each time, or incorporating an end-user identifier (for example, account ID or Worker script ID) within the hashing process, to ensure uniqueness. For example, `hash = slice(sha256(accountID + fileContents), 32)`.
-
-</Aside>
+:::
 
 #### Example manifest (JSON)
 
@@ -134,9 +133,9 @@ If the response to the Upload Session API returns `buckets`, that means you have
 
 Use the [Workers Assets Upload API](/api/resources/workers/subresources/assets/subresources/upload/) to transmit the raw file bytes in base64-encoded format for any missing or changed files. Once uploaded, Cloudflare will store these files so they can then be attached to a User Worker.
 
-<Aside type="caution">
-	Asset uniqueness is determined by the provided hash and are associated globally to their namespace rather than with each specific User Worker. If an asset has already been uploaded for that namespace earlier, Cloudflare will automatically omit sending this asset hash back in the `buckets` response to save you from re-uploading the same thing twice. This means that an asset can be shared between multiple User Workers if it shares the same hash unless you **explicitly make the hash unique**. If you require full isolation between assets across User Workers, incorporate a unique identifier within your asset hashing process (either salting it with something entirely random each time, or by including the end-user account ID or their Worker name to retain per-customer re-use).
-</Aside>
+:::caution
+Asset uniqueness is determined by the provided hash and are associated globally to their namespace rather than with each specific User Worker. If an asset has already been uploaded for that namespace earlier, Cloudflare will automatically omit sending this asset hash back in the `buckets` response to save you from re-uploading the same thing twice. This means that an asset can be shared between multiple User Workers if it shares the same hash unless you **explicitly make the hash unique**. If you require full isolation between assets across User Workers, incorporate a unique identifier within your asset hashing process (either salting it with something entirely random each time, or by including the end-user account ID or their Worker name to retain per-customer re-use).
+:::
 
 #### API Request Authentication
 

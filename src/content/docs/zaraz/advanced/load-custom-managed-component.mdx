@@ -5,6 +5,8 @@ sidebar:
   order: 15
 ---
 
+import { DashButton } from "~/components";
+
 Zaraz supports loading custom third-party tools using [Managed Components](https://managedcomponents.dev/). These can be Managed Components that you have developed yourself or that were developed by others. Using Custom Managed Components with Zaraz is done by converting them into a Cloudflare Worker running in your account.
 
 If you are new to Managed Components, we recommend you get started with [creating your own Managed Component](https://managedcomponents.dev/getting-started/quickstart) or check out [our demo Managed Component](https://github.com/managed-components/demo).
@@ -53,8 +55,10 @@ export default async function (manager) {
 As with regular tools, it is recommended that you [create the triggers](/zaraz/custom-actions/create-trigger/) you need first, if the Custom Managed Component you are adding needs to start actions using firing triggers different from the default `Pageview` trigger.
 :::
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account and domain.
-2. Select **Zaraz** > **Tools Configuration** > [**Third-party tools**](https://dash.cloudflare.com/?to=/:account/:zone/zaraz/tools-config/tools/catalog).
+1. In the Cloudflare dashboard, go to the **Tag setup** page.
+
+	<DashButton url="/?to=/:account/tag-management" />
+2. Select **Tools Configuration** > [**Third-party tools**](https://dash.cloudflare.com/?to=/:account/:zone/zaraz/tools-config/tools/catalog).
 3. Select **Add new tool** and choose **Custom Managed Component** from the tools library page. Select **Continue** to confirm your selection.
 4. In **Select Custom MC**, choose a Custom Managed Component that you have deployed to your account, such as `custom-mc-my-new-counter-mc`. Select **Continue**.
 5. In **Permissions**, select the permissions you want to grant the Custom Managed Component. If you run an untrusted Managed Component, pay close attention to what permissions you are granting. Select **Continue**.

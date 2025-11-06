@@ -29,6 +29,7 @@ const { usage } = props.parse(Astro.props);
 						"/" +
 						path
 							.replace("src/content/docs/", "")
+							.replace("/index.mdx", "")
 							.replace(".mdx", "")
 							.split("/")
 							.map((segment) => {
@@ -42,10 +43,7 @@ const { usage } = props.parse(Astro.props);
 
 					return (
 						<li>
-							<a
-								href={"https://developers.cloudflare.com" + slugified}
-								target="_blank"
-							>
+							<a href={slugified} target="_blank">
 								{slugified}
 							</a>
 							<span>

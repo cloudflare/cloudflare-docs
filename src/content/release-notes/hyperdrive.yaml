@@ -2,8 +2,6 @@
 link: "/hyperdrive/platform/release-notes/"
 productName: Hyperdrive
 productLink: "/hyperdrive/"
-productArea: Developer platform
-productAreaLink: /workers/platform/changelog/platform/
 entries:
   - publish_date: "2025-07-03"
     title: Hyperdrive now supports configurable connection counts

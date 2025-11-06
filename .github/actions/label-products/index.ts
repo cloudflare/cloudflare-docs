@@ -101,6 +101,15 @@ async function labelPRSubFolders(
 		}
 	}
 
+	// Add "date labels to PRs"
+
+	const formattedDate: string = new Date().toLocaleDateString("en-US", {
+		month: "long",
+		year: "numeric",
+	});
+
+	newLabels.push(formattedDate);
+
 	if (newLabels.length > 0) {
 		await octokit.rest.issues.addLabels({
 			...repo,

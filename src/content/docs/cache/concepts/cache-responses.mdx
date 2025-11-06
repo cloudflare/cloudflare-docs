@@ -7,7 +7,7 @@ head:
 
 ---
 
-The `CF-Cache-Status` header output indicates whether a resource is cached or not. To investigate cache responses returned by this header, use services like [Redbot](https://redbot.org/), [webpagetest.org](http://www.webpagetest.org/), or a visual tool like [Chrome's Dr. Flare plugin](https://community.cloudflare.com/t/community-tip-dr-flare-debug-tool-for-cloudflare-chrome-extension/110166).
+The `CF-Cache-Status` header output indicates whether a resource is cached or not. To investigate cache responses returned by this header, use services like [Redbot](https://redbot.org/), [webpagetest.org](http://www.webpagetest.org/), or a visual tool like [Cloudflare Optics plugin](https://chromewebstore.google.com/detail/cloudflare-optics/mdjgbjnbdnhneejmmaabmccfehigbjbe).
 
 :::note[`Age` response header]
 The `Age` response header is a header returned from cache that specifies the time in seconds that an asset has been in Cloudflare's cache. This value resets if the asset is revalidated, purged, or evicted and then re-cached.

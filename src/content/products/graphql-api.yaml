@@ -8,4 +8,4 @@ product:
   wrap: true
 
 meta:
-  description: The GraphQL Analytics API provides data regarding HTTP requests passing through Cloudflare’s network, as well as data from specific products, such as Firewall or Load Balancing.
+  description: Access data on HTTP requests and Cloudflare products

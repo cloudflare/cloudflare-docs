@@ -1,0 +1,25 @@
+---
+title: Workers per-branch preview URLs now support long branch names
+description: Branch names that create URLs longer than 63 characters now get hash-based preview URLs instead of failing, ensuring every pull request has a working preview link.
+tags:
+  - workers
+date: 2025-08-14T01:00:00Z
+---
+
+We've updated [preview URLs](/workers/configuration/previews/) for Cloudflare Workers to support long branch names.
+
+Previously, branch and Worker names exceeding the 63-character DNS limit would cause alias generation to fail, leaving pull requests without aliased preview URLs. This particularly impacted teams relying on descriptive branch naming.
+
+Now, Cloudflare automatically truncates long branch names and appends a unique hash, ensuring every pull request gets a working preview link.
+
+## How it works
+
+- **63 characters or less**: `<branch-name>-<worker-name>` → Uses actual branch name as is
+- **64 characters or more**: `<truncated-branch-name>--<hash>-<worker-name>` → Uses truncated name with 4-character hash
+- **Hash generation**: The hash is derived from the full branch name to ensure uniqueness
+- **Stable URLs**: The same branch always generates the same hash across all commits
+
+## Requirements and compatibility 
+
+- **Wrangler 4.30.0 or later**: This feature requires updating to wrangler@4.30.0+
+- **No configuration needed**: Works automatically with existing preview URL setups

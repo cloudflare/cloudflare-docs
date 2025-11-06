@@ -40,7 +40,7 @@ When no Worker subrequest is triggered, `cf-connecting-ip` reflects the client's
 
 Cloudflare provides [free IPv6 support](/network/ipv6-compatibility/) to all domains without requiring additional configuration or hardware. To support migrating to IPv6, Cloudflare's [Pseudo IPv4](/network/pseudo-ipv4/) provides an IPv6 to IPv4 translation service for all Cloudflare domains.
 
-<Render file="pseudo-ipv4-warning" /> <br />
+<Render file="pseudo-ipv4-warning" product="fundamentals" /> <br />
 
 ### CF-EW-Via
 
@@ -118,6 +118,10 @@ Currently, this header is a JSON object, containing only one key called `scheme`
 ### CDN-Loop
 
 `CDN-Loop` allows Cloudflare to specify how many times a request can enter Cloudflare's network before it is blocked as a looping request. For example: `CDN-Loop: cloudflare`.
+
+### CF-Connecting-O2O
+
+If [SSL for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/) is used for [the SaaS provider-owned zone](/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/how-it-works/), a HTTP header will be set to `cf-connecting-o2o: 1`.
 
 ### CF-Worker
 

@@ -1,0 +1,16 @@
+---
+title: "Azure Sentinel Connector"
+description: "New Azure Sentinel Connector based on Codeless Connector Framework (CCF)"
+date: "2025-10-27"
+---
+
+Logpush now supports integration with [Microsoft Sentinel](https://www.microsoft.com/en-us/security/business/siem-and-xdr/microsoft-sentinel).The new Azure Sentinel Connector built on Microsoft’s Codeless Connector Framework (CCF), is now avaialble. This solution replaces the previous Azure Functions-based connector, offering significant improvements in security, data control, and ease of use for customers. Logpush customers can send logs to Azure Blob Storage and configure this new Sentinel Connector to ingest those logs directly into Microsoft Sentinel.
+
+This upgrade significantly streamlines log ingestion, improves security, and provides greater control:
+
+- Simplified Implementation: Easier for engineering teams to set up and maintain.
+- Cost Control: New support for Data Collection Rules (DCRs) allows you to filter and transform logs at ingestion time, offering potential cost savings.
+- Enhanced Security: CCF provides a higher level of security compared to the older Azure Functions connector.
+- ata Lake Integration: Includes native integration with Data Lake.
+
+Find the new solution [here](https://marketplace.microsoft.com/en-us/product/azure-application/cloudflare.azure-sentinel-solution-cloudflare-ccf?tab=Overview) and refer to the [Cloudflare's developer documention](https://developers.cloudflare.com/analytics/analytics-integrations/sentinel/#supported-logs:~:text=WorkBook%20fields,-Analytic%20rules)for more information on the connector, including setup steps, supported logs and Microsfot's resources.

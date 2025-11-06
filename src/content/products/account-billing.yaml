@@ -6,4 +6,5 @@ product:
   url: /fundamentals/account/
 
 meta:
-  description: Manage your Cloudflare account.
+  description: Manage your Cloudflare account and contacts
+  author: "@cloudflare"

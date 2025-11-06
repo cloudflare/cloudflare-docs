@@ -5,7 +5,7 @@ sidebar:
   order: 13
 ---
 
-import { FeatureTable, TabItem, Tabs, APIRequest } from "~/components";
+import { FeatureTable, TabItem, Tabs, APIRequest, Render, DashButton } from "~/components";
 
 Minimum TLS Version only allows HTTPS connections from visitors that support the selected TLS protocol version or newer.
 
@@ -43,10 +43,11 @@ To manage the TLS version applied to your whole zone when proxied through Cloudf
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. Select your website.
-3. Go to **SSL/TLS** > **Edge Certificates**.
-4. For **Minimum TLS Version**, select an option.
+1. In the Cloudflare dashboard, go to the **Edge Certificates** page.
+
+   <DashButton url="/?to=/:account/:zone/ssl-tls/edge-certificates" />
+
+2. For **Minimum TLS Version**, select an option.
 
 </TabItem> <TabItem label="API">
 
@@ -92,16 +93,11 @@ In the following example, the minimum TLS version for a specific hostname will b
 	}}
 />
 
+### Cloudflare for SaaS
+
+If you are a SaaS provider looking to configure minimum TLS version for your custom hostnames, refer to the Cloudflare for SaaS [TLS management](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/enforce-mtls/#minimum-tls-version).
+
+
 ## Test supported TLS versions
 
-To test supported TLS versions, attempt a request to your website or application while specifying a TLS version.
-
-For example, use a `curl` command to test TLS 1.1 (replace `www.example.com` with your Cloudflare domain and hostname):
-
-```sh
-curl https://www.example.com -svo /dev/null --tls-max 1.1
-```
-
-If the TLS version you are testing is blocked by Cloudflare, the TLS handshake is not completed and returns an error:
-
-`* error:1400442E:SSL routines:CONNECT_CR_SRVR_HELLO:tlsv1 alert`
+<Render file="test-tls-version" product="ssl" />

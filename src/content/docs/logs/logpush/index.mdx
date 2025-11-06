@@ -12,6 +12,10 @@ Logpush delivers logs in batches as quickly as possible, with no minimum batch s
 
 Logpush does not offer storage or search functionality for logs; its primary aim is to send logs as quickly as they arrive.
 
+Cloudflare Logpush supports pushing logs to storage services, SIEMs, and log management providers via the Cloudflare dashboard or API.
+
+Cloudflare aims to support additional services in the future. Interested in a particular service? Take this [survey](https://goo.gl/forms/0KpMfae63WMPjBmD2).
+
 ## Limits
 
 There is currently a max limit of **4 Logpush jobs per zone**. Trying to create a job once the limit has been reached will result in an error message: `creating a new job is not allowed: exceeded max jobs allowed`.

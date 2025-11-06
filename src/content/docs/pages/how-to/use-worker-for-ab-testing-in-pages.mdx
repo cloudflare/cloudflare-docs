@@ -1,12 +1,10 @@
 ---
 pcx_content_type: how-to
 title: Use Pages Functions for A/B testing
-banner:
-  content: We recommend using <strong>Cloudflare Workers</strong> for new projects. For existing Pages projects, see our <a href="/workers/static-assets/migrate-from-pages/">migration guide</a> and <a href="/workers/static-assets/migrate-from-pages/#compatibility-matrix">compatibility matrix</a>.
-  type: note
-  dismissible:
-    id: pages-migrate-to-workers
+
 ---
+
+import { DashButton } from "~/components";
 
 In this guide, you will learn how to use [Pages Functions](/pages/functions/) for A/B testing in your Pages projects. A/B testing is a user experience research methodology applied when comparing two or more versions of a web page or application. With A/B testing, you can serve two or more versions of a webpage to users and divide traffic to your site.
 
@@ -158,6 +156,7 @@ After you have set up your `functions/_middleware.js` file in your project you a
 
 After you have deployed your application, review your middleware Function:
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com) and select your account.
-2. In Account Home, select **Workers & Pages**.
-3. In **Overview**, select your Pages project > **Settings** > **Functions** > **Configuration**.
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+2. Select your Pages project > **Settings** > **Functions** > **Configuration**.

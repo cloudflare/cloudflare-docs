@@ -1,0 +1,16 @@
+releaseNotes: |-
+  This release contains minor fixes and improvements.
+
+  **Changes and improvements**
+  - Fixed an issue preventing devices from reaching split-tunneled traffic even when WARP was disconnected.
+  - Fix to prevent WARP from re-enabling its firewall rules after a user-initiated disconnect.
+  - Improvement to managed network detection checks for faster switching between managed networks.
+
+  **Known issues**
+  - macOS Sequoia: Due to changes Apple introduced in macOS 15.0.x, the WARP client may not behave as expected. Cloudflare recommends the use of macOS 15.4 or later.
+  - Devices using WARP client 2025.4.929.0 and up may experience Local Domain Fallback failures if a fallback server has not been configured. To configure a fallback server, refer to [Route traffic to fallback server](/cloudflare-one/team-and-resources/devices/warp/configure-warp/route-traffic/local-domains/#route-traffic-to-fallback-server).
+version: 2025.6.824.1
+releaseDate: 2025-07-24T12:28:40.940Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2025.6.824.1
+packageSize: 107463104
+platformName: macOS
