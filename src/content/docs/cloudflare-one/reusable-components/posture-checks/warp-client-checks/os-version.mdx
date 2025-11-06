@@ -82,13 +82,21 @@ Windows version numbers consist of four parts: `Major.Minor.Build.UBR`. For exam
 To determine the Windows version on your device:
 
 1. Open a PowerShell window.
-2. Use the `Get-ItemProperty` command to read the registry:
+2. Get the **Version** (Major.Minor.Build):
 
    ```bash
-   (Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion" -Name LCUVer).LCUVer
+   (Get-CimInstance Win32_OperatingSystem).version
    ```
 
-   This returns the full version in the format `Major.Minor.Build.UBR` (for example, `10.0.19045.3803`).
+   This returns the version in the format `Major.Minor.Build` (for example, `10.0.19045`).
+
+3. Get the **UBR** (Update Build Revision):
+
+   ```bash
+   (Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion" -Name UBR).UBR
+   ```
+
+   This returns the UBR value (for example, `3803`).
 
 ### Linux
 
