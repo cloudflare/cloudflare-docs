@@ -122,7 +122,7 @@ Decodes a Base64-encoded String specified in `source`.
 For example, with the following HTTP request header: `client_id: MTIzYWJj`, `(any(decode_base64(http.request.headers["client_id"][*])[*] eq "123abc"))` would return `true`.
 
 :::note
-You can only use the `decode_base64()` function in [header transform rules](/rules/transform/), [custom rules](/waf/custom-rules/), and [rate limiting rules](/waf/rate-limiting-rules/).
+You can only use the `decode_base64()` function in [Transform Rules](/rules/transform/), [custom rules](/waf/custom-rules/), and [rate limiting rules](/waf/rate-limiting-rules/).
 :::
 
 ### `ends_with`
@@ -249,8 +249,10 @@ Examples:
 
 Create capture groups by putting part of the regular expression in parentheses. Then, reference a capture group using `${<NUMBER>}` in the replacement string, where `<NUMBER>` is the number of the capture group.
 
+You can only use the `regex_replace()` function once in an expression, and you cannot nest it with the [`wildcard_replace()`](/ruleset-engine/rules-language/functions/#wildcard_replace) function.
+
 :::note
-You can only use the `regex_replace()` function in rewrite expressions of [Transform Rules](/rules/transform/) and target URL expressions of [dynamic URL redirects](/rules/url-forwarding/single-redirects/).
+Currently, the `regex_replace()` function is only available in rewrite expressions of [Transform Rules](/rules/transform/) and target URL expressions of [dynamic URL redirects](/rules/url-forwarding/single-redirects/).
 :::
 
 ### `remove_bytes`
@@ -422,6 +424,8 @@ To enter a literal `$` character in the `replacement` parameter, you must escape
 To perform case-sensitive wildcard matching, set the `flags` parameter to `"s"`.
 
 This function uses lazy matching, that is, it tries to match each `*` metacharacter with the shortest possible string.
+
+You can only use the `wildcard_replace()` function once in an expression, and you cannot nest it with the [`regex_replace()`](/ruleset-engine/rules-language/functions/#regex_replace) function.
 
 Examples:
 

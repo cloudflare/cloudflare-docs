@@ -12,6 +12,10 @@ languages:
     file:
       - ".nvmrc"
       - ".node-version"
+  - name: Bun
+    default: "1.2.15"
+    supported: "Any version"
+    environment_variable: "BUN_VERSION"
   - name: Python
     default: "3.13.3"
     supported: "Any version"
@@ -58,10 +62,6 @@ tools:
     default: "4.9.1"
     supported: "Any version"
     environment_variable: "YARN_VERSION"
-  - name: Bun
-    default: "1.2.15"
-    supported: "Any version"
-    environment_variable: "BUN_VERSION"
 build_environment:
   operating_system: "Ubuntu `22.04.2`"
   architecture: "x86_64"

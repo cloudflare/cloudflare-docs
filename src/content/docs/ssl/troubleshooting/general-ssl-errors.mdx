@@ -8,7 +8,7 @@ head: []
 description: Learn how to troubleshoot various SSL/TLS errors with Cloudflare.
 ---
 
-import { GlossaryTooltip } from "~/components";
+import { GlossaryTooltip, DashButton } from "~/components";
 
 ## Let's Encrypt chain update
 
@@ -116,7 +116,10 @@ The HSTS headers (`Strict-Transport-Security` and `X-Content-Type-Options`) in t
 
 You may have configured [Response Header Transform Rules](/rules/transform/response-header-modification) that are overriding the HSTS header values defined in the **SSL/TLS** app.
 
-1. Go to **Rules** > **Overview**.
+1. In the Cloudflare dashboard, go to the Rules **Overview** page.
+
+   <DashButton url="/?to=/:account/:zone/rules/overview" />
+
 2. Under **Response Header Transform Rules**, search for a rule setting the value of one of the HSTS headers (`Strict-Transport-Security` or `X-Content-Type-Options`).
 3. Delete (or edit) the rule so that the HSTS configuration settings defined in the **SSL/TLS** app are applied.
 4. Repeat this procedure for the other HSTS header.

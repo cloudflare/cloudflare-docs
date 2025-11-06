@@ -32,7 +32,7 @@ await durableObjectStub.cat(); // billed as a request
 
 <sup>3</sup> Application level auto-response messages handled by [`state.setWebSocketAutoResponse()`](/durable-objects/best-practices/websockets/) will not incur additional wall-clock time, and so they will not be charged.
 
-<sup>4</sup> Duration is billed in wall-clock time as long as the Object is active, but is shared across all requests active on an Object at once. Calling `accept()` on a WebSocket in an Object will incur duration charges for the entire time the WebSocket is connected. It is recommended to use the WebSocket Hibernation API to avoid incurring duration charges once all event handlers finish running. Note that the Durable Object will remain active for 10 seconds after the last client disconnects. For a complete explanation, refer to [When does a Durable Object incur duration charges?](/durable-objects/platform/pricing/#when-does-a-durable-object-incur-duration-charges).
+<sup>4</sup> Duration is billed in wall-clock time as long as the Object is active, but is shared across all requests active on an Object at once. Calling `accept()` on a WebSocket in an Object will incur duration charges for the entire time the WebSocket is connected. It is recommended to use the WebSocket Hibernation API to avoid incurring duration charges once all event handlers finish running. For a complete explanation, refer to [When does a Durable Object incur duration charges?](/durable-objects/platform/pricing/#when-does-a-durable-object-incur-duration-charges).
 
 <sup>5</sup> Duration billing charges for the 128 MB of memory your Durable Object is allocated, regardless of actual usage. If your account creates many instances of a single Durable Object class, Durable Objects may run in the same isolate on the same physical machine and share the 128 MB of memory. These Durable Objects are still billed as if they are allocated a full 128 MB of memory.
 
@@ -41,7 +41,7 @@ await durableObjectStub.cat(); // billed as a request
 { props.product === "durable-objects" && <><AnchorHeading title="Storage billing" depth={2}/></> }
 { props.product === "workers" && <><AnchorHeading title="Storage billing" depth={3}/></> }
 
-The [Durable Objects Storage API](/durable-objects/api/storage-api/) is only accessible from within Durable Objects. Pricing depends on the storage backend of your Durable Objects.
+The [Durable Objects Storage API](/durable-objects/api/sqlite-storage-api/) is only accessible from within Durable Objects. Pricing depends on the storage backend of your Durable Objects.
 
 - **SQLite-backed Durable Objects (recommended)**: [SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#create-sqlite-backed-durable-object-class) is recommended for all new Durable Object classes. Workers Free plan can only create and access SQLite-backed Durable Objects.
 - **Key-value backed Durable Objects**: [Key-value storage backend](/durable-objects/reference/durable-objects-migrations/#create-durable-object-class-with-key-value-storage) is only available on the Workers Paid plan.
@@ -93,6 +93,6 @@ The [Durable Objects Storage API](/durable-objects/api/storage-api/) is only acc
 
 <sup>5</sup> Durable Objects will be billed for stored data until the data is removed. Once the data is removed, the object will be cleaned up automatically by the system.
 
-Requests that hit the [Durable Objects in-memory cache](/durable-objects/reference/in-memory-state/) or that use the [multi-key versions of `get()`/`put()`/`delete()` methods](/durable-objects/api/storage-api/) are billed the same as if they were a normal, individual request for each key.
+Requests that hit the [Durable Objects in-memory cache](/durable-objects/reference/in-memory-state/) or that use the [multi-key versions of `get()`/`put()`/`delete()` methods](/durable-objects/api/sqlite-storage-api/) are billed the same as if they were a normal, individual request for each key.
 
 </Details>

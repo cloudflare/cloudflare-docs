@@ -9,7 +9,7 @@ head:
 
 ---
 
-import { Details, GlossaryTooltip } from "~/components"
+import { Details, GlossaryTooltip, DashButton } from "~/components"
 
 ## Use cases
 
@@ -26,3 +26,18 @@ The override only applies to the fingerprint and not the detection. Refer to [Im
 ### Attack traffic is flagged by the adaptive rule based on UDP and destination port
 
 If you recognize that the traffic flagged by the adaptive rule based on UDP and destination port is an attack, you create an override rule to enable the adaptive rule in mitigation mode, setting the action to block the traffic.
+
+### Minimize the risk of false positives impacting production traffic
+
+To avoid disruptions during initial deployment, you can create a _Log_ only – _Essentially Off_ ruleset override that allows all traffic while logging detection results. This lets you safely observe and analyze DDoS activity before enabling enforcement.
+
+1. In the Cloudflare dashboard, go to the **Security rules** page.
+
+    <DashButton url="/?to=/:account/:zone/security/security-rules" />
+2. Go to the **DDoS protection** tab.
+3. On **HTTP DDoS attack protection**, select **Create override**.
+4. Set the **Scope** to _Apply to all incoming packets_.
+5. Under **Ruleset configuration**:
+    - Set the **Ruleset action** to _Log_.
+    - Set the **Ruleset sensitivity** to _Essentially Off_. 
+6. Select **Save**. 

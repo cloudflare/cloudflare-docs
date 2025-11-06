@@ -3,12 +3,11 @@ pcx_content_type: concept
 title: Session affinity
 sidebar:
   order: 17
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
-<Render file="session-affinity-definition" />
+<Render file="session-affinity-definition" product="load-balancing" />
 
 ## Types
 
@@ -20,9 +19,9 @@ On the first request to a proxied load balancer, a cookie is generated, encoding
 
 #### How does it work?
 
-<Render file="session-affinity-by-cookie-process" />
+<Render file="session-affinity-by-cookie-process" product="load-balancing" />
 
-### ip\_cookie
+### ip_cookie
 
 This behaves similar to `cookie` except the initial endpoint selection is stable and based on the client's IP address.
 
@@ -32,9 +31,7 @@ On the first request to a proxied load balancer, a session key based on the conf
 
 :::note
 
-
 [Sticky Zero-Downtime Failover](/load-balancing/understand-basics/session-affinity/#zero-downtime-failover) is not supported for session affinity by HTTP header.
-
 
 :::
 
@@ -44,7 +41,7 @@ By default, at least one of the HTTP headers that you configure for session affi
 
 If you would like to require all of your configured HTTP headers to be present on requests in order for sessions to be created, then set `session_affinity_attributes.require_all_headers` to `true` via the Cloudflare API or toggle `Require all headers` to `enabled` in the Cloudflare dashboard when editing your load balancer.
 
-***
+---
 
 ## Enabling Session Affinity from the Cloudflare dashboard
 
@@ -52,26 +49,24 @@ Enable Session Affinity when you [create or edit a load balancer](/load-balancin
 
 If you enable Session Affinity, choose one of the following options:
 
-* **By Cloudflare cookie only**: Sets a `__cflb` cookie to track the associated endpoint.
-* **By Cloudflare cookie and Client IP fallback**: Sets a `__cflb` cookie, but also uses the client IP address when no session affinity cookie is provided.
-* **By HTTP header**.
+- **By Cloudflare cookie only**: Sets a `__cflb` cookie to track the associated endpoint.
+- **By Cloudflare cookie and Client IP fallback**: Sets a `__cflb` cookie, but also uses the client IP address when no session affinity cookie is provided.
+- **By HTTP header**.
 
 :::caution[Important]
 
-
 Session Affinity is not supported in [DNS-only mode (gray cloud)](/load-balancing/understand-basics/proxy-modes/).
-
 
 :::
 
-***
+---
 
 ## Enabling Session Affinity via the Cloudflare API
 
 Session affinity is a property of load balancers, which you can set with the following endpoints:
 
-* [Create a load balancer](/api/resources/load_balancers/methods/create/)
-* [Edit a load balancer](/api/resources/load_balancers/methods/update/)
+- [Create a load balancer](/api/resources/load_balancers/methods/create/)
+- [Edit a load balancer](/api/resources/load_balancers/methods/update/)
 
 Customize the behavior of session affinity by using the `session_affinity`, `session_affinity_ttl`, and `session_affinity_attributes` parameters.
 
@@ -80,7 +75,7 @@ HTTP header names to `session_affinity_attributes.headers`.
 
 For more details on API commands in context, refer to [Create a load balancer with the API](/load-balancing/load-balancers/create-load-balancer/).
 
-***
+---
 
 ## Endpoint Drain
 
@@ -88,9 +83,7 @@ Drain or remove all traffic from an endpoint without affecting any active custom
 
 :::caution[Important]
 
-
 Endpoint drain is not supported for load balancers in [DNS-only mode (gray cloud)](/load-balancing/understand-basics/proxy-modes/).
-
 
 :::
 
@@ -100,14 +93,12 @@ Zero-Downtime Failover automatically sends traffic to endpoints within a pool du
 
 You can enable one of three options:
 
-* **None**: No failover will take place and errors may show to your users.
-* **Temporary**: Traffic will be sent to other endpoint(s) until the originally pinned endpoint is available.
-* **Sticky**: The session affinity cookie is updated and subsequent requests are sent to the new endpoint moving forward as needed.
+- **None**: No failover will take place and errors may show to your users.
+- **Temporary**: Traffic will be sent to other endpoint(s) until the originally pinned endpoint is available.
+- **Sticky**: The session affinity cookie is updated and subsequent requests are sent to the new endpoint moving forward as needed.
 
 :::note
 
-
 [Sticky Zero-Downtime Failover](/load-balancing/understand-basics/session-affinity/#zero-downtime-failover) is not supported for session affinity by HTTP header.
-
 
 :::

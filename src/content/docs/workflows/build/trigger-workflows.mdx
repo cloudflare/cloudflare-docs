@@ -1,6 +1,8 @@
 ---
 title: Trigger Workflows
 pcx_content_type: concept
+tags:
+  - Bindings
 sidebar:
   order: 3
 
@@ -88,8 +90,6 @@ export default {
 			id: instance.id,
 			details: await instance.status(),
 		});
-
-		return Response.json({ result });
 	},
 };
 ```

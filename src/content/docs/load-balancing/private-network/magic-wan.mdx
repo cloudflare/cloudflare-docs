@@ -37,7 +37,7 @@ Pools can be created using either the Cloudflare dashboard or the API. Refer to 
 After selecting an IP address and completing the setup, you will be redirected to the Load Balancing dashboard. You can locate your load balancer using the search bar or by filtering for **Private** load balancers. Be sure to note the assigned IP address, as it will be required in the following steps.
 
 :::note
-Traffic from your load balancer will appear to originate from one of Cloudflare’s IP addresses. These IP addresses must be whitelisted to ensure proper traffic flow. Ensure your routing is properly configured to return traffic to your Magic WAN tunnels and not the public Internet. Private Load Balancers created with a Cloudflare private IP address will receive an address in the CGNAT range 100.112.64.0/16
+Traffic from your load balancer will appear to originate from one of Cloudflare’s IP addresses. These IP addresses must be whitelisted to ensure proper traffic flow. Ensure your routing is properly configured to return traffic to your Magic WAN tunnels and not the public Internet. Private Load Balancers created with a Cloudflare private IP address will receive an address in the CGNAT range `100.112.0.0`.
 :::
 
 ## 3. FQDN override (optional)

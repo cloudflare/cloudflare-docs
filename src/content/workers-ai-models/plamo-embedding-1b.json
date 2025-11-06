@@ -1,0 +1,64 @@
+{
+    "id": "bc2b61f6-7eb3-4cdf-94f5-ffc128bd6aa4",
+    "source": 1,
+    "name": "@cf/pfnet/plamo-embedding-1b",
+    "description": "PLaMo-Embedding-1B is a Japanese text embedding model developed by Preferred Networks, Inc.\n\nIt can convert Japanese text input into numerical vectors and can be used for a wide range of applications, including information retrieval, text classification, and clustering.",
+    "task": {
+        "id": "0137cdcf-162a-4108-94f2-1ca59e8c65ee",
+        "name": "Text Embeddings",
+        "description": "Feature extraction models transform raw data into numerical features that can be processed while preserving the information in the original dataset. These models are ideal as part of building vector search applications or Retrieval Augmented Generation workflows with Large Language Models (LLM)."
+    },
+    "created_at": "2025-09-24 18:42:05.576",
+    "tags": [],
+    "properties": [
+        {
+            "property_id": "price",
+            "value": [
+                {
+                    "unit": "per M input tokens",
+                    "price": 0.019,
+                    "currency": "USD"
+                }
+            ]
+        }
+    ],
+    "schema": {
+        "input": {
+          "type": "object",
+          "properties": {
+            "text": {
+              "oneOf": [
+                { "type": "string" },
+                {
+                  "type": "array",
+                  "items": { "type": "string" }
+                }
+              ],
+              "description": "Input text to embed. Can be a single string or a list of strings."
+            }
+          },
+          "required": ["text"]
+        },
+        "output": {
+          "type": "object",
+          "properties": {
+            "data": {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "items": { "type": "number" }
+              },
+              "description": "Embedding vectors, where each vector is a list of floats."
+            },
+            "shape": {
+              "type": "array",
+              "items": { "type": "integer" },
+              "minItems": 2,
+              "maxItems": 2,
+              "description": "Shape of the embedding data as [number_of_embeddings, embedding_dimension]."
+            }
+          },
+          "required": ["data", "shape"]
+        }
+    }
+}

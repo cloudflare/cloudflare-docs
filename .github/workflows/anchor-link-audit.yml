@@ -39,7 +39,6 @@ jobs:
       - run: npm run build
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NODE_OPTIONS: "--max-old-space-size=4192"
 
       - name: Install dependencies
         run: curl https://htmltest.wjdp.uk | bash

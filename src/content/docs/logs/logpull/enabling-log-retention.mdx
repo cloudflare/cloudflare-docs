@@ -28,31 +28,31 @@ To make a `POST` call, you must have zone-scoped `edit` permissions, such as Sup
 
 ### Check log retention status
 
-<Render file="check-log-retention" />
+<Render file="check-log-retention" product="logs" />
 
 If the zone has log retention [enabled](/logs/logpull/enabling-log-retention/#enabled-response) you get the value `true`, whereas a value of `false` is returned when it is [disabled](/logs/logpull/enabling-log-retention/#disabled-response).
 
 ### Turn on log retention
 
-<Render file="enable-log-retention" />
+<Render file="enable-log-retention" product="logs" />
 
 #### Enabled response
 
 ```json
 {
-  "flag": true
+	"flag": true
 }
 ```
 
 ### Turn off log retention
 
-<Render file="disable-log-retention" />
+<Render file="disable-log-retention" product="logs" />
 
 #### Disabled response
 
 ```json
 {
-  "flag": false
+	"flag": false
 }
 ```
 

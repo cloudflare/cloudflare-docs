@@ -1,0 +1,116 @@
+---
+pcx_content_type: concept
+title: Exporting OpenTelemetry Data
+sidebar:
+  order: 5
+---
+
+import { Badge, DirectoryListing, WranglerConfig } from "~/components";
+
+Cloudflare Workers supports exporting OpenTelemetry (OTel)-compliant telemetry data to any destination with an available OTel endpoint, allowing you to integrate with your existing monitoring and observability stack. 
+
+### Supported telemetry types
+
+You can export the following types of telemetry data:
+
+- **Traces** - Traces showing request flows through your Worker and connected services
+- **Logs** - Application logs including `console.log()` output and system-generated logs  
+
+**Note**: exporting Worker metrics and custom metrics is not yet supported. 
+
+### Available OpenTelemetry destinations
+
+Below are common OTLP endpoint formats for popular observability providers. Refer to your provider's documentation for specific details and authentication requirements.
+
+| Provider | Traces Endpoint | Logs Endpoint |
+|----------|----------------|---------------|
+| [**Honeycomb**](/workers/observability/exporting-opentelemetry-data/honeycomb/) | `https://api.honeycomb.io/v1/traces` | `https://api.honeycomb.io/v1/logs` |
+| [**Grafana Cloud**](/workers/observability/exporting-opentelemetry-data/grafana-cloud/) | `https://otlp-gateway-{region}.grafana.net/otlp/v1/traces`| `https://otlp-gateway-{region}.grafana.net/otlp/v1/logs`[^1] |
+| [**Axiom**](/workers/observability/exporting-opentelemetry-data/axiom/) | `https://api.axiom.co/v1/traces` | `https://api.axiom.co/v1/logs` |
+| [**Sentry**](/workers/observability/exporting-opentelemetry-data/sentry/) | `https://{HOST}/api/{PROJECT_ID}/integration/otlp/v1/traces` | `https://{HOST}/api/{PROJECT_ID}/integration/otlp/v1/logs` |
+| [**Datadog**](https://docs.datadoghq.com/opentelemetry/setup/otlp_ingest/) | Not yet available. Pending release from Datadog | Not yet available. Pending release from Datadog |
+
+:::note[Authentication]
+Most providers require authentication headers. Refer to your provider's documentation for specific authentication requirements.
+:::
+
+## Setting up OpenTelemetry-compatible destinations
+To start sending data to your destination, you'll need to create a destination in the Cloudflare dashboard.
+
+### Creating a destination
+
+![Observability Destinations dashboard showing configured destinations for Grafana and Honeycomb with their respective endpoints and status](~/assets/images/workers-observability/destinations.png)
+
+1. Head to your account's [Workers Observability](https://dash.cloudflare.com/?to=/:account/workers-and-pages/observability/pipelines) section of the dashboard 
+2. Click add destination. 
+3. Configure your destination:
+   - **Destination Name** - A descriptive name (e.g., "Grafana-tracing", "Honeycomb-Logs")
+   - **Destination Type** - Choose between "Traces" or "Logs"
+   - **OTLP Endpoint** - The URL where your observability platform accepts OTLP data. 
+   - **Custom Headers** (Optional) - Any authentication headers or other provider-required headers 
+4. Save your destination
+
+![Edit Destination dialog showing configuration for Honeycomb tracing with destination name, type selection, OTLP endpoint, and custom headers](~/assets/images/workers-observability/destination-setup.png)
+
+## Enabling OpenTelemetry export for your Worker
+
+After setting up destinations in the dashboard, configure your Worker to export telemetry data by updating your Wrangler configuration. Your destination name configured in your configuration file should be the same as the destination configured in the dashboard. 
+
+<WranglerConfig>
+
+```json
+{
+  "observability": {
+    "traces": {
+      "enabled": true,
+      "destinations": ["tracing-destination-name"],
+      
+      // traces sample rate of 5%
+      "head_sampling_rate": 0.05,
+
+      // (optional disable traces in Cloudflare dashboard
+      "persist": false
+    },
+    "logs": {
+      "enabled": true,
+      "destinations": ["logs-destination-name"],
+      // logs sample rate of 60%
+      "head_sampling_rate": 0.6,
+      
+      // (optional disable logs in Cloudflare dashboard
+      "persist": false
+    }
+  }
+}
+```
+
+</WranglerConfig>
+
+Once you've configured your Wrangler configuration file, redeploy your Worker for new configurations to take effect. Note that it may take a few minutes for events to reach your destination. 
+
+## Destination status
+
+After creating a destination, you can monitor its health and delivery status in the Cloudflare dashboard. Each destination displays a status indicator that shows how recently data was successfully delivered.
+
+### Status indicators
+
+| Status | Description | Troubleshooting |
+|--------|-------------|-----------------|
+| **Last: n minutes ago** | Data was recently delivered successfully. |  |
+| **Never run** | No data has been delivered to this destination. | •Check if your Worker is receving traffic <br /> • Review sampling rates (low rates generate less data)<br /> |
+| **Error** | An error occurred while attempting to deliver data to this destination. |• Verify OTLP endpoint URL is correct<br />• Check authentication headers are valid<br />|
+
+## Limits and pricing
+Exporting OTel data is currently **free** to those currently on a Workers Paid subscription or higher during the early beta period. However, starting on **`January 15, 2026`**, tracing will be billed as part of your usage on the Workers Paid plan or contract. 
+
+This includes the following limits and pricing:
+
+| Plan | Traces | Logs | Pricing |
+|------|--------|------|---------|
+| **Workers Free** | Not available | Not available | - |
+| **Workers Paid** | 10 million events per month included | 10 million events per month included | $0.05 per million additional events |
+
+## Known limitations
+OpenTelemetry data export is currently in beta. Please be aware of the following limitations:
+- **Metrics export not yet supported**: Exporting Worker infrastructure metrics and custom metrics via OpenTelemetry is not currently available. We are actively working to add metrics support in the future. 
+- **Limited OTLP support from some providers**: Some observability providers are still rolling out OTLP endpoint support. Check the [Available OpenTelemetry destinations](#available-opentelemetry-destinations) table above for current availability.

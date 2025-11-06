@@ -13,14 +13,30 @@ Secrets Store allows security administrators to have more control by implementin
 While all Cloudflare accounts will have access to the Secrets Store section on the dashboard, only users with the necessary permissions will be able to interact with it, as described below.
 :::
 
-## Relevant roles for Secrets Store
+## Relevant roles
 
 Refer to the list below for default role definitions.
 
-- **Super Administrator**: Can create, edit, duplicate, delete, and view secrets metadata. Can also [add a Secrets Store binding to a Worker](/secrets-store/integrations/workers/).
-- **Secrets Store Admin**: Can create, edit, duplicate, delete, and view secrets metadata.
-- **Secrets Store Deployer**: Can view secrets metadata but cannot create, edit, duplicate, nor delete secrets. Can also [add a Secrets Store binding to a Worker](/secrets-store/integrations/workers/).
-- **Secrets Store Reporter**: Can view secrets metadata. Cannot perform any actions (create, edit, duplicate, delete secrets), nor add a Secrets Store binding to a Worker.
+#### Super Administrator
+
+- Can create, edit, duplicate, delete, and view secrets metadata.
+- Can [add a Secrets Store binding to a Worker](/secrets-store/integrations/workers/).
+- Can [create an association between a secret and an AI gateway](/ai-gateway/configuration/bring-your-own-keys/).
+
+#### Secrets Store Admin
+
+- Can create, edit, duplicate, delete, and view secrets metadata.
+
+#### Secrets Store Deployer
+
+- Can view secrets metadata but cannot create, edit, duplicate, nor delete secrets.
+- Can [add a Secrets Store binding to a Worker](/secrets-store/integrations/workers/).
+- Can [create an association between a secret and an AI gateway](/ai-gateway/configuration/bring-your-own-keys/).
+
+#### Secrets Store Reporter
+
+- Can view secrets metadata.
+- Cannot perform any actions (create, edit, duplicate, delete secrets), nor use Secrets Store integrations with other Cloudflare products.
 
 ## API token permissions
 

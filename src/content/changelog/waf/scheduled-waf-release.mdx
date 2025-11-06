@@ -1,7 +1,7 @@
 ---
-title: WAF Release - Scheduled changes for 2025-07-28
-description: WAF managed ruleset changes scheduled for 2025-07-28
-date: 2025-07-21
+title: WAF Release - Scheduled changes for 2025-11-10
+description: WAF managed ruleset changes scheduled for 2025-11-10
+date: 2025-11-03
 scheduled: true
 ---
 
@@ -9,75 +9,60 @@ import { RuleID } from "~/components";
 
 <table style="width: 100%">
 	<thead>
-		<tr>
-			<th>Announcement Date</th>
-			<th>Release Date</th>
-			<th>Release Behavior</th>
-			<th>Legacy Rule ID</th>
-			<th>Rule ID</th>
-			<th>Description</th>
-			<th>Comments</th>
-		</tr>
+	<tr>
+		<th>Announcement Date</th>
+		<th>Release Date</th>
+		<th>Release Behavior</th>
+		<th>Legacy Rule ID</th>
+		<th>Rule ID</th>
+		<th>Description</th>
+		<th>Comments</th>
+	</tr>
 	</thead>
 	<tbody>
-		<tr>
-	    <td>2025-07-21</td>
-	    <td>2025-07-28</td>
-	    <td>Log</td>
-	    <td>100804</td>
-	    <td>
-	        <RuleID id="6ab3bd3b58fb4325ac2d3cc73461ec9e" />
-	    </td>
-	    <td>BerriAI - SSRF - CVE:CVE-2024-6587</td>
-	    <td>This is a New Detection</td>
-    </tr>
-		<tr>
-			<td>2025-07-21</td>
-			<td>2025-07-28</td>
-			<td>Log</td>
-			<td>100812</td>
-			<td>
-				<RuleID id="2e6c4d02f42a4c3ca90649d50cb13e1d" />
-			</td>
-			<td>Fortinet FortiWeb - Remote Code Execution - CVE:CVE-2025-25257</td>
-			<td>This is a New Detection</td>
-		</tr>
-		<tr>
-			<td>2025-07-21</td>
-			<td>2025-07-28</td>
-			<td>Log</td>
-			<td>100813</td>
-			<td>
-				<RuleID id="fd360d8fd9994e6bab6fb06067fae7f7" />
-			</td>
-			<td>Apache Tomcat - DoS - CVE:CVE-2025-31650</td>
-			<td>This is a New Detection</td>
-		</tr>
-		<tr>
-			<td>2025-07-21</td>
-			<td>2025-07-28</td>
-			<td>Log</td>
-			<td>100815</td>
-			<td>
-				<RuleID id="f9e01e28c5d6499cac66364b4b6a5bb1" />
-			</td>
-			<td>
-				MongoDB - Remote Code Execution - CVE:CVE-2024-53900, CVE:CVE-2025-23061
-			</td>
-			<td>This is a New Detection</td>
-		</tr>
-		<tr>
-			<td>2025-07-21</td>
-			<td>2025-07-28</td>
-			<td>Log</td>
-			<td>100816</td>
-			<td>
-				<RuleID id="700d4fcc7b1f481a80cbeee5688f8e79" />
-			</td>
-			<td>
-				MongoDB - Remote Code Execution - CVE:CVE-2024-53900, CVE:CVE-2025-23061
-			</td>
-			<td>This is a New Detection</td>
-		</tr>
+	<tr>
+		<td>2025-10-27</td>
+		<td>2025-11-10</td>
+		<td>Log</td>
+		<td>N/A</td>
+		<td>
+			<RuleID id="32405a50728746dd8caa057b606285e6" />
+		</td>
+		<td>Generic Rules - Prototype Pollution - URI</td>
+		<td>This is a new detection</td>
+	</tr>
+	<tr>
+		<td>2025-10-27</td>
+		<td>2025-11-10</td>
+		<td>Log</td>
+		<td>N/A</td>
+		<td>
+			<RuleID id="a7da00c63c4243d2a72456fe4f59ff26" />
+		</td>
+		<td>Generic Rules - Prototype Pollution - Body</td>
+		<td>This is a new detection</td>
+	</tr>
+	<tr>
+		<td>2025-10-27</td>
+		<td>2025-11-10</td>
+		<td>Log</td>
+		<td>N/A</td>
+		<td>
+			<RuleID id="833078bdcfa04bb7aa7b8fb67efbeb39" />
+		</td>
+		<td>Generic Rules - Prototype Pollution - Header - Form</td>
+		<td>This is a new detection</td>
+	</tr>
+	<tr>
+		<td>2025-10-27</td>
+		<td>2025-11-10</td>
+		<td>Log</td>
+		<td>N/A</td>
+		<td>
+			<RuleID id="818d92d370654c3d8f1adc7c9029cd61" />
+		</td>
+		<td>HTTP Truncated Beta</td>
+		<td>This is a beta detection and will replace the action on original detection (ID: <RuleID id="646bccf7e9dc46918a4150d6c22b51d3" />)  </td>
+	</tr>
 	</tbody>
 </table>

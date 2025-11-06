@@ -10,8 +10,6 @@ product:
 
 meta:
   title: Cloudflare Network Error Logging docs
-  description: Network Error Logging allows you to take a peek into connectivity
-    issues on the Internet to provide answers to when and where incident is
-    happening, who is impacted, and how they're impacted.
+  description: Review connectivity issues to learn when and where an incident is happening and its impact
   author: "@cloudflare"
   image: data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQEAYAAABPYyMiAAAABmJLR0T///////8JWPfcAAAACXBIWXMAAABIAAAASABGyWs+AAAAF0lEQVRIx2NgGAWjYBSMglEwCkbBSAcACBAAAeaR9cIAAAAASUVORK5CYII=

@@ -7,5 +7,5 @@ product:
 
 meta:
   title: Cloudflare Pipelines Docs
-  description: Ingest real time data streams and load into R2.
+  description: Ingest real time data streams and load into R2
   author: '@cloudflare'

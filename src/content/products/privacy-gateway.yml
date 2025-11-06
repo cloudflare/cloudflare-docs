@@ -9,7 +9,5 @@ product:
 
 meta:
   title: Cloudflare Privacy Gateway docs
-  description:
-    A managed gateway service that implements the Oblivious HTTP IETF standard
-    and improves client privacy.
+  description: Implement the Oblivious HTTP IETF standard to improve client privacy
   author: "@cloudflare"

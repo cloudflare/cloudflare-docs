@@ -1,0 +1,340 @@
+---
+id: 89f8aaf01e4cadd0c777eded7ef4cca2
+url: onboard-domain-cf
+title: Onboard your domain to Cloudflare
+description: Learn how Cloudflare secures and accelerates your website using its global network and reverse proxy technology. In this video, we explain how connecting your domain to Cloudflare protects your origin server, enhances performance, and keeps your site online—even during attacks. You'll see how DNS, nameservers, and proxy status work together to route and safeguard traffic. Whether you're self-hosting or using serverless platforms like Cloudflare Workers, this guide helps you understand the onboarding process and why Cloudflare is essential for modern web infrastructure.
+products:
+  - fundamentals
+pcx_content_type: video
+thumbnail:
+  timestamp: 2s
+chapters: {
+  "How Cloudflare Works": "0s",
+  "Getting Started: Domain Onboarding": "55s",
+  "DNS and Reverse Proxy Explained": "01m24s",
+  "Request Lifecycle and Performance Optimization": "03m20s"
+}
+transcript: |
+
+  WEBVTT
+
+  1
+  00:00:00.280 --> 00:00:04.760
+  Cloudflare operates a global network that 
+  makes your online presence faster and protect
+
+  2
+  00:00:04.760 --> 00:00:06.120
+  it from cyber attacks.
+
+  3
+  00:00:07.160 --> 00:00:09.840
+  When you connect a website or app to 
+  Cloudflare,
+
+  4
+  00:00:09.840 --> 00:00:15.040
+  we act as both the authoritative DNS provider 
+  and a reverse proxy that sits between your
+
+  5
+  00:00:15.040 --> 00:00:17.160
+  visitors and your origin servers.
+
+  6
+  00:00:17.880 --> 00:00:20.960
+  When a visitor or an attacker tries to reach 
+  your website,
+
+  7
+  00:00:21.120 --> 00:00:25.080
+  those requests are first routed to the 
+  Cloudflare network instead of your origin
+
+  8
+  00:00:25.080 --> 00:00:30.240
+  server. Cloudflare processes those requests, 
+  mitigating malicious traffic while speeding
+
+  9
+  00:00:30.240 --> 00:00:31.600
+  up legitimate traffic.
+
+  10
+  00:00:33.520 --> 00:00:38.000
+  Our services are customizable to give you 
+  granular control over your traffic.
+
+  11
+  00:00:38.160 --> 00:00:42.120
+  You can write rules to cache, 
+  load, balance and redirect requests,
+
+  12
+  00:00:42.360 --> 00:00:45.000
+  modify headers, execute code, 
+  and more.
+
+  13
+  00:00:46.040 --> 00:00:50.880
+  Many of our services are on by default, 
+  such as DDoS protection and caching,
+
+  14
+  00:00:50.880 --> 00:00:54.240
+  so your traffic will automatically be safer 
+  and faster.
+
+  15
+  00:00:55.480 --> 00:00:58.280
+  To make this possible, 
+  you need to onboard your domain to
+
+  16
+  00:00:58.280 --> 00:01:03.440
+  Cloudflare. The most common way to onboard 
+  your domain is to update your DNS name
+
+  17
+  00:01:03.440 --> 00:01:06.370
+  servers to the Cloudflare name servers we 
+  provide you,
+
+  18
+  00:01:06.610 --> 00:01:09.690
+  which makes Cloudflare your authoritative DNS 
+  provider.
+
+  19
+  00:01:10.650 --> 00:01:13.730
+  You do this at the provider you purchase your 
+  domain name from,
+
+  20
+  00:01:13.730 --> 00:01:17.570
+  such as a registrar. If you need a new 
+  domain,
+
+  21
+  00:01:17.570 --> 00:01:20.370
+  you can purchase one at cost from the 
+  Cloudflare registrar,
+
+  22
+  00:01:20.490 --> 00:01:23.610
+  which is automatically configured to use our 
+  name servers.
+
+  23
+  00:01:24.650 --> 00:01:27.610
+  Let's review the basics of name servers and 
+  DNS.
+
+  24
+  00:01:27.890 --> 00:01:33.210
+  A name server is a service operated by your 
+  authoritative DNS provider that acts as a
+
+  25
+  00:01:33.210 --> 00:01:35.890
+  source of truth for your domain's DNS 
+  records.
+
+  26
+  00:01:36.570 --> 00:01:40.810
+  Dns records map a human readable hostname, 
+  such as example.com,
+
+  27
+  00:01:40.810 --> 00:01:43.650
+  to machine readable IP addresses or data.
+
+  28
+  00:01:44.570 --> 00:01:48.890
+  The IP address listed in a DNS record 
+  identifies where your origin server is
+
+  29
+  00:01:48.890 --> 00:01:54.530
+  hosted. These DNS records tell your 
+  authoritative DNS provider how to respond to
+
+  30
+  00:01:54.530 --> 00:01:56.370
+  DNS queries for your domain.
+
+  31
+  00:01:56.770 --> 00:02:01.690
+  So altogether, DNS allows internet browsers 
+  such as Google Chrome to find the correct
+
+  32
+  00:02:01.690 --> 00:02:06.250
+  content. Then the browser can make HTTP 
+  requests to load the content for your
+
+  33
+  00:02:06.250 --> 00:02:10.970
+  visitors. If you're not using a reverse proxy 
+  such as Cloudflare.
+
+  34
+  00:02:11.130 --> 00:02:15.490
+  The browser makes HTTP requests directly to 
+  the IP address of your origin server.
+
+  35
+  00:02:15.530 --> 00:02:19.650
+  This is not secure because your origin is 
+  exposed to the internet without protection.
+
+  36
+  00:02:21.010 --> 00:02:25.290
+  When Cloudflare is in front of your origin, 
+  we act as both your authoritative DNS
+
+  37
+  00:02:25.290 --> 00:02:28.850
+  provider and a reverse proxy for your HTTP 
+  requests.
+
+  38
+  00:02:29.330 --> 00:02:32.850
+  We respond to DNS queries with Cloudflare IP 
+  addresses,
+
+  39
+  00:02:33.050 --> 00:02:37.090
+  which makes your HTTP traffic go through 
+  Cloudflare instead of directly to your
+
+  40
+  00:02:37.090 --> 00:02:40.850
+  origin. This process is called reverse 
+  Proxying,
+
+  41
+  00:02:40.970 --> 00:02:44.610
+  which allows us to hide and therefore protect 
+  your origin server.
+
+  42
+  00:02:44.970 --> 00:02:49.330
+  Furthermore, we highly recommend blocking 
+  traffic that doesn't come through Cloudflare
+
+  43
+  00:02:49.330 --> 00:02:54.210
+  by configuring your origins firewall to only 
+  allow Cloudflare IP addresses or using
+
+  44
+  00:02:54.210 --> 00:03:01.170
+  Cloudflare Tunnel. You can identify which 
+  traffic is proxy in the DNS records table in
+
+  45
+  00:03:01.170 --> 00:03:02.530
+  the Cloudflare dashboard.
+
+  46
+  00:03:03.530 --> 00:03:08.130
+  If the proxy status is set to proxy, 
+  requests for those hostname will flow through
+
+  47
+  00:03:08.130 --> 00:03:09.370
+  the Cloudflare network.
+
+  48
+  00:03:09.570 --> 00:03:12.450
+  This will start happening once you update 
+  your nameservers.
+
+  49
+  00:03:13.330 --> 00:03:15.380
+  If the status is as DNS only.
+
+  50
+  00:03:15.500 --> 00:03:19.620
+  Requests for those hostnames will only use 
+  Cloudflare for DNS resolution.
+
+  51
+  00:03:20.700 --> 00:03:25.860
+  Let's follow an HTTP request as it gets 
+  processed by Cloudflare when someone visits
+
+  52
+  00:03:25.860 --> 00:03:27.940
+  or tries to attack your website or app.
+
+  53
+  00:03:28.100 --> 00:03:32.460
+  That request will be routed to the Cloudflare 
+  data center that's closest to that visitor.
+
+  54
+  00:03:34.220 --> 00:03:38.740
+  If a request is from a legitimate user, 
+  we check if it's for a resource that's in the
+
+  55
+  00:03:38.740 --> 00:03:41.300
+  Cloudflare cache. If we don't have it cached,
+
+  56
+  00:03:41.300 --> 00:03:43.620
+  we proxy the request to your origin server.
+
+  57
+  00:03:44.980 --> 00:03:46.940
+  We then cache the origins response.
+
+  58
+  00:03:47.060 --> 00:03:50.220
+  So the next time Cloudflare sees a request 
+  for the same resource,
+
+  59
+  00:03:50.220 --> 00:03:51.860
+  we can deliver it straight away.
+
+  60
+  00:03:52.780 --> 00:03:55.620
+  We block suspicious requests from reaching 
+  your origin,
+
+  61
+  00:03:55.820 --> 00:03:59.300
+  only allowing legitimate users and speeding 
+  up their experience.
+
+  62
+  00:04:00.420 --> 00:04:03.540
+  So you will always have the most up to date 
+  security posture,
+
+  63
+  00:04:03.620 --> 00:04:06.500
+  including protection from Sierra de 
+  vulnerabilities,
+
+  64
+  00:04:06.620 --> 00:04:08.740
+  advanced DDoS attacks, 
+  and more.
+
+  65
+  00:04:10.060 --> 00:04:12.580
+  Cloudflare is an extension of your 
+  infrastructure,
+
+  66
+  00:04:12.700 --> 00:04:15.140
+  keeping your site safe and highly available.
+
+  67
+  00:04:15.300 --> 00:04:17.580
+  Get started with onboarding your domain 
+  today.

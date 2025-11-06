@@ -3,15 +3,15 @@
 		"title": "Account options",
 		"single_sign_on": {
 			"title": "Cloudflare dashboard single sign-on",
-			"link": "/cloudflare-one/applications/configure-apps/dash-sso-apps/",
+			"link": "/fundamentals/manage-members/dashboard-sso/",
 			"properties": {
 				"availability": {
 					"title": "Availability",
-					"summary": "Enterprise-only",
-					"free": "No",
-					"pro": "No",
-					"biz": "No",
-					"ent": "Yes (with Standard or Premium Success plans)"
+					"summary": "Available on all plans",
+					"free": "Yes",
+					"pro": "Yes",
+					"biz": "Yes",
+					"ent": "Yes"
 				}
 			}
 		},
@@ -176,9 +176,9 @@
 					"ent": "30 seconds"
 				},
 				"minimum_cache_rules": {
-					"title": "Minimum Browser Cache TTL (Cache Rules)",
-					"free": "2 hours",
-					"pro": "1 hour",
+					"title": "Minimum Browser Cache TTL",
+					"free": "1 second",
+					"pro": "1 second",
 					"biz": "1 second",
 					"ent": "1 second"
 				},
@@ -727,7 +727,6 @@
 					"biz": "8 days",
 					"ent": "62 days"
 				}
-
 			}
 		},
 		"dnssec": {
@@ -757,6 +756,20 @@
 					"pro": "No",
 					"biz": "No",
 					"ent": "Paid add-on"
+				},
+				"historical_data_account": {
+					"title": "Historical data",
+					"free": "N/A",
+					"pro": "N/A",
+					"biz": "N/A",
+					"ent": "62 days"
+				},
+				"maximum_duration_account": {
+					"title": "Maximum time interval",
+					"free": "N/A",
+					"pro": "N/A",
+					"biz": "N/A",
+					"ent": "62 days"
 				}
 			}
 		},
@@ -1368,7 +1381,7 @@
 					"ent": 300
 				},
 				"subrequests": {
-					"title": "Number of [[GLOSSARY_TOOLTIP_SNIPPETS_SUBREQUEST]]",
+					"title": "Number of snippet subrequests",
 					"free": 0,
 					"pro": 2,
 					"biz": 3,
@@ -2138,13 +2151,23 @@
 					"title": "Pricing",
 					"link": "https://www.cloudflare.com/application-services/products/turnstile/#Page-Pricing-AS",
 					"free": "Free",
-					"ent": "Contact sales"
+					"ent": "Contact Sales"
 				},
 				"widgets": {
 					"title": "Number of widgets",
 					"link": "/turnstile/concepts/widget/",
 					"free": "Up to 20 widgets",
 					"ent": "Unlimited"
+				},
+				"widget_types": {
+					"title": "All widget types",
+					"free": "Yes",
+					"ent": "Yes"
+				},
+				"challenges_limit": {
+					"title": "Unlimited challenges (traffic or verification requests)",
+					"free": "Yes",
+					"ent": "Yes"
 				},
 				"hostname_management": {
 					"title": "Hostname management",
@@ -2178,6 +2201,16 @@
 				"offlabel": {
 					"title": "Offlabel (remove Cloudflare branding)",
 					"free": "No",
+					"ent": "Yes"
+				},
+				"compliance": {
+					"title": "WCAG 2.1 AA compliance",
+					"free": "Yes",
+					"ent": "Yes"
+				},
+				"community": {
+					"title": "Community support",
+					"free": "Yes",
 					"ent": "Yes"
 				}
 			}
@@ -2288,20 +2321,6 @@
 	},
 	"speed": {
 		"title": "Speed",
-		"amp": {
-			"title": "AMP Real URL",
-			"link": "/speed/optimization/other/amp-real-url/",
-			"properties": {
-				"availability": {
-					"title": "Availability",
-					"summary": "Available on all plans",
-					"free": "Yes",
-					"pro": "Yes",
-					"biz": "Yes",
-					"ent": "Yes"
-				}
-			}
-		},
 		"automatic_platform_optimization": {
 			"title": "Automatic Platform Optimization",
 			"link": "/automatic-platform-optimization/",
@@ -2310,20 +2329,6 @@
 					"title": "Availability",
 					"summary": "Included with Pro and above",
 					"free": "Paid add-on",
-					"pro": "Yes",
-					"biz": "Yes",
-					"ent": "Yes"
-				}
-			}
-		},
-		"automatic_signed_exchanges": {
-			"title": "Automatic Signed Exchanges (SXGs)",
-			"link": "/speed/optimization/other/signed-exchanges/",
-			"properties": {
-				"availability": {
-					"title": "Availability",
-					"summary": "Included with Pro and above or [Automatic Platform Optimization](/automatic-platform-optimization/)",
-					"free": "No",
 					"pro": "Yes",
 					"biz": "Yes",
 					"ent": "Yes"
@@ -2440,7 +2445,7 @@
 			}
 		},
 		"mirage": {
-			"title": "Mirage",
+			"title": "Mirage (deprecated)",
 			"link": "/speed/optimization/images/mirage/",
 			"properties": {
 				"availability": {
@@ -2741,7 +2746,7 @@
 					"free": "Yes",
 					"pro": "Yes",
 					"biz": "Yes",
-					"ent": "Yes"
+					"ent": "Contact your account team"
 				},
 				"b_initial_quota": {
 					"title": "Hostnames included",
@@ -2749,7 +2754,7 @@
 					"free": "100",
 					"pro": "100",
 					"biz": "100",
-					"ent": "0"
+					"ent": "Custom"
 				},
 				"c_max_hostnames": {
 					"title": "Max hostnames",
@@ -2785,7 +2790,7 @@
 					"pro": "No",
 					"biz": "No",
 					"ent": "Contact your account team"
-				},				
+				},
 				"custom_certificates": {
 					"title": "[Custom certificates](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/custom-certificates/)",
 					"free": "No",

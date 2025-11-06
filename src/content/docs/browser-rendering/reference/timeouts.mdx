@@ -1,0 +1,29 @@
+---
+pcx_content_type: reference
+title: REST API timeouts
+sidebar:
+  order: 5
+---
+import { Tabs, TabItem } from "~/components";
+
+Browser Rendering uses several independent timers to manage how long different parts of a request can take.
+If any of these timers exceed their limit, the request returns a timeout error.
+
+Each timer controls a specific part of the rendering lifecycle — from page load, to selector load, to action.
+
+| Timer                                | Scope           |Default           |Max           |
+| -------------------------------------- | --------------- | --------------- | --------------- |
+|  `goToOptions.timeout`     | Time to wait for the page to load before timeout.  |   30 s       |   60 s        |
+|  `goToOptions.waitUntil`    |  Time until page load considered complete: <br />`load` = full page load, including resources, like images and stylesheets. <br />`Event.domcontentloaded` = waits until the DOM content has been fully loaded, fires before the page `load` event. <br />`Event.networkidle0` = there are no active network connections for at least 500 ms. <br />`Event.networkidle2` = there are no more than two active network connections for at least 500 ms.         |     —      |     —      |
+|  `waitForSelector`   | Time to wait for a specific element (any CSS selector) to appear on the page.  |    null      |     60 s      |
+|  `waitForTimeout`     | Additional amount of time to wait after the page has loaded to proceed with actions.  |     null     |      60 s     |
+|  `actionTimeout`     |  Time to wait for the action itself (for example: a screenshot, PDF, or scrape) to complete after the page has loaded.  |    null      |      5 min     |
+|  `PDFOptions.timeout`     |  Same as `actionTimeout`, but only applies to the [/pdf endpoint](/browser-rendering/rest-api/pdf-endpoint/). |     30 s     |     5 min      |
+
+## Notes and recommendations
+You can set multiple timers — as long as one is complete, the request will fire.
+
+If you are not getting the expected output:
+- Try increasing `goToOptions.timeout` (up to 60 s).
+- If waiting for a specific element, use `waitForSelector`. Otherwise, use `goToOptions.waitUntil` set to `networkidle2` to ensure the page has finished loading dynamic content.
+- If you are getting a `422`, it may be the action itself (ex: taking a screenshot, extracting the html content) that takes a long time. Try increasing the `actionTimeout` instead.

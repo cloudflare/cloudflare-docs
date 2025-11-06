@@ -2,6 +2,8 @@
 {}
 ---
 
+import {DashButton} from "~/components";
+
 After your first deploy, select **Continue to project** to see your project's configuration in the Cloudflare Pages dashboard. On this page, you can see your project's current deployment status, the production URL and associated commit, and all past deployments.
 
 ![Site dashboard displaying your environments and deployments](~/assets/images/pages/get-started/site-dashboard.png)
@@ -10,9 +12,10 @@ After your first deploy, select **Continue to project** to see your project's co
 
 To delete your Pages project:
 
-1. Go back to the **Account Home** or use the drop-down menu at the top of the dashboard.
-2. Select **Workers & Pages**.
-3. Select your Pages project > **Settings** > **Delete project**.
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+2. Select your Pages project > **Settings** > **Delete project**.
 
 :::caution
 

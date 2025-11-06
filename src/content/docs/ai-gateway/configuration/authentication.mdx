@@ -1,6 +1,6 @@
 ---
 pcx_content_type: configuration
-title: Authentication
+title: Authenticated Gateway
 sidebar:
   order: 7
 head: []
@@ -29,7 +29,7 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/chat/
   --header 'cf-aig-authorization: Bearer {CF_AIG_TOKEN}' \
   --header 'Authorization: Bearer OPENAI_TOKEN' \
   --header 'Content-Type: application/json' \
-  --data '{"model": "gpt-3.5-turbo", "messages": [{"role": "user", "content": "What is Cloudflare?"}]}'
+  --data '{"model": "gpt-5-mini", "messages": [{"role": "user", "content": "What is Cloudflare?"}]}'
 ```
 
 Using the OpenAI SDK:
@@ -60,6 +60,11 @@ const openai = createOpenAI({
 ```
 
 ## Expected behavior
+
+:::note
+When an AI Gateway is accessed from a Cloudflare Worker using a **binding**, the `cf-aig-authorization` header does not need to be manually included.  
+Requests made through bindings are **pre-authenticated** within the associated Cloudflare account. 
+:::
 
 The following table outlines gateway behavior based on the authentication settings and header status:
 

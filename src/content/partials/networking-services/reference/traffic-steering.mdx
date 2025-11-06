@@ -2,6 +2,13 @@
 params:
   - magicWord
   - productName
+  - mFirewallName
+  - mFirewallURL
+  - warpClientURL
+  - remoteBrowserURL
+  - accessURL
+  - gatewayURL
+  - cfTunnelURL?
   - greIpsecReferenceURL
   - createStaticRoute
   - editStaticRoute
@@ -16,8 +23,8 @@ import { AnchorHeading, Aside, Markdown, Render } from "~/components";
 
 The Magic networking routing table is a virtual network overlay, private to your account, that spans all Cloudflare data centers globally. This overlay network provides:
 
-- Magic Transit delivery for [DoS](/ddos-protection/) and [Magic Firewall](/magic-firewall/) filtered Internet traffic, from the entry data center where the traffic ingressed, to your publicly addressed edge/border network.
-- Magic WAN packet transport between Magic tunnels, interconnects, [Cloudflare Load Balancer](/load-balancing/), and [Zero Trust](/cloudflare-one/) connections such as [WARP Client](/cloudflare-one/connections/connect-devices/warp/), [Remote Browser Isolation](/cloudflare-one/policies/browser-isolation/), [Access](/cloudflare-one/policies/access/), and [Gateway](/cloudflare-one/policies/gateway/).
+- Magic Transit delivery for [DoS](/ddos-protection/) and <a href={props.mFirewallURL}>{props.mFirewallName}</a> filtered Internet traffic, from the entry data center where the traffic ingressed, to your publicly addressed edge/border network.
+- {props.productName} packet transport between Magic tunnels, interconnects, [Cloudflare Load Balancer](/load-balancing/), and [Zero Trust](/cloudflare-one/) connections such as <a href={props.warpClientURL}>WARP Client</a>, <a href={props.remoteBrowserURL}>Remote Browser Isolation</a>, <a href={props.accessURL}>Access</a>, and <a href={props.gatewayURL}>Gateway</a>.
 
 The Magic routing table supports routing the {props.productName} traffic via anycast tunnels using <a href={props.greIpsecReferenceURL}>GRE and Internet Protocol Security (IPsec)</a> or [Direct Cloudflare Network Interconnect (CNI)](/network-interconnect/). Entries can be added to the Magic routing table via static route configuration or via routes learned through BGP peering (only available over Direct CNI).
 
@@ -38,25 +45,23 @@ The following IPv4 address ranges are allowed in the Magic Routing table:
   )
 }
 
-{ props.magicWord === "Magic WAN" && (
+{ props.magicWord !== "Magic Transit" && (
   <>
-		<Markdown
-    text={`
-		- [RFC 1918](https://datatracker.ietf.org/doc/html/rfc1918) address space, specifically \`10.0.0.0/8\`, \`172.16.0.0/12\`, and \`192.168.0.0/16\`.
-
-		When using Magic WAN and Cloudflare Tunnel together, remember to consider the IP ranges utilized in the static routes of Cloudflare Tunnel when selecting static routes for Magic WAN. For more information, refer to [Cloudflare Tunnel](/magic-wan/zero-trust/cloudflare-tunnel/).
-
-		For prefixes outside RFC 1918 contact your Cloudflare customer service manager.
-			`}
-				inline={false}
-  	/>
+		<Render
+			file="routing/magic-wan-allowed-ip-ranges"
+			product="networking-services"
+			params={{
+				productName: props.productName,
+				cfTunnelURL: props.cfTunnelURL
+			}}
+		/>
   </>
   )
 }
 
 ### Route prioritization
 
-Magic {props.productName} is steered along tunnel routes based on priorities of route entries.
+{props.productName} is steered along tunnel routes based on priorities of route entries.
 
 - Lower values have greater priority.
 - When the priority values for prefix entries match, Cloudflare uses [equal-cost multi-path (ECMP)](#equal-cost-multi-path-routing) packet forwarding to route traffic. An optional weight value can be applied to static routes to [modify ECMP tunnel distribution](#set-priority-and-weights-for-static-routes).
@@ -159,6 +164,13 @@ The following table exemplifies how to use geographic scoping for routes:
 | `10.10.10.100/24` | `TUNNEL_4_ATL` | `100` | `ENAM` |
 
 When there are multiple routes to the same prefix with equal priority, and those routes are assigned to different geographic regions (like WNAM and ENAM), traffic entering the network in a specific region — for example, WNAM — will egress through the route associated with that same region.
+
+{ props.magicWord === "Magic Transit" && (
+  <>
+		<Render file="routing/anycast-warning" product="networking-services" />
+	</>
+)
+}
 
 ### Region codes and associated regions
 
@@ -320,7 +332,7 @@ For more on {props.productName} tunnel weights, contact your Cloudflare customer
 
 ## BGP information
 
-When using a [Direct CNI](/network-interconnect/express-cni/) connection as an on-ramp, {props.productName} customers can also use BGP peering between their networks and their Magic routing table.
+When using a [Direct CNI](/network-interconnect/) connection as an on-ramp, {props.productName} customers can also use BGP peering between their networks and their Magic routing table.
 
 Using BGP peering with a CNI allows customers to:
 
@@ -337,11 +349,11 @@ With this functionality, customers can:
 
 {props.productName} BGP peering is with the Magic networking routing table (as opposed to peering with the Cloudflare Internet global network). BGP peers configured by following this guide will receive advertisements for all prefixes in the Magic routing table plus any additional prefixes configured in the per-interconnect <a href={props.setupBgpPeering}>Advertised prefix list</a>.
 
-If instead you are seeking to do public peering with the Cloudflare ASN 13335 at one of the Cloudflare data centers, refer to [PNI and peering setup](/network-interconnect/pni-and-peering/). Note that it is not currently possible to share Magic network BGP peering and PNI on the same physical interconnect port.
+If instead you are seeking to do public peering with the Cloudflare ASN 13335 at one of the Cloudflare data centers, refer to [PNI and peering setup](/network-interconnect/). Note that it is not currently possible to share Magic network BGP peering and PNI on the same physical interconnect port.
 
 ### BGP route distribution and convergence
 
-Routes received from the customer device will be redistributed into the Magic routing table, which is used by both Magic WAN and Magic Transit.
+Routes received from the customer device will be redistributed into the Magic routing table, which is used by both {props.productName} and Magic Transit.
 
 All routes in the Magic routing table are advertised to BGP peers. Each BGP peer will receive each prefix route along with the full `AS_PATH`, with the selected Cloudflare side [ASN](https://www.cloudflare.com/learning/network-layer/what-is-an-autonomous-system/) prepended. This is so that the peer can accurately perform [loop prevention](https://datatracker.ietf.org/doc/html/rfc4271#section-9.1.2).
 
@@ -374,7 +386,7 @@ BGP support currently has the following limitations:
 
 { props.magicWord === "Magic Transit" && (
   <>
-    <p>For Magic Transit customers, BGP with the Magic routing table is separated from the announcement of anycast prefixes at the Cloudflare edge. Anycast withdrawal must be controlled with existing methods documented in [Advertise prefixes](https://developers.cloudflare.com/magic-transit/how-to/advertise-prefixes/).</p>
+    <p>For Magic Transit customers, BGP with the Magic routing table is separated from the announcement of anycast prefixes at the Cloudflare edge. Anycast withdrawal must be controlled with existing methods documented in <a href="/magic-transit/how-to/advertise-prefixes/">Advertise prefixes</a>.</p>
   </>
   )
 }
@@ -384,12 +396,12 @@ BGP support currently has the following limitations:
 {props.productName} customers need to enable <a href={props.legacyHCs}>legacy health checks</a> alongside BGP. This is essential to determine if a specific Cloudflare data center is reachable from a customer device or not. <a href={props.tunnelHCsPage}>Tunnel health checks</a> will modify the route's priorities for dynamically learned BGP routes.
 
 
-{ props.magicWord === "Magic WAN" && (
+{ props.magicWord !== "Magic Transit" && (
   <>
 		<AnchorHeading title="Application-aware policies" depth={2} />
-    <p>By default, Cloudflare balances and steers traffic based on network-layer characteristics (IP, port etc). If you are using the Magic WAN Connector, you can also steer traffic based on well-known applications. Application-aware policies provide easier management and more granularity over traffic flows.
+    <p>By default, Cloudflare balances and steers traffic based on network-layer characteristics (IP, port etc). If you are using the {props.productName} Connector, you can also steer traffic based on well-known applications. Application-aware policies provide easier management and more granularity over traffic flows.
 
-		For more information, refer to <a href="/cloudflare-one/policies/gateway/application-app-types/">Applications and app types</a>.</p>
+		For more information, refer to <a href="/cloudflare-one/traffic-policies/application-app-types/">Applications and app types</a>.</p>
   </>
   )
 }

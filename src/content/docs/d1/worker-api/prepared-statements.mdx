@@ -63,8 +63,9 @@ const stmt = env.DB.prepare("SELECT * FROM Customers WHERE CompanyName = ?").bin
 
 D1 API supports static statements. Static statements are SQL statements where the variables have been hard coded. When writing a static statement, you manually type the variable within the statement string.
 
-:::note
-The recommended approach is to bind parameters to create a prepared statement (which are precompiled objects used by the database) to run the SQL. Prepared statements lead to faster overall execution and prevent SQL injection attacks.
+:::note[Advantages of prepared statements]
+The recommended approach is to use [prepared statements](/d1/worker-api/d1-database/#prepare) to run the SQL and bind parameters to them. Binding parameters using [`bind()`](/d1/worker-api/prepared-statements/#bind) to prepared statements allows you to reuse the prepared statements in your code, and prevents SQL injection attacks.
+
 :::
 
 Example of a prepared statement with dynamically bound value:
