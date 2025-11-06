@@ -33,7 +33,7 @@ entries:
   - publish_date: "2025-07-29"
     title: Updates to Playwright, local dev support, and REST API
     description: |-
-      * [Playwright](/browser-rendering/playwright/) upgraded to [Playwright v1.54.1](https://github.com/microsoft/playwright/releases/tag/v1.54.1) and [Playwright MCP](/browser-rendering/playwright-mcp/) upgraded to be in sync with upstream Playwright MCP v0.0.30.
+      * [Playwright](/browser-rendering/playwright/) upgraded to [Playwright v1.54.1](https://github.com/microsoft/playwright/releases/tag/v1.54.1) and [Playwright MCP](/browser-rendering/playwright/playwright-mcp/) upgraded to be in sync with upstream Playwright MCP v0.0.30.
       * Local development with `npx wrangler dev` now supports [Playwright](/browser-rendering/playwright/) when using Browser Rendering. Upgrade to the latest version of wrangler to get started.
       * The [`/content` endpoint](/browser-rendering/rest-api/content-endpoint/) now returns the page's title, making it easier to identify pages.
       * The [`/json` endpoint](/browser-rendering/rest-api/json-endpoint/) now allows you to specify your own AI model for the extraction, using the `custom_ai` parameter.
@@ -65,7 +65,7 @@ entries:
   - publish_date: "2025-05-26"
     title: Playwright MCP
     description: |-
-      * You can now deploy [Playwright MCP](/browser-rendering/playwright-mcp/) and use any MCP client to get AI models to interact with Browser Rendering.
+      * You can now deploy [Playwright MCP](/browser-rendering/playwright/playwright-mcp/) and use any MCP client to get AI models to interact with Browser Rendering.
   - publish_date: "2025-04-30"
     title: Automatic Request Headers
     description: |-
