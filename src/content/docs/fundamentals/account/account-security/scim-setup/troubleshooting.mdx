@@ -24,7 +24,11 @@ curl -X PUT "https://api.cloudflare.com/client/v4/accounts/{account_id}/members/
   -H "Authorization: Bearer YOUR_SCIM_AOT" \
   -H "Content-Type: application/json" \
   -d '{
-    "roles": ["33666b9c79b9a5273fc7344ff42f953d"]
+    "roles": [
+      {
+        "id": "33666b9c79b9a5273fc7344ff42f953d"
+      }
+    ]
   }'
 ```
 
