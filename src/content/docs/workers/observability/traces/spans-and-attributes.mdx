@@ -137,7 +137,58 @@ Cloudflare Workers provides automatic tracing instrumentation **out of the box**
 
 ---
 
-#### [`browser_rendering_fetch`](/browser-rendering/)
+### [D1](/d1/)
+
+#### Attributes available on all D1 spans
+
+- `db.system.name`
+- `db.operation.name`
+- `db.query.text`
+- `cloudflare.binding.type`
+- `cloudflare.d1.response.size_after`
+- `cloudflare.d1.response.rows_read`
+- `cloudflare.d1.response.rows_written`
+- `cloudflare.d1.response.last_row_id`
+- `cloudflare.d1.response.changed_db`
+- `cloudflare.d1.response.changes`
+- `cloudflare.d1.response.served_by_region`
+- `cloudflare.d1.response.served_by_primary`
+- `cloudflare.d1.response.sql_duration_ms`
+- `cloudflare.d1.response.total_attempts`
+
+#### [`d1_batch`](/d1/worker-api/d1-database/#batch)
+
+- `db.operation.batch.size`
+- `cloudflare.d1.query.bookmark`
+- `cloudflare.d1.response.bookmark`
+
+#### [`d1_exec`](/d1/worker-api/d1-database/#exec)
+
+#### [`d1_first`](/d1/worker-api/prepared-statements/#first)
+
+- `cloudflare.d1.query.bookmark`
+- `cloudflare.d1.response.bookmark`
+
+#### [`d1_run`](/d1/worker-api/prepared-statements/#run)
+
+- `cloudflare.d1.query.bookmark`
+- `cloudflare.d1.response.bookmark`
+
+#### [`d1_all`](/d1/worker-api/prepared-statements/#run)
+
+- `cloudflare.d1.query.bookmark`
+- `cloudflare.d1.response.bookmark`
+
+#### [`d1_raw`](/d1/worker-api/prepared-statements/#raw)
+
+- `cloudflare.d1.query.bookmark`
+- `cloudflare.d1.response.bookmark`
+
+---
+
+### [Browser Rendering](/browser-rendering/)
+
+#### `browser_rendering_fetch`
 
 ---
 
@@ -390,6 +441,31 @@ The SQL API allow you to modify the SQLite database embedded within a Durable Ob
 - `cloudflare.durable_object.response.rows_written`
 - `cloudflare.durable_object.response.statement_count`
 
+#### [`durable_object_storage_kv_get`](/durable-objects/api/sqlite-storage-api/#get)
+
+- `cloudflare.durable_object.kv.query.keys`
+- `cloudflare.durable_object.kv.query.keys.count`
+
+#### [`durable_object_storage_kv_put`](/durable-objects/api/sqlite-storage-api/#put)
+
+- `cloudflare.durable_object.kv.query.keys`
+- `cloudflare.durable_object.kv.query.keys.count`
+
+#### [`durable_object_storage_kv_delete`](/durable-objects/api/sqlite-storage-api/#delete)
+
+- `cloudflare.durable_object.kv.query.keys`
+- `cloudflare.durable_object.kv.query.keys.count`
+- `cloudflare.durable_object.kv.response.deleted_count`
+
+#### [`durable_object_storage_kv_list`](/durable-objects/api/sqlite-storage-api/#list)
+
+- `cloudflare.durable_object.kv.query.start`
+- `cloudflare.durable_object.kv.query.startAfter`
+- `cloudflare.durable_object.kv.query.end`
+- `cloudflare.durable_object.kv.query.prefix`
+- `cloudflare.durable_object.kv.query.reverse`
+- `cloudflare.durable_object.kv.query.limit`
+
 ---
 
 ### [Durable Object Storage KV API](/durable-objects/api/legacy-kv-storage-api)
@@ -415,6 +491,30 @@ The legacy KV-backed API allows you to modify embedded storage within a Durable 
 #### [`durable_object_alarms_setAlarm`](/durable-objects/api/alarms/#setalarm)
 
 #### [`durable_object_alarms_deleteAlarm`](/durable-objects/api/alarms/#deletealarm)
+
+---
+
+### [Images](/images/transform-images/bindings/)
+
+### [`images_output`](/images/transform-images/bindings/#output)
+
+- `cloudflare.binding.type`
+- `cloudflare.images.options.format`
+- `cloudflare.images.options.quality`
+- `cloudflare.images.options.background`
+- `cloudflare.images.options.anim`
+- `cloudflare.images.options.transforms`
+- `cloudflare.images.error.code`
+
+### [`images_info`](/images/transform-images/bindings/#info)
+
+- `cloudflare.binding.type`
+- `cloudflare.images.options.encoding`
+- `cloudflare.images.result.format`
+- `cloudflare.images.result.file_size`
+- `cloudflare.images.result.width`
+- `cloudflare.images.result.height`
+- `cloudflare.images.error.code`
 
 ---
 

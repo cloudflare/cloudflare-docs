@@ -1,0 +1,25 @@
+---
+pcx_content_type: troubleshooting
+title: Available debug endpoints
+sidebar:
+  order: 10
+  label: Debug endpoints
+---
+
+The following debug endpoints are available via `dig` or other DNS query tools.
+
+```sh
+$ dig @<YOUR_DOMAIN> chaos txt myip.cloudflare +short
+```
+
+```sh
+$ dig @<YOUR_DOMAIN> chaos txt id.server +short
+```
+
+```sh
+$ dig @<YOUR_DOMAIN> chaos txt version.bind +short
+```
+
+```sh
+$ dig @<YOUR_DOMAIN> txt whoami.cloudflare.net +short
+```

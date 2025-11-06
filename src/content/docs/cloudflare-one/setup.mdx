@@ -7,7 +7,7 @@ sidebar:
 
 import { Render } from "~/components";
 
-This guide covers the recommended steps to start securing your users and devices with Cloudflare One.
+This guide covers the recommended steps to start securing your users and devices with Cloudflare Zero Trust.
 
 :::note
 
@@ -18,26 +18,26 @@ To get started with a specific use case, refer to our [implementation guides](/c
 
 Sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up).
 
-## Create a Cloudflare One organization
+## Create a Zero Trust Organization
 
 <Render file="choose-team-name" product="cloudflare-one" />
 
-Welcome to Cloudflare One! You can now explore a list of one-click actions we have designed to help you kickstart your Cloudflare One experience.
+Welcome to Cloudflare Zero Trust! You can now explore a list of one-click actions we have designed to help you kickstart your experience.
 
 ## Install the WARP client on your devices
 
 If you want to enable security features such as Browser Isolation, HTTP filtering, AV scanning, and device posture, or connect networks to Cloudflare, here are the next steps you need to take:
 
-1. **Set up a login method.** Configure [One-time PIN](/cloudflare-one/integrations/identity-providers/one-time-pin/) or connect a [third-party identity provider](/cloudflare-one/integrations/identity-providers/) in Cloudflare One. This is the login method your users will utilize when authenticating to add a new device to your Cloudflare One setup.
+1. **Set up a login method.** Configure [One-time PIN](/cloudflare-one/integrations/identity-providers/one-time-pin/) or connect a [third-party identity provider](/cloudflare-one/integrations/identity-providers/) in Cloudflare Zero Trust. This is the login method your users will utilize when authenticating to add a new device to your Cloudflare Zero Trust setup.
 
-2. **Next, define [device enrollment permissions](/cloudflare-one/team-and-resources/devices/warp/deployment/device-enrollment/)**. Create device enrollment rules to define which users in your organization should be able to connect devices to your organization's Cloudflare One setup. As you create your rule, you will be asked to select which login method you would like users to authenticate with.
+2. **Next, define [device enrollment permissions](/cloudflare-one/team-and-resources/devices/warp/deployment/device-enrollment/)**. Create device enrollment rules to define which users in your organization should be able to connect devices to your organization's Cloudflare Zero Trust setup. As you create your rule, you will be asked to select which login method you would like users to authenticate with.
 
 3. **Install the [Cloudflare root certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/) on your devices.** Advanced security features including HTTP traffic inspection require users to install and trust the Cloudflare root certificate on their machine or device. If you are installing certificates manually on all your devices, these steps will need to be performed on each new device that is to be subject to HTTP filtering.
 
 4. **[Download](/cloudflare-one/team-and-resources/devices/warp/download-warp/) and deploy the WARP client to your devices**. Choose one of the [different ways](/cloudflare-one/team-and-resources/devices/warp/deployment/) to deploy the WARP client, depending on what works best for your organization.
 
-5. **Log in to your organization's Cloudflare One instance from your devices**. On your device, go to the Settings section in the WARP client and insert your organization's team name.
+5. **Log in to your organization's Cloudflare Zero Trust instance from your devices**. On your device, go to the Settings section in the WARP client and insert your organization's team name.
 
-Your devices are now connected to Cloudflare One through the WARP client. You can go to **Team & Resources** > **Devices** to find a list of your enrolled devices, when they were last seen, and the WARP client version they are running.
+Your devices are now connected to Cloudflare Zero Trust through the WARP client. You can go to **Team & Resources** > **Devices** to find a list of your enrolled devices, when they were last seen, and the WARP client version they are running.
 
 Next, [enforce security policies](/cloudflare-one/traffic-policies/) on your traffic and access requests.

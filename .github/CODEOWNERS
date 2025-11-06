@@ -66,7 +66,7 @@
 /src/content/docs/cloudflare-one/access-controls/ @kennyj42 @ranbel @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-one/team-and-resources/devices/ @ranbel @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-one/networks/connectors/cloudflare-tunnel/ @nikitacano @ranbel @cloudflare/pcx-technical-writing
-/src/content/docs/cloudflare-one/applications/casb/ @maxvp @cloudflare/pcx-technical-writing
+/src/content/docs/cloudflare-one/cloud-and-saas-findings/ @maxvp @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-one/traffic-policies/ @maxvp @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-one/remote-browser-isolation/ @deadlypants1973 @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-one/data-loss-prevention/ @maxvp @cloudflare/pcx-technical-writing
@@ -140,7 +140,7 @@
 /src/content/docs/analytics/analytics-engine/ @irvinebroque @elithrar @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-for-platforms/ @irvinebroque @dinasaur404 @cloudflare/pcx-technical-writing
 /src/content/docs/cloudflare-for-platforms/workers-for-platforms/ @irvinebroque @dinasaur404 @cloudflare/deploy-config @cloudflare/pcx-technical-writing
-/src/content/docs/workers/observability/ @irvinebroque @mikenomitch @rohinlohe @kodster28 @cloudflare/pcx-technical-writing
+/src/content/docs/workers/observability/ @irvinebroque @mikenomitch @nevikashah @kodster28 @cloudflare/pcx-technical-writing
 /src/content/docs/workers/static-assets @irvinebroque @GregBrimble @WalshyDev @kodster28 @cloudflare/deploy-config @cloudflare/pcx-technical-writing
 /src/content/docs/workflows/ @elithrar @celso @cloudflare/pcx-technical-writing
 /src/content/docs/sandbox/ @whoiskatrin @ghostwriternr @cloudflare/pcx-technical-writing @cloudflare/ai-agents

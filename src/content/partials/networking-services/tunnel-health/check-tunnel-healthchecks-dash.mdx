@@ -29,7 +29,7 @@ Not all data centers will be relevant to you at all times. You can refer to the 
 
 		1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/) and go to **Insights**.
 		2. Go to **Network visibility** > **WAN connector health**.
-		3. In the next screen you can access a list of your tunnels and their current health status. You can also check the amount of health checks passed in the last hour as well as traffic volume for each tunnel.
+		3. In this screen screen you can access a list of your tunnels and their current health status. You can also check the amount of health checks passed in the last hour as well as traffic volume for each tunnel.
 		4. Find the tunnel you wish to inspect, select the three dots in front of the tunnel and select:
 			- **Create alert**: This will send you to the ${props.notificationsPath} so you can create specific alerts for that tunnel, to be warned when specific conditions are met.
 			- **Network Analytics**: This will send you to the Analytics section of the dash, prefiltered with the tunnel you want to inspect.
@@ -66,7 +66,7 @@ To check for anycast tunnel health:
 			text={`
 			1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com/login) and select your account.
 			2. Go to **${props.productPath}**.
-			3. In the next screen you can access a list of your tunnels and their current health status. You can also check the amount of health checks passed in the last hour as well as traffic volume for each tunnel.
+			3. In this screen you can access a list of your tunnels and their current health status. You can also check the amount of health checks passed in the last hour as well as traffic volume for each tunnel.
 			4. Find the tunnel you wish to inspect, select the three dots in front of the tunnel and select:
 				- **Create alert**: This will send you to the ${props.notificationsPath} so you can create specific alerts for that tunnel, to be warned when specific conditions are met.
 				- **Network Analytics**: This will send you to the Analytics section of the dash, prefiltered with the tunnel you want to inspect.
@@ -83,7 +83,7 @@ To check for anycast tunnel health:
 
 ## Check tunnel health for a specific tunnel
 
-Beyond having a wide view into all connections, you can drill down into a specific tunnel to check its health status and other information. Refer to the blue note above to learn how to access the new dashboard experience, and:
+Beyond having a wide view into all connections, you can drill down into a specific tunnel to check its health status and other information.{props.magicWord !== "WAN Tunnels" && <> Refer to the blue note above to learn how to access the new dashboard experience, and:</>}
 
 1. Go to **{props.productPath}**.
 2. Find and select the tunnel you wish to inspect.

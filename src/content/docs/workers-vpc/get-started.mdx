@@ -1,0 +1,225 @@
+---
+title: Get started
+pcx_content_type: get-started
+updated: 2025-08-05
+sidebar:
+  order: 2
+---
+
+import {
+	Render,
+	PackageManagers,
+	FileTree,
+	Tabs,
+	TabItem,
+	TypeScriptExample,
+	WranglerConfig,
+	LinkButton,
+	Steps,
+} from "~/components";
+
+This guide will walk you through creating your first Workers VPC Service, allowing your Worker to access resources in your private network.
+
+You will create a Workers application, create a Tunnel in your private network to connect it to Cloudflare, and then configure VPC Services for the services on your private network you want to access from Workers.
+
+:::note
+
+Workers VPC is currently in beta. Features and APIs may change before general availability. While in beta, Workers VPC is available for free to all Workers plans.
+
+:::
+
+## Prerequisites
+
+Before you begin, ensure you have completed the following:
+
+<Render file="prereqs" product="workers" />
+
+Additionally, you will need:
+
+- Access to a private network (your local network, AWS VPC, Azure VNet, GCP VPC, or on-premise networks)
+
+## 1. Create a new Worker project
+
+Create a new Worker project using Wrangler:
+
+<PackageManagers
+	type="create"
+	pkg="cloudflare@latest"
+	args={"workers-vpc-app"}
+/>
+
+<Render
+	file="c3-post-run-steps"
+	product="workers"
+	params={{ category: "hello-world", type: "Worker only", lang: "TypeScript" }}
+/>
+
+Navigate to your project directory:
+
+```sh
+cd workers-vpc-app
+```
+
+## 2. Set up Cloudflare Tunnel
+
+A Cloudflare Tunnel creates a secure connection from your private network to Cloudflare. This tunnel will allow Workers to securely access your private resources. You can create the tunnel on a virtual machine or container in your external cloud, or even on your local desktop for the sake of this tutorial.
+
+<Steps>
+
+1. Navigate to the [Workers VPC dashboard](https://dash.cloudflare.com/?to=/:account/workers/vpc/tunnels) and select the **Tunnels** tab.
+
+2. Select **Create** to create a new tunnel.
+
+3. Enter a name for your tunnel (for example, `workers-vpc-tunnel`) and select **Save tunnel**.
+
+4. Choose your operating system and architecture. The dashboard will provide specific installation instructions for your environment.
+
+5. Follow the provided commands to download and install `cloudflared`, and execute the service installation command with your unique token.
+
+</Steps>
+
+The dashboard will confirm when your tunnel is successfully connected.
+
+### Configuring your private network for Cloudflare Tunnel
+
+Once your tunnel is connected, you will need to ensure it can access your the services that you want your Workers to have access to. The tunnel should be installed on a machine that can reach the internal resources you want to expose to Workers VPC. In external clouds, this may mean configuring Access-Control-Lists, Security Groups, or VPC Firewall Rules to ensure that the tunnel can access the desired services.
+
+:::note
+This guide provides a quick setup for Workers VPC.
+
+For comprehensive tunnel configuration, monitoring, and management, refer to the [full Cloudflare Tunnel documentation](/cloudflare-one/networks/connectors/cloudflare-tunnel/).
+:::
+
+## 3. Create a VPC Service
+
+Now that your tunnel is running, create a VPC Service that Workers can use to access your internal resources:
+
+<Tabs>
+<TabItem label="Dashboard">
+
+<Steps>
+
+1. Navigate to the [Workers VPC dashboard](https://dash.cloudflare.com/?to=/:account/workers/vpc) and select the **VPC Services** tab.
+
+2. Select **Create** to create a new VPC Service.
+
+3. Enter a **Service name** for your VPC Service (for example, `my-private-api`).
+
+4. Select your tunnel from the **Tunnel** dropdown, or select **Create Tunnel** if you need to create a new one.
+
+5. Enter the **Host or IP address** of your internal service (for example, `localhost`, `internal-api.company.local`, or `10.0.1.50`).
+
+6. Configure **Ports**. Select either:
+   - **Use default ports** for standard HTTP (80) and HTTPS (443)
+   - **Provide port values** to specify custom HTTP and HTTPS ports
+
+7. Configure **DNS Resolver**. Select either:
+   - **Use tunnel as resolver** to use the tunnel's built-in DNS resolution
+   - **Custom resolver** and enter your DNS resolver IP (for example, `8.8.8.8`)
+
+8. Select **Create service** to create your VPC Service.
+
+</Steps>
+
+The dashboard will display your new VPC Service with a unique Service ID. Save this Service ID for the next step.
+
+</TabItem>
+<TabItem label="Wrangler CLI">
+
+```sh
+npx wrangler vpc service create my-private-api \
+  --type http \
+  --tunnel-id <YOUR_TUNNEL_ID> \
+  --hostname <YOUR_HOSTNAME>
+```
+
+Replace:
+
+- `<YOUR_TUNNEL_ID>` with your tunnel ID from step 2
+- `<YOUR_HOSTNAME>` with your internal service hostname (for example, `internal-api.company.local`)
+
+You can also:
+
+- Create services using IP addresses by replacing `--hostname <YOUR_HOSTNAME>` with `--ipv4 <YOUR_IPV4_ADDRESS>` (for example, `--ipv4 10.0.1.50`), `--ipv6 <YOUR_IPV6_ADDRESS>` (for example, `--ipv6 fe80::1`), or both for dual-stack configuration (`--ipv4 10.0.1.50 --ipv6 fe80::1`)
+- Specify custom ports by adding `--http-port <PORT>` and/or `--https-port <PORT>` (for example, `--http-port 8080 --https-port 8443`)
+
+The command will return a service ID. Save this for the next step.
+
+</TabItem>
+</Tabs>
+
+## 4. Configure your Worker
+
+Add the VPC Service binding to your `wrangler.toml`:
+
+<WranglerConfig>
+```toml
+name = "workers-vpc-app"
+main = "src/index.ts"
+compatibility_date = "2024-01-01"
+
+[[vpc_services]]
+binding = "VPC_SERVICE"
+service_id = "<YOUR_SERVICE_ID>"
+
+```
+
+</WranglerConfig>
+
+Replace `<YOUR_SERVICE_ID>` with the service ID from step 3.
+
+## 5. Write your Worker code
+
+Update your Worker to use the VPC Service binding. The following example:
+
+```ts
+export default {
+	async fetch(request, env, ctx): Promise<Response> {
+		const url = new URL(request.url);
+
+		// This is a simple proxy scenario.
+		// In this case, you will need to replace the URL with the proper protocol (http vs. https), hostname and port of the service.
+		// For example, this could be "http://localhost:1111", "http://192.0.0.1:3000", "https://my-internal-api.example.com"
+		const targetUrl = new URL(`http://<ENTER_SERVICE_HOST>:<ENTER_SERVICE_PORT>${url.pathname}${url.search}`);
+
+		// Create new request with the target URL but preserve all other properties
+		const proxyRequest = new Request(targetUrl, {
+			method: request.method,
+			headers: request.headers,
+			body: request.body,
+		});
+
+		const response = await env.VPC_SERVICE.fetch(proxyRequest);
+
+		return response;
+	},
+} satisfies ExportedHandler<Env>;
+
+```
+
+## 6. Test locally
+
+Test your Worker locally. You must use remote VPC Services, using either [Workers remote bindings](/workers/development-testing/#remote-bindings) as was configured in your `wrangler.jsonc` configuration file, or using `npx wrangler dev --remote`:
+
+```sh
+npx wrangler dev
+```
+
+Visit `http://localhost:8787` to test your Worker's connection to your private network.
+
+## 7. Deploy your Worker
+
+Once testing is complete, deploy your Worker:
+
+```sh
+npx wrangler deploy
+```
+
+Your Worker is now deployed and can access your private network resources securely through the Cloudflare Tunnel.
+
+## Next steps
+
+- Explore [configuration options](/workers-vpc/configuration/) for advanced setups
+- Set up [high availability tunnels](/workers-vpc/configuration/tunnel/hardware-requirements/) for production
+- View [platform-specific guides](/cloudflare-one/networks/connectors/cloudflare-tunnel/deployment-guides/) for AWS, Azure, GCP, and Kubernetes
+- Check out [examples](/workers-vpc/examples/) for common use cases

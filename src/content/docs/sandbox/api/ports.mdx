@@ -24,6 +24,7 @@ const response = await sandbox.exposePort(port: number, options?: ExposePortOpti
 ```
 
 **Parameters**:
+
 - `port` - Port number to expose (1024-65535)
 - `options` (optional):
   - `name` - Friendly name for the port
@@ -56,10 +57,11 @@ await sandbox.unexposePort(port: number): Promise<void>
 ```
 
 **Parameters**:
+
 - `port` - Port number to unexpose
 
 <TypeScriptExample>
-```
+```ts
 await sandbox.unexposePort(8000);
 ```
 </TypeScriptExample>
@@ -79,8 +81,46 @@ const response = await sandbox.getExposedPorts(): Promise<GetExposedPortsRespons
 const { ports } = await sandbox.getExposedPorts();
 
 for (const port of ports) {
-  console.log(`${port.name || port.port}: ${port.exposedAt}`);
+console.log(`${port.name || port.port}: ${port.exposedAt}`);
 }
+```
+</TypeScriptExample>
+
+### `wsConnect()`
+
+Connect to WebSocket servers running in the sandbox. Use this when your Worker needs to establish WebSocket connections with services in the sandbox.
+
+**Common use cases:**
+- Route incoming WebSocket upgrade requests with custom authentication or authorization
+- Connect from your Worker to get real-time data from sandbox services
+
+For exposing WebSocket services via public preview URLs, use `exposePort()` with `proxyToSandbox()` instead. See [WebSocket Connections guide](/sandbox/guides/websocket-connections/) for examples.
+
+```ts
+const response = await sandbox.wsConnect(request: Request, port: number): Promise<Response>
+```
+
+**Parameters**:
+
+- `request` - Incoming WebSocket upgrade request
+- `port` - Port number (1024-65535, excluding 3000)
+
+**Returns**: `Promise<Response>` - WebSocket response establishing the connection
+
+<TypeScriptExample>
+```ts
+import { getSandbox } from "@cloudflare/sandbox";
+
+export default {
+  async fetch(request: Request, env: Env): Promise<Response> {
+    if (request.headers.get('Upgrade')?.toLowerCase() === 'websocket') {
+      const sandbox = getSandbox(env.Sandbox, 'my-sandbox');
+      return await sandbox.wsConnect(request, 8080);
+    }
+
+    return new Response('WebSocket endpoint', { status: 200 });
+  }
+};
 ```
 </TypeScriptExample>
 

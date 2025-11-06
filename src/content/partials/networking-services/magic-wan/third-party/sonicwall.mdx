@@ -1,6 +1,5 @@
 ---
 params:
-  - productName
   - ipsecTunnelsUrl
   - creatingYourIpsecTunnelsUrl
   - createYourStaticRoutesUrl
@@ -9,7 +8,7 @@ params:
 
 import { Render } from "~/components";
 
-This tutorial shows you how to use {props.productName} with the following versions of the SonicWall appliances:
+This tutorial shows you how to use Magic WAN with the following versions of the SonicWall appliances:
 
 - **Hardware tested**:
   - SonicWall NSv 470
@@ -17,11 +16,11 @@ This tutorial shows you how to use {props.productName} with the following versio
 - **Software versions tested**:
   - SonicOS 7.0.1
 
-You can connect your SonicWall appliance through <a href={props.ipsecTunnelsUrl}>IPsec tunnels</a> to {props.productName}. Generic Routing Encapsulation (GRE) is not supported on SonicWall.
+You can connect your SonicWall appliance through <a href={props.ipsecTunnelsUrl}>IPsec tunnels</a> to Magic WAN. Generic Routing Encapsulation (GRE) is not supported on SonicWall.
 
 ## Topology
 
-![Topology diagram showing how to connect SonicWall appliances to {props.productName}](~/assets/images/magic-wan/third-party/sonicwall/topology.png)
+![Topology diagram showing how to connect SonicWall appliances to Magic WAN](~/assets/images/magic-wan/third-party/sonicwall/topology.png)
 
 The following instructions show how to setup an IPsec connection on your SonicWall device. We will use the IP ranges from the above topology example to create the connections needed. Settings not explicitly mentioned can be left with their default values.
 
@@ -104,7 +103,7 @@ Static routes are required for any networks that will be reached via the IPsec t
 
 ## 4. Add a VPN tunnel interface
 
-SonicOS requires a VPN tunnel interface to route traffic via {props.productName}. When creating the interface, use the prefix `10.200.1.1/31`. This matches with the Cloudflare side for this tunnel, which is `10.200.1.0`.
+SonicOS requires a VPN tunnel interface to route traffic via Magic WAN. When creating the interface, use the prefix `10.200.1.1/31`. This matches with the Cloudflare side for this tunnel, which is `10.200.1.0`.
 
 :::note
 You will need to use a different IP pair for each tunnel/site.
@@ -113,20 +112,20 @@ You will need to use a different IP pair for each tunnel/site.
 1. Go to **Network** > **System** > **Interfaces**.
 2. Select **Add interface** > **VPN Tunnel Interface**.
 3. For IP Address, use `10.200.1.1`.
-4. Enable **Ping**. This is required so the interface can be pinged for debugging and {props.productName} health checks.
+4. Enable **Ping**. This is required so the interface can be pinged for debugging and Magic WAN health checks.
 
 <div class="large-img">
 
-![Enable ping to that your interface can be pinged for debugging and {props.productName} health checks](~/assets/images/magic-wan/third-party/sonicwall/6-vpn-ping.png)
+![Enable ping to that your interface can be pinged for debugging and Magic WAN health checks](~/assets/images/magic-wan/third-party/sonicwall/6-vpn-ping.png)
 
 </div>
 
 5. Select **Advanced**.
-6. Enable the **Enable Asymmetric Route Support** option. This is required for the {props.productName} tunnel health check.
+6. Enable the **Enable Asymmetric Route Support** option. This is required for the Magic WAN tunnel health check.
 
 <div class="large-img">
 
-![Enable Asymmetric Route Support. It is required for {props.productName} health checks](~/assets/images/magic-wan/third-party/sonicwall/6-vpn-assymetric.png)
+![Enable Asymmetric Route Support. It is required for Magic WAN health checks](~/assets/images/magic-wan/third-party/sonicwall/6-vpn-assymetric.png)
 
 </div>
 
@@ -134,7 +133,7 @@ You will need to use a different IP pair for each tunnel/site.
 
 ## 5. Add address object(s)
 
-Address objects are necessary for route policies. In our example, we have one other site that will be reached via {props.productName}. First, you need to create address objects for each network. Then, you need to create an address group that contains all the remote networks. This address group will be used in the next step to create the correct route policies.
+Address objects are necessary for route policies. In our example, we have one other site that will be reached via Magic WAN. First, you need to create address objects for each network. Then, you need to create an address group that contains all the remote networks. This address group will be used in the next step to create the correct route policies.
 
 To add an address object:
 
@@ -170,7 +169,7 @@ Add a route using the address object or group just created as the destination.
 
 ## 7. Add access rule for health checks
 
-An additional access rule is required for {props.productName} health checks to work properly. This will enable the WAN IP to receive ICMP pings via the tunnel, and return them over the WAN.
+An additional access rule is required for Magic WAN health checks to work properly. This will enable the WAN IP to receive ICMP pings via the tunnel, and return them over the WAN.
 
 1. Select **Policy** > **Rules and Policies**.
 2. Select **Access Rules** > **Add**.
@@ -181,7 +180,7 @@ An additional access rule is required for {props.productName} health checks to w
 
 ## 8. Setup health checks
 
-You have to [configure {props.productName} health checks](/magic-wan/configuration/manually/how-to/configure-tunnel-endpoints/#add-tunnels) correctly. Here is an example of how to set up health checks:
+You have to [configure Magic WAN health checks](/magic-wan/configuration/manually/how-to/configure-tunnel-endpoints/#add-tunnels) correctly. Here is an example of how to set up health checks:
 
 ```bash
 curl --request PUT \

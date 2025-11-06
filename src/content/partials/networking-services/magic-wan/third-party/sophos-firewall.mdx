@@ -1,6 +1,5 @@
 ---
 params:
-  - productName
   - genericRoutingEncapsulationGreOrIpsecTunnelsUrl
   - ikeIdUrl
   - configureTunnelEndpointsUrl
@@ -9,7 +8,7 @@ params:
 
 import { Render } from "~/components";
 
-This tutorial shows you how to use {props.productName} with the following versions of the Sophos Firewall:
+This tutorial shows you how to use Magic WAN with the following versions of the Sophos Firewall:
 
 - **Sophos form factor tested:**
 
@@ -20,7 +19,7 @@ This tutorial shows you how to use {props.productName} with the following versio
   - SFOS Version 19.0 MR2-Build 472
   - SFOS Version 19.5.1 MR1-Build 278
 
-You can connect through<a href={props.genericRoutingEncapsulationGreOrIpsecTunnelsUrl}> Generic Routing Encapsulation (GRE) or IPsec tunnels</a> to {props.productName}.
+You can connect through<a href={props.genericRoutingEncapsulationGreOrIpsecTunnelsUrl}> Generic Routing Encapsulation (GRE) or IPsec tunnels</a> to Magic WAN.
 
 ## IPsec connection
 
@@ -71,7 +70,7 @@ After setting up your IPsec tunnel, it will show up on the IPsec connections lis
 
 ### 3. Assign the XFRM interface address
 
-You must use an interface address from the `/31` subnet required to <a href={props.configureTunnelEndpointsUrl}>configure tunnel endpoints</a> on {props.productName}.
+You must use an interface address from the `/31` subnet required to <a href={props.configureTunnelEndpointsUrl}>configure tunnel endpoints</a> on Magic WAN.
 
 1. Go to **Configure** > **Network**.
 2. In **Interfaces**, select the corresponding interface to the IPsec tunnel you created in [step 2](#2-create-ipsec-connection-tunnel).
@@ -82,7 +81,7 @@ You must use an interface address from the `/31` subnet required to <a href={pro
 ### 4. Add a firewall rule
 
 1. Go to **Protect** > **Rules and policies**.
-2. In **Firewall rules**, create a firewall rule with the criteria and security policies from your company that allows traffic to flow between Sophos and {props.productName}.
+2. In **Firewall rules**, create a firewall rule with the criteria and security policies from your company that allows traffic to flow between Sophos and Magic WAN.
 
 ![Create a firewall rule with the criteria and security policies from your company](~/assets/images/magic-wan/third-party/sophos-firewall/4-firewall-rule.png)
 
@@ -130,7 +129,7 @@ The detailed information on how to add a GRE or SD-WAN route to redirect traffic
 
 ### 3. Add a firewall rule for LAN/DMZ to VPN
 
-Create a firewall rule with the criteria and security policies from your company that allows traffic to flow between Sophos and {props.productName}. This firewall rule should include the required networks and services.
+Create a firewall rule with the criteria and security policies from your company that allows traffic to flow between Sophos and Magic WAN. This firewall rule should include the required networks and services.
 
 1. Go to **Protect** > **Rules and policies**.
 2. In **Firewall rules**, select **IPv4** > **Add firewall rule**.

@@ -15,15 +15,20 @@ import { Render } from "~/components";
 Only available on Enterprise plans.
 :::
 
-Zero Trust risk scoring detects user activity and behaviors that could introduce risk to your organization's systems and data. Risk scores add user and entity behavior analytics (UEBA) to the Zero Trust platform.
+Cloudflare One risk scoring detects user activity and behaviors that could introduce risk to your organization's systems and data. Risk scores add user and entity behavior analytics (UEBA) to the Cloudflare One platform.
 
 ## User risk scoring
 
-Cloudflare Zero Trust assigns a risk score of Low, Medium, or High based on detections of users' activities, posture, and settings. A user's score is equal to the highest-level risk behavior they trigger.
+Cloudflare One assigns a risk score of Low, Medium, or High based on detections of users' activities, posture, and settings. A user's score is equal to the highest-level risk behavior they trigger.
 
 ### View a user's risk score
 
-To view a user's risk score in [Zero Trust](https://one.dash.cloudflare.com/), go to **Risk score** > **User risk scoring**. Select a user's name to view their instances of risk behaviors, if any. You can select an instance of a risk behavior to view the log associated with the detection.
+To view a user's risk score:
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Teams & Resources**.
+2. Select **Users**.
+3. Select **Risk score** > **Risk scoring**.
+4. Select a user's name to view their instances of risk behaviors, if any. You can select an instance of a risk behavior to view the log associated with the detection.
 
 Users that have had their risk score [cleared](#clear-a-users-risk-score) will not appear in the table unless they trigger another risk behavior.
 
@@ -31,24 +36,25 @@ Users that have had their risk score [cleared](#clear-a-users-risk-score) will n
 
 If required, you can reset risk scores for specific users. Once reset, users will not appear in the associated risk table until they trigger another risk behavior.
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Risk score** > **User risk scoring**.
-2. Select the user you want to clear the risk score for.
-3. In **User risk overview**, select **Reset user risk**.
-4. Select **Confirm**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Teams & Resources**.
+2. Select **Risk score** > **Risk scoring**.
+3. Select the user you want to clear the risk score for.
+4. In **User risk overview**, select **Reset user risk**.
+5. Select **Confirm**.
 
 ### Send risk score to Okta
 
-In addition to controls in Zero Trust, Okta users can send risk scores to Okta to apply SSO-level policies.
+In addition to controls in Cloudflare One, Okta users can send risk scores to Okta to apply SSO-level policies.
 
 <Render file="send-risk-scores-okta" product="cloudflare-one" />
 
 For more information on configuring user risk score within Okta, refer to the [Okta documentation](https://help.okta.com/oie/en-us/content/topics/itp/overview.htm).
 
-While the Okta integration is turned on, Zero Trust will send any user risk score updates to Okta, including score increases and resets. Score update events will appear in your [Access audit logs](/cloudflare-one/insights/logs/audit-logs/).
+While the Okta integration is turned on, Cloudflare One will send any user risk score updates to Okta, including score increases and resets. Score update events will appear in your [Access audit logs](/cloudflare-one/insights/logs/audit-logs/).
 
 ## Predefined risk behaviors
 
-By default, all predefined behaviors are disabled. When a behavior is enabled, Zero Trust will continuously evaluate all users within the organization for the behavior. You can [change the risk level](#change-risk-behavior-risk-levels) for predefined behaviors if the default assignment does not suit your environment.
+By default, all predefined behaviors are disabled. When a behavior is enabled, Cloudflare One will continuously evaluate all users within the organization for the behavior. You can [change the risk level](#change-risk-behavior-risk-levels) for predefined behaviors if the default assignment does not suit your environment.
 
 | Risk behaviors                         | Requirements                                                                                                | Description                                                                                                                                                                                                            |
 | -------------------------------------- | ----------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -62,9 +68,9 @@ To toggle risk behaviors, go to **Risk score** > **Risk behaviors**.
 
 ### Enable risk behaviors
 
-When a specific behavior is enabled, Zero Trust will continuously monitor all users within the organization for any instances of that behavior.
+When a specific behavior is enabled, Cloudflare One will continuously monitor all users within the organization for any instances of that behavior.
 
-If a user engages in an enabled risk behavior, their risk level is re-evaluated. Zero Trust will update their risk score to the highest value between the current risk level and the risk level of the behavior they triggered.
+If a user engages in an enabled risk behavior, their risk level is re-evaluated. Cloudflare One will update their risk score to the highest value between the current risk level and the risk level of the behavior they triggered.
 
 ### Disable risk behaviors
 
@@ -74,7 +80,9 @@ When a risk behavior is disabled, monitoring for future activity will cease. Pre
 
 You can change the risk level for a behavior at any time.
 
-1. In [Zero Trust](https://one.dash.cloudflare.com/), go to **Risk score** > **Risk behaviors**.
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Teams & Resources**.
+2. Go to **Users**.
+3. Select **Risk score** > **Risk behaviors**.
 2. Select the risk behavior you want to modify.
 3. In the drop-down menu, choose your desired risk level.
 4. Select **Save**.

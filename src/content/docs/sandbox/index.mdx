@@ -112,6 +112,25 @@ df['sales'].sum()  # Last expression is automatically returned
     	};
     	```
     </TabItem>
+    <TabItem label="WebSocket Connections">
+    	```typescript
+      import { getSandbox } from '@cloudflare/sandbox';
+
+      export default {
+        async fetch(request: Request, env: Env): Promise<Response> {
+          // Connect to WebSocket services in sandbox
+          if (request.headers.get('Upgrade')?.toLowerCase() === 'websocket') {
+            const sandbox = getSandbox(env.Sandbox, 'user-123');
+            return await sandbox.wsConnect(request, 8080);
+          }
+
+          return Response.json({ message: 'WebSocket endpoint' });
+        }
+      };
+      ```
+
+      Connect to WebSocket servers running in sandboxes. Learn more: [WebSocket Connections](/sandbox/guides/websocket-connections/).
+    </TabItem>
 
 </Tabs>
 
@@ -269,3 +288,4 @@ Stateful coordination layer that enables Sandbox to maintain persistent environm
 </LinkTitleCard>
 
 </CardGrid>
+```

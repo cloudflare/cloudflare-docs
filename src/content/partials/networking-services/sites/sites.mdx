@@ -1,7 +1,6 @@
 ---
 params:
   - magicWord
-  - productName
   - greIpsecTunnelsURL
   - connectorURL
   - cniURL
@@ -51,7 +50,7 @@ When you are finished setting these up, refer to the steps below to learn how to
 6. Choose one or more on-ramps for your site from the list. Remember to only choose the on-ramps available to that particular site, as the list might show on-ramps available on other locations.
 7. Select **Continue**.
 8. In **Define alert settings** you set up alerts to notify you when there are issues with your site's on-ramps. If you want to set up alerts later, select **Skip this for now** to complete your setup. Otherwise, continue reading.
-9. In **{props.productName} Health Check Alert** > **Notification name**, enter a name for the site's alert.
+9. In **Magic WAN Health Check Alert** > **Notification name**, enter a name for the site's alert.
 10. Under **Alert settings**, choose how you want to be notified when there is an issue. You can add webhooks as well as email addresses.
 11. In **Alert sensitivity level** define the threshold for Magic Tunnel health alerts to be fired. Refer to [How Cloudflare calculates Magic Tunnel health alerts](/magic-wan/reference/how-cloudflare-calculates-magic-tunnel-health-alerts/) for more information.
 12. Select **Complete setup** to finish setting up your site.
@@ -68,7 +67,6 @@ Your site is now set up. If you have other sites you need to set up, repeat the 
 	params={{
 		instructions: "",
 		magicWord: props.magicWord,
-		productName: props.productName,
 		networkOverviewPageName: props.magicWord === "WAN Tunnels" ? "Network visibility" : "Network overview (beta)",
 		magicTunnelHcsURL: props.magicTunnelHcsURL,
 		setGeoCoordinatesURL: "#set-geographic-coordinates"
@@ -144,7 +142,7 @@ If you add geographic coordinates to your site, it will show up in the Network m
 	file="analytics/set-thresholds-site-health"
 	product="networking-services"
 	params={{
-		productName: props.productName,
+		productName: "Magic WAN",
 		magicTunnelHcsURL: props.magicTunnelHcsURL
 	}}
 />
